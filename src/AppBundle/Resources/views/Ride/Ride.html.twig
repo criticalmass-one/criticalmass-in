@@ -71,12 +71,6 @@
                         </span>
                         </a>
                     </li>
-                    <li role="presentation">
-                        <a href="#music" aria-controls="profile" role="tab" data-toggle="tab">
-                            <i class="fa fa-music"></i>
-                            Musik
-                        </a>
-                    </li>
                 {% endif %}
             </ul>
 
@@ -87,7 +81,6 @@
 
                 {% if pastRide %}
                     {{ render(controller('AppBundle:Ride/RideTabs:renderTracksTab', { 'ride': ride } )) }}
-                    {{ render(controller('AppBundle:Ride/RideTabs:renderMusicTab', { 'ride': ride } )) }}
                 {% endif %}
             </div>
         </div>
@@ -117,9 +110,9 @@
         {% for photo in photos %}
         {% if photo.hasCoordinates() %}
         {% if photo.user.blurGalleries %}
-        {% set blur = 'true' %}
+        {% set blur = true %}
         {% else %}
-        {% set blur = 'false' %}
+        {% set blur = false %}
         {% endif %}
         ridePage.addPhoto('{{ photo|serialize|raw|e('js') }}', '{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}', '{{ blur }}');
         {% endif %}

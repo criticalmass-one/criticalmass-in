@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace AppBundle\Criticalmass\Timeline\Collector;
 
@@ -16,10 +16,12 @@ class CityEditCollector extends AbstractTimelineCollector
             if ($city->getSlugs()) {
                 $item = new CityEditItem();
 
-                $item->setUsername($city->getUser()->getUsername());
-                $item->setCityName($city->getCity());
-                $item->setCity($city);
-                $item->setDateTime($city->getUpdatedAt());
+                $item
+                    ->setUser($city->getUser())
+                    ->setCityName($city->getCity())
+                    ->setCity($city)
+                    ->setDateTime($city->getUpdatedAt());
+
                 $this->addItem($item);
             }
         }

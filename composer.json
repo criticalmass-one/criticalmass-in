@@ -63,7 +63,8 @@
         "zendframework/zend-feed": "^2.9",
         "php-http/guzzle6-adapter": "^1.1",
         "php-http/httplug-bundle": "^1.10",
-        "knplabs/knp-menu-bundle": "^2.0"
+        "knplabs/knp-menu-bundle": "^2.0",
+        "salavert/time-ago-in-words": "1.*"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

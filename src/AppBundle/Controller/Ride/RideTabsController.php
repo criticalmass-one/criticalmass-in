@@ -59,14 +59,6 @@ class RideTabsController extends AbstractController
         ]);
     }
 
-    public function renderMusicTabAction(Ride $ride): Response
-    {
-        return $this->render('AppBundle:RideTabs:MusicTab.html.twig', [
-            'ride' => $ride,
-            'dateTime' => new \DateTime(),
-        ]);
-    }
-
     public function renderDetailsTabAction(Ride $ride): Response
     {
         /**

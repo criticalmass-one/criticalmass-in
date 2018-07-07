@@ -3,8 +3,9 @@
 namespace AppBundle\Event\Participation;
 
 use AppBundle\Entity\Participation;
+use Symfony\Component\EventDispatcher\Event;
 
-abstract class AbstractParticipationEvent
+abstract class AbstractParticipationEvent extends Event
 {
     /** @var Participation $participation */
     protected $participation;

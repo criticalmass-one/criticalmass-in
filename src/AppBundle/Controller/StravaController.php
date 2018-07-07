@@ -66,7 +66,7 @@ class StravaController extends AbstractController
 
         return $this->render('AppBundle:Strava:auth.html.twig', [
             'authorizationUrl' => $authorizationUrl,
-            'ride' => $ride
+            'ride' => $ride,
         ]);
     }
 

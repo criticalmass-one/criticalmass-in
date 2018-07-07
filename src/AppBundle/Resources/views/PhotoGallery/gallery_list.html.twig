@@ -1,10 +1,6 @@
 {% extends 'AppBundle:Template:StandardTemplate.html.twig' %}
 
-{% if ride %}
-    {% set city = ride.city %}
-{% else %}
-    {% set city = event.city %}
-{% endif %}
+{% set city = ride.city %}
 
 {% block title %}Fotos{% endblock %}
 
@@ -15,20 +11,14 @@
         </a>
     </li>
     <li>
-        <a href="{{ objectPath(city) }}">
-            {{ city.city }}
+        <a href="{{ objectPath(ride.city) }}">
+            {{ ride.city.city }}
         </a>
     </li>
     <li>
-        {% if ride %}
-            <a href="{{ objectPath(ride) }}">
-                {{ ride.getFancyTitle() }}
-            </a>
-        {% else %}
-            <a href="{{ objectPath(event) }}">
-                {{ event.title }}
-            </a>
-        {% endif %}
+        <a href="{{ objectPath(ride) }}">
+            {{ ride.getFancyTitle() }}
+        </a>
     </li>
     <li class="active">
         Fotos
@@ -39,30 +29,25 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                {% if app.getUser() %}
-                    {% if ride %}
-                        {% set uploadPath = path('caldera_criticalmass_gallery_photos_upload_ride', { 'citySlug': city.slug, 'rideDate': ride.getFormattedDate() }) %}
-                    {% else %}
-                        {% set uploadPath = path('caldera_criticalmass_photo_upload_event', { 'citySlug': city.slug, 'eventSlug': event.slug }) %}
-                    {% endif %}
+                <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
+                {% if app.user %}
+                    {% set uploadPath = path('caldera_criticalmass_gallery_photos_upload_ride', { 'citySlug': city.slug, 'rideDate': ride.getFormattedDate() }) %}
 
-                    <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
-                        <a class="btn btn-success" href="{{ uploadPath }}" title="Fotos hochladen">
-                            <i class="fa fa-camera"></i>
-                            Fotos hochladen
-                        </a>
-                    </div>
-                {% endif %}
-
-                {% if ride %}
-                    <h1>
-                        Fotos von {{ ride.getFancyTitle() }}
-                    </h1>
+                    <a class="btn btn-success" href="{{ uploadPath }}" title="Fotos hochladen">
+                        <i class="fa fa-camera"></i>
+                        Fotos hochladen
+                    </a>
                 {% else %}
-                    <h1>
-                        Fotos von {{ event.title }}
-                    </h1>
+                    <span class="btn btn-success modal-hint" data-modal-hint-title="{{ 'hint_modal.gallery.photo_upload_button.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.gallery.photo_upload_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
+                        <i class="fa fa-camera"></i>
+                        Fotos hochladen
+                    </span>
                 {% endif %}
+                </div>
+
+                <h1>
+                    Fotos von {{ ride.getFancyTitle() }}
+                </h1>
             </div>
         </div>
 
