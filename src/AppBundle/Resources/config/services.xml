@@ -26,10 +26,6 @@
             <tag name="liip_imagine.filter.loader" loader="fast_blur_filter"/>
         </service>
 
-        <service id="caldera.criticalmass.routing.object_router" class="AppBundle\Criticalmass\Router\ObjectRouter">
-            <argument type="service" id="router.default"/>
-        </service>
-
         <service id="fos_user.doctrine_registry" alias="doctrine"/>
 
         <service id="caldera.user_provider" class="AppBundle\UserProvider\FOSUBUserProvider">

@@ -23,7 +23,7 @@ trait UtilTrait
     protected function generateObjectUrl($object, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
         /** @var ObjectRouter $router */
-        $router = $this->get('caldera.criticalmass.routing.object_router');
+        $router = $this->get(ObjectRouter::class);
 
         $url = $router->generate($object, $referenceType);
 
