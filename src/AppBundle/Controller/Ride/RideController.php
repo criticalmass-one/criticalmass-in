@@ -4,10 +4,11 @@ namespace AppBundle\Controller\Ride;
 
 use AppBundle\Entity\Ride;
 use AppBundle\Criticalmass\SeoPage\SeoPage;
-use AppBundle\Criticalmass\ViewStorage\ViewStorageCache;
+use AppBundle\Event\View\ViewEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use AppBundle\Controller\AbstractController;
 use AppBundle\Entity\Weather;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -31,12 +32,12 @@ class RideController extends AbstractController
     /**
      * @ParamConverter("ride", class="AppBundle:Ride")
      */
-    public function showAction(Request $request, SeoPage $seoPage, ViewStorageCache $viewStorageCache, Ride $ride): Response
+    public function showAction(Request $request, SeoPage $seoPage, EventDispatcher $eventDispatcher, Ride $ride): Response
     {
         $nextRide = $this->getRideRepository()->getNextRide($ride);
         $previousRide = $this->getRideRepository()->getPreviousRide($ride);
 
-        $viewStorageCache->countView($ride);
+        $eventDispatcher->dispatch(ViewEvent::NAME, new ViewEvent($ride));
 
         $seoPage
             ->setDescription('Informationen, Strecken und Fotos von der Critical Mass in ' . $ride->getCity()->getCity() . ' am ' . $ride->getDateTime()->format('d.m.Y'))
