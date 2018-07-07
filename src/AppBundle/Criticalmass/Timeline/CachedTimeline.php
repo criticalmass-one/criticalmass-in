@@ -11,12 +11,12 @@ class CachedTimeline extends Timeline
 {
     protected $ttl;
 
-    public function __construct(RegistryInterface $doctrine, EngineInterface $templating, FeatureManager $featureManager, int $ttl = 300)
+    public function __construct(RegistryInterface $doctrine, EngineInterface $templating, FeatureManager $featureManager, int $cachedTimelineTtl = 300)
     {
 
         $this->doctrine = $doctrine;
         $this->templating = $templating;
-        $this->ttl = $ttl;
+        $this->ttl = $cachedTimelineTtl;
 
         parent::__construct($doctrine, $templating, $featureManager);
     }

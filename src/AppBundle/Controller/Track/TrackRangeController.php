@@ -21,7 +21,7 @@ class TrackRangeController extends AbstractController
      * @Security("is_granted('edit', track)")
      * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
      */
-    public function rangeAction(Request $request, UserInterface $user, Track $track, SimpleLatLngListGenerator $latLngListGenerator, EventDispatcherInterface $eventDispatcher): Response
+    public function rangeAction(Request $request, Track $track, SimpleLatLngListGenerator $latLngListGenerator, EventDispatcherInterface $eventDispatcher): Response
     {
         $form = $this->createForm(TrackRangeType::class, $track);
 
@@ -50,7 +50,8 @@ class TrackRangeController extends AbstractController
     {
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var Track $track */
             $track = $form->getData();
 
             $eventDispatcher->dispatch(TrackTrimmedEvent::NAME, new TrackTrimmedEvent($track));

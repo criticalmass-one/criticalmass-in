@@ -89,8 +89,8 @@ define(['Map', 'bootstrap-slider'], function () {
             var endValue = slideEvt.value.pop();
             var beginValue = slideEvt.value.pop();
 
-            $('#form_startPoint').val(beginValue * gapWidth);
-            $('#form_endPoint').val(endValue * gapWidth);
+            $('#track_range_startPoint').val(beginValue * gapWidth);
+            $('#track_range_endPoint').val(endValue * gapWidth);
 
             var newLatLngs = that._polylineLatLngs.slice();
 

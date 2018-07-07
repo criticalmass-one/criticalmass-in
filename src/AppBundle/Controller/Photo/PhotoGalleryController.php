@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class PhotoGalleryController extends AbstractController
 {
@@ -39,7 +40,10 @@ class PhotoGalleryController extends AbstractController
         ]);
     }
 
-    public function userlistAction(Request $request, UserInterface $user): Response
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function userlistAction(UserInterface $user = null): Response
     {
         $this->errorIfFeatureDisabled('photos');
 

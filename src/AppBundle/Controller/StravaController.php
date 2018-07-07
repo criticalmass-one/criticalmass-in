@@ -2,25 +2,23 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\City;
+use AppBundle\Event\Track\TrackUploadedEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Position;
 use AppBundle\Entity\Ride;
 use AppBundle\Entity\Track;
-use AppBundle\Traits\TrackHandlingTrait;
 use AppBundle\Criticalmass\Gps\GpxExporter\GpxExporter;
 use Pest;
 use Strava\API\Client;
 use Strava\API\OAuth as OAuth;
 use Strava\API\Service\REST;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class StravaController extends AbstractController
 {
-    use TrackHandlingTrait;
-
     protected function initOauthForRide(Request $request, Ride $ride)
     {
         $redirectUri = $request->getUriForPath($this->generateUrl(
@@ -66,7 +64,7 @@ class StravaController extends AbstractController
 
         return $this->render('AppBundle:Strava:auth.html.twig', [
             'authorizationUrl' => $authorizationUrl,
-            'ride' => $ride
+            'ride' => $ride,
         ]);
     }
 
@@ -135,7 +133,7 @@ class StravaController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("ride", class="AppBundle:Ride")
      */
-    public function importAction(Request $request, GpxExporter $exporter, Ride $ride): Response
+    public function importAction(Request $request, EventDispatcherInterface $eventDispatcher, GpxExporter $exporter, Ride $ride): Response
     {
         $activityId = $request->get('activityId');
 
@@ -196,11 +194,7 @@ class StravaController extends AbstractController
         $track->setUsername($this->getUser()->getUsername());
         $track->setRide($ride);
 
-        $this->loadTrackProperties($track);
-        $this->generatePolyline($track);
-        $this->generatePreviewPolyline($track);
-
-        $this->addRideEstimate($track, $ride);
+        $eventDispatcher->dispatch(TrackUploadedEvent::NAME, new TrackUploadedEvent($track));
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($track);

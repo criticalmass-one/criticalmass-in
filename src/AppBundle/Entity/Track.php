@@ -58,6 +58,7 @@ class Track implements RouteableInterface, StaticMapableInterface
 
     /**
      * @ORM\OneToOne(targetEntity="RideEstimate", mappedBy="track", cascade={"all"}, orphanRemoval=true)
+     * @ORM\JoinColumn(name="estimate_id", referencedColumnName="id")
      */
     protected $rideEstimate;
 
@@ -144,6 +145,14 @@ class Track implements RouteableInterface, StaticMapableInterface
      * @JMS\SerializedName("polylineString")
      */
     protected $polyline;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     * @JMS\Groups({"timelapse"})
+     * @JMS\Expose
+     * @JMS\SerializedName("reducedPolylineString")
+     */
+    protected $reducedPolyline;
 
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
@@ -363,6 +372,18 @@ class Track implements RouteableInterface, StaticMapableInterface
     public function getPolyline(): ?string
     {
         return $this->polyline;
+    }
+
+    public function setReducedPolyline(string $reducedPolyline): Track
+    {
+        $this->reducedPolyline = $reducedPolyline;
+
+        return $this;
+    }
+
+    public function getReducedPolyline(): ?string
+    {
+        return $this->reducedPolyline;
     }
 
     /**

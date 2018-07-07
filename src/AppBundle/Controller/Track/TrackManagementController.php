@@ -2,27 +2,27 @@
 
 namespace AppBundle\Controller\Track;
 
-use AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateService;
+use AppBundle\Event\Track\TrackDeletedEvent;
+use AppBundle\Event\Track\TrackHiddenEvent;
+use AppBundle\Event\Track\TrackShownEvent;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Controller\AbstractController;
 use AppBundle\Entity\Track;
-use AppBundle\Traits\TrackHandlingTrait;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class TrackManagementController extends AbstractController
 {
-    use TrackHandlingTrait;
-
     /**
      * @Security("is_granted('ROLE_USER')")
      */
-    public function listAction(Request $request, UserInterface $user, PaginatorInterface $paginator)
+    public function listAction(Request $request, UserInterface $user = null, PaginatorInterface $paginator)
     {
-        $query = $this->getTrackRepository()->findByUserQuery($user);
+        $query = $this->getTrackRepository()->findByUserQuery($user, null, false);
 
         $pagination = $paginator->paginate(
             $query,
@@ -39,7 +39,7 @@ class TrackManagementController extends AbstractController
      * @Security("is_granted('edit', track)")
      * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
      */
-    public function downloadAction(Request $request, UserInterface $user, Track $track): Response
+    public function downloadAction(Track $track): Response
     {
         $trackContent = file_get_contents($this->getTrackFilename($track));
 
@@ -60,13 +60,17 @@ class TrackManagementController extends AbstractController
      * @Security("is_granted('edit', track)")
      * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
      */
-    public function toggleAction(Request $request, UserInterface $user, Track $track, RideEstimateService $rideEstimateService): Response
+    public function toggleAction(EventDispatcherInterface $eventDispatcher, Track $track): Response
     {
         $track->setEnabled(!$track->getEnabled());
 
         $this->getManager()->flush();
 
-        $rideEstimateService->calculateEstimates($track->getRide());
+        if ($track->getEnabled()) {
+            $eventDispatcher->dispatch(TrackShownEvent::NAME, new TrackShownEvent($track));
+        } else {
+            $eventDispatcher->dispatch(TrackHiddenEvent::NAME, new TrackHiddenEvent($track));
+        }
 
         return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
     }
@@ -75,13 +79,13 @@ class TrackManagementController extends AbstractController
      * @Security("is_granted('edit', track)")
      * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
      */
-    public function deleteAction(Request $request, UserInterface $user, Track $track, RideEstimateService $rideEstimateService): Response
+    public function deleteAction(Track $track, EventDispatcherInterface $eventDispatcher): Response
     {
         $track->setDeleted(true);
 
         $this->getManager()->flush();
 
-        $rideEstimateService->calculateEstimates($track->getRide());
+        $eventDispatcher->dispatch(TrackDeletedEvent::NAME, new TrackDeletedEvent($track));
 
         return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
     }

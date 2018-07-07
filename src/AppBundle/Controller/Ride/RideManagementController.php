@@ -24,7 +24,7 @@ class RideManagementController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("city", class="AppBundle:City")
      */
-    public function addAction(Request $request, UserInterface $user, EntityManagerInterface $entityManager, City $city): Response
+    public function addAction(Request $request, UserInterface $user = null, EntityManagerInterface $entityManager, City $city): Response
     {
         $ride = new Ride();
         $ride
@@ -44,7 +44,7 @@ class RideManagementController extends AbstractController
         }
     }
 
-    protected function addGetAction(Request $request, UserInterface $user, Ride $ride, EntityManagerInterface $entityManager, City $city, FormInterface $form): Response
+    protected function addGetAction(Request $request, UserInterface $user = null, Ride $ride, EntityManagerInterface $entityManager, City $city, FormInterface $form): Response
     {
         $oldRides = $this->getRideRepository()->findRidesForCity($city);
 
@@ -60,7 +60,7 @@ class RideManagementController extends AbstractController
 
     protected function addPostAction(
         Request $request,
-        UserInterface $user,
+        UserInterface $user = null,
         Ride $ride,
         EntityManagerInterface $entityManager,
         City $city,
@@ -109,7 +109,7 @@ class RideManagementController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("ride", class="AppBundle:Ride")
      */
-    public function editAction(Request $request, UserInterface $user, Ride $ride): Response
+    public function editAction(Request $request, UserInterface $user = null, Ride $ride): Response
     {
         $form = $this->createForm(
             RideType::class,
@@ -133,7 +133,7 @@ class RideManagementController extends AbstractController
 
     protected function editGetAction(
         Request $request,
-        UserInterface $user,
+        UserInterface $user = null,
         Ride $ride,
         City $city,
         Form $form
@@ -155,7 +155,7 @@ class RideManagementController extends AbstractController
 
     protected function editPostAction(
         Request $request,
-        UserInterface $user,
+        UserInterface $user = null,
         Ride $ride,
         City $city,
         Form $form
@@ -198,47 +198,10 @@ class RideManagementController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("ride", class="AppBundle:Ride")
      */
-    public function facebookUpdateAction(Ride $ride): Response
-    {
-        /**
-         * @var FacebookEventRideApi $fera
-         */
-        $fera = $this->get('caldera.criticalmass.facebookapi.eventride');
-
-        $facebookRide = $fera->createRideForRide($ride);
-
-        $form = $this->createForm(
-            RideType::class,
-            $ride,
-            array(
-                'action' => $this->generateUrl('caldera_criticalmass_ride_edit',
-                    array(
-                        'citySlug' => $ride->getCity()->getSlug(),
-                        'rideDate' => $ride->getFormattedDate()
-                    )
-                )
-            )
-        );
-
-        return $this->render(
-            'AppBundle:RideManagement:facebook_update.html.twig',
-            [
-                'city' => $ride->getCity(),
-                'ride' => $ride,
-                'facebookRide' => $facebookRide,
-                'form' => $form->createView()
-            ]
-        );
-    }
-
-    /**
-     * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("ride", class="AppBundle:Ride")
-     */
     public function socialPreviewAction(
         EntityManagerInterface $entityManager,
         Request $request,
-        UserInterface $user,
+        UserInterface $user = null,
         Ride $ride
     ): Response {
         $form = $this->createForm(RideSocialPreviewType::class, $ride, [
@@ -258,7 +221,7 @@ class RideManagementController extends AbstractController
     protected function socialPreviewGetAction(
         EntityManagerInterface $entityManager,
         Request $request,
-        UserInterface $user,
+        UserInterface $user = null,
         Ride $ride,
         Form $form
     ): Response {
@@ -271,7 +234,7 @@ class RideManagementController extends AbstractController
     protected function socialPreviewPostAction(
         EntityManagerInterface $entityManager,
         Request $request,
-        UserInterface $user,
+        UserInterface $user = null,
         Ride $ride,
         Form $form
     ): Response {

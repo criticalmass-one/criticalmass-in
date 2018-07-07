@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace AppBundle\Validator\Constraint;
 
@@ -12,12 +12,12 @@ class SingleRideForDay extends Constraint
 {
     public $message = 'Für diesen Tag wurde bereits eine Tour angelegt.';
 
-    public function getTargets()
+    public function getTargets(): string
     {
         return self::CLASS_CONSTRAINT;
     }
 
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return SingleRideForDayValidator::class;
     }

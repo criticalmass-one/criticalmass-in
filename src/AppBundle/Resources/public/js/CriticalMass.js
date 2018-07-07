@@ -36,7 +36,6 @@ require.config({
         "StravaImportPage": "/bundles/app/js/modules/page/StravaImportPage",
         "CalendarPage": "/bundles/app/js/modules/page/CalendarPage",
         "TrackListPage": "/bundles/app/js/modules/page/TrackListPage",
-        "FacebookImportRidePage": "/bundles/app/js/modules/page/FacebookImportRidePage",
         "RidePage": "/bundles/app/js/modules/page/RidePage",
         "RideStatisticPage": "/bundles/app/js/modules/page/RideStatisticPage",
         "PlacePhotoPage": "/bundles/app/js/modules/page/PlacePhotoPage",

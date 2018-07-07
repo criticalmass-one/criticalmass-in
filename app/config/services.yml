@@ -10,23 +10,20 @@ services:
             $staticmapsHost: '%staticmaps.host%'
             $featurePhotos: '%feature.photos%'
             $gapWidth: '%track.gap_width%'
+            $facebookAppId: '%facebook.app_id%'
+            $facebookAppSecret: '%facebook.app_secret%'
+            $facebookDefaultToken: '%facebook.default_token%'
+            $uploadDestinationPhoto: '%upload_destination.photo%'
+            $cachedTimelineTtl: '%timeline.ttl%'
 
     AppBundle\:
         resource: '../../src/AppBundle/*'
-        exclude: '../../src/AppBundle/{Admin,DQL,Entity,Manager,Menu,Model,Repository,Tests,UserProvider,Validator,Criticalmass/Facebook,Criticalmass/Image,Criticalmass/UploadValidator/UploadValidatorException}'
+        exclude: '../../src/AppBundle/{Admin,DQL,Entity,Manager,Menu,Model,Repository,Tests,UserProvider,Validator,Criticalmass/UploadValidator/UploadValidatorException}'
 
     AppBundle\Controller\:
         resource: '../../src/AppBundle/Controller'
         public: true
         tags: ['controller.service_arguments']
-
-    AppBundle\Criticalmass\Image\PhotoUploader\PhotoUploader:
-        arguments:
-            $uploadDestinationPhoto: '%upload_destination.photo%'
-
-    AppBundle\Criticalmass\Image\PhotoGps\PhotoGps:
-        arguments:
-            $uploadDestinationPhoto: '%upload_destination.photo%'
 
     Cmfcmf\OpenWeatherMap: ~
 

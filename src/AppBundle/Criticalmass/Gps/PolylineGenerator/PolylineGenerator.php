@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Gps\TrackPolyline;
+namespace AppBundle\Criticalmass\Gps\PolylineGenerator;
 
 class PolylineGenerator extends AbstractPolylineGenerator
 {
