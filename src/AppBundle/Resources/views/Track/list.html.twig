@@ -3,8 +3,15 @@
 {% block title %}Deine Tracks{% endblock %}
 
 {% block breadcrumb %}
-    <li><a href="{{ path('fos_user_profile_show') }}">Dein Benutzerkonto</a></li>
-    <li class="active">Deine Tracks</li>
+    <li>
+        <a href="{{ path('criticalmass_user_usermanagement') }}">
+            Dein Benutzerkonto
+        </a>
+    </li>
+
+    <li class="active">
+        Deine Tracks
+    </li>
 {% endblock %}
 
 {% block content %}
