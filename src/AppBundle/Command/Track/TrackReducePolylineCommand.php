@@ -6,6 +6,8 @@ use AppBundle\Criticalmass\Gps\PolylineGenerator\ReducedPolylineGenerator;
 use AppBundle\Entity\Track;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -27,7 +29,7 @@ class TrackReducePolylineCommand extends Command
         parent::__construct($name);
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('criticalmass:track:reduce-polyline')
@@ -36,13 +38,28 @@ class TrackReducePolylineCommand extends Command
             ->addArgument('trackId', InputArgument::OPTIONAL, 'Id of the track to reduce polyline');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         if ($input->hasOption('all') && $input->getOption('all')) {
             $tracks = $this->registry->getRepository(Track::class)->findAll();
         } elseif ($input->hasArgument('trackId') && $trackId = $input->getArgument('trackId')) {
             $tracks = [$this->registry->getRepository(Track::class)->find($trackId)];
+        } else {
+            $output->writeln('No tracks selected to refresh.');
+            return;
         }
+
+        $progressBar = new ProgressBar($output, count($tracks));
+
+        $table = new Table($output);
+        $table->setHeaders([
+            'Track Id',
+            'Username',
+            'DateTime',
+            'City',
+            'Ride Date Time',
+            'Reduced Polyline',
+        ]);
 
         /** @var Track $track */
         foreach ($tracks as $track) {
@@ -52,8 +69,21 @@ class TrackReducePolylineCommand extends Command
                 ->getPolyline();
 
             $track->setReducedPolyline($polyline);
+
+            $progressBar->advance();
+            $table->addRow([
+                $track->getId(),
+                $track->getUser()->getUsername(),
+                $track->getCreationDateTime()->format('Y-m-d H:i:s'),
+                $track->getRide()->getCity()->getCity(),
+                $track->getRide()->getDateTime()->format('Y-m-d H:i'),
+                $track->getReducedPolyline(),
+            ]);
         }
 
         $this->registry->getManager()->flush();
+
+        $progressBar->finish();
+        $table->render();
     }
 }
