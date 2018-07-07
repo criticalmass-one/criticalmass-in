@@ -9,8 +9,6 @@
     </imports>
 
     <services>
-        <service id="critical_markdown" class="AppBundle\Criticalmass\Markdown\CriticalMarkdown"/>
-
         <service id="caldera.criticalmass.validator.single_ride_day"
                  class="AppBundle\Validator\SingleRideForDayValidator">
             <argument type="service" id="doctrine.orm.entity_manager"/>
