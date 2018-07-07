@@ -2,6 +2,8 @@
 
 namespace AppBundle\Command\Statistic;
 
+use AppBundle\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandler;
+use AppBundle\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandlerInterface;
 use AppBundle\Entity\Ride;
 use AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateService;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -16,13 +18,13 @@ class CalculateRideEstimatesCommand extends Command
     /** @var RegistryInterface $registry */
     protected $registry;
 
-    /** @var RideEstimateService $rideEstimateService */
-    protected $rideEstimateService;
+    /** @var RideEstimateHandlerInterface $rideEstimateHandler */
+    protected $rideEstimateHandler;
 
-    public function __construct(?string $name = null, RideEstimateService $rideEstimateService, RegistryInterface $registry)
+    public function __construct(?string $name = null, RideEstimateHandlerInterface $rideEstimateHandler, RegistryInterface $registry)
     {
         $this->registry = $registry;
-        $this->rideEstimateService = $rideEstimateService;
+        $this->rideEstimateHandler = $rideEstimateHandler;
 
         parent::__construct($name);
     }
@@ -60,9 +62,10 @@ class CalculateRideEstimatesCommand extends Command
 
             $progressBar->advance();
 
-            $this->rideEstimateService
-                ->flushEstimates($ride, false)
-                ->calculateEstimates($ride, false);
+            $this->rideEstimateHandler
+                ->setRide($ride)
+                ->flushEstimates()
+                ->calculateEstimates();
         }
 
         $this->registry->getManager()->flush();

@@ -1,7 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Statistic\RideEstimate;
+namespace AppBundle\Criticalmass\Statistic\RideEstimateHandler;
 
+use AppBundle\Criticalmass\Statistic\RideEstimateCalculator\RideEstimateCalculatorInterface;
 use AppBundle\Entity\Ride;
 use AppBundle\Entity\RideEstimate;
 use AppBundle\Entity\Track;
@@ -13,10 +14,10 @@ class RideEstimateService
     /** @var Doctrine $doctrine */
     protected $doctrine;
 
-    /** @var RideEstimateCalculator $calculator */
+    /** @var RideEstimateCalculatorInterface $calculator */
     protected $calculator;
 
-    public function __construct(Doctrine $doctrine, RideEstimateCalculator $calculator)
+    public function __construct(Doctrine $doctrine, RideEstimateCalculatorInterface $calculator)
     {
         $this->doctrine = $doctrine;
 
