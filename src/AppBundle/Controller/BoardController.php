@@ -3,7 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Board;
-use AppBundle\Criticalmass\ViewStorage\ViewStorageCache;
+use AppBundle\Event\View\ViewEvent;
+use FOS\RestBundle\View\View;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\City;
@@ -11,6 +12,7 @@ use AppBundle\Entity\Post;
 use AppBundle\Entity\Thread;
 use AppBundle\EntityInterface\BoardInterface;
 use Malenki\Slug;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Form;
@@ -62,12 +64,12 @@ class BoardController extends AbstractController
     /**
      * @ParamConverter("thread", class="AppBundle:Thread")
      */
-    public function viewthreadAction(ViewStorageCache $viewStorageCache, Thread $thread): Response
+    public function viewthreadAction(EventDispatcher $eventDispatcher, Thread $thread): Response
     {
         $posts = $this->getPostRepository()->findPostsForThread($thread);
         $board = $thread->getCity() ?? $thread->getBoard();
 
-        $viewStorageCache->countView($thread);
+        $eventDispatcher->dispatch(ViewEvent::NAME, new ViewEvent($thread));
 
         return $this->render('AppBundle:Board:view_thread.html.twig', [
             'board' => $board,
