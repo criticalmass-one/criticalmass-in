@@ -6,7 +6,9 @@ use AppBundle\Criticalmass\Gps\PolylineGenerator\ReducedPolylineGenerator;
 use AppBundle\Entity\Track;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class TrackReducePolylineCommand extends Command
@@ -29,12 +31,18 @@ class TrackReducePolylineCommand extends Command
     {
         $this
             ->setName('criticalmass:track:reduce-polyline')
-            ->setDescription('');
+            ->setDescription('')
+            ->addOption('all', 'a', InputOption::VALUE_OPTIONAL, 'Generate polylines for all tracks')
+            ->addArgument('trackId', InputArgument::OPTIONAL, 'Id of the track to reduce polyline');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $tracks = $this->registry->getRepository(Track::class)->findAll();
+        if ($input->hasOption('all') && $input->getOption('all')) {
+            $tracks = $this->registry->getRepository(Track::class)->findAll();
+        } elseif ($input->hasArgument('trackId') && $trackId = $input->getArgument('trackId')) {
+            $tracks = [$this->registry->getRepository(Track::class)->find($trackId)];
+        }
 
         /** @var Track $track */
         foreach ($tracks as $track) {
