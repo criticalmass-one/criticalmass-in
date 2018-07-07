@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Statistic\RideEstimateCalcular;
+namespace AppBundle\Criticalmass\Statistic\RideEstimateCalculator;
 
 use AppBundle\Entity\RideEstimate;
 

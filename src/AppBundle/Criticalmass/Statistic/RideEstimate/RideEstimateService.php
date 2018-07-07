@@ -7,6 +7,7 @@ use AppBundle\Entity\RideEstimate;
 use AppBundle\Entity\Track;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 
+/** @deprecated  */
 class RideEstimateService
 {
     /** @var Doctrine $doctrine */
@@ -22,6 +23,7 @@ class RideEstimateService
         $this->calculator = $calculator;
     }
 
+    /** @deprecated  */
     public function flushEstimates(Ride $ride, bool $flush = true): RideEstimateService
     {
         $ride
@@ -36,6 +38,7 @@ class RideEstimateService
         return $this;
     }
 
+    /** @deprecated  */
     public function calculateEstimates(Ride $ride, bool $flush = true): RideEstimateService
     {
         $estimates = $this->doctrine->getRepository(RideEstimate::class)->findByRide($ride);
@@ -52,6 +55,7 @@ class RideEstimateService
         return $this;
     }
 
+    /** @deprecated  */
     public function addEstimateFromTrack(Track $track, bool $flush = true): RideEstimateService
     {
         $re = new RideEstimate();
@@ -73,6 +77,7 @@ class RideEstimateService
         return $this;
     }
 
+    /** @deprecated  */
     protected function calculateDurationInSeconds(Track $track): int
     {
         if ($track->getStartDateTime() && $track->getEndDateTime()) {
@@ -82,6 +87,7 @@ class RideEstimateService
         return 0;
     }
 
+    /** @deprecated  */
     protected function calculateDurationInHours(Track $track): float
     {
         if ($durationInSeconds = $this->calculateDurationInSeconds($track)) {
