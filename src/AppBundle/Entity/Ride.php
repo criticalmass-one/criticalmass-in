@@ -69,7 +69,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     protected $subrides;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=false)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      */
@@ -613,21 +613,6 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     public function getTracks(): Collection
     {
         return $this->tracks;
-    }
-
-    /**
-     * @JMS\VirtualProperty
-     * @JMS\SerializedName("title")
-     * @JMS\Type("string")
-     * @deprecated
-     */
-    public function getFancyTitle(): string
-    {
-        if (!$this->title) {
-            return $this->city->getTitle() . ' ' . $this->dateTime->format('d.m.Y');
-        }
-
-        return $this->getTitle();
     }
 
     public function addPost(Post $post): Ride

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace AppBundle\Form\Type;
 
@@ -10,14 +10,13 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class RideType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title', TextType::class, ['required' => false])
+            ->add('title', TextType::class, ['required' => true])
             ->add('description', TextareaType::class, ['required' => false])
             ->add('dateTime', DateTimeType::class, [
                 'model_timezone' => 'UTC',
