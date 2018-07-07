@@ -3,6 +3,7 @@
 namespace AppBundle\EventSubscriber;
 
 use AppBundle\Criticalmass\Gps\DistanceCalculator\TrackDistanceCalculatorInterface;
+use AppBundle\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandlerInterface;
 use AppBundle\Entity\Ride;
 use AppBundle\Entity\Track;
 use AppBundle\Event\Track\TrackDeletedEvent;
@@ -13,7 +14,6 @@ use AppBundle\Event\Track\TrackTrimmedEvent;
 use AppBundle\Criticalmass\Gps\GpxReader\TrackReader;
 use AppBundle\Criticalmass\Gps\LatLngListGenerator\RangeLatLngListGenerator;
 use AppBundle\Criticalmass\Gps\TrackPolyline\PolylineGeneratorInterface;
-use AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateHandler;
 use AppBundle\Event\Track\TrackUpdatedEvent;
 use AppBundle\Event\Track\TrackUploadedEvent;
 use Doctrine\Bundle\DoctrineBundle\Registry;
@@ -30,7 +30,7 @@ class TrackEventSubscriber implements EventSubscriberInterface
     /** @var RangeLatLngListGenerator $rangeLatLngListGenerator */
     protected $rangeLatLngListGenerator;
 
-    /** @var RideEstimateHandler $rideEstimateHandler */
+    /** @var RideEstimateHandlerInterface $rideEstimateHandler */
     protected $rideEstimateHandler;
 
     /** @var TrackDistanceCalculatorInterface $trackDistanceCalculator */
@@ -41,7 +41,7 @@ class TrackEventSubscriber implements EventSubscriberInterface
 
     public function __construct(
         Registry $registry,
-        RideEstimateHandler $rideEstimateHandler,
+        RideEstimateHandlerInterface $rideEstimateHandler,
         TrackReader $trackReader,
         PolylineGeneratorInterface $trackPolyline,
         RangeLatLngListGenerator $rangeLatLngListGenerator,
@@ -71,6 +71,31 @@ class TrackEventSubscriber implements EventSubscriberInterface
             TrackUpdatedEvent::NAME => 'onTrackUpdated',
             TrackUploadedEvent::NAME => 'onTrackUploaded',
         ];
+    }
+
+    public function onTrackHidden(TrackHiddenEvent $trackHiddenEvent): void
+    {
+        $track = $trackHiddenEvent->getTrack();
+        $ride = $track->getRide();
+
+        $this->rideEstimateHandler->setRide($ride)->flushEstimates()->calculateEstimates();
+    }
+
+
+    public function onTrackShown(TrackShownEvent $trackShownEvent): void
+    {
+        $track = $trackShownEvent->getTrack();
+        $ride = $track->getRide();
+
+        $this->rideEstimateHandler->setRide($ride)->flushEstimates()->calculateEstimates();
+    }
+
+    public function onTrackDeleted(TrackDeletedEvent $trackDeletedEvent): void
+    {
+        $track = $trackDeletedEvent->getTrack();
+        $ride = $track->getRide();
+
+        $this->rideEstimateHandler->setRide($ride)->flushEstimates()->calculateEstimates();
     }
 
     public function onTrackTime(TrackTimeEvent $trackTimeEvent): void
