@@ -1,51 +1,27 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Statistic\RideEstimate;
+namespace AppBundle\Criticalmass\Statistic\RideEstimateHandler;
 
-use AppBundle\Entity\Ride;
 use AppBundle\Entity\RideEstimate;
 use AppBundle\Entity\Track;
-use AppBundle\Repository\RideEstimateRepository;
-use Doctrine\Bundle\DoctrineBundle\Registry;
-use Doctrine\Common\Persistence\ObjectManager;
 
-class RideEstimateHandler
+class RideEstimateHandler extends AbstractRideEstimateHandler
 {
-    /** @var Registry $registry */
-    protected $registry;
-
-    /** @var RideEstimateCalculator $calculator */
-    protected $calculator;
-
-    /** @var Ride $ride */
-    protected $ride;
-
-    public function __construct(Registry $registry, RideEstimateCalculator $calculator)
-    {
-        $this->registry = $registry;
-        $this->calculator = $calculator;
-    }
-
-    public function setRide(Ride $ride): RideEstimateHandler
-    {
-        $this->ride = $ride;
-
-        return $this;
-    }
-
-    public function flushEstimates(): RideEstimateHandler
+    public function flushEstimates(bool $flush = true): RideEstimateHandlerInterface
     {
         $this->ride
             ->setEstimatedDistance(0.0)
             ->setEstimatedDuration(0.0)
             ->setEstimatedParticipants(0);
 
-        $this->getEntityManager()->flush();
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
 
         return $this;
     }
 
-    public function calculateEstimates(): RideEstimateHandler
+    public function calculateEstimates(bool $flush = true): RideEstimateHandlerInterface
     {
         $estimates = $this->getRideEstimateRepository()->findByRide($this->ride);
 
@@ -54,12 +30,14 @@ class RideEstimateHandler
             ->setEstimates($estimates)
             ->calculate();
 
-        $this->getEntityManager()->flush();
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
 
         return $this;
     }
 
-    public function addEstimateFromTrack(Track $track): RideEstimateHandler
+    public function addEstimateFromTrack(Track $track, bool $flush = true): RideEstimateHandlerInterface
     {
         if ($track->getRideEstimate()) {
             $re = $track->getRideEstimate();
@@ -75,7 +53,10 @@ class RideEstimateHandler
             $track->setRideEstimate($re);
 
             $this->getEntityManager()->persist($re);
-            $this->getEntityManager()->flush();
+
+            if ($flush) {
+                $this->getEntityManager()->flush();
+            }
         }
 
         return $this;
@@ -97,15 +78,5 @@ class RideEstimateHandler
         }
 
         return 0;
-    }
-
-    protected function getRideEstimateRepository(): RideEstimateRepository
-    {
-        return $this->registry->getRepository(RideEstimate::class);
-    }
-
-    protected function getEntityManager(): ObjectManager
-    {
-        return $this->registry->getManager();
     }
 }

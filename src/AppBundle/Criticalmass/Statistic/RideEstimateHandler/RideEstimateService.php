@@ -1,27 +1,30 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Statistic\RideEstimate;
+namespace AppBundle\Criticalmass\Statistic\RideEstimateHandler;
 
+use AppBundle\Criticalmass\Statistic\RideEstimateCalculator\RideEstimateCalculatorInterface;
 use AppBundle\Entity\Ride;
 use AppBundle\Entity\RideEstimate;
 use AppBundle\Entity\Track;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 
+/** @deprecated  */
 class RideEstimateService
 {
     /** @var Doctrine $doctrine */
     protected $doctrine;
 
-    /** @var RideEstimateCalculator $calculator */
+    /** @var RideEstimateCalculatorInterface $calculator */
     protected $calculator;
 
-    public function __construct(Doctrine $doctrine, RideEstimateCalculator $calculator)
+    public function __construct(Doctrine $doctrine, RideEstimateCalculatorInterface $calculator)
     {
         $this->doctrine = $doctrine;
 
         $this->calculator = $calculator;
     }
 
+    /** @deprecated  */
     public function flushEstimates(Ride $ride, bool $flush = true): RideEstimateService
     {
         $ride
@@ -36,6 +39,7 @@ class RideEstimateService
         return $this;
     }
 
+    /** @deprecated  */
     public function calculateEstimates(Ride $ride, bool $flush = true): RideEstimateService
     {
         $estimates = $this->doctrine->getRepository(RideEstimate::class)->findByRide($ride);
@@ -52,6 +56,7 @@ class RideEstimateService
         return $this;
     }
 
+    /** @deprecated  */
     public function addEstimateFromTrack(Track $track, bool $flush = true): RideEstimateService
     {
         $re = new RideEstimate();
@@ -73,6 +78,7 @@ class RideEstimateService
         return $this;
     }
 
+    /** @deprecated  */
     protected function calculateDurationInSeconds(Track $track): int
     {
         if ($track->getStartDateTime() && $track->getEndDateTime()) {
@@ -82,6 +88,7 @@ class RideEstimateService
         return 0;
     }
 
+    /** @deprecated  */
     protected function calculateDurationInHours(Track $track): float
     {
         if ($durationInSeconds = $this->calculateDurationInSeconds($track)) {

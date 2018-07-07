@@ -57,6 +57,7 @@ class Track implements RouteableInterface
 
     /**
      * @ORM\OneToOne(targetEntity="RideEstimate", mappedBy="track", cascade={"all"}, orphanRemoval=true)
+     * @ORM\JoinColumn(name="estimate_id", referencedColumnName="id")
      */
     protected $rideEstimate;
 

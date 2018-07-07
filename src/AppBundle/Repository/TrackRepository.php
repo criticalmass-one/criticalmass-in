@@ -193,19 +193,27 @@ class TrackRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findByUserQuery(User $user, bool $enabled = true, bool $deleted = false, string $order = 'DESC'): Query
+    public function findByUserQuery(User $user, bool $enabled = null, bool $deleted = null, string $order = 'DESC'): Query
     {
         $builder = $this->createQueryBuilder('t');
 
         $builder
             ->join('t.ride', 'r')
             ->where($builder->expr()->eq('t.user', ':user'))
-            ->andWhere($builder->expr()->eq('t.enabled', ':enabled'))
-            ->andWhere($builder->expr()->eq('t.deleted', ':deleted'))
-            ->orderBy('r.dateTime', $order)
             ->setParameter('user', $user)
-            ->setParameter('enabled', $enabled)
-            ->setParameter('deleted', $deleted);
+            ->orderBy('r.dateTime', $order);
+
+        if ($enabled !== null) {
+            $builder
+                ->andWhere($builder->expr()->eq('t.enabled', ':enabled'))
+                ->setParameter('enabled', $enabled);
+        }
+
+        if ($deleted !== null) {
+            $builder
+                ->andWhere($builder->expr()->eq('t.deleted', ':deleted'))
+                ->setParameter('deleted', $deleted);
+        }
 
         return $builder->getQuery();
     }

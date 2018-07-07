@@ -1,16 +1,23 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace AppBundle\Command;
+namespace AppBundle\Command\Track;
 
 use AppBundle\Entity\Track;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class TracksTransformCommand extends ContainerAwareCommand
+class TracksTransformCommand extends Command
 {
+    /** @var RegistryInterface $registry */
+    protected $registry;
+
+    public function __construct(?string $name = null, RegistryInterface $registry)
+    {
+        parent::__construct($name);
+    }
+
     protected function configure()
     {
         $this
@@ -20,13 +27,11 @@ class TracksTransformCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $tracks = $this->getContainer()->get('doctrine')->getRepository('AppBundle:Track')->findAll();
+        $tracks = $this->registry->getRepository(Track::class)->findAll();
 
-        $em = $this->getContainer()->get('doctrine')->getManager();
+        $em = $this->registry->getManager();
 
-        /**
-         * @var Track $track
-         */
+        /** @var Track $track */
         foreach ($tracks as $track) {
             $output->writeln('Track #' . $track->getId());
 
@@ -40,7 +45,6 @@ class TracksTransformCommand extends ContainerAwareCommand
                 $output->writeln($polyline);
 
                 $em->persist($track);
-
             }
         }
 
