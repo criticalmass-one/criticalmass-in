@@ -6,8 +6,6 @@ use AppBundle\Controller\AbstractController;
 use AppBundle\Entity\BikerightVoucher;
 use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -16,7 +14,7 @@ class BikerightController extends AbstractController
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function viewAction(UserInterface $user): Response
+    public function viewAction(UserInterface $user = null): Response
     {
         $bikerightVoucher = $this->getVoucher($user);
 
@@ -28,7 +26,7 @@ class BikerightController extends AbstractController
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function generateAction(Request $request, UserInterface $user): Response
+    public function generateAction(UserInterface $user = null): Response
     {
         $bikerightVoucher = $this->getVoucher($user);
 

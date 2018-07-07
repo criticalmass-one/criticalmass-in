@@ -20,7 +20,7 @@ class TrackManagementController extends AbstractController
     /**
      * @Security("is_granted('ROLE_USER')")
      */
-    public function listAction(Request $request, UserInterface $user, PaginatorInterface $paginator)
+    public function listAction(Request $request, UserInterface $user = null, PaginatorInterface $paginator)
     {
         $query = $this->getTrackRepository()->findByUserQuery($user, null, false);
 
@@ -39,7 +39,7 @@ class TrackManagementController extends AbstractController
      * @Security("is_granted('edit', track)")
      * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
      */
-    public function downloadAction(Request $request, UserInterface $user, Track $track): Response
+    public function downloadAction(Track $track): Response
     {
         $trackContent = file_get_contents($this->getTrackFilename($track));
 
@@ -60,7 +60,7 @@ class TrackManagementController extends AbstractController
      * @Security("is_granted('edit', track)")
      * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
      */
-    public function toggleAction(Request $request, UserInterface $user, EventDispatcherInterface $eventDispatcher, Track $track): Response
+    public function toggleAction(EventDispatcherInterface $eventDispatcher, Track $track): Response
     {
         $track->setEnabled(!$track->getEnabled());
 
@@ -79,7 +79,7 @@ class TrackManagementController extends AbstractController
      * @Security("is_granted('edit', track)")
      * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
      */
-    public function deleteAction(Request $request, UserInterface $user, Track $track, EventDispatcherInterface $eventDispatcher): Response
+    public function deleteAction(Track $track, EventDispatcherInterface $eventDispatcher): Response
     {
         $track->setDeleted(true);
 

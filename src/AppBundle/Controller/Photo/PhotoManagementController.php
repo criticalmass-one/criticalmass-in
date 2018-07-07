@@ -25,7 +25,7 @@ class PhotoManagementController extends AbstractController
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function listAction(UserInterface $user): Response
+    public function listAction(UserInterface $user = null): Response
     {
         $this->errorIfFeatureDisabled('photos');
 
@@ -230,7 +230,7 @@ class PhotoManagementController extends AbstractController
      * @Security("is_granted('edit', photo)")
      * @ParamConverter("photo", class="AppBundle:Photo", options={"id": "photoId"})
      */
-    public function censorAction(Request $request, UserInterface $user, Photo $photo): Response
+    public function censorAction(Request $request, UserInterface $user = null, Photo $photo): Response
     {
         $this->errorIfFeatureDisabled('photos');
 
@@ -241,14 +241,14 @@ class PhotoManagementController extends AbstractController
         }
     }
 
-    public function censorGetAction(Request $request, UserInterface $user, Photo $photo): Response
+    public function censorGetAction(Request $request, UserInterface $user = null, Photo $photo): Response
     {
         return $this->render('AppBundle:PhotoManagement:censor.html.twig', [
             'photo' => $photo,
         ]);
     }
 
-    public function censorPostAction(Request $request, UserInterface $user, Photo $photo): Response
+    public function censorPostAction(Request $request, UserInterface $user = null, Photo $photo): Response
     {
         $areaDataList = json_decode($request->getContent());
 
