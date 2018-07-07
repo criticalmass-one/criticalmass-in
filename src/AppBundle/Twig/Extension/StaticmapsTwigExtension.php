@@ -3,9 +3,11 @@
 namespace AppBundle\Twig\Extension;
 
 use AppBundle\Entity\City;
+use AppBundle\Entity\Photo;
 use AppBundle\Entity\Ride;
 use AppBundle\Entity\Track;
 use AppBundle\EntityInterface\StaticMapableInterface;
+use Tests\Component\Image\PhotoGps\PhotoGpsTest;
 
 class StaticmapsTwigExtension extends \Twig_Extension
 {
@@ -80,6 +82,32 @@ class StaticmapsTwigExtension extends \Twig_Extension
         ];
 
         return $this->generateMapUrl($parameters, $width, $height, $zoom);
+    }
+
+    public function staticmapsPhoto(Photo $photo, int $width = null, int $height = null, int $zoom = null): string
+    {
+        $parameters = [
+            'center' => sprintf('%f,%f', $photo->getLatitude(), $photo->getLongitude()),
+            'markers' => sprintf('%f,%f,%s,%s,%s', $photo->getLatitude(), $photo->getLongitude(), 'square', 'yellow', 'camera'),
+        ];
+
+        if ($track = $this->findTrackForPhoto($photo)) {
+            $parameters['polylines'] = sprintf('%s,%d,%d,%d', base64_encode($track->getReducedPolyline()), $track->getColorRed(), $track->getColorGreen(), $track->getColorBlue());
+        }
+
+        return $this->generateMapUrl($parameters, $width, $height, $zoom);
+    }
+
+    protected function findTrackForPhoto(Photo $photo): ?Track
+    {
+        /** @var Track $track */
+        foreach ($photo->getRide()->getTracks() as $track) {
+            if ($track->getUser() === $photo->getUser()) {
+                return $track;
+            }
+        }
+
+        return null;
     }
 
     public function staticmapsCity(City $city, int $width = null, int $height = null, int $zoom = null): string
