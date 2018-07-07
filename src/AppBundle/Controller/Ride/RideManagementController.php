@@ -198,43 +198,6 @@ class RideManagementController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("ride", class="AppBundle:Ride")
      */
-    public function facebookUpdateAction(Ride $ride): Response
-    {
-        /**
-         * @var FacebookEventRideApi $fera
-         */
-        $fera = $this->get('caldera.criticalmass.facebookapi.eventride');
-
-        $facebookRide = $fera->createRideForRide($ride);
-
-        $form = $this->createForm(
-            RideType::class,
-            $ride,
-            array(
-                'action' => $this->generateUrl('caldera_criticalmass_ride_edit',
-                    array(
-                        'citySlug' => $ride->getCity()->getSlug(),
-                        'rideDate' => $ride->getFormattedDate()
-                    )
-                )
-            )
-        );
-
-        return $this->render(
-            'AppBundle:RideManagement:facebook_update.html.twig',
-            [
-                'city' => $ride->getCity(),
-                'ride' => $ride,
-                'facebookRide' => $facebookRide,
-                'form' => $form->createView()
-            ]
-        );
-    }
-
-    /**
-     * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("ride", class="AppBundle:Ride")
-     */
     public function socialPreviewAction(
         EntityManagerInterface $entityManager,
         Request $request,
