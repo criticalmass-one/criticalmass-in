@@ -64,8 +64,8 @@ class CalculateRideEstimatesCommand extends Command
 
             $this->rideEstimateHandler
                 ->setRide($ride)
-                ->flushEstimates()
-                ->calculateEstimates();
+                ->flushEstimates(false)
+                ->calculateEstimates(false);
         }
 
         $this->registry->getManager()->flush();

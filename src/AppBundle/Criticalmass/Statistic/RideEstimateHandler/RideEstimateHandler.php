@@ -7,19 +7,21 @@ use AppBundle\Entity\Track;
 
 class RideEstimateHandler extends AbstractRideEstimateHandler
 {
-    public function flushEstimates(): RideEstimateHandlerInterface
+    public function flushEstimates(bool $flush = true): RideEstimateHandlerInterface
     {
         $this->ride
             ->setEstimatedDistance(0.0)
             ->setEstimatedDuration(0.0)
             ->setEstimatedParticipants(0);
 
-        $this->getEntityManager()->flush();
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
 
         return $this;
     }
 
-    public function calculateEstimates(): RideEstimateHandlerInterface
+    public function calculateEstimates(bool $flush = true): RideEstimateHandlerInterface
     {
         $estimates = $this->getRideEstimateRepository()->findByRide($this->ride);
 
@@ -28,12 +30,14 @@ class RideEstimateHandler extends AbstractRideEstimateHandler
             ->setEstimates($estimates)
             ->calculate();
 
-        $this->getEntityManager()->flush();
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
 
         return $this;
     }
 
-    public function addEstimateFromTrack(Track $track): RideEstimateHandlerInterface
+    public function addEstimateFromTrack(Track $track, bool $flush = true): RideEstimateHandlerInterface
     {
         if ($track->getRideEstimate()) {
             $re = $track->getRideEstimate();
@@ -49,7 +53,10 @@ class RideEstimateHandler extends AbstractRideEstimateHandler
             $track->setRideEstimate($re);
 
             $this->getEntityManager()->persist($re);
-            $this->getEntityManager()->flush();
+
+            if ($flush) {
+                $this->getEntityManager()->flush();
+            }
         }
 
         return $this;
