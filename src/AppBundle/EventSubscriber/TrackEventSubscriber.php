@@ -120,6 +120,8 @@ class TrackEventSubscriber implements EventSubscriberInterface
         $this->addRideEstimate($track, $track->getRide());
         $this->updateLatLngList($track);
         $this->updatePolyline($track);
+
+        $this->registry->getManager()->flush();
     }
 
     public function onTrackTrimmed(TrackTrimmedEvent $trackTrimmedEvent): void
