@@ -146,6 +146,14 @@ class Track implements RouteableInterface
     protected $polyline;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     * @JMS\Groups({"timelapse"})
+     * @JMS\Expose
+     * @JMS\SerializedName("reducedPolylineString")
+     */
+    protected $reducedPolyline;
+
+    /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
      * @Vich\UploadableField(mapping="track_file", fileNameProperty="trackFilename")
@@ -363,6 +371,18 @@ class Track implements RouteableInterface
     public function getPolyline(): ?string
     {
         return $this->polyline;
+    }
+
+    public function setReducedPolyline(string $reducedPolyline): Track
+    {
+        $this->reducedPolyline = $reducedPolyline;
+
+        return $this;
+    }
+
+    public function getReducedPolyline(): ?string
+    {
+        return $this->reducedPolyline;
     }
 
     /**
