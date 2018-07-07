@@ -17,7 +17,7 @@ class PhotoCommentCollector extends AbstractTimelineCollector
 
             $item
                 ->setUser($postEntity->getUser())
-                ->setRideTitle($postEntity->getPhoto()->getRide()->getFancyTitle())
+                ->setRideTitle($postEntity->getPhoto()->getRide()->getTitle())
                 ->setPhoto($postEntity->getPhoto())
                 ->setText($postEntity->getMessage())
                 ->setDateTime($postEntity->getDateTime());

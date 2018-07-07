@@ -133,7 +133,7 @@ class RideCalculator extends AbstractRideCalculator
         if (!$ride->getDateTime()) {
             return $ride;
         }
-        
+
         $title = sprintf('%s %s', $cityCycle->getCity()->getTitle(), $ride->getDateTime()->format('d.m.Y'));
 
         $ride->setTitle($title);
