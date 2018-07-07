@@ -2,10 +2,8 @@
 
 namespace AppBundle\Command\Statistic;
 
-use AppBundle\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandler;
 use AppBundle\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandlerInterface;
 use AppBundle\Entity\Ride;
-use AppBundle\Criticalmass\Statistic\RideEstimate\RideEstimateService;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
