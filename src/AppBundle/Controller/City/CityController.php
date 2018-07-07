@@ -129,13 +129,6 @@ class CityController extends AbstractController
 
         $rides = $this->getRideRepository()->findRidesForCity($city, 'DESC', 6);
 
-        $dateTime = null;
-
-        if ($city->getTimezone()) {
-            $dateTime = new \DateTime();
-            $dateTime->setTimezone(new \DateTimeZone($city->getTimezone()));
-        }
-
         $locations = $this->getLocationRepository()->findLocationsByCity($city);
 
         $photos = $this->getPhotoRepository()->findSomePhotos(8, null, $city);
@@ -149,7 +142,6 @@ class CityController extends AbstractController
         return $this->render('AppBundle:City:show.html.twig', [
             'city' => $city,
             'currentRide' => $currentRide,
-            'dateTime' => $dateTime,
             'nearCities' => $nearCities,
             'locations' => $locations,
             'photos' => $photos,
