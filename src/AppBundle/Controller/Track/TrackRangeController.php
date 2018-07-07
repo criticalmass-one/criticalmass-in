@@ -50,7 +50,8 @@ class TrackRangeController extends AbstractController
     {
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var Track $track */
             $track = $form->getData();
 
             $eventDispatcher->dispatch(TrackTrimmedEvent::NAME, new TrackTrimmedEvent($track));

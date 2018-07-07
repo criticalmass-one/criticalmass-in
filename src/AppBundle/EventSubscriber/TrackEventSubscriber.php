@@ -65,7 +65,7 @@ class TrackEventSubscriber implements EventSubscriberInterface
         return [
             TrackDeletedEvent::NAME => 'onTrackDeleted',
             TrackHiddenEvent::NAME => 'onTrackHidden',
-            TrackShownEvent::NAME => 'onTrackShowned',
+            TrackShownEvent::NAME => 'onTrackShown',
             TrackTimeEvent::NAME => 'onTrackTime',
             TrackTrimmedEvent::NAME => 'onTrackTrimmed',
             TrackUpdatedEvent::NAME => 'onTrackUpdated',
@@ -76,26 +76,31 @@ class TrackEventSubscriber implements EventSubscriberInterface
     public function onTrackHidden(TrackHiddenEvent $trackHiddenEvent): void
     {
         $track = $trackHiddenEvent->getTrack();
-        $ride = $track->getRide();
+        $this->removeEstimateFromTrack($track);
 
-        $this->rideEstimateHandler->setRide($ride)->flushEstimates()->calculateEstimates();
+        $this->rideEstimateHandler
+            ->setRide($track->getRide())
+            ->flushEstimates()
+            ->calculateEstimates();
     }
-
 
     public function onTrackShown(TrackShownEvent $trackShownEvent): void
     {
         $track = $trackShownEvent->getTrack();
         $ride = $track->getRide();
 
-        $this->rideEstimateHandler->setRide($ride)->flushEstimates()->calculateEstimates();
+        $this->addRideEstimate($track, $ride);
     }
 
     public function onTrackDeleted(TrackDeletedEvent $trackDeletedEvent): void
     {
         $track = $trackDeletedEvent->getTrack();
-        $ride = $track->getRide();
+        $this->removeEstimateFromTrack($track);
 
-        $this->rideEstimateHandler->setRide($ride)->flushEstimates()->calculateEstimates();
+        $this->rideEstimateHandler
+            ->setRide($track->getRide())
+            ->flushEstimates()
+            ->calculateEstimates();
     }
 
     public function onTrackTime(TrackTimeEvent $trackTimeEvent): void
@@ -121,6 +126,8 @@ class TrackEventSubscriber implements EventSubscriberInterface
     {
         $track = $trackTrimmedEvent->getTrack();
 
+        $this->removeEstimateFromTrack($track);
+        
         $this->updatePolyline($track);
 
         $this->updateLatLngList($track);
@@ -199,5 +206,15 @@ class TrackEventSubscriber implements EventSubscriberInterface
             ->addEstimateFromTrack($track);
 
         $this->rideEstimateHandler->calculateEstimates();
+    }
+
+    protected function removeEstimateFromTrack(Track $track): void
+    {
+        $estimate = $track->getRideEstimate();
+
+        $track->setRideEstimate(null);
+
+        $this->registry->getManager()->remove($estimate);
+        $this->registry->getManager()->flush();
     }
 }
