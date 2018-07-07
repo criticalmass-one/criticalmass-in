@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace AppBundle\Validator;
 
@@ -9,6 +9,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class SingleRideForDayValidator extends ConstraintValidator
 {
+    /** @var EntityManager $manager */
     protected $manager;
 
     public function __construct(EntityManager $manager)
@@ -31,7 +32,7 @@ class SingleRideForDayValidator extends ConstraintValidator
 
         $city = $ride->getCity();
 
-        $rideList = $this->manager->getRepository('AppBundle:Ride')->findRidesForCity($city);
+        $rideList = $this->manager->getRepository(Ride::class)->findRidesForCity($city);
 
         $foundRidesForSameDay = 0;
 
