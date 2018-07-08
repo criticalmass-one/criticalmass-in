@@ -3,6 +3,8 @@
 namespace AppBundle\Controller\City;
 
 use AppBundle\Criticalmass\OpenStreetMap\NominatimCityBridge\NominatimCityBridge;
+use AppBundle\Event\City\CityCreatedEvent;
+use AppBundle\Event\City\CityUpdatedEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Controller\AbstractController;
@@ -11,7 +13,8 @@ use AppBundle\Entity\CitySlug;
 use AppBundle\Entity\Region;
 use AppBundle\Form\Type\StandardCityType;
 use Malenki\Slug;
-use Symfony\Component\Form\Form;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -25,6 +28,7 @@ class CityManagementController extends AbstractController
         Request $request,
         UserInterface $user = null,
         NominatimCityBridge $nominatimCityBridge,
+        EventDispatcherInterface $eventDispatcher,
         string $slug1 = null,
         string $slug2 = null,
         string $slug3 = null,
@@ -42,18 +46,25 @@ class CityManagementController extends AbstractController
         $city->setUser($this->getUser());
 
         $form = $this->createForm(StandardCityType::class, $city, [
-            'action' => $this->generateUrl('caldera_criticalmass_city_add', $this->getRegionSlugParameterArray($region)),
+            'action' => $this->generateUrl('caldera_criticalmass_city_add',
+                $this->getRegionSlugParameterArray($region)),
         ]);
 
         if (Request::METHOD_POST == $request->getMethod()) {
-            return $this->addPostAction($request, $user, $city, $region, $form);
+            return $this->addPostAction($request, $user, $eventDispatcher, $city, $region, $form);
         } else {
-            return $this->addGetAction($request, $user, $city, $region, $form);
+            return $this->addGetAction($request, $user, $eventDispatcher, $city, $region, $form);
         }
     }
 
-    protected function addGetAction(Request $request, UserInterface $user = null, City $city, Region $region, Form $form)
-    {
+    protected function addGetAction(
+        Request $request,
+        UserInterface $user = null,
+        EventDispatcherInterface $eventDispatcher,
+        City $city,
+        Region $region,
+        FormInterface $form
+    ) {
         return $this->render('AppBundle:CityManagement:edit.html.twig', [
             'city' => null,
             'form' => $form->createView(),
@@ -64,13 +75,21 @@ class CityManagementController extends AbstractController
         ]);
     }
 
-    protected function addPostAction(Request $request, UserInterface $user = null, City $city, Region $region, Form $form): Response
-    {
+    protected function addPostAction(
+        Request $request,
+        UserInterface $user = null,
+        EventDispatcherInterface $eventDispatcher,
+        City $city,
+        Region $region,
+        FormInterface $form
+    ): Response {
         $form->handleRequest($request);
 
         $hasErrors = null;
 
         if ($form->isValid()) {
+            $eventDispatcher->dispatch(CityCreatedEvent::NAME, new CityCreatedEvent($city));
+
             $em = $this->getDoctrine()->getManager();
 
             $citySlug = $this->createCitySlug($city);
@@ -115,8 +134,12 @@ class CityManagementController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("city", class="AppBundle:City")
      */
-    public function editAction(Request $request, UserInterface $user = null, City $city): Response
-    {
+    public function editAction(
+        Request $request,
+        UserInterface $user = null,
+        EventDispatcherInterface $eventDispatcher,
+        City $city
+    ): Response {
         $form = $this->createForm(StandardCityType::class, $city, [
             'action' => $this->generateUrl('caldera_criticalmass_city_edit', [
                 'citySlug' => $city->getMainSlugString()
@@ -124,14 +147,19 @@ class CityManagementController extends AbstractController
         ]);
 
         if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->editPostAction($request, $user, $city, $form);
+            return $this->editPostAction($request, $user, $eventDispatcher, $city, $form);
         } else {
-            return $this->editGetAction($request, $user, $city, $form);
+            return $this->editGetAction($request, $user, $eventDispatcher, $city, $form);
         }
     }
 
-    protected function editGetAction(Request $request, UserInterface $user = null, City $city, Form $form): Response
-    {
+    protected function editGetAction(
+        Request $request,
+        UserInterface $user = null,
+        EventDispatcherInterface $eventDispatcher,
+        City $city,
+        FormInterface $form
+    ): Response {
         return $this->render('AppBundle:CityManagement:edit.html.twig', [
             'city' => $city,
             'form' => $form->createView(),
@@ -142,8 +170,13 @@ class CityManagementController extends AbstractController
         ]);
     }
 
-    protected function editPostAction(Request $request, UserInterface $user = null, City $city, Form $form): Response
-    {
+    protected function editPostAction(
+        Request $request,
+        UserInterface $user = null,
+        EventDispatcherInterface $eventDispatcher,
+        City $city,
+        FormInterface $form
+    ): Response {
         $form->handleRequest($request);
 
         $hasErrors = null;
@@ -156,6 +189,8 @@ class CityManagementController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
             $hasErrors = false;
+
+            $eventDispatcher->dispatch(CityUpdatedEvent::NAME, new CityUpdatedEvent($city));
         } elseif ($form->isSubmitted()) {
             $hasErrors = true;
         }
@@ -182,8 +217,11 @@ class CityManagementController extends AbstractController
         return $citySlug;
     }
 
-    protected function getRegion(NominatimCityBridge $nominatimCityBridge, string $regionSlug = null, string $citySlug = null): ?Region
-    {
+    protected function getRegion(
+        NominatimCityBridge $nominatimCityBridge,
+        string $regionSlug = null,
+        string $citySlug = null
+    ): ?Region {
         if ($regionSlug) {
             return $this->getRegionRepository()->findOneBySlug($regionSlug);
         }

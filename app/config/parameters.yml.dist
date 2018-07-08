@@ -59,3 +59,5 @@ parameters:
     upload_destination.photo: %kernel.root_dir%/../web/photos
 
     feature.photos: true
+
+    timezone_db.api_key: 1234567890
