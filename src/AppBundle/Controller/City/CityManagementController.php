@@ -68,7 +68,6 @@ class CityManagementController extends AbstractController
         return $this->render('AppBundle:CityManagement:edit.html.twig', [
             'city' => null,
             'form' => $form->createView(),
-            'hasErrors' => null,
             'country' => $region->getParent()->getName(),
             'state' => $region->getName(),
             'region' => $region,
@@ -85,9 +84,7 @@ class CityManagementController extends AbstractController
     ): Response {
         $form->handleRequest($request);
 
-        $hasErrors = null;
-
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $eventDispatcher->dispatch(CityCreatedEvent::NAME, new CityCreatedEvent($city));
 
             $em = $this->getDoctrine()->getManager();
@@ -100,30 +97,26 @@ class CityManagementController extends AbstractController
 
             $em->flush();
 
-            $hasErrors = false;
-
             $form = $this->createForm(StandardCityType::class, $city, [
                 'action' => $this->generateUrl('caldera_criticalmass_city_edit', [
                     'citySlug' => $citySlug->getSlug(),
                 ])
             ]);
 
+            $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
+
             return $this->render('AppBundle:CityManagement:edit.html.twig', [
                 'city' => $city,
                 'form' => $form->createView(),
-                'hasErrors' => $hasErrors,
                 'country' => $region->getParent()->getName(),
                 'state' => $region->getName(),
                 'region' => $region,
             ]);
-        } elseif ($form->isSubmitted()) {
-            $hasErrors = true;
         }
 
         return $this->render('AppBundle:CityManagement:edit.html.twig', [
             'city' => null,
             'form' => $form->createView(),
-            'hasErrors' => $hasErrors,
             'country' => $region->getParent()->getName(),
             'state' => $region->getName(),
             'region' => $region,
@@ -163,7 +156,6 @@ class CityManagementController extends AbstractController
         return $this->render('AppBundle:CityManagement:edit.html.twig', [
             'city' => $city,
             'form' => $form->createView(),
-            'hasErrors' => null,
             'country' => $city->getRegion()->getParent()->getName(),
             'state' => $city->getRegion()->getName(),
             'region' => $city->getRegion(),
@@ -179,26 +171,21 @@ class CityManagementController extends AbstractController
     ): Response {
         $form->handleRequest($request);
 
-        $hasErrors = null;
-
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $city
                 ->setUpdatedAt(new \DateTime())
                 ->setUser($user);
 
             $this->getDoctrine()->getManager()->flush();
 
-            $hasErrors = false;
-
             $eventDispatcher->dispatch(CityUpdatedEvent::NAME, new CityUpdatedEvent($city));
-        } elseif ($form->isSubmitted()) {
-            $hasErrors = true;
+
+            $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
         }
 
         return $this->render('AppBundle:CityManagement:edit.html.twig', [
             'city' => $city,
             'form' => $form->createView(),
-            'hasErrors' => $hasErrors,
             'country' => $city->getRegion()->getParent()->getName(),
             'state' => $city->getRegion()->getName(),
             'region' => $city->getRegion(),

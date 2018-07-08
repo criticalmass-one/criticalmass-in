@@ -8,9 +8,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Controller\AbstractController;
 use AppBundle\Entity\Subride;
 use AppBundle\Form\Type\SubrideType;
-use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class SubrideController extends AbstractController
 {
@@ -18,13 +19,13 @@ class SubrideController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("ride", class="AppBundle:Ride")
      */
-    public function addAction(Request $request, Ride $ride): Response
+    public function addAction(Request $request, Ride $ride, UserInterface $user): Response
     {
         $subride = new Subride();
         $subride
             ->setDateTime($ride->getDateTime())
             ->setRide($ride)
-            ->setUser($this->getUser());
+            ->setUser($user);
 
         $form = $this->createForm(SubrideType::class, $subride, [
             'action' => $this->generateUrl('caldera_criticalmass_subride_add', [
@@ -40,10 +41,9 @@ class SubrideController extends AbstractController
         }
     }
 
-    protected function addGetAction(Request $request, Subride $subride, Form $form): Response
+    protected function addGetAction(Request $request, Subride $subride, FormInterface $form): Response
     {
         return $this->render('AppBundle:Subride:edit.html.twig', [
-            'hasErrors' => null,
             'subride' => null,
             'form' => $form->createView(),
             'city' => $subride->getRide()->getCity(),
@@ -51,23 +51,19 @@ class SubrideController extends AbstractController
         ]);
     }
 
-    protected function addPostAction(Request $request, Subride $subride, Form $form): Response
+    protected function addPostAction(Request $request, Subride $subride, FormInterface $form): Response
     {
         $form->handleRequest($request);
 
-        $hasErrors = true;
         $actionUrl = $this->generateUrl('caldera_criticalmass_subride_add', [
             'citySlug' => $subride->getRide()->getCity()->getMainSlugString(),
             'rideDate' => $subride->getRide()->getFormattedDate(),
         ]);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($form->getData());
             $em->flush();
-
-            // TODO: remove also this
-            $hasErrors = false;
 
             $actionUrl = $this->generateUrl('caldera_criticalmass_subride_edit', [
                 'citySlug' => $subride->getRide()->getCity()->getMainSlugString(),
@@ -84,7 +80,6 @@ class SubrideController extends AbstractController
 
         // QND: this is a try to serve an instance of the new created subride to get the marker to the right place
         return $this->render('AppBundle:Subride:edit.html.twig', [
-            'hasErrors' => $hasErrors,
             'subride' => $subride,
             'form' => $form->createView(),
             'city' => $subride->getRide()->getCity(),
@@ -106,17 +101,16 @@ class SubrideController extends AbstractController
             ])
         ]);
 
-        if ('POST' == $request->getMethod()) {
+        if (Request::METHOD_POST === $request->getMethod()) {
             return $this->editPostAction($request, $subride, $form);
         } else {
             return $this->editGetAction($request, $subride, $form);
         }
     }
 
-    protected function editGetAction(Request $request, Subride $subride, Form $form): Response
+    protected function editGetAction(Request $request, Subride $subride, FormInterface $form): Response
     {
         return $this->render('AppBundle:Subride:edit.html.twig', [
-            'hasErrors' => null,
             'subride' => null,
             'form' => $form->createView(),
             'city' => $subride->getRide()->getCity(),
@@ -124,22 +118,15 @@ class SubrideController extends AbstractController
         ]);
     }
 
-    protected function editPostAction(Request $request, Subride $subride, Form $form): Response
+    protected function editPostAction(Request $request, Subride $subride, FormInterface $form): Response
     {
         $form->handleRequest($request);
 
-        // TODO: remove this shit and test the validation in the template
-        $hasErrors = null;
-
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->flush();
 
-            // TODO: remove also this
-            $hasErrors = false;
-        } elseif ($form->isSubmitted()) {
-            // TODO: remove even more shit
-            $hasErrors = true;
+            $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
         }
 
         return $this->render('AppBundle:Subride:edit.html.twig', [
@@ -147,7 +134,6 @@ class SubrideController extends AbstractController
             'city' => $subride->getRide()->getCity(),
             'subride' => $subride,
             'form' => $form->createView(),
-            'hasErrors' => $hasErrors,
             'dateTime' => new \DateTime(),
         ]);
     }

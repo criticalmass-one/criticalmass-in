@@ -9,7 +9,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Controller\AbstractController;
-use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -52,7 +52,7 @@ class CityCycleController extends AbstractController
         }
     }
 
-    protected function addGetAction(Request $request, CityCycle $cityCycle, Form $form): Response
+    protected function addGetAction(Request $request, CityCycle $cityCycle, FormInterface $form): Response
     {
         return $this->render('AppBundle:CityCycle:edit.html.twig', [
             'city' => $cityCycle->getCity(),
@@ -61,7 +61,7 @@ class CityCycleController extends AbstractController
         ]);
     }
 
-    protected function addPostAction(Request $request, CityCycle $cityCycle, Form $form): Response
+    protected function addPostAction(Request $request, CityCycle $cityCycle, FormInterface $form): Response
     {
         $city = $cityCycle->getCity();
 
@@ -71,6 +71,8 @@ class CityCycleController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($cityCycle);
             $em->flush();
+
+            $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
 
             return $this->redirectToRoute('caldera_criticalmass_citycycle_list', [
                 'citySlug' => $city->getMainSlugString(),
@@ -100,13 +102,13 @@ class CityCycleController extends AbstractController
         ]);
 
         if (Request::METHOD_POST == $request->getMethod()) {
-            return $this->addPostAction($request, $user, $cityCycle, $form);
+            return $this->editPostAction($request, $user, $cityCycle, $form);
         } else {
-            return $this->addGetAction($request, $user, $cityCycle, $form);
+            return $this->editGetAction($request, $user, $cityCycle, $form);
         }
     }
 
-    protected function editGetAction(Request $request, UserInterface $user = null, CityCycle $cityCycle, Form $form): Response
+    protected function editGetAction(Request $request, UserInterface $user = null, CityCycle $cityCycle, FormInterface $form): Response
     {
         return $this->render('AppBundle:CityCycle:edit.html.twig', [
             'city' => $cityCycle->getCity(),
@@ -115,13 +117,13 @@ class CityCycleController extends AbstractController
         ]);
     }
 
-    protected function editPostAction(Request $request, UserInterface $user = null, CityCycle $cityCycle, Form $form): Response
+    protected function editPostAction(Request $request, UserInterface $user = null, CityCycle $cityCycle, FormInterface $form): Response
     {
         $city = $cityCycle->getCity();
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($cityCycle);
             $em->flush();
@@ -133,13 +135,7 @@ class CityCycleController extends AbstractController
                 ])
             ]);
 
-            return $this->render('AppBundle:CityCycle:edit.html.twig', [
-                'city' => $city,
-                'cityCycle' => $cityCycle,
-                'form' => $form->createView(),
-            ]);
-        } elseif ($form->isSubmitted()) {
-            $hasErrors = true;
+            $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
         }
 
         return $this->render('AppBundle:CityCycle:edit.html.twig', [
