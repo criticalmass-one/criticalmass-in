@@ -5,6 +5,7 @@ namespace AppBundle\EventSubscriber;
 use AppBundle\Criticalmass\Timezone\CityTimezoneDetector\CityTimezoneDetectorInterface;
 use AppBundle\Event\City\CityCreatedEvent;
 use AppBundle\Event\City\CityUpdatedEvent;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class CityEventSubscriber implements EventSubscriberInterface
@@ -12,9 +13,13 @@ class CityEventSubscriber implements EventSubscriberInterface
     /** @var CityTimezoneDetectorInterface $cityTimezoneDetector */
     protected $cityTimezoneDetector;
 
-    public function __construct(CityTimezoneDetectorInterface $cityTimezoneDetector)
+    /** @var RegistryInterface $registry; */
+    protected $registry;
+
+    public function __construct(CityTimezoneDetectorInterface $cityTimezoneDetector, RegistryInterface $registry)
     {
         $this->cityTimezoneDetector = $cityTimezoneDetector;
+        $this->registry = $registry;
     }
 
     public static function getSubscribedEvents(): array
@@ -28,14 +33,22 @@ class CityEventSubscriber implements EventSubscriberInterface
     public function onCityCreated(CityCreatedEvent $cityCreatedEvent): void
     {
         $city = $cityCreatedEvent->getCity();
+        
+        if ($timezone = $this->cityTimezoneDetector->queryForCity($city)) {
+            $city->setTimezone($timezone);
 
-        $this->cityTimezoneDetector->queryForCity($city);
+            $this->registry->getManager()->flush();
+        }
     }
 
     public function onCityUpdated(CityUpdatedEvent $cityUpdatedEvent): void
     {
         $city = $cityUpdatedEvent->getCity();
 
-        $this->cityTimezoneDetector->queryForCity($city);
+        if ($timezone = $this->cityTimezoneDetector->queryForCity($city)) {
+            $city->setTimezone($timezone);
+
+            $this->registry->getManager()->flush();
+        }
     }
 }
