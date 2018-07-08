@@ -49,7 +49,6 @@ class RideManagementController extends AbstractController
         $oldRides = $this->getRideRepository()->findRidesForCity($city);
 
         return $this->render('AppBundle:RideManagement:edit.html.twig', [
-            'hasErrors' => null,
             'ride' => null,
             'form' => $form->createView(),
             'city' => $city,
@@ -70,17 +69,11 @@ class RideManagementController extends AbstractController
 
         $form->handleRequest($request);
 
-        // TODO: remove this shit and test the validation in the template
-        $hasErrors = null;
-
         if ($form->isSubmitted() && $form->isValid()) {
             $ride = $form->getData();
 
             $entityManager->persist($ride);
             $entityManager->flush();
-
-            // TODO: remove also this
-            $hasErrors = false;
 
             /* As we have created our new ride, we serve the user the new "edit ride form". Normally it would be enough
             just to change the action url of the form, but we are far to stupid for this hack. */
@@ -90,13 +83,11 @@ class RideManagementController extends AbstractController
                     'rideDate' => $ride->getFormattedDate()
                 ])
             ]);
-        } elseif ($form->isSubmitted()) {
-            // TODO: remove even more shit
-            $hasErrors = true;
+
+            $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
         }
 
         return $this->render('AppBundle:RideManagement:edit.html.twig', [
-            'hasErrors' => $hasErrors,
             'ride' => $ride,
             'form' => $form->createView(),
             'city' => $city,
@@ -111,18 +102,12 @@ class RideManagementController extends AbstractController
      */
     public function editAction(Request $request, UserInterface $user = null, Ride $ride): Response
     {
-        $form = $this->createForm(
-            RideType::class,
-            $ride,
-            array(
-                'action' => $this->generateUrl('caldera_criticalmass_ride_edit',
-                    array(
-                        'citySlug' => $ride->getCity()->getMainSlugString(),
-                        'rideDate' => $ride->getDateTime()->format('Y-m-d')
-                    )
-                )
-            )
-        );
+        $form = $this->createForm(RideType::class, $ride, [
+            'action' => $this->generateUrl('caldera_criticalmass_ride_edit', [
+                'citySlug' => $ride->getCity()->getMainSlugString(),
+                'rideDate' => $ride->getDateTime()->format('Y-m-d')
+            ])
+        ]);
 
         if (Request::METHOD_POST == $request->getMethod()) {
             return $this->editPostAction($request, $user, $ride, $ride->getCity(), $form);
@@ -136,21 +121,17 @@ class RideManagementController extends AbstractController
         UserInterface $user = null,
         Ride $ride,
         City $city,
-        Form $form
+        FormInterface $form
     ): Response {
         $oldRides = $this->getRideRepository()->findRidesForCity($city);
 
-        return $this->render(
-            'AppBundle:RideManagement:edit.html.twig',
-            array(
-                'ride' => $ride,
-                'city' => $city,
-                'form' => $form->createView(),
-                'hasErrors' => null,
-                'dateTime' => new \DateTime(),
-                'oldRides' => $oldRides
-            )
-        );
+        return $this->render('AppBundle:RideManagement:edit.html.twig', [
+            'ride' => $ride,
+            'city' => $city,
+            'form' => $form->createView(),
+            'dateTime' => new \DateTime(),
+            'oldRides' => $oldRides
+        ]);
     }
 
     protected function editPostAction(
@@ -158,40 +139,29 @@ class RideManagementController extends AbstractController
         UserInterface $user = null,
         Ride $ride,
         City $city,
-        Form $form
+        FormInterface $form
     ): Response {
         $oldRides = $this->getRideRepository()->findRidesForCity($city);
 
         $form->handleRequest($request);
 
-        // TODO: remove this shit and test the validation in the template
-        $hasErrors = null;
-
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $ride
                 ->setUpdatedAt(new \DateTime())
                 ->setUser($user);
 
             $this->getDoctrine()->getManager()->flush();
 
-            // TODO: remove also this
-            $hasErrors = false;
-        } elseif ($form->isSubmitted()) {
-            // TODO: remove even more shit
-            $hasErrors = true;
+            $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
         }
 
-        return $this->render(
-            'AppBundle:RideManagement:edit.html.twig',
-            array(
-                'ride' => $ride,
-                'city' => $city,
-                'form' => $form->createView(),
-                'hasErrors' => $hasErrors,
-                'dateTime' => new \DateTime(),
-                'oldRides' => $oldRides
-            )
-        );
+        return $this->render('AppBundle:RideManagement:edit.html.twig', [
+            'ride' => $ride,
+            'city' => $city,
+            'form' => $form->createView(),
+            'dateTime' => new \DateTime(),
+            'oldRides' => $oldRides,
+        ]);
     }
 
     /**

@@ -83,8 +83,6 @@ class SocialNetworkController extends AbstractController
     ): Response {
         $form->handleRequest($request);
 
-        $hasErrors = null;
-
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var SocialNetworkProfile $socialNetworkProfile */
             $socialNetworkProfile = $form->getData();
@@ -98,6 +96,8 @@ class SocialNetworkController extends AbstractController
             $this->getDoctrine()->getManager()->persist($socialNetworkProfile);
 
             $this->getDoctrine()->getManager()->flush();
+
+            $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
         }
 
         return $this->redirectToRoute('criticalmass_socialnetwork_city_list', [
