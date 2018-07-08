@@ -19,7 +19,7 @@ services:
 
     AppBundle\:
         resource: '../../src/AppBundle/*'
-        exclude: '../../src/AppBundle/{Admin,DQL,Entity,Manager,Menu,Model,Repository,Tests,UserProvider,Validator,Criticalmass/UploadValidator/UploadValidatorException}'
+        exclude: '../../src/AppBundle/{Admin,DQL,Entity,Manager,Menu,Model,Repository,Tests,UserProvider,Criticalmass/UploadValidator/UploadValidatorException}'
 
     AppBundle\Controller\:
         resource: '../../src/AppBundle/Controller'

@@ -3,18 +3,18 @@
 namespace AppBundle\Validator;
 
 use AppBundle\Entity\Ride;
-use Doctrine\ORM\EntityManager;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 class SingleRideForDayValidator extends ConstraintValidator
 {
-    /** @var EntityManager $manager */
-    protected $manager;
+    /** @var RegistryInterface $registry */
+    protected $registry;
 
-    public function __construct(EntityManager $manager)
+    public function __construct(RegistryInterface $registry)
     {
-        $this->manager = $manager;
+        $this->registry = $registry;
     }
 
     /**
@@ -32,7 +32,7 @@ class SingleRideForDayValidator extends ConstraintValidator
 
         $city = $ride->getCity();
 
-        $rideList = $this->manager->getRepository(Ride::class)->findRidesForCity($city);
+        $rideList = $this->registry->getRepository(Ride::class)->findRidesForCity($city);
 
         $foundRidesForSameDay = 0;
 
