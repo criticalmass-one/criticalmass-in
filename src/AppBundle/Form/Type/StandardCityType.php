@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace AppBundle\Form\Type;
 
@@ -10,13 +10,12 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class StandardCityType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('city',
@@ -80,9 +79,6 @@ class StandardCityType extends AbstractType
                     'required' => false
                 ]
             )
-            ->add('timezone',
-                TimezoneType::class
-            )
             ->add('imageFile',
                 VichFileType::class, [
                     'required' => false
@@ -90,7 +86,7 @@ class StandardCityType extends AbstractType
             );
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'city';
     }
