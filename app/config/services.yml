@@ -15,6 +15,7 @@ services:
             $facebookDefaultToken: '%facebook.default_token%'
             $uploadDestinationPhoto: '%upload_destination.photo%'
             $cachedTimelineTtl: '%timeline.ttl%'
+            $timezoneDbApiKey: '%timezone_db.api_key%'
 
     AppBundle\:
         resource: '../../src/AppBundle/*'
