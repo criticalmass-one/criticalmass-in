@@ -33,7 +33,7 @@ class CityEventSubscriber implements EventSubscriberInterface
     public function onCityCreated(CityCreatedEvent $cityCreatedEvent): void
     {
         $city = $cityCreatedEvent->getCity();
-        
+
         if ($timezone = $this->cityTimezoneDetector->queryForCity($city)) {
             $city->setTimezone($timezone);
 

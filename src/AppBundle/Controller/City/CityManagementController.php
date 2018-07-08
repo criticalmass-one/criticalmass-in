@@ -88,6 +88,8 @@ class CityManagementController extends AbstractController
         $hasErrors = null;
 
         if ($form->isValid()) {
+            $eventDispatcher->dispatch(CityCreatedEvent::NAME, new CityCreatedEvent($city));
+
             $em = $this->getDoctrine()->getManager();
 
             $citySlug = $this->createCitySlug($city);
@@ -99,8 +101,6 @@ class CityManagementController extends AbstractController
             $em->flush();
 
             $hasErrors = false;
-
-            $eventDispatcher->dispatch(CityCreatedEvent::NAME, new CityCreatedEvent($city));
 
             $form = $this->createForm(StandardCityType::class, $city, [
                 'action' => $this->generateUrl('caldera_criticalmass_city_edit', [
