@@ -68,24 +68,7 @@
             </div>
         </div>
 
-        {% if hasErrors is not null %}
-            <div class="row">
-                <div class="col-md-12">
-                    {% if hasErrors == true %}
-                        <div class="alert alert-danger" role="alert">
-                            Deine Änderungen konnten nicht gespeichert werden, weil du ungültige Werte eingegeben hast
-                            :(
-                        </div>
-                    {% elseif hasErrors == false %}
-                        <div class="alert alert-success" role="alert">
-                            Deine Änderungen wurden gespeichert. <a href="{{ objectPath(ride) }}">
-                                Zurück zur Tour?
-                            </a>
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
-        {% endif %}
+        {{ include('AppBundle:Flash:_flash.html.twig') }}
 
         {{ form_start(form) }}
         <div class="row">

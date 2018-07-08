@@ -55,17 +55,7 @@
             </div>
         </div>
 
-        {% if hasErrors is not null %}
-            {% if hasErrors == true %}
-                <div class="alert alert-danger" role="alert">Deine Änderungen konnten nicht gespeichert werden, weil du
-                    ungültige Werte eingegeben hast :(
-                </div>
-            {% elseif hasErrors == false %}
-                <div class="alert alert-success" role="alert">Deine Änderungen wurden gespeichert. <a
-                            href="{{ path('caldera_criticalmass_ride_show', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getFormattedDate() } ) }}">Zurück
-                        zur Tour?</a></div>
-            {% endif %}
-        {% endif %}
+        {{ include('AppBundle:Flash:_flash.html.twig') }}
 
         {{ form_start(form) }}
         <div class="row">

@@ -22,6 +22,8 @@
 {% block content %}
     {{ form_errors(form) }}
     <div class="container">
+        {{ include('AppBundle:Flash:_flash.html.twig') }}
+
         {{ form_start(form) }}
 
         <div class="row">
