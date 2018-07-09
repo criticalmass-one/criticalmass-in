@@ -2,15 +2,15 @@
 
 namespace AppBundle\Twig\Extension;
 
-use AppBundle\Criticalmass\Router\ObjectRouter;
+use AppBundle\Criticalmass\Router\ObjectRouterInterface;
 use AppBundle\EntityInterface\RouteableInterface;
 
 class RouterTwigExtension extends \Twig_Extension
 {
-    /** @var ObjectRouter $router */
+    /** @var ObjectRouterInterface $router */
     protected $router;
 
-    public function __construct(ObjectRouter $router)
+    public function __construct(ObjectRouterInterface $router)
     {
         $this->router = $router;
     }

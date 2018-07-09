@@ -7,24 +7,10 @@ use AppBundle\Criticalmass\Router\Annotation\RouteParameter;
 use AppBundle\Entity\Region;
 use AppBundle\Entity\Thread;
 use AppBundle\EntityInterface\RouteableInterface;
-use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Routing\RouterInterface;
 
-class ObjectRouter
+class ObjectRouter extends AbstractObjectRouter
 {
-    /** @var RouterInterface $router */
-    protected $router;
-
-    /** @var AnnotationReader $annotationReader */
-    protected $annotationReader;
-
-    public function __construct(RouterInterface $router, AnnotationReader $annotationReader)
-    {
-        $this->router = $router;
-        $this->annotationReader = $annotationReader;
-    }
-
     public function generate(RouteableInterface $routeable, string $routeName = null): string
     {
         if (!$routeName) {
