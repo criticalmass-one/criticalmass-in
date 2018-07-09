@@ -73,14 +73,13 @@ class ObjectRouter
 
     protected function generateLocationUrl(Location $location, string $routeName = null): string
     {
-        $route = 'caldera_criticalmass_location_show';
+        if (!$routeName) {
+            $routeName = $this->getDefaultRouteName($location);
+        }
 
-        $parameters = [
-            'citySlug' => $location->getCity()->getSlug(),
-            'locationSlug' => $location->getSlug()
-        ];
+        $parameterList = $this->generateParameterList($location, $routeName);
 
-        return $this->router->generate($route, $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
+        return $this->router->generate($routeName, $parameterList, UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
     protected function generateBoardUrl(Board $board, string $routeName): string
