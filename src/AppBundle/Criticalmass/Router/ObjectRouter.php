@@ -82,7 +82,7 @@ class ObjectRouter
         return $this->router->generate($routeName, $parameterList, UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
-    protected function generateBoardUrl(Board $board, string $routeName): string
+    protected function generateBoardUrl(Board $board, string $routeName = null): string
     {
         if (!$routeName) {
             $routeName = $this->getDefaultRouteName($board);
@@ -93,7 +93,7 @@ class ObjectRouter
         return $this->router->generate($routeName, $parameterList, UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
-    protected function generateTrackUrl(Track $track, string $routeName): string
+    protected function generateTrackUrl(Track $track, string $routeName = null): string
     {
         $route = 'caldera_criticalmass_track_view';
 
@@ -104,8 +104,8 @@ class ObjectRouter
         return $this->router->generate($route, $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
-    protected function generateThreadUrl(Thread $thread, string $routeName
-    ): string {
+    protected function generateThreadUrl(Thread $thread, string $routeName = null): string
+    {
         /* Let’s see if this is a city thread */
         if ($thread->getCity()) {
             $route = 'caldera_criticalmass_board_viewcitythread';
@@ -126,10 +126,8 @@ class ObjectRouter
         return $this->router->generate($route, $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
-    protected function generateRegionUrl(
-        Region $region,
-        string $routeName
-    ): string {
+    protected function generateRegionUrl(Region $region, string $routeName = null): string
+    {
         if ($region->getParent() == null) {
             return $this->router->generate(
                 'caldera_criticalmass_region_world', [], UrlGeneratorInterface::ABSOLUTE_URL);
