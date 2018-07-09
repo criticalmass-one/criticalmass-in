@@ -9,8 +9,15 @@ class RouteParameter extends AbstractAnnotation
 {
     protected $name;
 
+    protected $dateFormat;
+
     public function getName(): ?string
     {
         return $this->name;
+    }
+
+    public function getDateFormat(): ?string
+    {
+        return $this->dateFormat;
     }
 }

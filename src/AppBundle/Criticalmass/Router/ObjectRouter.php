@@ -32,25 +32,22 @@ class ObjectRouter
         $this->annotationReader = $annotationReader;
     }
 
-    public function generate(RouteableInterface $object, string $routeName = null): string {
-        $classNameParts = explode('\\', get_class($object));
-        $className = array_pop($classNameParts);
+    public function generate(RouteableInterface $routeable, string $routeName = null): string
+    {
+        $methodName = sprintf('generate%sUrl', $this->getClassname($routeable));
 
-        $methodName = sprintf('generate%sUrl', $className);
-
-        return $this->$methodName($object, $routeName);
+        return $this->$methodName($routeable, $routeName);
     }
 
-    protected function generateRideUrl(Ride $ride, string $routeName): string
+    protected function generateRideUrl(Ride $ride, string $routeName = null): string
     {
-        $route = 'caldera_criticalmass_ride_show';
+        if (!$routeName) {
+            $routeName = $this->getDefaultRouteName($ride);
+        }
 
-        $parameters = [
-            'citySlug' => $ride->getCity()->getMainSlugString(),
-            'rideDate' => $ride->getFormattedDate()
-        ];
+        $parameterList = $this->generateParameterList($ride, $routeName);
 
-        return $this->router->generate($route, $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
+        return $this->router->generate($routeName, $parameterList, UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
     protected function generateCityUrl(City $city, string $routeName = null): string
@@ -64,7 +61,7 @@ class ObjectRouter
         return $this->router->generate($routeName, $parameterList, UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
-    protected function generatePhotoUrl(Photo $photo, string $routeName): string
+    protected function generatePhotoUrl(Photo $photo, string $routeName = null): string
     {
         $route = 'caldera_criticalmass_photo_show_ride';
 
@@ -78,10 +75,8 @@ class ObjectRouter
         return $this->router->generate($route, $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
-    protected function generateLocationUrl(
-        Location $location,
-        string $routeName
-    ): string {
+    protected function generateLocationUrl(Location $location, string $routeName = null): string
+    {
         $route = 'caldera_criticalmass_location_show';
 
         $parameters = [
@@ -174,7 +169,12 @@ class ObjectRouter
 
     protected function getDefaultRouteName(RouteableInterface $routeable): ?string
     {
-        $reflectionClass = new \ReflectionClass($routeable);
+        /* It looks like Doctrine Annotation Reader cannot handle class annotations of Doctrine proxy objects so we do
+         * not inject the $routeable itself but its classname */
+        $classname = $this->getClassname($routeable);
+        $fqcn = sprintf('AppBundle\\Entity\\%s', $classname);
+
+        $reflectionClass = new \ReflectionClass($fqcn);
 
         $defaultRouteAnnotation = $this->annotationReader->getClassAnnotation($reflectionClass, DefaultRoute::class);
 
@@ -210,6 +210,10 @@ class ObjectRouter
                     $value = $this->getRouteParameter($value, $variableName);
                 }
 
+                if (is_object($value) && $value instanceof \DateTime) {
+                    $value = $value->format($parameterAnnotation->getDateFormat());
+                }
+
                 return $value;
             }
         }
@@ -231,5 +235,13 @@ class ObjectRouter
         }
 
         return $parameterList;
+    }
+
+    protected function getClassname(RouteableInterface $routeable): string
+    {
+        $classNameParts = explode('\\', get_class($routeable));
+        $className = array_pop($classNameParts);
+
+        return $className;
     }
 }

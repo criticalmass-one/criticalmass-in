@@ -73,7 +73,7 @@
                                 </ul>
                             </td>
                             <td>
-                                <a href="{{ path('caldera_criticalmass_city_listrides', { citySlug: city.city.slug }) }}">
+                                <a href="{{ objectPath(city.city, 'caldera_criticalmass_city_listrides') }}">
                                     {{ city.countRides }}
                                 </a>
                             </td>

@@ -95,12 +95,12 @@ class CityRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findEnabledCities()
+    public function findEnabledCities(): array
     {
         return $this->findCities();
     }
 
-    public function findCities()
+    public function findCities(): array
     {
         $builder = $this->createQueryBuilder('c');
 
