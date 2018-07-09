@@ -15,7 +15,6 @@ use AppBundle\Entity\Track;
 use AppBundle\EntityInterface\RouteableInterface;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RouterInterface;
 
 class ObjectRouter
@@ -63,16 +62,13 @@ class ObjectRouter
 
     protected function generatePhotoUrl(Photo $photo, string $routeName = null): string
     {
-        $route = 'caldera_criticalmass_photo_show_ride';
+        if (!$routeName) {
+            $routeName = $this->getDefaultRouteName($photo);
+        }
 
-        $parameters = [
-            'citySlug' => $photo->getCity()->getMainSlugString(),
-            'photoId' => $photo->getId()
-        ];
+        $parameterList = $this->generateParameterList($photo, $routeName);
 
-        $parameters['rideDate'] = $photo->getRide()->getFormattedDate();
-
-        return $this->router->generate($route, $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
+        return $this->router->generate($routeName, $parameterList, UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
     protected function generateLocationUrl(Location $location, string $routeName = null): string
@@ -109,9 +105,7 @@ class ObjectRouter
         return $this->router->generate($route, $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
-    protected function generateThreadUrl(
-        Thread $thread,
-        string $routeName
+    protected function generateThreadUrl(Thread $thread, string $routeName
     ): string {
         /* Let’s see if this is a city thread */
         if ($thread->getCity()) {
