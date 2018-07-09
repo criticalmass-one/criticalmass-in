@@ -95,13 +95,13 @@ class ObjectRouter
 
     protected function generateTrackUrl(Track $track, string $routeName = null): string
     {
-        $route = 'caldera_criticalmass_track_view';
+        if (!$routeName) {
+            $routeName = $this->getDefaultRouteName($track);
+        }
 
-        $parameters = [
-            'trackId' => $track->getId()
-        ];
+        $parameterList = $this->generateParameterList($track, $routeName);
 
-        return $this->router->generate($route, $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
+        return $this->router->generate($routeName, $parameterList, UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
     protected function generateThreadUrl(Thread $thread, string $routeName = null): string
