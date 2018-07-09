@@ -28,6 +28,8 @@ services:
 
     Cmfcmf\OpenWeatherMap: ~
 
+    Symfony\Component\Routing\RouteCollection: ~
+
     AppBundle\Request\ParamConverter\RideParamConverter:
         tags:
             - { name: request.param_converter, priority: 0, converter: ride_converter }

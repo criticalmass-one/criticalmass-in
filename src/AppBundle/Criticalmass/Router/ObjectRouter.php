@@ -1,7 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace AppBundle\Criticalmass\Router;
 
+use AppBundle\Criticalmass\Router\Annotation\RouteParameter;
 use AppBundle\Entity\Board;
 use AppBundle\Entity\City;
 use AppBundle\Entity\Location;
@@ -11,7 +12,9 @@ use AppBundle\Entity\Ride;
 use AppBundle\Entity\Thread;
 use AppBundle\Entity\Track;
 use AppBundle\EntityInterface\RouteableInterface;
+use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RouterInterface;
 
 class ObjectRouter
@@ -19,24 +22,28 @@ class ObjectRouter
     /** @var RouterInterface $router */
     protected $router;
 
-    public function __construct(RouterInterface $router)
+    /** @var AnnotationReader $annotationReader */
+    protected $annotationReader;
+
+    public function __construct(RouterInterface $router, AnnotationReader $annotationReader)
     {
         $this->router = $router;
+        $this->annotationReader = $annotationReader;
     }
 
     public function generate(
         RouteableInterface $object,
-        int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH
+        string $routeName = null
     ): string {
         $classNameParts = explode('\\', get_class($object));
         $className = array_pop($classNameParts);
 
         $methodName = sprintf('generate%sUrl', $className);
 
-        return $this->$methodName($object, $referenceType);
+        return $this->$methodName($object, $routeName);
     }
 
-    protected function generateRideUrl(Ride $ride, int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
+    protected function generateRideUrl(Ride $ride, string $routeName): string
     {
         $route = 'caldera_criticalmass_ride_show';
 
@@ -45,21 +52,60 @@ class ObjectRouter
             'rideDate' => $ride->getFormattedDate()
         ];
 
-        return $this->router->generate($route, $parameters, $referenceType);
+        return $this->router->generate($route, $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
-    protected function generateCityUrl(City $city, int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
+    protected function generateCityUrl(City $city, string $routeName): string
     {
-        $route = 'caldera_criticalmass_city_show';
+        $routeName = 'caldera_criticalmass_city_show';
 
-        $parameters = [
-            'citySlug' => $city->getMainSlugString()
-        ];
+        $route = $this->router->getRouteCollection()->get($routeName);
 
-        return $this->router->generate($route, $parameters, $referenceType);
+        $compiledRoute = $route->compile();
+
+        $variableList = $compiledRoute->getVariables();
+        $parameterList = [];
+
+        foreach ($variableList as $variableName) {
+            $parameterList[$variableName] = $this->getRouteParameter($city, $variableName);
+        }
+
+        return $this->router->generate($routeName, $parameterList, UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
-    protected function generatePhotoUrl(Photo $photo, int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
+    protected function getRouteParameter(RouteableInterface $routeable, string $variableName): ?string
+    {
+        $reflectionClass = new \ReflectionClass($routeable);
+        $properties = $reflectionClass->getProperties();
+
+        foreach ($properties as $key => $property) {
+            $parameterAnnotation = $this->annotationReader->getPropertyAnnotation($property, RouteParameter::class);
+
+            if ($parameterAnnotation) {
+                if ($parameterAnnotation->getName() !== $variableName) {
+                    continue;
+                }
+
+                $getMethodName = sprintf('get%s', ucfirst($property->getName()));
+
+                if (!$reflectionClass->hasMethod($getMethodName)) {
+                    continue;
+                }
+
+                $value = $routeable->$getMethodName();
+
+                if (is_object($value) && $value instanceof RouteableInterface) {
+                    $value = $this->getRouteParameter($value, $variableName);
+                }
+
+                return $value;
+            }
+        }
+
+        return null;
+    }
+
+    protected function generatePhotoUrl(Photo $photo, string $routeName): string
     {
         $route = 'caldera_criticalmass_photo_show_ride';
 
@@ -70,12 +116,12 @@ class ObjectRouter
 
         $parameters['rideDate'] = $photo->getRide()->getFormattedDate();
 
-        return $this->router->generate($route, $parameters, $referenceType);
+        return $this->router->generate($route, $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
     protected function generateLocationUrl(
         Location $location,
-        int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH
+        string $routeName
     ): string {
         $route = 'caldera_criticalmass_location_show';
 
@@ -84,10 +130,10 @@ class ObjectRouter
             'locationSlug' => $location->getSlug()
         ];
 
-        return $this->router->generate($route, $parameters, $referenceType);
+        return $this->router->generate($route, $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
-    protected function generateBoardUrl(Board $board, int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
+    protected function generateBoardUrl(Board $board, string $routeName): string
     {
         $route = 'caldera_criticalmass_board_listthreads';
 
@@ -95,10 +141,10 @@ class ObjectRouter
             'boardSlug' => $board->getSlug()
         ];
 
-        return $this->router->generate($route, $parameters, $referenceType);
+        return $this->router->generate($route, $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
-    protected function generateTrackUrl(Track $track, int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
+    protected function generateTrackUrl(Track $track, string $routeName): string
     {
         $route = 'caldera_criticalmass_track_view';
 
@@ -106,12 +152,12 @@ class ObjectRouter
             'trackId' => $track->getId()
         ];
 
-        return $this->router->generate($route, $parameters, $referenceType);
+        return $this->router->generate($route, $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
     protected function generateThreadUrl(
         Thread $thread,
-        int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH
+        string $routeName
     ): string {
         /* Let’s see if this is a city thread */
         if ($thread->getCity()) {
@@ -130,23 +176,23 @@ class ObjectRouter
             ];
         }
 
-        return $this->router->generate($route, $parameters, $referenceType);
+        return $this->router->generate($route, $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
     protected function generateRegionUrl(
         Region $region,
-        int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH
+        string $routeName
     ): string {
         if ($region->getParent() == null) {
             return $this->router->generate(
-                'caldera_criticalmass_region_world', [], $referenceType);
+                'caldera_criticalmass_region_world', [], UrlGeneratorInterface::ABSOLUTE_URL);
         } elseif ($region->getParent()->getParent() == null) {
             return $this->router->generate(
                 'caldera_criticalmass_region_world_region_1',
                 [
                     'slug1' => $region->getSlug()
                 ],
-                $referenceType);
+                UrlGeneratorInterface::ABSOLUTE_URL);
         } elseif ($region->getParent()->getParent()->getParent() == null) {
             return $this->router->generate(
                 'caldera_criticalmass_region_world_region_2',
@@ -154,7 +200,7 @@ class ObjectRouter
                     'slug1' => $region->getParent()->getSlug(),
                     'slug2' => $region->getSlug()
                 ],
-                $referenceType);
+                UrlGeneratorInterface::ABSOLUTE_URL);
         } elseif ($region->getParent()->getParent()->getParent()->getParent() == null) {
             return $this->router->generate(
                 'caldera_criticalmass_region_world_region_3',
@@ -163,7 +209,7 @@ class ObjectRouter
                     'slug2' => $region->getParent()->getSlug(),
                     'slug3' => $region->getSlug()
                 ],
-                $referenceType);
+                UrlGeneratorInterface::ABSOLUTE_URL);
         }
     }
 }
