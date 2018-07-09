@@ -109,21 +109,13 @@ class ObjectRouter
         /* Let’s see if this is a city thread */
         if ($thread->getCity()) {
             $route = 'caldera_criticalmass_board_viewcitythread';
-
-            $parameters = [
-                'threadSlug' => $thread->getSlug(),
-                'citySlug' => $thread->getCity()->getSlug()
-            ];
         } else {
             $route = 'caldera_criticalmass_board_viewthread';
-
-            $parameters = [
-                'threadSlug' => $thread->getSlug(),
-                'boardSlug' => $thread->getBoard()->getSlug()
-            ];
         }
 
-        return $this->router->generate($route, $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
+        $parameterList = $this->generateParameterList($thread, $routeName);
+
+        return $this->router->generate($route, $parameterList, UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
     protected function generateRegionUrl(Region $region, string $routeName = null): string

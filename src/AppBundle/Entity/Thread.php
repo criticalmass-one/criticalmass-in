@@ -8,10 +8,12 @@ use AppBundle\EntityInterface\RouteableInterface;
 use AppBundle\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use AppBundle\Criticalmass\Router\Annotation as Routing;
 
 /**
  * @ORM\Table(name="thread")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ThreadRepository")
+
  */
 class Thread implements ViewableInterface, RouteableInterface, AutoParamConverterAble, PostableInterface
 {
@@ -25,12 +27,14 @@ class Thread implements ViewableInterface, RouteableInterface, AutoParamConverte
     /**
      * @ORM\ManyToOne(targetEntity="Board", inversedBy="threads")
      * @ORM\JoinColumn(name="board_id", referencedColumnName="id")
+     * @Routing\RouteParameter(name="boardSlug")
      */
     protected $board;
 
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="threads")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     * @Routing\RouteParameter(name="citySlug")
      */
     protected $city;
 
@@ -42,6 +46,7 @@ class Thread implements ViewableInterface, RouteableInterface, AutoParamConverte
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Routing\RouteParameter(name="threadSlug")
      */
     protected $slug;
 
