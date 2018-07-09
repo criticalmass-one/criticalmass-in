@@ -85,13 +85,13 @@ class ObjectRouter
 
     protected function generateBoardUrl(Board $board, string $routeName): string
     {
-        $route = 'caldera_criticalmass_board_listthreads';
+        if (!$routeName) {
+            $routeName = $this->getDefaultRouteName($board);
+        }
 
-        $parameters = [
-            'boardSlug' => $board->getSlug()
-        ];
+        $parameterList = $this->generateParameterList($board, $routeName);
 
-        return $this->router->generate($route, $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
+        return $this->router->generate($routeName, $parameterList, UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
     protected function generateTrackUrl(Track $track, string $routeName): string
