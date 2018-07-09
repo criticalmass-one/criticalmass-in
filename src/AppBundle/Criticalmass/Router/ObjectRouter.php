@@ -4,14 +4,8 @@ namespace AppBundle\Criticalmass\Router;
 
 use AppBundle\Criticalmass\Router\Annotation\DefaultRoute;
 use AppBundle\Criticalmass\Router\Annotation\RouteParameter;
-use AppBundle\Entity\Board;
-use AppBundle\Entity\City;
-use AppBundle\Entity\Location;
-use AppBundle\Entity\Photo;
 use AppBundle\Entity\Region;
-use AppBundle\Entity\Ride;
 use AppBundle\Entity\Thread;
-use AppBundle\Entity\Track;
 use AppBundle\EntityInterface\RouteableInterface;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -33,75 +27,19 @@ class ObjectRouter
 
     public function generate(RouteableInterface $routeable, string $routeName = null): string
     {
-        $methodName = sprintf('generate%sUrl', $this->getClassname($routeable));
-
-        return $this->$methodName($routeable, $routeName);
-    }
-
-    protected function generateRideUrl(Ride $ride, string $routeName = null): string
-    {
         if (!$routeName) {
-            $routeName = $this->getDefaultRouteName($ride);
+            $routeName = $this->getDefaultRouteName($routeable);
         }
 
-        $parameterList = $this->generateParameterList($ride, $routeName);
+        if ($routeName) {
+            $parameterList = $this->generateParameterList($routeable, $routeName);
 
-        return $this->router->generate($routeName, $parameterList, UrlGeneratorInterface::ABSOLUTE_URL);
-    }
+            return $this->router->generate($routeName, $parameterList, UrlGeneratorInterface::ABSOLUTE_URL);
+        } else {
+            $methodName = sprintf('generate%sUrl', $this->getClassname($routeable));
 
-    protected function generateCityUrl(City $city, string $routeName = null): string
-    {
-        if (!$routeName) {
-            $routeName = $this->getDefaultRouteName($city);
+            return $this->$methodName($routeable, $routeName);
         }
-
-        $parameterList = $this->generateParameterList($city, $routeName);
-
-        return $this->router->generate($routeName, $parameterList, UrlGeneratorInterface::ABSOLUTE_URL);
-    }
-
-    protected function generatePhotoUrl(Photo $photo, string $routeName = null): string
-    {
-        if (!$routeName) {
-            $routeName = $this->getDefaultRouteName($photo);
-        }
-
-        $parameterList = $this->generateParameterList($photo, $routeName);
-
-        return $this->router->generate($routeName, $parameterList, UrlGeneratorInterface::ABSOLUTE_URL);
-    }
-
-    protected function generateLocationUrl(Location $location, string $routeName = null): string
-    {
-        if (!$routeName) {
-            $routeName = $this->getDefaultRouteName($location);
-        }
-
-        $parameterList = $this->generateParameterList($location, $routeName);
-
-        return $this->router->generate($routeName, $parameterList, UrlGeneratorInterface::ABSOLUTE_URL);
-    }
-
-    protected function generateBoardUrl(Board $board, string $routeName = null): string
-    {
-        if (!$routeName) {
-            $routeName = $this->getDefaultRouteName($board);
-        }
-
-        $parameterList = $this->generateParameterList($board, $routeName);
-
-        return $this->router->generate($routeName, $parameterList, UrlGeneratorInterface::ABSOLUTE_URL);
-    }
-
-    protected function generateTrackUrl(Track $track, string $routeName = null): string
-    {
-        if (!$routeName) {
-            $routeName = $this->getDefaultRouteName($track);
-        }
-
-        $parameterList = $this->generateParameterList($track, $routeName);
-
-        return $this->router->generate($routeName, $parameterList, UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
     protected function generateThreadUrl(Thread $thread, string $routeName = null): string
@@ -197,7 +135,7 @@ class ObjectRouter
                     $value = $value->format($parameterAnnotation->getDateFormat());
                 }
 
-                return $value;
+                return (string) $value;
             }
         }
 
