@@ -1,9 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace AppBundle\Twig\Extension;
 
 use AppBundle\Criticalmass\Router\ObjectRouter;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use AppBundle\EntityInterface\RouteableInterface;
 
 class RouterTwigExtension extends \Twig_Extension
 {
@@ -15,21 +15,21 @@ class RouterTwigExtension extends \Twig_Extension
         $this->router = $router;
     }
 
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
-            new \Twig_SimpleFunction('objectPath', [$this, 'objectPath'], array(
-                'is_safe' => array('raw')
-            )),
+            new \Twig_SimpleFunction('objectPath', [$this, 'objectPath'], [
+                'is_safe' => ['raw'],
+            ]),
         ];
     }
 
-    public function objectPath($object, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
+    public function objectPath(RouteableInterface $object, string $routeName = null): string
     {
-        return $this->router->generate($object, $referenceType);
+        return $this->router->generate($object, $routeName);
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'router_extension';
     }
