@@ -2,6 +2,7 @@
 
 namespace AppBundle\Criticalmass\Router;
 
+use AppBundle\Criticalmass\Router\Annotation\DefaultRoute;
 use AppBundle\Criticalmass\Router\Annotation\RouteParameter;
 use AppBundle\Entity\Board;
 use AppBundle\Entity\City;
@@ -31,10 +32,7 @@ class ObjectRouter
         $this->annotationReader = $annotationReader;
     }
 
-    public function generate(
-        RouteableInterface $object,
-        string $routeName = null
-    ): string {
+    public function generate(RouteableInterface $object, string $routeName = null): string {
         $classNameParts = explode('\\', get_class($object));
         $className = array_pop($classNameParts);
 
@@ -55,54 +53,15 @@ class ObjectRouter
         return $this->router->generate($route, $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
-    protected function generateCityUrl(City $city, string $routeName): string
+    protected function generateCityUrl(City $city, string $routeName = null): string
     {
-        $routeName = 'caldera_criticalmass_city_show';
-
-        $route = $this->router->getRouteCollection()->get($routeName);
-
-        $compiledRoute = $route->compile();
-
-        $variableList = $compiledRoute->getVariables();
-        $parameterList = [];
-
-        foreach ($variableList as $variableName) {
-            $parameterList[$variableName] = $this->getRouteParameter($city, $variableName);
+        if (!$routeName) {
+            $routeName = $this->getDefaultRouteName($city);
         }
+
+        $parameterList = $this->generateParameterList($city, $routeName);
 
         return $this->router->generate($routeName, $parameterList, UrlGeneratorInterface::ABSOLUTE_URL);
-    }
-
-    protected function getRouteParameter(RouteableInterface $routeable, string $variableName): ?string
-    {
-        $reflectionClass = new \ReflectionClass($routeable);
-        $properties = $reflectionClass->getProperties();
-
-        foreach ($properties as $key => $property) {
-            $parameterAnnotation = $this->annotationReader->getPropertyAnnotation($property, RouteParameter::class);
-
-            if ($parameterAnnotation) {
-                if ($parameterAnnotation->getName() !== $variableName) {
-                    continue;
-                }
-
-                $getMethodName = sprintf('get%s', ucfirst($property->getName()));
-
-                if (!$reflectionClass->hasMethod($getMethodName)) {
-                    continue;
-                }
-
-                $value = $routeable->$getMethodName();
-
-                if (is_object($value) && $value instanceof RouteableInterface) {
-                    $value = $this->getRouteParameter($value, $variableName);
-                }
-
-                return $value;
-            }
-        }
-
-        return null;
     }
 
     protected function generatePhotoUrl(Photo $photo, string $routeName): string
@@ -211,5 +170,66 @@ class ObjectRouter
                 ],
                 UrlGeneratorInterface::ABSOLUTE_URL);
         }
+    }
+
+    protected function getDefaultRouteName(RouteableInterface $routeable): ?string
+    {
+        $reflectionClass = new \ReflectionClass($routeable);
+
+        $defaultRouteAnnotation = $this->annotationReader->getClassAnnotation($reflectionClass, DefaultRoute::class);
+
+        if ($defaultRouteAnnotation) {
+            return $defaultRouteAnnotation->getName();
+        }
+
+        return null;
+    }
+
+    protected function getRouteParameter(RouteableInterface $routeable, string $variableName): ?string
+    {
+        $reflectionClass = new \ReflectionClass($routeable);
+        $properties = $reflectionClass->getProperties();
+
+        foreach ($properties as $key => $property) {
+            $parameterAnnotation = $this->annotationReader->getPropertyAnnotation($property, RouteParameter::class);
+
+            if ($parameterAnnotation) {
+                if ($parameterAnnotation->getName() !== $variableName) {
+                    continue;
+                }
+
+                $getMethodName = sprintf('get%s', ucfirst($property->getName()));
+
+                if (!$reflectionClass->hasMethod($getMethodName)) {
+                    continue;
+                }
+
+                $value = $routeable->$getMethodName();
+
+                if (is_object($value) && $value instanceof RouteableInterface) {
+                    $value = $this->getRouteParameter($value, $variableName);
+                }
+
+                return $value;
+            }
+        }
+
+        return null;
+    }
+
+    protected function generateParameterList(RouteableInterface $routeable, string $routeName): array
+    {
+        $route = $this->router->getRouteCollection()->get($routeName);
+
+        $compiledRoute = $route->compile();
+
+        $variableList = $compiledRoute->getVariables();
+        $parameterList = [];
+
+        foreach ($variableList as $variableName) {
+            $parameterList[$variableName] = $this->getRouteParameter($routeable, $variableName);
+        }
+
+        return $parameterList;
     }
 }

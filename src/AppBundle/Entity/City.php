@@ -26,6 +26,7 @@ use AppBundle\Criticalmass\Router\Annotation as Routing;
  * @Vich\Uploadable
  * @ORM\Table(name="city")
  * @JMS\ExclusionPolicy("all")
+ * @Routing\DefaultRoute(name="caldera_criticalmass_city_show")
  */
 class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, AutoParamConverterAble, SocialNetworkProfileAble, PostableInterface
 {
