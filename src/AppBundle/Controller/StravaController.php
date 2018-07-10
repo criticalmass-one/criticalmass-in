@@ -71,10 +71,7 @@ class StravaController extends AbstractController
         $error = $request->get('error');
 
         if ($error) {
-            return $this->redirectToRoute('caldera_criticalmass_strava_auth', [
-                'citySlug' => $ride->getCity()->getMainSlugString(),
-                'rideDate' => $ride->getFormattedDate(),
-            ]);
+            return $this->redirectToObject($ride, 'caldera_criticalmass_strava_auth');
         }
 
         $oauth = $this->initOauthForRide($request, $ride);
@@ -87,15 +84,9 @@ class StravaController extends AbstractController
             $session = $this->getSession();
             $session->set('strava_token', $token);
 
-            return $this->redirectToRoute('caldera_criticalmass_strava_list', [
-                'citySlug' => $ride->getCity()->getMainSlugString(),
-                'rideDate' => $ride->getFormattedDate(),
-            ]);
+            return $this->redirectToObject($ride, 'caldera_criticalmass_strava_list');
         } catch (\Exception $e) {
-            return $this->redirectToRoute('caldera_criticalmass_strava_auth', [
-                'citySlug' => $ride->getCity()->getMainSlugString(),
-                'rideDate' => $ride->getFormattedDate(),
-            ]);
+            return $this->redirectToObject($ride, 'caldera_criticalmass_strava_auth');
         }
     }
 

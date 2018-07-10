@@ -73,10 +73,7 @@ class RideTabsController extends AbstractController
         }
 
         $estimateForm = $this->createForm(RideEstimateType::class, new RideEstimate(), [
-            'action' => $this->generateUrl('caldera_criticalmass_ride_addestimate', [
-                'citySlug' => $ride->getCity()->getMainSlugString(),
-                'rideDate' => $ride->getFormattedDate(),
-            ])
+            'action' => $this->redirectToObject($ride, 'caldera_criticalmass_ride_addestimate'),
         ]);
 
         $location = $this->getLocationRepository()->findLocationForRide($ride);

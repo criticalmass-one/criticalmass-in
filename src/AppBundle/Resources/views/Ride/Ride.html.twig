@@ -89,7 +89,7 @@
 
 <script>
     var pageOptions = {
-        photoViewPageUrl: '{{ objectPath(photo) }}',
+        photoViewPageUrl: '{{ objectPath(ride, 'caldera_criticalmass_photo_show_ride', { photoId: 'photoId'}) }}',
         photoCounterUrl: '{{ objectPath(ride, 'caldera_criticalmass_photo_ajaxview') }}',
         citySlug: '{{ city.slug }}',
         rideDate: '{{ ride.getFormattedDate() }}'

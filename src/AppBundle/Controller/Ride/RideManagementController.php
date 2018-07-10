@@ -78,10 +78,7 @@ class RideManagementController extends AbstractController
             /* As we have created our new ride, we serve the user the new "edit ride form". Normally it would be enough
             just to change the action url of the form, but we are far to stupid for this hack. */
             $form = $this->createForm(RideType::class, $ride, [
-                'action' => $this->generateUrl('caldera_criticalmass_ride_edit', [
-                    'citySlug' => $city->getMainSlugString(),
-                    'rideDate' => $ride->getFormattedDate()
-                ])
+                'action' => $this->redirectToObject($ride, 'caldera_criticalmass_ride_edit'),
             ]);
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
