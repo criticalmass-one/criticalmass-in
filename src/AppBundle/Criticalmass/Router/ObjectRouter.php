@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ObjectRouter extends AbstractObjectRouter
 {
-    public function generate(RouteableInterface $routeable, string $routeName = null, array $parameters = []): string
+    public function generate(RouteableInterface $routeable, string $routeName = null, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
     {
         if (!$routeName) {
             $routeName = $this->getDefaultRouteName($routeable);
@@ -20,15 +20,15 @@ class ObjectRouter extends AbstractObjectRouter
         if ($routeName) {
             $parameterList = array_merge($this->generateParameterList($routeable, $routeName), $parameters);
 
-            return $this->router->generate($routeName, $parameterList, UrlGeneratorInterface::ABSOLUTE_URL);
+            return $this->router->generate($routeName, $parameterList, $referenceType);
         } else {
             $methodName = sprintf('generate%sUrl', $this->getClassname($routeable));
 
-            return $this->$methodName($routeable, $routeName, $parameters);
+            return $this->$methodName($routeable, $routeName, $parameters, $referenceType);
         }
     }
 
-    protected function generateThreadUrl(Thread $thread, string $routeName = null, array $parameters = []): string
+    protected function generateThreadUrl(Thread $thread, string $routeName = null, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
     {
         /* Let’s see if this is a city thread */
         if ($thread->getCity()) {
@@ -39,32 +39,31 @@ class ObjectRouter extends AbstractObjectRouter
 
         $parameterList = array_merge($this->generateParameterList($thread, $routeName), $parameters);
 
-        return $this->router->generate($routeName, $parameterList, UrlGeneratorInterface::ABSOLUTE_URL);
+        return $this->router->generate($routeName, $parameterList, $referenceType);
     }
 
-    protected function generateRegionUrl(Region $region, string $routeName = null, array $parameters = []): string
+    protected function generateRegionUrl(Region $region, string $routeName = null, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
     {
         if ($region->getParent() == null) {
-            return $this->router->generate(
-                'caldera_criticalmass_region_world', [], UrlGeneratorInterface::ABSOLUTE_URL);
+            return $this->router->generate('caldera_criticalmass_region_world', [], $referenceType);
         } elseif ($region->getParent()->getParent() == null) {
             return $this->router->generate('caldera_criticalmass_region_world_region_1', [
                     'slug1' => $region->getSlug()
                 ],
-                UrlGeneratorInterface::ABSOLUTE_URL);
+                $referenceType);
         } elseif ($region->getParent()->getParent()->getParent() == null) {
             return $this->router->generate('caldera_criticalmass_region_world_region_2', [
                     'slug1' => $region->getParent()->getSlug(),
                     'slug2' => $region->getSlug()
                 ],
-                UrlGeneratorInterface::ABSOLUTE_URL);
+                $referenceType);
         } elseif ($region->getParent()->getParent()->getParent()->getParent() == null) {
             return $this->router->generate('caldera_criticalmass_region_world_region_3', [
                     'slug1' => $region->getParent()->getParent()->getSlug(),
                     'slug2' => $region->getParent()->getSlug(),
                     'slug3' => $region->getSlug()
                 ],
-                UrlGeneratorInterface::ABSOLUTE_URL);
+                $referenceType);
         }
     }
 
