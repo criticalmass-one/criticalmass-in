@@ -24,9 +24,9 @@ class RouterTwigExtension extends \Twig_Extension
         ];
     }
 
-    public function objectPath(RouteableInterface $object, string $routeName = null): string
+    public function objectPath(RouteableInterface $object, string $routeName = null, array $parameters = []): string
     {
-        return $this->router->generate($object, $routeName);
+        return $this->router->generate($object, $routeName, $parameters);
     }
 
     public function getName(): string

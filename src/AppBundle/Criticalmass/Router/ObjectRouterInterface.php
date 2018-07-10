@@ -6,5 +6,5 @@ use AppBundle\EntityInterface\RouteableInterface;
 
 interface ObjectRouterInterface
 {
-    public function generate(RouteableInterface $routeable, string $routeName = null): string;
+    public function generate(RouteableInterface $routeable, string $routeName = null, array $parameters = []): string;
 }
