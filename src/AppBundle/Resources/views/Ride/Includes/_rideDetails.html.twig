@@ -18,7 +18,7 @@
                     {% if ride.hasLocation() and ride.location %}
                         {% if location %}
                             <dd>
-                                <a href="{{ path('caldera_criticalmass_location_ride', { 'citySlug': ride.city.slug, 'rideDate': ride.getFormattedDate() }) }}">
+                                <a href="{{ objectPath(ride, 'caldera_criticalmass_location_ride') }}">
                                     {{ ride.location }}
                                 </a>
                             </dd>
@@ -28,7 +28,7 @@
                     {% else %}
                         <dd>
                             {% if app.user %}
-                            <a href="{{ path('caldera_criticalmass_ride_edit', { citySlug: ride.city.mainSlugString, rideDate: ride.formattedDate }) }}">
+                            <a href="{{ objectPath(ride, 'caldera_criticalmass_ride_edit') }}">
                                 noch nicht bekannt
                             </a>
                             {% else %}

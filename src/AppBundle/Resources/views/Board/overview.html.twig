@@ -79,7 +79,7 @@
                     {% for city in cities %}
                         <tr>
                             <td>
-                                <a href="{{ path('caldera_criticalmass_board_listcitythreads', { citySlug: city.getMainSlugString() }) }}">
+                                <a href="{{ objectPath(city, 'caldera_criticalmass_board_listcitythreads') }}">
                                     <h5 class="no-margin-top">
                                         {{ city.title }}
                                     </h5>

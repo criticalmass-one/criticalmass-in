@@ -106,8 +106,9 @@
                 <ul class="pager">
                     {% if previousTrack %}
                         <li class="previous">
-                            <a href="{{ path('caldera_criticalmass_track_view', { 'trackId': previousTrack.getId() }) }}">&larr;
-                                Voriger Track</a>
+                            <a href="{{ objectPath(previousTrack) }}">
+                                &larr; Voriger Track
+                            </a>
                         </li>
                     {% else %}
                         <li class="previous disabled">
@@ -117,8 +118,9 @@
 
                     {% if nextTrack %}
                         <li class="next">
-                            <a href="{{ path('caldera_criticalmass_track_view', { 'trackId': nextTrack.getId() }) }}">Nächster
-                                Track &rarr;</a>
+                            <a href="{{ objectPath(nextTrack) }}">
+                                Nächster Track &rarr;
+                            </a>
                         </li>
                     {% else %}
                         <li class="next disabled">

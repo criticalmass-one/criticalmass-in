@@ -31,7 +31,7 @@
             <div class="col-md-12">
                 <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
                 {% if app.user %}
-                    {% set uploadPath = path('caldera_criticalmass_gallery_photos_upload_ride', { 'citySlug': city.slug, 'rideDate': ride.getFormattedDate() }) %}
+                    {% set uploadPath = objectPath(ride, 'caldera_criticalmass_gallery_photos_upload_ride') %}
 
                     <a class="btn btn-success" href="{{ uploadPath }}" title="Fotos hochladen">
                         <i class="fa fa-camera"></i>

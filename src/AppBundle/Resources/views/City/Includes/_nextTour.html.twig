@@ -39,7 +39,7 @@
                         {% if currentRide.hasLocation() and currentRide.location %}
                             <dd>{{ currentRide.location }}</dd>
                         {% else %}
-                            <a href="{{ path('caldera_criticalmass_ride_edit', { citySlug: currentRide.city.mainSlugString, rideDate: currentRide.formattedDate }) }}">
+                            <a href="{{ objectPath(ride, 'caldera_criticalmass_ride_edit') }}">
                                 noch nicht bekannt
                             </a>
                         {% endif %}
@@ -59,10 +59,10 @@
         <div class="row margin-top-medium">
             <div class="col-md-12">
                 <div class="text-center">
-                    <a href="{{ path('caldera_criticalmass_city_listrides', { citySlug: city.getMainSlugString }) }}"
-                       class="btn btn-success">
+                    <a href="{{ objectPath(city, 'caldera_criticalmass_city_listrides') }}" class="btn btn-success">
                         <i class="fa fa-list"></i>
-                        weitere Touren anzeigen</a>
+                        weitere Touren anzeigen
+                    </a>
                 </div>
             </div>
         </div>

@@ -8,7 +8,7 @@
                     {{ item.user.username }}
                 </strong>
                 hat
-                <a href="{{ path('caldera_criticalmass_photo_ride_list', { citySlug: item.city.slug, rideDate: item.ride.getFormattedDate() }) }}">
+                <a href="{{ objectPath(item.ride, 'caldera_criticalmass_photo_ride_list') }}">
                     {{ item.counter }} Fotos
                 </a> zur Tour
                 <strong>

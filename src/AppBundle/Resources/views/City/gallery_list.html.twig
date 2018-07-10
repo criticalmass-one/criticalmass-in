@@ -64,7 +64,7 @@
                                 </a>
                             </td>
                             <td>
-                                <a href="{{ path('caldera_criticalmass_photo_ride_list', { 'citySlug': city.slug, 'rideDate': ride.getFormattedDate() }) }}">
+                                <a href="{{ objectPath(ride, 'caldera_criticalmass_photo_ride_list') }}">
                                     {{ result.counter[key] }}
                                 </a>
                             </td>

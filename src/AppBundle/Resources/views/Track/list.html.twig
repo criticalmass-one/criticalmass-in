@@ -135,28 +135,28 @@
                                         <ul class="dropdown-menu">
                                             {% if track.source == constant('TRACK_SOURCE_DRAW', track) %}
                                                 <li>
-                                                    <a href="{{ path('caldera_criticalmass_track_edit', { trackId: track.getId() }) }}">
+                                                    <a href="{{ objectPath(track, 'caldera_criticalmass_track_edit') }}">
                                                         <i class="fa fa-pencil-square-o"></i>
                                                         Track editieren
                                                     </a>
                                                 </li>
                                             {% else %}
                                                 <li>
-                                                    <a href="{{ path('caldera_criticalmass_track_download', {'trackId': track.getId()}) }}">
+                                                    <a href="{{ objectPath(track, 'caldera_criticalmass_track_download') }}">
                                                         <i class="fa fa-file"></i>
                                                         Herunterladen
                                                     </a>
                                                 </li>
                                                 {% if track.enabled %}
                                                     <li>
-                                                        <a href="{{ path('caldera_criticalmass_track_toggle', {'trackId': track.getId()}) }}">
+                                                        <a href="{{ objectPath(track, 'caldera_criticalmass_track_toggle') }}">
                                                             <i class="fa fa-eye-slash"></i>
                                                             Deaktivieren
                                                         </a>
                                                     </li>
                                                 {% else %}
                                                     <li>
-                                                        <a href="{{ path('caldera_criticalmass_track_toggle', {'trackId': track.getId()}) }}">
+                                                        <a href="{{ objectPath(track, 'caldera_criticalmass_track_toggle') }}">
                                                             <i class="fa fa-eye"></i>
                                                             Aktivieren
                                                         </a>
@@ -166,14 +166,14 @@
                                                 <li role="separator" class="divider"></li>
 
                                                 <li>
-                                                    <a href="{{ path('caldera_criticalmass_track_range', { trackId: track.getId() }) }}">
+                                                    <a href="{{ objectPath(track, 'caldera_criticalmass_track_range') }}">
                                                         <i class="fa fa-scissors"></i>
                                                         Beschneiden
                                                     </a>
                                                 </li>
 
                                                 <li>
-                                                    <a href="{{ path('caldera_criticalmass_track_time', { trackId: track.getId() }) }}">
+                                                    <a href="{{ objectPath(track, 'caldera_criticalmass_track_time') }) }}">
                                                         <i class="fa fa-clock-o"></i>
                                                         Zeit anpassen
                                                     </a>

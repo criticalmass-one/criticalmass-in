@@ -3,10 +3,9 @@
         <div class="col-md-12">
             <div class="btn-group pull-right" style="margin-top: 16px;">
             {% if app.getUser() %}
-                <a class="btn btn-success"
-                   href="{{ path('caldera_criticalmass_ride_edit', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}"
-                   title="Tour bearbeiten">
-                    <i class="fa fa-cogs"></i> Tour editieren
+                <a class="btn btn-success" href="{{ objectPath(ride, 'caldera_criticalmass_ride_edit') }}" title="Tour bearbeiten">
+                    <i class="fa fa-cogs"></i>
+                    Tour editieren
                 </a>
                 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
@@ -15,13 +14,13 @@
                 </button>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="{{ path('criticalmass_socialnetwork_ride_list', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.getDateTime().format('Y-m-d') } ) }}">
+                        <a href="{{ objectPath(ride, 'criticalmass_socialnetwork_ride_list') }}">
                             soziale Netzwerke verwalten
                         </a>
                     </li>
 
                     <li>
-                        <a href="{{ path('caldera_criticalmass_ride_socialpreview', { citySlug: ride.getCity().getMainSlugString(), rideDate: ride.dateTime|date('Y-m-d') } ) }}">
+                        <a href="{{ objectPath(ride, 'caldera_criticalmass_ride_socialpreview') }}">
                             Vorschau für soziale Netzwerke
                         </a>
                     </li>
@@ -73,9 +72,7 @@
                 <div class="alert alert-info">
                     <strong>Huch?</strong>
                     Schade, bislang hat noch niemand Informationen über diese Tour hinterlegt. Wenn du Lust und Zeit
-                    hast, kannst du {{ ride.title }} <a
-                            href="{{ path('caldera_criticalmass_ride_edit', {citySlug: ride.city.mainSlugString, rideDate: ride.formattedDate}) }}">hier
-                        editieren</a>:
+                    hast, kannst du {{ ride.title }} <a href="{{ objectPath(ride, 'caldera_criticalmass_ride_edit') }}">hier editieren</a>:
 
                     <ul>
                         <li>
@@ -92,7 +89,7 @@
                     </ul>
 
                     <p class="text-center margin-top-medium">
-                        <a href="{{ path('caldera_criticalmass_ride_edit', {citySlug: ride.city.mainSlugString, rideDate: ride.formattedDate}) }}"
+                        <a href="{{ objectPath(ride, 'caldera_criticalmass_ride_edit') }}"
                            class="btn btn-primary btn-lg">
                             Tour editieren
                         </a>

@@ -14,7 +14,7 @@
         </a>
     </li>
     <li>
-        <a href="{{ path('caldera_criticalmass_photo_manage', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">
+        <a href="{{ objectPath(ride, 'caldera_criticalmass_photo_manage') }}">
             Fotos verwalten
         </a>
     </li>

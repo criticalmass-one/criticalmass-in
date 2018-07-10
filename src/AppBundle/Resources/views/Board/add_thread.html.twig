@@ -12,7 +12,7 @@
         {% if instanceof(board, 'Board') %}
         <a href="{{ objectPath(board) }}">
             {% else %}
-            <a href="{{ path('caldera_criticalmass_board_listcitythreads', { citySlug: board.slug }) }}">
+            <a href="{{ objectPath(board, 'caldera_criticalmass_board_listcitythreads') }}">
                 {% endif %}
                 {{ board.title }}
             </a>
