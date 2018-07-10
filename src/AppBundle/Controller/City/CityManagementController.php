@@ -98,9 +98,7 @@ class CityManagementController extends AbstractController
             $em->flush();
 
             $form = $this->createForm(StandardCityType::class, $city, [
-                'action' => $this->generateUrl('caldera_criticalmass_city_edit', [
-                    'citySlug' => $citySlug->getSlug(),
-                ])
+                'action' => $this->generateObjectUrl($city, 'caldera_criticalmass_city_edit'),
             ]);
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
@@ -134,9 +132,7 @@ class CityManagementController extends AbstractController
         City $city
     ): Response {
         $form = $this->createForm(StandardCityType::class, $city, [
-            'action' => $this->generateUrl('caldera_criticalmass_city_edit', [
-                'citySlug' => $city->getMainSlugString()
-            ])
+            'action' => $this->generateObjectUrl($city, 'caldera_criticalmass_city_edit'),
         ]);
 
         if (Request::METHOD_POST === $request->getMethod()) {

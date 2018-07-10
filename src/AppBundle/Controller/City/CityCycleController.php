@@ -40,9 +40,7 @@ class CityCycleController extends AbstractController
             ->setUser($user);
 
         $form = $this->createForm(CityCycleType::class, $cityCycle, [
-            'action' => $this->generateUrl('caldera_criticalmass_citycycle_add', [
-                'citySlug' => $city->getMainSlugString(),
-            ])
+            'action' => $this->generateObjectUrl($city, 'caldera_criticalmass_citycycle_add'),
         ]);
 
         if (Request::METHOD_POST === $request->getMethod()) {
@@ -95,10 +93,7 @@ class CityCycleController extends AbstractController
         $cityCycle->setUser($user);
 
         $form = $this->createForm(CityCycleType::class, $cityCycle, [
-            'action' => $this->generateUrl('caldera_criticalmass_citycycle_edit', [
-                'citySlug' => $cityCycle->getCity()->getMainSlugString(),
-                'cycleId' => $cityCycle->getId(),
-            ])
+            'action' => $this->generateObjectUrl($cityCycle, 'caldera_criticalmass_citycycle_edit'),
         ]);
 
         if (Request::METHOD_POST == $request->getMethod()) {
@@ -129,10 +124,7 @@ class CityCycleController extends AbstractController
             $em->flush();
 
             $form = $this->createForm(CityCycleType::class, $cityCycle, [
-                'action' => $this->generateUrl('caldera_criticalmass_citycycle_edit', [
-                    'citySlug' => $city->getMainSlugString(),
-                    'cycleId' => $cityCycle->getId(),
-                ])
+                'action' => $this->generateObjectUrl($cityCycle, 'caldera_criticalmass_citycycle_edit'),
             ]);
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');

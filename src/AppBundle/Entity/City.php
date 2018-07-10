@@ -318,6 +318,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      * @JMS\VirtualProperty
      * @JMS\SerializedName("slug")
      * @JMS\Type("string")
+     * @deprecated
      */
     public function getMainSlugString(): string
     {

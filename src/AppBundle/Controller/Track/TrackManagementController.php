@@ -72,7 +72,7 @@ class TrackManagementController extends AbstractController
             $eventDispatcher->dispatch(TrackHiddenEvent::NAME, new TrackHiddenEvent($track));
         }
 
-        return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
+        return $this->redirectToRoute('caldera_criticalmass_track_list');
     }
 
     /**
@@ -87,7 +87,7 @@ class TrackManagementController extends AbstractController
 
         $eventDispatcher->dispatch(TrackDeletedEvent::NAME, new TrackDeletedEvent($track));
 
-        return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
+        return $this->redirectToRoute('caldera_criticalmass_track_list');
     }
 
     protected function getTrackFilename(Track $track): string

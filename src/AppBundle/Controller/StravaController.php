@@ -21,13 +21,7 @@ class StravaController extends AbstractController
 {
     protected function initOauthForRide(Request $request, Ride $ride)
     {
-        $redirectUri = $request->getUriForPath($this->generateUrl(
-            'caldera_criticalmass_strava_token',
-            [
-                'citySlug' => $ride->getCity()->getMainSlugString(),
-                'rideDate' => $ride->getFormattedDate()
-            ]
-        ));
+        $redirectUri = $request->getUriForPath($this->generateObjectUrl($ride, 'caldera_criticalmass_strava_token'));
 
         /* avoid double app_dev.php in uri */
         $redirectUri = str_replace('app_dev.php/app_dev.php/', 'app_dev.php/', $redirectUri);

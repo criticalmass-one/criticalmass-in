@@ -27,10 +27,7 @@ class TrackUploadController extends AbstractController
         $track = new Track();
 
         $form = $this->createFormBuilder($track)
-            ->setAction($this->generateUrl('caldera_criticalmass_track_upload', [
-                'citySlug' => $ride->getCity()->getMainSlugString(),
-                'rideDate' => $ride->getFormattedDate(),
-            ]))
+            ->setAction($this->generateObjectUrl($track, 'caldera_criticalmass_track_upload'))
             ->add('trackFile', VichFileType::class)
             ->getForm();
 
@@ -86,9 +83,7 @@ class TrackUploadController extends AbstractController
 
             $eventDispatcher->dispatch(TrackUploadedEvent::NAME, new TrackUploadedEvent($track));
 
-            return $this->redirect($this->generateUrl('caldera_criticalmass_track_view', [
-                'trackId' => $track->getId(),
-            ]));
+            return $this->redirectToObject($track);
         }
 
         return $this->uploadGetAction($request, $eventDispatcher, $ride, $form, $trackValidator);

@@ -33,10 +33,7 @@ class RideEstimateController extends AbstractController
             ->setRide($ride);
 
         $estimateForm = $this->createForm(RideEstimateType::class, $rideEstimate, [
-            'action' => $this->generateUrl('caldera_criticalmass_ride_addestimate', [
-                'citySlug' => $ride->getCity()->getMainSlugString(),
-                'rideDate' => $ride->getFormattedDate()
-            ])
+            'action' => $this->generateObjectUrl($ride, 'caldera_criticalmass_ride_addestimate')
         ]);
 
         $estimateForm->handleRequest($request);
@@ -66,10 +63,7 @@ class RideEstimateController extends AbstractController
             ->setRide($ride);
 
         $estimateForm = $this->createForm(RideEstimateType::class, $rideEstimate, [
-            'action' => $this->generateUrl('caldera_criticalmass_ride_addestimate_anonymous', [
-                'citySlug' => $ride->getCity()->getMainSlugString(),
-                'rideDate' => $ride->getFormattedDate()
-            ])
+            'action' => $this->generateObjectUrl($ride, 'caldera_criticalmass_ride_addestimate_anonymous')
         ]);
 
         $estimateForm->handleRequest($request);
