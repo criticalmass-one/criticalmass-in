@@ -4,24 +4,27 @@ namespace AppBundle\Entity;
 
 use AppBundle\EntityInterface\AuditableInterface;
 use AppBundle\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use AppBundle\EntityInterface\RouteableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
+use AppBundle\Criticalmass\Router\Annotation as Routing;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\SubrideRepository")
  * @ORM\Table(name="subride")
  * @JMS\ExclusionPolicy("all")
  */
-class Subride implements AuditableInterface, SocialNetworkProfileAble
+class Subride implements AuditableInterface, SocialNetworkProfileAble, RouteableInterface
 {
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Expose
+     * @Routing\RouteParameter(name="subrideId")
      */
     protected $id;
 
@@ -29,6 +32,8 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble
      * @ORM\ManyToOne(targetEntity="Ride", inversedBy="subrides")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      * @JMS\Expose
+     * @Routing\RouteParameter(name="rideDate")
+     * @Routing\RouteParameter(name="citySlug")
      */
     protected $ride;
 

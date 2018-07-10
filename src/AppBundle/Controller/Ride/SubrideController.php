@@ -28,10 +28,7 @@ class SubrideController extends AbstractController
             ->setUser($user);
 
         $form = $this->createForm(SubrideType::class, $subride, [
-            'action' => $this->generateUrl('caldera_criticalmass_subride_add', [
-                'citySlug' => $ride->getCity()->getMainSlugString(),
-                'rideDate' => $ride->getFormattedDate(),
-            ])
+            'action' => $this->redirectToObject($ride, 'caldera_criticalmass_subride_add'),
         ]);
 
         if (Request::METHOD_POST === $request->getMethod()) {
@@ -55,21 +52,14 @@ class SubrideController extends AbstractController
     {
         $form->handleRequest($request);
 
-        $actionUrl = $this->generateUrl('caldera_criticalmass_subride_add', [
-            'citySlug' => $subride->getRide()->getCity()->getMainSlugString(),
-            'rideDate' => $subride->getRide()->getFormattedDate(),
-        ]);
+        $actionUrl = $this->redirectToObject($subride->getRide(), 'caldera_criticalmass_subride_add');
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($form->getData());
             $em->flush();
 
-            $actionUrl = $this->generateUrl('caldera_criticalmass_subride_edit', [
-                'citySlug' => $subride->getRide()->getCity()->getMainSlugString(),
-                'rideDate' => $subride->getRide()->getFormattedDate(),
-                'subrideId' => $subride->getId(),
-            ]);
+            $actionUrl = $this->redirectToObject($subride, 'caldera_criticalmass_subride_edit');
         }
 
         /* As we have created our new ride, we serve the user the new "edit ride form". Normally it would be enough
@@ -94,11 +84,7 @@ class SubrideController extends AbstractController
     public function editAction(Request $request, Subride $subride): Response
     {
         $form = $this->createForm(SubrideType::class, $subride, [
-            'action' => $this->generateUrl('caldera_criticalmass_subride_edit', [
-                'citySlug' => $subride->getRide()->getCity()->getMainSlugString(),
-                'rideDate' => $subride->getRide()->getFormattedDate(),
-                'subrideId' => $subride->getId()
-            ])
+            'action' => $this->generateObjectUrl($subride, 'caldera_criticalmass_subride_edit'),
         ]);
 
         if (Request::METHOD_POST === $request->getMethod()) {
@@ -114,7 +100,7 @@ class SubrideController extends AbstractController
             'subride' => null,
             'form' => $form->createView(),
             'city' => $subride->getRide()->getCity(),
-            'ride' => $subride->getRide()
+            'ride' => $subride->getRide(),
         ]);
     }
 
@@ -177,9 +163,6 @@ class SubrideController extends AbstractController
 
         $em->flush();
 
-        return $this->redirectToRoute('caldera_criticalmass_ride_show', [
-            'citySlug' => $ride->getCity()->getMainSlugString(),
-            'rideDate' => $ride->getFormattedDate()
-        ]);
+        return $this->redirectToObject($ride, 'caldera_criticalmass_ride_show');
     }
 }
