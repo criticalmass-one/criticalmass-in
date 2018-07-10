@@ -32,14 +32,14 @@ class ObjectRouter extends AbstractObjectRouter
     {
         /* Let’s see if this is a city thread */
         if ($thread->getCity()) {
-            $route = 'caldera_criticalmass_board_viewcitythread';
+            $routeName = 'caldera_criticalmass_board_viewcitythread';
         } else {
-            $route = 'caldera_criticalmass_board_viewthread';
+            $routeName = 'caldera_criticalmass_board_viewthread';
         }
 
         $parameterList = $this->generateParameterList($thread, $routeName);
 
-        return $this->router->generate($route, $parameterList, UrlGeneratorInterface::ABSOLUTE_URL);
+        return $this->router->generate($routeName, $parameterList, UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
     protected function generateRegionUrl(Region $region, string $routeName = null): string
