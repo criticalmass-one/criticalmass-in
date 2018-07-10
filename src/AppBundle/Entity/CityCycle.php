@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Criticalmass\Router\Annotation as Routing;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CityCycleRepository")
@@ -30,6 +31,7 @@ class CityCycle
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Routing\RouteParameter(name="cycleId")
      */
     protected $id;
 
