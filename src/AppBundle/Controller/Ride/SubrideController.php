@@ -154,18 +154,16 @@ class SubrideController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("ride", class="AppBundle:Ride")
-     * @ParamConverter("oldDate", options={"format": "Y-m-d"})
+     * @ParamConverter("oldRide", class="AppBundle:Ride")
+     * @ParamConverter("newDate", options={"format": "Y-m-d"})
      */
-    public function copyAction(Ride $ride, \DateTime $oldDate): Response
+    public function copyAction(Ride $oldRide, \DateTime $newDate): Response
     {
-        $oldRide = $this->getRideRepository()->findCityRideByDate($ride->getCity(), $oldDate);
+        $ride = $this->getRideRepository()->findCityRideByDate($oldRide->getCity(), $newDate);
 
         $em = $this->getDoctrine()->getManager();
 
-        /**
-         * @var Subride $oldSubride
-         */
+        /** @var Subride $oldSubride */
         foreach ($oldRide->getSubrides() as $oldSubride) {
             $newSubride = clone $oldSubride;
             $newSubride->setUser($this->getUser());
