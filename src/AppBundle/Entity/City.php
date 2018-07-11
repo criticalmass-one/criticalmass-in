@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Criticalmass\Sharing\ShareableInterface\Shareable;
 use Caldera\GeoBasic\Coord\Coord;
 use AppBundle\EntityInterface\AuditableInterface;
 use AppBundle\EntityInterface\AutoParamConverterAble;
@@ -29,7 +30,7 @@ use AppBundle\Criticalmass\Sharing\Annotation as Sharing;
  * @JMS\ExclusionPolicy("all")
  * @Routing\DefaultRoute(name="caldera_criticalmass_city_show")
  */
-class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, AutoParamConverterAble, SocialNetworkProfileAble, PostableInterface
+class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, AutoParamConverterAble, SocialNetworkProfileAble, PostableInterface, Shareable
 {
     /**
      * @ORM\Id
@@ -75,6 +76,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      * @Assert\NotBlank()
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
+     * @Sharing\Title()
      */
     protected $title;
 
@@ -170,6 +172,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * @ORM\Column(type="string", nullable=true)
      * @JMS\Expose
+     * @Sharing\Intro()
      */
     protected $punchLine;
 

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Criticalmass\Sharing\ShareableInterface\Shareable;
 use AppBundle\EntityInterface\AutoParamConverterAble;
 use AppBundle\EntityInterface\PhotoInterface;
 use AppBundle\EntityInterface\PostableInterface;
@@ -21,7 +22,7 @@ use AppBundle\Criticalmass\Sharing\Annotation as Sharing;
  * @JMS\ExclusionPolicy("all")
  * @Routing\DefaultRoute(name="caldera_criticalmass_photo_show_ride")
  */
-class Photo implements ViewableInterface, PhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble
+class Photo implements ViewableInterface, PhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, Shareable
 {
     /**
      * @ORM\Id
@@ -67,6 +68,7 @@ class Photo implements ViewableInterface, PhotoInterface, RouteableInterface, Po
     /**
      * @ORM\Column(type="text", nullable=true)
      * @JMS\Expose
+     * @Sharing\Intro()
      */
     protected $description;
 
