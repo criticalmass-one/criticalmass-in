@@ -100,9 +100,7 @@ class SocialNetworkController extends AbstractController
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
         }
 
-        return $this->redirectToRoute('criticalmass_socialnetwork_city_list', [
-            'citySlug' => $socialNetworkProfile->getCity()->getMainSlugString(),
-        ]);
+        return $this->redirectToObject($socialNetworkProfile->getCity(), 'criticalmass_socialnetwork_city_list');
     }
 
     protected function addGetAction(

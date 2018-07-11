@@ -102,12 +102,12 @@
                                 {% if not cycle.disabledAt %}
                                 <div class="btn-group">
                                     <a class="btn btn-default btn-xs"
-                                       href="{{ objectPath(city, 'caldera_criticalmass_citycycle_edit', { cycleId: cycle.id }) }}">
+                                       href="{{ objectPath(cycle, 'caldera_criticalmass_citycycle_edit') }}">
                                         <i class="fa fa-wrench"></i>
                                     </a>
 
                                     <a class="btn btn-default btn-xs"
-                                       href="{{ objectPath('caldera_criticalmass_citycycle_disable', { citySlug: city.mainSlugString, cycleId: cycle.id }) }}">
+                                       href="{{ objectPath(cycle, 'caldera_criticalmass_citycycle_disable') }}">
                                         <i class="fa fa-trash-o"></i>
                                     </a>
                                 </div>

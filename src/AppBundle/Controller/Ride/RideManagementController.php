@@ -32,9 +32,7 @@ class RideManagementController extends AbstractController
             ->setUser($user);
 
         $form = $this->createForm(RideType::class, $ride, [
-            'action' => $this->generateUrl('caldera_criticalmass_ride_add', [
-                'citySlug' => $city->getMainSlugString(),
-            ])
+            'action' => $this->generateObjectUrl($city,'caldera_criticalmass_ride_add'),
         ]);
 
         if ($request->isMethod(Request::METHOD_POST)) {
@@ -100,10 +98,7 @@ class RideManagementController extends AbstractController
     public function editAction(Request $request, UserInterface $user = null, Ride $ride): Response
     {
         $form = $this->createForm(RideType::class, $ride, [
-            'action' => $this->generateUrl('caldera_criticalmass_ride_edit', [
-                'citySlug' => $ride->getCity()->getMainSlugString(),
-                'rideDate' => $ride->getDateTime()->format('Y-m-d')
-            ])
+            'action' => $this->generateObjectUrl($ride, 'caldera_criticalmass_ride_edit'),
         ]);
 
         if (Request::METHOD_POST == $request->getMethod()) {
@@ -172,10 +167,7 @@ class RideManagementController extends AbstractController
         Ride $ride
     ): Response {
         $form = $this->createForm(RideSocialPreviewType::class, $ride, [
-            'action' => $this->generateUrl('caldera_criticalmass_ride_socialpreview', [
-                'citySlug' => $ride->getCity()->getMainSlugString(),
-                'rideDate' => $ride->getDateTime()->format('Y-m-d')
-            ])
+            'action' => $this->generateObjectUrl($ride, 'caldera_criticalmass_ride_socialpreview'),
         ]);
 
         if ($request->isMethod(Request::METHOD_POST)) {

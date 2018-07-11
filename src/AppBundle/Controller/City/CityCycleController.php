@@ -72,9 +72,7 @@ class CityCycleController extends AbstractController
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
 
-            return $this->redirectToRoute('caldera_criticalmass_citycycle_list', [
-                'citySlug' => $city->getMainSlugString(),
-            ]);
+            return $this->redirectToObject($city, 'caldera_criticalmass_citycycle_list');
         }
 
         return $this->render('AppBundle:CityCycle:edit.html.twig', [
@@ -159,8 +157,6 @@ class CityCycleController extends AbstractController
 
         $objectManager->flush();
 
-        return $this->redirectToRoute('caldera_criticalmass_citycycle_list', [
-            'citySlug' => $cityCycle->getCity()->getMainSlugString()
-        ]);
+        return $this->redirectToObject($city, 'caldera_criticalmass_citycycle_list');
     }
 }
