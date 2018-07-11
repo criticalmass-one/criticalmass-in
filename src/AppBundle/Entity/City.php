@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use AppBundle\Criticalmass\Router\Annotation as Routing;
+use AppBundle\Criticalmass\Sharing\Annotation as Sharing;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CityRepository")
@@ -260,6 +261,12 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      * @ORM\Column(type="integer")
      */
     protected $views = 0;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Sharing\Shorturl()
+     */
+    protected $shorturl;
 
     public function __construct()
     {
@@ -880,5 +887,17 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         $this->socialNetworkProfiles->removeElement($socialNetworkProfile);
 
         return $this;
+    }
+
+    public function setShorturl(string $shorturl): City
+    {
+        $this->shorturl = $shorturl;
+
+        return $this;
+    }
+
+    public function getShorturl(): ?string
+    {
+        return $this->shorturl;
     }
 }

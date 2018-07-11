@@ -12,6 +12,7 @@ use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use AppBundle\Criticalmass\Router\Annotation as Routing;
+use AppBundle\Criticalmass\Sharing\Annotation as Sharing;
 
 /**
  * @ORM\Table(name="photo")
@@ -128,6 +129,12 @@ class Photo implements ViewableInterface, PhotoInterface, RouteableInterface, Po
      * @ORM\OneToMany(targetEntity="Photo", mappedBy="featuredPhoto", fetch="LAZY")
      */
     protected $featuredRides;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Sharing\Shorturl()
+     */
+    protected $shorturl;
 
     public function __construct()
     {
@@ -336,6 +343,18 @@ class Photo implements ViewableInterface, PhotoInterface, RouteableInterface, Po
     public function getBackupName(): string
     {
         return $this->backupName;
+    }
+
+    public function setShorturl(string $shorturl): Photo
+    {
+        $this->shorturl = $shorturl;
+
+        return $this;
+    }
+
+    public function getShorturl(): ?string
+    {
+        return $this->shorturl;
     }
 
     public function __toString(): string

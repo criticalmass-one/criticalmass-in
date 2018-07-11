@@ -20,6 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Validator\Constraint as CriticalAssert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use AppBundle\Criticalmass\Router\Annotation as Routing;
+use AppBundle\Criticalmass\Sharing\Annotation as Sharing;
 
 /**
  * @ORM\Table(name="ride")
@@ -271,6 +272,12 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @var string
      */
     private $imageName;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Sharing\Shorturl()
+     */
+    protected $shorturl;
 
     public function __construct()
     {
@@ -939,5 +946,17 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         $this->socialNetworkProfiles->removeElement($socialNetworkProfile);
 
         return $this;
+    }
+
+    public function setShorturl(string $shorturl): Ride
+    {
+        $this->shorturl = $shorturl;
+
+        return $this;
+    }
+
+    public function getShorturl(): ?string
+    {
+        return $this->shorturl;
     }
 }
