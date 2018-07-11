@@ -4,5 +4,5 @@ namespace AppBundle\Criticalmass\Sharing\ShareableInterface;
 
 interface Shareable
 {
-
+    public function getId(): ?int;
 }

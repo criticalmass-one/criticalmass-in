@@ -5,6 +5,7 @@ namespace AppBundle\Criticalmass\Sharing\Metadata;
 use AppBundle\Criticalmass\Sharing\Annotation\Intro;
 use AppBundle\Criticalmass\Sharing\Annotation\Title;
 use AppBundle\Criticalmass\Sharing\ShareableInterface\Shareable;
+use AppBundle\Criticalmass\Util\ClassUtil;
 
 class Metadata extends AbstractMetadata
 {
@@ -15,7 +16,7 @@ class Metadata extends AbstractMetadata
         return $keyword;
     }
 
-    public function getShareTitle(Shareable $shareable): ?string
+    public function getShareTitle(Shareable $shareable): string
     {
         $reflectionClass = new \ReflectionClass($shareable);
         $properties = $reflectionClass->getProperties();
@@ -34,7 +35,7 @@ class Metadata extends AbstractMetadata
             }
         }
 
-        return null;
+        return sprintf('%s #%d', ClassUtil::getShortname($shareable), $shareable->getId());
     }
 
     public function getShareIntro(Shareable $shareable): ?string
