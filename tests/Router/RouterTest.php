@@ -1,12 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace Tests\Component\Router;
+namespace Tests\Router;
 
 use AppBundle\Criticalmass\Router\ObjectRouter;
 use AppBundle\Entity\City;
 use AppBundle\Entity\CitySlug;
 use AppBundle\Entity\Ride;
-use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class RouterTest extends KernelTestCase
@@ -34,7 +33,7 @@ class RouterTest extends KernelTestCase
 
         $route = $this->getRouter()->generate($city, 'caldera_criticalmass_city_show');
 
-        $this->assertEquals('http://localhost/testcity', $route);
+        $this->assertEquals('/testcity', $route);
     }
 
     public function testCity(): void
@@ -50,7 +49,7 @@ class RouterTest extends KernelTestCase
 
         $route = $this->getRouter()->generate($city);
 
-        $this->assertEquals('http://localhost/testcity', $route);
+        $this->assertEquals('/testcity', $route);
     }
 
     public function testRide(): void
@@ -73,6 +72,6 @@ class RouterTest extends KernelTestCase
 
         $route = $this->getRouter()->generate($ride);
 
-        $this->assertEquals('http://localhost/testcity/2018-01-01', $route);
+        $this->assertEquals('/testcity/2018-01-01', $route);
     }
 }

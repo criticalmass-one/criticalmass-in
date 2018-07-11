@@ -1,13 +1,13 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace Tests\Component\Image\PhotoGps\Mocks;
+namespace Tests\Image\PhotoGps\Mocks;
 
-use Criticalmass\Bundle\AppBundle\Entity\Track;
+use AppBundle\Entity\Track;
 
 class MockTrack extends Track
 {
     public function getTrackFilename(): ?string
     {
-        return '../../tests/Component/Image/PhotoGps/Files/braunschweig.gpx';
+        return '../../tests/Image/PhotoGps/Files/braunschweig.gpx';
     }
 }
