@@ -30,6 +30,12 @@ services:
 
     Symfony\Component\Routing\RouteCollection: ~
 
+    Caldera\YourlsApiManager\YourlsApiManager:
+        arguments:
+            - '%yourls.api_hostname%'
+            - '%yourls.api_username%'
+            - '%yourls.api_password%'
+
     AppBundle\Request\ParamConverter\RideParamConverter:
         tags:
             - { name: request.param_converter, priority: 0, converter: ride_converter }
