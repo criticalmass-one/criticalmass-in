@@ -36,6 +36,10 @@ class ReverseGeocoder implements ReverseGeocoderInterface
 
     public function reverseGeocode(ReverseGeocodeable $geocodeable): ReverseGeocodeable
     {
+        if (!$geocodeable->getLatitude() || !$geocodeable->getLongitude()) {
+            return $geocodeable;
+        }
+
         $result = $this->geocoder->reverseQuery(ReverseQuery::fromCoordinates($geocodeable->getLatitude(), $geocodeable->getLongitude()));
 
         $firstResult = $result->first();
