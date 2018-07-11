@@ -2,6 +2,7 @@
 
 namespace AppBundle\Criticalmass\Sharing\Metadata;
 
+use AppBundle\Criticalmass\Router\ObjectRouterInterface;
 use AppBundle\Criticalmass\Sharing\Annotation\Intro;
 use AppBundle\Criticalmass\Sharing\Annotation\Route;
 use AppBundle\Criticalmass\Sharing\Annotation\RouteParameter;
@@ -11,12 +12,11 @@ use AppBundle\Criticalmass\Sharing\ShareableInterface\Shareable;
 use Caldera\YourlsApiManager\YourlsApiManager;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 use Doctrine\Common\Annotations\AnnotationReader;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\Routing\RouterInterface;
 
 class Metadata
 {
-    /** @var Router $router */
+    /** @var ObjectRouterInterface $router */
     protected $router;
 
     /** @var AnnotationReader $annotationReader */
@@ -28,7 +28,7 @@ class Metadata
     /** @var Doctrine $doctrine */
     protected $doctrine;
 
-    public function __construct(Router $router, AnnotationReader $annotationReader, YourlsApiManager $yourlsApiManager, Doctrine $doctrine)
+    public function __construct(ObjectRouterInterface $router, AnnotationReader $annotationReader, YourlsApiManager $yourlsApiManager, Doctrine $doctrine)
     {
         $this->router = $router;
         $this->annotationReader = $annotationReader;
@@ -45,11 +45,7 @@ class Metadata
 
     protected function generateShareUrl(Shareable $shareable): string
     {
-        return $this->router->generate(
-            $this->getRouteName($shareable),
-            $this->getRouteParameter($shareable),
-            RouterInterface::ABSOLUTE_URL
-        );
+        return $this->router->generate($shareable, null, [], RouterInterface::ABSOLUTE_URL);
     }
 
     protected function checkShorturl(Shareable $shareable): ?string
