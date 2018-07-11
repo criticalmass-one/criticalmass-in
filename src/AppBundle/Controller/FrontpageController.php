@@ -43,7 +43,7 @@ class FrontpageController extends AbstractController
 
         /** @var Ride $ride */
         foreach ($rides as $ride) {
-            $rideDate = $ride->getFormattedDate();
+            $rideDate = $ride->getDateTime()->format('Y-m-d');
             $citySlug = $ride->getCity()->getSlug();
 
             if (!array_key_exists($rideDate, $rideList)) {

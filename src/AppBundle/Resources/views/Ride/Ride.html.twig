@@ -92,7 +92,7 @@
         photoViewPageUrl: '{{ objectPath(ride, 'caldera_criticalmass_photo_show_ride', { photoId: 'photoId'}) }}',
         photoCounterUrl: '{{ objectPath(ride, 'caldera_criticalmass_photo_ajaxview') }}',
         citySlug: '{{ city.slug }}',
-        rideDate: '{{ ride.getFormattedDate() }}'
+        rideDate: '{{ ride.dateTime|date('Y-m-d') }}'
     };
 
     CriticalMass.loadModule('RidePage', null, pageOptions, function (ridePage) {

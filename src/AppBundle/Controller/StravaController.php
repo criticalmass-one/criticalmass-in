@@ -96,8 +96,8 @@ class StravaController extends AbstractController
      */
     public function listridesAction(Ride $ride): Response
     {
-        $afterDateTime = new \DateTime($ride->getFormattedDate() . ' 00:00:00');
-        $beforeDateTime = new \DateTime($ride->getFormattedDate() . ' 23:59:59');
+        $afterDateTime = new \DateTime($ride->getDateTime()->format('Y-m-d') . ' 00:00:00');
+        $beforeDateTime = new \DateTime($ride->getDateTime()->format('Y-m-d') . ' 23:59:59');
 
         $token = $this->getSession()->get('strava_token');
 

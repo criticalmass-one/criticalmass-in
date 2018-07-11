@@ -462,7 +462,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     /** @deprecated */
     public function isSameRide(Ride $ride): bool
     {
-        return $ride->getCity()->getId() == $this->getCity()->getId() && $ride->getFormattedDate() == $this->getFormattedDate();
+        return $ride->getCity()->getId() == $this->getCity()->getId() && $ride->getDateTime()->format('Y-m-d') == $this->getDateTime()->format('Y-m-d');
     }
 
     public function __toString(): string
@@ -539,13 +539,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     {
         return $this->url;
     }
-
-    /** @deprecated */
-    public function getFormattedDate(): string
-    {
-        return $this->dateTime->format('Y-m-d');
-    }
-
+    
     /** @deprecated */
     public function getDate(): \DateTime
     {
