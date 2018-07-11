@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "41d170b344686679fb462425b66f524c",
+    "content-hash": "11c8354822b020ecc1388c50fff55697",
     "packages": [
         {
             "name": "basvandorst/stravaphp",
@@ -136,6 +136,42 @@
                 }
             ],
             "time": "2017-05-05T10:40:27+00:00"
+        },
+        {
+            "name": "calderacc/yourls-api-manager",
+            "version": "0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/calderacc/yourls-api-manager.git",
+                "reference": "12775fb0316ee9ae2662acbefe1b356d990fd284"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/calderacc/yourls-api-manager/zipball/12775fb0316ee9ae2662acbefe1b356d990fd284",
+                "reference": "12775fb0316ee9ae2662acbefe1b356d990fd284",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1",
+                "php-curl-class/php-curl-class": "^8.0"
+            },
+            "type": "package",
+            "autoload": {
+                "psr-4": {
+                    "Caldera\\YourlsApiManager\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Malte Hübner",
+                    "email": "malte@caldera.cc"
+                }
+            ],
+            "time": "2017-12-29T01:19:11+00:00"
         },
         {
             "name": "cebe/markdown",
@@ -4184,23 +4220,25 @@
         },
         {
             "name": "php-curl-class/php-curl-class",
-            "version": "7.4.0",
+            "version": "8.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-curl-class/php-curl-class.git",
-                "reference": "c15f23ce5d52a4c68b69640ed6510a9d2a98ec6f"
+                "reference": "0090c30b4348028cabf1d03427423460ca7dc4a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-curl-class/php-curl-class/zipball/c15f23ce5d52a4c68b69640ed6510a9d2a98ec6f",
-                "reference": "c15f23ce5d52a4c68b69640ed6510a9d2a98ec6f",
+                "url": "https://api.github.com/repos/php-curl-class/php-curl-class/zipball/0090c30b4348028cabf1d03427423460ca7dc4a4",
+                "reference": "0090c30b4348028cabf1d03427423460ca7dc4a4",
                 "shasum": ""
             },
             "require": {
                 "ext-curl": "*",
+                "ext-mbstring": "*",
                 "php": ">=5.3"
             },
             "require-dev": {
+                "ext-gd": "*",
                 "phpunit/phpunit": "*",
                 "squizlabs/php_codesniffer": "*"
             },
@@ -4237,7 +4275,7 @@
                 "web service",
                 "xml"
             ],
-            "time": "2017-09-04T21:38:09+00:00"
+            "time": "2018-06-06T05:01:44+00:00"
         },
         {
             "name": "php-http/cache-plugin",

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Criticalmass\Sharing\ShareableInterface\Shareable;
 use Caldera\GeoBasic\Coord\Coord;
 use AppBundle\EntityInterface\AuditableInterface;
 use AppBundle\EntityInterface\AutoParamConverterAble;
@@ -20,6 +21,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use AppBundle\Criticalmass\Router\Annotation as Routing;
+use AppBundle\Criticalmass\Sharing\Annotation as Sharing;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CityRepository")
@@ -28,7 +30,7 @@ use AppBundle\Criticalmass\Router\Annotation as Routing;
  * @JMS\ExclusionPolicy("all")
  * @Routing\DefaultRoute(name="caldera_criticalmass_city_show")
  */
-class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, AutoParamConverterAble, SocialNetworkProfileAble, PostableInterface
+class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, AutoParamConverterAble, SocialNetworkProfileAble, PostableInterface, Shareable
 {
     /**
      * @ORM\Id
@@ -74,6 +76,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      * @Assert\NotBlank()
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
+     * @Sharing\Title()
      */
     protected $title;
 
@@ -169,6 +172,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     /**
      * @ORM\Column(type="string", nullable=true)
      * @JMS\Expose
+     * @Sharing\Intro()
      */
     protected $punchLine;
 
@@ -260,6 +264,12 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      * @ORM\Column(type="integer")
      */
     protected $views = 0;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Sharing\Shorturl()
+     */
+    protected $shorturl;
 
     public function __construct()
     {
@@ -880,5 +890,17 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         $this->socialNetworkProfiles->removeElement($socialNetworkProfile);
 
         return $this;
+    }
+
+    public function setShorturl(string $shorturl): City
+    {
+        $this->shorturl = $shorturl;
+
+        return $this;
+    }
+
+    public function getShorturl(): ?string
+    {
+        return $this->shorturl;
     }
 }

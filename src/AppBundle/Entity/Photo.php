@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Criticalmass\Sharing\ShareableInterface\Shareable;
 use AppBundle\EntityInterface\AutoParamConverterAble;
 use AppBundle\EntityInterface\PhotoInterface;
 use AppBundle\EntityInterface\PostableInterface;
@@ -12,6 +13,7 @@ use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use AppBundle\Criticalmass\Router\Annotation as Routing;
+use AppBundle\Criticalmass\Sharing\Annotation as Sharing;
 
 /**
  * @ORM\Table(name="photo")
@@ -20,7 +22,7 @@ use AppBundle\Criticalmass\Router\Annotation as Routing;
  * @JMS\ExclusionPolicy("all")
  * @Routing\DefaultRoute(name="caldera_criticalmass_photo_show_ride")
  */
-class Photo implements ViewableInterface, PhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble
+class Photo implements ViewableInterface, PhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, Shareable
 {
     /**
      * @ORM\Id
@@ -66,6 +68,7 @@ class Photo implements ViewableInterface, PhotoInterface, RouteableInterface, Po
     /**
      * @ORM\Column(type="text", nullable=true)
      * @JMS\Expose
+     * @Sharing\Intro()
      */
     protected $description;
 
@@ -128,6 +131,12 @@ class Photo implements ViewableInterface, PhotoInterface, RouteableInterface, Po
      * @ORM\OneToMany(targetEntity="Photo", mappedBy="featuredPhoto", fetch="LAZY")
      */
     protected $featuredRides;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Sharing\Shorturl()
+     */
+    protected $shorturl;
 
     public function __construct()
     {
@@ -336,6 +345,18 @@ class Photo implements ViewableInterface, PhotoInterface, RouteableInterface, Po
     public function getBackupName(): string
     {
         return $this->backupName;
+    }
+
+    public function setShorturl(string $shorturl): Photo
+    {
+        $this->shorturl = $shorturl;
+
+        return $this;
+    }
+
+    public function getShorturl(): ?string
+    {
+        return $this->shorturl;
     }
 
     public function __toString(): string

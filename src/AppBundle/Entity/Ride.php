@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Criticalmass\Sharing\ShareableInterface\Shareable;
 use Caldera\GeoBasic\Coord\Coord;
 use AppBundle\EntityInterface\AuditableInterface;
 use AppBundle\EntityInterface\ElasticSearchPinInterface;
@@ -20,6 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Validator\Constraint as CriticalAssert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use AppBundle\Criticalmass\Router\Annotation as Routing;
+use AppBundle\Criticalmass\Sharing\Annotation as Sharing;
 
 /**
  * @ORM\Table(name="ride")
@@ -29,7 +31,7 @@ use AppBundle\Criticalmass\Router\Annotation as Routing;
  * @Vich\Uploadable
  * @Routing\DefaultRoute(name="caldera_criticalmass_ride_show")
  */
-class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble
+class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, Shareable
 {
     /**
      * @ORM\Id
@@ -75,6 +77,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @ORM\Column(type="string", length=255, nullable=false)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
+     * @Sharing\Title()
      */
     protected $title;
 
@@ -82,6 +85,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @ORM\Column(type="text", nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
+     * @Sharing\Intro()
      */
     protected $description;
 
@@ -271,6 +275,12 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @var string
      */
     private $imageName;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Sharing\Shorturl()
+     */
+    protected $shorturl;
 
     public function __construct()
     {
@@ -939,5 +949,17 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         $this->socialNetworkProfiles->removeElement($socialNetworkProfile);
 
         return $this;
+    }
+
+    public function setShorturl(string $shorturl): Ride
+    {
+        $this->shorturl = $shorturl;
+
+        return $this;
+    }
+
+    public function getShorturl(): ?string
+    {
+        return $this->shorturl;
     }
 }

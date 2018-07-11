@@ -61,3 +61,7 @@ parameters:
     feature.photos: true
 
     timezone_db.api_key: 1234567890
+
+    yourls.api_hostname: asdasd
+    yourls.api_username: asdasd
+    yourls.api_password: asdasd
