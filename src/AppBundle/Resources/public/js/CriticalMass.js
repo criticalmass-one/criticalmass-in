@@ -73,6 +73,7 @@ require.config({
         "SubrideMarker": "/bundles/app/js/modules/map/marker/SubrideMarker",
         "SnapablePhotoMarker": "/bundles/app/js/modules/map/marker/SnapablePhotoMarker",
         "Search": "/bundles/app/js/modules/Search",
+        "Sharing": "/bundles/app/js/modules/Sharing",
         "ReadMore": "/bundles/app/js/modules/ReadMore",
         "CookieNotice": "/bundles/app/js/modules/CookieNotice",
         "readmorejs": "/bundles/app/js/external/readmore/readmore.min",
