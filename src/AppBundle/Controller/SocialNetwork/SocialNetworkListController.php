@@ -3,19 +3,18 @@
 namespace AppBundle\Controller\SocialNetwork;
 
 use AppBundle\Controller\AbstractController;
+use AppBundle\Criticalmass\Router\ObjectRouterInterface;
 use AppBundle\Entity\City;
 use AppBundle\Entity\Ride;
 use AppBundle\Entity\SocialNetworkProfile;
 use AppBundle\Entity\Subride;
 use AppBundle\Entity\User;
+use AppBundle\EntityInterface\RouteableInterface;
 use AppBundle\Form\Type\SocialNetworkProfileType;
 use AppBundle\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
-use AppBundle\Criticalmass\SocialNetwork\NetworkDetector\NetworkDetector;
 use AppBundle\Criticalmass\Util\ClassUtil;
-use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -24,7 +23,7 @@ class SocialNetworkListController extends AbstractController
     /**
      * @ParamConverter("city", class="AppBundle:City")
      */
-    public function listCityAction(RouterInterface $router, City $city): Response
+    public function listCityAction(ObjectRouterInterface $router, City $city): Response
     {
         $addProfileForm = $this->getAddProfileForm($router, $city);
 
@@ -39,7 +38,7 @@ class SocialNetworkListController extends AbstractController
     /**
      * @ParamConverter("ride", class="AppBundle:Ride")
      */
-    public function listRideAction(RouterInterface $router, Ride $ride): Response
+    public function listRideAction(ObjectRouterInterface $router, Ride $ride): Response
     {
         $addProfileForm = $this->getAddProfileForm($router, $ride);
 
@@ -51,7 +50,7 @@ class SocialNetworkListController extends AbstractController
         ]);
     }
 
-    protected function getAddProfileForm(RouterInterface $router, SocialNetworkProfileAble $profileAble): FormInterface
+    protected function getAddProfileForm(ObjectRouterInterface $router, SocialNetworkProfileAble $profileAble): FormInterface
     {
         $socialNetworkProfile = new SocialNetworkProfile();
 
@@ -77,31 +76,10 @@ class SocialNetworkListController extends AbstractController
         return $list;
     }
 
-    protected function getRouteName(RouterInterface $router, SocialNetworkProfileAble $profileAble, string $actionName): string
+    protected function getRouteName(ObjectRouterInterface $router, SocialNetworkProfileAble $profileAble, string $actionName): string
     {
         $routeName = sprintf('criticalmass_socialnetwork_%s_%s', ClassUtil::getLowercaseShortname($profileAble), $actionName);
 
-        $parameters = [];
-
-        if ($profileAble instanceof City) {
-            $parameters = ['citySlug' => $profileAble->getMainSlug()->getSlug()];
-        } elseif ($profileAble instanceof Ride) {
-            $parameters = [
-                'citySlug' => $profileAble->getCity()->getMainSlug()->getSlug(),
-                'rideDate' => $profileAble->getDateTime()->format('Y-m-d'),
-            ];
-        } elseif ($profileAble instanceof Subride) {
-            $parameters = [
-                'citySlug' => $profileAble->getRide()->getCity()->getMainSlug()->getSlug(),
-                'rideDate' => $profileAble->getRide()->getDateTime()->format('Y-m-d'),
-                'subrideId' => $profileAble->getId(),
-            ];
-        } elseif ($profileAble instanceof User) {
-            $parameters = [
-                'username' => $profileAble->getUsernameCanonical(),
-            ];
-        }
-
-        return $router->generate($routeName, $parameters);
+        return $router->generate($profileAble, $routeName);
     }
 }
