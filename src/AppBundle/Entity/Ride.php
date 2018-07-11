@@ -539,7 +539,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     {
         return $this->url;
     }
-    
+
     /** @deprecated */
     public function getDate(): \DateTime
     {

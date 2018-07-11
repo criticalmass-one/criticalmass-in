@@ -187,15 +187,15 @@ class SocialNetworkController extends AbstractController
         $parameters = [];
 
         if ($profileAble instanceof City) {
-            $parameters = ['citySlug' => $profileAble->getMainSlugString()];
+            $parameters = ['citySlug' => $profileAble->getMainSlug()->getSlug()];
         } elseif ($profileAble instanceof Ride) {
             $parameters = [
-                'citySlug' => $profileAble->getCity()->getMainSlugString(),
+                'citySlug' => $profileAble->getCity()->getMainSlug()->getSlug(),
                 'rideDate' => $profileAble->getDateTime()->format('Y-m-d'),
             ];
         } elseif ($profileAble instanceof Subride) {
             $parameters = [
-                'citySlug' => $profileAble->getRide()->getCity()->getMainSlugString(),
+                'citySlug' => $profileAble->getRide()->getCity()->getMainSlug()->getSlug(),
                 'rideDate' => $profileAble->getRide()->getDateTime()->format('Y-m-d'),
                 'subrideId' => $profileAble->getId(),
             ];

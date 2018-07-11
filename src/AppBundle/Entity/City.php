@@ -325,6 +325,9 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this->getMainSlug()->getSlug();
     }
 
+    /**
+     * @deprecated
+     */
     public function getSlug(): string
     {
         return $this->getMainSlugString();

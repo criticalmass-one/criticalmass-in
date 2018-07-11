@@ -235,7 +235,7 @@
 
     <script>
         var options = {
-            citySlug: '{{ city.getMainSlugString() }}'
+            citySlug: '{{ city.mainSlug.slug() }}'
         };
 
         CriticalMass.loadModule('EditRidePage', options, null, function (editRidePage) {
