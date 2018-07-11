@@ -3,14 +3,14 @@
 namespace AppBundle\Twig\Extension;
 
 use AppBundle\Criticalmass\Sharing\ShareableInterface\Shareable;
-use AppBundle\Criticalmass\Sharing\SocialSharer;
+use AppBundle\Criticalmass\Sharing\SocialSharerInterface;
 
 class SharingExtension extends \Twig_Extension
 {
-    /** @var SocialSharer $sharer */
+    /** @var SocialSharerInterface $sharer */
     protected $sharer;
 
-    public function __construct(SocialSharer $sharer)
+    public function __construct(SocialSharerInterface $sharer)
     {
         $this->sharer = $sharer;
     }
