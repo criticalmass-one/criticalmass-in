@@ -2,10 +2,13 @@
 
 namespace AppBundle\Command\Geocoding;
 
+use AppBundle\Criticalmass\Geocoding\ReverseGeocoderInterface;
 use AppBundle\Entity\Photo;
 use Geocoder\Query\ReverseQuery;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -15,9 +18,14 @@ class GeocodingCommand extends Command
     /** @var RegistryInterface $registry */
     protected $registry;
 
-    public function __construct(?string $name = null, RegistryInterface $registry)
+    /** @var ReverseGeocoderInterface $reverseGeocoder */
+    protected $reverseGeocoder;
+
+    public function __construct(?string $name = null, RegistryInterface $registry, ReverseGeocoderInterface $reverseGeocoder)
     {
         $this->registry = $registry;
+
+        $this->reverseGeocoder = $reverseGeocoder;
 
         parent::__construct($name);
     }
@@ -27,28 +35,47 @@ class GeocodingCommand extends Command
         $this
             ->setName('criticalmass:geocoding:photos')
             ->setDescription('Geocode photos')
-            ->addOption('sleep', 's', InputArgument::OPTIONAL, 'Delay between nominatim queries, must not be lower than 1 second', 1);
+            ->addOption('sleep', 's', InputArgument::OPTIONAL, 'Delay between nominatim queries, must not be lower than 1 second', 2.5)
+            ->addOption('limit', 'l', InputArgument::OPTIONAL, 'Max number of photos per command call', 50);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $sleep = (int) $input->getOption('sleep');
-        $photoList = $this->registry->getRepository(Photo::class)->findGeocodeablePhotos();
+        $limit = (int) $input->getOption('limit');
 
-        $httpClient = new \Http\Adapter\Guzzle6\Client();
-        $provider = new \Geocoder\Provider\Nominatim\Nominatim($httpClient, 'https://nominatim.openstreetmap.org', 'Critical Mass Photo Geocoder', 'https://criticalmass.in/');
-        $geocoder = new \Geocoder\StatefulGeocoder($provider, 'en');
+        $photoList = $this->registry->getRepository(Photo::class)->findGeocodeablePhotos($limit, true);
 
+        $progressBar = new ProgressBar($output, count($photoList));
+        $table = new Table($output);
+
+        $table->setHeaders([
+            'Photo Id',
+            'DateTime',
+            'City',
+            'Ride DateTime',
+            'Location',
+        ]);
+
+        /** @var Photo $photo */
         foreach ($photoList as $photo) {
-            $result = $geocoder->reverseQuery(ReverseQuery::fromCoordinates($photo->getLatitude(), $photo->getLongitude()));
+            $photo = $this->reverseGeocoder->reverseGeocode($photo);
 
-            $firstResult = $result->first();
+            $table->addRow([
+                $photo->getId(),
+                $photo->getDateTime()->format('Y-m-d H:i:s'),
+                $photo->getRide()->getCity()->getCity(),
+                $photo->getRide()->getDateTime()->format('Y-m-d'),
+                $photo->getLocation(),
+            ]);
 
-            var_dump($firstResult->getStreetName(), $firstResult->getAdminLevels()->first()->getName());
+            $progressBar->advance();
 
             sleep($sleep);
         }
 
-
+        $this->registry->getManager()->flush();
+        $progressBar->finish();
+        $table->render();
     }
 }

@@ -101,7 +101,7 @@ class PhotoRepository extends EntityRepository
         return $result;
     }
 
-    public function findGeocodeablePhotos(): array
+    public function findGeocodeablePhotos(int $limit = 50, ?bool $emptyLocationOnly = false): array
     {
         $builder = $this->createQueryBuilder('p');
 
@@ -109,7 +109,12 @@ class PhotoRepository extends EntityRepository
             ->select('p')
             ->where($builder->expr()->isNotNull('p.latitude'))
             ->andWhere($builder->expr()->isNotNull('p.longitude'))
-            ->orderBy('p.dateTime', 'asc');
+            ->orderBy('p.dateTime', 'asc')
+            ->setMaxResults($limit);
+
+        if ($emptyLocationOnly) {
+            $builder->andWhere($builder->expr()->isNull('p.location'));
+        }
 
         $query = $builder->getQuery();
         $result = $query->getResult();
