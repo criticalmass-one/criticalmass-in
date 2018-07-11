@@ -79,7 +79,6 @@ class PhotoRepository extends EntityRepository
         return $result;
     }
 
-
     public function findRidesWithPhotoCounterByUser(User $user): array
     {
         $builder = $this->createQueryBuilder('photo');
@@ -95,6 +94,22 @@ class PhotoRepository extends EntityRepository
             ->join('photo.ride', 'ride')
             ->join('ride.city', 'city')
             ->orderBy('ride.dateTime', 'desc');
+
+        $query = $builder->getQuery();
+        $result = $query->getResult();
+
+        return $result;
+    }
+
+    public function findGeocodeablePhotos(): array
+    {
+        $builder = $this->createQueryBuilder('p');
+
+        $builder
+            ->select('p')
+            ->where($builder->expr()->isNotNull('p.latitude'))
+            ->andWhere($builder->expr()->isNotNull('p.longitude'))
+            ->orderBy('p.dateTime', 'asc');
 
         $query = $builder->getQuery();
         $result = $query->getResult();
