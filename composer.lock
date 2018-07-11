@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "11c8354822b020ecc1388c50fff55697",
+    "content-hash": "4e9710685530f1f9378001457dead005",
     "packages": [
         {
             "name": "basvandorst/stravaphp",
@@ -2138,6 +2138,125 @@
                 "User management"
             ],
             "time": "2018-03-25T11:43:48+00:00"
+        },
+        {
+            "name": "geocoder-php/common-http",
+            "version": "4.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/geocoder-php/php-common-http.git",
+                "reference": "99db54307a4b12e4cb4a8c3fbafc41c395c97d65"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/geocoder-php/php-common-http/zipball/99db54307a4b12e4cb4a8c3fbafc41c395c97d65",
+                "reference": "99db54307a4b12e4cb4a8c3fbafc41c395c97d65",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0",
+                "php-http/client-implementation": "^1.0",
+                "php-http/discovery": "^1.4",
+                "php-http/httplug": "^1.0",
+                "php-http/message-factory": "^1.0.2",
+                "psr/http-message": "^1.0",
+                "psr/http-message-implementation": "^1.0",
+                "willdurand/geocoder": "^4.0"
+            },
+            "require-dev": {
+                "nyholm/psr7": "^0.2.2",
+                "php-http/message": "^1.0",
+                "php-http/mock-client": "^1.0",
+                "phpunit/phpunit": "6.3.*",
+                "symfony/stopwatch": "~2.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Geocoder\\Http\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Nyholm",
+                    "email": "tobias.nyholm@gmail.com"
+                }
+            ],
+            "description": "Common files for HTTP based Geocoders",
+            "homepage": "http://geocoder-php.org",
+            "keywords": [
+                "http geocoder"
+            ],
+            "time": "2018-06-28T09:46:39+00:00"
+        },
+        {
+            "name": "geocoder-php/nominatim-provider",
+            "version": "5.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/geocoder-php/nominatim-provider.git",
+                "reference": "38d9299ae3cb95cd5eb354008dc19884d00f7edc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/geocoder-php/nominatim-provider/zipball/38d9299ae3cb95cd5eb354008dc19884d00f7edc",
+                "reference": "38d9299ae3cb95cd5eb354008dc19884d00f7edc",
+                "shasum": ""
+            },
+            "require": {
+                "geocoder-php/common-http": "^4.1",
+                "php": "^7.0",
+                "willdurand/geocoder": "^4.0"
+            },
+            "provide": {
+                "geocoder-php/provider-implementation": "1.0"
+            },
+            "require-dev": {
+                "geocoder-php/provider-integration-tests": "^1.0",
+                "nyholm/psr7": "^0.2.2",
+                "php-http/curl-client": "^1.7",
+                "php-http/message": "^1.0",
+                "phpunit/phpunit": "6.3.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Geocoder\\Provider\\Nominatim\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "William Durand",
+                    "email": "william.durand1@gmail.com"
+                }
+            ],
+            "description": "Geocoder Nominatim adapter",
+            "homepage": "http://geocoder-php.org/Geocoder/",
+            "time": "2018-07-08T11:28:45+00:00"
         },
         {
             "name": "graylog2/gelf-php",
@@ -7405,6 +7524,65 @@
                 "upload"
             ],
             "time": "2018-03-09T14:08:14+00:00"
+        },
+        {
+            "name": "willdurand/geocoder",
+            "version": "4.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/geocoder-php/php-common.git",
+                "reference": "5e97b3c3d830fe47474cb331a05b4c63e16217b9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/geocoder-php/php-common/zipball/5e97b3c3d830fe47474cb331a05b4c63e16217b9",
+                "reference": "5e97b3c3d830fe47474cb331a05b4c63e16217b9",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0"
+            },
+            "require-dev": {
+                "nyholm/nsa": "^1.1",
+                "phpunit/phpunit": "6.3.*",
+                "symfony/stopwatch": "~2.5"
+            },
+            "suggest": {
+                "symfony/stopwatch": "If you want to use the TimedGeocoder"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Geocoder\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "William Durand",
+                    "email": "william.durand1@gmail.com"
+                }
+            ],
+            "description": "Common files for PHP Geocoder",
+            "homepage": "http://geocoder-php.org",
+            "keywords": [
+                "abstraction",
+                "geocoder",
+                "geocoding",
+                "geoip"
+            ],
+            "time": "2018-02-10T13:22:58+00:00"
         },
         {
             "name": "willdurand/jsonp-callback-validator",
