@@ -20,7 +20,7 @@
                 {% for subride in subrides %}
                     <div class="media subride col-md-4 no-margin-top margin-bottom-medium">
                         {% if app.getUser() %}
-                            <a href="{{ objectPath(ride, 'caldera_criticalmass_subride_edit') }}" class="edit-subride pull-right btn btn-default btn-xs">
+                            <a href="{{ objectPath(subride, 'caldera_criticalmass_subride_edit') }}" class="edit-subride pull-right btn btn-default btn-xs">
                                 <i class="fa fa-wrench"></i>
                             </a>
                         {% endif %}
