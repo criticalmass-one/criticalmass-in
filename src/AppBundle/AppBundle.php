@@ -3,7 +3,9 @@
 namespace AppBundle;
 
 use AppBundle\Criticalmass\Router\DelegatedRouter\DelegatedRouterInterface;
+use AppBundle\Criticalmass\Sharing\Network\ShareNetworkInterface;
 use AppBundle\DependencyInjection\Compiler\ObjectRouterPass;
+use AppBundle\DependencyInjection\Compiler\ShareNetworkPass;
 use AppBundle\DependencyInjection\Compiler\SocialNetworkPass;
 use AppBundle\DependencyInjection\Compiler\TimelineCollectorPass;
 use AppBundle\Criticalmass\SocialNetwork\Network\NetworkInterface;
@@ -32,6 +34,9 @@ class AppBundle extends Bundle
 
         $container->registerForAutoconfiguration(DelegatedRouterInterface::class)->addTag('object_router.delegated_router');
         $container->addCompilerPass(new ObjectRouterPass());
+
+        $container->addCompilerPass(new ShareNetworkPass());
+        $container->registerForAutoconfiguration(ShareNetworkInterface::class)->addTag('share.network');
     }
 
     public function getParent(): string
