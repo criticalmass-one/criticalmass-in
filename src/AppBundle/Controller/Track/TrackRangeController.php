@@ -57,6 +57,6 @@ class TrackRangeController extends AbstractController
             $eventDispatcher->dispatch(TrackTrimmedEvent::NAME, new TrackTrimmedEvent($track));
         }
 
-        return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
+        return $this->redirectToRoute('caldera_criticalmass_track_list');
     }
 }

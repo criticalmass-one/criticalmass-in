@@ -6,10 +6,12 @@ use AppBundle\EntityInterface\AuditableInterface;
 use AppBundle\EntityInterface\AutoParamConverterAble;
 use AppBundle\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Criticalmass\Router\Annotation as Routing;
 
 /**
  * @ORM\Table(name="location")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\LocationRepository")
+ * @Routing\DefaultRoute(name="caldera_criticalmass_location_show")
  */
 class Location implements RouteableInterface, AuditableInterface, AutoParamConverterAble
 {
@@ -23,11 +25,13 @@ class Location implements RouteableInterface, AuditableInterface, AutoParamConve
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="photos")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     * @Routing\RouteParameter(name="citySlug")
      */
     protected $city;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Routing\RouteParameter(name="locationSlug")
      */
     protected $slug;
 

@@ -21,13 +21,7 @@ class StravaController extends AbstractController
 {
     protected function initOauthForRide(Request $request, Ride $ride)
     {
-        $redirectUri = $request->getUriForPath($this->generateUrl(
-            'caldera_criticalmass_strava_token',
-            [
-                'citySlug' => $ride->getCity()->getMainSlugString(),
-                'rideDate' => $ride->getFormattedDate()
-            ]
-        ));
+        $redirectUri = $request->getUriForPath($this->generateObjectUrl($ride, 'caldera_criticalmass_strava_token'));
 
         /* avoid double app_dev.php in uri */
         $redirectUri = str_replace('app_dev.php/app_dev.php/', 'app_dev.php/', $redirectUri);
@@ -77,10 +71,7 @@ class StravaController extends AbstractController
         $error = $request->get('error');
 
         if ($error) {
-            return $this->redirectToRoute('caldera_criticalmass_strava_auth', [
-                'citySlug' => $ride->getCity()->getMainSlugString(),
-                'rideDate' => $ride->getFormattedDate(),
-            ]);
+            return $this->redirectToObject($ride, 'caldera_criticalmass_strava_auth');
         }
 
         $oauth = $this->initOauthForRide($request, $ride);
@@ -93,15 +84,9 @@ class StravaController extends AbstractController
             $session = $this->getSession();
             $session->set('strava_token', $token);
 
-            return $this->redirectToRoute('caldera_criticalmass_strava_list', [
-                'citySlug' => $ride->getCity()->getMainSlugString(),
-                'rideDate' => $ride->getFormattedDate(),
-            ]);
+            return $this->redirectToObject($ride, 'caldera_criticalmass_strava_list');
         } catch (\Exception $e) {
-            return $this->redirectToRoute('caldera_criticalmass_strava_auth', [
-                'citySlug' => $ride->getCity()->getMainSlugString(),
-                'rideDate' => $ride->getFormattedDate(),
-            ]);
+            return $this->redirectToObject($ride, 'caldera_criticalmass_strava_auth');
         }
     }
 
@@ -111,8 +96,8 @@ class StravaController extends AbstractController
      */
     public function listridesAction(Ride $ride): Response
     {
-        $afterDateTime = new \DateTime($ride->getFormattedDate() . ' 00:00:00');
-        $beforeDateTime = new \DateTime($ride->getFormattedDate() . ' 23:59:59');
+        $afterDateTime = new \DateTime($ride->getDateTime()->format('Y-m-d') . ' 00:00:00');
+        $beforeDateTime = new \DateTime($ride->getDateTime()->format('Y-m-d') . ' 23:59:59');
 
         $token = $this->getSession()->get('strava_token');
 

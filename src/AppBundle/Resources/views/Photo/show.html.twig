@@ -19,7 +19,7 @@
         </a>
     </li>
     <li>
-        <a href="{{ path('caldera_criticalmass_photo_ride_list', { 'citySlug': city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">
+        <a href="{{ objectPath(ride, 'caldera_criticalmass_photo_ride_list') }}">
             Fotos
         </a>
     </li>

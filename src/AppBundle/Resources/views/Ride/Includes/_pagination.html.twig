@@ -1,8 +1,9 @@
 <ul class="pager">
     {% if previousRide %}
         <li class="previous">
-            <a href="{{ path('caldera_criticalmass_ride_show', { 'citySlug': previousRide.getCity().getMainSlugString(), 'rideDate': previousRide.getDateTime().format('Y-m-d') }) }}">&larr;
-                Vorige Tour</a>
+            <a href="{{ objectPath(previousRide) }}">
+                &larr; Vorige Tour
+            </a>
         </li>
     {% else %}
         <li class="previous disabled"><a href="#">&larr; Vorige Tour</a></li>
@@ -10,8 +11,9 @@
 
     {% if nextRide %}
         <li class="next">
-            <a href="{{ path('caldera_criticalmass_ride_show', { 'citySlug': nextRide.getCity().getMainSlugString(), 'rideDate': nextRide.getDateTime().format('Y-m-d') }) }}">Nächste
-                Tour &rarr;</a>
+            <a href="{{ objectPath(nextRide) }}">
+                Nächste Tour &rarr;
+            </a>
         </li>
     {% else %}
         <li class="next disabled"><a href="#">Nächste Tour &rarr;</a></li>

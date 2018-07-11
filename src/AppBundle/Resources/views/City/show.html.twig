@@ -3,8 +3,15 @@
 {% block title %}{{ city.title }}{% endblock %}
 
 {% block breadcrumb %}
-    <li><a href="{{ path('caldera_criticalmass_city_list') }}">Städteliste</a></li>
-    <li class="active">{{ city.city }}</li>
+    <li>
+        <a href="{{ path('caldera_criticalmass_city_list') }}">
+            Städteliste
+        </a>
+    </li>
+
+    <li class="active">
+        {{ city.city }}
+    </li>
 {% endblock %}
 
 {% block optionsButton %}
@@ -17,28 +24,28 @@
         </button>
         <ul class="dropdown-menu">
             <li>
-                <a href="{{ path('caldera_criticalmass_city_edit', { citySlug: city.getMainSlugString() } ) }}">
+                <a href="{{ objectPath(city, 'caldera_criticalmass_city_edit') }}">
                     <i class="fa fa-cogs"></i>
                     Stadt editieren
                 </a>
             </li>
 
             <li>
-                <a href="{{ path('caldera_criticalmass_ride_add', { citySlug: city.getMainSlugString() } ) }}">
+                <a href="{{ objectPath(city, 'caldera_criticalmass_ride_add') }}">
                     <i class="fa fa-plus"></i>
                     Tour hinzufügen
                 </a>
             </li>
 
             <li>
-                <a href="{{ path('caldera_criticalmass_citycycle_list', { citySlug: city.getMainSlugString() } ) }}">
+                <a href="{{ objectPath(city, 'caldera_criticalmass_citycycle_list') }}">
                     <i class="fa fa-calendar-o"></i>
                     Turnus verwalten
                 </a>
             </li>
 
             <li>
-                <a href="{{ path('criticalmass_socialnetwork_city_list', { citySlug: city.getMainSlugString() } ) }}">
+                <a href="{{ objectPath(city, 'criticalmass_socialnetwork_city_list') }}">
                     <i class="fa fa-at"></i>
                     soziale Netzwerke verwalten
                 </a>
@@ -102,7 +109,7 @@
                                 <strong>Huch?</strong>
                                 Schade, bislang hat noch niemand Informationen über {{ city.city }} hinterlegt. Wenn du
                                 Lust und Zeit hast, kannst du {{ city.title }} <a
-                                        href="{{ path('caldera_criticalmass_city_edit', {citySlug: city.mainSlugString}) }}">hier
+                                        href="{{ objectPath(city, 'caldera_criticalmass_city_edit') }}">hier
                                     beschreiben</a>:
 
                                 <ul>
@@ -121,7 +128,7 @@
                                 </ul>
 
                                 <p class="text-center margin-top-medium">
-                                    <a href="{{ path('caldera_criticalmass_city_edit', {citySlug: city.mainSlugString}) }}"
+                                    <a href="{{ objectPath(city, 'caldera_criticalmass_city_edit') }}"
                                        class="btn btn-primary btn-lg">
                                         {{ city.city }} editieren
                                     </a>
@@ -140,7 +147,7 @@
 
                             <p>
                                 Hier siehst du ein paar Fotos aus {{ city.city }}. Schau dir auch die <a
-                                        href="{{ path('caldera_criticalmass_city_listgalleries', { 'citySlug': city.slug }) }}">Übersicht
+                                        href="{{ objectPath(city, 'caldera_criticalmass_city_listgalleries') }}">Übersicht
                                     über Fotos aus {{ city.city }}</a> an.
                             </p>
                         </div>

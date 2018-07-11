@@ -11,13 +11,13 @@
                 </button>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="{{ path('caldera_criticalmass_strava_auth', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}">
+                        <a href="{{ objectPath(ride, 'caldera_criticalmass_strava_auth') }}">
                             <i class="fa fa-map-o"></i>
                             Track von Strava importieren
                         </a>
                     </li>
                     <li>
-                        <a href="{{ path('caldera_criticalmass_track_upload', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}"
+                        <a href="{{ objectPath(ride, 'caldera_criticalmass_track_upload') }}"
                            title="Track hochladen">
                             <i class="fa fa-upload"></i>
                             GPX-Datei hochladen

@@ -20,8 +20,9 @@ class RideController extends AbstractController
 
         $rides = [];
 
+        /** @var Ride $ride */
         foreach ($ridesResult as $ride) {
-            $rides[$ride->getFormattedDate()][] = $ride;
+            $rides[$ride->getDateTime()->format('Y-m-d')][] = $ride;
         }
 
         return $this->render('AppBundle:Ride:list.html.twig', [

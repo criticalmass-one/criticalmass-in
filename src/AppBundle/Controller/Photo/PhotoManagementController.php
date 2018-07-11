@@ -137,9 +137,7 @@ class PhotoManagementController extends AbstractController
         $this->errorIfFeatureDisabled('photos');
 
         $form = $this->createForm(PhotoCoordType::class, $photo, [
-            'action' => $this->generateUrl('caldera_criticalmass_photo_place_single', [
-                'photoId' => $photo->getId(),
-            ])
+            'action' => $this->generateObjectUrl($photo, 'caldera_criticalmass_photo_place_single')
         ]);
 
         if (Request::METHOD_POST === $request->getMethod()) {

@@ -106,7 +106,7 @@ class PostController extends AbstractController
 
             $em->flush();
 
-            return new RedirectResponse($this->generateObjectUrl($postable));
+            return $this->redirectToObject($postable);
         }
 
         return $this->render('AppBundle:Post:write_failed.html.twig', [

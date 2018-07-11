@@ -2,15 +2,17 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\EntityInterface\RouteableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Criticalmass\Router\Annotation as Routing;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CityCycleRepository")
  * @ORM\Table(name="city_cycle")
  */
-class CityCycle
+class CityCycle implements RouteableInterface
 {
     const DAY_MONDAY = 1;
     const DAY_TUESDAY = 2;
@@ -30,12 +32,14 @@ class CityCycle
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Routing\RouteParameter(name="cycleId")
      */
     protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="cityCycles")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     * @Routing\RouteParameter(name="citySlug")
      */
     protected $city;
 

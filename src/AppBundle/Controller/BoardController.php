@@ -41,17 +41,13 @@ class BoardController extends AbstractController
         if ($board) {
             $threads = $this->getThreadRepository()->findThreadsForBoard($board);
 
-            $newThreadUrl = $this->generateUrl('caldera_criticalmass_board_addthread', [
-                'boardSlug' => $board->getSlug(),
-            ]);
+            $newThreadUrl = $this->generateObjectUrl($board, 'caldera_criticalmass_board_addthread');
         }
 
         if ($city) {
             $threads = $this->getThreadRepository()->findThreadsForCity($city);
 
-            $newThreadUrl = $this->generateUrl('caldera_criticalmass_board_addcitythread', [
-                'citySlug' => $city->getSlug(),
-            ]);
+            $newThreadUrl = $this->generateObjectUrl($city, 'caldera_criticalmass_board_addcitythread');
         }
 
         return $this->render('AppBundle:Board:list_threads.html.twig', [

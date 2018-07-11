@@ -32,7 +32,7 @@
                     Wie viele, wie lange, wohin? Diese Seite bereitet die statistischen Daten auf, die von Teilnehmern
                     der Critical Mass in {{ city.city }} nach einer Tour eingearbeitet worden sind &mdash; entweder von
                     den importieren GPX-Tracks oder mit Schätzungen der Teilnehmerzahlen. Schau dir außerdem die <a
-                            href="{{ path('caldera_criticalmass_city_missingstats', { citySlug: city.slug }) }}">Liste
+                            href="{{ objectPath(city, 'caldera_criticalmass_city_missingstats') }}">Liste
                         von Touren ohne Statistiken</a> an, um eventuell Zahlenmaterial nachzutragen.
                 </p>
             </div>
@@ -128,7 +128,7 @@
     <script type="text/javascript">
         CriticalMass.loadModule('CityStatisticPage', null, null, function (page) {
             {% for ride in rides %}
-            page.addRideData('{{ ride.getFormattedDate }}', {{ ride.estimatedParticipants|default(0) }}, {{ ride.estimatedDuration|default(0) }}, {{ ride.estimatedDistance|default(0) }});
+            page.addRideData('{{ ride.dateTime|date('Y-m-d') }}', {{ ride.estimatedParticipants|default(0) }}, {{ ride.estimatedDuration|default(0) }}, {{ ride.estimatedDistance|default(0) }});
             {% endfor %}
 
             page.createChart($('#chart'));

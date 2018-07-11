@@ -11,11 +11,15 @@
             <div class="media-body">
                 <h4 class="media-heading username">
                     {% if post.getRide() %}
-                        {{ post.getUser().getUsername() }} schreibt zu <a
-                            href="{{ path('caldera_criticalmass_ride_show', { 'citySlug': post.getRide().getCity().getMainSlug().getSlug(), 'rideDate': post.getRide().getDateTime().format('Y-m-d') }) }}">{{ post.ride.title }}</a>:
+                    {{ post.getUser().getUsername() }} schreibt zu
+                        <a href="{{ objectPath(post.ride) }}">
+                            {{ post.ride.title }}
+                        </a>:
                     {% elseif post.getCity() %}
-                        {{ post.getUser().getUsername() }} schreibt über <a
-                            href="{{ path('caldera_criticalmass_city_show', { 'citySlug': post.getCity().getMainSlug().getSlug() }) }}">{{ post.getCity().getTitle() }}</a>:
+                    {{ post.getUser().getUsername() }} schreibt über
+                    <a href="{{ objectPath(post.city) }}">
+                        {{ post.city.title }}
+                    </a>:
                     {% else %}
                         {{ post.getUser().getUsername() }} schreibt:
                     {% endif %}

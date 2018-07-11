@@ -135,7 +135,7 @@ class PhotoRepository extends EntityRepository
             $ride = $row[0]->getRide();
             $counter = $row[1];
 
-            $key = $ride->getFormattedDate() . '_' . $ride->getId();
+            $key = $ride->getDateTime()->format('Y-m-d') . '_' . $ride->getId();
 
             $galleryResult[$key]['ride'] = $ride;
             $galleryResult[$key]['counter'] = $counter;
@@ -181,7 +181,7 @@ class PhotoRepository extends EntityRepository
              * @var Ride $ride
              */
             $ride = $row[0]->getRide();
-            $key = $ride->getFormattedDate() . '_' . $ride->getId();
+            $key = $ride->getDateTime()->format('Y-m-d') . '_' . $ride->getId();
 
             $rides[$key] = $ride;
             $counter[$key] = $row[1];

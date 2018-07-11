@@ -2,15 +2,17 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
+use AppBundle\Criticalmass\Router\Annotation as Routing;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CitySlugRepository")
  * @ORM\Table(name="cityslug")
  * @JMS\ExclusionPolicy("all")
  */
-class CitySlug
+class CitySlug implements RouteableInterface
 {
     /**
      * @ORM\Id
@@ -25,6 +27,7 @@ class CitySlug
      * @ORM\Column(type="string", length=50)
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
+     * @Routing\RouteParameter(name="citySlug")
      */
     protected $slug;
 

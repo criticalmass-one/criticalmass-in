@@ -24,9 +24,7 @@ class TrackTimeController extends AbstractController
     public function timeAction(Request $request, EventDispatcher $eventDispatcher, Track $track, TrackTimeshift $trackTimeshift): Response
     {
         $form = $this->createFormBuilder($track)
-            ->setAction($this->generateUrl('caldera_criticalmass_track_time', [
-                'trackId' => $track->getId()
-            ]))
+            ->setAction($this->generateObjectUrl($track, 'caldera_criticalmass_track_time'))
             ->add('startDate', DateType::class)
             ->add('startTime', TimeType::class)
             ->getForm();
@@ -68,6 +66,6 @@ class TrackTimeController extends AbstractController
             $eventDispatcher->dispatch(TrackTimeEvent::NAME, new TrackTimeEvent($track));
         }
 
-        return $this->redirect($this->generateUrl('caldera_criticalmass_track_list'));
+        return $this->redirectToRoute('caldera_criticalmass_track_list');
     }
 }

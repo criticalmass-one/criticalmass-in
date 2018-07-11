@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Validator\Constraint as CriticalAssert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use AppBundle\Criticalmass\Router\Annotation as Routing;
 
 /**
  * @ORM\Table(name="ride")
@@ -26,6 +27,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @JMS\ExclusionPolicy("all")
  * @CriticalAssert\SingleRideForDay
  * @Vich\Uploadable
+ * @Routing\DefaultRoute(name="caldera_criticalmass_ride_show")
  */
 class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble
 {
@@ -55,6 +57,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
+     * @Routing\RouteParameter(name="citySlug")
      */
     protected $city;
 
@@ -92,6 +95,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      * @JMS\Type("DateTime<'U'>")
+     * @Routing\RouteParameter(name="rideDate", dateFormat="Y-m-d")
      */
     protected $dateTime;
 
@@ -458,7 +462,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     /** @deprecated */
     public function isSameRide(Ride $ride): bool
     {
-        return $ride->getCity()->getId() == $this->getCity()->getId() && $ride->getFormattedDate() == $this->getFormattedDate();
+        return $ride->getCity()->getId() == $this->getCity()->getId() && $ride->getDateTime()->format('Y-m-d') == $this->getDateTime()->format('Y-m-d');
     }
 
     public function __toString(): string
@@ -534,12 +538,6 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     public function getUrl(): ?string
     {
         return $this->url;
-    }
-
-    /** @deprecated */
-    public function getFormattedDate(): string
-    {
-        return $this->dateTime->format('Y-m-d');
     }
 
     /** @deprecated */

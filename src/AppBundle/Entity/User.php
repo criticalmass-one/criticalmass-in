@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use AppBundle\EntityInterface\RouteableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,6 +12,7 @@ use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use AppBundle\Criticalmass\Router\Annotation as Routing;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
@@ -19,7 +21,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Vich\Uploadable
  * @JMS\ExclusionPolicy("all")
  */
-class User extends BaseUser implements SocialNetworkProfileAble
+class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterface
 {
     /**
      * @ORM\Id
@@ -35,6 +37,7 @@ class User extends BaseUser implements SocialNetworkProfileAble
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      * @Assert\NotBlank()
+     * @Routing\RouteParameter(name="username")
      */
     protected $username;
 

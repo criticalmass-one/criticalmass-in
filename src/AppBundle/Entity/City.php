@@ -19,12 +19,14 @@ use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use AppBundle\Criticalmass\Router\Annotation as Routing;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CityRepository")
  * @Vich\Uploadable
  * @ORM\Table(name="city")
  * @JMS\ExclusionPolicy("all")
+ * @Routing\DefaultRoute(name="caldera_criticalmass_city_show")
  */
 class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, AutoParamConverterAble, SocialNetworkProfileAble, PostableInterface
 {
@@ -54,6 +56,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      * @ORM\JoinColumn(name="main_slug_id", referencedColumnName="id")
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
+     * @Routing\RouteParameter(name="citySlug")
      */
     protected $mainSlug;
 
@@ -315,12 +318,16 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      * @JMS\VirtualProperty
      * @JMS\SerializedName("slug")
      * @JMS\Type("string")
+     * @deprecated
      */
     public function getMainSlugString(): string
     {
         return $this->getMainSlug()->getSlug();
     }
 
+    /**
+     * @deprecated
+     */
     public function getSlug(): string
     {
         return $this->getMainSlugString();

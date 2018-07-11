@@ -11,5 +11,5 @@ caldera_criticalmass_subride_preparecopy:
     defaults: { _controller: AppBundle:Ride/Subride:preparecopy }
     
 caldera_criticalmass_subride_copy:
-    path:  /{citySlug}/{rideDate}/copysubrides/{oldDate}
+    path:  /{citySlug}/{rideDate}/copysubrides/{newDate}
     defaults: { _controller: AppBundle:Ride/Subride:copy }

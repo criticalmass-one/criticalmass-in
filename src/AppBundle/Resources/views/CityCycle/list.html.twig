@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-md-12">
                 <a class="btn btn-success pull-right"
-                   href="{{ path('caldera_criticalmass_citycycle_add', { citySlug: city.mainSlugString }) }}">
+                   href="{{ objectPath(city, 'caldera_criticalmass_citycycle_add') }}">
                     Turnus ergänzen
                 </a>
 
@@ -102,12 +102,12 @@
                                 {% if not cycle.disabledAt %}
                                 <div class="btn-group">
                                     <a class="btn btn-default btn-xs"
-                                       href="{{ path('caldera_criticalmass_citycycle_edit', { citySlug: city.mainSlugString, cycleId: cycle.id }) }}">
+                                       href="{{ objectPath(cycle, 'caldera_criticalmass_citycycle_edit') }}">
                                         <i class="fa fa-wrench"></i>
                                     </a>
 
                                     <a class="btn btn-default btn-xs"
-                                       href="{{ path('caldera_criticalmass_citycycle_disable', { citySlug: city.mainSlugString, cycleId: cycle.id }) }}">
+                                       href="{{ objectPath(cycle, 'caldera_criticalmass_citycycle_disable') }}">
                                         <i class="fa fa-trash-o"></i>
                                     </a>
                                 </div>

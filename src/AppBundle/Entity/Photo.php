@@ -11,12 +11,14 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use AppBundle\Criticalmass\Router\Annotation as Routing;
 
 /**
  * @ORM\Table(name="photo")
  * @Vich\Uploadable
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PhotoRepository")
  * @JMS\ExclusionPolicy("all")
+ * @Routing\DefaultRoute(name="caldera_criticalmass_photo_show_ride")
  */
 class Photo implements ViewableInterface, PhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble
 {
@@ -25,6 +27,7 @@ class Photo implements ViewableInterface, PhotoInterface, RouteableInterface, Po
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Expose
+     * @Routing\RouteParameter(name="photoId")
      */
     protected $id;
 
@@ -37,12 +40,14 @@ class Photo implements ViewableInterface, PhotoInterface, RouteableInterface, Po
     /**
      * @ORM\ManyToOne(targetEntity="Ride", inversedBy="photos")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
+     * @Routing\RouteParameter(name="rideDate")
      */
     protected $ride;
 
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="photos")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     * @Routing\RouteParameter(name="citySlug")
      */
     protected $city;
 
