@@ -2,6 +2,7 @@
 
 namespace AppBundle\Criticalmass\Router;
 
+use AppBundle\Criticalmass\Router\Annotation\AbstractAnnotation;
 use AppBundle\Criticalmass\Router\Annotation\DefaultRoute;
 use AppBundle\Criticalmass\Router\Annotation\RouteParameter;
 use AppBundle\Entity\Region;
@@ -91,30 +92,33 @@ class ObjectRouter extends AbstractObjectRouter
         $properties = $reflectionClass->getProperties();
 
         foreach ($properties as $key => $property) {
-            $parameterAnnotation = $this->annotationReader->getPropertyAnnotation($property, RouteParameter::class);
+            $parameterAnnotations = $this->annotationReader->getPropertyAnnotations($property);
 
-            if ($parameterAnnotation) {
-                if ($parameterAnnotation->getName() !== $variableName) {
-                    continue;
+            /** @var AbstractAnnotation $parameterAnnotation */
+            foreach ($parameterAnnotations as $parameterAnnotation) {
+                if ($parameterAnnotation instanceof RouteParameter) {
+                    if ($parameterAnnotation->getName() !== $variableName) {
+                        continue;
+                    }
+
+                    $getMethodName = sprintf('get%s', ucfirst($property->getName()));
+
+                    if (!$reflectionClass->hasMethod($getMethodName)) {
+                        continue;
+                    }
+
+                    $value = $routeable->$getMethodName();
+
+                    if (is_object($value) && $value instanceof RouteableInterface) {
+                        $value = $this->getRouteParameter($value, $variableName);
+                    }
+
+                    if (is_object($value) && $value instanceof \DateTime) {
+                        $value = $value->format($parameterAnnotation->getDateFormat());
+                    }
+
+                    return (string) $value;
                 }
-
-                $getMethodName = sprintf('get%s', ucfirst($property->getName()));
-
-                if (!$reflectionClass->hasMethod($getMethodName)) {
-                    continue;
-                }
-
-                $value = $routeable->$getMethodName();
-
-                if (is_object($value) && $value instanceof RouteableInterface) {
-                    $value = $this->getRouteParameter($value, $variableName);
-                }
-
-                if (is_object($value) && $value instanceof \DateTime) {
-                    $value = $value->format($parameterAnnotation->getDateFormat());
-                }
-
-                return (string) $value;
             }
         }
 
