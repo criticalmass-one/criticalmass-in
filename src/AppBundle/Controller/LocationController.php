@@ -25,7 +25,7 @@ class LocationController extends AbstractController
     }
 
     /**
-     * @ParamConverter("location", class="AppBundle:Location", options={"slug": "locationSlug"})
+     * @ParamConverter("location", class="AppBundle:Location")
      */
     public function showAction(Location $location): Response
     {

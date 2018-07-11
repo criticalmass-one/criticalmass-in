@@ -39,7 +39,7 @@
                         {% if currentRide.hasLocation() and currentRide.location %}
                             <dd>{{ currentRide.location }}</dd>
                         {% else %}
-                            <a href="{{ objectPath(ride, 'caldera_criticalmass_ride_edit') }}">
+                            <a href="{{ objectPath(currentRide, 'caldera_criticalmass_ride_edit') }}">
                                 noch nicht bekannt
                             </a>
                         {% endif %}
