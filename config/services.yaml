@@ -78,6 +78,9 @@ services:
             - '%yourls.api_username%'
             - '%yourls.api_password%'
 
+    Sonata\SeoBundle\Seo\SeoPageInterface:
+        alias: sonata.seo.page.default
+
     App\Request\ParamConverter\RideParamConverter:
         tags:
             - { name: request.param_converter, priority: 0, converter: ride_converter }
