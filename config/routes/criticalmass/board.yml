@@ -1,27 +1,27 @@
 caldera_criticalmass_board_overview:
     path:  /boards/overview
-    defaults: { _controller: App:Board:overview }
+    controller: App\Controller\Board:overview
 
 caldera_criticalmass_board_listthreads:
-    path:  /boards/{boardSlug}
-    defaults: { _controller: App:Board:listthreads }
+    path:  /boards/{boardSlug
+    controller: App\Controller\Board:listthreads
 
 caldera_criticalmass_board_addthread:
-    path:  /boards/{boardSlug}/addthread
-    defaults: { _controller: App:Board:addthread }
+    path:  /boards/{boardSlug/addthread
+    controller: App\Controller\Board:addthread
 
 caldera_criticalmass_board_viewthread:
-    path:  /boards/{boardSlug}/thread/{threadSlug}
-    defaults: { _controller: App:Board:viewthread }
+    path:  /boards/{boardSlug/thread/{threadSlug
+    controller: App\Controller\Board:viewthread
 
 caldera_criticalmass_board_listcitythreads:
-    path:  /{citySlug}/listthreads
-    defaults: { _controller: App:Board:listthreads }
+    path:  /{citySlug/listthreads
+    controller: App\Controller\Board:listthreads
 
 caldera_criticalmass_board_addcitythread:
-    path:  /{citySlug}/addthread
-    defaults: { _controller: App:Board:addthread }
+    path:  /{citySlug/addthread
+    controller: App\Controller\Board:addthread
 
 caldera_criticalmass_board_viewcitythread:
-    path:  /{citySlug}/thread/{threadSlug}
-    defaults: { _controller: App:Board:viewthread }
+    path:  /{citySlug/thread/{threadSlug
+    controller: App\Controller\Board:viewthread

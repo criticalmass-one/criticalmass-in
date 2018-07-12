@@ -1,9 +1,9 @@
 caldera_criticalmass_search_query:
     path:  /search/query
-    defaults: { _controller: App:Search:query }
+    controller: App\Controller\Search:query
 
 caldera_criticalmass_search_prefetch:
     path:  /search/prefetch
-    defaults: { _controller: App:Search:prefetch }
+    controller: App\Controller\Search:prefetch
     options:
         expose: true

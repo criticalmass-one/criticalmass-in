@@ -1,6 +1,6 @@
 remove_trailing_slash:
-    path: /{url}
-    defaults: { _controller: App:Redirecting:removeTrailingSlash }
+    path: /{url
+    controller: App\Controller\Redirecting:removeTrailingSlash
     requirements:
         url: .*/$
     methods: [GET]

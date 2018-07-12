@@ -20,11 +20,11 @@
         <default key="_controller">App:Profile/Participation:list</default>
     </route>
 
-    <route id="criticalmass_user_participation_update" path="/profile/participation/{participationId}/update">
+    <route id="criticalmass_user_participation_update" path="/profile/participation/{participationId/update">
         <default key="_controller">App:Profile/Participation:update</default>
     </route>
 
-    <route id="criticalmass_user_participation_delete" path="/profile/participation/{participationId}/delete">
+    <route id="criticalmass_user_participation_delete" path="/profile/participation/{participationId/delete">
         <default key="_controller">App:Profile/Participation:delete</default>
     </route>
 

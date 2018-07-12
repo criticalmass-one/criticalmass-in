@@ -1,11 +1,11 @@
 caldera_criticalmass_city_add:
-    path:  /world/{slug1}/{slug2}/{slug3}/addcity
-    defaults: { _controller: App:City/CityManagement:add }
+    path:  /world/{slug1/{slug2/{slug3/addcity
+    controller: App\Controller\City/CityManagement:add
 
 caldera_criticalmass_city_add_slug:
-    path:  /{citySlug}/add
-    defaults: { _controller: App:City/CityManagement:add }
+    path:  /{citySlug/add
+    controller: App\Controller\City/CityManagement:add
 
 caldera_criticalmass_city_edit:
-    path:  /{citySlug}/edit
-    defaults: { _controller: App:City/CityManagement:edit }
+    path:  /{citySlug/edit
+    controller: App\Controller\City/CityManagement:edit

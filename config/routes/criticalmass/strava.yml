@@ -1,15 +1,15 @@
 caldera_criticalmass_strava_auth:
-    path:  /{citySlug}/{rideDate}/stravaauth
-    defaults: { _controller: App:Strava:auth }
+    path:  /{citySlug/{rideDate/stravaauth
+    controller: App\Controller\Strava:auth
 
 caldera_criticalmass_strava_token:
-    path:  /{citySlug}/{rideDate}/stravatoken
-    defaults: { _controller: App:Strava:token }
+    path:  /{citySlug/{rideDate/stravatoken
+    controller: App\Controller\Strava:token
 
 caldera_criticalmass_strava_list:
-    path:  /{citySlug}/{rideDate}/stravalist
-    defaults: { _controller: App:Strava:listrides }
+    path:  /{citySlug/{rideDate/stravalist
+    controller: App\Controller\Strava:listrides
 
 caldera_criticalmass_strava_import:
-    path:  /{citySlug}/{rideDate}/stravaimport
-    defaults: { _controller: App:Strava:import }
+    path:  /{citySlug/{rideDate/stravaimport
+    controller: App\Controller\Strava:import

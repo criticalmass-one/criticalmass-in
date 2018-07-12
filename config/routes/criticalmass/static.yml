@@ -1,3 +1,3 @@
 caldera_criticalmass_static_display:
-    path: /content/{slug}
-    defaults: { _controller: App:Static:displayStaticContent }
+    path: /content/{slug
+    controller: App\Controller\Static:displayStaticContent

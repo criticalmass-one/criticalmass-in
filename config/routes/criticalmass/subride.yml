@@ -1,15 +1,15 @@
 caldera_criticalmass_subride_add:
-    path:  /{citySlug}/{rideDate}/addsubride
-    defaults: { _controller: App:Ride/Subride:add }
+    path:  /{citySlug/{rideDate/addsubride
+    controller: App\Controller\Ride/Subride:add
 
 caldera_criticalmass_subride_edit:
-    path:  /{citySlug}/{rideDate}/editsubride/{subrideId}
-    defaults: { _controller: App:Ride/Subride:edit }
+    path:  /{citySlug/{rideDate/editsubride/{subrideId
+    controller: App\Controller\Ride/Subride:edit
     
 caldera_criticalmass_subride_preparecopy:
-    path:  /{citySlug}/{rideDate}/preparecopysubrides
-    defaults: { _controller: App:Ride/Subride:preparecopy }
+    path:  /{citySlug/{rideDate/preparecopysubrides
+    controller: App\Controller\Ride/Subride:preparecopy
     
 caldera_criticalmass_subride_copy:
-    path:  /{citySlug}/{rideDate}/copysubrides/{newDate}
-    defaults: { _controller: App:Ride/Subride:copy }
+    path:  /{citySlug/{rideDate/copysubrides/{newDate
+    controller: App\Controller\Ride/Subride:copy

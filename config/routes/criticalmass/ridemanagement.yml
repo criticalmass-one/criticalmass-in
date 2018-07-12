@@ -1,11 +1,11 @@
 caldera_criticalmass_ride_add:
-    path:  /{citySlug}/add-ride
-    defaults: { _controller: App:Ride/RideManagement:add }
+    path:  /{citySlug/add-ride
+    controller: App\Controller\Ride/RideManagement:add
 
 caldera_criticalmass_ride_edit:
-    path:  /{citySlug}/{rideDate}/edit
-    defaults: { _controller: App:Ride/RideManagement:edit }
+    path:  /{citySlug/{rideDate/edit
+    controller: App\Controller\Ride/RideManagement:edit
 
 caldera_criticalmass_ride_socialpreview:
-    path:  /{citySlug}/{rideDate}/socialpreview
-    defaults: { _controller: App:Ride/RideManagement:socialPreview }
+    path:  /{citySlug/{rideDate/socialpreview
+    controller: App\Controller\Ride/RideManagement:socialPreview
