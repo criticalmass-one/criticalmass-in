@@ -1,12 +1,12 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controller;
 
-use Abraham\TwitterOAuth\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class RegionController extends AbstractController
 {
-    public function indexAction($slug1 = null, $slug2 = null, $slug3 = null)
+    public function indexAction(string $slug1 = null, string $slug2 = null, string $slug3 = null): Response
     {
         $region = null;
 
@@ -31,15 +31,12 @@ class RegionController extends AbstractController
             $cityCounter[$region2->getId()] = $this->getCityRepository()->countChildrenCitiesOfRegion($region2);
         }
 
-        return $this->render(
-            'App:Region:index.html.twig',
-            [
-                'region' => $region,
-                'regions' => $regions,
-                'cities' => $cities,
-                'cityCounter' => $cityCounter,
-                'allCities' => $allCities
-            ]
-        );
+        return $this->render('Region/index.html.twig', [
+            'region' => $region,
+            'regions' => $regions,
+            'cities' => $cities,
+            'cityCounter' => $cityCounter,
+            'allCities' => $allCities,
+        ]);
     }
 }
