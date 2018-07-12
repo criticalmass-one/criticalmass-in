@@ -44,17 +44,17 @@ criticalmass:
                 4: vierten
 
 # Time ago in words - Twig Extension
-less than %seconds seconds ago: vor weniger als %seconds Sekunden
-half a minute ago: vor einer halben Minute
-less than a minute ago: vor weniger als einer Minute
-1 minute ago: vor einer Minute
-%minutes minutes ago: vor %minutes Minuten
-about 1 hour ago: vor einer Stunde
-about %hours hours ago: vor %hours Stunden
-1 day ago: gestern
-%days days ago: vor %days Tagen
-"{1} 1 month ago |]1,Inf[ %months months ago": "vor einem Monat|]1,Inf[v or %months Monaten"
-"{1} 1 year ago |]1,Inf[ %years years ago":  "vor einem Jahr|]1,Inf[ vor %years Jahren"
+'less than %seconds seconds ago': 'vor weniger als %seconds Sekunden'
+'half a minute ago': 'vor einer halben Minute'
+'less than a minute ago': 'vor weniger als einer Minute'
+'1 minute ago': 'vor einer Minute'
+'%minutes minutes ago': 'vor %minutes Minuten'
+'about 1 hour ago': 'vor einer Stunde'
+'about %hours hours ago': 'vor %hours Stunden'
+'1 day ago': 'gestern'
+'%days days ago': 'vor %days Tagen'
+'{1} 1 month ago |]1,Inf[ %months months ago': 'vor einem Monat|]1,Inf[v or %months Monaten'
+'{1} 1 year ago |]1,Inf[ %years years ago':  'vor einem Jahr|]1,Inf[ vor %years Jahren'
 
 # Modal hints
 hint_modal:
