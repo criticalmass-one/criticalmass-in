@@ -1,31 +1,108 @@
-# This file is the entry point to configure your own services.
-# Files in the packages/ subdirectory configure your dependencies.
-
-# Put parameters here that don't need to change on each machine where the app is deployed
-# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+# This file is auto-generated during the composer install
 parameters:
-    locale: 'en'
+    mailer_transport: sendmail
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    mailer_port: null
+    locale: de
+    secret: '%env(SECRET)%'
+    kernel.secret: '%env(SECRET)%'
+    database_driver: pdo_mysql
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: '%env(DATABASE_NAME)%'
+    database_user: '%env(DATABASE_USER)%'
+    database_password: '%env(DATABASE_PASSWORD)%'
+    track.gap_width: 10
+    openweather.appid: '%env(OPENWEATHERMAP_APP_ID)%'
+    strava.client_id: '%env(STRAVA_CLIENT_ID)%'
+    strava.token: '%env(STRAVA_TOKEN)%'
+    strava.secret: '%env(STRAVA_SECRET)%'
+    facebook.app_id: '%env(FACEBOOK_APP_ID)%'
+    facebook.app_secret: '%env(FACEBOOK_APP_SECRET)%'
+    facebook.default_token: '%env(FACEBOOK_DEFAULT_TOKEN)%'
+    runkeeper.client_id: '%env(RUNKEEPER_CLIENT_ID)%'
+    runkeeper.secret: '%env(RUNKEEPER_SECRET)%'
+    timeline.ttl: 60
+    notification.mail.sender_address: malte@criticalmass.in
+    jms_serializer.camel_case_naming_strategy.class: AppBundle\Serializer\JMSSerializer\Naming\CamelCaseNamingStrategy
+    request_listener.http_port: 80
+    request_listener.https_port: 443
+    bikeright.visible: true
+    upload_destination.photo: "%kernel.root_dir%/../web/photos"
+    feature.photos: true
+    staticmaps.host: '%env(STATICMAPS_HOST)%'
+    twitter.client_id: '%envTWITTER_CLIENT_ID)%'
+    twitter.token: '%env(TWITTER_TOKEN)%'
+    twitter.secret: '%env(TWITTER_SECRET)%'
+    timezone_db.api_key: '%env(TIMEZONE_DB_API_KEY)%'
+    yourls.api_hostname: '%env(YOURLS_API_HOSTNAME)%'
+    yourls.api_username: '%env(YOURLS_API_USERNAME)%'
+    yourls.api_password: '%env(YOURLS_API_PASSWORD)%'
 
 services:
-    # default configuration for services in *this* file
     _defaults:
-        autowire: true      # Automatically injects dependencies in your services.
-        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-        public: false       # Allows optimizing the container by removing unused services; this also means
-                            # fetching services directly from the container via $container->get() won't work.
-                            # The best practice is to be explicit about your dependencies anyway.
+        autowire: true
+        autoconfigure: true
+        public: false
+        bind:
+            $openWeatherMapApiKey: '%openweather.appid%'
+            $rootDirectory: '%kernel.root_dir%'
+            $projectDirectory: '%kernel.project_dir%'
+            $staticmapsHost: '%staticmaps.host%'
+            $featurePhotos: '%feature.photos%'
+            $gapWidth: '%track.gap_width%'
+            $facebookAppId: '%facebook.app_id%'
+            $facebookAppSecret: '%facebook.app_secret%'
+            $facebookDefaultToken: '%facebook.default_token%'
+            $uploadDestinationPhoto: '%upload_destination.photo%'
+            $cachedTimelineTtl: '%timeline.ttl%'
+            $timezoneDbApiKey: '%timezone_db.api_key%'
 
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+        exclude: '../src/{Admin,DQL,Entity,Manager,Menu,Migrations,Model,Repository,Tests,UserProvider,Criticalmass/UploadValidator/UploadValidatorException}'
 
-    # controllers are imported separately to make sure services can be injected
-    # as action arguments even if you don't extend any base controller class
     App\Controller\:
         resource: '../src/Controller'
+        public: true
         tags: ['controller.service_arguments']
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    Cmfcmf\OpenWeatherMap: ~
+
+    Symfony\Component\Routing\RouteCollection: ~
+
+    Caldera\YourlsApiManager\YourlsApiManager:
+        arguments:
+            - '%yourls.api_hostname%'
+            - '%yourls.api_username%'
+            - '%yourls.api_password%'
+
+    App\Request\ParamConverter\RideParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: ride_converter }
+
+    App\Request\ParamConverter\CityParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: city_converter }
+
+    App\Request\ParamConverter\LocationParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: location_converter }
+
+    App\Request\ParamConverter\BoardParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: board_converter }
+
+    App\Request\ParamConverter\ThreadParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: thread_converter }
+
+    App\Request\ParamConverter\PhotoParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: photo_converter }
+
+    App\Request\ParamConverter\UserParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 10, converter: user_converter }
