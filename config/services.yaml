@@ -26,7 +26,7 @@ parameters:
     runkeeper.secret: '%env(RUNKEEPER_SECRET)%'
     timeline.ttl: 60
     notification.mail.sender_address: malte@criticalmass.in
-    jms_serializer.camel_case_naming_strategy.class: AppBundle\Serializer\JMSSerializer\Naming\CamelCaseNamingStrategy
+    jms_serializer.camel_case_naming_strategy.class: App\Serializer\JMSSerializer\Naming\CamelCaseNamingStrategy
     request_listener.http_port: 80
     request_listener.https_port: 443
     bikeright.visible: true

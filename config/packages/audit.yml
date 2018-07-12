@@ -1,15 +1,15 @@
 simple_things_entity_audit:
     audited_entities:
-        - AppBundle\Entity\City
-        - AppBundle\Entity\CityCycle
-        - AppBundle\Entity\HelpCategory
-        - AppBundle\Entity\HelpItem
-        - AppBundle\Entity\Location
-        - AppBundle\Entity\Region
-        - AppBundle\Entity\Ride
-        - AppBundle\Entity\Subride
-        - AppBundle\Entity\SocialNetworkProfile
-        - AppBundle\Entity\SocialNetworkFeedItem
+        - App\Entity\City
+        - App\Entity\CityCycle
+        - App\Entity\HelpCategory
+        - App\Entity\HelpItem
+        - App\Entity\Location
+        - App\Entity\Region
+        - App\Entity\Ride
+        - App\Entity\Subride
+        - App\Entity\SocialNetworkProfile
+        - App\Entity\SocialNetworkFeedItem
 
     global_ignore_columns:
         - created_at

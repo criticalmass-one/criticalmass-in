@@ -18,9 +18,9 @@ doctrine:
         url: '%env(resolve:DATABASE_URL)%'
 
         types:
-            datetime: AppBundle\DBAL\Type\UTCDateTimeType
-            date: AppBundle\DBAL\Type\UTCDateType
-            time: AppBundle\DBAL\Type\UTCTimeType
+            datetime: App\DBAL\Type\UTCDateTimeType
+            date: App\DBAL\Type\UTCDateType
+            time: App\DBAL\Type\UTCTimeType
         mapping_types:
             enum: string
 
@@ -38,10 +38,10 @@ doctrine:
 
         dql:
             datetime_functions:
-                day: AppBundle\DQL\DayFunction
-                date: AppBundle\DQL\DateFunction
-                month: AppBundle\DQL\MonthFunction
-                year: AppBundle\DQL\YearFunction
-                dayofweek: AppBundle\DQL\DayOfWeekFunction
+                day: App\DQL\DayFunction
+                date: App\DQL\DateFunction
+                month: App\DQL\MonthFunction
+                year: App\DQL\YearFunction
+                dayofweek: App\DQL\DayOfWeekFunction
             numeric_functions:
-                rand: AppBundle\DQL\RandFunction
+                rand: App\DQL\RandFunction

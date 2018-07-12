@@ -24,7 +24,7 @@ fos_elastica:
                         intro: ~
                     persistence:
                         driver: orm
-                        model: AppBundle\Entity\HelpCategory
+                        model: App\Entity\HelpCategory
                         provider: ~
                         listener: ~
                         finder: ~
@@ -51,7 +51,7 @@ fos_elastica:
                                 text: ~
                             persistence:
                                 driver: orm
-                                model: AppBundle\Entity\HelpItem
+                                model: App\Entity\HelpItem
                                 provider: ~
                                 listener: ~
                                 finder: ~
@@ -85,7 +85,7 @@ fos_elastica:
                         pin: { type: geo_point }
                     persistence:
                         driver: orm
-                        model: AppBundle\Entity\Ride
+                        model: App\Entity\Ride
                         provider: ~
                         listener: ~
                         finder: ~
@@ -117,7 +117,7 @@ fos_elastica:
                         pin: { type: geo_point }
                     persistence:
                         driver: orm
-                        model: AppBundle\Entity\City
+                        model: App\Entity\City
                         provider: ~
                         listener: ~
                         finder: ~
