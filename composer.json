@@ -73,7 +73,8 @@
         "symfony/form": "^4.1",
         "symfony/security-bundle": "^4.1",
         "symfony/translation": "^4.1",
-        "symfony/validator": "^4.1"
+        "symfony/validator": "^4.1",
+        "symfony/dotenv": "^4.1"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^3.0",
