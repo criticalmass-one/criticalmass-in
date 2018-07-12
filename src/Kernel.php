@@ -2,6 +2,17 @@
 
 namespace App;
 
+use AppBundle\Criticalmass\Router\DelegatedRouter\DelegatedRouterInterface;
+use AppBundle\Criticalmass\Sharing\Network\ShareNetworkInterface;
+use AppBundle\Criticalmass\SocialNetwork\Network\NetworkInterface;
+use AppBundle\Criticalmass\SocialNetwork\NetworkFeedFetcher\NetworkFeedFetcherInterface;
+use AppBundle\Criticalmass\Timeline\Collector\TimelineCollectorInterface;
+use AppBundle\DependencyInjection\Compiler\FeaturePass;
+use AppBundle\DependencyInjection\Compiler\ObjectRouterPass;
+use AppBundle\DependencyInjection\Compiler\ShareNetworkPass;
+use AppBundle\DependencyInjection\Compiler\SocialNetworkPass;
+use AppBundle\DependencyInjection\Compiler\TimelineCollectorPass;
+use AppBundle\Feature\FeatureInterface;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Resource\FileResource;
@@ -48,6 +59,22 @@ class Kernel extends BaseKernel
         $loader->load($confDir.'/{packages}/'.$this->environment.'/**/*'.self::CONFIG_EXTS, 'glob');
         $loader->load($confDir.'/{services}'.self::CONFIG_EXTS, 'glob');
         $loader->load($confDir.'/{services}_'.$this->environment.self::CONFIG_EXTS, 'glob');
+
+        $container->registerForAutoconfiguration(TimelineCollectorInterface::class)->addTag('timeline.collector');
+        $container->addCompilerPass(new TimelineCollectorPass());
+
+        $container->registerForAutoconfiguration(NetworkInterface::class)->addTag('social_network.network');
+        $container->registerForAutoconfiguration(NetworkFeedFetcherInterface::class)->addTag('social_network.network_fetcher');
+        $container->addCompilerPass(new SocialNetworkPass());
+
+        $container->addCompilerPass(new FeaturePass());
+        $container->registerForAutoconfiguration(FeatureInterface::class)->addTag('feature');
+
+        $container->registerForAutoconfiguration(DelegatedRouterInterface::class)->addTag('object_router.delegated_router');
+        $container->addCompilerPass(new ObjectRouterPass());
+
+        $container->addCompilerPass(new ShareNetworkPass());
+        $container->registerForAutoconfiguration(ShareNetworkInterface::class)->addTag('share.network');
     }
 
     protected function configureRoutes(RouteCollectionBuilder $routes)
