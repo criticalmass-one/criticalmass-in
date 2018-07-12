@@ -31,9 +31,8 @@
         "emcconville/google-map-polyline-encoding-tool" : ">=1.2.1",
         "friendsofsymfony/jsrouting-bundle": "^2.0",
         "jms/serializer-bundle": "^2.0",
-        "symfony/swiftmailer-bundle": "^2.3",
-        "symfony/monolog-bundle": "^3.0",
-        "sensio/framework-extra-bundle": "^5.0",
+        "symfony/monolog-bundle": "^3.3",
+        "sensio/framework-extra-bundle": "^5.2",
         "incenteev/composer-parameter-handler": "^2.0",
         "friendsofsymfony/user-bundle": "^2.0",
         "friendsofsymfony/rest-bundle": "^2.0",
@@ -66,7 +65,15 @@
         "emcconville/point-reduction-algorithms": "^1.2",
         "calderacc/yourls-api-manager": "^0.2.0",
         "geocoder-php/nominatim-provider": "^5.0",
-        "php-http/message": "^1.6"
+        "php-http/message": "^1.6",
+        "symfony/asset": "^4.1",
+        "symfony/orm-pack": "^1.0",
+        "symfony/twig-bundle": "^4.1",
+        "symfony/swiftmailer-bundle": "^3.2",
+        "symfony/form": "^4.1",
+        "symfony/security-bundle": "^4.1",
+        "symfony/translation": "^4.1",
+        "symfony/validator": "^4.1"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^3.0",
