@@ -41,7 +41,7 @@ class FeedFetcher
 
     protected function getFeedFetcherForNetworkProfile(SocialNetworkProfile $socialNetworkProfile): ?NetworkFeedFetcherInterface
     {
-        $namespace = 'Criticalmass\\Component\\SocialNetwork\\NetworkFeedFetcher\\';
+        $namespace = 'App\\Criticalmass\\SocialNetwork\\NetworkFeedFetcher\\';
 
         $network = ucfirst($socialNetworkProfile->getNetwork());
 

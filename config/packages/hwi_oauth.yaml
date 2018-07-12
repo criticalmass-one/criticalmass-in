@@ -1,5 +1,5 @@
 hwi_oauth:
-    firewall_names: [main]
+    firewall_names: ['main']
 
     fosub:
         username_iterations: 30
@@ -7,6 +7,7 @@ hwi_oauth:
             facebook: facebookId
             strava: stravaId
             runkeeper: runkeeperId
+
     resource_owners:
         facebook:
             type:                facebook
@@ -22,4 +23,3 @@ hwi_oauth:
             type:                runkeeper
             client_id:           '%runkeeper.client_id%'
             client_secret:       '%runkeeper.secret%'
-

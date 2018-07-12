@@ -1,9 +1,8 @@
 <?php
 
-namespace App\UserProvider;
+namespace App\Security\UserProvider;
 
 use App\Entity\User;
-use App\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGenerator;
 use App\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGeneratorInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;

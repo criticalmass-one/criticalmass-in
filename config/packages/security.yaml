@@ -1,24 +1,56 @@
 security:
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    encoders:
+        FOS\UserBundle\Model\UserInterface: sha512
+
     providers:
-        in_memory: { memory: ~ }
+        fos_userbundle:
+            id: fos_user.user_provider.username
+
     firewalls:
         dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
         main:
-            anonymous: true
+            pattern:             .*
+            context:             user
+            form_login:
+                provider: fos_userbundle
+                csrf_token_generator: security.csrf.token_manager
+                login_path:     /login
+                check_path:     /login_check
+                always_use_default_target_path: false
+                use_referer:                    true
+            logout:
+                invalidate_session: false
+            anonymous:          true
+            oauth:
+                resource_owners:
+                    facebook:  "/login/check-facebook"
+                    strava:    "/login/check-strava"
+                    runkeeper: "/login/check-runkeeper"
+                login_path:        /login
+                failure_path:      /login
+                oauth_user_provider:
+                    service: caldera.user_provider
 
-            # activate different ways to authenticate
-
-            # http_basic: true
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-
-            # form_login: true
-            # https://symfony.com/doc/current/security/form_login_setup.html
-
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        # URL of FOSUserBundle which need to be available to anonymous users
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+
+        # Admin login page needs to be access without credential
+        - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/logout$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+
+        - { path: ^/admin, role: ROLE_ADMIN }
+
+    role_hierarchy:
+        ROLE_USER:        []
+        ROLE_ADMIN:       [ROLE_USER]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    access_decision_manager:
+        strategy: unanimous

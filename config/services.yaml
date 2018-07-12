@@ -1,4 +1,3 @@
-# This file is auto-generated during the composer install
 parameters:
     mailer_transport: sendmail
     mailer_host: 127.0.0.1
@@ -6,8 +5,8 @@ parameters:
     mailer_password: null
     mailer_port: null
     locale: de
-    secret: '%env(SECRET)%'
-    kernel.secret: '%env(SECRET)%'
+    secret: '%env(APP_SECRET)%'
+    kernel.secret: '%env(APP_SECRET)%'
     database_driver: pdo_mysql
     database_host: 127.0.0.1
     database_port: null

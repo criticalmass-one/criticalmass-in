@@ -5,13 +5,14 @@ namespace App\Criticalmass\Calendar\EventProvider;
 use CalendR\Event\Provider\ProviderInterface;
 use App\Entity\Ride;
 use App\Criticalmass\Calendar\Event\RideEvent;
-use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class RideProvider implements ProviderInterface
 {
+    /** @var RegistryInterface $doctrine */
     protected $doctrine;
 
-    public function __construct(Doctrine $doctrine)
+    public function __construct(RegistryInterface $doctrine)
     {
         $this->doctrine = $doctrine;
     }
