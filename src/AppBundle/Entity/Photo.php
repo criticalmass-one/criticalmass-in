@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Criticalmass\Geocoding\ReverseGeocodeable;
 use AppBundle\Criticalmass\Sharing\ShareableInterface\Shareable;
 use AppBundle\EntityInterface\AutoParamConverterAble;
 use AppBundle\EntityInterface\PhotoInterface;
@@ -22,7 +23,7 @@ use AppBundle\Criticalmass\Sharing\Annotation as Sharing;
  * @JMS\ExclusionPolicy("all")
  * @Routing\DefaultRoute(name="caldera_criticalmass_photo_show_ride")
  */
-class Photo implements ViewableInterface, PhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, Shareable
+class Photo implements ViewableInterface, PhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, Shareable, ReverseGeocodeable
 {
     /**
      * @ORM\Id
@@ -137,6 +138,13 @@ class Photo implements ViewableInterface, PhotoInterface, RouteableInterface, Po
      * @Sharing\Shorturl()
      */
     protected $shorturl;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
+     */
+    protected $location;
 
     public function __construct()
     {
@@ -357,6 +365,18 @@ class Photo implements ViewableInterface, PhotoInterface, RouteableInterface, Po
     public function getShorturl(): ?string
     {
         return $this->shorturl;
+    }
+
+    public function setLocation(string $location): ReverseGeocodeable
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
+    public function getLocation(): ?string
+    {
+        return $this->location;
     }
 
     public function __toString(): string

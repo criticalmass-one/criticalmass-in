@@ -7,9 +7,11 @@ use AppBundle\Entity\Ride;
 use AppBundle\Entity\Track;
 use AppBundle\Entity\User;
 use AppBundle\Criticalmass\Image\PhotoGps\PhotoGps;
+use AppBundle\Event\RideEstimate\PhotoUploadedEvent;
 use DirectoryIterator;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 use PHPExif\Reader\Reader;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class PhotoUploader
 {
@@ -31,14 +33,18 @@ class PhotoUploader
     /** @var PhotoGps $photoGps */
     protected $photoGps;
 
+    /** @var EventDispatcherInterface $eventDispatcher */
+    protected $eventDispatcher;
+
     /** @var array $addedPhotoList */
     protected $addedPhotoList = [];
 
-    public function __construct(Doctrine $doctrine, PhotoGps $photoGps, string $uploadDestinationPhoto)
+    public function __construct(Doctrine $doctrine, PhotoGps $photoGps, string $uploadDestinationPhoto, EventDispatcherInterface $eventDispatcher)
     {
         $this->doctrine = $doctrine;
         $this->photoGps = $photoGps;
         $this->uploadDestinationPhoto = $uploadDestinationPhoto;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function setUser(User $user): PhotoUploader
@@ -133,6 +139,8 @@ class PhotoUploader
 
         $this->calculateDateTime($photo);
         $this->calculateLocation($photo);
+
+        $this->eventDispatcher->dispatch(PhotoUploadedEvent::NAME, new PhotoUploadedEvent($photo));
 
         $this->doctrine->getManager()->persist($photo);
 

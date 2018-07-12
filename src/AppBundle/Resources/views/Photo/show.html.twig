@@ -198,15 +198,24 @@
                             {{ photo.dateTime|date('d.m.y H:i:s') }} Uhr
                         </dd>
 
+                        {% if photo.location %}
+                            <dt>
+                                Aufnahmeort
+                            </dt>
+                            <dd>
+                                {{ photo.location }}
+                            </dd>
+                        {% endif %}
+
                         {% if photo.hasCoordinates() %}
-                        <dt>
-                            Koordinaten
-                        </dt>
-                        <dd>
-                            <a href="https://www.openstreetmap.org/#map=15/{{ photo.latitude }}/{{ photo.longitude }}" target="_blank">
-                                {{ photo.latitude }}, {{ photo.longitude }}
-                            </a>
-                        </dd>
+                            <dt>
+                                Koordinaten
+                            </dt>
+                            <dd>
+                                <a href="https://www.openstreetmap.org/#map=15/{{ photo.latitude }}/{{ photo.longitude }}" target="_blank">
+                                    {{ photo.latitude }}, {{ photo.longitude }}
+                                </a>
+                            </dd>
                         {% endif %}
 
                         {% if exifData.exposure %}
