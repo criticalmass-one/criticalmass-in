@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-class SocialNetworkFeedItemAdmin extends AbstractAdmin
+class SocialNetworkProfileAdmin extends AbstractAdmin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
