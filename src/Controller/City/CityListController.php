@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controller\City;
 
@@ -13,7 +13,7 @@ class CityListController extends AbstractController
     {
         $seoPage->setDescription('Liste mit vielen weltweiten Critical-Mass-Radtouren.');
 
-        return $this->render('App:CityList:list.html.twig', [
+        return $this->render('CityList/list.html.twig', [
             'cityList' => $cityListFactory->getList(),
         ]);
     }

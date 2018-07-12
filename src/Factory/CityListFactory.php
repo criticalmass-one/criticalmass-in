@@ -6,15 +6,16 @@ use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Entity\Ride;
 use App\Model\CityListModel;
-use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class CityListFactory
 {
+    /** @var RegistryInterface $doctrine */
     protected $doctrine;
 
     protected $list = [];
 
-    public function __construct(Doctrine $doctrine)
+    public function __construct(RegistryInterface $doctrine)
     {
         $this->doctrine = $doctrine;
     }
