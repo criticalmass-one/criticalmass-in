@@ -106,6 +106,10 @@ caldera_criticalmass_subdride:
     resource: 'subride.yml'
     prefix: /
 
+caldera_criticalmass_profile:
+    resource: 'profile.xml'
+    prefix: /
+
 caldera_criticalmass_social_network:
     resource: 'social_network.yml'
     prefix: /

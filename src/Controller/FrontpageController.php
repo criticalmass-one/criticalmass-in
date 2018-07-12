@@ -28,7 +28,7 @@ class FrontpageController extends AbstractController
             ->execute()
             ->getTimelineContent();
 
-        return $this->render('App:Frontpage:index.html.twig', [
+        return $this->render('Frontpage/index.html.twig', [
             'timelineContent' => $timelineContent,
             'rideList' => $rideList,
             'frontpageTeaserList' => $frontpageTeaserList,
@@ -58,6 +58,6 @@ class FrontpageController extends AbstractController
 
     public function introAction(): Response
     {
-        return $this->render('App:Frontpage:intro.html.twig');
+        return $this->render('Frontpage/intro.html.twig');
     }
 }

@@ -116,7 +116,7 @@ class Timeline
             $templateName = $this->templateNameForItem($item);
 
             $this->content .= $this->templating->render(
-                'App:Timeline/Items:' . $templateName . '.html.twig',
+                'Timeline/Items/' . $templateName . '.html.twig',
                 [
                     'item' => $item
                 ]
