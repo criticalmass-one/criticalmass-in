@@ -1,13 +1,15 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controller;
 
 use App\Criticalmass\Timeline\CachedTimeline;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class TimelineController extends AbstractController
 {
-    public function yearmonthAction(Request $request, $year, $month)
+    public function yearmonthAction(CachedTimeline $cachedTimeline, int $year, int $month): Response
     {
         $lowerLimitDateTime = new \DateTime('2010-01-01');
 
@@ -19,8 +21,7 @@ class TimelineController extends AbstractController
 
         $endDateTime = new \DateTime($year . '-' . $month . '-' . $startDateTime->format('t'));
 
-        $timelineContent = $this
-            ->get(CachedTimeline::class)
+        $timelineContent = $cachedTimeline
             ->setDateRange($startDateTime, $endDateTime)
             ->execute()
             ->getTimelineContent();
@@ -36,16 +37,16 @@ class TimelineController extends AbstractController
             $previousDateTime = null;
         }
 
-        return $this->render('App:Timeline:yearmonth.html.twig', [
+        return $this->render('Timeline/yearmonth.html.twig', [
             'timelineContent' => $timelineContent,
             'startDateTime' => $startDateTime,
             'endDateTime' => $endDateTime,
             'nextDateTime' => $nextDateTime,
-            'previousDateTime' => $previousDateTime
+            'previousDateTime' => $previousDateTime,
         ]);
     }
 
-    protected function getNextDateTime(\DateTime $dateTime)
+    protected function getNextDateTime(\DateTime $dateTime): \DateTime
     {
         $nextDateTime = clone $dateTime;
 
@@ -54,7 +55,7 @@ class TimelineController extends AbstractController
         return $nextDateTime->add($dateInterval);
     }
 
-    protected function getPreviousDateTime(\DateTime $dateTime)
+    protected function getPreviousDateTime(\DateTime $dateTime): \DateTime
     {
         $previousDateTime = clone $dateTime;
 
@@ -63,13 +64,13 @@ class TimelineController extends AbstractController
         return $previousDateTime->sub($dateInterval);
     }
 
-    public function indexAction(Request $request)
+    public function indexAction(): RedirectResponse
     {
         $dateTime = new \DateTime();
 
         return $this->redirectToRoute('caldera_criticalmass_timeline_yearmonth', [
             'year' => $dateTime->format('Y'),
-            'month' => $dateTime->format('m')
+            'month' => $dateTime->format('m'),
         ]);
     }
 }
