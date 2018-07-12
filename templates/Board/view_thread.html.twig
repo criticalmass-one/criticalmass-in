@@ -8,11 +8,13 @@
             Diskussionen
         </a>
     </li>
+
     <li>
         <a href="{{ objectPath(board) }}">
             {{ board.title }}
         </a>
     </li>
+
     <li class="active">
         {{ thread.title }}
     </li>
@@ -28,7 +30,7 @@
                     <i class="fa fa-comment"></i>
                     Antwort hinzufügen
                 </button>
-                {{ render(controller('AppBundle:Post:writeThread', { 'threadId': thread.id, 'noButton': true })) }}
+                {{ render(controller('App\\Controller\\PostController::writeThreadAction', { 'threadId': thread.id, 'noButton': true })) }}
             {% endif %}
             <h2>
                 {{ thread.title }}
@@ -40,7 +42,7 @@
         <div class="col-md-12">
             <div class="post-list">
                 {% for post in posts %}
-                    {% include('AppBundle:Post:post.html.twig') with { 'post':  post } %}
+                    {% include('Post/post.html.twig') with { 'post':  post } %}
                 {% endfor %}
             </div>
         </div>

@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Board;
 use App\Event\View\ViewEvent;
-use FOS\RestBundle\View\View;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Entity\City;
@@ -12,10 +12,10 @@ use App\Entity\Post;
 use App\Entity\Thread;
 use App\EntityInterface\BoardInterface;
 use Malenki\Slug;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,7 +23,7 @@ class BoardController extends AbstractController
 {
     public function overviewAction(): Response
     {
-        return $this->render('App:Board:overview.html.twig', [
+        return $this->render('Board/overview.html.twig', [
             'boards' => $this->getBoardRepository()->findEnabledBoards(),
             'cities' => $this->getCityRepository()->findCitiesWithBoard(),
         ]);
@@ -33,7 +33,7 @@ class BoardController extends AbstractController
      * @ParamConverter("city", class="App:City", isOptional="true")
      * @ParamConverter("board", class="App:Board", isOptional="true")
      */
-    public function listthreadsAction(Board $board = null, City $city = null): Response
+    public function listthreadsAction(ObjectRouterInterface $objectRouter, Board $board = null, City $city = null): Response
     {
         $threads = [];
         $newThreadUrl = '';
@@ -41,16 +41,16 @@ class BoardController extends AbstractController
         if ($board) {
             $threads = $this->getThreadRepository()->findThreadsForBoard($board);
 
-            $newThreadUrl = $this->generateObjectUrl($board, 'caldera_criticalmass_board_addthread');
+            $newThreadUrl = $objectRouter->generate($board, 'caldera_criticalmass_board_addthread');
         }
 
         if ($city) {
             $threads = $this->getThreadRepository()->findThreadsForCity($city);
 
-            $newThreadUrl = $this->generateObjectUrl($city, 'caldera_criticalmass_board_addcitythread');
+            $newThreadUrl = $objectRouter->generate($city, 'caldera_criticalmass_board_addcitythread');
         }
 
-        return $this->render('App:Board:list_threads.html.twig', [
+        return $this->render('Board/list_threads.html.twig', [
             'threads' => $threads,
             'board' => ($board ? $board : $city),
             'newThreadUrl' => $newThreadUrl,
@@ -60,14 +60,14 @@ class BoardController extends AbstractController
     /**
      * @ParamConverter("thread", class="App:Thread")
      */
-    public function viewthreadAction(EventDispatcher $eventDispatcher, Thread $thread): Response
+    public function viewthreadAction(EventDispatcherInterface $eventDispatcher, Thread $thread): Response
     {
         $posts = $this->getPostRepository()->findPostsForThread($thread);
         $board = $thread->getCity() ?? $thread->getBoard();
 
         $eventDispatcher->dispatch(ViewEvent::NAME, new ViewEvent($thread));
 
-        return $this->render('App:Board:view_thread.html.twig', [
+        return $this->render('Board/view_thread.html.twig', [
             'board' => $board,
             'thread' => $thread,
             'posts' => $posts,
@@ -96,15 +96,15 @@ class BoardController extends AbstractController
         }
     }
 
-    protected function addThreadGetAction(Request $request, BoardInterface $board, Form $form): Response
+    protected function addThreadGetAction(Request $request, BoardInterface $board, FormInterface $form): Response
     {
-        return $this->render('App:Board:add_thread.html.twig', [
+        return $this->render('Board/add_thread.html.twig', [
             'board' => $board,
             'form' => $form->createView(),
         ]);
     }
 
-    protected function addThreadPostAction(Request $request, BoardInterface $board, Form $form): Response
+    protected function addThreadPostAction(Request $request, BoardInterface $board, FormInterface $form): Response
     {
         $form->handleRequest($request);
 
@@ -148,7 +148,7 @@ class BoardController extends AbstractController
             return $this->redirectToObject($thread);
         }
 
-        return $this->render('App:Board:add_thread.html.twig', [
+        return $this->render('Board/add_thread.html.twig', [
             'board' => $board,
             'form' => $form->createView(),
         ]);
