@@ -1,9 +1,9 @@
-{% extends 'AppBundle:Template:MasterTemplate.html.twig' %}
+{% extends 'Template/MasterTemplate.html.twig' %}
 
 {% block masterContent %}
-    {% include('AppBundle:Template/Navigation:_full_navigation.html.twig') %}
+    {% include('Template/Navigation/_full_navigation.html.twig') %}
 
-    {% include('AppBundle:Template/Includes:_github.html.twig') %}
+    {% include('Template/Includes/_github.html.twig') %}
 
     {% block breadcrumbContainer %}
         {% if block('breadcrumb') %}
@@ -20,9 +20,9 @@
 
     {% block content %}{% endblock %}
 
-    {% include('AppBundle:Template:Includes/_adserver.html.twig') %}
+    {% include('Template/Includes/_adserver.html.twig') %}
 
-    {% include('AppBundle:Template:Includes/_footer.html.twig') %}
+    {% include('Template/Includes/_footer.html.twig') %}
 
-    {% include('AppBundle:Template:Includes/_piwik.html.twig') %}
+    {% include('Template/Includes/_piwik.html.twig') %}
 {% endblock %}
