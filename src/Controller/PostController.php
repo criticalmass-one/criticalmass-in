@@ -1,10 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controller;
 
 use App\Entity\Photo;
 use App\EntityInterface\PostableInterface;
-use App\Repository\PostRepository;
 use App\Criticalmass\Util\ClassUtil;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -15,7 +14,6 @@ use App\Entity\Thread;
 use App\EntityInterface\BoardInterface;
 use App\Form\Type\PostType;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -109,7 +107,7 @@ class PostController extends AbstractController
             return $this->redirectToObject($postable);
         }
 
-        return $this->render('App:Post:write_failed.html.twig', [
+        return $this->render('Post/write_failed.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -127,7 +125,6 @@ class PostController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function listAction(
-        Request $request,
         int $cityId = null,
         int $rideId = null,
         int $photoId = null
@@ -153,7 +150,7 @@ class PostController extends AbstractController
         $posts = $this->getPostRepository()->findBy($criteria, ['dateTime' => 'DESC']);
 
         /* And render our shit. */
-        return $this->render('App:Post:list.html.twig', ['posts' => $posts]);
+        return $this->render('Post/list.html.twig', ['posts' => $posts]);
     }
 
     protected function getPostForm(PostableInterface $postable, Post $post = null): FormInterface

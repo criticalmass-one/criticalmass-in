@@ -8,21 +8,25 @@
             Städteliste
         </a>
     </li>
+
     <li>
         <a href="{{ objectPath(city) }}">
             {{ city.city }}
         </a>
     </li>
+
     <li>
         <a href="{{ objectPath(ride) }}">
             {{ ride.title }}
         </a>
     </li>
+
     <li>
         <a href="{{ objectPath(ride, 'caldera_criticalmass_photo_ride_list') }}">
             Fotos
         </a>
     </li>
+
     <li class="active">
         Foto {{ photo.id }} aus {{ city.city }}
     </li>
@@ -139,10 +143,10 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    {{ render(controller('AppBundle:Post:list', { 'photoId': photo.id })) }}
+                    {{ render(controller('App\\Controller\\PostController::listAction', { 'photoId': photo.id })) }}
 
                     {% if app.getUser() %}
-                        {{ render(controller('AppBundle:Post:writePhoto', { 'photoId': photo.id, 'noButton': true })) }}
+                        {{ render(controller('App\\Controller\\PostController::writePhotoAction', { 'photoId': photo.id, 'noButton': true })) }}
                     {% endif %}
                 </div>
             </div>
@@ -219,48 +223,48 @@
                         {% endif %}
 
                         {% if exifData.exposure %}
-                        <dt>
-                            Verschlusszeit
-                        </dt>
-                        <dd>
-                            {{ exifData.exposure }}"
-                        </dd>
+                            <dt>
+                                Verschlusszeit
+                            </dt>
+                            <dd>
+                                {{ exifData.exposure }}"
+                            </dd>
                         {% endif %}
 
                         {% if exifData.aperture %}
-                        <dt>
-                            Blende
-                        </dt>
-                        <dd>
-                            {{ exifData.aperture }}
-                        </dd>
+                            <dt>
+                                Blende
+                            </dt>
+                            <dd>
+                                {{ exifData.aperture }}
+                            </dd>
                         {% endif %}
 
                         {% if exifData.iso %}
-                        <dt>
-                            ISO
-                        </dt>
-                        <dd>
-                            {{ exifData.iso }}
-                        </dd>
+                            <dt>
+                                ISO
+                            </dt>
+                            <dd>
+                                {{ exifData.iso }}
+                            </dd>
                         {% endif %}
 
                         {% if exifData.focalLength %}
-                        <dt>
-                            Brennweite
-                        </dt>
-                        <dd>
-                            {{ exifData.focalLength }} mm
-                        </dd>
+                            <dt>
+                                Brennweite
+                            </dt>
+                            <dd>
+                                {{ exifData.focalLength }} mm
+                            </dd>
                         {% endif %}
 
                         {% if exifData.camera %}
-                        <dt>
-                            Kamera
-                        </dt>
-                        <dd>
-                            {{ exifData.camera }}
-                        </dd>
+                            <dt>
+                                Kamera
+                            </dt>
+                            <dd>
+                                {{ exifData.camera }}
+                            </dd>
                         {% endif %}
                     </dl>
                 </div>

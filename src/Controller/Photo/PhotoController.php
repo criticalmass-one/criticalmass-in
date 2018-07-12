@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controller\Photo;
 
@@ -9,7 +9,7 @@ use App\Criticalmass\SeoPage\SeoPage;
 use App\Event\View\ViewEvent;
 use PHPExif\Exif;
 use PHPExif\Reader\Reader;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -20,9 +20,8 @@ class PhotoController extends AbstractController
      * @ParamConverter("photo", class="App:Photo", options={"id" = "photoId"})
      */
     public function showAction(
-        Request $request,
         SeoPage $seoPage,
-        EventDispatcher $eventDispatcher,
+        EventDispatcherInterface $eventDispatcher,
         Photo $photo
     ): Response {
         $this->errorIfFeatureDisabled('photos');
@@ -47,7 +46,7 @@ class PhotoController extends AbstractController
 
         $seoPage->setPreviewPhoto($photo);
 
-        return $this->render('App:Photo:show.html.twig', [
+        return $this->render('Photo/show.html.twig', [
             'photo' => $photo,
             'nextPhoto' => $this->getPhotoRepository()->getNextPhoto($photo),
             'previousPhoto' => $this->getPhotoRepository()->getPreviousPhoto($photo),
@@ -58,7 +57,7 @@ class PhotoController extends AbstractController
         ]);
     }
 
-    public function ajaxphotoviewAction(Request $request, EventDispatcher $eventDispatcher): Response
+    public function ajaxphotoviewAction(Request $request, EventDispatcherInterface $eventDispatcher): Response
     {
         $this->errorIfFeatureDisabled('photos');
 
