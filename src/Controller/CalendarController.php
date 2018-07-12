@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controller;
 
@@ -26,12 +26,10 @@ class CalendarController extends AbstractController
 
         $seoPage->setDescription('Kalender-Übersicht über weltweitere Critical-Mass-Touren.');
 
-        return $this->render(
-            'App:Calendar:index.html.twig', [
-                'dateTime' => $dateTime,
-                'previousMonth' => $previousMonth,
-                'nextMonth' => $nextMonth,
-            ]
-        );
+        return $this->render('Calendar/index.html.twig', [
+            'dateTime' => $dateTime,
+            'previousMonth' => $previousMonth,
+            'nextMonth' => $nextMonth,
+        ]);
     }
 }

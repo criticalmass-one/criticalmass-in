@@ -3,7 +3,9 @@
 {% block title %}Kalender{% endblock %}
 
 {% block breadcrumb %}
-    <li class="active">Critical-Mass-Kalender</li>
+    <li class="active">
+        Critical-Mass-Kalender
+    </li>
 {% endblock %}
 
 {% block content %}
@@ -30,7 +32,7 @@
             </div>
         </div>
 
-        {% include('AppBundle:Calendar:_pagination.html.twig') with { 'previousMonth': previousMonth, 'nextMonth': nextMonth } %}
+        {% include('Calendar/_pagination.html.twig') with { 'previousMonth': previousMonth, 'nextMonth': nextMonth } %}
 
         <div class="row">
             <div class="col-md-12">
@@ -99,7 +101,7 @@
         </div>
     </div>
 
-    {% include('AppBundle:Calendar:_pagination.html.twig') with { 'previousMonth': previousMonth, 'nextMonth': nextMonth } %}
+    {% include('Calendar/_pagination.html.twig') with { 'previousMonth': previousMonth, 'nextMonth': nextMonth } %}
 
     <script type="text/javascript">
         CriticalMass.loadModule('CalendarPage', '#calendar');
