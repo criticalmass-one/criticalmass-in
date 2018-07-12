@@ -1,10 +1,10 @@
 <?php
 
-namespace AppBundle\Controller\Api;
+namespace App\Controller\Api;
 
-use AppBundle\Entity\City;
-use AppBundle\Traits\RepositoryTrait;
-use AppBundle\Traits\UtilTrait;
+use App\Entity\City;
+use App\Traits\RepositoryTrait;
+use App\Traits\UtilTrait;
 use FOS\RestBundle\View\View;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,7 +39,7 @@ class CityController extends BaseController
      *  resource=true,
      *  description="Shows a critical mass city"
      * )
-     * @ParamConverter("city", class="AppBundle:City")
+     * @ParamConverter("city", class="App:City")
      */
     public function showAction(City $city): Response
     {

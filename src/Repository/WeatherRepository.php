@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Repository;
+namespace App\Repository;
 
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\Weather;
+use App\Entity\Ride;
+use App\Entity\Weather;
 use Doctrine\ORM\EntityRepository;
 
 class WeatherRepository extends EntityRepository

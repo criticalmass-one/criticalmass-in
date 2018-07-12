@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Repository;
+namespace App\Repository;
 
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\RideEstimate;
+use App\Entity\Ride;
+use App\Entity\RideEstimate;
 use Doctrine\ORM\EntityRepository;
 
 class RideEstimateRepository extends EntityRepository

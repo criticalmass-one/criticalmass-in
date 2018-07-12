@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Controller\Profile;
+namespace App\Controller\Profile;
 
-use AppBundle\Controller\AbstractController;
-use AppBundle\Form\Type\UserEmailType;
-use AppBundle\Form\Type\UsernameType;
+use App\Controller\AbstractController;
+use App\Form\Type\UserEmailType;
+use App\Form\Type\UsernameType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use FOS\UserBundle\Model\UserManagerInterface;
@@ -20,11 +20,11 @@ class ProfileManagementController extends AbstractController
      */
     public function manageAction(UserInterface $user = null): Response
     {
-        $participationCounter = $this->getDoctrine()->getRepository('AppBundle:Participation')->countByUser($user);
-        $trackCounter = $this->getDoctrine()->getRepository('AppBundle:Track')->countByUser($user);
-        $photoCounter = $this->getDoctrine()->getRepository('AppBundle:Photo')->countByUser($user);
+        $participationCounter = $this->getDoctrine()->getRepository('App:Participation')->countByUser($user);
+        $trackCounter = $this->getDoctrine()->getRepository('App:Track')->countByUser($user);
+        $photoCounter = $this->getDoctrine()->getRepository('App:Photo')->countByUser($user);
 
-        return $this->render('AppBundle:ProfileManagement:manage.html.twig', [
+        return $this->render('App:ProfileManagement:manage.html.twig', [
             'participationCounter' => $participationCounter,
             'trackCounter' => $trackCounter,
             'photoCounter' => $photoCounter,
@@ -62,7 +62,7 @@ class ProfileManagementController extends AbstractController
             }
         }
 
-        return $this->render('AppBundle:ProfileManagement:edit_username.html.twig', [
+        return $this->render('App:ProfileManagement:edit_username.html.twig', [
             'usernameForm' => $usernameForm->createView()
         ]);
     }
@@ -98,7 +98,7 @@ class ProfileManagementController extends AbstractController
             }
         }
 
-        return $this->render('AppBundle:ProfileManagement:edit_email.html.twig', [
+        return $this->render('App:ProfileManagement:edit_email.html.twig', [
             'userEmailForm' => $userEmailForm->createView()
         ]);
     }

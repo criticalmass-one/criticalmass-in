@@ -1,10 +1,10 @@
 <?php
 
-namespace AppBundle\Repository;
+namespace App\Repository;
 
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\Track;
-use AppBundle\Entity\User;
+use App\Entity\Ride;
+use App\Entity\Track;
+use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 
@@ -13,7 +13,7 @@ use Doctrine\ORM\Query;
  *
  * Reposity for Track entites.
  *
- * @package AppBundle\Repository
+ * @package App\Repository
  * @author maltehuebner
  * @since 2015-09-18
  */

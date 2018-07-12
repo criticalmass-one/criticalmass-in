@@ -1,15 +1,15 @@
 <?php
 
-namespace AppBundle\Manager;
+namespace App\Manager;
 
-use AppBundle\Model\CityListModel;
+use App\Model\CityListModel;
 
 class CityManager extends AbstractManager
 {
     public function buildCityList(): array
     {
-        $cityRepository = $this->doctrine->getRepository('AppBundle:City');
-        $rideRepository = $this->doctrine->getRepository('AppBundle:Ride');
+        $cityRepository = $this->doctrine->getRepository('App:City');
+        $rideRepository = $this->doctrine->getRepository('App:Ride');
 
         $cities = $cityRepository->findCities();
 

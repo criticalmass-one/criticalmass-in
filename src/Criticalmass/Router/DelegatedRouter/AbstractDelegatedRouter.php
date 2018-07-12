@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Router\DelegatedRouter;
+namespace App\Criticalmass\Router\DelegatedRouter;
 
-use AppBundle\Criticalmass\Router\AbstractObjectRouter;
-use AppBundle\EntityInterface\RouteableInterface;
+use App\Criticalmass\Router\AbstractObjectRouter;
+use App\EntityInterface\RouteableInterface;
 
 abstract class AbstractDelegatedRouter extends AbstractObjectRouter implements DelegatedRouterInterface
 {
@@ -22,7 +22,7 @@ abstract class AbstractDelegatedRouter extends AbstractObjectRouter implements D
 
         $entityClassName = array_pop($matches);
 
-        $fqcn = sprintf('AppBundle\\Entity\\%s', $entityClassName);
+        $fqcn = sprintf('App\\Entity\\%s', $entityClassName);
 
         return $fqcn;
     }

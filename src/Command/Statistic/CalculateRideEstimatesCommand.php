@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Command\Statistic;
+namespace App\Command\Statistic;
 
-use AppBundle\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandlerInterface;
-use AppBundle\Entity\Ride;
+use App\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandlerInterface;
+use App\Entity\Ride;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;

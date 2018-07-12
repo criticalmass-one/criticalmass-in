@@ -1,23 +1,23 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\EventSubscriber;
+namespace App\EventSubscriber;
 
-use AppBundle\Criticalmass\Gps\PolylineGenerator\ReducedPolylineGenerator;
-use AppBundle\Criticalmass\Gps\DistanceCalculator\TrackDistanceCalculatorInterface;
-use AppBundle\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandler;
-use AppBundle\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandlerInterface;
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\Track;
-use AppBundle\Event\Track\TrackDeletedEvent;
-use AppBundle\Event\Track\TrackHiddenEvent;
-use AppBundle\Event\Track\TrackShownEvent;
-use AppBundle\Event\Track\TrackTimeEvent;
-use AppBundle\Event\Track\TrackTrimmedEvent;
-use AppBundle\Criticalmass\Gps\GpxReader\TrackReader;
-use AppBundle\Criticalmass\Gps\LatLngListGenerator\RangeLatLngListGenerator;
-use AppBundle\Criticalmass\Gps\PolylineGenerator\PolylineGenerator;
-use AppBundle\Event\Track\TrackUpdatedEvent;
-use AppBundle\Event\Track\TrackUploadedEvent;
+use App\Criticalmass\Gps\PolylineGenerator\ReducedPolylineGenerator;
+use App\Criticalmass\Gps\DistanceCalculator\TrackDistanceCalculatorInterface;
+use App\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandler;
+use App\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandlerInterface;
+use App\Entity\Ride;
+use App\Entity\Track;
+use App\Event\Track\TrackDeletedEvent;
+use App\Event\Track\TrackHiddenEvent;
+use App\Event\Track\TrackShownEvent;
+use App\Event\Track\TrackTimeEvent;
+use App\Event\Track\TrackTrimmedEvent;
+use App\Criticalmass\Gps\GpxReader\TrackReader;
+use App\Criticalmass\Gps\LatLngListGenerator\RangeLatLngListGenerator;
+use App\Criticalmass\Gps\PolylineGenerator\PolylineGenerator;
+use App\Event\Track\TrackUpdatedEvent;
+use App\Event\Track\TrackUploadedEvent;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Timeline\Collector;
+namespace App\Criticalmass\Timeline\Collector;
 
-use AppBundle\Entity\Post;
-use AppBundle\Criticalmass\Timeline\Item\PhotoCommentItem;
+use App\Entity\Post;
+use App\Criticalmass\Timeline\Item\PhotoCommentItem;
 
 class PhotoCommentCollector extends AbstractTimelineCollector
 {

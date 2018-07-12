@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Repository;
+namespace App\Repository;
 
-use AppBundle\Entity\City;
-use AppBundle\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use App\Entity\City;
+use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 
@@ -43,7 +43,7 @@ class SocialNetworkProfileRepository extends EntityRepository
     public function __call($method, $arguments): array
     {
         $methodPrefix = 'findBy';
-        $entityNamespace = 'AppBundle\\Entity';
+        $entityNamespace = 'App\\Entity';
 
         if (0 === strpos($method, $methodPrefix)) {
             $entityClassname = substr($method, 6);

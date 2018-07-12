@@ -1,13 +1,13 @@
 <?php
 
-namespace AppBundle\Controller\Photo;
+namespace App\Controller\Photo;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Controller\AbstractController;
-use AppBundle\Entity\Photo;
-use AppBundle\Entity\Ride;
-use AppBundle\Criticalmass\Image\PhotoGps\PhotoGps;
+use App\Controller\AbstractController;
+use App\Entity\Photo;
+use App\Entity\Ride;
+use App\Criticalmass\Image\PhotoGps\PhotoGps;
 use PHPExif\Reader\Reader;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +17,7 @@ class PhotoUploadController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("ride", class="AppBundle:Ride")
+     * @ParamConverter("ride", class="App:Ride")
      */
     public function uploadAction(Request $request, UserInterface $user = null, PhotoGps $photoGps, Ride $ride): Response
     {
@@ -32,7 +32,7 @@ class PhotoUploadController extends AbstractController
 
     protected function uploadGetAction(Request $request, UserInterface $user = null, PhotoGps $photoGps, Ride $ride): Response
     {
-        return $this->render('AppBundle:PhotoUpload:upload.html.twig', [
+        return $this->render('App:PhotoUpload:upload.html.twig', [
             'ride' => $ride,
         ]);
     }

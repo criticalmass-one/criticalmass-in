@@ -1,12 +1,12 @@
 <?php
 
-namespace AppBundle\Criticalmass\Image\PhotoLocator;
+namespace App\Criticalmass\Image\PhotoLocator;
 
-use AppBundle\Entity\Photo;
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\Track;
-use AppBundle\Entity\User;
-use AppBundle\Criticalmass\Image\PhotoGps\PhotoGps;
+use App\Entity\Photo;
+use App\Entity\Ride;
+use App\Entity\Track;
+use App\Entity\User;
+use App\Criticalmass\Image\PhotoGps\PhotoGps;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 use Symfony\Component\Console\Output\OutputInterface;
 

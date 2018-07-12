@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Controller\Statistic;
+namespace App\Controller\Statistic;
 
-use AppBundle\Controller\AbstractController;
+use App\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
 class MonthlyStatsController extends AbstractController
@@ -25,7 +25,7 @@ class MonthlyStatsController extends AbstractController
 
         $month = new \DateInterval('P1M');
 
-        return $this->render('AppBundle:Statistic:list_rides.html.twig', [
+        return $this->render('App:Statistic:list_rides.html.twig', [
             'rides' => $rides,
             'dateTime' => $dateTime,
             'previousDateTime' => $dateTime->sub($month),

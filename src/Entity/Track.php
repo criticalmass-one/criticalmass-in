@@ -1,17 +1,17 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace App\Entity;
 
-use AppBundle\EntityInterface\RouteableInterface;
+use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use AppBundle\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Router\Annotation as Routing;
 
 /**
  * @ORM\Table(name="track")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\TrackRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\TrackRepository")
  * @Vich\Uploadable
  * @JMS\ExclusionPolicy("all")
  * @Routing\DefaultRoute(name="caldera_criticalmass_track_view")

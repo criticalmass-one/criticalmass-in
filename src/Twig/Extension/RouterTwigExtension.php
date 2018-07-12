@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Twig\Extension;
+namespace App\Twig\Extension;
 
-use AppBundle\Criticalmass\Router\ObjectRouterInterface;
-use AppBundle\EntityInterface\RouteableInterface;
+use App\Criticalmass\Router\ObjectRouterInterface;
+use App\EntityInterface\RouteableInterface;
 
 class RouterTwigExtension extends \Twig_Extension
 {

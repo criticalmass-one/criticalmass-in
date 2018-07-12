@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Criticalmass\Gps;
+namespace App\Criticalmass\Gps;
 
 /**
  * @deprecated

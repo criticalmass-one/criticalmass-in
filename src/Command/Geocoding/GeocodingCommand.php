@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Command\Geocoding;
+namespace App\Command\Geocoding;
 
-use AppBundle\Criticalmass\Geocoding\ReverseGeocoderInterface;
-use AppBundle\Entity\Photo;
+use App\Criticalmass\Geocoding\ReverseGeocoderInterface;
+use App\Entity\Photo;
 use Geocoder\Query\ReverseQuery;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;

@@ -1,12 +1,12 @@
 <?php
 
-namespace AppBundle\Controller\Ride;
+namespace App\Controller\Ride;
 
-use AppBundle\Controller\AbstractController;
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\RideEstimate;
-use AppBundle\Entity\Weather;
-use AppBundle\Form\Type\RideEstimateType;
+use App\Controller\AbstractController;
+use App\Entity\Ride;
+use App\Entity\RideEstimate;
+use App\Entity\Weather;
+use App\Form\Type\RideEstimateType;
 use Symfony\Component\HttpFoundation\Response;
 
 class RideTabsController extends AbstractController
@@ -15,7 +15,7 @@ class RideTabsController extends AbstractController
     {
         $photos = $this->getPhotoRepository()->findPhotosByRide($ride);
 
-        return $this->render('AppBundle:RideTabs:GalleryTab.html.twig', [
+        return $this->render('App:RideTabs:GalleryTab.html.twig', [
             'ride' => $ride,
             'photos' => $photos,
             'dateTime' => new \DateTime(),
@@ -26,7 +26,7 @@ class RideTabsController extends AbstractController
     {
         $tracks = $this->getTrackRepository()->findTracksByRide($ride);
 
-        return $this->render('AppBundle:RideTabs:TracksTab.html.twig', [
+        return $this->render('App:RideTabs:TracksTab.html.twig', [
             'ride' => $ride,
             'tracks' => $tracks,
             'dateTime' => new \DateTime()
@@ -35,7 +35,7 @@ class RideTabsController extends AbstractController
 
     public function renderPostsTabAction(Ride $ride): Response
     {
-        return $this->render('AppBundle:RideTabs:PostsTab.html.twig', [
+        return $this->render('App:RideTabs:PostsTab.html.twig', [
             'ride' => $ride,
         ]);
     }
@@ -44,7 +44,7 @@ class RideTabsController extends AbstractController
     {
         $subrides = $this->getSubrideRepository()->getSubridesForRide($ride);
 
-        return $this->render('AppBundle:RideTabs:SubridesTab.html.twig', [
+        return $this->render('App:RideTabs:SubridesTab.html.twig', [
             'ride' => $ride,
             'subrides' => $subrides,
             'dateTime' => new \DateTime(),
@@ -53,7 +53,7 @@ class RideTabsController extends AbstractController
 
     public function renderStatisticTabAction(Ride $ride): Response
     {
-        return $this->render('AppBundle:RideTabs:StatisticTab.html.twig', [
+        return $this->render('App:RideTabs:StatisticTab.html.twig', [
             'ride' => $ride,
             'dateTime' => new \DateTime(),
         ]);
@@ -78,7 +78,7 @@ class RideTabsController extends AbstractController
 
         $location = $this->getLocationRepository()->findLocationForRide($ride);
 
-        return $this->render('AppBundle:RideTabs:DetailsTab.html.twig', [
+        return $this->render('App:RideTabs:DetailsTab.html.twig', [
             'ride' => $ride,
             'dateTime' => new \DateTime(),
             'estimateForm' => $estimateForm->createView(),

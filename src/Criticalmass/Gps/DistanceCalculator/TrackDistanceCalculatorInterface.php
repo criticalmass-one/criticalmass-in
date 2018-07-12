@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Gps\DistanceCalculator;
+namespace App\Criticalmass\Gps\DistanceCalculator;
 
-use AppBundle\Entity\Track;
+use App\Entity\Track;
 
 /**
  * @deprecated

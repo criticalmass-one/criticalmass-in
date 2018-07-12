@@ -6,7 +6,7 @@
  * Time: 23:01
  */
 
-namespace AppBundle\Criticalmass\Gps;
+namespace App\Criticalmass\Gps;
 
 /**
  * @deprecated

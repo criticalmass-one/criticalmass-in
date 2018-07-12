@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Criticalmass\Calendar\Event;
+namespace App\Criticalmass\Calendar\Event;
 
 use CalendR\Event\AbstractEvent;
-use AppBundle\Entity\Ride;
+use App\Entity\Ride;
 
 class RideEvent extends AbstractEvent
 {

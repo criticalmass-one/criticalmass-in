@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Manager\ContentManager\Exception;
+namespace App\Manager\ContentManager\Exception;
 
 /**
  * @deprecated

@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Gps\DistanceCalculator;
+namespace App\Criticalmass\Gps\DistanceCalculator;
 
-use AppBundle\Criticalmass\Gps\GpxReader\TrackReader;
-use AppBundle\Entity\Track;
+use App\Criticalmass\Gps\GpxReader\TrackReader;
+use App\Entity\Track;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**

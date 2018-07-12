@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Timeline\Collector;
+namespace App\Criticalmass\Timeline\Collector;
 
-use AppBundle\Entity\RideEstimate;
-use AppBundle\Criticalmass\Timeline\Item\RideParticipationEstimateItem;
+use App\Entity\RideEstimate;
+use App\Criticalmass\Timeline\Item\RideParticipationEstimateItem;
 
 class RideParticipationEstimateCollector extends AbstractTimelineCollector
 {

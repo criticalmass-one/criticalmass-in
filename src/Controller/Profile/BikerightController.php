@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Controller\Profile;
+namespace App\Controller\Profile;
 
-use AppBundle\Controller\AbstractController;
-use AppBundle\Entity\BikerightVoucher;
-use AppBundle\Entity\User;
+use App\Controller\AbstractController;
+use App\Entity\BikerightVoucher;
+use App\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -18,7 +18,7 @@ class BikerightController extends AbstractController
     {
         $bikerightVoucher = $this->getVoucher($user);
 
-        return $this->render('AppBundle:BikeRight:view.html.twig', [
+        return $this->render('App:BikeRight:view.html.twig', [
             'bikerightVoucher' => $bikerightVoucher,
         ]);
     }

@@ -1,8 +1,8 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace App\Controller;
 
-use AppBundle\Criticalmass\Timeline\CachedTimeline;
+use App\Criticalmass\Timeline\CachedTimeline;
 use Symfony\Component\HttpFoundation\Request;
 
 class TimelineController extends AbstractController
@@ -36,7 +36,7 @@ class TimelineController extends AbstractController
             $previousDateTime = null;
         }
 
-        return $this->render('AppBundle:Timeline:yearmonth.html.twig', [
+        return $this->render('App:Timeline:yearmonth.html.twig', [
             'timelineContent' => $timelineContent,
             'startDateTime' => $startDateTime,
             'endDateTime' => $endDateTime,

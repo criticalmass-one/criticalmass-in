@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Admin;
+namespace App\Admin;
 
-use AppBundle\Entity\Board;
-use AppBundle\Entity\City;
+use App\Entity\Board;
+use App\Entity\City;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;

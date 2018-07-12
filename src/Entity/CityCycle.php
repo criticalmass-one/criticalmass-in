@@ -1,15 +1,15 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace App\Entity;
 
-use AppBundle\EntityInterface\RouteableInterface;
+use App\EntityInterface\RouteableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use AppBundle\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Router\Annotation as Routing;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CityCycleRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\CityCycleRepository")
  * @ORM\Table(name="city_cycle")
  */
 class CityCycle implements RouteableInterface

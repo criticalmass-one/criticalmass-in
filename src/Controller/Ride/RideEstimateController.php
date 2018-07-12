@@ -1,15 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Controller\Ride;
+namespace App\Controller\Ride;
 
-use AppBundle\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandlerInterface;
-use AppBundle\Event\RideEstimate\RideEstimateCreatedEvent;
+use App\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandlerInterface;
+use App\Event\RideEstimate\RideEstimateCreatedEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Controller\AbstractController;
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\RideEstimate;
-use AppBundle\Form\Type\RideEstimateType;
+use App\Controller\AbstractController;
+use App\Entity\Ride;
+use App\Entity\RideEstimate;
+use App\Form\Type\RideEstimateType;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +19,7 @@ class RideEstimateController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("ride", class="AppBundle:Ride")
+     * @ParamConverter("ride", class="App:Ride")
      */
     public function addestimateAction(
         Request $request,
@@ -49,7 +49,7 @@ class RideEstimateController extends AbstractController
     }
 
     /**
-     * @ParamConverter("ride", class="AppBundle:Ride")
+     * @ParamConverter("ride", class="App:Ride")
      */
     public function anonymousestimateAction(
         Request $request,
@@ -77,7 +77,7 @@ class RideEstimateController extends AbstractController
             return $this->redirectToObject($ride);
         }
 
-        return $this->render('AppBundle:RideEstimate:anonymous.html.twig', [
+        return $this->render('App:RideEstimate:anonymous.html.twig', [
             'estimateForm' => $estimateForm->createView(),
             'ride' => $ride,
         ]);

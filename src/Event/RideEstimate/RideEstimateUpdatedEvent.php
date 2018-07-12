@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Event\RideEstimate;
+namespace App\Event\RideEstimate;
 
 class RideEstimateUpdatedEvent extends AbstractRideEstimateEvent
 {

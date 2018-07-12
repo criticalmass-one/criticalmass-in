@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Request\ParamConverter;
+namespace App\Request\ParamConverter;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -20,7 +20,7 @@ abstract class AbstractParamConverter implements ParamConverterInterface
     public function supports(ParamConverter $configuration): bool
     {
         $shortname = $this->getEntityShortName();
-        $longname = sprintf('AppBundle:%s', $shortname);
+        $longname = sprintf('App:%s', $shortname);
 
         return $configuration->getClass() === $longname;
     }
@@ -41,7 +41,7 @@ abstract class AbstractParamConverter implements ParamConverterInterface
 
     protected function getEntityFqcn(): string
     {
-        return sprintf('AppBundle\\Entity\\%s', $this->getEntityShortName());
+        return sprintf('App\\Entity\\%s', $this->getEntityShortName());
     }
 
     protected function notFound(ParamConverter $configuration): void

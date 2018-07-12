@@ -1,17 +1,17 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace App\Entity;
 
-use AppBundle\EntityInterface\AutoParamConverterAble;
-use AppBundle\EntityInterface\BoardInterface;
-use AppBundle\EntityInterface\RouteableInterface;
+use App\EntityInterface\AutoParamConverterAble;
+use App\EntityInterface\BoardInterface;
+use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use AppBundle\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Router\Annotation as Routing;
 
 /**
  * @ORM\Table(name="board")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\BoardRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\BoardRepository")
  * @Routing\DefaultRoute(name="caldera_criticalmass_board_listthreads")
  */
 class Board implements BoardInterface, RouteableInterface, AutoParamConverterAble

@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\EntityInterface;
+namespace App\EntityInterface;
 
 interface CoordinateInterface
 {

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Event\Participation;
+namespace App\Event\Participation;
 
 class ParticipationCreatedEvent extends AbstractParticipationEvent
 {

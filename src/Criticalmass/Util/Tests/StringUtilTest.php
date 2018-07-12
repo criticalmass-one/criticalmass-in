@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Util\Tests;
+namespace App\Criticalmass\Util\Tests;
 
-use AppBundle\Criticalmass\Util\StringUtil;
+use App\Criticalmass\Util\StringUtil;
 use PHPUnit\Framework\TestCase;
 
 class StringUtilTest extends TestCase

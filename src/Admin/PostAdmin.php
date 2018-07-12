@@ -1,11 +1,11 @@
 <?php
 
-namespace AppBundle\Admin;
+namespace App\Admin;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\Thread;
-use AppBundle\Entity\User;
+use App\Entity\City;
+use App\Entity\Ride;
+use App\Entity\Thread;
+use App\Entity\User;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;

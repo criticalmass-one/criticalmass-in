@@ -1,11 +1,11 @@
 <?php
 
-namespace AppBundle\Controller\Photo;
+namespace App\Controller\Photo;
 
-use AppBundle\Controller\AbstractController;
-use AppBundle\Entity\City;
-use AppBundle\Entity\Photo;
-use AppBundle\Entity\Ride;
+use App\Controller\AbstractController;
+use App\Entity\City;
+use App\Entity\Photo;
+use App\Entity\Ride;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class PhotoGalleryController extends AbstractController
 {
     /**
-     * @ParamConverter("ride", class="AppBundle:Ride")
+     * @ParamConverter("ride", class="App:Ride")
      */
     public function galleryAction(Request $request, PaginatorInterface $paginator, Ride $ride): Response
     {
@@ -34,7 +34,7 @@ class PhotoGalleryController extends AbstractController
             32
         );
 
-        return $this->render('AppBundle:PhotoGallery:gallery_list.html.twig', [
+        return $this->render('App:PhotoGallery:gallery_list.html.twig', [
             'ride' => $ride,
             'pagination' => $pagination,
         ]);
@@ -49,7 +49,7 @@ class PhotoGalleryController extends AbstractController
 
         $result = $this->getPhotoRepository()->findRidesWithPhotoCounterByUser($user);
 
-        return $this->render('AppBundle:PhotoGallery:user_list.html.twig', [
+        return $this->render('App:PhotoGallery:user_list.html.twig', [
             'result' => $result,
         ]);
     }
@@ -73,7 +73,7 @@ class PhotoGalleryController extends AbstractController
 
         shuffle($cityList);
 
-        return $this->render('AppBundle:PhotoGallery:example_gallery.html.twig', [
+        return $this->render('App:PhotoGallery:example_gallery.html.twig', [
             'photos' => $photos,
             'cities' => $cityList,
         ]);

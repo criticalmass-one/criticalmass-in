@@ -1,11 +1,11 @@
 <?php
 
-namespace AppBundle\Controller\Photo;
+namespace App\Controller\Photo;
 
-use AppBundle\Controller\AbstractController;
-use AppBundle\Entity\Photo;
-use AppBundle\Entity\Ride;
-use AppBundle\Form\Type\PhotoCoordType;
+use App\Controller\AbstractController;
+use App\Entity\Photo;
+use App\Entity\Ride;
+use App\Form\Type\PhotoCoordType;
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;
 use Imagine\Image\ImageInterface;
@@ -29,13 +29,13 @@ class PhotoManagementController extends AbstractController
     {
         $this->errorIfFeatureDisabled('photos');
 
-        return $this->render('AppBundle:PhotoManagement:user_list.html.twig', [
+        return $this->render('App:PhotoManagement:user_list.html.twig', [
             'result' => $this->getPhotoRepository()->findRidesWithPhotoCounterByUser($user),
         ]);
     }
 
     /**
-     * @ParamConverter("ride", class="AppBundle:Ride")
+     * @ParamConverter("ride", class="App:Ride")
      */
     public function ridelistAction(Request $request, Paginator $paginator, Ride $ride): Response
     {
@@ -49,7 +49,7 @@ class PhotoManagementController extends AbstractController
             32
         );
 
-        return $this->render('AppBundle:PhotoManagement:ride_list.html.twig', [
+        return $this->render('App:PhotoManagement:ride_list.html.twig', [
             'ride' => $ride,
             'pagination' => $pagination,
         ]);
@@ -57,7 +57,7 @@ class PhotoManagementController extends AbstractController
 
     /**
      * @Security("is_granted('edit', photo)")
-     * @ParamConverter("photo", class="AppBundle:Photo", options={"id": "photoId"})
+     * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
     public function deleteAction(Request $request, Photo $photo): Response
     {
@@ -74,7 +74,7 @@ class PhotoManagementController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("ride", class="AppBundle:Ride")
+     * @ParamConverter("ride", class="App:Ride")
      */
     public function manageAction(Request $request, Paginator $paginator, Ride $ride): Response
     {
@@ -88,7 +88,7 @@ class PhotoManagementController extends AbstractController
             32
         );
 
-        return $this->render('AppBundle:PhotoManagement:manage.html.twig', [
+        return $this->render('App:PhotoManagement:manage.html.twig', [
             'ride' => $ride,
             'pagination' => $pagination
         ]);
@@ -96,7 +96,7 @@ class PhotoManagementController extends AbstractController
 
     /**
      * @Security("is_granted('edit', photo)")
-     * @ParamConverter("photo", class="AppBundle:Photo", options={"id": "photoId"})
+     * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
     public function toggleAction(Request $request, Photo $photo): Response
     {
@@ -113,7 +113,7 @@ class PhotoManagementController extends AbstractController
 
     /**
      * @Security("is_granted('edit', photo)")
-     * @ParamConverter("photo", class="AppBundle:Photo", options={"id": "photoId"})
+     * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
     public function featuredPhotoAction(Request $request, Photo $photo): Response
     {
@@ -130,7 +130,7 @@ class PhotoManagementController extends AbstractController
 
     /**
      * @Security("is_granted('edit', photo)")
-     * @ParamConverter("photo", class="AppBundle:Photo", options={"id": "photoId"})
+     * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
     public function placeSingleAction(Request $request, Photo $photo): Response
     {
@@ -156,7 +156,7 @@ class PhotoManagementController extends AbstractController
 
         $track = $this->getTrackRepository()->findByUserAndRide($photo->getRide(), $this->getUser());
 
-        return $this->render('AppBundle:PhotoManagement:place.html.twig', [
+        return $this->render('App:PhotoManagement:place.html.twig', [
             'photo' => $photo,
             'previousPhoto' => $previousPhoto,
             'nextPhoto' => $nextPhoto,
@@ -180,7 +180,7 @@ class PhotoManagementController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("ride", class="AppBundle:Ride")
+     * @ParamConverter("ride", class="App:Ride")
      */
     public function relocateAction(Ride $ride): Response
     {
@@ -190,7 +190,7 @@ class PhotoManagementController extends AbstractController
 
         $track = $this->getTrackRepository()->findByUserAndRide($ride, $this->getUser());
 
-        return $this->render('AppBundle:PhotoManagement:relocate.html.twig', [
+        return $this->render('App:PhotoManagement:relocate.html.twig', [
             'ride' => $ride,
             'photos' => $photos,
             'track' => $track,
@@ -199,7 +199,7 @@ class PhotoManagementController extends AbstractController
 
     /**
      * @Security("is_granted('edit', photo)")
-     * @ParamConverter("photo", class="AppBundle:Photo", options={"id": "photoId"})
+     * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
     public function rotateAction(Request $request, Photo $photo): Response
     {
@@ -226,7 +226,7 @@ class PhotoManagementController extends AbstractController
 
     /**
      * @Security("is_granted('edit', photo)")
-     * @ParamConverter("photo", class="AppBundle:Photo", options={"id": "photoId"})
+     * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
     public function censorAction(Request $request, UserInterface $user = null, Photo $photo): Response
     {
@@ -241,7 +241,7 @@ class PhotoManagementController extends AbstractController
 
     public function censorGetAction(Request $request, UserInterface $user = null, Photo $photo): Response
     {
-        return $this->render('AppBundle:PhotoManagement:censor.html.twig', [
+        return $this->render('App:PhotoManagement:censor.html.twig', [
             'photo' => $photo,
         ]);
     }

@@ -1,8 +1,8 @@
 <?php
 
-namespace AppBundle\Repository;
+namespace App\Repository;
 
-use AppBundle\Entity\City;
+use App\Entity\City;
 use Doctrine\ORM\EntityRepository;
 
 class FrontpageTeaserRepository extends EntityRepository

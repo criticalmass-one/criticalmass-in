@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Controller\Track;
+namespace App\Controller\Track;
 
-use AppBundle\Event\Track\TrackTimeEvent;
+use App\Event\Track\TrackTimeEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use AppBundle\Controller\AbstractController;
-use AppBundle\Entity\Track;
-use AppBundle\Criticalmass\Gps\TrackTimeshift\TrackTimeshift;
+use App\Controller\AbstractController;
+use App\Entity\Track;
+use App\Criticalmass\Gps\TrackTimeshift\TrackTimeshift;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormInterface;
@@ -19,7 +19,7 @@ class TrackTimeController extends AbstractController
 {
     /**
      * @Security("is_granted('edit', track)")
-     * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
+     * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
      */
     public function timeAction(Request $request, EventDispatcher $eventDispatcher, Track $track, TrackTimeshift $trackTimeshift): Response
     {
@@ -38,7 +38,7 @@ class TrackTimeController extends AbstractController
 
     protected function timeGetAction(Request $request, EventDispatcher $eventDispatcher, Track $track, FormInterface $form, TrackTimeshift $trackTimeshift): Response
     {
-        return $this->render('AppBundle:Track:time.html.twig', [
+        return $this->render('App:Track:time.html.twig', [
             'form' => $form->createView(),
             'track' => $track,
         ]);

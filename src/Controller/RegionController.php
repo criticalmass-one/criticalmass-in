@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace App\Controller;
 
 use Abraham\TwitterOAuth\Request;
 
@@ -32,7 +32,7 @@ class RegionController extends AbstractController
         }
 
         return $this->render(
-            'AppBundle:Region:index.html.twig',
+            'App:Region:index.html.twig',
             [
                 'region' => $region,
                 'regions' => $regions,

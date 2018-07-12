@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\RideGenerator\RideGenerator;
+namespace App\Criticalmass\RideGenerator\RideGenerator;
 
-use AppBundle\Entity\City;
-use AppBundle\Criticalmass\RideGenerator\RideCalculator\RideCalculatorInterface;
+use App\Entity\City;
+use App\Criticalmass\RideGenerator\RideCalculator\RideCalculatorInterface;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 
 abstract class AbstractRideGenerator implements RideGeneratorInterface

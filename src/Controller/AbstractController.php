@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace App\Controller;
 
-use AppBundle\Traits\RepositoryTrait;
-use AppBundle\Traits\UtilTrait;
+use App\Traits\RepositoryTrait;
+use App\Traits\UtilTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 abstract class AbstractController extends Controller

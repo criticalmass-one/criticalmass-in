@@ -1,8 +1,8 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace App\Controller;
 
-use AppBundle\Entity\User;
+use App\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -10,11 +10,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class ProfileController extends AbstractController
 {
     /**
-     * @ParamConverter("user", class="AppBundle:User")
+     * @ParamConverter("user", class="App:User")
      */
     public function showAction(User $user): Response
     {
-        return $this->render('AppBundle:Profile:show.html.twig', [
+        return $this->render('App:Profile:show.html.twig', [
             'userProfile' => $user,
         ]);
     }

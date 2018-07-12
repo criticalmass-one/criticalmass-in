@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Geocoding;
+namespace App\Criticalmass\Geocoding;
 
-use AppBundle\Criticalmass\Geocoding\LocationBuilder\LocationBuilderInterface;
+use App\Criticalmass\Geocoding\LocationBuilder\LocationBuilderInterface;
 use Geocoder\Geocoder;
 use Geocoder\Provider\Provider;
 use Geocoder\Query\ReverseQuery;

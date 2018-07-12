@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Gps\GpxExporter;
+namespace App\Criticalmass\Gps\GpxExporter;
 
 /** @deprecated */
 interface GpxExporterInterface

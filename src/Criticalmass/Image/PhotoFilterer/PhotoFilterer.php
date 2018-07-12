@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Criticalmass\Image\PhotoFilterer;
+namespace App\Criticalmass\Image\PhotoFilterer;
 
-use AppBundle\Entity\Photo;
-use AppBundle\Entity\Ride;
+use App\Entity\Photo;
+use App\Entity\Ride;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 use Liip\ImagineBundle\Controller\ImagineController;
 use Symfony\Component\Console\Helper\ProgressBar;

@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Sharing\Metadata;
+namespace App\Criticalmass\Sharing\Metadata;
 
-use AppBundle\Criticalmass\Sharing\Annotation\Intro;
-use AppBundle\Criticalmass\Sharing\Annotation\Title;
-use AppBundle\Criticalmass\Sharing\ShareableInterface\Shareable;
-use AppBundle\Criticalmass\Util\ClassUtil;
+use App\Criticalmass\Sharing\Annotation\Intro;
+use App\Criticalmass\Sharing\Annotation\Title;
+use App\Criticalmass\Sharing\ShareableInterface\Shareable;
+use App\Criticalmass\Util\ClassUtil;
 
 class Metadata extends AbstractMetadata
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace App\Entity;
 
-use AppBundle\EntityInterface\ViewInterface;
+use App\EntityInterface\ViewInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

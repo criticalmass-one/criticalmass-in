@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Controller\Statistic;
+namespace App\Controller\Statistic;
 
-use AppBundle\Controller\AbstractController;
-use AppBundle\Entity\City;
-use AppBundle\Entity\Region;
-use AppBundle\Entity\Ride;
-use AppBundle\Criticalmass\SeoPage\SeoPage;
+use App\Controller\AbstractController;
+use App\Entity\City;
+use App\Entity\Region;
+use App\Entity\Ride;
+use App\Criticalmass\SeoPage\SeoPage;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 class StatisticController extends AbstractController
 {
     /**
-     * @ParamConverter("city", class="AppBundle:City")
+     * @ParamConverter("city", class="App:City")
      */
     public function citystatisticAction(SeoPage $seoPage, City $city): Response
     {
@@ -22,7 +22,7 @@ class StatisticController extends AbstractController
 
         $seoPage->setDescription(sprintf('Critical-Mass-Statistiken aus %s: Teilnehmer, Fahrtdauer, Fahrtlänge, Touren', $city->getCity()));
 
-        return $this->render('AppBundle:Statistic:city_statistic.html.twig', [
+        return $this->render('App:Statistic:city_statistic.html.twig', [
             'city' => $city,
             'rides' => $rides,
         ]);
@@ -62,7 +62,7 @@ class StatisticController extends AbstractController
         $seoPage->setDescription('Critical-Mass-Statistiken: Teilnehmer, Fahrtdauer, Fahrtlänge, Touren');
 
         return $this->render(
-            'AppBundle:Statistic:overview.html.twig',
+            'App:Statistic:overview.html.twig',
             [
                 'cities' => $cities,
                 'rides' => $rides,

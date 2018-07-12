@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Profile\ParticipationTable;
+namespace App\Criticalmass\Profile\ParticipationTable;
 
-use AppBundle\Entity\User;
+use App\Entity\User;
 
 interface TableGeneratorInterface
 {

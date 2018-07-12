@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Security\Authorization\Voter;
+namespace App\Security\Authorization\Voter;
 
-use AppBundle\Entity\Photo;
-use AppBundle\Entity\User;
+use App\Entity\Photo;
+use App\Entity\User;
 
 class PhotoVoter extends AbstractVoter
 {

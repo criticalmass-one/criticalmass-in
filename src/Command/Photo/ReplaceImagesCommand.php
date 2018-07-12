@@ -1,11 +1,11 @@
 <?php
 
-namespace AppBundle\Command\Photo;
+namespace App\Command\Photo;
 
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\Track;
-use AppBundle\Entity\User;
-use AppBundle\Criticalmass\Image\PhotoLocator\PhotoLocator;
+use App\Entity\Ride;
+use App\Entity\Track;
+use App\Entity\User;
+use App\Criticalmass\Image\PhotoLocator\PhotoLocator;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;

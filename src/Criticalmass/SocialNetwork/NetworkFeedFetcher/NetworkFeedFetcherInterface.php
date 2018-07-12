@@ -1,8 +1,8 @@
 <?php
 
-namespace AppBundle\Criticalmass\SocialNetwork\NetworkFeedFetcher;
+namespace App\Criticalmass\SocialNetwork\NetworkFeedFetcher;
 
-use AppBundle\Entity\SocialNetworkProfile;
+use App\Entity\SocialNetworkProfile;
 
 interface NetworkFeedFetcherInterface
 {

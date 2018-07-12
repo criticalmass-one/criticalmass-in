@@ -1,13 +1,13 @@
 <?php
 
-namespace AppBundle\Controller\Ride;
+namespace App\Controller\Ride;
 
-use AppBundle\Entity\Ride;
-use AppBundle\Criticalmass\SeoPage\SeoPage;
-use AppBundle\Event\View\ViewEvent;
+use App\Entity\Ride;
+use App\Criticalmass\SeoPage\SeoPage;
+use App\Event\View\ViewEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use AppBundle\Controller\AbstractController;
-use AppBundle\Entity\Weather;
+use App\Controller\AbstractController;
+use App\Entity\Weather;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,13 +25,13 @@ class RideController extends AbstractController
             $rides[$ride->getDateTime()->format('Y-m-d')][] = $ride;
         }
 
-        return $this->render('AppBundle:Ride:list.html.twig', [
+        return $this->render('App:Ride:list.html.twig', [
             'rides' => $rides,
         ]);
     }
 
     /**
-     * @ParamConverter("ride", class="AppBundle:Ride")
+     * @ParamConverter("ride", class="App:Ride")
      */
     public function showAction(Request $request, SeoPage $seoPage, EventDispatcher $eventDispatcher, Ride $ride): Response
     {
@@ -74,7 +74,7 @@ class RideController extends AbstractController
             $participation = null;
         }
 
-        return $this->render('AppBundle:Ride:show.html.twig', [
+        return $this->render('App:Ride:show.html.twig', [
             'city' => $ride->getCity(),
             'ride' => $ride,
             'tracks' => $this->getTrackRepository()->findTracksByRide($ride),

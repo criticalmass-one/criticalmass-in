@@ -1,14 +1,14 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace App\Controller;
 
-use AppBundle\Event\Track\TrackUploadedEvent;
+use App\Event\Track\TrackUploadedEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Entity\Position;
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\Track;
-use AppBundle\Criticalmass\Gps\GpxExporter\GpxExporter;
+use App\Entity\Position;
+use App\Entity\Ride;
+use App\Entity\Track;
+use App\Criticalmass\Gps\GpxExporter\GpxExporter;
 use Pest;
 use Strava\API\Client;
 use Strava\API\OAuth as OAuth;
@@ -43,7 +43,7 @@ class StravaController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("ride", class="AppBundle:Ride")
+     * @ParamConverter("ride", class="App:Ride")
      */
     public function authAction(Request $request, Ride $ride): Response
     {
@@ -56,7 +56,7 @@ class StravaController extends AbstractController
 
         $authorizationUrl = $oauth->getAuthorizationUrl($authorizationOptions);
 
-        return $this->render('AppBundle:Strava:auth.html.twig', [
+        return $this->render('App:Strava:auth.html.twig', [
             'authorizationUrl' => $authorizationUrl,
             'ride' => $ride,
         ]);
@@ -64,7 +64,7 @@ class StravaController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("ride", class="AppBundle:Ride")
+     * @ParamConverter("ride", class="App:Ride")
      */
     public function tokenAction(Request $request, Ride $ride): Response
     {
@@ -92,7 +92,7 @@ class StravaController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("ride", class="AppBundle:Ride")
+     * @ParamConverter("ride", class="App:Ride")
      */
     public function listridesAction(Ride $ride): Response
     {
@@ -108,7 +108,7 @@ class StravaController extends AbstractController
 
         $activities = $client->getAthleteActivities($beforeDateTime->getTimestamp(), $afterDateTime->getTimestamp());
 
-        return $this->render('AppBundle:Strava:list.html.twig', [
+        return $this->render('App:Strava:list.html.twig', [
             'activities' => $activities,
             'ride' => $ride
         ]);
@@ -116,7 +116,7 @@ class StravaController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("ride", class="AppBundle:Ride")
+     * @ParamConverter("ride", class="App:Ride")
      */
     public function importAction(Request $request, EventDispatcherInterface $eventDispatcher, GpxExporter $exporter, Ride $ride): Response
     {

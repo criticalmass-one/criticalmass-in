@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Feature;
+namespace App\Feature;
 
 abstract class AbstractFeature implements FeatureInterface
 {

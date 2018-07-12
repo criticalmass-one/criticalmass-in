@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Timeline\Item;
+namespace App\Criticalmass\Timeline\Item;
 
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\Track;
+use App\Entity\Ride;
+use App\Entity\Track;
 
 class RideTrackItem extends AbstractItem
 {

@@ -1,13 +1,13 @@
 <?php
 
-namespace AppBundle\Controller\Ride;
+namespace App\Controller\Ride;
 
-use AppBundle\Entity\Ride;
+use App\Entity\Ride;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Controller\AbstractController;
-use AppBundle\Entity\Subride;
-use AppBundle\Form\Type\SubrideType;
+use App\Controller\AbstractController;
+use App\Entity\Subride;
+use App\Form\Type\SubrideType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +17,7 @@ class SubrideController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("ride", class="AppBundle:Ride")
+     * @ParamConverter("ride", class="App:Ride")
      */
     public function addAction(Request $request, Ride $ride, UserInterface $user): Response
     {
@@ -40,7 +40,7 @@ class SubrideController extends AbstractController
 
     protected function addGetAction(Request $request, Subride $subride, FormInterface $form): Response
     {
-        return $this->render('AppBundle:Subride:edit.html.twig', [
+        return $this->render('App:Subride:edit.html.twig', [
             'subride' => null,
             'form' => $form->createView(),
             'city' => $subride->getRide()->getCity(),
@@ -69,7 +69,7 @@ class SubrideController extends AbstractController
         ]);
 
         // QND: this is a try to serve an instance of the new created subride to get the marker to the right place
-        return $this->render('AppBundle:Subride:edit.html.twig', [
+        return $this->render('App:Subride:edit.html.twig', [
             'subride' => $subride,
             'form' => $form->createView(),
             'city' => $subride->getRide()->getCity(),
@@ -79,7 +79,7 @@ class SubrideController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("subride", class="AppBundle:Subride", options={"id" = "subrideId"})
+     * @ParamConverter("subride", class="App:Subride", options={"id" = "subrideId"})
      */
     public function editAction(Request $request, Subride $subride): Response
     {
@@ -96,7 +96,7 @@ class SubrideController extends AbstractController
 
     protected function editGetAction(Request $request, Subride $subride, FormInterface $form): Response
     {
-        return $this->render('AppBundle:Subride:edit.html.twig', [
+        return $this->render('App:Subride:edit.html.twig', [
             'subride' => null,
             'form' => $form->createView(),
             'city' => $subride->getRide()->getCity(),
@@ -115,7 +115,7 @@ class SubrideController extends AbstractController
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
         }
 
-        return $this->render('AppBundle:Subride:edit.html.twig', [
+        return $this->render('App:Subride:edit.html.twig', [
             'ride' => $subride->getRide(),
             'city' => $subride->getRide()->getCity(),
             'subride' => $subride,
@@ -126,13 +126,13 @@ class SubrideController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("ride", class="AppBundle:Ride")
+     * @ParamConverter("ride", class="App:Ride")
      */
     public function preparecopyAction(Ride $ride): Response
     {
         $oldRide = $this->getRideRepository()->getPreviousRideWithSubrides($ride);
 
-        return $this->render('AppBundle:Subride:preparecopy.html.twig', [
+        return $this->render('App:Subride:preparecopy.html.twig', [
             'oldRide' => $oldRide,
             'newRide' => $ride
         ]);
@@ -140,7 +140,7 @@ class SubrideController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("oldRide", class="AppBundle:Ride")
+     * @ParamConverter("oldRide", class="App:Ride")
      * @ParamConverter("newDate", options={"format": "Y-m-d"})
      */
     public function copyAction(Ride $oldRide, \DateTime $newDate): Response

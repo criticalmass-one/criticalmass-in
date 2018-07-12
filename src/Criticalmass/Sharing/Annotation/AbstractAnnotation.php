@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Sharing\Annotation;
+namespace App\Criticalmass\Sharing\Annotation;
 
 abstract class AbstractAnnotation
 {

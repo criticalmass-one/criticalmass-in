@@ -1,13 +1,13 @@
 <?php
 
-namespace AppBundle\Controller\Api;
+namespace App\Controller\Api;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\CitySlug;
-use AppBundle\Entity\Ride;
-use AppBundle\Traits\RepositoryTrait;
-use AppBundle\Traits\UtilTrait;
-use AppBundle\Criticalmass\Util\DateTimeUtil;
+use App\Entity\City;
+use App\Entity\CitySlug;
+use App\Entity\Ride;
+use App\Traits\RepositoryTrait;
+use App\Traits\UtilTrait;
+use App\Criticalmass\Util\DateTimeUtil;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -25,7 +25,7 @@ class RideController extends BaseController
      *  resource=true,
      *  description="Returns ride details"
      * )
-     * @ParamConverter("ride", class="AppBundle:Ride")
+     * @ParamConverter("ride", class="App:Ride")
      */
     public function showAction(Ride $ride): Response
     {
@@ -43,7 +43,7 @@ class RideController extends BaseController
      *  resource=true,
      *  description="Returns details of the next ride in the city"
      * )
-     * @ParamConverter("city", class="AppBundle:City")
+     * @ParamConverter("city", class="App:City")
      */
     public function showCurrentAction(City $city): Response
     {

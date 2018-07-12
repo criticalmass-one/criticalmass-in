@@ -1,10 +1,10 @@
 <?php
 
-namespace AppBundle\Criticalmass\ViewStorage;
+namespace App\Criticalmass\ViewStorage;
 
-use AppBundle\Entity\User;
-use AppBundle\EntityInterface\ViewableInterface;
-use AppBundle\EntityInterface\ViewInterface;
+use App\Entity\User;
+use App\EntityInterface\ViewableInterface;
+use App\EntityInterface\ViewInterface;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Cache\Adapter\AbstractAdapter;
@@ -99,7 +99,7 @@ class ViewStoragePersister implements ViewStoragePersisterInterface
 
     protected function getView(string $className): ViewInterface
     {
-        $viewClassName = 'AppBundle\Entity\\' . $className . 'View';
+        $viewClassName = 'App\Entity\\' . $className . 'View';
 
         $view = new $viewClassName;
 
@@ -108,14 +108,14 @@ class ViewStoragePersister implements ViewStoragePersisterInterface
 
     protected function getUser(int $userId): User
     {
-        $user = $this->manager->getRepository('AppBundle:User')->find($userId);
+        $user = $this->manager->getRepository('App:User')->find($userId);
 
         return $user;
     }
 
     protected function getEntity(string $className, int $entityId): ViewableInterface
     {
-        $entity = $this->manager->getRepository('AppBundle:' . $className)->find($entityId);
+        $entity = $this->manager->getRepository('App:' . $className)->find($entityId);
 
         return $entity;
     }

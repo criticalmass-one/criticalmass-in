@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Router\DelegatedRouter;
+namespace App\Criticalmass\Router\DelegatedRouter;
 
-use AppBundle\EntityInterface\RouteableInterface;
+use App\EntityInterface\RouteableInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 interface DelegatedRouterInterface

@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\RideGenerator\RideCalculator;
+namespace App\Criticalmass\RideGenerator\RideCalculator;
 
-use AppBundle\Entity\CityCycle;
-use AppBundle\Entity\Ride;
-use AppBundle\Criticalmass\RideGenerator\Exception\InvalidMonthException;
-use AppBundle\Criticalmass\RideGenerator\Exception\InvalidYearException;
+use App\Entity\CityCycle;
+use App\Entity\Ride;
+use App\Criticalmass\RideGenerator\Exception\InvalidMonthException;
+use App\Criticalmass\RideGenerator\Exception\InvalidYearException;
 
 class RideCalculator extends AbstractRideCalculator
 {

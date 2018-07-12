@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Controller\Track;
+namespace App\Controller\Track;
 
-use AppBundle\Event\Track\TrackTrimmedEvent;
-use AppBundle\Form\Type\TrackRangeType;
-use AppBundle\Criticalmass\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
+use App\Event\Track\TrackTrimmedEvent;
+use App\Form\Type\TrackRangeType;
+use App\Criticalmass\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Controller\AbstractController;
-use AppBundle\Entity\Track;
+use App\Controller\AbstractController;
+use App\Entity\Track;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +19,7 @@ class TrackRangeController extends AbstractController
 {
     /**
      * @Security("is_granted('edit', track)")
-     * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
+     * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
      */
     public function rangeAction(Request $request, Track $track, SimpleLatLngListGenerator $latLngListGenerator, EventDispatcherInterface $eventDispatcher): Response
     {
@@ -38,7 +38,7 @@ class TrackRangeController extends AbstractController
             ->loadTrack($track)
             ->execute();
 
-        return $this->render('AppBundle:Track:range.html.twig', [
+        return $this->render('App:Track:range.html.twig', [
             'form' => $form->createView(),
             'track' => $track,
             'latLngList' => $latLngListGenerator->getList(),

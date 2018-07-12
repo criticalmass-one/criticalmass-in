@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Event\Track;
+namespace App\Event\Track;
 
 class TrackDeletedEvent extends AbstractTrackEvent
 {

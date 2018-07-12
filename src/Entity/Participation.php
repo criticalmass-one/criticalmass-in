@@ -1,11 +1,11 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ParticipationRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ParticipationRepository")
  * @ORM\Table(name="participation")
  */
 class Participation

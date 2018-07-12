@@ -1,8 +1,8 @@
 <?php
 
-namespace AppBundle\Criticalmass\SocialNetwork\NetworkManager;
+namespace App\Criticalmass\SocialNetwork\NetworkManager;
 
-use AppBundle\Criticalmass\SocialNetwork\Network\NetworkInterface;
+use App\Criticalmass\SocialNetwork\Network\NetworkInterface;
 
 interface NetworkManagerInterface
 {

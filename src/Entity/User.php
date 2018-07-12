@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace App\Entity;
 
-use AppBundle\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
-use AppBundle\EntityInterface\RouteableInterface;
+use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use App\EntityInterface\RouteableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,10 +12,10 @@ use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use AppBundle\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Router\Annotation as Routing;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="fos_user_user")
  * @ORM\HasLifecycleCallbacks
  * @Vich\Uploadable

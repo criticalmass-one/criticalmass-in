@@ -6,7 +6,7 @@
             <tag name="form.type"/>
         </defaults>
 
-        <prototype namespace="AppBundle\Form\"
-                   resource="%kernel.project_dir%/src/AppBundle/Form/*"/>
+        <prototype namespace="App\Form\"
+                   resource="%kernel.project_dir%/src/App/Form/*"/>
     </services>
 </container>

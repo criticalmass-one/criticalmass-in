@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Event\City;
+namespace App\Event\City;
 
 class CityCreatedEvent extends AbstractCityEvent
 {

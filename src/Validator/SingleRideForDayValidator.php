@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Validator;
+namespace App\Validator;
 
-use AppBundle\Entity\Ride;
+use App\Entity\Ride;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;

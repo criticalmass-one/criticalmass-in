@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Controller\Ride;
+namespace App\Controller\Ride;
 
-use AppBundle\Event\Participation\ParticipationCreatedEvent;
+use App\Event\Participation\ParticipationCreatedEvent;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Controller\AbstractController;
-use AppBundle\Entity\Participation;
-use AppBundle\Entity\Ride;
+use App\Controller\AbstractController;
+use App\Entity\Participation;
+use App\Entity\Ride;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -17,7 +17,7 @@ class ParticipationController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("ride", class="AppBundle:Ride")
+     * @ParamConverter("ride", class="App:Ride")
      */
     public function rideparticipationAction(Registry $registry, EventDispatcherInterface $eventDispatcher, UserInterface $user = null, Ride $ride, string $status): Response
     {

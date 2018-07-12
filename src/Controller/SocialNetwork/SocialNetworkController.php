@@ -1,18 +1,18 @@
 <?php
 
-namespace AppBundle\Controller\SocialNetwork;
+namespace App\Controller\SocialNetwork;
 
-use AppBundle\Controller\AbstractController;
-use AppBundle\Criticalmass\Router\ObjectRouterInterface;
-use AppBundle\Criticalmass\Util\ClassUtil;
-use AppBundle\Entity\City;
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\SocialNetworkProfile;
-use AppBundle\Entity\Subride;
-use AppBundle\Entity\User;
-use AppBundle\Form\Type\SocialNetworkProfileType;
-use AppBundle\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
-use AppBundle\Criticalmass\SocialNetwork\NetworkDetector\NetworkDetector;
+use App\Controller\AbstractController;
+use App\Criticalmass\Router\ObjectRouterInterface;
+use App\Criticalmass\Util\ClassUtil;
+use App\Entity\City;
+use App\Entity\Ride;
+use App\Entity\SocialNetworkProfile;
+use App\Entity\Subride;
+use App\Entity\User;
+use App\Form\Type\SocialNetworkProfileType;
+use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use App\Criticalmass\SocialNetwork\NetworkDetector\NetworkDetector;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\FormInterface;
@@ -22,10 +22,10 @@ use Symfony\Component\HttpFoundation\Response;
 class SocialNetworkController extends AbstractController
 {
     /**
-     * @ParamConverter("city", class="AppBundle:City", isOptional=true)
-     * @ParamConverter("ride", class="AppBundle:Ride", isOptional=true)
-     * @ParamConverter("subride", class="AppBundle:Subride", isOptional=true)
-     * @ParamConverter("user", class="AppBundle:User", isOptional=true)
+     * @ParamConverter("city", class="App:City", isOptional=true)
+     * @ParamConverter("ride", class="App:Ride", isOptional=true)
+     * @ParamConverter("subride", class="App:Subride", isOptional=true)
+     * @ParamConverter("user", class="App:User", isOptional=true)
      */
     public function listAction(
         ObjectRouterInterface $router,
@@ -38,7 +38,7 @@ class SocialNetworkController extends AbstractController
 
         $addProfileForm = $this->getAddProfileForm($router, $profileAble);
 
-        return $this->render('AppBundle:SocialNetwork:list.html.twig', [
+        return $this->render('App:SocialNetwork:list.html.twig', [
             'list' => $this->getProfileList($profileAble),
             'addProfileForm' => $addProfileForm->createView(),
             'profileAbleType' => strtolower($this->getProfileAbleShortname($profileAble)),
@@ -47,7 +47,7 @@ class SocialNetworkController extends AbstractController
     }
 
     /**
-     * @ParamConverter("city", class="AppBundle:City", isOptional=true)
+     * @ParamConverter("city", class="App:City", isOptional=true)
      */
     public function addAction(
         Request $request,
@@ -109,7 +109,7 @@ class SocialNetworkController extends AbstractController
         FormInterface $form,
         NetworkDetector $networkDetector
     ): Response {
-        return $this->render('AppBundle:SocialNetwork:edit.html.twig', [
+        return $this->render('App:SocialNetwork:edit.html.twig', [
                 'form' => $form->createView(),
             ]
         );
@@ -133,7 +133,7 @@ class SocialNetworkController extends AbstractController
     }
 
     /**
-     * @ParamConverter("socialNetworkProfile", class="AppBundle:SocialNetworkProfile", options={"id" = "profileId"})
+     * @ParamConverter("socialNetworkProfile", class="App:SocialNetworkProfile", options={"id" = "profileId"})
      */
     public function disableAction(
         ObjectRouterInterface $router,

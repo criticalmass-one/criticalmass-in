@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Timeline\Collector;
+namespace App\Criticalmass\Timeline\Collector;
 
-use AppBundle\Entity\Photo;
-use AppBundle\Criticalmass\Timeline\Item\RidePhotoItem;
+use App\Entity\Photo;
+use App\Criticalmass\Timeline\Item\RidePhotoItem;
 
 class RidePhotoCollector extends AbstractTimelineCollector
 {

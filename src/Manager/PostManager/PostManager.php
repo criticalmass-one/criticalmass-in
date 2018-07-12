@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Manager\PostManager;
+namespace App\Manager\PostManager;
 
-use AppBundle\Manager\AbstractManager;
-use AppBundle\Repository\PostRepository;
+use App\Manager\AbstractManager;
+use App\Repository\PostRepository;
 
 /**
  * @deprecated
@@ -17,6 +17,6 @@ class PostManager extends AbstractManager
     {
         parent::__construct($doctrine);
 
-        $this->postRepository = $this->doctrine->getRepository('AppBundle:Post');
+        $this->postRepository = $this->doctrine->getRepository('App:Post');
     }
 }

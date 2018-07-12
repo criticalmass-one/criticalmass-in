@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Menu;
+namespace App\Menu;
 
-use AppBundle\Entity\User;
+use App\Entity\User;
 use Knp\Menu\ItemInterface;
 
 class Builder extends AbstractBuilder

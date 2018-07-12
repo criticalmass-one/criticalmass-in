@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Command\Photo;
+namespace App\Command\Photo;
 
-use AppBundle\Entity\Ride;
-use AppBundle\Criticalmass\Image\PhotoFilterer\PhotoFilterer;
+use App\Entity\Ride;
+use App\Criticalmass\Image\PhotoFilterer\PhotoFilterer;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;

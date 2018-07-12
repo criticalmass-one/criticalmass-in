@@ -1,25 +1,25 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace App\Entity;
 
-use AppBundle\Criticalmass\Geocoding\ReverseGeocodeable;
-use AppBundle\Criticalmass\Sharing\ShareableInterface\Shareable;
-use AppBundle\EntityInterface\AutoParamConverterAble;
-use AppBundle\EntityInterface\PhotoInterface;
-use AppBundle\EntityInterface\PostableInterface;
-use AppBundle\EntityInterface\RouteableInterface;
-use AppBundle\EntityInterface\ViewableInterface;
+use App\Criticalmass\Geocoding\ReverseGeocodeable;
+use App\Criticalmass\Sharing\ShareableInterface\Shareable;
+use App\EntityInterface\AutoParamConverterAble;
+use App\EntityInterface\PhotoInterface;
+use App\EntityInterface\PostableInterface;
+use App\EntityInterface\RouteableInterface;
+use App\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use AppBundle\Criticalmass\Router\Annotation as Routing;
-use AppBundle\Criticalmass\Sharing\Annotation as Sharing;
+use App\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Sharing\Annotation as Sharing;
 
 /**
  * @ORM\Table(name="photo")
  * @Vich\Uploadable
- * @ORM\Entity(repositoryClass="AppBundle\Repository\PhotoRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\PhotoRepository")
  * @JMS\ExclusionPolicy("all")
  * @Routing\DefaultRoute(name="caldera_criticalmass_photo_show_ride")
  */

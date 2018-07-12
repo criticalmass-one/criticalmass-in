@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Command\Facebook;
+namespace App\Command\Facebook;
 
-use AppBundle\Entity\Ride;
-use AppBundle\Criticalmass\Facebook\EventSelector;
+use App\Entity\Ride;
+use App\Criticalmass\Facebook\EventSelector;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;

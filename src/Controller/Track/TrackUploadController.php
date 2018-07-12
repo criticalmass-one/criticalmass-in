@@ -1,17 +1,17 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Controller\Track;
+namespace App\Controller\Track;
 
-use AppBundle\Event\Track\TrackUploadedEvent;
+use App\Event\Track\TrackUploadedEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
-use AppBundle\Criticalmass\UploadValidator\TrackValidator;
-use AppBundle\Criticalmass\UploadValidator\UploadValidatorException\TrackValidatorException\TrackValidatorException;
-use AppBundle\Controller\AbstractController;
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\Track;
+use App\Criticalmass\UploadValidator\TrackValidator;
+use App\Criticalmass\UploadValidator\UploadValidatorException\TrackValidatorException\TrackValidatorException;
+use App\Controller\AbstractController;
+use App\Entity\Ride;
+use App\Entity\Track;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Vich\UploaderBundle\Form\Type\VichFileType;
@@ -20,7 +20,7 @@ class TrackUploadController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("ride", class="AppBundle:Ride")
+     * @ParamConverter("ride", class="App:Ride")
      */
     public function uploadAction(Request $request, EventDispatcherInterface $eventDispatcher, Ride $ride, TrackValidator $trackValidator): Response
     {
@@ -40,7 +40,7 @@ class TrackUploadController extends AbstractController
 
     protected function uploadGetAction(Request $request, EventDispatcherInterface $eventDispatcher, Ride $ride, FormInterface $form, TrackValidator $trackValidator): Response
     {
-        return $this->render('AppBundle:Track:upload.html.twig', [
+        return $this->render('App:Track:upload.html.twig', [
             'form' => $form->createView(),
             'ride' => $ride,
             'errorMessage' => null,
@@ -65,7 +65,7 @@ class TrackUploadController extends AbstractController
             try {
                 $trackValidator->validate();
             } catch (TrackValidatorException $e) {
-                return $this->render('AppBundle:Track:upload.html.twig', [
+                return $this->render('App:Track:upload.html.twig', [
                     'form' => $form->createView(),
                     'ride' => $ride,
                     'errorMessage' => $e->getMessage(),

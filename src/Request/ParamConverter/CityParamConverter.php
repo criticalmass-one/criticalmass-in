@@ -1,8 +1,8 @@
 <?php
 
-namespace AppBundle\Request\ParamConverter;
+namespace App\Request\ParamConverter;
 
-use AppBundle\Entity\City;
+use App\Entity\City;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;

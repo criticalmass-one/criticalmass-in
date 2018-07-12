@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Security\Authorization\Voter;
+namespace App\Security\Authorization\Voter;
 
-use AppBundle\Entity\User;
+use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
@@ -61,7 +61,7 @@ abstract class AbstractVoter extends Voter
 
         $entityClassName = array_pop($matches);
 
-        $fqcn = sprintf('AppBundle\\Entity\\%s', $entityClassName);
+        $fqcn = sprintf('App\\Entity\\%s', $entityClassName);
 
         return $fqcn;
     }

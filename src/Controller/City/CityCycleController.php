@@ -1,14 +1,14 @@
 <?php
 
-namespace AppBundle\Controller\City;
+namespace App\Controller\City;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\CityCycle;
-use AppBundle\Form\Type\CityCycleType;
+use App\Entity\City;
+use App\Entity\CityCycle;
+use App\Form\Type\CityCycleType;
 use Doctrine\Common\Persistence\ObjectManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Controller\AbstractController;
+use App\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,11 +18,11 @@ class CityCycleController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("city", class="AppBundle:City")
+     * @ParamConverter("city", class="App:City")
      */
     public function listAction(City $city): Response
     {
-        return $this->render('AppBundle:CityCycle:list.html.twig', [
+        return $this->render('App:CityCycle:list.html.twig', [
             'cycles' => $this->getCityCycleRepository()->findByCity($city),
             'city' => $city,
         ]);
@@ -30,7 +30,7 @@ class CityCycleController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("city", class="AppBundle:City")
+     * @ParamConverter("city", class="App:City")
      */
     public function addAction(Request $request, UserInterface $user = null, City $city): Response
     {
@@ -52,7 +52,7 @@ class CityCycleController extends AbstractController
 
     protected function addGetAction(Request $request, CityCycle $cityCycle, FormInterface $form): Response
     {
-        return $this->render('AppBundle:CityCycle:edit.html.twig', [
+        return $this->render('App:CityCycle:edit.html.twig', [
             'city' => $cityCycle->getCity(),
             'cityCycle' => $cityCycle,
             'form' => $form->createView(),
@@ -75,7 +75,7 @@ class CityCycleController extends AbstractController
             return $this->redirectToObject($city, 'caldera_criticalmass_citycycle_list');
         }
 
-        return $this->render('AppBundle:CityCycle:edit.html.twig', [
+        return $this->render('App:CityCycle:edit.html.twig', [
             'city' => $city,
             'cityCycle' => $cityCycle,
             'form' => $form->createView(),
@@ -84,7 +84,7 @@ class CityCycleController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("cityCycle", class="AppBundle:CityCycle", options={"id" = "cycleId"})
+     * @ParamConverter("cityCycle", class="App:CityCycle", options={"id" = "cycleId"})
      */
     public function editAction(Request $request, UserInterface $user = null, CityCycle $cityCycle): Response
     {
@@ -103,7 +103,7 @@ class CityCycleController extends AbstractController
 
     protected function editGetAction(Request $request, UserInterface $user = null, CityCycle $cityCycle, FormInterface $form): Response
     {
-        return $this->render('AppBundle:CityCycle:edit.html.twig', [
+        return $this->render('App:CityCycle:edit.html.twig', [
             'city' => $cityCycle->getCity(),
             'cityCycle' => $cityCycle,
             'form' => $form->createView(),
@@ -128,7 +128,7 @@ class CityCycleController extends AbstractController
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
         }
 
-        return $this->render('AppBundle:CityCycle:edit.html.twig', [
+        return $this->render('App:CityCycle:edit.html.twig', [
             'city' => $city,
             'cityCycle' => $cityCycle,
             'form' => $form->createView(),
@@ -137,7 +137,7 @@ class CityCycleController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("cityCycle", class="AppBundle:CityCycle", options={"id" = "cycleId"})
+     * @ParamConverter("cityCycle", class="App:CityCycle", options={"id" = "cycleId"})
      */
     public function disableAction(CityCycle $cityCycle, ObjectManager $objectManager): Response
     {

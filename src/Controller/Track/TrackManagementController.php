@@ -1,15 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Controller\Track;
+namespace App\Controller\Track;
 
-use AppBundle\Event\Track\TrackDeletedEvent;
-use AppBundle\Event\Track\TrackHiddenEvent;
-use AppBundle\Event\Track\TrackShownEvent;
+use App\Event\Track\TrackDeletedEvent;
+use App\Event\Track\TrackHiddenEvent;
+use App\Event\Track\TrackShownEvent;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Controller\AbstractController;
-use AppBundle\Entity\Track;
+use App\Controller\AbstractController;
+use App\Entity\Track;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,14 +30,14 @@ class TrackManagementController extends AbstractController
             12
         );
 
-        return $this->render('AppBundle:Track:list.html.twig', [
+        return $this->render('App:Track:list.html.twig', [
             'pagination' => $pagination,
         ]);
     }
 
     /**
      * @Security("is_granted('edit', track)")
-     * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
+     * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
      */
     public function downloadAction(Track $track): Response
     {
@@ -58,7 +58,7 @@ class TrackManagementController extends AbstractController
 
     /**
      * @Security("is_granted('edit', track)")
-     * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
+     * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
      */
     public function toggleAction(EventDispatcherInterface $eventDispatcher, Track $track): Response
     {
@@ -77,7 +77,7 @@ class TrackManagementController extends AbstractController
 
     /**
      * @Security("is_granted('edit', track)")
-     * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
+     * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
      */
     public function deleteAction(Track $track, EventDispatcherInterface $eventDispatcher): Response
     {

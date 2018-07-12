@@ -1,11 +1,11 @@
 <?php
 
-namespace AppBundle\Factory;
+namespace App\Factory;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\CityCycle;
-use AppBundle\Entity\Ride;
-use AppBundle\Model\CityListModel;
+use App\Entity\City;
+use App\Entity\CityCycle;
+use App\Entity\Ride;
+use App\Model\CityListModel;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 
 class CityListFactory

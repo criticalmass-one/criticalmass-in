@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Timeline\Collector;
+namespace App\Criticalmass\Timeline\Collector;
 
-use AppBundle\Entity\Track;
-use AppBundle\Criticalmass\Timeline\Item\RideTrackItem;
+use App\Entity\Track;
+use App\Criticalmass\Timeline\Item\RideTrackItem;
 
 class RideTrackCollector extends AbstractTimelineCollector
 {

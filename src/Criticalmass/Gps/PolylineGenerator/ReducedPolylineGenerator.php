@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Gps\PolylineGenerator;
+namespace App\Criticalmass\Gps\PolylineGenerator;
 
 use PointReduction\Algorithms\RadialDistance;
 use PointReduction\Common\Point;

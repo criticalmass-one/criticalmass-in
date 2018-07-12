@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\EventSubscriber;
+namespace App\EventSubscriber;
 
-use AppBundle\Criticalmass\ViewStorage\ViewStorageCacheInterface;
-use AppBundle\Event\View\ViewEvent;
+use App\Criticalmass\ViewStorage\ViewStorageCacheInterface;
+use App\Event\View\ViewEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ViewEventSubscriber implements EventSubscriberInterface

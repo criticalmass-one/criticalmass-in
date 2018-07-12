@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Router;
+namespace App\Criticalmass\Router;
 
-use AppBundle\Criticalmass\Router\Annotation\AbstractAnnotation;
-use AppBundle\Criticalmass\Router\Annotation\DefaultRoute;
-use AppBundle\Criticalmass\Router\Annotation\RouteParameter;
-use AppBundle\EntityInterface\RouteableInterface;
+use App\Criticalmass\Router\Annotation\AbstractAnnotation;
+use App\Criticalmass\Router\Annotation\DefaultRoute;
+use App\Criticalmass\Router\Annotation\RouteParameter;
+use App\EntityInterface\RouteableInterface;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -28,7 +28,7 @@ abstract class AbstractObjectRouter
         /* It looks like Doctrine Annotation Reader cannot handle class annotations of Doctrine proxy objects so we do
          * not inject the $routeable itself but its classname */
         $classname = $this->getClassname($routeable);
-        $fqcn = sprintf('AppBundle\\Entity\\%s', $classname);
+        $fqcn = sprintf('App\\Entity\\%s', $classname);
 
         $reflectionClass = new \ReflectionClass($fqcn);
 

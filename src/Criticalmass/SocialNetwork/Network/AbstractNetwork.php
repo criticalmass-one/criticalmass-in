@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Criticalmass\SocialNetwork\Network;
+namespace App\Criticalmass\SocialNetwork\Network;
 
-use AppBundle\Entity\SocialNetworkProfile;
-use AppBundle\Criticalmass\Util\StringUtil;
+use App\Entity\SocialNetworkProfile;
+use App\Criticalmass\Util\StringUtil;
 
 abstract class AbstractNetwork implements NetworkInterface
 {

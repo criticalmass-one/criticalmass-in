@@ -1,19 +1,19 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace App\Controller;
 
-use AppBundle\Entity\Photo;
-use AppBundle\EntityInterface\PostableInterface;
-use AppBundle\Repository\PostRepository;
-use AppBundle\Criticalmass\Util\ClassUtil;
+use App\Entity\Photo;
+use App\EntityInterface\PostableInterface;
+use App\Repository\PostRepository;
+use App\Criticalmass\Util\ClassUtil;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use AppBundle\Entity\City;
-use AppBundle\Entity\Post;
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\Thread;
-use AppBundle\EntityInterface\BoardInterface;
-use AppBundle\Form\Type\PostType;
+use App\Entity\City;
+use App\Entity\Post;
+use App\Entity\Ride;
+use App\Entity\Thread;
+use App\EntityInterface\BoardInterface;
+use App\Form\Type\PostType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,7 +23,7 @@ class PostController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("city", class="AppBundle:City", converter="city_converter")
+     * @ParamConverter("city", class="App:City", converter="city_converter")
      */
     public function writeCityAction(Request $request, City $city): Response
     {
@@ -32,7 +32,7 @@ class PostController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("ride", class="AppBundle:Ride", converter="ride_converter")
+     * @ParamConverter("ride", class="App:Ride", converter="ride_converter")
      */
     public function writeRideAction(Request $request, Ride $ride): Response
     {
@@ -41,7 +41,7 @@ class PostController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("photo", class="AppBundle:Photo", converter="photo_converter")
+     * @ParamConverter("photo", class="App:Photo", converter="photo_converter")
      */
     public function writePhotoAction(Request $request, Photo $photo): Response
     {
@@ -50,7 +50,7 @@ class PostController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("thread", class="AppBundle:Thread", isOptional=true, converter="thread_converter")
+     * @ParamConverter("thread", class="App:Thread", isOptional=true, converter="thread_converter")
      */
     public function writeThreadAction(Request $request, Thread $thread = null): Response
     {
@@ -72,7 +72,7 @@ class PostController extends AbstractController
 
     protected function addGetAction(Request $request, FormInterface $form, Post $post, PostableInterface $postable): Response
     {
-        return $this->render('AppBundle:Post:write.html.twig', [
+        return $this->render('App:Post:write.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -109,7 +109,7 @@ class PostController extends AbstractController
             return $this->redirectToObject($postable);
         }
 
-        return $this->render('AppBundle:Post:write_failed.html.twig', [
+        return $this->render('App:Post:write_failed.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -153,7 +153,7 @@ class PostController extends AbstractController
         $posts = $this->getPostRepository()->findBy($criteria, ['dateTime' => 'DESC']);
 
         /* And render our shit. */
-        return $this->render('AppBundle:Post:list.html.twig', ['posts' => $posts]);
+        return $this->render('App:Post:list.html.twig', ['posts' => $posts]);
     }
 
     protected function getPostForm(PostableInterface $postable, Post $post = null): FormInterface

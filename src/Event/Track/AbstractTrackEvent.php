@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Event\Track;
+namespace App\Event\Track;
 
-use AppBundle\Entity\Track;
+use App\Entity\Track;
 use Symfony\Component\EventDispatcher\Event;
 
 abstract class AbstractTrackEvent extends Event

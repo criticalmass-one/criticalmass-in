@@ -1,16 +1,16 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace App\Controller;
 
-use AppBundle\Entity\Board;
-use AppBundle\Event\View\ViewEvent;
+use App\Entity\Board;
+use App\Event\View\ViewEvent;
 use FOS\RestBundle\View\View;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Entity\City;
-use AppBundle\Entity\Post;
-use AppBundle\Entity\Thread;
-use AppBundle\EntityInterface\BoardInterface;
+use App\Entity\City;
+use App\Entity\Post;
+use App\Entity\Thread;
+use App\EntityInterface\BoardInterface;
 use Malenki\Slug;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -23,15 +23,15 @@ class BoardController extends AbstractController
 {
     public function overviewAction(): Response
     {
-        return $this->render('AppBundle:Board:overview.html.twig', [
+        return $this->render('App:Board:overview.html.twig', [
             'boards' => $this->getBoardRepository()->findEnabledBoards(),
             'cities' => $this->getCityRepository()->findCitiesWithBoard(),
         ]);
     }
 
     /**
-     * @ParamConverter("city", class="AppBundle:City", isOptional="true")
-     * @ParamConverter("board", class="AppBundle:Board", isOptional="true")
+     * @ParamConverter("city", class="App:City", isOptional="true")
+     * @ParamConverter("board", class="App:Board", isOptional="true")
      */
     public function listthreadsAction(Board $board = null, City $city = null): Response
     {
@@ -50,7 +50,7 @@ class BoardController extends AbstractController
             $newThreadUrl = $this->generateObjectUrl($city, 'caldera_criticalmass_board_addcitythread');
         }
 
-        return $this->render('AppBundle:Board:list_threads.html.twig', [
+        return $this->render('App:Board:list_threads.html.twig', [
             'threads' => $threads,
             'board' => ($board ? $board : $city),
             'newThreadUrl' => $newThreadUrl,
@@ -58,7 +58,7 @@ class BoardController extends AbstractController
     }
 
     /**
-     * @ParamConverter("thread", class="AppBundle:Thread")
+     * @ParamConverter("thread", class="App:Thread")
      */
     public function viewthreadAction(EventDispatcher $eventDispatcher, Thread $thread): Response
     {
@@ -67,7 +67,7 @@ class BoardController extends AbstractController
 
         $eventDispatcher->dispatch(ViewEvent::NAME, new ViewEvent($thread));
 
-        return $this->render('AppBundle:Board:view_thread.html.twig', [
+        return $this->render('App:Board:view_thread.html.twig', [
             'board' => $board,
             'thread' => $thread,
             'posts' => $posts,
@@ -76,8 +76,8 @@ class BoardController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("city", class="AppBundle:City", isOptional="true")
-     * @ParamConverter("board", class="AppBundle:Board", isOptional="true")
+     * @ParamConverter("city", class="App:City", isOptional="true")
+     * @ParamConverter("board", class="App:Board", isOptional="true")
      */
     public function addThreadAction(Request $request, Board $board = null, City $city = null): Response
     {
@@ -98,7 +98,7 @@ class BoardController extends AbstractController
 
     protected function addThreadGetAction(Request $request, BoardInterface $board, Form $form): Response
     {
-        return $this->render('AppBundle:Board:add_thread.html.twig', [
+        return $this->render('App:Board:add_thread.html.twig', [
             'board' => $board,
             'form' => $form->createView(),
         ]);
@@ -148,7 +148,7 @@ class BoardController extends AbstractController
             return $this->redirectToObject($thread);
         }
 
-        return $this->render('AppBundle:Board:add_thread.html.twig', [
+        return $this->render('App:Board:add_thread.html.twig', [
             'board' => $board,
             'form' => $form->createView(),
         ]);

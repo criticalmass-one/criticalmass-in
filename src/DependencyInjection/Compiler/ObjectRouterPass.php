@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\DependencyInjection\Compiler;
+namespace App\DependencyInjection\Compiler;
 
-use AppBundle\Criticalmass\Router\ObjectRouter;
+use App\Criticalmass\Router\ObjectRouter;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;

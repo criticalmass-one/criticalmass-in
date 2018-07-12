@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Event\City;
+namespace App\Event\City;
 
-use AppBundle\Entity\City;
+use App\Entity\City;
 use Symfony\Component\EventDispatcher\Event;
 
 abstract class AbstractCityEvent extends Event

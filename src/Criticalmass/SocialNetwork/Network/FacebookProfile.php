@@ -1,8 +1,8 @@
 <?php
 
-namespace AppBundle\Criticalmass\SocialNetwork\Network;
+namespace App\Criticalmass\SocialNetwork\Network;
 
-use AppBundle\Entity\SocialNetworkProfile;
+use App\Entity\SocialNetworkProfile;
 use Facebook\Exceptions\FacebookResponseException;
 
 class FacebookProfile extends AbstractFacebookNetwork

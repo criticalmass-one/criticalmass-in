@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Twig\Extension;
+namespace App\Twig\Extension;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\Ride;
+use App\Entity\City;
+use App\Entity\Ride;
 
 class StaticmapsTwigExtension extends \Twig_Extension
 {

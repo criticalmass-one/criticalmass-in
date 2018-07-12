@@ -1,12 +1,12 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="weather")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\WeatherRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\WeatherRepository")
  */
 class Weather
 {

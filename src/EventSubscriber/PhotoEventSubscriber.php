@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\EventSubscriber;
+namespace App\EventSubscriber;
 
-use AppBundle\Criticalmass\Geocoding\ReverseGeocoderInterface;
-use AppBundle\Event\Photo\PhotoDeletedEvent;
-use AppBundle\Event\Photo\PhotoUpdatedEvent;
-use AppBundle\Event\Photo\PhotoUploadedEvent;
+use App\Criticalmass\Geocoding\ReverseGeocoderInterface;
+use App\Event\Photo\PhotoDeletedEvent;
+use App\Event\Photo\PhotoUpdatedEvent;
+use App\Event\Photo\PhotoUploadedEvent;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

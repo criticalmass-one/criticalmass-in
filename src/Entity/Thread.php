@@ -1,18 +1,18 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace App\Entity;
 
-use AppBundle\EntityInterface\AutoParamConverterAble;
-use AppBundle\EntityInterface\PostableInterface;
-use AppBundle\EntityInterface\RouteableInterface;
-use AppBundle\EntityInterface\ViewableInterface;
+use App\EntityInterface\AutoParamConverterAble;
+use App\EntityInterface\PostableInterface;
+use App\EntityInterface\RouteableInterface;
+use App\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use AppBundle\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Router\Annotation as Routing;
 
 /**
  * @ORM\Table(name="thread")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ThreadRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ThreadRepository")
 
  */
 class Thread implements ViewableInterface, RouteableInterface, AutoParamConverterAble, PostableInterface

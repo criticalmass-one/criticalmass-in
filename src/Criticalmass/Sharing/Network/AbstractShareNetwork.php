@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Sharing\Network;
+namespace App\Criticalmass\Sharing\Network;
 
-use AppBundle\Criticalmass\Sharing\Metadata\Metadata;
-use AppBundle\Criticalmass\Sharing\ShareableInterface\Shareable;
+use App\Criticalmass\Sharing\Metadata\Metadata;
+use App\Criticalmass\Sharing\ShareableInterface\Shareable;
 
 abstract class AbstractShareNetwork implements ShareNetworkInterface
 {

@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Statistic\RideEstimateHandler;
+namespace App\Criticalmass\Statistic\RideEstimateHandler;
 
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\Track;
+use App\Entity\Ride;
+use App\Entity\Track;
 
 interface RideEstimateHandlerInterface
 {

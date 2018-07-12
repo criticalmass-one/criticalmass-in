@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\EventSubscriber;
+namespace App\EventSubscriber;
 
-use AppBundle\Criticalmass\Timezone\CityTimezoneDetector\CityTimezoneDetectorInterface;
-use AppBundle\Event\City\CityCreatedEvent;
-use AppBundle\Event\City\CityUpdatedEvent;
+use App\Criticalmass\Timezone\CityTimezoneDetector\CityTimezoneDetectorInterface;
+use App\Event\City\CityCreatedEvent;
+use App\Event\City\CityUpdatedEvent;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

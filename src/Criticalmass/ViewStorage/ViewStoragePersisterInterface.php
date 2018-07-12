@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Criticalmass\ViewStorage;
+namespace App\Criticalmass\ViewStorage;
 
 interface ViewStoragePersisterInterface
 {

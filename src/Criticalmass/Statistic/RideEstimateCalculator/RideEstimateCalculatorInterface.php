@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Statistic\RideEstimateCalculator;
+namespace App\Criticalmass\Statistic\RideEstimateCalculator;
 
-use AppBundle\Entity\Ride;
+use App\Entity\Ride;
 
 interface RideEstimateCalculatorInterface
 {

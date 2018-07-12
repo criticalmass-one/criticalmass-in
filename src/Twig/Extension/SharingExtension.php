@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Twig\Extension;
+namespace App\Twig\Extension;
 
-use AppBundle\Criticalmass\Sharing\ShareableInterface\Shareable;
-use AppBundle\Criticalmass\Sharing\SocialSharerInterface;
+use App\Criticalmass\Sharing\ShareableInterface\Shareable;
+use App\Criticalmass\Sharing\SocialSharerInterface;
 
 class SharingExtension extends \Twig_Extension
 {

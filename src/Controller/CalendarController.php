@@ -1,8 +1,8 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace App\Controller;
 
-use AppBundle\Criticalmass\SeoPage\SeoPage;
+use App\Criticalmass\SeoPage\SeoPage;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -27,7 +27,7 @@ class CalendarController extends AbstractController
         $seoPage->setDescription('Kalender-Übersicht über weltweitere Critical-Mass-Touren.');
 
         return $this->render(
-            'AppBundle:Calendar:index.html.twig', [
+            'App:Calendar:index.html.twig', [
                 'dateTime' => $dateTime,
                 'previousMonth' => $previousMonth,
                 'nextMonth' => $nextMonth,

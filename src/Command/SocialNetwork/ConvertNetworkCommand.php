@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Command\SocialNetwork;
+namespace App\Command\SocialNetwork;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\SocialNetworkProfile;
-use AppBundle\Entity\Subride;
-use AppBundle\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
-use AppBundle\Criticalmass\Util\ClassUtil;
+use App\Entity\City;
+use App\Entity\Ride;
+use App\Entity\SocialNetworkProfile;
+use App\Entity\Subride;
+use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use App\Criticalmass\Util\ClassUtil;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

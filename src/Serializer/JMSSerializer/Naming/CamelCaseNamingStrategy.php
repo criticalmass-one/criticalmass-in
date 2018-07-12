@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Serializer\JMSSerializer\Naming;
+namespace App\Serializer\JMSSerializer\Naming;
 
 use JMS\Serializer\Metadata\PropertyMetadata;
 use JMS\Serializer\Naming\PropertyNamingStrategyInterface;

@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="social_network_feed_item", uniqueConstraints={
  *   @ORM\UniqueConstraint(name="unique_feed_item", columns={"social_network_profile_id", "uniqueIdentifier"})
  *    })
- * @ORM\Entity(repositoryClass="AppBundle\Repository\SocialNetworkFeedItemRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\SocialNetworkFeedItemRepository")
  */
 class SocialNetworkFeedItem
 {

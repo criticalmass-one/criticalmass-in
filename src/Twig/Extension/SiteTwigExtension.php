@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Twig\Extension;
+namespace App\Twig\Extension;
 
-use AppBundle\Entity\User;
-use AppBundle\HtmlMetadata\Metadata;
+use App\Entity\User;
+use App\HtmlMetadata\Metadata;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 

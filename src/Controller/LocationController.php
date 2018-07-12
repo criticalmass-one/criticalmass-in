@@ -1,10 +1,10 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace App\Controller;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\Location;
-use AppBundle\Entity\Ride;
+use App\Entity\City;
+use App\Entity\Location;
+use App\Entity\Ride;
 use FOS\ElasticaBundle\Finder\FinderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class LocationController extends AbstractController
 {
     /**
-     * @ParamConverter("city", class="AppBundle:City")
+     * @ParamConverter("city", class="App:City")
      */
     public function listlocationsAction(City $city): Response
     {
@@ -25,7 +25,7 @@ class LocationController extends AbstractController
     }
 
     /**
-     * @ParamConverter("location", class="AppBundle:Location")
+     * @ParamConverter("location", class="App:Location")
      */
     public function showAction(Location $location): Response
     {
@@ -34,7 +34,7 @@ class LocationController extends AbstractController
         $locations = $this->getLocationRepository()->findLocationsByCity($location->getCity());
 
         return $this->render(
-            'AppBundle:Location:show.html.twig',
+            'App:Location:show.html.twig',
             [
                 'location' => $location,
                 'locations' => $locations,
@@ -45,7 +45,7 @@ class LocationController extends AbstractController
     }
 
     /**
-     * @ParamConverter("ride", class="AppBundle:Ride")
+     * @ParamConverter("ride", class="App:Ride")
      */
     public function rideAction(Ride $ride): Response
     {
@@ -59,7 +59,7 @@ class LocationController extends AbstractController
 
         $locations = $this->getLocationRepository()->findLocationsByCity($ride->getCity());
 
-        return $this->render('AppBundle:Location:show.html.twig', [
+        return $this->render('App:Location:show.html.twig', [
             'location' => $location,
             'locations' => $locations,
             'rides' => $rides,

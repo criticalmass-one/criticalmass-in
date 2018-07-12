@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Criticalmass\ViewStorage;
+namespace App\Criticalmass\ViewStorage;
 
-use AppBundle\Entity\User;
-use AppBundle\EntityInterface\ViewableInterface;
+use App\Entity\User;
+use App\EntityInterface\ViewableInterface;
 use Symfony\Component\Cache\Adapter\AbstractAdapter;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;

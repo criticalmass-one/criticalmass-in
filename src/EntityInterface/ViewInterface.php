@@ -1,8 +1,8 @@
 <?php
 
-namespace AppBundle\EntityInterface;
+namespace App\EntityInterface;
 
-use AppBundle\Entity\User;
+use App\Entity\User;
 
 interface ViewInterface
 {

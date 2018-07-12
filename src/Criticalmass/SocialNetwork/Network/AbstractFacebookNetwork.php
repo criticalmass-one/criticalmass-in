@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Criticalmass\SocialNetwork\Network;
+namespace App\Criticalmass\SocialNetwork\Network;
 
-use AppBundle\Entity\SocialNetworkProfile;
-use AppBundle\Criticalmass\Facebook\Api\FacebookApi;
+use App\Entity\SocialNetworkProfile;
+use App\Criticalmass\Facebook\Api\FacebookApi;
 
 abstract class AbstractFacebookNetwork extends AbstractNetwork
 {

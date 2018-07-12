@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Participation\Calculator;
+namespace App\Criticalmass\Participation\Calculator;
 
-use AppBundle\Entity\Participation;
-use AppBundle\Entity\Ride;
-use AppBundle\Repository\ParticipationRepository;
+use App\Entity\Participation;
+use App\Entity\Ride;
+use App\Repository\ParticipationRepository;
 
 class RideParticipationCalculator extends AbstractRideParticipationCalculator
 {

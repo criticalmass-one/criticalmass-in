@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Sharing\Metadata;
+namespace App\Criticalmass\Sharing\Metadata;
 
-use AppBundle\Criticalmass\Router\ObjectRouterInterface;
-use AppBundle\Criticalmass\Sharing\Annotation\Route;
-use AppBundle\Criticalmass\Sharing\Annotation\RouteParameter;
-use AppBundle\Criticalmass\Sharing\Annotation\Shorturl;
-use AppBundle\Criticalmass\Sharing\ShareableInterface\Shareable;
+use App\Criticalmass\Router\ObjectRouterInterface;
+use App\Criticalmass\Sharing\Annotation\Route;
+use App\Criticalmass\Sharing\Annotation\RouteParameter;
+use App\Criticalmass\Sharing\Annotation\Shorturl;
+use App\Criticalmass\Sharing\ShareableInterface\Shareable;
 use Caldera\YourlsApiManager\YourlsApiManager;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 use Doctrine\Common\Annotations\AnnotationReader;

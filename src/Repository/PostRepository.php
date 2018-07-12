@@ -1,11 +1,11 @@
 <?php
 
-namespace AppBundle\Repository;
+namespace App\Repository;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\Event;
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\Thread;
+use App\Entity\City;
+use App\Entity\Event;
+use App\Entity\Ride;
+use App\Entity\Thread;
 use Doctrine\ORM\EntityRepository;
 
 class PostRepository extends EntityRepository
@@ -14,7 +14,7 @@ class PostRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('COUNT(post.id)');
-        $qb->from('AppBundle:Post', 'post');
+        $qb->from('App:Post', 'post');
 
         return $qb->getQuery()->getSingleScalarResult();
     }

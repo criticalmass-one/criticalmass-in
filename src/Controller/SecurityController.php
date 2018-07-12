@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Controller;
+namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -65,7 +65,7 @@ class SecurityController extends AbstractController
                 break;
         }
 
-        return $this->render('AppBundle:Security:' . $templateName, $data);
+        return $this->render('App:Security:' . $templateName, $data);
     }
 
     public function loginFormModalAction(Request $request): Response

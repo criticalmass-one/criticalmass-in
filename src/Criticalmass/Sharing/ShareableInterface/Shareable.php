@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Sharing\ShareableInterface;
+namespace App\Criticalmass\Sharing\ShareableInterface;
 
 interface Shareable
 {

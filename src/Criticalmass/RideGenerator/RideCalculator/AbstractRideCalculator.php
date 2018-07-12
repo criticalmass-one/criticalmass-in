@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\RideGenerator\RideCalculator;
+namespace App\Criticalmass\RideGenerator\RideCalculator;
 
-use AppBundle\Entity\CityCycle;
+use App\Entity\CityCycle;
 
 abstract class AbstractRideCalculator implements RideCalculatorInterface
 {

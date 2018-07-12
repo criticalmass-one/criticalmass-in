@@ -1,12 +1,12 @@
 <?php
 
-namespace AppBundle\Repository;
+namespace App\Repository;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\Event;
-use AppBundle\Entity\Photo;
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\User;
+use App\Entity\City;
+use App\Entity\Event;
+use App\Entity\Photo;
+use App\Entity\Ride;
+use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
 class PhotoRepository extends EntityRepository

@@ -1,10 +1,10 @@
 <?php
 
-namespace AppBundle\Repository;
+namespace App\Repository;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\Location;
-use AppBundle\Entity\Ride;
+use App\Entity\City;
+use App\Entity\Location;
+use App\Entity\Ride;
 use Doctrine\ORM\EntityRepository;
 
 class LocationRepository extends EntityRepository

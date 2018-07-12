@@ -1,8 +1,8 @@
 <?php
 
-namespace AppBundle\Criticalmass\OpenStreetMap\NominatimCityBridge;
+namespace App\Criticalmass\OpenStreetMap\NominatimCityBridge;
 
-use AppBundle\Entity\City;
+use App\Entity\City;
 
 interface NominatimCityBridgeInterface
 {

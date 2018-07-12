@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -10,7 +10,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Table(name="frontpage_teaser")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\FrontpageTeaserRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\FrontpageTeaserRepository")
  * @Vich\Uploadable
  */
 class FrontpageTeaser

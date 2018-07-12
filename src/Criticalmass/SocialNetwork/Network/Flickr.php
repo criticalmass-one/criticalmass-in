@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Criticalmass\SocialNetwork\Network;
+namespace App\Criticalmass\SocialNetwork\Network;
 
 class Flickr extends AbstractNetwork
 {

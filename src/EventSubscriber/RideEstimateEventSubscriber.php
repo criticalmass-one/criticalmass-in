@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\EventSubscriber;
+namespace App\EventSubscriber;
 
-use AppBundle\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandler;
-use AppBundle\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandlerInterface;
-use AppBundle\Event\RideEstimate\RideEstimateCreatedEvent;
-use AppBundle\Event\RideEstimate\RideEstimateDeletedEvent;
-use AppBundle\Event\RideEstimate\RideEstimateUpdatedEvent;
+use App\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandler;
+use App\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandlerInterface;
+use App\Event\RideEstimate\RideEstimateCreatedEvent;
+use App\Event\RideEstimate\RideEstimateDeletedEvent;
+use App\Event\RideEstimate\RideEstimateUpdatedEvent;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

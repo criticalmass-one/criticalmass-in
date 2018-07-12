@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Command\Statistic;
+namespace App\Command\Statistic;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\CitySlug;
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\RideEstimate;
+use App\Entity\City;
+use App\Entity\CitySlug;
+use App\Entity\Ride;
+use App\Entity\RideEstimate;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;

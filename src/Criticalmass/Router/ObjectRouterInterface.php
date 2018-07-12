@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Router;
+namespace App\Criticalmass\Router;
 
-use AppBundle\Criticalmass\Router\DelegatedRouter\DelegatedRouterInterface;
-use AppBundle\EntityInterface\RouteableInterface;
+use App\Criticalmass\Router\DelegatedRouter\DelegatedRouterInterface;
+use App\EntityInterface\RouteableInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 interface ObjectRouterInterface

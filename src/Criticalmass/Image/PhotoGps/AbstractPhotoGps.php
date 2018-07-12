@@ -1,10 +1,10 @@
 <?php
 
-namespace AppBundle\Criticalmass\Image\PhotoGps;
+namespace App\Criticalmass\Image\PhotoGps;
 
-use AppBundle\Entity\Photo;
-use AppBundle\Entity\Track;
-use AppBundle\Criticalmass\Gps\GpxReader\TrackReader;
+use App\Entity\Photo;
+use App\Entity\Track;
+use App\Criticalmass\Gps\GpxReader\TrackReader;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 abstract class AbstractPhotoGps implements PhotoGpsInterface

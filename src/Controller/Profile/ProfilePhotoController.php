@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Controller\Profile;
+namespace App\Controller\Profile;
 
-use AppBundle\Controller\AbstractController;
-use AppBundle\Form\Type\UserProfilePhotoType;
+use App\Controller\AbstractController;
+use App\Form\Type\UserProfilePhotoType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormInterface;
@@ -30,7 +30,7 @@ class ProfilePhotoController extends AbstractController
 
     protected function uploadGetAction(Request $request, UserInterface $user = null, FormInterface $form): Response
     {
-        return $this->render('AppBundle:ProfilePhoto:upload.html.twig', [
+        return $this->render('App:ProfilePhoto:upload.html.twig', [
             'profilePhotoForm' => $form->createView(),
         ]);
     }

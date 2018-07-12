@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Command\Cycles;
+namespace App\Command\Cycles;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\Ride;
-use AppBundle\Criticalmass\RideGenerator\RideGenerator\RideGeneratorInterface;
+use App\Entity\City;
+use App\Entity\Ride;
+use App\Criticalmass\RideGenerator\RideGenerator\RideGeneratorInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;

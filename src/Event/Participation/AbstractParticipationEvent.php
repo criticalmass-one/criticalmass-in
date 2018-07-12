@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Event\Participation;
+namespace App\Event\Participation;
 
-use AppBundle\Entity\Participation;
+use App\Entity\Participation;
 use Symfony\Component\EventDispatcher\Event;
 
 abstract class AbstractParticipationEvent extends Event

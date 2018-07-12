@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Command\Cycles;
+namespace App\Command\Cycles;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\CitySlug;
-use AppBundle\Criticalmass\Cycles\Analyzer\ComparisonResultInterface;
-use AppBundle\Criticalmass\Cycles\Analyzer\CycleAnalyzerInterface;
-use AppBundle\Criticalmass\Cycles\Analyzer\CycleAnalyzerModel;
+use App\Entity\City;
+use App\Entity\CitySlug;
+use App\Criticalmass\Cycles\Analyzer\ComparisonResultInterface;
+use App\Criticalmass\Cycles\Analyzer\CycleAnalyzerInterface;
+use App\Criticalmass\Cycles\Analyzer\CycleAnalyzerModel;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;

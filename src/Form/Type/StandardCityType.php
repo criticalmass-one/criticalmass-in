@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Form\Type;
+namespace App\Form\Type;
 
-use AppBundle\Repository\RegionRepository;
+use App\Repository\RegionRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -47,7 +47,7 @@ class StandardCityType extends AbstractType
             ->add('region',
                 EntityType::class,
                 [
-                    'class' => 'AppBundle:Region',
+                    'class' => 'App:Region',
                     'query_builder' => function (RegionRepository $er) {
                         $builder = $er->createQueryBuilder('region');
 

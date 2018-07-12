@@ -1,10 +1,10 @@
 <?php
 
-namespace AppBundle\Criticalmass\SeoPage;
+namespace App\Criticalmass\SeoPage;
 
-use AppBundle\EntityInterface\PhotoInterface;
-use AppBundle\EntityInterface\RouteableInterface;
-use AppBundle\Criticalmass\Router\ObjectRouter;
+use App\EntityInterface\PhotoInterface;
+use App\EntityInterface\RouteableInterface;
+use App\Criticalmass\Router\ObjectRouter;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Sonata\SeoBundle\Seo\SeoPageInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;

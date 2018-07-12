@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Event\View;
+namespace App\Event\View;
 
-use AppBundle\EntityInterface\ViewableInterface;
+use App\EntityInterface\ViewableInterface;
 use Symfony\Component\EventDispatcher\Event;
 
 class ViewEvent extends Event

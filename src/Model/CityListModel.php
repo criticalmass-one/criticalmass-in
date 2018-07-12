@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Model;
+namespace App\Model;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\Ride;
+use App\Entity\City;
+use App\Entity\Ride;
 
 class CityListModel
 {

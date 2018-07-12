@@ -1,31 +1,31 @@
 <?php
 
-namespace AppBundle\Controller\Ride;
+namespace App\Controller\Ride;
 
-use AppBundle\Controller\AbstractController;
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\Track;
-use AppBundle\Criticalmass\Gps\LatLngListGenerator\TimeLatLngListGenerator;
+use App\Controller\AbstractController;
+use App\Entity\Ride;
+use App\Entity\Track;
+use App\Criticalmass\Gps\LatLngListGenerator\TimeLatLngListGenerator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 
 class TimelapseController extends AbstractController
 {
     /**
-     * @ParamConverter("ride", class="AppBundle:Ride")
+     * @ParamConverter("ride", class="App:Ride")
      */
     public function showAction(Ride $ride): Response
     {
         $tracks = $this->getTrackRepository()->findTracksByRide($ride);
 
-        return $this->render('AppBundle:Timelapse:show.html.twig', [
+        return $this->render('App:Timelapse:show.html.twig', [
             'ride' => $ride,
             'tracks' => $tracks,
         ]);
     }
 
     /**
-     * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
+     * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
      */
     public function loadtrackAction(TimeLatLngListGenerator $generator, Track $track): Response
     {

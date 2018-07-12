@@ -1,13 +1,13 @@
 <?php
 
-namespace AppBundle\Command\Photo;
+namespace App\Command\Photo;
 
-use AppBundle\Entity\Photo;
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\Track;
-use AppBundle\Entity\User;
-use AppBundle\Criticalmass\Image\PhotoGps\PhotoGps;
-use AppBundle\Criticalmass\Image\PhotoUploader\PhotoUploader;
+use App\Entity\Photo;
+use App\Entity\Ride;
+use App\Entity\Track;
+use App\Entity\User;
+use App\Criticalmass\Image\PhotoGps\PhotoGps;
+use App\Criticalmass\Image\PhotoUploader\PhotoUploader;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 use Doctrine\ORM\EntityManager;
 use PHPExif\Reader\Reader;

@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Command\Track;
+namespace App\Command\Track;
 
-use AppBundle\Criticalmass\Gps\DistanceCalculator\TrackDistanceCalculatorInterface;
-use AppBundle\Entity\Track;
-use AppBundle\Criticalmass\Gps\LatLngListGenerator\RangeLatLngListGenerator;
+use App\Criticalmass\Gps\DistanceCalculator\TrackDistanceCalculatorInterface;
+use App\Entity\Track;
+use App\Criticalmass\Gps\LatLngListGenerator\RangeLatLngListGenerator;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;

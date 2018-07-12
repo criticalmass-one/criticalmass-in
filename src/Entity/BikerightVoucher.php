@@ -1,12 +1,12 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="bikeright_voucher")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\BikerightVoucherRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\BikerightVoucherRepository")
  */
 class BikerightVoucher
 {

@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Event\Photo;
+namespace App\Event\Photo;
 
-use AppBundle\Entity\Photo;
+use App\Entity\Photo;
 use Symfony\Component\EventDispatcher\Event;
 
 abstract class AbstractPhotoEvent extends Event

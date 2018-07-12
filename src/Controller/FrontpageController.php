@@ -1,11 +1,11 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace App\Controller;
 
-use AppBundle\Entity\Ride;
-use AppBundle\Criticalmass\SeoPage\SeoPage;
-use AppBundle\Criticalmass\Timeline\CachedTimeline;
-use AppBundle\Criticalmass\Timeline\Timeline;
+use App\Entity\Ride;
+use App\Criticalmass\SeoPage\SeoPage;
+use App\Criticalmass\Timeline\CachedTimeline;
+use App\Criticalmass\Timeline\Timeline;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -28,7 +28,7 @@ class FrontpageController extends AbstractController
             ->execute()
             ->getTimelineContent();
 
-        return $this->render('AppBundle:Frontpage:index.html.twig', [
+        return $this->render('App:Frontpage:index.html.twig', [
             'timelineContent' => $timelineContent,
             'rideList' => $rideList,
             'frontpageTeaserList' => $frontpageTeaserList,
@@ -58,6 +58,6 @@ class FrontpageController extends AbstractController
 
     public function introAction(): Response
     {
-        return $this->render('AppBundle:Frontpage:intro.html.twig');
+        return $this->render('App:Frontpage:intro.html.twig');
     }
 }

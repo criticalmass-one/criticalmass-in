@@ -1,8 +1,8 @@
 <?php
 
-namespace AppBundle\Repository;
+namespace App\Repository;
 
-use AppBundle\Entity\Ride;
+use App\Entity\Ride;
 use Doctrine\ORM\EntityRepository;
 
 class SubrideRepository extends EntityRepository

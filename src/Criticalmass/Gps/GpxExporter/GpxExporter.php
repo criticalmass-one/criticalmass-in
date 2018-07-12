@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Gps\GpxExporter;
+namespace App\Criticalmass\Gps\GpxExporter;
 
-use AppBundle\Entity\Position;
+use App\Entity\Position;
 
 /** @deprecated */
 class GpxExporter extends AbstractGpxExporter

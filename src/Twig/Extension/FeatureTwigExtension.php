@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Twig\Extension;
+namespace App\Twig\Extension;
 
-use AppBundle\Feature\FeatureManager;
+use App\Feature\FeatureManager;
 
 class FeatureTwigExtension extends \Twig_Extension
 {

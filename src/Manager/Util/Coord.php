@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Manager\Util;
+namespace App\Manager\Util;
 
 /**
  * @deprecated

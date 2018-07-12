@@ -1,8 +1,8 @@
 <?php
 
-namespace AppBundle\Command\SocialNetwork;
+namespace App\Command\SocialNetwork;
 
-use AppBundle\Criticalmass\SocialNetwork\FeedFetcher\FeedFetcher;
+use App\Criticalmass\SocialNetwork\FeedFetcher\FeedFetcher;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

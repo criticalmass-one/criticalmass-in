@@ -1,12 +1,12 @@
 <?php
 
-namespace AppBundle\Controller\Photo;
+namespace App\Controller\Photo;
 
-use AppBundle\Controller\AbstractController;
-use AppBundle\Entity\Photo;
-use AppBundle\Entity\Track;
-use AppBundle\Criticalmass\SeoPage\SeoPage;
-use AppBundle\Event\View\ViewEvent;
+use App\Controller\AbstractController;
+use App\Entity\Photo;
+use App\Entity\Track;
+use App\Criticalmass\SeoPage\SeoPage;
+use App\Event\View\ViewEvent;
 use PHPExif\Exif;
 use PHPExif\Reader\Reader;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -17,7 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 class PhotoController extends AbstractController
 {
     /**
-     * @ParamConverter("photo", class="AppBundle:Photo", options={"id" = "photoId"})
+     * @ParamConverter("photo", class="App:Photo", options={"id" = "photoId"})
      */
     public function showAction(
         Request $request,
@@ -47,7 +47,7 @@ class PhotoController extends AbstractController
 
         $seoPage->setPreviewPhoto($photo);
 
-        return $this->render('AppBundle:Photo:show.html.twig', [
+        return $this->render('App:Photo:show.html.twig', [
             'photo' => $photo,
             'nextPhoto' => $this->getPhotoRepository()->getNextPhoto($photo),
             'previousPhoto' => $this->getPhotoRepository()->getPreviousPhoto($photo),

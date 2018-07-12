@@ -1,8 +1,8 @@
 <?php
 
-namespace AppBundle\Request\ParamConverter;
+namespace App\Request\ParamConverter;
 
-use AppBundle\Entity\Ride;
+use App\Entity\Ride;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;

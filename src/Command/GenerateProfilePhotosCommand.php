@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Command;
+namespace App\Command;
 
-use AppBundle\Entity\User;
-use AppBundle\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGeneratorInterface;
+use App\Entity\User;
+use App\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGeneratorInterface;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;

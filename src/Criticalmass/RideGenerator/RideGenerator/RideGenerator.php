@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\RideGenerator\RideGenerator;
+namespace App\Criticalmass\RideGenerator\RideGenerator;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\CityCycle;
-use AppBundle\Entity\Ride;
-use AppBundle\Criticalmass\Util\DateTimeUtil;
+use App\Entity\City;
+use App\Entity\CityCycle;
+use App\Entity\Ride;
+use App\Criticalmass\Util\DateTimeUtil;
 
 class RideGenerator extends AbstractRideGenerator
 {

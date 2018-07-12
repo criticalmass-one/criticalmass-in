@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Controller\Track;
+namespace App\Controller\Track;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Controller\AbstractController;
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\Track;
+use App\Controller\AbstractController;
+use App\Entity\Ride;
+use App\Entity\Track;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -14,7 +14,7 @@ class TrackDrawController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("ride", class="AppBundle:Ride")
+     * @ParamConverter("ride", class="App:Ride")
      */
     public function drawAction(Request $request, Ride $ride): Response
     {
@@ -27,7 +27,7 @@ class TrackDrawController extends AbstractController
 
     protected function drawGetAction(Request $request, Ride $ride): Response
     {
-        return $this->render('AppBundle:Track:draw.html.twig', [
+        return $this->render('App:Track:draw.html.twig', [
             'ride' => $ride
         ]);
     }
@@ -57,7 +57,7 @@ class TrackDrawController extends AbstractController
 
     /**
      * @Security("is_granted('edit', track)")
-     * @ParamConverter("track", class="AppBundle:Track", options={"id" = "trackId"})
+     * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
      */
     public function editAction(Request $request, Track $track): Response
     {
@@ -72,7 +72,7 @@ class TrackDrawController extends AbstractController
 
     protected function editGetAction(Request $request, Ride $ride, Track $track): Response
     {
-        return $this->render('AppBundle:Track:draw.html.twig', [
+        return $this->render('App:Track:draw.html.twig', [
             'ride' => $ride,
             'track' => $track
         ]);

@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Command\Track;
+namespace App\Command\Track;
 
-use AppBundle\Criticalmass\Gps\PolylineGenerator\ReducedPolylineGenerator;
-use AppBundle\Entity\Track;
+use App\Criticalmass\Gps\PolylineGenerator\ReducedPolylineGenerator;
+use App\Entity\Track;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;

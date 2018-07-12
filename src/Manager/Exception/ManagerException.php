@@ -1,8 +1,8 @@
 <?php
 
-namespace AppBundle\Manager\Exception;
+namespace App\Manager\Exception;
 
-use AppBundle\Exception\CalderaException;
+use App\Exception\CalderaException;
 
 /**
  * @deprecated

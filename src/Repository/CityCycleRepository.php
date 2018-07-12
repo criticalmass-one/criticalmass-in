@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Repository;
+namespace App\Repository;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\Region;
+use App\Entity\City;
+use App\Entity\Region;
 use Doctrine\ORM\EntityRepository;
 
 class CityCycleRepository extends EntityRepository

@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Timeline\Item;
+namespace App\Criticalmass\Timeline\Item;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\Photo;
-use AppBundle\Entity\Ride;
+use App\Entity\City;
+use App\Entity\Photo;
+use App\Entity\Ride;
 
 class RidePhotoItem extends AbstractItem
 {

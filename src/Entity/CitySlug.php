@@ -1,14 +1,14 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace App\Entity;
 
-use AppBundle\EntityInterface\RouteableInterface;
+use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
-use AppBundle\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Router\Annotation as Routing;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CitySlugRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\CitySlugRepository")
  * @ORM\Table(name="cityslug")
  * @JMS\ExclusionPolicy("all")
  */

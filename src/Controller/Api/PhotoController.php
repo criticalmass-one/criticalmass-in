@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Controller\Api;
+namespace App\Controller\Api;
 
-use AppBundle\Traits\RepositoryTrait;
-use AppBundle\Traits\UtilTrait;
+use App\Traits\RepositoryTrait;
+use App\Traits\UtilTrait;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Response;

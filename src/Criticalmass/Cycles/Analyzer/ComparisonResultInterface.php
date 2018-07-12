@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Cycles\Analyzer;
+namespace App\Criticalmass\Cycles\Analyzer;
 
 class ComparisonResultInterface
 {

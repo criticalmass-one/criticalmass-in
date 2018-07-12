@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Router\DelegatedRouter;
+namespace App\Criticalmass\Router\DelegatedRouter;
 
-use AppBundle\Entity\Thread;
-use AppBundle\EntityInterface\RouteableInterface;
+use App\Entity\Thread;
+use App\EntityInterface\RouteableInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ThreadRouter extends AbstractDelegatedRouter

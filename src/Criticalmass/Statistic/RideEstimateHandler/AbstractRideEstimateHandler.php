@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Statistic\RideEstimateHandler;
+namespace App\Criticalmass\Statistic\RideEstimateHandler;
 
-use AppBundle\Criticalmass\Statistic\RideEstimateCalculator\RideEstimateCalculatorInterface;
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\RideEstimate;
-use AppBundle\Repository\RideEstimateRepository;
+use App\Criticalmass\Statistic\RideEstimateCalculator\RideEstimateCalculatorInterface;
+use App\Entity\Ride;
+use App\Entity\RideEstimate;
+use App\Repository\RideEstimateRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 

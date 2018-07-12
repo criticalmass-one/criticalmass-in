@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Criticalmass\Image\PhotoGps;
+namespace App\Criticalmass\Image\PhotoGps;
 
 use PHPExif\Exif;
 use PHPExif\Reader\Reader;

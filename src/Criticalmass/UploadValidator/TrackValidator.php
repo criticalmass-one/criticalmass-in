@@ -1,13 +1,13 @@
 <?php
 
-namespace AppBundle\Criticalmass\UploadValidator;
+namespace App\Criticalmass\UploadValidator;
 
-use AppBundle\Entity\Track;
-use AppBundle\Criticalmass\UploadValidator\UploadValidatorException\TrackValidatorException\NoDateTimeException;
-use AppBundle\Criticalmass\UploadValidator\UploadValidatorException\TrackValidatorException\NoLatitudeLongitudeException;
-use AppBundle\Criticalmass\UploadValidator\UploadValidatorException\TrackValidatorException\NotEnoughCoordsException;
-use AppBundle\Criticalmass\UploadValidator\UploadValidatorException\TrackValidatorException\NoValidGpxStructureException;
-use AppBundle\Criticalmass\UploadValidator\UploadValidatorException\TrackValidatorException\NoXmlException;
+use App\Entity\Track;
+use App\Criticalmass\UploadValidator\UploadValidatorException\TrackValidatorException\NoDateTimeException;
+use App\Criticalmass\UploadValidator\UploadValidatorException\TrackValidatorException\NoLatitudeLongitudeException;
+use App\Criticalmass\UploadValidator\UploadValidatorException\TrackValidatorException\NotEnoughCoordsException;
+use App\Criticalmass\UploadValidator\UploadValidatorException\TrackValidatorException\NoValidGpxStructureException;
+use App\Criticalmass\UploadValidator\UploadValidatorException\TrackValidatorException\NoXmlException;
 use Exception;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 

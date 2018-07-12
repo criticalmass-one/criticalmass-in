@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Request\ParamConverter;
+namespace App\Request\ParamConverter;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
 

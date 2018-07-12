@@ -1,8 +1,8 @@
 <?php
 
-namespace AppBundle\Criticalmass\Gps\TrackChecker;
+namespace App\Criticalmass\Gps\TrackChecker;
 
-use AppBundle\Entity\Track;
+use App\Entity\Track;
 
 /**
  * @deprecated

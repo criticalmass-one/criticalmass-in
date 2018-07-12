@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Criticalmass\Markdown;
+namespace App\Criticalmass\Markdown;
 
 use cebe\markdown\Parser;
 

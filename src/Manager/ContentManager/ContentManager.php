@@ -1,11 +1,11 @@
 <?php
 
-namespace AppBundle\Manager\ContentManager;
+namespace App\Manager\ContentManager;
 
-use AppBundle\Entity\Content;
-use AppBundle\Manager\AbstractManager;
-use AppBundle\Manager\ContentManager\Exception\ContentNotFoundException;
-use AppBundle\Repository\ContentRepository;
+use App\Entity\Content;
+use App\Manager\AbstractManager;
+use App\Manager\ContentManager\Exception\ContentNotFoundException;
+use App\Repository\ContentRepository;
 
 /**
  * @deprecated
@@ -19,7 +19,7 @@ class ContentManager extends AbstractManager
     {
         parent::__construct($doctrine);
 
-        $this->contentRepository = $this->doctrine->getRepository('AppBundle:Content');
+        $this->contentRepository = $this->doctrine->getRepository('App:Content');
     }
 
     public function getBySlug(string $slug): Content

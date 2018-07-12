@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Criticalmass\SocialNetwork\NetworkFeedFetcher;
+namespace App\Criticalmass\SocialNetwork\NetworkFeedFetcher;
 
 abstract class AbstractNetworkFeedFetcher implements NetworkFeedFetcherInterface
 {

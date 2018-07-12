@@ -1,8 +1,8 @@
 <?php
 
-namespace AppBundle\Repository;
+namespace App\Repository;
 
-use AppBundle\Entity\BikerightVoucher;
+use App\Entity\BikerightVoucher;
 use Doctrine\ORM\EntityRepository;
 
 class BikerightVoucherRepository extends EntityRepository

@@ -1,14 +1,14 @@
 <?php
 
-namespace AppBundle\Controller\Api;
+namespace App\Controller\Api;
 
-use AppBundle\Entity\CitySlug;
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\RideEstimate;
-use AppBundle\Event\RideEstimate\RideEstimateCreatedEvent;
-use AppBundle\Model\CreateEstimateModel;
-use AppBundle\Traits\RepositoryTrait;
-use AppBundle\Traits\UtilTrait;
+use App\Entity\CitySlug;
+use App\Entity\Ride;
+use App\Entity\RideEstimate;
+use App\Event\RideEstimate\RideEstimateCreatedEvent;
+use App\Model\CreateEstimateModel;
+use App\Traits\RepositoryTrait;
+use App\Traits\UtilTrait;
 use FOS\ElasticaBundle\Finder\FinderInterface;
 use FOS\RestBundle\View\View;
 use JMS\Serializer\Serializer;

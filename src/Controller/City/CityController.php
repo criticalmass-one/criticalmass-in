@@ -1,11 +1,11 @@
 <?php
 
-namespace AppBundle\Controller\City;
+namespace App\Controller\City;
 
-use AppBundle\Controller\AbstractController;
-use AppBundle\Entity\City;
-use AppBundle\Criticalmass\SeoPage\SeoPage;
-use AppBundle\Event\View\ViewEvent;
+use App\Controller\AbstractController;
+use App\Entity\City;
+use App\Criticalmass\SeoPage\SeoPage;
+use App\Event\View\ViewEvent;
 use FOS\ElasticaBundle\Finder\FinderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -16,11 +16,11 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class CityController extends AbstractController
 {
     /**
-     * @ParamConverter("city", class="AppBundle:City")
+     * @ParamConverter("city", class="App:City")
      */
     public function missingStatsAction(City $city): Response
     {
-        return $this->render('AppBundle:City:missing_stats.html.twig', [
+        return $this->render('App:City:missing_stats.html.twig', [
             'city' => $city,
             'rides' => $this->getRideRepository()->findRidesWithoutStatisticsForCity($city),
         ]);
@@ -70,18 +70,18 @@ class CityController extends AbstractController
     }
 
     /**
-     * @ParamConverter("city", class="AppBundle:City")
+     * @ParamConverter("city", class="App:City")
      */
     public function listRidesAction(City $city): Response
     {
-        return $this->render('AppBundle:City:ride_list.html.twig', [
+        return $this->render('App:City:ride_list.html.twig', [
             'city' => $city,
             'rides' => $this->getRideRepository()->findRidesForCity($city),
         ]);
     }
 
     /**
-     * @ParamConverter("city", class="AppBundle:City")
+     * @ParamConverter("city", class="App:City")
      */
     public function listGalleriesAction(Request $request, SeoPage $seoPage, City $city): Response
     {
@@ -89,14 +89,14 @@ class CityController extends AbstractController
 
         $result = $this->getPhotoRepository()->findRidesWithPhotoCounter($city);
 
-        return $this->render('AppBundle:City:gallery_list.html.twig', [
+        return $this->render('App:City:gallery_list.html.twig', [
             'city' => $city,
             'result' => $result,
         ]);
     }
 
     /**
-     * @ParamConverter("city", class="AppBundle:City", isOptional=true)
+     * @ParamConverter("city", class="App:City", isOptional=true)
      */
     public function showAction(Request $request, SeoPage $seoPage, EventDispatcher $eventDispatcher, City $city = null): Response
     {
@@ -107,7 +107,7 @@ class CityController extends AbstractController
                 throw $this->createNotFoundException('City not found');
             }
 
-            return $this->forward('AppBundle:City/MissingCity:missing', [
+            return $this->forward('App:City/MissingCity:missing', [
                 'citySlug' => $citySlug,
             ]);
         }
@@ -117,7 +117,7 @@ class CityController extends AbstractController
         $blocked = $this->getBlockedCityRepository()->findCurrentCityBlock($city);
 
         if ($blocked) {
-            return $this->render('AppBundle:City:blocked.html.twig', [
+            return $this->render('App:City:blocked.html.twig', [
                 'city' => $city,
                 'blocked' => $blocked
             ]);
@@ -139,7 +139,7 @@ class CityController extends AbstractController
             ->setCanonicalForObject($city)
             ->setTitle($city->getTitle());
 
-        return $this->render('AppBundle:City:show.html.twig', [
+        return $this->render('App:City:show.html.twig', [
             'city' => $city,
             'currentRide' => $currentRide,
             'nearCities' => $nearCities,
@@ -150,7 +150,7 @@ class CityController extends AbstractController
     }
 
     /**
-     * @ParamConverter("city", class="AppBundle:City")
+     * @ParamConverter("city", class="App:City")
      */
     public function getlocationsAction(City $city): Response
     {

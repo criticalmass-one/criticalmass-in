@@ -1,8 +1,8 @@
 <?php
 
-namespace AppBundle\Request\ParamConverter;
+namespace App\Request\ParamConverter;
 
-use AppBundle\Entity\User;
+use App\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace AppBundle\Repository;
+namespace App\Repository;
 
-use AppBundle\Entity\Region;
+use App\Entity\Region;
 use Doctrine\ORM\EntityRepository;
 
 class RegionRepository extends EntityRepository

@@ -1,18 +1,18 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace App\Entity;
 
-use AppBundle\Criticalmass\Sharing\ShareableInterface\Shareable;
+use App\Criticalmass\Sharing\ShareableInterface\Shareable;
 use Caldera\GeoBasic\Coord\Coord;
-use AppBundle\EntityInterface\AuditableInterface;
-use AppBundle\EntityInterface\AutoParamConverterAble;
-use AppBundle\EntityInterface\BoardInterface;
-use AppBundle\EntityInterface\ElasticSearchPinInterface;
-use AppBundle\EntityInterface\PhotoInterface;
-use AppBundle\EntityInterface\PostableInterface;
-use AppBundle\EntityInterface\RouteableInterface;
-use AppBundle\EntityInterface\ViewableInterface;
-use AppBundle\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use App\EntityInterface\AuditableInterface;
+use App\EntityInterface\AutoParamConverterAble;
+use App\EntityInterface\BoardInterface;
+use App\EntityInterface\ElasticSearchPinInterface;
+use App\EntityInterface\PhotoInterface;
+use App\EntityInterface\PostableInterface;
+use App\EntityInterface\RouteableInterface;
+use App\EntityInterface\ViewableInterface;
+use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -20,11 +20,11 @@ use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use AppBundle\Criticalmass\Router\Annotation as Routing;
-use AppBundle\Criticalmass\Sharing\Annotation as Sharing;
+use App\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Sharing\Annotation as Sharing;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CityRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\CityRepository")
  * @Vich\Uploadable
  * @ORM\Table(name="city")
  * @JMS\ExclusionPolicy("all")

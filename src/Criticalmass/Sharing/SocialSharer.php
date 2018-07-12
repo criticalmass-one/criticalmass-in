@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Sharing;
+namespace App\Criticalmass\Sharing;
 
-use AppBundle\Criticalmass\Sharing\ShareableInterface\Shareable;
+use App\Criticalmass\Sharing\ShareableInterface\Shareable;
 
 class SocialSharer extends AbstractSocialSharer
 {

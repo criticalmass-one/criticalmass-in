@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Validator\Constraint;
+namespace App\Validator\Constraint;
 
-use AppBundle\Validator\SingleRideForDayValidator;
+use App\Validator\SingleRideForDayValidator;
 use Symfony\Component\Validator\Constraint;
 
 /**

@@ -2,17 +2,17 @@
 
 namespace App;
 
-use AppBundle\Criticalmass\Router\DelegatedRouter\DelegatedRouterInterface;
-use AppBundle\Criticalmass\Sharing\Network\ShareNetworkInterface;
-use AppBundle\Criticalmass\SocialNetwork\Network\NetworkInterface;
-use AppBundle\Criticalmass\SocialNetwork\NetworkFeedFetcher\NetworkFeedFetcherInterface;
-use AppBundle\Criticalmass\Timeline\Collector\TimelineCollectorInterface;
-use AppBundle\DependencyInjection\Compiler\FeaturePass;
-use AppBundle\DependencyInjection\Compiler\ObjectRouterPass;
-use AppBundle\DependencyInjection\Compiler\ShareNetworkPass;
-use AppBundle\DependencyInjection\Compiler\SocialNetworkPass;
-use AppBundle\DependencyInjection\Compiler\TimelineCollectorPass;
-use AppBundle\Feature\FeatureInterface;
+use App\Criticalmass\Router\DelegatedRouter\DelegatedRouterInterface;
+use App\Criticalmass\Sharing\Network\ShareNetworkInterface;
+use App\Criticalmass\SocialNetwork\Network\NetworkInterface;
+use App\Criticalmass\SocialNetwork\NetworkFeedFetcher\NetworkFeedFetcherInterface;
+use App\Criticalmass\Timeline\Collector\TimelineCollectorInterface;
+use App\DependencyInjection\Compiler\FeaturePass;
+use App\DependencyInjection\Compiler\ObjectRouterPass;
+use App\DependencyInjection\Compiler\ShareNetworkPass;
+use App\DependencyInjection\Compiler\SocialNetworkPass;
+use App\DependencyInjection\Compiler\TimelineCollectorPass;
+use App\Feature\FeatureInterface;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Resource\FileResource;

@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Timeline;
+namespace App\Criticalmass\Timeline;
 
-use AppBundle\Feature\FeatureManager;
+use App\Feature\FeatureManager;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 use Symfony\Component\Templating\EngineInterface;

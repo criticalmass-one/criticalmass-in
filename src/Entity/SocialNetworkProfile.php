@@ -1,12 +1,12 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="social_network_profile")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\SocialNetworkProfileRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\SocialNetworkProfileRepository")
  */
 class SocialNetworkProfile
 {

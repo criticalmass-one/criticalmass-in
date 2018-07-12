@@ -1,10 +1,10 @@
 <?php
 
-namespace AppBundle\Request\ParamConverter;
+namespace App\Request\ParamConverter;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\CitySlug;
-use AppBundle\EntityInterface\AutoParamConverterAble;
+use App\Entity\City;
+use App\Entity\CitySlug;
+use App\EntityInterface\AutoParamConverterAble;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;

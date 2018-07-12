@@ -1,11 +1,11 @@
 <?php
 
-namespace AppBundle\Criticalmass\Gps\GpxReader;
+namespace App\Criticalmass\Gps\GpxReader;
 
-use AppBundle\Entity\Position;
-use AppBundle\Criticalmass\Gps\BoundingBox;
-use AppBundle\Criticalmass\Gps\Coord;
-use AppBundle\Criticalmass\Gps\GpxReader\GpxCoordLoop\GpxCoordLoop;
+use App\Entity\Position;
+use App\Criticalmass\Gps\BoundingBox;
+use App\Criticalmass\Gps\Coord;
+use App\Criticalmass\Gps\GpxReader\GpxCoordLoop\GpxCoordLoop;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 /**

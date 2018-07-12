@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Criticalmass\SocialNetwork\NetworkFeedFetcher;
+namespace App\Criticalmass\SocialNetwork\NetworkFeedFetcher;
 
-use AppBundle\Entity\SocialNetworkFeedItem;
-use AppBundle\Entity\SocialNetworkProfile;
+use App\Entity\SocialNetworkFeedItem;
+use App\Entity\SocialNetworkProfile;
 use Zend\Feed\Reader\Entry\EntryInterface;
 use Zend\Feed\Reader\Reader;
 

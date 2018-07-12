@@ -1,19 +1,19 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace App\Entity;
 
-use AppBundle\EntityInterface\AuditableInterface;
-use AppBundle\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
-use AppBundle\EntityInterface\RouteableInterface;
+use App\EntityInterface\AuditableInterface;
+use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use App\EntityInterface\RouteableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
-use AppBundle\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Router\Annotation as Routing;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\SubrideRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\SubrideRepository")
  * @ORM\Table(name="subride")
  * @JMS\ExclusionPolicy("all")
  */

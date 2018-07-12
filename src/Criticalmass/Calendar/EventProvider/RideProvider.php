@@ -1,10 +1,10 @@
 <?php
 
-namespace AppBundle\Criticalmass\Calendar\EventProvider;
+namespace App\Criticalmass\Calendar\EventProvider;
 
 use CalendR\Event\Provider\ProviderInterface;
-use AppBundle\Entity\Ride;
-use AppBundle\Criticalmass\Calendar\Event\RideEvent;
+use App\Entity\Ride;
+use App\Criticalmass\Calendar\Event\RideEvent;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 
 class RideProvider implements ProviderInterface

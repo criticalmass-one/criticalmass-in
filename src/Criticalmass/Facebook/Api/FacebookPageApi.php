@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace AppBundle\Criticalmass\Facebook\Api;
+namespace App\Criticalmass\Facebook\Api;
 
 use Facebook\GraphNodes\GraphPage;
 

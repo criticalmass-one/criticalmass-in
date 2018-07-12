@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Traits;
+namespace App\Traits;
 
-use AppBundle\Criticalmass\Router\ObjectRouter;
-use AppBundle\EntityInterface\RouteableInterface;
+use App\Criticalmass\Router\ObjectRouter;
+use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

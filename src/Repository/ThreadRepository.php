@@ -1,13 +1,13 @@
 <?php
 
-namespace AppBundle\Repository;
+namespace App\Repository;
 
-use AppBundle\Entity\Board;
-use AppBundle\Entity\City;
+use App\Entity\Board;
+use App\Entity\City;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * @package AppBundle\Repository
+ * @package App\Repository
  * @author maltehuebner
  * @since 2016-02-13
  */

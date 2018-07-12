@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Manager;
+namespace App\Manager;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
 

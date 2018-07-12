@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace App\Controller;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\Ride;
+use App\Entity\City;
+use App\Entity\Ride;
 use Elastica\ResultSet;
 use FOS\ElasticaBundle\Index\IndexManager;
 use Symfony\Component\HttpFoundation\Request;
@@ -113,7 +113,7 @@ class SearchController extends AbstractController
 
         $results = $transformer->transform($resultSet->getResults());
 
-        return $this->render('AppBundle:Search:result.html.twig',
+        return $this->render('App:Search:result.html.twig',
             [
                 'results' => $results,
                 'resultSet' => $resultSet,

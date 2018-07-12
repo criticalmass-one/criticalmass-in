@@ -1,18 +1,18 @@
 <?php
 
-namespace AppBundle\Controller\SocialNetwork;
+namespace App\Controller\SocialNetwork;
 
-use AppBundle\Controller\AbstractController;
-use AppBundle\Criticalmass\Router\ObjectRouterInterface;
-use AppBundle\Entity\City;
-use AppBundle\Entity\Ride;
-use AppBundle\Entity\SocialNetworkProfile;
-use AppBundle\Entity\Subride;
-use AppBundle\Entity\User;
-use AppBundle\EntityInterface\RouteableInterface;
-use AppBundle\Form\Type\SocialNetworkProfileType;
-use AppBundle\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
-use AppBundle\Criticalmass\Util\ClassUtil;
+use App\Controller\AbstractController;
+use App\Criticalmass\Router\ObjectRouterInterface;
+use App\Entity\City;
+use App\Entity\Ride;
+use App\Entity\SocialNetworkProfile;
+use App\Entity\Subride;
+use App\Entity\User;
+use App\EntityInterface\RouteableInterface;
+use App\Form\Type\SocialNetworkProfileType;
+use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use App\Criticalmass\Util\ClassUtil;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,13 +21,13 @@ use Symfony\Component\Routing\RouterInterface;
 class SocialNetworkListController extends AbstractController
 {
     /**
-     * @ParamConverter("city", class="AppBundle:City")
+     * @ParamConverter("city", class="App:City")
      */
     public function listCityAction(ObjectRouterInterface $router, City $city): Response
     {
         $addProfileForm = $this->getAddProfileForm($router, $city);
 
-        return $this->render('AppBundle:SocialNetwork:list.html.twig', [
+        return $this->render('App:SocialNetwork:list.html.twig', [
             'list' => $this->getProfileList($city),
             'addProfileForm' => $addProfileForm->createView(),
             'profileAbleType' => ClassUtil::getLowercaseShortname($city),
@@ -36,13 +36,13 @@ class SocialNetworkListController extends AbstractController
     }
 
     /**
-     * @ParamConverter("ride", class="AppBundle:Ride")
+     * @ParamConverter("ride", class="App:Ride")
      */
     public function listRideAction(ObjectRouterInterface $router, Ride $ride): Response
     {
         $addProfileForm = $this->getAddProfileForm($router, $ride);
 
-        return $this->render('AppBundle:SocialNetwork:list.html.twig', [
+        return $this->render('App:SocialNetwork:list.html.twig', [
             'list' => $this->getProfileList($ride),
             'addProfileForm' => $addProfileForm->createView(),
             'profileAbleType' => ClassUtil::getLowercaseShortname($ride),

@@ -1,13 +1,13 @@
 <?php
 
-namespace AppBundle\Repository;
+namespace App\Repository;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\CityCycle;
-use AppBundle\Entity\Location;
-use AppBundle\Entity\Region;
-use AppBundle\Entity\Ride;
-use AppBundle\Criticalmass\Util\DateTimeUtil;
+use App\Entity\City;
+use App\Entity\CityCycle;
+use App\Entity\Location;
+use App\Entity\Region;
+use App\Entity\Ride;
+use App\Criticalmass\Util\DateTimeUtil;
 use Doctrine\ORM\EntityRepository;
 
 class RideRepository extends EntityRepository
@@ -108,7 +108,7 @@ class RideRepository extends EntityRepository
 
     public function findRideByLatitudeLongitudeDateTime($latitude, $longitude, \DateTime $dateTime)
     {
-        $queryString = 'SELECT r AS ride, SQRT((r.latitude - ' . $latitude . ') * (r.latitude - ' . $latitude . ') + (r.longitude - ' . $longitude . ') * (r.longitude - ' . $longitude . ')) AS distance FROM AppBundle:Ride r JOIN r.city c WHERE c.enabled = 1 AND DATE(r.dateTime) = \'' . $dateTime->format('Y-m-d') . '\' ORDER BY distance ASC';
+        $queryString = 'SELECT r AS ride, SQRT((r.latitude - ' . $latitude . ') * (r.latitude - ' . $latitude . ') + (r.longitude - ' . $longitude . ') * (r.longitude - ' . $longitude . ')) AS distance FROM App:Ride r JOIN r.city c WHERE c.enabled = 1 AND DATE(r.dateTime) = \'' . $dateTime->format('Y-m-d') . '\' ORDER BY distance ASC';
 
         $query = $this->getEntityManager()->createQuery($queryString);
         $query->setMaxResults(1);
