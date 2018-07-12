@@ -6,7 +6,7 @@ use App\Criticalmass\Router\Annotation\AbstractAnnotation;
 use App\Criticalmass\Router\Annotation\DefaultRoute;
 use App\Criticalmass\Router\Annotation\RouteParameter;
 use App\EntityInterface\RouteableInterface;
-use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\Reader;
 use Symfony\Component\Routing\RouterInterface;
 
 abstract class AbstractObjectRouter
@@ -14,10 +14,10 @@ abstract class AbstractObjectRouter
     /** @var RouterInterface $router */
     protected $router;
 
-    /** @var AnnotationReader $annotationReader */
+    /** @var Reader $annotationReader */
     protected $annotationReader;
 
-    public function __construct(RouterInterface $router, AnnotationReader $annotationReader)
+    public function __construct(RouterInterface $router, Reader $annotationReader)
     {
         $this->router = $router;
         $this->annotationReader = $annotationReader;

@@ -2,17 +2,17 @@
 
 namespace App\Request\ParamConverter;
 
-use Doctrine\Bundle\DoctrineBundle\Registry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInterface;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 abstract class AbstractParamConverter implements ParamConverterInterface
 {
-    /** @var Registry $registry */
+    /** @var RegistryInterface $registry */
     protected $registry;
 
-    public function __construct(Registry $registry)
+    public function __construct(RegistryInterface $registry)
     {
         $this->registry = $registry;
     }

@@ -4,7 +4,7 @@ namespace App\Criticalmass\RideGenerator\RideGenerator;
 
 use App\Entity\City;
 use App\Criticalmass\RideGenerator\RideCalculator\RideCalculatorInterface;
-use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 abstract class AbstractRideGenerator implements RideGeneratorInterface
 {
@@ -20,13 +20,13 @@ abstract class AbstractRideGenerator implements RideGeneratorInterface
     /** @var array $rideList */
     protected $rideList = [];
 
-    /** @var Doctrine $doctrine */
+    /** @var RegistryInterface $doctrine */
     protected $doctrine;
 
     /** @var RideCalculatorInterface $rideCalculator */
     protected $rideCalculator;
 
-    public function __construct(Doctrine $doctrine, RideCalculatorInterface $rideCalculator)
+    public function __construct(RegistryInterface $doctrine, RideCalculatorInterface $rideCalculator)
     {
         $this->doctrine = $doctrine;
         $this->rideCalculator = $rideCalculator;

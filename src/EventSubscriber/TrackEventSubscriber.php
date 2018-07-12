@@ -18,7 +18,7 @@ use App\Criticalmass\Gps\LatLngListGenerator\RangeLatLngListGenerator;
 use App\Criticalmass\Gps\PolylineGenerator\PolylineGenerator;
 use App\Event\Track\TrackUpdatedEvent;
 use App\Event\Track\TrackUploadedEvent;
-use Doctrine\Bundle\DoctrineBundle\Registry;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class TrackEventSubscriber implements EventSubscriberInterface
@@ -41,11 +41,11 @@ class TrackEventSubscriber implements EventSubscriberInterface
     /** @var TrackDistanceCalculatorInterface $trackDistanceCalculator */
     protected $trackDistanceCalculator;
 
-    /** @var Registry $registry */
+    /** @var RegistryInterface $registry */
     protected $registry;
 
     public function __construct(
-        Registry $registry,
+        RegistryInterface $registry,
         RideEstimateHandler $rideEstimateHandler,
         TrackReader $trackReader,
         PolylineGenerator $polylineGenerator,

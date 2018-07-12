@@ -4,7 +4,7 @@ namespace App\Command\Photo;
 
 use App\Entity\Ride;
 use App\Criticalmass\Image\PhotoFilterer\PhotoFilterer;
-use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -12,13 +12,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class PrepareImagesCommand extends Command
 {
-    /** @var Doctrine $doctrine */
+    /** @var RegistryInterface $doctrine */
     protected $doctrine;
 
     /** @var PhotoFilterer $photoFilterer */
     protected $photoFilterer;
 
-    public function __construct(Doctrine $doctrine, PhotoFilterer $photoFilterer)
+    public function __construct(RegistryInterface $doctrine, PhotoFilterer $photoFilterer)
     {
         $this->doctrine = $doctrine;
         $this->photoFilterer = $photoFilterer;

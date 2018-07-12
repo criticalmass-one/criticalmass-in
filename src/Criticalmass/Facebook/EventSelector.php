@@ -5,13 +5,12 @@ namespace App\Criticalmass\Facebook;
 use App\Entity\Ride;
 use App\Entity\SocialNetworkProfile;
 use App\Criticalmass\Facebook\Bridge\RideBridge;
-use App\Criticalmass\SocialNetwork\Network\FacebookEvent;
-use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 use Facebook\GraphNodes\GraphEvent;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class EventSelector
 {
-    /** @var Doctrine $doctrine */
+    /** @var RegistryInterface $doctrine */
     protected $doctrine;
 
     /** @var RideBridge $rideBridge */
@@ -20,7 +19,7 @@ class EventSelector
     /** @var array $assignedRides */
     protected $assignedRides = [];
 
-    public function __construct(Doctrine $doctrine, RideBridge $rideBridge)
+    public function __construct(RegistryInterface $doctrine, RideBridge $rideBridge)
     {
         $this->doctrine = $doctrine;
         $this->rideBridge = $rideBridge;

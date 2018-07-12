@@ -7,7 +7,7 @@ use App\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandlerInterface;
 use App\Event\RideEstimate\RideEstimateCreatedEvent;
 use App\Event\RideEstimate\RideEstimateDeletedEvent;
 use App\Event\RideEstimate\RideEstimateUpdatedEvent;
-use Doctrine\Bundle\DoctrineBundle\Registry;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class RideEstimateEventSubscriber implements EventSubscriberInterface
@@ -15,11 +15,11 @@ class RideEstimateEventSubscriber implements EventSubscriberInterface
     /** @var RideEstimateHandlerInterface $rideEstimateHandler */
     protected $rideEstimateHandler;
 
-    /** @var Registry $registry */
+    /** @var RegistryInterface $registry */
     protected $registry;
 
     public function __construct(
-        Registry $registry,
+        RegistryInterface $registry,
         RideEstimateHandler $rideEstimateHandler
     ) {
         $this->rideEstimateHandler = $rideEstimateHandler;

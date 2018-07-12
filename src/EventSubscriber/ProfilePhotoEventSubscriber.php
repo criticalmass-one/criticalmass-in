@@ -4,10 +4,10 @@ namespace App\EventSubscriber;
 
 use App\Entity\User;
 use App\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGenerator;
-use Doctrine\Bundle\DoctrineBundle\Registry;
 use FOS\UserBundle\Event\FormEvent as FosFormEvent;
 use FOS\UserBundle\FOSUserEvents;
 use HWI\Bundle\OAuthBundle\HWIOAuthEvents;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use HWI\Bundle\OAuthBundle\Event\FormEvent as HwiFormEvent;
 
@@ -16,10 +16,10 @@ class ProfilePhotoEventSubscriber implements EventSubscriberInterface
     /** @var ProfilePhotoGenerator $profilePhotoGenerator */
     protected $profilePhotoGenerator;
 
-    /** @var Registry $registry */
+    /** @var RegistryInterface $registry */
     protected $registry;
 
-    public function __construct(ProfilePhotoGenerator $profilePhotoGenerator, Registry $registry)
+    public function __construct(ProfilePhotoGenerator $profilePhotoGenerator, RegistryInterface $registry)
     {
         $this->profilePhotoGenerator = $profilePhotoGenerator;
         $this->registry = $registry;

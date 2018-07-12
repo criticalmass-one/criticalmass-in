@@ -8,8 +8,8 @@ use App\Criticalmass\Sharing\Annotation\RouteParameter;
 use App\Criticalmass\Sharing\Annotation\Shorturl;
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
 use Caldera\YourlsApiManager\YourlsApiManager;
-use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
-use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\Reader;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 abstract class AbstractMetadata implements MetadataInterface
@@ -17,16 +17,16 @@ abstract class AbstractMetadata implements MetadataInterface
     /** @var ObjectRouterInterface $router */
     protected $router;
 
-    /** @var AnnotationReader $annotationReader */
+    /** @var Reader $annotationReader */
     protected $annotationReader;
 
     /** @var YourlsApiManager $yourlsApiManager */
     protected $yourlsApiManager;
 
-    /** @var Doctrine $doctrine */
+    /** @var RegistryInterface $doctrine */
     protected $doctrine;
 
-    public function __construct(ObjectRouterInterface $router, AnnotationReader $annotationReader, YourlsApiManager $yourlsApiManager, Doctrine $doctrine)
+    public function __construct(ObjectRouterInterface $router, Reader $annotationReader, YourlsApiManager $yourlsApiManager, RegistryInterface $doctrine)
     {
         $this->router = $router;
         $this->annotationReader = $annotationReader;

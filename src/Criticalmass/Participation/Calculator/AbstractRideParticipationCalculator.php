@@ -3,17 +3,17 @@
 namespace App\Criticalmass\Participation\Calculator;
 
 use App\Entity\Ride;
-use Doctrine\Bundle\DoctrineBundle\Registry;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 abstract class AbstractRideParticipationCalculator implements RideParticipationCalculatorInterface
 {
-    /** @var Registry $registry */
+    /** @var RegistryInterface $registry */
     protected $registry;
 
     /** @var Ride $ride */
     protected $ride;
 
-    public function __construct(Registry $registry)
+    public function __construct(RegistryInterface $registry)
     {
         $this->registry = $registry;
     }

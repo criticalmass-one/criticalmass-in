@@ -5,14 +5,15 @@ namespace App\Criticalmass\ViewStorage;
 use App\Entity\User;
 use App\EntityInterface\ViewableInterface;
 use App\EntityInterface\ViewInterface;
-use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Cache\Adapter\AbstractAdapter;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ViewStoragePersister implements ViewStoragePersisterInterface
 {
+    /** @var RegistryInterface $doctrine */
     protected $doctrine;
 
     /** @var EntityManager $manager */
@@ -24,7 +25,7 @@ class ViewStoragePersister implements ViewStoragePersisterInterface
     /** @var AbstractAdapter $cache */
     protected $cache = null;
 
-    public function __construct(Registry $doctrine)
+    public function __construct(RegistryInterface $doctrine)
     {
         $redisConnection = RedisAdapter::createConnection('redis://localhost');
 

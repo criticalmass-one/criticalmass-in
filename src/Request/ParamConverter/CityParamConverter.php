@@ -3,13 +3,13 @@
 namespace App\Request\ParamConverter;
 
 use App\Entity\City;
-use Doctrine\Bundle\DoctrineBundle\Registry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class CityParamConverter extends AbstractCriticalmassParamConverter
 {
-    public function __construct(Registry $registry)
+    public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry);
     }

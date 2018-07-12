@@ -6,8 +6,7 @@ use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Entity\Ride;
 use App\Criticalmass\RideGenerator\RideCalculator\RideCalculatorInterface;
-use App\Criticalmass\RideGenerator\RideGenerator\RideGenerator;
-use Doctrine\Bundle\DoctrineBundle\Registry;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class CycleAnalyzer implements CycleAnalyzerInterface
 {
@@ -23,7 +22,7 @@ class CycleAnalyzer implements CycleAnalyzerInterface
     /** @var array $simulatedRideList */
     protected $simulatedRideList = [];
 
-    /** @var Registry $registry */
+    /** @var RegistryInterface $registry */
     protected $registry;
 
     /** @var RideCalculatorInterface $rideCalculator */
@@ -39,7 +38,7 @@ class CycleAnalyzer implements CycleAnalyzerInterface
     protected $analyzerModelFactory;
 
     public function __construct(
-        Registry $registry,
+        RegistryInterface $registry,
         RideCalculatorInterface $rideCalculator,
         CycleAnalyzerModelFactoryInterface $analyzerModelFactory
     ) {

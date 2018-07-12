@@ -6,11 +6,8 @@ use App\Entity\Photo;
 use App\Entity\Ride;
 use App\Entity\Track;
 use App\Entity\User;
-use App\Criticalmass\Image\PhotoGps\PhotoGps;
 use App\Criticalmass\Image\PhotoUploader\PhotoUploader;
-use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
-use Doctrine\ORM\EntityManager;
-use PHPExif\Reader\Reader;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
@@ -19,13 +16,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ImportImagesCommand extends ContainerAwareCommand
 {
-    /** @var Doctrine $doctrine */
+    /** @var RegistryInterface $doctrine */
     protected $doctrine;
 
     /** @var PhotoUploader $photoUploader */
     protected $photoUploader;
 
-    public function __construct(Doctrine $doctrine, PhotoUploader $photoUploader)
+    public function __construct(RegistryInterface $doctrine, PhotoUploader $photoUploader)
     {
         $this->doctrine = $doctrine;
         $this->photoUploader = $photoUploader;

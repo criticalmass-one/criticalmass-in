@@ -4,8 +4,8 @@ namespace App\Criticalmass\Image\PhotoFilterer;
 
 use App\Entity\Photo;
 use App\Entity\Ride;
-use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 use Liip\ImagineBundle\Controller\ImagineController;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,7 +13,7 @@ use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class PhotoFilterer
 {
-    /** @var Doctrine $doctrine */
+    /** @var RegistryInterface $doctrine */
     protected $doctrine = null;
 
     /** @var UploaderHelper $uploaderHelper */
@@ -29,7 +29,7 @@ class PhotoFilterer
     protected $output;
 
     public function __construct(
-        Doctrine $doctrine,
+        RegistryInterface $doctrine,
         UploaderHelper $uploaderHelper,
         ImagineController $imagineController
     ) {

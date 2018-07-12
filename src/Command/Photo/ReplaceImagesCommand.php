@@ -6,7 +6,7 @@ use App\Entity\Ride;
 use App\Entity\Track;
 use App\Entity\User;
 use App\Criticalmass\Image\PhotoLocator\PhotoLocator;
-use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -17,10 +17,10 @@ class ReplaceImagesCommand extends Command
     /** @var PhotoLocator $photoLocator */
     protected $photoLocator;
 
-    /** @var Doctrine $doctrine */
+    /** @var RegistryInterface $doctrine */
     protected $doctrine;
 
-    public function __construct(PhotoLocator $photoLocator, Doctrine $doctrine)
+    public function __construct(PhotoLocator $photoLocator, RegistryInterface $doctrine)
     {
         $this->photoLocator = $photoLocator;
         $this->doctrine = $doctrine;

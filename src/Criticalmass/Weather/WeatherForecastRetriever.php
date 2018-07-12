@@ -7,13 +7,13 @@ use App\Entity\Weather;
 use Cmfcmf\OpenWeatherMap;
 use Cmfcmf\OpenWeatherMap\Forecast;
 use Cmfcmf\OpenWeatherMap\WeatherForecast;
-use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 use Cmfcmf\OpenWeatherMap\Exception as OWMException;
 use Psr\Log\LoggerInterface;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class WeatherForecastRetriever
 {
-    /** @var Doctrine $doctrine */
+    /** @var RegistryInterface $doctrine */
     protected $doctrine;
 
     /** @var OpenWeatherMap openWeatherMap */
@@ -25,7 +25,7 @@ class WeatherForecastRetriever
     /** @var LoggerInterface $logger */
     protected $logger;
 
-    public function __construct(Doctrine $doctrine, OpenWeatherMap $openWeatherMap, LoggerInterface $logger, string $openWeatherMapApiKey)
+    public function __construct(RegistryInterface $doctrine, OpenWeatherMap $openWeatherMap, LoggerInterface $logger, string $openWeatherMapApiKey)
     {
         $this->doctrine = $doctrine;
         $this->logger = $logger;

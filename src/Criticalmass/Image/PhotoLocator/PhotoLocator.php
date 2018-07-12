@@ -7,12 +7,12 @@ use App\Entity\Ride;
 use App\Entity\Track;
 use App\Entity\User;
 use App\Criticalmass\Image\PhotoGps\PhotoGps;
-use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class PhotoLocator
 {
-    /** @var Doctrine $doctrine */
+    /** @var RegistryInterface $doctrine */
     protected $doctrine;
 
     /** @var PhotoGps $photoGps */
@@ -33,7 +33,7 @@ class PhotoLocator
     /** @var \DateTimeZone $dateTimeZone */
     protected $dateTimeZone;
 
-    public function __construct(Doctrine $doctrine, PhotoGps $photoGps)
+    public function __construct(RegistryInterface $doctrine, PhotoGps $photoGps)
     {
         $this->doctrine = $doctrine;
 
