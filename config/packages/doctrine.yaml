@@ -16,6 +16,14 @@ doctrine:
             collate: utf8mb4_unicode_ci
 
         url: '%env(resolve:DATABASE_URL)%'
+
+        types:
+            datetime: AppBundle\DBAL\Type\UTCDateTimeType
+            date: AppBundle\DBAL\Type\UTCDateType
+            time: AppBundle\DBAL\Type\UTCTimeType
+        mapping_types:
+            enum: string
+
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
         naming_strategy: doctrine.orm.naming_strategy.underscore
@@ -27,3 +35,13 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
+
+        dql:
+            datetime_functions:
+                day: AppBundle\DQL\DayFunction
+                date: AppBundle\DQL\DateFunction
+                month: AppBundle\DQL\MonthFunction
+                year: AppBundle\DQL\YearFunction
+                dayofweek: AppBundle\DQL\DayOfWeekFunction
+            numeric_functions:
+                rand: AppBundle\DQL\RandFunction

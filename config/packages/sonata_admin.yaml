@@ -4,6 +4,10 @@ sonata_admin:
         blocks:
             - { type: sonata.admin.block.admin_list, position: left }
 
+sonata_doctrine_orm_admin:
+    audit:
+        force: false
+
 sonata_block:
     blocks:
         sonata.admin.block.admin_list:

@@ -1,35 +1,73 @@
-#liip_imagine:
-#    # valid drivers options include "gd" or "gmagick" or "imagick"
-#    driver: "gd"
-#
-#    # define your filter sets under this option
-#    filter_sets:
-#
-#        # an example thumbnail transformation definition
-#        # https://symfony.com/doc/current/bundles/LiipImagineBundle/basic-usage.html#create-thumbnails
-#        squared_thumbnail:
-#
-#            # set your image quality defaults
-#            jpeg_quality:          85
-#            png_compression_level: 8
-#
-#            # setup the filter steps to apply for this transformation
-#            filters:
-#
-#                # auto rotate the image using EXIF metadata
-#                auto_rotate: ~
-#
-#                # strip the image of all metadata
-#                strip: ~
-#
-#                # scale and square the image to the given dimensions
-#                thumbnail:
-#                    size:          [253, 253]
-#                    mode:          outbound
-#                    allow_upscale: true
-#
-#                # create border by placing image on larger black background
-#                background:
-#                    size:     [256, 256]
-#                    position: center
-#                    color:    '#fff'
+liip_imagine:
+    resolvers:
+       default:
+          web_path: ~
+    driver: imagick
+
+    filter_sets:
+        cache: ~
+        gallery_photo_thumb:
+            quality: 40
+            filters:
+                thumbnail: { size: [400, 300], mode: inset }
+        gallery_photo_standard:
+            quality: 60
+            filters:
+                thumbnail: { size: [1600, 1600], mode: inset }
+                watermark:
+                    image: ../src/AppBundle/Resources/public/images/watermark/criticalmass.png
+                    size: 0.15
+                    position: bottomright
+        gallery_photo_blurred:
+            quality: 30
+            filters:
+                thumbnail: { size: [800, 800], mode: inset }
+                fast_blur_filter: ~
+        gallery_photo_large:
+            quality: 60
+            filters:
+                thumbnail: { size: [2000, 2000], mode: inset }
+                watermark:
+                    image: ../src/AppBundle/Resources/public/images/watermark/criticalmass.png
+                    size: 0.15
+                    position: bottomright
+        city_image_wide:
+            quality: 60
+            filters:
+                thumbnail: { size: [1140, 250], mode: inset }
+        ride_image_wide:
+            quality: 60
+            filters:
+                thumbnail: { size: [1140, 250], mode: inset }
+        blog_featuredphoto_standard:
+            quality: 80
+            filters:
+                thumbnail: { size: [1600, 1600], mode: inset }
+        facebook_preview_image:
+            quality: 60
+            filters:
+                thumbnail: { size: [1600, 1600], mode: inset }
+        twitter_summary_large_image:
+            quality: 50
+            filters:
+                thumbnail: { size: [800, 800], mode: inset }
+        ride_photo_preview:
+            quality: 50
+            filters:
+                thumbnail: { size: [600, 600], mode: inset }
+        frontpage_teaser_large:
+            quality: 75
+            filters:
+                thumbnail: { size: [2000, 2000], mode: inset }
+        user_profile_photo_medium:
+            quality: 75
+            filters:
+                thumbnail: { size: [512, 512], mode: inset }
+        user_profile_photo_small:
+            quality: 50
+            filters:
+                thumbnail: { size: [128, 128], mode: inset }
+        user_profile_photo_timelapse:
+            quality: 30
+            filters:
+                thumbnail: { size: [50, 50], mode: inset }

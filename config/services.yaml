@@ -33,7 +33,7 @@ parameters:
     upload_destination.photo: "%kernel.root_dir%/../web/photos"
     feature.photos: true
     staticmaps.host: '%env(STATICMAPS_HOST)%'
-    twitter.client_id: '%envTWITTER_CLIENT_ID)%'
+    twitter.client_id: '%env(TWITTER_CLIENT_ID)%'
     twitter.token: '%env(TWITTER_TOKEN)%'
     twitter.secret: '%env(TWITTER_SECRET)%'
     timezone_db.api_key: '%env(TIMEZONE_DB_API_KEY)%'

@@ -1,15 +1,21 @@
-# Read the documentation: https://symfony.com/doc/master/bundles/FOSRestBundle/index.html
-fos_rest: ~
-#    param_fetcher_listener:  true
-#    allowed_methods_listener:  true
-#    routing_loader: true
-#    view:
-#        view_response_listener:  true
-#    exception:
-#        codes:
-#            App\Exception\MyException: 403
-#        messages:
-#            App\Exception\MyException: Forbidden area.
-#    format_listener:
-#        rules:
-#            - { path: ^/api, prefer_extension: true, fallback_format: json, priorities: [ json, html ] }
+fos_rest:
+    view:
+        formats:
+            json: true
+            xml: false
+            html: false
+            rss: false
+        templating_formats:
+            json: false
+            xml: false
+            html: false
+            rss: false
+        force_redirects:
+            html: false
+        failed_validation: HTTP_BAD_REQUEST
+        default_engine: twig
+    service:
+        serializer: fos_rest.serializer.jms
+    serializer:
+        groups:               []
+        serialize_null:       true

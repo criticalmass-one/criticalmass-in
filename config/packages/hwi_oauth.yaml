@@ -1,14 +1,25 @@
 hwi_oauth:
-    # list of names of the firewalls in which this bundle is active, this setting MUST be set
     firewall_names: [main]
 
-    # https://github.com/hwi/HWIOAuthBundle/blob/master/Resources/doc/2-configuring_resource_owners.md
+    fosub:
+        username_iterations: 30
+        properties:
+            facebook: facebookId
+            strava: stravaId
+            runkeeper: runkeeperId
     resource_owners:
         facebook:
             type:                facebook
-            client_id:           '%env(FB_ID)%'
-            client_secret:       '%env(FB_SECRET)%'
-            scope:               "email"
-            options:
-                display: popup
-                csrf: true
+            client_id:           '%facebook.app_id%'
+            client_secret:       '%facebook.app_secret%'
+            scope:               email
+            infos_url:           https://graph.facebook.com/me?fields=id,name,email,first_name,last_name,gender
+        strava:
+            type:                strava
+            client_id:           '%strava.client_id%'
+            client_secret:       '%strava.secret%'
+        runkeeper:
+            type:                runkeeper
+            client_id:           '%runkeeper.client_id%'
+            client_secret:       '%runkeeper.secret%'
+

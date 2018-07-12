@@ -1,13 +1,3 @@
-sonata_block:
-    default_contexts: [cms]
-    blocks:
-        sonata.admin.block.admin_list:
-            contexts: [admin]
-
-sonata_doctrine_orm_admin:
-    audit:
-        force: false
-
 sonata_seo:
     encoding:         UTF-8
     page:

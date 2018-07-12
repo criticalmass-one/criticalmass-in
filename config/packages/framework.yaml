@@ -4,27 +4,29 @@ framework:
     #csrf_protection: true
     #http_method_override: true
 
-    # Enables session support. Note that the session will ONLY be started if you read or write from it.
-    # Remove or comment this section to explicitly disable session support.
-    session:
-        handler_id: ~
-
     #esi: true
     #fragments: true
     php_errors:
         log: true
 
-    cache:
-        # Put the unique name of your app here: the prefix seed
-        # is used to compute stable namespaces for cache keys.
-        #prefix_seed: your_vendor_name/app_name
+    cache: ~
 
-        # The app cache caches to the filesystem by default.
-        # Other options include:
-
-        # Redis
-        #app: cache.adapter.redis
-        #default_redis_provider: redis://localhost
-
-        # APCu (not recommended with heavy random-write workloads as memory fragmentation can cause perf issues)
-        #app: cache.adapter.apcu
+    translator: { fallbacks: [de] }
+    form: ~
+    csrf_protection:
+        enabled: true
+    validation:
+        enable_annotations: true
+        #cache: validator.mapping.cache.doctrine.apc
+    templating:
+        engines: ['twig']
+    default_locale:  '%locale%'
+    session:
+        handler_id:  session.handler.native_file
+        save_path:   '%kernel.root_dir%/../var/sessions/%kernel.environment%'
+    fragments:       ~
+    http_method_override: true
+    assets: ~
+    router:
+        resource: '%kernel.root_dir%/config/routing.yml'
+        strict_requirements: ~
