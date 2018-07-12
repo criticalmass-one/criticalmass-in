@@ -25,7 +25,7 @@ class MonthlyStatsController extends AbstractController
 
         $month = new \DateInterval('P1M');
 
-        return $this->render('App:Statistic:list_rides.html.twig', [
+        return $this->render('Statistic/list_rides.html.twig', [
             'rides' => $rides,
             'dateTime' => $dateTime,
             'previousDateTime' => $dateTime->sub($month),

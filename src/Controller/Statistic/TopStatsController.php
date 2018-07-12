@@ -9,7 +9,7 @@ class TopStatsController extends AbstractController
 {
     public function topStatsAction(): Response
     {
-        return $this->render('App:Statistic:top.html.twig', [
+        return $this->render('Statistic/top.html.twig', [
             'participationList' => $this->getRideRepository()->findMostPopularRides(),
             'durationList' => $this->getRideRepository()->findLongestDurationRides(),
             'distanceList' => $this->getRideRepository()->findLongestDistanceRides(),

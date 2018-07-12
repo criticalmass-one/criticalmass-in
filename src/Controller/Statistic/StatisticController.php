@@ -22,7 +22,7 @@ class StatisticController extends AbstractController
 
         $seoPage->setDescription(sprintf('Critical-Mass-Statistiken aus %s: Teilnehmer, Fahrtdauer, Fahrtlänge, Touren', $city->getCity()));
 
-        return $this->render('App:Statistic:city_statistic.html.twig', [
+        return $this->render('Statistic/city_statistic.html.twig', [
             'city' => $city,
             'rides' => $rides,
         ]);
@@ -61,14 +61,11 @@ class StatisticController extends AbstractController
 
         $seoPage->setDescription('Critical-Mass-Statistiken: Teilnehmer, Fahrtdauer, Fahrtlänge, Touren');
 
-        return $this->render(
-            'App:Statistic:overview.html.twig',
-            [
-                'cities' => $cities,
-                'rides' => $rides,
-                'rideMonths' => $rideMonths
-            ]
-        );
+        return $this->render('Statistic/overview.html.twig', [
+            'cities' => $cities,
+            'rides' => $rides,
+            'rideMonths' => $rideMonths,
+        ]);
     }
 
     protected function findCitiesWithoutParticipationEstimates(array $rides): array
