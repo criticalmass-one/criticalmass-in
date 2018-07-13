@@ -2,16 +2,16 @@
 
 namespace App\Criticalmass\OpenStreetMap\NominatimCityBridge;
 
-use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
-abstract class AbstractNominatimCityBridge
+abstract class AbstractNominatimCityBridge implements NominatimCityBridgeInterface
 {
     const NOMINATIM_URL = 'https://nominatim.openstreetmap.org/';
 
-    /** @var Doctrine $doctrine */
+    /** @var RegistryInterface $doctrine */
     protected $doctrine;
 
-    public function __construct(Doctrine $doctrine)
+    public function __construct(RegistryInterface $doctrine)
     {
         $this->doctrine = $doctrine;
     }
