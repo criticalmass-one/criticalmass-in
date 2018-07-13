@@ -5,38 +5,38 @@
         xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
     <route id="criticalmass_user_usermanagement" path="/profile/">
-        <default key="_controller">App:Profile/ProfileManagement:manage</default>
+        <default key="_controller">App\Controller\Profile\ProfileManagementController::manageAction</default>
     </route>
 
     <route id="criticalmass_user_usermanagement_editusername" path="/profile/username">
-        <default key="_controller">App:Profile/ProfileManagement:editUsername</default>
+        <default key="_controller">App\Controller\Profile\ProfileManagementController::editUsernameAction</default>
     </route>
 
     <route id="criticalmass_user_usermanagement_editemail" path="/profile/email">
-        <default key="_controller">App:Profile/ProfileManagement:editEmail</default>
+        <default key="_controller">App\Controller\Profile\ProfileManagementController::editEmailAction</default>
     </route>
 
     <route id="criticalmass_user_participation_list" path="/profile/participation/list">
-        <default key="_controller">App:Profile/Participation:list</default>
+        <default key="_controller">App\Controller\Profile\ParticipationController::listAction</default>
     </route>
 
     <route id="criticalmass_user_participation_update" path="/profile/participation/{participationId/update">
-        <default key="_controller">App:Profile/Participation:update</default>
+        <default key="_controller">App\Controller\Profile\ParticipationController::updateAction</default>
     </route>
 
     <route id="criticalmass_user_participation_delete" path="/profile/participation/{participationId/delete">
-        <default key="_controller">App:Profile/Participation:delete</default>
+        <default key="_controller">App\Controller\Profile\ParticipationController::deleteAction</default>
     </route>
 
     <route id="criticalmass_user_profile_photo" path="/profile/profilephoto">
-        <default key="_controller">App:Profile/ProfilePhoto:upload</default>
+        <default key="_controller">App\Controller\Profile\ProfilePhotoController::uploadAction</default>
     </route>
 
     <route id="criticalmass_user_bikeright_view" path="/profile/bikeright">
-        <default key="_controller">App:Profile/Bikeright:view</default>
+        <default key="_controller">App\Controller\Profile\BikerightController::viewAction</default>
     </route>
 
     <route id="criticalmass_user_bikeright_generate" path="/profile/bikeright/generate">
-        <default key="_controller">App:Profile/Bikeright:generate</default>
+        <default key="_controller">App\Controller\Profile\BikerightController::generateAction</default>
     </route>
 </routes>

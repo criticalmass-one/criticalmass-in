@@ -29,7 +29,7 @@ class ParticipationController extends AbstractController
 
         $participationTable = $tableGenerator->setUser($user)->generate()->getTable();
 
-        return $this->render('App:Participation:list.html.twig', [
+        return $this->render('Participation/list.html.twig', [
             'participationYesList' => $repository->findByUser($user, true),
             'participationMaybeList' => $repository->findByUser($user, false, true),
             'participationNoList' => $repository->findByUser($user, false, false, true),

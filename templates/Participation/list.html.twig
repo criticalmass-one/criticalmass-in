@@ -51,7 +51,7 @@
 
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="table">
-                        {{ include('AppBundle:Participation:_table.html.twig') }}
+                        {{ include('Participation/_table.html.twig') }}
                     </div>
 
                     <div role="tabpanel" class="tab-pane" id="goingYes">
@@ -63,7 +63,7 @@
                             </div>
                         </div>
 
-                        {% include 'AppBundle:Participation:_list.html.twig' with { 'participationList': participationYesList } only %}
+                        {% include 'Participation/_list.html.twig' with { 'participationList': participationYesList } only %}
                     </div>
 
                     <div role="tabpanel" class="tab-pane" id="goingMaybe">
@@ -75,7 +75,7 @@
                             </div>
                         </div>
 
-                        {% include 'AppBundle:Participation:_list.html.twig' with { 'participationList': participationMaybeList } only %}
+                        {% include 'Participation/_list.html.twig' with { 'participationList': participationMaybeList } only %}
                     </div>
 
                     <div role="tabpanel" class="tab-pane" id="goingNo">
@@ -87,7 +87,7 @@
                             </div>
                         </div>
 
-                        {% include 'AppBundle:Participation:_list.html.twig' with { 'participationList': participationNoList } only %}
+                        {% include 'Participation/_list.html.twig' with { 'participationList': participationNoList } only %}
                     </div>
                 </div>
             </div>

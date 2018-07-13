@@ -18,7 +18,7 @@ class BikerightController extends AbstractController
     {
         $bikerightVoucher = $this->getVoucher($user);
 
-        return $this->render('App:BikeRight:view.html.twig', [
+        return $this->render('BikeRight/view.html.twig', [
             'bikerightVoucher' => $bikerightVoucher,
         ]);
     }

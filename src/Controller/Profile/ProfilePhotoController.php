@@ -30,7 +30,7 @@ class ProfilePhotoController extends AbstractController
 
     protected function uploadGetAction(Request $request, UserInterface $user = null, FormInterface $form): Response
     {
-        return $this->render('App:ProfilePhoto:upload.html.twig', [
+        return $this->render('ProfilePhoto/upload.html.twig', [
             'profilePhotoForm' => $form->createView(),
         ]);
     }

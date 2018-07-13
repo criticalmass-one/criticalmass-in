@@ -3,6 +3,9 @@
 namespace App\Controller\Profile;
 
 use App\Controller\AbstractController;
+use App\Entity\Participation;
+use App\Entity\Photo;
+use App\Entity\Track;
 use App\Form\Type\UserEmailType;
 use App\Form\Type\UsernameType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -20,11 +23,11 @@ class ProfileManagementController extends AbstractController
      */
     public function manageAction(UserInterface $user = null): Response
     {
-        $participationCounter = $this->getDoctrine()->getRepository('App:Participation')->countByUser($user);
-        $trackCounter = $this->getDoctrine()->getRepository('App:Track')->countByUser($user);
-        $photoCounter = $this->getDoctrine()->getRepository('App:Photo')->countByUser($user);
+        $participationCounter = $this->getDoctrine()->getRepository(Participation::class)->countByUser($user);
+        $trackCounter = $this->getDoctrine()->getRepository(Track::class)->countByUser($user);
+        $photoCounter = $this->getDoctrine()->getRepository(Photo::class)->countByUser($user);
 
-        return $this->render('App:ProfileManagement:manage.html.twig', [
+        return $this->render('ProfileManagement/manage.html.twig', [
             'participationCounter' => $participationCounter,
             'trackCounter' => $trackCounter,
             'photoCounter' => $photoCounter,
@@ -62,8 +65,8 @@ class ProfileManagementController extends AbstractController
             }
         }
 
-        return $this->render('App:ProfileManagement:edit_username.html.twig', [
-            'usernameForm' => $usernameForm->createView()
+        return $this->render('ProfileManagement/edit_username.html.twig', [
+            'usernameForm' => $usernameForm->createView(),
         ]);
     }
 
@@ -98,8 +101,8 @@ class ProfileManagementController extends AbstractController
             }
         }
 
-        return $this->render('App:ProfileManagement:edit_email.html.twig', [
-            'userEmailForm' => $userEmailForm->createView()
+        return $this->render('ProfileManagement/edit_email.html.twig', [
+            'userEmailForm' => $userEmailForm->createView(),
         ]);
     }
 }

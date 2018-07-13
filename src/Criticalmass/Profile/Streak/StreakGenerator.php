@@ -4,20 +4,20 @@ namespace App\Criticalmass\Profile\Streak;
 
 use App\Entity\Participation;
 use App\Entity\User;
-use Doctrine\Bundle\DoctrineBundle\Registry;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class StreakGenerator implements StreakGeneratorInterface
 {
     /** @var User $user */
     protected $user;
 
-    /** @var Registry $registry */
+    /** @var RegistryInterface $registry */
     protected $registry;
 
     /** @var StreakCalculator $calculator */
     protected $calculator;
 
-    public function __construct(Registry $registry)
+    public function __construct(RegistryInterface $registry)
     {
         $this->registry = $registry;
 

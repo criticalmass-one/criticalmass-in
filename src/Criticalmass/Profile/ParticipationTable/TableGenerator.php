@@ -4,7 +4,7 @@ namespace App\Criticalmass\Profile\ParticipationTable;
 
 use App\Entity\Participation;
 use App\Entity\User;
-use Doctrine\Bundle\DoctrineBundle\Registry;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class TableGenerator implements TableGeneratorInterface
 {
@@ -14,10 +14,10 @@ class TableGenerator implements TableGeneratorInterface
     /** @var User $user */
     protected $user;
 
-    /** @var Registry $registry */
+    /** @var RegistryInterface $registry */
     protected $registry;
 
-    public function __construct(Registry $registry)
+    public function __construct(RegistryInterface $registry)
     {
         $this->registry = $registry;
 
