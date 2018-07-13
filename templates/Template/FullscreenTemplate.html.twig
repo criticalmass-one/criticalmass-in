@@ -1,9 +1,9 @@
 {% extends 'Template/MasterTemplate.html.twig' %}
 
 {% block masterContent %}
-    {% include('AppBundle:Template:Includes/_navigation.html.twig') with { 'fullscreenMap': true } %}
+    {% include('Template/Includes/_navigation.html.twig') with { 'fullscreenMap': true } %}
 
     {% block content %}{% endblock %}
 
-    {% include('AppBundle:Template:Includes/_piwik.html.twig') %}
+    {% include('Template/Includes/_piwik.html.twig') %}
 {% endblock %}
