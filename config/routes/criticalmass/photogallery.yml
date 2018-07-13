@@ -1,5 +1,5 @@
 caldera_criticalmass_photo_ride_list:
-    path: /{citySlug/{rideDate}/listphotos
+    path: /{citySlug}/{rideDate}/listphotos
     controller: App\Controller\Photo\PhotoGalleryController::galleryAction
     requirements:
         rideDate: '([0-9]{4,4})\-([0-9]{1,2})\-([0-9]{1,2})'
