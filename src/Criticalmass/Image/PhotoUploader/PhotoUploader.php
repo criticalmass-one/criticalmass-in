@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Criticalmass\Image\PhotoUploader;
 
@@ -13,62 +13,9 @@ use PHPExif\Reader\Reader;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class PhotoUploader
+class PhotoUploader extends AbstractPhotoUploader
 {
-    /** @var RegistryInterface $doctrine */
-    protected $doctrine;
-
-    /** @var string $uploadDestinationPhoto */
-    protected $uploadDestinationPhoto;
-
-    /** @var User $user */
-    protected $user;
-
-    /** @var Ride $ride */
-    protected $ride;
-
-    /** @var Track $track */
-    protected $track;
-
-    /** @var PhotoGps $photoGps */
-    protected $photoGps;
-
-    /** @var EventDispatcherInterface $eventDispatcher */
-    protected $eventDispatcher;
-
-    /** @var array $addedPhotoList */
-    protected $addedPhotoList = [];
-
-    public function __construct(RegistryInterface $doctrine, PhotoGps $photoGps, string $uploadDestinationPhoto, EventDispatcherInterface $eventDispatcher)
-    {
-        $this->doctrine = $doctrine;
-        $this->photoGps = $photoGps;
-        $this->uploadDestinationPhoto = $uploadDestinationPhoto;
-        $this->eventDispatcher = $eventDispatcher;
-    }
-
-    public function setUser(User $user): PhotoUploader
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    public function setRide(Ride $ride): PhotoUploader
-    {
-        $this->ride = $ride;
-
-        return $this;
-    }
-
-    public function setTrack(Track $track = null): PhotoUploader
-    {
-        $this->track = $track;
-
-        return $this;
-    }
-
-    public function addFile(string $filename): PhotoUploader
+    public function addFile(string $filename): PhotoUploaderInterface
     {
         $this->createPhotoEntity($filename);
 
@@ -77,7 +24,7 @@ class PhotoUploader
         return $this;
     }
 
-    public function addDirectory(string $directoryName): PhotoUploader
+    public function addDirectory(string $directoryName): PhotoUploaderInterface
     {
         $dir = new DirectoryIterator($directoryName);
 
