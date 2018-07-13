@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controller;
 
@@ -17,10 +17,10 @@ class LocationController extends AbstractController
      */
     public function listlocationsAction(City $city): Response
     {
-        $locations = $this->getLocationRepository()->findAll();
+        $locations = $this->getLocationRepository()->findLocationsByCity($city);
 
-        return $this->render('CalderaCriticalmassDesktopBundle:Location:list.html.twig', [
-            'locations' => $locations
+        return $this->render('Location/list.html.twig', [
+            'locations' => $locations,
         ]);
     }
 
@@ -33,15 +33,12 @@ class LocationController extends AbstractController
 
         $locations = $this->getLocationRepository()->findLocationsByCity($location->getCity());
 
-        return $this->render(
-            'App:Location:show.html.twig',
-            [
-                'location' => $location,
-                'locations' => $locations,
-                'rides' => $rides,
-                'ride' => null
-            ]
-        );
+        return $this->render('Location/show.html.twig', [
+            'location' => $location,
+            'locations' => $locations,
+            'rides' => $rides,
+            'ride' => null,
+        ]);
     }
 
     /**
@@ -59,11 +56,11 @@ class LocationController extends AbstractController
 
         $locations = $this->getLocationRepository()->findLocationsByCity($ride->getCity());
 
-        return $this->render('App:Location:show.html.twig', [
+        return $this->render('Location/show.html.twig', [
             'location' => $location,
             'locations' => $locations,
             'rides' => $rides,
-            'ride' => $ride
+            'ride' => $ride,
         ]);
     }
 
