@@ -15,6 +15,7 @@
                 {{ city.city }}
             </a>
         </li>
+
         <li class="active">
             {{ title }}
         </li>
@@ -65,7 +66,7 @@
 {% block content %}
     {{ form_errors(form) }}
     <div class="container">
-        {{ include('AppBundle:Flash:_flash.html.twig') }}
+        {{ include('Flash/_flash.html.twig') }}
 
         {{ form_start(form) }}
 

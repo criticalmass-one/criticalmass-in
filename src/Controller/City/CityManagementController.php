@@ -1,8 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controller\City;
 
 use App\Criticalmass\OpenStreetMap\NominatimCityBridge\NominatimCityBridge;
+use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Event\City\CityCreatedEvent;
 use App\Event\City\CityUpdatedEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -103,7 +104,7 @@ class CityManagementController extends AbstractController
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
 
-            return $this->render('App:CityManagement:edit.html.twig', [
+            return $this->render('CityManagement/edit.html.twig', [
                 'city' => $city,
                 'form' => $form->createView(),
                 'country' => $region->getParent()->getName(),
@@ -112,7 +113,7 @@ class CityManagementController extends AbstractController
             ]);
         }
 
-        return $this->render('App:CityManagement:edit.html.twig', [
+        return $this->render('CityManagement/edit.html.twig', [
             'city' => null,
             'form' => $form->createView(),
             'country' => $region->getParent()->getName(),
@@ -129,10 +130,11 @@ class CityManagementController extends AbstractController
         Request $request,
         UserInterface $user = null,
         EventDispatcherInterface $eventDispatcher,
-        City $city
+        City $city,
+        ObjectRouterInterface $objectRouter
     ): Response {
         $form = $this->createForm(StandardCityType::class, $city, [
-            'action' => $this->generateObjectUrl($city, 'caldera_criticalmass_city_edit'),
+            'action' => $objectRouter->generate($city, 'caldera_criticalmass_city_edit'),
         ]);
 
         if (Request::METHOD_POST === $request->getMethod()) {
@@ -149,7 +151,7 @@ class CityManagementController extends AbstractController
         City $city,
         FormInterface $form
     ): Response {
-        return $this->render('App:CityManagement:edit.html.twig', [
+        return $this->render('CityManagement/edit.html.twig', [
             'city' => $city,
             'form' => $form->createView(),
             'country' => $city->getRegion()->getParent()->getName(),
@@ -179,7 +181,7 @@ class CityManagementController extends AbstractController
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
         }
 
-        return $this->render('App:CityManagement:edit.html.twig', [
+        return $this->render('CityManagement/edit.html.twig', [
             'city' => $city,
             'form' => $form->createView(),
             'country' => $city->getRegion()->getParent()->getName(),
