@@ -3,8 +3,15 @@
 {% block title %}{{ city.title }}{% endblock %}
 
 {% block breadcrumb %}
-    <li><a href="{{ path('caldera_criticalmass_city_list') }}">Städteliste</a></li>
-    <li class="active">{{ city.city }}</li>
+    <li>
+        <a href="{{ path('caldera_criticalmass_city_list') }}">
+            Städteliste
+        </a>
+    </li>
+
+    <li class="active">
+        {{ city.city }}
+    </li>
 {% endblock %}
 
 {% block content %}
