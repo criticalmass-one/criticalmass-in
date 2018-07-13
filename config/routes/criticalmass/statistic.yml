@@ -8,8 +8,8 @@ caldera_criticalmass_statistic_overview:
 
 caldera_criticalmass_statistic_ride_month:
     path: /statistic/{year}/{month}
-    controller: App\Controller\Statistic\MonthlyStatsController:listRidesAction
+    controller: App\Controller\Statistic\MonthlyStatsController::listRidesAction
 
 caldera_criticalmass_statistic_topten:
     path: /statistic/top
-    controller: App\Controller\Statistic\TopStatsController:topStatsAction
+    controller: App\Controller\Statistic\TopStatsController::topStatsAction
