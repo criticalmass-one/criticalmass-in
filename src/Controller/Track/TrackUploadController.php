@@ -40,7 +40,7 @@ class TrackUploadController extends AbstractController
 
     protected function uploadGetAction(Request $request, EventDispatcherInterface $eventDispatcher, Ride $ride, FormInterface $form, TrackValidator $trackValidator): Response
     {
-        return $this->render('App:Track:upload.html.twig', [
+        return $this->render('Track/upload.html.twig', [
             'form' => $form->createView(),
             'ride' => $ride,
             'errorMessage' => null,

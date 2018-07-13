@@ -30,7 +30,7 @@ class TrackManagementController extends AbstractController
             12
         );
 
-        return $this->render('App:Track:list.html.twig', [
+        return $this->render('Track/list.html.twig', [
             'pagination' => $pagination,
         ]);
     }

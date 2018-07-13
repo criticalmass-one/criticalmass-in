@@ -16,7 +16,7 @@ class TrackController extends AbstractController
      */
     public function viewAction(Track $track): Response
     {
-        return $this->render('App:Track:view.html.twig', [
+        return $this->render('Track/view.html.twig', [
             'track' => $track,
             'nextTrack' => $this->getTrackRepository()->getNextTrack($track),
             'previousTrack' => $this->getTrackRepository()->getPreviousTrack($track),

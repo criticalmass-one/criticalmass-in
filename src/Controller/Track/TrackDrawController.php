@@ -27,7 +27,7 @@ class TrackDrawController extends AbstractController
 
     protected function drawGetAction(Request $request, Ride $ride): Response
     {
-        return $this->render('App:Track:draw.html.twig', [
+        return $this->render('Track/draw.html.twig', [
             'ride' => $ride
         ]);
     }
@@ -72,9 +72,9 @@ class TrackDrawController extends AbstractController
 
     protected function editGetAction(Request $request, Ride $ride, Track $track): Response
     {
-        return $this->render('App:Track:draw.html.twig', [
+        return $this->render('Track/draw.html.twig', [
             'ride' => $ride,
-            'track' => $track
+            'track' => $track,
         ]);
     }
 

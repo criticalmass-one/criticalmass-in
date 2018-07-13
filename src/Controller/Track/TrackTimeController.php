@@ -2,13 +2,14 @@
 
 namespace App\Controller\Track;
 
+use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Event\Track\TrackTimeEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use App\Controller\AbstractController;
 use App\Entity\Track;
 use App\Criticalmass\Gps\TrackTimeshift\TrackTimeshift;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormInterface;
@@ -21,10 +22,10 @@ class TrackTimeController extends AbstractController
      * @Security("is_granted('edit', track)")
      * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
      */
-    public function timeAction(Request $request, EventDispatcher $eventDispatcher, Track $track, TrackTimeshift $trackTimeshift): Response
+    public function timeAction(Request $request, ObjectRouterInterface $objectRouter, EventDispatcherInterface $eventDispatcher, Track $track, TrackTimeshift $trackTimeshift): Response
     {
         $form = $this->createFormBuilder($track)
-            ->setAction($this->generateObjectUrl($track, 'caldera_criticalmass_track_time'))
+            ->setAction($objectRouter->generate($track, 'caldera_criticalmass_track_time'))
             ->add('startDate', DateType::class)
             ->add('startTime', TimeType::class)
             ->getForm();
@@ -36,15 +37,15 @@ class TrackTimeController extends AbstractController
         }
     }
 
-    protected function timeGetAction(Request $request, EventDispatcher $eventDispatcher, Track $track, FormInterface $form, TrackTimeshift $trackTimeshift): Response
+    protected function timeGetAction(Request $request, EventDispatcherInterface $eventDispatcher, Track $track, FormInterface $form, TrackTimeshift $trackTimeshift): Response
     {
-        return $this->render('App:Track:time.html.twig', [
+        return $this->render('Track/time.html.twig', [
             'form' => $form->createView(),
             'track' => $track,
         ]);
     }
 
-    protected function timePostAction(Request $request, EventDispatcher $eventDispatcher, Track $track, FormInterface $form, TrackTimeshift $trackTimeshift): Response
+    protected function timePostAction(Request $request, EventDispatcherInterface $eventDispatcher, Track $track, FormInterface $form, TrackTimeshift $trackTimeshift): Response
     {
         // catch the old dateTime before it is overridden by the form submit
         $oldDateTime = $track->getStartDateTime();

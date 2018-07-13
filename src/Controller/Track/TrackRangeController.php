@@ -38,11 +38,11 @@ class TrackRangeController extends AbstractController
             ->loadTrack($track)
             ->execute();
 
-        return $this->render('App:Track:range.html.twig', [
+        return $this->render('Track/range.html.twig', [
             'form' => $form->createView(),
             'track' => $track,
             'latLngList' => $latLngListGenerator->getList(),
-            'gapWidth' => $this->getParameter('track.gap_width')
+            'gapWidth' => $this->getParameter('track.gap_width'),
         ]);
     }
 
