@@ -1,7 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controller\Ride;
 
+use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Ride;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -19,7 +20,7 @@ class SubrideController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function addAction(Request $request, Ride $ride, UserInterface $user): Response
+    public function addAction(Request $request, Ride $ride, UserInterface $user, ObjectRouterInterface $objectRouter): Response
     {
         $subride = new Subride();
         $subride
@@ -28,19 +29,19 @@ class SubrideController extends AbstractController
             ->setUser($user);
 
         $form = $this->createForm(SubrideType::class, $subride, [
-            'action' => $this->generateObjectUrl($ride, 'caldera_criticalmass_subride_add'),
+            'action' => $objectRouter->generate($ride, 'caldera_criticalmass_subride_add'),
         ]);
 
         if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->addPostAction($request, $subride, $form);
+            return $this->addPostAction($request, $subride, $form, $objectRouter);
         } else {
-            return $this->addGetAction($request, $subride, $form);
+            return $this->addGetAction($request, $subride, $form, $objectRouter);
         }
     }
 
-    protected function addGetAction(Request $request, Subride $subride, FormInterface $form): Response
+    protected function addGetAction(Request $request, Subride $subride, FormInterface $form, ObjectRouterInterface $objectRouter): Response
     {
-        return $this->render('App:Subride:edit.html.twig', [
+        return $this->render('Subride/edit.html.twig', [
             'subride' => null,
             'form' => $form->createView(),
             'city' => $subride->getRide()->getCity(),
@@ -48,18 +49,18 @@ class SubrideController extends AbstractController
         ]);
     }
 
-    protected function addPostAction(Request $request, Subride $subride, FormInterface $form): Response
+    protected function addPostAction(Request $request, Subride $subride, FormInterface $form, ObjectRouterInterface $objectRouter): Response
     {
         $form->handleRequest($request);
 
-        $actionUrl = $this->generateObjectUrl($subride->getRide(), 'caldera_criticalmass_subride_add');
+        $actionUrl = $objectRouter->generate($subride->getRide(), 'caldera_criticalmass_subride_add');
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($form->getData());
             $em->flush();
 
-            $actionUrl = $this->generateObjectUrl($subride, 'caldera_criticalmass_subride_edit');
+            $actionUrl = $objectRouter->generate($subride, 'caldera_criticalmass_subride_edit');
         }
 
         /* As we have created our new ride, we serve the user the new "edit ride form". Normally it would be enough
@@ -69,7 +70,7 @@ class SubrideController extends AbstractController
         ]);
 
         // QND: this is a try to serve an instance of the new created subride to get the marker to the right place
-        return $this->render('App:Subride:edit.html.twig', [
+        return $this->render('Subride/edit.html.twig', [
             'subride' => $subride,
             'form' => $form->createView(),
             'city' => $subride->getRide()->getCity(),
@@ -96,7 +97,7 @@ class SubrideController extends AbstractController
 
     protected function editGetAction(Request $request, Subride $subride, FormInterface $form): Response
     {
-        return $this->render('App:Subride:edit.html.twig', [
+        return $this->render('Subride/edit.html.twig', [
             'subride' => null,
             'form' => $form->createView(),
             'city' => $subride->getRide()->getCity(),
@@ -115,7 +116,7 @@ class SubrideController extends AbstractController
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
         }
 
-        return $this->render('App:Subride:edit.html.twig', [
+        return $this->render('Subride/edit.html.twig', [
             'ride' => $subride->getRide(),
             'city' => $subride->getRide()->getCity(),
             'subride' => $subride,
@@ -132,7 +133,7 @@ class SubrideController extends AbstractController
     {
         $oldRide = $this->getRideRepository()->getPreviousRideWithSubrides($ride);
 
-        return $this->render('App:Subride:preparecopy.html.twig', [
+        return $this->render('Subride/preparecopy.html.twig', [
             'oldRide' => $oldRide,
             'newRide' => $ride
         ]);
@@ -143,7 +144,7 @@ class SubrideController extends AbstractController
      * @ParamConverter("oldRide", class="App:Ride")
      * @ParamConverter("newDate", options={"format": "Y-m-d"})
      */
-    public function copyAction(Ride $oldRide, \DateTime $newDate): Response
+    public function copyAction(Ride $oldRide, \DateTime $newDate, ObjectRouterInterface $objectRouter): Response
     {
         $ride = $this->getRideRepository()->findCityRideByDate($oldRide->getCity(), $newDate);
 
@@ -163,6 +164,6 @@ class SubrideController extends AbstractController
 
         $em->flush();
 
-        return $this->redirectToObject($ride, 'caldera_criticalmass_ride_show');
+        return $this->redirect($objectRouter->generate($ride, 'caldera_criticalmass_ride_show'));
     }
 }

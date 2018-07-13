@@ -14,11 +14,13 @@
             Städteliste
         </a>
     </li>
+
     <li>
         <a href="{{ objectPath(ride.city) }}">
             {{ ride.city.city }}
         </a>
     </li>
+
     <li>
         <a href="{{ objectPath(ride) }}">
             {{ ride.title }}
@@ -55,7 +57,7 @@
             </div>
         </div>
 
-        {{ include('AppBundle:Flash:_flash.html.twig') }}
+        {{ include('Flash/_flash.html.twig') }}
 
         {{ form_start(form) }}
         <div class="row">
