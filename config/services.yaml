@@ -29,7 +29,8 @@ parameters:
     request_listener.http_port: 80
     request_listener.https_port: 443
     bikeright.visible: true
-    upload_destination.photo: "%kernel.root_dir%/../web/photos"
+    upload_destination.photo: "%kernel.root_dir%/../public/photos"
+    upload_destination.track: "%kernel.root_dir%/../public/tracks"
     feature.photos: true
     staticmaps.host: '%env(STATICMAPS_HOST)%'
     twitter.client_id: '%env(TWITTER_CLIENT_ID)%'
@@ -56,6 +57,7 @@ services:
             $facebookAppSecret: '%facebook.app_secret%'
             $facebookDefaultToken: '%facebook.default_token%'
             $uploadDestinationPhoto: '%upload_destination.photo%'
+            $uploadDestinationTrack: '%upload_destination.track%'
             $cachedTimelineTtl: '%timeline.ttl%'
             $timezoneDbApiKey: '%timezone_db.api_key%'
 

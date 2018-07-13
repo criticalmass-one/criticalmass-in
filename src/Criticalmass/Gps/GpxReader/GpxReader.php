@@ -22,10 +22,10 @@ class GpxReader
     /** @var \DateTimeZone */
     protected $dateTimeZone = null;
 
-    public function __construct(UploaderHelper $uploaderHelper, $rootDirectory)
+    public function __construct(UploaderHelper $uploaderHelper, string $uploadDestinationTrack)
     {
         $this->uploaderHelper = $uploaderHelper;
-        $this->rootDirectory = $rootDirectory . '/../web';
+        $this->rootDirectory = $uploadDestinationTrack.'/../';
     }
 
     public function setDateTimeZone(\DateTimeZone $dateTimeZone = null)
