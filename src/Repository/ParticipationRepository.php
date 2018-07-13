@@ -38,7 +38,7 @@ class ParticipationRepository extends EntityRepository
 
         $query = $builder->getQuery();
 
-        return $query->getSingleScalarResult();
+        return (int) $query->getSingleScalarResult();
     }
 
     public function countByUser(User $user): int
