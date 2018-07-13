@@ -146,9 +146,7 @@
                             </h2>
 
                             <p>
-                                Hier siehst du ein paar Fotos aus {{ city.city }}. Schau dir auch die <a
-                                        href="{{ objectPath(city, 'caldera_criticalmass_city_listgalleries') }}">Übersicht
-                                    über Fotos aus {{ city.city }}</a> an.
+                                Hier siehst du ein paar Fotos aus {{ city.city }}. Schau dir auch die <a href="{{ objectPath(city, 'caldera_criticalmass_city_listgalleries') }}">Übersicht über Fotos aus {{ city.city }}</a> an.
                             </p>
                         </div>
                     </div>
@@ -173,37 +171,37 @@
             <div class="col-md-3">
                 <div class="row">
                     <div class="col-md-12">
-                        {% include 'AppBundle:City:Includes/_live.html.twig' with { 'city': city } %}
+                        {% include 'City/Includes/_live.html.twig' with { 'city': city } %}
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
-                        {% include 'AppBundle:City:Includes/_nextTour.html.twig' with { 'city': city, 'currentRide': currentRide } %}
+                        {% include 'City/Includes/_nextTour.html.twig' with { 'city': city, 'currentRide': currentRide } %}
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
-                        {% include 'AppBundle:City:Includes/_statistic.html.twig' with { 'city': city } %}
+                        {% include 'City/Includes/_statistic.html.twig' with { 'city': city } %}
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
-                        {% include 'AppBundle:City:Includes/_socialMedia.html.twig' with { 'city': city } %}
+                        {% include 'City/Includes/_socialMedia.html.twig' with { 'city': city } %}
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
-                        {% include 'AppBundle:City:Includes/_locations.html.twig' with { 'city': city, 'locations': locations } %}
+                        {% include 'City/Includes/_locations.html.twig' with { 'city': city, 'locations': locations } %}
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
-                        {% include 'AppBundle:City:Includes/_nearCities.html.twig' with { 'nearCities': nearCities } %}
+                        {% include 'City/Includes/_nearCities.html.twig' with { 'nearCities': nearCities } %}
                     </div>
                 </div>
             </div>

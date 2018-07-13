@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controller\City;
 
@@ -8,7 +8,7 @@ use App\Criticalmass\SeoPage\SeoPage;
 use App\Event\View\ViewEvent;
 use FOS\ElasticaBundle\Finder\FinderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -20,7 +20,7 @@ class CityController extends AbstractController
      */
     public function missingStatsAction(City $city): Response
     {
-        return $this->render('App:City:missing_stats.html.twig', [
+        return $this->render('City/missing_stats.html.twig', [
             'city' => $city,
             'rides' => $this->getRideRepository()->findRidesWithoutStatisticsForCity($city),
         ]);
@@ -74,7 +74,7 @@ class CityController extends AbstractController
      */
     public function listRidesAction(City $city): Response
     {
-        return $this->render('App:City:ride_list.html.twig', [
+        return $this->render('City/ride_list.html.twig', [
             'city' => $city,
             'rides' => $this->getRideRepository()->findRidesForCity($city),
         ]);
@@ -89,7 +89,7 @@ class CityController extends AbstractController
 
         $result = $this->getPhotoRepository()->findRidesWithPhotoCounter($city);
 
-        return $this->render('App:City:gallery_list.html.twig', [
+        return $this->render('City/gallery_list.html.twig', [
             'city' => $city,
             'result' => $result,
         ]);
@@ -98,7 +98,7 @@ class CityController extends AbstractController
     /**
      * @ParamConverter("city", class="App:City", isOptional=true)
      */
-    public function showAction(Request $request, SeoPage $seoPage, EventDispatcher $eventDispatcher, City $city = null): Response
+    public function showAction(Request $request, SeoPage $seoPage, EventDispatcherInterface $eventDispatcher, City $city = null): Response
     {
         if (!$city) {
             $citySlug = $request->get('citySlug');
@@ -107,7 +107,7 @@ class CityController extends AbstractController
                 throw $this->createNotFoundException('City not found');
             }
 
-            return $this->forward('App:City/MissingCity:missing', [
+            return $this->forward('App\\Controller\\City\\MissingCityController::missingAction', [
                 'citySlug' => $citySlug,
             ]);
         }
@@ -117,7 +117,7 @@ class CityController extends AbstractController
         $blocked = $this->getBlockedCityRepository()->findCurrentCityBlock($city);
 
         if ($blocked) {
-            return $this->render('App:City:blocked.html.twig', [
+            return $this->render('City/blocked.html.twig', [
                 'city' => $city,
                 'blocked' => $blocked
             ]);
@@ -139,7 +139,7 @@ class CityController extends AbstractController
             ->setCanonicalForObject($city)
             ->setTitle($city->getTitle());
 
-        return $this->render('App:City:show.html.twig', [
+        return $this->render('City/show.html.twig', [
             'city' => $city,
             'currentRide' => $currentRide,
             'nearCities' => $nearCities,
