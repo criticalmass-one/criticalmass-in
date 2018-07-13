@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controller;
 
@@ -113,14 +113,11 @@ class SearchController extends AbstractController
 
         $results = $transformer->transform($resultSet->getResults());
 
-        return $this->render('App:Search:result.html.twig',
-            [
-                'results' => $results,
-                'resultSet' => $resultSet,
-                'query' => $queryPhrase
-
-            ]
-        );
+        return $this->render('Search/result.html.twig', [
+            'results' => $results,
+            'resultSet' => $resultSet,
+            'query' => $queryPhrase,
+        ]);
     }
 
     public function prefetchAction(Request $request)
