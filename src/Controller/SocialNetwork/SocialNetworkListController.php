@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controller\SocialNetwork;
 
@@ -7,9 +7,6 @@ use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\City;
 use App\Entity\Ride;
 use App\Entity\SocialNetworkProfile;
-use App\Entity\Subride;
-use App\Entity\User;
-use App\EntityInterface\RouteableInterface;
 use App\Form\Type\SocialNetworkProfileType;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Criticalmass\Util\ClassUtil;
@@ -27,7 +24,7 @@ class SocialNetworkListController extends AbstractController
     {
         $addProfileForm = $this->getAddProfileForm($router, $city);
 
-        return $this->render('App:SocialNetwork:list.html.twig', [
+        return $this->render('SocialNetwork/list.html.twig', [
             'list' => $this->getProfileList($city),
             'addProfileForm' => $addProfileForm->createView(),
             'profileAbleType' => ClassUtil::getLowercaseShortname($city),
@@ -42,7 +39,7 @@ class SocialNetworkListController extends AbstractController
     {
         $addProfileForm = $this->getAddProfileForm($router, $ride);
 
-        return $this->render('App:SocialNetwork:list.html.twig', [
+        return $this->render('SocialNetwork/list.html.twig', [
             'list' => $this->getProfileList($ride),
             'addProfileForm' => $addProfileForm->createView(),
             'profileAbleType' => ClassUtil::getLowercaseShortname($ride),

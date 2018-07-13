@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controller\SocialNetwork;
 
@@ -38,7 +38,7 @@ class SocialNetworkController extends AbstractController
 
         $addProfileForm = $this->getAddProfileForm($router, $profileAble);
 
-        return $this->render('App:SocialNetwork:list.html.twig', [
+        return $this->render('SocialNetwork/list.html.twig', [
             'list' => $this->getProfileList($profileAble),
             'addProfileForm' => $addProfileForm->createView(),
             'profileAbleType' => strtolower($this->getProfileAbleShortname($profileAble)),
@@ -52,6 +52,7 @@ class SocialNetworkController extends AbstractController
     public function addAction(
         Request $request,
         NetworkDetector $networkDetector,
+        ObjectRouterInterface $objectRouter,
         User $user = null,
         City $city = null,
         Ride $ride = null,
@@ -71,16 +72,17 @@ class SocialNetworkController extends AbstractController
         );
 
         if (Request::METHOD_POST == $request->getMethod()) {
-            return $this->addPostAction($request, $form, $networkDetector);
+            return $this->addPostAction($request, $form, $networkDetector, $objectRouter);
         } else {
-            return $this->addGetAction($request, $form, $networkDetector);
+            return $this->addGetAction($request, $form, $networkDetector, $objectRouter);
         }
     }
 
     protected function addPostAction(
         Request $request,
         FormInterface $form,
-        NetworkDetector $networkDetector
+        NetworkDetector $networkDetector,
+        ObjectRouterInterface $objectRouter
     ): Response {
         $form->handleRequest($request);
 
@@ -101,15 +103,16 @@ class SocialNetworkController extends AbstractController
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
         }
 
-        return $this->redirectToObject($socialNetworkProfile->getCity(), 'criticalmass_socialnetwork_city_list');
+        return $this->redirect($objectRouter->generate($socialNetworkProfile->getCity(), 'criticalmass_socialnetwork_city_list'));
     }
 
     protected function addGetAction(
         Request $request,
         FormInterface $form,
-        NetworkDetector $networkDetector
+        NetworkDetector $networkDetector,
+        ObjectRouterInterface $objectRouter
     ): Response {
-        return $this->render('App:SocialNetwork:edit.html.twig', [
+        return $this->render('SocialNetwork/edit.html.twig', [
                 'form' => $form->createView(),
             ]
         );
