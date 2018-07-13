@@ -1,7 +1,7 @@
 caldera_criticalmass_ride_addestimate:
-    path:  /{citySlug/{rideDate/addestimate
-    controller: App\Controller\Ride/RideEstimate:addestimate
+    path:  /{citySlug}/{rideDate}/addestimate
+    controller: App\Controller\Ride\RideEstimateController::addestimateAction
 
 caldera_criticalmass_ride_addestimate_anonymous:
-    path:  /{citySlug/{rideDate/anonymousestimate
-    controller: App\Controller\Ride/RideEstimate:anonymousestimate
+    path:  /{citySlug}/{rideDate}/anonymousestimate
+    controller: App\Controller\Ride\RideEstimateController::anonymousestimateAction

@@ -2,7 +2,7 @@
 
 namespace App\Controller\Ride;
 
-use App\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandlerInterface;
+use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Event\RideEstimate\RideEstimateCreatedEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -25,7 +25,8 @@ class RideEstimateController extends AbstractController
         Request $request,
         UserInterface $user = null,
         Ride $ride,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
+        ObjectRouterInterface $objectRouter
     ): Response {
         $rideEstimate = new RideEstimate();
         $rideEstimate
@@ -33,7 +34,7 @@ class RideEstimateController extends AbstractController
             ->setRide($ride);
 
         $estimateForm = $this->createForm(RideEstimateType::class, $rideEstimate, [
-            'action' => $this->generateObjectUrl($ride, 'caldera_criticalmass_ride_addestimate')
+            'action' => $objectRouter->generate($ride, 'caldera_criticalmass_ride_addestimate')
         ]);
 
         $estimateForm->handleRequest($request);
@@ -45,7 +46,7 @@ class RideEstimateController extends AbstractController
             $eventDispatcher->dispatch(RideEstimateCreatedEvent::NAME, new RideEstimateCreatedEvent($rideEstimate));
         }
 
-        return $this->redirectToObject($ride);
+        return $this->redirect($objectRouter->generate($ride));
     }
 
     /**
@@ -55,7 +56,8 @@ class RideEstimateController extends AbstractController
         Request $request,
         UserInterface $user = null,
         Ride $ride,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
+        ObjectRouterInterface $objectRouter
     ): Response {
         $rideEstimate = new RideEstimate();
         $rideEstimate
@@ -63,7 +65,7 @@ class RideEstimateController extends AbstractController
             ->setRide($ride);
 
         $estimateForm = $this->createForm(RideEstimateType::class, $rideEstimate, [
-            'action' => $this->generateObjectUrl($ride, 'caldera_criticalmass_ride_addestimate_anonymous')
+            'action' => $objectRouter->generate($ride, 'caldera_criticalmass_ride_addestimate_anonymous')
         ]);
 
         $estimateForm->handleRequest($request);
@@ -77,7 +79,7 @@ class RideEstimateController extends AbstractController
             return $this->redirectToObject($ride);
         }
 
-        return $this->render('App:RideEstimate:anonymous.html.twig', [
+        return $this->render('RideEstimate/anonymous.html.twig', [
             'estimateForm' => $estimateForm->createView(),
             'ride' => $ride,
         ]);
