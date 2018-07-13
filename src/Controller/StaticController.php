@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controller;
 
@@ -8,12 +8,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 class StaticController extends AbstractController
 {
-    public function displayStaticContentAction(Request $request, string $slug): Response
+    public function displayStaticContentAction(string $slug): Response
     {
+        $templateName = sprintf('Static/%s.html.twig', $slug);
+
         try {
-            return $this->render('App:Static:' . $slug . '.html.twig');
+            return $this->render($templateName);
         } catch (InvalidArgumentException $e) {
-            throw $this->createNotFoundException('There is no content for slug "' . $slug . '"');
+            throw $this->createNotFoundException(sprintf('There is no content for slug "%s"', $slug));
         }
     }
 }
