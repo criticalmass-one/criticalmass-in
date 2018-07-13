@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controller\Ride;
 
@@ -18,7 +18,7 @@ class TimelapseController extends AbstractController
     {
         $tracks = $this->getTrackRepository()->findTracksByRide($ride);
 
-        return $this->render('App:Timelapse:show.html.twig', [
+        return $this->render('Timelapse/show.html.twig', [
             'ride' => $ride,
             'tracks' => $tracks,
         ]);
