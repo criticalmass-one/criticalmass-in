@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        {% include('AppBundle:Ride:Includes/_participation.html.twig') with { 'pastRide': pastRide, 'participation': participation } %}
+        {% include('Ride/Includes/_participation.html.twig') with { 'pastRide': pastRide, 'participation': participation } %}
         <h1>
             {{ ride.title }}
         </h1>
@@ -75,12 +75,12 @@
             </ul>
 
             <div class="tab-content">
-                {{ render(controller('AppBundle:Ride/RideTabs:renderDetailsTab', { 'ride': ride } )) }}
-                {{ render(controller('AppBundle:Ride/RideTabs:renderSubridesTab', { 'ride': ride } )) }}
-                {{ render(controller('AppBundle:Ride/RideTabs:renderPostsTab', { 'ride': ride } )) }}
+                {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderDetailsTabAction', { 'ride': ride } )) }}
+                {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderSubridesTabAction', { 'ride': ride } )) }}
+                {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderPostsTabAction', { 'ride': ride } )) }}
 
                 {% if pastRide %}
-                    {{ render(controller('AppBundle:Ride/RideTabs:renderTracksTab', { 'ride': ride } )) }}
+                    {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderTracksTabAction', { 'ride': ride } )) }}
                 {% endif %}
             </div>
         </div>

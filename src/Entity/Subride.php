@@ -167,7 +167,7 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
      */
     public function getTimestamp(): int
     {
-        return $this->dateTime->format('U');
+        return (int) $this->dateTime->format('U');
     }
 
     public function setDateTime(\DateTime $dateTime): Subride

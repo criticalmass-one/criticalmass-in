@@ -1,8 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controller\Ride;
 
 use App\Controller\AbstractController;
+use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
 use App\Entity\Weather;
@@ -15,7 +16,7 @@ class RideTabsController extends AbstractController
     {
         $photos = $this->getPhotoRepository()->findPhotosByRide($ride);
 
-        return $this->render('App:RideTabs:GalleryTab.html.twig', [
+        return $this->render('RideTabs/GalleryTab.html.twig', [
             'ride' => $ride,
             'photos' => $photos,
             'dateTime' => new \DateTime(),
@@ -26,7 +27,7 @@ class RideTabsController extends AbstractController
     {
         $tracks = $this->getTrackRepository()->findTracksByRide($ride);
 
-        return $this->render('App:RideTabs:TracksTab.html.twig', [
+        return $this->render('RideTabs/TracksTab.html.twig', [
             'ride' => $ride,
             'tracks' => $tracks,
             'dateTime' => new \DateTime()
@@ -35,7 +36,7 @@ class RideTabsController extends AbstractController
 
     public function renderPostsTabAction(Ride $ride): Response
     {
-        return $this->render('App:RideTabs:PostsTab.html.twig', [
+        return $this->render('RideTabs/PostsTab.html.twig', [
             'ride' => $ride,
         ]);
     }
@@ -44,7 +45,7 @@ class RideTabsController extends AbstractController
     {
         $subrides = $this->getSubrideRepository()->getSubridesForRide($ride);
 
-        return $this->render('App:RideTabs:SubridesTab.html.twig', [
+        return $this->render('RideTabs/SubridesTab.html.twig', [
             'ride' => $ride,
             'subrides' => $subrides,
             'dateTime' => new \DateTime(),
@@ -53,13 +54,13 @@ class RideTabsController extends AbstractController
 
     public function renderStatisticTabAction(Ride $ride): Response
     {
-        return $this->render('App:RideTabs:StatisticTab.html.twig', [
+        return $this->render('RideTabs/StatisticTab.html.twig', [
             'ride' => $ride,
             'dateTime' => new \DateTime(),
         ]);
     }
 
-    public function renderDetailsTabAction(Ride $ride): Response
+    public function renderDetailsTabAction(Ride $ride, ObjectRouterInterface $objectRouter): Response
     {
         /**
          * @var Weather $weather
@@ -73,12 +74,12 @@ class RideTabsController extends AbstractController
         }
 
         $estimateForm = $this->createForm(RideEstimateType::class, new RideEstimate(), [
-            'action' => $this->redirectToObject($ride, 'caldera_criticalmass_ride_addestimate'),
+            'action' => $objectRouter->generate($ride, 'caldera_criticalmass_ride_addestimate'),
         ]);
 
         $location = $this->getLocationRepository()->findLocationForRide($ride);
 
-        return $this->render('App:RideTabs:DetailsTab.html.twig', [
+        return $this->render('RideTabs/DetailsTab.html.twig', [
             'ride' => $ride,
             'dateTime' => new \DateTime(),
             'estimateForm' => $estimateForm->createView(),

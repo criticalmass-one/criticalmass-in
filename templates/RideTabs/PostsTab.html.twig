@@ -18,10 +18,10 @@
 
     <div class="row">
         <div class="col-md-12">
-            {{ render(controller('AppBundle:Post:list', { 'rideId': ride.getId() })) }}
+            {{ render(controller('App\\Controller\\PostController::listAction', { 'rideId': ride.getId() })) }}
 
             {% if app.getUser() %}
-                {{ render(controller('AppBundle:Post:writeRide', { 'rideId': ride.getId(), 'noButton': true })) }}
+                {{ render(controller('App\\Controller\\PostController::writeRideAction', { 'rideId': ride.getId(), 'noButton': true })) }}
             {% endif %}
         </div>
     </div>

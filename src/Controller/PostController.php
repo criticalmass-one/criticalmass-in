@@ -70,7 +70,7 @@ class PostController extends AbstractController
 
     protected function addGetAction(Request $request, FormInterface $form, Post $post, PostableInterface $postable): Response
     {
-        return $this->render('App:Post:write.html.twig', [
+        return $this->render('Post/write.html.twig', [
             'form' => $form->createView()
         ]);
     }
