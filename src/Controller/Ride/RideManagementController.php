@@ -1,9 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controller\Ride;
 
+use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Form\Type\RideSocialPreviewType;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -15,7 +15,6 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class RideManagementController extends AbstractController
@@ -24,7 +23,7 @@ class RideManagementController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("city", class="App:City")
      */
-    public function addAction(Request $request, UserInterface $user = null, EntityManagerInterface $entityManager, City $city): Response
+    public function addAction(Request $request, UserInterface $user = null, EntityManagerInterface $entityManager, City $city, ObjectRouterInterface $objectRouter): Response
     {
         $ride = new Ride();
         $ride
@@ -32,7 +31,7 @@ class RideManagementController extends AbstractController
             ->setUser($user);
 
         $form = $this->createForm(RideType::class, $ride, [
-            'action' => $this->generateObjectUrl($city,'caldera_criticalmass_ride_add'),
+            'action' => $objectRouter->generate($city,'caldera_criticalmass_ride_add'),
         ]);
 
         if ($request->isMethod(Request::METHOD_POST)) {
@@ -46,7 +45,7 @@ class RideManagementController extends AbstractController
     {
         $oldRides = $this->getRideRepository()->findRidesForCity($city);
 
-        return $this->render('App:RideManagement:edit.html.twig', [
+        return $this->render('RideManagement/edit.html.twig', [
             'ride' => null,
             'form' => $form->createView(),
             'city' => $city,
@@ -82,7 +81,7 @@ class RideManagementController extends AbstractController
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
         }
 
-        return $this->render('App:RideManagement:edit.html.twig', [
+        return $this->render('RideManagement/edit.html.twig', [
             'ride' => $ride,
             'form' => $form->createView(),
             'city' => $city,
@@ -95,10 +94,10 @@ class RideManagementController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function editAction(Request $request, UserInterface $user = null, Ride $ride): Response
+    public function editAction(Request $request, UserInterface $user = null, Ride $ride, ObjectRouterInterface $objectRouter): Response
     {
         $form = $this->createForm(RideType::class, $ride, [
-            'action' => $this->generateObjectUrl($ride, 'caldera_criticalmass_ride_edit'),
+            'action' => $objectRouter->generate($ride, 'caldera_criticalmass_ride_edit'),
         ]);
 
         if (Request::METHOD_POST == $request->getMethod()) {
@@ -117,7 +116,7 @@ class RideManagementController extends AbstractController
     ): Response {
         $oldRides = $this->getRideRepository()->findRidesForCity($city);
 
-        return $this->render('App:RideManagement:edit.html.twig', [
+        return $this->render('RideManagement/edit.html.twig', [
             'ride' => $ride,
             'city' => $city,
             'form' => $form->createView(),
@@ -147,7 +146,7 @@ class RideManagementController extends AbstractController
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
         }
 
-        return $this->render('App:RideManagement:edit.html.twig', [
+        return $this->render('RideManagement/edit.html.twig', [
             'ride' => $ride,
             'city' => $city,
             'form' => $form->createView(),
@@ -184,7 +183,7 @@ class RideManagementController extends AbstractController
         Ride $ride,
         Form $form
     ): Response {
-        return $this->render('App:RideManagement:social_preview.html.twig', [
+        return $this->render('RideManagement/social_preview.html.twig', [
             'ride' => $ride,
             'form' => $form->createView(),
         ]);
