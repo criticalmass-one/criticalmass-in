@@ -163,10 +163,11 @@ class RideManagementController extends AbstractController
         EntityManagerInterface $entityManager,
         Request $request,
         UserInterface $user = null,
+        ObjectRouterInterface $objectRouter,
         Ride $ride
     ): Response {
         $form = $this->createForm(RideSocialPreviewType::class, $ride, [
-            'action' => $this->generateObjectUrl($ride, 'caldera_criticalmass_ride_socialpreview'),
+            'action' => $objectRouter->generate($ride, 'caldera_criticalmass_ride_socialpreview'),
         ]);
 
         if ($request->isMethod(Request::METHOD_POST)) {
