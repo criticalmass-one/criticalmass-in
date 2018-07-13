@@ -1,7 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controller\Photo;
 
+use App\Criticalmass\Image\PhotoUploader\PhotoUploaderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Controller\AbstractController;
@@ -9,6 +10,7 @@ use App\Entity\Photo;
 use App\Entity\Ride;
 use App\Criticalmass\Image\PhotoGps\PhotoGps;
 use PHPExif\Reader\Reader;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -19,90 +21,36 @@ class PhotoUploadController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function uploadAction(Request $request, UserInterface $user = null, PhotoGps $photoGps, Ride $ride): Response
+    public function uploadAction(Request $request, UserInterface $user = null, PhotoGps $photoGps, Ride $ride, PhotoUploaderInterface $photoUploader): Response
     {
         $this->errorIfFeatureDisabled('photos');
 
         if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->uploadPostAction($request, $user, $photoGps, $ride);
+            return $this->uploadPostAction($request, $user, $photoGps, $ride, $photoUploader);
         } else {
-            return $this->uploadGetAction($request, $user, $photoGps, $ride);
+            return $this->uploadGetAction($request, $user, $photoGps, $ride, $photoUploader);
         }
     }
 
-    protected function uploadGetAction(Request $request, UserInterface $user = null, PhotoGps $photoGps, Ride $ride): Response
+    protected function uploadGetAction(Request $request, UserInterface $user = null, PhotoGps $photoGps, Ride $ride, PhotoUploaderInterface $photoUploader): Response
     {
-        return $this->render('App:PhotoUpload:upload.html.twig', [
+        return $this->render('PhotoUpload/upload.html.twig', [
             'ride' => $ride,
         ]);
     }
 
-    protected function uploadPostAction(Request $request, UserInterface $user = null, PhotoGps $photoGps, Ride $ride): Response
+    protected function uploadPostAction(Request $request, UserInterface $user = null, PhotoGps $photoGps, Ride $ride, PhotoUploaderInterface $photoUploader): Response
     {
-        $em = $this->getDoctrine()->getManager();
+        /** @var UploadedFile $uploadedFile */
+        $uploadedFile = $request->get('file');
 
-        $photo = new Photo();
-
-        $photo->setImageFile($request->files->get('file'));
-        $photo->setUser($this->getUser());
-
-        $photo->setRide($ride);
-        $photo->setCity($ride->getCity());
-
-        $em->persist($photo);
-        $em->flush();
-
-        $this->findDateTime($photo);
-        $this->findCoords($photoGps, $ride, $photo, $user);
-
-        $em->flush();
+        if ($uploadedFile) {
+            $photoUploader
+                ->setRide($ride)
+                ->setUser($user)
+                ->addFile($uploadedFile->getPathname());
+        }
 
         return new Response('');
-    }
-
-    protected function findDateTime(Photo $photo): bool
-    {
-        try {
-            $helper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
-            $path = $this->getParameter('kernel.root_dir') . '/../web/' . $helper->asset($photo, 'imageFile');
-
-            $reader = Reader::factory(Reader::TYPE_NATIVE);
-
-            $exif = $reader->getExifFromFile($path);
-
-            if ($dateTime = $exif->getCreationDate()) {
-                $photo->setDateTime($dateTime);
-            } else {
-                return false;
-            }
-        } catch (\Exception $e) {
-            return false;
-        }
-
-        return true;
-    }
-
-    protected function findCoords(PhotoGps $photoGps, Ride $ride, Photo $photo, UserInterface $user): bool
-    {
-        $track = null;
-
-        if ($ride) {
-            $track = $this->getTrackRepository()->findByUserAndRide($ride, $user);
-        }
-
-        if ($ride && $track) {
-            try {
-                $photoGps
-                    ->setPhoto($photo)
-                    ->setTrack($track)
-                    ->execute();
-            } catch (\Exception $e) {
-                return false;
-            }
-
-            return true;
-        }
-
-        return false;
     }
 }
