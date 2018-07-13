@@ -1,7 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controller\City;
 
+use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Form\Type\CityCycleType;
@@ -22,7 +23,7 @@ class CityCycleController extends AbstractController
      */
     public function listAction(City $city): Response
     {
-        return $this->render('App:CityCycle:list.html.twig', [
+        return $this->render('CityCycle/list.html.twig', [
             'cycles' => $this->getCityCycleRepository()->findByCity($city),
             'city' => $city,
         ]);
@@ -32,7 +33,7 @@ class CityCycleController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("city", class="App:City")
      */
-    public function addAction(Request $request, UserInterface $user = null, City $city): Response
+    public function addAction(Request $request, UserInterface $user = null, City $city, ObjectRouterInterface $objectRouter): Response
     {
         $cityCycle = new CityCycle();
         $cityCycle
@@ -40,26 +41,26 @@ class CityCycleController extends AbstractController
             ->setUser($user);
 
         $form = $this->createForm(CityCycleType::class, $cityCycle, [
-            'action' => $this->generateObjectUrl($city, 'caldera_criticalmass_citycycle_add'),
+            'action' => $objectRouter->generate($city, 'caldera_criticalmass_citycycle_add'),
         ]);
 
         if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->addPostAction($request, $cityCycle, $form);
+            return $this->addPostAction($request, $cityCycle, $form, $objectRouter);
         } else {
-            return $this->addGetAction($request, $cityCycle, $form);
+            return $this->addGetAction($request, $cityCycle, $form, $objectRouter);
         }
     }
 
-    protected function addGetAction(Request $request, CityCycle $cityCycle, FormInterface $form): Response
+    protected function addGetAction(Request $request, CityCycle $cityCycle, FormInterface $form, ObjectRouterInterface $objectRouter): Response
     {
-        return $this->render('App:CityCycle:edit.html.twig', [
+        return $this->render('CityCycle/edit.html.twig', [
             'city' => $cityCycle->getCity(),
             'cityCycle' => $cityCycle,
             'form' => $form->createView(),
         ]);
     }
 
-    protected function addPostAction(Request $request, CityCycle $cityCycle, FormInterface $form): Response
+    protected function addPostAction(Request $request, CityCycle $cityCycle, FormInterface $form, ObjectRouterInterface $objectRouter): Response
     {
         $city = $cityCycle->getCity();
 
@@ -72,10 +73,10 @@ class CityCycleController extends AbstractController
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
 
-            return $this->redirectToObject($city, 'caldera_criticalmass_citycycle_list');
+            return $this->redirect($objectRouter->generate($city, 'caldera_criticalmass_citycycle_list'));
         }
 
-        return $this->render('App:CityCycle:edit.html.twig', [
+        return $this->render('CityCycle/edit.html.twig', [
             'city' => $city,
             'cityCycle' => $cityCycle,
             'form' => $form->createView(),
@@ -86,31 +87,31 @@ class CityCycleController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("cityCycle", class="App:CityCycle", options={"id" = "cycleId"})
      */
-    public function editAction(Request $request, UserInterface $user = null, CityCycle $cityCycle): Response
+    public function editAction(Request $request, UserInterface $user = null, CityCycle $cityCycle, ObjectRouterInterface $objectRouter): Response
     {
         $cityCycle->setUser($user);
 
         $form = $this->createForm(CityCycleType::class, $cityCycle, [
-            'action' => $this->generateObjectUrl($cityCycle, 'caldera_criticalmass_citycycle_edit'),
+            'action' => $objectRouter->generate($cityCycle, 'caldera_criticalmass_citycycle_edit'),
         ]);
 
         if (Request::METHOD_POST == $request->getMethod()) {
-            return $this->editPostAction($request, $user, $cityCycle, $form);
+            return $this->editPostAction($request, $user, $cityCycle, $form, $objectRouter);
         } else {
-            return $this->editGetAction($request, $user, $cityCycle, $form);
+            return $this->editGetAction($request, $user, $cityCycle, $form, $objectRouter);
         }
     }
 
-    protected function editGetAction(Request $request, UserInterface $user = null, CityCycle $cityCycle, FormInterface $form): Response
+    protected function editGetAction(Request $request, UserInterface $user = null, CityCycle $cityCycle, FormInterface $form, ObjectRouterInterface $objectRouter): Response
     {
-        return $this->render('App:CityCycle:edit.html.twig', [
+        return $this->render('CityCycle/edit.html.twig', [
             'city' => $cityCycle->getCity(),
             'cityCycle' => $cityCycle,
             'form' => $form->createView(),
         ]);
     }
 
-    protected function editPostAction(Request $request, UserInterface $user = null, CityCycle $cityCycle, FormInterface $form): Response
+    protected function editPostAction(Request $request, UserInterface $user = null, CityCycle $cityCycle, FormInterface $form, ObjectRouterInterface $objectRouter): Response
     {
         $city = $cityCycle->getCity();
 
@@ -122,13 +123,13 @@ class CityCycleController extends AbstractController
             $em->flush();
 
             $form = $this->createForm(CityCycleType::class, $cityCycle, [
-                'action' => $this->generateObjectUrl($cityCycle, 'caldera_criticalmass_citycycle_edit'),
+                'action' => $objectRouter->generate($cityCycle, 'caldera_criticalmass_citycycle_edit'),
             ]);
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
         }
 
-        return $this->render('App:CityCycle:edit.html.twig', [
+        return $this->render('CityCycle/edit.html.twig', [
             'city' => $city,
             'cityCycle' => $cityCycle,
             'form' => $form->createView(),
@@ -139,7 +140,7 @@ class CityCycleController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("cityCycle", class="App:CityCycle", options={"id" = "cycleId"})
      */
-    public function disableAction(CityCycle $cityCycle, ObjectManager $objectManager): Response
+    public function disableAction(CityCycle $cityCycle, ObjectManager $objectManager, ObjectRouterInterface $objectRouter): Response
     {
         if ($cityCycle->getRides()->count() > 0) {
             if (!$cityCycle->getValidFrom()) {
@@ -157,6 +158,6 @@ class CityCycleController extends AbstractController
 
         $objectManager->flush();
 
-        return $this->redirectToObject($city, 'caldera_criticalmass_citycycle_list');
+        return $this->redirect($objectRouter->generate($cityCycle->getCity(), 'caldera_criticalmass_citycycle_list'));
     }
 }
