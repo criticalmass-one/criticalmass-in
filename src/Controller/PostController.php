@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Photo;
 use App\EntityInterface\PostableInterface;
 use App\Criticalmass\Util\ClassUtil;
@@ -23,59 +24,59 @@ class PostController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("city", class="App:City", converter="city_converter")
      */
-    public function writeCityAction(Request $request, City $city): Response
+    public function writeCityAction(Request $request, City $city, ObjectRouterInterface $objectRouter): Response
     {
-        return $this->writeAction($request, $city);
+        return $this->writeAction($request, $city, $objectRouter);
     }
 
     /**
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride", converter="ride_converter")
      */
-    public function writeRideAction(Request $request, Ride $ride): Response
+    public function writeRideAction(Request $request, Ride $ride, ObjectRouterInterface $objectRouter): Response
     {
-        return $this->writeAction($request, $ride);
+        return $this->writeAction($request, $ride, $objectRouter);
     }
 
     /**
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("photo", class="App:Photo", converter="photo_converter")
      */
-    public function writePhotoAction(Request $request, Photo $photo): Response
+    public function writePhotoAction(Request $request, Photo $photo, ObjectRouterInterface $objectRouter): Response
     {
-        return $this->writeAction($request, $photo);
+        return $this->writeAction($request, $photo, $objectRouter);
     }
 
     /**
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("thread", class="App:Thread", isOptional=true, converter="thread_converter")
      */
-    public function writeThreadAction(Request $request, Thread $thread = null): Response
+    public function writeThreadAction(Request $request, Thread $thread = null, ObjectRouterInterface $objectRouter): Response
     {
-        return $this->writeAction($request, $thread);
+        return $this->writeAction($request, $thread, $objectRouter);
     }
 
-    public function writeAction(Request $request, PostableInterface $postable): Response
+    public function writeAction(Request $request, PostableInterface $postable, ObjectRouterInterface $objectRouter): Response
     {
         $post = $this->createPostForPostable($postable);
 
         $form = $this->getPostForm($postable, $post);
 
         if ($request->isMethod(Request::METHOD_POST)) {
-            return $this->addPostAction($request, $form, $post, $postable);
+            return $this->addPostAction($request, $form, $post, $postable, $objectRouter);
         } else {
-            return $this->addGetAction($request, $form, $post,$postable);
+            return $this->addGetAction($request, $form, $post, $postable, $objectRouter);
         }
     }
 
-    protected function addGetAction(Request $request, FormInterface $form, Post $post, PostableInterface $postable): Response
+    protected function addGetAction(Request $request, FormInterface $form, Post $post, PostableInterface $postable, ObjectRouterInterface $objectRouter): Response
     {
         return $this->render('Post/write.html.twig', [
             'form' => $form->createView()
         ]);
     }
 
-    protected function addPostAction(Request $request, FormInterface $form, Post $post, PostableInterface $postable): Response
+    protected function addPostAction(Request $request, FormInterface $form, Post $post, PostableInterface $postable, ObjectRouterInterface $objectRouter): Response
     {
         $form->handleRequest($request);
 
@@ -104,7 +105,7 @@ class PostController extends AbstractController
 
             $em->flush();
 
-            return $this->redirectToObject($postable);
+            return $this->redirect($objectRouter->generate($postable));
         }
 
         return $this->render('Post/write_failed.html.twig', [
