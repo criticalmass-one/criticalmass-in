@@ -29,8 +29,12 @@ parameters:
     request_listener.http_port: 80
     request_listener.https_port: 443
     bikeright.visible: true
-    upload_destination.photo: "%kernel.root_dir%/../public/photos"
     upload_destination.track: "%kernel.root_dir%/../public/tracks"
+    upload_destination.photo: "%kernel.root_dir%/../public/photos"
+    upload_destination.city_photo: "%kernel.root_dir%/../public/cities"
+    upload_destination.ride_photo: "%kernel.root_dir%/../public/rides"
+    upload_destination.frontpage_teaser: "%kernel.root_dir%/../public/teaser"
+    upload_destination.user_photo: "%kernel.root_dir%/../public/users"
     feature.photos: true
     staticmaps.host: '%env(STATICMAPS_HOST)%'
     twitter.client_id: '%env(TWITTER_CLIENT_ID)%'
