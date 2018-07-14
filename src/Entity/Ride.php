@@ -690,7 +690,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return new \DateInterval('PT' . $hours . 'H' . $minutes . 'M');
     }
 
-    public function getAverageVelocity(): int
+    public function getAverageVelocity(): float
     {
         if (!$this->getEstimatedDuration() || !$this->getEstimatedDistance()) {
             return 0;

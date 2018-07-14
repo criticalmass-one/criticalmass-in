@@ -261,7 +261,7 @@ class PhotoRepository extends EntityRepository
 
         $query = $builder->getQuery();
 
-        return $query->getSingleScalarResult();
+        return (int) $query->getSingleScalarResult();
     }
 
     public function buildQueryPhotosByUserAndRide(User $user, Ride $ride)
@@ -363,7 +363,7 @@ class PhotoRepository extends EntityRepository
 
         $query = $builder->getQuery();
 
-        return $query->getSingleScalarResult();
+        return (int) $query->getSingleScalarResult();
     }
 }
 

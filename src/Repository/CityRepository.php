@@ -67,7 +67,7 @@ class CityRepository extends EntityRepository
 
         $query = $builder->getQuery();
 
-        return $query->getSingleScalarResult();
+        return (int) $query->getSingleScalarResult();
     }
 
     public function findChildrenCitiesOfRegion(Region $region)

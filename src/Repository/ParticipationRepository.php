@@ -2,14 +2,14 @@
 
 namespace App\Repository;
 
+use App\Entity\Participation;
 use App\Entity\Ride;
 use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query;
 
 class ParticipationRepository extends EntityRepository
 {
-    public function findParticipationForUserAndRide(User $user, Ride $ride)
+    public function findParticipationForUserAndRide(User $user, Ride $ride): ?Participation
     {
         $builder = $this->createQueryBuilder('participation');
 
@@ -53,7 +53,7 @@ class ParticipationRepository extends EntityRepository
 
         $query = $builder->getQuery();
 
-        return $query->getSingleScalarResult();
+        return (int) $query->getSingleScalarResult();
     }
 
     public function findByUser(User $user, bool $yes = false, bool $maybe = false, bool $no = false): array

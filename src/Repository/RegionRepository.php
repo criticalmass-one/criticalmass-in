@@ -32,7 +32,7 @@ class RegionRepository extends EntityRepository
 
         $query = $builder->getQuery();
 
-        return $query->getSingleScalarResult();
+        return (int) $query->getSingleScalarResult();
     }
 }
 

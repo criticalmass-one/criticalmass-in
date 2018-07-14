@@ -16,7 +16,7 @@ class PostRepository extends EntityRepository
         $qb->select('COUNT(post.id)');
         $qb->from('App:Post', 'post');
 
-        return $qb->getQuery()->getSingleScalarResult();
+        return (int) $qb->getQuery()->getSingleScalarResult();
     }
 
     public function getPostsForRide(Ride $ride)
@@ -45,10 +45,9 @@ class PostRepository extends EntityRepository
 
         $builder->where($builder->expr()->eq('ride.city', $city->getId()));
 
-
         $query = $builder->getQuery();
 
-        return $query->getSingleScalarResult();
+        return (int) $query->getSingleScalarResult();
     }
 
     public function getPostsForCityRides(City $city)
@@ -93,7 +92,7 @@ class PostRepository extends EntityRepository
 
         $query = $builder->getQuery();
 
-        return $query->getSingleScalarResult();
+        return (int) $query->getSingleScalarResult();
     }
 
     public function findRecentChatMessages($limit = 25)
