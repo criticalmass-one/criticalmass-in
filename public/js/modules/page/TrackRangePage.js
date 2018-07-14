@@ -17,7 +17,7 @@ define(['Map', 'bootstrap-slider'], function () {
         var $link = $('<link>', {
             rel: 'stylesheet',
             type: 'text/css',
-            href: '/bundles/app/css/external/bootstrap-slider.min.css'
+            href: '/css/external/bootstrap-slider.min.css'
         });
 
         $link.appendTo('head');

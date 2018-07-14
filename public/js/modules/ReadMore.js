@@ -24,7 +24,7 @@ define(['readmorejs'], function () {
         var $link = $('<link>', {
             rel: 'stylesheet',
             type: 'text/css',
-            href: '/bundles/app/css/readmore.css'
+            href: '/css/readmore.css'
         });
 
         $link.appendTo('head');

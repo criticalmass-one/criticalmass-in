@@ -102,7 +102,7 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'CityEntity', 'RideEntity', 'boo
         var $link = $('<link>', {
             rel: 'stylesheet',
             type: 'text/css',
-            href: '/bundles/calderacriticalmasssite/css/external/bootstrap-slider.min.css'
+            href: '/css/external/bootstrap-slider.min.css'
         });
 
         $link.appendTo('head');

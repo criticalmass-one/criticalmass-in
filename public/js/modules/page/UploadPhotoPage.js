@@ -7,7 +7,7 @@ define(['dropzone'], function (Dropzone) {
         var $link = $('<link>', {
             rel: 'stylesheet',
             type: 'text/css',
-            href: '/bundles/app/css/external/dropzone.basic.css'
+            href: '/css/external/dropzone.basic.css'
         });
 
         $link.appendTo('head');
