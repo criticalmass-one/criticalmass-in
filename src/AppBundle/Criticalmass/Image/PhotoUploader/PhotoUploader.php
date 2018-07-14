@@ -7,7 +7,7 @@ use AppBundle\Entity\Ride;
 use AppBundle\Entity\Track;
 use AppBundle\Entity\User;
 use AppBundle\Criticalmass\Image\PhotoGps\PhotoGps;
-use AppBundle\Event\RideEstimate\PhotoUploadedEvent;
+use AppBundle\Event\Photo\PhotoUploadedEvent;
 use DirectoryIterator;
 use Doctrine\Bundle\DoctrineBundle\Registry as Doctrine;
 use PHPExif\Reader\Reader;
