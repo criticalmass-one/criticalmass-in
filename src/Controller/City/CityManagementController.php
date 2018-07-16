@@ -68,7 +68,7 @@ class CityManagementController extends AbstractController
         Region $region,
         FormInterface $form
     ) {
-        return $this->render('App:CityManagement:edit.html.twig', [
+        return $this->render('CityManagement/edit.html.twig', [
             'city' => null,
             'form' => $form->createView(),
             'country' => $region->getParent()->getName(),
