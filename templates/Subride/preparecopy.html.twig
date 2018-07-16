@@ -1,0 +1,50 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Mini-Masses kopieren{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    Mini-Masses kopieren
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <p>Von der Tour <a href="{{ objectPath(oldRide) }}">{{ oldRide.title }}</a>
+                    ({{ oldRide.dateTime.format('d.m.Y H:i') }} Uhr) können die folgenden Mini-Masses kopiert werden:
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            {% for subride in oldRide.getSubrides() %}
+                <div class="media subride col-md-4 no-margin-top margin-bottom-medium">
+                    <a class="pull-left subride" href="#">
+                        <img class="media-object" src="{{ asset('/images/marker/marker-green.png') }}" alt="...">
+                    </a>
+                    <div class="media-body">
+                        <h5 class="media-heading">{{ subride.dateTime.format('H.i') }} Uhr: {{ subride.title }}</h5>
+                        <p>{{ subride.description|nl2br }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="btn-group pull-right" role="group" aria-label="...">
+                    <a href="{{ objectPath(newRide) }}" class="btn btn-default">
+                        Abbrechen
+                    </a>
+                    <a href="{{ objectPath(oldRide, 'caldera_criticalmass_subride_copy', { newDate: newRide.dateTime|date('Y-m-d') }) }}"
+                       class="btn btn-success">
+                        Kopieren</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

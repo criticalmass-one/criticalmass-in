@@ -1,0 +1,11 @@
+caldera_criticalmass_help_index:
+    path:     /help
+    controller: App\Controller\HelpController::helpAction
+
+caldera_criticalmass_help_faq:
+    path:     /faq
+    controller: App\Controller\HelpController::faqAction
+
+caldera_criticalmass_help_about:
+    path:     /about
+    controller: App\Controller\HelpController::aboutAction
