@@ -17,7 +17,7 @@ use Imagine\Image\Palette;
 
 class ProfilePhotoGenerator implements ProfilePhotoGeneratorInterface
 {
-    const FONT_FILE = '/app/Resources/fonts/Verdana/Bold.ttf';
+    const FONT_FILE = '/assets/fonts/Verdana/Bold.ttf';
 
     /** @var User $user */
     protected $user;
