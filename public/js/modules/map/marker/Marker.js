@@ -9,7 +9,7 @@ define(['leaflet'], function () {
     Marker.prototype._map = false;
     Marker.prototype._layer = false;
     Marker.prototype._icon = null;
-    Marker.prototype._baseIconUrl = '/bundles/calderacriticalmasssite/images/marker/';
+    Marker.prototype._baseIconUrl = '/images/marker/';
     Marker.prototype._isMapped = false;
 
     Marker.prototype._initIcon = function () {
