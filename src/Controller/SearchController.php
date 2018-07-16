@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\City;
 use App\Entity\Ride;
 use Elastica\ResultSet;
@@ -120,7 +121,7 @@ class SearchController extends AbstractController
         ]);
     }
 
-    public function prefetchAction(Request $request)
+    public function prefetchAction(ObjectRouterInterface $objectRouter): Response
     {
         $result = [];
 
@@ -130,7 +131,7 @@ class SearchController extends AbstractController
         foreach ($rides as $ride) {
             $result[] = [
                 'type' => 'ride',
-                'url' => $this->generateObjectUrl($ride),
+                'url' => $objectRouter->generate($ride),
                 'value' => $ride->getTitle(),
                 'meta' => [
                     'dateTime' => $ride->getDateTime()->format('Y-m-d\TH:i:s'),
@@ -145,17 +146,13 @@ class SearchController extends AbstractController
         foreach ($cities as $city) {
             $result[] = [
                 'type' => 'city',
-                'url' => $this->generateObjectUrl($city),
+                'url' => $objectRouter->generate($city),
                 'value' => $city->getCity()
             ];
         }
 
-        return new Response(
-            json_encode($result),
-            200,
-            [
-                'Content-Type' => 'text/json'
-            ]
-        );
+        return new Response(json_encode($result), 200, [
+            'Content-Type' => 'text/json'
+        ]);
     }
 }

@@ -30,6 +30,7 @@ class CityManagementController extends AbstractController
         UserInterface $user = null,
         NominatimCityBridge $nominatimCityBridge,
         EventDispatcherInterface $eventDispatcher,
+        ObjectRouterInterface $objectRouter,
         string $slug1 = null,
         string $slug2 = null,
         string $slug3 = null,
@@ -52,9 +53,9 @@ class CityManagementController extends AbstractController
         ]);
 
         if (Request::METHOD_POST == $request->getMethod()) {
-            return $this->addPostAction($request, $user, $eventDispatcher, $city, $region, $form);
+            return $this->addPostAction($request, $user, $eventDispatcher, $objectRouter, $city, $region, $form);
         } else {
-            return $this->addGetAction($request, $user, $eventDispatcher, $city, $region, $form);
+            return $this->addGetAction($request, $user, $eventDispatcher, $objectRouter, $city, $region, $form);
         }
     }
 
@@ -62,6 +63,7 @@ class CityManagementController extends AbstractController
         Request $request,
         UserInterface $user = null,
         EventDispatcherInterface $eventDispatcher,
+        ObjectRouterInterface $objectRouter,
         City $city,
         Region $region,
         FormInterface $form
@@ -79,6 +81,7 @@ class CityManagementController extends AbstractController
         Request $request,
         UserInterface $user = null,
         EventDispatcherInterface $eventDispatcher,
+        ObjectRouterInterface $objectRouter,
         City $city,
         Region $region,
         FormInterface $form
@@ -99,7 +102,7 @@ class CityManagementController extends AbstractController
             $em->flush();
 
             $form = $this->createForm(StandardCityType::class, $city, [
-                'action' => $this->generateObjectUrl($city, 'caldera_criticalmass_city_edit'),
+                'action' => $objectRouter->generate($city, 'caldera_criticalmass_city_edit'),
             ]);
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');

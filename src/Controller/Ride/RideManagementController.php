@@ -35,13 +35,13 @@ class RideManagementController extends AbstractController
         ]);
 
         if ($request->isMethod(Request::METHOD_POST)) {
-            return $this->addPostAction($request, $user, $ride, $entityManager, $city, $form);
+            return $this->addPostAction($request, $user, $ride, $entityManager, $objectRouter, $city, $form);
         } else {
-            return $this->addGetAction($request, $user, $ride, $entityManager, $city, $form);
+            return $this->addGetAction($request, $user, $ride, $entityManager, $objectRouter, $city, $form);
         }
     }
 
-    protected function addGetAction(Request $request, UserInterface $user = null, Ride $ride, EntityManagerInterface $entityManager, City $city, FormInterface $form): Response
+    protected function addGetAction(Request $request, UserInterface $user = null, Ride $ride, EntityManagerInterface $entityManager, ObjectRouterInterface $objectRouter, City $city, FormInterface $form): Response
     {
         $oldRides = $this->getRideRepository()->findRidesForCity($city);
 
@@ -59,6 +59,7 @@ class RideManagementController extends AbstractController
         UserInterface $user = null,
         Ride $ride,
         EntityManagerInterface $entityManager,
+        ObjectRouterInterface $objectRouter,
         City $city,
         FormInterface $form
     ): Response {
@@ -75,7 +76,7 @@ class RideManagementController extends AbstractController
             /* As we have created our new ride, we serve the user the new "edit ride form". Normally it would be enough
             just to change the action url of the form, but we are far to stupid for this hack. */
             $form = $this->createForm(RideType::class, $ride, [
-                'action' => $this->redirectToObject($ride, 'caldera_criticalmass_ride_edit'),
+                'action' => $this->redirect($objectRouter->generate($ride, 'caldera_criticalmass_ride_edit')),
             ]);
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');

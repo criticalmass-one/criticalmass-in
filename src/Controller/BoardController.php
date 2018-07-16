@@ -79,7 +79,7 @@ class BoardController extends AbstractController
      * @ParamConverter("city", class="App:City", isOptional="true")
      * @ParamConverter("board", class="App:Board", isOptional="true")
      */
-    public function addThreadAction(Request $request, Board $board = null, City $city = null): Response
+    public function addThreadAction(Request $request, ObjectRouterInterface $objectRouter, Board $board = null, City $city = null): Response
     {
         $board = $board ?? $city;
 
@@ -90,13 +90,13 @@ class BoardController extends AbstractController
             ->getForm();
 
         if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->addThreadPostAction($request, $board, $form);
+            return $this->addThreadPostAction($request, $objectRouter, $board, $form);
         } else {
-            return $this->addThreadGetAction($request, $board, $form);
+            return $this->addThreadGetAction($request, $objectRouter, $board, $form);
         }
     }
 
-    protected function addThreadGetAction(Request $request, BoardInterface $board, FormInterface $form): Response
+    protected function addThreadGetAction(Request $request, ObjectRouterInterface $objectRouter, BoardInterface $board, FormInterface $form): Response
     {
         return $this->render('Board/add_thread.html.twig', [
             'board' => $board,
@@ -104,7 +104,7 @@ class BoardController extends AbstractController
         ]);
     }
 
-    protected function addThreadPostAction(Request $request, BoardInterface $board, FormInterface $form): Response
+    protected function addThreadPostAction(Request $request, ObjectRouterInterface $objectRouter, BoardInterface $board, FormInterface $form): Response
     {
         $form->handleRequest($request);
 
@@ -145,7 +145,7 @@ class BoardController extends AbstractController
 
             $em->flush();
 
-            return $this->redirectToObject($thread);
+            return $this->redirect($objectRouter->generate($thread));
         }
 
         return $this->render('Board/add_thread.html.twig', [

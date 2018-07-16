@@ -2,6 +2,7 @@
 
 namespace App\Controller\Track;
 
+use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Event\Track\TrackUploadedEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -22,23 +23,23 @@ class TrackUploadController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function uploadAction(Request $request, EventDispatcherInterface $eventDispatcher, Ride $ride, TrackValidator $trackValidator): Response
+    public function uploadAction(Request $request, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, Ride $ride, TrackValidator $trackValidator): Response
     {
         $track = new Track();
 
         $form = $this->createFormBuilder($track)
-            ->setAction($this->generateObjectUrl($track, 'caldera_criticalmass_track_upload'))
+            ->setAction($objectRouter->generate($track, 'caldera_criticalmass_track_upload'))
             ->add('trackFile', VichFileType::class)
             ->getForm();
 
         if ($request->isMethod(Request::METHOD_POST)) {
-            return $this->uploadPostAction($request, $eventDispatcher, $track, $ride, $form, $trackValidator);
+            return $this->uploadPostAction($request, $eventDispatcher, $objectRouter, $track, $ride, $form, $trackValidator);
         } else {
-            return $this->uploadGetAction($request, $eventDispatcher, $ride, $form, $trackValidator);
+            return $this->uploadGetAction($request, $eventDispatcher, $objectRouter, $ride, $form, $trackValidator);
         }
     }
 
-    protected function uploadGetAction(Request $request, EventDispatcherInterface $eventDispatcher, Ride $ride, FormInterface $form, TrackValidator $trackValidator): Response
+    protected function uploadGetAction(Request $request, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, Ride $ride, FormInterface $form, TrackValidator $trackValidator): Response
     {
         return $this->render('Track/upload.html.twig', [
             'form' => $form->createView(),
@@ -47,7 +48,7 @@ class TrackUploadController extends AbstractController
         ]);
     }
 
-    public function uploadPostAction(Request $request, EventDispatcherInterface $eventDispatcher, Track $track, Ride $ride, FormInterface $form, TrackValidator $trackValidator): Response
+    public function uploadPostAction(Request $request, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, Track $track, Ride $ride, FormInterface $form, TrackValidator $trackValidator): Response
     {
         $form->handleRequest($request);
 
@@ -83,9 +84,9 @@ class TrackUploadController extends AbstractController
 
             $eventDispatcher->dispatch(TrackUploadedEvent::NAME, new TrackUploadedEvent($track));
 
-            return $this->redirectToObject($track);
+            return $this->redirect($objectRouter->generate($track));
         }
 
-        return $this->uploadGetAction($request, $eventDispatcher, $ride, $form, $trackValidator);
+        return $this->uploadGetAction($request, $eventDispatcher, $objectRouter, $ride, $form, $trackValidator);
     }
 }

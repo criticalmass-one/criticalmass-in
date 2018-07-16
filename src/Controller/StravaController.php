@@ -73,7 +73,7 @@ class StravaController extends AbstractController
         $error = $request->get('error');
 
         if ($error) {
-            return $this->redirectToObject($ride, 'caldera_criticalmass_strava_auth');
+            return $this->redirect($objectRouter->generate($ride, 'caldera_criticalmass_strava_auth'));
         }
 
         $oauth = $this->initOauthForRide($request, $ride, $objectRouter);

@@ -1,14 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Traits;
 
-use App\Criticalmass\Router\ObjectRouter;
-use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 trait UtilTrait
 {
@@ -18,25 +15,6 @@ trait UtilTrait
         $session = new Session();
 
         return $session;
-    }
-
-    /** @deprecated  */
-    protected function generateObjectUrl(RouteableInterface $object, string $routeName = null, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
-    {
-        /** @var ObjectRouter $router */
-        $router = $this->get(ObjectRouter::class);
-
-        $url = $router->generate($object, $routeName, $parameters, $referenceType);
-
-        return $url;
-    }
-
-    /** @deprecated  */
-    protected function redirectToObject(RouteableInterface $object, string $routeName = null, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
-    {
-        $url = $this->generateObjectUrl($object, $routeName, $parameters, $referenceType);
-
-        return $this->redirect($url);
     }
 
     /** @deprecated  */

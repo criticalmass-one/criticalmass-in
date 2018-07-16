@@ -76,7 +76,7 @@ class RideEstimateController extends AbstractController
 
             $eventDispatcher->dispatch(RideEstimateCreatedEvent::NAME, new RideEstimateCreatedEvent($rideEstimate));
 
-            return $this->redirectToObject($ride);
+            return $this->redirect($objectRouter->generate($ride));
         }
 
         return $this->render('RideEstimate/anonymous.html.twig', [

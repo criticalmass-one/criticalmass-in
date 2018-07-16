@@ -82,10 +82,10 @@ class SubrideController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("subride", class="App:Subride", options={"id" = "subrideId"})
      */
-    public function editAction(Request $request, Subride $subride): Response
+    public function editAction(Request $request, Subride $subride, ObjectRouterInterface $objectRouter): Response
     {
         $form = $this->createForm(SubrideType::class, $subride, [
-            'action' => $this->generateObjectUrl($subride, 'caldera_criticalmass_subride_edit'),
+            'action' => $objectRouter->generate($subride, 'caldera_criticalmass_subride_edit'),
         ]);
 
         if (Request::METHOD_POST === $request->getMethod()) {
@@ -135,7 +135,7 @@ class SubrideController extends AbstractController
 
         return $this->render('Subride/preparecopy.html.twig', [
             'oldRide' => $oldRide,
-            'newRide' => $ride
+            'newRide' => $ride,
         ]);
     }
 
