@@ -5,7 +5,7 @@
 }
 
 .blurred {
-    filter: url('/bundles/app/images/jquery/filter.svg#blur3px');
+    filter: url('/images/jquery/filter.svg#blur3px');
     -webkit-filter: blur(3px);
     -moz-filter: blur(3px);
     -o-filter: blur(3px);
@@ -13,7 +13,7 @@
 }
 
 .select-areas-outline {
-    background: #fff url('/bundles/app/images/jquery/outline.gif');
+    background: #fff url('/images/jquery/outline.gif');
     overflow: hidden;
 }
 
@@ -26,7 +26,7 @@
 }
 
 .select-areas-delete-area {
-    background: url('/bundles/app/images/jquery/bt-delete.png');
+    background: url('/images/jquery/bt-delete.png');
     cursor: pointer;
     height: 16px;
     width: 16px;
