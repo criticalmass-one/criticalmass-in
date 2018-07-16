@@ -200,7 +200,7 @@ class CityManagementController extends AbstractController
         $citySlug = new CitySlug();
         $citySlug
             ->setCity($city)
-            ->setSlug($slugString);
+            ->setSlug($slugString->render());
 
         return $citySlug;
     }
