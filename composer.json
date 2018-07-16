@@ -74,7 +74,8 @@
         "symfony/translation": "^4.1",
         "symfony/validator": "^4.1",
         "symfony/dotenv": "^4.1",
-        "symfony/apache-pack": "^1.0"
+        "symfony/apache-pack": "^1.0",
+        "sunra/php-simple-html-dom-parser": "^1.5"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^3.0",

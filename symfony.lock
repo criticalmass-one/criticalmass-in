@@ -467,6 +467,9 @@
     "sonata-project/seo-bundle": {
         "version": "2.5.1"
     },
+    "sunra/php-simple-html-dom-parser": {
+        "version": "v1.5.2"
+    },
     "swiftmailer/swiftmailer": {
         "version": "v6.1.1"
     },
