@@ -20,6 +20,7 @@ trait UtilTrait
         return $session;
     }
 
+    /** @deprecated  */
     protected function generateObjectUrl(RouteableInterface $object, string $routeName = null, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
         /** @var ObjectRouter $router */
@@ -30,6 +31,7 @@ trait UtilTrait
         return $url;
     }
 
+    /** @deprecated  */
     protected function redirectToObject(RouteableInterface $object, string $routeName = null, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
         $url = $this->generateObjectUrl($object, $routeName, $parameters, $referenceType);
