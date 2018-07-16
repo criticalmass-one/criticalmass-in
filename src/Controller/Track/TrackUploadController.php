@@ -28,7 +28,7 @@ class TrackUploadController extends AbstractController
         $track = new Track();
 
         $form = $this->createFormBuilder($track)
-            ->setAction($objectRouter->generate($track, 'caldera_criticalmass_track_upload'))
+            ->setAction($objectRouter->generate($ride, 'caldera_criticalmass_track_upload'))
             ->add('trackFile', VichFileType::class)
             ->getForm();
 
@@ -66,7 +66,7 @@ class TrackUploadController extends AbstractController
             try {
                 $trackValidator->validate();
             } catch (TrackValidatorException $e) {
-                return $this->render('App:Track:upload.html.twig', [
+                return $this->render('Track/upload.html.twig', [
                     'form' => $form->createView(),
                     'ride' => $ride,
                     'errorMessage' => $e->getMessage(),

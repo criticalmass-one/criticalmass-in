@@ -3,15 +3,9 @@
 namespace App\Criticalmass\Image\PhotoUploader;
 
 use App\Entity\Photo;
-use App\Entity\Ride;
-use App\Entity\Track;
-use App\Entity\User;
-use App\Criticalmass\Image\PhotoGps\PhotoGps;
 use App\Event\Photo\PhotoUploadedEvent;
 use DirectoryIterator;
 use PHPExif\Reader\Reader;
-use Symfony\Bridge\Doctrine\RegistryInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class PhotoUploader extends AbstractPhotoUploader
 {

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Criticalmass\UploadValidator;
 
@@ -13,38 +13,39 @@ use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class TrackValidator implements UploadValidatorInterface
 {
-    /**
-     * @var Track $track
-     */
+    /** @var Track $track */
     protected $track;
 
-    /**
-     * @var UploaderHelper $uploaderHelper
-     */
+    /** @var UploaderHelper $uploaderHelper */
     protected $uploaderHelper;
 
-    protected $rootDirectory;
+    /** @var string $uploadDestinationTrack */
+    protected $uploadDestinationTrack;
 
+    /** @var \SimpleXMLElement $simpleXml */
     protected $simpleXml;
 
+    /** @var string $rawFileContent */
     protected $rawFileContent;
 
-    public function __construct(UploaderHelper $uploaderHelper, $rootDirectory)
+    public function __construct(UploaderHelper $uploaderHelper, $uploadDestinationTrack)
     {
         $this->uploaderHelper = $uploaderHelper;
-        $this->rootDirectory = $rootDirectory . '/../web';
+        $this->uploadDestinationTrack = $uploadDestinationTrack;
     }
 
-    public function loadTrack(Track $track)
+    public function loadTrack(Track $track): TrackValidator
     {
         $this->track = $track;
 
-        $filename = $this->uploaderHelper->asset($track, 'trackFile');
+        $filename = sprintf('%s/../%s', $this->uploadDestinationTrack, $this->uploaderHelper->asset($track, 'trackFile'));
 
-        $this->rawFileContent = file_get_contents($this->rootDirectory . $filename);
+        $this->rawFileContent = file_get_contents($filename);
+
+        return $this;
     }
 
-    protected function checkForXmlContent()
+    protected function checkForXmlContent(): void
     {
         //echo "checkForXmlContent";
         try {
@@ -54,7 +55,7 @@ class TrackValidator implements UploadValidatorInterface
         }
     }
 
-    protected function checkForBasicGpxStructure()
+    protected function checkForBasicGpxStructure(): void
     {
         //echo "checkForBasicGpxStructure";
         try {
@@ -64,7 +65,7 @@ class TrackValidator implements UploadValidatorInterface
         }
     }
 
-    protected function checkNumberOfPoints()
+    protected function checkNumberOfPoints(): void
     {
         //echo "checkNumberOfPoints";
         if (count($this->simpleXml->trk->trkseg->trkpt) <= 50) {
@@ -72,7 +73,7 @@ class TrackValidator implements UploadValidatorInterface
         }
     }
 
-    protected function checkForLatitudeLongitude()
+    protected function checkForLatitudeLongitude(): void
     {
         //echo "checkForLatitudeLongitude";
         foreach ($this->simpleXml->trk->trkseg->trkpt as $point) {
@@ -80,15 +81,15 @@ class TrackValidator implements UploadValidatorInterface
             if (
                 !$point['lat'] ||
                 !$point['lon'] ||
-                !preg_match('/^([-]?)([0-9]{1,3})\.([0-9]*)$/', $point['lat']) ||
-                !preg_match('/^([-]?)([0-9]{1,3})\.([0-9]*)$/', $point['lon'])
+                !preg_match('/^([-]?)([0-9]{1,3})\.([0-9]*)$/', (string) $point['lat']) ||
+                !preg_match('/^([-]?)([0-9]{1,3})\.([0-9]*)$/', (string) $point['lon'])
             ) {
                 throw new NoLatitudeLongitudeException();
             }
         }
     }
 
-    protected function checkForDateTime()
+    protected function checkForDateTime(): void
     {
         //echo "checkForDateTime";
         foreach ($this->simpleXml->trk->trkseg->trkpt as $point) {
@@ -97,14 +98,14 @@ class TrackValidator implements UploadValidatorInterface
             }
 
             try {
-                $dateTime = new \DateTime($point->time);
+                $dateTime = new \DateTime((string) $point->time);
             } catch (Exception $e) {
                 throw new NoDateTimeException();
             }
         }
     }
 
-    public function validate()
+    public function validate(): bool
     {
         $this->checkForXmlContent();
         $this->checkForBasicGpxStructure();

@@ -21,28 +21,28 @@ class PhotoUploadController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function uploadAction(Request $request, UserInterface $user = null, PhotoGps $photoGps, Ride $ride, PhotoUploaderInterface $photoUploader): Response
+    public function uploadAction(Request $request, UserInterface $user = null, Ride $ride, PhotoUploaderInterface $photoUploader): Response
     {
         $this->errorIfFeatureDisabled('photos');
 
         if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->uploadPostAction($request, $user, $photoGps, $ride, $photoUploader);
+            return $this->uploadPostAction($request, $user, $ride, $photoUploader);
         } else {
-            return $this->uploadGetAction($request, $user, $photoGps, $ride, $photoUploader);
+            return $this->uploadGetAction($request, $user, $ride, $photoUploader);
         }
     }
 
-    protected function uploadGetAction(Request $request, UserInterface $user = null, PhotoGps $photoGps, Ride $ride, PhotoUploaderInterface $photoUploader): Response
+    protected function uploadGetAction(Request $request, UserInterface $user = null, Ride $ride, PhotoUploaderInterface $photoUploader): Response
     {
         return $this->render('PhotoUpload/upload.html.twig', [
             'ride' => $ride,
         ]);
     }
 
-    protected function uploadPostAction(Request $request, UserInterface $user = null, PhotoGps $photoGps, Ride $ride, PhotoUploaderInterface $photoUploader): Response
+    protected function uploadPostAction(Request $request, UserInterface $user = null, Ride $ride, PhotoUploaderInterface $photoUploader): Response
     {
         /** @var UploadedFile $uploadedFile */
-        $uploadedFile = $request->get('file');
+        $uploadedFile = $request->files->get('file');
 
         if ($uploadedFile) {
             $photoUploader
