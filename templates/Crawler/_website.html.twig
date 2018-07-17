@@ -1,0 +1,17 @@
+<div class="media">
+    <div class="media-left">
+        <a href="{{ website.url }}">
+            <img class="media-object img-responsive" src="{{ website.imageUrl|imagine_filter('crawled_preview_image') }}" alt="{{ website.title }}" />
+        </a>
+    </div>
+
+    <div class="media-body">
+        <h4 class="media-heading">
+            {{ website.title }}
+        </h4>
+
+        <p>
+           {{ website.description }}
+        </p>
+    </div>
+</div>

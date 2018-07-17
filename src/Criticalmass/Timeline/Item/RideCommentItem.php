@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\Timeline\Item;
 
+use App\Entity\Post;
 use App\Entity\Ride;
 
 class RideCommentItem extends AbstractItem
@@ -15,6 +16,9 @@ class RideCommentItem extends AbstractItem
     /** @var string $text */
     protected $text;
 
+    /** @var Post $post */
+    protected $post;
+
     public function getRide(): Ride
     {
         return $this->ride;
@@ -25,6 +29,18 @@ class RideCommentItem extends AbstractItem
         $this->ride = $ride;
 
         return $this;
+    }
+
+    public function setPost(Post $post): RideCommentItem
+    {
+        $this->post = $post;
+
+        return $this;
+    }
+
+    public function getPost(): Post
+    {
+        return $this->post;
     }
 
     public function getRideTitle(): string
