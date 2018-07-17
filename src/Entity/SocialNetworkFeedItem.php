@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\Crawler\Crawlable;
+use App\Criticalmass\Website\Crawler\Crawlable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

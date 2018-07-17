@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\Crawler;
+namespace App\Criticalmass\Website\Crawler;
 
 interface Crawlable
 {

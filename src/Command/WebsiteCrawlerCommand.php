@@ -2,7 +2,8 @@
 
 namespace App\Command;
 
-use App\Entity\CrawledWebsite;
+use App\Criticalmass\Website\Crawler\CrawlerInterface;
+use App\Criticalmass\Website\Parser\ParserInterface;
 use App\Entity\Post;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
@@ -11,16 +12,24 @@ use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use \simplehtmldom_1_5\simple_html_dom as HtmlDomElement;
+
 
 class WebsiteCrawlerCommand extends Command
 {
     /** @var RegistryInterface $registry */
     protected $registry;
 
-    public function __construct(RegistryInterface $registry)
+    /** @var CrawlerInterface $crawler */
+    protected $crawler;
+
+    /** @var ParserInterface $parser */
+    protected $parser;
+
+    public function __construct(RegistryInterface $registry, CrawlerInterface $crawler, ParserInterface $parser)
     {
         $this->registry = $registry;
+        $this->crawler = $crawler;
+        $this->parser = $parser;
 
         parent::__construct();
     }
@@ -56,29 +65,27 @@ class WebsiteCrawlerCommand extends Command
 
         /** @var Post $post */
         foreach ($postList as $post) {
-            preg_match_all('/\b(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)[-A-Z0-9+&@#\/%=~_|$?!:,.]*[A-Z0-9+&@#\/%=~_|$]/i', $post->getMessage(), $resultList, PREG_PATTERN_ORDER);
+            $urlList = $this->crawler->crawlUrls($post);
 
-            foreach ($resultList as $result) {
-                $url = array_pop($result);
+            foreach ($urlList as $url) {
+                $crawledWebsite = $this->parser->parse($url);
 
-                if ($url) {
-                    $html = \Sunra\PhpSimple\HtmlDomParser::str_get_html(file_get_contents($url));
-
-                    $cw = $this->parse($html, $url);
-
-                    $table->addRow([
-                        $post->getId(),
-                        $url,
-                        $cw->getTitle(),
-                        $cw->getDescription(),
-                        $cw->getImageUrl(),
-                    ]);
-
-                    $this->registry->getManager()->persist($cw);
+                if (!$crawledWebsite) {
+                    continue;
                 }
 
-                $post->setCrawled(true);
+                $this->registry->getManager()->persist($crawledWebsite);
+
+                $table->addRow([
+                    $post->getId(),
+                    $url,
+                    $crawledWebsite->getTitle(),
+                    $crawledWebsite->getDescription(),
+                    $crawledWebsite->getImageUrl(),
+                ]);
             }
+
+            $post->setCrawled(true);
 
             $progressBar->advance();
         }
@@ -89,31 +96,5 @@ class WebsiteCrawlerCommand extends Command
         $table->render();
     }
 
-    protected function parse(HtmlDomElement $element, string $url): ?CrawledWebsite
-    {
-        $cw = new CrawledWebsite();
 
-        $cw->setUrl($url);
-
-        $this->findFirstMatchingElement($element, $cw, 'title', 'title', 'innertext');
-        $this->findFirstMatchingElement($element, $cw, 'description', 'meta[name*="description"]', 'content');
-        $this->findFirstMatchingElement($element, $cw, 'imageUrl', 'meta[name="twitter:image"],meta[property="og:image"]', 'content');
-
-        return $cw;
-    }
-
-    protected function findFirstMatchingElement(HtmlDomElement $element, CrawledWebsite $crawledWebsite, string $propertyName, string $selector, string $accessMethod): CrawledWebsite
-    {
-        $list = $element->find($selector);
-
-        $item = array_pop($list);
-
-        if ($item) {
-            $setMethodName = sprintf('set%s', ucfirst($propertyName));
-
-            $crawledWebsite->$setMethodName($item->$accessMethod);
-        }
-
-        return $crawledWebsite;
-    }
 }
