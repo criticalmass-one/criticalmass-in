@@ -8,6 +8,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use \simplehtmldom_1_5\simple_html_dom as HtmlDomElement;
@@ -28,12 +29,17 @@ class WebsiteCrawlerCommand extends Command
     {
         $this
             ->setName('criticalmass:website:crawl')
-            ->setDescription('Crawl websites from posts');
+            ->setDescription('Crawl websites from posts')
+            ->addArgument('limit', InputArgument::OPTIONAL, 'Number of posts to crawl per command call');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        $postList = $this->registry->getRepository(Post::class)->findByCrawled(false);
+        if (!$limit = (int) $input->getArgument('limit')) {
+            $limit = null;
+        }
+
+        $postList = $this->registry->getRepository(Post::class)->findByCrawled(false, $limit);
 
         rsort($postList);
         $progressBar = new ProgressBar($output, count($postList));

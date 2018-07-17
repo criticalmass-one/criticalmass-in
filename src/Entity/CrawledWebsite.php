@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="linked_website")
+ * @ORM\Table(name="crawled_website")
  * @ORM\Entity()
  */
 class CrawledWebsite
@@ -41,6 +41,11 @@ class CrawledWebsite
      * @ORM\Column(type="datetime")
      */
     protected $createdAt;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
 
     public function getId():? int
     {
