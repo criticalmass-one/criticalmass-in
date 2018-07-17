@@ -2,12 +2,15 @@
 
 namespace App\Command;
 
+use App\Entity\CrawledWebsite;
 use App\Entity\Post;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use \simplehtmldom_1_5\simple_html_dom as HtmlDomElement;
 
 class WebsiteCrawlerCommand extends Command
 {
@@ -30,10 +33,20 @@ class WebsiteCrawlerCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        $postList = $this->registry->getRepository(Post::class)->findAll();
+        $postList = $this->registry->getRepository(Post::class)->findByCrawled(false);
 
         rsort($postList);
         $progressBar = new ProgressBar($output, count($postList));
+
+        $table = new Table($output);
+
+        $table->setHeaders([
+            'Post Id',
+            'url',
+            'title',
+            'description',
+            'imageUrl',
+        ]);
 
         /** @var Post $post */
         foreach ($postList as $post) {
@@ -43,23 +56,58 @@ class WebsiteCrawlerCommand extends Command
                 $url = array_pop($result);
 
                 if ($url) {
-                    echo $url;
-
                     $html = \Sunra\PhpSimple\HtmlDomParser::str_get_html(file_get_contents($url));
 
-                    $titles = $html->find('html > head > title');
+                    $cw = $this->parse($html, $url);
 
-                $title = array_pop($titles);
+                    $table->addRow([
+                        $post->getId(),
+                        $url,
+                        $cw->getTitle(),
+                        $cw->getDescription(),
+                        $cw->getImageUrl(),
+                    ]);
 
-                echo $title->innertext();
-
+                    $this->registry->getManager()->persist($cw);
                 }
 
+                $post->setCrawled(true);
             }
 
             $progressBar->advance();
         }
 
+        $this->registry->getManager()->flush();
+
         $progressBar->finish();
+        $table->render();
+    }
+
+    protected function parse(HtmlDomElement $element, string $url): ?CrawledWebsite
+    {
+        $cw = new CrawledWebsite();
+
+        $cw->setUrl($url);
+
+        $this->findFirstMatchingElement($element, $cw, 'title', 'title', 'innertext');
+        $this->findFirstMatchingElement($element, $cw, 'description', 'meta[name*="description"]', 'content');
+        $this->findFirstMatchingElement($element, $cw, 'imageUrl', 'meta[name="twitter:image"],meta[property="og:image"]', 'content');
+
+        return $cw;
+    }
+
+    protected function findFirstMatchingElement(HtmlDomElement $element, CrawledWebsite $crawledWebsite, string $propertyName, string $selector, string $accessMethod): CrawledWebsite
+    {
+        $list = $element->find($selector);
+
+        $item = array_pop($list);
+
+        if ($item) {
+            $setMethodName = sprintf('set%s', ucfirst($propertyName));
+
+            $crawledWebsite->$setMethodName($item->$accessMethod);
+        }
+
+        return $crawledWebsite;
     }
 }
