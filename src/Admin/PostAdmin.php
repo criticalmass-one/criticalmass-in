@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Admin;
 
@@ -18,7 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class PostAdmin extends AbstractAdmin
 {
-    protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $formMapper): void
     {
         $formMapper
             ->with('Post', ['class' => 'col-md-6'])
@@ -41,7 +41,7 @@ class PostAdmin extends AbstractAdmin
             ->end();
     }
 
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
     {
         $datagridMapper
             ->add('user')
@@ -49,7 +49,7 @@ class PostAdmin extends AbstractAdmin
             ->add('enabled');
     }
 
-    protected function configureListFields(ListMapper $listMapper)
+    protected function configureListFields(ListMapper $listMapper): void
     {
         $listMapper
             ->addIdentifier('message')

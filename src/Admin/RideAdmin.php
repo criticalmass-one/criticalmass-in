@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Admin;
 
@@ -14,7 +14,7 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class RideAdmin extends AbstractAdmin
 {
-    protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $formMapper): void
     {
         $formMapper
             ->with('Details', ['class' => 'col-md-6'])
@@ -48,7 +48,7 @@ class RideAdmin extends AbstractAdmin
             ->end();
     }
 
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
     {
         $datagridMapper
             ->add('dateTime')
@@ -57,7 +57,7 @@ class RideAdmin extends AbstractAdmin
             ->add('location');
     }
 
-    protected function configureListFields(ListMapper $listMapper)
+    protected function configureListFields(ListMapper $listMapper): void
     {
         $listMapper
             ->addIdentifier('dateTime')

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Admin;
 
@@ -17,7 +17,7 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class PhotoAdmin extends AbstractAdmin
 {
-    protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $formMapper): void
     {
         $formMapper
             ->with('Photo', ['class' => 'col-md-6'])
@@ -42,13 +42,13 @@ class PhotoAdmin extends AbstractAdmin
             ->end();
     }
 
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
     {
         $datagridMapper
             ->add('id');
     }
 
-    protected function configureListFields(ListMapper $listMapper)
+    protected function configureListFields(ListMapper $listMapper): void
     {
         $listMapper
             ->addIdentifier('id')

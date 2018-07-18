@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Admin;
 
@@ -9,7 +9,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 
 class BikerightVoucherAdmin extends AbstractAdmin
 {
-    protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $formMapper): void
     {
         $formMapper
             ->with('Voucher', ['class' => 'col-md-6'])
@@ -23,7 +23,7 @@ class BikerightVoucherAdmin extends AbstractAdmin
             ->end();
     }
 
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
     {
         $datagridMapper
             ->add('code')
@@ -33,7 +33,7 @@ class BikerightVoucherAdmin extends AbstractAdmin
             ->add('assignedAt');
     }
 
-    protected function configureListFields(ListMapper $listMapper)
+    protected function configureListFields(ListMapper $listMapper): void
     {
         $listMapper
             ->addIdentifier('code')
