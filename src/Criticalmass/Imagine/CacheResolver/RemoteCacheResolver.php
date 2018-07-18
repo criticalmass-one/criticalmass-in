@@ -9,8 +9,6 @@ use Symfony\Component\Routing\RequestContext;
 
 class RemoteCacheResolver extends WebPathResolver
 {
-    protected $logger;
-
     public function __construct(
         Filesystem $filesystem,
         RequestContext $requestContext,
@@ -18,8 +16,6 @@ class RemoteCacheResolver extends WebPathResolver
         string $cachePrefix = 'media/cache',
         LoggerInterface $logger
     ) {
-        $this->logger = $logger;
-
         parent::__construct($filesystem, $requestContext, $webRootDir, $cachePrefix);
     }
 
@@ -33,6 +29,6 @@ class RemoteCacheResolver extends WebPathResolver
         $path = str_replace(['https://', 'http://'], '', $path);
         $path = str_replace(['/', '.'], '_', $path);
 
-        return sprintf('%s/resolve/%s/%s', $this->cachePrefix, $filter, trim($path, '/'));
+        return sprintf('%s/%s/%s', $this->cachePrefix, $filter, trim($path, '/'));
     }
 }

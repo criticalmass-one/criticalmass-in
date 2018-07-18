@@ -53,7 +53,7 @@ services:
         bind:
             $openWeatherMapApiKey: '%openweather.appid%'
             $rootDirectory: '%kernel.root_dir%'
-            $webRootDir: '%kernel.root_dir%/public'
+            $webRootDir: '%kernel.root_dir%/../public'
             $projectDirectory: '%kernel.project_dir%'
             $staticmapsHost: '%staticmaps.host%'
             $featurePhotos: '%feature.photos%'

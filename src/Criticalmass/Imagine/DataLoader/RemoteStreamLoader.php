@@ -16,9 +16,6 @@ class RemoteStreamLoader implements LoaderInterface
 
     public function find($path)
     {
-        $path = str_replace(['https://', 'http://'], '', $path);
-        $path = str_replace(['/', '.'], '_', $path);
-
         return $this->imagine->load(file_get_contents($path));
     }
 }
