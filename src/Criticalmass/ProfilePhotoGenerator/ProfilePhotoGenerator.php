@@ -3,7 +3,6 @@
 namespace App\Criticalmass\ProfilePhotoGenerator;
 
 use App\Entity\User;
-use Imagick;
 use Imagine\Image\AbstractFont;
 use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
@@ -25,12 +24,16 @@ class ProfilePhotoGenerator implements ProfilePhotoGeneratorInterface
     /** @var string $projectDirectory */
     protected $projectDirectory;
 
+    /** @var string $uploadDestinationUserPhoto */
+    protected $uploadDestinationUserPhoto;
+
     /** @var PaletteInterface $palette */
     protected $palette;
 
-    public function __construct(string $projectDirectory)
+    public function __construct(string $projectDirectory, string $uploadDestinationUserPhoto)
     {
         $this->projectDirectory = $projectDirectory;
+        $this->uploadDestinationUserPhoto = $uploadDestinationUserPhoto;
         $this->palette = new Palette\RGB();
     }
 
@@ -118,6 +121,6 @@ class ProfilePhotoGenerator implements ProfilePhotoGeneratorInterface
 
         $this->user->setImageName($filename);
 
-        return sprintf('%s/web/users/%s', $this->projectDirectory, $filename);
+        return sprintf('%s/%s', $this->uploadDestinationUserPhoto, $filename);
     }
 }

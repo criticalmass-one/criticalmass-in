@@ -75,12 +75,14 @@
         "symfony/validator": "^4.1",
         "symfony/dotenv": "^4.1",
         "symfony/apache-pack": "^1.0",
-        "sunra/php-simple-html-dom-parser": "^1.5"
+        "sunra/php-simple-html-dom-parser": "^1.5",
+        "symfony/flex": "^1.0"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^3.0",
         "phpunit/phpunit": "^7",
-        "codedungeon/phpunit-result-printer": "^0.6.0"
+        "codedungeon/phpunit-result-printer": "^0.6.0",
+        "symfony/profiler-pack": "^1.0"
     },
     "conflict": {
         "symfony/symfony": "*"

@@ -71,6 +71,9 @@
             "ref": "c1431086fec31f17fbcfe6d6d7e92059458facc1"
         }
     },
+    "doctrine/event-manager": {
+        "version": "v1.0.0"
+    },
     "doctrine/inflector": {
         "version": "v1.3.0"
     },
@@ -86,8 +89,11 @@
     "doctrine/orm": {
         "version": "v2.6.1"
     },
-    "educoder/pest": {
-        "version": "1.0.0"
+    "doctrine/persistence": {
+        "version": "v1.0.0"
+    },
+    "doctrine/reflection": {
+        "version": "v1.0.0"
     },
     "egulias/email-validator": {
         "version": "2.1.4"
@@ -175,12 +181,6 @@
     },
     "incenteev/composer-parameter-handler": {
         "version": "v2.1.3"
-    },
-    "ircmaxell/random-lib": {
-        "version": "v1.2.0"
-    },
-    "ircmaxell/security-lib": {
-        "version": "v1.1.0"
     },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
@@ -596,8 +596,14 @@
     "symfony/polyfill-mbstring": {
         "version": "v1.8.0"
     },
+    "symfony/polyfill-php72": {
+        "version": "v1.8.0"
+    },
     "symfony/process": {
         "version": "v4.1.1"
+    },
+    "symfony/profiler-pack": {
+        "version": "v1.0.3"
     },
     "symfony/property-access": {
         "version": "v4.1.1"
@@ -667,6 +673,18 @@
     },
     "symfony/validator": {
         "version": "v4.1.1"
+    },
+    "symfony/var-dumper": {
+        "version": "v4.1.1"
+    },
+    "symfony/web-profiler-bundle": {
+        "version": "3.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.3",
+            "ref": "6bdfa1a95f6b2e677ab985cd1af2eae35d62e0f6"
+        }
     },
     "symfony/yaml": {
         "version": "v4.1.1"
