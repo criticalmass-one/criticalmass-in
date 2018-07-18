@@ -1,6 +1,3 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
 criticalmass:
      resource: routes/criticalmass/routing.yml
 
