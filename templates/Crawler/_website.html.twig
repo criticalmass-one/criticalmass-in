@@ -1,17 +1,22 @@
-<div class="media">
-    <div class="media-left">
+<div class="panel panel-default">
+    <div class="panel-heading">
         <a href="{{ website.url }}">
-            <img class="media-object img-responsive" src="{{ website.imageUrl|imagine_filter('crawled_preview_image') }}" alt="{{ website.title }}" />
+            {{ website.title }}
         </a>
     </div>
-
-    <div class="media-body">
-        <h4 class="media-heading">
-            {{ website.title }}
-        </h4>
-
+    <div class="panel-body">
+        {% if website.imageUrl %}
         <p>
-           {{ website.description }}
+            <a href="{{ website.url }}">
+                <img class="media-object img-thumbnail" src="{{ website.imageUrl|imagine_filter('crawled_preview_image') }}" alt="{{ website.title }}" />
+            </a>
         </p>
+        {% endif %}
+
+        {% if website.description %}
+        <p>
+            {{ website.description }}
+        </p>
+        {% endif %}
     </div>
 </div>
