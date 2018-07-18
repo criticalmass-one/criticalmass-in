@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Admin;
 
@@ -14,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class RideEstimateAdmin extends AbstractAdmin
 {
-    protected function configureFormFields(FormMapper $formMapper)
+    protected function configureFormFields(FormMapper $formMapper): void
     {
         $formMapper
             ->with('RideEstimate', ['class' => 'col-md-6'])
@@ -30,7 +30,7 @@ class RideEstimateAdmin extends AbstractAdmin
             ->end();
     }
 
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
     {
         $datagridMapper
             ->add('user')
@@ -41,7 +41,7 @@ class RideEstimateAdmin extends AbstractAdmin
             ->add('estimatedDuration');
     }
 
-    protected function configureListFields(ListMapper $listMapper)
+    protected function configureListFields(ListMapper $listMapper): void
     {
         $listMapper
             ->addIdentifier('id')
