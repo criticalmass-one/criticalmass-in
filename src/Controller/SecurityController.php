@@ -65,7 +65,7 @@ class SecurityController extends AbstractController
                 break;
         }
 
-        return $this->render(sprintf('Security/%s', $templateName), $data);
+        return $this->render(sprintf('bundles/FOSUserBundle/Security/%s', $templateName), $data);
     }
 
     public function loginFormModalAction(Request $request): Response

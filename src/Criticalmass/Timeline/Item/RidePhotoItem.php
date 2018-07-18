@@ -2,7 +2,6 @@
 
 namespace App\Criticalmass\Timeline\Item;
 
-use App\Entity\City;
 use App\Entity\Photo;
 use App\Entity\Ride;
 
@@ -11,17 +10,11 @@ class RidePhotoItem extends AbstractItem
     /** @var Ride $ride */
     protected $ride;
 
-    /** @var City $city */
-    protected $city;
-
-    /** @var string $rideTitle */
-    protected $rideTitle;
-
     /** @var integer $counter */
     protected $counter;
 
-    /** @var Photo $previewPhoto */
-    protected $previewPhoto;
+    /** @var array $previewPhotoList */
+    protected $previewPhotoList = [];
 
     public function getRide(): Ride
     {
@@ -31,30 +24,6 @@ class RidePhotoItem extends AbstractItem
     public function setRide(Ride $ride): RidePhotoItem
     {
         $this->ride = $ride;
-
-        return $this;
-    }
-
-    public function getCity(): City
-    {
-        return $this->city;
-    }
-
-    public function setCity(City $city): RidePhotoItem
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    public function getRideTitle(): string
-    {
-        return $this->rideTitle;
-    }
-
-    public function setRideTitle(string $rideTitle): RidePhotoItem
-    {
-        $this->rideTitle = $rideTitle;
 
         return $this;
     }
@@ -71,15 +40,15 @@ class RidePhotoItem extends AbstractItem
         return $this;
     }
 
-    public function setPreviewPhoto(Photo $previewPhoto): RidePhotoItem
+    public function addPreviewPhoto(Photo $previewPhoto): RidePhotoItem
     {
-        $this->previewPhoto = $previewPhoto;
+        $this->previewPhotoList[] = $previewPhoto;
 
         return $this;
     }
 
-    public function getPreviewPhoto(): Photo
+    public function getPreviewPhotoList(): array
     {
-        return $this->previewPhoto;
+        return $this->previewPhotoList;
     }
 }

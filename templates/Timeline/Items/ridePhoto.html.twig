@@ -13,21 +13,21 @@
                 </a> zur Tour
                 <strong>
                     <a href="{{ objectPath(item.ride) }}">
-                        {{ item.rideTitle }}
+                        {{ item.ride.title }}
                     </a>
                 </strong>
                 hochgeladen
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <a href="{{ objectPath(item.previewPhoto) }}">
-                    <img src="{{ vich_uploader_asset(item.previewPhoto, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"
-                         class="img-responsive"/>
+        <div class="row margin-top-medium">
+            {% for previewPhoto in item.previewPhotoList %}
+            <div class="col-md-4">
+                <a href="{{ objectPath(previewPhoto) }}">
+                    <img src="{{ vich_uploader_asset(previewPhoto, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" class="img-responsive thumbnail" />
                 </a>
             </div>
+            {% endfor %}
         </div>
-
     </div>
 </div>

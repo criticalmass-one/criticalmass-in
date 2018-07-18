@@ -17,6 +17,13 @@
             <tag name="sonata.admin" manager-type="orm" group="Community" label="Board"/>
         </service>
 
+        <service id="App\Admin\CityAdmin">
+            <argument/>
+            <argument type="string">App\Entity\City</argument>
+            <argument/>
+            <tag name="sonata.admin" manager-type="orm" group="Critical Mass" label="City"/>
+        </service>
+
         <service id="App\Admin\FrontpageTeaserAdmin">
             <argument/>
             <argument type="string">App\Entity\FrontpageTeaser</argument>
