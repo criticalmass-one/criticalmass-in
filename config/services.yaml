@@ -62,6 +62,7 @@ services:
             $facebookDefaultToken: '%facebook.default_token%'
             $uploadDestinationPhoto: '%upload_destination.photo%'
             $uploadDestinationTrack: '%upload_destination.track%'
+            $uploadDestinationUserPhoto: '%upload_destination.user_photo%'
             $cachedTimelineTtl: '%timeline.ttl%'
             $timezoneDbApiKey: '%timezone_db.api_key%'
 
