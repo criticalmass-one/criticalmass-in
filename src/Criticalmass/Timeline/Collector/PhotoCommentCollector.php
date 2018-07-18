@@ -9,20 +9,46 @@ class PhotoCommentCollector extends AbstractTimelineCollector
 {
     protected $entityClass = Post::class;
 
+    protected function groupEntities(array $postEntities): array
+    {
+        $groupedEntities = [];
+
+        /** @var Post $postEntity */
+        foreach ($postEntities as $postEntity) {
+            $userKey = $postEntity->getUser()->getId();
+            $rideKey = $postEntity->getPhoto()->getRide()->getId();
+            $photoKey = $postEntity->getId();
+
+            if (!array_key_exists($userKey, $groupedEntities) || !is_array($groupedEntities[$userKey])) {
+                $groupedEntities[$userKey] = [];
+            }
+
+            $groupedEntities[$userKey][$rideKey][$photoKey] = $postEntity;
+        }
+
+        return $groupedEntities;
+    }
+
     protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {
         /** @var Post $postEntity */
-        foreach ($groupedEntities as $postEntity) {
-            $item = new PhotoCommentItem();
+        foreach ($groupedEntities as $userGroup) {
+            foreach ($userGroup as $rideGroup) {
+                $item = new PhotoCommentItem();
 
-            $item
-                ->setUser($postEntity->getUser())
-                ->setRideTitle($postEntity->getPhoto()->getRide()->getTitle())
-                ->setPhoto($postEntity->getPhoto())
-                ->setText($postEntity->getMessage())
-                ->setDateTime($postEntity->getDateTime());
+                foreach ($rideGroup as $commentPost) {
+                    $item->addPost($commentPost);
+                }
 
-            $this->addItem($item);
+                $lastPost = array_pop($rideGroup);
+
+                $item
+                    ->setUser($lastPost->getUser())
+                    ->setRide($lastPost->getPhoto()->getRide())
+                    ->setDateTime($lastPost->getDateTime());
+
+                $this->addItem($item);
+            }
         }
 
         return $this;

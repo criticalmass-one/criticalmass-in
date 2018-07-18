@@ -7,33 +7,34 @@
                 <strong>
                     {{ item.user.username }}
                 </strong>
-                hat ein Foto kommentiert:
+                hat {{ item.postList|length }} Fotos kommentiert:
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-12">
-                <img src="{{ vich_uploader_asset(item.photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"
-                     class="img-responsive"/>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <a href="{{ objectPath(item.photo) }}">
+                <a href="{{ objectPath(item.ride) }}">
                     <h4>
-                        {{ item.rideTitle }}
+                        {{ item.ride.title }}
                     </h4>
                 </a>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
+        {% for post in item.postList %}
+        <div class="row margin-top-medium">
+            <div class="col-md-4">
+                <a href="{{ objectPath(post.photo) }}">
+                    <img src="{{ vich_uploader_asset(post.photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" class="img-responsive img-thumbnail" />
+                </a>
+            </div>
+
+            <div class="col-md-8">
                 <p>
-                    {{ item.text|slice(0, 140)|markdown }}…
+                    {{ post.message|markdown }}
                 </p>
             </div>
         </div>
+        {% endfor %}
     </div>
 </div>
