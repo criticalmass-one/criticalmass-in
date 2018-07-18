@@ -3,51 +3,38 @@
 namespace App\Criticalmass\Timeline\Item;
 
 use App\Entity\Photo;
+use App\Entity\Post;
+use App\Entity\Ride;
 
 class PhotoCommentItem extends AbstractItem
 {
-    /** @var Photo $photo */
-    public $photo;
+    /** @var array $postList*/
+    public $postList = [];
 
-    /** @var string $rideTitle */
-    public $rideTitle;
+    /** @var Ride $ride */
+    public $ride;
 
-    /** @var string $text */
-    public $text;
-
-    public function getPhoto(): Photo
+    public function addPost(Post $post): PhotoCommentItem
     {
-        return $this->photo;
-    }
-
-    public function setPhoto(Photo $photo): PhotoCommentItem
-    {
-        $this->photo = $photo;
+        $this->postList[] = $post;
 
         return $this;
     }
 
-    public function getRideTitle(): string
+    public function getPostList(): array
     {
-        return $this->rideTitle;
+        return $this->postList;
     }
 
-    public function setRideTitle(string $rideTitle): PhotoCommentItem
+    public function setRide(Ride $ride): PhotoCommentItem
     {
-        $this->rideTitle = $rideTitle;
+        $this->ride = $ride;
 
         return $this;
     }
 
-    public function getText(): string
+    public function getRide(): Ride
     {
-        return $this->text;
-    }
-
-    public function setText(string $text): PhotoCommentItem
-    {
-        $this->text = $text;
-
-        return $this;
+        return $this->ride;
     }
 }

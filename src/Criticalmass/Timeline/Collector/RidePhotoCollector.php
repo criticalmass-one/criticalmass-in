@@ -33,12 +33,11 @@ class RidePhotoCollector extends AbstractTimelineCollector
     {
         foreach ($groupedEntities as $userGroup) {
             foreach ($userGroup as $rideGroup) {
-                $item = new RidePhotoItem();
-                $item->setCounter(count($rideGroup));
+                $photoCounter = count($rideGroup);
 
-                // grab a random photo as preview
-                $previewPhotoId = array_rand($rideGroup);
-                $item->setPreviewPhoto($rideGroup[$previewPhotoId]);
+                $item = new RidePhotoItem();
+
+                $item = $this->grapRandomFotos($rideGroup, $item);
 
                 // take last photo to fetch $user and $ride and $dateTime
                 $lastPhoto = array_pop($rideGroup);
@@ -46,9 +45,8 @@ class RidePhotoCollector extends AbstractTimelineCollector
                 $item
                     ->setUser($lastPhoto->getUser())
                     ->setRide($lastPhoto->getRide())
-                    ->setCity($lastPhoto->getCity())
-                    ->setRideTitle($lastPhoto->getRide()->getTitle())
-                    ->setDateTime($lastPhoto->getCreationDateTime());
+                    ->setDateTime($lastPhoto->getCreationDateTime())
+                    ->setCounter($photoCounter);
 
                 $this->addItem($item);
             }
@@ -60,5 +58,22 @@ class RidePhotoCollector extends AbstractTimelineCollector
     public function getRequiredFeatures(): array
     {
         return ['photos'];
+    }
+
+    protected function grapRandomFotos(array $rideGroup, RidePhotoItem $item, int $maxPhotos = 3): RidePhotoItem
+    {
+        $counter = count($rideGroup);
+
+        $previewPhotoIds = array_rand($rideGroup, $counter < $maxPhotos ? $counter : $maxPhotos);
+
+        if (is_array($previewPhotoIds)) {
+            foreach ($previewPhotoIds as $previewPhotoId) {
+                $item->addPreviewPhoto($rideGroup[$previewPhotoId]);
+            }
+        } else {
+            $item->addPreviewPhoto($rideGroup[$previewPhotoIds]);
+        }
+
+        return $item;
     }
 }
