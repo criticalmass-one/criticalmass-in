@@ -24,6 +24,13 @@
             <tag name="sonata.admin" manager-type="orm" group="Critical Mass" label="City"/>
         </service>
 
+        <service id="App\Admin\CrawledWebsiteAdmin">
+            <argument/>
+            <argument type="string">App\Entity\CrawledWebsite</argument>
+            <argument/>
+            <tag name="sonata.admin" manager-type="orm" group="Crawler" label="Website"/>
+        </service>
+
         <service id="App\Admin\FrontpageTeaserAdmin">
             <argument/>
             <argument type="string">App\Entity\FrontpageTeaser</argument>
