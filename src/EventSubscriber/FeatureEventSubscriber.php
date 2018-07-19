@@ -55,14 +55,28 @@ class FeatureEventSubscriber implements EventSubscriberInterface
     {
         list($controllerClass, $actionMethod) = explode('::', $requestPath);
 
-        $reflectionMethod = new \ReflectionMethod($controllerClass, $actionMethod);
+        if ($featureAnnotation = $this->findRequiredFeatureAnnotationByClass($controllerClass)) {
+            return $featureAnnotation->getName();
+        }
 
-        $featureAnnotation = $this->annotationReader->getMethodAnnotation($reflectionMethod, Feature::class);
-
-        if ($featureAnnotation) {
+        if ($featureAnnotation = $this->findRequiredFeatureAnnotationByActionMethod($controllerClass, $actionMethod)) {
             return $featureAnnotation->getName();
         }
 
         return null;
+    }
+
+    protected function findRequiredFeatureAnnotationByClass(string $controllerClass): ?Feature
+    {
+        $reflectionClass = new \ReflectionClass($controllerClass);
+
+        return $this->annotationReader->getClassAnnotation($reflectionClass, Feature::class);
+    }
+
+    protected function findRequiredFeatureAnnotationByActionMethod(string $controllerClass, string $actionMethod): ?Feature
+    {
+        $reflectionMethod = new \ReflectionMethod($controllerClass, $actionMethod);
+
+        return $this->annotationReader->getMethodAnnotation($reflectionMethod, Feature::class);
     }
 }
