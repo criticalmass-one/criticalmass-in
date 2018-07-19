@@ -14,7 +14,11 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
+use App\Criticalmass\Feature\Annotation\Feature as Feature;
 
+/**
+ * @Feature(name="photos")
+ */
 class PhotoUploadController extends AbstractController
 {
     /**
@@ -23,8 +27,6 @@ class PhotoUploadController extends AbstractController
      */
     public function uploadAction(Request $request, UserInterface $user = null, Ride $ride, PhotoUploaderInterface $photoUploader): Response
     {
-        $this->errorIfFeatureDisabled('photos');
-
         if (Request::METHOD_POST === $request->getMethod()) {
             return $this->uploadPostAction($request, $user, $ride, $photoUploader);
         } else {
