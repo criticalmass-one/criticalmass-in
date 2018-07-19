@@ -13,11 +13,13 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use App\Criticalmass\Feature\Annotation\Feature as Feature;
 
 class PhotoController extends AbstractController
 {
     /**
      * @ParamConverter("photo", class="App:Photo", options={"id" = "photoId"})
+     * @Feature(name="photos")
      */
     public function showAction(
         SeoPage $seoPage,
