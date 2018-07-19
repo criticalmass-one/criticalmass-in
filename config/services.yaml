@@ -1,0 +1,117 @@
+parameters:
+    mailer_transport: sendmail
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    mailer_port: null
+    locale: de
+    secret: '%env(APP_SECRET)%'
+    kernel.secret: '%env(APP_SECRET)%'
+    database_driver: pdo_mysql
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: '%env(DATABASE_NAME)%'
+    database_user: '%env(DATABASE_USER)%'
+    database_password: '%env(DATABASE_PASSWORD)%'
+    track.gap_width: 10
+    openweather.appid: '%env(OPENWEATHERMAP_APP_ID)%'
+    strava.client_id: '%env(STRAVA_CLIENT_ID)%'
+    strava.token: '%env(STRAVA_TOKEN)%'
+    strava.secret: '%env(STRAVA_SECRET)%'
+    facebook.app_id: '%env(FACEBOOK_APP_ID)%'
+    facebook.app_secret: '%env(FACEBOOK_APP_SECRET)%'
+    facebook.default_token: '%env(FACEBOOK_DEFAULT_TOKEN)%'
+    runkeeper.client_id: '%env(RUNKEEPER_CLIENT_ID)%'
+    runkeeper.secret: '%env(RUNKEEPER_SECRET)%'
+    timeline.ttl: 60
+    notification.mail.sender_address: malte@criticalmass.in
+    jms_serializer.camel_case_naming_strategy.class: App\Serializer\JMSSerializer\Naming\CamelCaseNamingStrategy
+    request_listener.http_port: 80
+    request_listener.https_port: 443
+    bikeright.visible: true
+    upload_destination.track: '%kernel.root_dir%/../public/tracks'
+    upload_destination.photo: '%kernel.root_dir%/../public/photos'
+    upload_destination.city_photo: '%kernel.root_dir%/../public/cities'
+    upload_destination.ride_photo: '%kernel.root_dir%/../public/rides'
+    upload_destination.frontpage_teaser: '%kernel.root_dir%/../public/teaser'
+    upload_destination.user_photo: '%kernel.root_dir%/../public/users'
+    feature.photos: true
+    staticmaps.host: '%env(STATICMAPS_HOST)%'
+    twitter.client_id: '%env(TWITTER_CLIENT_ID)%'
+    twitter.token: '%env(TWITTER_TOKEN)%'
+    twitter.secret: '%env(TWITTER_SECRET)%'
+    timezone_db.api_key: '%env(TIMEZONE_DB_API_KEY)%'
+    yourls.api_hostname: '%env(YOURLS_API_HOSTNAME)%'
+    yourls.api_username: '%env(YOURLS_API_USERNAME)%'
+    yourls.api_password: '%env(YOURLS_API_PASSWORD)%'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+        bind:
+            $openWeatherMapApiKey: '%openweather.appid%'
+            $rootDirectory: '%kernel.root_dir%'
+            $projectDirectory: '%kernel.project_dir%'
+            $staticmapsHost: '%staticmaps.host%'
+            $featurePhotos: '%feature.photos%'
+            $gapWidth: '%track.gap_width%'
+            $facebookAppId: '%facebook.app_id%'
+            $facebookAppSecret: '%facebook.app_secret%'
+            $facebookDefaultToken: '%facebook.default_token%'
+            $uploadDestinationPhoto: '%upload_destination.photo%'
+            $uploadDestinationTrack: '%upload_destination.track%'
+            $uploadDestinationUserPhoto: '%upload_destination.user_photo%'
+            $cachedTimelineTtl: '%timeline.ttl%'
+            $timezoneDbApiKey: '%timezone_db.api_key%'
+
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{Admin,DQL,Entity,Manager,Menu,Migrations,Model,Repository,Tests,UserProvider,Criticalmass/UploadValidator/UploadValidatorException}'
+
+    App\Controller\:
+        resource: '../src/Controller'
+        public: true
+        tags: ['controller.service_arguments']
+
+    Cmfcmf\OpenWeatherMap: ~
+
+    Symfony\Component\Routing\RouteCollection: ~
+
+    Caldera\YourlsApiManager\YourlsApiManager:
+        arguments:
+            - '%yourls.api_hostname%'
+            - '%yourls.api_username%'
+            - '%yourls.api_password%'
+
+    Sonata\SeoBundle\Seo\SeoPageInterface:
+        alias: sonata.seo.page.default
+
+    App\Request\ParamConverter\RideParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: ride_converter }
+
+    App\Request\ParamConverter\CityParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: city_converter }
+
+    App\Request\ParamConverter\LocationParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: location_converter }
+
+    App\Request\ParamConverter\BoardParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: board_converter }
+
+    App\Request\ParamConverter\ThreadParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: thread_converter }
+
+    App\Request\ParamConverter\PhotoParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: photo_converter }
+
+    App\Request\ParamConverter\UserParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 10, converter: user_converter }

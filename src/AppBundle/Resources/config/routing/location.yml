@@ -1,7 +1,0 @@
-caldera_criticalmass_location_show:
-    path:  /{citySlug}/location/{locationSlug}
-    defaults: { _controller: AppBundle:Location:show }
-
-caldera_criticalmass_location_ride:
-    path:  /{citySlug}/{rideDate}/location
-    defaults: { _controller: AppBundle:Location:ride }

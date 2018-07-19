@@ -55,3 +55,19 @@ src/Criticalmass/Bundle/AppBundle/Resources/public/js/external/bootstrap-app-4/t
 
 
 toolkit.min.css.map
+
+###> symfony/framework-bundle ###
+/.env
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+###< phpunit/phpunit ###
+
+###> symfony/phpunit-bridge ###
+.phpunit
+/phpunit.xml
+###< symfony/phpunit-bridge ###
