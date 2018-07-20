@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Feature;
+namespace App\Criticalmass\Feature\Feature;
 
 abstract class AbstractFeature implements FeatureInterface
 {

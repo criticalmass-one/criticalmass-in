@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use App\Criticalmass\Feature\Annotation\Feature as Feature;
 
 class PhotoManagementController extends AbstractController
 {
@@ -29,8 +30,6 @@ class PhotoManagementController extends AbstractController
      */
     public function listAction(UserInterface $user = null): Response
     {
-        $this->errorIfFeatureDisabled('photos');
-
         return $this->render('PhotoManagement/user_list.html.twig', [
             'result' => $this->getPhotoRepository()->findRidesWithPhotoCounterByUser($user),
         ]);
@@ -41,8 +40,6 @@ class PhotoManagementController extends AbstractController
      */
     public function ridelistAction(Request $request, PaginatorInterface $paginator, Ride $ride): Response
     {
-        $this->errorIfFeatureDisabled('photos');
-
         $query = $this->getPhotoRepository()->buildQueryPhotosByRide($ride);
 
         $pagination = $paginator->paginate(
@@ -63,8 +60,6 @@ class PhotoManagementController extends AbstractController
      */
     public function deleteAction(Request $request, Photo $photo): Response
     {
-        $this->errorIfFeatureDisabled('photos');
-
         $this->saveReferer($request);
 
         $photo->setDeleted(true);
@@ -80,8 +75,6 @@ class PhotoManagementController extends AbstractController
      */
     public function manageAction(Request $request, PaginatorInterface $paginator, Ride $ride): Response
     {
-        $this->errorIfFeatureDisabled('photos');
-
         $query = $this->getPhotoRepository()->buildQueryPhotosByUserAndRide($this->getUser(), $ride);
 
         $pagination = $paginator->paginate(
@@ -102,8 +95,6 @@ class PhotoManagementController extends AbstractController
      */
     public function toggleAction(Request $request, Photo $photo): Response
     {
-        $this->errorIfFeatureDisabled('photos');
-
         $this->saveReferer($request);
 
         $photo->setEnabled(!$photo->getEnabled());
@@ -119,8 +110,6 @@ class PhotoManagementController extends AbstractController
      */
     public function featuredPhotoAction(Request $request, Photo $photo): Response
     {
-        $this->errorIfFeatureDisabled('photos');
-
         $this->saveReferer($request);
 
         $photo->getRide()->setFeaturedPhoto($photo);
@@ -136,8 +125,6 @@ class PhotoManagementController extends AbstractController
      */
     public function placeSingleAction(Request $request, Photo $photo, ObjectRouterInterface $objectRouter): Response
     {
-        $this->errorIfFeatureDisabled('photos');
-
         $form = $this->createForm(PhotoCoordType::class, $photo, [
             'action' => $objectRouter->generate($photo, 'caldera_criticalmass_photo_place_single')
         ]);
@@ -186,8 +173,6 @@ class PhotoManagementController extends AbstractController
      */
     public function relocateAction(Ride $ride): Response
     {
-        $this->errorIfFeatureDisabled('photos');
-
         $photos = $this->getPhotoRepository()->findPhotosByUserAndRide($this->getUser(), $ride);
 
         $track = $this->getTrackRepository()->findByUserAndRide($ride, $this->getUser());
@@ -205,8 +190,6 @@ class PhotoManagementController extends AbstractController
      */
     public function rotateAction(Request $request, Photo $photo): Response
     {
-        $this->errorIfFeatureDisabled('photos');
-
         $this->saveReferer($request);
 
         $angle = 90;
@@ -232,8 +215,6 @@ class PhotoManagementController extends AbstractController
      */
     public function censorAction(Request $request, UserInterface $user = null, Photo $photo): Response
     {
-        $this->errorIfFeatureDisabled('photos');
-
         if (Request::METHOD_POST === $request->getMethod()) {
             return $this->censorPostAction($request, $user, $photo);
         } else {

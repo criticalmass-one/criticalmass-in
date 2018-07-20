@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\Timeline;
 
-use App\Feature\FeatureManager;
+use App\Criticalmass\Feature\FeatureManager\FeatureManagerInterface;
 use App\Criticalmass\Timeline\Collector\AbstractTimelineCollector;
 use App\Criticalmass\Timeline\Collector\TimelineCollectorInterface;
 use App\Criticalmass\Timeline\Item\ItemInterface;
@@ -34,10 +34,10 @@ class Timeline
     /** @var \DateTime $endDateTime */
     protected $endDateTime = null;
 
-    /** @var FeatureManager $featureManager */
+    /** @var FeatureManagerInterface $featureManager */
     protected $featureManager;
 
-    public function __construct(RegistryInterface $doctrine, EngineInterface $templating, FeatureManager $featureManager)
+    public function __construct(RegistryInterface $doctrine, EngineInterface $templating, FeatureManagerInterface $featureManager)
     {
         $this->doctrine = $doctrine;
         $this->templating = $templating;

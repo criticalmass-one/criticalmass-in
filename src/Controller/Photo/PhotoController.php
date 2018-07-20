@@ -13,7 +13,11 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use App\Criticalmass\Feature\Annotation\Feature as Feature;
 
+/**
+ * @Feature(name="photos")
+ */
 class PhotoController extends AbstractController
 {
     /**
@@ -24,8 +28,6 @@ class PhotoController extends AbstractController
         EventDispatcherInterface $eventDispatcher,
         Photo $photo
     ): Response {
-        $this->errorIfFeatureDisabled('photos');
-
         $city = $photo->getCity();
 
         $ride = $photo->getRide();
@@ -59,8 +61,6 @@ class PhotoController extends AbstractController
 
     public function ajaxphotoviewAction(Request $request, EventDispatcherInterface $eventDispatcher): Response
     {
-        $this->errorIfFeatureDisabled('photos');
-
         $photoId = $request->get('photoId');
 
         /** @var Photo $photo */
