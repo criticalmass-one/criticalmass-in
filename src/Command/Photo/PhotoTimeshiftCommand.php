@@ -58,21 +58,17 @@ class PhotoTimeshiftCommand extends Command
                 'Interval to shift'
             )
             ->addArgument(
-                'photoDateTimeZone',
+                'direction',
                 InputArgument::OPTIONAL,
-                'Timezone of the photos datetime values'
+                'Direction to shift',
+                'add'
             );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        if ($input->hasArgument('photoDateTimeZone') && $input->getArgument('photoDateTimeZone')) {
-            $dateTimeZone = new \DateTimeZone($input->getArgument('photoDateTimeZone'));
-        } else {
-            $dateTimeZone = new \DateTimeZone('UTC');
-        }
-
         $interval = new \DateInterval($input->getArgument('dateInterval'));
+        $modificationMethodName = $input->getArgument('direction');
 
         /** @var Ride $ride */
         $ride = $this->registry->getRepository(Ride::class)->findByCitySlugAndRideDate($input->getArgument('citySlug'), $input->getArgument('rideDate'));
@@ -97,7 +93,7 @@ class PhotoTimeshiftCommand extends Command
         /** @var Photo $photo */
         foreach ($photos as $photo) {
             $dateTime = $photo->getDateTime();
-            $dateTime->add($interval);
+            $dateTime->$modificationMethodName($interval);
             $photo->setDateTime($dateTime);
 
             $this->eventDispatcher->dispatch(PhotoUpdatedEvent::NAME, new PhotoUpdatedEvent($photo, false));
