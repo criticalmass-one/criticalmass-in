@@ -42,11 +42,13 @@ class PhotoEventSubscriber implements EventSubscriberInterface
     public function onPhotoUploaded(PhotoUploadedEvent $photoUploadedEvent): void
     {
         $this->reverseGeocode($photoUploadedEvent->getPhoto());
+        $this->locate($photoUploadedEvent->getPhoto());
     }
 
     public function onPhotoUpdated(PhotoUpdatedEvent $photoUpdatedEvent): void
     {
         $this->reverseGeocode($photoUpdatedEvent->getPhoto());
+        $this->locate($photoUpdatedEvent->getPhoto());
     }
 
     public function onPhotoDeleted(PhotoDeletedEvent $photoDeletedEvent): void
@@ -58,7 +60,7 @@ class PhotoEventSubscriber implements EventSubscriberInterface
         $this->reverseGeocoder->reverseGeocode($photo);
     }
 
-    protected function locate(Photo $photo): void
+    protected function locate(Photo $photo, bool $flush = true): void
     {
         $track = $this->registry->getRepository(Track::class)->findByUserAndRide($photo->getRide(), $photo->getUser());
 
@@ -69,7 +71,9 @@ class PhotoEventSubscriber implements EventSubscriberInterface
                 ->execute()
                 ->getPhoto();
 
-            $this->registry->getManager()->flush();
+            if ($flush) {
+                $this->registry->getManager()->flush();
+            }
         }
     }
 }

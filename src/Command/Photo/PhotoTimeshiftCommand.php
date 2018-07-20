@@ -9,6 +9,8 @@ use App\Entity\User;
 use App\Event\Photo\PhotoUpdatedEvent;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -62,7 +64,7 @@ class PhotoTimeshiftCommand extends Command
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         if ($input->hasArgument('photoDateTimeZone') && $input->getArgument('photoDateTimeZone')) {
             $dateTimeZone = new \DateTimeZone($input->getArgument('photoDateTimeZone'));
@@ -81,13 +83,39 @@ class PhotoTimeshiftCommand extends Command
         /** @var Track $track */
         $photos = $this->registry->getRepository(Photo::class)->findPhotosByUserAndRide($user, $ride);
 
+        $progressBar = new ProgressBar($output, count($photos));
+
+        $table = new Table($output);
+        $table->setHeaders([
+            'photoId',
+            'dateTime',
+            'latitude',
+            'longitude',
+            'location',
+        ]);
+
         /** @var Photo $photo */
         foreach ($photos as $photo) {
-            $photo->setDateTime($photo->getDateTime()->add($interval));
+            $dateTime = $photo->getDateTime();
+            $dateTime->add($interval);
+            $photo->setDateTime($dateTime);
 
-            $this->eventDispatcher->dispatch(PhotoUpdatedEvent::NAME, new PhotoUpdatedEvent($photo));
+            $this->eventDispatcher->dispatch(PhotoUpdatedEvent::NAME, new PhotoUpdatedEvent($photo, false));
+
+            $table->addRow([
+                $photo->getId(),
+                $photo->getDateTime()->format('Y-m-d H:i:s'),
+                $photo->getLatitude(),
+                $photo->getLongitude(),
+                $photo->getLocation(),
+            ]);
+
+            $progressBar->advance();
         }
 
         $this->registry->getManager()->flush();
+
+        $progressBar->finish();
+        $table->render();
     }
 }
