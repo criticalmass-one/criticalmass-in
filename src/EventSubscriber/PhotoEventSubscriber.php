@@ -3,6 +3,9 @@
 namespace App\EventSubscriber;
 
 use App\Criticalmass\Geocoding\ReverseGeocoderInterface;
+use App\Criticalmass\Image\PhotoGps\PhotoGpsInterface;
+use App\Entity\Photo;
+use App\Entity\Track;
 use App\Event\Photo\PhotoDeletedEvent;
 use App\Event\Photo\PhotoUpdatedEvent;
 use App\Event\Photo\PhotoUploadedEvent;
@@ -17,11 +20,14 @@ class PhotoEventSubscriber implements EventSubscriberInterface
     /** @var ReverseGeocoderInterface $reverseGeocoder */
     protected $reverseGeocoder;
 
-    public function __construct(RegistryInterface $registry, ReverseGeocoderInterface $reverseGeocoder)
+    /** @var PhotoGpsInterface $photoGps */
+    protected $photoGps;
+
+    public function __construct(RegistryInterface $registry, ReverseGeocoderInterface $reverseGeocoder, PhotoGpsInterface $photoGps)
     {
         $this->registry = $registry;
-
         $this->reverseGeocoder = $reverseGeocoder;
+        $this->photoGps = $photoGps;
     }
 
     public static function getSubscribedEvents(): array
@@ -35,15 +41,35 @@ class PhotoEventSubscriber implements EventSubscriberInterface
 
     public function onPhotoUploaded(PhotoUploadedEvent $photoUploadedEvent): void
     {
-        $this->reverseGeocoder->reverseGeocode($photoUploadedEvent->getPhoto());
+        $this->reverseGeocode($photoUploadedEvent->getPhoto());
     }
 
     public function onPhotoUpdated(PhotoUpdatedEvent $photoUpdatedEvent): void
     {
-        $this->reverseGeocoder->reverseGeocode($photoUpdatedEvent->getPhoto());
+        $this->reverseGeocode($photoUpdatedEvent->getPhoto());
     }
 
     public function onPhotoDeleted(PhotoDeletedEvent $photoDeletedEvent): void
     {
+    }
+
+    protected function reverseGeocode(Photo $photo): void
+    {
+        $this->reverseGeocoder->reverseGeocode($photo);
+    }
+
+    protected function locate(Photo $photo): void
+    {
+        $track = $this->registry->getRepository(Track::class)->findByUserAndRide($photo->getRide(), $photo->getUser());
+
+        if ($track) {
+            $photo = $this->photoGps
+                ->setPhoto($photo)
+                ->setTrack($track)
+                ->execute()
+                ->getPhoto();
+
+            $this->registry->getManager()->flush();
+        }
     }
 }
