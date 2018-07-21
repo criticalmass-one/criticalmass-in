@@ -12,4 +12,4 @@ caldera_criticalmass_strava_list:
 
 caldera_criticalmass_strava_import:
     path:  /{citySlug}/{rideDate}/stravaimport
-    controller: App\Controller\StravaController:importAction
+    controller: App\Controller\StravaController::importAction
