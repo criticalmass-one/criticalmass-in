@@ -199,7 +199,7 @@
                             Aufnahmedatum
                         </dt>
                         <dd>
-                            {{ photo.dateTime|date('d.m.y H:i:s') }} Uhr
+                            {{ photo.dateTime|date('d.m.y H:i:s', 'Europe/Berlin') }} Uhr
                         </dd>
 
                         {% if photo.location %}
@@ -222,7 +222,7 @@
                             </dd>
                         {% endif %}
 
-                        {% if exifData.exposure %}
+                        {% if exifData and exifData.exposure %}
                             <dt>
                                 Verschlusszeit
                             </dt>
@@ -231,7 +231,7 @@
                             </dd>
                         {% endif %}
 
-                        {% if exifData.aperture %}
+                        {% if exifData and exifData.aperture %}
                             <dt>
                                 Blende
                             </dt>
@@ -240,7 +240,7 @@
                             </dd>
                         {% endif %}
 
-                        {% if exifData.iso %}
+                        {% if exifData and exifData.iso %}
                             <dt>
                                 ISO
                             </dt>
@@ -249,7 +249,7 @@
                             </dd>
                         {% endif %}
 
-                        {% if exifData.focalLength %}
+                        {% if exifData and exifData.focalLength %}
                             <dt>
                                 Brennweite
                             </dt>
@@ -258,7 +258,7 @@
                             </dd>
                         {% endif %}
 
-                        {% if exifData.camera %}
+                        {% if exifData and exifData.camera %}
                             <dt>
                                 Kamera
                             </dt>
