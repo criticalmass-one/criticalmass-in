@@ -1,3 +1,0 @@
-caldera_criticalmass_calendar:
-    path:  /calendar
-    defaults: { _controller: AppBundle:Calendar:index }
