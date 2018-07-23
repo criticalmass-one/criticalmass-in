@@ -10,6 +10,13 @@
             <tag name="sonata.admin" manager-type="orm" group="Campaign" label="Bikeright Voucher"/>
         </service>
 
+        <service id="App\Admin\BlacklistedWebsiteAdmin">
+            <argument/>
+            <argument type="string">App\Entity\BlacklistedWebsite</argument>
+            <argument/>
+            <tag name="sonata.admin" manager-type="orm" group="Crawler" label="Blacklist"/>
+        </service>
+
         <service id="App\Admin\BoardAdmin">
             <argument/>
             <argument type="string">App\Entity\Board</argument>

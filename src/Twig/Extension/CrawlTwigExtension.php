@@ -4,6 +4,7 @@ namespace App\Twig\Extension;
 
 use App\Criticalmass\Website\Crawler\Crawlable;
 use App\Criticalmass\Website\Crawler\CrawlerInterface;
+use App\Entity\BlacklistedWebsite;
 use App\Entity\CrawledWebsite;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
@@ -19,6 +20,8 @@ class CrawlTwigExtension extends \Twig_Extension
     /** @var EngineInterface $twigEngine */
     protected $twigEngine;
 
+    protected $blacklistPatternList = [];
+
     public function __construct(RegistryInterface $registry, CrawlerInterface $crawler, EngineInterface $twigEngine)
     {
         $this->registry = $registry;
@@ -26,6 +29,8 @@ class CrawlTwigExtension extends \Twig_Extension
         $this->crawler = $crawler;
 
         $this->twigEngine = $twigEngine;
+
+        $this->populateBlacklist();
     }
 
     public function getFunctions(): array
@@ -42,12 +47,30 @@ class CrawlTwigExtension extends \Twig_Extension
         $message = $crawlable->getText();
 
         foreach ($urls as $url) {
-            $crawledWebsite = $this->registry->getRepository(CrawledWebsite::class)->findOneByUrl($url);
+            if (!$this->checkIfBlacklisted($url)) {
+                $crawledWebsite = $this->registry->getRepository(CrawledWebsite::class)->findOneByUrl($url);
 
-            $message = str_replace($url, $this->twigEngine->render('Crawler/_website.html.twig', ['website' => $crawledWebsite]), $message);
+                $message = str_replace($url, $this->twigEngine->render('Crawler/_website.html.twig', ['website' => $crawledWebsite]), $message);
+            }
         }
 
         return $message;
+    }
+
+    protected function populateBlacklist(): void
+    {
+        $this->blacklistPatternList = $this->registry->getRepository(BlacklistedWebsite::class)->findAll();
+    }
+
+    protected function checkIfBlacklisted(string $url): ?BlacklistedWebsite
+    {
+        foreach ($this->blacklistPatternList as $blacklistPattern) {
+            if (preg_match($blacklistPattern->getPattern(), $url)) {
+                return $blacklistPattern;
+            }
+        }
+
+        return null;
     }
 
     public function getName(): string
