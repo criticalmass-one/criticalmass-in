@@ -1,0 +1,35 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        track_file:
+            uri_prefix:         /tracks
+            upload_destination: '%upload_destination.track%'
+            namer:              vich_uploader.namer_uniqid
+
+        photo_photo:
+            uri_prefix:         /photos
+            upload_destination: '%upload_destination.photo%'
+            namer:              vich_uploader.namer_uniqid
+
+        city_photo:
+            uri_prefix:         /cities
+            upload_destination: '%upload_destination.city_photo%'
+            namer:              vich_uploader.namer_uniqid
+
+        ride_photo:
+            uri_prefix:         /rides
+            upload_destination: '%upload_destination.ride_photo%'
+            namer:              vich_uploader.namer_uniqid
+
+        frontpage_teaser:
+            uri_prefix:         /teaser
+            upload_destination: '%upload_destination.frontpage_teaser%'
+            namer:              vich_uploader.namer_uniqid
+
+        user_photo:
+            uri_prefix:         /users
+            upload_destination: '%upload_destination.user_photo%'
+            namer:              vich_uploader.namer_uniqid
+            delete_on_remove:   true
+            delete_on_update:   true

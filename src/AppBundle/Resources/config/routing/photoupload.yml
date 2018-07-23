@@ -1,9 +1,0 @@
-caldera_criticalmass_gallery_photos_upload_ride:
-    path: /{citySlug}/{rideDate}/addphoto
-    defaults: { _controller: AppBundle:Photo/PhotoUpload:upload }
-    requirements:
-        rideDate: '([0-9]{4,4})\-([0-9]{1,2})\-([0-9]{1,2})'
-
-caldera_criticalmass_photo_upload_event:
-    path: /{citySlug}/{eventSlug}/addphoto
-    defaults: { _controller: AppBundle:Photo/PhotoUpload:upload }

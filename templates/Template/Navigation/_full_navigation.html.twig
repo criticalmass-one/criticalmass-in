@@ -1,0 +1,12 @@
+{% if bootstrap4 is defined and bootstrap4 == true %}
+    {{ include('Template/Navigation/_bs4_navigation.html.twig') }}
+{% elseif bootstrap4app is defined and bootstrap4app == true %}
+    {{ include('Template/Navigation/_bs4app_navigation.html.twig') }}
+{% else %}
+<nav id="navigation" class="navbar navbar-default">
+    <div class="container">
+        {{ include('Template/Navigation/_navbar_header.html.twig') }}
+        {{ include('Template/Navigation/_navbar_content.html.twig') }}
+    </div>
+</nav>
+{% endif %}
