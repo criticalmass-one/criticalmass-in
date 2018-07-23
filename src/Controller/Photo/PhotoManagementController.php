@@ -275,7 +275,7 @@ class PhotoManagementController extends AbstractController
 
     protected function getPhotoFilename(Photo $photo): string
     {
-        $path = $this->getParameter('kernel.root_dir') . '/../web';
+        $path = $this->getParameter('upload_destination.photo');
         $filename = $this->get('vich_uploader.templating.helper.uploader_helper')->asset($photo, 'imageFile');
 
         return $path . $filename;
