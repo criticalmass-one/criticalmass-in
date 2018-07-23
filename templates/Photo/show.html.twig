@@ -199,7 +199,7 @@
                             Aufnahmedatum
                         </dt>
                         <dd>
-                            {{ photo.dateTime|date('d.m.y H:i:s') }} Uhr
+                            {{ photo.dateTime|date('d.m.y H:i:s', 'Europe/Berlin') }} Uhr
                         </dd>
 
                         {% if photo.location %}
