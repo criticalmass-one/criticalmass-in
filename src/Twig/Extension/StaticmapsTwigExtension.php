@@ -15,8 +15,6 @@ class StaticmapsTwigExtension extends \Twig_Extension
 
     /** @var array $defaultParameters */
     protected $defaultParameters = [
-        'maptype' => 'wikimedia-intl',
-        'zoom' => 14,
         'size' => '865x512',
     ];
 
@@ -57,9 +55,7 @@ class StaticmapsTwigExtension extends \Twig_Extension
         }
 
         $parameters = [
-            'center' => sprintf('%f,%f', $track->getRide()->getLatitude(), $track->getRide()->getLongitude()),
             'polylines' => sprintf('%s,%d,%d,%d', base64_encode($track->getReducedPolyline()), $track->getColorRed(), $track->getColorGreen(), $track->getColorBlue()),
-            'zoom' => 10,
         ];
 
         return $this->generateMapUrl($parameters, $width, $height, $zoom);
@@ -76,7 +72,6 @@ class StaticmapsTwigExtension extends \Twig_Extension
         }
 
         $parameters = [
-            'center' => sprintf('%f,%f', $latitude, $longitude),
             'markers' => sprintf('%f,%f,%s,%s,%s', $latitude, $longitude, 'circle', 'red', 'bicycle'),
         ];
 
@@ -86,7 +81,6 @@ class StaticmapsTwigExtension extends \Twig_Extension
     public function staticmapsPhoto(Photo $photo, int $width = null, int $height = null, int $zoom = null): string
     {
         $parameters = [
-            'center' => sprintf('%f,%f', $photo->getLatitude(), $photo->getLongitude()),
             'markers' => sprintf('%f,%f,%s,%s,%s', $photo->getLatitude(), $photo->getLongitude(), 'square', 'yellow', 'camera'),
         ];
 
@@ -112,7 +106,6 @@ class StaticmapsTwigExtension extends \Twig_Extension
     public function staticmapsCity(City $city, int $width = null, int $height = null, int $zoom = null): string
     {
         $parameters = [
-            'center' => sprintf('%f,%f', $city->getLatitude(), $city->getLongitude()),
             'markers' => sprintf('%f,%f,%s,%s,%s', $city->getLatitude(), $city->getLongitude(), 'circle', 'blue', 'university'),
         ];
 
