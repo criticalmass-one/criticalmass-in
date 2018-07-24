@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmas\Image\PhotoManipulator;
+namespace App\Criticalmass\Image\PhotoManipulator;
 
 use Imagine\Image\Box;
 use Imagine\Image\BoxInterface;

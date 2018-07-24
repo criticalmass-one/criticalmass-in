@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmas\Image\PhotoManipulator\PhotoInterface;
+namespace App\Criticalmass\Image\PhotoManipulator\PhotoInterface;
 
 interface PhotoInterface
 {

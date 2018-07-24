@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmas\Image\PhotoManipulator\Storage;
+namespace App\Criticalmass\Image\PhotoManipulator\Storage;
 
-use App\Criticalmas\Image\PhotoManipulator\PhotoInterface\PhotoInterface;
+use App\Criticalmass\Image\PhotoManipulator\PhotoInterface\PhotoInterface;
 use Imagine\Image\ImageInterface;
 
 interface PhotoStorageInterface
