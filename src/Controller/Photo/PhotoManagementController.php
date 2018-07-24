@@ -3,6 +3,7 @@
 namespace App\Controller\Photo;
 
 use App\Controller\AbstractController;
+use App\Criticalmass\Image\PhotoManipulator\PhotoManipulatorInterface;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Photo;
 use App\Entity\Ride;
@@ -185,7 +186,7 @@ class PhotoManagementController extends AbstractController
      * @Security("is_granted('edit', photo)")
      * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
-    public function rotateAction(Request $request, Photo $photo): Response
+    public function rotateAction(Request $request, Photo $photo, PhotoManipulatorInterface $photoManipulator): Response
     {
         $this->saveReferer($request);
 
@@ -195,13 +196,10 @@ class PhotoManagementController extends AbstractController
             $angle = -90;
         }
 
-        $imagine = new Imagine();
-
-        $image = $imagine->open($this->getPhotoFilename($photo));
-
-        $image->rotate($angle);
-
-        $this->saveManipulatedImage($image, $photo);
+        $photoManipulator
+            ->open($photo)
+            ->rotate($angle)
+            ->save();
 
         return $this->createRedirectResponseForSavedReferer();
     }
@@ -210,7 +208,7 @@ class PhotoManagementController extends AbstractController
      * @Security("is_granted('edit', photo)")
      * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
-    public function censorAction(Request $request, UserInterface $user = null, Photo $photo): Response
+    public function censorAction(Request $request, UserInterface $user = null, Photo $photo, PhotoManipulatorInterface $photoManipulator): Response
     {
         if (Request::METHOD_POST === $request->getMethod()) {
             return $this->censorPostAction($request, $user, $photo);
@@ -219,14 +217,14 @@ class PhotoManagementController extends AbstractController
         }
     }
 
-    public function censorGetAction(Request $request, UserInterface $user = null, Photo $photo): Response
+    public function censorGetAction(Request $request, UserInterface $user = null, Photo $photo, PhotoManipulatorInterface $photoManipulator): Response
     {
         return $this->render('PhotoManagement/censor.html.twig', [
             'photo' => $photo,
         ]);
     }
 
-    public function censorPostAction(Request $request, UserInterface $user = null, Photo $photo): Response
+    public function censorPostAction(Request $request, UserInterface $user = null, Photo $photo, PhotoManipulatorInterface $photoManipulator): Response
     {
         $areaDataList = json_decode($request->getContent());
 
@@ -234,24 +232,10 @@ class PhotoManagementController extends AbstractController
             return new Response(null);
         }
 
-        $displayWidth = $request->query->get('width');
-
-        $imagine = new Imagine();
-
-        $image = $imagine->open($this->getPhotoFilename($photo));
-
-        $size = $image->getSize();
-
-        $factor = $size->getWidth() / $displayWidth;
-
-        foreach ($areaDataList as $areaData) {
-            $topLeftPoint = new Point($areaData->x * $factor, $areaData->y * $factor);
-            $dimension = new Box($areaData->width * $factor, $areaData->height * $factor);
-
-            $this->applyBlurArea($image, $topLeftPoint, $dimension);
-        }
-
-        $newFilename = $this->saveManipulatedImage($image, $photo);
+        $newFilename = $photoManipulator
+            ->open($photo)
+            ->censor($areaDataList, intval($request->query->get('width')))
+            ->save();
 
         return new Response($newFilename);
     }

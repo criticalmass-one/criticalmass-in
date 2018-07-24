@@ -2,12 +2,12 @@
 
 namespace App\Criticalmass\Image\PhotoManipulator\Cache;
 
-use App\Criticalmass\Image\PhotoManipulator\PhotoInterface\PhotoInterface;
+use App\Criticalmass\Image\PhotoManipulator\PhotoInterface\ManipulateablePhotoInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class PhotoCache extends AbstractPhotoCache
 {
-    public function recachePhoto(PhotoInterface $photo): PhotoCacheInterface
+    public function recachePhoto(ManipulateablePhotoInterface $photo): PhotoCacheInterface
     {
         $this->clearImageCache($photo);
 
@@ -22,7 +22,7 @@ class PhotoCache extends AbstractPhotoCache
         return $this;
     }
 
-    public function clearImageCache(PhotoInterface $photo): PhotoCacheInterface
+    public function clearImageCache(ManipulateablePhotoInterface $photo): PhotoCacheInterface
     {
         $path = $this->uploaderHelper->asset($photo, 'imageFile');
 

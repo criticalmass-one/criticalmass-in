@@ -2,11 +2,11 @@
 
 namespace App\Criticalmass\Image\PhotoManipulator;
 
-use App\Criticalmass\Image\PhotoManipulator\PhotoInterface\PhotoInterface;
+use App\Criticalmass\Image\PhotoManipulator\PhotoInterface\ManipulateablePhotoInterface;
 
 interface PhotoManipulatorInterface
 {
-    public function open(PhotoInterface $photo): PhotoManipulatorInterface;
+    public function open(ManipulateablePhotoInterface $photo): PhotoManipulatorInterface;
     public function save(): string;
 
     public function rotate(int $angle): PhotoManipulatorInterface;

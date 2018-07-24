@@ -2,13 +2,13 @@
 
 namespace App\Criticalmass\Image\PhotoManipulator\Storage;
 
-use App\Criticalmass\Image\PhotoManipulator\PhotoInterface\PhotoInterface;
+use App\Criticalmass\Image\PhotoManipulator\PhotoInterface\ManipulateablePhotoInterface;
 use Imagine\Image\ImageInterface;
 use Imagine\Imagick\Imagine;
 
 class PhotoStorage extends AbstractPhotoStorage
 {
-    public function open(PhotoInterface $photo): ImageInterface
+    public function open(ManipulateablePhotoInterface $photo): ImageInterface
     {
         $imagine = new Imagine();
 
@@ -17,7 +17,7 @@ class PhotoStorage extends AbstractPhotoStorage
         return $image;
     }
 
-    public function save(PhotoInterface $photo, ImageInterface $image): string
+    public function save(ManipulateablePhotoInterface $photo, ImageInterface $image): string
     {
         if (!$photo->getBackupName()) {
             $newFilename = uniqid().'.JPG';
@@ -35,7 +35,7 @@ class PhotoStorage extends AbstractPhotoStorage
         return $filename;
     }
 
-    protected function getImageFilename(PhotoInterface $photo): string
+    protected function getImageFilename(ManipulateablePhotoInterface $photo): string
     {
         $path = $this->uploaderHelper->asset($photo, 'imageFile');
 

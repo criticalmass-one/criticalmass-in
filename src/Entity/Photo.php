@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Criticalmass\Geocoding\ReverseGeocodeable;
+use App\Criticalmass\Image\PhotoManipulator\PhotoInterface\ManipulateablePhotoInterface;
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
 use App\EntityInterface\AutoParamConverterAble;
 use App\EntityInterface\PhotoInterface;
@@ -23,7 +24,7 @@ use App\Criticalmass\Sharing\Annotation as Sharing;
  * @JMS\ExclusionPolicy("all")
  * @Routing\DefaultRoute(name="caldera_criticalmass_photo_show_ride")
  */
-class Photo implements ViewableInterface, PhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, Shareable, ReverseGeocodeable
+class Photo implements ViewableInterface, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, Shareable, ReverseGeocodeable
 {
     /**
      * @ORM\Id
@@ -343,14 +344,14 @@ class Photo implements ViewableInterface, PhotoInterface, RouteableInterface, Po
         return $this->updatedAt;
     }
 
-    public function setBackupName(string $backupName): Photo
+    public function setBackupName(string $backupName = null): ManipulateablePhotoInterface
     {
         $this->backupName = $backupName;
 
         return $this;
     }
 
-    public function getBackupName(): string
+    public function getBackupName(): ?string
     {
         return $this->backupName;
     }
