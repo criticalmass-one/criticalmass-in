@@ -95,7 +95,7 @@
                         Dauer:
                     </dt>
                     <dd>
-                        {{ track.getDurationInterval().format('%h:%i') }}&nbsp;Stunden
+                        {{ human_duration(track.getDurationInSeconds()) }}
                     </dd>
                 </dl>
             </div>

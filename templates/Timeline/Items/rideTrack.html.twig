@@ -65,7 +65,7 @@
                     </dt>
 
                     <dd>
-                        {{ (item.duration / 60 / 60)|number_format(2, ',', '.') }} Stunden
+                        {{ human_duration(item.duration) }}
                     </dd>
                 </dl>
             </div>

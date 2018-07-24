@@ -70,7 +70,7 @@
                             </td>
                             <td>
                                 {% if track.getDurationInterval() %}
-                                    {{ track.getDurationInterval().format('%h:%i') }}&nbsp;Stunden
+                                    {{ human_duration(track.getDurationInSeconds()) }}
                                 {% endif %}
                             </td>
                             <td>
