@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
+use App\EntityInterface\StaticMapableInterface;
 use Caldera\GeoBasic\Coord\Coord;
 use App\EntityInterface\AuditableInterface;
 use App\EntityInterface\ElasticSearchPinInterface;
@@ -31,7 +32,7 @@ use App\Criticalmass\Sharing\Annotation as Sharing;
  * @Vich\Uploadable
  * @Routing\DefaultRoute(name="caldera_criticalmass_ride_show")
  */
-class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, Shareable
+class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, Shareable
 {
     /**
      * @ORM\Id

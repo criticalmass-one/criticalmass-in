@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\EntityInterface\RouteableInterface;
+use App\EntityInterface\StaticMapableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
@@ -16,7 +17,7 @@ use App\Criticalmass\Router\Annotation as Routing;
  * @JMS\ExclusionPolicy("all")
  * @Routing\DefaultRoute(name="caldera_criticalmass_track_view")
  */
-class Track implements RouteableInterface
+class Track implements RouteableInterface, StaticMapableInterface
 {
     const TRACK_SOURCE_GPX = 'TRACK_SOURCE_GPX';
     const TRACK_SOURCE_STRAVA = 'TRACK_SOURCE_STRAVA';
