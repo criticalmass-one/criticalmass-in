@@ -38,6 +38,8 @@ class StaticmapsTwigExtension extends \Twig_Extension
             return $this->staticmapsCity($object, $width, $height, $zoom);
         } elseif ($object instanceof Track) {
             return $this->staticmapsTrack($object, $width, $height, $zoom);
+        } elseif ($object instanceof Photo) {
+            return $this->staticmapsPhoto($object, $width, $height, $zoom);
         }
 
         return '';
@@ -85,7 +87,9 @@ class StaticmapsTwigExtension extends \Twig_Extension
         ];
 
         if ($track = $this->findTrackForPhoto($photo)) {
-            $parameters['polylines'] = sprintf('%s,%d,%d,%d', base64_encode($track->getReducedPolyline()), $track->getColorRed(), $track->getColorGreen(), $track->getColorBlue());
+            if ($track->getReducedPolyline()) {
+                $parameters['polylines'] = sprintf('%s,%d,%d,%d', base64_encode($track->getReducedPolyline()), $track->getColorRed(), $track->getColorGreen(), $track->getColorBlue());
+            }
         }
 
         return $this->generateMapUrl($parameters, $width, $height, $zoom);
