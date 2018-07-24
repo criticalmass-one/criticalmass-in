@@ -15,9 +15,10 @@ class PhotoCache extends AbstractPhotoCache
 
         $this->cacheManager->remove($filename);
 
-        $this->imagineController->filterAction(new Request(), $filename, 'standard');
-        $this->imagineController->filterAction(new Request(), $filename, 'preview');
-        $this->imagineController->filterAction(new Request(), $filename, 'thumb');
+        $this->imagineController->filterAction(new Request(), $filename, 'gallery_photo_thumb');
+        $this->imagineController->filterAction(new Request(), $filename, 'gallery_photo_standard');
+        $this->imagineController->filterAction(new Request(), $filename, 'gallery_photo_large');
+        $this->imagineController->filterAction(new Request(), $filename, 'city_image_wide');
 
         return $this;
     }
