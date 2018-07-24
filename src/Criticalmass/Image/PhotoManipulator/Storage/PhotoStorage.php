@@ -25,12 +25,14 @@ class PhotoStorage extends AbstractPhotoStorage
             $photo->setBackupName($photo->getImageName());
 
             $photo->setImageName($newFilename);
-        }
 
-        $this->photoCache->recachePhoto($photo);
+            $this->registry->getManager()->flush();
+        }
 
         $filename = $this->getImageFilename($photo);
         $image->save($filename);
+
+        $this->photoCache->recachePhoto($photo);
 
         return $filename;
     }
@@ -39,7 +41,7 @@ class PhotoStorage extends AbstractPhotoStorage
     {
         $path = $this->uploaderHelper->asset($photo, 'imageFile');
 
-        $filename = sprintf('%s%s', $this->webDirectory, $path);
+        $filename = sprintf('%s/..%s', $this->uploadDestinationPhoto, $path);
 
         return $filename;
     }
