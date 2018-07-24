@@ -211,9 +211,9 @@ class PhotoManagementController extends AbstractController
     public function censorAction(Request $request, UserInterface $user = null, Photo $photo, PhotoManipulatorInterface $photoManipulator): Response
     {
         if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->censorPostAction($request, $user, $photo);
+            return $this->censorPostAction($request, $user, $photo, $photoManipulator);
         } else {
-            return $this->censorGetAction($request, $user, $photo);
+            return $this->censorGetAction($request, $user, $photo, $photoManipulator);
         }
     }
 
