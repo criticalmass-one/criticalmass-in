@@ -58,7 +58,7 @@
                         Datum:
                     </dt>
                     <dd>
-                        {{ track.ride.dateTime.format('d.m.Y H:i') }}&nbsp;Uhr
+                        {{ track.ride.dateTime|date('d.m.Y H:i', track.ride.city.timezone) }}&nbsp;Uhr
                     </dd>
                 </dl>
             </div>
