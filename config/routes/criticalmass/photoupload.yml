@@ -1,0 +1,5 @@
+caldera_criticalmass_gallery_photos_upload_ride:
+    path: /{citySlug}/{rideDate}/addphoto
+    controller: App\Controller\Photo\PhotoUploadController::uploadAction
+    requirements:
+        rideDate: '([0-9]{4,4})\-([0-9]{1,2})\-([0-9]{1,2})'

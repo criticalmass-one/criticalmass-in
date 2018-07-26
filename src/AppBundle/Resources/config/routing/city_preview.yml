@@ -1,3 +1,0 @@
-caldera_criticalmass_city_preview_manage:
-    path:  /{citySlug}/preview-select
-    defaults: { _controller: AppBundle:City/CityPreview:select }
