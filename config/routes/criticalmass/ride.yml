@@ -13,3 +13,11 @@ caldera_criticalmass_ride_show_month:
         rideDate: '([0-9]{4,4})\-([0-9]{2,2})'
     options:
         expose: true
+
+caldera_criticalmass_ride_slug:
+    path:  /{citySlug}/{rideSlug}
+    controller: App\Controller\Ride\RideController::showAction
+    requirements:
+        rideSlug: '([a-zA-Z0-9\-]*)'
+    options:
+        expose: true

@@ -167,6 +167,21 @@ class RideRepository extends EntityRepository
         return $query->getResult();
     }
 
+    public function findOneByCityAndSlug(City $city, string $slug): ?Ride
+    {
+        $builder = $this->createQueryBuilder('r');
+
+        $builder->select('r')
+            ->where($builder->expr()->eq('r.city', ':city'))
+            ->andWhere($builder->expr()->eq('r.slug', ':slug'))
+            ->setParameter('city', $city)
+            ->setParameter('slug', $slug);
+
+        $query = $builder->getQuery();
+
+        return $query->getOneOrNullResult();
+    }
+
     public function findFrontpageRides()
     {
         $startDateTime = new \DateTime();
