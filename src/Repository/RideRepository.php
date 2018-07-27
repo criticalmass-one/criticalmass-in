@@ -4,7 +4,6 @@ namespace App\Repository;
 
 use App\Entity\City;
 use App\Entity\CityCycle;
-use App\Entity\Location;
 use App\Entity\Region;
 use App\Entity\Ride;
 use App\Criticalmass\Util\DateTimeUtil;
@@ -12,19 +11,6 @@ use Doctrine\ORM\EntityRepository;
 
 class RideRepository extends EntityRepository
 {
-    public function findRidesWithPhotos()
-    {
-        $builder = $this->createQueryBuilder('ride');
-
-        $builder->join('ride.photos', 'photos');
-
-        $builder->orderBy('ride.dateTime', 'desc');
-
-        $query = $builder->getQuery();
-
-        return $query->getResult();
-    }
-
     public function findCurrentRideForCity(City $city)
     {
         $dateTime = new \DateTime();
@@ -104,21 +90,6 @@ class RideRepository extends EntityRepository
         }
 
         return $result;
-    }
-
-    public function findRideByLatitudeLongitudeDateTime($latitude, $longitude, \DateTime $dateTime)
-    {
-        $queryString = 'SELECT r AS ride, SQRT((r.latitude - ' . $latitude . ') * (r.latitude - ' . $latitude . ') + (r.longitude - ' . $longitude . ') * (r.longitude - ' . $longitude . ')) AS distance FROM App:Ride r JOIN r.city c WHERE c.enabled = 1 AND DATE(r.dateTime) = \'' . $dateTime->format('Y-m-d') . '\' ORDER BY distance ASC';
-
-        $query = $this->getEntityManager()->createQuery($queryString);
-        $query->setMaxResults(1);
-        $result = $query->getOneOrNullResult();
-
-        if ($result) {
-            return $result['ride'];
-        }
-
-        return null;
     }
 
     /**
@@ -235,23 +206,6 @@ class RideRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findFutureRides(): array
-    {
-        $dateTime = new \DateTime();
-
-        $builder = $this->createQueryBuilder('r');
-
-        $builder
-            ->select('r')
-            ->where($builder->expr()->gt('r.dateTime', ':dateTime'))
-            ->setParameter('dateTime', $dateTime)
-            ->orderBy('r.dateTime', 'ASC');
-
-        $query = $builder->getQuery();
-
-        return $query->getResult();
-    }
-
     public function findRidesInInterval(\DateTime $startDateTime = null, \DateTime $endDateTime = null)
     {
         if (!$startDateTime) {
@@ -277,43 +231,6 @@ class RideRepository extends EntityRepository
         $query = $builder->getQuery();
 
         return $query->getResult();
-    }
-
-    public function findRidesAndCitiesInInterval(\DateTime $startDateTime = null, \DateTime $endDateTime = null)
-    {
-        if (!$startDateTime) {
-            $startDateTime = new \DateTime();
-        }
-
-        if (!$endDateTime) {
-            $endDate = new \DateTime();
-            $dayInterval = new \DateInterval('P1M');
-            $endDateTime = $endDate->add($dayInterval);
-        }
-
-        $builder = $this->createQueryBuilder('ride');
-
-        $builder
-            ->select('ride')
-            ->join('ride.city', 'city')
-            ->where($builder->expr()->gt('ride.dateTime', '\'' . $startDateTime->format('Y-m-d') . '\''))
-            ->andWhere($builder->expr()->lt('ride.dateTime', '\'' . $endDateTime->format('Y-m-d') . '\''))
-            ->andWhere($builder->expr()->eq('city.enabled', 1))
-            ->addOrderBy('city.city', 'ASC')
-            ->addOrderBy('ride.dateTime', 'ASC');
-
-        $query = $builder->getQuery();
-
-        return $query->getResult();
-    }
-
-
-    public function findRidesByYearMonth($year, $month)
-    {
-        $startDateTime = new \DateTime($year . '-' . $month . '-01');
-        $endDateTime = new \DateTime($year . '-' . $month . '-' . $startDateTime->format('t'));
-
-        return $this->findRidesInInterval($startDateTime, $endDateTime);
     }
 
     public function findRidesByDateTimeMonth(\DateTime $dateTime): array
@@ -364,30 +281,6 @@ class RideRepository extends EntityRepository
             ->setParameter('citySlug', $citySlug)
             ->setParameter('fromDateTime', $fromDateTime)
             ->setParameter('untilDateTime', $untilDateTime);
-
-        $query = $builder->getQuery();
-
-        return $query->getOneOrNullResult();
-    }
-
-    public function findByCityAndRideDate(City $city, $rideDate)
-    {
-        // Maybe this datetime computation stuff is stupid. Will look for a better solution.
-        $fromDateTime = new \DateTime($rideDate);
-        $fromDateTime->setTime(0, 0, 0);
-
-        $untilDateTime = new \DateTime($rideDate);
-        $untilDateTime->setTime(23, 59, 59);
-
-        $builder = $this->createQueryBuilder('ride');
-
-        $builder->select('ride');
-
-        $builder->where($builder->expr()->eq('ride.city', $city->getId()));
-        $builder->andWhere($builder->expr()->gt('ride.dateTime', '\'' . $fromDateTime->format('Y-m-d H:i:s') . '\''));
-        $builder->andWhere($builder->expr()->lt('ride.dateTime', '\'' . $untilDateTime->format('Y-m-d H:i:s') . '\''));
-
-        $builder->setMaxResults(1);
 
         $query = $builder->getQuery();
 
@@ -496,34 +389,6 @@ class RideRepository extends EntityRepository
         $result = $query->getResult();
 
         return $result;
-    }
-
-    public function countRidesByLocation(Location $location)
-    {
-        $builder = $this->createQueryBuilder('ride');
-
-        $builder->select('COUNT(ride)');
-
-        $builder->where($builder->expr()->like('ride.location', '\'' . $location->getTitle() . '\''));
-
-        $query = $builder->getQuery();
-
-        return $query->getResult();
-    }
-
-    public function findRidesByLocation(Location $location)
-    {
-        $builder = $this->createQueryBuilder('ride');
-
-        $builder->select('ride');
-
-        $builder->where($builder->expr()->like('ride.location', '\'' . $location->getTitle() . '\''));
-
-        $builder->addOrderBy('ride.dateTime', 'DESC');
-
-        $query = $builder->getQuery();
-
-        return $query->getResult();
     }
 
     public function countRidesByCity(City $city)
@@ -725,24 +590,6 @@ class RideRepository extends EntityRepository
 
         $builder
             ->addOrderBy('r.updatedAt', 'DESC');
-
-        $query = $builder->getQuery();
-
-        return $query->getResult();
-    }
-
-    public function findPopularRides(int $limit = 15): array
-    {
-        $builder = $this->createQueryBuilder('ride');
-
-        $builder->select('ride');
-        $builder->join('ride.city', 'city');
-
-        $builder->groupBy('ride.city');
-
-        $builder->orderBy('ride.estimatedParticipants', 'DESC');
-
-        $builder->setMaxResults($limit);
 
         $query = $builder->getQuery();
 
