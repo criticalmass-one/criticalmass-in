@@ -238,7 +238,7 @@
             citySlug: '{{ city.mainSlug.slug() }}'
         };
 
-        CriticalMass.loadModule('EditRidePage', options, null, function (editRidePage) {
+        CriticalMass.loadModule('EditRidePage', null, options, function (editRidePage) {
             var cityLatLng = L.latLng({{ city.latitude }}, {{ city.longitude }});
 
             editRidePage.setCityLatLng(cityLatLng);

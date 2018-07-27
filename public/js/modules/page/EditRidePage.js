@@ -11,6 +11,7 @@ define(['Map', 'LocationMarker', 'typeahead', 'bloodhound', 'bootstrap-datepicke
         rideLongitudeInputSelector: '#ride_longitude',
         rideHasLocationInputSelector: '#ride_hasLocation',
         rideLocationInputSelector: '#ride_location',
+        rideDateSelector: '#ride_dateTime_date',
         rideHasTimeInputSelector: '#ride_hasTime',
         messageDoubleMonthRideSelector: '#doubleMonthRide',
         messageDoubleDayRideSelector: '#doubleDayRide',
@@ -84,6 +85,7 @@ define(['Map', 'LocationMarker', 'typeahead', 'bloodhound', 'bootstrap-datepicke
         $(this.settings.rideHasLocationInputSelector).on('click', toggleLocationFunction);
         $(this.settings.rideHasTimeInputSelector).on('click', toggleTimeFunction);
 
+        $(this.settings.rideDateSelector).on('change', checkFunction);
     };
 
     EditRidePage.prototype._initLatLngs = function () {
@@ -176,25 +178,25 @@ define(['Map', 'LocationMarker', 'typeahead', 'bloodhound', 'bootstrap-datepicke
         $(this.settings.rideLongitudeInputSelector).val(position.lng);
     };
 
-    EditRidePage.prototype._searchForMonth = function (year, month) {
-        for (index in this.rideDateList) {
-            if (this.rideDateList[index].getFullYear() == year && this.rideDateList[index].getMonth() + 1 == month && !this._isSelfMonth(year, month)) {
-                return true;
-            }
-        }
-
-        return false;
+    EditRidePage.prototype._searchForMonth = function (year, month, successCallback, failCallback) {
+        var rideDate = [year, month].join('-');
+        var url = Routing.generate('caldera_criticalmass_rest_ride_show', { citySlug: this.settings.citySlug, rideIdentifier: rideDate});
+        alert(url);
+        $.ajax(url, {
+            success: successCallback,
+            fail: failCallback
+        });
     };
 
-    EditRidePage.prototype._searchForMonthDay = function (year, month, day) {
-        for (index in this.rideDateList) {
-            console.log(this.rideDateList[index], year, month, day);
-            if (this.rideDateList[index].getFullYear() == year && this.rideDateList[index].getMonth() + 1 == month && this.rideDateList[index].getDate() == day && !this._isSelfDateTime(year, month, day)) {
-                return true;
-            }
-        }
+    EditRidePage.prototype._searchForMonthDay = function (year, month, day, successCallback, failCallback) {
+        var rideDate = [year, month, day].join('-');
+        var url = Routing.generate('caldera_criticalmass_rest_ride_show', { citySlug: this.settings.citySlug, rideIdentifier: rideDate});
 
-        return false;
+        alert(url);
+        $.ajax(url, {
+            success: successCallback,
+            fail: failCallback
+        });
     };
 
     EditRidePage.prototype._isSelfDateTime = function (year, month, day) {
@@ -206,27 +208,33 @@ define(['Map', 'LocationMarker', 'typeahead', 'bloodhound', 'bootstrap-datepicke
     };
 
     EditRidePage.prototype._checkRideDate = function () {
-        var day = $(this.settings.rideDateDayInputSelector).val();
-        var month = $(this.settings.rideDateMonthInputSelector).val();
-        var year = $(this.settings.rideDateYearInputSelector).val();
+        var date = $(this.settings.rideDateSelector).val().split('.');
 
+        alert(date);
         var $messageDoubleMonthRide = $(this.settings.messageDoubleMonthRideSelector);
         var $messageDoubleDayRide = $(this.settings.messageDoubleDayRideSelector);
         var $submitButton = $(this.settings.submitButtonSelector);
 
-        if (this._searchForMonthDay(year, month, day)) {
+        var failCallback = function() {
+            $messageDoubleMonthRide.hide();
+            $messageDoubleDayRide.hide();
+            $submitButton.prop('disabled', '');
+        };
+
+        var daySuccessCallback = function() {
             $messageDoubleMonthRide.hide();
             $messageDoubleDayRide.show();
             $submitButton.prop('disabled', 'disabled');
-        } else if (this._searchForMonth(year, month)) {
+        };
+
+        var monthSuccessCallback = function() {
             $messageDoubleMonthRide.show();
             $messageDoubleDayRide.hide();
             $submitButton.prop('disabled', '');
-        } else {
-            $messageDoubleMonthRide.hide();
-            $messageDoubleDayRide.hide();
-            $submitButton.prop('disabled', '');
-        }
+        };
+
+        this._searchForMonth(date[2], date[1], monthSuccessCallback, failCallback);
+        this._searchForMonthDay(date[2], date[1], date[0], daySuccessCallback, failCallback);
     };
 
     EditRidePage.prototype._initLocationSearch = function () {
