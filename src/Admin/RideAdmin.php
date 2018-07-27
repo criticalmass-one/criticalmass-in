@@ -19,6 +19,7 @@ class RideAdmin extends AbstractAdmin
         $formMapper
             ->with('Details', ['class' => 'col-md-6'])
             ->add('city')
+            ->add('slug')
             ->add('title')
             ->add('description')
             ->add('socialDescription')

@@ -3,7 +3,7 @@ caldera_criticalmass_photo_user_list:
     controller: App\Controller\Photo\PhotoManagementController::listAction
 
 caldera_criticalmass_photo_manage:
-    path: /{citySlug}/{rideDate}/managephotos
+    path: /{citySlug}/{rideIdentifier}/managephotos
     controller: App\Controller\Photo\PhotoManagementController::manageAction
 
 caldera_criticalmass_photo_place_single:
@@ -27,11 +27,11 @@ caldera_criticalmass_photo_delete:
     controller: App\Controller\Photo\PhotoManagementController::deleteAction
 
 caldera_criticalmass_photo_relocate:
-    path: /{citySlug}/{rideDate}/relocatephotos
+    path: /{citySlug}/{rideIdentifier}/relocatephotos
     controller: App\Controller\Photo\PhotoManagementController::relocateAction
 
 caldera_criticalmass_gallery_photos_rearrange:
-    path: /{citySlug}/{rideDate}/gallery/rearrange
+    path: /{citySlug}/{rideIdentifier}/gallery/rearrange
     controller: App\Controller\Photo\PhotoManagementController::rearrangeAction
 
 caldera_criticalmass_photo_censor:

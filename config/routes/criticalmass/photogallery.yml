@@ -1,20 +1,6 @@
 caldera_criticalmass_photo_ride_list:
-    path: /{citySlug}/{rideDate}/listphotos
+    path: /{citySlug}/{rideIdentifier}/listphotos
     controller: App\Controller\Photo\PhotoGalleryController::galleryAction
-    requirements:
-        rideDate: '([0-9]{4,4})\-([0-9]{1,2})\-([0-9]{1,2})'
-
-caldera_criticalmass_photo_ride_list_seo:
-    path: /fotos-der-critical-mass-in-{citySlug}-am-{rideDate}
-    controller: App\Controller\Photo\PhotoGalleryController::galleryAction
-    requirements:
-        rideDate: '([0-9]{4,4})\-([0-9]{1,2})\-([0-9]{1,2})'
-
-caldera_criticalmass_photo_event_list:
-    path:  /{citySlug}/{eventSlug}/listphotos
-    controller: App\Controller\Photo\PhotoGalleryController::galleryAction
-    requirements:
-        eventSlug: '^([a-zA-Z0-9\-]*)$'
 
 caldera_criticalmass_photo_examplegallery:
     path: /city/gallery
