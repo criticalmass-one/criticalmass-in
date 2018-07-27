@@ -45,7 +45,7 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
     /**
      * @ORM\ManyToOne(targetEntity="Ride", inversedBy="photos")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
-     * @Routing\RouteParameter(name="rideDate")
+     * @Routing\RouteParameter(name="rideIdentifier")
      */
     protected $ride;
 
