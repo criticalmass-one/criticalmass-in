@@ -74,7 +74,16 @@ class RideParamConverter extends AbstractCriticalmassParamConverter
             if ($city) {
                 return $this->registry->getRepository(Ride::class)->findOneByCityAndSlug($city, $rideIdentifier);
             }
-        } elseif ($citySlug) {
+        } elseif ($citySlug && count($matches) === 3) {
+            $rideDateTime = $this->guessDateTime($rideIdentifier);
+            $city = $this->findCityBySlug($request);
+
+            if ($city && $rideDateTime) {
+                $rides = $this->registry->getRepository(Ride::class)->findByCityAndMonth($city, $rideDateTime);
+
+                return array_shift($rides);
+            }
+        } elseif ($citySlug && count($matches) === 4) {
             $rideDateTime = $this->guessDateTime($rideIdentifier);
             $city = $this->findCityBySlug($request);
 
