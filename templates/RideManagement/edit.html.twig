@@ -243,16 +243,6 @@
 
             editRidePage.setCityLatLng(cityLatLng);
 
-            {% for ride in oldRides %}
-            editRidePage.addRideDate(new Date({{ ride.getDateTime().format('Y') }}, {{ (ride.getDateTime().format('m') - 1) }}, {{ ride.getDateTime().format('d, H, i, s') }}));
-            {% endfor %}
-
-            {% if ride %}
-            editRidePage.setRideDateTime(new Date({{ ride.getDateTime().format('Y') }}, {{ (ride.getDateTime().format('m') - 1) }}, {{ ride.getDateTime().format('d, H, i, s') }}));
-            {% else %}
-            editRidePage.setRideDateTime(null);
-            {% endif %}
-
             editRidePage.init();
         });
     </script>
