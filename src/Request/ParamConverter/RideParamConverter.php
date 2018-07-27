@@ -64,17 +64,18 @@ class RideParamConverter extends AbstractCriticalmassParamConverter
     protected function findRideBySlugs(Request $request): ?Ride
     {
         $citySlug = $request->get('citySlug');
-        $rideDate = $request->get('rideDate');
-        $rideSlug = $request->get('rideSlug');
+        $rideIdentifier = $request->get('rideIdentifier');
 
-        if ($citySlug && $rideSlug) {
+        preg_match('/^([0-9]{4,4})\-([0-9]{1,2})(?:\-?)([0-9]{1,2})?$/', $rideIdentifier,$matches);
+
+        if ($citySlug && count($matches) === 0) {
             $city = $this->findCityBySlug($request);
 
             if ($city) {
-                return $this->registry->getRepository(Ride::class)->findOneByCityAndSlug($city, $rideSlug);
+                return $this->registry->getRepository(Ride::class)->findOneByCityAndSlug($city, $rideIdentifier);
             }
-        } elseif ($citySlug && $rideDate) {
-            $rideDateTime = $this->guessDateTime($rideDate);
+        } elseif ($citySlug) {
+            $rideDateTime = $this->guessDateTime($rideIdentifier);
             $city = $this->findCityBySlug($request);
 
             if ($city && $rideDateTime) {

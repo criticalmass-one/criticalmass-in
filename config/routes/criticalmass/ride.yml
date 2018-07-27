@@ -1,23 +1,5 @@
 caldera_criticalmass_ride_show:
-    path:  /{citySlug}/{rideDate}
+    path:  /{citySlug}/{rideIdentifier}
     controller: App\Controller\Ride\RideController::showAction
-    requirements:
-        rideDate: '([0-9]{4,4})\-([0-9]{2,2})\-([0-9]{1,2})'
-    options:
-        expose: true
-
-caldera_criticalmass_ride_show_month:
-    path:  /{citySlug}/{rideDate}
-    controller: App\Controller\Ride\Ride::showAction
-    requirements:
-        rideDate: '([0-9]{4,4})\-([0-9]{2,2})'
-    options:
-        expose: true
-
-caldera_criticalmass_ride_slug:
-    path:  /{citySlug}/{rideSlug}
-    controller: App\Controller\Ride\RideController::showAction
-    requirements:
-        rideSlug: '([a-zA-Z0-9\-]*)'
     options:
         expose: true

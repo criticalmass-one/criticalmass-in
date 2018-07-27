@@ -30,6 +30,7 @@ use App\Criticalmass\Sharing\Annotation as Sharing;
  * @JMS\ExclusionPolicy("all")
  * @CriticalAssert\SingleRideForDay
  * @Vich\Uploadable
+ * @Routing\DefaultRoute(name="caldera_criticalmass_ride_show")
  */
 class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, Shareable
 {
@@ -77,7 +78,6 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @ORM\Column(type="string", nullable=true)
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
-     * @Routing\RouteParameter(name="rideSlug")
      */
     protected $slug;
 
@@ -107,7 +107,6 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      * @JMS\Type("DateTime<'U'>")
-     * @Routing\RouteParameter(name="rideDate", dateFormat="Y-m-d")
      */
     protected $dateTime;
 

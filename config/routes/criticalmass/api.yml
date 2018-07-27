@@ -34,7 +34,7 @@ caldera_criticalmass_rest_ride_show_current:
     methods:  [GET]
 
 caldera_criticalmass_rest_ride_show:
-    path:     /{citySlug}/{rideDate}
+    path:     /{citySlug}/{rideIdentifier}
     controller: App\Controller\Api\RideController::showAction
     methods:  [GET]
 
