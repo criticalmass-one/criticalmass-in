@@ -12,11 +12,6 @@ define(['Map', 'LocationMarker', 'typeahead', 'bloodhound', 'bootstrap-datepicke
         rideHasLocationInputSelector: '#ride_hasLocation',
         rideLocationInputSelector: '#ride_location',
         rideHasTimeInputSelector: '#ride_hasTime',
-        rideTimeMinuteInputSelector: '#ride_datetime_minute',
-        rideTimeHourInputSelector: '#ride_datetime_hour',
-        rideDateDayInputSelector: '#ride_datedate_day',
-        rideDateMonthInputSelector: '#ride_date_month',
-        rideDateYearInputSelector: '#ride_date_year',
         messageDoubleMonthRideSelector: '#doubleMonthRide',
         messageDoubleDayRideSelector: '#doubleDayRide',
         submitButtonSelector: '#rideSubmitButton',
@@ -89,9 +84,6 @@ define(['Map', 'LocationMarker', 'typeahead', 'bloodhound', 'bootstrap-datepicke
         $(this.settings.rideHasLocationInputSelector).on('click', toggleLocationFunction);
         $(this.settings.rideHasTimeInputSelector).on('click', toggleTimeFunction);
 
-        $(this.settings.rideDateDayInputSelector).on('click', checkFunction);
-        $(this.settings.rideDateMonthInputSelector).on('click', checkFunction);
-        $(this.settings.rideDateYearInputSelector).on('click', checkFunction);
     };
 
     EditRidePage.prototype._initLatLngs = function () {
