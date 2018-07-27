@@ -173,23 +173,23 @@ define(['Map', 'LocationMarker', 'typeahead', 'bloodhound', 'bootstrap-datepicke
         $(this.settings.rideLongitudeInputSelector).val(position.lng);
     };
 
-    EditRidePage.prototype._searchForMonth = function (year, month, successCallback, failCallback) {
+    EditRidePage.prototype._searchForMonth = function (year, month, successCallback, errorCallback) {
         var rideDate = [year, month].join('-');
         var url = Routing.generate('caldera_criticalmass_rest_ride_show', { citySlug: this.settings.citySlug, rideIdentifier: rideDate});
 
         $.ajax(url, {
             success: successCallback,
-            fail: failCallback
+            error: errorCallback
         });
     };
 
-    EditRidePage.prototype._searchForMonthDay = function (year, month, day, successCallback, failCallback) {
+    EditRidePage.prototype._searchForMonthDay = function (year, month, day, successCallback, errorCallback) {
         var rideDate = [year, month, day].join('-');
         var url = Routing.generate('caldera_criticalmass_rest_ride_show', { citySlug: this.settings.citySlug, rideIdentifier: rideDate});
 
         $.ajax(url, {
             success: successCallback,
-            fail: failCallback
+            error: errorCallback
         });
     };
 
@@ -208,12 +208,6 @@ define(['Map', 'LocationMarker', 'typeahead', 'bloodhound', 'bootstrap-datepicke
         var $messageDoubleDayRide = $(this.settings.messageDoubleDayRideSelector);
         var $submitButton = $(this.settings.submitButtonSelector);
 
-        var failCallback = function() {
-            $messageDoubleMonthRide.hide();
-            $messageDoubleDayRide.hide();
-            $submitButton.prop('disabled', '');
-        };
-
         var daySuccessCallback = function() {
             $messageDoubleMonthRide.hide();
             $messageDoubleDayRide.show();
@@ -224,15 +218,21 @@ define(['Map', 'LocationMarker', 'typeahead', 'bloodhound', 'bootstrap-datepicke
             $messageDoubleMonthRide.show();
             $messageDoubleDayRide.hide();
             $submitButton.prop('disabled', '');
-        };
+
+            this._searchForMonthDay(date[2], date[1], date[0], daySuccessCallback);
+        }.bind(this);
+
+        var monthFailCallback = function() {
+            $messageDoubleMonthRide.hide();
+            $messageDoubleDayRide.hide();
+            $submitButton.prop('disabled', '');
+        }.bind(this);
 
         if (this._isSelfDay(date[2], date[1], date[0]) || this._isSelfMonth(date[2], date[1])) {
-            alert('jo');
             return;
         }
 
-        this._searchForMonth(date[2], date[1], monthSuccessCallback, failCallback);
-        this._searchForMonthDay(date[2], date[1], date[0], daySuccessCallback, failCallback);
+        this._searchForMonth(date[2], date[1], monthSuccessCallback, monthFailCallback);
     };
 
     EditRidePage.prototype._initLocationSearch = function () {
