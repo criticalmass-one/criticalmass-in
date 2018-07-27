@@ -30,12 +30,7 @@ define(['Map', 'LocationMarker', 'typeahead', 'bloodhound', 'bootstrap-datepicke
     EditRidePage.prototype.mapZoom = null;
     EditRidePage.prototype.cityMarker = null;
     EditRidePage.prototype.locationMarker = null;
-    EditRidePage.prototype.rideDateList = [];
     EditRidePage.prototype.rideDateTime = null;
-
-    EditRidePage.prototype.addRideDate = function (rideDate) {
-        this.rideDateList.push(rideDate);
-    };
 
     EditRidePage.prototype.setRideDateTime = function (rideDateTime) {
         this.rideDateTime = rideDateTime;
@@ -181,7 +176,7 @@ define(['Map', 'LocationMarker', 'typeahead', 'bloodhound', 'bootstrap-datepicke
     EditRidePage.prototype._searchForMonth = function (year, month, successCallback, failCallback) {
         var rideDate = [year, month].join('-');
         var url = Routing.generate('caldera_criticalmass_rest_ride_show', { citySlug: this.settings.citySlug, rideIdentifier: rideDate});
-        alert(url);
+
         $.ajax(url, {
             success: successCallback,
             fail: failCallback
@@ -192,14 +187,13 @@ define(['Map', 'LocationMarker', 'typeahead', 'bloodhound', 'bootstrap-datepicke
         var rideDate = [year, month, day].join('-');
         var url = Routing.generate('caldera_criticalmass_rest_ride_show', { citySlug: this.settings.citySlug, rideIdentifier: rideDate});
 
-        alert(url);
         $.ajax(url, {
             success: successCallback,
             fail: failCallback
         });
     };
 
-    EditRidePage.prototype._isSelfDateTime = function (year, month, day) {
+    EditRidePage.prototype._isSelfDay = function (year, month, day) {
         return (this.rideDateTime && this.rideDateTime.getFullYear() == year && this.rideDateTime.getMonth() + 1 == month && this.rideDateTime.getDate() == day);
     };
 
@@ -210,7 +204,6 @@ define(['Map', 'LocationMarker', 'typeahead', 'bloodhound', 'bootstrap-datepicke
     EditRidePage.prototype._checkRideDate = function () {
         var date = $(this.settings.rideDateSelector).val().split('.');
 
-        alert(date);
         var $messageDoubleMonthRide = $(this.settings.messageDoubleMonthRideSelector);
         var $messageDoubleDayRide = $(this.settings.messageDoubleDayRideSelector);
         var $submitButton = $(this.settings.submitButtonSelector);
@@ -232,6 +225,11 @@ define(['Map', 'LocationMarker', 'typeahead', 'bloodhound', 'bootstrap-datepicke
             $messageDoubleDayRide.hide();
             $submitButton.prop('disabled', '');
         };
+
+        if (this._isSelfDay(date[2], date[1], date[0]) || this._isSelfMonth(date[2], date[1])) {
+            alert('jo');
+            return;
+        }
 
         this._searchForMonth(date[2], date[1], monthSuccessCallback, failCallback);
         this._searchForMonthDay(date[2], date[1], date[0], daySuccessCallback, failCallback);

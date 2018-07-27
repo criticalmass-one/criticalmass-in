@@ -243,6 +243,10 @@
 
             editRidePage.setCityLatLng(cityLatLng);
 
+            {% if ride.id %}
+            editRidePage.setRideDateTime(new Date({{ ride.dateTime|date('U') * 1000 }}));
+            {% endif %}
+
             editRidePage.init();
         });
     </script>
