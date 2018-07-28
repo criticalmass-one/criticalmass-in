@@ -175,7 +175,7 @@
                                     </td>
 
                                     <td>
-                                        {{ ride.estimatedDuration|round(2) }} Stunden
+                                        {{ human_duration(ride.getEstimatedDurationInSeconds()) }}
                                     </td>
                                 </tr>
                             {% endfor %}

@@ -73,10 +73,10 @@ class TrackReducePolylineCommand extends Command
             $progressBar->advance();
             $table->addRow([
                 $track->getId(),
-                $track->getUser()->getUsername(),
+                $track->getUsername(),
                 $track->getCreationDateTime()->format('Y-m-d H:i:s'),
-                $track->getRide()->getCity()->getCity(),
-                $track->getRide()->getDateTime()->format('Y-m-d H:i'),
+                ($track->getRide() && $track->getRide()->getCity() ? $track->getRide()->getCity()->getCity() : ''),
+                ($track->getRide() ? $track->getRide()->getDateTime()->format('Y-m-d H:i') : ''),
                 $track->getReducedPolyline(),
             ]);
         }

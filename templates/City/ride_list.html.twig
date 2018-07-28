@@ -100,7 +100,7 @@
                             </td>
                             <td>
                                 {% if ride.estimatedDuration %}
-                                    {{ ride.estimatedDuration|round(2) }}&nbsp;Stunden
+                                    {{ human_duration(ride.getEstimatedDurationInSeconds()) }}
                                 {% endif %}
                             </td>
                         </tr>

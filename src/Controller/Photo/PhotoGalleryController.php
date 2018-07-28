@@ -12,7 +12,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use App\Criticalmass\Feature\Annotation\Feature as Feature;
 
+/**
+ * @Feature(name="photos")
+ */
 class PhotoGalleryController extends AbstractController
 {
     /**
@@ -20,8 +24,6 @@ class PhotoGalleryController extends AbstractController
      */
     public function galleryAction(Request $request, PaginatorInterface $paginator, Ride $ride): Response
     {
-        $this->errorIfFeatureDisabled('photos');
-
         if ($ride && $ride->getRestrictedPhotoAccess() && !$this->getUser()) {
             throw $this->createAccessDeniedException();
         }
@@ -42,11 +44,10 @@ class PhotoGalleryController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
+     * @Feature(name="photos")
      */
     public function userlistAction(UserInterface $user = null): Response
     {
-        $this->errorIfFeatureDisabled('photos');
-
         $result = $this->getPhotoRepository()->findRidesWithPhotoCounterByUser($user);
 
         return $this->render('PhotoGallery/user_list.html.twig', [
@@ -54,10 +55,11 @@ class PhotoGalleryController extends AbstractController
         ]);
     }
 
+    /*
+     * @Feature(name="photos")
+     */
     public function examplegalleryAction(): Response
     {
-        $this->errorIfFeatureDisabled('photos');
-
         $photos = $this->getPhotoRepository()->findSomePhotos(32);
 
         $cityList = [];

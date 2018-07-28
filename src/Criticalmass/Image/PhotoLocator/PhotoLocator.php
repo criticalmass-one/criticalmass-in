@@ -10,6 +10,7 @@ use App\Criticalmass\Image\PhotoGps\PhotoGps;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/** @deprecated  */
 class PhotoLocator
 {
     /** @var RegistryInterface $doctrine */

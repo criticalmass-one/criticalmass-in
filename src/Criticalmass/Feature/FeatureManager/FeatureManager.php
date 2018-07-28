@@ -1,12 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace App\Feature;
+namespace App\Criticalmass\Feature\FeatureManager;
 
-class FeatureManager
+use App\Criticalmass\Feature\Feature\FeatureInterface;
+
+class FeatureManager implements FeatureManagerInterface
 {
+    /** @var array $featureList */
     protected $featureList = [];
 
-    public function addFeature(FeatureInterface $feature): FeatureManager
+    public function addFeature(FeatureInterface $feature): FeatureManagerInterface
     {
         $this->featureList[$feature->getName()] = $feature;
 

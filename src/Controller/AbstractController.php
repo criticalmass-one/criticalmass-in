@@ -17,18 +17,4 @@ abstract class AbstractController extends Controller
             ->get('security.authorization_checker')
             ->isGranted('IS_AUTHENTICATED_FULLY');
     }
-
-    protected function isFeatureEnabled(string $featureName): bool
-    {
-        $parameterName = sprintf('feature.%s', $featureName);
-
-        return $this->getParameter($parameterName) === true;
-    }
-
-    protected function errorIfFeatureDisabled(string $featureName): void
-    {
-        if (!$this->isFeatureEnabled($featureName)) {
-            throw $this->createNotFoundException();
-        }
-    }
 }

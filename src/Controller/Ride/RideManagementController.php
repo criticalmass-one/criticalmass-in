@@ -43,14 +43,11 @@ class RideManagementController extends AbstractController
 
     protected function addGetAction(Request $request, UserInterface $user = null, Ride $ride, EntityManagerInterface $entityManager, ObjectRouterInterface $objectRouter, City $city, FormInterface $form): Response
     {
-        $oldRides = $this->getRideRepository()->findRidesForCity($city);
-
         return $this->render('RideManagement/edit.html.twig', [
             'ride' => null,
             'form' => $form->createView(),
             'city' => $city,
             'dateTime' => new \DateTime(),
-            'oldRides' => $oldRides,
         ]);
     }
 
@@ -63,8 +60,6 @@ class RideManagementController extends AbstractController
         City $city,
         FormInterface $form
     ): Response {
-        $oldRides = $this->getRideRepository()->findRidesForCity($city);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -87,7 +82,6 @@ class RideManagementController extends AbstractController
             'form' => $form->createView(),
             'city' => $city,
             'dateTime' => new \DateTime(),
-            'oldRides' => $oldRides,
         ]);
     }
 
@@ -115,14 +109,11 @@ class RideManagementController extends AbstractController
         City $city,
         FormInterface $form
     ): Response {
-        $oldRides = $this->getRideRepository()->findRidesForCity($city);
-
         return $this->render('RideManagement/edit.html.twig', [
             'ride' => $ride,
             'city' => $city,
             'form' => $form->createView(),
             'dateTime' => new \DateTime(),
-            'oldRides' => $oldRides
         ]);
     }
 
@@ -133,8 +124,6 @@ class RideManagementController extends AbstractController
         City $city,
         FormInterface $form
     ): Response {
-        $oldRides = $this->getRideRepository()->findRidesForCity($city);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -152,7 +141,6 @@ class RideManagementController extends AbstractController
             'city' => $city,
             'form' => $form->createView(),
             'dateTime' => new \DateTime(),
-            'oldRides' => $oldRides,
         ]);
     }
 

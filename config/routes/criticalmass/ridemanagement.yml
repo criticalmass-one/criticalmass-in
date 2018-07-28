@@ -3,9 +3,9 @@ caldera_criticalmass_ride_add:
     controller: App\Controller\Ride\RideManagementController::addAction
 
 caldera_criticalmass_ride_edit:
-    path:  /{citySlug}/{rideDate}/edit
+    path:  /{citySlug}/{rideIdentifier}/edit
     controller: App\Controller\Ride\RideManagementController::editAction
 
 caldera_criticalmass_ride_socialpreview:
-    path:  /{citySlug}/{rideDate}/socialpreview
+    path:  /{citySlug}/{rideIdentifier}/socialpreview
     controller: App\Controller\Ride\RideManagementController::socialPreviewAction
