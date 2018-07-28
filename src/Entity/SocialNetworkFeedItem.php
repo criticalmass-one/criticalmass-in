@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  *    })
  * @ORM\Entity(repositoryClass="App\Repository\SocialNetworkFeedItemRepository")
  */
-class SocialNetworkFeedItem implements Crawlable
+class SocialNetworkFeedItem //implements Crawlable
 {
     /**
      * @ORM\Id
@@ -67,9 +67,9 @@ class SocialNetworkFeedItem implements Crawlable
     protected $createdAt;
 
     /**
-     * @ORM\Column(type="boolean")
+     * ORM\Column(type="boolean")
      */
-    protected $crawled = false;
+    //protected $crawled = false;
 
     public function __construct()
     {
@@ -196,7 +196,7 @@ class SocialNetworkFeedItem implements Crawlable
         return $this;
     }
 
-    public function isCrawled(): bool
+    /*public function isCrawled(): bool
     {
         return $this->crawled;
     }
@@ -206,5 +206,5 @@ class SocialNetworkFeedItem implements Crawlable
         $this->crawled = $crawled;
 
         return $this;
-    }
+    }*/
 }
