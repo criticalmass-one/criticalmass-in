@@ -13,7 +13,11 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use App\Criticalmass\Feature\Annotation\Feature as Feature;
 
+/**
+ * @Feature(name="photos")
+ */
 class PhotoController extends AbstractController
 {
     /**
@@ -24,8 +28,6 @@ class PhotoController extends AbstractController
         EventDispatcherInterface $eventDispatcher,
         Photo $photo
     ): Response {
-        $this->errorIfFeatureDisabled('photos');
-
         $city = $photo->getCity();
 
         $ride = $photo->getRide();
@@ -46,6 +48,8 @@ class PhotoController extends AbstractController
 
         $seoPage->setPreviewPhoto($photo);
 
+        $exifData = $this->readExifData($photo);
+
         return $this->render('Photo/show.html.twig', [
             'photo' => $photo,
             'nextPhoto' => $this->getPhotoRepository()->getNextPhoto($photo),
@@ -53,14 +57,12 @@ class PhotoController extends AbstractController
             'city' => $city,
             'ride' => $ride,
             'track' => $track,
-            'exifData' => $this->readExifData($photo)->getData(),
+            'exifData' => $exifData ? $exifData->getData() : null,
         ]);
     }
 
     public function ajaxphotoviewAction(Request $request, EventDispatcherInterface $eventDispatcher): Response
     {
-        $this->errorIfFeatureDisabled('photos');
-
         $photoId = $request->get('photoId');
 
         /** @var Photo $photo */
@@ -73,13 +75,16 @@ class PhotoController extends AbstractController
         return new Response(null);
     }
 
-    protected function readExifData(Photo $photo): Exif
+    protected function readExifData(Photo $photo): ?Exif
     {
         $filename = sprintf('%s/%s', $this->getParameter('upload_destination.photo'), $photo->getImageName());
 
         $reader = Reader::factory(Reader::TYPE_NATIVE);
-        $exif = $reader->read($filename);
 
-        return $exif;
+        if ($exif = $reader->read($filename)) {
+            return $exif;
+        }
+
+        return null;
     }
 }

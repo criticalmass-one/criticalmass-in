@@ -66,11 +66,11 @@
                                        checked="checked"/>
                             </td>
                             <td>
-                                {{ track.username }}
+                                {{ track.user.username }}
                             </td>
                             <td>
                                 {% if track.getDurationInterval() %}
-                                    {{ track.getDurationInterval().format('%h:%i') }}&nbsp;Stunden
+                                    {{ human_duration(track.getDurationInSeconds()) }}
                                 {% endif %}
                             </td>
                             <td>

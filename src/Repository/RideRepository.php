@@ -149,22 +149,58 @@ class RideRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findByCityAndMonth(City $city, \DateTime $dateTime)
+    public function findByCityAndMonth(City $city, \DateTime $monthDateTime): array
     {
-        $startDateTime = new \DateTime($dateTime->format('Y') . '-' . $dateTime->format('m') . '-01 00:00:00');
-        $endDateTime = new \DateTime($dateTime->format('Y') . '-' . $dateTime->format('m') . '-' . $dateTime->format('t') . ' 23:59:59');
+        $startDateTime = DateTimeUtil::getMonthStartDateTime($monthDateTime);
+        $endDateTime = DateTimeUtil::getMonthEndDateTime($monthDateTime);
 
-        $builder = $this->createQueryBuilder('ride');
+        $builder = $this->createQueryBuilder('r');
 
-        $builder->select('ride');
-        $builder->where($builder->expr()->gte('ride.dateTime', '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
-        $builder->andWhere($builder->expr()->lte('ride.dateTime', '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
-
-        $builder->andWhere($builder->expr()->eq('ride.city', $city->getId()));
+        $builder->select('r')
+            ->where($builder->expr()->gte('r.dateTime', ':startDateTime'))
+            ->andWhere($builder->expr()->lte('r.dateTime', ':endDateTime'))
+            ->andWhere($builder->expr()->eq('r.city', ':city'))
+            ->addOrderBy('r.dateTime', 'ASC')
+            ->setParameter('startDateTime', $startDateTime)
+            ->setParameter('endDateTime', $endDateTime)
+            ->setParameter('city', $city);
 
         $query = $builder->getQuery();
 
         return $query->getResult();
+    }
+
+    public function findOneByCityAndSlug(City $city, string $slug): ?Ride
+    {
+        $builder = $this->createQueryBuilder('r');
+
+        $builder->select('r')
+            ->where($builder->expr()->eq('r.city', ':city'))
+            ->andWhere($builder->expr()->eq('r.slug', ':slug'))
+            ->setParameter('city', $city)
+            ->setParameter('slug', $slug);
+
+        $query = $builder->getQuery();
+
+        return $query->getOneOrNullResult();
+    }
+
+    public function findOneByCitySlugAndSlug(string $citySlug, string $rideSlug): ?Ride
+    {
+        $builder = $this->createQueryBuilder('r');
+
+        $builder
+            ->select('r')
+            ->join('r.city', 'c')
+            ->join('c.slugs', 'cs')
+            ->where($builder->expr()->eq('cs.slug', ':citySlug'))
+            ->andWhere($builder->expr()->eq('r.slug', ':rideSlug'))
+            ->setParameter('citySlug', $citySlug)
+            ->setParameter('rideSlug', $rideSlug);
+
+        $query = $builder->getQuery();
+
+        return $query->getOneOrNullResult();
     }
 
     public function findFrontpageRides()

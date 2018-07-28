@@ -1,12 +1,10 @@
 caldera_criticalmass_photo_ajaxview:
-    path: /{citySlug}/{rideDate}/ajaxphotoview
+    path: /{citySlug}/{rideIdentifier}/ajaxphotoview
     controller: App\Controller\Photo\PhotoController::ajaxphotoviewAction
 
 caldera_criticalmass_photo_show_ride:
-    path: /{citySlug}/{rideDate}/photo/{photoId}
+    path: /{citySlug}/{rideIdentifier}/photo/{photoId}
     controller: App\Controller\Photo\PhotoController::showAction
-    requirements:
-        rideDate: '^([0-9]{4,4})\-([0-9]{1,2})\-([0-9]{1,2})$'
 
 caldera_criticalmass_photo_show:
     path: /photo/{photoId}
