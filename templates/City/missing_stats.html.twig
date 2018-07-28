@@ -81,7 +81,7 @@
                             </td>
 
                             <td>
-                                {{ ride.estimatedDuration|default('fehlt') }}
+                                {{ human_duration(ride.getEstimatedDurationInSeconds())|default('fehlt') }}
                             </td>
 
                             <td>

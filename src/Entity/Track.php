@@ -532,6 +532,7 @@ class Track implements RouteableInterface, StaticMapableInterface
         return $this->updatedAt;
     }
 
+    /** @deprecated  */
     public function getDurationInterval(): ?\DateInterval
     {
         if ($this->startDateTime && $this->endDateTime) {
