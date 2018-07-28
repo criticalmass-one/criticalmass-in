@@ -3,12 +3,14 @@
 namespace App\Entity;
 
 use App\Criticalmass\Geocoding\ReverseGeocodeable;
+use App\Criticalmass\Image\PhotoManipulator\PhotoInterface\ManipulateablePhotoInterface;
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
 use App\EntityInterface\AutoParamConverterAble;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
 use App\EntityInterface\ViewableInterface;
+use App\EntityInterface\StaticMapableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
@@ -23,7 +25,7 @@ use App\Criticalmass\Sharing\Annotation as Sharing;
  * @JMS\ExclusionPolicy("all")
  * @Routing\DefaultRoute(name="caldera_criticalmass_photo_show_ride")
  */
-class Photo implements ViewableInterface, PhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, Shareable, ReverseGeocodeable
+class Photo implements ViewableInterface, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, Shareable, StaticMapableInterface, ReverseGeocodeable
 {
     /**
      * @ORM\Id
@@ -43,7 +45,7 @@ class Photo implements ViewableInterface, PhotoInterface, RouteableInterface, Po
     /**
      * @ORM\ManyToOne(targetEntity="Ride", inversedBy="photos")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
-     * @Routing\RouteParameter(name="rideDate")
+     * @Routing\RouteParameter(name="rideIdentifier")
      */
     protected $ride;
 
@@ -343,14 +345,14 @@ class Photo implements ViewableInterface, PhotoInterface, RouteableInterface, Po
         return $this->updatedAt;
     }
 
-    public function setBackupName(string $backupName): Photo
+    public function setBackupName(string $backupName = null): ManipulateablePhotoInterface
     {
         $this->backupName = $backupName;
 
         return $this;
     }
 
-    public function getBackupName(): string
+    public function getBackupName(): ?string
     {
         return $this->backupName;
     }

@@ -21,7 +21,7 @@ caldera_criticalmass_track_list:
     controller: App\Controller\Track\TrackManagementController::listAction
 
 caldera_criticalmass_track_upload:
-    path:  /{citySlug}/{rideDate}/addtrack
+    path:  /{citySlug}/{rideIdentifier}/addtrack
     controller: App\Controller\Track\TrackUploadController::uploadAction
 
 caldera_criticalmass_track_view:
@@ -37,7 +37,7 @@ caldera_criticalmass_track_time:
     controller: App\Controller\Track\TrackTimeController::timeAction
 
 caldera_criticalmass_track_draw:
-    path:  /{citySlug}/{rideDate}/drawtrack
+    path:  /{citySlug}/{rideIdentifier}/drawtrack
     controller: App\Controller\Track\TrackDrawController::drawAction
 
 caldera_criticalmass_track_edit:

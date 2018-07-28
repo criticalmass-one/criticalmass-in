@@ -74,7 +74,7 @@
                             </td>
                             <td>
                                 {% if ride.durationInterval.format('%h:%i') > 0 %}
-                                {{ ride.durationInterval.format('%h:%i') }}&nbsp;Stunden
+                                {{ human_duration(ride.getEstimatedDurationInSeconds()) }}
                                 {% endif %}
                             </td>
                             <td>

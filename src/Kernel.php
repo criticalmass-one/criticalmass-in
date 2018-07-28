@@ -1,7 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App;
 
+use App\Criticalmass\Feature\Feature\FeatureInterface;
 use App\Criticalmass\Router\DelegatedRouter\DelegatedRouterInterface;
 use App\Criticalmass\Sharing\Network\ShareNetworkInterface;
 use App\Criticalmass\SocialNetwork\Network\NetworkInterface;
@@ -12,7 +13,6 @@ use App\DependencyInjection\Compiler\ObjectRouterPass;
 use App\DependencyInjection\Compiler\ShareNetworkPass;
 use App\DependencyInjection\Compiler\SocialNetworkPass;
 use App\DependencyInjection\Compiler\TimelineCollectorPass;
-use App\Feature\FeatureInterface;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Resource\FileResource;

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
+use App\EntityInterface\StaticMapableInterface;
 use Caldera\GeoBasic\Coord\Coord;
 use App\EntityInterface\AuditableInterface;
 use App\EntityInterface\ElasticSearchPinInterface;
@@ -31,7 +32,7 @@ use App\Criticalmass\Sharing\Annotation as Sharing;
  * @Vich\Uploadable
  * @Routing\DefaultRoute(name="caldera_criticalmass_ride_show")
  */
-class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, Shareable
+class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, Shareable
 {
     /**
      * @ORM\Id
@@ -74,6 +75,13 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     protected $subrides;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
+     */
+    protected $slug;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=false)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
@@ -99,7 +107,6 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      * @JMS\Type("DateTime<'U'>")
-     * @Routing\RouteParameter(name="rideDate", dateFormat="Y-m-d")
      */
     protected $dateTime;
 
@@ -421,6 +428,23 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->longitude;
     }
 
+    public function setSlug(string $slug = null): Ride
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function hasSlug(): bool
+    {
+        return $this->slug !== null;
+    }
+
     public function setTitle(string $title = null): Ride
     {
         $this->title = $title;
@@ -602,6 +626,15 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     public function getEstimatedDuration(): ?float
     {
         return $this->estimatedDuration;
+    }
+
+    public function getEstimatedDurationInSeconds(): ?int
+    {
+        if ($this->estimatedDuration) {
+            return intval(ceil($this->estimatedDuration * 60 * 60));
+        }
+
+        return null;
     }
 
     public function addTrack(Track $track): Ride

@@ -26,6 +26,8 @@
         "vich/uploader-bundle": "^1.6",
         "liip/imagine-bundle": "^2.0",
         "knplabs/knp-paginator-bundle": "^2.5",
+        "basvandorst/StravaPHP": "1.0.1",
+        "facebook/php-sdk-v4" : "~5.0",
         "friendsofsymfony/elastica-bundle": "^5.0",
         "emcconville/google-map-polyline-encoding-tool" : ">=1.2.1",
         "friendsofsymfony/jsrouting-bundle": "^2.0",
@@ -76,7 +78,8 @@
         "symfony/dotenv": "^4.1",
         "symfony/apache-pack": "^1.0",
         "sunra/php-simple-html-dom-parser": "^1.5",
-        "symfony/flex": "^1.0"
+        "symfony/flex": "^1.0",
+        "khill/php-duration": "^1.0"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^3.0",

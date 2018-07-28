@@ -2,14 +2,14 @@
 
 namespace App\Twig\Extension;
 
-use App\Feature\FeatureManager;
+use App\Criticalmass\Feature\FeatureManager\FeatureManagerInterface;
 
 class FeatureTwigExtension extends \Twig_Extension
 {
-    /** @var FeatureManager $featureManager */
+    /** @var FeatureManagerInterface $featureManager */
     protected $featureManager;
 
-    public function __construct(FeatureManager $featureManager)
+    public function __construct(FeatureManagerInterface $featureManager)
     {
         $this->featureManager = $featureManager;
     }

@@ -3,24 +3,23 @@
 namespace App\Controller\Photo;
 
 use App\Controller\AbstractController;
+use App\Criticalmass\Image\PhotoManipulator\PhotoManipulatorInterface;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Photo;
 use App\Entity\Ride;
 use App\Form\Type\PhotoCoordType;
 use Imagine\Image\Box;
-use Imagine\Image\BoxInterface;
-use Imagine\Image\ImageInterface;
 use Imagine\Image\Point;
-use Imagine\Image\PointInterface;
 use Imagine\Imagick\Imagine;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\Form\Form;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use App\Criticalmass\Feature\Annotation\Feature as Feature;
 
 class PhotoManagementController extends AbstractController
 {
@@ -29,8 +28,6 @@ class PhotoManagementController extends AbstractController
      */
     public function listAction(UserInterface $user = null): Response
     {
-        $this->errorIfFeatureDisabled('photos');
-
         return $this->render('PhotoManagement/user_list.html.twig', [
             'result' => $this->getPhotoRepository()->findRidesWithPhotoCounterByUser($user),
         ]);
@@ -41,8 +38,6 @@ class PhotoManagementController extends AbstractController
      */
     public function ridelistAction(Request $request, PaginatorInterface $paginator, Ride $ride): Response
     {
-        $this->errorIfFeatureDisabled('photos');
-
         $query = $this->getPhotoRepository()->buildQueryPhotosByRide($ride);
 
         $pagination = $paginator->paginate(
@@ -61,15 +56,13 @@ class PhotoManagementController extends AbstractController
      * @Security("is_granted('edit', photo)")
      * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
-    public function deleteAction(Request $request, Photo $photo): Response
+    public function deleteAction(Request $request, Photo $photo, RegistryInterface $registry): Response
     {
-        $this->errorIfFeatureDisabled('photos');
-
         $this->saveReferer($request);
 
         $photo->setDeleted(true);
 
-        $this->getManager()->flush();
+        $registry->getManager()->flush();
 
         return $this->createRedirectResponseForSavedReferer();
     }
@@ -80,8 +73,6 @@ class PhotoManagementController extends AbstractController
      */
     public function manageAction(Request $request, PaginatorInterface $paginator, Ride $ride): Response
     {
-        $this->errorIfFeatureDisabled('photos');
-
         $query = $this->getPhotoRepository()->buildQueryPhotosByUserAndRide($this->getUser(), $ride);
 
         $pagination = $paginator->paginate(
@@ -100,15 +91,13 @@ class PhotoManagementController extends AbstractController
      * @Security("is_granted('edit', photo)")
      * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
-    public function toggleAction(Request $request, Photo $photo): Response
+    public function toggleAction(Request $request, Photo $photo, RegistryInterface $registry): Response
     {
-        $this->errorIfFeatureDisabled('photos');
-
         $this->saveReferer($request);
 
         $photo->setEnabled(!$photo->getEnabled());
 
-        $this->getManager()->flush();
+        $registry->getManager()->flush();
 
         return $this->createRedirectResponseForSavedReferer();
     }
@@ -117,15 +106,13 @@ class PhotoManagementController extends AbstractController
      * @Security("is_granted('edit', photo)")
      * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
-    public function featuredPhotoAction(Request $request, Photo $photo): Response
+    public function featuredPhotoAction(Request $request, Photo $photo, RegistryInterface $registry): Response
     {
-        $this->errorIfFeatureDisabled('photos');
-
         $this->saveReferer($request);
 
         $photo->getRide()->setFeaturedPhoto($photo);
 
-        $this->getManager()->flush();
+        $registry->getManager()->flush();
 
         return $this->createRedirectResponseForSavedReferer();
     }
@@ -134,22 +121,20 @@ class PhotoManagementController extends AbstractController
      * @Security("is_granted('edit', photo)")
      * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
-    public function placeSingleAction(Request $request, Photo $photo, ObjectRouterInterface $objectRouter): Response
+    public function placeSingleAction(Request $request, Photo $photo, ObjectRouterInterface $objectRouter, RegistryInterface $registry): Response
     {
-        $this->errorIfFeatureDisabled('photos');
-
         $form = $this->createForm(PhotoCoordType::class, $photo, [
             'action' => $objectRouter->generate($photo, 'caldera_criticalmass_photo_place_single')
         ]);
 
         if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->placeSinglePostAction($request, $photo, $form);
+            return $this->placeSinglePostAction($request, $photo, $form, $registry);
         } else {
-            return $this->placeSingleGetAction($request, $photo, $form);
+            return $this->placeSingleGetAction($request, $photo, $form, $registry);
         }
     }
 
-    protected function placeSingleGetAction(Request $request, Photo $photo, FormInterface $form): Response
+    protected function placeSingleGetAction(Request $request, Photo $photo, FormInterface $form, RegistryInterface $registry): Response
     {
         $this->saveReferer($request);
 
@@ -167,14 +152,14 @@ class PhotoManagementController extends AbstractController
         ]);
     }
 
-    protected function placeSinglePostAction(Request $request, Photo $photo, FormInterface $form): Response
+    protected function placeSinglePostAction(Request $request, Photo $photo, FormInterface $form, RegistryInterface $registry): Response
     {
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $photo = $form->getData();
 
-            $this->getManager()->flush();
+            $registry->getManager()->flush();
         }
 
         return $this->createRedirectResponseForSavedReferer();
@@ -186,8 +171,6 @@ class PhotoManagementController extends AbstractController
      */
     public function relocateAction(Ride $ride): Response
     {
-        $this->errorIfFeatureDisabled('photos');
-
         $photos = $this->getPhotoRepository()->findPhotosByUserAndRide($this->getUser(), $ride);
 
         $track = $this->getTrackRepository()->findByUserAndRide($ride, $this->getUser());
@@ -203,10 +186,8 @@ class PhotoManagementController extends AbstractController
      * @Security("is_granted('edit', photo)")
      * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
-    public function rotateAction(Request $request, Photo $photo): Response
+    public function rotateAction(Request $request, Photo $photo, PhotoManipulatorInterface $photoManipulator): Response
     {
-        $this->errorIfFeatureDisabled('photos');
-
         $this->saveReferer($request);
 
         $angle = 90;
@@ -215,13 +196,10 @@ class PhotoManagementController extends AbstractController
             $angle = -90;
         }
 
-        $imagine = new Imagine();
-
-        $image = $imagine->open($this->getPhotoFilename($photo));
-
-        $image->rotate($angle);
-
-        $this->saveManipulatedImage($image, $photo);
+        $photoManipulator
+            ->open($photo)
+            ->rotate($angle)
+            ->save();
 
         return $this->createRedirectResponseForSavedReferer();
     }
@@ -230,25 +208,23 @@ class PhotoManagementController extends AbstractController
      * @Security("is_granted('edit', photo)")
      * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
-    public function censorAction(Request $request, UserInterface $user = null, Photo $photo): Response
+    public function censorAction(Request $request, UserInterface $user = null, Photo $photo, PhotoManipulatorInterface $photoManipulator): Response
     {
-        $this->errorIfFeatureDisabled('photos');
-
         if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->censorPostAction($request, $user, $photo);
+            return $this->censorPostAction($request, $user, $photo, $photoManipulator);
         } else {
-            return $this->censorGetAction($request, $user, $photo);
+            return $this->censorGetAction($request, $user, $photo, $photoManipulator);
         }
     }
 
-    public function censorGetAction(Request $request, UserInterface $user = null, Photo $photo): Response
+    public function censorGetAction(Request $request, UserInterface $user = null, Photo $photo, PhotoManipulatorInterface $photoManipulator): Response
     {
         return $this->render('PhotoManagement/censor.html.twig', [
             'photo' => $photo,
         ]);
     }
 
-    public function censorPostAction(Request $request, UserInterface $user = null, Photo $photo): Response
+    public function censorPostAction(Request $request, UserInterface $user = null, Photo $photo, PhotoManipulatorInterface $photoManipulator): Response
     {
         $areaDataList = json_decode($request->getContent());
 
@@ -256,81 +232,11 @@ class PhotoManagementController extends AbstractController
             return new Response(null);
         }
 
-        $displayWidth = $request->query->get('width');
-
-        $imagine = new Imagine();
-
-        $image = $imagine->open($this->getPhotoFilename($photo));
-
-        $size = $image->getSize();
-
-        $factor = $size->getWidth() / $displayWidth;
-
-        foreach ($areaDataList as $areaData) {
-            $topLeftPoint = new Point($areaData->x * $factor, $areaData->y * $factor);
-            $dimension = new Box($areaData->width * $factor, $areaData->height * $factor);
-
-            $this->applyBlurArea($image, $topLeftPoint, $dimension);
-        }
-
-        $newFilename = $this->saveManipulatedImage($image, $photo);
+        $newFilename = $photoManipulator
+            ->open($photo)
+            ->censor($areaDataList, intval($request->query->get('width')))
+            ->save();
 
         return new Response($newFilename);
-    }
-
-    protected function applyBlurArea(ImageInterface $image, PointInterface $topLeftPoint, BoxInterface $dimension): void
-    {
-        $blurImage = $image->copy();
-
-        $pixelateDimension = $dimension->scale(0.01);
-
-        $blurImage
-            ->crop($topLeftPoint, $dimension)
-            ->resize($pixelateDimension, ImageInterface::FILTER_CUBIC)
-            ->resize($dimension, ImageInterface::FILTER_CUBIC);
-
-        $image->paste($blurImage, $topLeftPoint);
-    }
-
-    protected function getPhotoFilename(Photo $photo): string
-    {
-        $path = $this->getParameter('kernel.root_dir') . '/../web';
-        $filename = $this->get('vich_uploader.templating.helper.uploader_helper')->asset($photo, 'imageFile');
-
-        return $path . $filename;
-    }
-
-    protected function saveManipulatedImage(ImageInterface $image, Photo $photo): string
-    {
-        if (!$photo->getBackupName()) {
-            $newFilename = uniqid() . '.JPG';
-
-            $photo->setBackupName($photo->getImageName());
-
-            $photo->setImageName($newFilename);
-
-            $this->getDoctrine()->getManager()->flush();
-        }
-
-        $filename = $this->getPhotoFilename($photo);
-        $image->save($filename);
-
-        $this->recachePhoto($photo);
-
-        return $filename;
-    }
-
-    protected function recachePhoto(Photo $photo): void
-    {
-        $filename = $this->get('vich_uploader.templating.helper.uploader_helper')->asset($photo, 'imageFile');
-
-        $imagineCache = $this->get('liip_imagine.cache.manager');
-        $imagineCache->remove($filename);
-
-        $imagineController = $this->get('liip_imagine.controller');
-        $imagineController->filterAction(new Request(), $filename, 'gallery_photo_thumb');
-        $imagineController->filterAction(new Request(), $filename, 'gallery_photo_standard');
-        $imagineController->filterAction(new Request(), $filename, 'gallery_photo_large');
-        $imagineController->filterAction(new Request(), $filename, 'city_image_wide');
     }
 }
