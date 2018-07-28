@@ -15,6 +15,10 @@ class ObjectRouter extends AbstractObjectRouter implements ObjectRouterInterface
             $routeName = $this->getDefaultRouteName($routeable);
         }
 
+        if ($delegatedRouter = $this->findDelegatedRouter($routeable)) {
+            return $delegatedRouter->generate($routeable, $routeName, $parameters, $referenceType);
+        }
+
         if ($routeName) {
             $parameterList = array_merge($this->generateParameterList($routeable, $routeName), $parameters);
 
@@ -25,10 +29,6 @@ class ObjectRouter extends AbstractObjectRouter implements ObjectRouterInterface
 
                 return $delegatedRouter->generate($routeable, $routeName, $parameters, $referenceType);
             }
-        } else {
-            $delegatedRouter = $this->findDelegatedRouter($routeable);
-
-            return $delegatedRouter->generate($routeable, $routeName, $parameters, $referenceType);
         }
     }
 
