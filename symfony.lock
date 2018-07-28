@@ -110,9 +110,6 @@
     "facebook/graph-sdk": {
         "version": "5.6.3"
     },
-    "facebook/php-sdk-v4": {
-        "version": "5.6.3"
-    },
     "friendsofsymfony/elastica-bundle": {
         "version": "5.0",
         "recipe": {
