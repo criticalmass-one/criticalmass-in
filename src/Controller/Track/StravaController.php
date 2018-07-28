@@ -24,28 +24,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class StravaController extends AbstractController
 {
-    protected function initOauthForRide(Request $request, Ride $ride, ObjectRouterInterface $objectRouter): OAuth
-    {
-        $redirectUri = $request->getUriForPath($objectRouter->generate($ride, 'caldera_criticalmass_strava_token'));
-
-        /* avoid double app_dev.php in uri */
-        $redirectUri = str_replace('app_dev.php/app_dev.php/', 'app_dev.php/', $redirectUri);
-
-        try {
-            $oauthOptions = [
-                'clientId' => $this->getParameter('strava.client_id'),
-                'clientSecret' => $this->getParameter('strava.secret'),
-                'redirectUri' => $redirectUri,
-                'scopes' => ['view_private'],
-            ];
-
-            return new OAuth($oauthOptions);
-
-        } catch (\Exception $e) {
-            print $e->getMessage();
-        }
-    }
-
     /**
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
@@ -192,5 +170,19 @@ class StravaController extends AbstractController
         $em->flush();
 
         return $this->redirect($objectRouter->generate($track));
+    }
+
+    protected function initOauthForRide(Request $request, Ride $ride, ObjectRouterInterface $objectRouter): OAuth
+    {
+        $redirectUri = $request->getUriForPath($objectRouter->generate($ride, 'caldera_criticalmass_strava_token'));
+
+        $oauthOptions = [
+            'clientId' => $this->getParameter('strava.client_id'),
+            'clientSecret' => $this->getParameter('strava.secret'),
+            'redirectUri' => $redirectUri,
+            'scopes' => ['view_private'],
+        ];
+
+        return new OAuth($oauthOptions);
     }
 }
