@@ -1,9 +1,11 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <a href="{{ website.url }}">
-            {{ website.title }}
+            {{ website.title|raw }}
         </a>
     </div>
+
+    {% if website.description or website.imageUrl %}
     <div class="panel-body">
         {% if website.imageUrl %}
         <p>
@@ -15,8 +17,9 @@
 
         {% if website.description %}
         <p>
-            {{ website.description }}
+            {{ website.description|raw }}
         </p>
         {% endif %}
     </div>
+    {% endif %}
 </div>
