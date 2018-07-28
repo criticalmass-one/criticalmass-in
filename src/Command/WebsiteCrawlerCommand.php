@@ -71,7 +71,7 @@ class WebsiteCrawlerCommand extends Command
                 $crawledWebsite = $this->parser->parse($url);
 
                 if (!$crawledWebsite) {
-                    continue;
+                    continue 2;
                 }
 
                 $this->registry->getManager()->persist($crawledWebsite);
@@ -95,6 +95,4 @@ class WebsiteCrawlerCommand extends Command
         $progressBar->finish();
         $table->render();
     }
-
-
 }
