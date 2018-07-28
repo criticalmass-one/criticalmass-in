@@ -75,6 +75,13 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     protected $subrides;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
+     */
+    protected $slug;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=false)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
@@ -100,7 +107,6 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      * @JMS\Type("DateTime<'U'>")
-     * @Routing\RouteParameter(name="rideDate", dateFormat="Y-m-d")
      */
     protected $dateTime;
 
@@ -420,6 +426,23 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     public function getLongitude(): ?float
     {
         return $this->longitude;
+    }
+
+    public function setSlug(string $slug = null): Ride
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function hasSlug(): bool
+    {
+        return $this->slug !== null;
     }
 
     public function setTitle(string $title = null): Ride

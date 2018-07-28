@@ -43,9 +43,9 @@ class PhotoTimeshiftCommand extends Command
                 'Slug of the city'
             )
             ->addArgument(
-                'rideDate',
+                'rideIdentifier',
                 InputArgument::REQUIRED,
-                'date of the ride'
+                'Slug or date of the ride'
             )
             ->addArgument(
                 'username',
@@ -71,7 +71,7 @@ class PhotoTimeshiftCommand extends Command
         $modificationMethodName = $input->getArgument('direction');
 
         /** @var Ride $ride */
-        $ride = $this->registry->getRepository(Ride::class)->findByCitySlugAndRideDate($input->getArgument('citySlug'), $input->getArgument('rideDate'));
+        $ride = $this->getRide($input->getArgument('citySlug'), $input->getArgument('rideIdentifier'));
 
         /** @var User $user */
         $user = $this->registry->getRepository(User::class)->findOneByUsername($input->getArgument('username'));
@@ -113,5 +113,16 @@ class PhotoTimeshiftCommand extends Command
 
         $progressBar->finish();
         $table->render();
+    }
+
+    protected function getRide(string $citySlug, string $rideIdentifier): ?Ride
+    {
+        $ride = $this->registry->getRepository(Ride::class)->findByCitySlugAndRideDate($citySlug, $rideIdentifier);
+
+        if (!$ride) {
+            $ride = $this->registry->getRepository(Ride::class)->findOneByCitySlugAndSlug($citySlug, $rideIdentifier);
+        }
+
+        return $ride;
     }
 }

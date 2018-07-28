@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Command\Photo;
 
@@ -8,29 +8,29 @@ use App\Entity\Track;
 use App\Entity\User;
 use App\Criticalmass\Image\PhotoUploader\PhotoUploader;
 use Symfony\Bridge\Doctrine\RegistryInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ImportImagesCommand extends ContainerAwareCommand
+class ImportImagesCommand extends Command
 {
-    /** @var RegistryInterface $doctrine */
-    protected $doctrine;
+    /** @var RegistryInterface $registry */
+    protected $registry;
 
     /** @var PhotoUploader $photoUploader */
     protected $photoUploader;
 
-    public function __construct(RegistryInterface $doctrine, PhotoUploader $photoUploader)
+    public function __construct(RegistryInterface $registry, PhotoUploader $photoUploader)
     {
-        $this->doctrine = $doctrine;
+        $this->registry = $registry;
         $this->photoUploader = $photoUploader;
 
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('criticalmass:photos:import')
@@ -41,9 +41,9 @@ class ImportImagesCommand extends ContainerAwareCommand
                 'Slug of the city'
             )
             ->addArgument(
-                'rideDate',
+                'rideIdentifier',
                 InputArgument::REQUIRED,
-                'Date of the ride'
+                'Date or slug of the ride'
             )
             ->addArgument(
                 'username',
@@ -57,12 +57,11 @@ class ImportImagesCommand extends ContainerAwareCommand
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        $ride = $this->doctrine->getRepository(Ride::class)->findByCitySlugAndRideDate($input->getArgument('citySlug'),
-            $input->getArgument('rideDate'));
-        $user = $this->doctrine->getRepository(User::class)->findOneByUsername($input->getArgument('username'));
-        $track = $this->doctrine->getRepository(Track::class)->findByUserAndRide($ride, $user);
+        $ride = $this->getRide($input->getArgument('citySlug'), $input->getArgument('rideIdentifier'));
+        $user = $this->registry->getRepository(User::class)->findOneByUsername($input->getArgument('username'));
+        $track = $this->registry->getRepository(Track::class)->findByUserAndRide($ride, $user);
 
         $this->photoUploader
             ->setRide($ride)
@@ -84,5 +83,16 @@ class ImportImagesCommand extends ContainerAwareCommand
 
         $table->render();
 
+    }
+
+    protected function getRide(string $citySlug, string $rideIdentifier): ?Ride
+    {
+        $ride = $this->registry->getRepository(Ride::class)->findByCitySlugAndRideDate($citySlug, $rideIdentifier);
+
+        if (!$ride) {
+            $ride = $this->registry->getRepository(Ride::class)->findOneByCitySlugAndSlug($citySlug, $rideIdentifier);
+        }
+
+        return $ride;
     }
 }
