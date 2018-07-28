@@ -50,7 +50,9 @@ class CrawlTwigExtension extends \Twig_Extension
             if (!$this->checkIfBlacklisted($url)) {
                 $crawledWebsite = $this->registry->getRepository(CrawledWebsite::class)->findOneByUrl($url);
 
-                $message = str_replace($url, $this->twigEngine->render('Crawler/_website.html.twig', ['website' => $crawledWebsite]), $message);
+                if ($crawledWebsite) {
+                    $message = str_replace($url, $this->twigEngine->render('Crawler/_website.html.twig', ['website' => $crawledWebsite]), $message);
+                }
             }
         }
 
