@@ -71,6 +71,9 @@
             "ref": "c1431086fec31f17fbcfe6d6d7e92059458facc1"
         }
     },
+    "doctrine/event-manager": {
+        "version": "v1.0.0"
+    },
     "doctrine/inflector": {
         "version": "v1.3.0"
     },
@@ -86,8 +89,11 @@
     "doctrine/orm": {
         "version": "v2.6.1"
     },
-    "educoder/pest": {
-        "version": "1.0.0"
+    "doctrine/persistence": {
+        "version": "v1.0.0"
+    },
+    "doctrine/reflection": {
+        "version": "v1.0.0"
     },
     "egulias/email-validator": {
         "version": "2.1.4"
@@ -178,12 +184,6 @@
     },
     "incenteev/composer-parameter-handler": {
         "version": "v2.1.3"
-    },
-    "ircmaxell/random-lib": {
-        "version": "v1.2.0"
-    },
-    "ircmaxell/security-lib": {
-        "version": "v1.1.0"
     },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"

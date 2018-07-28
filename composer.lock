@@ -3222,16 +3222,16 @@
         },
         {
             "name": "jms/serializer",
-            "version": "1.12.1",
+            "version": "1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/serializer.git",
-                "reference": "93d6e03fcb71d45854cc44b5a84d645c02c5d763"
+                "reference": "00863e1d55b411cc33ad3e1de09a4c8d3aae793c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/93d6e03fcb71d45854cc44b5a84d645c02c5d763",
-                "reference": "93d6e03fcb71d45854cc44b5a84d645c02c5d763",
+                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/00863e1d55b411cc33ad3e1de09a4c8d3aae793c",
+                "reference": "00863e1d55b411cc33ad3e1de09a4c8d3aae793c",
                 "shasum": ""
             },
             "require": {
@@ -3271,7 +3271,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-1.x": "1.11-dev"
+                    "dev-1.x": "1.13-dev"
                 }
             },
             "autoload": {
@@ -3302,7 +3302,7 @@
                 "serialization",
                 "xml"
             ],
-            "time": "2018-06-01T12:10:12+00:00"
+            "time": "2018-07-25T13:58:54+00:00"
         },
         {
             "name": "jms/serializer-bundle",
@@ -3439,16 +3439,16 @@
         },
         {
             "name": "khill/php-duration",
-            "version": "1.0.5",
+            "version": "1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinkhill/php-duration.git",
-                "reference": "9fbb2eaf584d0e04f9d49e008c6abe56e2915625"
+                "reference": "5efcb6d492030e012a869f328284a377ee35c993"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinkhill/php-duration/zipball/9fbb2eaf584d0e04f9d49e008c6abe56e2915625",
-                "reference": "9fbb2eaf584d0e04f9d49e008c6abe56e2915625",
+                "url": "https://api.github.com/repos/kevinkhill/php-duration/zipball/5efcb6d492030e012a869f328284a377ee35c993",
+                "reference": "5efcb6d492030e012a869f328284a377ee35c993",
                 "shasum": ""
             },
             "require-dev": {
@@ -3485,7 +3485,7 @@
                 "seconds",
                 "time"
             ],
-            "time": "2018-04-07T15:02:43+00:00"
+            "time": "2018-07-05T12:10:14+00:00"
         },
         {
             "name": "knplabs/knp-components",
@@ -5920,16 +5920,16 @@
         },
         {
             "name": "sonata-project/admin-bundle",
-            "version": "3.36.0",
+            "version": "3.37.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataAdminBundle.git",
-                "reference": "20b1810a75792bc59e5941f520e3991629beb111"
+                "reference": "3f4ae4285f277251adad9bf8e47ff74ff9600aae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/20b1810a75792bc59e5941f520e3991629beb111",
-                "reference": "20b1810a75792bc59e5941f520e3991629beb111",
+                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/3f4ae4285f277251adad9bf8e47ff74ff9600aae",
+                "reference": "3f4ae4285f277251adad9bf8e47ff74ff9600aae",
                 "shasum": ""
             },
             "require": {
@@ -6021,7 +6021,7 @@
                 "bootstrap",
                 "sonata"
             ],
-            "time": "2018-07-17T05:59:07+00:00"
+            "time": "2018-07-26T19:29:16+00:00"
         },
         {
             "name": "sonata-project/block-bundle",
@@ -7535,16 +7535,16 @@
         },
         {
             "name": "symfony/flex",
-            "version": "v1.0.84",
+            "version": "v1.0.88",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/flex.git",
-                "reference": "7ede6446afac01e6e381db8c8c6fddb7c05a2aa7"
+                "reference": "730ff18ed2d15ed8a0eaba8115a0cffdf53c39eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/flex/zipball/7ede6446afac01e6e381db8c8c6fddb7c05a2aa7",
-                "reference": "7ede6446afac01e6e381db8c8c6fddb7c05a2aa7",
+                "url": "https://api.github.com/repos/symfony/flex/zipball/730ff18ed2d15ed8a0eaba8115a0cffdf53c39eb",
+                "reference": "730ff18ed2d15ed8a0eaba8115a0cffdf53c39eb",
                 "shasum": ""
             },
             "require": {
@@ -7578,7 +7578,7 @@
                 }
             ],
             "description": "Composer plugin for Symfony",
-            "time": "2018-07-19T06:01:11+00:00"
+            "time": "2018-07-27T16:55:54+00:00"
         },
         {
             "name": "symfony/form",
@@ -9472,24 +9472,24 @@
         },
         {
             "name": "twig/extensions",
-            "version": "v1.5.1",
+            "version": "v1.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig-extensions.git",
-                "reference": "d188c76168b853481cc75879ea045bf93d718e9c"
+                "reference": "2c1a86526d0044065220d1b51ac08348bea5ca82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig-extensions/zipball/d188c76168b853481cc75879ea045bf93d718e9c",
-                "reference": "d188c76168b853481cc75879ea045bf93d718e9c",
+                "url": "https://api.github.com/repos/twigphp/Twig-extensions/zipball/2c1a86526d0044065220d1b51ac08348bea5ca82",
+                "reference": "2c1a86526d0044065220d1b51ac08348bea5ca82",
                 "shasum": ""
             },
             "require": {
-                "twig/twig": "~1.27|~2.0"
+                "twig/twig": "^1.27|^2.0"
             },
             "require-dev": {
-                "symfony/phpunit-bridge": "~3.3@dev",
-                "symfony/translation": "~2.3|~3.0"
+                "symfony/phpunit-bridge": "^3.4",
+                "symfony/translation": "^2.7|^3.4"
             },
             "suggest": {
                 "symfony/translation": "Allow the time_diff output to be translated"
@@ -9519,12 +9519,11 @@
                 }
             ],
             "description": "Common additional features for Twig that do not directly belong in core",
-            "homepage": "http://twig.sensiolabs.org/doc/extensions/index.html",
             "keywords": [
                 "i18n",
                 "text"
             ],
-            "time": "2017-06-08T18:19:53+00:00"
+            "time": "2018-05-22T13:26:07+00:00"
         },
         {
             "name": "twig/twig",

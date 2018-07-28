@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Criticalmass\Markdown;
 
@@ -30,7 +30,6 @@ class CriticalMarkdown extends Parser
     use inline\LinkTrait;
 
     use inline\StrikeoutTrait;
-    use inline\UrlLinkTrait;
 
     protected $html5 = true;
 

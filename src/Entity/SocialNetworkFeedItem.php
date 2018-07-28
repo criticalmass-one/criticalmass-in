@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\Website\Crawler\Crawlable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  *    })
  * @ORM\Entity(repositoryClass="App\Repository\SocialNetworkFeedItemRepository")
  */
-class SocialNetworkFeedItem
+class SocialNetworkFeedItem implements Crawlable
 {
     /**
      * @ORM\Id
@@ -64,6 +65,11 @@ class SocialNetworkFeedItem
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $createdAt;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $crawled = false;
 
     public function __construct()
     {
@@ -190,5 +196,15 @@ class SocialNetworkFeedItem
         return $this;
     }
 
+    public function isCrawled(): bool
+    {
+        return $this->crawled;
+    }
 
+    public function setCrawled(bool $crawled): Crawlable
+    {
+        $this->crawled = $crawled;
+
+        return $this;
+    }
 }
