@@ -4,6 +4,7 @@ namespace App\Controller\Track;
 
 use App\Controller\AbstractController;
 use App\Criticalmass\Router\ObjectRouterInterface;
+use App\Criticalmass\Util\DateTimeUtil;
 use App\Event\Track\TrackUploadedEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -18,6 +19,7 @@ use Strava\API\Service\REST;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class StravaController extends AbstractController
@@ -97,12 +99,12 @@ class StravaController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function listridesAction(Ride $ride): Response
+    public function listridesAction(Ride $ride, SessionInterface $session): Response
     {
-        $afterDateTime = new \DateTime($ride->getDateTime()->format('Y-m-d') . ' 00:00:00');
-        $beforeDateTime = new \DateTime($ride->getDateTime()->format('Y-m-d') . ' 23:59:59');
+        $afterDateTime = DateTimeUtil::getDayStartDateTime($ride->getDateTime());
+        $beforeDateTime = DateTimeUtil::getDayEndDateTime($ride->getDateTime());
 
-        $token = $this->getSession()->get('strava_token');
+        $token = $session->get('strava_token');
 
         $adapter = new Pest('https://www.strava.com/api/v3');
         $service = new REST($token, $adapter);
@@ -121,11 +123,11 @@ class StravaController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function importAction(Request $request, UserInterface $user, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, GpxExporter $exporter, Ride $ride, string $uploadDestinationTrack): Response
+    public function importAction(Request $request, UserInterface $user, SessionInterface $session, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, GpxExporter $exporter, Ride $ride, string $uploadDestinationTrack): Response
     {
         $activityId = (int) $request->get('activityId');
 
-        $token = $this->getSession()->get('strava_token');
+        $token = $session->get('strava_token');
 
         $adapter = new Pest('https://www.strava.com/api/v3');
         $service = new REST($token, $adapter);
