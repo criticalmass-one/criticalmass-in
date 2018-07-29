@@ -120,10 +120,11 @@ class StravaController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function importAction(Request $request, UserInterface $user, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, GpxExporter $exporter, Ride $ride, string $uploadDestinationTrack): Response
+    public function importAction(Request $request, UserInterface $user, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, GpxExporter $exporter, Ride $ride): Response
     {
         $activityId = (int) $request->get('activityId');
 
+        $uploadDestinationTrack = $this->getParameter('upload_destination.track');
         $token = $this->getSession()->get('strava_token');
 
         $adapter = new Pest('https://www.strava.com/api/v3');
