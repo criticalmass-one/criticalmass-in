@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Criticalmass\Geo\Test\DistanceCalculator;
+namespace Tests\DistanceCalculator;
 
 use Caldera\GeoBundle\GpxReader\GpxReader;
 use Caldera\GeoBundle\TimeShifter\GpxTimeShifter;

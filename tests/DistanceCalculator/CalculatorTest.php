@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Criticalmass\Geo\Test\DistanceCalculator;
+namespace Tests\DistanceCalculator;
 
 use Caldera\GeoBasic\Coord\Coord;
 use Caldera\GeoBasic\Track\Track;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Criticalmass\Geo\Test\DistanceCalculator;
+namespace Tests\DistanceCalculator;
 
 use Caldera\GeoBundle\Entity\Position;
 use Caldera\GeoBundle\GpxWriter\GpxWriter;
