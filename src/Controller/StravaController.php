@@ -102,7 +102,7 @@ class StravaController extends AbstractController
 
         $token = $this->getSession()->get('strava_token');
 
-        $adapter = new \GuzzleHttp\Client(['base_uri' => 'https://www.strava.com/api/v3']);
+        $adapter = new \GuzzleHttp\Client(['base_uri' => 'https://www.strava.com/api/v3/']);
         $service = new REST($token, $adapter);
 
         $client = new Client($service);
@@ -125,7 +125,7 @@ class StravaController extends AbstractController
 
         $token = $this->getSession()->get('strava_token');
 
-        $adapter = new \GuzzleHttp\Client(['base_uri' => 'https://www.strava.com/api/v3']);
+        $adapter = new \GuzzleHttp\Client(['base_uri' => 'https://www.strava.com/api/v3/']);
         $service = new REST($token, $adapter);
 
         $client = new Client($service);
