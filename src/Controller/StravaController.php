@@ -32,7 +32,6 @@ class StravaController extends AbstractController
                 'clientId' => $this->getParameter('strava.client_id'),
                 'clientSecret' => $this->getParameter('strava.secret'),
                 'redirectUri' => $redirectUri,
-                'scopes' => ['view_private'],
             ];
 
             return new OAuth($oauthOptions);
@@ -52,7 +51,8 @@ class StravaController extends AbstractController
 
         $authorizationOptions = [
             'state' => '',
-            'approval_prompt' => 'force'
+            'approval_prompt' => 'force',
+            'scope' => 'public',
         ];
 
         $authorizationUrl = $oauth->getAuthorizationUrl($authorizationOptions);
