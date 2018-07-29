@@ -26,7 +26,6 @@
         "vich/uploader-bundle": "^1.6",
         "liip/imagine-bundle": "^2.0",
         "knplabs/knp-paginator-bundle": "^2.5",
-        "basvandorst/StravaPHP": "1.0.1",
         "friendsofsymfony/elastica-bundle": "^5.0",
         "emcconville/google-map-polyline-encoding-tool" : ">=1.2.1",
         "friendsofsymfony/jsrouting-bundle": "^2.0",
@@ -51,7 +50,6 @@
         "sonata-project/seo-bundle": "^2.2",
         "graylog2/gelf-php": "^1.5",
         "facebook/graph-sdk": "^5.6",
-        "basvandorst/stravaphp": "^1.0",
         "calderacc/geobasic": "^0.2.0",
         "yohang/calendr": "^2.0",
         "maxh/php-nominatim": "^1.2",
@@ -78,7 +76,8 @@
         "symfony/apache-pack": "^1.0",
         "sunra/php-simple-html-dom-parser": "^1.5",
         "symfony/flex": "^1.0",
-        "khill/php-duration": "^1.0"
+        "khill/php-duration": "^1.0",
+        "basvandorst/stravaphp": "1.0.1"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^3.0",

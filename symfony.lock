@@ -1,6 +1,6 @@
 {
     "basvandorst/stravaphp": {
-        "version": "1.1.0"
+        "version": "1.0.1"
     },
     "behat/transliterator": {
         "version": "v1.2.0"
@@ -149,6 +149,9 @@
     "graylog2/gelf-php": {
         "version": "1.5.5"
     },
+    "guzzle/guzzle": {
+        "version": "v3.8.1"
+    },
     "guzzlehttp/guzzle": {
         "version": "6.3.3"
     },
@@ -222,7 +225,7 @@
         "version": "v2.8.0"
     },
     "league/oauth2-client": {
-        "version": "1.4.2"
+        "version": "0.8.1"
     },
     "liip/imagine-bundle": {
         "version": "1.8",

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Event\Track\TrackUploadedEvent;
+use Pest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Entity\Position;
@@ -32,7 +33,6 @@ class StravaController extends AbstractController
                 'clientId' => $this->getParameter('strava.client_id'),
                 'clientSecret' => $this->getParameter('strava.secret'),
                 'redirectUri' => $redirectUri,
-                'scopes' => ['view_private'],
             ];
 
             return new OAuth($oauthOptions);
@@ -52,7 +52,8 @@ class StravaController extends AbstractController
 
         $authorizationOptions = [
             'state' => '',
-            'approval_prompt' => 'force'
+            'approval_prompt' => 'force',
+            'scope' => 'public',
         ];
 
         $authorizationUrl = $oauth->getAuthorizationUrl($authorizationOptions);
@@ -102,7 +103,7 @@ class StravaController extends AbstractController
 
         $token = $this->getSession()->get('strava_token');
 
-        $adapter = new \GuzzleHttp\Client(['base_uri' => 'https://www.strava.com/api/v3']);
+        $adapter = new Pest('https://www.strava.com/api/v3');
         $service = new REST($token, $adapter);
 
         $client = new Client($service);
@@ -119,13 +120,14 @@ class StravaController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function importAction(Request $request, UserInterface $user, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, GpxExporter $exporter, Ride $ride, string $uploadDestinationTrack): Response
+    public function importAction(Request $request, UserInterface $user, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, GpxExporter $exporter, Ride $ride): Response
     {
         $activityId = (int) $request->get('activityId');
 
+        $uploadDestinationTrack = $this->getParameter('upload_destination.track');
         $token = $this->getSession()->get('strava_token');
 
-        $adapter = new \GuzzleHttp\Client(['base_uri' => 'https://www.strava.com/api/v3']);
+        $adapter = new Pest('https://www.strava.com/api/v3');
         $service = new REST($token, $adapter);
 
         $client = new Client($service);
