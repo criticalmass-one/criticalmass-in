@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Event\Track\TrackUploadedEvent;
+use Pest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Entity\Position;
@@ -102,7 +103,7 @@ class StravaController extends AbstractController
 
         $token = $this->getSession()->get('strava_token');
 
-        $adapter = new \GuzzleHttp\Client(['base_uri' => 'https://www.strava.com/api/v3/']);
+        $adapter = new Pest('https://www.strava.com/api/v3');
         $service = new REST($token, $adapter);
 
         $client = new Client($service);
@@ -125,7 +126,7 @@ class StravaController extends AbstractController
 
         $token = $this->getSession()->get('strava_token');
 
-        $adapter = new \GuzzleHttp\Client(['base_uri' => 'https://www.strava.com/api/v3/']);
+        $adapter = new Pest('https://www.strava.com/api/v3');
         $service = new REST($token, $adapter);
 
         $client = new Client($service);
