@@ -5,6 +5,9 @@ namespace App\Criticalmass\Gps\PolylineGenerator;
 use App\Entity\Track;
 use App\Criticalmass\Gps\GpxReader\TrackReader;
 
+/**
+ * @deprecated
+ */
 abstract class AbstractPolylineGenerator implements PolylineGeneratorInterface
 {
     /** @var Track $track */
