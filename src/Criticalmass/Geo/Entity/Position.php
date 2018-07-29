@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\GeoBundle\Entity;
+namespace App\Criticalmass\Geo\Entity;
 
 use Caldera\GeoBasic\Coord\Coord;
 use Caldera\GeoBundle\EntityInterface\PositionInterface;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\GeoBundle\DistanceCalculator;
+namespace App\Criticalmass\Geo\DistanceCalculator;
 
 use Caldera\GeoBasic\Coord\CoordInterface;
 use Caldera\GeoBasic\PolylineConverter\PolylineConverter;

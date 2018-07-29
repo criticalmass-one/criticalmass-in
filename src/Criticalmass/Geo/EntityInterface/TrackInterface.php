@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\GeoBundle\EntityInterface;
+namespace App\Criticalmass\Geo\EntityInterface;
 
 use Caldera\GeoBasic\Track\TrackInterface as BaseTrackInterface;
 

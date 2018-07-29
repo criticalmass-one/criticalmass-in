@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\GeoBundle\GpxReader;
+namespace App\Criticalmass\Geo\GpxReader;
 
 use Caldera\GeoBundle\Entity\Track;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;

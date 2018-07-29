@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\GeoBundle\DistanceCalculator;
+namespace App\Criticalmass\Geo\DistanceCalculator;
 
 class DistanceCalculator extends AbstractDistanceCalculator
 {

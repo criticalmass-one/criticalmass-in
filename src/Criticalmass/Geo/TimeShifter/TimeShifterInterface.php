@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\GeoBundle\TimeShifter;
+namespace App\Criticalmass\Geo\TimeShifter;
 
 use Caldera\GeoBundle\PositionList\PositionListInterface;
 

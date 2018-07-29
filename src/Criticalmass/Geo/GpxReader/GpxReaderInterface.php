@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\GeoBundle\GpxReader;
+namespace App\Criticalmass\Geo\GpxReader;
 
 use Caldera\GeoBundle\EntityInterface\PositionInterface;
 use Caldera\GeoBundle\PositionList\PositionListInterface;

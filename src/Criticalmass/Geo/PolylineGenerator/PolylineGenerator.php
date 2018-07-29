@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\GeoBundle\PolylineGenerator;
+namespace App\Criticalmass\Geo\PolylineGenerator;
 
 use Caldera\GeoBundle\EntityInterface\TrackInterface;
 use Caldera\GeoBundle\GpxReader\TrackReader;

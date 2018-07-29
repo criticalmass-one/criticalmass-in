@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\GeoBundle\GpxWriter;
+namespace App\Criticalmass\Geo\GpxWriter;
 
 interface GpxWriterInterface
 {

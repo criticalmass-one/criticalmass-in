@@ -1,6 +1,6 @@
 <?php
 
-namespace Caldera\GeoBundle\TimeShifter;
+namespace App\Criticalmass\Geo\TimeShifter;
 
 class TimeShifter extends AbstractTimeShifter
 {
