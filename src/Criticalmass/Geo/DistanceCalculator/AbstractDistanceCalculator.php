@@ -2,10 +2,8 @@
 
 namespace App\Criticalmass\Geo\DistanceCalculator;
 
-use Caldera\GeoBasic\Coord\CoordInterface;
-use Caldera\GeoBasic\PolylineConverter\PolylineConverter;
-use Caldera\GeoBasic\Track\TrackInterface;
-use Caldera\GeoBundle\PositionList\PositionListInterface;
+
+use App\Criticalmass\Geo\PositionList\PositionListInterface;
 
 abstract class AbstractDistanceCalculator implements DistanceCalculatorInterface
 {

@@ -2,10 +2,11 @@
 
 namespace App\Criticalmass\Geo\PositionList;
 
-use Caldera\GeoBundle\EntityInterface\PositionInterface;
+use App\Criticalmass\Geo\EntityInterface\PositionInterface;
 
 class PositionList implements PositionListInterface
 {
+    /** @var array $list */
     protected $list = [];
 
     public function __construct(array $list = [])

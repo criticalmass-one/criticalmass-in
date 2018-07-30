@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\Geo\PositionList;
 
-use Caldera\GeoBundle\EntityInterface\PositionInterface;
+use App\Criticalmass\Geo\EntityInterface\PositionInterface;
 
 interface PositionListInterface extends \Countable
 {

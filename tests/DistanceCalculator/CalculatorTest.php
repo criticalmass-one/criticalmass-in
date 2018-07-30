@@ -1,13 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tests\DistanceCalculator;
 
-use Caldera\GeoBasic\Coord\Coord;
-use Caldera\GeoBasic\Track\Track;
-use Caldera\GeoBundle\DistanceCalculator\DistanceCalculator;
-use Caldera\GeoBundle\Entity\Position;
-use Caldera\GeoBundle\PositionList\PositionList;
-use Caldera\GeoBundle\PositionList\PositionListInterface;
+use App\Criticalmass\Geo\DistanceCalculator\DistanceCalculator;
+use App\Criticalmass\Geo\Entity\Position;
+use App\Criticalmass\Geo\PositionList\PositionList;
+use App\Criticalmass\Geo\PositionList\PositionListInterface;
 use PHPUnit\Framework\TestCase;
 
 class SimpleDistanceCalculatorTest extends TestCase
@@ -24,7 +22,7 @@ class SimpleDistanceCalculatorTest extends TestCase
         return $positionList;
     }
 
-    public function testDistanceCalculator1()
+    public function testDistanceCalculator1(): void
     {
         $distanceCalculator = new DistanceCalculator();
 
