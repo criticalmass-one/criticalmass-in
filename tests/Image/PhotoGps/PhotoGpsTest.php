@@ -2,9 +2,8 @@
 
 namespace Tests\Image\PhotoGps;
 
-use AppBundle\Entity\City;
-use AppBundle\Criticalmass\Image\PhotoGps\PhotoGps;
-use AppBundle\Criticalmass\Image\PhotoGps\PhotoGpsInterface;
+use App\Criticalmass\Image\PhotoGps\PhotoGpsInterface;
+use App\Entity\City;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Tests\Image\PhotoGps\Mocks\GpsPhoto;
 use Tests\Image\PhotoGps\Mocks\MockTrack;
@@ -19,7 +18,9 @@ class PhotoGpsTest extends KernelTestCase
 
     protected function getPhotoGps(): PhotoGpsInterface
     {
-        return static::$kernel->getContainer()->get(PhotoGps::class);
+        $container = self::$container;
+
+        return $container->get(PhotoGpsInterface::class);
     }
 
     public function testPhotoWithoutCoords(): void

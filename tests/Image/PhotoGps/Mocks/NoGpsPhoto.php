@@ -2,7 +2,7 @@
 
 namespace Tests\Image\PhotoGps\Mocks;
 
-use AppBundle\Entity\Photo;
+use App\Entity\Photo;
 
 class NoGpsPhoto extends Photo
 {

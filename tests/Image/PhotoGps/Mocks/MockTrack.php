@@ -2,7 +2,7 @@
 
 namespace Tests\Image\PhotoGps\Mocks;
 
-use AppBundle\Entity\Track;
+use App\Entity\Track;
 
 class MockTrack extends Track
 {
