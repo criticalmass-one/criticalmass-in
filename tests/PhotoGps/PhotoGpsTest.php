@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace Tests\Image\PhotoGps;
+namespace Tests\PhotoGps;
 
 use App\Criticalmass\Image\PhotoGps\PhotoGpsInterface;
 use App\Entity\City;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Tests\Image\PhotoGps\Mocks\GpsPhoto;
-use Tests\Image\PhotoGps\Mocks\MockTrack;
-use Tests\Image\PhotoGps\Mocks\NoGpsPhoto;
+use Tests\PhotoGps\Mocks\GpsPhoto;
+use Tests\PhotoGps\Mocks\MockTrack;
+use Tests\PhotoGps\Mocks\NoGpsPhoto;
 
 class PhotoGpsTest extends KernelTestCase
 {
