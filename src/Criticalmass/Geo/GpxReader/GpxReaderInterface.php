@@ -2,8 +2,8 @@
 
 namespace App\Criticalmass\Geo\GpxReader;
 
-use Caldera\GeoBundle\EntityInterface\PositionInterface;
-use Caldera\GeoBundle\PositionList\PositionListInterface;
+use App\Criticalmass\Geo\EntityInterface\PositionInterface;
+use App\Criticalmass\Geo\PositionList\PositionListInterface;
 
 interface GpxReaderInterface
 {

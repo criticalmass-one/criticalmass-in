@@ -1,16 +1,15 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace Tests\DistanceCalculator;
+namespace Tests\GpxReader;
 
-use Caldera\GeoBundle\Entity\Position;
-use Caldera\GeoBundle\GpxReader\GpxReader;
+use App\Criticalmass\Geo\GpxReader\GpxReader;
 use PHPUnit\Framework\TestCase;
 
 class MultiTrackTest extends TestCase
 {
     public function test1()
     {
-        $gpxTestFilename = __DIR__.'/../Files/cmhh.gpx';
+        $gpxTestFilename = __DIR__.'/../GpxReader/Files/cmhh.gpx';
 
         $gpxReader = new GpxReader();
         $gpxReader
@@ -21,7 +20,7 @@ class MultiTrackTest extends TestCase
 
     public function test2()
     {
-        $gpxTestFilename = __DIR__.'/../Files/berlin.gpx';
+        $gpxTestFilename = __DIR__.'/../GpxReader/Files/berlin.gpx';
 
         $gpxReader = new GpxReader();
         $gpxReader

@@ -2,11 +2,11 @@
 
 namespace App\Criticalmass\Geo\GpxReader;
 
-use Caldera\GeoBundle\Entity\Position;
-use Caldera\GeoBundle\EntityInterface\PositionInterface;
-use Caldera\GeoBundle\Exception\GpxFileNotFoundException;
-use Caldera\GeoBundle\PositionList\PositionList;
-use Caldera\GeoBundle\PositionList\PositionListInterface;
+use App\Criticalmass\Geo\Entity\Position;
+use App\Criticalmass\Geo\EntityInterface\PositionInterface;
+use App\Criticalmass\Geo\Exception\GpxFileNotFoundException;
+use App\Criticalmass\Geo\PositionList\PositionList;
+use App\Criticalmass\Geo\PositionList\PositionListInterface;
 
 class GpxReader implements GpxReaderInterface
 {
@@ -68,19 +68,19 @@ class GpxReader implements GpxReaderInterface
 
     public function getCreationDateTime(): \DateTime
     {
-        return new \DateTime($this->rootNode->metadata->time);
+        return new \DateTime((string) $this->rootNode->metadata->time);
     }
 
     public function getStartDateTime(): \DateTime
     {
-        return new \DateTime($this->trackPointList[0]->time);
+        return new \DateTime((string) $this->trackPointList[0]->time);
     }
 
     public function getEndDateTime(): \DateTime
     {
         $lastTrackPointNumber = count($this->rootNode->trk->trkseg->trkpt) - 1;
 
-        return new \DateTime($this->trackPointList[$lastTrackPointNumber]->time);
+        return new \DateTime((string) $this->trackPointList[$lastTrackPointNumber]->time);
     }
 
     public function countPoints(): int
@@ -105,7 +105,7 @@ class GpxReader implements GpxReaderInterface
 
     public function getDateTimeOfPoint(int $n): \DateTime
     {
-        return new \DateTime($this->trackPointList[$n]->time);
+        return new \DateTime((string) $this->trackPointList[$n]->time);
     }
 
     public function getPoint(int $n): \SimpleXMLElement

@@ -1,16 +1,16 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace Tests\DistanceCalculator;
+namespace Tests\GpxReader;
 
-use Caldera\GeoBundle\Entity\Position;
-use Caldera\GeoBundle\GpxReader\GpxReader;
+use App\Criticalmass\Geo\Entity\Position;
+use App\Criticalmass\Geo\GpxReader\GpxReader;
 use PHPUnit\Framework\TestCase;
 
 class GpxReaderTest extends TestCase
 {
     public function testGpxReader1()
     {
-        $gpxTestFilename = __DIR__.'/../Files/cmhh.gpx';
+        $gpxTestFilename = __DIR__.'/../GpxReader/Files/cmhh.gpx';
 
         $gpxReader = new GpxReader();
         $gpxReader
@@ -21,7 +21,7 @@ class GpxReaderTest extends TestCase
 
     public function testCreationDateTime()
     {
-        $gpxTestFilename = __DIR__.'/../Files/bahnhof.gpx';
+        $gpxTestFilename = __DIR__.'/../GpxReader/Files/bahnhof.gpx';
 
         $gpxReader = new GpxReader();
 
@@ -34,7 +34,7 @@ class GpxReaderTest extends TestCase
 
     public function testStartDateTime()
     {
-        $gpxTestFilename = __DIR__.'/../Files/bahnhof.gpx';
+        $gpxTestFilename = __DIR__.'/../GpxReader/Files/bahnhof.gpx';
 
         $gpxReader = new GpxReader();
 
@@ -47,7 +47,7 @@ class GpxReaderTest extends TestCase
 
     public function testEndDateTime()
     {
-        $gpxTestFilename = __DIR__.'/../Files/bahnhof.gpx';
+        $gpxTestFilename = __DIR__.'/../GpxReader/Files/bahnhof.gpx';
 
         $gpxReader = new GpxReader();
 
@@ -60,7 +60,7 @@ class GpxReaderTest extends TestCase
 
     public function testCountPoints()
     {
-        $gpxTestFilename = __DIR__.'/../Files/bahnhof.gpx';
+        $gpxTestFilename = __DIR__.'/../GpxReader/Files/bahnhof.gpx';
 
         $gpxReader = new GpxReader();
 
@@ -73,7 +73,7 @@ class GpxReaderTest extends TestCase
 
     public function testGetPositionLatitude()
     {
-        $gpxTestFilename = __DIR__.'/../Files/bahnhof.gpx';
+        $gpxTestFilename = __DIR__.'/../GpxReader/Files/bahnhof.gpx';
 
         $gpxReader = new GpxReader();
 
@@ -86,7 +86,7 @@ class GpxReaderTest extends TestCase
 
     public function testGetPositionLongitude()
     {
-        $gpxTestFilename = __DIR__.'/../Files/bahnhof.gpx';
+        $gpxTestFilename = __DIR__.'/../GpxReader/Files/bahnhof.gpx';
 
         $gpxReader = new GpxReader();
 
@@ -99,7 +99,7 @@ class GpxReaderTest extends TestCase
 
     public function testGetElevationOfPosition()
     {
-        $gpxTestFilename = __DIR__.'/../Files/bahnhof.gpx';
+        $gpxTestFilename = __DIR__.'/../GpxReader/Files/bahnhof.gpx';
 
         $gpxReader = new GpxReader();
 
@@ -112,7 +112,7 @@ class GpxReaderTest extends TestCase
 
     public function testGetDateTimeOfPosition()
     {
-        $gpxTestFilename = __DIR__.'/../Files/bahnhof.gpx';
+        $gpxTestFilename = __DIR__.'/../GpxReader/Files/bahnhof.gpx';
 
         $gpxReader = new GpxReader();
 
@@ -123,15 +123,17 @@ class GpxReaderTest extends TestCase
         $this->assertEquals(new \DateTime('2016-11-25 15:40:29'), $dateTime);
     }
 
-    public function testGetPosition()
+    public function testGetPositionList()
     {
-        $gpxTestFilename = __DIR__.'/../Files/bahnhof.gpx';
+        $gpxTestFilename = __DIR__.'/../GpxReader/Files/bahnhof.gpx';
 
         $gpxReader = new GpxReader();
 
-        $position = $gpxReader
+        $positionList = $gpxReader
             ->loadFromFile($gpxTestFilename)
-            ->getPosition(5);
+            ->createPositionList();
+
+        $position = $positionList->get(5);
 
         $expectedPosition = new Position(53.549361, 9.979132);
         $expectedPosition
