@@ -8,14 +8,14 @@ use PHPUnit\Framework\TestCase;
 
 class PositionListTest extends TestCase
 {
-    public function testPositionList1()
+    public function testPositionList1(): void
     {
         $positionList = new PositionList();
 
         $this->assertEquals(0, $positionList->count());
     }
 
-    public function testPositionList2()
+    public function testPositionList2(): void
     {
         $positionList = new PositionList();
 
@@ -27,7 +27,7 @@ class PositionListTest extends TestCase
         $this->assertEquals(2, $positionList->count());
     }
 
-    public function testPositionList3()
+    public function testPositionList3(): void
     {
         $positionList = new PositionList();
 

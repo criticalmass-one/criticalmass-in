@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class GpxTimeShifterTest extends TestCase
 {
-    public function testGpxTimeShifter1()
+    public function testGpxTimeShifter1(): void
     {
         $gpxTestFilename = __DIR__.'/Files/bahnhof.gpx';
 
@@ -22,7 +22,7 @@ class GpxTimeShifterTest extends TestCase
         $this->assertEquals(new \DateTime('2016-11-25 15:40:29'), $dateTime);
     }
 
-    public function testGpxTimeShifter2()
+    public function testGpxTimeShifter2(): void
     {
         $gpxTestFilename = __DIR__.'/Files/bahnhof.gpx';
 

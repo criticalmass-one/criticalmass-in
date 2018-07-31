@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class MultiTrackTest extends TestCase
 {
-    public function test1()
+    public function test1(): void
     {
         $gpxTestFilename = __DIR__.'/../GpxReader/Files/cmhh.gpx';
 
@@ -18,7 +18,7 @@ class MultiTrackTest extends TestCase
         $this->assertEquals(5218, $gpxReader->countPoints());
     }
 
-    public function test2()
+    public function test2(): void
     {
         $gpxTestFilename = __DIR__.'/../GpxReader/Files/berlin.gpx';
 
