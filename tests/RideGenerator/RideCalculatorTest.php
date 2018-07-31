@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace Tests\Component\Util\RideGenerator;
+namespace Tests\RideGenerator;
 
-use AppBundle\Entity\City;
-use AppBundle\Entity\CityCycle;
-use AppBundle\Entity\Ride;
-use AppBundle\Criticalmass\RideGenerator\RideCalculator\RideCalculator;
-use AppBundle\Criticalmass\RideGenerator\RideCalculator\RideCalculatorInterface;
+use App\Entity\City;
+use App\Entity\CityCycle;
+use App\Entity\Ride;
+use App\Criticalmass\RideGenerator\RideCalculator\RideCalculator;
+use App\Criticalmass\RideGenerator\RideCalculator\RideCalculatorInterface;
 use PHPUnit\Framework\TestCase;
 
 class RideCalculatorTest extends TestCase
