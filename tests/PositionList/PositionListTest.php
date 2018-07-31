@@ -1,10 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tests\DistanceCalculator;
 
-use Caldera\GeoBundle\Entity\Position;
-use Caldera\GeoBundle\GpxWriter\GpxWriter;
-use Caldera\GeoBundle\PositionList\PositionList;
+use App\Criticalmass\Geo\Entity\Position;
+use App\Criticalmass\Geo\PositionList\PositionList;
 use PHPUnit\Framework\TestCase;
 
 class PositionListTest extends TestCase
