@@ -1,16 +1,16 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace Tests\DistanceCalculator;
+namespace Tests\TimeShifter;
 
-use Caldera\GeoBundle\GpxReader\GpxReader;
-use Caldera\GeoBundle\TimeShifter\GpxTimeShifter;
+use App\Criticalmass\Geo\GpxReader\GpxReader;
+use App\Criticalmass\Geo\TimeShifter\GpxTimeShifter;
 use PHPUnit\Framework\TestCase;
 
 class GpxTimeShifterTest extends TestCase
 {
     public function testGpxTimeShifter1()
     {
-        $gpxTestFilename = __DIR__.'/../Files/bahnhof.gpx';
+        $gpxTestFilename = __DIR__.'/Files/bahnhof.gpx';
 
         $gpxReader = new GpxReader();
 
@@ -24,7 +24,7 @@ class GpxTimeShifterTest extends TestCase
 
     public function testGpxTimeShifter2()
     {
-        $gpxTestFilename = __DIR__.'/../Files/bahnhof.gpx';
+        $gpxTestFilename = __DIR__.'/Files/bahnhof.gpx';
 
         $gpxReader = new GpxReader();
         $timeShifter = new GpxTimeShifter($gpxReader);
