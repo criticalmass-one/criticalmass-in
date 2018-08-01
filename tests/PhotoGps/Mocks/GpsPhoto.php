@@ -8,6 +8,6 @@ class GpsPhoto extends Photo
 {
     public function getImageName(): ?string
     {
-        return '../tests/PhotoGps/Files/coords.jpeg';
+        return __DIR__.'/../Files/coords.jpeg';
     }
 }

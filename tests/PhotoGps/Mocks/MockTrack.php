@@ -8,6 +8,6 @@ class MockTrack extends Track
 {
     public function getTrackFilename(): ?string
     {
-        return '../tests/PhotoGps/Files/braunschweig.gpx';
+        return __DIR__.'/../Files/braunschweig.gpx';
     }
 }
