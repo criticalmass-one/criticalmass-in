@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Tests\TimeShifter;
+namespace Tests\DistanceCalculator;
 
 use App\Criticalmass\Geo\GpxReader\GpxReader;
 use App\Criticalmass\Geo\TimeShifter\GpxTimeShifter;
@@ -8,9 +8,9 @@ use PHPUnit\Framework\TestCase;
 
 class GpxTimeShifterTest extends TestCase
 {
-    public function testGpxTimeShifter1(): void
+    public function testGpxTimeShifter1()
     {
-        $gpxTestFilename = __DIR__.'/Files/bahnhof.gpx';
+        $gpxTestFilename = __DIR__.'/../Files/bahnhof.gpx';
 
         $gpxReader = new GpxReader();
 
@@ -22,9 +22,9 @@ class GpxTimeShifterTest extends TestCase
         $this->assertEquals(new \DateTime('2016-11-25 15:40:29'), $dateTime);
     }
 
-    public function testGpxTimeShifter2(): void
+    public function testGpxTimeShifter2()
     {
-        $gpxTestFilename = __DIR__.'/Files/bahnhof.gpx';
+        $gpxTestFilename = __DIR__.'/../Files/bahnhof.gpx';
 
         $gpxReader = new GpxReader();
         $timeShifter = new GpxTimeShifter($gpxReader);
