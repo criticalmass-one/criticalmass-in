@@ -2,8 +2,8 @@
 
 namespace Tests\Profile;
 
-use AppBundle\Entity\Ride;
-use AppBundle\Criticalmass\Profile\Streak\StreakCalculator;
+use App\Entity\Ride;
+use App\Criticalmass\Profile\Streak\StreakCalculator;
 use PHPUnit\Framework\TestCase;
 
 class StreakTest extends TestCase

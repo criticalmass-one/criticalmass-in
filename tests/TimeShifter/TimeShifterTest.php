@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace App\Criticalmass\Geo\Test\DistanceCalculator;
+namespace Tests\TimeShifter;
 
-use Caldera\GeoBundle\Entity\Position;
-use Caldera\GeoBundle\PositionList\PositionList;
-use Caldera\GeoBundle\TimeShifter\TimeShifter;
+use App\Criticalmass\Geo\Entity\Position;
+use App\Criticalmass\Geo\PositionList\PositionList;
+use App\Criticalmass\Geo\TimeShifter\TimeShifter;
 use PHPUnit\Framework\TestCase;
 
 class TimeShifterTest extends TestCase
@@ -12,10 +12,10 @@ class TimeShifterTest extends TestCase
     protected function createPositionList(): PositionList
     {
         $position1 = new Position(53, 10);
-        $position1->setTimestamp((new \DateTime('2011-06-24 19:00:00'))->format('U'));
+        $position1->setTimestamp((int) (new \DateTime('2011-06-24 19:00:00'))->format('U'));
 
         $position2 = new Position(54, 11);
-        $position2->setTimestamp((new \DateTime('2011-06-24 19:15:00'))->format('U'));
+        $position2->setTimestamp((int) (new \DateTime('2011-06-24 19:15:00'))->format('U'));
 
         $positionList = new PositionList();
         $positionList
@@ -26,7 +26,7 @@ class TimeShifterTest extends TestCase
         return $positionList;
     }
 
-    public function testTimeShifter1()
+    public function testTimeShifter1(): void
     {
         $positionList = $this->createPositionList();
 
@@ -37,7 +37,7 @@ class TimeShifterTest extends TestCase
         $this->assertEquals((new \DateTime('2011-06-24 19:15:00'))->format('U'), $position2->getTimestamp());
     }
 
-    public function testTimeShifter2()
+    public function testTimeShifter2(): void
     {
         $timeShifter = new TimeShifter();
         $timeShifter->setPositionList($this->createPositionList());

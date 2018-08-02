@@ -2,8 +2,8 @@
 
 namespace App\Criticalmass\Geo\Entity;
 
+use App\Criticalmass\Geo\EntityInterface\PositionInterface;
 use Caldera\GeoBasic\Coord\Coord;
-use Caldera\GeoBundle\EntityInterface\PositionInterface;
 
 class Position extends Coord implements PositionInterface
 {

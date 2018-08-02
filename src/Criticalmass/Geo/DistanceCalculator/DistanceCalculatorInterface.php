@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\Geo\DistanceCalculator;
 
-use Caldera\GeoBundle\PositionList\PositionListInterface;
+use App\Criticalmass\Geo\PositionList\PositionListInterface;
 
 interface DistanceCalculatorInterface
 {
