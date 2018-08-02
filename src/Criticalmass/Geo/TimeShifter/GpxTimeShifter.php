@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\Geo\TimeShifter;
 
-use Caldera\GeoBundle\GpxReader\GpxReader;
+use App\Criticalmass\Geo\GpxReader\GpxReader;
 
 class GpxTimeShifter extends TimeShifter
 {

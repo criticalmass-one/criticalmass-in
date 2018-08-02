@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\Geo\TimeShifter;
 
-use Caldera\GeoBundle\PositionList\PositionListInterface;
+use App\Criticalmass\Geo\PositionList\PositionListInterface;
 
 abstract class AbstractTimeShifter implements TimeShifterInterface
 {

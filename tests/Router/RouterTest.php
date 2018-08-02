@@ -2,22 +2,24 @@
 
 namespace Tests\Router;
 
-use AppBundle\Criticalmass\Router\ObjectRouter;
-use AppBundle\Entity\City;
-use AppBundle\Entity\CitySlug;
-use AppBundle\Entity\Ride;
+use App\Criticalmass\Router\ObjectRouterInterface;
+use App\Entity\City;
+use App\Entity\CitySlug;
+use App\Entity\Ride;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class RouterTest extends KernelTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         self::bootKernel();
     }
 
-    protected function getRouter(): ObjectRouter
+    protected function getRouter(): ObjectRouterInterface
     {
-        return static::$kernel->getContainer()->get(ObjectRouter::class);
+        $container = self::$container;
+
+        return $container->get(ObjectRouterInterface::class);
     }
 
     public function test1(): void

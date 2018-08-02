@@ -8,6 +8,6 @@ class NoGpsPhoto extends Photo
 {
     public function getImageName(): ?string
     {
-        return '../../tests/PhotoGps/Files/no-coords.jpeg';
+        return __DIR__.'/../Files/no-coords.jpeg';
     }
 }

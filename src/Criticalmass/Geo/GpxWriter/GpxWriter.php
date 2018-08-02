@@ -56,7 +56,7 @@ class GpxWriter implements GpxWriterInterface
         $this->writer->openMemory();
         $this->writer->startDocument('1.0');
 
-        $this->writer->setIndent(4);
+        $this->writer->setIndent(true);
 
         $this->writer->startElement('gpx');
 
