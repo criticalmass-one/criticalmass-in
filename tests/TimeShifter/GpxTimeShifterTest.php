@@ -1,9 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tests\DistanceCalculator;
 
-use Caldera\GeoBundle\GpxReader\GpxReader;
-use Caldera\GeoBundle\TimeShifter\GpxTimeShifter;
+use App\Criticalmass\Geo\GpxReader\GpxReader;
+use App\Criticalmass\Geo\TimeShifter\GpxTimeShifter;
 use PHPUnit\Framework\TestCase;
 
 class GpxTimeShifterTest extends TestCase
