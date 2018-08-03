@@ -64,11 +64,9 @@ class SeoPage
 
     public function setPreviewMap(StaticMapableInterface $staticMapable): SeoPage
     {
-        $staticmapUrl = $this->urlGenerator->generate($staticMapable);
-
         $this->sonataSeoPage
-            ->addMeta('property', 'og:image', $staticmapUrl)
-            ->addMeta('name', 'twitter:image', $staticmapUrl)
+            ->addMeta('property', 'og:image', $this->urlGenerator->generate($staticMapable, 600, 315))
+            ->addMeta('name', 'twitter:image', $this->urlGenerator->generate($staticMapable, 800, 320))
             ->addMeta('name', 'twitter:card', 'summary_large_image');
 
         return $this;

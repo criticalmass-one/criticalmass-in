@@ -52,6 +52,16 @@ class UrlGenerator extends AbstractUrlGenerator
             'markers' => sprintf('%f,%f,%s,%s,%s', $latitude, $longitude, 'circle', 'red', 'bicycle'),
         ];
 
+        if (count($ride->getTracks()) !== 0) {
+            $maps = [];
+
+            foreach ($ride->getTracks() as $track) {
+                $maps[] = sprintf('%s,%d,%d,%d', base64_encode($track->getReducedPolyline()), $track->getColorRed(), $track->getColorGreen(), $track->getColorBlue());
+            }
+
+            $parameters['polylines'] = join('|', $maps);
+        }
+
         return $this->generateMapUrl($parameters, $width, $height, $zoom);
     }
 
