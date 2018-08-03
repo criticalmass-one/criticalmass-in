@@ -39,10 +39,43 @@ class ParticipationTableTest extends KernelTestCase
         return $participation;
     }
 
-    public function test1(): void
+    public function testEmptyTable(): void
     {
         $table = $this->getTableGenerator()->getTable();
 
         $this->assertEquals(0, count($table));
+    }
+
+    public function testOneParticipation(): void
+    {
+        $table = $this->getTableGenerator()->getTable();
+
+        $table->addParticipation($this->createParticipation(new \DateTime('2018-01-01')));
+
+        $this->assertEquals(1, count($table));
+    }
+
+    public function testTwoParticipations(): void
+    {
+        $table = $this->getTableGenerator()->getTable();
+
+        $table
+            ->addParticipation($this->createParticipation(new \DateTime('2018-01-01')))
+            ->addParticipation($this->createParticipation(new \DateTime('2018-02-01')));
+
+        $this->assertEquals(2, count($table));
+    }
+
+    public function testFourDifferentYearParticipations(): void
+    {
+        $table = $this->getTableGenerator()->getTable();
+
+        $table
+            ->addParticipation($this->createParticipation(new \DateTime('2015-01-01')))
+            ->addParticipation($this->createParticipation(new \DateTime('2016-01-01')))
+            ->addParticipation($this->createParticipation(new \DateTime('2017-01-01')))
+            ->addParticipation($this->createParticipation(new \DateTime('2018-01-01')));
+
+        $this->assertEquals(4, count($table));
     }
 }
