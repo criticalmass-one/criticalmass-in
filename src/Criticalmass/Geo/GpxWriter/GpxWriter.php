@@ -2,12 +2,13 @@
 
 namespace App\Criticalmass\Geo\GpxWriter;
 
+use App\Criticalmass\Geo\PositionList\PositionListInterface;
 use Caldera\GeoBundle\EntityInterface\PositionInterface;
 
 class GpxWriter implements GpxWriterInterface
 {
-    /** @var array $coordList */
-    protected $coordList;
+    /** @var PositionListInterface $positionList */
+    protected $positionList;
 
     /** @var array $gpxAttributes */
     protected $gpxAttributes = [];
@@ -18,11 +19,16 @@ class GpxWriter implements GpxWriterInterface
     /** @var \XMLWriter $writer */
     protected $writer;
 
-    public function __construct(array $coordList = [])
+    public function __construct()
     {
-        $this->coordList = $coordList;
-
         $this->writer = new \XMLWriter();
+    }
+
+    public function setPositionList(PositionListInterface $positionList): GpxWriterInterface
+    {
+        $this->positionList = $positionList;
+
+        return $this;
     }
 
     public function getGpxContent(): string
@@ -66,8 +72,7 @@ class GpxWriter implements GpxWriterInterface
         $this->writer->startElement('trk');
         $this->writer->startElement('trkseg');
 
-        /** @var PositionInterface $position */
-        foreach ($this->coordList as $position) {
+        foreach ($this->positionList->get as $position) {
             $this->generateGpxPosition($position);
         }
 
