@@ -3,13 +3,29 @@
 namespace App\Repository;
 
 use App\Entity\City;
-use App\Entity\Event;
 use App\Entity\Ride;
 use App\Entity\Thread;
 use Doctrine\ORM\EntityRepository;
 
 class PostRepository extends EntityRepository
 {
+    public function findByCrawled(bool $crawled, int $limit = null): array
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        $qb
+            ->where($qb->expr()->eq('p.crawled', ':crawled'))
+            ->setParameter('crawled', $crawled);
+
+        if ($limit) {
+            $qb->setMaxResults($limit);
+        }
+
+        $query = $qb->getQuery();
+
+        return $query->getResult();
+    }
+
     public function countPosts()
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
@@ -79,20 +95,6 @@ class PostRepository extends EntityRepository
         $query = $builder->getQuery();
 
         return $query->getResult();
-    }
-
-    public function countPostsForEvent(Event $event)
-    {
-        $builder = $this->createQueryBuilder('post');
-
-        $builder->select('COUNT(post.id)');
-
-        $builder->where($builder->expr()->eq('post.event', $event->getId()));
-        $builder->andWhere($builder->expr()->eq('post.enabled', 1));
-
-        $query = $builder->getQuery();
-
-        return (int) $query->getSingleScalarResult();
     }
 
     public function findRecentChatMessages($limit = 25)

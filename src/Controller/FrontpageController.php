@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class FrontpageController extends AbstractController
 {
-    public function indexAction(SeoPage $seoPage, CachedTimeline $cachedTimeline): Response
+    public function indexAction(SeoPage $seoPage, Timeline $cachedTimeline): Response
     {
         $seoPage->setDescription('criticalmass.in sammelt Fotos, Tracks und Informationen über weltweite Critical-Mass-Touren');
 

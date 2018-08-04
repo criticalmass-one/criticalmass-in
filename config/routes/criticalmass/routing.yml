@@ -118,6 +118,6 @@ caldera_criticalmass_static:
     resource: 'static.yml'
     prefix: /
 
-caldera_criticalmass_redirecting:
-    resource: 'redirecting.yml'
-    prefix: /
+#caldera_criticalmass_redirecting:
+#    resource: 'redirecting.yml'
+#    prefix: /

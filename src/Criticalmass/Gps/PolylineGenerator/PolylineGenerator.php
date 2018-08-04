@@ -2,6 +2,9 @@
 
 namespace App\Criticalmass\Gps\PolylineGenerator;
 
+/**
+ * @deprecated
+ */
 class PolylineGenerator extends AbstractPolylineGenerator
 {
     public function execute(): PolylineGeneratorInterface

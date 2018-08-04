@@ -4,29 +4,25 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "61b32d2b8b8e7f27e65873fda433e83f",
+    "content-hash": "9f4db428bcc13a28cb0d84034d5618b3",
     "packages": [
         {
             "name": "basvandorst/stravaphp",
-            "version": "1.2.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/basvandorst/StravaPHP.git",
-                "reference": "0d6c347280695dac240bb3431ded1a815b5d1e4f"
+                "reference": "296c6d0a317390acc233d100b4a0630e8bcc723f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/basvandorst/StravaPHP/zipball/0d6c347280695dac240bb3431ded1a815b5d1e4f",
-                "reference": "0d6c347280695dac240bb3431ded1a815b5d1e4f",
+                "url": "https://api.github.com/repos/basvandorst/StravaPHP/zipball/296c6d0a317390acc233d100b4a0630e8bcc723f",
+                "reference": "296c6d0a317390acc233d100b4a0630e8bcc723f",
                 "shasum": ""
             },
             "require": {
-                "guzzlehttp/guzzle": "~6.3",
-                "league/oauth2-client": "~2.3",
-                "php": ">=5.6"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^5"
+                "educoder/pest": "1.0.0",
+                "league/oauth2-client": "0.8.1"
             },
             "type": "library",
             "autoload": {
@@ -52,7 +48,7 @@
                 "php",
                 "strava"
             ],
-            "time": "2018-07-13T20:51:52+00:00"
+            "time": "2015-02-23T08:57:10+00:00"
         },
         {
             "name": "behat/transliterator",
@@ -1715,6 +1711,48 @@
             "time": "2018-06-14T14:45:07+00:00"
         },
         {
+            "name": "educoder/pest",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/educoder/pest.git",
+                "reference": "7c4d24d6aafc4ebac711c73cc8797d9b1779525b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/educoder/pest/zipball/7c4d24d6aafc4ebac711c73cc8797d9b1779525b",
+                "reference": "7c4d24d6aafc4ebac711c73cc8797d9b1779525b",
+                "shasum": ""
+            },
+            "require": {
+                "lib-curl": "*",
+                "php": ">=5.2"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    ""
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matt Zukowski",
+                    "email": "matt@zukowski.ca"
+                },
+                {
+                    "name": "Donald Sipe",
+                    "email": "donald.sipe@gmail.com"
+                }
+            ],
+            "description": "A proper REST client for PHP.",
+            "homepage": "https://github.com/educoder/pest",
+            "time": "2013-11-17T12:58:01+00:00"
+        },
+        {
             "name": "egulias/email-validator",
             "version": "2.1.4",
             "source": {
@@ -1976,65 +2014,6 @@
                 "facebook",
                 "sdk"
             ],
-            "time": "2018-07-03T02:25:00+00:00"
-        },
-        {
-            "name": "facebook/php-sdk-v4",
-            "version": "5.6.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/facebook/php-graph-sdk.git",
-                "reference": "90e92bd1816fe718e55184ab85910dfcf488432c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/facebook/php-graph-sdk/zipball/90e92bd1816fe718e55184ab85910dfcf488432c",
-                "reference": "90e92bd1816fe718e55184ab85910dfcf488432c",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.4|^7.0"
-            },
-            "require-dev": {
-                "guzzlehttp/guzzle": "~5.0",
-                "mockery/mockery": "~0.8",
-                "phpunit/phpunit": "~4.0"
-            },
-            "suggest": {
-                "guzzlehttp/guzzle": "Allows for implementation of the Guzzle HTTP client",
-                "paragonie/random_compat": "Provides a better CSPRNG option in PHP 5"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "5.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Facebook\\": "src/Facebook/"
-                },
-                "files": [
-                    "src/Facebook/polyfills.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Facebook Platform"
-            ],
-            "authors": [
-                {
-                    "name": "Facebook",
-                    "homepage": "https://github.com/facebook/php-graph-sdk/contributors"
-                }
-            ],
-            "description": "Facebook SDK for PHP",
-            "homepage": "https://github.com/facebook/php-graph-sdk",
-            "keywords": [
-                "facebook",
-                "sdk"
-            ],
-            "abandoned": "facebook/graph-sdk",
             "time": "2018-07-03T02:25:00+00:00"
         },
         {
@@ -2534,6 +2513,99 @@
             ],
             "description": "A php implementation to send log-messages to a GELF compatible backend like Graylog2.",
             "time": "2017-06-24T10:38:25+00:00"
+        },
+        {
+            "name": "guzzle/guzzle",
+            "version": "v3.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/guzzle.git",
+                "reference": "4de0618a01b34aa1c8c33a3f13f396dcd3882eba"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/4de0618a01b34aa1c8c33a3f13f396dcd3882eba",
+                "reference": "4de0618a01b34aa1c8c33a3f13f396dcd3882eba",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.3.3",
+                "symfony/event-dispatcher": ">=2.1"
+            },
+            "replace": {
+                "guzzle/batch": "self.version",
+                "guzzle/cache": "self.version",
+                "guzzle/common": "self.version",
+                "guzzle/http": "self.version",
+                "guzzle/inflection": "self.version",
+                "guzzle/iterator": "self.version",
+                "guzzle/log": "self.version",
+                "guzzle/parser": "self.version",
+                "guzzle/plugin": "self.version",
+                "guzzle/plugin-async": "self.version",
+                "guzzle/plugin-backoff": "self.version",
+                "guzzle/plugin-cache": "self.version",
+                "guzzle/plugin-cookie": "self.version",
+                "guzzle/plugin-curlauth": "self.version",
+                "guzzle/plugin-error-response": "self.version",
+                "guzzle/plugin-history": "self.version",
+                "guzzle/plugin-log": "self.version",
+                "guzzle/plugin-md5": "self.version",
+                "guzzle/plugin-mock": "self.version",
+                "guzzle/plugin-oauth": "self.version",
+                "guzzle/service": "self.version",
+                "guzzle/stream": "self.version"
+            },
+            "require-dev": {
+                "doctrine/cache": "*",
+                "monolog/monolog": "1.*",
+                "phpunit/phpunit": "3.7.*",
+                "psr/log": "1.0.*",
+                "symfony/class-loader": "*",
+                "zendframework/zend-cache": "<2.3",
+                "zendframework/zend-log": "<2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.8-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Guzzle": "src/",
+                    "Guzzle\\Tests": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                },
+                {
+                    "name": "Guzzle Community",
+                    "homepage": "https://github.com/guzzle/guzzle/contributors"
+                }
+            ],
+            "description": "Guzzle is a PHP HTTP client library and framework for building RESTful web service clients",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "client",
+                "curl",
+                "framework",
+                "http",
+                "http client",
+                "rest",
+                "web service"
+            ],
+            "abandoned": "guzzlehttp/guzzle",
+            "time": "2014-01-28T22:29:15+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -3222,16 +3294,16 @@
         },
         {
             "name": "jms/serializer",
-            "version": "1.12.1",
+            "version": "1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/serializer.git",
-                "reference": "93d6e03fcb71d45854cc44b5a84d645c02c5d763"
+                "reference": "00863e1d55b411cc33ad3e1de09a4c8d3aae793c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/93d6e03fcb71d45854cc44b5a84d645c02c5d763",
-                "reference": "93d6e03fcb71d45854cc44b5a84d645c02c5d763",
+                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/00863e1d55b411cc33ad3e1de09a4c8d3aae793c",
+                "reference": "00863e1d55b411cc33ad3e1de09a4c8d3aae793c",
                 "shasum": ""
             },
             "require": {
@@ -3271,7 +3343,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-1.x": "1.11-dev"
+                    "dev-1.x": "1.13-dev"
                 }
             },
             "autoload": {
@@ -3302,7 +3374,7 @@
                 "serialization",
                 "xml"
             ],
-            "time": "2018-06-01T12:10:12+00:00"
+            "time": "2018-07-25T13:58:54+00:00"
         },
         {
             "name": "jms/serializer-bundle",
@@ -3439,16 +3511,16 @@
         },
         {
             "name": "khill/php-duration",
-            "version": "1.0.5",
+            "version": "1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevinkhill/php-duration.git",
-                "reference": "9fbb2eaf584d0e04f9d49e008c6abe56e2915625"
+                "reference": "5efcb6d492030e012a869f328284a377ee35c993"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevinkhill/php-duration/zipball/9fbb2eaf584d0e04f9d49e008c6abe56e2915625",
-                "reference": "9fbb2eaf584d0e04f9d49e008c6abe56e2915625",
+                "url": "https://api.github.com/repos/kevinkhill/php-duration/zipball/5efcb6d492030e012a869f328284a377ee35c993",
+                "reference": "5efcb6d492030e012a869f328284a377ee35c993",
                 "shasum": ""
             },
             "require-dev": {
@@ -3485,7 +3557,7 @@
                 "seconds",
                 "time"
             ],
-            "time": "2018-04-07T15:02:43+00:00"
+            "time": "2018-07-05T12:10:14+00:00"
         },
         {
             "name": "knplabs/knp-components",
@@ -3747,34 +3819,31 @@
         },
         {
             "name": "league/oauth2-client",
-            "version": "2.3.0",
+            "version": "0.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/oauth2-client.git",
-                "reference": "aa2e3df188f0bfd87f7880cc880e906e99923580"
+                "reference": "bb2d4e4be7a4af05260de9eaa4337920bc5e0ad1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/oauth2-client/zipball/aa2e3df188f0bfd87f7880cc880e906e99923580",
-                "reference": "aa2e3df188f0bfd87f7880cc880e906e99923580",
+                "url": "https://api.github.com/repos/thephpleague/oauth2-client/zipball/bb2d4e4be7a4af05260de9eaa4337920bc5e0ad1",
+                "reference": "bb2d4e4be7a4af05260de9eaa4337920bc5e0ad1",
                 "shasum": ""
             },
             "require": {
-                "guzzlehttp/guzzle": "^6.0",
-                "paragonie/random_compat": "^1|^2",
-                "php": "^5.6|^7.0"
+                "guzzle/guzzle": "~3.7",
+                "php": ">=5.4.0"
             },
             "require-dev": {
-                "eloquent/liberator": "^2.0",
-                "eloquent/phony-phpunit": "^1.0|^3.0",
-                "jakub-onderka/php-parallel-lint": "^0.9.2",
-                "phpunit/phpunit": "^5.7|^6.0",
-                "squizlabs/php_codesniffer": "^2.3|^3.0"
+                "mockery/mockery": "~0.9",
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "~2.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-2.x": "2.0.x-dev"
+                    "dev-master": "0.8.x-dev"
                 }
             },
             "autoload": {
@@ -3792,11 +3861,6 @@
                     "email": "hello@alexbilbie.com",
                     "homepage": "http://www.alexbilbie.com",
                     "role": "Developer"
-                },
-                {
-                    "name": "Woody Gilk",
-                    "homepage": "https://github.com/shadowhand",
-                    "role": "Contributor"
                 }
             ],
             "description": "OAuth 2.0 Client Library",
@@ -3810,7 +3874,7 @@
                 "oauth2",
                 "single sign on"
             ],
-            "time": "2018-01-13T05:27:58+00:00"
+            "time": "2015-02-12T17:10:16+00:00"
         },
         {
             "name": "liip/imagine-bundle",
@@ -5920,16 +5984,16 @@
         },
         {
             "name": "sonata-project/admin-bundle",
-            "version": "3.36.0",
+            "version": "3.37.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataAdminBundle.git",
-                "reference": "20b1810a75792bc59e5941f520e3991629beb111"
+                "reference": "3f4ae4285f277251adad9bf8e47ff74ff9600aae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/20b1810a75792bc59e5941f520e3991629beb111",
-                "reference": "20b1810a75792bc59e5941f520e3991629beb111",
+                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/3f4ae4285f277251adad9bf8e47ff74ff9600aae",
+                "reference": "3f4ae4285f277251adad9bf8e47ff74ff9600aae",
                 "shasum": ""
             },
             "require": {
@@ -6021,7 +6085,7 @@
                 "bootstrap",
                 "sonata"
             ],
-            "time": "2018-07-17T05:59:07+00:00"
+            "time": "2018-07-26T19:29:16+00:00"
         },
         {
             "name": "sonata-project/block-bundle",
@@ -7535,16 +7599,16 @@
         },
         {
             "name": "symfony/flex",
-            "version": "v1.0.84",
+            "version": "v1.0.88",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/flex.git",
-                "reference": "7ede6446afac01e6e381db8c8c6fddb7c05a2aa7"
+                "reference": "730ff18ed2d15ed8a0eaba8115a0cffdf53c39eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/flex/zipball/7ede6446afac01e6e381db8c8c6fddb7c05a2aa7",
-                "reference": "7ede6446afac01e6e381db8c8c6fddb7c05a2aa7",
+                "url": "https://api.github.com/repos/symfony/flex/zipball/730ff18ed2d15ed8a0eaba8115a0cffdf53c39eb",
+                "reference": "730ff18ed2d15ed8a0eaba8115a0cffdf53c39eb",
                 "shasum": ""
             },
             "require": {
@@ -7578,7 +7642,7 @@
                 }
             ],
             "description": "Composer plugin for Symfony",
-            "time": "2018-07-19T06:01:11+00:00"
+            "time": "2018-07-27T16:55:54+00:00"
         },
         {
             "name": "symfony/form",
@@ -9472,24 +9536,24 @@
         },
         {
             "name": "twig/extensions",
-            "version": "v1.5.1",
+            "version": "v1.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig-extensions.git",
-                "reference": "d188c76168b853481cc75879ea045bf93d718e9c"
+                "reference": "2c1a86526d0044065220d1b51ac08348bea5ca82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig-extensions/zipball/d188c76168b853481cc75879ea045bf93d718e9c",
-                "reference": "d188c76168b853481cc75879ea045bf93d718e9c",
+                "url": "https://api.github.com/repos/twigphp/Twig-extensions/zipball/2c1a86526d0044065220d1b51ac08348bea5ca82",
+                "reference": "2c1a86526d0044065220d1b51ac08348bea5ca82",
                 "shasum": ""
             },
             "require": {
-                "twig/twig": "~1.27|~2.0"
+                "twig/twig": "^1.27|^2.0"
             },
             "require-dev": {
-                "symfony/phpunit-bridge": "~3.3@dev",
-                "symfony/translation": "~2.3|~3.0"
+                "symfony/phpunit-bridge": "^3.4",
+                "symfony/translation": "^2.7|^3.4"
             },
             "suggest": {
                 "symfony/translation": "Allow the time_diff output to be translated"
@@ -9519,12 +9583,11 @@
                 }
             ],
             "description": "Common additional features for Twig that do not directly belong in core",
-            "homepage": "http://twig.sensiolabs.org/doc/extensions/index.html",
             "keywords": [
                 "i18n",
                 "text"
             ],
-            "time": "2017-06-08T18:19:53+00:00"
+            "time": "2018-05-22T13:26:07+00:00"
         },
         {
             "name": "twig/twig",
@@ -11742,16 +11805,16 @@
         },
         {
             "name": "symfony/phpunit-bridge",
-            "version": "v3.4.13",
+            "version": "v4.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/phpunit-bridge.git",
-                "reference": "62c8349f21927b9a5975d89ee065e84d233a34e5"
+                "reference": "b3c53eb42f6527498a1c99cb3051ada7dc6b4225"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/62c8349f21927b9a5975d89ee065e84d233a34e5",
-                "reference": "62c8349f21927b9a5975d89ee065e84d233a34e5",
+                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/b3c53eb42f6527498a1c99cb3051ada7dc6b4225",
+                "reference": "b3c53eb42f6527498a1c99cb3051ada7dc6b4225",
                 "shasum": ""
             },
             "require": {
@@ -11770,7 +11833,7 @@
             "type": "symfony-bridge",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.4-dev"
+                    "dev-master": "4.1-dev"
                 },
                 "thanks": {
                     "name": "phpunit/phpunit",
@@ -11804,7 +11867,7 @@
             ],
             "description": "Symfony PHPUnit Bridge",
             "homepage": "https://symfony.com",
-            "time": "2018-07-05T11:53:23+00:00"
+            "time": "2018-07-05T11:54:23+00:00"
         },
         {
             "name": "symfony/polyfill-php72",

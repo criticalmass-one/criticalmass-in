@@ -6,13 +6,13 @@ use App\Controller\AbstractController;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Criticalmass\Util\DateTimeUtil;
 use App\Event\Track\TrackUploadedEvent;
+use Pest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Entity\Position;
 use App\Entity\Ride;
 use App\Entity\Track;
 use App\Criticalmass\Gps\GpxExporter\GpxExporter;
-use Pest;
 use Strava\API\Client;
 use Strava\API\OAuth as OAuth;
 use Strava\API\Service\REST;
@@ -34,7 +34,8 @@ class StravaController extends AbstractController
 
         $authorizationOptions = [
             'state' => '',
-            'approval_prompt' => 'force'
+            'approval_prompt' => 'force',
+            'scope' => 'public',
         ];
 
         $authorizationUrl = $oauth->getAuthorizationUrl($authorizationOptions);
@@ -101,11 +102,12 @@ class StravaController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function importAction(Request $request, UserInterface $user, SessionInterface $session, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, GpxExporter $exporter, Ride $ride, string $uploadDestinationTrack): Response
+    public function importAction(Request $request, UserInterface $user, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, GpxExporter $exporter, Ride $ride): Response
     {
         $activityId = (int) $request->get('activityId');
 
-        $token = $session->get('strava_token');
+        $uploadDestinationTrack = $this->getParameter('upload_destination.track');
+        $token = $this->getSession()->get('strava_token');
 
         $adapter = new Pest('https://www.strava.com/api/v3');
         $service = new REST($token, $adapter);

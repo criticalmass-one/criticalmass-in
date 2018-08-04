@@ -1,0 +1,25 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <a href="{{ website.url }}">
+            {{ website.title|raw }}
+        </a>
+    </div>
+
+    {% if website.description or website.imageUrl %}
+    <div class="panel-body">
+        {% if website.imageUrl %}
+        <p>
+            <a href="{{ website.url }}">
+                <img class="media-object img-thumbnail" src="{{ website.imageUrl|imagine_filter('crawled_preview_image') }}" alt="{{ website.title }}" />
+            </a>
+        </p>
+        {% endif %}
+
+        {% if website.description %}
+        <p>
+            {{ website.description|raw }}
+        </p>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
