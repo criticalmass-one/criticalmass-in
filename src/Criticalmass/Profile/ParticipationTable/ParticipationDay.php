@@ -34,7 +34,6 @@ class ParticipationDay implements \Countable, \Iterator
 
     public function count(): int
     {
-        echo count($this->participationList);
         return count($this->participationList);
     }
 

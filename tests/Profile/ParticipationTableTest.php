@@ -2,7 +2,6 @@
 
 namespace Tests\Profile;
 
-use App\Criticalmass\Profile\ParticipationTable\TableGenerator;
 use App\Criticalmass\Profile\ParticipationTable\TableGeneratorInterface;
 use App\Entity\Participation;
 use App\Entity\Ride;
@@ -21,7 +20,6 @@ class ParticipationTableTest extends KernelTestCase
 
         return $container->get(TableGeneratorInterface::class);
     }
-
 
     protected function createRide(\DateTime $dateTime): Ride
     {
@@ -77,5 +75,16 @@ class ParticipationTableTest extends KernelTestCase
             ->addParticipation($this->createParticipation(new \DateTime('2018-01-01')));
 
         $this->assertEquals(4, count($table));
+    }
+
+    public function testTwoRidesForADay(): void
+    {
+        $table = $this->getTableGenerator()->getTable();
+
+        $table
+            ->addParticipation($this->createParticipation(new \DateTime('2015-01-01 15:00:00')))
+            ->addParticipation($this->createParticipation(new \DateTime('2015-01-01 19:00:00')));
+
+        $this->assertEquals(2, count($table));
     }
 }

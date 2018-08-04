@@ -30,7 +30,7 @@ class ParticipationMonth implements \Countable, \Iterator
         $dateTime = $ride->getDateTime();
         $day = (int) $dateTime->format('j');
 
-        if (!isset($this->dayList[$day]) || !is_array($this->dayList[$day])) {
+        if (!isset($this->dayList[$day])) {
             $this->dayList[$day] = new ParticipationDay($this->year, $this->month, $day);
         }
 
