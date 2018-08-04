@@ -5,10 +5,10 @@ namespace App\Criticalmass\Strava\TrackImporter;
 use App\Criticalmass\Geo\Entity\Position;
 use App\Criticalmass\Geo\GpxWriter\GpxWriter;
 use App\Criticalmass\Geo\PositionList\PositionList;
+use App\Entity\Track;
 use Pest;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Strava\API\Client;
-use Strava\API\OAuth as OAuth;
 use Strava\API\Service\REST;
 
 class TrackImporter
@@ -96,14 +96,23 @@ class TrackImporter
         return $positionList;
     }
 
-    public function doMagic(int $activityId)
+    protected function createTrack(int $activityId, string $filename): Track
+    {
+        $track = new Track();
+        $track
+            ->setStravaActivityId($activityId)
+            ->setTrackFilename($filename);
+
+        return $track;
+    }
+
+    public function doMagic(int $activityId): Track
     {
         $positionList = $this->createPositionList($activityId);
 
-        $this->gpxWriter->
-        $exporter->setPositionArray($positionArray);
+        $this->gpxWriter->setPositionList($positionList);
 
-        $exporter->execute();
+        $this->gpxWriter->saveGpxContent();
 
         $filename = sprintf('%s.gpx', uniqid());
 
@@ -111,16 +120,7 @@ class TrackImporter
         fwrite($fp, $exporter->getGpxContent());
         fclose($fp);
 
-        $track = new Track();
-        $track
-            ->setSource(Track::TRACK_SOURCE_STRAVA)
-            ->setStravaActivityId($activityId)
-            ->setUser($user)
-            ->setTrackFilename($filename)
-            ->setUsername($user->getUsername())
-            ->setRide($ride);
 
-        $eventDispatcher->dispatch(TrackUploadedEvent::NAME, new TrackUploadedEvent($track));
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($track);
