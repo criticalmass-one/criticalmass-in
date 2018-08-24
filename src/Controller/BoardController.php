@@ -126,7 +126,7 @@ class BoardController extends AbstractController
             $thread->setTitle($data['title']);
             $thread->setFirstPost($post);
             $thread->setLastPost($post);
-            $thread->setSlug($slug);
+            $thread->setSlug($slug->render());
 
             $board->setLastThread($thread);
             $board->incPostNumber();
