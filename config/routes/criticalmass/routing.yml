@@ -90,6 +90,18 @@ caldera_criticalmass_citycycle:
     resource: 'citycycle.yml'
     prefix: /
 
+caldera_criticalmass_profile:
+    resource: 'profile.xml'
+    prefix: /
+
+caldera_criticalmass_social_network:
+    resource: 'social_network.yml'
+    prefix: /
+
+caldera_criticalmass_static:
+    resource: 'static.yml'
+    prefix: /
+
 caldera_criticalmass_ride:
     resource: 'ride.yml'
     prefix: /
@@ -104,18 +116,6 @@ caldera_criticalmass_rideestimate:
 
 caldera_criticalmass_subdride:
     resource: 'subride.yml'
-    prefix: /
-
-caldera_criticalmass_profile:
-    resource: 'profile.xml'
-    prefix: /
-
-caldera_criticalmass_social_network:
-    resource: 'social_network.yml'
-    prefix: /
-
-caldera_criticalmass_static:
-    resource: 'static.yml'
     prefix: /
 
 #caldera_criticalmass_redirecting:
