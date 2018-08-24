@@ -40,6 +40,7 @@ require.config({
         "RideStatisticPage": "/js/modules/page/RideStatisticPage",
         "PlacePhotoPage": "/js/modules/page/PlacePhotoPage",
         "PhotoViewModal": "/js/modules/PhotoViewModal",
+        "ProfileColorPage": "/js/modules/page/ProfileColorPage",
         "Timelapse": "/js/modules/map/Timelapse",
         "TrackRangePage": "/js/modules/page/TrackRangePage",
         "TrackUploadPage": "/js/modules/page/TrackUploadPage",
