@@ -15,11 +15,11 @@ caldera_criticalmass_board_viewthread:
     controller: App\Controller\BoardController::viewThreadAction
 
 caldera_criticalmass_board_listcitythreads:
-    path:  /{citySlug/listthreads
+    path:  /{citySlug}/listthreads
     controller: App\Controller\BoardController::listThreadsAction
 
 caldera_criticalmass_board_addcitythread:
-    path:  /{citySlug/addthread
+    path:  /{citySlug}/addthread
     controller: App\Controller\BoardController::addThreadAction
 
 caldera_criticalmass_board_viewcitythread:
