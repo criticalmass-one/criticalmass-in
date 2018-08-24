@@ -28,6 +28,9 @@
         {{ form_start(profileColorForm) }}
         <div class="row">
             <div class="col-md-6 col-md-offset-3 text-center">
+                <div id="colorpicker" style="display: inline-block">
+                </div>
+
                 {{ form_widget(profileColorForm.colorRed) }}
                 {{ form_widget(profileColorForm.colorGreen) }}
                 {{ form_widget(profileColorForm.colorBlue) }}

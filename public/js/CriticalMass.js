@@ -109,6 +109,7 @@ require.config({
         "chartjs": "/js/external/chartjs/chartjs",
         "localforage": "/js/external/localforage/localforage.min",
         "bootstrap-datepicker": "/js/external/bootstrap-datepicker/bootstrap-datepicker.min",
+        "bootstrap-colorpicker": "/js/external/bootstrap-colorpicker/bootstrap-colorpicker.min",
         "bootstrap4": "/js/external/bootstrap4/bootstrap.min",
         "bootstrap4app": "/js/external/bootstrap-app-4/toolkit",
         "popper": "/js/external/popper/popper.min",
