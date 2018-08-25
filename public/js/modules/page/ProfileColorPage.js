@@ -3,6 +3,7 @@ define(['jquery', 'bootstrap-colorpicker'], function ($) {
         $colorPicker = $('#colorpicker');
 
         $colorPicker.colorpicker({
+            format: 'rgb'
         });
 
         $colorPicker.on('changeColor', function(e) {
