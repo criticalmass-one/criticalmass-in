@@ -4,10 +4,11 @@ namespace App\Criticalmass\SocialNetwork\NetworkFeedFetcher;
 
 use App\Entity\SocialNetworkFeedItem;
 use App\Entity\SocialNetworkProfile;
+use Codebird\Codebird;
 use Zend\Feed\Reader\Entry\EntryInterface;
 use Zend\Feed\Reader\Reader;
 
-class HomepageFeedFetcher extends AbstractNetworkFeedFetcher
+class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
 {
     public function __construct()
     {
@@ -16,58 +17,25 @@ class HomepageFeedFetcher extends AbstractNetworkFeedFetcher
 
     public function fetch(SocialNetworkProfile $socialNetworkProfile): NetworkFeedFetcherInterface
     {
-        return $this;
         try {
             $this->fetchFeed($socialNetworkProfile);
         } catch (\Exception $exception) {
-
+            var_dump($exception->getMessage());
         }
 
         return $this;
-    }
-
-    protected function getFeedLink(SocialNetworkProfile $socialNetworkProfile): ?string
-    {
-        $homepageAddress = $socialNetworkProfile->getIdentifier();
-
-        $links = Reader::findFeedLinks($homepageAddress);
-
-        if (isset($links->rdf)) {
-            return $links->rdf;
-        }
-
-        if (isset($links->rss)) {
-            return $links->rss;
-        }
-
-        if (isset($links->atom)) {
-            return $links->atom;
-        }
-
-        return null;
     }
 
     protected function fetchFeed(SocialNetworkProfile $socialNetworkProfile): NetworkFeedFetcherInterface
     {
-        $feedLink = $this->getFeedLink($socialNetworkProfile);
+        Codebird::setConsumerKey('foo', 'bar');
+        $cb = Codebird::getInstance();
 
-        if (!$feedLink) {
-            return $this;
-        }
+        $reply = $cb->statuses_userTimeline('screen_name=maltehuebner');
+        $data = (array) $reply;
 
-        $feed = Reader::import($feedLink);
-
-        /** @var EntryInterface $entry */
-        foreach ($feed as $entry) {
-            $feedItem = $this->convertEntryToFeedItem($entry);
-
-            if ($feedItem) {
-                $feedItem->setSocialNetworkProfile($socialNetworkProfile);
-
-                $this->feedItemList[] = $feedItem;
-            }
-        }
-
+        echo "FOO";
+        var_dump($data);
         return $this;
     }
 

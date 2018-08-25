@@ -61,6 +61,11 @@ class SocialNetworkProfile
      */
     protected $enabled = true;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $autoPublish = true;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -165,6 +170,18 @@ class SocialNetworkProfile
     public function setEnabled(bool $enabled): SocialNetworkProfile
     {
         $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    public function isAutoPublish(): bool
+    {
+        return $this->autoPublish;
+    }
+
+    public function setAutoPublish(bool $autoPublish): SocialNetworkProfile
+    {
+        $this->autoPublish = $autoPublish;
 
         return $this;
     }

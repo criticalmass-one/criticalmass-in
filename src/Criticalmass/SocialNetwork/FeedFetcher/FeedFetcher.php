@@ -66,7 +66,6 @@ class FeedFetcher
 
                 $this->feedItemList = array_merge($this->feedItemList, $feedItemList);
             }
-
         }
 
         return $this;
