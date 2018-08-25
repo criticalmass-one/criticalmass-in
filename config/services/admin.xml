@@ -134,6 +134,11 @@
             <argument type="string">App\Entity\User</argument>
             <argument/>
             <tag name="sonata.admin" manager-type="orm" group="Community" label="User"/>
+            <call method="setTemplates">
+                <argument type="collection">
+                    <argument key="outer_list_rows_mosaic">Admin/user_mosaic.html.twig</argument>
+                </argument>
+            </call>
         </service>
     </services>
 </container>
