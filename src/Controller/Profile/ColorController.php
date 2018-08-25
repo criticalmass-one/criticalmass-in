@@ -3,9 +3,10 @@
 namespace App\Controller\Profile;
 
 use App\Controller\AbstractController;
+use App\Event\User\UserColorChangedEvent;
 use App\Form\Type\ProfileColorType;
-use App\Form\Type\UserProfilePhotoType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,19 +18,19 @@ class ColorController extends AbstractController
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function colorAction(Request $request, UserInterface $user = null): Response
+    public function colorAction(Request $request, EventDispatcherInterface $eventDispatcher, UserInterface $user = null): Response
     {
         $form = $this->createForm(ProfileColorType::class, $user);
         $form->add('submit', SubmitType::class);
 
         if ($request->isMethod(Request::METHOD_POST)) {
-            return $this->colorPostAction($request, $user, $form);
+            return $this->colorPostAction($request, $user, $form, $eventDispatcher);
         } else {
-            return $this->colorGetAction($request, $user, $form);
+            return $this->colorGetAction($request, $user, $form, $eventDispatcher);
         }
     }
 
-    protected function colorGetAction(Request $request, UserInterface $user = null, FormInterface $form): Response
+    protected function colorGetAction(Request $request, UserInterface $user = null, FormInterface $form, EventDispatcherInterface $eventDispatcher): Response
     {
         return $this->render('ProfileColor/color.html.twig', [
             'profileColorForm' => $form->createView(),
@@ -37,7 +38,7 @@ class ColorController extends AbstractController
         ]);
     }
 
-    public function colorPostAction(Request $request, UserInterface $user = null, FormInterface $form): Response
+    public function colorPostAction(Request $request, UserInterface $user = null, FormInterface $form, EventDispatcherInterface $eventDispatcher): Response
     {
         $form->handleRequest($request);
 
@@ -45,8 +46,10 @@ class ColorController extends AbstractController
             $user = $form->getData();
 
             $this->getDoctrine()->getManager()->flush();
+
+            $eventDispatcher->dispatch(UserColorChangedEvent::NAME, new UserColorChangedEvent($user));
         }
 
-        return $this->colorGetAction($request, $user, $form);
+        return $this->colorGetAction($request, $user, $form, $eventDispatcher);
     }
 }

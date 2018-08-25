@@ -3,6 +3,7 @@
 namespace App\Controller\Profile;
 
 use App\Controller\AbstractController;
+use App\Entity\User;
 use App\Form\Type\UserProfilePhotoType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -40,7 +41,10 @@ class ProfilePhotoController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var User $user */
             $user = $form->getData();
+
+            $user->setOwnProfilePhoto(true);
 
             $this->getDoctrine()->getManager()->flush();
         }

@@ -4,6 +4,7 @@ namespace App\EventSubscriber;
 
 use App\Entity\User;
 use App\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGenerator;
+use App\Event\User\UserColorChangedEvent;
 use FOS\UserBundle\Event\FormEvent as FosFormEvent;
 use FOS\UserBundle\FOSUserEvents;
 use HWI\Bundle\OAuthBundle\HWIOAuthEvents;
@@ -30,6 +31,7 @@ class ProfilePhotoEventSubscriber implements EventSubscriberInterface
         return [
             FOSUserEvents::REGISTRATION_SUCCESS => 'onFosRegistrationSuccess',
             HWIOAuthEvents::CONNECT_INITIALIZE => 'onHwiRegistrationSuccess',
+            UserColorChangedEvent::NAME => 'onUserColorChange',
         ];
     }
 
@@ -42,9 +44,18 @@ class ProfilePhotoEventSubscriber implements EventSubscriberInterface
 
     public function onHwiRegistrationSuccess(HwiFormEvent $event): void
     {
-        $user = $user = $event->getForm()->getData();
+        $user = $event->getForm()->getData();
 
         $this->createProfilePhoto($user);
+    }
+
+    public function onUserColorChange(UserColorChangedEvent $event): void
+    {
+        $user = $event->getUser();
+
+        if (!$user->hasOwnProfilePhoto()) {
+            $this->createProfilePhoto($user);
+        }
     }
 
     protected function createProfilePhoto(User $user): void
