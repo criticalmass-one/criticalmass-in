@@ -9,3 +9,6 @@ strava_login:
 
 runkeeper_login:
     path: /login/check-runkeeper
+
+twitter_login:
+    path: /login/check-twitter

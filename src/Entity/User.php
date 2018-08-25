@@ -154,7 +154,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     /**
      * @ORM\Column(type="boolean", options={"default" = 0})
      */
-    protected $ownProfilePhoto;
+    protected $ownProfilePhoto = false;
 
     public function __construct()
     {
