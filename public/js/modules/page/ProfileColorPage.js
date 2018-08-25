@@ -3,9 +3,6 @@ define(['jquery', 'bootstrap-colorpicker'], function ($) {
         $colorPicker = $('#colorpicker');
 
         $colorPicker.colorpicker({
-            color: '#ffaa00',
-            container: true,
-            inline: true
         });
 
         $colorPicker.on('changeColor', function(e) {

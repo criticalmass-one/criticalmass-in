@@ -20,7 +20,7 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3 text-center">
                 <h2>
-                    Dein Profilfoto
+                    Deine Benutzerfarbe
                 </h2>
             </div>
         </div>
@@ -28,7 +28,9 @@
         {{ form_start(profileColorForm) }}
         <div class="row">
             <div class="col-md-6 col-md-offset-3 text-center">
-                <div id="colorpicker" style="display: inline-block">
+                <div id="colorpicker" class="input-group colorpicker-component">
+                    <input type="text" value="{{ rgb_to_hex(user.colorRed, user.colorGreen, user.colorBlue) }}" class="form-control" />
+                    <span class="input-group-addon"><i></i></span>
                 </div>
 
                 {{ form_widget(profileColorForm.colorRed) }}

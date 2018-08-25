@@ -33,6 +33,7 @@ class ColorController extends AbstractController
     {
         return $this->render('ProfileColor/color.html.twig', [
             'profileColorForm' => $form->createView(),
+            'user' => $user,
         ]);
     }
 
