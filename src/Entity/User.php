@@ -141,6 +141,11 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
      */
     protected $imageName;
 
+    /**
+     * @ORM\Column(type="boolean", options={"default" = 0})
+     */
+    protected $ownProfilePhoto;
+
     public function __construct()
     {
         parent::__construct();
@@ -461,5 +466,17 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     public function getImageName(): ?string
     {
         return $this->imageName;
+    }
+
+    public function hasOwnProfilePhoto(): bool
+    {
+        return $this->ownProfilePhoto;
+    }
+
+    public function setOwnProfilePhoto(bool $ownProfilePhoto): User
+    {
+        $this->ownProfilePhoto = $ownProfilePhoto;
+
+        return $this;
     }
 }

@@ -19,7 +19,6 @@ class UserAdmin extends AbstractAdmin
             ->add('username')
             ->add('email')
             ->add('plainPassword', TextType::class, ['required' => false])
-            ->add('description', TextareaType::class, ['required' => false])
             ->end()
             ->with('Color', ['class' => 'col-md-6'])
             ->add('colorRed')
@@ -29,6 +28,7 @@ class UserAdmin extends AbstractAdmin
             ->with('Settings', ['class' => 'col-md-6'])
             ->add('blurGalleries', CheckboxType::class, ['required' => false])
             ->add('enabled', CheckboxType::class, ['required' => false])
+            ->add('ownProfilePhoto', CheckboxType::class, ['required' => false])
             ->end();
     }
 
