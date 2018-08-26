@@ -6,13 +6,19 @@ use App\Entity\SocialNetworkFeedItem;
 use App\Entity\SocialNetworkProfile;
 use Codebird\Codebird;
 use Zend\Feed\Reader\Entry\EntryInterface;
-use Zend\Feed\Reader\Reader;
 
 class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
 {
-    public function __construct()
-    {
+    /** @var string $twitterClientId */
+    protected $twitterClientId;
 
+    /** @var string $twitterSecret */
+    protected $twitterSecret;
+
+    public function __construct(string $twitterClientId, string $twitterSecret)
+    {
+        $this->twitterClientId = $twitterClientId;
+        $this->twitterSecret = $twitterSecret;
     }
 
     public function fetch(SocialNetworkProfile $socialNetworkProfile): NetworkFeedFetcherInterface
@@ -28,10 +34,13 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
 
     protected function fetchFeed(SocialNetworkProfile $socialNetworkProfile): NetworkFeedFetcherInterface
     {
-        Codebird::setConsumerKey('foo', 'bar');
+        Codebird::setConsumerKey($this->twitterClientId, $this->twitterSecret);
         $cb = Codebird::getInstance();
 
-        $reply = $cb->statuses_userTimeline('screen_name=maltehuebner');
+        $reply = $cb->oauth2_token();
+        $bearer_token = $reply->access_token;
+
+        $reply = $cb->statuses_userTimeline('screen_name=maltehuebner', true);
         $data = (array) $reply;
 
         echo "FOO";
