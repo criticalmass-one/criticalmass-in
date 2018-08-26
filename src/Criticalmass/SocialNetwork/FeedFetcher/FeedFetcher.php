@@ -41,17 +41,13 @@ class FeedFetcher
 
     protected function getFeedFetcherForNetworkProfile(SocialNetworkProfile $socialNetworkProfile): ?NetworkFeedFetcherInterface
     {
-        $namespace = 'App\\Criticalmass\\SocialNetwork\\NetworkFeedFetcher\\';
-
-        $network = ucfirst($socialNetworkProfile->getNetwork());
-
-        $classname = sprintf('%s%sFeedFetcher', $namespace, $network);
-
-        if (class_exists($classname)) {
-            return new $classname;
+        foreach ($this->networkFetcherList as $fetcher) {
+            if ($fetcher->supports($socialNetworkProfile)) {
+                break;
+            }
         }
 
-        return null;
+        return $fetcher;
     }
 
     public function fetch(): FeedFetcher
