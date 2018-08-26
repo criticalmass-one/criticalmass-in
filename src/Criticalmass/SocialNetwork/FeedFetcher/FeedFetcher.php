@@ -43,11 +43,11 @@ class FeedFetcher
     {
         foreach ($this->networkFetcherList as $fetcher) {
             if ($fetcher->supports($socialNetworkProfile)) {
-                break;
+                return $fetcher;
             }
         }
 
-        return $fetcher;
+        return null;
     }
 
     public function fetch(): FeedFetcher
