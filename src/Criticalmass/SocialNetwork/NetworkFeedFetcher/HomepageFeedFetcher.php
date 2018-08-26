@@ -11,11 +11,10 @@ class HomepageFeedFetcher extends AbstractNetworkFeedFetcher
 {
     public function fetch(SocialNetworkProfile $socialNetworkProfile): NetworkFeedFetcherInterface
     {
-        return $this;
         try {
             $this->fetchFeed($socialNetworkProfile);
         } catch (\Exception $exception) {
-
+            $this->logger->error(sprintf('Failed to fetch social network profile %d: %s', $socialNetworkProfile->getId(), $exception->getMessage()));
         }
 
         return $this;
@@ -50,6 +49,8 @@ class HomepageFeedFetcher extends AbstractNetworkFeedFetcher
             return $this;
         }
 
+        $this->logger->info(sprintf('Now quering %s', $feedLink));
+
         $feed = Reader::import($feedLink);
 
         /** @var EntryInterface $entry */
@@ -60,6 +61,8 @@ class HomepageFeedFetcher extends AbstractNetworkFeedFetcher
                 $feedItem->setSocialNetworkProfile($socialNetworkProfile);
 
                 $this->feedItemList[] = $feedItem;
+
+                $this->logger->info(sprintf('Fetched website %s', $feedItem->getPermalink()));
             }
         }
 
