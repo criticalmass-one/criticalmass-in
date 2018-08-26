@@ -5,6 +5,7 @@ namespace App\Criticalmass\SocialNetwork\NetworkFeedFetcher;
 use App\Entity\SocialNetworkFeedItem;
 use App\Entity\SocialNetworkProfile;
 use Codebird\Codebird;
+use Psr\Log\LoggerInterface;
 
 class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
 {
@@ -17,13 +18,15 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
     /** @var Codebird $codebird */
     protected $codebird;
 
-    public function __construct(string $twitterClientId, string $twitterSecret)
+    public function __construct(LoggerInterface $logger, string $twitterClientId, string $twitterSecret)
     {
         $this->twitterClientId = $twitterClientId;
         $this->twitterSecret = $twitterSecret;
 
         Codebird::setConsumerKey($this->twitterClientId, $this->twitterSecret);
         $this->codebird = Codebird::getInstance();
+
+        parent::__construct($logger);
     }
 
     public function fetch(SocialNetworkProfile $socialNetworkProfile): NetworkFeedFetcherInterface
@@ -42,15 +45,24 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
         //$reply = $cb->oauth2_token();
         //$bearer_token = $reply->access_token;
 
-        if (!$this->isValidScreenname($socialNetworkProfile)) {
+        $screenname = $this->getScreenname($socialNetworkProfile);
+
+        if (!$this->isValidScreenname($screenname)) {
+            $this->logger->error(sprintf('Skipping %s cause it is not a valid twitter handle.', $screenname));
+
             return $this;
         }
 
-        $reply = $this->codebird->statuses_userTimeline(sprintf('screen_name=%s&tweet_mode=extended', $socialNetworkProfile->getIdentifier()), true);
+        $this->logger->info(sprintf('Now quering @%s', $screenname));
+
+        $reply = $this->codebird->statuses_userTimeline(sprintf('screen_name=%s&tweet_mode=extended', $screenname), true);
         $data = (array) $reply;
 
         foreach ($data as $tweet) {
             if (!is_object($tweet)) {
+                var_dump($tweet);
+                $this->logger->info('Tweet did not contain usable data. Skipping.');
+
                 continue;
             }
 
@@ -58,6 +70,8 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
 
             if ($feedItem) {
                 $feedItem->setSocialNetworkProfile($socialNetworkProfile);
+
+                $this->logger->info(sprintf('Parsed and added tweet #%s', $feedItem->getUniqueIdentifier()));
 
                 $this->feedItemList[] = $feedItem;
             }
@@ -71,14 +85,13 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
         $feedItem = new SocialNetworkFeedItem();
 
         try {
-            $uniqueId = $tweet->id_str;
             $permalink = sprintf('https://twitter.com/i/web/status/%s', $tweet->id);
             $text = $tweet->full_text;
             $dateTime = new \DateTime($tweet->created_at);
 
-            if ($uniqueId && $permalink && $text && $dateTime) {
+            if ($permalink && $text && $dateTime) {
                 $feedItem
-                    ->setUniqueIdentifier($uniqueId)
+                    ->setUniqueIdentifier($permalink)
                     ->setPermalink($permalink)
                     ->setText($text)
                     ->setDateTime($dateTime);
@@ -90,12 +103,17 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
         } catch (\Exception $e) {
             return null;
         }
-
-        return null;
     }
 
-    protected function isValidScreenname(SocialNetworkProfile $socialNetworkProfile): bool
+    protected function getScreenname(SocialNetworkProfile $socialNetworkProfile): ?string
     {
-        return preg_match('/^@?(\w){1,15}$/', $socialNetworkProfile->getIdentifier()) !== false;
+        $identifierParts = explode('/', $socialNetworkProfile->getIdentifier());
+
+        return array_pop($identifierParts);
+    }
+
+    protected function isValidScreenname(string $screenname): bool
+    {
+        return (bool) preg_match('/^@?(\w){1,15}$/', $screenname);
     }
 }

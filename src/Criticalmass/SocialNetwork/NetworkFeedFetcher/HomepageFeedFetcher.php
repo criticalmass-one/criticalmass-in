@@ -9,11 +9,6 @@ use Zend\Feed\Reader\Reader;
 
 class HomepageFeedFetcher extends AbstractNetworkFeedFetcher
 {
-    public function __construct()
-    {
-
-    }
-
     public function fetch(SocialNetworkProfile $socialNetworkProfile): NetworkFeedFetcherInterface
     {
         return $this;
