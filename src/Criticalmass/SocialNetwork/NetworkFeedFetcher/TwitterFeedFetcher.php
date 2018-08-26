@@ -5,7 +5,6 @@ namespace App\Criticalmass\SocialNetwork\NetworkFeedFetcher;
 use App\Entity\SocialNetworkFeedItem;
 use App\Entity\SocialNetworkProfile;
 use Codebird\Codebird;
-use Zend\Feed\Reader\Entry\EntryInterface;
 
 class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
 {
@@ -15,10 +14,16 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
     /** @var string $twitterSecret */
     protected $twitterSecret;
 
+    /** @var Codebird $codebird */
+    protected $codebird;
+
     public function __construct(string $twitterClientId, string $twitterSecret)
     {
         $this->twitterClientId = $twitterClientId;
         $this->twitterSecret = $twitterSecret;
+
+        Codebird::setConsumerKey($this->twitterClientId, $this->twitterSecret);
+        $this->codebird = Codebird::getInstance();
     }
 
     public function fetch(SocialNetworkProfile $socialNetworkProfile): NetworkFeedFetcherInterface
@@ -34,45 +39,63 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
 
     protected function fetchFeed(SocialNetworkProfile $socialNetworkProfile): NetworkFeedFetcherInterface
     {
-        Codebird::setConsumerKey($this->twitterClientId, $this->twitterSecret);
-        $cb = Codebird::getInstance();
+        //$reply = $cb->oauth2_token();
+        //$bearer_token = $reply->access_token;
 
-        $reply = $cb->oauth2_token();
-        $bearer_token = $reply->access_token;
+        if (!$this->isValidScreenname($socialNetworkProfile)) {
+            return $this;
+        }
 
-        $reply = $cb->statuses_userTimeline('screen_name=maltehuebner', true);
+        $reply = $this->codebird->statuses_userTimeline(sprintf('screen_name=%s&tweet_mode=extended', $socialNetworkProfile->getIdentifier()), true);
         $data = (array) $reply;
 
-        echo "FOO";
-        var_dump($data);
+        foreach ($data as $tweet) {
+            if (!is_object($tweet)) {
+                continue;
+            }
+
+            $feedItem = $this->convertEntryToFeedItem($tweet);
+
+            if ($feedItem) {
+                $feedItem->setSocialNetworkProfile($socialNetworkProfile);
+
+                $this->feedItemList[] = $feedItem;
+            }
+        }
+
         return $this;
     }
 
-    protected function convertEntryToFeedItem(EntryInterface $entry): ?SocialNetworkFeedItem
+    protected function convertEntryToFeedItem(\stdClass $tweet): ?SocialNetworkFeedItem
     {
         $feedItem = new SocialNetworkFeedItem();
 
         try {
-            $uniqueId = $entry->getId();
-            $permalink = $entry->getPermalink();
-            $title = $entry->getTitle();
-            $text = $entry->getContent();
-            $dateTime = $entry->getDateCreated();
+            $uniqueId = $tweet->id_str;
+            $permalink = sprintf('https://twitter.com/i/web/status/%s', $tweet->id);
+            $text = $tweet->full_text;
+            $dateTime = new \DateTime($tweet->created_at);
 
-            if ($uniqueId && $permalink && $title && $text && $dateTime) {
+            if ($uniqueId && $permalink && $text && $dateTime) {
                 $feedItem
                     ->setUniqueIdentifier($uniqueId)
                     ->setPermalink($permalink)
-                    ->setTitle($title)
                     ->setText($text)
                     ->setDateTime($dateTime);
 
                 return $feedItem;
             }
+
+            return $feedItem;
         } catch (\Exception $e) {
             return null;
         }
 
         return null;
+    }
+
+    protected function isValidScreenname(SocialNetworkProfile $socialNetworkProfile): bool
+    {
+        return preg_match('/^@?(\w){1,15}$/', $socialNetworkProfile->getIdentifier()) !== false;
     }
 }
