@@ -11,6 +11,10 @@ class HomepageFeedFetcher extends AbstractNetworkFeedFetcher
 {
     public function fetch(SocialNetworkProfile $socialNetworkProfile): NetworkFeedFetcherInterface
     {
+        if (!$socialNetworkProfile->getCity()) {
+            return $this;
+        }
+
         try {
             $this->fetchFeed($socialNetworkProfile);
         } catch (\Exception $exception) {

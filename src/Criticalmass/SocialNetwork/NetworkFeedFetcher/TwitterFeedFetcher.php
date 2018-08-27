@@ -31,10 +31,14 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
 
     public function fetch(SocialNetworkProfile $socialNetworkProfile): NetworkFeedFetcherInterface
     {
+        if (!$socialNetworkProfile->getCity()) {
+            return $this;
+        }
+
         try {
             $this->fetchFeed($socialNetworkProfile);
         } catch (\Exception $exception) {
-            var_dump($exception->getMessage());
+            $this->logger->error(sprintf('Failed to fetch social network profile %d: %s', $socialNetworkProfile->getId(), $exception->getMessage()));
         }
 
         return $this;
