@@ -9,21 +9,12 @@ use Psr\Log\LoggerInterface;
 
 class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
 {
-    /** @var string $twitterClientId */
-    protected $twitterClientId;
-
-    /** @var string $twitterSecret */
-    protected $twitterSecret;
-
     /** @var Codebird $codebird */
     protected $codebird;
 
     public function __construct(LoggerInterface $logger, string $twitterClientId, string $twitterSecret)
     {
-        $this->twitterClientId = $twitterClientId;
-        $this->twitterSecret = $twitterSecret;
-
-        Codebird::setConsumerKey($this->twitterClientId, $this->twitterSecret);
+        Codebird::setConsumerKey($twitterClientId, $twitterSecret);
         $this->codebird = Codebird::getInstance();
 
         parent::__construct($logger);
