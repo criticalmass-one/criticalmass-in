@@ -25,11 +25,21 @@ abstract class AbstractNetworkFeedFetcher implements NetworkFeedFetcherInterface
 
     public function supports(SocialNetworkProfile $socialNetworkProfile): bool
     {
+        return $this->supportsNetwork($socialNetworkProfile->getNetwork());
+    }
+
+    public function supportsNetwork(string $network): bool
+    {
+        return $this->getNetworkIdentifier() === $network;
+    }
+
+    public function getNetworkIdentifier(): string
+    {
         $fqcn = get_class($this);
         $parts = explode('\\', $fqcn);
         $classname = array_pop($parts);
-        $network = str_replace('FeedFetcher', '', $classname);
+        $feedFetcherNetwork = str_replace('FeedFetcher', '', $classname);
 
-        return strtolower($network) === $socialNetworkProfile->getNetwork();
+        return strtolower($feedFetcherNetwork);
     }
 }

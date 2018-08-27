@@ -5,6 +5,7 @@ namespace App\Command\SocialNetwork;
 use App\Criticalmass\SocialNetwork\FeedFetcher\FeedFetcher;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -29,11 +30,19 @@ class FetchFeedCommand extends Command
     {
         $this
             ->setName('criticalmass:social-network:fetch-feed')
-            ->setDescription('Fetch feeds');
+            ->setDescription('Fetch feeds')
+            ->addArgument('networks', InputArgument::IS_ARRAY);
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
+        if ($input->hasArgument('networks')) {
+            foreach ($input->getArgument('networks') as $network) {
+                $this->feedFetcher->addFetchableNetwork($network);
+            }
+        }
+
         $this->feedFetcher->fetch()->persist();
     }
 }

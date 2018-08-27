@@ -11,6 +11,7 @@ class FeedFetcher extends AbstractFeedFetcher
 {
     protected function getFeedFetcherForNetworkProfile(SocialNetworkProfile $socialNetworkProfile): ?NetworkFeedFetcherInterface
     {
+        /** @var NetworkFeedFetcherInterface $fetcher */
         foreach ($this->networkFetcherList as $fetcher) {
             if ($fetcher->supports($socialNetworkProfile)) {
                 return $fetcher;
@@ -22,6 +23,8 @@ class FeedFetcher extends AbstractFeedFetcher
 
     public function fetch(): FeedFetcher
     {
+        $this->stripNetworkList();
+
         $profileList = $this->getSocialNetworkProfiles();
 
         foreach ($profileList as $profile) {
@@ -60,14 +63,25 @@ class FeedFetcher extends AbstractFeedFetcher
     {
         $existingItem = $this->doctrine->getRepository(SocialNetworkFeedItem::class)->findOneBy([
             'socialNetworkProfile' => $feedItem->getSocialNetworkProfile(),
-            'uniqueIdentifier' => $feedItem->getUniqueIdentifier()
+            'uniqueIdentifier' => $feedItem->getUniqueIdentifier(),
         ]);
 
         return $existingItem !== null;
     }
 
-    public function getFeedItemList(): array
+    protected function stripNetworkList(): FeedFetcher
     {
-        return $this->feedItemList;
+        if (count($this->fetchableNetworkList) === 0) {
+            return $this;
+        }
+
+        /** @var NetworkFeedFetcherInterface $fetcher */
+        foreach ($this->networkFetcherList as $key => $fetcher) {
+            if (!in_array($fetcher->getNetworkIdentifier(), $this->fetchableNetworkList)) {
+                unset($this->networkFetcherList[$key]);
+            }
+        }
+
+        return $this;
     }
 }

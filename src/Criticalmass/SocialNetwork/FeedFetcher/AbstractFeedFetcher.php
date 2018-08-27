@@ -11,6 +11,9 @@ abstract class AbstractFeedFetcher
     /** @var array $networkFetcherList */
     protected $networkFetcherList = [];
 
+    /** @var array $feedFetcher */
+    protected $fetchableNetworkList = [];
+
     /** @var RegistryInterface $doctrine */
     protected $doctrine;
 
@@ -24,6 +27,13 @@ abstract class AbstractFeedFetcher
     public function addNetworkFeedFetcher(NetworkFeedFetcherInterface $networkFeedFetcher): AbstractFeedFetcher
     {
         $this->networkFetcherList[] = $networkFeedFetcher;
+
+        return $this;
+    }
+
+    public function addFetchableNetwork(string $network): AbstractFeedFetcher
+    {
+        $this->fetchableNetworkList[] = $network;
 
         return $this;
     }
