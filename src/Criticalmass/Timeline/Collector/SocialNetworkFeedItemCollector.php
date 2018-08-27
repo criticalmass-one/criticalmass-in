@@ -13,17 +13,12 @@ class SocialNetworkFeedItemCollector extends AbstractTimelineCollector
     {
         //return $this;
         
-        /** @var SocialNetworkFeedItemItem $itemEntity */
+        /** @var SocialNetworkFeedItem $itemEntity */
         foreach ($groupedEntities as $itemEntity) {
             $item = new SocialNetworkFeedItemItem();
 
             $item
-                ->setCity($itemEntity->getSocialNetworkProfile()->getCity())
-                ->setRide($itemEntity->getSocialNetworkProfile()->getRide())
-                ->setSubride($itemEntity->getSocialNetworkProfile()->getSubride())
-                ->setPermalink($itemEntity->getPermalink())
-                ->setTitle($itemEntity->getTitle() ?? '')
-                ->setText($itemEntity->getText())
+                ->setSocialNetworkFeedItem($itemEntity)
                 ->setDateTime($itemEntity->getDateTime());
 
             $this->addItem($item);
