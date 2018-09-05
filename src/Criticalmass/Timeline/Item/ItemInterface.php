@@ -9,4 +9,6 @@ interface ItemInterface
     public function getDateTime(): \DateTime;
 
     public function getUniqId(): string;
+
+    public function getTabName(): string;
 }
