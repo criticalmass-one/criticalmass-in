@@ -70,9 +70,7 @@ class Timeline
 
     protected function process(): Timeline
     {
-        /**
-         * @var AbstractTimelineCollector $collector
-         */
+        /** @var AbstractTimelineCollector $collector */
         foreach ($this->collectorList as $collector) {
             $collector->setDateRange($this->startDateTime, $this->endDateTime);
 
