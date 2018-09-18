@@ -215,20 +215,6 @@ class PhotoRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function buildQueryPhotosByEvent(Event $event)
-    {
-        $builder = $this->createQueryBuilder('photo');
-
-        $builder->select('photo');
-
-        $builder->where($builder->expr()->eq('photo.event', $event->getId()));
-        $builder->andWhere($builder->expr()->eq('photo.deleted', 0));
-
-        $builder->addOrderBy('photo.dateTime', 'ASC');
-
-        return $builder->getQuery();
-    }
-
     public function countPhotosByRide(Ride $ride)
     {
         $builder = $this->createQueryBuilder('photo');
