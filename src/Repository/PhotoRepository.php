@@ -295,29 +295,32 @@ class PhotoRepository extends EntityRepository
         \DateTime $endDateTime = null,
         $limit = null
     ) {
-        $builder = $this->createQueryBuilder('photo');
+        $builder = $this->createQueryBuilder('p');
 
-        $builder->select('photo');
-
-        $builder->where($builder->expr()->eq('photo.enabled', 1));
-        $builder->andWhere($builder->expr()->isNotNull('photo.ride'));
-        $builder->andWhere($builder->expr()->eq('photo.deleted', 0));
+        $builder
+            ->select('p')
+            ->where($builder->expr()->eq('p.enabled', 'enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->eq('p.deleted', ':deleted'))
+            ->setParameter('deleted', false);
 
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gte('photo.creationDateTime',
-                '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder
+                ->andWhere($builder->expr()->gte('p.creationDateTime', ':startDateTime'))
+                ->setParameter('startDateTime', $startDateTime);
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lte('photo.creationDateTime',
-                '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder
+                ->andWhere($builder->expr()->lte('p.creationDateTime', ':endDateTime'))
+                ->setParameter('endDateTime', $endDateTime);
         }
 
         if ($limit) {
             $builder->setMaxResults($limit);
         }
 
-        $builder->addOrderBy('photo.creationDateTime', 'DESC');
+        $builder->addOrderBy('p.creationDateTime', 'DESC');
 
         $query = $builder->getQuery();
 
