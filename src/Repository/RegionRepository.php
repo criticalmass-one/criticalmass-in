@@ -7,15 +7,15 @@ use Doctrine\ORM\EntityRepository;
 
 class RegionRepository extends EntityRepository
 {
-    public function findByParentRegion(Region $region)
+    public function findByParentRegion(Region $region): array
     {
-        $builder = $this->createQueryBuilder('region');
+        $builder = $this->createQueryBuilder('r');
 
-        $builder->select('region');
-
-        $builder->where($builder->expr()->eq('region.parent', $region->getId()));
-
-        $builder->addOrderBy('region.name', 'ASC');
+        $builder
+            ->select('r')
+            ->where($builder->expr()->eq('r.parent', ':region'))
+            ->setParameter('region', $region)
+            ->addOrderBy('r.name', 'ASC');
 
         $query = $builder->getQuery();
 
