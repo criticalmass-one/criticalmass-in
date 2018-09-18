@@ -2,7 +2,8 @@
 
 namespace App\Command\Photo;
 
-use App\Criticalmass\Image\PhotoLocator\PhotoLocator;
+use App\Criticalmass\Image\PhotoGps\PhotoGpsInterface;
+use App\Entity\Photo;
 use App\Entity\Ride;
 use App\Entity\Track;
 use App\Entity\User;
@@ -14,15 +15,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class RelocatePhotosCommand extends Command
 {
-    /** @var PhotoLocator $photoLocator */
-    protected $photoLocator;
+    /** @var PhotoGpsInterface $photoGps */
+    protected $photoGps;
 
     /** @var RegistryInterface $registry */
     protected $registry;
 
-    public function __construct(PhotoLocator $photoLocator, RegistryInterface $registry)
+    public function __construct(PhotoGpsInterface $photoGps, RegistryInterface $registry)
     {
-        $this->photoLocator = $photoLocator;
+        $this->photoGps = $photoGps;
         $this->registry = $registry;
 
         parent::__construct();
@@ -60,12 +61,11 @@ class RelocatePhotosCommand extends Command
         if ($input->hasArgument('photoDateTimeZone') && $input->getArgument('photoDateTimeZone')) {
             $dateTimeZone = new \DateTimeZone($input->getArgument('photoDateTimeZone'));
 
-            $this->photoLocator->setDateTimeZone($dateTimeZone);
+            $this->photoGps->setDateTimeZone($dateTimeZone);
         }
 
         /** @var Ride $ride */
-        $ride = $this->registry->getRepository(Ride::class)->findByCitySlugAndRideDate($input->getArgument('citySlug'),
-            $input->getArgument('rideDate'));
+        $ride = $this->registry->getRepository(Ride::class)->findByCitySlugAndRideDate($input->getArgument('citySlug'), $input->getArgument('rideDate'));
 
         /** @var User $user */
         $user = $this->registry->getRepository(User::class)->findOneByUsername($input->getArgument('username'));
@@ -73,11 +73,26 @@ class RelocatePhotosCommand extends Command
         /** @var Track $track */
         $track = $this->registry->getRepository(Track::class)->findByUserAndRide($ride, $user);
 
-        $this->photoLocator
-            ->setRide($ride)
-            ->setUser($user)
-            ->setTrack($track)
-            ->setOutput($output)
-            ->relocate();
+        $this->photoGps->setTrack($track);
+
+        $photoList = $this->registry->getRepository(Photo::class)->findPhotosByRide($ride);
+        /** @todo only lookup users photos */
+
+        /** @var Photo $photo */
+        foreach ($photoList as $photo) {
+            $this->photoGps
+                ->setPhoto($photo)
+                ->execute();
+
+            $output->writeln(sprintf(
+                'Updated location of photo <comment>#%d</comment> to <info>%f,%f</info>',
+                $photo->getId(),
+                $photo->getLatitude(),
+                $photo->getLongitude()
+            ));
+        }
+
+        $this->registry->getManager()->flush();
+
     }
 }
