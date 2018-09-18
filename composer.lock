@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9f4db428bcc13a28cb0d84034d5618b3",
+    "content-hash": "4d5d3f228bcde1fa525813959345e0e3",
     "packages": [
         {
             "name": "basvandorst/stravaphp",
@@ -5929,6 +5929,47 @@
                 "controllers"
             ],
             "time": "2018-05-12T09:37:42+00:00"
+        },
+        {
+            "name": "sherlockode/sonata-gentelella-bundle",
+            "version": "v1.0.15",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sherlockode/sonata-gentelella-bundle.git",
+                "reference": "9727e69f619e32cbb7cdc51051ad17a4faf812f7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sherlockode/sonata-gentelella-bundle/zipball/9727e69f619e32cbb7cdc51051ad17a4faf812f7",
+                "reference": "9727e69f619e32cbb7cdc51051ad17a4faf812f7",
+                "shasum": ""
+            },
+            "require": {
+                "sonata-project/admin-bundle": "^3.14"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Sherlockode\\SonataGentelellaBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sherlockode",
+                    "email": "contact@sherlockode.fr"
+                }
+            ],
+            "description": "Symfony SonataAdminBundle themed with Gentelella",
+            "time": "2018-05-18T09:14:10+00:00"
         },
         {
             "name": "simplethings/entity-audit-bundle",

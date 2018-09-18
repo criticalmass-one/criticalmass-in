@@ -431,6 +431,9 @@
             "ref": "fb7e19da7f013d0d422fa9bce16f5c510e27609b"
         }
     },
+    "sherlockode/sonata-gentelella-bundle": {
+        "version": "v1.0.15"
+    },
     "simplethings/entity-audit-bundle": {
         "version": "v1.0.9"
     },
