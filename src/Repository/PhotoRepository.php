@@ -14,7 +14,8 @@ class PhotoRepository extends EntityRepository
     {
         $builder = $this->createQueryBuilder('p');
 
-        $builder->select('p')
+        $builder
+            ->select('p')
             ->where($builder->expr()->eq('p.ride', ':ride'))
             ->setParameter('ride', $photo->getRide())
             ->andWhere($builder->expr()->lt('p.dateTime', ':dateTime'))
@@ -37,7 +38,8 @@ class PhotoRepository extends EntityRepository
     {
         $builder = $this->createQueryBuilder('p');
 
-        $builder->select('p')
+        $builder
+            ->select('p')
             ->where($builder->expr()->eq('p.ride', ':ride'))
             ->setParameter('ride', $photo->getRide())
             ->andWhere($builder->expr()->gt('p.dateTime', ':dateTime'))
@@ -65,8 +67,10 @@ class PhotoRepository extends EntityRepository
             ->addSelect('ride')
             ->addSelect('city')
             ->addSelect('COUNT(photo)')
-            ->where($builder->expr()->eq('photo.deleted', 0))
-            ->andWhere($builder->expr()->eq('photo.user', $user->getId()))
+            ->where($builder->expr()->eq('photo.deleted', ':deleted'))
+            ->setParameter('deleted', false)
+            ->andWhere($builder->expr()->eq('photo.user', ':user'))
+            ->setParameter('user', $user)
             ->groupBy('photo.ride')
             ->join('photo.ride', 'ride')
             ->join('ride.city', 'city')
