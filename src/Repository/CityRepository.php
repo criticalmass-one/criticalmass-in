@@ -222,4 +222,3 @@ class CityRepository extends EntityRepository
         return $query->getResult();
     }
 }
-
