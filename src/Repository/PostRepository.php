@@ -97,31 +97,33 @@ class PostRepository extends EntityRepository
         \DateTime $endDateTime = null,
         $limit = null
     ) {
-        $builder = $this->createQueryBuilder('post');
+        $builder = $this->createQueryBuilder('p');
 
-        $builder->select('post');
-
-        $builder->join('post.thread', 'thread');
-
-        $builder->where($builder->expr()->eq('post.enabled', 1));
-        $builder->andWhere($builder->expr()->isNotNull('post.thread'));
-        $builder->andWhere($builder->expr()->neq('post', 'thread.firstPost'));
+        $builder
+            ->select('p')
+            ->join('p.thread', 'thread')
+            ->where($builder->expr()->eq('p.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->isNotNull('p.thread'))
+            ->andWhere($builder->expr()->neq('p', 'thread.firstPost'));
 
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gte('post.dateTime',
-                '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder
+                ->andWhere($builder->expr()->gte('p.dateTime', ':startDateTime'))
+                ->setParameter('startDateTime', $startDateTime);
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lte('post.dateTime',
-                '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder
+                ->andWhere($builder->expr()->lte('p.dateTime', ':endDateTime'))
+                ->setParameter('startDateTime', $endDateTime);
         }
 
         if ($limit) {
             $builder->setMaxResults($limit);
         }
 
-        $builder->addOrderBy('post.dateTime', 'DESC');
+        $builder->addOrderBy('p.dateTime', 'DESC');
 
         $query = $builder->getQuery();
 
