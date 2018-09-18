@@ -74,25 +74,27 @@ class CityRepository extends EntityRepository
         return (int) $query->getSingleScalarResult();
     }
 
-    public function findChildrenCitiesOfRegion(Region $region)
+    public function findChildrenCitiesOfRegion(Region $region): array
     {
         $builder = $this->createQueryBuilder('city');
 
-        $builder->select('city');
-
-        $builder->leftJoin('city.region', 'region1');
-        $builder->leftJoin('region1.parent', 'region2');
-        $builder->leftJoin('region2.parent', 'region3');
-
-        $builder->where($builder->expr()->eq('city.enabled', 1));
-
-        $builder->andWhere(
-            $builder->expr()->orX(
-                $builder->expr()->eq('region1.id', $region->getId()),
-                $builder->expr()->eq('region2.id', $region->getId()),
-                $builder->expr()->eq('region3.id', $region->getId())
+        $builder
+            ->select('c')
+            ->leftJoin('c.region', 'r1')
+            ->leftJoin('r1.parent', 'r2')
+            ->leftJoin('r2.parent', 'r3')
+            ->where($builder->expr()->eq('c.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere(
+                $builder->expr()->orX(
+                    $builder->expr()->eq('r1', ':region1'),
+                    $builder->expr()->eq('r2', ':region2'),
+                    $builder->expr()->eq('r3', ':region3')
+                )
             )
-        );
+            ->setParameter('region1', $region)
+            ->setParameter('region2', $region)
+            ->setParameter('region3', $region);
 
         $query = $builder->getQuery();
 
