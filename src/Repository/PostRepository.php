@@ -75,15 +75,17 @@ class PostRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findPostsForThread(Thread $thread)
+    public function findPostsForThread(Thread $thread): array
     {
-        $builder = $this->createQueryBuilder('post');
+        $builder = $this->createQueryBuilder('p');
 
-        $builder->select('post');
-
-        $builder->where($builder->expr()->eq('post.thread', $thread->getId()));
-        $builder->andWhere($builder->expr()->eq('post.enabled', 1));
-        $builder->addOrderBy('post.dateTime', 'ASC');
+        $builder
+            ->select('p')
+            ->where($builder->expr()->eq('p.thread', ':thread'))
+            ->setParameter('thread', $thread)
+            ->andWhere($builder->expr()->eq('p.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->addOrderBy('p.dateTime', 'ASC');
 
         $query = $builder->getQuery();
 
