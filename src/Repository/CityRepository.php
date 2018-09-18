@@ -24,18 +24,23 @@ class CityRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findCitiesOfRegion(Region $region)
+    public function findCitiesOfRegion(Region $region): array
     {
-        $builder = $this->createQueryBuilder('city');
+        $builder = $this->createQueryBuilder('c');
 
-        $builder->select('city');
+        $builder->select('c');
 
-        $builder->where($builder->expr()->eq('city.enabled', 1));
-        $builder->andWhere($builder->expr()->eq('city.region', $region->getId()));
-        $builder->andWhere($builder->expr()->neq('city.latitude', 0));
-        $builder->andWhere($builder->expr()->neq('city.longitude', 0));
+        $builder
+            ->where($builder->expr()->eq('c.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->eq('c.region', ':region'))
+            ->setParameter('region', $region)
+            ->andWhere($builder->expr()->neq('c.latitude', ':notLatitude'))
+            ->setParameter('notLatitude', 0)
+            ->andWhere($builder->expr()->neq('c.longitude', ':notLongitude'))
+            ->setParameter('notLongitude', 0);
 
-        $builder->orderBy('city.city', 'ASC');
+        $builder->orderBy('c.city', 'ASC');
 
         $query = $builder->getQuery();
 
