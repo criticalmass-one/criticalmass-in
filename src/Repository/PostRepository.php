@@ -45,15 +45,15 @@ class PostRepository extends EntityRepository
         return $result;
     }
 
-    public function countPostsForCityRides(City $city)
+    public function countPostsForCityRides(City $city): int
     {
-        $builder = $this->createQueryBuilder('post');
+        $builder = $this->createQueryBuilder('p');
 
-        $builder->select('COUNT(post.id)');
-
-        $builder->join('post.ride', 'ride');
-
-        $builder->where($builder->expr()->eq('ride.city', $city->getId()));
+        $builder
+            ->select('COUNT(p.id)')
+            ->join('p.ride', 'ride')
+            ->where($builder->expr()->eq('ride.city', ':city'))
+            ->setParameter('city', $city);
 
         $query = $builder->getQuery();
 
