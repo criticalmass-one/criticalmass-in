@@ -96,7 +96,7 @@ class PostRepository extends EntityRepository
         \DateTime $startDateTime = null,
         \DateTime $endDateTime = null,
         $limit = null
-    ) {
+    ): array {
         $builder = $this->createQueryBuilder('p');
 
         $builder
@@ -116,7 +116,7 @@ class PostRepository extends EntityRepository
         if ($endDateTime) {
             $builder
                 ->andWhere($builder->expr()->lte('p.dateTime', ':endDateTime'))
-                ->setParameter('startDateTime', $endDateTime);
+                ->setParameter('endDateTime', $endDateTime);
         }
 
         if ($limit) {
