@@ -121,16 +121,17 @@ class CityRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findCitiesWithBoard()
+    public function findCitiesWithBoard(): array
     {
-        $builder = $this->createQueryBuilder('city');
+        $builder = $this->createQueryBuilder('c');
 
-        $builder->select('city');
-
-        $builder->where($builder->expr()->eq('city.enabled', 1));
-        $builder->andWhere($builder->expr()->eq('city.enableBoard', 1));
-
-        $builder->orderBy('city.city', 'ASC');
+        $builder
+            ->select('c')
+            ->where($builder->expr()->eq('c.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->eq('c.enableBoard', ':enableBoard'))
+            ->setParameter('enableBoard', true)
+            ->orderBy('c.city', 'ASC');
 
         $query = $builder->getQuery();
 
