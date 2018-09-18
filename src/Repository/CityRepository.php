@@ -5,22 +5,19 @@ namespace App\Repository;
 use App\Entity\Region;
 use Doctrine\ORM\EntityRepository;
 
-/**
- * Dieses Repository erbt vom EntityRepository und stellt eine zusaetzliche Me-
- * thode bereit, um Staedte nach ihrer Entfernung zu einer angegebenen Koor-
- * dinate sortiert auszugeben.
- */
 class CityRepository extends EntityRepository
 {
-    public function findCitiesWithFacebook()
+    /**
+     * @deprecated
+     */
+    public function findCitiesWithFacebook(): array
     {
-        $builder = $this->createQueryBuilder('city');
+        $builder = $this->createQueryBuilder('c');
 
-        $builder->select('city');
-
-        $builder->where($builder->expr()->isNotNull('city.facebook'));
-
-        $builder->orderBy('city.city', 'ASC');
+        $builder
+            ->select('c')
+            ->where($builder->expr()->isNotNull('c.facebook'))
+            ->orderBy('c.city', 'ASC');
 
         $query = $builder->getQuery();
 
