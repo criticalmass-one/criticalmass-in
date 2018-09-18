@@ -11,12 +11,15 @@ class ParticipationRepository extends EntityRepository
 {
     public function findParticipationForUserAndRide(User $user, Ride $ride): ?Participation
     {
-        $builder = $this->createQueryBuilder('participation');
+        $builder = $this->createQueryBuilder('p');
 
-        $builder->select('participation');
-        $builder->where($builder->expr()->eq('participation.user', $user->getId()));
-        $builder->andWhere($builder->expr()->eq('participation.ride', $ride->getId()));
-        $builder->setMaxResults(1);
+        $builder
+            ->select('p')
+            ->where($builder->expr()->eq('p.user', ':user'))
+            ->setParameter('user', $user)
+            ->andWhere($builder->expr()->eq('p.ride', ':ride'))
+            ->setParameter('ride', $ride)
+            ->setMaxResults(1);
 
         $query = $builder->getQuery();
 
