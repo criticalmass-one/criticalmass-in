@@ -215,15 +215,18 @@ class PhotoRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function countPhotosByRide(Ride $ride)
+    public function countPhotosByRide(Ride $ride): int
     {
-        $builder = $this->createQueryBuilder('photo');
+        $builder = $this->createQueryBuilder('p');
 
         $builder
-            ->select('COUNT(photo)')
-            ->where($builder->expr()->eq('photo.ride', $ride))
-            ->andWhere($builder->expr()->eq('photo.enabled', 1))
-            ->andWhere($builder->expr()->eq('photo.deleted', 0));
+            ->select('COUNT(p)')
+            ->where($builder->expr()->eq('p.ride', ':ride'))
+            ->setParameter('ride', $ride)
+            ->andWhere($builder->expr()->eq('p.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->eq('p.deleted', ':deleted'))
+            ->setParameter('deleted', false);
 
         $query = $builder->getQuery();
 
