@@ -7,6 +7,7 @@ use App\Entity\Photo;
 use App\Entity\Ride;
 use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 class PhotoRepository extends EntityRepository
 {
@@ -193,17 +194,16 @@ class PhotoRepository extends EntityRepository
         ];
     }
 
-
-    public function buildQueryPhotosByRide(Ride $ride)
+    public function buildQueryPhotosByRide(Ride $ride): QueryBuilder
     {
-        $builder = $this->createQueryBuilder('photo');
+        $builder = $this->createQueryBuilder('p');
 
-        $builder->select('photo');
-
-        $builder->where($builder->expr()->eq('photo.ride', $ride->getId()));
-        $builder->andWhere($builder->expr()->eq('photo.deleted', 0));
-
-        $builder->addOrderBy('photo.dateTime', 'ASC');
+        $builder->select('p')
+            ->where($builder->expr()->eq('p.ride', ':ride'))
+            ->setParameter('ride', $ride)
+            ->andWhere($builder->expr()->eq('p.deleted', ':deleted'))
+            ->setParameter('deleted', false)
+            ->addOrderBy('p.dateTime', 'ASC');
 
         return $builder->getQuery();
     }
