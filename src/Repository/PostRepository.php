@@ -92,28 +92,6 @@ class PostRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findRecentChatMessages($limit = 25)
-    {
-        $builder = $this->createQueryBuilder('post');
-
-        $builder->select('post');
-
-        $builder->where($builder->expr()->eq('post.enabled', 1));
-        $builder->andWhere($builder->expr()->eq('post.chat', 1));
-
-        if ($limit) {
-            $builder->setMaxResults($limit);
-        }
-
-        $builder->addOrderBy('post.dateTime', 'DESC');
-
-        $query = $builder->getQuery();
-
-        $result = $query->getResult();
-
-        return $result;
-    }
-
     public function findForTimelineThreadPostCollector(
         \DateTime $startDateTime = null,
         \DateTime $endDateTime = null,
