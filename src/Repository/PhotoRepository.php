@@ -257,28 +257,33 @@ class PhotoRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findSomePhotos($limit = 16, $maxViews = 15, City $city = null)
+    public function findSomePhotos($limit = 16, $maxViews = 15, City $city = null): array
     {
-        $builder = $this->createQueryBuilder('photo');
+        $builder = $this->createQueryBuilder('p');
 
-        $builder->select('photo');
-        $builder->addSelect('RAND() as HIDDEN rand');
-
-        $builder->where($builder->expr()->eq('photo.enabled', 1));
-        $builder->andWhere($builder->expr()->isNotNull('photo.ride'));
-        $builder->andWhere($builder->expr()->eq('photo.deleted', 0));
+        $builder
+            ->select('p')
+            ->addSelect('RAND() as HIDDEN rand')
+            ->where($builder->expr()->eq('p.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->eq('p.deleted', ':deleted'))
+            ->setParameter('deleted', false);
 
         if ($maxViews) {
-            $builder->andWhere($builder->expr()->lte('photo.views', $maxViews));
+            $builder
+                ->andWhere($builder->expr()->lte('p.views', ':maxViews'))
+                ->setParameter('maxViews', $maxViews);
         }
 
         if ($city) {
-            $builder->andWhere($builder->expr()->eq('photo.city', $city->getId()));
+            $builder
+                ->andWhere($builder->expr()->eq('p.city', ':city'))
+                ->setParameter('city', $city);
         }
 
-        $builder->addOrderBy('rand');
-
-        $builder->setMaxResults($limit);
+        $builder
+            ->addOrderBy('rand')
+            ->setMaxResults($limit);
 
         $query = $builder->getQuery();
 
