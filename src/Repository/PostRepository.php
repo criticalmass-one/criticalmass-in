@@ -26,15 +26,6 @@ class PostRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function countPosts()
-    {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('COUNT(post.id)');
-        $qb->from('App:Post', 'post');
-
-        return (int) $qb->getQuery()->getSingleScalarResult();
-    }
-
     public function getPostsForRide(Ride $ride)
     {
         $builder = $this->createQueryBuilder('post');
