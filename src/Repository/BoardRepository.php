@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Board;
 use Doctrine\ORM\EntityRepository;
 
 class BoardRepository extends EntityRepository
@@ -21,16 +22,19 @@ class BoardRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findBoardBySlug($slug)
+    public function findBoardBySlug(string $slug): ?Board
     {
-        $builder = $this->createQueryBuilder('board');
+        $builder = $this->createQueryBuilder('b');
 
-        $builder->select('board');
-        $builder->where($builder->expr()->eq('board.enabled', 1));
-        $builder->andWhere($builder->expr()->eq('board.slug', '\'' . $slug . '\''));
+        $builder
+            ->select('b')
+            ->where($builder->expr()->eq('b.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->eq('b.slug', ':slug'))
+            ->setParameter('slug', $slug);
 
         $query = $builder->getQuery();
 
-        return $query->getSingleResult();
+        return $query->getOneOrNullResult();
     }
 }
