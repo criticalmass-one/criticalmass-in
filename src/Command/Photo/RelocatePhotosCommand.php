@@ -9,6 +9,8 @@ use App\Entity\Track;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -77,21 +79,36 @@ class RelocatePhotosCommand extends Command
 
         $photoList = $this->registry->getRepository(Photo::class)->findPhotosByUserAndRide($user, $ride);
 
+        $table = new Table($output);
+        $table->setHeaders([
+            'Id',
+            'DateTime',
+            'Latitude',
+            'Longitude',
+            'Location',
+        ]);
+
+        $progressBar = new ProgressBar($output, count($photoList));
+
         /** @var Photo $photo */
         foreach ($photoList as $photo) {
             $this->photoGps
                 ->setPhoto($photo)
                 ->execute();
 
-            $output->writeln(sprintf(
-                'Updated location of photo <comment>#%d</comment> to <info>%f,%f</info>',
+            $table->addRow([
                 $photo->getId(),
+                $photo->getDateTime()->format('Y-m-d H:i:s'),
                 $photo->getLatitude(),
-                $photo->getLongitude()
-            ));
+                $photo->getLongitude(),
+                $photo->getLocation(),
+            ]);
+
+            $progressBar->advance();
         }
 
+        $progressBar->finish();
         $this->registry->getManager()->flush();
-
+        $table->render();
     }
 }
