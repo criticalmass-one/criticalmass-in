@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\City;
-use App\Entity\Event;
 use App\Entity\Photo;
 use App\Entity\Ride;
 use App\Entity\User;
@@ -11,32 +10,21 @@ use Doctrine\ORM\EntityRepository;
 
 class PhotoRepository extends EntityRepository
 {
-    /**
-     * @param Photo $photo
-     * @return Photo
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @author maltehuebner
-     * @since 2015-12-06
-     */
-    public function getPreviousPhoto(Photo $photo)
+    public function getPreviousPhoto(Photo $photo): ?Photo
     {
-        $builder = $this->createQueryBuilder('photo');
+        $builder = $this->createQueryBuilder('p');
 
-        $builder->select('photo');
-
-        if ($photo->getRide()) {
-            $builder->where($builder->expr()->eq('photo.ride', $photo->getRide()->getId()));
-        } elseif ($photo->getEvent()) {
-            $builder->where($builder->expr()->eq('photo.event', $photo->getEvent()->getId()));
-        }
-
-        $builder->andWhere($builder->expr()->lt('photo.dateTime',
-            '\'' . $photo->getDateTime()->format('Y-m-d H:i:s') . '\''));
-        $builder->andWhere($builder->expr()->eq('photo.enabled', 1));
-        $builder->andWhere($builder->expr()->eq('photo.deleted', 0));
-
-        $builder->addOrderBy('photo.dateTime', 'DESC');
-        $builder->setMaxResults(1);
+        $builder->select('p')
+            ->where($builder->expr()->eq('p.ride', ':ride'))
+            ->setParameter('ride', $photo->getRide())
+            ->andWhere($builder->expr()->lt('p.dateTime', ':dateTime'))
+            ->setParameter('dateTime', $photo->getDateTime())
+            ->andWhere($builder->expr()->eq('p.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->eq('p.deleted', ':deleted'))
+            ->setParameter('deleted', false)
+            ->addOrderBy('p.dateTime', 'DESC')
+            ->setMaxResults(1);
 
         $query = $builder->getQuery();
 
