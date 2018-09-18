@@ -105,6 +105,9 @@ class PhotoRepository extends EntityRepository
         return $result;
     }
 
+    /**
+     * @deprecated
+     */
     public function findRidesForGallery(City $city = null): array
     {
         $builder = $this->createQueryBuilder('photo');
@@ -148,6 +151,9 @@ class PhotoRepository extends EntityRepository
         return $galleryResult;
     }
 
+    /**
+     * @deprecated
+     */
     public function findRidesWithPhotoCounter(City $city = null)
     {
         $builder = $this->createQueryBuilder('photo');
