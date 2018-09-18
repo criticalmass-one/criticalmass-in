@@ -22,13 +22,14 @@ class RegionRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function countChildren(Region $region)
+    public function countChildren(Region $region): int
     {
-        $builder = $this->createQueryBuilder('region');
+        $builder = $this->createQueryBuilder('r');
 
-        $builder->select('COUNT(region)');
-
-        $builder->where($builder->expr()->eq('region.parent', $region->getId()));
+        $builder
+            ->select('COUNT(r)')
+            ->where($builder->expr()->eq('r.parent', ':region'))
+            ->setParameter('region', $region);
 
         $query = $builder->getQuery();
 
