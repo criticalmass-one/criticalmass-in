@@ -75,8 +75,7 @@ class RelocatePhotosCommand extends Command
 
         $this->photoGps->setTrack($track);
 
-        $photoList = $this->registry->getRepository(Photo::class)->findPhotosByRide($ride);
-        /** @todo only lookup users photos */
+        $photoList = $this->registry->getRepository(Photo::class)->findPhotosByUserAndRide($user, $ride);
 
         /** @var Photo $photo */
         foreach ($photoList as $photo) {
