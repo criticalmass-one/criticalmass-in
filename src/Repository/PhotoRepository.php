@@ -305,7 +305,7 @@ class PhotoRepository extends EntityRepository
 
         $builder
             ->select('p')
-            ->where($builder->expr()->eq('p.enabled', 'enabled'))
+            ->where($builder->expr()->eq('p.enabled', ':enabled'))
             ->setParameter('enabled', true)
             ->andWhere($builder->expr()->eq('p.deleted', ':deleted'))
             ->setParameter('deleted', false);
