@@ -26,14 +26,17 @@ class PostRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function getPostsForRide(Ride $ride)
+    public function getPostsForRide(Ride $ride): array
     {
-        $builder = $this->createQueryBuilder('post');
+        $builder = $this->createQueryBuilder('p');
 
-        $builder->select('post');
-        $builder->where($builder->expr()->eq('post.ride', $ride->getId()));
-        $builder->andWhere($builder->expr()->eq('post.enabled', true));
-        $builder->addOrderBy('post.dateTime', 'ASC');
+        $builder
+            ->select('p')
+            ->where($builder->expr()->eq('p.ride', ':ride'))
+            ->setParameter('ride', $ride)
+            ->andWhere($builder->expr()->eq('p.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->addOrderBy('p.dateTime', 'ASC');
 
         $query = $builder->getQuery();
 
