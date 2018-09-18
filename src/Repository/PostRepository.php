@@ -60,16 +60,15 @@ class PostRepository extends EntityRepository
         return (int) $query->getSingleScalarResult();
     }
 
-    public function getPostsForCityRides(City $city)
+    public function getPostsForCityRides(City $city): array
     {
-        $builder = $this->createQueryBuilder('post');
+        $builder = $this->createQueryBuilder('p');
 
-        $builder->select('post');
-
-        $builder->join('post.ride', 'ride');
-
-        $builder->where($builder->expr()->eq('ride.city', $city->getId()));
-
+        $builder
+            ->select('p')
+            ->join('p.ride', 'ride')
+            ->where($builder->expr()->eq('ride.city', ':city'))
+            ->setParameter('city', $city);
 
         $query = $builder->getQuery();
 
