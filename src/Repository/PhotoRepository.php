@@ -208,7 +208,7 @@ class PhotoRepository extends EntityRepository
         return $builder->getQuery();
     }
 
-    public function findPhotosByRide(Ride $ride)
+    public function findPhotosByRide(Ride $ride): array
     {
         $query = $this->buildQueryPhotosByRide($ride);
 
