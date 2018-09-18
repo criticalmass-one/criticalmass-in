@@ -146,28 +146,26 @@ class PhotoRepository extends EntityRepository
         return $galleryResult;
     }
 
-    /**
-     * @param City|null $city
-     * @return array
-     * @deprecated
-     */
     public function findRidesWithPhotoCounter(City $city = null)
     {
         $builder = $this->createQueryBuilder('photo');
 
-        $builder->select('photo');
-        $builder->addSelect('COUNT(photo)');
-
-        $builder->where($builder->expr()->eq('photo.deleted', 0));
+        $builder
+            ->select('photo')
+            ->addSelect('COUNT(photo)')
+            ->where($builder->expr()->eq('photo.deleted', ':deleted'))
+            ->setParameter('deleted', false);
 
         if ($city) {
-            $builder->andWhere($builder->expr()->eq('photo.city', $city->getId()));
+            $builder
+                ->andWhere($builder->expr()->eq('photo.city', ':city'))
+                ->setParameter('city', $city)
         }
 
-        $builder->groupBy('photo.ride');
-
-        $builder->join('photo.ride', 'ride');
-        $builder->orderBy('ride.dateTime', 'desc');
+        $builder
+            ->groupBy('photo.ride')
+            ->join('photo.ride', 'ride')
+            ->orderBy('ride.dateTime', 'desc');
 
         $query = $builder->getQuery();
         $result = $query->getResult();
