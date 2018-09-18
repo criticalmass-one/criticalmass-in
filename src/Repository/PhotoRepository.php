@@ -103,29 +103,30 @@ class PhotoRepository extends EntityRepository
         return $result;
     }
 
-    public function findRidesForGallery(City $city = null)
+    public function findRidesForGallery(City $city = null): array
     {
         $builder = $this->createQueryBuilder('photo');
 
-        $builder->select('photo');
-        $builder->addSelect('ride');
-        $builder->addSelect('city');
-        $builder->addSelect('COUNT(photo)');
-        $builder->addSelect('featuredPhoto');
-
-        $builder->where($builder->expr()->eq('photo.deleted', 0));
+        $builder
+            ->select('photo')
+            ->addSelect('ride')
+            ->addSelect('city')
+            ->addSelect('COUNT(photo)')
+            ->addSelect('featuredPhoto')
+            ->where($builder->expr()->eq('photo.deleted', 0));
 
         if ($city) {
-            $builder->andWhere($builder->expr()->eq('photo.city', $city->getId()));
+            $builder
+                ->andWhere($builder->expr()->eq('photo.city', ':city'))
+                ->setParameter('city', $city);
         }
 
-        $builder->join('photo.ride', 'ride');
-        $builder->join('ride.city', 'city');
-        $builder->leftJoin('ride.featuredPhoto', 'featuredPhoto');
-
-        $builder->orderBy('ride.dateTime', 'desc');
-
-        $builder->groupBy('ride');
+        $builder
+            ->join('photo.ride', 'ride')
+            ->join('ride.city', 'city')
+            ->leftJoin('ride.featuredPhoto', 'featuredPhoto')
+            ->orderBy('ride.dateTime', 'desc')
+            ->groupBy('ride');
 
         $query = $builder->getQuery();
         $result = $query->getResult();
