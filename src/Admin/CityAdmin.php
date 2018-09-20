@@ -2,6 +2,7 @@
 
 namespace App\Admin;
 
+use Caldera\MapTypeBundle\Form\Type\MapType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -29,8 +30,7 @@ class CityAdmin extends AbstractAdmin
             ->end()
             ->with('Geografie', ['class' => 'col-md-6'])
             ->add('region')
-            ->add('latitude')
-            ->add('longitude')
+            ->add('latLng', MapType::class)
             ->end()
             ->with('Technisches', ['class' => 'col-md-6'])
             ->add('mainSlug')

@@ -434,6 +434,16 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this->twitter;
     }
 
+    public function setLatLng($latLng): City
+    {
+        return $this;
+    }
+
+    public function getLatLng()
+    {
+
+    }
+
     public function setLatitude(float $latitude): City
     {
         $this->latitude = $latitude;
