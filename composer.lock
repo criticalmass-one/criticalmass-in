@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9f4db428bcc13a28cb0d84034d5618b3",
+    "content-hash": "d9ff96e6f754053f8ae7901e8af12b44",
     "packages": [
         {
             "name": "basvandorst/stravaphp",
@@ -132,6 +132,42 @@
                 }
             ],
             "time": "2017-05-05T10:40:27+00:00"
+        },
+        {
+            "name": "calderacc/maptype-bundle",
+            "version": "dev-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/calderacc/maptype-bundle.git",
+                "reference": "d3044f5cb9ee4e06d9e16f104ed12cd7f1c6ca16"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/calderacc/maptype-bundle/zipball/d3044f5cb9ee4e06d9e16f104ed12cd7f1c6ca16",
+                "reference": "d3044f5cb9ee4e06d9e16f104ed12cd7f1c6ca16",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Caldera\\MapTypeBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Malte Hübner",
+                    "email": "malte@caldera.cc"
+                }
+            ],
+            "description": "Add a map as form type",
+            "time": "2018-09-20T17:07:02+00:00"
         },
         {
             "name": "calderacc/yourls-api-manager",
@@ -12186,7 +12222,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "calderacc/maptype-bundle": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
