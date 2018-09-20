@@ -15,7 +15,7 @@ use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class SeoPage
 {
-    /** @var SeoPageInterface */
+    /** @var SeoPageInterface $sonataSeoPage*/
     protected $sonataSeoPage;
 
     /** @var UploaderHelper $uploaderHelper */
