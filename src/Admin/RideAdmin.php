@@ -7,6 +7,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -35,7 +36,7 @@ class RideAdmin extends AbstractAdmin
             ->end()
             ->with('Uhrzeit', ['class' => 'col-md-6'])
             ->add('hasTime')
-            ->add('dateTime')
+            ->add('dateTime', DateTimeType::class)
             ->end()
             ->with('Treffpunkt', ['class' => 'col-md-6'])
             ->add('hasLocation')
