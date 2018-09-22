@@ -116,5 +116,11 @@
         "branch-alias": {
             "dev-master": "3.0-dev"
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/maltehuebner/StravaPHP.git"
+        }
+    ]
 }
