@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f62a493f27c45017e1cca93db579db21",
+    "content-hash": "c668fc678399150af792314fa95ec505",
     "packages": [
         {
             "name": "basvandorst/stravaphp",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/basvandorst/StravaPHP.git",
-                "reference": "0d6c347280695dac240bb3431ded1a815b5d1e4f"
+                "url": "https://github.com/maltehuebner/StravaPHP.git",
+                "reference": "b698b50053c63cb9ee77fb4a967fabb0c211cea1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/basvandorst/StravaPHP/zipball/0d6c347280695dac240bb3431ded1a815b5d1e4f",
-                "reference": "0d6c347280695dac240bb3431ded1a815b5d1e4f",
+                "url": "https://api.github.com/repos/maltehuebner/StravaPHP/zipball/b698b50053c63cb9ee77fb4a967fabb0c211cea1",
+                "reference": "b698b50053c63cb9ee77fb4a967fabb0c211cea1",
                 "shasum": ""
             },
             "require": {
@@ -34,7 +34,6 @@
                     "Strava": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -46,13 +45,16 @@
             ],
             "description": "Strava V3 API PHP client with OAuth authentication",
             "keywords": [
-                "StravaPHP",
-                "api",
-                "oauth",
-                "php",
-                "strava"
+                "API",
+                "OAuth",
+                "PHP",
+                "Strava",
+                "StravaPHP"
             ],
-            "time": "2018-07-13T20:51:52+00:00"
+            "support": {
+                "source": "https://github.com/maltehuebner/StravaPHP/tree/master"
+            },
+            "time": "2018-09-22T13:12:28+00:00"
         },
         {
             "name": "behat/transliterator",

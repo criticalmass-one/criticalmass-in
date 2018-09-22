@@ -77,7 +77,7 @@
         "sunra/php-simple-html-dom-parser": "^1.5",
         "symfony/flex": "^1.0",
         "khill/php-duration": "^1.0",
-        "basvandorst/stravaphp": "^1.0"
+        "basvandorst/stravaphp": "^1.2"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "*",
