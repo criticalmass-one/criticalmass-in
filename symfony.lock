@@ -149,9 +149,6 @@
     "graylog2/gelf-php": {
         "version": "1.5.5"
     },
-    "guzzle/guzzle": {
-        "version": "v3.8.1"
-    },
     "guzzlehttp/guzzle": {
         "version": "6.3.3"
     },
