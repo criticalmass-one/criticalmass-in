@@ -2891,16 +2891,16 @@
         },
         {
             "name": "hwi/oauth-bundle",
-            "version": "0.6.2",
+            "version": "0.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hwi/HWIOAuthBundle.git",
-                "reference": "d94181ac3d90509a557e3ea2bf6a85fcc8cd67b6"
+                "reference": "0963709b04d8ac0d6d6c0c78787f6f59bd0d9a01"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hwi/HWIOAuthBundle/zipball/d94181ac3d90509a557e3ea2bf6a85fcc8cd67b6",
-                "reference": "d94181ac3d90509a557e3ea2bf6a85fcc8cd67b6",
+                "url": "https://api.github.com/repos/hwi/HWIOAuthBundle/zipball/0963709b04d8ac0d6d6c0c78787f6f59bd0d9a01",
+                "reference": "0963709b04d8ac0d6d6c0c78787f6f59bd0d9a01",
                 "shasum": ""
             },
             "require": {
@@ -3045,7 +3045,7 @@
                 "yandex",
                 "youtube"
             ],
-            "time": "2018-03-28T16:21:10+00:00"
+            "time": "2018-07-31T10:19:28+00:00"
         },
         {
             "name": "imagine/imagine",
