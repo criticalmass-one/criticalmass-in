@@ -2,10 +2,16 @@
 
 namespace App\Twig\Extension;
 
+use Sonata\SeoBundle\Seo\SeoPageInterface;
 use Sonata\SeoBundle\Twig\Extension\SeoExtension;
 
 class SeoTwigExtension extends SeoExtension
 {
+    public function __construct(SeoPageInterface $page, string $encoding = 'UTF-8')
+    {
+        parent::__construct($page, $encoding);
+    }
+
     public function getMetadatas(): string
     {
         $html = '';
