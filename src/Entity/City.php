@@ -439,9 +439,9 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this;
     }
 
-    public function getLatLng()
+    public function getLatLng(): string
     {
-
+        return '57.99,10.3';
     }
 
     public function setLatitude(float $latitude): City

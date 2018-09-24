@@ -2,6 +2,7 @@
 
 namespace App\Form\Type;
 
+use Caldera\MapTypeBundle\Form\Type\MapType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -27,8 +28,9 @@ class RideType extends AbstractType
                 'compound' => true
             ])
             ->add('location', TextType::class, ['required' => false])
-            ->add('latitude', HiddenType::class, ['required' => false])
-            ->add('longitude', HiddenType::class, ['required' => false])
+            //->add('latitude', HiddenType::class, ['required' => false])
+            //->add('longitude', HiddenType::class, ['required' => false])
+            ->add('latLng', MapType::class)
             ->add('hasLocation', CheckboxType::class, ['required' => false])
             ->add('hasTime', CheckboxType::class, ['required' => false])
             ->add('save', SubmitType::class);
