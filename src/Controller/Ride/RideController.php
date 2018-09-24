@@ -5,6 +5,8 @@ namespace App\Controller\Ride;
 use App\Entity\Ride;
 use App\Criticalmass\SeoPage\SeoPage;
 use App\Event\View\ViewEvent;
+use function GuzzleHttp\Psr7\str;
+use Sabre\VObject\Component\VCalendar;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Controller\AbstractController;
 use App\Entity\Weather;
@@ -12,6 +14,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class RideController extends AbstractController
 {
@@ -89,5 +92,32 @@ class RideController extends AbstractController
             'weatherForecast' => $weatherForecast,
             'participation' => $participation,
         ]);
+    }
+
+    /**
+     * @ParamConverter("ride", class="App:Ride")
+     */
+    public function icalAction(Ride $ride): Response
+    {
+        $vcalendar = new VCalendar([
+            'VEVENT' => [
+                'SUMMARY' => $ride->getTitle(),
+                'DTSTART' => $ride->getDateTime(),
+                'DTEND'   => $ride->getDateTime()->add(new \DateInterval('PT2H')),
+            ],
+        ]);
+
+        $filename = sprintf('%s.ics', $ride->getTitle());
+        
+        $content = $vcalendar->serialize();
+
+        $response = new Response($content);
+
+        $response->headers->set('Cache-Control', 'private');
+        $response->headers->set('Content-type', 'text/calendar');
+        $response->headers->set('Content-Disposition', 'attachment; filename="' . $filename . '";');
+        $response->headers->set('Content-length', strlen($content));
+
+        return $response;
     }
 }
