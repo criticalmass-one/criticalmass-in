@@ -24,12 +24,18 @@ class CalendarController extends AbstractController
         $endDateTime = clone $ride->getDateTime();
         $endDateTime->setTimezone($timezone)->add($durationInterval);
 
+        $vevent = [
+            'SUMMARY' => $ride->getTitle(),
+            'DTSTART' => $startDateTime,
+            'DTEND'   => $endDateTime,
+        ];
+
+        if ($ride->getHasLocation() && $ride->getLocation()) {
+            $vevent['LOCATION'] = $ride->getLocation();
+        }
+
         $vcalendar = new VCalendar([
-            'VEVENT' => [
-                'SUMMARY' => $ride->getTitle(),
-                'DTSTART' => $startDateTime,
-                'DTEND'   => $endDateTime,
-            ],
+            'VEVENT' => $vevent,
         ]);
 
         $filename = sprintf('%s.ics', $ride->getTitle());
