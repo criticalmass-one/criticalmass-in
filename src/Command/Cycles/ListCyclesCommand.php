@@ -10,15 +10,20 @@ use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class ListCyclesCommand extends Command
 {
     /** @var RegistryInterface $registry */
     protected $registry;
 
-    public function __construct($name = null, RegistryInterface $registry)
+    /** @var TranslatorInterface $translator */
+    protected $translator;
+
+    public function __construct($name = null, RegistryInterface $registry, TranslatorInterface $translator)
     {
         $this->registry = $registry;
+        $this->translator = $translator;
 
         parent::__construct($name);
     }
@@ -61,8 +66,8 @@ class ListCyclesCommand extends Command
             $table->addRow([
                 $cityCycle->getId(),
                 sprintf('%s (%f, %f)', $cityCycle->getLocation(), $cityCycle->getLatitude(), $cityCycle->getLongitude()),
-                $cityCycle->getDayOfWeek(),
-                $cityCycle->getWeekOfMonth(),
+                $this->translator->trans(sprintf('cycle.event_date.day.%d', $cityCycle->getDayOfWeek())),
+                $this->translator->trans(sprintf('cycle.event_date.month_week.%d', $cityCycle->getWeekOfMonth())),
                 $cityCycle->getTime() ? $cityCycle->getTime()->format('H:i') : '',
                 $cityCycle->getValidFrom() ? $cityCycle->getValidFrom()->format('Y-m-d') : '',
                 $cityCycle->getValidUntil() ? $cityCycle->getValidUntil()->format('Y-m-d') : '',
