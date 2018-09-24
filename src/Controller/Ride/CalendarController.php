@@ -15,11 +15,20 @@ class CalendarController extends AbstractController
      */
     public function icalAction(Ride $ride): Response
     {
+        $timezone = new \DateTimeZone($ride->getCity()->getTimezone());
+        $durationInterval = new \DateInterval('PT2H');
+
+        $startDateTime = clone $ride->getDateTime();
+        $startDateTime->setTimezone($timezone);
+
+        $endDateTime = clone $ride->getDateTime();
+        $endDateTime->setTimezone($timezone)->add($durationInterval);
+
         $vcalendar = new VCalendar([
             'VEVENT' => [
                 'SUMMARY' => $ride->getTitle(),
-                'DTSTART' => $ride->getDateTime(),
-                'DTEND'   => $ride->getDateTime()->add(new \DateInterval('PT2H')),
+                'DTSTART' => $startDateTime,
+                'DTEND'   => $endDateTime,
             ],
         ]);
 
