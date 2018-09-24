@@ -35,7 +35,7 @@
 
                         <dd>
                             jeweils
-                            am {{ ('criticalmass.city_list.event_date.month_week.' ~ city.standardWeekOfMonth)|trans }} {{ ('criticalmass.city_list.event_date.day.' ~ city.standardDayOfWeek)|trans }}
+                            am {{ ('cycle.event_date.month_week.' ~ city.standardWeekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ city.standardDayOfWeek)|trans }}
                             um {{ city.standardTime|date('H:i', 'Europe/Berlin') }} Uhr
                         </dd>
                     </dl>
