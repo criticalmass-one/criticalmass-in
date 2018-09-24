@@ -441,7 +441,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
 
     public function getLatLng(): string
     {
-        return '57.99,10.3';
+        return sprintf('%f,%f', $this->latitude, $this->longitude);
     }
 
     public function setLatitude(float $latitude): City

@@ -30,7 +30,7 @@ class CityAdmin extends AbstractAdmin
             ->end()
             ->with('Geografie', ['class' => 'col-md-6'])
             ->add('region')
-            //->add('latLng', MapType::class)
+            ->add('latLng', MapType::class)
             ->end()
             ->with('Technisches', ['class' => 'col-md-6'])
             ->add('mainSlug')
