@@ -57,7 +57,7 @@ class ListCyclesCommand extends Command
         $cycleList = $this->registry->getRepository(CityCycle::class)->findByCity($city);
 
         $table = new Table($output);
-        $table->setHeaders(['Id', 'Location', 'Day', 'Week', 'Time', 'Valid from', 'Valid until']);
+        $table->setHeaders(['Id', 'Location', 'Day', 'Week', 'UTC Time', 'Valid from', 'Valid until']);
 
         $utc = new \DateTimeZone('UTC');
 
