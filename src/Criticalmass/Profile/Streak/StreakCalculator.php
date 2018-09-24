@@ -68,7 +68,7 @@ class StreakCalculator implements StreakCalculatorInterface
         krsort($this->list);
 
         if (!$this->checkCurrentStreakMonth($dateTime, $includeCurrentMonth)) {
-            return new Streak(new \DateTime(), new \DateTime(), []);
+            return new Streak($dateTime, $dateTime, []);
         }
 
         $longestStreakCounter = null;

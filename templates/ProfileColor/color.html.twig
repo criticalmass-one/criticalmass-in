@@ -1,0 +1,60 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Farbe wählen{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ path('criticalmass_user_usermanagement') }}">
+            Dein Benutzerkonto
+        </a>
+    </li>
+
+    <li class="active">
+        Farbe wählen
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 text-center">
+                <h2>
+                    Deine Benutzerfarbe
+                </h2>
+
+                <p>
+                    Hier kannst du eine Farbe wählen, mit der dein Benutzerkonto auf criticalmass.in repräsentiert wird. Beispielsweise werden von dir hochgeladene Tracks in dieser Farbe angezeigt.
+                </p>
+            </div>
+        </div>
+
+        {{ form_start(profileColorForm) }}
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 text-center">
+                <div id="colorpicker" class="input-group colorpicker-component">
+                    <input type="text" value="{{ rgb_to_hex(user.colorRed, user.colorGreen, user.colorBlue) }}" class="form-control" />
+                    <span class="input-group-addon"><i></i></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row margin-top-medium">
+            <div class="col-md-6 col-md-offset-3 text-center">
+                <div class="btn-group">
+                    {{ form_widget(profileColorForm.submit, { label: 'Speichern', attr: { class: 'btn btn-primary'}}) }}
+
+                    <a href="{{ path('criticalmass_user_usermanagement') }}" class="btn btn-default">
+                        Abbrechen
+                    </a>
+                </div>
+            </div>
+        </div>
+        {{ form_end(profileColorForm) }}
+    </div>
+
+
+    <script>
+        CriticalMass.loadModule('ProfileColorPage');
+    </script>
+{% endblock %}

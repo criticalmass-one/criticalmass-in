@@ -79,6 +79,8 @@ class PhotoTimeshiftCommand extends Command
         /** @var Track $track */
         $photos = $this->registry->getRepository(Photo::class)->findPhotosByUserAndRide($user, $ride);
 
+        $entityManager = $this->registry->getManager();
+
         $progressBar = new ProgressBar($output, count($photos));
 
         $table = new Table($output);
@@ -92,9 +94,9 @@ class PhotoTimeshiftCommand extends Command
 
         /** @var Photo $photo */
         foreach ($photos as $photo) {
-            $dateTime = $photo->getDateTime();
-            $dateTime->$modificationMethodName($interval);
-            $photo->setDateTime($dateTime);
+            $dateTimeImmutable = \DateTimeImmutable::createFromMutable($photo->getDateTime());
+            $dateTimeImmutable = $dateTimeImmutable->$modificationMethodName($interval);
+            $photo->setDateTime(new \DateTime(sprintf('@%d', $dateTimeImmutable->getTimestamp())));
 
             $this->eventDispatcher->dispatch(PhotoUpdatedEvent::NAME, new PhotoUpdatedEvent($photo, false));
 
@@ -109,10 +111,10 @@ class PhotoTimeshiftCommand extends Command
             $progressBar->advance();
         }
 
-        $this->registry->getManager()->flush();
-
         $progressBar->finish();
         $table->render();
+
+        $entityManager->flush();
     }
 
     protected function getRide(string $citySlug, string $rideIdentifier): ?Ride

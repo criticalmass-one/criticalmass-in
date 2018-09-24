@@ -6,7 +6,6 @@ use App\Controller\AbstractController;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Criticalmass\Util\DateTimeUtil;
 use App\Event\Track\TrackUploadedEvent;
-use Pest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Entity\Position;
@@ -14,7 +13,7 @@ use App\Entity\Ride;
 use App\Entity\Track;
 use App\Criticalmass\Gps\GpxExporter\GpxExporter;
 use Strava\API\Client;
-use Strava\API\OAuth as OAuth;
+use Strava\API\OAuth;
 use Strava\API\Service\REST;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -85,9 +84,8 @@ class StravaController extends AbstractController
 
         $token = $session->get('strava_token');
 
-        $adapter = new Pest('https://www.strava.com/api/v3');
+        $adapter = new \GuzzleHttp\Client(['base_uri' => 'https://www.strava.com/api/v3/']);
         $service = new REST($token, $adapter);
-
         $client = new Client($service);
 
         $activities = $client->getAthleteActivities($beforeDateTime->getTimestamp(), $afterDateTime->getTimestamp());
@@ -109,9 +107,8 @@ class StravaController extends AbstractController
         $uploadDestinationTrack = $this->getParameter('upload_destination.track');
         $token = $this->getSession()->get('strava_token');
 
-        $adapter = new Pest('https://www.strava.com/api/v3');
-        $service = new REST($token, $adapter);
-
+        $adapter = new \GuzzleHttp\Client(['base_uri' => 'https://www.strava.com/api/v3/']);
+        $service = new REST($token, $adapter);  // Define your user token here.
         $client = new Client($service);
 
         /* Catch the activity to retrieve the start dateTime */

@@ -13,6 +13,7 @@ use App\DependencyInjection\Compiler\ObjectRouterPass;
 use App\DependencyInjection\Compiler\ShareNetworkPass;
 use App\DependencyInjection\Compiler\SocialNetworkPass;
 use App\DependencyInjection\Compiler\TimelineCollectorPass;
+use App\DependencyInjection\Compiler\TwigSeoExtensionPass;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Resource\FileResource;
@@ -75,6 +76,9 @@ class Kernel extends BaseKernel
 
         $container->addCompilerPass(new ShareNetworkPass());
         $container->registerForAutoconfiguration(ShareNetworkInterface::class)->addTag('share.network');
+
+        $container->addCompilerPass(new TwigSeoExtensionPass());
+
     }
 
     protected function configureRoutes(RouteCollectionBuilder $routes)
