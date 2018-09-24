@@ -93,31 +93,4 @@ class RideController extends AbstractController
             'participation' => $participation,
         ]);
     }
-
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
-    public function icalAction(Ride $ride): Response
-    {
-        $vcalendar = new VCalendar([
-            'VEVENT' => [
-                'SUMMARY' => $ride->getTitle(),
-                'DTSTART' => $ride->getDateTime(),
-                'DTEND'   => $ride->getDateTime()->add(new \DateInterval('PT2H')),
-            ],
-        ]);
-
-        $filename = sprintf('%s.ics', $ride->getTitle());
-        
-        $content = $vcalendar->serialize();
-
-        $response = new Response($content);
-
-        $response->headers->set('Cache-Control', 'private');
-        $response->headers->set('Content-type', 'text/calendar');
-        $response->headers->set('Content-Disposition', 'attachment; filename="' . $filename . '";');
-        $response->headers->set('Content-length', strlen($content));
-
-        return $response;
-    }
 }

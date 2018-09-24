@@ -6,4 +6,5 @@ caldera_criticalmass_ride_show:
 
 caldera_criticalmass_ride_ical:
     path:  /{citySlug}/{rideIdentifier}/ical
-    controller: App\Controller\Ride\RideController::icalAction
+    controller: App\Controller\Ride\CalendarController::icalAction
+
