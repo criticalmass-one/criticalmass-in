@@ -28,10 +28,12 @@ class CalendarController extends AbstractController
             'SUMMARY' => $ride->getTitle(),
             'DTSTART' => $startDateTime,
             'DTEND'   => $endDateTime,
+            'DESCRIPTION' => $ride->getDescription(),
         ];
 
-        if ($ride->getHasLocation() && $ride->getLocation()) {
+        if ($ride->getHasLocation() && $ride->getLocation() && $ride->getLatitude() && $ride->getLongitude()) {
             $vevent['LOCATION'] = $ride->getLocation();
+            $vevent['GEO'] = sprintf('%f;%f', $ride->getLatitude(), $ride->getLongitude());
         }
 
         $vcalendar = new VCalendar([
