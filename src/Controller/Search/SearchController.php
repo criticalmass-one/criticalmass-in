@@ -110,10 +110,10 @@ class SearchController extends AbstractController
 
         $transformer = $this->get('fos_elastica.elastica_to_model_transformer.collection.criticalmass_city');
 
-        $results = $transformer->transform($resultSet->getResults());
+        $cityResults = $transformer->transform($resultSet->getResults());
 
         return $this->render('Search/result.html.twig', [
-            'results' => $results,
+            'cityResults' => $cityResults,
             'resultSet' => $resultSet,
             'query' => $queryPhrase,
         ]);

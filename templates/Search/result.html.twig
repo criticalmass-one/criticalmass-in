@@ -58,13 +58,35 @@
             </form>
 
             <div class="col-md-9">
-                {% for result in results %}
-                    {% if true or result.standardLocation is defined %}
-                        {% include 'Search/includes/_city.html.twig' with { city: result } %}
-                    {% else %}
-                        {% include 'Search/includes/_ride.html.twig' with { ride: result } %}
-                    {% endif %}
-                {% endfor %}
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#city-results" aria-controls="home" role="tab" data-toggle="tab">
+                            <i class="fa fa-university"></i>
+                            Städte
+                        </a>
+                    </li>
+
+                    <li role="presentation">
+                        <a href="#ride-results" aria-controls="profile" role="tab" data-toggle="tab">
+                            <i class="fa fa-bicycle"></i>
+                            Touren
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="city-results">
+                        {% for cityResult in cityResults %}
+                        {% include 'Search/includes/_city.html.twig' with { city: cityResult } %}
+                        {% endfor %}
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="ride-results">
+
+                    </div>
+                </div>
+
+
             </div>
         </div>
     </div>
