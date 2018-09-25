@@ -10,8 +10,8 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 class GenerateRidesCommand extends Command
 {
@@ -48,12 +48,6 @@ class GenerateRidesCommand extends Command
                 'cities',
                 InputArgument::IS_ARRAY,
                 'List of cities'
-            )
-            ->addOption(
-                'save',
-                null,
-                InputOption::VALUE_NONE,
-                'Save the generated stuff'
             );
     }
 
@@ -80,6 +74,8 @@ class GenerateRidesCommand extends Command
 
         $utc = new \DateTimeZone('UTC');
 
+        $counter = 0;
+
         /** @var Ride $ride */
         foreach ($this->rideGenerator->getRideList() as $ride) {
             $table->addRow([
@@ -90,17 +86,22 @@ class GenerateRidesCommand extends Command
             ]);
 
             $manager->persist($ride);
+
+            ++$counter;
         }
 
         $table->render();
 
-        if ($input->getOption('save')) {
-            $output->writeln('Saved all those rides');
+        $helper = $this->getHelper('question');
+        $question = new ConfirmationQuestion('Save all created rides?', false);
 
-            $manager->flush();
-        } else {
-            $output->writeln('Did not save any of these rides, run with --save to persist.');
+        if (!$helper->ask($input, $output, $question)) {
+            return;
         }
+
+        $manager->flush();
+
+        $output->writeln(sprintf('Saved %d rides', $counter));
     }
 
     protected function getCityList(InputInterface $input): array
