@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SearchController extends AbstractController
 {
-    protected function createQuery(string $queryPhrase): Query
+    protected function createCityQuery(string $queryPhrase): Query
     {
         if ($queryPhrase) {
             $simpleQueryString = new \Elastica\Query\SimpleQueryString($queryPhrase,
@@ -33,22 +33,42 @@ class SearchController extends AbstractController
         return $query;
     }
 
+    protected function createRideQuery(string $queryPhrase): Query
     {
+        if ($queryPhrase) {
+            $simpleQueryString = new \Elastica\Query\SimpleQueryString($queryPhrase,
+                ['title', 'description', 'location']);
+        } else {
+            $simpleQueryString = new \Elastica\Query\MatchAll();
+        }
 
+        $boolQuery = new \Elastica\Query\BoolQuery();
+        $boolQuery
+            ->addMust($simpleQueryString);
+
+        $query = new \Elastica\Query($boolQuery);
+
+        $query->setSize(50);
+        $query->addSort('_score');
+
+        return $query;
     }
 
     public function queryAction(Request $request): Response
     {
         $queryPhrase = $request->get('query');
 
-        $query = $this->createQuery($queryPhrase);
+        $cityQuery = $this->createCityQuery($queryPhrase);
+        $cityFinder = $this->get('fos_elastica.finder.criticalmass_city');
+        $cityResults = $cityFinder->find($cityQuery);
 
-        $finder = $this->get('fos_elastica.finder.criticalmass_city');
-
-        $cityResults = $finder->find($query);
+        $rideQuery = $this->createRideQuery($queryPhrase);
+        $rideFinder = $this->get('fos_elastica.finder.criticalmass_ride');
+        $rideResults = $rideFinder->find($rideQuery);
 
         return $this->render('Search/result.html.twig', [
             'cityResults' => $cityResults,
+            'rideResults' => $rideResults,
             'query' => $queryPhrase,
         ]);
     }

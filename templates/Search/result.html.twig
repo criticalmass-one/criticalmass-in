@@ -82,11 +82,11 @@
                     </div>
 
                     <div role="tabpanel" class="tab-pane" id="ride-results">
-
+                        {% for rideResult in rideResults %}
+                        {% include 'Search/includes/_ride.html.twig' with { ride: rideResult } %}
+                        {% endfor %}
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>
