@@ -52,13 +52,13 @@
                 </ul>
 
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="city-results">
+                    <div role="tabpanel" class="tab-pane active padding-top-small" id="city-results">
                         {% for cityResult in cityResults %}
                         {% include 'Search/includes/_city.html.twig' with { city: cityResult } %}
                         {% endfor %}
                     </div>
 
-                    <div role="tabpanel" class="tab-pane" id="ride-results">
+                    <div role="tabpanel" class="tab-pane padding-top-small" id="ride-results">
                         {% for rideResult in rideResults %}
                         {% include 'Search/includes/_ride.html.twig' with { ride: rideResult } %}
                         {% endfor %}
