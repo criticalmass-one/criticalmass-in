@@ -13,9 +13,9 @@ use Symfony\Component\HttpFoundation\Response;
 class SearchController extends AbstractController
 {
     protected function createQuery(
-        $queryPhrase,
-        \Elastica\Filter\AbstractFilter $cityFilter,
-        \Elastica\Filter\AbstractFilter $countryFilter
+        $queryPhrase//,
+       // \Elastica\Filter\AbstractFilter $cityFilter,
+        //\Elastica\Filter\AbstractFilter $countryFilter
     ) {
         if ($queryPhrase) {
             $simpleQueryString = new \Elastica\Query\SimpleQueryString($queryPhrase,
@@ -24,13 +24,14 @@ class SearchController extends AbstractController
             $simpleQueryString = new \Elastica\Query\MatchAll();
         }
 
-        $enabledFilter = new \Elastica\Filter\Term(['isEnabled' => true]);
+        $enabledFilter = new \Elastica\Query\Term(['isEnabled' => true]);
 
-        $filter = new \Elastica\Filter\BoolAnd([$enabledFilter, $cityFilter, $countryFilter]);
+        $boolQuery = new \Elastica\Query\BoolQuery();
+        $boolQuery
+            ->addMust($enabledFilter)
+            ->addMust($simpleQueryString);
 
-        $filteredQuery = new \Elastica\Query\Filtered($simpleQueryString, $filter);
-
-        $query = new \Elastica\Query($filteredQuery);
+        $query = new \Elastica\Query($boolQuery);
 
         $query->setSize(50);
         $query->addSort('_score');
@@ -40,7 +41,7 @@ class SearchController extends AbstractController
 
     protected function performSearch(\Elastica\Query $query, IndexManager $manager)
     {
-        $search = $manager->getIndex('criticalmass')->createSearch();
+        $search = $manager->getIndex('criticalmass_city')->createSearch();
 
         //$search->addType('ride');
         //$search->addType('city');
@@ -90,7 +91,7 @@ class SearchController extends AbstractController
         $queryPhrase = $request->get('query');
         $cities = $request->get('cities');
         $countries = $request->get('countries');
-
+/*
         if ($cities) {
             $cityFilter = $this->createCityFilter($cities);
         } else {
@@ -102,15 +103,15 @@ class SearchController extends AbstractController
         } else {
             $countryFilter = new \Elastica\Filter\MatchAll();
         }
-
-        $query = $this->createQuery($queryPhrase, $cityFilter, $countryFilter);
+*/
+        $query = $this->createQuery($queryPhrase);//, $cityFilter, $countryFilter);
 
         $query = $this->addAggregations($query);
 
         /** @var ResultSet $resultSet */
         $resultSet = $this->performSearch($query, $manager);
 
-        $transformer = $this->get('fos_elastica.elastica_to_model_transformer.collection.criticalmass');
+        $transformer = $this->get('fos_elastica.elastica_to_model_transformer.collection.criticalmass_city');
 
         $results = $transformer->transform($resultSet->getResults());
 
