@@ -56,12 +56,24 @@
                         {% for cityResult in cityResults %}
                         {% include 'Search/includes/_city.html.twig' with { city: cityResult } %}
                         {% endfor %}
+
+                        {% if cityResults|length == 0 %}
+                            <div class="alert alert-info">
+                                Zu deiner Suchanfrage wurden leider keine Städte gefunden.
+                            </div>
+                        {% endif %}
                     </div>
 
                     <div role="tabpanel" class="tab-pane padding-top-small" id="ride-results">
                         {% for rideResult in rideResults %}
                         {% include 'Search/includes/_ride.html.twig' with { ride: rideResult } %}
                         {% endfor %}
+
+                        {% if rideResults|length == 0 %}
+                            <div class="alert alert-info">
+                                Zu deiner Suchanfrage wurden leider keine Touren gefunden.
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
