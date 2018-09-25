@@ -91,7 +91,7 @@ class GenerateRidesCommand extends Command
         }
 
         $table = new Table($output);
-        $table->setHeaders(['City', 'DateTime Location', 'DateTime UTC', 'Location']);
+        $table->setHeaders(['City', 'DateTime Location', 'DateTime UTC', 'Location', 'Cycle Id']);
 
         $utc = new \DateTimeZone('UTC');
 
@@ -104,6 +104,7 @@ class GenerateRidesCommand extends Command
                 $ride->getDateTime()->format('Y-m-d H:i'),
                 $ride->getDateTime()->setTimezone($utc)->format('Y-m-d H:i'),
                 $ride->getLocation(),
+                $ride->getCycle()->getId(),
             ]);
 
             $manager->persist($ride);
