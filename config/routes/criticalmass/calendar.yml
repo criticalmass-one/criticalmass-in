@@ -1,0 +1,3 @@
+caldera_criticalmass_calendar:
+    path:  /calendar
+    controller: App\Controller\CalendarController::indexAction

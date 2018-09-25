@@ -1,7 +1,0 @@
-caldera_criticalmass_frontpage:
-    path:  /
-    defaults: { _controller: AppBundle:Frontpage:index }
-
-caldera_criticalmass_intro:
-    path:  /intro
-    defaults: { _controller: AppBundle:Frontpage:intro }

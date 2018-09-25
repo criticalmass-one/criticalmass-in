@@ -1,0 +1,131 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Foto platzieren{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ path('caldera_criticalmass_city_list') }}">
+            Städteliste
+        </a>
+    </li>
+    <li>
+        <a href="{{ objectPath(photo.ride.city) }}">
+            {{ photo.ride.city.title }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ objectPath(photo.ride) }}">
+            {{ photo.ride.title }}
+        </a>
+    </li>
+    <li class="active">
+        Foto platzieren
+    </li>
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    Foto platzieren
+                </h1>
+
+                <p class="lead">
+                    Hier kannst du das folgende Foto auf der Karte platzieren oder verschieben.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 text-center">
+                <img class="img-responsive img-thumbnail"
+                     src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
+            </div>
+
+            <div class="col-md-9">
+                <div id="map" style="height: 300px;">
+                </div>
+            </div>
+        </div>
+
+        <div class="row margin-top-medium">
+            <div class="col-md-12">
+                {{ form_start(form) }}
+                {{ form_widget(form.latitude) }}
+                {{ form_widget(form.longitude) }}
+
+                <div class="btn-group pull-right" role="group" aria-label="...">
+                    <a href="javascript:window.location=document.referrer;" class="btn btn-default">
+                        Abbrechen
+                    </a>
+                    <button type="submit" class="btn btn-success">
+                        Speichern
+                    </button>
+                </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="pager">
+                    {% if previousPhoto %}
+                        <li class="previous">
+                            <a href="{{ objectPath(previousPhoto) }}">
+                                &larr; Voriges Foto
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="previous disabled">
+                            <a href="#">
+                                &larr; Voriges Foto
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    {% if nextPhoto %}
+                        <li class="next">
+                            <a href="{{ objectPath(nextPhoto) }}">
+                                Nächstes Foto &rarr;
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="next disabled">
+                            <a href="#">
+                                Nächstes Foto &rarr;
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var pageOptions = {
+            startCoord: {
+                latitude: {{ photo.ride.latitude }},
+                longitude: {{ photo.ride.longitude }}
+            },
+            inputFields: {
+                latitude: '#photo_coord_latitude',
+                longitude: '#photo_coord_longitude'
+            }
+        };
+
+        CriticalMass.loadModule('PlacePhotoPage', null, pageOptions, function (placePage) {
+            {% if track %}
+            placePage.addTrack('{{ track|serialize('json')|raw|e('js') }}');
+            {% endif %}
+
+            placePage.addRide('{{ photo.ride|serialize|raw|e('js') }}');
+
+            placePage.setPhoto('{{ photo|serialize|raw|e('js') }}', '{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}');
+
+            placePage.init();
+        });
+    </script>
+{% endblock %}

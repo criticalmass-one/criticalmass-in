@@ -1,0 +1,75 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% form_theme usernameForm 'Form/theme.html.twig' %}
+
+{% block title %}Benutzername ändern{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ path('criticalmass_user_usermanagement') }}">
+            Dein Benutzerkonto
+        </a>
+    </li>
+
+    <li class="active">
+        Benutzername ändern
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <h2>
+                    Benutzername ändern
+                </h2>
+
+                <p class="lead">
+                    Dein Benutzername wird öffentlich angezeigt, beispielsweise bei Fotos, Kommentaren oder Teilnahmen
+                    an Critical-Mass-Touren.
+                </p>
+            </div>
+        </div>
+
+        {{ form_start(usernameForm) }}
+
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Dein Benutzername
+                    </div>
+                    <div class="panel-body form-group form-group{% if form_errors(usernameForm.username) %} has-error has-feedback{% endif %}">
+                        <p>
+                            Dein Benutzername wird öffentlich angezeigt &mdash; außerdem brauchst du ihn zum Einloggen,
+                            wenn du dich nicht über ein soziales Netzwerk anmeldest.
+                        </p>
+
+                        {{ form_errors(usernameForm.username) }}
+
+                        <label class="control-label" for="">
+                            Benutzername:
+                        </label>
+                        {{ form_widget(usernameForm.username, { 'attr' : { 'class': 'form-control'} }) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 text-center">
+                <div class="btn-group" role="group">
+                    <a href="{{ path('criticalmass_user_usermanagement') }}" class="btn btn-default">
+                        Abbrechen
+                    </a>
+
+                    <button type="submit" class="btn btn-primary">
+                        Speichern
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        {{ form_end(usernameForm) }}
+    </div>
+{% endblock %}

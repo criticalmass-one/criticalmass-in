@@ -1,0 +1,58 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Critical Mass im {{ startDateTime|format_date('MMMM YYYY') }}{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ path('caldera_criticalmass_timeline_index') }}">
+            Timeline
+        </a>
+    </li>
+
+    <li class="active">
+        {{ startDateTime|format_date('MMMM YYYY') }}
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    Die Critical Mass im {{ startDateTime|format_date('MMMM YYYY') }}
+                </h1>
+
+                <p class="lead">
+                    Schau dir an, was im {{ startDateTime|format_date('MMMM YYYY') }} bei der Critical Mass passiert
+                    ist.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                {{ timelineContent|raw }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <nav>
+                    <ul class="pager">
+                        <li class="previous{% if not previousDateTime %} disabled{% endif %}">
+                            <a href="{% if previousDateTime %}{{ path('caldera_criticalmass_timeline_yearmonth', { year: previousDateTime|date('Y'), month: previousDateTime|date('m') }) }}{% else %}#{% endif %}">
+                                Voriger Monat
+                            </a>
+                        </li>
+
+                        <li class="next{% if not nextDateTime %} disabled{% endif %}">
+                            <a href="{% if nextDateTime %}{{ path('caldera_criticalmass_timeline_yearmonth', { year: nextDateTime|date('Y'), month: nextDateTime|date('m') }) }}{% else %}#{% endif %}">
+                                Nächster Monat
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+{% endblock %}

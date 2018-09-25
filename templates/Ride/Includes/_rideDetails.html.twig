@@ -1,0 +1,58 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Details</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <dl>
+                    <dt>Datum</dt>
+                    <dd>{{ ride.dateTime|date('d.m.Y', 'Europe/Berlin') }}</dd>
+                    <dt>Uhrzeit</dt>
+                    {% if ride.hasTime %}
+                        <dd>{{ ride.dateTime|date('H:i', 'Europe/Berlin') }} Uhr</dd>
+                    {% else %}
+                        <dd>die Uhrzeit ist noch nicht bekannt</dd>
+                    {% endif %}
+                    <dt>Treffpunkt</dt>
+                    {% if ride.hasLocation() and ride.location %}
+                        {% if location %}
+                            <dd>
+                                <a href="{{ objectPath(ride, 'caldera_criticalmass_location_ride') }}">
+                                    {{ ride.location }}
+                                </a>
+                            </dd>
+                        {% else %}
+                            <dd>{{ ride.location }}</dd>
+                        {% endif %}
+                    {% else %}
+                        <dd>
+                            {% if app.user %}
+                            <a href="{{ objectPath(ride, 'caldera_criticalmass_ride_edit') }}">
+                                noch nicht bekannt
+                            </a>
+                            {% else %}
+                            <a href="#" class="modal-hint" data-modal-hint-title="{{ 'hint_modal.ride.location_edit_link.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.ride.location_edit_link.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
+                                noch nicht bekannt
+                            </a>
+                            {% endif %}
+                        </dd>
+                    {% endif %}
+                    {% if weatherForecast %}
+                        <dt>Wetter</dt>
+                        <dd>{{ weatherForecast }}</dd>
+                    {% endif %}
+                </dl>
+
+                {% if ride.hasTime %}
+                <p class="text-center">
+                    <a href="{{ objectPath(ride, 'caldera_criticalmass_ride_ical') }}" class="btn btn-success">
+                        <i class="fa fa-calendar"></i>
+                        Kalendereintrag merken
+                    </a>
+                </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
