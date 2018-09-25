@@ -24,35 +24,27 @@
                 </a>
             </div>
         </div>
-{#
-        {% if city.isStandardable %}
+
+        {% if city.cycles|length > 0 %}
             <div class="row">
                 <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-                    <dl>
-                        <dt>
-                            Turnus:
-                        </dt>
-
-                        <dd>
-                            jeweils
-                            am {{ ('cycle.event_date.month_week.' ~ city.standardWeekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ city.standardDayOfWeek)|trans }}
-                            um {{ city.standardTime|date('H:i', 'Europe/Berlin') }} Uhr
-                        </dd>
-                    </dl>
-                </div>
-
-                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                    <dl>
-                        <dt>
-                            Treffpunkt:
-                        </dt>
-
-                        <dd>
-                            {{ city.standardLocation }}
-                        </dd>
-                    </dl>
+                    <ul>
+                        {% for cycle in city.cycles %}
+                        <li>
+                            am {{ ('cycle.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ cycle.dayOfWeek)|trans }} um {{ cycle.time|date('H:i', city.timezone) }} Uhr
+                            {% if cycle.location %}
+                                <br />Treffpunkt: {{ cycle.location }}
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
+        {% endif %}
+{#
+
+        {% if city.isStandardable %}
+
         {% endif %}#}
     </div>
 </div>
