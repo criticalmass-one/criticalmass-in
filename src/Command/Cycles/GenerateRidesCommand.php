@@ -10,6 +10,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 
@@ -34,19 +35,22 @@ class GenerateRidesCommand extends Command
         $this
             ->setName('criticalmass:cycles:generate-rides')
             ->setDescription('Create rides for a parameterized year and month automatically')
-            ->addArgument(
+            ->addOption(
                 'dateTime',
-                InputArgument::OPTIONAL,
+                null,
+                InputOption::VALUE_OPTIONAL,
                 'DateTime of month to generate'
             )
-            ->addArgument(
+            ->addOption(
                 'from',
-                InputArgument::OPTIONAL,
+                null,
+                InputOption::VALUE_OPTIONAL,
                 'DateTime of period to start'
             )
-            ->addArgument(
+            ->addOption(
                 'until',
-                InputArgument::OPTIONAL,
+                null,
+                InputOption::VALUE_OPTIONAL,
                 'DateTime of period to start'
             )
             ->addArgument(
@@ -58,9 +62,9 @@ class GenerateRidesCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $dateTime = $input->getArgument('dateTime') ? new \DateTime($input->getArgument('dateTime')) : null;
-        $fromDateTime = $input->getArgument('from') ? new \DateTime($input->getArgument('from')) : null;
-        $untilDateTime = $input->getArgument('until') ? new \DateTime($input->getArgument('until')) : null;
+        $dateTime = $input->getOption('dateTime') ? new \DateTime($input->getOption('dateTime')) : null;
+        $fromDateTime = $input->getOption('from') ? new \DateTime($input->getOption('from')) : null;
+        $untilDateTime = $input->getOption('until') ? new \DateTime($input->getOption('until')) : null;
 
         $manager = $this->registry->getManager();
 
