@@ -35,14 +35,19 @@ class GenerateRidesCommand extends Command
             ->setName('criticalmass:cycles:generate-rides')
             ->setDescription('Create rides for a parameterized year and month automatically')
             ->addArgument(
-                'year',
-                InputArgument::REQUIRED,
-                'Year of the rides to create'
+                'dateTime',
+                InputArgument::OPTIONAL,
+                'DateTime of month to generate'
             )
             ->addArgument(
-                'month',
-                InputArgument::REQUIRED,
-                'Month of the rides to create'
+                'from',
+                InputArgument::OPTIONAL,
+                'DateTime of period to start'
+            )
+            ->addArgument(
+                'until',
+                InputArgument::OPTIONAL,
+                'DateTime of period to start'
             )
             ->addArgument(
                 'cities',
@@ -53,21 +58,33 @@ class GenerateRidesCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /** @var int $year */
-        $year = (int) $input->getArgument('year');
-
-        /** @var int $month */
-        $month = (int) $input->getArgument('month');
+        $dateTime = $input->getArgument('dateTime') ? new \DateTime($input->getArgument('dateTime')) : null;
+        $fromDateTime = $input->getArgument('from') ? new \DateTime($input->getArgument('from')) : null;
+        $untilDateTime = $input->getArgument('until') ? new \DateTime($input->getArgument('until')) : null;
 
         $manager = $this->registry->getManager();
 
         $cityList = $this->getCityList($input);
 
-        $this->rideGenerator
-            ->setMonth($month)
-            ->setYear($year)
-            ->setCityList($cityList)
-            ->execute();
+        if ($fromDateTime && $untilDateTime) {
+            $monthInterval = new \DateInterval('P1M');
+
+            do {
+                $this->rideGenerator
+                    ->setMonth((int) $fromDateTime->format('m'))
+                    ->setYear((int) $fromDateTime->format('Y'))
+                    ->setCityList($cityList)
+                    ->execute();
+
+                $fromDateTime->add($monthInterval);
+            } while ($fromDateTime <= $untilDateTime);
+        } elseif ($dateTime) {
+            $this->rideGenerator
+                ->setMonth((int) $dateTime->format('m'))
+                ->setYear((int) $dateTime->format('Y'))
+                ->setCityList($cityList)
+                ->execute();
+        }
 
         $table = new Table($output);
         $table->setHeaders(['City', 'DateTime Location', 'DateTime UTC', 'Location']);
