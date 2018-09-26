@@ -26,18 +26,18 @@ class ThreadRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findThreadsForCity(City $city)
+    public function findThreadsForCity(City $city): array
     {
-        $builder = $this->createQueryBuilder('thread');
+        $builder = $this->createQueryBuilder('t');
 
-        $builder->select('thread');
-
-        $builder->leftJoin('thread.lastPost', 'lastPost');
-
-        $builder->where($builder->expr()->eq('thread.city', $city->getId()));
-        $builder->andWhere($builder->expr()->eq('thread.enabled', 1));
-
-        $builder->orderBy('lastPost.dateTime', 'DESC');
+        $builder
+            ->select('t')
+            ->leftJoin('t.lastPost', 'lastPost')
+            ->where($builder->expr()->eq('t.city', ':city'))
+            ->setParameter('city', $city)
+            ->andWhere($builder->expr()->eq('t.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->orderBy('lastPost.dateTime', 'DESC');
 
         $query = $builder->getQuery();
 
