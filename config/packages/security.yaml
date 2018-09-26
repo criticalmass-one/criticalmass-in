@@ -29,6 +29,7 @@ security:
                     facebook:  "/login/check-facebook"
                     strava:    "/login/check-strava"
                     runkeeper: "/login/check-runkeeper"
+                    twitter:   "/login/check-twitter"
                 login_path:        /login
                 failure_path:      /login
                 oauth_user_provider:
