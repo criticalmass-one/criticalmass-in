@@ -8,38 +8,21 @@ use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 
-/**
- * Class TrackRepository
- *
- * Reposity for Track entites.
- *
- * @package App\Repository
- * @author maltehuebner
- * @since 2015-09-18
- */
 class TrackRepository extends EntityRepository
 {
-    /**
-     * Get the previous track of the parameterized track. Only collects tracks of the same user and sorts them by the
-     * datetime of the ride.
-     *
-     * @param Track $track
-     * @return Track
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @author maltehuebner
-     * @since 2015-09-18
-     */
-    public function getPreviousTrack(Track $track)
+    public function getPreviousTrack(Track $track): ?Track
     {
-        $builder = $this->createQueryBuilder('track');
+        $builder = $this->createQueryBuilder('t');
 
-        $builder->select('track');
-        $builder->join('track.ride', 'ride');
-        $builder->where($builder->expr()->lt('ride.dateTime',
-            '\'' . $track->getRide()->getDateTime()->format('Y-m-d H:i:s') . '\''));
-        $builder->andWhere($builder->expr()->eq('track.user', $track->getUser()->getId()));
-        $builder->addOrderBy('track.startDateTime', 'DESC');
-        $builder->setMaxResults(1);
+        $builder
+            ->select('t')
+            ->join('t.ride', 'ride')
+            ->where($builder->expr()->lt('ride.dateTime', ':dateTime'))
+            ->setParameter('dateTime', $track->getRide()->getDateTime())
+            ->andWhere($builder->expr()->eq('t.user', ':user'))
+            ->setParameter('user', $track->getUser())
+            ->addOrderBy('t.startDateTime', 'DESC')
+            ->setMaxResults(1);
 
         $query = $builder->getQuery();
 
