@@ -31,27 +31,19 @@ class TrackRepository extends EntityRepository
         return $result;
     }
 
-    /**
-     * Get the next track of the parameterized track. Only collects tracks of the same user and sorts them by the
-     * datetime of the ride.
-     *
-     * @param Track $track
-     * @return Track
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @author maltehuebner
-     * @since 2015-09-18
-     */
-    public function getNextTrack(Track $track)
+    public function getNextTrack(Track $track): ?Track
     {
-        $builder = $this->createQueryBuilder('track');
+        $builder = $this->createQueryBuilder('t');
 
-        $builder->select('track');
-        $builder->join('track.ride', 'ride');
-        $builder->where($builder->expr()->gt('ride.dateTime',
-            '\'' . $track->getRide()->getDateTime()->format('Y-m-d H:i:s') . '\''));
-        $builder->andWhere($builder->expr()->eq('track.user', $track->getUser()->getId()));
-        $builder->addOrderBy('track.startDateTime', 'ASC');
-        $builder->setMaxResults(1);
+        $builder
+            ->select('t')
+            ->join('t.ride', 'ride')
+            ->where($builder->expr()->gt('ride.dateTime', ':dateTime'))
+            ->setParameter('dateTime', $track->getRide()->getDateTime())
+            ->andWhere($builder->expr()->eq('t.user', ':user'))
+            ->setParameter('user', $track->getUser())
+            ->addOrderBy('t.startDateTime', 'ASC')
+            ->setMaxResults(1);
 
         $query = $builder->getQuery();
 
