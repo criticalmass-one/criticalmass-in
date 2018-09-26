@@ -6,25 +6,20 @@ use App\Entity\Board;
 use App\Entity\City;
 use Doctrine\ORM\EntityRepository;
 
-/**
- * @package App\Repository
- * @author maltehuebner
- * @since 2016-02-13
- */
 class ThreadRepository extends EntityRepository
 {
-    public function findThreadsForBoard(Board $board)
+    public function findThreadsForBoard(Board $board): array
     {
-        $builder = $this->createQueryBuilder('thread');
+        $builder = $this->createQueryBuilder('t');
 
-        $builder->select('thread');
-
-        $builder->leftJoin('thread.lastPost', 'lastPost');
-
-        $builder->where($builder->expr()->eq('thread.board', $board->getId()));
-        $builder->andWhere($builder->expr()->eq('thread.enabled', 1));
-
-        $builder->orderBy('lastPost.dateTime', 'DESC');
+        $builder
+            ->select('t')
+            ->leftJoin('t.lastPost', 'lastPost')
+            ->where($builder->expr()->eq('t.board', ':board'))
+            ->setParameter('board', $board)
+            ->andWhere($builder->expr()->eq('t.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->orderBy('lastPost.dateTime', 'DESC');
 
         $query = $builder->getQuery();
 
