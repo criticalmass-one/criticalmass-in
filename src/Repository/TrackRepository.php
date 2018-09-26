@@ -73,15 +73,19 @@ class TrackRepository extends EntityRepository
         return $result;
     }
 
-    public function findByUserAndRide(Ride $ride, User $user)
+    public function findByUserAndRide(Ride $ride, User $user): ?Track
     {
-        $builder = $this->createQueryBuilder('track');
+        $builder = $this->createQueryBuilder('t');
 
-        $builder->select('track');
-        $builder->where($builder->expr()->eq('track.ride', $ride->getId()));
-        $builder->andWhere($builder->expr()->eq('track.user', $user->getId()));
-        $builder->andWhere($builder->expr()->eq('track.enabled', 1));
-        $builder->andWhere($builder->expr()->eq('track.deleted', 0));
+        $builder->select('t')
+            ->where($builder->expr()->eq('t.ride', ':ride'))
+            ->setParameter('ride', $ride)
+            ->andWhere($builder->expr()->eq('t.user', ':user'))
+            ->setParameter('user', $user)
+            ->andWhere($builder->expr()->eq('t.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->eq('t.deleted', ':deleted'))
+            ->setParameter('deleted', false);
 
         $query = $builder->getQuery();
 
