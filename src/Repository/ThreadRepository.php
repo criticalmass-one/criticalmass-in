@@ -61,34 +61,32 @@ class ThreadRepository extends EntityRepository
         return $query->getSingleResult();
     }
 
-    public function findForTimelineThreadCollector(
-        \DateTime $startDateTime = null,
-        \DateTime $endDateTime = null,
-        $limit = null
-    ) {
-        $builder = $this->createQueryBuilder('thread');
+    public function findForTimelineThreadCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null): array
+    {
+        $builder = $this->createQueryBuilder('t');
 
-        $builder->select('thread');
-
-        $builder->join('thread.firstPost', 'firstPost');
-
-        $builder->where($builder->expr()->eq('thread.enabled', 1));
+        $builder
+            ->select('t')
+            ->join('t.firstPost', 'firstPost')
+            ->where($builder->expr()->eq('t.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->addOrderBy('firstPost.dateTime', 'DESC');
 
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gte('firstPost.dateTime',
-                '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder
+                ->andWhere($builder->expr()->gte('firstPost.dateTime',':startDateTime'))
+                ->setParameter('startDateTime', $startDateTime);
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lte('firstPost.dateTime',
-                '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder
+                ->andWhere($builder->expr()->lte('firstPost.dateTime', ':endDateTime'))
+                ->setParameter('endDateTime', $endDateTime);
         }
 
         if ($limit) {
             $builder->setMaxResults($limit);
         }
-
-        $builder->addOrderBy('firstPost.dateTime', 'DESC');
 
         $query = $builder->getQuery();
 
