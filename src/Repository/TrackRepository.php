@@ -73,27 +73,6 @@ class TrackRepository extends EntityRepository
         return $result;
     }
 
-    public function findSuitableTracksByRide(Ride $ride)
-    {
-        $builder = $this->createQueryBuilder('track');
-
-        $builder->select('track');
-
-        $builder->where($builder->expr()->eq('track.ride', $ride->getId()));
-        $builder->andWhere($builder->expr()->eq('track.enabled', 1));
-        $builder->andWhere($builder->expr()->eq('track.deleted', 0));
-        $builder->andWhere($builder->expr()->gt('track.distance', 5));
-        $builder->andWhere($builder->expr()->gt('track.points', 100));
-
-        $builder->addOrderBy('track.startDateTime', 'ASC');
-
-        $query = $builder->getQuery();
-
-        $result = $query->getResult();
-
-        return $result;
-    }
-
     public function findByUserAndRide(Ride $ride, User $user)
     {
         $builder = $this->createQueryBuilder('track');
