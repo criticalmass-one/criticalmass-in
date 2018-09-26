@@ -43,6 +43,15 @@
                         <dd>{{ weatherForecast }}</dd>
                     {% endif %}
                 </dl>
+
+                {% if ride.hasTime %}
+                <p class="text-center">
+                    <a href="{{ objectPath(ride, 'caldera_criticalmass_ride_ical') }}" class="btn btn-success">
+                        <i class="fa fa-calendar"></i>
+                        Kalendereintrag merken
+                    </a>
+                </p>
+                {% endif %}
             </div>
         </div>
     </div>
