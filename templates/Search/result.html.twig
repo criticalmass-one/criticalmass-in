@@ -15,18 +15,17 @@
         <div class="row">
             <form action="{{ path('caldera_criticalmass_search_query') }}" method="get">
                 <div class="col-md-3">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="query-input">
-                                    Deine Suchanfrage
-                                </label>
-                                <input type="text" class="form-control" name="query" value="{{ query }}"
-                                       id="query-input"
-                                       placeholder="Deine Suchanfrage"/>
-                            </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Suche
+                        </div>
+                        <div class="panel-body form-group">
+                            <label for="query-input">
+                                Deine Suchanfrage
+                            </label>
+                            <input type="text" class="form-control" name="query" value="{{ query }}" id="query-input" placeholder="Deine Suchanfrage"/>
 
-                            <button type="submit" class="btn btn-success pull-right">
+                            <button type="submit" class="btn btn-success pull-right margin-top-small">
                                 Finden
                             </button>
                         </div>
