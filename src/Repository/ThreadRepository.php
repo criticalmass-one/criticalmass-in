@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Board;
 use App\Entity\City;
+use App\Entity\Thread;
 use Doctrine\ORM\EntityRepository;
 
 class ThreadRepository extends EntityRepository
@@ -44,13 +45,16 @@ class ThreadRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findThreadBySlug($slug)
+    public function findThreadBySlug(string $slug): ?Thread
     {
-        $builder = $this->createQueryBuilder('thread');
+        $builder = $this->createQueryBuilder('t');
 
-        $builder->select('thread');
-        $builder->where($builder->expr()->eq('thread.enabled', 1));
-        $builder->andWhere($builder->expr()->eq('thread.slug', '\'' . $slug . '\''));
+        $builder
+            ->select('t')
+            ->where($builder->expr()->eq('t.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->eq('t.slug', ':slug'))
+            ->setParameter('slug', $slug);
 
         $query = $builder->getQuery();
 
