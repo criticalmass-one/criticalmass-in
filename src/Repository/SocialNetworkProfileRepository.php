@@ -2,7 +2,6 @@
 
 namespace App\Repository;
 
-use App\Entity\City;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
