@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\Geo\EntityInterface\TrackInterface;
 use App\EntityInterface\RouteableInterface;
 use App\EntityInterface\StaticMapableInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,6 +10,7 @@ use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use App\Criticalmass\Router\Annotation as Routing;
+use Caldera\GeoBasic\Track\TrackInterface as BaseTrackInterface;
 
 /**
  * @ORM\Table(name="track")
@@ -17,7 +19,7 @@ use App\Criticalmass\Router\Annotation as Routing;
  * @JMS\ExclusionPolicy("all")
  * @Routing\DefaultRoute(name="caldera_criticalmass_track_view")
  */
-class Track implements RouteableInterface, StaticMapableInterface
+class Track implements RouteableInterface, StaticMapableInterface, TrackInterface
 {
     const TRACK_SOURCE_GPX = 'TRACK_SOURCE_GPX';
     const TRACK_SOURCE_STRAVA = 'TRACK_SOURCE_STRAVA';
@@ -365,19 +367,19 @@ class Track implements RouteableInterface, StaticMapableInterface
         return $this->latLngList;
     }
 
-    public function setPolyline(string $polyline): Track
+    public function setPolyline(string $polyline): BaseTrackInterface
     {
         $this->polyline = $polyline;
 
         return $this;
     }
 
-    public function getPolyline(): ?string
+    public function getPolyline(): string
     {
         return $this->polyline;
     }
 
-    public function setReducedPolyline(string $reducedPolyline): Track
+    public function setReducedPolyline(string $reducedPolyline = null): TrackInterface
     {
         $this->reducedPolyline = $reducedPolyline;
 
@@ -532,6 +534,7 @@ class Track implements RouteableInterface, StaticMapableInterface
         return $this->updatedAt;
     }
 
+    /** @deprecated  */
     public function getDurationInterval(): ?\DateInterval
     {
         if ($this->startDateTime && $this->endDateTime) {

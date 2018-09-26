@@ -32,7 +32,7 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
      * @ORM\ManyToOne(targetEntity="Ride", inversedBy="subrides")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      * @JMS\Expose
-     * @Routing\RouteParameter(name="rideDate")
+     * @Routing\RouteParameter(name="rideIdentifier")
      * @Routing\RouteParameter(name="citySlug")
      */
     protected $ride;

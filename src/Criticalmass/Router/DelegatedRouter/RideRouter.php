@@ -17,7 +17,7 @@ class RideRouter extends AbstractDelegatedRouter
     }
 
     /** @var Ride $ride */
-    protected function getRouteParameter(RouteableInterface $ride, string $variableName): ?string
+    public function getRouteParameter(RouteableInterface $ride, string $variableName): ?string
     {
         if ($variableName === 'rideIdentifier') {
             if ($ride->hasSlug()) {

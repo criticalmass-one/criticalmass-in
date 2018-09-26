@@ -123,6 +123,16 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     protected $runkeeperAccessToken;
 
     /**
+     * @ORM\Column(name="twitter_id", type="string", length=255, nullable=true)
+     */
+    protected $twitterId;
+
+    /**
+     * @ORM\Column(name="twitter_access_token", type="string", length=255, nullable=true)
+     */
+    protected $twitterkAccessToken;
+
+    /**
      * @ORM\OneToMany(targetEntity="CityCycle", mappedBy="city", cascade={"persist", "remove"})
      */
     protected $cycles;
@@ -140,6 +150,11 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $imageName;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default" = 0})
+     */
+    protected $ownProfilePhoto = false;
 
     public function __construct()
     {
@@ -358,6 +373,30 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         return $this->runkeeperAccessToken;
     }
 
+    public function setTwitterId(string $twitterId): User
+    {
+        $this->twitterId = $twitterId;
+
+        return $this;
+    }
+
+    public function getTwitterId(): ?string
+    {
+        return $this->twitterId;
+    }
+
+    public function setTwitterAccessToken(string $twitterkAccessToken): User
+    {
+        $this->twitterkAccessToken = $twitterkAccessToken;
+
+        return $this;
+    }
+
+    public function getTwitterAccessToken(): ?string
+    {
+        return $this->twitterkAccessToken;
+    }
+
     public function setBlurGalleries(bool $blurGalleries): User
     {
         $this->blurGalleries = $blurGalleries;
@@ -372,7 +411,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
 
     public function isOauthAccount(): bool
     {
-        return $this->runkeeperId || $this->stravaId || $this->facebookId;
+        return $this->runkeeperId || $this->stravaId || $this->facebookId || $this->isTwitterAccount();
     }
 
     public function isFacebookAccount(): bool
@@ -388,6 +427,11 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     public function isRunkeeperAccount(): bool
     {
         return $this->facebookId !== null;
+    }
+
+    public function isTwitterAccount(): bool
+    {
+        return $this->twitterId !== null;
     }
 
     public function addBikerightVoucher(BikerightVoucher $bikerightVoucher): User
@@ -461,5 +505,17 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     public function getImageName(): ?string
     {
         return $this->imageName;
+    }
+
+    public function hasOwnProfilePhoto(): bool
+    {
+        return $this->ownProfilePhoto;
+    }
+
+    public function setOwnProfilePhoto(bool $ownProfilePhoto): User
+    {
+        $this->ownProfilePhoto = $ownProfilePhoto;
+
+        return $this;
     }
 }

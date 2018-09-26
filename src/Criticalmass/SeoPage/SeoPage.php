@@ -1,18 +1,21 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Criticalmass\SeoPage;
 
+use App\Criticalmass\Router\ObjectRouterInterface;
+use App\Criticalmass\StaticMap\UrlGenerator\UrlGeneratorInterface;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\RouteableInterface;
 use App\Criticalmass\Router\ObjectRouter;
+use App\EntityInterface\StaticMapableInterface;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Sonata\SeoBundle\Seo\SeoPageInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface as SymfonyUrlGeneratorInterface;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class SeoPage
 {
-    /** @var SeoPageInterface */
+    /** @var SeoPageInterface $sonataSeoPage*/
     protected $sonataSeoPage;
 
     /** @var UploaderHelper $uploaderHelper */
@@ -24,16 +27,21 @@ class SeoPage
     /** @var ObjectRouter $objectRouter */
     protected $objectRouter;
 
+    /** @var UrlGeneratorInterface $urlGenerator */
+    protected $urlGenerator;
+
     public function __construct(
         SeoPageInterface $sonataSeoPage,
         UploaderHelper $uploaderHelper,
         CacheManager $cacheManager,
-        ObjectRouter $objectRouter
+        ObjectRouterInterface $objectRouter,
+        UrlGeneratorInterface $urlGenerator
     ) {
         $this->sonataSeoPage = $sonataSeoPage;
         $this->uploaderHelper = $uploaderHelper;
         $this->cacheManager = $cacheManager;
         $this->objectRouter = $objectRouter;
+        $this->urlGenerator = $urlGenerator;
     }
 
     public function setTitle(string $title): SeoPage
@@ -50,6 +58,16 @@ class SeoPage
         $this->sonataSeoPage
             ->addMeta('name', 'description', $description)
             ->addMeta('property', 'og:description', $description);
+
+        return $this;
+    }
+
+    public function setPreviewMap(StaticMapableInterface $staticMapable): SeoPage
+    {
+        $this->sonataSeoPage
+            ->addMeta('property', 'og:image', $this->urlGenerator->generate($staticMapable, 600, 315), ['escape' => false])
+            ->addMeta('name', 'twitter:image', $this->urlGenerator->generate($staticMapable, 800, 320), ['escape' => false])
+            ->addMeta('name', 'twitter:card', 'summary_large_image');
 
         return $this;
     }
@@ -84,7 +102,7 @@ class SeoPage
 
     public function setCanonicalForObject(RouteableInterface $object): SeoPage
     {
-        $url = $this->objectRouter->generate($object, UrlGeneratorInterface::ABSOLUTE_URL);
+        $url = $this->objectRouter->generate($object, null, [], SymfonyUrlGeneratorInterface::ABSOLUTE_URL);
 
         $this->setCanonicalLink($url);
 

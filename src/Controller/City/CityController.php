@@ -135,9 +135,14 @@ class CityController extends AbstractController
 
         $seoPage
             ->setDescription('Informationen, Tourendaten, Tracks und Fotos von der Critical Mass in ' . $city->getCity())
-            ->setPreviewPhoto($city)
             ->setCanonicalForObject($city)
             ->setTitle($city->getTitle());
+
+        if ($city->getImageName()) {
+            $seoPage->setPreviewPhoto($city);
+        } else {
+            $seoPage->setPreviewMap($city);
+        }
 
         return $this->render('City/show.html.twig', [
             'city' => $city,

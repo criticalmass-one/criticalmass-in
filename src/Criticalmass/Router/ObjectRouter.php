@@ -9,13 +9,14 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ObjectRouter extends AbstractObjectRouter implements ObjectRouterInterface
 {
-    /** @var array $delegatedRouterList */
-    protected $delegatedRouterList = [];
-
     public function generate(RouteableInterface $routeable, string $routeName = null, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
     {
         if (!$routeName) {
             $routeName = $this->getDefaultRouteName($routeable);
+        }
+
+        if ($delegatedRouter = $this->findDelegatedRouter($routeable)) {
+            return $delegatedRouter->generate($routeable, $routeName, $parameters, $referenceType);
         }
 
         if ($routeName) {
@@ -28,29 +29,14 @@ class ObjectRouter extends AbstractObjectRouter implements ObjectRouterInterface
 
                 return $delegatedRouter->generate($routeable, $routeName, $parameters, $referenceType);
             }
-        } else {
-            $delegatedRouter = $this->findDelegatedRouter($routeable);
-
-            return $delegatedRouter->generate($routeable, $routeName, $parameters, $referenceType);
         }
     }
 
     public function addDelegatedRouter(DelegatedRouterInterface $delegatedRouter): ObjectRouterInterface
     {
-        $this->delegatedRouterList[] = $delegatedRouter;
+        $this->delegatedRouterList[] = $delegatedRouter->setObjectRouter($this);
 
         return $this;
     }
 
-    protected function findDelegatedRouter(RouteableInterface $routeable): DelegatedRouterInterface
-    {
-        /** @var DelegatedRouterInterface $delegatedRouter */
-        foreach ($this->delegatedRouterList as $delegatedRouter) {
-            if ($delegatedRouter->supports($routeable)) {
-                return $delegatedRouter;
-            }
-        }
-
-        return null;
-    }
 }

@@ -1,6 +1,6 @@
 {
     "basvandorst/stravaphp": {
-        "version": "1.1.0"
+        "version": "1.2.0"
     },
     "behat/transliterator": {
         "version": "v1.2.0"
@@ -71,6 +71,9 @@
             "ref": "c1431086fec31f17fbcfe6d6d7e92059458facc1"
         }
     },
+    "doctrine/event-manager": {
+        "version": "v1.0.0"
+    },
     "doctrine/inflector": {
         "version": "v1.3.0"
     },
@@ -86,8 +89,11 @@
     "doctrine/orm": {
         "version": "v2.6.1"
     },
-    "educoder/pest": {
-        "version": "1.0.0"
+    "doctrine/persistence": {
+        "version": "v1.0.0"
+    },
+    "doctrine/reflection": {
+        "version": "v1.0.0"
     },
     "egulias/email-validator": {
         "version": "2.1.4"
@@ -102,9 +108,6 @@
         "version": "v1.2.0"
     },
     "facebook/graph-sdk": {
-        "version": "5.6.3"
-    },
-    "facebook/php-sdk-v4": {
         "version": "5.6.3"
     },
     "friendsofsymfony/elastica-bundle": {
@@ -179,12 +182,6 @@
     "incenteev/composer-parameter-handler": {
         "version": "v2.1.3"
     },
-    "ircmaxell/random-lib": {
-        "version": "v1.2.0"
-    },
-    "ircmaxell/security-lib": {
-        "version": "v1.1.0"
-    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
@@ -209,6 +206,9 @@
     "jublonet/codebird-php": {
         "version": "3.1.0"
     },
+    "khill/php-duration": {
+        "version": "1.0.5"
+    },
     "knplabs/knp-components": {
         "version": "1.3.8"
     },
@@ -222,7 +222,7 @@
         "version": "v2.8.0"
     },
     "league/oauth2-client": {
-        "version": "1.4.2"
+        "version": "2.3.0"
     },
     "liip/imagine-bundle": {
         "version": "1.8",
@@ -382,6 +382,15 @@
     },
     "ruflin/elastica": {
         "version": "6.0.2"
+    },
+    "sabre/uri": {
+        "version": "2.1.1"
+    },
+    "sabre/vobject": {
+        "version": "4.1.6"
+    },
+    "sabre/xml": {
+        "version": "2.1.0"
     },
     "salavert/time-ago-in-words": {
         "version": "v1.7"

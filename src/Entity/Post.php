@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\Website\Crawler\Crawlable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="post")
  * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
  */
-class Post
+class Post implements Crawlable
 {
     /**
      * @ORM\Id
@@ -86,6 +87,11 @@ class Post
      * @ORM\Column(type="boolean")
      */
     protected $enabled = true;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $crawled = false;
 
     public function __construct()
     {
@@ -246,6 +252,24 @@ class Post
     public function setThread(Thread $thread = null): Post
     {
         $this->thread = $thread;
+
+        return $this;
+    }
+
+    /** TODO remove this and rename $message to $text */
+    public function getText(): string
+    {
+        return $this->message;
+    }
+
+    public function isCrawled(): bool
+    {
+        return $this->crawled;
+    }
+
+    public function setCrawled(bool $crawled): Crawlable
+    {
+        $this->crawled = $crawled;
 
         return $this;
     }

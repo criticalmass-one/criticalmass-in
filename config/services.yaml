@@ -23,6 +23,9 @@ parameters:
     facebook.default_token: '%env(FACEBOOK_DEFAULT_TOKEN)%'
     runkeeper.client_id: '%env(RUNKEEPER_CLIENT_ID)%'
     runkeeper.secret: '%env(RUNKEEPER_SECRET)%'
+    twitter.client_id: '%env(TWITTER_CLIENT_ID)%'
+    twitter.token: '%env(TWITTER_TOKEN)%'
+    twitter.secret: '%env(TWITTER_SECRET)%'
     timeline.ttl: 60
     notification.mail.sender_address: malte@criticalmass.in
     jms_serializer.camel_case_naming_strategy.class: App\Serializer\JMSSerializer\Naming\CamelCaseNamingStrategy
@@ -37,9 +40,6 @@ parameters:
     upload_destination.user_photo: '%kernel.root_dir%/../public/users'
     feature.photos: true
     staticmaps.host: '%env(STATICMAPS_HOST)%'
-    twitter.client_id: '%env(TWITTER_CLIENT_ID)%'
-    twitter.token: '%env(TWITTER_TOKEN)%'
-    twitter.secret: '%env(TWITTER_SECRET)%'
     timezone_db.api_key: '%env(TIMEZONE_DB_API_KEY)%'
     yourls.api_hostname: '%env(YOURLS_API_HOSTNAME)%'
     yourls.api_username: '%env(YOURLS_API_USERNAME)%'
@@ -53,6 +53,7 @@ services:
         bind:
             $openWeatherMapApiKey: '%openweather.appid%'
             $rootDirectory: '%kernel.root_dir%'
+            $webRootDir: '%kernel.root_dir%/../public'
             $projectDirectory: '%kernel.project_dir%'
             $staticmapsHost: '%staticmaps.host%'
             $featurePhotos: '%feature.photos%'
@@ -60,6 +61,8 @@ services:
             $facebookAppId: '%facebook.app_id%'
             $facebookAppSecret: '%facebook.app_secret%'
             $facebookDefaultToken: '%facebook.default_token%'
+            $twitterClientId: '%twitter.client_id%'
+            $twitterSecret: '%twitter.secret%'
             $uploadDestinationPhoto: '%upload_destination.photo%'
             $uploadDestinationTrack: '%upload_destination.track%'
             $uploadDestinationUserPhoto: '%upload_destination.user_photo%'
@@ -115,3 +118,12 @@ services:
     App\Request\ParamConverter\UserParamConverter:
         tags:
             - { name: request.param_converter, priority: 10, converter: user_converter }
+
+    App\Criticalmass\Imagine\DataLoader\RemoteStreamLoader:
+        arguments: ['@liip_imagine']
+        tags:
+            - { name: liip_imagine.binary.loader, loader: App\Criticalmass\Imagine\DataLoader\RemoteStreamLoader }
+
+    App\Criticalmass\Imagine\CacheResolver\RemoteCacheResolver:
+        tags:
+            - { name: liip_imagine.cache.resolver, resolver: App\Criticalmass\Imagine\CacheResolver\RemoteCacheResolver }

@@ -628,6 +628,15 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->estimatedDuration;
     }
 
+    public function getEstimatedDurationInSeconds(): ?int
+    {
+        if ($this->estimatedDuration) {
+            return intval(ceil($this->estimatedDuration * 60 * 60));
+        }
+
+        return null;
+    }
+
     public function addTrack(Track $track): Ride
     {
         $this->tracks->add($track);

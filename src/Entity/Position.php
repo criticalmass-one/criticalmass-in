@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+/**
+ * @deprecated
+ */
 class Position
 {
     protected $id;

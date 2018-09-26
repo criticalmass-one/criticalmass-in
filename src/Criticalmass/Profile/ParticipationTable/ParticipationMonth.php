@@ -12,8 +12,8 @@ class ParticipationMonth implements \Countable, \Iterator
     /** @var int $month */
     protected $month;
 
-    /** @var array $participationList */
-    protected $participationList = [];
+    /** @var array $dayList */
+    protected $dayList = [];
 
     /** @var int $day */
     protected $day = 1;
@@ -28,21 +28,31 @@ class ParticipationMonth implements \Countable, \Iterator
     {
         $ride = $participation->getRide();
         $dateTime = $ride->getDateTime();
-        $day = (int)$dateTime->format('j');
+        $day = (int) $dateTime->format('j');
 
-        $this->participationList[$day] = $participation;
+        if (!isset($this->dayList[$day])) {
+            $this->dayList[$day] = new ParticipationDay($this->year, $this->month, $day);
+        }
+
+        $this->dayList[$day]->addParticipation($participation);
 
         return $this;
     }
 
     public function count(): int
     {
-        return count($this->participationList);
+        $counter = 0;
+
+        foreach ($this->dayList as $participationDay) {
+            $counter += count($participationDay);
+        }
+
+        return $counter;
     }
 
     public function getParticipationList(): array
     {
-        return $this->participationList;
+        return $this->dayList;
     }
 
     public function getMonth(): int
@@ -57,8 +67,8 @@ class ParticipationMonth implements \Countable, \Iterator
 
     public function current(): ?Participation
     {
-        if (array_key_exists($this->day, $this->participationList)) {
-            return $this->participationList[$this->day];
+        if (array_key_exists($this->day, $this->dayList)) {
+            return $this->dayList[$this->day];
         }
 
         return null;

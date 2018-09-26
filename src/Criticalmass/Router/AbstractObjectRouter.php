@@ -5,6 +5,7 @@ namespace App\Criticalmass\Router;
 use App\Criticalmass\Router\Annotation\AbstractAnnotation;
 use App\Criticalmass\Router\Annotation\DefaultRoute;
 use App\Criticalmass\Router\Annotation\RouteParameter;
+use App\Criticalmass\Router\DelegatedRouter\DelegatedRouterInterface;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\Common\Annotations\Reader;
 use Symfony\Component\Routing\RouterInterface;
@@ -16,6 +17,9 @@ abstract class AbstractObjectRouter
 
     /** @var Reader $annotationReader */
     protected $annotationReader;
+
+    /** @var array $delegatedRouterList */
+    protected $delegatedRouterList = [];
 
     public function __construct(RouterInterface $router, Reader $annotationReader)
     {
@@ -41,7 +45,7 @@ abstract class AbstractObjectRouter
         return null;
     }
 
-    protected function getRouteParameter(RouteableInterface $routeable, string $variableName): ?string
+    public function getRouteParameter(RouteableInterface $routeable, string $variableName): ?string
     {
         $reflectionClass = new \ReflectionClass($routeable);
         $properties = $reflectionClass->getProperties();
@@ -65,7 +69,11 @@ abstract class AbstractObjectRouter
                     $value = $routeable->$getMethodName();
 
                     if (is_object($value) && $value instanceof RouteableInterface) {
-                        $value = $this->getRouteParameter($value, $variableName);
+                        if ($delegatedRouter = $this->findDelegatedRouter($value)) {
+                            $value = $delegatedRouter->getRouteParameter($value, $variableName);
+                        } else {
+                            $value = $this->getRouteParameter($value, $variableName);
+                        }
                     }
 
                     if (is_object($value) && $value instanceof \DateTime) {
@@ -102,5 +110,17 @@ abstract class AbstractObjectRouter
         $className = array_pop($classNameParts);
 
         return $className;
+    }
+
+    protected function findDelegatedRouter(RouteableInterface $routeable): ?DelegatedRouterInterface
+    {
+        /** @var DelegatedRouterInterface $delegatedRouter */
+        foreach ($this->delegatedRouterList as $delegatedRouter) {
+            if ($delegatedRouter->supports($routeable)) {
+                return $delegatedRouter;
+            }
+        }
+
+        return null;
     }
 }

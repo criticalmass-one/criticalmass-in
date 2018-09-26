@@ -42,6 +42,13 @@ class TableGenerator implements TableGeneratorInterface
         return $this;
     }
 
+    public function addParticipation(Participation $participation): TableGenerator
+    {
+        $this->table->addParticipation($participation);
+
+        return $this;
+    }
+
     public function getTable(): ParticipationTable
     {
         return $this->table;
