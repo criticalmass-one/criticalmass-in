@@ -3,40 +3,31 @@
 namespace App\Repository;
 
 use App\Entity\City;
-use App\Entity\Event;
 use App\Entity\Photo;
 use App\Entity\Ride;
 use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 
 class PhotoRepository extends EntityRepository
 {
-    /**
-     * @param Photo $photo
-     * @return Photo
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @author maltehuebner
-     * @since 2015-12-06
-     */
-    public function getPreviousPhoto(Photo $photo)
+    public function getPreviousPhoto(Photo $photo): ?Photo
     {
-        $builder = $this->createQueryBuilder('photo');
+        $builder = $this->createQueryBuilder('p');
 
-        $builder->select('photo');
-
-        if ($photo->getRide()) {
-            $builder->where($builder->expr()->eq('photo.ride', $photo->getRide()->getId()));
-        } elseif ($photo->getEvent()) {
-            $builder->where($builder->expr()->eq('photo.event', $photo->getEvent()->getId()));
-        }
-
-        $builder->andWhere($builder->expr()->lt('photo.dateTime',
-            '\'' . $photo->getDateTime()->format('Y-m-d H:i:s') . '\''));
-        $builder->andWhere($builder->expr()->eq('photo.enabled', 1));
-        $builder->andWhere($builder->expr()->eq('photo.deleted', 0));
-
-        $builder->addOrderBy('photo.dateTime', 'DESC');
-        $builder->setMaxResults(1);
+        $builder
+            ->select('p')
+            ->where($builder->expr()->eq('p.ride', ':ride'))
+            ->setParameter('ride', $photo->getRide())
+            ->andWhere($builder->expr()->lt('p.dateTime', ':dateTime'))
+            ->setParameter('dateTime', $photo->getDateTime())
+            ->andWhere($builder->expr()->eq('p.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->eq('p.deleted', ':deleted'))
+            ->setParameter('deleted', false)
+            ->addOrderBy('p.dateTime', 'DESC')
+            ->setMaxResults(1);
 
         $query = $builder->getQuery();
 
@@ -45,32 +36,22 @@ class PhotoRepository extends EntityRepository
         return $result;
     }
 
-    /**
-     * @param Photo $photo
-     * @return Photo
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @author maltehuebner
-     * @since 2015-12-06
-     */
-    public function getNextPhoto(Photo $photo)
+    public function getNextPhoto(Photo $photo): ?Photo
     {
-        $builder = $this->createQueryBuilder('photo');
+        $builder = $this->createQueryBuilder('p');
 
-        $builder->select('photo');
-
-        if ($photo->getRide()) {
-            $builder->where($builder->expr()->eq('photo.ride', $photo->getRide()->getId()));
-        } elseif ($photo->getEvent()) {
-            $builder->where($builder->expr()->eq('photo.event', $photo->getEvent()->getId()));
-        }
-
-        $builder->andWhere($builder->expr()->gt('photo.dateTime',
-            '\'' . $photo->getDateTime()->format('Y-m-d H:i:s') . '\''));
-        $builder->andWhere($builder->expr()->eq('photo.enabled', 1));
-        $builder->andWhere($builder->expr()->eq('photo.deleted', 0));
-
-        $builder->addOrderBy('photo.dateTime', 'ASC');
-        $builder->setMaxResults(1);
+        $builder
+            ->select('p')
+            ->where($builder->expr()->eq('p.ride', ':ride'))
+            ->setParameter('ride', $photo->getRide())
+            ->andWhere($builder->expr()->gt('p.dateTime', ':dateTime'))
+            ->setParameter('dateTime', $photo->getDateTime())
+            ->andWhere($builder->expr()->eq('p.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->eq('p.deleted', ':deleted'))
+            ->setParameter('deleted', false)
+            ->addOrderBy('p.dateTime', 'DESC')
+            ->setMaxResults(1);
 
         $query = $builder->getQuery();
 
@@ -88,8 +69,10 @@ class PhotoRepository extends EntityRepository
             ->addSelect('ride')
             ->addSelect('city')
             ->addSelect('COUNT(photo)')
-            ->where($builder->expr()->eq('photo.deleted', 0))
-            ->andWhere($builder->expr()->eq('photo.user', $user->getId()))
+            ->where($builder->expr()->eq('photo.deleted', ':deleted'))
+            ->setParameter('deleted', false)
+            ->andWhere($builder->expr()->eq('photo.user', ':user'))
+            ->setParameter('user', $user)
             ->groupBy('photo.ride')
             ->join('photo.ride', 'ride')
             ->join('ride.city', 'city')
@@ -122,29 +105,33 @@ class PhotoRepository extends EntityRepository
         return $result;
     }
 
-    public function findRidesForGallery(City $city = null)
+    /**
+     * @deprecated
+     */
+    public function findRidesForGallery(City $city = null): array
     {
         $builder = $this->createQueryBuilder('photo');
 
-        $builder->select('photo');
-        $builder->addSelect('ride');
-        $builder->addSelect('city');
-        $builder->addSelect('COUNT(photo)');
-        $builder->addSelect('featuredPhoto');
-
-        $builder->where($builder->expr()->eq('photo.deleted', 0));
+        $builder
+            ->select('photo')
+            ->addSelect('ride')
+            ->addSelect('city')
+            ->addSelect('COUNT(photo)')
+            ->addSelect('featuredPhoto')
+            ->where($builder->expr()->eq('photo.deleted', 0));
 
         if ($city) {
-            $builder->andWhere($builder->expr()->eq('photo.city', $city->getId()));
+            $builder
+                ->andWhere($builder->expr()->eq('photo.city', ':city'))
+                ->setParameter('city', $city);
         }
 
-        $builder->join('photo.ride', 'ride');
-        $builder->join('ride.city', 'city');
-        $builder->leftJoin('ride.featuredPhoto', 'featuredPhoto');
-
-        $builder->orderBy('ride.dateTime', 'desc');
-
-        $builder->groupBy('ride');
+        $builder
+            ->join('photo.ride', 'ride')
+            ->join('ride.city', 'city')
+            ->leftJoin('ride.featuredPhoto', 'featuredPhoto')
+            ->orderBy('ride.dateTime', 'desc')
+            ->groupBy('ride');
 
         $query = $builder->getQuery();
         $result = $query->getResult();
@@ -165,27 +152,28 @@ class PhotoRepository extends EntityRepository
     }
 
     /**
-     * @param City|null $city
-     * @return array
      * @deprecated
      */
     public function findRidesWithPhotoCounter(City $city = null)
     {
         $builder = $this->createQueryBuilder('photo');
 
-        $builder->select('photo');
-        $builder->addSelect('COUNT(photo)');
-
-        $builder->where($builder->expr()->eq('photo.deleted', 0));
+        $builder
+            ->select('photo')
+            ->addSelect('COUNT(photo)')
+            ->where($builder->expr()->eq('photo.deleted', ':deleted'))
+            ->setParameter('deleted', false);
 
         if ($city) {
-            $builder->andWhere($builder->expr()->eq('photo.city', $city->getId()));
+            $builder
+                ->andWhere($builder->expr()->eq('photo.city', ':city'))
+                ->setParameter('city', $city);
         }
 
-        $builder->groupBy('photo.ride');
-
-        $builder->join('photo.ride', 'ride');
-        $builder->orderBy('ride.dateTime', 'desc');
+        $builder
+            ->groupBy('photo.ride')
+            ->join('photo.ride', 'ride')
+            ->orderBy('ride.dateTime', 'desc');
 
         $query = $builder->getQuery();
         $result = $query->getResult();
@@ -213,101 +201,95 @@ class PhotoRepository extends EntityRepository
         ];
     }
 
-
-    public function buildQueryPhotosByRide(Ride $ride)
+    public function buildQueryPhotosByRide(Ride $ride): QueryBuilder
     {
-        $builder = $this->createQueryBuilder('photo');
+        $builder = $this->createQueryBuilder('p');
 
-        $builder->select('photo');
-
-        $builder->where($builder->expr()->eq('photo.ride', $ride->getId()));
-        $builder->andWhere($builder->expr()->eq('photo.deleted', 0));
-
-        $builder->addOrderBy('photo.dateTime', 'ASC');
+        $builder->select('p')
+            ->where($builder->expr()->eq('p.ride', ':ride'))
+            ->setParameter('ride', $ride)
+            ->andWhere($builder->expr()->eq('p.deleted', ':deleted'))
+            ->setParameter('deleted', false)
+            ->addOrderBy('p.dateTime', 'ASC');
 
         return $builder->getQuery();
     }
 
-    public function findPhotosByRide(Ride $ride)
+    public function findPhotosByRide(Ride $ride): array
     {
         $query = $this->buildQueryPhotosByRide($ride);
 
         return $query->getResult();
     }
 
-    public function buildQueryPhotosByEvent(Event $event)
+    public function countPhotosByRide(Ride $ride): int
     {
-        $builder = $this->createQueryBuilder('photo');
-
-        $builder->select('photo');
-
-        $builder->where($builder->expr()->eq('photo.event', $event->getId()));
-        $builder->andWhere($builder->expr()->eq('photo.deleted', 0));
-
-        $builder->addOrderBy('photo.dateTime', 'ASC');
-
-        return $builder->getQuery();
-    }
-
-    public function countPhotosByRide(Ride $ride)
-    {
-        $builder = $this->createQueryBuilder('photo');
+        $builder = $this->createQueryBuilder('p');
 
         $builder
-            ->select('COUNT(photo)')
-            ->where($builder->expr()->eq('photo.ride', $ride))
-            ->andWhere($builder->expr()->eq('photo.enabled', 1))
-            ->andWhere($builder->expr()->eq('photo.deleted', 0));
+            ->select('COUNT(p)')
+            ->where($builder->expr()->eq('p.ride', ':ride'))
+            ->setParameter('ride', $ride)
+            ->andWhere($builder->expr()->eq('p.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->eq('p.deleted', ':deleted'))
+            ->setParameter('deleted', false);
 
         $query = $builder->getQuery();
 
         return (int) $query->getSingleScalarResult();
     }
 
-    public function buildQueryPhotosByUserAndRide(User $user, Ride $ride)
+    public function buildQueryPhotosByUserAndRide(User $user, Ride $ride): Query
     {
-        $builder = $this->createQueryBuilder('photo');
+        $builder = $this->createQueryBuilder('p');
 
-        $builder->select('photo');
-
-        $builder->where($builder->expr()->eq('photo.ride', $ride->getId()));
-        $builder->andWhere($builder->expr()->eq('photo.user', $user->getId()));
-        $builder->andWhere($builder->expr()->eq('photo.deleted', 0));
-
-        $builder->addOrderBy('photo.dateTime', 'ASC');
+        $builder->select('p')
+        ->where($builder->expr()->eq('p.ride', ':ride'))
+        ->setParameter('ride', $ride)
+        ->andWhere($builder->expr()->eq('p.user', ':user'))
+        ->setParameter('user', $user)
+        ->andWhere($builder->expr()->eq('p.deleted', ':deleted'))
+        ->setParameter('deleted', false)
+        ->addOrderBy('p.dateTime', 'ASC');
 
         return $builder->getQuery();
     }
 
-    public function findPhotosByUserAndRide(User $user, Ride $ride)
+    public function findPhotosByUserAndRide(User $user, Ride $ride): array
     {
         $query = $this->buildQueryPhotosByUserAndRide($user, $ride);
 
         return $query->getResult();
     }
 
-    public function findSomePhotos($limit = 16, $maxViews = 15, City $city = null)
+    public function findSomePhotos($limit = 16, $maxViews = 15, City $city = null): array
     {
-        $builder = $this->createQueryBuilder('photo');
+        $builder = $this->createQueryBuilder('p');
 
-        $builder->select('photo');
-        $builder->addSelect('RAND() as HIDDEN rand');
-
-        $builder->where($builder->expr()->eq('photo.enabled', 1));
-        $builder->andWhere($builder->expr()->isNotNull('photo.ride'));
-        $builder->andWhere($builder->expr()->eq('photo.deleted', 0));
+        $builder
+            ->select('p')
+            ->addSelect('RAND() as HIDDEN rand')
+            ->where($builder->expr()->eq('p.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->eq('p.deleted', ':deleted'))
+            ->setParameter('deleted', false);
 
         if ($maxViews) {
-            $builder->andWhere($builder->expr()->lte('photo.views', $maxViews));
+            $builder
+                ->andWhere($builder->expr()->lte('p.views', ':maxViews'))
+                ->setParameter('maxViews', $maxViews);
         }
 
         if ($city) {
-            $builder->andWhere($builder->expr()->eq('photo.city', $city->getId()));
+            $builder
+                ->andWhere($builder->expr()->eq('p.city', ':city'))
+                ->setParameter('city', $city);
         }
 
-        $builder->addOrderBy('rand');
-
-        $builder->setMaxResults($limit);
+        $builder
+            ->addOrderBy('rand')
+            ->setMaxResults($limit);
 
         $query = $builder->getQuery();
 
@@ -319,29 +301,32 @@ class PhotoRepository extends EntityRepository
         \DateTime $endDateTime = null,
         $limit = null
     ) {
-        $builder = $this->createQueryBuilder('photo');
+        $builder = $this->createQueryBuilder('p');
 
-        $builder->select('photo');
-
-        $builder->where($builder->expr()->eq('photo.enabled', 1));
-        $builder->andWhere($builder->expr()->isNotNull('photo.ride'));
-        $builder->andWhere($builder->expr()->eq('photo.deleted', 0));
+        $builder
+            ->select('p')
+            ->where($builder->expr()->eq('p.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->eq('p.deleted', ':deleted'))
+            ->setParameter('deleted', false);
 
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gte('photo.creationDateTime',
-                '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder
+                ->andWhere($builder->expr()->gte('p.creationDateTime', ':startDateTime'))
+                ->setParameter('startDateTime', $startDateTime);
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lte('photo.creationDateTime',
-                '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder
+                ->andWhere($builder->expr()->lte('p.creationDateTime', ':endDateTime'))
+                ->setParameter('endDateTime', $endDateTime);
         }
 
         if ($limit) {
             $builder->setMaxResults($limit);
         }
 
-        $builder->addOrderBy('photo.creationDateTime', 'DESC');
+        $builder->addOrderBy('p.creationDateTime', 'DESC');
 
         $query = $builder->getQuery();
 
