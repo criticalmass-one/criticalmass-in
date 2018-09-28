@@ -20,14 +20,14 @@
                 <div class="col-md-6">
                     <dl>
                         <dt>Datum</dt>
-                        <dd>{{ currentRide.dateTime|date('d.m.Y', ride.city.timezone) }}</dd>
+                        <dd>{{ currentRide.dateTime|date('d.m.Y', currentRide.city.timezone) }}</dd>
                     </dl>
                 </div>
 
                 <div class="col-md-6">
                     <dl>
                         <dt>Uhrzeit</dt>
-                        <dd>{{ currentRide.dateTime|date('H:i', ride.city.timezone) }} Uhr</dd>
+                        <dd>{{ currentRide.dateTime|date('H:i', currentRide.city.timezone) }} Uhr</dd>
                     </dl>
                 </div>
             </div>
