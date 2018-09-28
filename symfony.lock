@@ -386,6 +386,15 @@
     "ruflin/elastica": {
         "version": "6.0.2"
     },
+    "sabre/uri": {
+        "version": "2.1.1"
+    },
+    "sabre/vobject": {
+        "version": "4.1.6"
+    },
+    "sabre/xml": {
+        "version": "2.1.0"
+    },
     "salavert/time-ago-in-words": {
         "version": "v1.7"
     },
