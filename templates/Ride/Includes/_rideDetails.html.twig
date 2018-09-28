@@ -7,10 +7,10 @@
             <div class="col-md-12">
                 <dl>
                     <dt>Datum</dt>
-                    <dd>{{ ride.dateTime|date('d.m.Y', 'Europe/Berlin') }}</dd>
+                    <dd>{{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}</dd>
                     <dt>Uhrzeit</dt>
                     {% if ride.hasTime %}
-                        <dd>{{ ride.dateTime|date('H:i', 'Europe/Berlin') }} Uhr</dd>
+                        <dd>{{ ride.dateTime|date('H:i', ride.city.timezone) }} Uhr</dd>
                     {% else %}
                         <dd>die Uhrzeit ist noch nicht bekannt</dd>
                     {% endif %}
