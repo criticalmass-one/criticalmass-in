@@ -22,7 +22,7 @@
         </div>
 
         {% for post in item.postList %}
-        <div class="row margin-top-medium">
+        <div class="row">
             <div class="col-md-4">
                 <a href="{{ objectPath(post.photo) }}">
                     <img src="{{ vich_uploader_asset(post.photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" class="img-responsive img-thumbnail" />
