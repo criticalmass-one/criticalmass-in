@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
-use App\Criticalmass\SeoPage\SeoPage;
+use App\Criticalmass\SeoPage\SeoPageInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class CalendarController extends AbstractController
 {
-    public function indexAction(Request $request, SeoPage $seoPage): Response
+    public function indexAction(Request $request, SeoPageInterface $seoPage): Response
     {
         $year = $request->query->getInt('year', (new \DateTime())->format('Y'));
         $month = $request->query->getInt('month', (new \DateTime())->format('m'));
