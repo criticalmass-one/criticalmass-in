@@ -3,12 +3,11 @@
 namespace App\Controller\Statistic;
 
 use App\Controller\AbstractController;
+use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Entity\City;
 use App\Entity\Region;
 use App\Entity\Ride;
-use App\Criticalmass\SeoPage\SeoPage;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class StatisticController extends AbstractController
@@ -16,7 +15,7 @@ class StatisticController extends AbstractController
     /**
      * @ParamConverter("city", class="App:City")
      */
-    public function citystatisticAction(SeoPage $seoPage, City $city): Response
+    public function citystatisticAction(SeoPageInterface $seoPage, City $city): Response
     {
         $rides = $this->getRideRepository()->findRidesForCity($city);
 
@@ -28,7 +27,7 @@ class StatisticController extends AbstractController
         ]);
     }
 
-    public function overviewAction(SeoPage $seoPage): Response
+    public function overviewAction(SeoPageInterface $seoPage): Response
     {
         /** @var Region $region */
         $region = $this->getRegionRepository()->find(3);

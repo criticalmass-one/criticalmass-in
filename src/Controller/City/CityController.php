@@ -4,14 +4,13 @@ namespace App\Controller\City;
 
 use App\Controller\AbstractController;
 use App\Entity\City;
-use App\Criticalmass\SeoPage\SeoPage;
+use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Event\View\ViewEvent;
 use FOS\ElasticaBundle\Finder\FinderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CityController extends AbstractController
 {
@@ -83,7 +82,7 @@ class CityController extends AbstractController
     /**
      * @ParamConverter("city", class="App:City")
      */
-    public function listGalleriesAction(Request $request, SeoPage $seoPage, City $city): Response
+    public function listGalleriesAction(Request $request, SeoPageInterface $seoPage, City $city): Response
     {
         $seoPage->setDescription('Übersicht über Fotos von Critical-Mass-Touren aus ' . $city->getCity());
 
@@ -98,7 +97,7 @@ class CityController extends AbstractController
     /**
      * @ParamConverter("city", class="App:City", isOptional=true)
      */
-    public function showAction(Request $request, SeoPage $seoPage, EventDispatcherInterface $eventDispatcher, City $city = null): Response
+    public function showAction(Request $request, SeoPageInterface $seoPage, EventDispatcherInterface $eventDispatcher, City $city = null): Response
     {
         if (!$city) {
             $citySlug = $request->get('citySlug');
