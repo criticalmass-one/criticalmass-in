@@ -3,9 +3,9 @@
 namespace App\Controller\Photo;
 
 use App\Controller\AbstractController;
+use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Entity\Photo;
 use App\Entity\Track;
-use App\Criticalmass\SeoPage\SeoPage;
 use App\Event\View\ViewEvent;
 use PHPExif\Exif;
 use PHPExif\Reader\Reader;
@@ -24,7 +24,7 @@ class PhotoController extends AbstractController
      * @ParamConverter("photo", class="App:Photo", options={"id" = "photoId"})
      */
     public function showAction(
-        SeoPage $seoPage,
+        SeoPageInterface $seoPage,
         EventDispatcherInterface $eventDispatcher,
         Photo $photo
     ): Response {
@@ -88,7 +88,7 @@ class PhotoController extends AbstractController
         return null;
     }
 
-    protected function setSeoMetaDetails(SeoPage $seoPage, Photo $photo): void
+    protected function setSeoMetaDetails(SeoPageInterface $seoPage, Photo $photo): void
     {
         $seoPage->setPreviewPhoto($photo);
 

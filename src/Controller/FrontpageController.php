@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Ride;
-use App\Criticalmass\SeoPage\SeoPage;
+use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Criticalmass\Timeline\CachedTimeline;
 use App\Criticalmass\Timeline\Timeline;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class FrontpageController extends AbstractController
 {
-    public function indexAction(SeoPage $seoPage, Timeline $cachedTimeline): Response
+    public function indexAction(SeoPageInterface $seoPage, Timeline $cachedTimeline): Response
     {
         $seoPage->setDescription('criticalmass.in sammelt Fotos, Tracks und Informationen über weltweite Critical-Mass-Touren');
 
