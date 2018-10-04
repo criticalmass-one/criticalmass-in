@@ -7,24 +7,29 @@
             <div class="col-md-12">
                 <dl>
                     <dt>Datum</dt>
-                    <dd>{{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}</dd>
+                    <dd itemprop="startDate" content="{{ ride.dateTime|date('Y-m-dTH:i') }}">{{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}</dd>
                     <dt>Uhrzeit</dt>
                     {% if ride.hasTime %}
                         <dd>{{ ride.dateTime|date('H:i', ride.city.timezone) }} Uhr</dd>
                     {% else %}
                         <dd>die Uhrzeit ist noch nicht bekannt</dd>
                     {% endif %}
+                    <div itemprop="location" itemscope itemtype="http://schema.org/Place">
                     <dt>Treffpunkt</dt>
                     {% if ride.hasLocation() and ride.location %}
                         {% if location %}
-                            <dd>
+                            <dd itemprop="name">
                                 <a href="{{ objectPath(ride, 'caldera_criticalmass_location_ride') }}">
                                     {{ ride.location }}
                                 </a>
                             </dd>
                         {% else %}
-                            <dd>{{ ride.location }}</dd>
+                            <dd itemprop="name">{{ ride.location }}</dd>
                         {% endif %}
+                        <div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
+                            <meta itemprop="latitude" content="{{ ride.latitude }}" />
+                            <meta itemprop="longitude" content="{{ ride.longitude }}" />
+                        </div>
                     {% else %}
                         <dd>
                             {% if app.user %}
@@ -38,6 +43,7 @@
                             {% endif %}
                         </dd>
                     {% endif %}
+                    </div>
                     {% if weatherForecast %}
                         <dt>Wetter</dt>
                         <dd>{{ weatherForecast }}</dd>
