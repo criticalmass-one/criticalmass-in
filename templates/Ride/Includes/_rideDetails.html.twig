@@ -16,34 +16,42 @@
                         <dd>die Uhrzeit ist noch nicht bekannt</dd>
                     {% endif %}
                     <div itemprop="location" itemscope itemtype="http://schema.org/Place">
-                    <dt>Treffpunkt</dt>
-                    {% if ride.hasLocation() and ride.location %}
-                        {% if location %}
-                            <dd itemprop="name">
-                                <a href="{{ objectPath(ride, 'caldera_criticalmass_location_ride') }}">
-                                    {{ ride.location }}
-                                </a>
-                            </dd>
-                        {% else %}
-                            <dd itemprop="name">{{ ride.location }}</dd>
-                        {% endif %}
-                        <div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
-                            <meta itemprop="latitude" content="{{ ride.latitude }}" />
-                            <meta itemprop="longitude" content="{{ ride.longitude }}" />
-                        </div>
-                    {% else %}
-                        <dd>
-                            {% if app.user %}
-                            <a href="{{ objectPath(ride, 'caldera_criticalmass_ride_edit') }}">
-                                noch nicht bekannt
-                            </a>
+                        <dt>Treffpunkt</dt>
+                        {% if ride.hasLocation() and ride.location %}
+                            {% if location %}
+                                <dd itemprop="name">
+                                    <a href="{{ objectPath(ride, 'caldera_criticalmass_location_ride') }}">
+                                        {{ ride.location }}
+                                    </a>
+                                </dd>
                             {% else %}
-                            <a href="#" class="modal-hint" data-modal-hint-title="{{ 'hint_modal.ride.location_edit_link.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.ride.location_edit_link.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
-                                noch nicht bekannt
-                            </a>
+                                <dd itemprop="name">{{ ride.location }}</dd>
                             {% endif %}
-                        </dd>
-                    {% endif %}
+                            <div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
+                                <meta itemprop="latitude" content="{{ ride.latitude }}" />
+                                <meta itemprop="longitude" content="{{ ride.longitude }}" />
+                            </div>
+                            {% set location = nominatim_location(ride) %}
+                            {% if location %}
+                                <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+                                    <span itemprop="streetAddress">{% if location.streetName %}{{ location.streetName }}{% elseif location.subLocality %}{{ location.subLocality }}{% endif %}</span>
+                                    <span itemprop="addressLocality">{{ location.locality }}</span>
+                                    <span itemprop="postalCode">{{ location.postalCode }}</span>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <dd>
+                                {% if app.user %}
+                                    <a href="{{ objectPath(ride, 'caldera_criticalmass_ride_edit') }}">
+                                        noch nicht bekannt
+                                    </a>
+                                {% else %}
+                                    <a href="#" class="modal-hint" data-modal-hint-title="{{ 'hint_modal.ride.location_edit_link.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.ride.location_edit_link.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
+                                        noch nicht bekannt
+                                    </a>
+                                {% endif %}
+                            </dd>
+                        {% endif %}
                     </div>
                     {% if weatherForecast %}
                         <dt>Wetter</dt>
@@ -52,14 +60,15 @@
                 </dl>
 
                 {% if ride.hasTime %}
-                <p class="text-center">
-                    <a href="{{ objectPath(ride, 'caldera_criticalmass_ride_ical') }}" class="btn btn-success">
-                        <i class="fa fa-calendar"></i>
-                        Kalendereintrag merken
-                    </a>
-                </p>
+                    <p class="text-center">
+                        <a href="{{ objectPath(ride, 'caldera_criticalmass_ride_ical') }}" class="btn btn-success">
+                            <i class="fa fa-calendar"></i>
+                            Kalendereintrag merken
+                        </a>
+                    </p>
                 {% endif %}
             </div>
         </div>
     </div>
 </div>
+{{ render(controller('App\\Controller\\Ride\\RideTabsController::renderDetailsTabAction', { 'ride': ride } )) }}

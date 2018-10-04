@@ -51,15 +51,15 @@
                 </li>
                 {% if pastRide %}
                     {% if feature_enabled('photos') %}
-                    <li role="presentation">
-                        <a href="{{ objectPath(ride, 'caldera_criticalmass_photo_ride_list') }}">
-                            <i class="fa fa-camera"></i>
-                            Galerie
-                            <span class="badge">
+                        <li role="presentation">
+                            <a href="{{ objectPath(ride, 'caldera_criticalmass_photo_ride_list') }}">
+                                <i class="fa fa-camera"></i>
+                                Galerie
+                                <span class="badge">
                             {{ photos|length }}
                         </span>
-                        </a>
-                    </li>
+                            </a>
+                        </li>
                     {% endif %}
                     <li role="presentation">
                         <a href="#tracks" aria-controls="profile" role="tab" data-toggle="tab">
