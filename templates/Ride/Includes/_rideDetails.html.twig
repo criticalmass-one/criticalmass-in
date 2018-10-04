@@ -8,6 +8,7 @@
                 <dl>
                     <dt>Datum</dt>
                     <dd itemprop="startDate" content="{{ ride.dateTime|date('Y-m-dTH:i') }}">{{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}</dd>
+                    <meta itemprop="endDate" content="{{ date_time_add(ride.dateTime, 'PT2H')|date('Y-m-dTH:i') }}" />
                     <dt>Uhrzeit</dt>
                     {% if ride.hasTime %}
                         <dd>{{ ride.dateTime|date('H:i', ride.city.timezone) }} Uhr</dd>
