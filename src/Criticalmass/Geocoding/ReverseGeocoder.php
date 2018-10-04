@@ -41,7 +41,11 @@ class ReverseGeocoder implements ReverseGeocoderInterface
             return null;
         }
 
-        $result = $this->geocoder->reverseQuery(ReverseQuery::fromCoordinates($geocodeable->getLatitude(), $geocodeable->getLongitude()));
+        try {
+            $result = $this->geocoder->reverseQuery(ReverseQuery::fromCoordinates($geocodeable->getLatitude(), $geocodeable->getLongitude()));
+        } catch (\Exception $exception) {
+            return null;
+        }
 
         $firstResult = $result->first();
 
