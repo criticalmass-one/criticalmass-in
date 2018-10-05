@@ -46,7 +46,8 @@ class AssignRidesCommand extends Command
             ->addOption('from', null, InputOption::VALUE_OPTIONAL, 'DateTime of period to start')
             ->addOption('until', null, InputOption::VALUE_OPTIONAL, 'DateTime of period to end')
             ->addOption('ignore', null, InputOption::VALUE_NONE, 'Ignore rides with cycle')
-            ->addOption('ignoreCycle', null, InputOption::VALUE_REQUIRED, 'Cycle id to ignore');
+            ->addOption('ignoreCycle', null, InputOption::VALUE_REQUIRED, 'Cycle id to ignore')
+            ->addOption('defaultCycle', null, InputOption::VALUE_REQUIRED, 'Default cycle id');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): void
@@ -61,7 +62,12 @@ class AssignRidesCommand extends Command
         $output->writeln(sprintf('Found <info>%d</info> rides for city <comment>%s</comment>', count($rideList), $city->getCity()));
 
         $questionHelper = $this->getHelper('question');
-        $question = new Question('Please submit cycle id or press enter to proceed:', '');
+
+        if ($defaultCycleId = $input->getOption('defaultCycle')) {
+            $question = new Question(sprintf('Please submit cycle id or press enter to proceed: <info>[%d]</info> ', $defaultCycleId));
+        } else {
+            $question = new Question(sprintf('Please submit cycle id or press enter to proceed: '));
+        }
 
         /** @var Ride $ride */
         foreach ($rideList as $ride) {
