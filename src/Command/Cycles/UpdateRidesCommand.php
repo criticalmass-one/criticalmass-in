@@ -56,11 +56,13 @@ class UpdateRidesCommand extends Command
 
                 continue;
             }
-            
+
             $this->printTable($output, $result);
 
             $this->transferProperties($input, $output, $result);
         }
+
+        $this->registry->getManager()->flush();
     }
 
     protected function getCityBySlug(string $slug): City
