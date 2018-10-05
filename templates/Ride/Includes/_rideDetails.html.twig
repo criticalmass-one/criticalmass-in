@@ -34,9 +34,9 @@
                             {% set location = nominatim_location(ride) %}
                             {% if location %}
                                 <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-                                    <span itemprop="streetAddress">{% if location.streetName %}{{ location.streetName }}{% elseif location.subLocality %}{{ location.subLocality }}{% endif %}</span>
-                                    <span itemprop="addressLocality">{{ location.locality }}</span>
-                                    <span itemprop="postalCode">{{ location.postalCode }}</span>
+                                    <meta itemprop="streetAddress" content="{% if location.streetName %}{{ location.streetName }}{% elseif location.subLocality %}{{ location.subLocality }}{% endif %}" />
+                                    <meta itemprop="addressLocality" content="{{ location.locality }}" />
+                                    <meta itemprop="postalCode" content="{{ location.postalCode }}" />
                                 </div>
                             {% endif %}
                         {% else %}
