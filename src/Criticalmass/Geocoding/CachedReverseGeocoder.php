@@ -14,6 +14,9 @@ class CachedReverseGeocoder extends ReverseGeocoder
     /** @var AbstractAdapter $cache */
     protected $cache = null;
 
+    /** @var int */
+    protected const LIFETIME = 2678400; // 60 * 60 * 24 * 31 = 2678400
+
     public function __construct(LocationBuilderInterface $locationBuilder)
     {
         $redisConnection = RedisAdapter::createConnection('redis://localhost');
@@ -29,34 +32,20 @@ class CachedReverseGeocoder extends ReverseGeocoder
 
     public function query(ReverseGeocodeable $geocodeable): ?Location
     {
-        if (!$geocodeable->getLatitude() || !$geocodeable->getLongitude()) {
-            return null;
+        if ($resultLocation = $this->getFromCache($geocodeable)) {
+            return $resultLocation;
         }
 
-        try {
-            $result = $this->geocoder->reverseQuery(ReverseQuery::fromCoordinates($geocodeable->getLatitude(),
-                $geocodeable->getLongitude()));
-        } catch (\Exception $exception) {
-            return null;
-        }
-
-        $firstResult = $result->first();
-
-        return $firstResult;
-    }
-
-    public function reverseGeocode(ReverseGeocodeable $geocodeable): ReverseGeocodeable
-    {
-        $resultLocation = $this->query($geocodeable);
+        $resultLocation = parent::query($geocodeable);
 
         if ($resultLocation) {
-            $geocodeable = $this->locationBuilder->build($geocodeable, $resultLocation);
+            $this->saveToCache($geocodeable, $resultLocation);
         }
 
-        return $geocodeable;
+        return $resultLocation;
     }
 
-    public function getFromCache(ReverseGeocodeable $geocodeable): ?Location
+    protected function getFromCache(ReverseGeocodeable $geocodeable): ?Location
     {
         $nominatimCache = $this->getCacheItem($geocodeable);
 
@@ -67,11 +56,15 @@ class CachedReverseGeocoder extends ReverseGeocoder
         return null;
     }
 
-    public function saveToCache(ReverseGeocodeable $geocodeable, Location $location): void
+    protected function saveToCache(ReverseGeocodeable $geocodeable, Location $location): void
     {
         $nominatimCache = $this->getCacheItem($geocodeable);
 
-        $nominatimCache->set($location);
+        $nominatimCache
+            ->set($location)
+            ->expiresAfter(self::LIFETIME);
+
+        $this->cache->save($nominatimCache);
     }
 
     protected function getCacheItem(ReverseGeocodeable $geocodeable): CacheItem
