@@ -40,7 +40,7 @@ class UpdateRidesCommand extends Command
         $this
             ->setName('criticalmass:cycles:update')
             ->setDescription('Compare city cycles to existing rides')
-            ->addArgument('citySlug', InputArgument::REQUIRED, 'City to analyze');
+            ->addArgument('citySlug', InputArgument::REQUIRED, 'City to update');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): void
@@ -51,7 +51,7 @@ class UpdateRidesCommand extends Command
 
         /** @var CycleAnalyzerModel $result */
         foreach ($this->cycleAnalyzer->getResultList() as $result) {
-            if (!$result->getCycle()) {
+            if (!$result->getRide()->getCycle()) {
                 $output->writeln(sprintf('Ride <info>%d</info> (<comment>%s</comment>) has no assigned cycle, skipping', $result->getRide()->getId(), $result->getRide()->getDateTime()->format('Y-m-d H:i')));
 
                 continue;
@@ -85,7 +85,7 @@ class UpdateRidesCommand extends Command
 
         $table->addRow([
             $ride->getId(),
-            $result->getCycle()->getId(),
+            $ride->getCycle()->getId(),
             $generatedRide->getDateTime()->setTimezone($timezone)->format('d.m.Y H:i'),
             $ride->getDateTime()->setTimezone($timezone)->format('d.m.Y H:i'),
             sprintf('%s (%f, %f)', $generatedRide->getLocation(), $generatedRide->getLatitude(), $generatedRide->getLongitude()),
