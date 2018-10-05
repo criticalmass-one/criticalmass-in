@@ -44,7 +44,9 @@ class AssignRidesCommand extends Command
             ->setDescription('Assign existing rides to city cycles')
             ->addArgument('citySlug', InputArgument::REQUIRED, 'City to analyze')
             ->addOption('from', null, InputOption::VALUE_OPTIONAL, 'DateTime of period to start')
-            ->addOption('until', null, InputOption::VALUE_OPTIONAL, 'DateTime of period to end');
+            ->addOption('until', null, InputOption::VALUE_OPTIONAL, 'DateTime of period to end')
+            ->addOption('ignore', null, InputOption::VALUE_NONE, 'Ignore rides with cycle')
+            ->addOption('ignoreCycle', null, InputOption::VALUE_REQUIRED, 'Cycle id to ignore');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): void
@@ -52,6 +54,7 @@ class AssignRidesCommand extends Command
         $city = $this->getCityBySlug($input->getArgument('citySlug'));
         $fromDateTime = $input->getOption('from') ? new \DateTime($input->getOption('from')) : null;
         $untilDateTime = $input->getOption('until') ? new \DateTime($input->getOption('until')) : null;
+        $ignoreCycleId = $input->getOption('ignoreCycle');
 
         $rideList = $this->registry->getRepository(Ride::class)->findRides($fromDateTime, $untilDateTime, $city);
 
@@ -62,6 +65,14 @@ class AssignRidesCommand extends Command
 
         /** @var Ride $ride */
         foreach ($rideList as $ride) {
+            if ($ride->getCycle() && $input->hasOption('ignore')) {
+                continue;
+            }
+
+            if ($ride->getCycle() && $ride->getCycle()->getId() === $ignoreCycleId) {
+                continue;
+            }
+
             if ($ride->getCycle()) {
                 $output->writeln(sprintf('Ride <info>%d</info> at <comment>%s</comment> is assigned to cycle <info>%d</info>.', $ride->getId(), $ride->getDateTime()->format('Y-m-d H:i:s'), $ride->getCycle()->getId()));
             } else {
