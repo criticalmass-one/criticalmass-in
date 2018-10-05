@@ -7,6 +7,7 @@ use App\Entity\CitySlug;
 use App\Criticalmass\Cycles\Analyzer\ComparisonResultInterface;
 use App\Criticalmass\Cycles\Analyzer\CycleAnalyzerInterface;
 use App\Criticalmass\Cycles\Analyzer\CycleAnalyzerModel;
+use App\Entity\Ride;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
@@ -22,6 +23,9 @@ class UpdateRidesCommand extends Command
 
     /** @var RegistryInterface $registry */
     protected $registry;
+
+    /** @var array $propertyList */
+    protected $propertyList = ['skip', 'all', 'date', 'time', 'dateTime', 'location', 'latitude', 'longitude', 'coord'];
 
     public function __construct($name = null, CycleAnalyzerInterface $cycleAnalyzer, RegistryInterface $registry)
     {
@@ -41,15 +45,9 @@ class UpdateRidesCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        $timezone = new \DateTimeZone('UTC');
-
         $city = $this->getCityBySlug($input->getArgument('citySlug'));
 
         $this->cycleAnalyzer->setCity($city)->analyze();
-
-        $questionHelper = $this->getHelper('question');
-
-        $propertyList = ['skip', 'all', 'date', 'time', 'dateTime', 'location', 'latitude', 'longitude', 'coord'];
 
         /** @var CycleAnalyzerModel $result */
         foreach ($this->cycleAnalyzer->getResultList() as $result) {
@@ -58,47 +56,10 @@ class UpdateRidesCommand extends Command
 
                 continue;
             }
+            
+            $this->printTable($output, $result);
 
-            $ride = $result->getRide();
-            $generatedRide = $result->getGeneratedRide();
-
-            $table = new Table($output);
-
-            $table->setHeaders(['Ride Id', 'Cycle Id', 'Computed DateTime', 'Actual DateTime', 'Computed Location', 'Actual Location']);
-
-            $table->addRow([
-                $ride->getId(),
-                $result->getCycle()->getId(),
-                $generatedRide->getDateTime()->setTimezone($timezone)->format('d.m.Y H:i'),
-                $ride->getDateTime()->setTimezone($timezone)->format('d.m.Y H:i'),
-                sprintf('%s (%f, %f)', $result->getGeneratedRide()->getLocation(), $result->getGeneratedRide()->getLatitude(), $result->getGeneratedRide()->getLongitude()),
-                sprintf('%s (%f, %f)', $result->getRide()->getLocation(), $result->getRide()->getLatitude(), $result->getRide()->getLongitude()),
-                $this->compare($result),
-            ]);
-
-            $table->render();
-
-            $question = new ChoiceQuestion('Please select which properties to transfer from generated to actual ride', $propertyList);
-            $question->setMultiselect(true);
-
-            $selectedProperties = $questionHelper->ask($input, $output, $question);
-
-            if (in_array('skip', $selectedProperties)) {
-                continue;
-            }
-
-            if (in_array('all', $selectedProperties)) {
-                $selectedProperties = array_slice($propertyList, 2, count($propertyList) - 2);
-            }
-
-            foreach ($selectedProperties as $property) {
-                $setMethodName = sprintf('set%s', ucfirst($property));
-                $getMethodName = sprintf('get%s', ucfirst($property));
-
-                $ride->$setMethodName($generatedRide->$getMethodName());
-            }
-
-            $output->writeln(sprintf('Updated following properties at ride entity <info>%d</info>: <comment>%s</comment>', $ride->getId(), implode(', ', $selectedProperties)));
+            $this->transferProperties($input, $output, $result);
         }
     }
 
@@ -108,6 +69,59 @@ class UpdateRidesCommand extends Command
         $citySlug = $this->registry->getRepository(CitySlug::class)->findOneBySlug($slug);
 
         return $citySlug->getCity();
+    }
+
+    protected function printTable(OutputInterface $output, CycleAnalyzerModel $result): void
+    {
+        $ride = $result->getRide();
+        $generatedRide = $result->getGeneratedRide();
+
+        $timezone = new \DateTimeZone('UTC');
+
+        $table = new Table($output);
+        $table->setHeaders(['Ride Id', 'Cycle Id', 'Computed DateTime', 'Actual DateTime', 'Computed Location', 'Actual Location']);
+
+        $table->addRow([
+            $ride->getId(),
+            $result->getCycle()->getId(),
+            $generatedRide->getDateTime()->setTimezone($timezone)->format('d.m.Y H:i'),
+            $ride->getDateTime()->setTimezone($timezone)->format('d.m.Y H:i'),
+            sprintf('%s (%f, %f)', $generatedRide->getLocation(), $generatedRide->getLatitude(), $generatedRide->getLongitude()),
+            sprintf('%s (%f, %f)', $ride->getLocation(), $ride->getLatitude(), $ride->getLongitude()),
+            $this->compare($result),
+        ]);
+
+        $table->render();
+    }
+
+    protected function transferProperties(InputInterface $input, OutputInterface $output, CycleAnalyzerModel $result): Ride
+    {
+        $ride = $result->getRide();
+        $generatedRide = $result->getGeneratedRide();
+
+        $question = new ChoiceQuestion('Please select which properties to transfer from generated to actual ride', $this->propertyList);
+        $question->setMultiselect(true);
+
+        $selectedProperties = $this->getHelper('question')->ask($input, $output, $question);
+
+        if (in_array('skip', $selectedProperties)) {
+            return $ride;
+        }
+
+        if (in_array('all', $selectedProperties)) {
+            $selectedProperties = array_slice($this->propertyList, 2, count($this->propertyList) - 2);
+        }
+
+        foreach ($selectedProperties as $property) {
+            $setMethodName = sprintf('set%s', ucfirst($property));
+            $getMethodName = sprintf('get%s', ucfirst($property));
+
+            $ride->$setMethodName($generatedRide->$getMethodName());
+        }
+
+        $output->writeln(sprintf('Updated following properties at ride entity <info>%d</info>: <comment>%s</comment>', $ride->getId(), implode(', ', $selectedProperties)));
+
+        return $ride;
     }
 
     protected function compare(CycleAnalyzerModel $model): string
