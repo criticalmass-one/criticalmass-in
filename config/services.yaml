@@ -91,6 +91,9 @@ services:
     Sonata\SeoBundle\Seo\SeoPageInterface:
         alias: sonata.seo.page.default
 
+    App\Criticalmass\Geocoding\ReverseGeocoderInterface:
+        alias: App\Criticalmass\Geocoding\CachedReverseGeocoder
+
     App\Request\ParamConverter\RideParamConverter:
         tags:
             - { name: request.param_converter, priority: 0, converter: ride_converter }
