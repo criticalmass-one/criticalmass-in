@@ -429,6 +429,19 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->longitude;
     }
 
+    public function setCoord(Coord $coord): Ride
+    {
+        $this->latitude = $coord->getLatitude();
+        $this->longitude = $coord->getLongitude();
+
+        return $this;
+    }
+
+    public function getCoord(): Coord
+    {
+        return new Coord($this->latitude, $this->longitude);
+    }
+
     public function setSlug(string $slug = null): Ride
     {
         $this->slug = $slug;
@@ -740,12 +753,6 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         }
 
         return $this->latitude . ',' . $this->longitude;
-    }
-
-    public function getCoord(): ?Coord
-    {
-        return null;
-        return new Coord($this->latitude, $this->longitude);
     }
 
     public function getCreatedAt(): \DateTime

@@ -49,6 +49,8 @@ class UpdateRidesCommand extends Command
 
         $questionHelper = $this->getHelper('question');
 
+        $propertyList = ['skip', 'all', 'date', 'time', 'dateTime', 'location', 'latitude', 'longitude', 'coord'];
+
         /** @var CycleAnalyzerModel $result */
         foreach ($this->cycleAnalyzer->getResultList() as $result) {
             if (!$result->getCycle()) {
@@ -59,8 +61,6 @@ class UpdateRidesCommand extends Command
 
             $ride = $result->getRide();
             $generatedRide = $result->getGeneratedRide();
-
-
 
             $table = new Table($output);
 
@@ -78,23 +78,27 @@ class UpdateRidesCommand extends Command
 
             $table->render();
 
-            $question = new ChoiceQuestion('Please select which properties to transfer from generated to actual ride', ['skip', 'date', 'time', 'dateTime', 'location', 'latitude', 'longitude', 'coords']);
+            $question = new ChoiceQuestion('Please select which properties to transfer from generated to actual ride', $propertyList);
             $question->setMultiselect(true);
 
-            $properties = $questionHelper->ask($input, $output, $question);
+            $selectedProperties = $questionHelper->ask($input, $output, $question);
 
-            if (in_array('skip', $properties)) {
+            if (in_array('skip', $selectedProperties)) {
                 continue;
             }
 
-            foreach ($properties as $property) {
+            if (in_array('all', $selectedProperties)) {
+                $selectedProperties = array_slice($propertyList, 2, count($propertyList) - 2);
+            }
+
+            foreach ($selectedProperties as $property) {
                 $setMethodName = sprintf('set%s', ucfirst($property));
                 $getMethodName = sprintf('get%s', ucfirst($property));
 
                 $ride->$setMethodName($generatedRide->$getMethodName());
             }
 
-            $output->writeln(sprintf('Updated following properties at ride entity <info>%d</info>: <comment>%s</comment>', $ride->getId(), implode(', ', $properties)));
+            $output->writeln(sprintf('Updated following properties at ride entity <info>%d</info>: <comment>%s</comment>', $ride->getId(), implode(', ', $selectedProperties)));
         }
     }
 
