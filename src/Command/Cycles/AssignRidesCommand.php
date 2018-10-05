@@ -14,6 +14,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 
@@ -41,18 +42,18 @@ class AssignRidesCommand extends Command
         $this
             ->setName('criticalmass:cycles:assign')
             ->setDescription('Assign existing rides to city cycles')
-            ->addArgument(
-                'citySlug',
-                InputArgument::REQUIRED,
-                'City to analyze'
-            );
+            ->addArgument('citySlug', InputArgument::REQUIRED, 'City to analyze')
+            ->addOption('from', null, InputOption::VALUE_OPTIONAL, 'DateTime of period to start')
+            ->addOption('until', null, InputOption::VALUE_OPTIONAL, 'DateTime of period to end');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $city = $this->getCityBySlug($input->getArgument('citySlug'));
+        $fromDateTime = $input->getOption('from') ? new \DateTime($input->getOption('from')) : null;
+        $untilDateTime = $input->getOption('until') ? new \DateTime($input->getOption('until')) : null;
 
-        $rideList = $this->registry->getRepository(Ride::class)->findRides(null, null, $city);
+        $rideList = $this->registry->getRepository(Ride::class)->findRides($fromDateTime, $untilDateTime, $city);
 
         $output->writeln(sprintf('Found <info>%d</info> rides for city <comment>%s</comment>', count($rideList), $city->getCity()));
 
