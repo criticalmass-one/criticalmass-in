@@ -51,24 +51,26 @@ class UpdateRidesCommand extends Command
 
         /** @var CycleAnalyzerModel $result */
         foreach ($this->cycleAnalyzer->getResultList() as $result) {
-            $ride = $result->getRide();
-            $generatedRide = $result->getGeneratedRide();
-
-            if (!$ride->getCycle()) {
-                $output->writeln(sprintf('Ride <info>%d</info> (<comment>%s</comment>) has no assigned cycle, skipping', $ride->getId(), $ride->getDateTime()->format('Y-m-d H:i')));
+            if (!$result->getCycle()) {
+                $output->writeln(sprintf('Ride <info>%d</info> (<comment>%s</comment>) has no assigned cycle, skipping', $result->getRide()->getId(), $result->getRide()->getDateTime()->format('Y-m-d H:i')));
 
                 continue;
             }
+
+            $ride = $result->getRide();
+            $generatedRide = $result->getGeneratedRide();
+
+
 
             $table = new Table($output);
 
             $table->setHeaders(['Ride Id', 'Cycle Id', 'Computed DateTime', 'Actual DateTime', 'Computed Location', 'Actual Location']);
 
             $table->addRow([
-                $result->getRide()->getId(),
-                $result->getCycle() ? $result->getCycle()->getId() : '',
-                $result->getGeneratedRide() ? $result->getGeneratedRide()->getDateTime()->setTimezone($timezone)->format('d.m.Y H:i') : '',
-                $result->getRide()->getDateTime()->setTimezone($timezone)->format('d.m.Y H:i'),
+                $ride->getId(),
+                $result->getCycle()->getId(),
+                $generatedRide->getDateTime()->setTimezone($timezone)->format('d.m.Y H:i'),
+                $ride->getDateTime()->setTimezone($timezone)->format('d.m.Y H:i'),
                 sprintf('%s (%f, %f)', $result->getGeneratedRide()->getLocation(), $result->getGeneratedRide()->getLatitude(), $result->getGeneratedRide()->getLongitude()),
                 sprintf('%s (%f, %f)', $result->getRide()->getLocation(), $result->getRide()->getLatitude(), $result->getRide()->getLongitude()),
                 $this->compare($result),
@@ -84,7 +86,7 @@ class UpdateRidesCommand extends Command
             if (in_array('skip', $properties)) {
                 continue;
             }
-            
+
             foreach ($properties as $property) {
                 $setMethodName = sprintf('set%s', ucfirst($property));
                 $getMethodName = sprintf('get%s', ucfirst($property));
