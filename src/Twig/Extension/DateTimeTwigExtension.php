@@ -17,6 +17,8 @@ class DateTimeTwigExtension extends \Twig_Extension
     {
         $dateInterval = new \DateInterval($dateIntervalSpec);
 
+        $dateTime = clone $dateTime;
+        
         return $dateTime->add($dateInterval);
     }
 
