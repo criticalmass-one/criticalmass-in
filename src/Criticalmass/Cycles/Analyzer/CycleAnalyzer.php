@@ -94,7 +94,9 @@ class CycleAnalyzer implements CycleAnalyzerInterface
     {
         $month = new \DateInterval('P1M');
 
-        for ($current = $this->startDateTime; $current <= $this->endDateTime; $current->add($month)) {
+        $current = $this->startDateTime;
+
+        do {
             $rideList = $this->rideCalculator
                 ->reset()
                 ->setMonth((int)$current->format('m'))
@@ -104,7 +106,9 @@ class CycleAnalyzer implements CycleAnalyzerInterface
                 ->getRideList();
 
             $this->simulatedRideList = array_merge($this->simulatedRideList, $rideList);
-        }
+
+            $current->add($month);
+        } while ($current->format('Y-m') < $this->endDateTime->format('Y-m'));
 
         return $this;
     }
