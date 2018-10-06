@@ -97,9 +97,9 @@ class UpdateRidesCommand extends Command
         $table->addRow([
             $ride->getId(),
             $ride->getCycle()->getId(),
-            $generatedRide->getDateTime()->setTimezone($timezone)->format('d.m.Y H:i'),
+            $generatedRide ? $generatedRide->getDateTime()->setTimezone($timezone)->format('d.m.Y H:i') : '',
             $ride->getDateTime()->setTimezone($timezone)->format('d.m.Y H:i'),
-            sprintf('%s (%f, %f)', $generatedRide->getLocation(), $generatedRide->getLatitude(), $generatedRide->getLongitude()),
+            $generatedRide ? sprintf('%s (%f, %f)', $generatedRide->getLocation(), $generatedRide->getLatitude(), $generatedRide->getLongitude()) : '',
             sprintf('%s (%f, %f)', $ride->getLocation(), $ride->getLatitude(), $ride->getLongitude()),
             $this->compare($result),
         ]);
