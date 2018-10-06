@@ -13,6 +13,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 
@@ -40,14 +41,24 @@ class UpdateRidesCommand extends Command
         $this
             ->setName('criticalmass:cycles:update')
             ->setDescription('Compare city cycles to existing rides')
-            ->addArgument('citySlug', InputArgument::REQUIRED, 'City to update');
+            ->addArgument('citySlug', InputArgument::REQUIRED, 'City to update')
+            ->addOption('from', null, InputOption::VALUE_OPTIONAL, 'DateTime of period to start')
+            ->addOption('until', null, InputOption::VALUE_OPTIONAL, 'DateTime of period to end');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $city = $this->getCityBySlug($input->getArgument('citySlug'));
 
-        $this->cycleAnalyzer->setCity($city)->analyze();
+        if ($input->getOption('from') && $input->getOption('until')) {
+            $this->cycleAnalyzer
+                ->setStartDateTime(new \DateTime($input->getOption('from')))
+                ->setEndDateTime(new \DateTime($input->getOption('until')));
+        }
+
+        $this->cycleAnalyzer
+            ->setCity($city)
+            ->analyze();
 
         /** @var CycleAnalyzerModel $result */
         foreach ($this->cycleAnalyzer->getResultList() as $result) {
@@ -86,9 +97,9 @@ class UpdateRidesCommand extends Command
         $table->addRow([
             $ride->getId(),
             $ride->getCycle()->getId(),
-            $generatedRide->getDateTime()->setTimezone($timezone)->format('d.m.Y H:i'),
+            $generatedRide ? $generatedRide->getDateTime()->setTimezone($timezone)->format('d.m.Y H:i') : '',
             $ride->getDateTime()->setTimezone($timezone)->format('d.m.Y H:i'),
-            sprintf('%s (%f, %f)', $generatedRide->getLocation(), $generatedRide->getLatitude(), $generatedRide->getLongitude()),
+            $generatedRide ? sprintf('%s (%f, %f)', $generatedRide->getLocation(), $generatedRide->getLatitude(), $generatedRide->getLongitude()) : '',
             sprintf('%s (%f, %f)', $ride->getLocation(), $ride->getLatitude(), $ride->getLongitude()),
             $this->compare($result),
         ]);
