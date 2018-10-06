@@ -29,10 +29,10 @@ class CycleAnalyzer implements CycleAnalyzerInterface
     protected $rideCalculator;
 
     /** @var \DateTime $startDateTime */
-    protected $startDateTime;
+    protected $startDateTime = null;
 
     /** @var \DateTime $endDateTime */
-    protected $endDateTime;
+    protected $endDateTime = null;
 
     /** @var CycleAnalyzerModelFactoryInterface $analyzerModelFactory */
     protected $analyzerModelFactory;
@@ -82,10 +82,15 @@ class CycleAnalyzer implements CycleAnalyzerInterface
 
     protected function fetchRides(): CycleAnalyzer
     {
-        $this->rideList = $this->registry->getRepository(Ride::class)->findRidesForCity($this->city);
+        $this->rideList = $this->registry->getRepository(Ride::class)->findRides($this->startDateTime, $this->endDateTime, $this->city);
 
-        $this->endDateTime = $this->rideList[0]->getDateTime();
-        $this->startDateTime = $this->rideList[count($this->rideList) - 1]->getDateTime();
+        if (!$this->endDateTime) {
+            $this->endDateTime = $this->rideList[0]->getDateTime();
+        }
+
+        if (!$this->startDateTime) {
+            $this->startDateTime = $this->rideList[count($this->rideList) - 1]->getDateTime();
+        }
 
         return $this;
     }
@@ -116,5 +121,19 @@ class CycleAnalyzer implements CycleAnalyzerInterface
     public function getResultList(): array
     {
         return $this->analyzerModelFactory->getResultList();
+    }
+
+    public function setStartDateTime(\DateTime $dateTime): CycleAnalyzerInterface
+    {
+        $this->startDateTime = $dateTime;
+
+        return $this;
+    }
+
+    public function setEndDateTime(\DateTime $dateTime): CycleAnalyzerInterface
+    {
+        $this->endDateTime = $dateTime;
+
+        return $this;
     }
 }
