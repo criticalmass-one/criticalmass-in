@@ -66,7 +66,7 @@
                                 <ul class="list-unstyled">
                                     {% for cycle in city.cycles %}
                                         <li>
-                                            am {{ ('criticalmass.city_list.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('criticalmass.city_list.event_date.day.' ~ cycle.dayOfWeek)|trans }}
+                                            am {{ ('cycle.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ cycle.dayOfWeek)|trans }}
                                             um {{ cycle.time|date('H:i', city.city.timezone) }} Uhr
                                         </li>
                                     {% endfor %}
