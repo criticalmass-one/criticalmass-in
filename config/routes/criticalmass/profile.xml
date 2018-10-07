@@ -8,6 +8,10 @@
         <default key="_controller">App\Controller\Profile\ProfileManagementController::manageAction</default>
     </route>
 
+    <route id="fos_user_profile_show" path="/profile/">
+        <default key="_controller">App\Controller\Profile\ProfileManagementController::manageAction</default>
+    </route>
+
     <route id="criticalmass_user_usermanagement_editusername" path="/profile/username">
         <default key="_controller">App\Controller\Profile\ProfileManagementController::editUsernameAction</default>
     </route>
