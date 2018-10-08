@@ -12,8 +12,6 @@ class Hour implements \Iterator
     /** @var \DateTime $dateTime */
     protected $dateTime = null;
 
-    protected $counter = 0;
-
     public function __construct(\DateTime $dateTime)
     {
         $this->dateTime = $dateTime;
@@ -26,7 +24,7 @@ class Hour implements \Iterator
         return $this;
     }
 
-    public function current()
+    public function current(): Ride
     {
         return current($this->list);
     }
@@ -36,7 +34,7 @@ class Hour implements \Iterator
         next($this->list);
     }
 
-    public function key()
+    public function key(): int
     {
         return key($this->list);
     }
