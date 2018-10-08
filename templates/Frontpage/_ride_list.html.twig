@@ -15,17 +15,15 @@
                             </h4>
 
                             <ul>
-                                {% for hour in day %}
-                                    {% for ride in hour %}
-                                        <li>
-                                            <a href="{{ objectPath(ride) }}">
-                                                {{ ride.city.city }}
-                                            </a>
-                                            <small>
-                                                ({{ ride.dateTime|date('H:i', ride.city.timezone) }})
-                                            </small>
-                                        </li>
-                                    {% endfor %}
+                                {% for ride in day %}
+                                <li>
+                                    <a href="{{ objectPath(ride) }}">
+                                        {{ ride.city.city }}
+                                    </a>
+                                    <small>
+                                        ({{ ride.dateTime|date('H:i', ride.city.timezone) }})
+                                    </small>
+                                </li>
                                 {% endfor %}
                             </ul>
                         </li>

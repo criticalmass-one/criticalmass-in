@@ -28,6 +28,15 @@ class FrontpageRideListFactory
         return $this->monthModel;
     }
 
+    public function sort(): Month
+    {
+        if (!$this->monthModel) {
+            $this->createList();
+        }
+
+        return $this->monthModel->sort();
+    }
+
     protected function createList(): FrontpageRideListFactory
     {
         $rides = $this->doctrine->getRepository(Ride::class)->findFrontpageRides();

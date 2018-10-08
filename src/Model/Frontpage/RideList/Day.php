@@ -9,8 +9,8 @@ class Day implements \Iterator
     /** @var \DateTime $dateTime */
     protected $dateTime = null;
 
-    /** @var array $hourList */
-    protected $hourList = [];
+    /** @var array $list */
+    protected $list = [];
 
     public function __construct(\DateTime $dateTime)
     {
@@ -19,44 +19,52 @@ class Day implements \Iterator
 
     public function add(Ride $ride): Day
     {
-        $hour = $ride->getDateTime()->format('j');
-
-        if (!array_key_exists($hour, $this->hourList)) {
-            $this->hourList[$hour] = new Hour($ride->getDateTime());
-        }
-
-        $this->hourList[$hour]->add($ride);
+        $this->list[] = $ride;
 
         return $this;
     }
 
-    public function current(): Hour
+    public function current(): Ride
     {
-        return current($this->hourList);
+        return current($this->list);
     }
 
     public function next(): void
     {
-        next($this->hourList);
+        next($this->list);
     }
 
     public function key(): int
     {
-        return key($this->hourList);
+        return key($this->list);
     }
 
     public function valid(): bool
     {
-        return current($this->hourList) instanceof Hour;
+        return current($this->list) instanceof Ride;
     }
 
     public function rewind(): void
     {
-        reset($this->hourList);
+        reset($this->list);
     }
 
     public function getDateTime(): \DateTime
     {
         return $this->dateTime;
+    }
+
+    public function sort(): Day
+    {
+        usort($this->list, function(Ride $a, Ride $b): int
+        {
+            if ($a->getCity()->getCity() === $b->getCity()->getCity() ) {
+                return 0;
+            }
+
+            return $a->getCity()->getCity()  < $b->getCity()->getCity() ? -1 : 1;
+        });
+
+        return $this;
     }
 }

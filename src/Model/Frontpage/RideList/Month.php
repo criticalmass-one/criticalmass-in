@@ -59,4 +59,13 @@ class Month implements \Iterator
     {
         return $this->dateTime;
     }
+
+    public function sort(): Month
+    {
+        /** @var Day $day */
+        foreach ($this->dayList as $day) {
+            $day->sort();
+        }
+        return $this;
+    }
 }
