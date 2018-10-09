@@ -11,7 +11,7 @@
                     {% for day in rideList %}
                         <li>
                             <h4>
-                                {{ day.dateTime|date('d.m.Y') }}
+                                {{ day.dateTime|format_date('eeee, dd. MMMM YYYY') }}
                             </h4>
 
                             <ul>
