@@ -2,10 +2,8 @@
 
 namespace App\Factory;
 
-use App\Entity\City;
-use App\Entity\CityCycle;
 use App\Entity\Ride;
-use App\Model\CityListModel;
+use App\Model\Frontpage\RideList\Month;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class FrontpageRideListFactory
@@ -13,44 +11,42 @@ class FrontpageRideListFactory
     /** @var RegistryInterface $doctrine */
     protected $doctrine;
 
-    protected $list = [];
+    /** @var Month $monthModel */
+    protected $monthModel = null;
 
     public function __construct(RegistryInterface $doctrine)
     {
         $this->doctrine = $doctrine;
     }
 
-    public function getList(): array
+    public function getMonth(): Month
     {
-        if (!count($this->list)) {
+        if (!$this->monthModel) {
             $this->createList();
         }
 
-        return $this->list;
+        return $this->monthModel;
     }
 
-    protected function createList(): CityListFactory
+    public function sort(): Month
     {
-        $cities = $this->doctrine->getRepository(City::class)->findEnabledCities();
-        $now = new \DateTime();
+        if (!$this->monthModel) {
+            $this->createList();
+        }
 
-        foreach ($cities as $city) {
-            $currentRide = $this->doctrine->getRepository(Ride::class)->findCurrentRideForCity($city);
-            $countRides = $this->doctrine->getRepository(Ride::class)->countRidesByCity($city);
-            $cycles = $this->doctrine->getRepository(CityCycle::class)->findByCity($city, $now, $now);
+        return $this->monthModel->sort();
+    }
 
-            $this->list[] = $this->createModel($city, $currentRide, $cycles, $countRides);
+    protected function createList(): FrontpageRideListFactory
+    {
+        $rides = $this->doctrine->getRepository(Ride::class)->findFrontpageRides();
+
+        $this->monthModel = new Month();
+
+        foreach ($rides as $ride) {
+            $this->monthModel->add($ride);
         }
 
         return $this;
-    }
-
-    protected function createModel(
-        City $city,
-        Ride $currentRide = null,
-        array $cycles = [],
-        int $countRides = 0
-    ): CityListModel {
-        return new CityListModel($city, $currentRide, $cycles, $countRides);
     }
 }
