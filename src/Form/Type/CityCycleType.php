@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Form\Type;
 
@@ -51,21 +51,21 @@ class CityCycleType extends AbstractType
             ->add('time', TimeType::class, [
                 'required' => false,
                 'model_timezone' => 'UTC',
-                'view_timezone' => $timezone,
+                'view_timezone' => 'UTC',
             ])
             ->add('location', TextType::class, [
                 'required' => false,
             ])
             ->add('validFrom', DateType::class, [
                 'model_timezone' => 'UTC',
-                'view_timezone' => $timezone,
+                'view_timezone' => 'UTC',
                 'widget' => 'single_text',
                 'format' => 'dd.MM.yyyy',
                 'required' => false,
             ])
             ->add('validUntil', DateType::class, [
                 'model_timezone' => 'UTC',
-                'view_timezone' => $timezone,
+                'view_timezone' => 'UTC',
                 'widget' => 'single_text',
                 'format' => 'dd.MM.yyyy',
                 'required' => false,
