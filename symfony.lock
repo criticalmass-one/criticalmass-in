@@ -362,6 +362,9 @@
     "predis/predis": {
         "version": "v1.1.1"
     },
+    "presta/sitemap-bundle": {
+        "version": "v1.5.3"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
