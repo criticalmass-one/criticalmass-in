@@ -78,7 +78,8 @@
         "symfony/flex": "^1.0",
         "khill/php-duration": "^1.0",
         "basvandorst/stravaphp": "^1.2",
-        "sabre/vobject": "^4.0"
+        "sabre/vobject": "^4.0",
+        "presta/sitemap-bundle": "^1.5"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "*",
