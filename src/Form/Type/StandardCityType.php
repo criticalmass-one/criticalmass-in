@@ -3,7 +3,6 @@
 namespace App\Form\Type;
 
 use App\Repository\RegionRepository;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -30,9 +29,8 @@ class StandardCityType extends AbstractType
                 ]
             )
             ->add('description',
-                CKEditorType::class, [
-                    'required' => false,
-                    'config_name' => 'standard',
+                TextareaType::class, [
+                    'required' => false
                 ]
             )
             ->add('longitude',
