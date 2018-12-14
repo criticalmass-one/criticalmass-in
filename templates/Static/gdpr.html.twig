@@ -1,5 +1,7 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set bootstrap4 = true %}
+
 {% block title %}Deine persönlichen Daten{% endblock %}
 
 {% block breadcrumb %}
@@ -11,7 +13,7 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-8">
             <h2>
                 Deine persönlichen Daten
             </h2>
@@ -366,82 +368,82 @@
             <iframe style="border: 0; height: 200px; width: 100%;" src="https://piwik.caldera.cc/index.php?module=CoreAdminHome&action=optOut&language=de&backgroundColor=ffffff&fontColor=000000&fontSize=16px&fontFamily=%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans-serif"></iframe>
         </div>
 
-        <div class="col-md-4">
-            <ul class="nav nav-pills nav-stacked">
-                <li role="presentation">
-                    <a href="#dein-profil">
+        <div class="col-4">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="#dein-profil">
                         Dein Profil
                     </a>
                 </li>
 
-                <li role="presentation">
-                    <a href="#login-soziale-netzwerke">
+                <li class="nav-item">
+                    <a class="nav-link" href="#login-soziale-netzwerke">
                         Login über soziale Netzwerke
                     </a>
                 </li>
 
-                <li role="presentation">
-                    <a href="#fotos">
+                <li class="nav-item">
+                    <a class="nav-link" href="#fotos">
                         Fotos
                     </a>
                 </li>
 
-                <li role="presentation">
-                    <a href="#tracks">
+                <li class="nav-item">
+                    <a class="nav-link" href="#tracks">
                         Tracks
                     </a>
                 </li>
 
-                <li role="presentation">
-                    <a href="#staedte-touren-zubringertouren">
+                <li class="nav-item">
+                    <a class="nav-link" href="#staedte-touren-zubringertouren">
                         Städte, Touren und Zubringertouren
                     </a>
                 </li>
 
-                <li role="presentation">
-                    <a href="#teilnahmen">
+                <li class="nav-item">
+                    <a class="nav-link" href="#teilnahmen">
                         Teilnahmen an Touren
                     </a>
                 </li>
 
-                <li role="presentation">
-                    <a href="#statistiken">
+                <li class="nav-item">
+                    <a class="nav-link" href="#statistiken">
                         Statistiken
                     </a>
                 </li>
 
-                <li role="presentation">
-                    <a href="#diskussionsforum">
+                <li class="nav-item">
+                    <a class="nav-link" href="#diskussionsforum">
                         Diskussionsforum
                     </a>
                 </li>
 
-                <li role="presentation">
-                    <a href="#landkarten">
+                <li class="nav-item">
+                    <a class="nav-link" href="#landkarten">
                         Landkarten
                     </a>
                 </li>
 
-                <li role="presentation">
-                    <a href="#werbung">
+                <li class="nav-item">
+                    <a class="nav-link" href="#werbung">
                         Werbung
                     </a>
                 </li>
 
-                <li role="presentation">
-                    <a href="#verschluesselung">
+                <li class="nav-item">
+                    <a class="nav-link" href="#verschluesselung">
                         Verschlüsselung
                     </a>
                 </li>
 
-                <li role="presentation">
-                    <a href="#cookies">
+                <li class="nav-item">
+                    <a class="nav-link" href="#cookies">
                         Cookies
                     </a>
                 </li>
 
-                <li role="presentation">
-                    <a href="#tracking">
+                <li class="nav-item">
+                    <a class="nav-link" href="#tracking">
                         Tracking
                     </a>
                 </li>
