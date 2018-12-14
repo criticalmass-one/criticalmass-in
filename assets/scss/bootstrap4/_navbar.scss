@@ -9,6 +9,7 @@
 // Navbar position
 // Navbar themes
 
+
 // Navbar
 //
 // Provide a static navbar from which we expand to create full-width, fixed, and
@@ -23,7 +24,7 @@
   padding: $navbar-padding-y $navbar-padding-x;
 
   // Because flex properties aren't inherited, we need to redeclare these first
-  // few properities so that content nested within behave properly.
+  // few properties so that content nested within behave properly.
   > .container,
   > .container-fluid {
     display: flex;
@@ -32,6 +33,7 @@
     justify-content: space-between;
   }
 }
+
 
 // Navbar brand
 //
@@ -50,6 +52,7 @@
     text-decoration: none;
   }
 }
+
 
 // Navbar nav
 //
@@ -73,6 +76,7 @@
   }
 }
 
+
 // Navbar text
 //
 //
@@ -83,16 +87,18 @@
   padding-bottom: $nav-link-padding-y;
 }
 
+
 // Responsive navbar
 //
 // Custom styles for responsive collapsing and toggling of navbar contents.
 // Powered by the collapse Bootstrap JavaScript plugin.
 
 // When collapsed, prevent the toggleable navbar contents from appearing in
-// the default flexbox row orienation. Requires the use of `flex-wrap: wrap`
+// the default flexbox row orientation. Requires the use of `flex-wrap: wrap`
 // on the `.navbar` parent.
 .navbar-collapse {
   flex-basis: 100%;
+  flex-grow: 1;
   // For always expanded or extra full navbars, ensure content aligns itself
   // properly vertically. Can be easily overridden with flex utilities.
   align-items: center;
@@ -103,12 +109,17 @@
   padding: $navbar-toggler-padding-y $navbar-toggler-padding-x;
   font-size: $navbar-toggler-font-size;
   line-height: 1;
-  background: transparent; // remove default button style
+  background-color: transparent; // remove default button style
   border: $border-width solid transparent; // remove default button style
   @include border-radius($navbar-toggler-border-radius);
 
   @include hover-focus {
     text-decoration: none;
+  }
+
+  // Opinionated: add "hand" cursor to non-disabled .navbar-toggler elements
+  &:not(:disabled):not(.disabled) {
+    cursor: pointer;
   }
 }
 
@@ -141,8 +152,7 @@
       }
 
       @include media-breakpoint-up($next) {
-        flex-direction: row;
-        flex-wrap: nowrap;
+        flex-flow: row nowrap;
         justify-content: flex-start;
 
         .navbar-nav {
@@ -152,14 +162,9 @@
             position: absolute;
           }
 
-          .dropdown-menu-right {
-            right: 0;
-            left: auto; // Reset the default from `.dropdown-menu`
-          }
-
           .nav-link {
-            padding-right: .5rem;
-            padding-left: .5rem;
+            padding-right: $navbar-nav-link-padding-x;
+            padding-left: $navbar-nav-link-padding-x;
           }
         }
 
@@ -169,11 +174,12 @@
           flex-wrap: nowrap;
         }
 
-        // scss-lint:disable ImportantRule
         .navbar-collapse {
-          display: flex !important;
+          display: flex !important;  // stylelint-disable-line declaration-no-important
+
+          // Changes flex-bases to auto because of an IE10 bug
+          flex-basis: auto;
         }
-        // scss-lint:enable ImportantRule
 
         .navbar-toggler {
           display: none;
@@ -182,6 +188,7 @@
     }
   }
 }
+
 
 // Navbar themes
 //
@@ -229,6 +236,13 @@
 
   .navbar-text {
     color: $navbar-light-color;
+    a {
+      color: $navbar-light-active-color;
+
+      @include hover-focus {
+        color: $navbar-light-active-color;
+      }
+    }
   }
 }
 
@@ -274,5 +288,12 @@
 
   .navbar-text {
     color: $navbar-dark-color;
+    a {
+      color: $navbar-dark-active-color;
+
+      @include hover-focus {
+        color: $navbar-dark-active-color;
+      }
+    }
   }
 }

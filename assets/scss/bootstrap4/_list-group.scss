@@ -11,6 +11,7 @@
   margin-bottom: 0;
 }
 
+
 // Interactive list items
 //
 // Use anchor or button elements instead of `li`s or `div`s to create interactive
@@ -33,6 +34,7 @@
     background-color: $list-group-action-active-bg;
   }
 }
+
 
 // Individual list items
 //
@@ -57,6 +59,7 @@
   }
 
   @include hover-focus {
+    z-index: 1; // Place hover/active items above their siblings for proper border styling
     text-decoration: none;
   }
 
@@ -75,6 +78,7 @@
   }
 }
 
+
 // Flush list items
 //
 // Remove borders and border-radius to keep list group items edge-to-edge. Most
@@ -84,7 +88,7 @@
   .list-group-item {
     border-right: 0;
     border-left: 0;
-    border-radius: 0;
+    @include border-radius(0);
   }
 
   &:first-child {
@@ -99,6 +103,7 @@
     }
   }
 }
+
 
 // Contextual variants
 //
