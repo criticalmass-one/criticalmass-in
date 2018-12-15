@@ -1,5 +1,7 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set bootstrap4 = true %}
+
 {% block title %}Dein Benutzerprofil{% endblock %}
 
 {% block breadcrumb %}
@@ -9,7 +11,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
+            <div class="col-12 col-md-10 offset-md-1">
                 <h2>
                     Hej {{ app.getUser().getUsername() }}, schön, dass du da bist!
                 </h2>
@@ -24,7 +26,7 @@
         {% for flashMessage in app.session.flashbag.get('success') %}
 
             <div class="row">
-                <div class="col-md-10 col-md-offset-1">
+                <div class="col-12 col-md-10 offset-md-1">
                     <div class="alert alert-dismissable alert-success" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -37,20 +39,20 @@
         {% endfor %}
 
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
+            <div class="col-12 col-md-10 offset-md-1">
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
+                    <div class="col-12 col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-header">
                                 Profilfoto ändern
                             </div>
-                            <div class="panel-body">
+                            <div class="card-body">
                                 <p>
                                     Lade ein Foto für dein Profil hoch.
                                 </p>
 
                                 <p class="text-center">
-                                    <a class="btn btn-default"
+                                    <a class="btn btn-secondary"
                                        href="{{ path('criticalmass_user_profile_photo') }}">
                                         Profilfoto ändern
                                     </a>
@@ -59,18 +61,18 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
+                    <div class="col-12 col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-header">
                                 Profilfarbe wählen
                             </div>
-                            <div class="panel-body">
+                            <div class="card-body">
                                 <p>
                                     Ändere die Farbe deines Benutzerkontos.
                                 </p>
 
                                 <p class="text-center">
-                                    <a class="btn btn-default"
+                                    <a class="btn btn-secondary"
                                        href="{{ path('criticalmass_user_profile_color') }}">
                                         Profilfarbe wählen
                                     </a>
@@ -79,13 +81,13 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
+                    <div class="col-12 col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-header">
                                 Deine Touren
                             </div>
 
-                            <div class="panel-body">
+                            <div class="card-body">
                                 {% if participationCounter == 0 %}
                                     <div class="alert alert-info" role="alert">
                                         <strong>Schade:</strong>
@@ -100,7 +102,7 @@
                                     </p>
 
                                     <p class="text-center">
-                                        <a class="btn btn-default"
+                                        <a class="btn btn-secondary"
                                            href="{{ path('criticalmass_user_participation_list') }}">
                                             Tourenübersicht
                                         </a>
@@ -110,12 +112,12 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
+                    <div class="col-12 col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-header">
                                 Deine Tracks
                             </div>
-                            <div class="panel-body">
+                            <div class="card-body">
                                 {% if trackCounter == 0 %}
                                     <div class="alert alert-info" role="alert">
                                         Du hast bislang noch keine Tracks von Critical-Mass-Touren gespeichert. Schau in
@@ -128,7 +130,7 @@
                                     </p>
 
                                     <p class="text-center">
-                                        <a class="btn btn-default" href="{{ path('caldera_criticalmass_track_list') }}">
+                                        <a class="btn btn-secondary" href="{{ path('caldera_criticalmass_track_list') }}">
                                             Tracks verwalten
                                         </a>
                                     </p>
@@ -138,12 +140,12 @@
                     </div>
 
                     {% if feature_enabled('photos') %}
-                    <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
+                    <div class="col-12 col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-header">
                                 Deine Fotos
                             </div>
-                            <div class="panel-body">
+                            <div class="card-body">
                                 {% if photoCounter == 0 %}
                                     <div class="alert alert-info" role="alert">
                                         Du hast bislang noch keine Fotos hochgeladen. In der Hilfe findest du mehr
@@ -155,7 +157,7 @@
                                     </p>
 
                                     <p class="text-center">
-                                        <a class="btn btn-default"
+                                        <a class="btn btn-secondary"
                                            href="{{ path('caldera_criticalmass_photo_user_list') }}">
                                             Fotos verwalten
                                         </a>
@@ -166,12 +168,12 @@
                     </div>
                     {% endif %}
 
-                    <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
+                    <div class="col-12 col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-header">
                                 Kennwort ändern
                             </div>
-                            <div class="panel-body">
+                            <div class="card-body">
                                 {% if app.user.oauthAccount %}
                                     <div class="alert alert-info" role="alert">
                                         Du kannst dein Kennwort nicht ändern, weil du dich über ein soziales Netzwerk
@@ -183,7 +185,7 @@
                                     </p>
 
                                     <p class="text-center">
-                                        <a class="btn btn-default" href="{{ path('fos_user_change_password') }}">
+                                        <a class="btn btn-secondary" href="{{ path('fos_user_change_password') }}">
                                             Kennwort ändern
                                         </a>
                                     </p>
@@ -192,18 +194,18 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
+                    <div class="col-12 col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-header">
                                 Benutzername ändern
                             </div>
-                            <div class="panel-body">
+                            <div class="card-body">
                                 <p>
                                     Hier kannst du deinen Benutzernamen ändern.
                                 </p>
 
                                 <p class="text-center">
-                                    <a class="btn btn-default"
+                                    <a class="btn btn-secondary"
                                        href="{{ path('criticalmass_user_usermanagement_editusername') }}">
                                         Benutzername ändern
                                     </a>
@@ -212,12 +214,12 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
+                    <div class="col-12 col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-header">
                                 E-Mail-Adresse ändern
                             </div>
-                            <div class="panel-body">
+                            <div class="card-body">
                                 {% if app.user.oauthAccount %}
                                     <div class="alert alert-info" role="alert">
                                         Du kannst deine E-Mail-Adresse nicht ändern, weil du dich über ein soziales
@@ -230,7 +232,7 @@
                                     </p>
 
                                     <p class="text-center">
-                                        <a class="btn btn-default"
+                                        <a class="btn btn-secondary"
                                            href="{{ path('criticalmass_user_usermanagement_editemail') }}">
                                             E-Mail-Adresse ändern
                                         </a>
@@ -241,16 +243,16 @@
                     </div>
 
                     {% if bikeright_visible %}
-                        <div class="col-md-6">
+                        <div class="col-12 col-md-6 mb-3">
                             <div class="panel panel-bikeright">
-                                <div class="panel-heading">
+                                <div class="card-header">
                                     <small class="pull-right">
                                         Anzeige
                                     </small>
 
                                     Bikeright-Rabattcode
                                 </div>
-                                <div class="panel-body">
+                                <div class="card-body">
                                     <p>
                                         Ab sofort! Kostenfreie Rechtsberatung für Community-Mitglieder!
                                     </p>
