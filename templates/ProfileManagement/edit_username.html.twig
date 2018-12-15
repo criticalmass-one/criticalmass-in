@@ -1,5 +1,7 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set bootstrap4 = true %}
+
 {% form_theme usernameForm 'Form/theme.html.twig' %}
 
 {% block title %}Benutzername ändern{% endblock %}
@@ -19,7 +21,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-12 col-md-6 offset-md-3 text-center">
                 <h2>
                     Benutzername ändern
                 </h2>
@@ -34,13 +36,13 @@
         {{ form_start(usernameForm) }}
 
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
+            <div class="col-12 col-md-6 offset-md-3">
+                <div class="card">
+                    <div class="card-header">
                         Dein Benutzername
                     </div>
-                    <div class="panel-body form-group form-group{% if form_errors(usernameForm.username) %} has-error has-feedback{% endif %}">
-                        <p>
+                    <div class="card-body form-group{% if form_errors(usernameForm.username) %} has-error has-feedback{% endif %}">
+                        <p class="card-text">
                             Dein Benutzername wird öffentlich angezeigt &mdash; außerdem brauchst du ihn zum Einloggen,
                             wenn du dich nicht über ein soziales Netzwerk anmeldest.
                         </p>
@@ -56,16 +58,16 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-6 col-md-offset-3 text-center">
+        <div class="row mt-3">
+            <div class="col-12 col-md-6 offset-md-3 text-center">
                 <div class="btn-group" role="group">
-                    <a href="{{ path('criticalmass_user_usermanagement') }}" class="btn btn-default">
-                        Abbrechen
-                    </a>
-
                     <button type="submit" class="btn btn-primary">
                         Speichern
                     </button>
+
+                    <a href="{{ path('criticalmass_user_usermanagement') }}" class="btn btn-secondary">
+                        Abbrechen
+                    </a>
                 </div>
             </div>
         </div>
