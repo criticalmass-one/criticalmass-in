@@ -1,5 +1,7 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set bootstrap4 = true %}
+
 {% block title %}Deine Touren{% endblock %}
 
 {% block breadcrumb %}
@@ -17,32 +19,32 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <ul class="nav nav-tabs">
-                    <li role="presentation" class="active">
-                        <a href="#table" aria-controls="profile" role="tab" data-toggle="tab">
+            <div class="col-12 col-md-10 offset-md-1">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="participationListTab" data-toggle="tab" href="#participationList" role="tab" aria-controls="participationList" aria-selected="true">
                             Übersicht
                         </a>
                     </li>
-                    <li role="presentation">
-                        <a href="#goingYes" aria-controls="profile" role="tab" data-toggle="tab">
-                            Teilgenommen <span class="badge">
+                    <li class="nav-item">
+                        <a class="nav-link" id="goingYesTab" data-toggle="tab" href="#goingYes" role="tab" aria-controls="goingYes" aria-selected="false">
+                            Teilgenommen <span class="badge badge-secondary">
                                 {{ participationYesList|length }}
                             </span>
                         </a>
                     </li>
 
-                    <li role="presentation">
-                        <a href="#goingMaybe" aria-controls="profile" role="tab" data-toggle="tab">
-                            Unentschieden <span class="badge">
+                    <li class="nav-item">
+                        <a class="nav-link" id="goingMaybeTab" data-toggle="tab" href="#goingMaybe" role="tab" aria-controls="goingMaybe" aria-selected="false">
+                            Unentschieden <span class="badge badge-secondary">
                                 {{ participationMaybeList|length }}
                             </span>
                         </a>
                     </li>
 
-                    <li role="presentation">
-                        <a href="#goingNo" aria-controls="profile" role="tab" data-toggle="tab">
-                            Abgesagt <span class="badge">
+                    <li class="nav-item">
+                        <a class="nav-link" id="goingNoTab" data-toggle="tab" href="#goingNo" role="tab" aria-controls="goingNo" aria-selected="false">
+                            Abgesagt <span class="badge badge-secondary">
                                 {{ participationNoList|length }}
                             </span>
                         </a>
@@ -50,11 +52,11 @@
                 </ul>
 
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="table">
+                    <div class="tab-pane fade show active" id="participationList" role="tabpanel" aria-labelledby="participationListTab">
                         {{ include('Participation/_table.html.twig') }}
                     </div>
 
-                    <div role="tabpanel" class="tab-pane" id="goingYes">
+                    <div class="tab-pane fade" id="goingYes" role="tabpanel" aria-labelledby="goingYesTab">
                         <div class="row margin-top-medium">
                             <div class="col-md-12">
                                 <p>
@@ -66,7 +68,7 @@
                         {% include 'Participation/_list.html.twig' with { 'participationList': participationYesList } only %}
                     </div>
 
-                    <div role="tabpanel" class="tab-pane" id="goingMaybe">
+                    <div class="tab-pane fade" id="goingMaybe" role="tabpanel" aria-labelledby="goingMaybeTab">
                         <div class="row margin-top-medium">
                             <div class="col-md-12">
                                 <p>
@@ -78,7 +80,7 @@
                         {% include 'Participation/_list.html.twig' with { 'participationList': participationMaybeList } only %}
                     </div>
 
-                    <div role="tabpanel" class="tab-pane" id="goingNo">
+                    <div class="tab-pane fade" id="goingNo" role="tabpanel" aria-labelledby="goingNoTaab">
                         <div class="row margin-top-medium">
                             <div class="col-md-12">
                                 <p>

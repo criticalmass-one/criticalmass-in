@@ -1,6 +1,6 @@
 {% if participationYesList|length > 0 %}
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-12">
         <table class="table">
             <tr>
                 <th>&nbsp;</th>
@@ -53,24 +53,24 @@
 </div>
 
 <div class="row">
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
+    <div class="col-12 col-md-4">
+        <div class="card">
+            <div class="card-header">
                 Current Streak
             </div>
-            <div class="panel-body text-center">
+            <div class="card-body text-center">
                 {% if currentStreak.rideList|length > 0 %}
-                <p>
+                <p class="card-text">
                     {{ currentStreak.startDateTime|date('d.m.Y') }} bis heute
                 </p>
 
-                <p>
+                    <p class="card-text">
                     <strong>
                         {{ currentStreak.rideList|length }} Touren
                     </strong>
                 </p>
                 {% else %}
-                    <p>
+                    <p class="card-text">
                         Schade: Du hast in der jüngeren Vergangenheit an keinen Touren teilgenommen.
                     </p>
                 {% endif %}
@@ -78,30 +78,30 @@
         </div>
     </div>
 
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
+    <div class="col-12 col-md-4">
+        <div class="card">
+            <div class="card-header">
                 Gesamtzahl
             </div>
-            <div class="panel-body text-center">
+            <div class="card-body text-center">
                 {% set firstRide = participationYesList|last %}
 
                 {% if firstRide %}
-                <p>
+                <p class="card-text">
                     seit {{ participationYesList|last.ride.dateTime|date('d.m.Y') }} hast du an
                 </p>
 
-                <p>
+                <p class="card-text">
                     <strong>
                         {{ participationYesList|length }} Touren
                     </strong>
                 </p>
 
-                <p>
+                <p class="card-text">
                     teilgenommen. Super!
                 </p>
                 {% else %}
-                <p>
+                <p class="card-text">
                     Schade, du hast bislang an keinen Touren teilgenommen.
                 </p>
                 {% endif %}
@@ -109,25 +109,25 @@
         </div>
     </div>
 
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
+    <div class="col-12 col-md-4">
+        <div class="card">
+            <div class="card-header">
                 Longest Streak
             </div>
-            <div class="panel-body text-center">
+            <div class="card-body text-center">
                 {% if longestStreak %}
-                <p>
+                <p class="card-text">
                     {{ longestStreak.startDateTime|date('d.m.Y') }}
                     bis {{ longestStreak.endDateTime|date('d.m.Y') }}
                 </p>
 
-                <p>
+                <p class="card-text">
                     <strong>
                         {{ longestStreak.rideList|length }} Touren
                     </strong>
                 </p>
                 {% else %}
-                    <p>
+                    <p class="card-text">
                         Schade, du hast bislang an keinen Touren teilgenommen.
                     </p>
                 {% endif %}
@@ -136,8 +136,8 @@
     </div>
 </div>
 {% else %}
-<div class="row margin-top-medium">
-    <div class="col-md-12">
+<div class="row mt-3">
+    <div class="col-12">
         <div class="alert alert-info">
             Schade: Du hast bislang an keinen Touren teilgenommen, sonst könnten wir dir hier ein paar Statistiken über deine Teilnahme anzeigen.
         </div>
