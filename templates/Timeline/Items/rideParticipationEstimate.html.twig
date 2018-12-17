@@ -20,20 +20,34 @@
         <div class="row">
             <div class="col-md-12 text-center">
                 <div class="flipcounter">
+                    {% set counter = item.estimatedParticipants %}
+
+                    {% if counter < 1000 %}
+                        {% set counter = 0 ~ counter %}
+                    {% endif %}
+
+                    {% if counter < 100 %}
+                        {% set counter = 0 ~ counter %}
+                    {% endif %}
+
+                    {% if counter < 10 %}
+                        {% set counter = 0 ~ counter %}
+                    {% endif %}
+
                     <div class="flipbreak">
 
                     </div>
                     <div class="digit">
-                        {{ item.estimatedParticipants[0:1] }}
+                        {{ counter[0:1] }}
                     </div>
                     <div class="digit">
-                        {{ item.estimatedParticipants[1:1] }}
+                        {{ counter[1:1] }}
                     </div>
                     <div class="digit">
-                        {{ item.estimatedParticipants[2:1] }}
+                        {{ counter[2:1] }}
                     </div>
                     <div class="digit">
-                        {{ item.estimatedParticipants[3:1] }}
+                        {{ counter[3:1] }}
                     </div>
                 </div>
             </div>
