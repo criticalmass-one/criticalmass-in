@@ -1,5 +1,7 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set bootstrap4 = true %}
+
 {% block title %}{{ thread.title }}{% endblock %}
 
 {% block breadcrumb %}
@@ -22,28 +24,29 @@
 
 {% block content %}
     <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            {% if app.getUser() %}
-                <button type="button" class="btn btn-success pull-right margin-top-medium" data-toggle="modal"
-                        data-target="#modal-add-post">
-                    <i class="fa fa-comment"></i>
-                    Antwort hinzufügen
-                </button>
-                {{ render(controller('App\\Controller\\PostController::writeThreadAction', { 'threadId': thread.id, 'noButton': true })) }}
-            {% endif %}
-            <h2>
-                {{ thread.title }}
-            </h2>
+        <div class="row">
+            <div class="col-12">
+                {% if app.getUser() %}
+                    <button type="button" class="btn btn-primary pull-right margin-top-medium" data-toggle="modal"
+                            data-target="#modal-add-post">
+                        <i class="fa fa-comment"></i>
+                        Antwort hinzufügen
+                    </button>
+                    {{ render(controller('App\\Controller\\PostController::writeThreadAction', { 'threadId': thread.id, 'noButton': true })) }}
+                {% endif %}
+                <h2>
+                    {{ thread.title }}
+                </h2>
+            </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="post-list">
-                {% for post in posts %}
-                    {% include('Post/post.html.twig') with { 'post':  post } %}
-                {% endfor %}
+        <div class="row">
+            <div class="col-12">
+                <div class="post-list">
+                    {% for post in posts %}
+                        {% include('Post/post.html.twig') with { 'post':  post } %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>
