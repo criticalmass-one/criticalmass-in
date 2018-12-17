@@ -1,5 +1,7 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set bootstrap4 = true %}
+
 {% block title %}Diskussionen{% endblock %}
 
 {% block breadcrumb %}
@@ -11,7 +13,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <table class="table">
                     <thead>
                     <tr>
@@ -32,18 +34,18 @@
                     <tbody>
                     <tr>
                         <td colspan="4">
-                            <h4>
+                            <h5>
                                 Allgemeines
-                            </h4>
+                            </h5>
                         </td>
                     </tr>
                     {% for board in boards %}
                         <tr>
                             <td>
                                 <a href="{{ objectPath(board) }}">
-                                    <h5 class="no-margin-top">
+                                    <h6 class="mt-0">
                                         {{ board.title }}
-                                    </h5>
+                                    </h6>
                                 </a>
 
                                 <small>
@@ -61,7 +63,7 @@
                                     <img class="pull-left img-fluid" style="margin-right: 5px; height: 60px;"
                                          src="{{ vich_uploader_asset(board.lastThread.lastPost.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}" alt="..."/>
                                     <a href="{{ objectPath(board.lastThread) }}">
-                                        <strong>{{ board.lastThread.title }}</strong>
+                                        {{ board.lastThread.title }}
                                     </a>
                                     <br/>
                                     von <strong>{{ board.lastThread.lastPost.user.username }}</strong><br/>
@@ -73,18 +75,18 @@
 
                     <tr>
                         <td colspan="4">
-                            <h4>
+                            <h5>
                                 Städte
-                            </h4>
+                            </h5>
                         </td>
                     </tr>
                     {% for city in cities %}
                         <tr>
                             <td>
                                 <a href="{{ objectPath(city, 'caldera_criticalmass_board_listcitythreads') }}">
-                                    <h5 class="no-margin-top">
+                                    <h6 class="mt-0">
                                         {{ city.title }}
-                                    </h5>
+                                    </h6>
                                 </a>
 
                                 <small>
@@ -102,7 +104,7 @@
                                     <img class="pull-left img-fluid" style="margin-right: 5px; height: 60px;"
                                          src="{{ vich_uploader_asset(city.lastThread.lastPost.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}" alt="..."/>
                                     <a href="{{ objectPath(city.lastThread) }}">
-                                        <strong>{{ city.lastThread.title }}</strong>
+                                        {{ city.lastThread.title }}
                                     </a>
                                     <br/>
                                     von <strong>{{ city.lastThread.lastPost.user.username }}</strong><br/>
