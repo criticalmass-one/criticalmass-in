@@ -1,5 +1,7 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set bootstrap4 = true %}
+
 {% block title %}{{ board.title }}{% endblock %}
 
 {% block breadcrumb %}
@@ -17,20 +19,20 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 {% if app.getUser() %}
-                    <a href="{{ newThreadUrl }}" class="btn btn-success pull-right margin-top-medium">
+                    <a href="{{ newThreadUrl }}" class="btn btn-primary pull-right margin-top-medium">
                         neues Thema eröffnen
                     </a>
                 {% endif %}
-                <h1>
+                <h2>
                     {{ board.title }}
-                </h1>
+                </h2>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 {% if threads|length %}
                     <table class="table">
                         <thead>
