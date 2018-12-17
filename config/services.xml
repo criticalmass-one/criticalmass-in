@@ -27,6 +27,12 @@
             <tag name="knp_menu.menu_builder" method="mainMenu" alias="main_menu" />
         </service>
 
+        <service id="App\Menu\Bootstrap4Builder">
+            <argument type="service" id="knp_menu.factory" />
+            <argument type="service" id="security.token_storage" />
+            <tag name="knp_menu.menu_builder" method="mainMenu" alias="main_menu_bs4" />
+        </service>
+
         <service id="salavert.twig.time_ago" class="Salavert\Twig\Extension\TimeAgoExtension">
             <tag name="twig.extension" />
             <argument type="service" id="translator" />
