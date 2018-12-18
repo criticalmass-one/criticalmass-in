@@ -125,6 +125,7 @@ gulp.task('copy-js-external', function () {
         'node_modules/chart.js/dist/Chart.bundle.min.js',
         'node_modules/datatables/media/js/jquery.dataTables.min.js',
         'node_modules/cookie-notice/dist/cookie.notice.min.js',
+        'node_modules/requirejs/require.js',
     ])
         .pipe(gulp.dest('public/js/'));
 });
