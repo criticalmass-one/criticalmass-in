@@ -117,7 +117,7 @@ gulp.task('copy-js-external', function () {
         'node_modules/typeahead.js/dist/typeahead.jquery.min.js',
         //'node_modules/leaflet/dist/leaflet.js',
         //'node_modules/leaflet-extra-markers/dist/js/leaflet.extra-markers.min.js',
-        //'node_modules/chart.js/dist/Chart.bundle.min.js',
+        'node_modules/chart.js/dist/Chart.bundle.min.js',
     ])
         .pipe(gulp.dest('public/js/'));
 });
