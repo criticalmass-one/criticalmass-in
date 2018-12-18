@@ -24,6 +24,7 @@
     "bootstrap": "^3.4.0",
     "bootstrap-colorpicker": "^2.5.3",
     "bootstrap-datepicker": "^1.8.0",
+    "bootstrap-slider": "^10.4.1",
     "dateformat": "^3.0.3",
     "dropzone": "^5.5.1",
     "jquery": "^3.3.1"

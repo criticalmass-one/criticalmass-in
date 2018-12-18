@@ -77,6 +77,7 @@ gulp.task('compress-css', ['leaflet-css', 'sass'], function () {
     return gulp.src([
             'node_modules/bootstrap/dist/css/bootstrap.css',
             'node_modules/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css',
+            'node_modules/bootstrap-slider/dist/css/bootstrap-slider.min.css',
             'node_modules/dropzone/dist/min/dropzone.min.css',
             'node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css',
         ])
@@ -111,6 +112,7 @@ gulp.task('copy-js-external', function () {
         'node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js',
         'node_modules/dropzone/dist/min/dropzone-amd-module.min.js',
         'node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',
+        'node_modules/bootstrap-slider/dist/bootstrap-slider.min.js',
         'node_modules/dateformat/lib/dateformat.js',
         'node_modules/jquery/dist/jquery.min.js',
         //'node_modules/leaflet/dist/leaflet.js',
