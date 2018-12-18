@@ -48,12 +48,16 @@ gulp.task('build-leaflet-extramarkers', ['extramarkers-images', 'extramarkers-cs
 
 gulp.task('copy-colorpicker-images', function () {
     return gulp.src('node_modules/bootstrap-colorpicker/dist/img/bootstrap-colorpicker/*')
-        .pipe(gulp.dest('public/images/'));
+        .pipe(gulp.dest('public/images/colorpicker/'));
+});
+
+gulp.task('copy-datatable-images', function () {
+    return gulp.src('node_modules/datatables/media/images/*')
+        .pipe(gulp.dest('public/images/datatables/'));
 });
 
 gulp.task('copy-asset-images', function () {
     return gulp.src('assets/images/*/*')
-        .pipe(gulp.src('node_modules/bootstrap-colorpicker/dist/img/bootstrap-colorpicker'))
         .pipe(gulp.dest('public/images/'));
 });
 
@@ -62,7 +66,7 @@ gulp.task('copy-fonts', function () {
         .pipe(gulp.dest('public/fonts'));*/
 });
 
-gulp.task('build-assets', ['copy-asset-images', 'copy-fonts', 'copy-colorpicker-images']);
+gulp.task('build-assets', ['copy-asset-images', 'copy-fonts', 'copy-datatable-images', 'copy-colorpicker-images']);
 
 
 /* CSS */
@@ -80,6 +84,7 @@ gulp.task('compress-css', ['leaflet-css', 'sass'], function () {
             'node_modules/bootstrap-slider/dist/css/bootstrap-slider.min.css',
             'node_modules/dropzone/dist/min/dropzone.min.css',
             'node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css',
+            'node_modules/datatables/media/css/jquery.dataTables.min.css',
         ])
         .pipe(cleanCSS())
         .pipe(concat('criticalmass.min.css'))
@@ -118,6 +123,7 @@ gulp.task('copy-js-external', function () {
         //'node_modules/leaflet/dist/leaflet.js',
         //'node_modules/leaflet-extra-markers/dist/js/leaflet.extra-markers.min.js',
         'node_modules/chart.js/dist/Chart.bundle.min.js',
+        'node_modules/datatables/media/js/jquery.dataTables.min.js',
     ])
         .pipe(gulp.dest('public/js/'));
 });
