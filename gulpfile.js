@@ -106,8 +106,6 @@ gulp.task('compress-js', function () {
 
 gulp.task('copy-js-external', function () {
     return gulp.src([
-        //'node_modules/jquery/dist/jquery.min.js',
-        //'node_modules/popper.js/dist/popper.min.js',
         'node_modules/bootstrap/dist/js/bootstrap.min.js',
         'node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js',
         'node_modules/dropzone/dist/min/dropzone-amd-module.min.js',
@@ -115,11 +113,10 @@ gulp.task('copy-js-external', function () {
         'node_modules/bootstrap-slider/dist/bootstrap-slider.min.js',
         'node_modules/dateformat/lib/dateformat.js',
         'node_modules/jquery/dist/jquery.min.js',
+        'node_modules/typeahead.js/dist/bloodhound.min.js',
+        'node_modules/typeahead.js/dist/typeahead.jquery.min.js',
         //'node_modules/leaflet/dist/leaflet.js',
         //'node_modules/leaflet-extra-markers/dist/js/leaflet.extra-markers.min.js',
-        //'node_modules/typeahead.js/dist/bloodhound.min.js',
-        //'node_modules/typeahead.js/dist/typeahead.jquery.min.js',
-        //'node_modules/calendar_heatmap/calendar_heatmap.bundle.js',
         //'node_modules/chart.js/dist/Chart.bundle.min.js',
     ])
         .pipe(gulp.dest('public/js/'));
