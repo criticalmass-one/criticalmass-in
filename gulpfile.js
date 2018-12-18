@@ -10,16 +10,16 @@ sass.compiler = require('node-sass');
 /* Leaflet */
 
 gulp.task('leaflet-images', function () {
-/*    return gulp.src('node_modules/leaflet/dist/images/*')
-        .pipe(gulp.dest('public/img/leaflet'));*/
+    return gulp.src('node_modules/leaflet/dist/images/*')
+        .pipe(gulp.dest('public/img/leaflet'));
 });
 
 gulp.task('leaflet-css', [], function() {
-/*    return gulp.src('node_modules/leaflet/dist/leaflet.css')
+    return gulp.src('node_modules/leaflet/dist/leaflet.css')
         .pipe(urlAdjuster({
             replace: ['images/','/img/leaflet/'],
         }))
-        .pipe(gulp.dest('assets/css'));*/
+        .pipe(gulp.dest('assets/css'));
 });
 
 gulp.task('build-leaflet', ['leaflet-images', 'leaflet-css']);
@@ -120,7 +120,7 @@ gulp.task('copy-js-external', function () {
         'node_modules/jquery/dist/jquery.min.js',
         'node_modules/typeahead.js/dist/bloodhound.min.js',
         'node_modules/typeahead.js/dist/typeahead.jquery.min.js',
-        //'node_modules/leaflet/dist/leaflet.js',
+        'node_modules/leaflet/dist/leaflet.js',
         //'node_modules/leaflet-extra-markers/dist/js/leaflet.extra-markers.min.js',
         'node_modules/chart.js/dist/Chart.bundle.min.js',
         'node_modules/datatables/media/js/jquery.dataTables.min.js',
