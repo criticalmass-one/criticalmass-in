@@ -77,6 +77,7 @@ gulp.task('compress-css', ['leaflet-css', 'sass'], function () {
     return gulp.src([
             'node_modules/bootstrap/dist/css/bootstrap.css',
             'node_modules/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css',
+            'node_modules/dropzone/dist/min/dropzone.min.css',
             //'node_modules/font-awesome/css/font-awesome.css',
             //'assets/css/*',
         ])
@@ -109,6 +110,7 @@ gulp.task('copy-js-external', function () {
         //'node_modules/popper.js/dist/popper.min.js',
         'node_modules/bootstrap/dist/js/bootstrap.min.js',
         'node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js',
+        'node_modules/dropzone/dist/min/dropzone-amd-module.min.js',
         //'node_modules/leaflet/dist/leaflet.js',
         //'node_modules/leaflet-extra-markers/dist/js/leaflet.extra-markers.min.js',
         //'node_modules/typeahead.js/dist/bloodhound.min.js',
