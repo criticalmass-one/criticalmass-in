@@ -46,8 +46,14 @@ gulp.task('build-leaflet-extramarkers', ['extramarkers-images', 'extramarkers-cs
 
 /* Assets */
 
+gulp.task('copy-colorpicker-images', function () {
+    return gulp.src('node_modules/bootstrap-colorpicker/dist/img/bootstrap-colorpicker/*')
+        .pipe(gulp.dest('public/images/'));
+});
+
 gulp.task('copy-asset-images', function () {
     return gulp.src('assets/images/*/*')
+        .pipe(gulp.src('node_modules/bootstrap-colorpicker/dist/img/bootstrap-colorpicker'))
         .pipe(gulp.dest('public/images/'));
 });
 
@@ -56,7 +62,7 @@ gulp.task('copy-fonts', function () {
         .pipe(gulp.dest('public/fonts'));*/
 });
 
-gulp.task('build-assets', ['copy-asset-images', 'copy-fonts']);
+gulp.task('build-assets', ['copy-asset-images', 'copy-fonts', 'copy-colorpicker-images']);
 
 
 /* CSS */
@@ -70,6 +76,7 @@ gulp.task('sass', function () {
 gulp.task('compress-css', ['leaflet-css', 'sass'], function () {
     return gulp.src([
             'node_modules/bootstrap/dist/css/bootstrap.css',
+            'node_modules/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css',
             //'node_modules/font-awesome/css/font-awesome.css',
             //'assets/css/*',
         ])
@@ -101,6 +108,7 @@ gulp.task('copy-js-external', function () {
         //'node_modules/jquery/dist/jquery.min.js',
         //'node_modules/popper.js/dist/popper.min.js',
         'node_modules/bootstrap/dist/js/bootstrap.min.js',
+        'node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js',
         //'node_modules/leaflet/dist/leaflet.js',
         //'node_modules/leaflet-extra-markers/dist/js/leaflet.extra-markers.min.js',
         //'node_modules/typeahead.js/dist/bloodhound.min.js',
