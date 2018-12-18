@@ -78,8 +78,7 @@ gulp.task('compress-css', ['leaflet-css', 'sass'], function () {
             'node_modules/bootstrap/dist/css/bootstrap.css',
             'node_modules/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css',
             'node_modules/dropzone/dist/min/dropzone.min.css',
-            //'node_modules/font-awesome/css/font-awesome.css',
-            //'assets/css/*',
+            'node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css',
         ])
         .pipe(cleanCSS())
         .pipe(concat('criticalmass.min.css'))
@@ -111,6 +110,7 @@ gulp.task('copy-js-external', function () {
         'node_modules/bootstrap/dist/js/bootstrap.min.js',
         'node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js',
         'node_modules/dropzone/dist/min/dropzone-amd-module.min.js',
+        'node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',
         //'node_modules/leaflet/dist/leaflet.js',
         //'node_modules/leaflet-extra-markers/dist/js/leaflet.extra-markers.min.js',
         //'node_modules/typeahead.js/dist/bloodhound.min.js',
