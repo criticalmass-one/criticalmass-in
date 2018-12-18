@@ -9,7 +9,7 @@ sass.compiler = require('node-sass');
 
 /* Leaflet */
 
-gulp.task('leaflet-images', function () {
+/*gulp.task('leaflet-images', function () {
     return gulp.src('node_modules/leaflet/dist/images/*')
         .pipe(gulp.dest('public/img/leaflet'));
 });
@@ -22,12 +22,12 @@ gulp.task('leaflet-css', [], function() {
         .pipe(gulp.dest('assets/css'));
 });
 
-gulp.task('build-leaflet', ['leaflet-images', 'leaflet-css']);
+gulp.task('build-leaflet', ['leaflet-images', 'leaflet-css']);*/
 
 
 /* Leaflet-Extramarkers */
 
-gulp.task('extramarkers-images', function () {
+/*gulp.task('extramarkers-images', function () {
     return gulp.src('node_modules/leaflet-extra-markers/dist/img/*')
         .pipe(gulp.dest('public/img/leaflet-extra-markers'));
 });
@@ -40,19 +40,19 @@ gulp.task('extramarkers-css', [], function() {
         .pipe(gulp.dest('assets/css'));
 });
 
-gulp.task('build-leaflet-extramarkers', ['extramarkers-images', 'extramarkers-css']);
+gulp.task('build-leaflet-extramarkers', ['extramarkers-images', 'extramarkers-css']);*/
 
 
 /* Assets */
 
 gulp.task('copy-asset-images', function () {
-    return gulp.src('assets/img/*/*')
-        .pipe(gulp.dest('public/img/'));
+    return gulp.src('assets/images/*/*')
+        .pipe(gulp.dest('public/images/'));
 });
 
 gulp.task('copy-fonts', function () {
-    return gulp.src('node_modules/font-awesome/fonts/*')
-        .pipe(gulp.dest('public/fonts'));
+/*    return gulp.src('node_modules/font-awesome/fonts/*')
+        .pipe(gulp.dest('public/fonts'));*/
 });
 
 gulp.task('build-assets', ['copy-asset-images', 'copy-fonts']);
@@ -61,19 +61,19 @@ gulp.task('build-assets', ['copy-asset-images', 'copy-fonts']);
 /* CSS */
 
 gulp.task('sass', function () {
-    return gulp.src('assets/scss/*.scss')
+/*    return gulp.src('assets/scss/*.scss')
         .pipe(sass().on('error', sass.logError))
-        .pipe(gulp.dest('assets/css'));
+        .pipe(gulp.dest('assets/css'));*/
 });
 
 gulp.task('compress-css', ['leaflet-css', 'sass'], function () {
     return gulp.src([
             'node_modules/bootstrap/dist/css/bootstrap.css',
-            'node_modules/font-awesome/css/font-awesome.css',
-            'assets/css/*',
+            //'node_modules/font-awesome/css/font-awesome.css',
+            //'assets/css/*',
         ])
         .pipe(cleanCSS())
-        .pipe(concat('luft.min.css'))
+        .pipe(concat('criticalmass.min.css'))
         .pipe(gulp.dest('public/css/'));
 });
 
@@ -97,15 +97,15 @@ gulp.task('compress-js', function () {
 
 gulp.task('copy-js-external', function () {
     return gulp.src([
-        'node_modules/jquery/dist/jquery.min.js',
-        'node_modules/popper.js/dist/popper.min.js',
+        //'node_modules/jquery/dist/jquery.min.js',
+        //'node_modules/popper.js/dist/popper.min.js',
         'node_modules/bootstrap/dist/js/bootstrap.min.js',
-        'node_modules/leaflet/dist/leaflet.js',
-        'node_modules/leaflet-extra-markers/dist/js/leaflet.extra-markers.min.js',
-        'node_modules/typeahead.js/dist/bloodhound.min.js',
-        'node_modules/typeahead.js/dist/typeahead.jquery.min.js',
-        'node_modules/calendar_heatmap/calendar_heatmap.bundle.js',
-        'node_modules/chart.js/dist/Chart.bundle.min.js',
+        //'node_modules/leaflet/dist/leaflet.js',
+        //'node_modules/leaflet-extra-markers/dist/js/leaflet.extra-markers.min.js',
+        //'node_modules/typeahead.js/dist/bloodhound.min.js',
+        //'node_modules/typeahead.js/dist/typeahead.jquery.min.js',
+        //'node_modules/calendar_heatmap/calendar_heatmap.bundle.js',
+        //'node_modules/chart.js/dist/Chart.bundle.min.js',
     ])
         .pipe(gulp.dest('public/js/'));
 });
