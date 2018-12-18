@@ -25,6 +25,7 @@
     "bootstrap-colorpicker": "^2.5.3",
     "bootstrap-datepicker": "^1.8.0",
     "dateformat": "^3.0.3",
-    "dropzone": "^5.5.1"
+    "dropzone": "^5.5.1",
+    "jquery": "^3.3.1"
   }
 }
