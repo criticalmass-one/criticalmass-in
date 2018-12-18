@@ -9,38 +9,39 @@ sass.compiler = require('node-sass');
 
 /* Leaflet */
 
-/*gulp.task('leaflet-images', function () {
-    return gulp.src('node_modules/leaflet/dist/images/*')
-        .pipe(gulp.dest('public/img/leaflet'));
+gulp.task('leaflet-images', function () {
+/*    return gulp.src('node_modules/leaflet/dist/images/*')
+        .pipe(gulp.dest('public/img/leaflet'));*/
 });
 
 gulp.task('leaflet-css', [], function() {
-    return gulp.src('node_modules/leaflet/dist/leaflet.css')
+/*    return gulp.src('node_modules/leaflet/dist/leaflet.css')
         .pipe(urlAdjuster({
             replace: ['images/','/img/leaflet/'],
         }))
-        .pipe(gulp.dest('assets/css'));
+        .pipe(gulp.dest('assets/css'));*/
 });
 
-gulp.task('build-leaflet', ['leaflet-images', 'leaflet-css']);*/
+gulp.task('build-leaflet', ['leaflet-images', 'leaflet-css']);
 
 
 /* Leaflet-Extramarkers */
 
-/*gulp.task('extramarkers-images', function () {
-    return gulp.src('node_modules/leaflet-extra-markers/dist/img/*')
-        .pipe(gulp.dest('public/img/leaflet-extra-markers'));
+gulp.task('extramarkers-images', function () {
+/*    return gulp.src('node_modules/leaflet-extra-markers/dist/img/*')
+        .pipe(gulp.dest('public/img/leaflet-extra-markers'));*/
 });
 
 gulp.task('extramarkers-css', [], function() {
+/*
     return gulp.src('node_modules/leaflet-extra-markers/dist/css/leaflet.extra-markers.min.css')
         .pipe(urlAdjuster({
             replace: ['../img/','/img/leaflet-extra-markers/'],
         }))
-        .pipe(gulp.dest('assets/css'));
+        .pipe(gulp.dest('assets/css')); */
 });
 
-gulp.task('build-leaflet-extramarkers', ['extramarkers-images', 'extramarkers-css']);*/
+gulp.task('build-leaflet-extramarkers', ['extramarkers-images', 'extramarkers-css']);
 
 
 /* Assets */

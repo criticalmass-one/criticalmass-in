@@ -19,5 +19,8 @@
     "node-sass": "^4.9.4"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^3.4.0"
+  }
 }
