@@ -1,7 +1,7 @@
 var CriticalMass = CriticalMass || {};
 
 CriticalMass.loadModule = function (name, context, options, callback) {
-    require([name], function (Module) {
+    require([name + '.min'], function (Module) {
         var module = new Module(context, options);
 
         if (callback) {
