@@ -128,6 +128,7 @@ gulp.task('copy-js-external', function () {
         'node_modules/datatables/media/js/jquery.dataTables.min.js',
         'node_modules/cookie-notice/dist/cookie.notice.min.js',
         'node_modules/leaflet-sleep/Leaflet.Sleep.js',
+        'node_modules/jquery-select-areas/jquery.selectareas.min.js',
         'node_modules/requirejs/require.js',
     ])
         .pipe(gulp.dest('public/js/'));
