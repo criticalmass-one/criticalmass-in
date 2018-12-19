@@ -97,17 +97,11 @@ gulp.task('build-css', ['sass', 'compress-css']);
 
 /* Javascript */
 
-gulp.task('compress-js', function () {
-    return gulp.src([
-        'assets/js/*',
-    ])
-        .pipe(minify({
-            ext: {
-                min:'.min.js'
-            },
-            noSource: true,
-        }))
-        .pipe(gulp.dest('public/js/'));
+gulp.task('copy-js-modules', function () {
+	return gulp.src([
+		'assets/js/modules/**/**/*.js',
+	    ])
+		.pipe(gulp.dest('public/js/modules/'));
 });
 
 gulp.task('copy-js-external', function () {
@@ -134,7 +128,23 @@ gulp.task('copy-js-external', function () {
         .pipe(gulp.dest('public/js/'));
 });
 
-gulp.task('build-js', ['compress-js', 'copy-js-external']);
+gulp.task('compress-js', ['copy-js'], function () {
+	return gulp.src([
+		'public/js/*.js',
+	])
+		.pipe(minify({
+			ext: {
+				min: '.min.js'
+			},
+			noSource: true,
+			ignoreFiles: ['.min.js']
+		}))
+		.pipe(gulp.dest('public/js/'));
+});
+
+gulp.task('copy-js', ['copy-js-modules', 'copy-js-external']);
+
+gulp.task('build-js', ['compress-js']);
 
 gulp.task('build', ['build-leaflet', 'build-leaflet-extramarkers', 'build-assets', 'build-js', 'build-css'], function () {});
 
