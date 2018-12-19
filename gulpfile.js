@@ -3,7 +3,7 @@ let minify = require('gulp-minify');
 let cleanCSS = require('gulp-clean-css');
 let concat = require('gulp-concat');
 let urlAdjuster = require('gulp-css-replace-url');
-
+let flatten = require('gulp-flatten');
 let sass = require('gulp-sass');
 sass.compiler = require('node-sass');
 
@@ -101,6 +101,7 @@ gulp.task('copy-js-modules', function () {
 	return gulp.src([
 		'assets/js/**/**/**/*.js',
 	    ])
+        .pipe(flatten())
 		.pipe(gulp.dest('public/js/'));
 });
 
