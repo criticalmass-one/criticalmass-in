@@ -99,9 +99,9 @@ gulp.task('build-css', ['sass', 'compress-css']);
 
 gulp.task('copy-js-modules', function () {
 	return gulp.src([
-		'assets/js/modules/**/**/*.js',
+		'assets/js/**/**/**/*.js',
 	    ])
-		.pipe(gulp.dest('public/js/modules/'));
+		.pipe(gulp.dest('public/js/'));
 });
 
 gulp.task('copy-js-external', function () {
@@ -137,7 +137,7 @@ gulp.task('compress-js', ['copy-js'], function () {
 				min: '.min.js'
 			},
 			noSource: true,
-			ignoreFiles: ['.min.js']
+			ignoreFiles: ['*.min.js']
 		}))
 		.pipe(gulp.dest('public/js/'));
 });
