@@ -1,4 +1,4 @@
-define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate', 'leaflet-sleep'], function () {
+define(['leaflet', 'CityMarker', 'LocationMarker', 'leaflet-locate', 'Leaflet.Sleep'], function () {
     Map = function (mapId, settings) {
         this._mapId = mapId;
 

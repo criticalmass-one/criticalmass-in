@@ -1,4 +1,4 @@
-define(['cookie-notice'], function () {
+define(['cookie.notice'], function () {
 
     CookieNotice = function (context, options) {
         new cookieNoticeJS({

@@ -22,7 +22,7 @@
     <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 
-    <script src="{{ asset('/js/external/requirejs/require.js') }}"></script>
+    <script src="{{ asset('/js/require.min.js') }}"></script>
     <script src="{{ asset('/js/CriticalMass.js') }}"></script>
 
     {% block additionalHeaderElements %}{% endblock %}
@@ -42,22 +42,9 @@
 
 {% block masterContent %}{% endblock %}
 
-{% if bootstrap4 is defined and bootstrap4 == true %}
-<script>
-    CriticalMass.loadModule('initBootstrap');
-</script>
-<script src="{{ asset('/js/external/jquery/jquery-3.2.1.min.js') }}"></script>
-<script src="{{ asset('/js/external/bootstrap4/bootstrap.min.js') }}"></script>
-{% elseif bootstrap4app is defined and bootstrap4app == true %}
-<script>
-    CriticalMass.loadModule('initBootstrap');
-</script>
-<script src="{{ asset('/js/external/jquery/jquery-3.2.1.min.js') }}"></script>
-<script src="{{ asset('/js/external/bootstrap-app-4/toolkit.min.js') }}"></script>
-{% else %}
-    <script src="{{ asset('/js/external/jquery/jquery-3.2.1.min.js') }}"></script>
-    <script src="{{ asset('/js/external/bootstrap3/bootstrap.min.js') }}"></script>
-{% endif %}
+<script src="{{ asset('/js/jquery.min.js') }}"></script>
+<script src="{{ asset('/js/bootstrap.min.js') }}"></script>
+
 {% block additionalFooterElements %}{% endblock %}
 <script>
     CriticalMass.loadModule('CookieNotice');
