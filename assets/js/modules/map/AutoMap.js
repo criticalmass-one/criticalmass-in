@@ -1,4 +1,4 @@
-define(['Map', 'leaflet-polyline', 'leaflet-extramarkers', 'Container', 'jquery'], function () {
+define(['Map', 'leaflet-polyline', 'leaflet.extra-markers', 'Container', 'jquery'], function () {
     AutoMap = function (mapId, settings) {
         this._mapId = mapId;
 

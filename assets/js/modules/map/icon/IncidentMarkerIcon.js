@@ -1,4 +1,4 @@
-define(['leaflet', 'leaflet-extramarkers'], function () {
+define(['leaflet', 'leaflet.extra-markers'], function () {
     IncidentMarkerIcon = function () {
     };
 

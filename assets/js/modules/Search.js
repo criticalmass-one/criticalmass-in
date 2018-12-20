@@ -1,4 +1,4 @@
-define(['typeahead', 'bloodhound', 'dateformat'], function () {
+define(['typeahead.jquery', 'bloodhound', 'dateformat'], function () {
 
     Search = function (context, options) {
         this._$input = $(context);

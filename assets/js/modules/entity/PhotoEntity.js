@@ -1,4 +1,4 @@
-define(['MarkerEntity', 'leaflet-extramarkers'], function () {
+define(['MarkerEntity', 'leaflet.extra-markers'], function () {
     PhotoEntity = function () {
     };
 

@@ -18,7 +18,7 @@ require.config({
             deps: ['leaflet'],
             exports: 'L.Map.Sleep'
         },
-        'leaflet-extramarkers': {
+        'leaflet.extra-markers': {
             deps: ['leaflet'],
             exports: 'L.ExtraMarkers'
         },

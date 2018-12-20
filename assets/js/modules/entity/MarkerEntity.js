@@ -1,4 +1,4 @@
-define(['BaseEntity', 'leaflet', 'Modal', 'leaflet-extramarkers'], function () {
+define(['BaseEntity', 'leaflet', 'Modal', 'leaflet.extra-markers'], function () {
     MarkerEntity = function () {
 
     };

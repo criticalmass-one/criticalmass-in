@@ -1,4 +1,4 @@
-define(['leaflet', 'leaflet-markercluster', 'LocalContainer', 'leaflet-extramarkers'], function () {
+define(['leaflet', 'leaflet-markercluster', 'LocalContainer', 'leaflet.extra-markers'], function () {
     IncidentContainer = function () {
         this._list = [];
         this._layer = L.markerClusterGroup({

@@ -1,4 +1,4 @@
-define(['Marker', 'leaflet-extramarkers'], function () {
+define(['Marker', 'leaflet.extra-markers'], function () {
     CityMarker = function (latLng, draggable) {
         this._latLng = latLng;
         this._draggable = draggable;

@@ -1,4 +1,4 @@
-define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet-extramarkers', 'Modal', 'CloseModalButton', 'ModalButton', 'IncidentMarker'], function (CriticalService) {
+define(['CriticalService', 'leaflet', 'BaseEntity', 'leaflet-polyline', 'leaflet.extra-markers', 'Modal', 'CloseModalButton', 'ModalButton', 'IncidentMarker'], function (CriticalService) {
     IncidentEntity = function () {
     };
 

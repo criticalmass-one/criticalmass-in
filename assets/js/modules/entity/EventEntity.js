@@ -1,4 +1,4 @@
-define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'ModalButton', 'CloseModalButton', 'dateformat'], function (CriticalService) {
+define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet.extra-markers', 'ModalButton', 'CloseModalButton', 'dateformat'], function (CriticalService) {
     EventEntity = function () {
     };
 

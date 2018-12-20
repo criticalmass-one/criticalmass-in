@@ -1,4 +1,4 @@
-define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet-extramarkers', 'dateformat'], function (CriticalService) {
+define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet.extra-markers', 'dateformat'], function (CriticalService) {
     SubrideEntity = function () {
     };
 

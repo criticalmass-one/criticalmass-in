@@ -86,6 +86,7 @@ gulp.task('compress-css', ['leaflet-css', 'sass'], function () {
             'node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css',
             'node_modules/datatables/media/css/jquery.dataTables.min.css',
             'node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css',
+            'node_modules/leaflet.locatecontrol/dist/L.Control.Locate.min.css',
         ])
         .pipe(cleanCSS())
         .pipe(concat('criticalmass.min.css'))
@@ -121,6 +122,7 @@ gulp.task('copy-js-external', function () {
         'node_modules/leaflet/dist/leaflet.js',
         'node_modules/leaflet.markercluster/dist/leaflet.markercluster.js',
         'node_modules/leaflet-extra-markers/dist/js/leaflet.extra-markers.js',
+        'node_modules/leaflet.locatecontrol/src/L.Control.Locate.js',
         'node_modules/chart.js/dist/Chart.bundle.js',
         'node_modules/datatables/media/js/jquery.dataTables.js',
         'node_modules/cookie-notice/dist/cookie.notice.js',

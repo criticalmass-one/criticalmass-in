@@ -1,4 +1,4 @@
-define(['PhotoMarker', 'TrackEntity', 'leaflet-geometry', 'leaflet-snap', 'leaflet-extramarkers'], function () {
+define(['PhotoMarker', 'TrackEntity', 'leaflet-geometry', 'leaflet-snap', 'leaflet.extra-markers'], function () {
     SnapablePhotoMarker = function (latLng) {
         this._latLng = latLng;
         this._draggable = true;

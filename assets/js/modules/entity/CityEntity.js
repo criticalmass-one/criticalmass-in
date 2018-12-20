@@ -1,4 +1,4 @@
-define(['CriticalService', 'leaflet', 'MarkerEntity', 'ModalButton', 'CloseModalButton', 'leaflet-extramarkers'], function (CriticalService) {
+define(['CriticalService', 'leaflet', 'MarkerEntity', 'ModalButton', 'CloseModalButton', 'leaflet.extra-markers'], function (CriticalService) {
     CityEntity = function () {
     };
 
