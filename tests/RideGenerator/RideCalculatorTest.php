@@ -121,13 +121,11 @@ class RideCalculatorTest extends TestCase
         /** @var Ride $ride */
         $ride = array_pop($rideList);
 
-        var_dump($ride->getDateTime());
-
         $europeLondon = new \DateTimeZone('Europe/London');
         $europeBerlin = new \DateTimeZone('Europe/Berlin');
 
         $this->assertEquals($europeLondon, $ride->getDateTime()->getTimezone());
-        $this->assertEquals((new \DateTime('2018-09-28 18:00:00', $europeLondon))->format('Y-m-d H:i:s'), $ride->getDateTime()->format('Y-m-d H:i:s'));
+        $this->assertEquals((new \DateTime('2018-09-28 17:00:00', $europeLondon))->format('Y-m-d H:i:s'), $ride->getDateTime()->format('Y-m-d H:i:s'));
     }
 
     public function testTime(): void
