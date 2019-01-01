@@ -139,11 +139,13 @@ class RideCalculatorTest extends TestCase
         ;
 
         $utc = new \DateTimeZone('UTC');
+        $europeBerlin = new \DateTimeZone('Europe/Berlin');
 
         /** @var Ride $ride */
         $ride = array_pop($rideList);
 
-        $this->assertEquals(new \DateTime('2018-09-28 18:00:00', $utc), $ride->getDateTime()->setTimezone($utc));
+        $this->assertEquals(new \DateTime('2018-09-28 17:00:00', $utc), $ride->getDateTime());
+        $this->assertEquals($europeBerlin, $ride->getDateTime()->getTimezone());
         $this->assertTrue($ride->getHasTime());
     }
 
