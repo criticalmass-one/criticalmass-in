@@ -164,7 +164,8 @@ class RideCalculatorTest extends TestCase
         /** @var Ride $ride */
         $ride = array_pop($rideList);
 
-        $this->assertEquals(new \DateTime('2018-02-23 20:00:00', $europeBerlin), $ride->getDateTime());
+        $this->assertEquals(new \DateTime('2018-02-23 19:00:00', $europeBerlin), $ride->getDateTime());
+        $this->assertEquals($europeBerlin, $ride->getDateTime()->getTimezone());
         $this->assertTrue($ride->getHasTime());
     }
 }
