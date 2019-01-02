@@ -48,6 +48,18 @@ class RideGeneratorTest extends KernelTestCase
         $this->assertEquals('Hamburg', $hamburg->getCity());
     }
 
+    public function testHamburg(): void
+    {
+        $hamburg = $this->getCityRepository()->findOneByCity('Hamburg');
+
+        $from = new \DateTime('2018-12-01');
+        $until = new \DateTime('2018-12-31');
+
+        $hamburgCycles = $this->getCityCycleRepository()->findByCity($hamburg, $from, $until);
+
+        $this->assertEquals(1, count($hamburgCycles));
+    }
+
     public function testBerlin(): void
     {
         $berlin = $this->getCityRepository()->findOneByCity('Berlin');
@@ -70,5 +82,29 @@ class RideGeneratorTest extends KernelTestCase
         $halleCycles = $this->getCityCycleRepository()->findByCity($halle, $from, $until);
 
         $this->assertEquals(1, count($halleCycles));
+    }
+
+    public function testMainz1(): void
+    {
+        $mainz = $this->getCityRepository()->findOneByCity('Mainz');
+
+        $from = new \DateTime('2018-09-01');
+        $until = new \DateTime('2018-09-30');
+
+        $mainzCycles = $this->getCityCycleRepository()->findByCity($mainz, $from, $until);
+
+        $this->assertEquals(1, count($mainzCycles));
+    }
+
+    public function testMainz2(): void
+    {
+        $mainz = $this->getCityRepository()->findOneByCity('Mainz');
+
+        $from = new \DateTime('2018-10-01');
+        $until = new \DateTime('2018-10-31');
+
+        $mainzCycles = $this->getCityCycleRepository()->findByCity($mainz, $from, $until);
+
+        $this->assertEquals(1, count($mainzCycles));
     }
 }
