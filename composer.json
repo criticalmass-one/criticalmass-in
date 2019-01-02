@@ -85,7 +85,8 @@
         "symfony/phpunit-bridge": "*",
         "phpunit/phpunit": "^7",
         "codedungeon/phpunit-result-printer": "^0.6.0",
-        "symfony/profiler-pack": "^1.0"
+        "symfony/profiler-pack": "^1.0",
+        "doctrine/doctrine-fixtures-bundle": "^3.1"
     },
     "conflict": {
         "symfony/symfony": "*"
