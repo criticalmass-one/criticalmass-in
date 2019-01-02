@@ -31,7 +31,7 @@ class CityCycleFixtures extends Fixture implements DependentFixtureInterface
 
         $berlin2 = new CityCycle();
         $berlin2
-            ->setCity($this->getReference('city-hamburg'))
+            ->setCity($this->getReference('city-berlin'))
             ->setDayOfWeek(CityCycle::DAY_SUNDAY)
             ->setWeekOfMonth(CityCycle::WEEK_FIRST)
             ->setTime(new \DateTime('14:00'));

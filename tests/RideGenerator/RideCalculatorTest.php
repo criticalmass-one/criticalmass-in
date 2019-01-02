@@ -21,8 +21,7 @@ class RideCalculatorTest extends TestCase
         $city = new City();
         $city
             ->setCity('London')
-            ->setTimezone('Europe/London')
-        ;
+            ->setTimezone('Europe/London');
 
         $cityCycle = new CityCycle();
         $cityCycle
@@ -32,8 +31,7 @@ class RideCalculatorTest extends TestCase
             ->setLocation('Southbank under Waterloo Bridge')
             ->setLatitude(51.507320112865)
             ->setLongitude(-0.11578559875488)
-            ->setCity($city)
-        ;
+            ->setCity($city);
 
         return $cityCycle;
     }
@@ -43,8 +41,7 @@ class RideCalculatorTest extends TestCase
         $city = new City();
         $city
             ->setCity('Hamburg')
-            ->setTimezone('Europe/Berlin')
-        ;
+            ->setTimezone('Europe/Berlin');
 
         $cityCycle = new CityCycle();
         $cityCycle
@@ -54,8 +51,28 @@ class RideCalculatorTest extends TestCase
             ->setLocation('Stadtpark Hamburg')
             ->setLatitude(53.596812)
             ->setLongitude(10.011008)
+            ->setCity($city);
+
+        return $cityCycle;
+    }
+
+    protected function createHalleCycle(): CityCycle
+    {
+        $city = new City();
+        $city
+            ->setCity('Halle')
+            ->setTimezone('Europe/Berlin');
+
+        $cityCycle = new CityCycle();
+        $cityCycle
+            ->setWeekOfMonth(CityCycle::WEEK_FIRST)
+            ->setDayOfWeek(CityCycle::DAY_FRIDAY)
+            ->setTime(new \DateTime('17:00:00'))
+            ->setLocation('August-Bebel-Platz')
+            ->setLatitude(51.491664696772)
+            ->setLongitude(11.96897149086)
             ->setCity($city)
-        ;
+            ->setValidFrom(new \DateTime('2018-03-30'));
 
         return $cityCycle;
     }
@@ -67,8 +84,7 @@ class RideCalculatorTest extends TestCase
             ->setMonth(9)
             ->addCycle($this->createHamburgCycle())
             ->execute()
-            ->getRideList()
-        ;
+            ->getRideList();
 
         $this->assertEquals(1, count($rideList));
     }
@@ -80,8 +96,7 @@ class RideCalculatorTest extends TestCase
             ->setMonth(9)
             ->addCycle($this->createHamburgCycle())
             ->execute()
-            ->getRideList()
-        ;
+            ->getRideList();
 
         /** @var Ride $ride */
         $ride = array_pop($rideList);
@@ -99,8 +114,7 @@ class RideCalculatorTest extends TestCase
             ->setMonth(9)
             ->addCycle($this->createHamburgCycle())
             ->execute()
-            ->getRideList()
-        ;
+            ->getRideList();
 
         /** @var Ride $ride */
         $ride = array_pop($rideList);
@@ -115,8 +129,7 @@ class RideCalculatorTest extends TestCase
             ->setMonth(9)
             ->addCycle($this->createLondonCycle())
             ->execute()
-            ->getRideList()
-        ;
+            ->getRideList();
 
         /** @var Ride $ride */
         $ride = array_pop($rideList);
@@ -135,8 +148,7 @@ class RideCalculatorTest extends TestCase
             ->setMonth(9)
             ->addCycle($this->createHamburgCycle())
             ->execute()
-            ->getRideList()
-        ;
+            ->getRideList();
 
         $utc = new \DateTimeZone('UTC');
         $europeBerlin = new \DateTimeZone('Europe/Berlin');
@@ -156,8 +168,7 @@ class RideCalculatorTest extends TestCase
             ->setMonth(2)
             ->addCycle($this->createHamburgCycle())
             ->execute()
-            ->getRideList()
-        ;
+            ->getRideList();
 
         $europeBerlin = new \DateTimeZone('Europe/Berlin');
 
