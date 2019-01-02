@@ -13,6 +13,7 @@ class CityFixtures extends Fixture
         $manager->persist($this->createCity('Hamburg'));
         $manager->persist($this->createCity('Halle'));
         $manager->persist($this->createCity('Berlin'));
+        $manager->persist($this->createCity('Mainz'));
         $manager->persist($this->createCity('London', 'Europe/London'));
 
         $manager->flush();
@@ -25,6 +26,8 @@ class CityFixtures extends Fixture
             ->setTitle(sprintf('Critical Mass %s', $cityName))
             ->setCity($cityName)
             ->setTimezone($timezone);
+
+        $this->setReference(sprintf('city-%s', strtolower($cityName)), $city);
 
         return $city;
     }
