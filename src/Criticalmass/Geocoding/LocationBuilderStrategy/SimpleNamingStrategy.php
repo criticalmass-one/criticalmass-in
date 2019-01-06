@@ -8,7 +8,7 @@ class SimpleNamingStrategy implements LocationBuilderStrategyInterface
 {
     public function buildLocation(Location $location): ?string
     {
-        if ($location->getStreetName() && $location->getAdminLevels()->first()) {
+        if ($location->getStreetName() && $location->getAdminLevels() && $location->getAdminLevels()->first()) {
             return sprintf('%s, %s', $location->getStreetName(), $location->getAdminLevels()->first()->getName());
         }
 
