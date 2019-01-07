@@ -28,7 +28,7 @@ class CycleAnalyzer extends AbstractCycleAnalyzer
             $this->simulatedRideList = array_merge($this->simulatedRideList, $rideList);
 
             $current->add($month);
-        } while ($current->format('Y-m') < $this->endDateTime->format('Y-m'));
+        } while ($current->format('Y-m') <= $this->endDateTime->format('Y-m'));
 
         return $this;
     }
