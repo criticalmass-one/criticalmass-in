@@ -375,7 +375,7 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
         return $this->shorturl;
     }
 
-    public function setLocation(string $location): ReverseGeocodeable
+    public function setLocation(string $location = null): ReverseGeocodeable
     {
         $this->location = $location;
 
