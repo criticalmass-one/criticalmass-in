@@ -26,13 +26,13 @@ require.config({
             deps: ['leaflet'],
             exports: 'L.MarkerClusterGroup'
         },
-        typeahead: {
+        'typeahead.jquery': {
             deps: ['jquery'],
             init: function ($) {
-                return require.s.contexts._.registry['typeahead.js'].factory($);
+                return require.s.contexts._.registry['typeahead.jquery.js'].factory($);
             }
         },
-        bloodhound: {
+        'bloodhound': {
             deps: [],
             exports: 'Bloodhound'
         }

@@ -118,7 +118,7 @@ gulp.task('copy-js-external', function () {
         'node_modules/jquery/dist/jquery.js',
         'node_modules/jquery/dist/jquery.min.js',
         'node_modules/typeahead.js/dist/bloodhound.js',
-        'node_modules/typeahead.js/dist/typeahead.jquery.js',
+        'node_modules/typeahead.js/dist/typeahead.bundle.js',
         'node_modules/leaflet/dist/leaflet.js',
         'node_modules/leaflet.markercluster/dist/leaflet.markercluster.js',
         'node_modules/leaflet-extra-markers/dist/js/leaflet.extra-markers.js',
