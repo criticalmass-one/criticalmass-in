@@ -107,4 +107,16 @@ class RideGeneratorTest extends KernelTestCase
 
         $this->assertEquals(1, count($mainzCycles));
     }
+
+    public function testEsslingen(): void
+    {
+        $esslingen = $this->getCityRepository()->findOneByCity('Esslingen');
+
+        $from = new \DateTime('2018-10-01');
+        $until = new \DateTime('2018-10-31');
+
+        $esslingenCycles = $this->getCityCycleRepository()->findByCity($esslingen, $from, $until);
+
+        $this->assertEquals(0, count($esslingenCycles));
+    }
 }

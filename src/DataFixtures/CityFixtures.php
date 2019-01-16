@@ -15,6 +15,7 @@ class CityFixtures extends Fixture
         $manager->persist($this->createCity('Berlin'));
         $manager->persist($this->createCity('Mainz'));
         $manager->persist($this->createCity('London', 'Europe/London'));
+        $manager->persist($this->createCity('Esslingen'));
 
         $manager->flush();
     }

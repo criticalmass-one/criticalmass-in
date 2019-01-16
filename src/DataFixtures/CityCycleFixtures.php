@@ -78,6 +78,16 @@ class CityCycleFixtures extends Fixture implements DependentFixtureInterface
 
         $manager->persist($london);
 
+        $esslingen = new CityCycle();
+        $esslingen
+            ->setCity($this->getReference('city-esslingen'))
+            ->setDayOfWeek(CityCycle::DAY_FRIDAY)
+            ->setWeekOfMonth(CityCycle::WEEK_SECOND)
+            ->setTime(new \DateTime('18:00'))
+            ->setDisabledAt(new \DateTime('2017-12-31'));
+
+        $manager->persist($london);
+
         $manager->flush();
     }
 
