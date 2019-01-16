@@ -27,7 +27,7 @@ class RideCalculatorTest extends TestCase
         $cityCycle
             ->setWeekOfMonth(CityCycle::WEEK_LAST)
             ->setDayOfWeek(CityCycle::DAY_FRIDAY)
-            ->setTime(new \DateTime('17:00:00'), new \DateTimeZone('Europe/London'))
+            ->setTime(new \DateTime('18:00:00'), new \DateTimeZone('Europe/London'))
             ->setLocation('Southbank under Waterloo Bridge')
             ->setLatitude(51.507320112865)
             ->setLongitude(-0.11578559875488)
@@ -47,7 +47,7 @@ class RideCalculatorTest extends TestCase
         $cityCycle
             ->setWeekOfMonth(CityCycle::WEEK_LAST)
             ->setDayOfWeek(CityCycle::DAY_FRIDAY)
-            ->setTime(new \DateTime('18:00:00'))
+            ->setTime(new \DateTime('19:00:00'))
             ->setLocation('Stadtpark Hamburg')
             ->setLatitude(53.596812)
             ->setLongitude(10.011008)
@@ -67,7 +67,7 @@ class RideCalculatorTest extends TestCase
         $cityCycle
             ->setWeekOfMonth(CityCycle::WEEK_FIRST)
             ->setDayOfWeek(CityCycle::DAY_FRIDAY)
-            ->setTime(new \DateTime('17:00:00'))
+            ->setTime(new \DateTime('18:00:00'))
             ->setLocation('August-Bebel-Platz')
             ->setLatitude(51.491664696772)
             ->setLongitude(11.96897149086)
@@ -138,7 +138,7 @@ class RideCalculatorTest extends TestCase
         $europeBerlin = new \DateTimeZone('Europe/Berlin');
 
         $this->assertEquals($europeLondon, $ride->getDateTime()->getTimezone());
-        $this->assertEquals((new \DateTime('2018-09-28 17:00:00', $europeLondon))->format('Y-m-d H:i:s'), $ride->getDateTime()->format('Y-m-d H:i:s'));
+        $this->assertEquals((new \DateTime('2018-09-28 18:00:00', $europeLondon))->format('Y-m-d H:i:s'), $ride->getDateTime()->format('Y-m-d H:i:s'));
     }
 
     public function testTime(): void
