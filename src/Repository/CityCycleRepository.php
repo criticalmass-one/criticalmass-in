@@ -25,14 +25,8 @@ class CityCycleRepository extends EntityRepository
             $builder
                 ->andWhere(
                     $builder->expr()->orX(
-                        $builder->expr()->andX(
-                            $builder->expr()->lte('cc.validFrom', ':startDateTime'),
-                            $builder->expr()->gte('cc.validUntil', ':startDateTime')
-                        ),
-                        $builder->expr()->andX(
-                            $builder->expr()->isNull('cc.validFrom'),
-                            $builder->expr()->isNull('cc.validUntil')
-                        )
+                        $builder->expr()->lte('cc.validFrom', ':startDateTime'),
+                        $builder->expr()->isNull('cc.validFrom')
                     )
                 )
                 ->setParameter('startDateTime', $startDateTime);
@@ -42,14 +36,8 @@ class CityCycleRepository extends EntityRepository
             $builder
                 ->andWhere(
                     $builder->expr()->orX(
-                        $builder->expr()->andX(
-                            $builder->expr()->lte('cc.validFrom', ':endDateTime'),
-                            $builder->expr()->gte('cc.validUntil', ':endDateTime')
-                        ),
-                        $builder->expr()->andX(
-                            $builder->expr()->isNull('cc.validFrom'),
-                            $builder->expr()->isNull('cc.validUntil')
-                        )
+                        $builder->expr()->gte('cc.validUntil', ':endDateTime'),
+                        $builder->expr()->isNull('cc.validUntil')
                     )
                 )
                 ->setParameter('endDateTime', $endDateTime);
