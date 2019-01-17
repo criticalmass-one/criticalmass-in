@@ -51,10 +51,11 @@ class DuplicateFinder implements DuplicateFinderInterface
                     if ($ride->getDateTime()->format('Y-m-d') === $otherRide->getDateTime()->format('Y-m-d')) {
                         $duplicateKey = sprintf('%d-%s', $cityId, $ride->getDateTime()->format('Y-m-d'));
 
-                        $duplicateRideList[$duplicateKey] = [
-                            $ride,
-                            $otherRide,
-                        ];
+                        if (!array_key_exists($duplicateKey, $duplicateRideList)) {
+                            $duplicateRideList[$duplicateKey][] = $ride;
+                        }
+
+                        $duplicateRideList[$duplicateKey][] = $otherRide;
                     }
                 }
             }

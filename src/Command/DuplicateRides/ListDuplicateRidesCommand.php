@@ -3,6 +3,7 @@
 namespace App\Command\DuplicateRides;
 
 use App\Criticalmass\RideDuplicates\DuplicateFinder\DuplicateFinderInterface;
+use App\Entity\City;
 use App\Entity\CitySlug;
 use App\Entity\Ride;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -61,24 +62,58 @@ class ListDuplicateRidesCommand extends Command
 
         $duplicateRideList = $this->duplicateFinder->findDuplicates();
 
-        $table = new Table($output);
-
         foreach ($duplicateRideList as $duplicateRides) {
-            /** @var Ride $rideA */
-            $rideA = array_pop($duplicateRides);
-            /** @var Ride $rideB */
-            $rideB = array_pop($duplicateRides);
+            /** @var City $city */
+            $city = $duplicateRides[0]->getCity();
 
-            $table->addRow([
-                $rideA->getCity()->getCity(),
-                $rideA->getDateTime()->format('Y-m-d'),
-                $rideA->getId(),
-                $rideB->getId(),
-                $rideA->getLocation(),
-                $rideB->getLocation(),
-            ]);
+            /** @var \DateTime $dateTime */
+            $dateTime = $duplicateRides[0]->getDateTime();
+
+            $output->writeln(sprintf('Duplicates found for <info>%s</info> in <comment>%s</comment>', $city->getCity(), $dateTime->format('Y-m-d')));
+
+            $table = new Table($output);
+            $this->printTableHeader($table);
+
+            /** @var Ride $duplicateRide */
+            foreach ($duplicateRides as $duplicateRide) {
+                $this->printTableRow($table, $duplicateRide);
+            }
+
+            $table->render();
         }
+    }
 
-        $table->render();
+    protected function printTableHeader(Table $table): void
+    {
+        $table->setHeaders([
+            'ID',
+            'slug',
+            'dateTime',
+            'Location',
+            'Description',
+            'Participations',
+            'Views',
+            'Estimations',
+            'Tracks',
+            'Comments',
+            'LastUpdate',
+        ]);
+    }
+
+    protected function printTableRow(Table $table, Ride $ride): void
+    {
+        $table->addRow([
+            $ride->getId(),
+            $ride->getSlug(),
+            $ride->getDateTime()->format('Y-m-d H:i:s'),
+            sprintf('%s (%f, %f)', $ride->getLocation(), $ride->getLatitude(), $ride->getLongitude()),
+            substr($ride->getDescription() ?? '', 0, 32),
+            $ride->getParticipations()->count(),
+            $ride->getViews(),
+            $ride->getEstimates()->count(),
+            $ride->getTracks()->count(),
+            $ride->getPosts()->count(),
+            $ride->getUpdatedAt() ? $ride->getUpdatedAt()->format('Y-m-d H:i:s') : '',
+        ]);
     }
 }
