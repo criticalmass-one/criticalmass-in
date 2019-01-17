@@ -1,4 +1,4 @@
-define(['AutoMap', 'leaflet-polyline', 'Modal', 'ModalButton', 'CloseModalButton'], function () {
+define(['AutoMap', 'Modal', 'ModalButton', 'CloseModalButton'], function () {
     TrackListPage = function (settings) {
         this._init();
     };

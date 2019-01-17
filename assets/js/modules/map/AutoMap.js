@@ -1,4 +1,4 @@
-define(['Map', 'leaflet-polyline', 'leaflet.extra-markers', 'Container', 'jquery'], function () {
+define(['Polyline.encoded', 'leaflet.extra-markers', 'Container', 'jquery', 'Map'], function () {
     AutoMap = function (mapId, settings) {
         this._mapId = mapId;
 
@@ -10,7 +10,6 @@ define(['Map', 'leaflet-polyline', 'leaflet.extra-markers', 'Container', 'jquery
     AutoMap.prototype._defaults = {
         tileLayerUrl: 'https://tiles.caldera.cc/wikimedia-intl/{z}/{x}/{y}.png',
         mapAttribution: 'Wikimedia maps beta | Map data &copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap contributors</a>',
-        stylesheetAddress: '/css/external/leaflet/leaflet-0.7.7.css',
         detectRetina: true,
         defaultLatitude: 51.0851708,
         defaultLongitude: 5.9692092,
@@ -26,7 +25,6 @@ define(['Map', 'leaflet-polyline', 'leaflet.extra-markers', 'Container', 'jquery
     AutoMap.prototype._mapViewSet = false;
 
     AutoMap.prototype._init = function () {
-        this._loadStyles();
         this._initMap();
         this._addTileLayer();
         this._autoSettings();

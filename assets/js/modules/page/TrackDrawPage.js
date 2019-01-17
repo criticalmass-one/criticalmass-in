@@ -1,4 +1,4 @@
-define(['CriticalService', 'RideEntity', 'TrackEntity', 'CityEntity', 'Map', 'leaflet-polyline', 'leaflet-routing', 'leaflet-routing-draw', 'leaflet-routing-edit', 'leaflet-routing-storage', 'leaflet-snapping-lineutil', 'leaflet-snapping-marker', 'leaflet-snapping-polyline'], function (CriticalService) {
+define(['CriticalService', 'RideEntity', 'TrackEntity', 'CityEntity', 'Map', 'Polyline.encoded', 'leaflet-routing', 'leaflet-routing-draw', 'leaflet-routing-edit', 'leaflet-routing-storage', 'leaflet-snapping-lineutil', 'leaflet-snapping-marker', 'leaflet-snapping-polyline'], function (CriticalService) {
     TrackDrawPage = function (context, options) {
         this._CriticalService = CriticalService;
     };

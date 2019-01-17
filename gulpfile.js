@@ -33,7 +33,6 @@ gulp.task('extramarkers-images', function () {
 });
 
 gulp.task('extramarkers-css', [], function() {
-
     return gulp.src('node_modules/leaflet-extra-markers/dist/css/leaflet.extra-markers.min.css')
         .pipe(urlAdjuster({
             replace: ['../img/','/img/leaflet-extra-markers/'],
@@ -41,7 +40,12 @@ gulp.task('extramarkers-css', [], function() {
         .pipe(gulp.dest('assets/css'));
 });
 
-gulp.task('build-leaflet-extramarkers', ['extramarkers-images', 'extramarkers-css']);
+gulp.task('extramarkers-js', function () {
+    return gulp.src('node_modules/leaflet-extra-markers/src/assets/js/leaflet.extra-markers.js')
+        .pipe(gulp.dest('public/js/'));
+});
+
+gulp.task('build-leaflet-extramarkers', ['extramarkers-images', 'extramarkers-css', 'extramarkers-js']);
 
 
 /* Assets */
@@ -122,7 +126,6 @@ gulp.task('copy-js-external', function () {
         'node_modules/typeahead.js/dist/typeahead.jquery.js',
         'node_modules/leaflet/dist/leaflet.js',
         'node_modules/leaflet.markercluster/dist/leaflet.markercluster.js',
-        'node_modules/leaflet-extra-markers/dist/js/leaflet.extra-markers.js',
         'node_modules/leaflet.locatecontrol/src/L.Control.Locate.js',
         'node_modules/chart.js/dist/Chart.bundle.js',
         'node_modules/datatables/media/js/jquery.dataTables.js',
@@ -131,6 +134,7 @@ gulp.task('copy-js-external', function () {
         'node_modules/jquery-select-areas/jquery.selectareas.js',
         'node_modules/requirejs/require.js',
         'node_modules/datatables/media/js/jquery.dataTables.min.js',
+        'node_modules/polyline-encoded/Polyline.encoded.js',
     ])
         .pipe(gulp.dest('public/js/'));
 });

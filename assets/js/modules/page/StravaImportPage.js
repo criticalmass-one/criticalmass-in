@@ -1,4 +1,4 @@
-define(['Map', 'leaflet-polyline'], function () {
+define(['Map', 'Polyline.encoded'], function () {
     StravaImportPage = function (settings) {
         this._init();
     };

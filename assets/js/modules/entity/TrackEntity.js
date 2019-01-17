@@ -1,4 +1,4 @@
-define(['leaflet', 'MarkerEntity', 'UserEntity', 'leaflet-polyline'], function () {
+define(['leaflet', 'MarkerEntity', 'UserEntity', 'Polyline.encoded'], function () {
     TrackEntity = function () {
     };
 

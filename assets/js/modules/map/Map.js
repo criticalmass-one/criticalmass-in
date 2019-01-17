@@ -1,4 +1,5 @@
-define(['leaflet', 'CityMarker', 'LocationMarker', 'L.Control.Locate', 'Leaflet.Sleep'], function () {
+//define(['leaflet', 'CityMarker', 'LocationMarker', 'L.Control.Locate', 'Leaflet.Sleep'], function () {
+define(['leaflet', 'CityMarker', 'LocationMarker'], function () {
     Map = function (mapId, settings) {
         this._mapId = mapId;
 
@@ -10,7 +11,6 @@ define(['leaflet', 'CityMarker', 'LocationMarker', 'L.Control.Locate', 'Leaflet.
     Map.prototype._defaults = {
         tileLayerUrl: 'https://tiles.caldera.cc/wikimedia-intl/{z}/{x}/{y}.png',
         mapAttribution: 'Wikimedia maps beta | Map data &copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap contributors</a>',
-        stylesheetAddress: '/css/external/leaflet/leaflet-0.7.7.css',
         detectRetina: true,
         defaultLatitude: 51.0851708,
         defaultLongitude: 5.9692092,
@@ -25,16 +25,6 @@ define(['leaflet', 'CityMarker', 'LocationMarker', 'L.Control.Locate', 'Leaflet.
         this._loadStyles();
         this._initMap();
         this._addTileLayer();
-    };
-
-    Map.prototype._loadStyles = function () {
-        var $link = $('<link>', {
-            rel: 'stylesheet',
-            type: 'text/css',
-            href: this.settings.stylesheetAddress
-        });
-
-        $link.appendTo('head');
     };
 
     Map.prototype._initMap = function () {

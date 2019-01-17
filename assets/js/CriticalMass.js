@@ -25,6 +25,10 @@ require.config({
             deps: ['leaflet'],
             exports: 'L.MarkerClusterGroup'
         },
+        'Polyline.encoded': {
+            deps: ['leaflet'],
+            exports: 'L.PolylineUtil'
+        },
         'typeahead.jquery': {
             deps: ['jquery'],
             init: function ($) {
