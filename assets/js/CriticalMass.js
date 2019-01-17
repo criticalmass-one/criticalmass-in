@@ -2,7 +2,6 @@ var CriticalMass = CriticalMass || {};
 
 CriticalMass.loadModule = function (name, context, options, callback) {
     require([name], function (Module) {
-        console.log(name, Module);
         var module = new Module(context, options);
 
         if (callback) {
@@ -29,7 +28,7 @@ require.config({
         'typeahead.jquery': {
             deps: ['jquery'],
             init: function ($) {
-                return require.s.contexts._.registry['typeahead.jquery.js'].factory($);
+                return require.s.contexts._.registry['typeahead.js'].factory($);
             }
         },
         'bloodhound': {
