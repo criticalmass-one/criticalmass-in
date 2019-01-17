@@ -62,11 +62,11 @@ class ListDuplicateRidesCommand extends Command
         $duplicateRideList = $this->duplicateFinder->findDuplicates();
 
         foreach ($duplicateRideList as $duplicateRides) {
-            $this->handleDuplicates($output, $duplicateRides);
+            $this->handleDuplicates($input, $output, $duplicateRides);
         }
     }
 
-    protected function handleDuplicates(OutputInterface $output, array $duplicateRides): void
+    protected function handleDuplicates(InputInterface $input, OutputInterface $output, array $duplicateRides): void
     {
         /** @var City $city */
         $city = $duplicateRides[0]->getCity();
