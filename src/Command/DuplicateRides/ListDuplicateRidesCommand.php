@@ -12,7 +12,6 @@ use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Translation\TranslatorInterface;
 
 class ListDuplicateRidesCommand extends Command
 {
@@ -63,24 +62,29 @@ class ListDuplicateRidesCommand extends Command
         $duplicateRideList = $this->duplicateFinder->findDuplicates();
 
         foreach ($duplicateRideList as $duplicateRides) {
-            /** @var City $city */
-            $city = $duplicateRides[0]->getCity();
-
-            /** @var \DateTime $dateTime */
-            $dateTime = $duplicateRides[0]->getDateTime();
-
-            $output->writeln(sprintf('Duplicates found for <info>%s</info> in <comment>%s</comment>', $city->getCity(), $dateTime->format('Y-m-d')));
-
-            $table = new Table($output);
-            $this->printTableHeader($table);
-
-            /** @var Ride $duplicateRide */
-            foreach ($duplicateRides as $duplicateRide) {
-                $this->printTableRow($table, $duplicateRide);
-            }
-
-            $table->render();
+            $this->handleDuplicates($output, $duplicateRides);
         }
+    }
+
+    protected function handleDuplicates(OutputInterface $output, array $duplicateRides): void
+    {
+        /** @var City $city */
+        $city = $duplicateRides[0]->getCity();
+
+        /** @var \DateTime $dateTime */
+        $dateTime = $duplicateRides[0]->getDateTime();
+
+        $output->writeln(sprintf('Duplicates found for <info>%s</info> in <comment>%s</comment>', $city->getCity(), $dateTime->format('Y-m-d')));
+
+        $table = new Table($output);
+        $this->printTableHeader($table);
+
+        /** @var Ride $duplicateRide */
+        foreach ($duplicateRides as $duplicateRide) {
+            $this->printTableRow($table, $duplicateRide);
+        }
+
+        $table->render();
     }
 
     protected function printTableHeader(Table $table): void
