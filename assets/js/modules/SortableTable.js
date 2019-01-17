@@ -1,4 +1,4 @@
-define(['jquery', 'datatables'], function () {
+define(['jquery', 'jquery.dataTables'], function () {
     var SortableTable = function (context) {
         this.context = context;
 

@@ -29,6 +29,7 @@
     "chart.js": "^2.7.3",
     "cookie-notice": "^1.1.17",
     "datatables": "^1.10.18",
+    "datatables.net": "^1.10.19",
     "dateformat": "^3.0.3",
     "dropzone": "^5.5.1",
     "i": "^0.3.6",

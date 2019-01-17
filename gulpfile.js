@@ -87,6 +87,7 @@ gulp.task('compress-css', ['leaflet-css', 'sass'], function () {
             'node_modules/datatables/media/css/jquery.dataTables.min.css',
             'node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css',
             'node_modules/leaflet.locatecontrol/dist/L.Control.Locate.min.css',
+            'node_modules/datatables/media/css/jquery.dataTables.min.css',
         ])
         .pipe(cleanCSS())
         .pipe(concat('criticalmass.min.css'))
@@ -129,6 +130,7 @@ gulp.task('copy-js-external', function () {
         'node_modules/leaflet-sleep/Leaflet.Sleep.js',
         'node_modules/jquery-select-areas/jquery.selectareas.js',
         'node_modules/requirejs/require.js',
+        'node_modules/datatables/media/js/jquery.dataTables.min.js',
     ])
         .pipe(gulp.dest('public/js/'));
 });
