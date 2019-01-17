@@ -2,20 +2,31 @@
 
 namespace App\Command\DuplicateRides;
 
+use App\Criticalmass\RideDuplicates\DuplicateFinder\DuplicateFinderInterface;
+use App\Criticalmass\RideDuplicates\RideMerger\RideMergerInterface;
 use App\Entity\City;
-use App\Entity\CitySlug;
 use App\Entity\Ride;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
 
 class MergeDuplicateRidesCommand extends ListDuplicateRidesCommand
 {
+    /** @var RideMergerInterface $rideMerger */
+    protected $rideMerger;
+
+    public function __construct($name = null, RegistryInterface $registry, DuplicateFinderInterface $duplicateFinder, RideMergerInterface $rideMerger)
+    {
+        $this->rideMerger = $rideMerger;
+
+        parent::__construct($name, $registry, $duplicateFinder);
+    }
+
     protected function configure(): void
     {
         $this
@@ -69,7 +80,22 @@ class MergeDuplicateRidesCommand extends ListDuplicateRidesCommand
         $question = new ConfirmationQuestion(sprintf('Merge all <info>%d</info> rides in ride id <comment>%d</comment>?', count($duplicateRides), $targetId));
 
         if ($questionHelper->ask($input, $output, $question)) {
-            echo "FOO";
+            $this->rideMerger->setTargetRide($duplicateRides[$targetId]);
+
+            unset($duplicateRides[$targetId]);
+
+            $this->rideMerger->addSourceRides($duplicateRides);
+
+            $ride = $this->rideMerger->merge();
+
+            $question = new ConfirmationQuestion('Delete old rides?');
+            if ($questionHelper->ask($input, $output, $question)) {
+                foreach ($duplicateRides as $sourceRide) {
+                    $this->registry->getManager()->remove($sourceRide);
+                }
+            }
+
+            $this->registry->getManager()->flush();
         }
     }
 }

@@ -818,6 +818,8 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     public function setViews(int $views): ViewableInterface
     {
         $this->views = $views;
+
+        return $this;
     }
 
     public function getViews(): int
@@ -914,6 +916,13 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->estimates;
     }
 
+    public function setEstimates(Collection $estimates): Ride
+    {
+        $this->estimates = $estimates;
+
+        return $this;
+    }
+
     public function addWeather(Weather $weather): Ride
     {
         $this->weathers->add($weather);
@@ -931,6 +940,13 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     public function getWeathers(): Collection
     {
         return $this->weathers;
+    }
+
+    public function setWeathers(Collection $weathers): Ride
+    {
+        $this->weathers = $weathers;
+
+        return $this;
     }
 
     public function __clone()
