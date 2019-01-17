@@ -70,41 +70,49 @@ class CityCycle implements RouteableInterface
     protected $time;
 
     /**
+     * @var string
      * @ORM\Column(type="string", nullable=true)
      */
     protected $location;
 
     /**
+     * @var float
      * @ORM\Column(type="float", nullable=true)
      */
-    protected $latitude = 0;
+    protected $latitude = 0.0;
 
     /**
+     * @var float
      * @ORM\Column(type="float", nullable=true)
      */
-    protected $longitude = 0;
+    protected $longitude = 0.0;
 
     /**
+     * @var \DateTime
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $createdAt;
 
     /**
+     * @var \DateTime
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $updatedAt;
 
     /**
+     * @var \DateTime
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $disabledAt;
 
     /**
+     * @var \DateTime
      * @ORM\Column(type="date", nullable=true)
      */
     protected $validFrom;
 
     /**
+     * @var \DateTime
      * @ORM\Column(type="date", nullable=true)
      */
     protected $validUntil;

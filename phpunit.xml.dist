@@ -21,6 +21,7 @@
         <env name="REDIS_HOST" value="localhost" />
         <env name="MEMCACHED_HOST" value="localhost" />
         <server name="KERNEL_CLASS" value="App\Kernel" />
+        <env name="DATABASE_URL" value="mysql://root:root@127.0.0.1/criticalmass" />
     </php>
 
     <testsuites>
