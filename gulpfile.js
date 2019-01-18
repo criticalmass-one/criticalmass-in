@@ -76,14 +76,14 @@ gulp.task('build-assets', ['copy-asset-images', 'copy-fonts', 'copy-datatable-im
 /* CSS */
 
 gulp.task('sass', function () {
-/*    return gulp.src('assets/scss/*.scss')
+    return gulp.src('assets/scss/criticalmass.scss')
         .pipe(sass().on('error', sass.logError))
-        .pipe(gulp.dest('assets/css'));*/
+        .pipe(gulp.dest('assets/css'));
 });
 
-gulp.task('compress-css', ['leaflet-css', 'sass'], function () {
+gulp.task('compress-css', ['leaflet-css', 'extramarkers-css', 'sass'], function () {
     return gulp.src([
-            'node_modules/bootstrap/dist/css/bootstrap.css',
+            'assets/css/*.css',
             'node_modules/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css',
             'node_modules/bootstrap-slider/dist/css/bootstrap-slider.min.css',
             'node_modules/dropzone/dist/min/dropzone.min.css',
