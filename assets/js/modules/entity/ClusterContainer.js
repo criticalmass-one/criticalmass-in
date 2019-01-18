@@ -2,7 +2,7 @@
  * @todo: Rename this to PhotoContainer
  *
  */
-define(['leaflet', 'leaflet-markercluster', 'Container', 'leaflet.extra-markers'], function () {
+define(['leaflet', 'leaflet.markercluster', 'Container', 'leaflet.extra-markers'], function () {
     ClusterContainer = function () {
         this._list = [];
         this._layer = L.markerClusterGroup({

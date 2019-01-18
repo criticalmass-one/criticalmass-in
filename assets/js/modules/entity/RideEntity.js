@@ -1,4 +1,4 @@
-define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet.extra-markers', 'ModalButton', 'CloseModalButton', 'dateformat'], function (CriticalService) {
+define(['CriticalService', 'dateformat', 'leaflet', 'MarkerEntity', 'leaflet.extra-markers', 'ModalButton', 'CloseModalButton'], function (CriticalService, dateFormat) {
     RideEntity = function () {
     };
 
@@ -26,10 +26,10 @@ define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet.extra-markers', '
 
         var content = '<dl class="dl-horizontal">';
 
-        content += '<dt>Datum:</dt><dd>' + this._dateTime.format('dd.mm.yyyy') + '</dd>';
+        content += '<dt>Datum:</dt><dd>' + dateFormat(this._dateTime, 'dd.mm.yyyy') + '</dd>';
 
         if (this._hasTime) {
-            content += '<dt>Uhrzeit:</dt><dd>' + this._dateTime.format('HH:MM') + ' Uhr</dd>';
+            content += '<dt>Uhrzeit:</dt><dd>' + dateFormat(this._dateTime, 'HH:MM') + ' Uhr</dd>';
         } else {
             content += '<dt>Uhrzeit:</dt><dd>die Uhrzeit ist noch nicht bekannt</dd>';
         }
@@ -78,7 +78,7 @@ define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet.extra-markers', '
         rideButton.setClass('btn-success');
         rideButton.setHref(Routing.generate('caldera_criticalmass_ride_show', {
             citySlug: this._city._slug,
-            rideDate: this._dateTime.format('yyyy-mm-dd')
+            rideDate: dateFormat(this._dateTime, 'yyyy-mm-dd')
         }));
 
         var closeButton = new CloseModalButton;

@@ -77,7 +77,6 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'CityEntity', 'RideEntity', 'boo
         this._map = this._parentPage._map;
         this._trackContainer = this._parentPage._trackContainer;
 
-        this._loadStyles();
         this._initSpeedSlider();
         this._initControls();
     };
@@ -96,16 +95,6 @@ define(['Map', 'PositionMarker', 'TrackEntity', 'CityEntity', 'RideEntity', 'boo
         this._initialized = true;
 
         this._initCallbackFunction();
-    };
-
-    Timelapse.prototype._loadStyles = function () {
-        var $link = $('<link>', {
-            rel: 'stylesheet',
-            type: 'text/css',
-            href: '/css/external/bootstrap-slider.min.css'
-        });
-
-        $link.appendTo('head');
     };
 
     Timelapse.prototype._initTimeSlider = function () {

@@ -22,7 +22,6 @@ define(['leaflet', 'CityMarker', 'LocationMarker'], function () {
     Map.prototype._$mapContainer = null;
 
     Map.prototype._init = function () {
-        this._loadStyles();
         this._initMap();
         this._addTileLayer();
     };

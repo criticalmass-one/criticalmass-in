@@ -1,4 +1,4 @@
-define(['leaflet', 'leaflet-groupedlayer'], function () {
+define(['leaflet', 'leaflet.groupedlayercontrol'], function () {
     MapLayerControl = function () {
     };
 

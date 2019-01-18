@@ -1,4 +1,4 @@
-define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet.extra-markers', 'dateformat'], function (CriticalService) {
+define(['CriticalService', 'dateformat', 'leaflet', 'MarkerEntity', 'leaflet.extra-markers'], function (CriticalService, dateFormat) {
     SubrideEntity = function () {
     };
 
@@ -27,8 +27,8 @@ define(['CriticalService', 'leaflet', 'MarkerEntity', 'leaflet.extra-markers', '
         this._modal.setTitle(this._title);
 
         var content = '<dl class="dl-horizontal">';
-        content += '<dt>Datum:</dt><dd>' + this._timestamp.format('dd.mm.yyyy') + '</dd>';
-        content += '<dt>Uhrzeit:</dt><dd>' + this._timestamp.format('HH:MM') + '&nbsp;Uhr</dd>';
+        content += '<dt>Datum:</dt><dd>' + dateFormat(this._timestamp, 'dd.mm.yyyy') + '</dd>';
+        content += '<dt>Uhrzeit:</dt><dd>' + dateFormat(this._timestamp, 'HH:MM') + '&nbsp;Uhr</dd>';
         content += '<dt>Treffpunkt:</dt><dd>' + this._location + '</dd>';
 
         if (this._weather) {

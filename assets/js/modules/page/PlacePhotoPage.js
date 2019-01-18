@@ -1,4 +1,4 @@
-define(['CriticalService', 'Map', 'RideEntity', 'TrackEntity', 'PhotoEntity', 'RideEntity', 'CityEntity', 'SnapablePhotoMarker'], function (CriticalService) {
+define(['CriticalService', 'Map', 'RideEntity', 'TrackEntity', 'PhotoEntity', 'CityEntity', 'SnapablePhotoMarker'], function (CriticalService) {
     PlacePhotoPage = function (context, options) {
         this._CriticalService = CriticalService;
 
