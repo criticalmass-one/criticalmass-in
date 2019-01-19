@@ -3,9 +3,9 @@
 namespace App\Controller\Photo;
 
 use App\Controller\AbstractController;
+use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Entity\Photo;
 use App\Entity\Track;
-use App\Criticalmass\SeoPage\SeoPage;
 use App\Event\View\ViewEvent;
 use PHPExif\Exif;
 use PHPExif\Reader\Reader;
@@ -24,7 +24,7 @@ class PhotoController extends AbstractController
      * @ParamConverter("photo", class="App:Photo", options={"id" = "photoId"})
      */
     public function showAction(
-        SeoPage $seoPage,
+        SeoPageInterface $seoPage,
         EventDispatcherInterface $eventDispatcher,
         Photo $photo
     ): Response {
@@ -46,7 +46,7 @@ class PhotoController extends AbstractController
             $track = $this->getTrackRepository()->findByUserAndRide($ride, $photo->getUser());
         }
 
-        $seoPage->setPreviewPhoto($photo);
+        $this->setSeoMetaDetails($seoPage, $photo);
 
         $exifData = $this->readExifData($photo);
 
@@ -86,5 +86,22 @@ class PhotoController extends AbstractController
         }
 
         return null;
+    }
+
+    protected function setSeoMetaDetails(SeoPageInterface $seoPage, Photo $photo): void
+    {
+        $seoPage->setPreviewPhoto($photo);
+
+        if ($photo->getLocation()) {
+            $title = sprintf('Fotos von der Critical Mass in %s am %s, %s', $photo->getRide()->getCity()->getCity(), $photo->getRide()->getDateTime()->format('d.m.Y'), $photo->getLocation());
+            $description = sprintf('Schau dir Fotos von der %s an, aufgenommen am %s', $photo->getRide()->getTitle(), $photo->getLocation());
+        } else {
+            $title = sprintf('Fotos von der Critical Mass in %s am %s', $photo->getRide()->getCity()->getCity(), $photo->getRide()->getDateTime()->format('d.m.Y'));
+            $description = sprintf('Schau dir Fotos von der %s an', $photo->getRide()->getTitle());
+        }
+
+        $seoPage
+            ->setTitle($title)
+            ->setDescription($description);
     }
 }

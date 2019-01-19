@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\Geocoding\ReverseGeocodeable;
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
 use App\EntityInterface\StaticMapableInterface;
 use Caldera\GeoBasic\Coord\Coord;
@@ -32,7 +33,7 @@ use App\Criticalmass\Sharing\Annotation as Sharing;
  * @Vich\Uploadable
  * @Routing\DefaultRoute(name="caldera_criticalmass_ride_show")
  */
-class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, Shareable
+class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, Shareable, ReverseGeocodeable
 {
     /**
      * @ORM\Id
@@ -380,7 +381,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->hasLocation;
     }
 
-    public function setLocation(string $location = null): Ride
+    public function setLocation(string $location = null): ReverseGeocodeable
     {
         $this->location = $location;
 
@@ -426,6 +427,19 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     public function getLongitude(): ?float
     {
         return $this->longitude;
+    }
+
+    public function setCoord(Coord $coord): Ride
+    {
+        $this->latitude = $coord->getLatitude();
+        $this->longitude = $coord->getLongitude();
+
+        return $this;
+    }
+
+    public function getCoord(): Coord
+    {
+        return new Coord($this->latitude, $this->longitude);
     }
 
     public function setSlug(string $slug = null): Ride
@@ -741,12 +755,6 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->latitude . ',' . $this->longitude;
     }
 
-    public function getCoord(): ?Coord
-    {
-        return null;
-        return new Coord($this->latitude, $this->longitude);
-    }
-
     public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
@@ -810,6 +818,8 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     public function setViews(int $views): ViewableInterface
     {
         $this->views = $views;
+
+        return $this;
     }
 
     public function getViews(): int
@@ -906,6 +916,13 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->estimates;
     }
 
+    public function setEstimates(Collection $estimates): Ride
+    {
+        $this->estimates = $estimates;
+
+        return $this;
+    }
+
     public function addWeather(Weather $weather): Ride
     {
         $this->weathers->add($weather);
@@ -923,6 +940,13 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     public function getWeathers(): Collection
     {
         return $this->weathers;
+    }
+
+    public function setWeathers(Collection $weathers): Ride
+    {
+        $this->weathers = $weathers;
+
+        return $this;
     }
 
     public function __clone()
