@@ -48,6 +48,16 @@ gulp.task('extramarkers-js', function () {
 gulp.task('build-leaflet-extramarkers', ['extramarkers-images', 'extramarkers-css', 'extramarkers-js']);
 
 
+/* Font Awesome */
+
+gulp.task('copy-fontawesome-fonts', function () {
+    return gulp.src('node_modules/font-awesome/fonts/*')
+        .pipe(gulp.dest('public/fonts'));
+});
+
+gulp.task('build-fontawesome', ['copy-fontawesome-fonts']);
+
+
 /* Assets */
 
 gulp.task('copy-colorpicker-images', function () {
@@ -65,12 +75,7 @@ gulp.task('copy-asset-images', function () {
         .pipe(gulp.dest('public/images/'));
 });
 
-gulp.task('copy-fonts', function () {
-/*    return gulp.src('node_modules/font-awesome/fonts/*')
-        .pipe(gulp.dest('public/fonts'));*/
-});
-
-gulp.task('build-assets', ['copy-asset-images', 'copy-fonts', 'copy-datatable-images', 'copy-colorpicker-images']);
+gulp.task('build-assets', ['copy-asset-images', 'copy-datatable-images', 'copy-colorpicker-images']);
 
 
 /* CSS */
@@ -158,6 +163,6 @@ gulp.task('copy-js', ['copy-js-modules', 'copy-js-external']);
 
 gulp.task('build-js', ['compress-js']);
 
-gulp.task('build', ['build-leaflet', 'build-leaflet-extramarkers', 'build-assets', 'build-js', 'build-css'], function () {});
+gulp.task('build', ['build-leaflet', 'build-leaflet-extramarkers', 'build-fontawesome', 'build-assets', 'build-js', 'build-css'], function () {});
 
 gulp.task('default', ['build']);
