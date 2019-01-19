@@ -179,7 +179,7 @@ class PostRepository extends EntityRepository
 
         $builder
             ->select('p')
-            ->where($builder->expr()->eq('p.enabled', 'enabled'))
+            ->where($builder->expr()->eq('p.enabled', ':enabled'))
             ->setParameter('enabled', true)
             ->andWhere($builder->expr()->isNotNull('p.photo'));
 
