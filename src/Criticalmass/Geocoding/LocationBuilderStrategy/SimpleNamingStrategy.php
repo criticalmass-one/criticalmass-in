@@ -6,8 +6,12 @@ use Geocoder\Location;
 
 class SimpleNamingStrategy implements LocationBuilderStrategyInterface
 {
-    public function buildLocation(Location $location): string
+    public function buildLocation(Location $location): ?string
     {
-        return sprintf('%s, %s', $location->getStreetName(), $location->getAdminLevels()->first()->getName());
+        if ($location->getStreetName() && $location->getAdminLevels()->count() !== 0 && $location->getAdminLevels()->first()) {
+            return sprintf('%s, %s', $location->getStreetName(), $location->getAdminLevels()->first()->getName());
+        }
+
+        return null;
     }
 }

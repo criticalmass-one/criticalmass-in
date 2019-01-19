@@ -6,5 +6,5 @@ use Geocoder\Location;
 
 interface LocationBuilderStrategyInterface
 {
-    public function buildLocation(Location $location): string;
+    public function buildLocation(Location $location): ?string;
 }

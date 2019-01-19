@@ -6,11 +6,8 @@ use Doctrine\ORM\EntityRepository;
 
 class SocialNetworkFeedItemRepository extends EntityRepository
 {
-    public function findForTimelineSocialNetworkFeedItemCollector(
-        \DateTime $startDateTime = null,
-        \DateTime $endDateTime = null,
-        $limit = null
-    ) {
+    public function findForTimelineSocialNetworkFeedItemCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null): array
+    {
         $builder = $this->createQueryBuilder('fi');
 
         if ($startDateTime) {
@@ -44,4 +41,3 @@ class SocialNetworkFeedItemRepository extends EntityRepository
         return $result;
     }
 }
-
