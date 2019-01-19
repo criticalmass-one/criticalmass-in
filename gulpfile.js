@@ -117,7 +117,7 @@ gulp.task('copy-js-external', function () {
         'node_modules/bootstrap/dist/js/bootstrap.js',
         'node_modules/bootstrap/dist/js/bootstrap.min.js',
         'node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js',
-        'node_modules/dropzone/dist/min/dropzone-amd-module.js',
+        'node_modules/dropzone/dist/dropzone-amd-module.js',
         'node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
         'node_modules/bootstrap-slider/dist/bootstrap-slider.js',
         'node_modules/dateformat/lib/dateformat.js',
