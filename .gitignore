@@ -18,9 +18,9 @@
 /public/tracks
 /public/photos
 /public/cities
-/public/js
-/public/img
 /public/images
+/public/img
+/public/js
 /public/css
 
 # Backup entities generated with doctrine:generate:entities command
