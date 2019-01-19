@@ -212,14 +212,14 @@ class PhotoRepository extends EntityRepository
             ->setParameter('deleted', false)
             ->addOrderBy('p.dateTime', 'ASC');
 
-        return $builder->getQuery();
+        return $builder;
     }
 
     public function findPhotosByRide(Ride $ride): array
     {
-        $query = $this->buildQueryPhotosByRide($ride);
+        $builder = $this->buildQueryPhotosByRide($ride);
 
-        return $query->getResult();
+        return $builder->getQuery()->getResult();
     }
 
     public function countPhotosByRide(Ride $ride): int
