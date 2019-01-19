@@ -21,7 +21,6 @@
 /public/images
 /public/img
 /public/js
-/public/css
 
 # Backup entities generated with doctrine:generate:entities command
 **/Entity/*~
