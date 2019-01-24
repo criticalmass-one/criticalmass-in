@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "13ee5fbf6a85718852a8bfd4696d598b",
+    "content-hash": "155cb8808aa24000db9262e9eb9d20da",
     "packages": [
         {
             "name": "basvandorst/stravaphp",
@@ -4717,21 +4717,21 @@
         },
         {
             "name": "php-http/cache-plugin",
-            "version": "v1.5.0",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/cache-plugin.git",
-                "reference": "c573ac6ea9b4e33fad567f875b844229d18000b9"
+                "reference": "8e2505d2090316fac7cce637b39b6bbb5249c5a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/cache-plugin/zipball/c573ac6ea9b4e33fad567f875b844229d18000b9",
-                "reference": "c573ac6ea9b4e33fad567f875b844229d18000b9",
+                "url": "https://api.github.com/repos/php-http/cache-plugin/zipball/8e2505d2090316fac7cce637b39b6bbb5249c5a8",
+                "reference": "8e2505d2090316fac7cce637b39b6bbb5249c5a8",
                 "shasum": ""
             },
             "require": {
                 "php": "^5.4 || ^7.0",
-                "php-http/client-common": "^1.1",
+                "php-http/client-common": "^1.9 || ^2.0",
                 "php-http/message-factory": "^1.0",
                 "psr/cache": "^1.0",
                 "symfony/options-resolver": "^2.6 || ^3.0 || ^4.0"
@@ -4743,7 +4743,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.5-dev"
+                    "dev-master": "1.6-dev"
                 }
             },
             "autoload": {
@@ -4769,7 +4769,7 @@
                 "httplug",
                 "plugin"
             ],
-            "time": "2017-11-29T20:45:41+00:00"
+            "time": "2019-01-23T16:51:58+00:00"
         },
         {
             "name": "php-http/client-common",
@@ -4834,16 +4834,16 @@
         },
         {
             "name": "php-http/discovery",
-            "version": "1.5.2",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/discovery.git",
-                "reference": "ffef11d54171336d841a34816a35bc035fb8cef0"
+                "reference": "02b7ea21eafa0757af04140890a67d8ed45f83b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/discovery/zipball/ffef11d54171336d841a34816a35bc035fb8cef0",
-                "reference": "ffef11d54171336d841a34816a35bc035fb8cef0",
+                "url": "https://api.github.com/repos/php-http/discovery/zipball/02b7ea21eafa0757af04140890a67d8ed45f83b2",
+                "reference": "02b7ea21eafa0757af04140890a67d8ed45f83b2",
                 "shasum": ""
             },
             "require": {
@@ -4853,8 +4853,7 @@
                 "nyholm/psr7": "<1.0"
             },
             "require-dev": {
-                "henrikbjorn/phpspec-code-coverage": "^2.0.2",
-                "php-http/httplug": "^1.0|^2.0",
+                "php-http/httplug": "^1.0 || ^2.0",
                 "php-http/message-factory": "^1.0",
                 "phpspec/phpspec": "^2.4",
                 "puli/composer-plugin": "1.0.0-beta10"
@@ -4895,7 +4894,7 @@
                 "message",
                 "psr7"
             ],
-            "time": "2018-12-31T07:31:26+00:00"
+            "time": "2019-01-23T12:41:22+00:00"
         },
         {
             "name": "php-http/guzzle6-adapter",
@@ -6851,16 +6850,16 @@
         },
         {
             "name": "sonata-project/doctrine-orm-admin-bundle",
-            "version": "3.8.0",
+            "version": "3.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataDoctrineORMAdminBundle.git",
-                "reference": "276e0925d6824ddd5a791146df08f922197b9bd7"
+                "reference": "0d692dc627435348e37aaf3486f465ab4bc9ee8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataDoctrineORMAdminBundle/zipball/276e0925d6824ddd5a791146df08f922197b9bd7",
-                "reference": "276e0925d6824ddd5a791146df08f922197b9bd7",
+                "url": "https://api.github.com/repos/sonata-project/SonataDoctrineORMAdminBundle/zipball/0d692dc627435348e37aaf3486f465ab4bc9ee8c",
+                "reference": "0d692dc627435348e37aaf3486f465ab4bc9ee8c",
                 "shasum": ""
             },
             "require": {
@@ -6931,38 +6930,38 @@
                 "generator",
                 "sonata"
             ],
-            "time": "2019-01-20T16:50:56+00:00"
+            "time": "2019-01-23T22:01:58+00:00"
         },
         {
             "name": "sonata-project/exporter",
-            "version": "1.11.0",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/exporter.git",
-                "reference": "63d1199e802ff8af2826d8410080093f949dcb92"
+                "reference": "a82bb9c3ed6fe9fa073c8bf145db6449da1ab8e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/exporter/zipball/63d1199e802ff8af2826d8410080093f949dcb92",
-                "reference": "63d1199e802ff8af2826d8410080093f949dcb92",
+                "url": "https://api.github.com/repos/sonata-project/exporter/zipball/a82bb9c3ed6fe9fa073c8bf145db6449da1ab8e7",
+                "reference": "a82bb9c3ed6fe9fa073c8bf145db6449da1ab8e7",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.6 || ^7.0"
+                "php": "^7.2"
             },
             "require-dev": {
                 "doctrine/dbal": "^2.5",
                 "doctrine/orm": "^2.4.5",
-                "matthiasnoback/symfony-config-test": "^2.0",
-                "matthiasnoback/symfony-dependency-injection-test": "^1.0",
+                "matthiasnoback/symfony-config-test": "^4.0",
+                "matthiasnoback/symfony-dependency-injection-test": "^3.0",
                 "propel/propel1": "^1.6",
-                "symfony/config": "^2.8 || ^3.2 || ^4.0",
-                "symfony/dependency-injection": "^2.8 || ^3.2 || ^4.0",
-                "symfony/http-foundation": "^2.8 || ^3.2 || ^4.0",
-                "symfony/http-kernel": "^2.8 || ^3.2 || ^4.0",
-                "symfony/phpunit-bridge": "^4.0",
-                "symfony/property-access": "^2.8 || ^3.2 || ^4.0",
-                "symfony/routing": "^2.8 || ^3.2 || ^4.0"
+                "symfony/config": "^3.4 || ^4.0",
+                "symfony/dependency-injection": "^3.4 || ^4.0",
+                "symfony/http-foundation": "^3.4 || ^4.0",
+                "symfony/http-kernel": "^3.4 || ^4.0",
+                "symfony/phpunit-bridge": "^4.1",
+                "symfony/property-access": "^3.4 || ^4.0",
+                "symfony/routing": "^3.4 || ^4.0"
             },
             "suggest": {
                 "ext-curl": "*",
@@ -6973,12 +6972,11 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.x-dev"
+                    "dev-master": "2.x-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Exporter\\": "aliases/",
                     "Sonata\\Exporter\\": "src/"
                 }
             },
@@ -7002,7 +7000,7 @@
                 "export",
                 "xls"
             ],
-            "time": "2019-01-10T19:05:17+00:00"
+            "time": "2018-12-15T18:40:08+00:00"
         },
         {
             "name": "sonata-project/intl-bundle",
@@ -7078,21 +7076,21 @@
         },
         {
             "name": "sonata-project/seo-bundle",
-            "version": "2.6.2",
+            "version": "2.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataSeoBundle.git",
-                "reference": "2b7d1f7b3e26fabd3a91d45b9ff1273872e52aaf"
+                "reference": "b0d586a6f52283c2f2abd85eb5c43e5f3d07662c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataSeoBundle/zipball/2b7d1f7b3e26fabd3a91d45b9ff1273872e52aaf",
-                "reference": "2b7d1f7b3e26fabd3a91d45b9ff1273872e52aaf",
+                "url": "https://api.github.com/repos/sonata-project/SonataSeoBundle/zipball/b0d586a6f52283c2f2abd85eb5c43e5f3d07662c",
+                "reference": "b0d586a6f52283c2f2abd85eb5c43e5f3d07662c",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.6 || ^7.0",
-                "sonata-project/exporter": "^1.8",
+                "php": "^7.1",
+                "sonata-project/exporter": "^1.11 || ^2.0",
                 "symfony/config": "^2.8 || ^3.2 || ^4.0",
                 "symfony/dependency-injection": "^2.8 || ^3.2 || ^4.0",
                 "symfony/form": "^2.8 || ^3.2 || ^4.0",
@@ -7152,7 +7150,7 @@
                 "seo",
                 "sonata"
             ],
-            "time": "2018-11-04T22:28:01+00:00"
+            "time": "2019-01-23T21:59:32+00:00"
         },
         {
             "name": "sunra/php-simple-html-dom-parser",
@@ -7674,16 +7672,16 @@
         },
         {
             "name": "symfony/dependency-injection",
-            "version": "v4.2.2",
+            "version": "4.2.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dependency-injection.git",
-                "reference": "a28dda9df1d5494367454cad91e44751ac53921c"
+                "reference": "4d968e390b49527f8e077bd9799468b9c00434f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/a28dda9df1d5494367454cad91e44751ac53921c",
-                "reference": "a28dda9df1d5494367454cad91e44751ac53921c",
+                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/4d968e390b49527f8e077bd9799468b9c00434f1",
+                "reference": "4d968e390b49527f8e077bd9799468b9c00434f1",
                 "shasum": ""
             },
             "require": {
@@ -7743,7 +7741,7 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "https://symfony.com",
-            "time": "2019-01-05T16:37:49+00:00"
+            "time": "2019-01-16T21:31:25+00:00"
         },
         {
             "name": "symfony/doctrine-bridge",
@@ -10937,16 +10935,16 @@
         },
         {
             "name": "zendframework/zend-http",
-            "version": "2.9.0",
+            "version": "2.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-http.git",
-                "reference": "7027fa2f70f8f9865ec14728cea05087a5f4d9c0"
+                "reference": "fe80a6bc0b8a632ed878854ee519a2eed4a1e2d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-http/zipball/7027fa2f70f8f9865ec14728cea05087a5f4d9c0",
-                "reference": "7027fa2f70f8f9865ec14728cea05087a5f4d9c0",
+                "url": "https://api.github.com/repos/zendframework/zend-http/zipball/fe80a6bc0b8a632ed878854ee519a2eed4a1e2d0",
+                "reference": "fe80a6bc0b8a632ed878854ee519a2eed4a1e2d0",
                 "shasum": ""
             },
             "require": {
@@ -10988,7 +10986,7 @@
                 "zend",
                 "zf"
             ],
-            "time": "2019-01-08T16:41:31+00:00"
+            "time": "2019-01-22T19:48:43+00:00"
         },
         {
             "name": "zendframework/zend-loader",
@@ -12958,7 +12956,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "symfony/dependency-injection": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
