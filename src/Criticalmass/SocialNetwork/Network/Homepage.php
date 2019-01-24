@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Criticalmass\SocialNetwork\Network;
 
@@ -18,6 +18,6 @@ class Homepage extends AbstractNetwork
 
     public function accepts(SocialNetworkProfile $socialNetworkProfile): bool
     {
-        return filter_var($socialNetworkProfile->getIdentifier(), FILTER_VALIDATE_URL);
+        return false !== filter_var($socialNetworkProfile->getIdentifier(), FILTER_VALIDATE_URL);
     }
 }
