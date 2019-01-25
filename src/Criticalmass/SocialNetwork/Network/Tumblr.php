@@ -14,9 +14,16 @@ class Tumblr extends AbstractNetwork
 
     protected $textColor = 'white';
 
-    /** TODO add regex here */
     public function accepts(SocialNetworkProfile $socialNetworkProfile): bool
     {
-        return strpos($socialNetworkProfile->getIdentifier(), '.tumblr.com') !== false;
+        $pattern = '/^(https?\:\/\/)((www\.)?)([a-zA-Z0-9]*)\.(tumblr\.com)(\/?)$/';
+
+        preg_match($pattern, $socialNetworkProfile->getIdentifier(), $matches);
+
+        if ($matches && is_array($matches) && count($matches) > 1) {
+            return true;
+        }
+
+        return false;
     }
 }

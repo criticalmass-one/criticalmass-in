@@ -14,9 +14,17 @@ class Youtube extends AbstractNetwork
 
     protected $textColor = 'white';
 
-    /** TODO add regex here */
     public function accepts(SocialNetworkProfile $socialNetworkProfile): bool
     {
-        return strpos($socialNetworkProfile->getIdentifier(), '.youtube.com') !== false;
+        // ^(https?\:\/\/)?(www\.)?(flickr\.com)\/(photos)\/.+$
+        $pattern = '/^(https?\:\/\/)?(www\.)?(youtube\.com)\/(channel)\/.+$/';
+
+        preg_match($pattern, $socialNetworkProfile->getIdentifier(), $matches);
+
+        if ($matches && is_array($matches) && count($matches) > 1) {
+            return true;
+        }
+
+        return false;
     }
 }
