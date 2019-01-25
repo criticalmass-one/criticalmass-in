@@ -4,9 +4,9 @@ namespace App\Criticalmass\SocialNetwork\Network;
 
 use App\Entity\SocialNetworkProfile;
 
-class Youtube extends AbstractNetwork
+class YoutubeUser extends AbstractNetwork
 {
-    protected $name = 'YouTube';
+    protected $name = 'YouTube-Konto';
 
     protected $icon = 'fa-youtube';
 
@@ -16,8 +16,7 @@ class Youtube extends AbstractNetwork
 
     public function accepts(SocialNetworkProfile $socialNetworkProfile): bool
     {
-        // ^(https?\:\/\/)?(www\.)?(flickr\.com)\/(photos)\/.+$
-        $pattern = '/^(https?\:\/\/)?(www\.)?(youtube\.com)\/(channel)\/.+$/';
+        $pattern = '/^(https?\:\/\/)?(www\.)?(youtube\.com)\/(user)\/.+$/';
 
         preg_match($pattern, $socialNetworkProfile->getIdentifier(), $matches);
 
