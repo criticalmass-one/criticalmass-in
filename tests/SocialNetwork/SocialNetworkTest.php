@@ -23,6 +23,8 @@ class SocialNetworkTest extends KernelTestCase
         $networkManager->addNetwork(new Network\Homepage());
         $networkManager->addNetwork(new Network\Tumblr());
         $networkManager->addNetwork(new Network\Twitter());
+        $networkManager->addNetwork(new Network\InstagramPhoto());
+        $networkManager->addNetwork(new Network\InstagramProfile());
         $networkManager->addNetwork(new Network\YoutubeChannel());
         $networkManager->addNetwork(new Network\YoutubePlaylist());
         $networkManager->addNetwork(new Network\YoutubeUser());
@@ -186,5 +188,75 @@ class SocialNetworkTest extends KernelTestCase
         $network = $this->createAndDetect('https://www.youtube.com/watch?v=MglnNn_rB3I');
 
         $this->assertEquals('youtube_video', $network->getIdentifier());
+    }
+
+    public function testInstagramPhoto(): void
+    {
+        $network = $this->createAndDetect('https://www.instagram.com/p/BsRoT-eA23Q/');
+
+        $this->assertEquals('instagram_photo', $network->getIdentifier());
+
+        $network = $this->createAndDetect('http://www.instagram.com/p/BsRoT-eA23Q/');
+
+        $this->assertEquals('instagram_photo', $network->getIdentifier());
+
+        $network = $this->createAndDetect('https://instagram.com/p/BsRoT-eA23Q/');
+
+        $this->assertEquals('instagram_photo', $network->getIdentifier());
+
+        $network = $this->createAndDetect('http://instagram.com/p/BsRoT-eA23Q/');
+
+        $this->assertEquals('instagram_photo', $network->getIdentifier());
+
+        $network = $this->createAndDetect('https://www.instagram.com/p/BsRoT-eA23Q');
+
+        $this->assertEquals('instagram_photo', $network->getIdentifier());
+
+        $network = $this->createAndDetect('http://www.instagram.com/p/BsRoT-eA23Q');
+
+        $this->assertEquals('instagram_photo', $network->getIdentifier());
+
+        $network = $this->createAndDetect('https://instagram.com/p/BsRoT-eA23Q');
+
+        $this->assertEquals('instagram_photo', $network->getIdentifier());
+
+        $network = $this->createAndDetect('http://instagram.com/p/BsRoT-eA23Q');
+
+        $this->assertEquals('instagram_photo', $network->getIdentifier());
+    }
+
+    public function testInstagramProfile(): void
+    {
+        $network = $this->createAndDetect('https://www.instagram.com/criticalmasshamburg/');
+
+        $this->assertEquals('instagram_profile', $network->getIdentifier());
+
+        $network = $this->createAndDetect('http://www.instagram.com/criticalmasshamburg/');
+
+        $this->assertEquals('instagram_profile', $network->getIdentifier());
+
+        $network = $this->createAndDetect('https://instagram.com/criticalmasshamburg/');
+
+        $this->assertEquals('instagram_profile', $network->getIdentifier());
+
+        $network = $this->createAndDetect('http://www.instagram.com/criticalmasshamburg/');
+
+        $this->assertEquals('instagram_profile', $network->getIdentifier());
+
+        $network = $this->createAndDetect('https://www.instagram.com/criticalmasshamburg');
+
+        $this->assertEquals('instagram_profile', $network->getIdentifier());
+
+        $network = $this->createAndDetect('http://www.instagram.com/criticalmasshamburg');
+
+        $this->assertEquals('instagram_profile', $network->getIdentifier());
+
+        $network = $this->createAndDetect('https://instagram.com/criticalmasshamburg');
+
+        $this->assertEquals('instagram_profile', $network->getIdentifier());
+
+        $network = $this->createAndDetect('http://www.instagram.com/criticalmasshamburg');
+
+        $this->assertEquals('instagram_profile', $network->getIdentifier());
     }
 }
