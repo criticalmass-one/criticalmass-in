@@ -11,7 +11,7 @@ criticalmass_socialnetwork_city_add:
     controller: App\Controller\SocialNetwork\SocialNetworkController::addAction
 
 criticalmass_socialnetwork_ride_add:
-    path:  /{citySlug}/{rideIdentifier/socialnetwork/add
+    path:  /{citySlug}/{rideIdentifier}/socialnetwork/add
     controller: App\Controller\SocialNetwork\SocialNetworkController::addAction
 
 criticalmass_socialnetwork_disable:
