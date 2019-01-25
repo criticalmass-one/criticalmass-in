@@ -16,7 +16,7 @@ class YoutubePlaylist extends AbstractNetwork
 
     public function accepts(SocialNetworkProfile $socialNetworkProfile): bool
     {
-        $pattern = '/^(https?\:\/\/)?(www\.)?(youtube\.com)\/(playlist)\/.+$/';
+        $pattern = '/^(https?\:\/\/)?(www\.)?(youtube\.com)\/(playlist)\?.+$/';
 
         preg_match($pattern, $socialNetworkProfile->getIdentifier(), $matches);
 

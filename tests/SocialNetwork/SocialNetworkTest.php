@@ -149,36 +149,52 @@ class SocialNetworkTest extends KernelTestCase
     {
         $network = $this->createAndDetect('https://www.youtube.com/playlist?list=abcdefg');
 
-        $this->assertEquals('youtube_channel', $network->getIdentifier());
+        $this->assertEquals('youtube_playlist', $network->getIdentifier());
 
         $network = $this->createAndDetect('https://youtube.com/playlist?list=abcdefg');
 
-        $this->assertEquals('youtube_channel', $network->getIdentifier());
+        $this->assertEquals('youtube_playlist', $network->getIdentifier());
 
         $network = $this->createAndDetect('http://www.youtube.com/playlist?list=abcdefg');
 
-        $this->assertEquals('youtube_channel', $network->getIdentifier());
+        $this->assertEquals('youtube_playlist', $network->getIdentifier());
 
         $network = $this->createAndDetect('http://youtube.com/playlist?list=abcdefg');
 
-        $this->assertEquals('youtube_channel', $network->getIdentifier());
+        $this->assertEquals('youtube_playlist', $network->getIdentifier());
     }
 
     public function testYoutubeUser(): void
     {
-        $network = $this->createAndDetect('https://www.youtube.com/playlist?list=abcdefg');
+        $network = $this->createAndDetect('https://www.youtube.com/user/TomorrowlandChannel/');
 
         $this->assertEquals('youtube_user', $network->getIdentifier());
 
-        $network = $this->createAndDetect('https://youtube.com/playlist?list=abcdefg');
+        $network = $this->createAndDetect('http://www.youtube.com/user/TomorrowlandChannel/');
 
         $this->assertEquals('youtube_user', $network->getIdentifier());
 
-        $network = $this->createAndDetect('http://www.youtube.com/playlist?list=abcdefg');
+        $network = $this->createAndDetect('https://youtube.com/user/TomorrowlandChannel/');
 
         $this->assertEquals('youtube_user', $network->getIdentifier());
 
-        $network = $this->createAndDetect('http://youtube.com/playlist?list=abcdefg');
+        $network = $this->createAndDetect('http://youtube.com/user/TomorrowlandChannel/');
+
+        $this->assertEquals('youtube_user', $network->getIdentifier());
+
+        $network = $this->createAndDetect('https://www.youtube.com/user/TomorrowlandChannel');
+
+        $this->assertEquals('youtube_user', $network->getIdentifier());
+
+        $network = $this->createAndDetect('http://www.youtube.com/user/TomorrowlandChannel');
+
+        $this->assertEquals('youtube_user', $network->getIdentifier());
+
+        $network = $this->createAndDetect('https://youtube.com/user/TomorrowlandChannel');
+
+        $this->assertEquals('youtube_user', $network->getIdentifier());
+
+        $network = $this->createAndDetect('http://youtube.com/user/TomorrowlandChannel');
 
         $this->assertEquals('youtube_user', $network->getIdentifier());
     }

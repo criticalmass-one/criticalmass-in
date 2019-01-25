@@ -14,9 +14,11 @@ class YoutubeVideo extends AbstractNetwork
 
     protected $textColor = 'white';
 
+    protected $detectorPriority = -10;
+
     public function accepts(SocialNetworkProfile $socialNetworkProfile): bool
     {
-        $pattern = '/^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/';
+        $pattern = '/^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:watch+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/';
 
         preg_match($pattern, $socialNetworkProfile->getIdentifier(), $matches);
 
