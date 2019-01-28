@@ -1,5 +1,7 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set bootstrap4 = true %}
+
 {% import 'Help/_macro.html.twig' as categoryMacro %}
 
 {% block title %}{{ mainCategory.title }}{% endblock %}
@@ -13,7 +15,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-8 offset-2">
                 <h1>
                     {{ mainCategory.title }}
                 </h1>
@@ -27,7 +29,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-8 offset-2">
                 {{ categoryMacro.renderCategory(mainCategory) }}
             </div>
         </div>

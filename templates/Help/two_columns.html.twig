@@ -1,5 +1,7 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set bootstrap4 = true %}
+
 {% import 'Help/_macro.html.twig' as categoryMacro %}
 
 {% block title %}{{ mainCategory.title }}{% endblock %}
@@ -13,7 +15,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <h1>
                     {{ mainCategory.title }}
                 </h1>
@@ -27,7 +29,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-6">
                 {% for category in mainCategory.children %}
                     {% if category.side == 'left' %}
                         {{ categoryMacro.renderCategory(category) }}
@@ -35,7 +37,7 @@
                 {% endfor %}
             </div>
 
-            <div class="col-md-6">
+            <div class="col-6">
                 {% for category in mainCategory.children %}
                     {% if category.side == 'right' %}
                         {{ categoryMacro.renderCategory(category) }}
