@@ -79,11 +79,11 @@ class CityRepository extends EntityRepository
         $builder = $this->createQueryBuilder('city');
 
         $builder
-            ->select('c')
-            ->leftJoin('c.region', 'r1')
+            ->select('city')
+            ->leftJoin('city.region', 'r1')
             ->leftJoin('r1.parent', 'r2')
             ->leftJoin('r2.parent', 'r3')
-            ->where($builder->expr()->eq('c.enabled', ':enabled'))
+            ->where($builder->expr()->eq('city.enabled', ':enabled'))
             ->setParameter('enabled', true)
             ->andWhere(
                 $builder->expr()->orX(
