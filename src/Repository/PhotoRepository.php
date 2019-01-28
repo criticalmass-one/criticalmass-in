@@ -50,7 +50,7 @@ class PhotoRepository extends EntityRepository
             ->setParameter('enabled', true)
             ->andWhere($builder->expr()->eq('p.deleted', ':deleted'))
             ->setParameter('deleted', false)
-            ->addOrderBy('p.dateTime', 'DESC')
+            ->addOrderBy('p.dateTime', 'ASC')
             ->setMaxResults(1);
 
         $query = $builder->getQuery();
