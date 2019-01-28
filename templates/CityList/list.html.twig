@@ -1,5 +1,7 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set bootstrap4 = true %}
+
 {% block title %}Städte-Übersicht{% endblock %}
 
 {% block breadcrumb %}
@@ -9,7 +11,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <h1>
                     Die nächste Masse ist ganz nah
                 </h1>
@@ -19,32 +21,29 @@
                 </p>
 
                 <p>
-                    Auf den Sattel, fertig, los: Die folgende Liste enthält mittlerweile {{ cityList|length }} Städte.
-                    Bitte bedenke, dass die folgenden Informationen aus verschiedenen Quellen im Internet stammen und
-                    womöglich veraltet oder schlichtweg falsch sein können. Überprüfe bitte vorher die einschlägigen
-                    Quellen wie facebook oder twitter, bevor du dich auf den Weg machst.
+                    Auf den Sattel, fertig, los: Die folgende Liste enthält mittlerweile {{ cityList|length }} Städte. Bitte bedenke, dass die folgenden Informationen aus verschiedenen Quellen im Internet stammen und womöglich veraltet oder schlichtweg falsch sein können. Überprüfe bitte vorher die einschlägigen Quellen wie Facebook oder Twitter, bevor du dich auf den Weg machst.
                 </p>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <table id="city-list-table" class="table tablesorter">
                     <thead>
-                    <tr>
-                        <th>
-                            Stadt
-                        </th>
-                        <th>
-                            aktuelle Tour
-                        </th>
-                        <th>
-                            Turnus
-                        </th>
-                        <th>
-                            Touren
-                        </th>
-                    </tr>
+                        <tr>
+                            <th>
+                                Stadt
+                            </th>
+                            <th>
+                                aktuelle Tour
+                            </th>
+                            <th>
+                                Turnus
+                            </th>
+                            <th>
+                                Touren
+                            </th>
+                        </tr>
                     </thead>
                     <tbody>
                     {% for city in cityList %}
