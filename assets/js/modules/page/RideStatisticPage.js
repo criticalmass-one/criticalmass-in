@@ -1,4 +1,4 @@
-define(['chartjs'], function () {
+define(['Chart.bundle'], function () {
     RideStatisticPage = function (context, options) {
     };
 

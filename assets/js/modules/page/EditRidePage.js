@@ -1,4 +1,4 @@
-define(['Map', 'LocationMarker', 'typeahead', 'bloodhound', 'bootstrap-datepicker'], function () {
+define(['Map', 'LocationMarker', 'typeahead.jquery', 'bloodhound', 'bootstrap-datepicker'], function () {
 
     var EditRidePage = function (context, options) {
         this.settings = $.extend(this._defaults, options);

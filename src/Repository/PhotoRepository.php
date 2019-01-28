@@ -50,7 +50,7 @@ class PhotoRepository extends EntityRepository
             ->setParameter('enabled', true)
             ->andWhere($builder->expr()->eq('p.deleted', ':deleted'))
             ->setParameter('deleted', false)
-            ->addOrderBy('p.dateTime', 'DESC')
+            ->addOrderBy('p.dateTime', 'ASC')
             ->setMaxResults(1);
 
         $query = $builder->getQuery();
@@ -212,14 +212,14 @@ class PhotoRepository extends EntityRepository
             ->setParameter('deleted', false)
             ->addOrderBy('p.dateTime', 'ASC');
 
-        return $builder->getQuery();
+        return $builder;
     }
 
     public function findPhotosByRide(Ride $ride): array
     {
-        $query = $this->buildQueryPhotosByRide($ride);
+        $builder = $this->buildQueryPhotosByRide($ride);
 
-        return $query->getResult();
+        return $builder->getQuery()->getResult();
     }
 
     public function countPhotosByRide(Ride $ride): int
