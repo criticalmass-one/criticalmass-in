@@ -1,6 +1,7 @@
 var CriticalMass = CriticalMass || {};
 
 CriticalMass.loadModule = function (name, context, options, callback) {
+    console.log(name);
     require([name], function (Module) {
         var module = new Module(context, options);
 
@@ -13,6 +14,9 @@ CriticalMass.loadModule = function (name, context, options, callback) {
 require.config({
     baseUrl: '/js/',
     shim: {
+        'bootstrap.bundle': {
+            deps: ['jquery']
+        },
         'leaflet-sleep': {
             deps: ['leaflet'],
             exports: 'L.Map.Sleep'

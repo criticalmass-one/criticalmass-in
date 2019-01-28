@@ -42,11 +42,9 @@
 
 {% block masterContent %}{% endblock %}
 
-<script src="{{ asset('/js/jquery.min.js') }}"></script>
-<script src="{{ asset('/js/bootstrap.bundle.min.js') }}"></script>
-
 {% block additionalFooterElements %}{% endblock %}
 <script>
+    CriticalMass.loadModule('bootstrap.bundle');
     CriticalMass.loadModule('CookieNotice');
     CriticalMass.loadModule('HintModal', '.modal-hint');
     CriticalMass.loadModule('Sharing');
