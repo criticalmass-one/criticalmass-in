@@ -1,8 +1,8 @@
-@import "../../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
 @import "../../node_modules/font-awesome/scss/font-awesome.scss";
 @import "criticalmass/criticalmass";
-@import "criticalmass/bikeright3";
-@import "criticalmass/frontpage3";
+@import "criticalmass/bikeright4";
+@import "criticalmass/frontpage4";
 
 .form-control.datepicker {
   padding: 0.5rem 0.75rem !important;
@@ -14,7 +14,7 @@
 
 .breadcrumb > li + li:before {
   content: "/\00a0";
-  color: $breadcrumb-color;
+  color: $breadcrumb-bg;
 }
 
 input[type="file"] {

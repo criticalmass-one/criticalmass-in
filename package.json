@@ -22,10 +22,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bootstrap": "^3.4.0",
+    "bootstrap": "^4.2",
     "bootstrap-colorpicker": "^2.5.3",
     "bootstrap-datepicker": "^1.8.0",
-    "bootstrap-sass": "^3.4.0",
     "bootstrap-slider": "^10.4.1",
     "chart.js": "^2.7.3",
     "cookie-notice": "^1.1.17",

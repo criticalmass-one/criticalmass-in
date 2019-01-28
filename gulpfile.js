@@ -119,8 +119,7 @@ gulp.task('copy-js-modules', function () {
 
 gulp.task('copy-js-external', function () {
     return gulp.src([
-        'node_modules/bootstrap/dist/js/bootstrap.js',
-        'node_modules/bootstrap/dist/js/bootstrap.min.js',
+        'node_modules/bootstrap/dist/js/bootstrap.bundle.js',
         'node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js',
         'node_modules/dropzone/dist/dropzone-amd-module.js',
         'node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
