@@ -1,5 +1,7 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set bootstrap4 = true %}
+
 {% block title %}Kalender{% endblock %}
 
 {% block breadcrumb %}
@@ -13,7 +15,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <h1>
                     Dein weltweiter Critical-Mass-Kalender
                 </h1>
@@ -25,7 +27,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12 text-center">
+            <div class="col-12 text-center">
                 <h3>
                     {{ dateTime|format_date('MMMM YYYY') }}
                 </h3>
@@ -35,7 +37,7 @@
         {% include('Calendar/_pagination.html.twig') with { 'previousMonth': previousMonth, 'nextMonth': nextMonth } %}
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <table id="calendar" class="calendar">
                     <thead>
                     <tr>
@@ -99,9 +101,11 @@
                 </table>
             </div>
         </div>
+
+        {% include('Calendar/_pagination.html.twig') with { 'previousMonth': previousMonth, 'nextMonth': nextMonth } %}
+
     </div>
 
-    {% include('Calendar/_pagination.html.twig') with { 'previousMonth': previousMonth, 'nextMonth': nextMonth } %}
 
     <script type="text/javascript">
         CriticalMass.loadModule('CalendarPage', '#calendar');
