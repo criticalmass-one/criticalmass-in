@@ -23,31 +23,6 @@ class SocialNetworkController extends AbstractController
 {
     /**
      * @ParamConverter("city", class="App:City", isOptional=true)
-     * @ParamConverter("ride", class="App:Ride", isOptional=true)
-     * @ParamConverter("subride", class="App:Subride", isOptional=true)
-     * @ParamConverter("user", class="App:User", isOptional=true)
-     */
-    public function listAction(
-        ObjectRouterInterface $router,
-        City $city = null,
-        Ride $ride = null,
-        Subride $subride = null,
-        User $user = null
-    ): Response {
-        $profileAble = $this->getProfileAbleObject($ride, $subride, $city, $user);
-
-        $addProfileForm = $this->getAddProfileForm($router, $profileAble);
-
-        return $this->render('SocialNetwork/list.html.twig', [
-            'list' => $this->getProfileList($profileAble),
-            'addProfileForm' => $addProfileForm->createView(),
-            'profileAbleType' => strtolower($this->getProfileAbleShortname($profileAble)),
-            'profileAble' => $profileAble,
-        ]);
-    }
-
-    /**
-     * @ParamConverter("city", class="App:City", isOptional=true)
      */
     public function addAction(
         Request $request,
@@ -171,15 +146,6 @@ class SocialNetworkController extends AbstractController
         $reflection = new \ReflectionClass($profileAble);
 
         return $reflection->getShortName();
-    }
-
-    protected function getProfileList(SocialNetworkProfileAble $profileAble): array
-    {
-        $methodName = sprintf('findBy%s', $this->getProfileAbleShortname($profileAble));
-
-        $list = $this->getDoctrine()->getRepository(SocialNetworkProfile::class)->$methodName($profileAble);
-
-        return $list;
     }
 
     protected function getRouteName(ObjectRouterInterface $router, SocialNetworkProfileAble $profileAble, string $actionName): string
