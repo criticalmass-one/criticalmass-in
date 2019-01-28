@@ -22,6 +22,8 @@
 /public/img
 /public/js
 
+node_modules
+
 # Backup entities generated with doctrine:generate:entities command
 **/Entity/*~
 criticalmass.iml
