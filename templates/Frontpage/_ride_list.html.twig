@@ -1,20 +1,20 @@
 <div class="row hidden-xs hidden-sm">
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="panel-title">
                     Bald unterwegs
-                </h3>
+                </h5>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <ul class="list-unstyled">
                     {% for day in rideList %}
-                        <li>
-                            <h4>
+                        <li class="mt-2">
+                            <strong>
                                 {{ day.dateTime|format_date('eeee, dd. MMMM YYYY') }}
-                            </h4>
+                            </strong>
 
-                            <ul>
+                            <ul class="list-unstyled">
                                 {% for ride in day %}
                                 <li>
                                     <a href="{{ objectPath(ride) }}">
