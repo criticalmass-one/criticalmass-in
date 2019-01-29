@@ -1,9 +1,9 @@
-<div class="row margin-bottom-medium">
+<div class="row mt-3">
     {{ include('Timeline/_includes/user_column.html.twig') }}
 
-    <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
+    <div class="col-9 col-md-10">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <strong>
                     {{ item.user.username }}
                 </strong>
@@ -22,7 +22,7 @@
 
         <div class="row">
             {% for previewPhoto in item.previewPhotoList %}
-            <div class="col-md-4">
+            <div class="col-4">
                 <a href="{{ objectPath(previewPhoto) }}">
                     <img src="{{ vich_uploader_asset(previewPhoto, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" class="img-responsive thumbnail" />
                 </a>
