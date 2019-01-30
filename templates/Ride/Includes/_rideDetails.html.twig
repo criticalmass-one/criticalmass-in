@@ -1,10 +1,10 @@
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Details</h3>
+<div class="card card">
+    <div class="card-header">
+        <h5 class="card-title">Details</h5>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <dl>
                     <dt>Datum</dt>
                     <dd itemprop="startDate" content="{{ ride.dateTime|date('Y-m-dTH:i') }}">{{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}</dd>

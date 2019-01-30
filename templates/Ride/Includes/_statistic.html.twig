@@ -7,14 +7,15 @@
 {% endif %}
 
 {% if pastRide %}
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Statistik</h3>
-        </div>
-        <div class="panel-body">
+    <div class="card">
+        <h5 class="card-header">
+            Statistik
+        </h5>
+
+        <div class="card-body">
             {% if hasEstimations %}
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <dl>
                             {% if ride.estimatedParticipants and ride.estimatedParticipants > 0 %}
                                 <dt>Teilnehmer</dt>
@@ -41,7 +42,7 @@
             {% endif %}
 
             <div class="row">
-                <div class="col-md-12 text-center">
+                <div class="col-12 text-center">
                 {% if app.user %}
                     <button class="btn btn-success" data-toggle="modal" data-target="#estimate-modal">
                         <i class="fa fa-users"></i>

@@ -1,12 +1,10 @@
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">
-            Soziale Netze
-        </h3>
-    </div>
+<div class="card">
+    <h5 class="card-header">
+        Soziale Netze
+    </h5>
 
     {% if ride.socialNetworkProfiles|length > 0 %}
-        <div class="panel-body text-center">
+        <div class="card-body text-center">
             <div class="btn-group-vertical">
                 {% for profile in ride.socialNetworkProfiles %}
                     {% set network = getNetwork(profile.network) %}
@@ -20,7 +18,7 @@
         </div>
     {% endif %}
 
-    <div class="panel-body text-center">
+    <div class="card-body text-center">
         <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-share-square-o"></i>
             in sozialen Netzen teilen
