@@ -121,17 +121,7 @@ class CityController extends AbstractController
                 'blocked' => $blocked
             ]);
         }
-
-        $nearCities = $this->findNearCities($city);
-
-        $currentRide = $this->getRideRepository()->findCurrentRideForCity($city);
-
-        $rides = $this->getRideRepository()->findRidesForCity($city, 'DESC', 6);
-
-        $locations = $this->getLocationRepository()->findLocationsByCity($city);
-
-        $photos = $this->getPhotoRepository()->findSomePhotos(8, null, $city);
-
+        
         $seoPage
             ->setDescription('Informationen, Tourendaten, Tracks und Fotos von der Critical Mass in ' . $city->getCity())
             ->setCanonicalForObject($city)
@@ -145,11 +135,12 @@ class CityController extends AbstractController
 
         return $this->render('City/show.html.twig', [
             'city' => $city,
-            'currentRide' => $currentRide,
-            'nearCities' => $nearCities,
-            'locations' => $locations,
-            'photos' => $photos,
-            'rides' => $rides,
+            'currentRide' => $this->getRideRepository()->findCurrentRideForCity($city),
+            'nearCities' => $this->findNearCities($city),
+            'locations' => $this->getLocationRepository()->findLocationsByCity($city),
+            'photos' => $this->getPhotoRepository()->findSomePhotos(8, null, $city),
+            'rides' => $this->getRideRepository()->findRidesForCity($city, 'DESC', 6),
+            'socialNetworkProfiles' => $this->getSocialNetworkProfileRepository()->findByCity($city),
         ]);
     }
 

@@ -2,11 +2,11 @@
     <h5 class="card-header">
         Soziale Netze
     </h5>
-
-    {% if ride.socialNetworkProfiles|length > 0 %}
+    
+    {% if socialNetworkProfiles|length > 0 %}
         <div class="card-body text-center">
             <div class="btn-group-vertical">
-                {% for profile in ride.socialNetworkProfiles %}
+                {% for profile in socialNetworkProfiles %}
                     {% set network = getNetwork(profile.network) %}
 
                     <a href="{{ profile.identifier }}" class="btn" style="background-color: {{ network.backgroundColor }}; color: {{ network.textColor }};">
