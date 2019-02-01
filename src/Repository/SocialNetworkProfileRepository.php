@@ -8,13 +8,15 @@ use Doctrine\ORM\QueryBuilder;
 
 class SocialNetworkProfileRepository extends EntityRepository
 {
-    protected function getProfileAbleQueryBuilder(): QueryBuilder
+    protected function getProfileAbleQueryBuilder(bool $enabled = true): QueryBuilder
     {
         $builder = $this->createQueryBuilder('snp');
 
-        $builder
-            ->where($builder->expr()->eq('snp.enabled', ':enabled'))
-            ->setParameter('enabled', true);
+        if ($enabled) {
+            $builder
+                ->where($builder->expr()->eq('snp.enabled', ':enabled'))
+                ->setParameter('enabled', $enabled);
+        }
 
         return $builder;
     }
