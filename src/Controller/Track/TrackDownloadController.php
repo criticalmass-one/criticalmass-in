@@ -31,8 +31,7 @@ class TrackDownloadController extends AbstractController
 
         $response->headers->add([
             'Content-disposition' => sprintf('attachment; filename=%s', $filename),
-            'Content-type',
-            'text/plain',
+            'Content-type' => 'application/gpx+xml',
         ]);
 
         $response->setContent($trackContent);
