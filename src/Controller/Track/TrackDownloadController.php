@@ -52,6 +52,6 @@ class TrackDownloadController extends AbstractController
         $rootDirectory = $this->getParameter('kernel.root_dir');
         $filename = $uploaderHelper->asset($track, 'trackFile');
 
-        return sprintf('%s/../web%s', $rootDirectory, $filename);
+        return sprintf('%s/../public%s', $rootDirectory, $filename);
     }
 }
