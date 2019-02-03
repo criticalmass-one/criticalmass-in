@@ -7,7 +7,7 @@
 {% set hasSocialMedia = ride.getUrl() or ride.getFacebook() or ride.getTwitter() %}
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-12">
         {% include('Ride/Includes/_participation.html.twig') with { 'pastRide': pastRide, 'participation': participation } %}
         <h1 itemprop="name">
             {{ ride.title }}
@@ -15,13 +15,13 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-12">
+<div class="row mt-3">
+    <div class="col-12">
         <div id="map" style="height: 350px;"></div>
     </div>
 </div>
 
-<div class="row" style="margin-top: 1em;">
+<div class="row mt-3">
     <div class="col-md-12">
         <div role="tabpanel">
             <ul class="nav nav-tabs" role="tablist">

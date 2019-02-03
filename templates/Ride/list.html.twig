@@ -1,13 +1,27 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set bootstrap4 = true %}
+
 {% block title %}Kalender{% endblock %}
 
 {% block content %}
     <div class="container">
         <ol class="breadcrumb">
-            <li><a href="{{ path('caldera_criticalmass_frontpage') }}">criticalmass.in</a></li>
-            <li><a href="{{ path('caldera_criticalmass_city_list') }}">Städteliste</a></li>
-            <li class="active">Kalender</li>
+            <li>
+                <a href="{{ path('caldera_criticalmass_frontpage') }}">
+                    criticalmass.in
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ path('caldera_criticalmass_city_list') }}">
+                    Städteliste
+                </a>
+            </li>
+
+            <li class="active">
+                Kalender
+            </li>
         </ol>
 
         <div class="row">
