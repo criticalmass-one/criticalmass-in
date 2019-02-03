@@ -14,6 +14,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class TrackDownloadController extends AbstractController
 {
@@ -21,14 +22,15 @@ class TrackDownloadController extends AbstractController
      * @Security("is_granted('edit', track)")
      * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
      */
-    public function downloadAction(Track $track): Response
+    public function downloadAction(Track $track, UploaderHelper $uploaderHelper): Response
     {
-        $trackContent = file_get_contents($this->getTrackFilename($track));
+        $trackContent = file_get_contents($this->getTrackFilename($track, $uploaderHelper));
+        $filename = $this->generateFilename($track);
 
         $response = new Response();
 
         $response->headers->add([
-            'Content-disposition' => 'attachment; filename=track.gpx',
+            'Content-disposition' => sprintf('attachment; filename=%s', $filename),
             'Content-type',
             'text/plain',
         ]);
@@ -38,12 +40,18 @@ class TrackDownloadController extends AbstractController
         return $response;
     }
 
-    protected function getTrackFilename(Track $track): string
+    protected function generateFilename(Track $track): string
+    {
+        $filename = sprintf('Critical Mass %s %s', $track->getRide()->getCity()->getCity(), $track->getRide()->getDateTime()->format('Y-m-d'));
+
+        return sprintf('%s.gpx', $filename);
+    }
+
+    protected function getTrackFilename(Track $track, UploaderHelper $uploaderHelper): string
     {
         $rootDirectory = $this->getParameter('kernel.root_dir');
-        $helper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
-        $filename = $helper->asset($track, 'trackFile');
+        $filename = $uploaderHelper->asset($track, 'trackFile');
 
-        return $rootDirectory . '/../web' . $filename;
+        return sprintf('%s/../web%s', $rootDirectory, $filename);
     }
 }
