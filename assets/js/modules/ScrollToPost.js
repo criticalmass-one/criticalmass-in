@@ -8,11 +8,12 @@ define([], function () {
 
         if (hash.startsWith('post-')) {
             var $anchor = $('a[name=' + hash + ']');
-
-            var $tabContent = $anchor.closest('.tab-pane');
-
+            var $post = $anchor.closest('.post');
+            var $tabContent = $post.closest('.tab-pane');
             var $tab = $('a[href=\'#' + $tabContent.attr('id') + '\']');
-            
+
+            $post.addClass('bg-warning');
+
             $tab.tab('show');
         }
     };
