@@ -21,10 +21,9 @@ define([], function () {
 
     ScrollToPost.prototype._addEventListers = function () {
         $('a[href^=\'#post-\']').on('click', function (e) {
-            e.preventDefault();
-
+            this._unhighlightPosts();
             this._highlightPost(this._getHash());
-        });
+        }.bind(this));
     };
 
     ScrollToPost.prototype._highlightPost = function (hash) {
@@ -36,6 +35,10 @@ define([], function () {
         $post.addClass('bg-warning');
 
         $tab.tab('show');
+    };
+
+    ScrollToPost.prototype._unhighlightPosts = function () {
+         $('.post').removeClass('bg-warning');
     };
 
     return ScrollToPost;
