@@ -2,7 +2,7 @@ define([], function () {
 
     ScrollToPost = function (context, options) {
 
-        var hash = this._getHash();
+        var hash = this._getHash(window.location.hash);
 
         if (hash.startsWith('post-')) {
             this._highlightPost(hash);
@@ -11,8 +11,7 @@ define([], function () {
         this._addEventListers();
     };
 
-    ScrollToPost.prototype._getHash = function () {
-        var url = window.location.hash;
+    ScrollToPost.prototype._getHash = function (url) {
         var idx = url.indexOf('#');
         var hash = idx != -1 ? url.substring(idx+1) : '';
 
@@ -21,6 +20,13 @@ define([], function () {
 
     ScrollToPost.prototype._addEventListers = function () {
         $('a[href^=\'#post-\']').on('click', function (e) {
+            e.preventDefault();
+
+            alert($(e.target).attr('href'));
+            var hash = this._getHash($(this).attr('href'));
+
+            location.hash = hash;
+
             this._unhighlightPosts();
             this._highlightPost(this._getHash());
         }.bind(this));
