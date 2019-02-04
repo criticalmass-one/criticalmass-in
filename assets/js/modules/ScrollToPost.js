@@ -2,7 +2,7 @@ define([], function () {
 
     ScrollToPost = function (context, options) {
 
-        var hash = this._getHash(window.location.hash);
+        let hash = this._getHash(window.location.hash);
 
         if (hash.startsWith('post-')) {
             this._highlightPost(hash);
@@ -12,31 +12,32 @@ define([], function () {
     };
 
     ScrollToPost.prototype._getHash = function (url) {
-        var idx = url.indexOf('#');
-        var hash = idx != -1 ? url.substring(idx+1) : '';
+        let idx = url.indexOf('#');
+        let hash = idx != -1 ? url.substring(idx+1) : '';
 
         return hash;
     };
 
     ScrollToPost.prototype._addEventListers = function () {
+        let that = this;
+
         $('a[href^=\'#post-\']').on('click', function (e) {
             e.preventDefault();
 
-            alert($(e.target).attr('href'));
-            var hash = this._getHash($(this).attr('href'));
+            let hash = that._getHash($(this).attr('href'));
 
             location.hash = hash;
 
-            this._unhighlightPosts();
-            this._highlightPost(this._getHash());
-        }.bind(this));
+            that._unhighlightPosts();
+            that._highlightPost(hash);
+        });
     };
 
     ScrollToPost.prototype._highlightPost = function (hash) {
-        var $anchor = $('a[name=' + hash + ']');
-        var $post = $anchor.closest('.post');
-        var $tabContent = $post.closest('.tab-pane');
-        var $tab = $('a[href=\'#' + $tabContent.attr('id') + '\']');
+        let $anchor = $('a[name=' + hash + ']');
+        let $post = $anchor.closest('.post');
+        let $tabContent = $post.closest('.tab-pane');
+        let $tab = $('a[href=\'#' + $tabContent.attr('id') + '\']');
 
         $post.addClass('bg-warning');
 
