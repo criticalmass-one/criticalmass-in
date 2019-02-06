@@ -33,6 +33,7 @@ class CityAdmin extends AbstractAdmin
             ->add('longitude')
             ->end()
             ->with('Technisches', ['class' => 'col-md-6'])
+            ->add('rideNamer')
             ->add('mainSlug')
             ->add('timezone')
             ->end()
@@ -44,17 +45,6 @@ class CityAdmin extends AbstractAdmin
             ->end()
             ->with('Headergrafik', ['class' => 'col-md-6'])
             ->add('imageFile', VichImageType::class)
-            ->end()
-            ->with('Wiederkehrende Touren', ['class' => 'col-md-6'])
-            ->add('isStandardable')
-            ->add('standardDayOfWeek')
-            ->add('standardWeekOfMonth')
-            ->add('isStandardableTime')
-            ->add('standardTime')
-            ->add('isStandardableLocation')
-            ->add('standardLocation')
-            ->add('standardLatitude')
-            ->add('standardLongitude')
             ->end();
     }
 
