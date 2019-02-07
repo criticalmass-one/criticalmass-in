@@ -2,18 +2,27 @@
 
 namespace App\Admin;
 
+use App\Criticalmass\RideNamer\RideNamerListInterface;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class CityAdmin extends AbstractAdmin
 {
+    /** @var RideNamerListInterface $rideNamerList */
+    protected $rideNamerList;
+
+    public function __construct(string $code, string $class, string $baseControllerName, RideNamerListInterface $rideNamerList)
+    {
+        parent::__construct($code, $class, $baseControllerName);
+
+        $this->rideNamerList = $rideNamerList;
+    }
+
     protected function configureFormFields(FormMapper $formMapper): void
     {
         $formMapper
@@ -33,7 +42,9 @@ class CityAdmin extends AbstractAdmin
             ->add('longitude')
             ->end()
             ->with('Technisches', ['class' => 'col-md-6'])
-            ->add('rideNamer')
+            ->add('rideNamer', ChoiceType::class, [
+                'choices' => $this->rideNamerList->getList(),
+            ])
             ->add('mainSlug')
             ->add('timezone')
             ->end()
@@ -44,7 +55,7 @@ class CityAdmin extends AbstractAdmin
             ->add('enableBoard')
             ->end()
             ->with('Headergrafik', ['class' => 'col-md-6'])
-            ->add('imageFile', VichImageType::class)
+            ->add('imageFile', VichImageType::class, ['required' => false])
             ->end();
     }
 

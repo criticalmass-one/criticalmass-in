@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Criticalmass\Feature\Feature\FeatureInterface;
+use App\Criticalmass\RideNamer\RideNamerInterface;
 use App\Criticalmass\Router\DelegatedRouter\DelegatedRouterInterface;
 use App\Criticalmass\Sharing\Network\ShareNetworkInterface;
 use App\Criticalmass\SocialNetwork\Network\NetworkInterface;
@@ -10,6 +11,7 @@ use App\Criticalmass\SocialNetwork\NetworkFeedFetcher\NetworkFeedFetcherInterfac
 use App\Criticalmass\Timeline\Collector\TimelineCollectorInterface;
 use App\DependencyInjection\Compiler\FeaturePass;
 use App\DependencyInjection\Compiler\ObjectRouterPass;
+use App\DependencyInjection\Compiler\RideNamerPass;
 use App\DependencyInjection\Compiler\ShareNetworkPass;
 use App\DependencyInjection\Compiler\SocialNetworkPass;
 use App\DependencyInjection\Compiler\TimelineCollectorPass;
@@ -76,6 +78,9 @@ class Kernel extends BaseKernel
 
         $container->addCompilerPass(new ShareNetworkPass());
         $container->registerForAutoconfiguration(ShareNetworkInterface::class)->addTag('share.network');
+
+        $container->addCompilerPass(new RideNamerPass());
+        $container->registerForAutoconfiguration(RideNamerInterface::class)->addTag('ride_namer');
 
         $container->addCompilerPass(new TwigSeoExtensionPass());
 
