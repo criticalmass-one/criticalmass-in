@@ -40,7 +40,7 @@ class CityAdmin extends AbstractAdmin
             ->add('timezone')
             ->add('enableBoard')
             ->end()
-            
+
             ->with('Headergrafik', ['class' => 'col-md-6'])
             ->add('imageFile', VichImageType::class, ['required' => false])
             ->end();
