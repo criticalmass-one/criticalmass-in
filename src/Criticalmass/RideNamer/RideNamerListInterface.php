@@ -7,4 +7,6 @@ interface RideNamerListInterface
     public function addRideNamer(RideNamerInterface $rideNamer): RideNamerListInterface;
 
     public function getList(): array;
+
+    public function getRideNamerByFqcn(string $rideNamerFqcn): ?RideNamerInterface;
 }

@@ -18,4 +18,13 @@ class RideNamerList implements RideNamerListInterface
     {
         return $this->list;
     }
+
+    public function getRideNamerByFqcn(string $rideNamerFqcn): ?RideNamerInterface
+    {
+        if (array_key_exists($rideNamerFqcn, $this->list)) {
+            return $this->list[$rideNamerFqcn];
+        }
+
+        return null;
+    }
 }
