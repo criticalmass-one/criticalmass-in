@@ -10,6 +10,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class RideEstimateAdmin extends AbstractAdmin
@@ -22,11 +23,17 @@ class RideEstimateAdmin extends AbstractAdmin
             ->add('estimatedDistance', NumberType::class, ['required' => false])
             ->add('estimatedDuration', NumberType::class, ['required' => false])
             ->end()
+
             ->with('Settings', ['class' => 'col-md-6'])
-            ->add('user', EntityType::class, ['class' => User::class])
+            ->add('user', EntityType::class, ['class' => User::class, 'required' => false])
             ->add('ride', EntityType::class, ['class' => Ride::class])
             ->add('track', EntityType::class, ['class' => Track::class, 'required' => false])
-            ->add('creationDateTime')
+            ->add('dateTime', DateTimeType::class, [
+                'date_widget' => 'single_text',
+                'date_format' => 'dd.MM.yyyy',
+                'time_widget' => 'single_text',
+                'compound' => true,
+            ])
             ->end();
     }
 
