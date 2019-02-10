@@ -256,7 +256,7 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
         return $this->description;
     }
 
-    public function setDescription(string $description): Photo
+    public function setDescription(string $description = null): Photo
     {
         $this->description = $description;
 
@@ -401,6 +401,6 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
 
     public function __toString(): string
     {
-        return $this->id;
+        return (string) $this->id;
     }
 }
