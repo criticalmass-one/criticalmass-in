@@ -33,7 +33,7 @@ class BoardController extends AbstractController
      * @ParamConverter("city", class="App:City", isOptional="true")
      * @ParamConverter("board", class="App:Board", isOptional="true")
      */
-    public function listthreadsAction(ObjectRouterInterface $objectRouter, Board $board = null, City $city = null): Response
+    public function listThreadsAction(ObjectRouterInterface $objectRouter, Board $board = null, City $city = null): Response
     {
         $threads = [];
         $newThreadUrl = '';
@@ -60,7 +60,7 @@ class BoardController extends AbstractController
     /**
      * @ParamConverter("thread", class="App:Thread")
      */
-    public function viewthreadAction(EventDispatcherInterface $eventDispatcher, Thread $thread): Response
+    public function viewThreadAction(EventDispatcherInterface $eventDispatcher, Thread $thread): Response
     {
         $posts = $this->getPostRepository()->findPostsForThread($thread);
         $board = $thread->getCity() ?? $thread->getBoard();
@@ -126,7 +126,7 @@ class BoardController extends AbstractController
             $thread->setTitle($data['title']);
             $thread->setFirstPost($post);
             $thread->setLastPost($post);
-            $thread->setSlug($slug);
+            $thread->setSlug($slug->render());
 
             $board->setLastThread($thread);
             $board->incPostNumber();

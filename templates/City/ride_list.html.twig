@@ -75,10 +75,10 @@
 
                         >
                             <td>
-                                {{ ride.dateTime|date('d.m.Y', 'Europe/Berlin') }}
+                                {{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}
                             </td>
                             <td>
-                                {{ ride.dateTime|date('H:i', 'Europe/Berlin') }}&nbsp;Uhr
+                                {{ ride.dateTime|date('H:i', ride.city.timezone) }}&nbsp;Uhr
                             </td>
                             <td>
                                 <a href="{{ objectPath(ride) }}">
@@ -100,7 +100,7 @@
                             </td>
                             <td>
                                 {% if ride.estimatedDuration %}
-                                    {{ ride.estimatedDuration|round(2) }}&nbsp;Stunden
+                                    {{ human_duration(ride.getEstimatedDurationInSeconds()) }}
                                 {% endif %}
                             </td>
                         </tr>

@@ -10,11 +10,7 @@
     </li>
 
     <li>
-        {% if instanceof(board, 'Board') %}
         <a href="{{ objectPath(board) }}">
-        {% else %}
-        <a href="{{ objectPath(board, 'caldera_criticalmass_board_listcitythreads') }}">
-        {% endif %}
             {{ board.title }}
         </a>
     </li>

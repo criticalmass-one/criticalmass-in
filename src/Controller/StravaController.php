@@ -10,9 +10,8 @@ use App\Entity\Position;
 use App\Entity\Ride;
 use App\Entity\Track;
 use App\Criticalmass\Gps\GpxExporter\GpxExporter;
-use Pest;
 use Strava\API\Client;
-use Strava\API\OAuth as OAuth;
+use Strava\API\OAuth;
 use Strava\API\Service\REST;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,7 +32,6 @@ class StravaController extends AbstractController
                 'clientId' => $this->getParameter('strava.client_id'),
                 'clientSecret' => $this->getParameter('strava.secret'),
                 'redirectUri' => $redirectUri,
-                'scopes' => ['view_private'],
             ];
 
             return new OAuth($oauthOptions);
@@ -53,7 +51,8 @@ class StravaController extends AbstractController
 
         $authorizationOptions = [
             'state' => '',
-            'approval_prompt' => 'force'
+            'approval_prompt' => 'force',
+            'scope' => 'public',
         ];
 
         $authorizationUrl = $oauth->getAuthorizationUrl($authorizationOptions);
@@ -103,9 +102,8 @@ class StravaController extends AbstractController
 
         $token = $this->getSession()->get('strava_token');
 
-        $adapter = new Pest('https://www.strava.com/api/v3');
+        $adapter = new \GuzzleHttp\Client(['base_uri' => 'https://www.strava.com/api/v3/']);
         $service = new REST($token, $adapter);
-
         $client = new Client($service);
 
         $activities = $client->getAthleteActivities($beforeDateTime->getTimestamp(), $afterDateTime->getTimestamp());
@@ -120,15 +118,15 @@ class StravaController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function importAction(Request $request, UserInterface $user, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, GpxExporter $exporter, Ride $ride, string $uploadDestinationTrack): Response
+    public function importAction(Request $request, UserInterface $user, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, GpxExporter $exporter, Ride $ride): Response
     {
         $activityId = (int) $request->get('activityId');
 
+        $uploadDestinationTrack = $this->getParameter('upload_destination.track');
         $token = $this->getSession()->get('strava_token');
 
-        $adapter = new Pest('https://www.strava.com/api/v3');
-        $service = new REST($token, $adapter);
-
+        $adapter = new \GuzzleHttp\Client(['base_uri' => 'https://www.strava.com/api/v3/']);
+        $service = new REST($token, $adapter);  // Define your user token here.
         $client = new Client($service);
 
         /* Catch the activity to retrieve the start dateTime */

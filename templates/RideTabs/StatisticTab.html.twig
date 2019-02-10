@@ -51,7 +51,7 @@
         </tr>
         <tr>
             <th>Dauer</th>
-            <td>{{ (ride.getEstimatedDuration() * 60)|round }} Minuten</td>
+            <td>{{ human_duration(ride.getEstimatedDurationInSeconds()) }}</td>
             <td>
                 {% include('AppBundle:Common/Ride:RideDuration.html.twig') with { 'ride': ride } %}
             </td>

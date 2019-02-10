@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Request\ParamConverter;
 
@@ -64,11 +64,28 @@ class RideParamConverter extends AbstractCriticalmassParamConverter
     protected function findRideBySlugs(Request $request): ?Ride
     {
         $citySlug = $request->get('citySlug');
-        $rideDate = $request->get('rideDate');
+        $rideIdentifier = $request->get('rideIdentifier');
 
-        if ($citySlug && $rideDate) {
+        preg_match('/^([0-9]{4,4})\-([0-9]{1,2})(?:\-?)([0-9]{1,2})?$/', $rideIdentifier,$matches);
+
+        if ($citySlug && count($matches) === 0) {
             $city = $this->findCityBySlug($request);
-            $rideDateTime = $this->guessDateTime($rideDate);
+
+            if ($city) {
+                return $this->registry->getRepository(Ride::class)->findOneByCityAndSlug($city, $rideIdentifier);
+            }
+        } elseif ($citySlug && count($matches) === 3) {
+            $rideDateTime = $this->guessDateTime($rideIdentifier);
+            $city = $this->findCityBySlug($request);
+
+            if ($city && $rideDateTime) {
+                $rides = $this->registry->getRepository(Ride::class)->findByCityAndMonth($city, $rideDateTime);
+
+                return array_shift($rides);
+            }
+        } elseif ($citySlug && count($matches) === 4) {
+            $rideDateTime = $this->guessDateTime($rideIdentifier);
+            $city = $this->findCityBySlug($request);
 
             if ($city && $rideDateTime) {
                 return $this->registry->getRepository(Ride::class)->findCityRideByDate($city, $rideDateTime);

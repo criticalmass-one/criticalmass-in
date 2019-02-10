@@ -1,42 +1,15 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Criticalmass\SeoPage;
 
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\RouteableInterface;
-use App\Criticalmass\Router\ObjectRouter;
-use Liip\ImagineBundle\Imagine\Cache\CacheManager;
-use Sonata\SeoBundle\Seo\SeoPageInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
+use App\EntityInterface\StaticMapableInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface as SymfonyUrlGeneratorInterface;
 
-class SeoPage
+class SeoPage extends AbstractSeoPage
 {
-    /** @var SeoPageInterface */
-    protected $sonataSeoPage;
-
-    /** @var UploaderHelper $uploaderHelper */
-    protected $uploaderHelper;
-
-    /** @var CacheManager $cacheManager */
-    protected $cacheManager;
-
-    /** @var ObjectRouter $objectRouter */
-    protected $objectRouter;
-
-    public function __construct(
-        SeoPageInterface $sonataSeoPage,
-        UploaderHelper $uploaderHelper,
-        CacheManager $cacheManager,
-        ObjectRouter $objectRouter
-    ) {
-        $this->sonataSeoPage = $sonataSeoPage;
-        $this->uploaderHelper = $uploaderHelper;
-        $this->cacheManager = $cacheManager;
-        $this->objectRouter = $objectRouter;
-    }
-
-    public function setTitle(string $title): SeoPage
+    public function setTitle(string $title): SeoPageInterface
     {
         $this->sonataSeoPage
             ->setTitle($title)
@@ -45,7 +18,7 @@ class SeoPage
         return $this;
     }
 
-    public function setDescription(string $description): SeoPage
+    public function setDescription(string $description): SeoPageInterface
     {
         $this->sonataSeoPage
             ->addMeta('name', 'description', $description)
@@ -54,7 +27,17 @@ class SeoPage
         return $this;
     }
 
-    public function setPreviewPhoto(PhotoInterface $object): SeoPage
+    public function setPreviewMap(StaticMapableInterface $staticMapable): SeoPageInterface
+    {
+        $this->sonataSeoPage
+            ->addMeta('property', 'og:image', $this->urlGenerator->generate($staticMapable, 600, 315), ['escape' => false])
+            ->addMeta('name', 'twitter:image', $this->urlGenerator->generate($staticMapable, 800, 320), ['escape' => false])
+            ->addMeta('name', 'twitter:card', 'summary_large_image');
+
+        return $this;
+    }
+
+    public function setPreviewPhoto(PhotoInterface $object): SeoPageInterface
     {
         if (!$object->getImageName()) {
             return $this;
@@ -73,7 +56,7 @@ class SeoPage
         return $this;
     }
 
-    public function setCanonicalLink(string $link): SeoPage
+    public function setCanonicalLink(string $link): SeoPageInterface
     {
         $this->sonataSeoPage
             ->setLinkCanonical($link)
@@ -82,9 +65,9 @@ class SeoPage
         return $this;
     }
 
-    public function setCanonicalForObject(RouteableInterface $object): SeoPage
+    public function setCanonicalForObject(RouteableInterface $object): SeoPageInterface
     {
-        $url = $this->objectRouter->generate($object, UrlGeneratorInterface::ABSOLUTE_URL);
+        $url = $this->objectRouter->generate($object, null, [], SymfonyUrlGeneratorInterface::ABSOLUTE_URL);
 
         $this->setCanonicalLink($url);
 

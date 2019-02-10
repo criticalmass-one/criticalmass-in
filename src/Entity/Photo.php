@@ -11,6 +11,7 @@ use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
 use App\EntityInterface\ViewableInterface;
 use App\EntityInterface\StaticMapableInterface;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
@@ -45,7 +46,7 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
     /**
      * @ORM\ManyToOne(targetEntity="Ride", inversedBy="photos")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
-     * @Routing\RouteParameter(name="rideDate")
+     * @Routing\RouteParameter(name="rideIdentifier")
      */
     protected $ride;
 
@@ -147,6 +148,11 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
      * @JMS\Groups({"ride-list"})
      */
     protected $location;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Post", mappedBy="photo")
+     */
+    protected $posts;
 
     public function __construct()
     {
@@ -250,7 +256,7 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
         return $this->description;
     }
 
-    public function setDescription(string $description): Photo
+    public function setDescription(string $description = null): Photo
     {
         $this->description = $description;
 
@@ -369,7 +375,7 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
         return $this->shorturl;
     }
 
-    public function setLocation(string $location): ReverseGeocodeable
+    public function setLocation(string $location = null): ReverseGeocodeable
     {
         $this->location = $location;
 
@@ -381,8 +387,20 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
         return $this->location;
     }
 
+    public function setPosts(Collection $posts): Photo
+    {
+        $this->posts = $posts;
+
+        return $this;
+    }
+
+    public function getPosts(): Collection
+    {
+        return $this->posts;
+    }
+
     public function __toString(): string
     {
-        return $this->id;
+        return (string) $this->id;
     }
 }

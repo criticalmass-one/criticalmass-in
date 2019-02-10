@@ -50,7 +50,7 @@
                         <div class="panel-body">
                             <div class="row margin-bottom-medium">
                                 <div class="col-md-12">
-                                    <img src="{{ static_map(track, 300, 150) }}" class="img-fluid img-responsive" />
+                                    <div id="map-{{ track.id }}" class="preview-map" style="height: 150px;" data-polyline-color="rgb({{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }})" data-lock-map="true" data-polyline="{{ track.polyline }}"></div>
                                 </div>
                             </div>
 
@@ -104,7 +104,7 @@
                                         </dt>
 
                                         <dd>
-                                            {{ track.startDateTime|date('H:i', 'Europe/Berlin') }}&nbsp;Uhr
+                                            {{ track.startDateTime|date('H:i', track.ride.city.timezone) }}&nbsp;Uhr
                                         </dd>
                                     </dl>
                                 </div>
@@ -116,7 +116,7 @@
                                         </dt>
 
                                         <dd>
-                                            {{ track.endDateTime|date('H:i', 'Europe/Berlin') }}&nbsp;Uhr
+                                            {{ track.endDateTime|date('H:i', track.ride.city.timezone) }}&nbsp;Uhr
                                         </dd>
                                     </dl>
                                 </div>

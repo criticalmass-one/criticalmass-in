@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Command\Photo;
 
@@ -37,7 +37,7 @@ class PrepareImagesCommand extends Command
                 'Slug of the city'
             )
             ->addArgument(
-                'rideDate',
+                'rideIdentifier',
                 InputArgument::REQUIRED,
                 'Date of the ride'
             );
@@ -46,9 +46,9 @@ class PrepareImagesCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $citySlug = $input->getArgument('citySlug');
-        $rideDate = $input->getArgument('rideDate');
+        $rideIdentifier = $input->getArgument('rideIdentifier');
 
-        $ride = $this->getRide($citySlug, $rideDate);
+        $ride = $this->getRide($citySlug, $rideIdentifier);
 
         if (!$ride) {
             return;
@@ -60,8 +60,14 @@ class PrepareImagesCommand extends Command
             ->filter();
     }
 
-    protected function getRide(string $citySlug, string $rideDate): ?Ride
+    protected function getRide(string $citySlug, string $rideIdentifier): ?Ride
     {
-        return $this->doctrine->getRepository(Ride::class)->findByCitySlugAndRideDate($citySlug, $rideDate);
+        $ride = $this->doctrine->getRepository(Ride::class)->findByCitySlugAndRideDate($citySlug, $rideIdentifier);
+
+        if (!$ride) {
+            $ride = $this->doctrine->getRepository(Ride::class)->findOneByCitySlugAndSlug($citySlug, $rideIdentifier);
+        }
+
+        return $ride;
     }
 }

@@ -2,8 +2,8 @@
 
 namespace Tests\Profile;
 
-use AppBundle\Entity\Ride;
-use AppBundle\Criticalmass\Profile\Streak\StreakCalculator;
+use App\Entity\Ride;
+use App\Criticalmass\Profile\Streak\StreakCalculator;
 use PHPUnit\Framework\TestCase;
 
 class StreakTest extends TestCase
@@ -78,7 +78,7 @@ class StreakTest extends TestCase
             ->addRide($this->createRide(new \DateTime('2012-06-29 00:00:00')))
             ->addRide($this->createRide(new \DateTime('2012-07-27 00:00:00')));
 
-        $streak = $streakCalculator->calculateCurrentStreak(new \DateTime('2012-07-30 00:00:00'));
+        $streak = $streakCalculator->calculateCurrentStreak(new \DateTime('2012-07-30 00:00:00'), true);
 
         $this->assertEquals(new \DateTime('2012-04-01 00:00:00'), $streak->getStartDateTime());
         $this->assertEquals(new \DateTime('2012-07-01 00:00:00'), $streak->getEndDateTime());

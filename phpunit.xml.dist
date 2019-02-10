@@ -2,56 +2,62 @@
 
 <!-- https://phpunit.de/manual/current/en/appendixes.configuration.html -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.8/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.1/phpunit.xsd"
          backupGlobals="false"
          colors="true"
-         bootstrap="app/autoload.php"
-         printerClass="Codedungeon\PHPUnitPrettyResultPrinter\Printer"
+         bootstrap="vendor/autoload.php"
+         failOnRisky="true"
+         failOnWarning="true"
 >
     <php>
         <ini name="error_reporting" value="-1" />
-        <server name="KERNEL_DIR" value="app/" />
-
-        <!-- ###+ symfony/framework-bundle ### -->
-        <env name="APP_ENV" value="dev"/>
-        <env name="APP_SECRET" value="da1c825b3bf3c28a93e77ab73eda5cfc"/>
-        <!-- env name="TRUSTED_PROXIES" value="127.0.0.1,127.0.0.2" -->
-        <!-- env name="TRUSTED_HOSTS" value="localhost,example.com" -->
-        <!-- ###- symfony/framework-bundle ### -->
-
-        <!-- ###+ symfony/swiftmailer-bundle ### -->
-        <!-- For Gmail as a transport, use: "gmail://username:password@localhost" -->
-        <!-- For a generic SMTP server, use: "smtp://localhost:25?encryption=&auth_mode=" -->
-        <!-- Delivery is disabled by default via "null://localhost" -->
-        <env name="MAILER_URL" value="null://localhost"/>
-        <!-- ###- symfony/swiftmailer-bundle ### -->
-
-        <!-- ###+ hwi/oauth-bundle ### -->
-        <env name="FB_ID" value=""/>
-        <env name="FB_SECRET" value=""/>
-        <!-- ###- hwi/oauth-bundle ### -->
-
-        <!-- ###+ doctrine/doctrine-bundle ### -->
-        <!-- Format described at http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url -->
-        <!-- For an SQLite database, use: "sqlite:///%kernel.project_dir%/var/data.db" -->
-        <!-- Configure your db driver and server_version in config/packages/doctrine.yaml -->
-        <env name="DATABASE_URL" value="mysql://db_user:db_password@127.0.0.1:3306/db_name"/>
-        <!-- ###- doctrine/doctrine-bundle ### -->
+        <ini name="intl.default_locale" value="en" />
+        <ini name="intl.error_level" value="0" />
+        <ini name="memory_limit" value="-1" />
+        <env name="DUMP_LIGHT_ARRAY" value="" />
+        <env name="DUMP_STRING_LENGTH" value="" />
+        <env name="LDAP_HOST" value="127.0.0.1" />
+        <env name="LDAP_PORT" value="3389" />
+        <env name="REDIS_HOST" value="localhost" />
+        <env name="MEMCACHED_HOST" value="localhost" />
+        <server name="KERNEL_CLASS" value="App\Kernel" />
+        <env name="DATABASE_URL" value="mysql://root:root@127.0.0.1/criticalmass" />
     </php>
 
     <testsuites>
-        <testsuite name="Project Test Suite">
-            <directory>tests</directory>
+        <testsuite name="Symfony Test Suite">
+            <directory>./src/Symfony/Bridge/*/Tests/</directory>
+            <directory>./src/Symfony/Component/*/Tests/</directory>
+            <directory>./src/Symfony/Component/*/*/Tests/</directory>
+            <directory>./src/Symfony/Contract/*/Tests/</directory>
+            <directory>./src/Symfony/Bundle/*/Tests/</directory>
         </testsuite>
     </testsuites>
 
+    <groups>
+        <exclude>
+            <group>benchmark</group>
+            <group>intl-data</group>
+        </exclude>
+    </groups>
+
     <filter>
         <whitelist>
-            <directory>src</directory>
+            <directory>./src/Symfony/</directory>
             <exclude>
-                <directory>src/*Bundle/Resources</directory>
-                <directory>src/*/*Bundle/Resources</directory>
-                <directory>src/*/Bundle/*Bundle/Resources</directory>
+                <directory>./src/Symfony/Bridge/*/Tests</directory>
+                <directory>./src/Symfony/Component/*/Tests</directory>
+                <directory>./src/Symfony/Component/*/*/Tests</directory>
+                <directory>./src/Symfony/Contract/*/Tests</directory>
+                <directory>./src/Symfony/Bundle/*/Tests</directory>
+                <directory>./src/Symfony/Bundle/*/Resources</directory>
+                <directory>./src/Symfony/Component/*/Resources</directory>
+                <directory>./src/Symfony/Component/*/*/Resources</directory>
+                <directory>./src/Symfony/Bridge/*/vendor</directory>
+                <directory>./src/Symfony/Bundle/*/vendor</directory>
+                <directory>./src/Symfony/Component/*/vendor</directory>
+                <directory>./src/Symfony/Component/*/*/vendor</directory>
+                <directory>./src/Symfony/Contract/*/vendor</directory>
             </exclude>
         </whitelist>
     </filter>

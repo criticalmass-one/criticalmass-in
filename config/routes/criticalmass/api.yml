@@ -10,7 +10,7 @@ caldera_criticalmass_rest_ride_list_deprecated:
 
 caldera_criticalmass_rest_city_list:
     path:     /city
-    controller: App\Controller\Api\CityController:listAction
+    controller: App\Controller\Api\CityController::listAction
     methods:  [GET]
 
 caldera_criticalmass_rest_city_list_deprecated:
@@ -34,9 +34,11 @@ caldera_criticalmass_rest_ride_show_current:
     methods:  [GET]
 
 caldera_criticalmass_rest_ride_show:
-    path:     /{citySlug}/{rideDate}
+    path:     /{citySlug}/{rideIdentifier}
     controller: App\Controller\Api\RideController::showAction
     methods:  [GET]
+    options:
+        expose: true
 
 caldera_criticalmass_rest_estimate_create:
     path:     /estimate

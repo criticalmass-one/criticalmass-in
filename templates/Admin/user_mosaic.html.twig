@@ -1,0 +1,5 @@
+{% extends '@SonataAdmin/CRUD/list_outer_rows_mosaic.html.twig' %}
+
+{% block sonata_mosaic_background %}
+    <img src="{{ vich_uploader_asset(object, 'imageFile')|imagine_filter('user_profile_photo_small') }}" />
+{% endblock %}

@@ -43,9 +43,9 @@ class PhotoTimeshiftCommand extends Command
                 'Slug of the city'
             )
             ->addArgument(
-                'rideDate',
+                'rideIdentifier',
                 InputArgument::REQUIRED,
-                'date of the ride'
+                'Slug or date of the ride'
             )
             ->addArgument(
                 'username',
@@ -71,13 +71,15 @@ class PhotoTimeshiftCommand extends Command
         $modificationMethodName = $input->getArgument('direction');
 
         /** @var Ride $ride */
-        $ride = $this->registry->getRepository(Ride::class)->findByCitySlugAndRideDate($input->getArgument('citySlug'), $input->getArgument('rideDate'));
+        $ride = $this->getRide($input->getArgument('citySlug'), $input->getArgument('rideIdentifier'));
 
         /** @var User $user */
         $user = $this->registry->getRepository(User::class)->findOneByUsername($input->getArgument('username'));
 
         /** @var Track $track */
         $photos = $this->registry->getRepository(Photo::class)->findPhotosByUserAndRide($user, $ride);
+
+        $entityManager = $this->registry->getManager();
 
         $progressBar = new ProgressBar($output, count($photos));
 
@@ -92,9 +94,9 @@ class PhotoTimeshiftCommand extends Command
 
         /** @var Photo $photo */
         foreach ($photos as $photo) {
-            $dateTime = $photo->getDateTime();
-            $dateTime->$modificationMethodName($interval);
-            $photo->setDateTime($dateTime);
+            $dateTimeImmutable = \DateTimeImmutable::createFromMutable($photo->getDateTime());
+            $dateTimeImmutable = $dateTimeImmutable->$modificationMethodName($interval);
+            $photo->setDateTime(new \DateTime(sprintf('@%d', $dateTimeImmutable->getTimestamp())));
 
             $this->eventDispatcher->dispatch(PhotoUpdatedEvent::NAME, new PhotoUpdatedEvent($photo, false));
 
@@ -109,9 +111,20 @@ class PhotoTimeshiftCommand extends Command
             $progressBar->advance();
         }
 
-        $this->registry->getManager()->flush();
-
         $progressBar->finish();
         $table->render();
+
+        $entityManager->flush();
+    }
+
+    protected function getRide(string $citySlug, string $rideIdentifier): ?Ride
+    {
+        $ride = $this->registry->getRepository(Ride::class)->findByCitySlugAndRideDate($citySlug, $rideIdentifier);
+
+        if (!$ride) {
+            $ride = $this->registry->getRepository(Ride::class)->findOneByCitySlugAndSlug($citySlug, $rideIdentifier);
+        }
+
+        return $ride;
     }
 }

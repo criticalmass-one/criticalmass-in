@@ -13,6 +13,7 @@ sonata_seo:
             property:
                 'fb:app_id':          '216780188685195'
                 'og:type':            Website
+                'og:title':           criticalmass.in — Critical Mass, Touren, Photos und mehr
                 'og:site_name':       criticalmass.in
                 'og:description':     criticalmass.in sammelt Fotos und Tourdaten über die Critical Mass
                 'og:locale':          de_DE

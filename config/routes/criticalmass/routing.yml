@@ -1,3 +1,7 @@
+caldera_criticalmass_profile:
+    resource: 'profile.xml'
+    prefix: /
+
 caldera_criticalmass_api:
     resource: 'api.yml'
     prefix: /api
@@ -98,6 +102,14 @@ caldera_criticalmass_ride:
     resource: 'ride.yml'
     prefix: /
 
+caldera_criticalmass_social_network:
+    resource: 'social_network.yml'
+    prefix: /
+
+caldera_criticalmass_static:
+    resource: 'static.yml'
+    prefix: /
+
 caldera_criticalmass_ridemanagement:
     resource: 'ridemanagement.yml'
     prefix: /
@@ -110,18 +122,6 @@ caldera_criticalmass_subdride:
     resource: 'subride.yml'
     prefix: /
 
-caldera_criticalmass_profile:
-    resource: 'profile.xml'
-    prefix: /
-
-caldera_criticalmass_social_network:
-    resource: 'social_network.yml'
-    prefix: /
-
-caldera_criticalmass_static:
-    resource: 'static.yml'
-    prefix: /
-
-caldera_criticalmass_redirecting:
-    resource: 'redirecting.yml'
-    prefix: /
+#caldera_criticalmass_redirecting:
+#    resource: 'redirecting.yml'
+#    prefix: /

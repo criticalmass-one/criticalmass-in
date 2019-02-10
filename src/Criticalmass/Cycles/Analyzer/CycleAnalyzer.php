@@ -8,93 +8,15 @@ use App\Entity\Ride;
 use App\Criticalmass\RideGenerator\RideCalculator\RideCalculatorInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
-class CycleAnalyzer implements CycleAnalyzerInterface
+class CycleAnalyzer extends AbstractCycleAnalyzer
 {
-    /** @var City $city */
-    protected $city;
-
-    /** @var array $cycleList */
-    protected $cycleList = [];
-
-    /** @var array $rideList */
-    protected $rideList = [];
-
-    /** @var array $simulatedRideList */
-    protected $simulatedRideList = [];
-
-    /** @var RegistryInterface $registry */
-    protected $registry;
-
-    /** @var RideCalculatorInterface $rideCalculator */
-    protected $rideCalculator;
-
-    /** @var \DateTime $startDateTime */
-    protected $startDateTime;
-
-    /** @var \DateTime $endDateTime */
-    protected $endDateTime;
-
-    /** @var CycleAnalyzerModelFactoryInterface $analyzerModelFactory */
-    protected $analyzerModelFactory;
-
-    public function __construct(
-        RegistryInterface $registry,
-        RideCalculatorInterface $rideCalculator,
-        CycleAnalyzerModelFactoryInterface $analyzerModelFactory
-    ) {
-        $this->registry = $registry;
-
-        $this->rideCalculator = $rideCalculator;
-
-        $this->analyzerModelFactory = $analyzerModelFactory;
-    }
-
-    public function setCity(City $city): CycleAnalyzerInterface
-    {
-        $this->city = $city;
-        $this->fetchCycles();
-
-        return $this;
-    }
-
-    public function analyze(): CycleAnalyzerInterface
-    {
-        $this->fetchRides();
-
-        $this->simulateRides();
-
-        $this->analyzerModelFactory
-            ->setRides($this->rideList)
-            ->setSimulatedRides($this->simulatedRideList)
-            ->build();
-
-        return $this;
-    }
-
-    protected function fetchCycles(): CycleAnalyzer
-    {
-        $this->cycleList = $this->registry->getRepository(CityCycle::class)->findByCity($this->city);
-
-        $this->rideCalculator->setCycleList($this->cycleList);
-
-        return $this;
-    }
-
-    protected function fetchRides(): CycleAnalyzer
-    {
-        $this->rideList = $this->registry->getRepository(Ride::class)->findRidesForCity($this->city);
-
-        $this->endDateTime = $this->rideList[0]->getDateTime();
-        $this->startDateTime = $this->rideList[count($this->rideList) - 1]->getDateTime();
-
-        return $this;
-    }
-
     protected function simulateRides(): CycleAnalyzer
     {
         $month = new \DateInterval('P1M');
 
-        for ($current = $this->startDateTime; $current <= $this->endDateTime; $current->add($month)) {
+        $current = $this->startDateTime;
+
+        do {
             $rideList = $this->rideCalculator
                 ->reset()
                 ->setMonth((int)$current->format('m'))
@@ -104,13 +26,10 @@ class CycleAnalyzer implements CycleAnalyzerInterface
                 ->getRideList();
 
             $this->simulatedRideList = array_merge($this->simulatedRideList, $rideList);
-        }
+
+            $current->add($month);
+        } while ($current->format('Y-m') <= $this->endDateTime->format('Y-m'));
 
         return $this;
-    }
-
-    public function getResultList(): array
-    {
-        return $this->analyzerModelFactory->getResultList();
     }
 }
