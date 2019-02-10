@@ -272,6 +272,11 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      */
     protected $shorturl;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $rideNamer;
+
     public function __construct()
     {
         $this->rides = new ArrayCollection();
@@ -903,5 +908,17 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     public function getShorturl(): ?string
     {
         return $this->shorturl;
+    }
+
+    public function setRideNamer(string $rideNamer): City
+    {
+        $this->rideNamer = $rideNamer;
+
+        return $this;
+    }
+
+    public function getRideNamer(): ?string
+    {
+        return $this->rideNamer;
     }
 }

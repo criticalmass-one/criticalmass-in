@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\RideGenerator\RideCalculator;
 
+use App\Criticalmass\RideNamer\GermanCityDateRideNamer;
 use App\Entity\CityCycle;
 use App\Entity\Ride;
 use App\Criticalmass\RideGenerator\Exception\InvalidMonthException;
@@ -133,7 +134,13 @@ class RideCalculator extends AbstractRideCalculator
             return $ride;
         }
 
-        $title = sprintf('%s %s', $cityCycle->getCity()->getTitle(), $ride->getDateTime()->format('d.m.Y'));
+        if (!$cityCycle->getCity()->getRideNamer()) {
+            $rideNamer = new GermanCityDateRideNamer();
+        } else {
+            $rideNamer = $this->rideNamerList->getRideNamerByFqcn($cityCycle->getCity()->getRideNamer());
+        }
+
+        $title = $rideNamer->generateTitle($ride);
 
         $ride->setTitle($title);
 
