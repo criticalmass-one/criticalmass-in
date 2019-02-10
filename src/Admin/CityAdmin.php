@@ -30,30 +30,29 @@ class CityAdmin extends AbstractAdmin
             ->add('city')
             ->add('cityPopulation')
             ->end()
+
             ->with('Critical Mass', ['class' => 'col-md-6'])
-            ->add('title')
-            ->add('description')
-            ->add('longdescription', TextType::class)
-            ->add('punchline', TextType::class)
+            ->add('title', TextType::class, ['required' => true])
+            ->add('description', TextType::class, ['required' => false])
+            ->add('longdescription', TextType::class, ['required' => false])
+            ->add('punchline', TextType::class, ['required' => false])
             ->end()
+
             ->with('Geografie', ['class' => 'col-md-6'])
             ->add('region')
             ->add('latitude')
             ->add('longitude')
             ->end()
+
             ->with('Technisches', ['class' => 'col-md-6'])
             ->add('rideNamer', ChoiceType::class, [
                 'choices' => $this->rideNamerList->getList(),
             ])
             ->add('mainSlug')
             ->add('timezone')
-            ->end()
-            ->with('Soziale Netzwerke', ['class' => 'col-md-6'])
-            ->add('url')
-            ->add('facebook')
-            ->add('twitter')
             ->add('enableBoard')
             ->end()
+
             ->with('Headergrafik', ['class' => 'col-md-6'])
             ->add('imageFile', VichImageType::class, ['required' => false])
             ->end();
