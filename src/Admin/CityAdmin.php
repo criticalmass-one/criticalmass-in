@@ -46,7 +46,7 @@ class CityAdmin extends AbstractAdmin
 
             ->with('Technisches', ['class' => 'col-md-6'])
             ->add('rideNamer', ChoiceType::class, [
-                'choices' => $this->rideNamerList->getList(),
+                'choices' => $this->getRideNamerList(),
             ])
             ->add('mainSlug')
             ->add('timezone')
@@ -69,5 +69,19 @@ class CityAdmin extends AbstractAdmin
     {
         $listMapper
             ->addIdentifier('title');
+    }
+
+    protected function getRideNamerList(): array
+    {
+        $list = [];
+
+        foreach ($this->rideNamerList->getList() as $rideNamer) {
+            $fqcn = get_class($rideNamer);
+            $shortName = (new \ReflectionClass($rideNamer))->getShortName();
+
+            $list[$shortName] = $fqcn;
+        }
+
+        return $list;
     }
 }
