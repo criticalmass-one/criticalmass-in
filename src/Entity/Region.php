@@ -30,7 +30,7 @@ class Region implements RouteableInterface, AuditableInterface
     protected $name;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $description;
 
@@ -67,12 +67,12 @@ class Region implements RouteableInterface, AuditableInterface
         return $this;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function setDescription(string $description): Region
+    public function setDescription(string $description = null): Region
     {
         $this->description = $description;
 
