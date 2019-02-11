@@ -27,8 +27,7 @@
         <div class="row">
             <div class="col-12">
                 {% if app.getUser() %}
-                    <button type="button" class="btn btn-primary pull-right margin-top-medium" data-toggle="modal"
-                            data-target="#modal-add-post">
+                    <button type="button" class="btn btn-primary pull-right margin-top-medium" data-toggle="modal" data-target="#modal-add-post">
                         <i class="fa fa-comment"></i>
                         Antwort hinzufügen
                     </button>
@@ -50,4 +49,8 @@
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+        CriticalMass.loadModule('ScrollToPost');
+    </script>
 {% endblock %}
