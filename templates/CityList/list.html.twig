@@ -48,7 +48,7 @@
                     </thead>
                     <tbody>
                     {% for city in cityList %}
-                        <tr>
+                        <tr data-city-slug="{{ city.city.getMainSlugString() }}">
                             <td>
                                 <a href="{{ objectPath(city.city) }}">
                                     {{ city.city.city }}
