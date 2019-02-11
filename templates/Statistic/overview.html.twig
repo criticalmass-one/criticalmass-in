@@ -1,5 +1,7 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set bootstrap4 = true %}
+
 {% block title %}Statistiken{% endblock %}
 
 {% block breadcrumb %}
@@ -11,7 +13,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <h1>
                     Statistiken
                 </h1>
@@ -30,6 +32,36 @@
         </div>
 
         <div>
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link" id="goingYesTab" data-toggle="tab" href="#goingYes" role="tab" aria-controls="goingYes" aria-selected="false">
+                        Teilgenommen <span class="badge badge-secondary">
+                                {{ participationYesList|length }}
+                            </span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" id="goingMaybeTab" data-toggle="tab" href="#goingMaybe" role="tab" aria-controls="goingMaybe" aria-selected="false">
+                        Unentschieden <span class="badge badge-secondary">
+                                {{ participationMaybeList|length }}
+                            </span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" id="goingNoTab" data-toggle="tab" href="#goingNo" role="tab" aria-controls="goingNo" aria-selected="false">
+                        Abgesagt <span class="badge badge-secondary">
+                                {{ participationNoList|length }}
+                            </span>
+                    </a>
+                </li>
+            </ul>
+
+
+
+
+
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active">
                     <a href="#tab-participiants" aria-controls="" role="tab" data-toggle="tab">
