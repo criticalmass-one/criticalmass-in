@@ -12,16 +12,18 @@ define(['jquery', 'jquery.dataTables', 'Map', 'CityMarker'], function ($) {
 
         let that = this;
 
-        $(this.cityListTableSelector + ' tbody').on('click', 'td', function () {
+        $('button.show-more').on('click', function () {
             var $tr = $(this).closest('tr');
             var row = table.row($tr);
 
             if (row.child.isShown()) {
                 row.child.hide();
                 $tr.removeClass('shown');
+                $(this).find('i').removeClass('fa-minus-circle').addClass('fa-plus-circle');
             }
             else {
                 that._buildChildRow($tr, row);
+                $(this).find('i').removeClass('fa-plus-circle').addClass('fa-minus-circle');
             }
         } );
     };
