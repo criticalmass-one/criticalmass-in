@@ -1,4 +1,4 @@
-define(['jquery', 'dateformat', 'jquery.dataTables', 'Map', 'CityMarker'], function ($, dateFormat) {
+define(['jquery', 'dateformat', 'jquery.dataTables', 'Map', 'CityMarker', 'LocationMarker'], function ($, dateFormat) {
     var CityListPage = function (context) {
         this.cityListTableSelector = context;
 
@@ -53,8 +53,6 @@ define(['jquery', 'dateformat', 'jquery.dataTables', 'Map', 'CityMarker'], funct
             const cityData = cityResponse[0];
             const rideData = rideResponse[0];
 
-            console.log(cityData, rideData);
-
             let html = '<div class="row">';
             html += '<div class="col-md-6">';
             html += '<div style="height: 150px;" id="map-' + citySlug + '"></div>';
@@ -66,11 +64,24 @@ define(['jquery', 'dateformat', 'jquery.dataTables', 'Map', 'CityMarker'], funct
                 html += '<p class="lead">' + cityData.punchline + '</p>';
             }
 
+            let mapCenter = [cityData.latitude, cityData.longitude];
+            let marker = new CityMarker(mapCenter);
+
             if (rideData) {
-                html += '<p><strong>Nächste Tour</strong></p>';
+                if (rideData.latitude && rideData.longitude) {
+                    mapCenter = [rideData.latitude, rideData.longitude];
+                    marker = new LocationMarker(mapCenter);
+                }
+
+                html += '<p><strong>Nächste Tour:</strong></p>';
 
                 html += '<p>' + dateFormat(rideData.dateTime * 1000, 'dd.mm.yyyy HH:MM') + '&nbsp;Uhr';
                 html += '<br />' + rideData.location + '</p>';
+
+                const rideDate = dateFormat(rideData.dateTime * 1000, 'yyyy-mm-dd');
+                const rideUrl = Routing.generate('caldera_criticalmass_ride_show', { citySlug: citySlug, rideDate: rideDate});
+
+                html += '<p><a href="' + rideUrl + '" class="btn btn-primary"><i class="fa fa-bicycle"></i> Mehr erfahren</a></p>';
             }
 
             html += '</div>';
@@ -80,12 +91,8 @@ define(['jquery', 'dateformat', 'jquery.dataTables', 'Map', 'CityMarker'], funct
             $tr.addClass('shown');
 
             const map = new Map('map-' + citySlug);
-            const mapCenter = [cityData.latitude, cityData.longitude];
-
             map.setView(mapCenter, 12);
-
-            const cityMarker = new CityMarker(mapCenter);
-            cityMarker.addTo(map);
+            marker.addTo(map);
         });
     };
 
