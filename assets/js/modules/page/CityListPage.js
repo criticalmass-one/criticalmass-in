@@ -49,9 +49,9 @@ define(['jquery', 'dateformat', 'jquery.dataTables', 'Map', 'CityMarker', 'Locat
             });
         }
 
-        $.when(loadCityData(), loadRideData()).done(function(cityResponse, rideResponse) {
+        function renderDetailsRow(cityResponse, rideResponse) {
             const cityData = cityResponse[0];
-            const rideData = rideResponse[0];
+            const rideData = rideResponse !== 'error' ? rideResponse[0] : null;
 
             let html = '<div class="row">';
             html += '<div class="col-md-6">';
@@ -67,7 +67,7 @@ define(['jquery', 'dateformat', 'jquery.dataTables', 'Map', 'CityMarker', 'Locat
             let mapCenter = [cityData.latitude, cityData.longitude];
             let marker = new CityMarker(mapCenter);
 
-            if (rideData) {
+            if (rideData !== null && rideData.id) {
                 if (rideData.latitude && rideData.longitude) {
                     mapCenter = [rideData.latitude, rideData.longitude];
                     marker = new LocationMarker(mapCenter);
@@ -82,6 +82,14 @@ define(['jquery', 'dateformat', 'jquery.dataTables', 'Map', 'CityMarker', 'Locat
                 const rideUrl = Routing.generate('caldera_criticalmass_ride_show', { citySlug: citySlug, rideDate: rideDate});
 
                 html += '<p><a href="' + rideUrl + '" class="btn btn-primary"><i class="fa fa-bicycle"></i> Mehr erfahren</a></p>';
+            } else {
+                if (cityData.description) {
+                    html += '<p>' + cityData.description + '</p>';
+                }
+
+                const cityUrl = Routing.generate('caldera_criticalmass_city_show', { citySlug: citySlug});
+
+                html += '<p><a href="' + cityUrl + '" class="btn btn-primary"><i class="fa fa-university"></i> Mehr erfahren</a></p>';
             }
 
             html += '</div>';
@@ -93,7 +101,9 @@ define(['jquery', 'dateformat', 'jquery.dataTables', 'Map', 'CityMarker', 'Locat
             const map = new Map('map-' + citySlug);
             map.setView(mapCenter, 12);
             marker.addTo(map);
-        });
+        }
+
+        $.when(loadCityData(), loadRideData()).done(renderDetailsRow);
     };
 
     return CityListPage;
