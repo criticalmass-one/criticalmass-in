@@ -4,8 +4,4 @@ namespace App\Criticalmass\Feature\Feature;
 
 class BikerightFeature extends AbstractFeature
 {
-    public function __construct(bool $featureBikeright)
-    {
-        $this->enabled = $featureBikeright;
-    }
 }
