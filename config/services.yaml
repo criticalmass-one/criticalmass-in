@@ -94,6 +94,9 @@ services:
     App\Criticalmass\Geocoding\ReverseGeocoderInterface:
         alias: App\Criticalmass\Geocoding\CachedReverseGeocoder
 
+    App\Criticalmass\Timeline\TimelineInterface:
+        alias: App\Criticalmass\Timeline\CachedTimeline
+
     App\Request\ParamConverter\RideParamConverter:
         tags:
             - { name: request.param_converter, priority: 0, converter: ride_converter }
