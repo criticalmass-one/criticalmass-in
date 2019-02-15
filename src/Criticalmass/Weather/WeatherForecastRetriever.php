@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Criticalmass\Weather;
 
@@ -54,6 +54,10 @@ class WeatherForecastRetriever
 
         /** @var Ride $ride */
         foreach ($rideList as $ride) {
+            if (!$ride->getLatitude() || !$ride->getLongitude()) {
+                continue;
+            }
+            
             $currentWeather = $this->findCurrentWeatherForRide($ride);
 
             if (!$currentWeather || $currentWeather->getCreationDateTime() < $halfDateTime) {
