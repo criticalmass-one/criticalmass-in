@@ -20,7 +20,7 @@ class CachedTimeline extends Timeline
         parent::__construct($doctrine, $templating, $featureManager);
     }
 
-    public function execute(): Timeline
+    public function execute(): TimelineInterface
     {
         $cacheKey = 'criticalmass-timeline-content';
 
