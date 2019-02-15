@@ -96,6 +96,9 @@ services:
     App\Criticalmass\Geocoding\ReverseGeocoderInterface:
         alias: App\Criticalmass\Geocoding\CachedReverseGeocoder
 
+    App\Criticalmass\Website\Obfuscator\ObfuscatorInterface:
+        alias: App\Criticalmass\Website\Obfuscator\CaseAwareObfuscator
+
     App\Request\ParamConverter\RideParamConverter:
         tags:
             - { name: request.param_converter, priority: 0, converter: ride_converter }
