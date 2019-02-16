@@ -6,12 +6,16 @@ use App\Entity\SocialNetworkProfile;
 
 class Flickr extends AbstractNetwork
 {
+    /** @var string $name */
     protected $name = 'flickr';
 
+    /** @var string $icon */
     protected $icon = 'fa-flickr';
 
-    protected $backgroundColor = 'rgb(85, 172, 238)';
+    /** @var string $backgroundColor */
+    protected $backgroundColor = 'rgb(12, 101, 211)';
 
+    /** @var string $textColor */
     protected $textColor = 'white';
 
     public function accepts(SocialNetworkProfile $socialNetworkProfile): bool
@@ -20,10 +24,6 @@ class Flickr extends AbstractNetwork
 
         preg_match($pattern, $socialNetworkProfile->getIdentifier(), $matches);
 
-        if ($matches && is_array($matches) && count($matches) > 1) {
-            return true;
-        }
-
-        return false;
+        return $matches && is_array($matches) && count($matches) > 1;
     }
 }
