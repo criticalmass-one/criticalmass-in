@@ -6,12 +6,16 @@ use App\Entity\SocialNetworkProfile;
 
 class Tumblr extends AbstractNetwork
 {
+    /** @var string $name */
     protected $name = 'Tumblr';
 
+    /** @var string $icon */
     protected $icon = 'fa-tumblr';
 
-    protected $backgroundColor = 'rgb(220, 78, 65)';
+    /** @var string $backgroundColor */
+    protected $backgroundColor = 'rgb(0, 0, 0)';
 
+    /** @var string $textColor */
     protected $textColor = 'white';
 
     public function accepts(SocialNetworkProfile $socialNetworkProfile): bool
@@ -20,10 +24,6 @@ class Tumblr extends AbstractNetwork
 
         preg_match($pattern, $socialNetworkProfile->getIdentifier(), $matches);
 
-        if ($matches && is_array($matches) && count($matches) > 1) {
-            return true;
-        }
-
-        return false;
+        return $matches && is_array($matches) && count($matches) > 1;
     }
 }
