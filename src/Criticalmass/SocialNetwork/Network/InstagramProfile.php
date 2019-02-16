@@ -6,6 +6,7 @@ use App\Entity\SocialNetworkProfile;
 
 class InstagramProfile extends AbstractInstagramNetwork
 {
+    /** @var string $name */
     protected $name = 'Instagram-Profil';
 
     public function accepts(SocialNetworkProfile $socialNetworkProfile): bool
@@ -14,10 +15,6 @@ class InstagramProfile extends AbstractInstagramNetwork
 
         preg_match($pattern, $socialNetworkProfile->getIdentifier(), $matches);
 
-        if ($matches && is_array($matches) && count($matches) > 1) {
-            return true;
-        }
-
-        return false;
+        return $matches && is_array($matches) && count($matches) > 1;
     }
 }

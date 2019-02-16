@@ -2,15 +2,14 @@
 
 namespace App\Criticalmass\SocialNetwork\Network;
 
-use App\Entity\SocialNetworkProfile;
-
 abstract class AbstractInstagramNetwork extends AbstractNetwork
 {
-    protected $name = 'Instagram';
-
+    /** @var string $icon */
     protected $icon = 'fa-instagram';
 
-    protected $backgroundColor = 'rgb(85, 172, 238)';
+    /** @var string $backgroundColor */
+    protected $backgroundColor = 'rgb(203, 44, 128)';
 
+    /** @var string $textColor */
     protected $textColor = 'white';
 }
