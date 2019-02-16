@@ -6,14 +6,19 @@ use App\Entity\SocialNetworkProfile;
 
 class Homepage extends AbstractNetwork
 {
+    /** @var string */
     protected $name = 'Homepage';
 
+    /** @var string $icon */
     protected $icon = 'fa-globe';
 
-    protected $backgroundColor = 'rgb(85, 172, 238)';
+    /** @var string $backgroundColor */
+    protected $backgroundColor = 'white';
 
-    protected $textColor = 'white';
+    /** @var string $textColor */
+    protected $textColor = 'black';
 
+    /** @var int $detectorPriority */
     protected $detectorPriority = -100;
 
     public function accepts(SocialNetworkProfile $socialNetworkProfile): bool
