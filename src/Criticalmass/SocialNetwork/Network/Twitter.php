@@ -6,12 +6,16 @@ use App\Entity\SocialNetworkProfile;
 
 class Twitter extends AbstractNetwork
 {
+    /** @var string $name */
     protected $name = 'twitter';
 
+    /** @var string $icon */
     protected $icon = 'fa-twitter';
 
-    protected $backgroundColor = 'rgb(85, 172, 238)';
+    /** @var string $backgroundColor */
+    protected $backgroundColor = 'rgb(29, 161, 242)';
 
+    /** @var string $textColor */
     protected $textColor = 'white';
 
     public function accepts(SocialNetworkProfile $socialNetworkProfile): bool
@@ -20,10 +24,6 @@ class Twitter extends AbstractNetwork
 
         preg_match($pattern, $socialNetworkProfile->getIdentifier(), $matches);
 
-        if ($matches && is_array($matches) && 2 === count($matches)) {
-            return true;
-        }
-
-        return false;
+        return $matches && is_array($matches) && 2 === count($matches);
     }
 }
