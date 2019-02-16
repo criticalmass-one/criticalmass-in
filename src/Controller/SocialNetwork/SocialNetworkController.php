@@ -2,9 +2,7 @@
 
 namespace App\Controller\SocialNetwork;
 
-use App\Controller\AbstractController;
 use App\Criticalmass\Router\ObjectRouterInterface;
-use App\Criticalmass\Util\ClassUtil;
 use App\Entity\City;
 use App\Entity\Ride;
 use App\Entity\SocialNetworkProfile;
@@ -13,13 +11,12 @@ use App\Entity\User;
 use App\Form\Type\SocialNetworkProfileType;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Criticalmass\SocialNetwork\NetworkDetector\NetworkDetector;
-use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class SocialNetworkController extends AbstractController
+class SocialNetworkController extends AbstractSocialNetworkController
 {
     /**
      * @ParamConverter("city", class="App:City", isOptional=true)
@@ -108,50 +105,5 @@ class SocialNetworkController extends AbstractController
         );
 
         return $form;
-    }
-
-    /**
-     * @ParamConverter("socialNetworkProfile", class="App:SocialNetworkProfile", options={"id" = "profileId"})
-     */
-    public function disableAction(
-        ObjectRouterInterface $router,
-        EntityManagerInterface $entityManager,
-        SocialNetworkProfile $socialNetworkProfile
-    ): Response {
-        $socialNetworkProfile->setEnabled(false);
-
-        $entityManager->flush();
-
-        return $this->redirect($this->getRouteName($router, $this->getProfileAble($socialNetworkProfile), 'list'));
-    }
-
-    protected function getProfileAbleObject(
-        Ride $ride = null,
-        Subride $subride = null,
-        City $city = null,
-        User $user = null
-    ): SocialNetworkProfileAble {
-        $profileAble = $user ?? $ride ?? $city ?? $subride;
-
-        return $profileAble;
-    }
-
-    protected function getProfileAble(SocialNetworkProfile $socialNetworkProfile): SocialNetworkProfileAble
-    {
-        return $socialNetworkProfile->getUser() ?? $socialNetworkProfile->getRide() ?? $socialNetworkProfile->getCity() ?? $socialNetworkProfile->getSubride();
-    }
-
-    protected function getProfileAbleShortname(SocialNetworkProfileAble $profileAble): string
-    {
-        $reflection = new \ReflectionClass($profileAble);
-
-        return $reflection->getShortName();
-    }
-
-    protected function getRouteName(ObjectRouterInterface $router, SocialNetworkProfileAble $profileAble, string $actionName): string
-    {
-        $routeName = sprintf('criticalmass_socialnetwork_%s_%s', ClassUtil::getLowercaseShortname($profileAble), $actionName);
-
-        return $router->generate($profileAble, $routeName);
     }
 }

@@ -16,4 +16,8 @@ criticalmass_socialnetwork_ride_add:
 
 criticalmass_socialnetwork_disable:
     path:  /socialnetwork/{profileId}/disable
-    controller: App\Controller\SocialNetwork\SocialNetworkController::disableAction
+    controller: App\Controller\SocialNetwork\SocialNetworkManagementController::disableAction
+
+criticalmass_socialnetwork_edit:
+    path:  /socialnetwork/{profileId}/edit
+    controller: App\Controller\SocialNetwork\SocialNetworkManagementController::editAction
