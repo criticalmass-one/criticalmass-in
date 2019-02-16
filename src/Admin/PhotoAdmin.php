@@ -25,18 +25,22 @@ class PhotoAdmin extends AbstractAdmin
             ->add('user', EntityType::class, ['class' => User::class])
             ->add('description', TextareaType::class, ['required' => false])
             ->end()
+
             ->with('Date', ['class' => 'col-md-6'])
             ->add('dateTime', DateTimeType::class)
             ->add('creationDateTime', DateTimeType::class)
             ->end()
+
             ->with('Coords', ['class' => 'col-md-6'])
             ->add('latitude', TextType::class, ['required' => false])
             ->add('longitude', TextType::class, ['required' => false])
             ->end()
+
             ->with('Settings', ['class' => 'col-md-6'])
             ->add('enabled', CheckboxType::class, ['required' => false])
             ->add('deleted', CheckboxType::class, ['required' => false])
             ->end()
+
             ->with('Image file', ['class' => 'col-md-6'])
             ->add('imageFile', VichImageType::class, ['required' => false])
             ->end();

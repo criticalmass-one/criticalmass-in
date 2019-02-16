@@ -2,18 +2,27 @@
 
 namespace App\Admin;
 
+use App\Criticalmass\RideNamer\RideNamerListInterface;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class CityAdmin extends AbstractAdmin
 {
+    /** @var RideNamerListInterface $rideNamerList */
+    protected $rideNamerList;
+
+    public function __construct(string $code, string $class, string $baseControllerName, RideNamerListInterface $rideNamerList)
+    {
+        parent::__construct($code, $class, $baseControllerName);
+
+        $this->rideNamerList = $rideNamerList;
+    }
+
     protected function configureFormFields(FormMapper $formMapper): void
     {
         $formMapper
@@ -21,40 +30,31 @@ class CityAdmin extends AbstractAdmin
             ->add('city')
             ->add('cityPopulation')
             ->end()
+
             ->with('Critical Mass', ['class' => 'col-md-6'])
-            ->add('title')
-            ->add('description')
-            ->add('longdescription', TextType::class)
-            ->add('punchline', TextType::class)
+            ->add('title', TextType::class, ['required' => true])
+            ->add('description', TextType::class, ['required' => false])
+            ->add('longdescription', TextType::class, ['required' => false])
+            ->add('punchline', TextType::class, ['required' => false])
             ->end()
+
             ->with('Geografie', ['class' => 'col-md-6'])
             ->add('region')
             ->add('latitude')
             ->add('longitude')
             ->end()
+
             ->with('Technisches', ['class' => 'col-md-6'])
+            ->add('rideNamer', ChoiceType::class, [
+                'choices' => $this->getRideNamerList(),
+            ])
             ->add('mainSlug')
             ->add('timezone')
-            ->end()
-            ->with('Soziale Netzwerke', ['class' => 'col-md-6'])
-            ->add('url')
-            ->add('facebook')
-            ->add('twitter')
             ->add('enableBoard')
             ->end()
+
             ->with('Headergrafik', ['class' => 'col-md-6'])
-            ->add('imageFile', VichImageType::class)
-            ->end()
-            ->with('Wiederkehrende Touren', ['class' => 'col-md-6'])
-            ->add('isStandardable')
-            ->add('standardDayOfWeek')
-            ->add('standardWeekOfMonth')
-            ->add('isStandardableTime')
-            ->add('standardTime')
-            ->add('isStandardableLocation')
-            ->add('standardLocation')
-            ->add('standardLatitude')
-            ->add('standardLongitude')
+            ->add('imageFile', VichImageType::class, ['required' => false])
             ->end();
     }
 
@@ -69,5 +69,19 @@ class CityAdmin extends AbstractAdmin
     {
         $listMapper
             ->addIdentifier('title');
+    }
+
+    protected function getRideNamerList(): array
+    {
+        $list = [];
+
+        foreach ($this->rideNamerList->getList() as $rideNamer) {
+            $fqcn = get_class($rideNamer);
+            $shortName = (new \ReflectionClass($rideNamer))->getShortName();
+
+            $list[$shortName] = $fqcn;
+        }
+
+        return $list;
     }
 }

@@ -4,11 +4,19 @@ namespace App\Criticalmass\Feature\Feature;
 
 abstract class AbstractFeature implements FeatureInterface
 {
+    /** @var bool $enabled */
     protected $enabled = false;
 
-    public function enabled(): bool
+    public function isEnabled(): bool
     {
         return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): FeatureInterface
+    {
+        $this->enabled = $enabled;
+
+        return $this;
     }
 
     public function getName(): string

@@ -4,6 +4,7 @@ namespace App\Criticalmass\Feature\Feature;
 
 interface FeatureInterface
 {
-    public function enabled(): bool;
+    public function isEnabled(): bool;
+    public function setEnabled(bool $enabled): FeatureInterface;
     public function getName(): string;
 }

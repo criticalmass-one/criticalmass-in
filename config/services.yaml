@@ -31,7 +31,6 @@ parameters:
     jms_serializer.camel_case_naming_strategy.class: App\Serializer\JMSSerializer\Naming\CamelCaseNamingStrategy
     request_listener.http_port: 80
     request_listener.https_port: 443
-    bikeright.visible: true
     upload_destination.track: '%kernel.root_dir%/../public/tracks'
     upload_destination.photo: '%kernel.root_dir%/../public/photos'
     upload_destination.city_photo: '%kernel.root_dir%/../public/cities'
@@ -39,6 +38,8 @@ parameters:
     upload_destination.frontpage_teaser: '%kernel.root_dir%/../public/teaser'
     upload_destination.user_photo: '%kernel.root_dir%/../public/users'
     feature.photos: true
+    feature.art11: false
+    feature.bikeright: true
     staticmaps.host: '%env(STATICMAPS_HOST)%'
     timezone_db.api_key: '%env(TIMEZONE_DB_API_KEY)%'
     yourls.api_hostname: '%env(YOURLS_API_HOSTNAME)%'
@@ -56,13 +57,12 @@ services:
             $webRootDir: '%kernel.root_dir%/../public'
             $projectDirectory: '%kernel.project_dir%'
             $staticmapsHost: '%staticmaps.host%'
-            $featurePhotos: '%feature.photos%'
             $gapWidth: '%track.gap_width%'
             $facebookAppId: '%facebook.app_id%'
             $facebookAppSecret: '%facebook.app_secret%'
             $facebookDefaultToken: '%facebook.default_token%'
-            $twitterClientId: '%twitter.client_id%'
-            $twitterSecret: '%twitter.secret%'
+            #$twitterClientId: '%twitter.client_id%'
+            #$twitterSecret: '%twitter.secret%'
             $uploadDestinationPhoto: '%upload_destination.photo%'
             $uploadDestinationTrack: '%upload_destination.track%'
             $uploadDestinationUserPhoto: '%upload_destination.user_photo%'
@@ -93,6 +93,12 @@ services:
 
     App\Criticalmass\Geocoding\ReverseGeocoderInterface:
         alias: App\Criticalmass\Geocoding\CachedReverseGeocoder
+
+    App\Criticalmass\Website\Obfuscator\ObfuscatorInterface:
+        alias: App\Criticalmass\Website\Obfuscator\CaseAwareObfuscator
+
+    App\Criticalmass\Timeline\TimelineInterface:
+        alias: App\Criticalmass\Timeline\CachedTimeline
 
     App\Request\ParamConverter\RideParamConverter:
         tags:
