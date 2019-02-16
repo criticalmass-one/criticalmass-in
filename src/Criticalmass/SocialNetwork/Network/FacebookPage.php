@@ -7,6 +7,7 @@ use Facebook\Exceptions\FacebookResponseException;
 
 class FacebookPage extends AbstractFacebookNetwork
 {
+    /** @var string $name */
     protected $name = 'facebook-Seite';
 
     public function accepts(SocialNetworkProfile $socialNetworkProfile): bool

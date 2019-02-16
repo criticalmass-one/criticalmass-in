@@ -6,6 +6,7 @@ use App\Entity\SocialNetworkProfile;
 
 class FacebookEvent extends AbstractFacebookNetwork
 {
+    /** @var string $name */
     protected $name = 'facebook-Event';
 
     public function accepts(SocialNetworkProfile $socialNetworkProfile): bool

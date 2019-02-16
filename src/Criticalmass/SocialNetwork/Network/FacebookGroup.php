@@ -6,6 +6,7 @@ use App\Entity\SocialNetworkProfile;
 
 class FacebookGroup extends AbstractFacebookNetwork
 {
+    /** @var string $name */
     protected $name = 'facebook-Gruppe';
 
     public function accepts(SocialNetworkProfile $socialNetworkProfile): bool

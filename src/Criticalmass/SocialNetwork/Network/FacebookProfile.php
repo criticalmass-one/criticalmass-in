@@ -7,6 +7,7 @@ use Facebook\Exceptions\FacebookResponseException;
 
 class FacebookProfile extends AbstractFacebookNetwork
 {
+    /** @var string $name */
     protected $name = 'facebook-Profil';
 
     public function accepts(SocialNetworkProfile $socialNetworkProfile): bool
@@ -20,6 +21,7 @@ class FacebookProfile extends AbstractFacebookNetwork
         // Sorry, this is so ugly, please provide a better solution and do not try this at home!
         try {
             $endpoint = sprintf('/%s', $profileName);
+
             $result = $this->facebookApi->query($endpoint);
         } catch (FacebookResponseException $exception) {
             if (strpos($exception->getMessage(), '(#803) Cannot query users by their username') !== false) {
