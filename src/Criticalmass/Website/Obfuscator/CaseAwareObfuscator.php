@@ -12,19 +12,11 @@ class CaseAwareObfuscator implements ObfuscatorInterface
             $ord = ord($text[$index]);
 
             if ($ord >= 65 && $ord <= 90) {
-                $ord += 1;
-
-                if ($ord > 90) {
-                    $ord -= 26;
-                }
+                $ord = (($ord - 65 + 1) % 26 + 65);
             }
 
             if ($ord >= 97 && $ord <= 122) {
-                $ord += 1;
-
-                if ($ord > 122) {
-                    $ord -= 26;
-                }
+                $ord = (($ord - 97 + 1) % 26 + 97);
             }
 
             $text[$index] = chr($ord);
