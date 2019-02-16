@@ -47,7 +47,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-md-12">
                 <button class="btn btn-success pull-right" data-toggle="modal" data-target="#profile-add-modal">
                     <i class="fa fa-plus"></i>
                     Profil ergänzen
@@ -59,7 +59,7 @@
 
                 {% if profileAbleType == 'city' %}
                     <p class="lead">
-                        Die folgende Liste enthält Konten in sozialen Netzwerken und Links zu Webseiten, die mit der Critical Mass in {{ profileAble.city }} in Verbindung stehen.
+                        Die folgende Liste enthält Konten in sozialen Netzwerken und Links zu Webseiten, die mit der Critical Mass in <strong>{{ profileAble.city }}</strong> in Verbindung stehen.
                     </p>
                 {% endif %}
 
@@ -76,7 +76,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-md-12">
                 <table class="table">
                     <thead>
                         <tr>
@@ -109,9 +109,14 @@
                                 </a>
                             </td>
                             <td>
-                                <a href="{{ path('criticalmass_socialnetwork_disable', { profileId: profile.id }) }}" class="btn btn-default btn-xs">
-                                    <i class="fa fa-trash-o"></i>
-                                </a>
+                                <div class="btn-group">
+                                    <a href="{{ path('criticalmass_socialnetwork_edit', { profileId: profile.id }) }}" class="btn btn-default btn-xs">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                    <a href="{{ path('criticalmass_socialnetwork_disable', { profileId: profile.id }) }}" class="btn btn-default btn-xs">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                         {% endfor %}
