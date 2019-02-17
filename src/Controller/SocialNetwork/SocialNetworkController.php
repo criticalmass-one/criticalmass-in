@@ -8,9 +8,9 @@ use App\Entity\Ride;
 use App\Entity\SocialNetworkProfile;
 use App\Entity\Subride;
 use App\Entity\User;
-use App\Form\Type\SocialNetworkProfileType;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Criticalmass\SocialNetwork\NetworkDetector\NetworkDetector;
+use App\Form\Type\SocialNetworkProfileAddType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,7 +39,7 @@ class SocialNetworkController extends AbstractSocialNetworkController
             ->setSubride($subride);
 
         $form = $this->createForm(
-            SocialNetworkProfileType::class,
+            SocialNetworkProfileAddType::class,
             $socialNetworkProfile
         );
 
@@ -98,7 +98,7 @@ class SocialNetworkController extends AbstractSocialNetworkController
         $socialNetworkProfile->$setMethodName($profileAble);
 
         $form = $this->createForm(
-            SocialNetworkProfileType::class,
+            SocialNetworkProfileAddType::class,
             $socialNetworkProfile, [
                 'action' => $this->getRouteName($router, $this->getProfileAble($socialNetworkProfile), 'add'),
             ]

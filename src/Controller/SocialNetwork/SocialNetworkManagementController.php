@@ -4,7 +4,7 @@ namespace App\Controller\SocialNetwork;
 
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\SocialNetworkProfile;
-use App\Form\Type\SocialNetworkProfileType;
+use App\Form\Type\SocialNetworkProfileEditType;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\FormInterface;
@@ -19,7 +19,7 @@ class SocialNetworkManagementController extends AbstractSocialNetworkController
     public function editAction(Request $request, SocialNetworkProfile $socialNetworkProfile, ObjectRouterInterface $objectRouter): Response
     {
         $form = $this->createForm(
-            SocialNetworkProfileType::class,
+            SocialNetworkProfileEditType::class,
             $socialNetworkProfile
         );
 
