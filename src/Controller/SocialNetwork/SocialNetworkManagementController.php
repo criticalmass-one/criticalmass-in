@@ -3,7 +3,6 @@
 namespace App\Controller\SocialNetwork;
 
 use App\Criticalmass\Router\ObjectRouterInterface;
-use App\Criticalmass\SocialNetwork\NetworkDetector\NetworkDetectorInterface;
 use App\Entity\SocialNetworkProfile;
 use App\Form\Type\SocialNetworkProfileType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,7 +16,7 @@ class SocialNetworkManagementController extends AbstractSocialNetworkController
     /**
      * @ParamConverter("socialNetworkProfile", class="App:SocialNetworkProfile", options={"id" = "profileId"})
      */
-    public function editAction(Request $request, SocialNetworkProfile $socialNetworkProfile, NetworkDetectorInterface $networkDetector, ObjectRouterInterface $objectRouter): Response
+    public function editAction(Request $request, SocialNetworkProfile $socialNetworkProfile, ObjectRouterInterface $objectRouter): Response
     {
         $form = $this->createForm(
             SocialNetworkProfileType::class,
@@ -25,16 +24,15 @@ class SocialNetworkManagementController extends AbstractSocialNetworkController
         );
 
         if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->editPostAction($request, $form, $networkDetector, $objectRouter);
+            return $this->editPostAction($request, $form, $objectRouter);
         } else {
-            return $this->editGetAction($request, $form, $networkDetector, $objectRouter);
+            return $this->editGetAction($request, $form, $objectRouter);
         }
     }
 
     protected function editPostAction(
         Request $request,
         FormInterface $form,
-        NetworkDetectorInterface $networkDetector,
         ObjectRouterInterface $objectRouter
     ): Response {
         $form->handleRequest($request);
@@ -43,11 +41,6 @@ class SocialNetworkManagementController extends AbstractSocialNetworkController
             /** @var SocialNetworkProfile $socialNetworkProfile */
             $socialNetworkProfile = $form->getData();
 
-            $network = $networkDetector->detect($socialNetworkProfile);
-
-            if ($network) {
-                $socialNetworkProfile->setNetwork($network->getIdentifier());
-            }
 
             $this->getDoctrine()->getManager()->persist($socialNetworkProfile);
 
@@ -62,7 +55,6 @@ class SocialNetworkManagementController extends AbstractSocialNetworkController
     protected function editGetAction(
         Request $request,
         FormInterface $form,
-        NetworkDetectorInterface $networkDetector,
         ObjectRouterInterface $objectRouter
     ): Response {
         return $this->render('SocialNetwork/edit.html.twig', [
