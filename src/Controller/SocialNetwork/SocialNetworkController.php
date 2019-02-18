@@ -3,11 +3,7 @@
 namespace App\Controller\SocialNetwork;
 
 use App\Criticalmass\Router\ObjectRouterInterface;
-use App\Entity\City;
-use App\Entity\Ride;
 use App\Entity\SocialNetworkProfile;
-use App\Entity\Subride;
-use App\Entity\User;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Criticalmass\SocialNetwork\NetworkDetector\NetworkDetector;
 use App\Form\Type\SocialNetworkProfileAddType;
@@ -24,26 +20,18 @@ class SocialNetworkController extends AbstractSocialNetworkController
     public function addAction(
         Request $request,
         NetworkDetector $networkDetector,
-        ObjectRouterInterface $objectRouter,
-        User $user = null,
-        City $city = null,
-        Ride $ride = null,
-        Subride $subride = null
+        ObjectRouterInterface $objectRouter
     ): Response {
         $socialNetworkProfile = new SocialNetworkProfile();
 
-        $socialNetworkProfile
-            ->setUser($user)
-            ->setCity($city)
-            ->setRide($ride)
-            ->setSubride($subride);
+        $socialNetworkProfile = $this->assignProfileAble($socialNetworkProfile, $request);
 
         $form = $this->createForm(
             SocialNetworkProfileAddType::class,
             $socialNetworkProfile
         );
 
-        if (Request::METHOD_POST == $request->getMethod()) {
+        if (Request::METHOD_POST === $request->getMethod()) {
             return $this->addPostAction($request, $form, $networkDetector, $objectRouter);
         } else {
             return $this->addGetAction($request, $form, $networkDetector, $objectRouter);
@@ -62,6 +50,8 @@ class SocialNetworkController extends AbstractSocialNetworkController
             /** @var SocialNetworkProfile $socialNetworkProfile */
             $socialNetworkProfile = $form->getData();
 
+            $socialNetworkProfile = $this->assignProfileAble($socialNetworkProfile, $request);
+
             $network = $networkDetector->detect($socialNetworkProfile);
 
             if ($network) {
@@ -75,7 +65,8 @@ class SocialNetworkController extends AbstractSocialNetworkController
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
         }
 
-        return $this->redirect($objectRouter->generate($socialNetworkProfile->getCity(), 'criticalmass_socialnetwork_city_list'));
+        dump($socialNetworkProfile);die;
+        return $this->redirect($objectRouter->generate($this->getProfileAble($socialNetworkProfile), 'criticalmass_socialnetwork_city_list'));
     }
 
     protected function addGetAction(

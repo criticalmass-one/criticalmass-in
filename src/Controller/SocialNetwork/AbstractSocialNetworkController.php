@@ -11,6 +11,7 @@ use App\Entity\SocialNetworkProfile;
 use App\Entity\Subride;
 use App\Entity\User;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractSocialNetworkController extends AbstractController
 {
@@ -21,6 +22,25 @@ abstract class AbstractSocialNetworkController extends AbstractController
         User $user = null
     ): SocialNetworkProfileAble {
         return $user ?? $ride ?? $city ?? $subride;
+    }
+
+    protected function assignProfileAble(SocialNetworkProfile $socialNetworkProfile, Request $request): SocialNetworkProfile
+    {
+        $classNameOrder = [User::class, Subride::class, Ride::class, City::class];
+
+        foreach ($classNameOrder as $className) {
+            $shortname = ClassUtil::getLowercaseShortnameFromFqcn($className);
+
+            if ($request->get($shortname)) {
+                $setMethodName = sprintf('set%s', ucfirst($shortname));
+
+                $socialNetworkProfile->$setMethodName($request->get($shortname));
+
+                break;
+            }
+        }
+
+        return $socialNetworkProfile;
     }
 
     protected function getProfileAble(SocialNetworkProfile $socialNetworkProfile): SocialNetworkProfileAble
