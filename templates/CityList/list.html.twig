@@ -30,24 +30,27 @@
             <div class="col-12">
                 <table id="city-list-table" class="table tablesorter">
                     <thead>
-                        <tr>
-                            <th>
-                                Stadt
-                            </th>
-                            <th>
-                                aktuelle Tour
-                            </th>
-                            <th>
-                                Turnus
-                            </th>
-                            <th>
-                                Touren
-                            </th>
-                        </tr>
+                    <tr>
+                        <th>
+                            Stadt
+                        </th>
+                        <th>
+                            aktuelle Tour
+                        </th>
+                        <th>
+                            Turnus
+                        </th>
+                        <th>
+                            Touren
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
                     </thead>
                     <tbody>
                     {% for city in cityList %}
-                        <tr>
+                        <tr data-city-slug="{{ city.city.getMainSlugString() }}">
                             <td>
                                 <a href="{{ objectPath(city.city) }}">
                                     {{ city.city.city }}
@@ -76,6 +79,11 @@
                                     {{ city.countRides }}
                                 </a>
                             </td>
+                            <td>
+                                <button class="btn btn-default show-more">
+                                    <i class="fa fa-plus-circle"></i>
+                                </button>
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -88,6 +96,6 @@
 
 {% block additionalFooterElements %}
     <script>
-        CriticalMass.loadModule('SortableTable', '#city-list-table');
+        CriticalMass.loadModule('CityListPage', '#city-list-table');
     </script>
 {% endblock %}

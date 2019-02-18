@@ -48,11 +48,13 @@
             </div>
 
             <div class="col-12 col-md-4">
+                {% if feature_enabled('bikeright') %}
                 <div class="row">
                     <div class="col-12">
                         {{ include('Frontpage/_bikeright.html.twig') }}
                     </div>
                 </div>
+                {% endif %}
 
                 <div class="row mt-3">
                     <div class="col-12">

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Criticalmass\SocialNetwork\Network;
 
@@ -7,6 +7,7 @@ use Facebook\Exceptions\FacebookResponseException;
 
 class FacebookPage extends AbstractFacebookNetwork
 {
+    /** @var string $name */
     protected $name = 'facebook-Seite';
 
     public function accepts(SocialNetworkProfile $socialNetworkProfile): bool
