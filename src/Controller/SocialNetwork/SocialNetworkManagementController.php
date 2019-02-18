@@ -57,12 +57,12 @@ class SocialNetworkManagementController extends AbstractSocialNetworkController
         FormInterface $form,
         ObjectRouterInterface $objectRouter
     ): Response {
-        $profile = $form->getData();
+        $socialNetworkProfile = $form->getData();
 
         return $this->render('SocialNetwork/edit.html.twig', [
                 'form' => $form->createView(),
-                'profileAbleType' => ClassUtil::getLowercaseShortname($this->getProfileAble($profile)),
-                'profileAble' => $this->getProfileAble($profile),
+                'profileAbleType' => ClassUtil::getLowercaseShortname($this->getProfileAble($socialNetworkProfile)),
+                'profileAble' => $this->getProfileAble($socialNetworkProfile),
             ]
         );
     }

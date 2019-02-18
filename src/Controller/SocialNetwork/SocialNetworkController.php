@@ -63,10 +63,13 @@ class SocialNetworkController extends AbstractSocialNetworkController
             $this->getDoctrine()->getManager()->flush();
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
+
+            $routeName = sprintf('criticalmass_socialnetwork_%s_list', ClassUtil::getLowercaseShortname($this->getProfileAble($socialNetworkProfile)));
+
+            return $this->redirect($objectRouter->generate($this->getProfileAble($socialNetworkProfile), $routeName));
         }
 
-        dump($socialNetworkProfile);die;
-        return $this->redirect($objectRouter->generate($this->getProfileAble($socialNetworkProfile), 'criticalmass_socialnetwork_city_list'));
+        return $this->addGetAction($request, $form, $networkDetector, $objectRouter);
     }
 
     protected function addGetAction(
@@ -75,8 +78,12 @@ class SocialNetworkController extends AbstractSocialNetworkController
         NetworkDetector $networkDetector,
         ObjectRouterInterface $objectRouter
     ): Response {
-        return $this->render('SocialNetwork/edit.html.twig', [
+        $socialNetworkProfile = $form->getData();
+
+        return $this->render('SocialNetwork/add.html.twig', [
                 'form' => $form->createView(),
+                'profileAbleType' => ClassUtil::getLowercaseShortname($this->getProfileAble($socialNetworkProfile)),
+                'profileAble' => $this->getProfileAble($socialNetworkProfile),
             ]
         );
     }
