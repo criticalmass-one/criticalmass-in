@@ -3,6 +3,7 @@
 namespace App\Controller\SocialNetwork;
 
 use App\Criticalmass\Router\ObjectRouterInterface;
+use App\Criticalmass\Util\ClassUtil;
 use App\Entity\SocialNetworkProfile;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Criticalmass\SocialNetwork\NetworkDetector\NetworkDetector;
@@ -16,6 +17,9 @@ class SocialNetworkController extends AbstractSocialNetworkController
 {
     /**
      * @ParamConverter("city", class="App:City", isOptional=true)
+     * @ParamConverter("ride", class="App:Ride", isOptional=true)
+     * @ParamConverter("subride", class="App:Subride", isOptional=true)
+     * @ParamConverter("user", class="App:User", isOptional=true)
      */
     public function addAction(
         Request $request,

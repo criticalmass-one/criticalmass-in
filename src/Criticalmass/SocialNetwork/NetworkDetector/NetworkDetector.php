@@ -9,6 +9,10 @@ class NetworkDetector extends AbstractNetworkDetector
 {
     public function detect(SocialNetworkProfile $socialNetworkProfile): ?NetworkInterface
     {
+        if (!$socialNetworkProfile->getIdentifier()) {
+            return null;
+        }
+
         /** @var NetworkInterface $network */
         foreach ($this->networkList as $network) {
             if ($network->accepts($socialNetworkProfile)) {
