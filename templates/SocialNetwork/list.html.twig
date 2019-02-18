@@ -119,6 +119,20 @@
                             </td>
                         </tr>
                         {% endfor %}
+
+                        {% if list|length == 0 %}
+                            <tr>
+                                <td colspan="4">
+                                    <div class="alert alert-info">
+                                        {% if profileAbleType == 'ride' %}
+                                        Schade, zu dieser Tour wurden noch keine sozialen Netzwerke gespeichert.
+                                        {% else %}
+                                        Schade, zu dieser Stadt wurden noch keine sozialen Netzwerke gespeichert.
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endif %}
                     </tbody>
                 </table>
             </div>
