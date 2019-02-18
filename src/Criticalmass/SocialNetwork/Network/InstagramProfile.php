@@ -4,23 +4,14 @@ namespace App\Criticalmass\SocialNetwork\Network;
 
 use App\Entity\SocialNetworkProfile;
 
-class Flickr extends AbstractNetwork
+class InstagramProfile extends AbstractInstagramNetwork
 {
     /** @var string $name */
-    protected $name = 'flickr';
-
-    /** @var string $icon */
-    protected $icon = 'fa-flickr';
-
-    /** @var string $backgroundColor */
-    protected $backgroundColor = 'rgb(12, 101, 211)';
-
-    /** @var string $textColor */
-    protected $textColor = 'white';
+    protected $name = 'Instagram-Profil';
 
     public function accepts(SocialNetworkProfile $socialNetworkProfile): bool
     {
-        $pattern = '/^(https?\:\/\/)?(www\.)?(flickr\.com)\/(photos)\/.+$/';
+        $pattern = '/^(https?\:\/\/)?(www\.)?(instagram\.com)\/.+$/';
 
         preg_match($pattern, $socialNetworkProfile->getIdentifier(), $matches);
 

@@ -4,23 +4,17 @@ namespace App\Criticalmass\SocialNetwork\Network;
 
 use App\Entity\SocialNetworkProfile;
 
-class Google extends AbstractNetwork
+class YoutubeVideo extends AbstractNetwork
 {
     /** @var string $name */
-    protected $name = 'Google+';
+    protected $name = 'YouTube-Video';
 
-    /** @var string $icon */
-    protected $icon = 'fa-google-plus';
-
-    /** @var string $backgroundColor */
-    protected $backgroundColor = 'rgb(234, 66, 53)';
-
-    /** @var string $textColor */
-    protected $textColor = 'white';
+    /** @var int $detectorPriority */
+    protected $detectorPriority = -10;
 
     public function accepts(SocialNetworkProfile $socialNetworkProfile): bool
     {
-        $pattern = '/^(https?\:\/\/)((www\.)?)(plus\.google\.com)\/\+([a-zA-Z0-9-]+)(\/?)$/';
+        $pattern = '/^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:watch+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/';
 
         preg_match($pattern, $socialNetworkProfile->getIdentifier(), $matches);
 
