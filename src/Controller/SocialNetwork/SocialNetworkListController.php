@@ -6,6 +6,7 @@ use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\City;
 use App\Entity\Ride;
 use App\Entity\SocialNetworkProfile;
+use App\Form\Type\SocialNetworkProfileAddType;
 use App\Form\Type\SocialNetworkProfileType;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Criticalmass\Util\ClassUtil;
@@ -53,7 +54,7 @@ class SocialNetworkListController extends AbstractSocialNetworkController
         $socialNetworkProfile->$setMethodName($profileAble);
 
         $form = $this->createForm(
-            SocialNetworkProfileType::class,
+            SocialNetworkProfileAddType::class,
             $socialNetworkProfile, [
                 'action' => $this->getRouteName($router, $profileAble, 'add'),
             ]

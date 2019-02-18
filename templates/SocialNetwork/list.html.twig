@@ -46,6 +46,9 @@
 
 {% block content %}
     <div class="container">
+
+        {{ include('Flash/_flash.html.twig') }}
+
         <div class="row">
             <div class="col-md-12">
                 <button class="btn btn-success pull-right" data-toggle="modal" data-target="#profile-add-modal">
@@ -65,11 +68,7 @@
 
                 {% if profileAbleType == 'ride' %}
                     <p class="lead">
-                        Die folgende Liste enthält Konten in sozialen Netzwerken und Links zu Webseiten, die zu der Tour am {{ profileAble.dateTime|date('d.m.Y') }} in Verbindung stehen.
-                    </p>
-
-                    <p>
-                        Die Profile der übergeordneten Stadt {{ profileAble.city.city }} werden getrennt von dieser Liste verwaltet: <a class="btn btn-default" href="{{ objectPath(profileAble.city, 'criticalmass_socialnetwork_city_list') }}">Profile der Stadt verwalten</a>
+                        Die folgende Liste enthält Konten in sozialen Netzwerken und Links zu Webseiten, die zu der Tour am <strong>{{ profileAble.dateTime|date('d.m.Y') }}</strong> in Verbindung stehen.
                     </p>
                 {% endif %}
             </div>
@@ -124,6 +123,17 @@
                 </table>
             </div>
         </div>
+
+        {% if profileAbleType == 'ride' %}
+        <div class="row">
+            <div class="col-md-12">
+                <p class="text-center">
+                    Die Profile der übergeordneten Stadt {{ profileAble.city.city }} werden getrennt von dieser Liste verwaltet:<br />
+                    <a class="btn btn-default margin-top-small" href="{{ objectPath(profileAble.city, 'criticalmass_socialnetwork_city_list') }}">Profile der Stadt verwalten</a>
+                </p>
+            </div>
+        </div>
+        {% endif %}
     </div>
 
     <div class="modal fade" id="profile-add-modal" tabindex="-1" role="dialog" aria-labelledby="profile-add-modal-label">

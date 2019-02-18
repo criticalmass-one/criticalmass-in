@@ -7,6 +7,7 @@ use App\Criticalmass\SocialNetwork\NetworkManager\NetworkManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class SocialNetworkProfileEditType extends AbstractType
@@ -22,6 +23,7 @@ class SocialNetworkProfileEditType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('identifier', TextType::class, ['required' => true, 'disabled' => true])
             ->add('mainNetwork', CheckboxType::class, ['required' => false])
             ->add('network', ChoiceType::class, [
                 'choices' => $this->getNetworkList(),

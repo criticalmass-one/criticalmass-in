@@ -3,6 +3,7 @@
 namespace App\Controller\SocialNetwork;
 
 use App\Criticalmass\Router\ObjectRouterInterface;
+use App\Criticalmass\Util\ClassUtil;
 use App\Entity\SocialNetworkProfile;
 use App\Form\Type\SocialNetworkProfileEditType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -41,7 +42,6 @@ class SocialNetworkManagementController extends AbstractSocialNetworkController
             /** @var SocialNetworkProfile $socialNetworkProfile */
             $socialNetworkProfile = $form->getData();
 
-
             $this->getDoctrine()->getManager()->persist($socialNetworkProfile);
 
             $this->getDoctrine()->getManager()->flush();
@@ -57,8 +57,12 @@ class SocialNetworkManagementController extends AbstractSocialNetworkController
         FormInterface $form,
         ObjectRouterInterface $objectRouter
     ): Response {
+        $profile = $form->getData();
+
         return $this->render('SocialNetwork/edit.html.twig', [
                 'form' => $form->createView(),
+                'profileAbleType' => ClassUtil::getLowercaseShortname($this->getProfileAble($profile)),
+                'profileAble' => $this->getProfileAble($profile),
             ]
         );
     }
