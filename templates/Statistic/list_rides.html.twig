@@ -1,5 +1,6 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set bootstrap4 = true %}
 {% block title %}Critical-Mass-Teilnehmerzahlen im {{ dateTime|format_date('MMMM YYYY') }}{% endblock %}
 
 {% block breadcrumb %}
@@ -13,7 +14,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <h2>
                     Critical-Mass-Teilnehmerzahlen im {{ dateTime|format_date('MMMM YYYY') }}
                 </h2>
@@ -25,7 +26,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <table class="table">
                     <thead>
                     <tr>
@@ -90,7 +91,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <p>
                     Hier fehlt noch was? Du kannst fehlende Teilnehmerzahlen auf der jeweiligen Tourenseite nachtragen oder Streckenlängen mit hochgeladenen GPX-Dateien ergänzen. Auf <a href="{{ path('caldera_criticalmass_help_index') }}">unserer Hilfeseite</a> findest du weitere Informationen.
                 </p>
@@ -98,36 +99,8 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
-                <ul class="pager">
-                    {% if previousDateTime %}
-                        <li class="previous">
-                            <a href="{{ path('caldera_criticalmass_statistic_ride_month', { year: previousDateTime|date('Y'), month: previousDateTime|date('m') }) }}">
-                                &larr; Voriger Monat
-                            </a>
-                        </li>
-                    {% else %}
-                        <li class="previous disabled">
-                            <a href="#">
-                                &larr; Voriger Monat
-                            </a>
-                        </li>
-                    {% endif %}
-
-                    {% if nextDateTime %}
-                        <li class="next">
-                            <a href="{{ path('caldera_criticalmass_statistic_ride_month', { year: nextDateTime|date('Y'), month: nextDateTime|date('m') }) }}">
-                                Nächster Monat &rarr;
-                            </a>
-                        </li>
-                    {% else %}
-                        <li class="next disabled">
-                            <a href="#">
-                                Nächster Monat &rarr;
-                            </a>
-                        </li>
-                    {% endif %}
-                </ul>
+            <div class="col-12">
+                {% include('Statistic/_pagination.html.twig') with { 'previousMonth': previousDateTime, 'nextMonth': nextDateTime } %}
             </div>
         </div>
     </div>
