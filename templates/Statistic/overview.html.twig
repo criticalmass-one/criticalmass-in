@@ -14,124 +14,103 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h1>
-                    Statistiken
-                </h1>
+                <h2>
+                    Critical-Mass-Statistiken
+                </h2>
 
                 <p class="lead">
-                    Wie viele, wie lange, wohin? Diese Seite bereitet die statistischen Daten auf, die von Teilnehmern
-                    der Critical Mass in den verschiedenen Städten nach einer Tour eingearbeitet worden sind &mdash;
-                    entweder von den importieren GPX-Tracks oder mit Schätzungen der Teilnehmerzahlen.
-                </p>
-
-                <p>
-                    Die Statistiken enthalten alle Städte aus Deutschland, bei denen innerhalb der letzten zwei Jahre
-                    mindestens 18 Schätzungen zu Teilnehmer-Zahlen abgegeben wurden.
+                    Wie viele, wie lange, wohin? Diese Seite bereitet die statistischen Daten auf, die von Teilnehmern der Critical Mass in den verschiedenen Städten nach einer Tour eingearbeitet worden sind &mdash; entweder von den importieren GPX-Tracks oder mit Schätzungen der Teilnehmerzahlen.
                 </p>
             </div>
         </div>
 
-        <div>
-            <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link" id="goingYesTab" data-toggle="tab" href="#goingYes" role="tab" aria-controls="goingYes" aria-selected="false">
-                        Teilgenommen <span class="badge badge-secondary">
-                                {{ participationYesList|length }}
-                            </span>
-                    </a>
-                </li>
+        <div class="row">
+            <div class="col-12">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="participants-tab" data-toggle="tab" href="#tab-participiants" role="tab" aria-controls="participatns" aria-selected="true">
+                            Teilnehmerzahl
+                        </a>
+                    </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" id="goingMaybeTab" data-toggle="tab" href="#goingMaybe" role="tab" aria-controls="goingMaybe" aria-selected="false">
-                        Unentschieden <span class="badge badge-secondary">
-                                {{ participationMaybeList|length }}
-                            </span>
-                    </a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="duration-tab" data-toggle="tab" href="#tab-duration" role="tab" aria-controls="participatns" aria-selected="true">
+                            Fahrtdauer
+                        </a>
+                    </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" id="goingNoTab" data-toggle="tab" href="#goingNo" role="tab" aria-controls="goingNo" aria-selected="false">
-                        Abgesagt <span class="badge badge-secondary">
-                                {{ participationNoList|length }}
-                            </span>
-                    </a>
-                </li>
-            </ul>
+                    <li class="nav-item">
+                        <a class="nav-link" id="distance-tab" data-toggle="tab" href="#tab-distance" role="tab" aria-controls="participatns" aria-selected="true">
+                            Fahrtlänge
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col-12">
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="tab-participiants" role="tabpanel" aria-labelledby="participants-tab">
+                        <div class="row mt-1">
+                            <div class="col-12">
+                                <p>
+                                    Bei der angezeigten Teilnehmerzahl handelt es sich um den Durchschnitt der Werte, die
+                                    von den
+                                    Teilnehmern geschätzt wurden.
+                                </p>
+                            </div>
+                        </div>
 
-
-
-
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active">
-                    <a href="#tab-participiants" aria-controls="" role="tab" data-toggle="tab">
-                        Teilnehmerzahl
-                    </a>
-                </li>
-                <li role="presentation">
-                    <a href="#tab-duration" aria-controls="" role="tab" data-toggle="tab">
-                        Fahrtdauer
-                    </a>
-                </li>
-                <li role="presentation">
-                    <a href="#tab-distance" aria-controls="" role="tab" data-toggle="tab">
-                        Fahrtlänge
-                    </a>
-                </li>
-            </ul>
-
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="tab-participiants">
-                    <div class="row margin-top-small">
-                        <div class="col-md-12">
-                            <p>
-                                Bei der angezeigten Teilnehmerzahl handelt es sich um den Durchschnitt der Werte, die
-                                von den
-                                Teilnehmern geschätzt wurden.
-                            </p>
+                        <div class="row">
+                            <div class="col-12">
+                                <canvas id="participants" style="width: 100%; height: 250px;"></canvas>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <canvas id="participants" style="width: 100%; height: 250px;"></canvas>
+                    <div class="tab-pane fade" id="tab-duration" role="tabpanel" aria-labelledby="duration-tab">
+                        <div class="row mt-1">
+                            <div class="col-12">
+                                <p>
+                                    Die Fahrtdauer wird anhand der importierten GPX-Tracks ermittelt und in Stunden
+                                    angegeben.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <canvas id="duration" style="width: 100%; height: 250px;"></canvas>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div role="tabpanel" class="tab-pane" id="tab-duration">
-                    <div class="row margin-top-small">
-                        <div class="col-md-12">
-                            <p>
-                                Die Fahrtdauer wird anhand der importierten GPX-Tracks ermittelt und in Stunden
-                                angegeben.
-                            </p>
+                    <div class="tab-pane fade" id="tab-distance" role="tabpanel" aria-labelledby="distance-tab">
+                        <div class="row mt-1">
+                            <div class="col-12">
+                                <p>
+                                    Die Fahrtlänge wird anhand der importierten GPX-Tracks ermittelt und in Kilometern
+                                    angegeben.
+                                </p>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <canvas id="duration" style="width: 100%; height: 250px;"></canvas>
+                        <div class="row">
+                            <div class="col-12">
+                                <canvas id="distance" style="width: 100%; height: 250px;"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <div role="tabpanel" class="tab-pane" id="tab-distance">
-                    <div class="row margin-top-small">
-                        <div class="col-md-12">
-                            <p>
-                                Die Fahrtlänge wird anhand der importierten GPX-Tracks ermittelt und in Kilometern
-                                angegeben.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <canvas id="distance" style="width: 100%; height: 250px;"></canvas>
-                        </div>
-                    </div>
-                </div>
+        <div class="row">
+            <div class="col-12">
+                <p>
+                    Die Statistiken enthalten alle Städte aus Deutschland, bei denen innerhalb der letzten zwei Jahre mindestens 18 Schätzungen zu Teilnehmer-Zahlen abgegeben wurden.
+                </p>
             </div>
         </div>
     </div>
