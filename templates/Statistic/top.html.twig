@@ -26,35 +26,37 @@
 
         <div class="row">
             <div class="col-12">
-                <div role="tabpanel">
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active">
-                            <a href="#participants" aria-controls="home" role="tab" data-toggle="tab">
-                                <i class="fa fa-group"></i>
-                                Teilnehmer
-                            </a>
-                        </li>
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="participants-tab" data-toggle="tab" href="#tab-participiants" role="tab" aria-controls="participatns" aria-selected="true">
+                            <i class="fa fa-group"></i>
+                            Teilnehmerzahl
+                        </a>
+                    </li>
 
-                        <li role="presentation">
-                            <a href="#distance" aria-controls="home" role="tab" data-toggle="tab">
-                                <i class="fa fa-map"></i>
-                                Strecke
-                            </a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="duration-tab" data-toggle="tab" href="#tab-duration" role="tab" aria-controls="participatns" aria-selected="true">
+                            <i class="fa fa-clock-o"></i>
+                            Fahrtdauer
+                        </a>
+                    </li>
 
-                        <li role="presentation">
-                            <a href="#duration" aria-controls="home" role="tab" data-toggle="tab">
-                                <i class="fa fa-clock-o"></i>
-                                Länge
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                    <li class="nav-item">
+                        <a class="nav-link" id="distance-tab" data-toggle="tab" href="#tab-distance" role="tab" aria-controls="participatns" aria-selected="true">
+                            <i class="fa fa-map"></i>
+                            Streckenlänge
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col-12">
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="participants">
+                    <div role="tabpanel" class="tab-pane active" id="tab-participiants">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-12">
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -98,9 +100,9 @@
                         </div>
                     </div>
 
-                    <div role="tabpanel" class="tab-pane" id="distance">
+                    <div role="tabpanel" class="tab-pane" id="tab-distance">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-12">
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -144,9 +146,9 @@
                         </div>
                     </div>
 
-                    <div role="tabpanel" class="tab-pane" id="duration">
+                    <div role="tabpanel" class="tab-pane" id="tab-duration">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-12">
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -198,7 +200,7 @@
                 <p>
                     Hier fehlt noch was? Du kannst fehlende Teilnehmerzahlen auf der jeweiligen Tourenseite nachtragen oder Streckenlängen mit hochgeladenen GPX-Dateien ergänzen. Auf <a href="{{ path('caldera_criticalmass_help_index') }}">unserer Hilfeseite</a> findest du weitere Informationen.
                 </p>
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}
