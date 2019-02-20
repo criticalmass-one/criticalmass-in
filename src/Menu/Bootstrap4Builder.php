@@ -60,39 +60,24 @@ class Bootstrap4Builder extends AbstractBuilder
         $communityDropdown->addChild('Diskussion', ['route' => 'caldera_criticalmass_board_overview']);
         $communityDropdown->addChild('Fotos', ['route' => 'caldera_criticalmass_photo_examplegallery']);
 
-
-
-        /*
-        $menu = $this->factory->createItem('root');
-
-        $menu->setChildrenAttribute('class', 'nav navbar-nav');
-
-
-
-
-
         if ($this->isUserLoggedIn()) {
-            $menu->addChild('Benutzerkonto', ['uri' => '#'])
-                ->setExtra('dropdown', true);
+            $userDropdown = $menu->addChild('Benutzerkonto', [
+                'attributes' => [
+                    'dropdown' => true,
+                ]
+            ]);
 
-            $menu['Benutzerkonto'
-                ]->addChild('Dein Profil', ['route' => 'criticalmass_user_usermanagement']);
+            $userDropdown->addChild('Dein Profil', ['route' => 'criticalmass_user_usermanagement']);
 
-            $menu['Benutzerkonto']
-                ->addChild('Abmelden', ['route' => 'fos_user_security_logout']);
+            $userDropdown->addChild('Abmelden', ['route' => 'fos_user_security_logout']);
         } else {
-            $menu
-                ->addChild('Anmelden', [
-                    'uri' => '#'
-                ])
-                ->setLinkAttributes([
+            $menu->addChild('Anmelden', [
+                'attributes' => [
                     'data-toggle' => 'modal',
-                    'data-target' => '#loginModal'
-                ]);
+                    'data-target' => '#loginModal',
+                ]
+            ]);
         }
-
-
-        return $menu;*/
 
         return $menu;
     }
