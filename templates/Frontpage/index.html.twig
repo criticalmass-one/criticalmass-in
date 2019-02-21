@@ -1,14 +1,15 @@
-{% extends 'Template/MasterTemplate.html.twig' %}
+{% extends 'Template/StandardTemplate.html.twig' %}
 
 {% set bootstrap4 = true %}
 
 {% block title %}criticalmass.in{% endblock %}
 
-{% block masterContent %}
+{% block content %}
+    {#
     <div class="navbar-wrapper">
         {% include('Template/Navigation/_navigation.html.twig') %}
     </div>
-    {#
+
     <div class="container-fluid mb-2">
         <div class="row">
             <div class="col-md-12">
