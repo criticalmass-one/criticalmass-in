@@ -1,0 +1,14 @@
+<nav aria-label="timeline navigation" class="text-center m-4">
+    <ul class="pagination justify-content-center">
+        <li class="page-item">
+            <a class="page-link" href="{{ path('caldera_criticalmass_timeline_yearmonth', { 'year': previousMonth|date('Y'), 'month': previousMonth|date('m') }) }}">
+                &larr; {{ previousMonth|format_date('MMMM YYYY') }}
+            </a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="{{ path('caldera_criticalmass_timeline_yearmonth', { 'year': nextMonth|date('Y'), 'month': nextMonth|date('m') }) }}">
+                {{ nextMonth|format_date('MMMM YYYY') }} &rarr;
+            </a>
+        </li>
+    </ul>
+</nav>
