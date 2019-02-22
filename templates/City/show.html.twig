@@ -1,5 +1,7 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set bootstrap4 = true %}
+
 {% block title %}{{ city.title }}{% endblock %}
 
 {% block breadcrumb %}
@@ -57,13 +59,12 @@
 {% block content %}
     <div class="container" itemscope itemtype="http://schema.org/Organization">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 {% if city.imageName %}
-                    <div class="jumbotron" id="city-jumbotron"
-                         style="height: 250px; background-image: url({{ vich_uploader_asset(city, 'imageFile')|imagine_filter('city_image_wide') }});">
+                    <div class="jumbotron" id="city-jumbotron" style="height: 250px; background-image: url({{ vich_uploader_asset(city, 'imageFile')|imagine_filter('city_image_wide') }});">
                         <div class="row">
-                            <div class="col-md-12">
-                                <h1 class="pull-right no-margin-top" itemprop="name">
+                            <div class="col-12">
+                                <h1 class="pull-right mt-0" itemprop="name">
                                     {{ city.title }}
                                 </h1>
                             </div>
@@ -71,8 +72,8 @@
 
                         {% if city.punchline %}
                             <div class="row">
-                                <div class="col-md-12">
-                                    <p class="lead pull-right no-margin-top">
+                                <div class="col-12">
+                                    <p class="lead pull-right mt-0">
                                         {{ city.punchline }}
                                     </p>
                                 </div>
@@ -81,7 +82,7 @@
 
                         {% if app.getUser() %}
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-12">
                                     {{ block('optionsButton') }}
                                 </div>
                             </div>
@@ -91,17 +92,17 @@
                     {% if app.getUser() %}
                         {{ block('optionsButton') }}
                     {% endif %}
-                    <h1 class="no-margin-top">
+                    <h2 class="mt-0">
                         {{ city.title }}
-                    </h1>
+                    </h2>
                 {% endif %}
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-12 col-md-9">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         {% if city.longDescription %}
                             {{ city.longDescription|markdown }}
                         {% else %}
@@ -140,7 +141,7 @@
 
                 {% if feature_enabled('photos') and photos|length > 0 %}
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-12">
                             <h2>
                                 Fotos aus {{ city.city }}
                             </h2>
@@ -154,11 +155,10 @@
                     <div class="row">
                         <div class="photo-list">
                             {% for photo in photos %}
-                                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                                <div class="col-6 col-sm-4 col-md-3 col-lg-3">
                                     <div class="photo-thumb margin-bottom-medium text-center">
                                         <a href="{{ objectPath(photo) }}">
-                                            <img class="img-responsive"
-                                                 src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
+                                            <img class="img-fluid img-thumbnail" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
                                         </a>
                                     </div>
                                 </div>
@@ -168,39 +168,39 @@
                 {% endif %}
             </div>
 
-            <div class="col-md-3">
+            <div class="col-12 col-md-3">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         {% include 'City/Includes/_live.html.twig' with { 'city': city } %}
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         {% include 'City/Includes/_nextTour.html.twig' with { 'city': city, 'currentRide': currentRide } %}
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         {% include 'City/Includes/_statistic.html.twig' with { 'city': city } %}
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         {% include 'City/Includes/_socialMedia.html.twig' with { 'city': city } %}
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         {% include 'City/Includes/_locations.html.twig' with { 'city': city, 'locations': locations } %}
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         {% include 'City/Includes/_nearCities.html.twig' with { 'nearCities': nearCities } %}
                     </div>
                 </div>

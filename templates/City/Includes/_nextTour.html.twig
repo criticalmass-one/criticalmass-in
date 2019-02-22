@@ -1,30 +1,28 @@
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Nächste Tour</h3>
+<div class="card">
+    <div class="card-header">
+        Nächste Tour
     </div>
-    <div class="panel-body">
+    <div class="card-body">
         {% if currentRide %}
             <div class="row">
-                <div class="col-md-12">
-                    <div class="text-center">
-                        <a href="{{ objectPath(currentRide) }}">
-                            <h3 class="no-margin-top">
-                                {{ currentRide.title }}
-                            </h3>
-                        </a>
-                    </div>
+                <div class="col-12 text-center">
+                    <a href="{{ objectPath(currentRide) }}">
+                        <h3 class="mt-0">
+                            {{ currentRide.title }}
+                        </h3>
+                    </a>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-6">
                     <dl>
                         <dt>Datum</dt>
                         <dd>{{ currentRide.dateTime|date('d.m.Y', currentRide.city.timezone) }}</dd>
                     </dl>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-6">
                     <dl>
                         <dt>Uhrzeit</dt>
                         <dd>{{ currentRide.dateTime|date('H:i', currentRide.city.timezone) }} Uhr</dd>
@@ -33,7 +31,7 @@
             </div>
 
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <dl>
                         <dt>Treffpunkt</dt>
                         {% if currentRide.hasLocation() and currentRide.location %}
@@ -48,22 +46,18 @@
             </div>
         {% else %}
             <div class="row">
-                <div class="col-md-12">
-                    <div class="text-center">
-                        Über eine Radtour ist momentan nichts bekannt.
-                    </div>
+                <div class="col-12 text-center">
+                    Über eine Radtour ist momentan nichts bekannt.
                 </div>
             </div>
         {% endif %}
 
-        <div class="row margin-top-medium">
-            <div class="col-md-12">
-                <div class="text-center">
-                    <a href="{{ objectPath(city, 'caldera_criticalmass_city_listrides') }}" class="btn btn-success">
-                        <i class="fa fa-list"></i>
-                        weitere Touren anzeigen
-                    </a>
-                </div>
+        <div class="row mt-2">
+            <div class="col-12 text-center">
+                <a href="{{ objectPath(city, 'caldera_criticalmass_city_listrides') }}" class="btn btn-primary">
+                    <i class="fa fa-list"></i>
+                    weitere Touren anzeigen
+                </a>
             </div>
         </div>
     </div>

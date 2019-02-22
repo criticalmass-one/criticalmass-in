@@ -1,16 +1,14 @@
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">
-            Statistiken
-        </h3>
+<div class="card">
+    <div class="card-header">
+        Statistiken
     </div>
-    <div class="panel-body">
-        <p>
+    <div class="card-body">
+        <p class="card-text">
             Teilnehmerzahlen, Fahrtlänge und Fahrtdauer: Schau dir Statistiken aus {{ city.city }} an:
         </p>
 
-        <p class="text-center">
-            <a href="{{ objectPath(city, 'caldera_criticalmass_statistic_city') }}" class="btn btn-success">
+        <p class="card-text text-center">
+            <a href="{{ objectPath(city, 'caldera_criticalmass_statistic_city') }}" class="btn btn-primary">
                 <i class="fa fa-bar-chart"></i>
                 Statistiken
             </a>

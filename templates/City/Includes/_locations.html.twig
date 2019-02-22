@@ -1,12 +1,10 @@
 {% if locations|length > 0 %}
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">
-                Treffpunkte
-            </h3>
+    <div class="card">
+        <div class="card-header">
+            Treffpunkte
         </div>
-        <div class="panel-body">
-            <ul>
+        <div class="card-body">
+            <ul class="list-unstyled">
                 {% for location in locations %}
                     <li>
                         <a href="{{ objectPath(location) }}">

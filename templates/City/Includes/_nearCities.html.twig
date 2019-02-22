@@ -1,9 +1,9 @@
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Städte in der Umgebung</h3>
+<div class="card">
+    <div class="card-header">
+        Städte in der Umgebung
     </div>
-    <div class="panel-body">
-        <ul>
+    <div class="card-body">
+        <ul class="list-unstyled">
             {% for city in nearCities %}
                 <li>
                     <a href="{{ objectPath(city) }}">
