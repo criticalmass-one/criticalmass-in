@@ -65,14 +65,18 @@ class PhotoEventSubscriber implements EventSubscriberInterface
         $track = $this->registry->getRepository(Track::class)->findByUserAndRide($photo->getRide(), $photo->getUser());
 
         if ($track) {
-            $photo = $this->photoGps
-                ->setPhoto($photo)
-                ->setTrack($track)
-                ->execute()
-                ->getPhoto();
+            try {
+                $photo = $this->photoGps
+                    ->setPhoto($photo)
+                    ->setTrack($track)
+                    ->execute()
+                    ->getPhoto();
 
-            if ($flush) {
-                $this->registry->getManager()->flush();
+                if ($flush) {
+                    $this->registry->getManager()->flush();
+                }
+            } catch (\Exception $exception) {
+
             }
         }
     }
