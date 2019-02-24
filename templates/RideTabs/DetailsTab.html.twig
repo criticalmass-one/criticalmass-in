@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="btn-group pull-right" style="margin-top: 16px;">
             {% if app.user %}
-                <a class="btn btn-success" href="{{ objectPath(ride, 'caldera_criticalmass_ride_edit') }}" title="Tour bearbeiten">
+                <a class="btn btn-primary" href="{{ objectPath(ride, 'caldera_criticalmass_ride_edit') }}" title="Tour bearbeiten">
                     <i class="fa fa-cogs"></i>
                     Tour editieren
                 </a>
@@ -39,42 +39,44 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-12 col-sm-4 col-sm-push-8">
+        <div class="col-12 col-sm-4">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     {% include 'Ride/Includes/_live.html.twig' with { 'ride': ride } %}
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-12">
+            <div class="row mt-2">
+                <div class="col-12">
                     {% include 'Ride/Includes/_rideDetails.html.twig' with { 'ride': ride, 'weatherForecast': weatherForecast, 'location': location } %}
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-12">
+            <div class="row mt-2">
+                <div class="col-12">
                     {% include 'Ride/Includes/_socialMedia.html.twig' with { 'ride': ride } %}
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-12">
+            <div class="row mt-2">
+                <div class="col-12">
                     {% include 'Ride/Includes/_statistic.html.twig' with { 'ride': ride } %}
                 </div>
             </div>
         </div>
 
         {% if ride.description %}
-            <div itemprop="description" class="col-xs-12 col-sm-8 col-sm-pull-4">
+            <div itemprop="description" class="col-12 col-sm-8">
                 {{ ride.description|markdown }}
             </div>
             {% else %}
-            <div class="col-xs-12 col-sm-8 col-sm-pull-4">
+            <div class="col-12 col-sm-8">
                 <div class="alert alert-info">
                     <strong>Huch?</strong>
-                    Schade, bislang hat noch niemand Informationen über diese Tour hinterlegt. Wenn du Lust und Zeit
-                    hast, kannst du {{ ride.title }} <a href="{{ objectPath(ride, 'caldera_criticalmass_ride_edit') }}">hier editieren</a>:
+
+                    <p>
+                        Schade, bislang hat noch niemand Informationen über diese Tour hinterlegt. Wenn du Lust und Zeit hast, kannst du {{ ride.title }} <a href="{{ objectPath(ride, 'caldera_criticalmass_ride_edit') }}">hier editieren</a>:
+                    </p>
 
                     <ul>
                         <li>
@@ -90,7 +92,7 @@
                         </li>
                     </ul>
 
-                    <p class="text-center margin-top-medium">
+                    <p class="text-center mt-3">
                         <a href="{{ objectPath(ride, 'caldera_criticalmass_ride_edit') }}"
                            class="btn btn-primary btn-lg">
                             Tour editieren
