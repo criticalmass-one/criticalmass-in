@@ -1,4 +1,4 @@
-define(['CriticalService', 'PhotoEntity', 'jquery-areaselect'], function (CriticalService) {
+define(['CriticalService', 'PhotoEntity', 'jquery.selectareas'], function (CriticalService) {
     PhotoCensorPage = function () {
         this._CriticalService = CriticalService;
     };

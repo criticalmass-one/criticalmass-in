@@ -34,6 +34,7 @@
     "dropzone": "^5.5.1",
     "font-awesome": "^4.7.0",
     "jquery": "^3.3.1",
+    "jquery-select-areas": "^0.1.0",
     "leaflet": "^0.7.7",
     "leaflet-extra-markers": "^1.0.6",
     "leaflet-groupedlayercontrol": "^0.6.1",
