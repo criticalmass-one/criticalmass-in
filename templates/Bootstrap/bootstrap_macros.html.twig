@@ -1,0 +1,66 @@
+{% macro create_html_tag(tag_name, attribute_list, inner_html) %}
+    {% set attributes = [] %}
+
+    {% if attribute_list is defined and attribute_list is iterable %}
+        {% for key, val in attribute_list %}
+            {% set attributes = attributes | merge(['%s="%s"' | format(key, val)]) %}
+        {% endfor %}
+    {% endif %}
+
+    <{{ tag_name }} {{ attributes | join(' ') | raw }}>
+
+    {% if inner_html is defined and inner_html | length > 0 %}
+        {{ inner_html | raw }}
+    {% endif %}
+
+    {% if tag_name in ['img', 'br'] %}
+        />
+    {% else %}
+        </{{ tag_name }}>
+    {% endif %}
+{% endmacro %}
+
+{% macro dropdown(button_caption, item_list, btn_class) %}
+    {% import _self as bootstrap %}
+
+    {% set btn_class = btn_class is not defined or btn_class is empty ? 'btn-secondary' : btn_class %}
+
+    <div class="dropdown">
+        <button class="btn {{ btn_class }} dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ button_caption|raw }}
+            <span class="caret"></span>
+        </button>
+
+        {{ bootstrap.dropdown_menu(item_list) }}
+    </div>
+{% endmacro %}
+
+{% macro dropdown_menu(item_list) %}
+    {% import _self as bootstrap %}
+
+    <div class="dropdown-menu">
+        {% if item_list is defined and item_list is iterable %}
+            {% for item in item_list %}
+                {% set class = ['dropdown-item'] %}
+
+                {% set class = item.active is defined and item.active == true ? class | merge(['active']) : class %}
+
+                {% set class = item.disabled is defined and item.disabled == true ? class | merge(['disabled']) : class %}
+
+                {% set attributes = { 'href': item.href } %}
+
+                {% if item.attr is defined and item.attr is iterable %}
+                    {% if item.attr.class is defined %}
+                        {% set class = class | merge(item.attr.class | split(' ')) %}
+                    {% endif %}
+
+                    {% set attributes = attributes | merge(item.attr) %}
+                {% endif %}
+
+                {% set attributes = attributes | merge({'class': class | join(' ')}) %}
+
+                {{ bootstrap.create_html_tag('a', attributes, item.caption) }}
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endmacro %}
