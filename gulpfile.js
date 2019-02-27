@@ -141,6 +141,7 @@ gulp.task('copy-js-external', function () {
         'node_modules/requirejs/require.js',
         'node_modules/polyline-encoded/Polyline.encoded.js',
         'node_modules/leaflet-groupedlayercontrol/src/leaflet.groupedlayercontrol.js',
+        'node_modules/jquery-select-areas/jquery.selectareas.js'
     ])
         .pipe(gulp.dest('public/js/'));
 });
