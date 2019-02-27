@@ -7,6 +7,38 @@ let flatten = require('gulp-flatten');
 let sass = require('gulp-sass');
 sass.compiler = require('node-sass');
 
+/* jQuery Select Areas */
+
+gulp.task('areaselect-images', function () {
+    return gulp.src([
+        'node_modules/jquery-select-areas/resources/bt-delete.png',
+        'node_modules/jquery-select-areas/resources/filter.svg',
+        'node_modules/jquery-select-areas/resources/outline.gif'
+        ])
+        .pipe(gulp.dest('public/img/areaselect'));
+});
+
+gulp.task('areaselect-css', [], function() {
+    return gulp.src([
+        'node_modules/jquery-select-areas/resources/jquery.selectareas.css',
+        'node_modules/jquery-select-areas/resources/jquery.selectareas.ie8.css'
+        ])
+        .pipe(urlAdjuster({
+            replace: ['','/img/areaselect/'],
+        }))
+        .pipe(gulp.dest('assets/css'));
+});
+
+gulp.task('areaselect-js', function () {
+    return gulp.src([
+        'node_modules/jquery-select-areas/jquery.selectareas.js'
+    ])
+        .pipe(gulp.dest('public/js/'));
+});
+
+gulp.task('build-areaselect', ['areaselect-images', 'areaselect-css', 'areaselect-js']);
+
+
 /* Leaflet */
 
 gulp.task('leaflet-images', function () {
@@ -141,7 +173,6 @@ gulp.task('copy-js-external', function () {
         'node_modules/requirejs/require.js',
         'node_modules/polyline-encoded/Polyline.encoded.js',
         'node_modules/leaflet-groupedlayercontrol/src/leaflet.groupedlayercontrol.js',
-        'node_modules/jquery-select-areas/jquery.selectareas.js'
     ])
         .pipe(gulp.dest('public/js/'));
 });
@@ -164,6 +195,6 @@ gulp.task('copy-js', ['copy-js-modules', 'copy-js-external']);
 
 gulp.task('build-js', ['compress-js']);
 
-gulp.task('build', ['build-leaflet', 'build-leaflet-extramarkers', 'build-fontawesome', 'build-assets', 'build-js', 'build-css'], function () {});
+gulp.task('build', ['build-areaselect', 'build-leaflet', 'build-leaflet-extramarkers', 'build-fontawesome', 'build-assets', 'build-js', 'build-css'], function () {});
 
 gulp.task('default', ['build']);
