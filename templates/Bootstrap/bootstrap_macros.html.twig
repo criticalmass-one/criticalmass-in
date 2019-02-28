@@ -64,3 +64,39 @@
         {% endif %}
     </div>
 {% endmacro %}
+
+{% macro tabs(item_list) %}
+    {% import _self as bootstrap %}
+
+    <ul class="nav nav-tabs" role="tablist">
+        {% if item_list is defined and item_list is iterable %}
+            {% for item in item_list %}
+                {{ bootstrap.nav_element(item) }}
+            {% endfor %}
+        {% endif %}
+    </ul>
+{% endmacro %}
+
+{% macro nav_element(item) %}
+    {% import _self as bootstrap %}
+
+    {% set li_attr = { class: 'nav-item' } %}
+
+    {% set a_attr = { 'data-toggle': 'tab', role: 'tab', id: item.href ~ '-tab', href: '#' ~ item.href, 'aria-controls': item.href } %}
+    {% set a_class = ['nav-link'] %}
+
+    {% if item.active is defined and item.active == true %}
+    {% set a_class = a_class | merge(['active']) %}
+    {% set a_attr = a_attr | merge({ 'aria-selected': 'true'} ) %}
+    {% endif %}
+
+    {% if item.disabled is defined and item.disabled == true %}
+    {% set a_class = a_class | merge(['disabled']) %}
+    {% endif %}
+
+    {% set a_attr = a_class | length > 0 ? a_attr | merge({'class': a_class | join(' ')}) : a_attr %}
+
+    {% set a_element %}{{ bootstrap.create_html_Tag('a', a_attr, item.caption|raw) }}{% endset %}
+
+    {{ bootstrap.create_html_Tag('li', li_attr, a_element) }}
+{% endmacro %}

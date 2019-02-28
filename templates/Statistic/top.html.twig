@@ -2,6 +2,8 @@
 
 {% set bootstrap4 = true %}
 
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+
 {% block title %}Top-Ten-Statistiken{% endblock %}
 
 {% block breadcrumb %}
@@ -26,35 +28,18 @@
 
         <div class="row">
             <div class="col-12">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="participants-tab" data-toggle="tab" href="#tab-participiants" role="tab" aria-controls="participatns" aria-selected="true">
-                            <i class="fa fa-group"></i>
-                            Teilnehmerzahl
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" id="duration-tab" data-toggle="tab" href="#tab-duration" role="tab" aria-controls="participatns" aria-selected="true">
-                            <i class="fa fa-clock-o"></i>
-                            Fahrtdauer
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" id="distance-tab" data-toggle="tab" href="#tab-distance" role="tab" aria-controls="participatns" aria-selected="true">
-                            <i class="fa fa-map"></i>
-                            Streckenlänge
-                        </a>
-                    </li>
-                </ul>
+                {{ bootstrap.tabs([
+                    {href: 'participants', caption: '<i class="fa fa-group"></i> Teilnehmerzahl', active: true},
+                    {href: 'duration', caption: '<i class="fa fa-clock-o"></i> Fahrtdauer'},
+                    {href: 'distance', caption: '<i class="fa fa-map"></i> Streckenlänge'}
+                ]) }}
             </div>
         </div>
 
         <div class="row">
             <div class="col-12">
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="tab-participiants">
+                    <div role="tabpanel" class="tab-pane active" id="participants">
                         <div class="row">
                             <div class="col-12">
                                 <table class="table">
@@ -100,7 +85,7 @@
                         </div>
                     </div>
 
-                    <div role="tabpanel" class="tab-pane" id="tab-distance">
+                    <div role="tabpanel" class="tab-pane" id="distance">
                         <div class="row">
                             <div class="col-12">
                                 <table class="table">
@@ -146,7 +131,7 @@
                         </div>
                     </div>
 
-                    <div role="tabpanel" class="tab-pane" id="tab-duration">
+                    <div role="tabpanel" class="tab-pane" id="duration">
                         <div class="row">
                             <div class="col-12">
                                 <table class="table">
