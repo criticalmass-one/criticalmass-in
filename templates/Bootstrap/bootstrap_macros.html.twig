@@ -100,3 +100,22 @@
 
     {{ bootstrap.create_html_Tag('li', li_attr, a_element) }}
 {% endmacro %}
+
+{% macro tab_panels(item_list) %}
+    {% import _self as bootstrap %}
+
+    <div class="tab-content">
+        {% for item in item_list %}
+            {% set class = ['tab-pane', 'fade'] %}
+            {% set attr = { id: item.id, role: 'tabpanel', 'aria-labelledby': item.id ~ '-tab' } %}
+
+            {% if item.active is defined and item.active == true %}
+                {% set class = class | merge(['show', 'active']) %}
+            {% endif %}
+
+            {% set attr = attr | merge({'class': class | join(' ')}) %}
+
+            {{ bootstrap.create_html_Tag('div', attr, item.content) }}
+        {% endfor %}
+    </div>
+{% endmacro %}
