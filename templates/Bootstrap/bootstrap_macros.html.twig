@@ -120,9 +120,14 @@
     </div>
 {% endmacro %}
 
-{% macro modal(modal_id, title, body, footer_button_list) %}
+{% macro modal(modal_id, title, body, attr, footer_button_list) %}
+    {% import _self as bootstrap %}
+
     <div class="modal fade" id="{{ modal_id }}" tabindex="-1" role="dialog" aria-labelledby="{{ modal_id }}-title" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable" role="document">
+            {% if attr is defined and attr is iterable and attr.pre_content %}
+                {{ attr.pre_content }}
+            {% endif %}
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="{{ modal_id }}-title">
@@ -137,11 +142,47 @@
                     {{ body | raw }}
                 </div>
 
+                {% if footer_button_list is defined and footer_button_list is iterable and footer_button_list | length > 0 %}
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <div class="btn-group">
+                        {% for button_item in footer_button_list %}
+                            {{ bootstrap.button(button_item.caption, button_item.href, button_item.class, button_item.attr) }}
+                        {% endfor %}
+                    </div>
                 </div>
+                {% endif %}
             </div>
+            {% if attr is defined and attr is iterable and attr.post_content %}
+                {{ attr.post_content }}
+            {% endif %}
         </div>
     </div>
+{% endmacro %}
+
+{% macro button(caption, href, class, attr) %}
+    {% import _self as bootstrap %}
+
+    {% if class is not defined or class is empty %}
+    {% set class = ['btn', 'btn-secondary'] %}
+    {% endif %}
+    {% set class = class | split(' ') | merge(['btn']) %}
+
+    {% set attributes = attr is defined and attr != null and attr is iterable ? attr : {} %}
+
+    {% set tag_name = href is defined and href != null ? 'a' : 'button' %}
+
+    {% if href is defined and href != null %}
+        {% set attributes = attributes | merge( { 'href': href } ) %}
+        {% set tag_name = 'a' %}
+    {% else %}
+        {% set tag_name = 'button' %}
+
+        {% if attr is not defined or attr is not iterable or attr.type is not defined or attr.type is empty %}
+        {% set attributes = attributes | merge( { 'type': 'button' } ) %}
+        {% endif %}
+    {% endif %}
+
+    {% set attributes = attributes | merge({'class': class|join(' ')}) %}
+
+    {{ bootstrap.create_html_tag(tag_name, attributes, caption) }}
 {% endmacro %}

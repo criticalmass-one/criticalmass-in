@@ -63,29 +63,27 @@
 
     {% if app.user %}
         {% set modal_content %}
-            {{ form_start(estimateForm) }}
-            <div class="row">
-                <div class="col-12 form-group">
-                    <label class="control-label" for="estimatedParticipants">Geschätzte Teilnehmerzahl:</label>
-                    {{ form_widget(estimateForm.estimatedParticipants, { 'attr' : { 'class': 'form-control' } }) }}
-                </div>
+        <div class="row">
+            <div class="col-12 form-group">
+                <label class="control-label" for="estimatedParticipants">Geschätzte Teilnehmerzahl:</label>
+                {{ form_widget(estimateForm.estimatedParticipants, { 'attr' : { 'class': 'form-control' } }) }}
             </div>
-
-            <div class="row">
-                <div class="col-12">
-                    <div class="btn-group pull-right">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                            Abbrechen
-                        </button>
-                        <button type="submit" class="btn btn-primary">
-                            Speichern
-                        </button>
-                    </div>
-                </div>
-            </div>
-            {{ form_end(estimateForm) }}
+        </div>
         {% endset %}
 
-        {{ bootstrap.modal('estimate-modal', 'Teilnehmerzahl schätzen', modal_content) }}
+        {% set modal_pre_content %}
+        {{ form_start(estimateForm) }}
+        {% endset %}
+
+        {% set modal_post_content %}
+        {{ form_end(estimateForm) }}
+        {% endset %}
+
+        {% set button_list = [
+            { caption: 'Abbrechen', href: null, attr: { 'data-dismiss': 'modal' }, class: 'btn-secondary' },
+            { caption: 'Speichern', href: null, attr: { 'type': 'submit' }, class: 'btn-primary' }
+        ] %}
+
+        {{ bootstrap.modal('estimate-modal', 'Teilnehmerzahl schätzen', modal_content, { pre_content: modal_pre_content, post_content: modal_post_content }, button_list) }}
     {% endif %}
 {% endif %}
