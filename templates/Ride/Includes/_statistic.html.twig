@@ -1,5 +1,7 @@
 {% set hasEstimations = ride.estimatedParticipants or ride.estimatedDistance or ride.estimatedDuration %}
 
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+
 {% if dateTime > ride.dateTime %}
     {% set pastRide = true %}
 {% else %}
@@ -60,35 +62,30 @@
     </div>
 
     {% if app.user %}
-        <div class="modal fade" id="estimate-modal" tabindex="-1" role="dialog" aria-labelledby="estimate-modal-label">
-            <div class="modal-dialog modal-sm" role="document">
-                <div class="modal-content">
-                    {{ form_start(estimateForm) }}
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                    aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="estimate-modal-label">Teilnehmerzahl schätzen</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label class="control-label" for="estimatedParticipants">Geschätzte Teilnehmerzahl:</label>
-                            {{ form_widget(estimateForm.estimatedParticipants, { 'attr' : { 'class': 'form-control' } }) }}
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">
-                                Abbrechen
-                            </button>
-                            <button type="submit" class="btn btn-success">
-                                Speichern
-                            </button>
-                        </div>
-                    </div>
-                    {{ form_end(estimateForm) }}
+        {% set modal_content %}
+            {{ form_start(estimateForm) }}
+            <div class="row">
+                <div class="col-12 form-group">
+                    <label class="control-label" for="estimatedParticipants">Geschätzte Teilnehmerzahl:</label>
+                    {{ form_widget(estimateForm.estimatedParticipants, { 'attr' : { 'class': 'form-control' } }) }}
                 </div>
             </div>
-        </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="btn-group pull-right">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Abbrechen
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            Speichern
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {{ form_end(estimateForm) }}
+        {% endset %}
+
+        {{ bootstrap.modal('estimate-modal', 'Teilnehmerzahl schätzen', modal_content) }}
     {% endif %}
 {% endif %}
