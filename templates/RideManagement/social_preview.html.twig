@@ -57,7 +57,7 @@
                 {% if ride.imageName %}
                 <div class="row margin-bottom-medium">
                     <div class="col-md-12">
-                        <img id="photo" class="img-thumbnail img-responsive" src="{{ vich_uploader_asset(ride, 'imageFile')|imagine_filter('ride_photo_preview') }}"/>
+                        <img id="photo" class="img-thumbnail img-fluid" src="{{ vich_uploader_asset(ride, 'imageFile')|imagine_filter('ride_photo_preview') }}"/>
                     </div>
                 </div>
                 {% endif %}

@@ -109,11 +109,11 @@
                         </div>
                     </div>
                 </div>
-                <img id="photo" class="img-responsive"
+                <img id="photo" class="img-fluid"
                      src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_blurred') }}"
                      style="width: 100%;"/>
             {% else %}
-                <img id="photo" class="img-responsive"
+                <img id="photo" class="img-fluid"
                      src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}"/>
             {% endif %}
         </div>

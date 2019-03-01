@@ -24,7 +24,7 @@
             {% for previewPhoto in item.previewPhotoList %}
             <div class="col-4">
                 <a href="{{ objectPath(previewPhoto) }}">
-                    <img src="{{ vich_uploader_asset(previewPhoto, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" class="img-responsive thumbnail" />
+                    <img src="{{ vich_uploader_asset(previewPhoto, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" class="img-fluid img-thumbnail" />
                 </a>
             </div>
             {% endfor %}

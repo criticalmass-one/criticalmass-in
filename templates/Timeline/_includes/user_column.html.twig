@@ -1,6 +1,6 @@
 <div class="col-3 col-md-2 text-center">
     {% if item.user.imageName %}
-        <img class="media-object round-media-object img-responsive img-fluid"
+        <img class="media-object round-media-object img-fluid"
              src="{{ vich_uploader_asset(item.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}"/>
     {% endif %}
 
