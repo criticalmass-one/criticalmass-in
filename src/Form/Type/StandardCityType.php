@@ -20,17 +20,20 @@ class StandardCityType extends AbstractType
         $builder
             ->add('city',
                 TextType::class, [
-                    'required' => false
+                    'required' => false,
+                    'help' => 'Name der Stadt, etwa Hamburg oder Rendsburg.',
                 ]
             )
             ->add('title',
                 TextType::class, [
-                    'required' => false
+                    'required' => false,
+                    'help' => 'Gib hier den Titel der Stadt ein, beispielsweise „Critical Mass Hamburg“ oder „Fahrradfreitag Rendsburg“.',
                 ]
             )
             ->add('description',
                 TextareaType::class, [
-                    'required' => false
+                    'required' => false,
+                    'help' => 'Eine kurze, aufs Wesentliche reduzierte Beschreibung der Stadt.',
                 ]
             )
             ->add('longitude',
@@ -41,7 +44,8 @@ class StandardCityType extends AbstractType
             )
             ->add('cityPopulation',
                 IntegerType::class, [
-                    'required' => false
+                    'required' => false,
+                    'help' => 'Für die Berechnung bestimmter Statistiken wird die Einwohnerzahl einer Stadt benötigt.',
                 ]
             )
             ->add('region',
@@ -61,27 +65,32 @@ class StandardCityType extends AbstractType
 
                         return $builder;
                     },
-                    'group_by' => 'parent'
+                    'group_by' => 'parent',
+                    'help' => 'Wähle das Bundesland, den Kanton oder das County dieser Stadt aus.',
                 ]
             )
             ->add('punchLine',
                 TextType::class, [
-                    'required' => false
+                    'required' => false,
+                    'help' => 'Hier kann ein ganz einprägsamer Satz hin. Sowas wie „We are traffic“ oder „Reclaim the streets“ ist ja schon fast Standard.',
                 ]
             )
             ->add('longDescription',
                 TextareaType::class, [
-                    'required' => false
+                    'required' => false,
+                    'help' => 'Hier ist Platz für eine längere und ausführlichere Beschreibung.',
                 ]
             )
             ->add('enableBoard',
                 CheckboxType::class, [
-                    'required' => false
+                    'required' => false,
+                    'help' => 'Aktiviere diese Checkbox, um ein Diskussionsforum für diese Stadt zu aktivieren.',
                 ]
             )
             ->add('imageFile',
                 VichFileType::class, [
-                    'required' => false
+                    'required' => false,
+                    'help' => 'Lade hier ein Foto für diese Stadt hoch. Bitte beachte, dass du das Urheber- oder Nutzungsrecht an dieser Datei besitzt. Am besten sind Bildabmessungen von 2.280 mal 500 Pixel.',
                 ]
             );
     }

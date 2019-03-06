@@ -1,5 +1,9 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set bootstrap4 = true %}
+
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
 {% if city != null %}
     {% set title = 'Stadt editieren' %}
 {% else %}
@@ -71,138 +75,106 @@
         {{ form_start(form) }}
 
         <div class="row">
-            <div class="col-md-12">
-                <h1>{{ title }}</h1>
+            <div class="col-12">
+                <h2>
+                    {{ title }}
+                </h2>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <div id="map" style="height: 250px;"></div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-6">
+        <div class="row mt-2">
+            <div class="col-6">
                 <div class="row">
-                    <div class="col-md-12">
-                        <h2>Städte-Informationen</h2>
+                    <div class="col-12">
+                        <h4>
+                            Städte-Informationen
+                        </h4>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group{% if form_errors(form.region) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="">Region:</label>
-                            {{ form_widget(form.region, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">Wähle das Bundesland, den Kanton oder das County dieser Stadt aus.</p>
-                        </div>
+                    <div class="col-12">
+                        {{ form_row(form.region) }}
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group{% if form_errors(form.title) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="">Titel:</label>
-                            {{ form_widget(form.title, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">Gib hier den Titel der Stadt ein, beispielsweise „Critical Mass
-                                Hamburg“ oder „Fahrradfreitag Rendsburg“.</p>
-                        </div>
+                    <div class="col-12">
+                        {{ form_row(form.title) }}
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group{% if form_errors(form.city) %} has-error has-feedback{% endif %}">
-                            <button id="search-city-button" class="btn btn-default btn-xs pull-right" type="button">
-                                <i class="fa fa-map-marker"></i>
-                            </button>
-                            <label class="control-label" for="">Name:</label>
-                            {{ form_widget(form.city, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">Name der Stadt, etwa Hamburg oder Rendsburg.</p>
-                        </div>
+                    <div class="col-12">
+                        <button id="search-city-button" class="btn btn-outline-secondary btn-sm pull-right" type="button">
+                            <i class="fa fa-map-marker"></i>
+                        </button>
+
+                        {{ form_row(form.city) }}
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group{% if form_errors(form.description) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="">Beschreibung:</label>
-                            {{ form_widget(form.description, { 'attr' : { 'class': 'form-control', 'rows': '10' } }) }}
-                            <p class="help-block">Eine kurze, aufs Wesentliche reduzierte Beschreibung der Stadt.</p>
-                        </div>
+                    <div class="col-12">
+                        {{ form_row(form.description) }}
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group{% if form_errors(form.punchLine) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="">Punchline:</label>
-                            {{ form_widget(form.punchLine, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">Hier kann ein ganz einprägsamer Satz hin. Sowas wie „We are traffic“
-                                oder „Reclaim the streets“ ist ja schon fast Standard.</p>
-                        </div>
+                    <div class="col-12">
+                        {{ form_row(form.punchLine) }}
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group{% if form_errors(form.longDescription) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="">Lange Beschreibung:</label>
-                            {{ form_widget(form.longDescription, { 'attr' : { 'class': 'form-control', 'rows': '10' } }) }}
-                            <p class="help-block">Hier ist Platz für eine längere und ausführlichere Beschreibung.</p>
-                        </div>
+                    <div class="col-12">
+                        {{ form_row(form.longDescription) }}
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group{% if form_errors(form.cityPopulation) %} has-error has-feedback{% endif %}">
-                            <button id="fetch-population-button" class="btn btn-default btn-xs pull-right" type="button">
-                                <i class="fa fa-users"></i>
-                            </button>
-                            <label class="control-label" for="">Einwohnerzahl:</label>
-                            {{ form_widget(form.cityPopulation, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">Für die Berechnung bestimmter Statistiken wird die Einwohnerzahl einer
-                                Stadt benötigt.</p>
-                        </div>
+                    <div class="col-12">
+                        <button id="fetch-population-button" class="btn btn-outline-secondary btn-sm pull-right" type="button">
+                            <i class="fa fa-users"></i>
+                        </button>
+
+                        {{ form_row(form.cityPopulation) }}
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-6">
                 <div class="row">
-                    <div class="col-md-12">
-                        <h2>Technisches</h2>
+                    <div class="col-12">
+                        <h4>
+                            Technisches
+                        </h4>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label class="control-label" for="">Forum anzeigen:</label>
-                            {{ form_widget(form.enableBoard, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">Aktiviere diese Checkbox, um ein Diskussionsforum für diese Stadt zu
-                                aktivieren.</p>
-                        </div>
+                    <div class="col-12">
+                        {{ form_row(form.enableBoard) }}
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
-                        <h2>Header-Grafik</h2>
+                    <div class="col-12">
+                        <h4>
+                            Header-Grafik
+                        </h4>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label class="control-label" for="">Datei:</label>
-                            {{ form_widget(form.imageFile, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">Lade hier ein Foto für diese Stadt hoch. <strong>Bitte beachte, dass
-                                    du das Urheber- oder Nutzungsrecht an dieser Datei besitzt.</strong> Am besten sind
-                                Bildabmessungen von 2.280 mal 500 Pixel.</p>
-                        </div>
+                    <div class="col-12">
+                        {{ form_row(form.imageFile) }}
                     </div>
                 </div>
             </div>
@@ -212,15 +184,15 @@
             <div class="col-md-12">
                 <div class="btn-group pull-right">
                     {% if city %}
-                        <a href="{{ objectPath(city) }}" class="btn btn-default">
+                        <a href="{{ objectPath(city) }}" class="btn btn-secondary">
                             Abbrechen
                         </a>
                     {% else %}
-                        <a href="{{ objectPath(region) }}" class="btn btn-default">
+                        <a href="{{ objectPath(region) }}" class="btn btn-secondary">
                             Abbrechen
                         </a>
                     {% endif %}
-                    <button type="submit" class="btn btn-success">
+                    <button type="submit" class="btn btn-primary">
                         Speichern
                     </button>
                 </div>
