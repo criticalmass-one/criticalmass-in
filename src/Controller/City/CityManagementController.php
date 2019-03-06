@@ -2,11 +2,11 @@
 
 namespace App\Controller\City;
 
+use App\Criticalmass\CityPopulationFetcher\CityPopulationFetcherInterface;
 use App\Criticalmass\OpenStreetMap\NominatimCityBridge\NominatimCityBridge;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Event\City\CityCreatedEvent;
 use App\Event\City\CityUpdatedEvent;
-use Curl\Curl;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Controller\AbstractController;
@@ -15,7 +15,6 @@ use App\Entity\CitySlug;
 use App\Entity\Region;
 use App\Form\Type\StandardCityType;
 use Malenki\Slug;
-use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -236,37 +235,10 @@ class CityManagementController extends AbstractController
         ];
     }
 
-    public function populationAction(string $cityName): Response
+    public function populationAction(CityPopulationFetcherInterface $cityPopulationFetcher, string $cityName): Response
     {
-        $wikipediaUrl = sprintf('https://de.wikipedia.org/wiki/%s', $cityName);
-        $curl = new Curl();
+        $populationNumber = $cityPopulationFetcher->fetch($cityName);
 
-        $curl->get($wikipediaUrl);
-
-        if ($curl->httpStatusCode !== Response::HTTP_OK) {
-            return new Response(sprintf('City "%s" not found in Wikipedia', $cityName), Response::HTTP_NOT_FOUND);
-        }
-
-        $body = $curl->response;
-
-        $crawler = new Crawler($body);
-
-        // find table cell with "Einwohner" label
-        $crawler = $crawler
-            ->filter('table tr td')
-            ->reduce(function (Crawler $node, $i) {
-                return (strpos($node->text(), 'Einwohner') === 0);
-            });
-
-        try {
-            // here we have the number
-            $populationNumber = $crawler->nextAll()->first()->text();
-
-            $populationNumber = (int) str_replace('.', '', (explode(' ', $populationNumber)[0]));
-
-            return new Response($populationNumber);
-        } catch (\Exception $exception) {
-            return new Response(sprintf('No useable population data found for city "%s" in Wikipedia', $cityName), Response::HTTP_NOT_FOUND);
-        }
+        return new Response($populationNumber, $populationNumber ? Response::HTTP_OK : Response::HTTP_NOT_FOUND);
     }
 }
