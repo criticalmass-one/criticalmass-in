@@ -1,47 +1,51 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set bootstrap4 = true %}
+
 {% block title %}Login{% endblock %}
 
 {% block breadcrumb %}
-    <li class="active">Login</li>
+    <li class="active">
+        Login
+    </li>
 {% endblock %}
 
 {% block content %}
     <div class="container">
         {% if error %}
             <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <div class="alert alert-danger alert-error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                <div class="col-12 col-md-10 offset-md-1">
+                    <div class="alert alert-danger">
+                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                    </div>
                 </div>
             </div>
         {% endif %}
 
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <h1>Einloggen und losfahren!</h1>
+            <div class="col-12 col-md-10 offset-md-1">
+                <h2>
+                    Einloggen und losfahren!
+                </h2>
 
                 <p class="lead">
-                    Hier kannst du dich mit deinem criticalmass.in-Benutzerkonto einloggen. Gültig sind alle
-                    Benutzerkonten, die seit Anfang 2013 registriert worden sind. Falls du dein Kennwort vergessen hast,
-                    kannst du dir <a href="{{ path('fos_user_resetting_request') }}">ein neues zusenden lassen</a>. Und
-                    falls du noch kein Benutzerkonto hast, kannst du dich <a
-                            href="{{ path('fos_user_registration_register') }}">hier registrieren</a>.
+                    Hier kannst du dich mit deinem criticalmass.in-Benutzerkonto einloggen. Gültig sind alle Benutzerkonten, die seit Anfang 2013 registriert worden sind. Falls du dein Kennwort vergessen hast, kannst du dir <a href="{{ path('fos_user_resetting_request') }}">ein neues zusenden lassen</a>. Und falls du noch kein Benutzerkonto hast, kannst du dich <a href="{{ path('fos_user_registration_register') }}">hier registrieren</a>.
                 </p>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-5 col-md-offset-1">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
+            <div class="col-12 col-md-5 offset-md-1">
+                <div class="card">
+                    <div class="card-header">
                         Soziale Netzwerke
                     </div>
-                    <div class="panel-body">
+
+                    <div class="card-body">
                         <div class="row">
-                            <div class="col-md-12 text-center">
+                            <div class="col-12 text-center">
                                 <p>
-                                    Logge dich über eines dieser sozialen Netzwerke ein &mdash; es dauert nur einen
-                                    Klick!
+                                    Logge dich über eines dieser sozialen Netzwerke ein &mdash; es dauert nur einen Klick!
                                 </p>
 
                                 <div class="btn-group" role="group" aria-label="...">
@@ -78,40 +82,41 @@
                 </div>
             </div>
 
-            <div class="col-md-5">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
+            <div class="col-12 col-md-5">
+                <div class="card">
+                    <div class="card-header">
                         E-Mail-Adresse
                     </div>
-                    <div class="panel-body">
-                        <form action="{{ path("fos_user_security_check") }}" method="post" role="form"
-                              class="form-horizontal">
+                    <div class="card-body">
+                        <form action="{{ path("fos_user_security_check") }}" method="post" role="form" class="form-horizontal">
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
 
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-12">
                                     <label for="username" class="control-label">
                                         Dein Benutzername:
                                     </label>
-                                    <input type="text" class="form-control" id="username" name="_username"
-                                           value="{{ last_username }}"/>
+
+                                    <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}" />
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-12">
                                     <label for="password" class="control-label">
                                         Dein Kennwort:
                                     </label>
-                                    <input type="password" class="form-control" id="password" name="_password"/>
+
+                                    <input type="password" class="form-control" id="password" name="_password" />
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-12">
                                     <div class="checkbox control-group">
                                         <label for="remember_me">
-                                            <input type="checkbox" id="remember_me" name="_remember_me" value="on"/>
+                                            <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+
                                             eingeloggt bleiben
                                         </label>
                                     </div>
@@ -127,11 +132,12 @@
                                 </div>
                             </div>
 
-                            <div class="row margin-top-medium">
-                                <div class="col-md-12 text-center">
+                            <div class="row mt-2">
+                                <div class="col-12 text-center">
                                     <a href="{{ path('fos_user_resetting_request') }}">
                                         Kennwort vergessen?
                                     </a>
+
                                     <a href="{{ path('fos_user_registration_register') }}">
                                         Oder jetzt registrieren?
                                     </a>
