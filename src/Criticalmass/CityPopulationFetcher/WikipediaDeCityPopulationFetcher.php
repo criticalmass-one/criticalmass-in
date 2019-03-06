@@ -21,7 +21,7 @@ class WikipediaDeCityPopulationFetcher implements CityPopulationFetcherInterface
         $html = $this->getHtml($url);
 
         if (!$html) {
-            throw new CityNotFoundException(sprintf('City "%s" not found in Wikipedia. Looked up "%".', $cityName, $url));
+            throw new CityNotFoundException(sprintf('City "%s" not found in Wikipedia. Looked up "%s".', $cityName, $url));
         }
 
         $populationNumber = $this->parseHtml($html);

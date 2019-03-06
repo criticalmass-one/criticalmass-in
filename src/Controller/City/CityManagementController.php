@@ -237,8 +237,12 @@ class CityManagementController extends AbstractController
 
     public function populationAction(CityPopulationFetcherInterface $cityPopulationFetcher, string $cityName): Response
     {
-        $populationNumber = $cityPopulationFetcher->fetch($cityName);
+        try {
+            $populationNumber = $cityPopulationFetcher->fetch($cityName);
 
-        return new Response($populationNumber, $populationNumber ? Response::HTTP_OK : Response::HTTP_NOT_FOUND);
+            return new Response($populationNumber, Response::HTTP_OK);
+        } catch (\Exception $exception) {
+            return new Response($exception->getMessage(), Response::HTTP_NOT_FOUND);
+        }
     }
 }
