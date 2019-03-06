@@ -1,5 +1,7 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set bootstrap4 = true %}
+
 {% block title %}Registrierung{% endblock %}
 
 {% block breadcrumb %}
@@ -11,7 +13,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-12 col-md-8 offset-md-2">
                 <h2>
                     Hej {{ user.username }}!
                 </h2>
