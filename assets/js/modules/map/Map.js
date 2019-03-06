@@ -1,5 +1,5 @@
 //define(['leaflet', 'CityMarker', 'LocationMarker', 'L.Control.Locate', 'Leaflet.Sleep'], function () {
-define(['leaflet', 'CityMarker', 'LocationMarker'], function () {
+define(['jquery', 'leaflet', 'CityMarker', 'LocationMarker'], function ($, L) {
     Map = function (mapId, settings) {
         this._mapId = mapId;
 
