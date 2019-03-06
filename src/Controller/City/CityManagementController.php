@@ -238,12 +238,14 @@ class CityManagementController extends AbstractController
 
     public function populationAction(string $cityName): Response
     {
-        $einwohner = ['Einwohner:', 'Einwohner', 'Einwohnerzahl:', 'Einwohnerzahl'];
-
         $wikipediaUrl = sprintf('https://de.wikipedia.org/wiki/%s', $cityName);
         $curl = new Curl();
 
         $curl->get($wikipediaUrl);
+
+        if ($curl->httpStatusCode !== Response::HTTP_OK) {
+            return new Response(sprintf('City "%s" not found in Wikipedia', $cityName), Response::HTTP_NOT_FOUND);
+        }
 
         $body = $curl->response;
 
@@ -252,19 +254,19 @@ class CityManagementController extends AbstractController
         // find table cell with "Einwohner" label
         $crawler = $crawler
             ->filter('table tr td')
-            ->reduce(function (Crawler $node, $i) use ($einwohner) {
-                if (in_array($node->text(), $einwohner)) {
-                    return true;
-                }
-
-                return false;
+            ->reduce(function (Crawler $node, $i) {
+                return (strpos($node->text(), 'Einwohner') === 0);
             });
 
-        // here we have the number
-        $populationNumber = $crawler->nextAll()->first()->text();
+        try {
+            // here we have the number
+            $populationNumber = $crawler->nextAll()->first()->text();
 
-        $populationNumber = (int) str_replace('.', '', (explode(' ', $populationNumber)[0]));
+            $populationNumber = (int) str_replace('.', '', (explode(' ', $populationNumber)[0]));
 
-        return new Response($populationNumber);
+            return new Response($populationNumber);
+        } catch (\Exception $exception) {
+            return new Response(sprintf('No useable population data found for city "%s" in Wikipedia', $cityName), Response::HTTP_NOT_FOUND);
+        }
     }
 }
