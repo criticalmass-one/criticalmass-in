@@ -1,5 +1,7 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set bootstrap4 = true %}
+
 {% block title %}Dein Benutzerprofil{% endblock %}
 
 {% block breadcrumb %}
@@ -17,7 +19,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
+            <div class="col-12 col-md-8 offset-md-2">
                 <small class="pull-right">
                     Anzeige
                 </small>
@@ -34,17 +36,15 @@
         </div>
 
         <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-                <div class="panel panel-bikeright">
-                    <div class="panel-heading">
+            <div class="col-12 col-md-8 offset-md-2">
+                <div class="card card-bikeright">
+                    <h5 class="card-header">
                         Dein Rabattcode
-                    </div>
+                    </h5>
 
-                    <div class="panel-body text-center">
+                    <div class="card-body text-center">
                         {% if bikerightVoucher %}
-                            <div class="well well-sm">
-                                {{ bikerightVoucher.code }}
-                            </div>
+                            <input class="form-control form-control-lg w-25 d-block m-auto text-center" type="text" value="{{ bikerightVoucher.code }}" disabled="disabled" />
                         {% else %}
                             <a href="{{ path('criticalmass_user_bikeright_generate') }}" class="btn btn-bikeright">
                                 Code anfordern
@@ -55,11 +55,11 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <h3>
+        <div class="row mt-2">
+            <div class="col-12 col-md-8 offset-md-2">
+                <h4>
                     Rabatt-Code einlösen &mdash; So einfach geht’s:
-                </h3>
+                </h4>
 
                 <ol>
                     <li>
@@ -80,8 +80,7 @@
                 </ol>
 
                 <p>
-                    Achtung: Der Code wird in deinem Nutzerbereich hinterlegt und ist dort jederzeit einsehbar. Zudem
-                    hast du noch bis zum 31.12.2019 Zeit, den Gutschein einzulösen.
+                    Achtung: Der Code wird in deinem Nutzerbereich hinterlegt und ist dort jederzeit einsehbar. Zudem hast du noch bis zum 31.12.2019 Zeit, den Gutschein einzulösen.
                 </p>
             </div>
         </div>
