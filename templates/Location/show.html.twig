@@ -1,5 +1,7 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set bootstrap4 = true %}
+
 {% block title %}Übersicht zum Treffpunkt {{ location.title }} der {{ location.city.title }}{% endblock %}
 
 {% block breadcrumb %}
@@ -38,18 +40,18 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-8">
-                <h1>
+            <div class="col-12">
+                <h2>
                     {{ location.title }}
-                </h1>
+                </h2>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-12 col-md-8">
                 {% if location.hasCoordinates() %}
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-12">
                             <div id="map" style="height: 250px;"
                                  data-map-center-latitude="{{ location.latitude }}"
                                  data-map-center-longitude="{{ location.longitude }}"
@@ -68,23 +70,22 @@
                     </script>
                 {% endif %}
 
-                <div class="row">
-                    <div class="col-md-12">
+                <div class="row mt-2">
+                    <div class="col-12">
                         {{ location.description|markdown }}
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-12 col-md-4">
                 {% if rides|length > 0 %}
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">
-                                Touren von diesem Treffpunkt
-                            </h3>
+                    <div class="card">
+                        <div class="card-header">
+                            Touren von diesem Treffpunkt
                         </div>
-                        <div class="panel-body">
-                            <ul>
+
+                        <div class="card-body">
+                            <ul class="list-unstyled">
                                 {% for ride in rides %}
                                     <li>
                                         <a href="{{ objectPath(ride) }}">
@@ -96,14 +97,13 @@
                         </div>
                     </div>
                 {% endif %}
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            Andere Treffpunkte dieser Stadt
-                        </h3>
+
+                <div class="card mt-2">
+                    <div class="card-header">
+                        Andere Treffpunkte dieser Stadt
                     </div>
-                    <div class="panel-body">
-                        <ul>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
                             {% for location in locations %}
                                 <li>
                                     <a href="{{ objectPath(location) }}">
