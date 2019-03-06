@@ -1,5 +1,7 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set bootstrap4 = true %}
+
 {% block title %}Kennwort vergessen?{% endblock %}
 
 {% block breadcrumb %}
@@ -11,7 +13,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-12 col-md-8 offset-md-2">
                 <h2>
                     Kennwort vergessen?
                 </h2>
@@ -21,16 +23,17 @@
                 </p>
             </div>
         </div>
+
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
+            <div class="col-12 col-md-8 offset-md-2">
+                <div class="card">
+                    <div class="card-header">
                         Kennwort zurücksetzen
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
                         <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
                             <div class="row">
-                                <div class="col-md-12 form-group">
+                                <div class="col-12 form-group">
                                     {% if invalid_username is defined %}
                                         <div class="alert alert-danger" role="alert">
                                             <strong>
@@ -40,22 +43,24 @@
                                         </div>
                                     {% endif %}
 
-                                    <label for="username" class="col-md-4 control-label">
-                                        Dein Benutzername
-                                    </label>
-                                    <div class="col-md-8">
-                                        <input type="text" id="username" name="username" required="required" class="form-control"/>
+                                    <div class="row">
+                                        <label for="username" class="col-4 control-label">
+                                            Dein Benutzername
+                                        </label>
+                                        <div class="col-8">
+                                            <input type="text" id="username" name="username" required="required" class="form-control"/>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-md-12 text-center">
+                                <div class="col-12 text-center">
                                     <div class="btn-group">
-                                        <button type="submit" class="btn btn-success">
+                                        <button type="submit" class="btn btn-primary">
                                             Kennwort zurücksetzen
                                         </button>
-                                        <a href="{{ path('caldera_criticalmass_frontpage') }}" class="btn btn-default">
+                                        <a href="{{ path('caldera_criticalmass_frontpage') }}" class="btn btn-secondary">
                                             Abbrechen
                                         </a>
                                     </div>

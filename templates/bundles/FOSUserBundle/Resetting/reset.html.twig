@@ -1,5 +1,7 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set bootstrap4 = true %}
+
 {% block title %}Kennwort vergessen?{% endblock %}
 
 {% block breadcrumb %}
@@ -11,7 +13,7 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-12 col-md-8 offset-md-2">
             <h2>
                 Kennwort vergessen?
             </h2>
@@ -23,15 +25,15 @@
     </div>
 
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">
+        <div class="col-12 col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
                     Kennwort zurücksetzen
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
                     {{ form_start(form, { 'action': path('fos_user_resetting_reset', {'token': token}), 'attr': { 'class': 'fos_user_resetting_reset' } }) }}
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-12">
                             <label class="control-label" for="fos_user_change_password_form[new][first]">
                                 Dein neues Kennwort:
                             </label>
@@ -39,8 +41,8 @@
                         </div>
                     </div>
 
-                    <div class="row margin-top-medium">
-                        <div class="col-md-12">
+                    <div class="row mt-2">
+                        <div class="col-12">
                             <label class="control-label" for="fos_user_change_password_form[new][second]">
                                 Gleich noch einmal:
                             </label>
@@ -48,13 +50,13 @@
                         </div>
                     </div>
 
-                    <div class="row margin-top-medium">
-                        <div class="col-md-12 text-center">
+                    <div class="row mt-2">
+                        <div class="col-12 col-md-8 offset-md-2 text-center">
                             <div class="btn-group">
                                 <button type="submit" class="btn btn-primary">
                                     Speichern
                                 </button>
-                                <a href="{{ path('caldera_criticalmass_frontpage') }}" class="btn btn-default">
+                                <a href="{{ path('caldera_criticalmass_frontpage') }}" class="btn btn-secondary">
                                     Abbrechen
                                 </a>
                             </div>
