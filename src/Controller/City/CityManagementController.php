@@ -6,6 +6,7 @@ use App\Criticalmass\OpenStreetMap\NominatimCityBridge\NominatimCityBridge;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Event\City\CityCreatedEvent;
 use App\Event\City\CityUpdatedEvent;
+use Curl\Curl;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Controller\AbstractController;
@@ -232,5 +233,17 @@ class CityManagementController extends AbstractController
             'slug2' => $region->getParent()->getSlug(),
             'slug3' => $region->getSlug(),
         ];
+    }
+
+    public function populationAction(string $cityName): Response
+    {
+        $wikipediaUrl = sprintf('https://de.wikipedia.org/wiki/%s', $cityName);
+        $curl = new Curl();
+
+        $curl->get($wikipediaUrl);
+
+        $body = $curl->response;
+
+        return new Response('wefwefe');
     }
 }
