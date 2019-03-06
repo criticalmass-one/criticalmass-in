@@ -13,3 +13,5 @@ caldera_criticalmass_city_edit:
 caldera_criticalmass_city_population:
     path:  /fetch-population/{cityName}
     controller: App\Controller\City\CityManagementController::populationAction
+    options:
+        expose: true
