@@ -73,7 +73,11 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function () {
             this._initLocationMarker();
         } else {
             this._geocoding.searchState(this.settings.state, function (data) {
-                that.mapCenter = L.latLng(data.lat, data.lon);
+                if (data) {
+                    that.mapCenter = L.latLng(data.lat, data.lon);
+                } else {
+                    that.mapCenter = L.latLng(that.settings.defaultCenterLatitude, that.settings.defaultCenterLongitude);
+                }
 
                 that.mapZoom = 5;
 
