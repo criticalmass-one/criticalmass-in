@@ -15,6 +15,7 @@ use App\Entity\CitySlug;
 use App\Entity\Region;
 use App\Form\Type\StandardCityType;
 use Malenki\Slug;
+use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -237,6 +238,8 @@ class CityManagementController extends AbstractController
 
     public function populationAction(string $cityName): Response
     {
+        $einwohner = ['Einwohner:', 'Einwohner', 'Einwohnerzahl:', 'Einwohnerzahl'];
+
         $wikipediaUrl = sprintf('https://de.wikipedia.org/wiki/%s', $cityName);
         $curl = new Curl();
 
@@ -244,6 +247,24 @@ class CityManagementController extends AbstractController
 
         $body = $curl->response;
 
-        return new Response('wefwefe');
+        $crawler = new Crawler($body);
+
+        // find table cell with "Einwohner" label
+        $crawler = $crawler
+            ->filter('table tr td')
+            ->reduce(function (Crawler $node, $i) use ($einwohner) {
+                if (in_array($node->text(), $einwohner)) {
+                    return true;
+                }
+
+                return false;
+            });
+
+        // here we have the number
+        $populationNumber = $crawler->nextAll()->first()->text();
+
+        $populationNumber = (int) str_replace('.', '', (explode(' ', $populationNumber)[0]));
+
+        return new Response($populationNumber);
     }
 }
