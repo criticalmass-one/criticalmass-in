@@ -26,7 +26,7 @@ define(['AutoMap', 'Modal', 'ModalButton', 'CloseModalButton'], function () {
         var deleteButton = new ModalButton();
         deleteButton.setCaption('Löschen');
         deleteButton.setIcon('cross');
-        deleteButton.setClass('btn-success');
+        deleteButton.setClass('btn-primary');
         deleteButton.setHref(Routing.generate('caldera_criticalmass_track_delete', {trackId: trackId}));
 
         var closeButton = new CloseModalButton;
