@@ -1,5 +1,7 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set bootstrap4 = true %}
+
 {% block title %}Track von Strava importieren{% endblock %}
 
 {% block breadcrumb %}
@@ -26,18 +28,13 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <h1>
+            <div class="col-12">
+                <h2>
                     Wähle eine Aktivität
-                </h1>
-            </div>
-        </div>
+                </h2>
 
-        <div class="row">
-            <div class="col-md-12">
                 <p>
-                    Am <strong>{{ ride.dateTime.format('d.m.Y') }}</strong> hast du die folgenden Aktivitäten mit Strava
-                    aufgezeichnet. Bitte wähle die Aktivität aus, die du als Track importieren möchtest.
+                    Am <strong>{{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}</strong> hast du die folgenden Aktivitäten mit Strava aufgezeichnet. Bitte wähle die Aktivität aus, die du als Track importieren möchtest.
                 </p>
             </div>
         </div>
@@ -45,71 +42,66 @@
         <div class="row">
             {% if activities|length %}
                 {% for activity in activities %}
-                    <div class="col-md-4">
+                    <div class="col-12 col-md-4">
                         <div class="row">
-                            <div class="col-md-12">
-                                <h3>
+                            <div class="col-12">
+                                <h5>
                                     {{ activity.name }}
-                                </h3>
+                                </h5>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-12">
-                                <div id="map-{{ activity.id }}" class="preview-map" style="height: 150px;"
-                                     data-polyline="{{ activity.map.summary_polyline }}">
-
-                                </div>
+                            <div class="col-12">
+                                <div id="map-{{ activity.id }}" class="preview-map" style="height: 150px;" data-polyline="{{ activity.map.summary_polyline }}"></div>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-4">
                                 <dl>
                                     <dt>Distanz:</dt>
-                                    <dd>{{ (activity.distance / 1000)|round(2) }}&nbsp;Kilometer</dd>
+                                    <dd>{{ (activity.distance / 1000)|round(2) }}&nbsp;km</dd>
                                 </dl>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-4">
                                 <dl>
                                     <dt>Start:</dt>
                                     <dd>{{ activity.start_date|date('H:i') }}&nbsp;Uhr</dd>
                                 </dl>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-4">
                                 <dl>
                                     <dt>Dauer:</dt>
-                                    <dd>{{ (activity.elapsed_time / 60)|round() }}&nbsp;Minuten</dd>
+                                    <dd>{{ (activity.elapsed_time / 60)|round() }}&nbsp;min</dd>
                                 </dl>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="text-center">
-                                    <a class="btn btn-success" href="{{ objectPath(ride, 'caldera_criticalmass_strava_import') }}?activityId={{ activity.id }}">
-                                        {# TODO #}
-                                        <i class="fa fa-cloud-download"></i>
-                                        Track importieren
-                                    </a>
-                                </div>
+                            <div class="col-12 text-center">
+                                <a class="btn btn-primary" href="{{ objectPath(ride, 'caldera_criticalmass_strava_import') }}?activityId={{ activity.id }}">
+                                    {# TODO #}
+                                    <i class="fa fa-cloud-download"></i>
+                                    Track importieren
+                                </a>
                             </div>
                         </div>
                     </div>
                 {% endfor %}
             {% else %}
-                <div class="col-md-12">
+                <div class="col-12">
                     <div class="alert alert-danger" role="alert">
                         <strong>Keine Touren gefunden!</strong>
-                        Offenbar hast du mit Strava am {{ ride.dateTime.format('d.m.Y') }} keine Touren aufgezeichnet.
+                        Offenbar hast du mit Strava am <strong>{{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}</strong> keine Touren aufgezeichnet.
                     </div>
                 </div>
             {% endif %}
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <a href="{{ objectPath(ride) }}" class="btn btn-default pull-right">
+        <div class="row mt-2">
+            <div class="col-12">
+                <a href="{{ objectPath(ride) }}" class="btn btn-secondary pull-right">
                     Abbrechen
                 </a>
             </div>
