@@ -1,5 +1,7 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set bootstrap4 = true %}
+
 {% block title %}Fotogalerie{% endblock %}
 
 {% block breadcrumb %}
@@ -8,6 +10,7 @@
             Städteliste
         </a>
     </li>
+
     <li class="active">
         Fotogalerie
     </li>
@@ -15,14 +18,6 @@
 
 {% block content %}
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>
-                    Fotogalerie
-                </h1>
-            </div>
-        </div>
-
         {% set cityString = '' %}
         {% for city in cities %}
             {% set cityString = cityString ~ '<a href="' ~ objectPath(city) ~ '">' ~ city.city ~ '</a>' %}
@@ -35,22 +30,25 @@
                 {% set cityString = cityString ~ ' und ' %}
             {% endif %}
         {% endfor %}
+
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
+                <h2>
+                    Fotogalerie
+                </h2>
+
                 <p class="lead">
-                    Neugierig geworden? Hier siehst du ein paar zufällig ausgewählte Fotos von früheren
-                    Critical-Mass-Touren aus {{ cityString|raw }}. Viel Spaß beim Herumblättern!
+                    Neugierig geworden? Hier siehst du ein paar zufällig ausgewählte Fotos von früheren Critical-Mass-Touren aus {{ cityString|raw }}. Viel Spaß beim Herumblättern!
                 </p>
             </div>
         </div>
 
         <div class="row">
-            <div class="photo-list">
+            <div class="col-12 photo-list">
                 {% for photo in photos %}
-                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 text-center margin-bottom-medium">
+                    <div class="col-6 col-sm-4 col-md-3 col-lg-3 text-center mb-2">
                         <a href="{{ objectPath(photo) }}">
-                            <img class="img-thumbnail img-fluid"
-                                 src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
+                            <img class="img-thumbnail img-fluid" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
                         </a>
                     </div>
                 {% endfor %}
