@@ -1,11 +1,10 @@
 {% if photo.hasCoordinates() %}
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">
-                Karte
-            </h3>
+    <div class="card">
+        <div class="card-header">
+            Karte
         </div>
-        <div class="panel-body">
+
+        <div class="card-body">
             <div id="map" style="height: 150px;"
                  data-map-center-latitude="{{ photo.latitude }}"
                  data-map-center-longitude="{{ photo.longitude }}"
