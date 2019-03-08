@@ -54,7 +54,7 @@
 
         {% if pagination|length == 0 %}
             {% if not app.getUser() %}
-                <div class="row">
+                <div class="row mt-2">
                     <div class="col-12">
                         <div class="alert alert-info" role="alert">
                             <strong>
@@ -65,7 +65,7 @@
                     </div>
                 </div>
             {% else %}
-                <div class="row">
+                <div class="row mt-2">
                     <div class="col-12">
                         <div class="alert alert-info" role="alert">
                             <strong>
@@ -77,7 +77,7 @@
                 </div>
             {% endif %}
         {% else %}
-            <div class="row photo-list">
+            <div class="row mt-2 photo-list">
                 {% for photo in pagination %}
                     <div class="col-6 col-sm-4 col-md-3 col-lg-3">
                         <div class="mb-2 text-center">
@@ -92,7 +92,7 @@
                 {% endfor %}
             </div>
 
-            <div class="row">
+            <div class="row mt-2">
                 <div class="col-12">
                     <div class="text-center">
                         {{ knp_pagination_render(pagination, null, [], { align: 'center' } ) }}
