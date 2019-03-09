@@ -52,10 +52,10 @@
 
         {{ form_start(form) }}
 
-        <div class="row margin-top-medium">
+        <div class="row mt-2">
             <div class="col-md-6">
                 {% if ride.imageName %}
-                <div class="row margin-bottom-medium">
+                <div class="row mb-2">
                     <div class="col-12">
                         <img id="photo" class="img-thumbnail img-fluid" src="{{ vich_uploader_asset(ride, 'imageFile')|imagine_filter('ride_photo_preview') }}"/>
                     </div>

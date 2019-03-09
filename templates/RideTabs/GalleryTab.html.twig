@@ -42,7 +42,7 @@
                 <div class="photo-list">
                     {% for photo in photos %}
                         <div class="col-md-3">
-                            <div class="photo margin-bottom-medium text-center">
+                            <div class="photo mb-2 text-center">
                                 <a href="{{ objectPath(photo) }}">
                                     <img src="#"
                                          data-src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>

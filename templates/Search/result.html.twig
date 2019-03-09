@@ -25,7 +25,7 @@
                             </label>
                             <input type="text" class="form-control" name="query" value="{{ query }}" id="query-input" placeholder="Deine Suchanfrage"/>
 
-                            <button type="submit" class="btn btn-primary pull-right margin-top-small">
+                            <button type="submit" class="btn btn-primary pull-right mt-1">
                                 Finden
                             </button>
                         </div>
@@ -51,7 +51,7 @@
                 </ul>
 
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active padding-top-small" id="city-results">
+                    <div role="tabpanel" class="tab-pane active pt-1" id="city-results">
                         {% for cityResult in cityResults %}
                         {% include 'Search/includes/_city.html.twig' with { city: cityResult } %}
                         {% endfor %}
@@ -63,7 +63,7 @@
                         {% endif %}
                     </div>
 
-                    <div role="tabpanel" class="tab-pane padding-top-small" id="ride-results">
+                    <div role="tabpanel" class="tab-pane pt-1" id="ride-results">
                         {% for rideResult in rideResults %}
                         {% include 'Search/includes/_ride.html.twig' with { ride: rideResult } %}
                         {% endfor %}
