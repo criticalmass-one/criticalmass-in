@@ -1,23 +1,26 @@
-<div class="row">
-    <div class="col-md-12">
+<div class="row mt-2">
+    <div class="col-12">
         {% if app.getUser() %}
             <div class="btn-group pull-right" style="margin-top: 16px;">
-                <a class="btn btn-success" href="{{ objectPath(ride, 'caldera_criticalmass_subride_add') }}" title="Mini-Mass anlegen">
+                <a class="btn btn-primary" href="{{ objectPath(ride, 'caldera_criticalmass_subride_add') }}" title="Mini-Mass anlegen">
                     <i class="fa fa-map-marker"></i>
                     Mini-Mass eintragen
                 </a>
             </div>
         {% endif %}
-        <h3>Mini-Masses zu dieser Tour</h3>
+
+        <h3>
+            Mini-Masses zu dieser Tour
+        </h3>
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-12">
+<div class="row mt-2">
+    <div class="col-12">
         {% if subrides|length > 0 %}
             {% set subrideNumber = 0 %}
             {% for subride in subrides %}
-                <div class="media subride col-md-4 no-margin-top margin-bottom-medium">
+                <div class="media subride col-4 mt-0 mb-2">
                     {% if app.getUser() %}
                         <a href="{{ objectPath(subride, 'caldera_criticalmass_subride_edit') }}" class="edit-subride pull-right btn btn-default btn-xs">
                             <i class="fa fa-wrench"></i>
@@ -25,8 +28,7 @@
                     {% endif %}
 
                     <a class="pull-left subride-link" href="#" data-subride-id="{{ subride.id }}">
-                        <img class="media-object"
-                             src="/bundles/caldera/images/marker/marker-green.png" alt="...">
+                        <img class="media-object" src="/bundles/caldera/images/marker/marker-green.png" alt="...">
                     </a>
 
                     <div class="media-body">
@@ -39,16 +41,14 @@
             {% endfor %}
         {% else %}
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     {% if app.getUser() %}
                         <div class="alert alert-info" role="alert">
                             <strong>Schade!</strong> Bislang hat noch niemand eine Mini-Mass für diese Tour erstellt &mdash; <a href="{{ objectPath(ride, 'caldera_criticalmass_subride_add') }}" title="Mini-Mass anlegen">Du kannst noch immer der Erste sein</a> oder die <a href="{{ objectPath(ride, 'caldera_criticalmass_subride_preparecopy') }}">Mini-Masses der letzten Tour kopieren</a>.
                         </div>
                     {% else %}
-                        <div class="alert alert-info" role="alert"><strong>Schade!</strong> Bislang hat noch niemand
-                            eine Mini-Mass für diese Tour erstellt. Als <a
-                                    href="{{ path('fos_user_security_login') }}">angemeldeter Nutzer</a> könntest du
-                            hier der Erste sein.
+                        <div class="alert alert-info" role="alert">
+                            <strong>Schade!</strong> Bislang hat noch niemand eine Mini-Mass für diese Tour erstellt. Als <a href="{{ path('fos_user_security_login') }}">angemeldeter Nutzer</a> könntest du hier der Erste sein.
                         </div>
                     {% endif %}
                 </div>

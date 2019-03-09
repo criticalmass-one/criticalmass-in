@@ -24,11 +24,11 @@
 </div>
 
 <div class="row mt-3">
-    <div class="col-md-12">
+    <div class="col-12">
         {% set tab_list = [
             { href: 'details', caption: '<i class="fa fa-flag"></i> Details', active: true },
-            { href: 'minimass', caption: '<i class="fa fa-map-marker"></i> Mini-Masses <span class="badge">' ~ ride.getSubrides|length ~ '</span>' },
-            { href: 'comments', caption: '<i class="fa fa-pencil"></i> Kommentare <span class="badge">' ~ ride.getPosts|length ~ '</span>' },
+            { href: 'minimass', caption: '<i class="fa fa-map-marker"></i> Mini-Masses <span class="badge badge-secondary">' ~ ride.getSubrides|length ~ '</span>' },
+            { href: 'comments', caption: '<i class="fa fa-pencil"></i> Kommentare <span class="badge badge-secondary">' ~ ride.getPosts|length ~ '</span>' },
         ] %}
 
         {% set tab_content_list = [
@@ -41,11 +41,11 @@
             {% if feature_enabled('photos') %}
                 {% set past_ride_tabs = [
                     { href: objectPath(ride, 'caldera_criticalmass_photo_ride_list'), caption: '<i class="fa fa-camera"></i> Galerie <span class="badge">' ~ photos|length ~ '</span>' },
-                    { href: 'tracks', caption: '<i class="fa fa-bicycle"></i> Tracks <span class="badge">' ~ tracks|length ~ '</span>' },
+                    { href: 'tracks', caption: '<i class="fa fa-bicycle"></i> Tracks <span class="badge badge-secondary">' ~ tracks|length ~ '</span>' },
                 ] %}
             {% else %}
                 {% set past_ride_tabs = [
-                    { href: 'tracks', caption: '<i class="fa fa-bicycle"></i> Tracks <span class="badge">' ~ tracks|length ~ '</span>' },
+                    { href: 'tracks', caption: '<i class="fa fa-bicycle"></i> Tracks <span class="badge badge-secondary">' ~ tracks|length ~ '</span>' },
                 ] %}
             {% endif %}
 

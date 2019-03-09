@@ -1,12 +1,12 @@
-<div class="row">
-    <div class="col-md-12">
+<div class="row mt-2">
+    <div class="col-12">
         <div class="btn-group pull-right" style="margin-top: 16px;">
         {% if app.user %}
             <a class="btn btn-primary" href="{{ objectPath(ride, 'caldera_criticalmass_ride_edit') }}" title="Tour bearbeiten">
                 <i class="fa fa-cogs"></i>
                 Tour editieren
             </a>
-            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                 <span class="caret"></span>
                 <span class="sr-only">Toggle Dropdown</span>
@@ -25,7 +25,7 @@
                 </li>
             </ul>
         {% else %}
-            <span class="btn btn-success modal-hint" data-modal-hint-title="{{ 'hint_modal.ride.edit_button.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.ride.edit_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
+            <span class="btn btn-primary modal-hint" data-modal-hint-title="{{ 'hint_modal.ride.edit_button.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.ride.edit_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
                 <i class="fa fa-cogs"></i> Tour editieren
             </span>
         {% endif %}
@@ -37,7 +37,7 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row mt-2">
     <div class="col-12 col-sm-4">
         <div class="row">
             <div class="col-12">

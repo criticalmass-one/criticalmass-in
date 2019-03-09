@@ -4,16 +4,17 @@
     {% set pastRide = false %}
 {% endif %}
 
-<div class="row">
-    <div class="col-md-12">
+<div class="row mt-2">
+    <div class="col-12">
         {% if pastRide and app.getUser() %}
             <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
-                <a class="btn btn-success" href="#" data-toggle="modal" data-target="#modalEstimate"
-                   title="Tour schätzen"><i class="halflings signal"></i> Tour schätzen</a>
+                <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#modalEstimate" title="Tour schätzen"><i class="halflings signal"></i> Tour schätzen</a>
             </div>
         {% endif %}
 
-        <h3>Statistik</h3>
+        <h3>
+            Statistik
+        </h3>
     </div>
 </div>
 
