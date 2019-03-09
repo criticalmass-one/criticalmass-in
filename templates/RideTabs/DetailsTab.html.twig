@@ -1,29 +1,14 @@
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+
 <div class="row mt-2">
     <div class="col-12">
-        <div class="btn-group pull-right" style="margin-top: 16px;">
+        <div class="btn-group pull-right mt-0">
         {% if app.user %}
-            <a class="btn btn-primary" href="{{ objectPath(ride, 'caldera_criticalmass_ride_edit') }}" title="Tour bearbeiten">
-                <i class="fa fa-cogs"></i>
-                Tour editieren
-            </a>
-            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                <span class="caret"></span>
-                <span class="sr-only">Toggle Dropdown</span>
-            </button>
-            <ul class="dropdown-menu">
-                <li>
-                    <a href="{{ objectPath(ride, 'criticalmass_socialnetwork_ride_list') }}">
-                        soziale Netzwerke verwalten
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{ objectPath(ride, 'caldera_criticalmass_ride_socialpreview') }}">
-                        Vorschau für soziale Netzwerke
-                    </a>
-                </li>
-            </ul>
+            {{ bootstrap.dropdown('<i class="fa fa-cogs"></i> Tour bearbeiten', [
+                { href: objectPath(ride, 'caldera_criticalmass_ride_edit'), caption: 'Tour bearbeiten' },
+                { href: objectPath(ride, 'criticalmass_socialnetwork_ride_list'), caption: 'soziale Netzwerke verwalten' },
+                { href: objectPath(ride, 'caldera_criticalmass_ride_socialpreview'), caption: 'Vorschau für soziale Netzwerke' },
+            ], 'btn-primary', false) }}
         {% else %}
             <span class="btn btn-primary modal-hint" data-modal-hint-title="{{ 'hint_modal.ride.edit_button.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.ride.edit_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
                 <i class="fa fa-cogs"></i> Tour editieren
@@ -31,7 +16,7 @@
         {% endif %}
         </div>
 
-        <h3>
+        <h3 class="mt-0">
             {{ ride.title }}
         </h3>
     </div>

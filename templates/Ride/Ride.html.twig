@@ -40,7 +40,7 @@
         {% if pastRide %}
             {% if feature_enabled('photos') %}
                 {% set past_ride_tabs = [
-                    { href: objectPath(ride, 'caldera_criticalmass_photo_ride_list'), caption: '<i class="fa fa-camera"></i> Galerie <span class="badge">' ~ photos|length ~ '</span>' },
+                    { href: objectPath(ride, 'caldera_criticalmass_photo_ride_list'), caption: '<i class="fa fa-camera"></i> Galerie <span class="badge badge-secondary">' ~ photos|length ~ '</span>' },
                     { href: 'tracks', caption: '<i class="fa fa-bicycle"></i> Tracks <span class="badge badge-secondary">' ~ tracks|length ~ '</span>' },
                 ] %}
             {% else %}
