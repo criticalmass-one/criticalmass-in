@@ -44,7 +44,7 @@
     <div class="container">
         {% if city.cycles|length > 0 and mode == 'create' %}
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <div class="alert alert-warning" role="alert">
                         <strong>Vorsicht!</strong>
                         Die Touren für diese Stadt werden jeden Monat anhand vorgegebener Standard-Werte automatisch
@@ -57,13 +57,13 @@
         {% endif %}
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <h1>{{ title }}</h1>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <p>Hier kannst du die Details einer Tour editieren.</p>
             </div>
         </div>
@@ -72,7 +72,7 @@
 
         {{ form_start(form) }}
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <div id="map" style="height: 250px;">
 
                 </div>
@@ -82,7 +82,7 @@
         <div class="row margin-top-medium">
             <div class="col-md-6">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <h3>
                             Tourdaten
                         </h3>
@@ -90,7 +90,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <div class="form-group">
                             <label class="control-label" for="title">
                                 Titel:
@@ -104,7 +104,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <div class="form-group">
                             <label class="control-label" for="description">
                                 Beschreibung:
@@ -122,7 +122,7 @@
 
             <div class="col-md-6">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <h3>
                             Datum und Treffpunkt
                         </h3>
@@ -130,7 +130,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <div class="alert alert-warning" role="alert" id="doubleMonthRide" style="display: none;">
                             <strong>
                                 Vorsicht!
@@ -165,7 +165,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <div class="form-group">
                             <label class="control-label" for="time">
                                 Uhrzeit anzeigen
@@ -181,7 +181,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <label class="control-label" for="location">
                             Treffpunkt:
                         </label>
@@ -205,7 +205,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <div class="form-group">
                             <div class="btn-group pull-right" role="group" aria-label="...">
                                 {% if ride %}

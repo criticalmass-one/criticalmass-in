@@ -27,7 +27,7 @@
         {{ form_start(form) }}
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <h1>{{ title }}</h1>
 
                 <p class="lead">criticalmass.in kann jeden Monat automatisch eine neue Tour für diese Stadt erstellen,
@@ -37,7 +37,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <div class="alert alert-info">
                     Wenn du lediglich eine einzelne Tour für {{ city.city }} erstellen möchtest, nutze bitte <strong><a href="{{ objectPath(city, 'caldera_criticalmass_ride_add') }}">dieses Formular</a></strong>.
                 </div>
@@ -45,7 +45,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <div id="map" style="height: 250px;"></div>
             </div>
         </div>
@@ -53,7 +53,7 @@
         <div class="row margin-top-medium">
             <div class="col-md-6">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <div class="form-group{% if form_errors(form.dayOfWeek) %} has-error has-feedback{% endif %}">
                             <label class="control-label" for="">Wochentag der Touren:</label>
                             {{ form_widget(form.dayOfWeek, { 'attr' : { 'class': 'form-control'} }) }}
@@ -65,7 +65,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <div class="form-group{% if form_errors(form.weekOfMonth) %} has-error has-feedback{% endif %}">
                             <label class="control-label" for="">Woche der Touren:</label>
                             {{ form_widget(form.weekOfMonth, { 'attr' : { 'class': 'form-control'} }) }}
@@ -79,7 +79,7 @@
 
             <div class="col-md-6">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <div class="form-group{% if form_errors(form.time) %} has-error has-feedback{% endif %}">
                             <label class="control-label" for="">Uhrzeit der Touren:</label>
                             {{ form_widget(form.time, { 'attr' : { 'class': 'form-control' } }) }}
@@ -91,7 +91,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <div class="form-group{% if form_errors(form.location) %} has-error has-feedback{% endif %}">
                             <label class="control-label" for="">Treffpunkt der Touren:</label>
                             {{ form_widget(form.location, { 'attr' : { 'class': 'form-control' } }) }}
@@ -106,7 +106,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 Hier kannst du einen optionalen Gültigkeitszeitraum angeben, in dem neue Touren nach dem obigen
                 Einstellungen erzeugt werden sollen. Das kann nützlich sein, falls die Critical Mass in {{ city.city }}
                 nur im Sommer stattfindet oder sich irgendwann einmal der Treffpunkt ändert.
@@ -130,7 +130,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <div class="btn-group pull-right">
                     <a href="{{ objectPath(city) }}" class="btn btn-default">
                         Abbrechen

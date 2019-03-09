@@ -11,7 +11,7 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-12">
             <h1>
                 Handy-Nummer editieren
             </h1>
@@ -20,13 +20,13 @@
 
     <div class="row">
         {% if app.getUser().phoneNumberVerified %}
-        <div class="col-md-12">
+        <div class="col-12">
             {% else %}
             <div class="col-md-8">
                 {% endif %}
                 {{ form_start(phoneNumberForm) }}
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <div class="form-group{% if form_errors(phoneNumberForm.phoneNumber) %} has-error has-feedback{% endif %}">
                             <label class="control-label" for="">Deine Handy-Nummer:</label>
                             {{ form_widget(phoneNumberForm.phoneNumber, { 'attr' : { 'class': 'form-control' } }) }}
@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <button type="submit" class="btn btn-success pull-right">
                             Speichern
                         </button>
@@ -48,7 +48,7 @@
                 <div class="col-md-4">
                     {{ form_start(verificationForm) }}
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-12">
                             <div class="form-group{% if form_errors(verificationForm.verificationNumber) %} has-error has-feedback{% endif %}">
                                 <label class="control-label" for="">Dein Verifikationscode:</label>
                                 {{ form_widget(verificationForm.verificationNumber, { 'attr' : { 'class': 'form-control', 'maxlength': 6 } }) }}
@@ -57,7 +57,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-12">
                             <button type="submit" class="btn btn-success pull-right">
                                 Überprüfen
                             </button>

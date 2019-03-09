@@ -30,7 +30,7 @@
     <div class="container">
         {% for message in app.flashes('success') %}
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <div class="alert alert-success">
                         {{ message }}
                     </div>
@@ -39,7 +39,7 @@
         {% endfor %}
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <h2>
                     Details für soziale Netzwerke
                 </h2>
@@ -56,14 +56,14 @@
             <div class="col-md-6">
                 {% if ride.imageName %}
                 <div class="row margin-bottom-medium">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <img id="photo" class="img-thumbnail img-fluid" src="{{ vich_uploader_asset(ride, 'imageFile')|imagine_filter('ride_photo_preview') }}"/>
                     </div>
                 </div>
                 {% endif %}
 
                 <div class="row">
-                    <div class="col-md-12 form-group">
+                    <div class="col-12 form-group">
                         <label class="control-label" for="">
                             Datei:
                         </label>
@@ -88,7 +88,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12 form-group">
+            <div class="col-12 form-group">
                 <div class="btn-group pull-right" role="group" aria-label="...">
                     <a href="{{ objectPath(ride) }}" class="btn btn-default">
                         Abbrechen
