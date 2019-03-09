@@ -1,3 +1,5 @@
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+
 {% if dateTime > ride.getDateTime() %}
     {% set pastRide = true %}
 {% else %}
@@ -23,66 +25,37 @@
 
 <div class="row mt-3">
     <div class="col-md-12">
-        <div role="tabpanel">
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active">
-                    <a href="#details" aria-controls="home" role="tab" data-toggle="tab">
-                        <i class="fa fa-flag"></i>
-                        Details
-                    </a>
-                </li>
-                <li role="presentation">
-                    <a href="#minimass" aria-controls="settings" role="tab" data-toggle="tab">
-                        <i class="fa fa-map-marker"></i>
-                        Mini-Masses
-                        <span class="badge">
-                            {{ ride.getSubrides|length }}
-                        </span>
-                    </a>
-                </li>
-                <li role="presentation">
-                    <a href="#comments" aria-controls="messages" role="tab" data-toggle="tab">
-                        <i class="fa fa-pencil"></i>
-                        Kommentare
-                        <span class="badge">
-                            {{ ride.getPosts|length }}
-                        </span>
-                    </a>
-                </li>
-                {% if pastRide %}
-                    {% if feature_enabled('photos') %}
-                        <li role="presentation">
-                            <a href="{{ objectPath(ride, 'caldera_criticalmass_photo_ride_list') }}">
-                                <i class="fa fa-camera"></i>
-                                Galerie
-                                <span class="badge">
-                            {{ photos|length }}
-                        </span>
-                            </a>
-                        </li>
-                    {% endif %}
-                    <li role="presentation">
-                        <a href="#tracks" aria-controls="profile" role="tab" data-toggle="tab">
-                            <i class="fa fa-bicycle"></i>
-                            Tracks
-                            <span class="badge">
-                            {{ tracks|length }}
-                        </span>
-                        </a>
-                    </li>
-                {% endif %}
-            </ul>
+        {% set tab_list = [
+            { href: 'details', caption: '<i class="fa fa-flag"></i> Details', active: true },
+            { href: 'minimass', caption: '<i class="fa fa-map-marker"></i> Mini-Masses <span class="badge">' ~ ride.getSubrides|length ~ '</span>' },
+            { href: 'comments', caption: '<i class="fa fa-pencil"></i> Kommentare <span class="badge">' ~ ride.getPosts|length ~ '</span>' },
+        ] %}
 
-            <div class="tab-content">
-                {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderDetailsTabAction', { 'ride': ride } )) }}
-                {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderSubridesTabAction', { 'ride': ride } )) }}
-                {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderPostsTabAction', { 'ride': ride } )) }}
+        {% set tab_content_list = [
+            { id: 'details', active: true, content: render(controller('App\\Controller\\Ride\\RideTabsController::renderDetailsTabAction', { 'ride': ride } )) },
+            { id: 'minimass', content: render(controller('App\\Controller\\Ride\\RideTabsController::renderSubridesTabAction', { 'ride': ride } )) },
+            { id: 'comments', content: render(controller('App\\Controller\\Ride\\RideTabsController::renderPostsTabAction', { 'ride': ride } )) },
+        ] %}
 
-                {% if pastRide %}
-                    {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderTracksTabAction', { 'ride': ride } )) }}
-                {% endif %}
-            </div>
-        </div>
+        {% if pastRide %}
+            {% if feature_enabled('photos') %}
+                {% set past_ride_tabs = [
+                    { href: objectPath(ride, 'caldera_criticalmass_photo_ride_list'), caption: '<i class="fa fa-camera"></i> Galerie <span class="badge">' ~ photos|length ~ '</span>' },
+                    { href: 'tracks', caption: '<i class="fa fa-bicycle"></i> Tracks <span class="badge">' ~ tracks|length ~ '</span>' },
+                ] %}
+            {% else %}
+                {% set past_ride_tabs = [
+                    { href: 'tracks', caption: '<i class="fa fa-bicycle"></i> Tracks <span class="badge">' ~ tracks|length ~ '</span>' },
+                ] %}
+            {% endif %}
+
+            {% set tab_content_list = tab_content_list | merge([{ id: 'tracks', content: render(controller('App\\Controller\\Ride\\RideTabsController::renderTracksTabAction', { 'ride': ride } )) }]) %}
+
+            {% set tab_list = tab_list | merge(past_ride_tabs) %}
+        {% endif %}
+
+        {{ bootstrap.tabs(tab_list) }}
+        {{ bootstrap.tab_panels(tab_content_list) }}
     </div>
 </div>
 
