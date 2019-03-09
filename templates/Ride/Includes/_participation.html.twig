@@ -31,7 +31,7 @@
                 {#{ href: objectPath(ride, 'caldera_criticalmass_participation_ride', { status: 'yes' }), caption: caption },#}
                 {{ bootstrap.dropdown(caption, [
                     { href: objectPath(ride, 'caldera_criticalmass_participation_ride', { status: 'no' }), attr: { class: 'bg-danger' }, caption: no_caption },
-                ], 'btn-success', false) }}
+                ], 'btn-primary', false) }}
             {% endif %}
 
             {% if participation.goingMaybe %}
