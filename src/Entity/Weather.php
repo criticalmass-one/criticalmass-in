@@ -104,12 +104,12 @@ class Weather
     protected $windSpeed;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
      */
     protected $windDeg;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
      */
     protected $clouds;
 
@@ -308,24 +308,24 @@ class Weather
         return $this;
     }
 
-    public function getWindDeg(): ?int
+    public function getWindDeg(): ?float
     {
         return $this->windDeg;
     }
 
-    public function setWindDeg(int $windDeg = null): Weather
+    public function setWindDeg(float $windDeg = null): Weather
     {
         $this->windDeg = $windDeg;
 
         return $this;
     }
 
-    public function getClouds(): ?int
+    public function getClouds(): ?float
     {
         return $this->clouds;
     }
 
-    public function setClouds(int $clouds = null): Weather
+    public function setClouds(float $clouds = null): Weather
     {
         $this->clouds = $clouds;
 
