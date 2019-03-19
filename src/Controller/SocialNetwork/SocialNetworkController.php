@@ -3,10 +3,10 @@
 namespace App\Controller\SocialNetwork;
 
 use App\Criticalmass\Router\ObjectRouterInterface;
+use App\Criticalmass\SocialNetwork\EntityNetworkDetector\EntityNetworkDetectorInterface;
 use App\Criticalmass\Util\ClassUtil;
 use App\Entity\SocialNetworkProfile;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
-use App\Criticalmass\SocialNetwork\NetworkDetector\NetworkDetector;
 use App\Form\Type\SocialNetworkProfileAddType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\FormInterface;
@@ -23,7 +23,7 @@ class SocialNetworkController extends AbstractSocialNetworkController
      */
     public function addAction(
         Request $request,
-        NetworkDetector $networkDetector,
+        EntityNetworkDetectorInterface $networkDetector,
         ObjectRouterInterface $objectRouter
     ): Response {
         $socialNetworkProfile = new SocialNetworkProfile();
@@ -45,7 +45,7 @@ class SocialNetworkController extends AbstractSocialNetworkController
     protected function addPostAction(
         Request $request,
         FormInterface $form,
-        NetworkDetector $networkDetector,
+        EntityNetworkDetectorInterface $networkDetector,
         ObjectRouterInterface $objectRouter
     ): Response {
         $form->handleRequest($request);
@@ -79,7 +79,7 @@ class SocialNetworkController extends AbstractSocialNetworkController
     protected function addGetAction(
         Request $request,
         FormInterface $form,
-        NetworkDetector $networkDetector,
+        EntityNetworkDetectorInterface $networkDetector,
         ObjectRouterInterface $objectRouter
     ): Response {
         $socialNetworkProfile = $form->getData();

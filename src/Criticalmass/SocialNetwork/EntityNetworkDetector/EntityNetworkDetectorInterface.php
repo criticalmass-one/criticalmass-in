@@ -1,12 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\SocialNetwork\NetworkDetector;
+namespace App\Criticalmass\SocialNetwork\EntityNetworkDetector;
 
 use App\Entity\SocialNetworkProfile;
-use App\Criticalmass\SocialNetwork\Network\NetworkInterface;
+use Caldera\SocialNetworkBundle\Network\NetworkInterface;
 
-interface NetworkDetectorInterface
+interface EntityNetworkDetectorInterface
 {
     public function detect(SocialNetworkProfile $socialNetworkProfile): ?NetworkInterface;
-
 }
