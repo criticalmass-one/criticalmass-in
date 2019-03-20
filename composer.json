@@ -19,6 +19,7 @@
     "require": {
         "php": ">=7.3",
         "ext-intl": "*",
+        "ext-simplexml": "*",
         "doctrine/orm": "^2.5",
         "doctrine/doctrine-bundle": "^1.7",
         "doctrine/doctrine-migrations-bundle": "^1.0",

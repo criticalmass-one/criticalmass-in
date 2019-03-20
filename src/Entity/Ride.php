@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Criticalmass\Geocoding\ReverseGeocodeable;
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
+use App\Criticalmass\Weather\EntityInterface\WeatherableInterface;
+use App\Criticalmass\Weather\EntityInterface\WeatherInterface;
 use App\EntityInterface\StaticMapableInterface;
 use Caldera\GeoBasic\Coord\Coord;
 use App\EntityInterface\AuditableInterface;
@@ -33,7 +35,7 @@ use App\Criticalmass\Sharing\Annotation as Sharing;
  * @Vich\Uploadable
  * @Routing\DefaultRoute(name="caldera_criticalmass_ride_show")
  */
-class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, Shareable, ReverseGeocodeable
+class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, Shareable, ReverseGeocodeable, WeatherableInterface
 {
     /**
      * @ORM\Id
@@ -923,14 +925,14 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this;
     }
 
-    public function addWeather(Weather $weather): Ride
+    public function addWeather(WeatherInterface $weather): WeatherableInterface
     {
         $this->weathers->add($weather);
 
         return $this;
     }
 
-    public function removeWeather(Weather $weathers): Ride
+    public function removeWeather(WeatherInterface $weathers): WeatherableInterface
     {
         $this->weathers->removeElement($weathers);
 
@@ -942,7 +944,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->weathers;
     }
 
-    public function setWeathers(Collection $weathers): Ride
+    public function setWeathers(Collection $weathers): WeatherableInterface
     {
         $this->weathers = $weathers;
 
