@@ -1,15 +1,12 @@
-<?php
-/**
- * Created by IntelliJ IDEA.
- * User: maltehuebner
- * Date: 2019-03-20
- * Time: 12:15
- */
+<?php declare(strict_types=1);
 
 namespace App\Criticalmass\Weather\WeatherFactory;
 
+use App\Entity\Ride;
+use App\Entity\Weather;
+use Cmfcmf\OpenWeatherMap\Forecast;
 
 interface WeatherFactoryInterface
 {
-
+    public function createWeather(Ride $ride, Forecast $owmWeather): Weather;
 }

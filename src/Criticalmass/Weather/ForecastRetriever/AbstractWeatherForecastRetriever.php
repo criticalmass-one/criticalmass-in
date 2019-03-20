@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\Weather\ForecastRetriever;
 
+use App\Criticalmass\Weather\WeatherFactory\WeatherFactoryInterface;
 use App\Entity\Ride;
 use App\Entity\Weather;
 use Cmfcmf\OpenWeatherMap;
@@ -22,10 +23,14 @@ abstract class AbstractWeatherForecastRetriever implements WeatherForecastRetrie
     /** @var LoggerInterface $logger */
     protected $logger;
 
-    public function __construct(RegistryInterface $doctrine, OpenWeatherMap $openWeatherMap, LoggerInterface $logger, string $openWeatherMapApiKey)
+    /** @var WeatherFactoryInterface $weatherFactory */
+    protected $weatherFactory;
+
+    public function __construct(RegistryInterface $doctrine, OpenWeatherMap $openWeatherMap, WeatherFactoryInterface $weatherFactory, LoggerInterface $logger, string $openWeatherMapApiKey)
     {
         $this->doctrine = $doctrine;
         $this->logger = $logger;
+        $this->weatherFactory = $weatherFactory;
 
         $this->openWeatherMap = $openWeatherMap;
         $this->openWeatherMap->setApiKey($openWeatherMapApiKey);
