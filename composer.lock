@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "33bcc473209c264276f03cc0982e4dc7",
+    "content-hash": "b90182cf7a37fe6d335227accb377232",
     "packages": [
         {
             "name": "basvandorst/stravaphp",
@@ -140,17 +140,17 @@
             "time": "2017-05-05T10:40:27+00:00"
         },
         {
-            "name": "calderacc/socialnetwork-bundle",
-            "version": "0.1.0",
+            "name": "calderacc/weather-bundle",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/calderacc/socialnetwork-bundle.git",
-                "reference": "b9a7d310fc25cdecb09511fcc30c19a9a8bea6f9"
+                "url": "https://github.com/calderacc/weather-bundle.git",
+                "reference": "a6da2f941c31ac13d0f3cf12dc8d058b338eba47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/calderacc/socialnetwork-bundle/zipball/b9a7d310fc25cdecb09511fcc30c19a9a8bea6f9",
-                "reference": "b9a7d310fc25cdecb09511fcc30c19a9a8bea6f9",
+                "url": "https://api.github.com/repos/calderacc/weather-bundle/zipball/a6da2f941c31ac13d0f3cf12dc8d058b338eba47",
+                "reference": "a6da2f941c31ac13d0f3cf12dc8d058b338eba47",
                 "shasum": ""
             },
             "require": {
@@ -162,7 +162,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Caldera\\SocialNetworkBundle\\": ""
+                    "Caldera\\WeatherBundle\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -175,8 +175,8 @@
                     "email": "malte@caldera.cc"
                 }
             ],
-            "description": "Handle links to social network profiles.",
-            "time": "2019-03-19T21:44:55+00:00"
+            "description": "Handle weather data",
+            "time": "2019-03-20T16:14:47+00:00"
         },
         {
             "name": "calderacc/yourls-api-manager",
@@ -325,56 +325,6 @@
                 "stream_filter_register"
             ],
             "time": "2017-08-18T09:54:01+00:00"
-        },
-        {
-            "name": "cmfcmf/openweathermap-php-api",
-            "version": "v2.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/cmfcmf/OpenWeatherMap-PHP-Api.git",
-                "reference": "37f2e1178948a07c8d50d5063a15ca84b5b51f6a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/cmfcmf/OpenWeatherMap-PHP-Api/zipball/37f2e1178948a07c8d50d5063a15ca84b5b51f6a",
-                "reference": "37f2e1178948a07c8d50d5063a15ca84b5b51f6a",
-                "shasum": ""
-            },
-            "require": {
-                "ext-xml": "*",
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.8 || ^5.0.5"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Cmfcmf\\": "Cmfcmf"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Christian Flach (cmfcmf)",
-                    "email": "cmfcmf.flach@gmail.com",
-                    "homepage": "http://cmfcmf.github.io",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A php api to parse weather data from OpenWeatherMap.org. This api tries to normalise and abstract the data and remove inconsistencies.",
-            "homepage": "https://github.com/cmfcmf/OpenWeatherMap-PHP-Api",
-            "keywords": [
-                "OpenWeatherMap",
-                "api",
-                "free",
-                "owm",
-                "weather"
-            ],
-            "time": "2018-08-30T07:35:48+00:00"
         },
         {
             "name": "cocur/slugify",
@@ -13106,13 +13056,15 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "symfony/dependency-injection": 20
+        "symfony/dependency-injection": 20,
+        "calderacc/weather-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": ">=7.3",
-        "ext-intl": "*"
+        "ext-intl": "*",
+        "ext-simplexml": "*"
     },
     "platform-dev": []
 }

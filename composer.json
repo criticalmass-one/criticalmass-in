@@ -39,7 +39,6 @@
         "hwi/oauth-bundle": "^0.6.2",
         "php-curl-class/php-curl-class": "^8.0",
         "malenki/slug": "1.0.0",
-        "cmfcmf/openweathermap-php-api": "^2.1",
         "sonata-project/intl-bundle": "^2.3",
         "nelmio/api-doc-bundle": "^2.13",
         "predis/predis": "^1.1",
@@ -85,7 +84,7 @@
         "symfony/dependency-injection": "^4.2@dev",
         "symfony/dom-crawler": "^4.2",
         "symfony/css-selector": "^4.2",
-        "calderacc/socialnetwork-bundle": "^0.1.0"
+        "calderacc/weather-bundle": "@dev"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "*",

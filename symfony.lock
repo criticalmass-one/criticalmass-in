@@ -8,8 +8,8 @@
     "calderacc/geobasic": {
         "version": "0.2"
     },
-    "calderacc/socialnetwork-bundle": {
-        "version": "0.1.0"
+    "calderacc/weather-bundle": {
+        "version": "dev-master"
     },
     "calderacc/yourls-api-manager": {
         "version": "0.2"
@@ -19,9 +19,6 @@
     },
     "clue/stream-filter": {
         "version": "v1.4.0"
-    },
-    "cmfcmf/openweathermap-php-api": {
-        "version": "v2.3.0"
     },
     "cocur/slugify": {
         "version": "v3.1"
