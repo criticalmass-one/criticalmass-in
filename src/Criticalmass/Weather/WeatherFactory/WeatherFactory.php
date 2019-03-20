@@ -37,14 +37,32 @@ class WeatherFactory implements WeatherFactoryInterface
 
     protected function assignProperty(WeatherInterface $weather, Forecast $owmWeather, string $methodName, array $path): WeatherInterface
     {
-        if (2 !== count($path)) {
-            return $weather;
+        if (2 === count($path)) {
+            list($prop1, $prop2) = $path;
+
+            if (property_exists($owmWeather, $prop1) && property_exists($owmWeather->{$prop1}, $prop2)) {
+                if (is_object($owmWeather->{$prop1}->{$prop2}) && method_exists($owmWeather->{$prop1}->{$prop2}, 'getValue')) {
+                    $weather->$methodName($owmWeather->{$prop1}->{$prop2}->getValue());
+                }
+
+                if (is_string($owmWeather->{$prop1}->{$prop2}) || is_int($owmWeather->{$prop1}->{$prop2})) {
+                    $weather->$methodName($owmWeather->{$prop1}->{$prop2});
+                }
+            }
         }
 
-        list($prop1, $prop2) = $path;
+        if (1 === count($path)) {
+            list($prop1) = $path;
 
-        if (property_exists($owmWeather, $prop1) && property_exists($owmWeather->{$prop1}, $prop2) && is_object($owmWeather->{$prop1}->{$prop2})) {
-            $weather->$methodName($owmWeather->{$prop1}->{$prop2}->getValue());
+            if (property_exists($owmWeather, $prop1)) {
+                if (is_object($owmWeather->{$prop1}) && method_exists($owmWeather->{$prop1}, 'getValue')) {
+                    $weather->$methodName($owmWeather->{$prop1}->getValue());
+                }
+
+                if (is_string($owmWeather->{$prop1}) || is_int($owmWeather->{$prop1})) {
+                    $weather->$methodName($owmWeather->{$prop1});
+                }
+            }
         }
 
         return $weather;
@@ -60,13 +78,8 @@ class WeatherFactory implements WeatherFactoryInterface
             ->setCreationDateTime(new \DateTime())
             ->setWeatherDateTime($owmWeather->time->from)
             ->setWeather(null)
-            ->setWeatherDescription($owmWeather->weather->description)
             ->setWeatherCode($owmWeather->weather->id)
-            ->setWeatherIcon($owmWeather->weather->icon)
-            ->setPressure($owmWeather->pressure->getValue())
-            ->setHumidity($owmWeather->humidity->getValue())
             ->setWindDeg($owmWeather->wind->direction->getValue())
-            ->setClouds($owmWeather->clouds->getValue())
             ->setRain($owmWeather->precipitation->getValue());
 
         return $weather;
