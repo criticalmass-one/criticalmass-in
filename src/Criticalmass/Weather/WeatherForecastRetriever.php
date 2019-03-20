@@ -4,36 +4,12 @@ namespace App\Criticalmass\Weather;
 
 use App\Entity\Ride;
 use App\Entity\Weather;
-use Cmfcmf\OpenWeatherMap;
 use Cmfcmf\OpenWeatherMap\Forecast;
 use Cmfcmf\OpenWeatherMap\WeatherForecast;
 use Cmfcmf\OpenWeatherMap\Exception as OWMException;
-use Psr\Log\LoggerInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
-class WeatherForecastRetriever
+class WeatherForecastRetriever extends AbstractWeatherForecastRetriever
 {
-    /** @var RegistryInterface $doctrine */
-    protected $doctrine;
-
-    /** @var OpenWeatherMap openWeatherMap */
-    protected $openWeatherMap;
-
-    /** @var array $newWeatherList */
-    protected $newWeatherList = [];
-
-    /** @var LoggerInterface $logger */
-    protected $logger;
-
-    public function __construct(RegistryInterface $doctrine, OpenWeatherMap $openWeatherMap, LoggerInterface $logger, string $openWeatherMapApiKey)
-    {
-        $this->doctrine = $doctrine;
-        $this->logger = $logger;
-
-        $this->openWeatherMap = $openWeatherMap;
-        $this->openWeatherMap->setApiKey($openWeatherMapApiKey);
-    }
-
     public function retrieve(\DateTime $startDateTime = null, \DateTime $endDateTime = null): array
     {
         if (!$startDateTime) {
@@ -143,29 +119,5 @@ class WeatherForecastRetriever
             ->setRain($owmWeather->precipitation->getValue());
 
         return $weather;
-    }
-
-    protected function getLatLng(Ride $ride): array
-    {
-        if ($ride->getHasLocation() && $ride->getCoord()) {
-            $ride->getCoord()->toLatLonArray();
-        }
-
-        return $ride->getCity()->getCoord()->toLatLonArray();
-    }
-
-    protected function findRides(\DateTime $startDateTime, \DateTime $endDateTime): array
-    {
-        return $this->doctrine->getRepository(Ride::class)->findRidesInInterval($startDateTime, $endDateTime);
-    }
-
-    protected function findCurrentWeatherForRide(Ride $ride): ?Weather
-    {
-        return $this->doctrine->getRepository(Weather::class)->findCurrentWeatherForRide($ride);
-    }
-
-    public function getNewWeatherForecasts(): array
-    {
-        return $this->newWeatherList;
     }
 }
