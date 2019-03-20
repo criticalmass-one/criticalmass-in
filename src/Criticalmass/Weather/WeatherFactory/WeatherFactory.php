@@ -8,18 +8,26 @@ use Cmfcmf\OpenWeatherMap\Forecast;
 
 class WeatherFactory implements WeatherFactoryInterface
 {
+    protected $mapping = [
+        'setWeatherDateTime' => ['time', 'from'],
+        'setWeatherCode' => ['weather', 'id'],
+    ];
+
     protected function createEntity(): WeatherInterface
     {
         return new Weather();
     }
 
-    protected function assignProperties(WeatherInterface $weather, Forecast $owmWeather): WeatherInterface
+    protected function getMapping(WeatherInterface $weather): array
     {
         $reflection = new \ReflectionClass($weather);
 
-        /** @var \ReflectionMethod $method */
         foreach ($reflection->getMethods() as $method) {
             $methodName = $method->getShortName();
+
+            if (array_key_exists($methodName, $this->mapping)) {
+                continue;
+            }
 
             if (0 !== strpos($methodName, 'set')) {
                 continue;
@@ -29,6 +37,15 @@ class WeatherFactory implements WeatherFactoryInterface
 
             $path = array_map('strtolower', $matches[0]);
 
+            $this->mapping[$methodName] = $path;
+        }
+
+        return $this->mapping;
+    }
+
+    protected function assignProperties(WeatherInterface $weather, Forecast $owmWeather): WeatherInterface
+    {
+        foreach ($this->getMapping($weather) as $methodName => $path) {
             $weather = $this->assignProperty($weather, $owmWeather, $methodName, $path);
         }
 
@@ -74,13 +91,7 @@ class WeatherFactory implements WeatherFactoryInterface
 
         $weather = $this->assignProperties($weather, $owmWeather);
 
-        $weather
-            ->setCreationDateTime(new \DateTime())
-            ->setWeatherDateTime($owmWeather->time->from)
-            ->setWeather(null)
-            ->setWeatherCode($owmWeather->weather->id)
-            ->setWindDeg($owmWeather->wind->direction->getValue())
-            ->setRain($owmWeather->precipitation->getValue());
+        $weather->setCreationDateTime(new \DateTime());
 
         return $weather;
     }

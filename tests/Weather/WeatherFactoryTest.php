@@ -42,8 +42,8 @@ class WeatherFactoryTest extends TestCase
         $this->assertEquals('light rain', $weather->getWeatherDescription());
         $this->assertEquals('10d', $weather->getWeatherIcon());
         $this->assertEquals(4.38, $weather->getWindSpeed());
-        $this->assertEquals(315.0, $weather->getWindDeg());
+        $this->assertEquals(315.0, $weather->getWindDirection());
         $this->assertEquals(92.0, $weather->getClouds());
-        $this->assertEquals(0.25, $weather->getRain());
+        $this->assertEquals(0.25, $weather->getPrecipitation());
     }
 }

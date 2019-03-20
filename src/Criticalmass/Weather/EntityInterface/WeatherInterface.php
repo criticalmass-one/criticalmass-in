@@ -46,14 +46,14 @@ interface WeatherInterface
     public function getWindSpeed(): ?float;
     public function setWindSpeed(float $windSpeed = null): WeatherInterface;
 
-    public function getWindDeg(): ?float;
-    public function setWindDeg(float $windDeg = null): WeatherInterface;
+    public function getWindDirection(): ?float;
+    public function setWindDirection(float $windDirection = null): WeatherInterface;
 
     public function getClouds(): ?float;
     public function setClouds(float $clouds = null): WeatherInterface;
 
-    public function getRain(): ?float;
-    public function setRain(float $rain = null): WeatherInterface;
+    public function getPrecipitation(): ?float;
+    public function setPrecipitation(float $precipitation = null): WeatherInterface;
 
     public function getWeatherIcon(): ?string;
     public function setWeatherIcon(string $weatherIcon = null): WeatherInterface;

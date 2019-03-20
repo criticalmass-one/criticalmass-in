@@ -107,7 +107,7 @@ class Weather implements WeatherInterface
     /**
      * @ORM\Column(type="float")
      */
-    protected $windDeg;
+    protected $windDirection;
 
     /**
      * @ORM\Column(type="float")
@@ -117,7 +117,7 @@ class Weather implements WeatherInterface
     /**
      * @ORM\Column(type="float")
      */
-    protected $rain;
+    protected $precipitation;
 
     public function __construct()
     {
@@ -309,14 +309,14 @@ class Weather implements WeatherInterface
         return $this;
     }
 
-    public function getWindDeg(): ?float
+    public function getWindDirection(): ?float
     {
-        return $this->windDeg;
+        return $this->windDirection;
     }
 
-    public function setWindDeg(float $windDeg = null): WeatherInterface
+    public function setWindDirection(float $windDirection = null): WeatherInterface
     {
-        $this->windDeg = $windDeg;
+        $this->windDirection = $windDirection;
 
         return $this;
     }
@@ -333,14 +333,14 @@ class Weather implements WeatherInterface
         return $this;
     }
 
-    public function getRain(): ?float
+    public function getPrecipitation(): ?float
     {
-        return $this->rain;
+        return $this->precipitation;
     }
 
-    public function setRain(float $rain = null): WeatherInterface
+    public function setPrecipitation(float $precipitation = null): WeatherInterface
     {
-        $this->rain = $rain;
+        $this->precipitation = $precipitation;
 
         return $this;
     }
