@@ -26,7 +26,8 @@ class WeatherFactoryTest extends TestCase
         $weatherFactory = new WeatherFactory();
         $ride = new Ride();
 
-        $weather = $weatherFactory->createWeather($ride, $this->forecast->current());
+        $weather = $weatherFactory->createWeather($this->forecast->current());
+        $weather->setRide($ride);
 
         $this->assertEquals(40.59, $weather->getTemperatureMin());
         $this->assertEquals(41.0, $weather->getTemperatureMax());

@@ -2,11 +2,10 @@
 
 namespace App\Criticalmass\Weather\WeatherFactory;
 
-use App\Entity\Ride;
-use App\Entity\Weather;
+use App\Criticalmass\Weather\EntityInterface\WeatherInterface;
 use Cmfcmf\OpenWeatherMap\Forecast;
 
 interface WeatherFactoryInterface
 {
-    public function createWeather(Ride $ride, Forecast $owmWeather): Weather;
+    public function createWeather(Forecast $owmWeather): WeatherInterface;
 }

@@ -75,7 +75,8 @@ class WeatherForecastRetriever extends AbstractWeatherForecastRetriever
             }
 
             if ($owmWeather) {
-                $weather = $this->createWeatherEntity($ride, $owmWeather);
+                $weather = $this->createWeatherEntity($owmWeather);
+                $weather->setRide($ride);
 
                 $this->doctrine->getManager()->persist($weather);
 
