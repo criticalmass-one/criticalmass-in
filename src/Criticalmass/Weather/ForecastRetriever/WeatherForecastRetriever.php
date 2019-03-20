@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\Weather;
+namespace App\Criticalmass\Weather\ForecastRetriever;
 
 use App\Entity\Ride;
 use App\Entity\Weather;

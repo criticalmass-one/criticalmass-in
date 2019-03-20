@@ -2,7 +2,7 @@
 
 namespace App\Command\Weather;
 
-use App\Criticalmass\Weather\WeatherForecastRetrieverInterface;
+use App\Criticalmass\Weather\ForecastRetriever\WeatherForecastRetrieverInterface;
 use App\Entity\Weather;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
