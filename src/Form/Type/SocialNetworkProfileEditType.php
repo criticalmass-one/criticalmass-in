@@ -2,8 +2,8 @@
 
 namespace App\Form\Type;
 
-use App\Criticalmass\SocialNetwork\Network\NetworkInterface;
-use App\Criticalmass\SocialNetwork\NetworkManager\NetworkManager;
+use Caldera\SocialNetworkBundle\Network\NetworkInterface;
+use Caldera\SocialNetworkBundle\NetworkManager\NetworkManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -12,10 +12,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class SocialNetworkProfileEditType extends AbstractType
 {
-    /** @var NetworkManager $networkManager */
+    /** @var NetworkManagerInterface $networkManager */
     protected $networkManager;
 
-    public function __construct(NetworkManager $networkManager)
+    public function __construct(NetworkManagerInterface $networkManager)
     {
         $this->networkManager = $networkManager;
     }
