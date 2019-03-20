@@ -1,5 +1,7 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set bootstrap4 = true %}
+
 {% if ride %}
     {% set title = 'Tour editieren' %}
     {% set mode = 'edit' %}
@@ -47,24 +49,21 @@
                 <div class="col-12">
                     <div class="alert alert-warning" role="alert">
                         <strong>Vorsicht!</strong>
-                        Die Touren für diese Stadt werden jeden Monat anhand vorgegebener Standard-Werte automatisch
-                        generiert. Bitte schau erst einmal nach, ob die Tour, die du gerade anlegen möchtest, womöglich
-                        bereits existiert.
+                        Die Touren für diese Stadt werden jeden Monat anhand vorgegebener Standard-Werte automatisch generiert. Bitte schau erst einmal nach, ob die Tour, die du gerade anlegen möchtest, womöglich bereits existiert.
                     </div>
                 </div>
             </div>
-
         {% endif %}
 
         <div class="row">
             <div class="col-12">
-                <h1>{{ title }}</h1>
-            </div>
-        </div>
+                <h2>
+                    {{ title }}
+                </h2>
 
-        <div class="row">
-            <div class="col-12">
-                <p>Hier kannst du die Details einer Tour editieren.</p>
+                <p>
+                    Hier kannst du die Details einer Tour editieren.
+                </p>
             </div>
         </div>
 
