@@ -4,8 +4,6 @@ namespace App\Entity;
 
 use App\Criticalmass\Geocoding\ReverseGeocodeable;
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
-use App\Criticalmass\Weather\EntityInterface\WeatherableInterface;
-use App\Criticalmass\Weather\EntityInterface\WeatherInterface;
 use App\EntityInterface\StaticMapableInterface;
 use Caldera\GeoBasic\Coord\Coord;
 use App\EntityInterface\AuditableInterface;
@@ -16,6 +14,8 @@ use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
 use App\EntityInterface\ViewableInterface;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use Caldera\WeatherBundle\EntityInterface\WeatherableInterface;
+use Caldera\WeatherBundle\EntityInterface\WeatherInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -932,9 +932,9 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this;
     }
 
-    public function removeWeather(WeatherInterface $weathers): WeatherableInterface
+    public function removeWeather(WeatherInterface $weather): WeatherableInterface
     {
-        $this->weathers->removeElement($weathers);
+        $this->weathers->removeElement($weather);
 
         return $this;
     }

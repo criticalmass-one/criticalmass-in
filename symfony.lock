@@ -8,6 +8,9 @@
     "calderacc/geobasic": {
         "version": "0.2"
     },
+    "calderacc/socialnetwork-bundle": {
+        "version": "0.1.0"
+    },
     "calderacc/weather-bundle": {
         "version": "dev-master"
     },

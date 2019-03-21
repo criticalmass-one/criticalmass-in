@@ -34,5 +34,5 @@ return [
     Presta\SitemapBundle\PrestaSitemapBundle::class => ['all' => true],
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
     Caldera\SocialNetworkBundle\SocialNetworkBundle::class => ['all' => true],
-    Caldera\WeatherBundle\WeatherBundle::class => ['all' => true],
+    Caldera\WeatherBundle\CalderaWeatherBundle::class => ['all' => true],
 ];
