@@ -55,6 +55,8 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     /**
      * @ORM\ManyToOne(targetEntity="CityCycle", inversedBy="rides", fetch="LAZY")
      * @ORM\JoinColumn(name="cycle_id", referencedColumnName="id")
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $cycle;
 
