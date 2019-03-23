@@ -7,10 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Criticalmass\Router\Annotation as Routing;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CityCycleRepository")
  * @ORM\Table(name="city_cycle")
+ * @JMS\ExclusionPolicy("all")
  */
 class CityCycle implements RouteableInterface
 {
@@ -56,11 +58,15 @@ class CityCycle implements RouteableInterface
 
     /**
      * @ORM\Column(type="smallint", nullable=false)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $dayOfWeek;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $weekOfMonth;
 
@@ -72,18 +78,24 @@ class CityCycle implements RouteableInterface
     /**
      * @var string
      * @ORM\Column(type="string", nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $location;
 
     /**
      * @var float
      * @ORM\Column(type="float", nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $latitude = 0.0;
 
     /**
      * @var float
      * @ORM\Column(type="float", nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $longitude = 0.0;
 
@@ -108,12 +120,16 @@ class CityCycle implements RouteableInterface
     /**
      * @var \DateTime
      * @ORM\Column(type="date", nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $validFrom;
 
     /**
      * @var \DateTime
      * @ORM\Column(type="date", nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $validUntil;
 
