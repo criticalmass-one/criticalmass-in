@@ -108,6 +108,10 @@ services:
         tags:
             - { name: request.param_converter, priority: 0, converter: city_converter }
 
+    App\Request\ParamConverter\CityCycleParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: citycycle_converter }
+
     App\Request\ParamConverter\LocationParamConverter:
         tags:
             - { name: request.param_converter, priority: 0, converter: location_converter }
