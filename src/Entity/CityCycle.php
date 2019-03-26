@@ -34,7 +34,7 @@ class CityCycle implements RouteableInterface
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Routing\RouteParameter(name="cycleId")
+     * @Routing\RouteParameter(name="cityCycleId")
      */
     protected $id;
 
