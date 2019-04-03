@@ -63,7 +63,7 @@ define(['dateformat', 'typeahead.jquery', 'bloodhound'], function (dateFormat) {
         html += '</div>';
         html += '</div>';
 
-        if (data.meta.location.length > 0) {
+        if (data.meta && data.meta.location && data.meta.location.length > 0) {
             html += '<div class="row">';
             html += '<div class="col-md-12">';
             html += data.meta.location;

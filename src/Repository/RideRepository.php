@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityRepository;
 
 class RideRepository extends EntityRepository
 {
-    public function findCurrentRideForCity(City $city): ?Ride
+    public function findCurrentRideForCity(City $city, bool $cycleMandatory = false, bool $slugsAllowed = true): ?Ride
     {
         $dateTime = new \DateTime();
 
@@ -24,6 +24,14 @@ class RideRepository extends EntityRepository
             ->addOrderBy('r.dateTime', 'ASC')
             ->setParameter('dateTime', $dateTime)
             ->setParameter('city', $city);
+
+        if ($cycleMandatory === true) {
+            $builder->andWhere($builder->expr()->isNotNull('r.cycle'));
+        }
+
+        if ($slugsAllowed === false) {
+            $builder->andWhere($builder->expr()->isNull('r.slug'));
+        }
 
         $query = $builder->getQuery();
         $query->setMaxResults(1);

@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\SocialNetwork\NetworkDetector;
+namespace App\Criticalmass\SocialNetwork\EntityNetworkDetector;
 
 use App\Entity\SocialNetworkProfile;
-use App\Criticalmass\SocialNetwork\Network\NetworkInterface;
+use Caldera\SocialNetworkBundle\Network\NetworkInterface;
 
-class NetworkDetector extends AbstractNetworkDetector
+class EntityNetworkNetworkDetector extends AbstractEntityNetworkDetector
 {
     public function detect(SocialNetworkProfile $socialNetworkProfile): ?NetworkInterface
     {
@@ -15,7 +15,7 @@ class NetworkDetector extends AbstractNetworkDetector
 
         /** @var NetworkInterface $network */
         foreach ($this->networkList as $network) {
-            if ($network->accepts($socialNetworkProfile)) {
+            if ($network->accepts($socialNetworkProfile->getIdentifier())) {
                 return $network;
             }
         }
