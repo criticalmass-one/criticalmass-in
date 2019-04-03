@@ -1,5 +1,6 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set bootstrap4 = true %}
 
 {% block breadcrumb %}
     {% if profileAbleType == 'city' %}
@@ -60,7 +61,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-12 col-md-6 offset-md-3">
                 <h2>
                     Soziales Netzwerk hinzufügen
                 </h2>
@@ -68,20 +69,20 @@
         </div>
 
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-12 col-md-6 offset-md-3">
                 {{ form_start(form) }}
 
                 {{ form_errors(form.identifier) }}
 
                 <div class="row">
-                    <div class="col-md-12 form-group">
+                    <div class="col-12 form-group">
                         <label class="control-label" for="">Adresse:</label>
                         {{ form_widget(form.identifier, { 'attr' : { 'class': 'form-control'} }) }}
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12 form-group">
+                    <div class="col-12 form-group">
                         <label class="control-label" for="">Hauptkonto:</label>
                         {{ form_widget(form.mainNetwork, { 'attr' : { 'class': 'form-control'} }) }}
                         <p class="help-block">
@@ -91,9 +92,9 @@
                 </div>
 
                 <div class="row">
-                     <div class="col-md-12 form-group">
+                     <div class="col-12 form-group">
                          <div class="btn-group pull-right">
-                             <a href="" class="btn btn-default">
+                             <a href="" class="btn btn-secondary">
                                  Abbrechen
                              </a>
 

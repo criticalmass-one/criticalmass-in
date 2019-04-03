@@ -1,5 +1,9 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set bootstrap4 = true %}
+
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+
 {% block breadcrumb %}
     {% if profileAbleType == 'city' %}
         <li>
@@ -109,10 +113,10 @@
                             </td>
                             <td>
                                 <div class="btn-group">
-                                    <a href="{{ path('criticalmass_socialnetwork_edit', { profileId: profile.id }) }}" class="btn btn-default btn-xs">
+                                    <a href="{{ path('criticalmass_socialnetwork_edit', { profileId: profile.id }) }}" class="btn btn-secondary btn-xs">
                                         <i class="fa fa-pencil"></i>
                                     </a>
-                                    <a href="{{ path('criticalmass_socialnetwork_disable', { profileId: profile.id }) }}" class="btn btn-default btn-xs">
+                                    <a href="{{ path('criticalmass_socialnetwork_disable', { profileId: profile.id }) }}" class="btn btn-secondary btn-xs">
                                         <i class="fa fa-trash-o"></i>
                                     </a>
                                 </div>
@@ -143,54 +147,45 @@
             <div class="col-12">
                 <p class="text-center">
                     Die Profile der übergeordneten Stadt {{ profileAble.city.city }} werden getrennt von dieser Liste verwaltet:<br />
-                    <a class="btn btn-default mt-1" href="{{ objectPath(profileAble.city, 'criticalmass_socialnetwork_city_list') }}">Profile der Stadt verwalten</a>
+                    <a class="btn btn-secondary mt-1" href="{{ objectPath(profileAble.city, 'criticalmass_socialnetwork_city_list') }}">Profile der Stadt verwalten</a>
                 </p>
             </div>
         </div>
         {% endif %}
     </div>
 
-    <div class="modal fade" id="profile-add-modal" tabindex="-1" role="dialog" aria-labelledby="profile-add-modal-label">
-        <div class="modal-dialog modal-md" role="document">
-            <div class="modal-content">
-                {{ form_start(addProfileForm) }}
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="profile-add-modal-label">
-                        Profil ergänzen
-                    </h4>
-                </div>
-                <div class="modal-body">
-                    <p>
-                        Kopiere einfach den Link zu einem Profil aus einem sozialen Netzwerk hier hinein!
-                    </p>
-                    <div class="form-group">
-                        <label class="control-label" for="identifier">
-                            Link zum Profil:
-                        </label>
-                        {{ form_widget(addProfileForm.identifier, { 'attr' : { 'class': 'form-control' } }) }}
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label" for="mainNetwork">
-                            Hauptprofil:
-                        </label>
-                        {{ form_widget(addProfileForm.mainNetwork, { 'attr' : { 'class': 'form-control' } }) }}
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">
-                            Abbrechen
-                        </button>
-                        <button type="submit" class="btn btn-primary">
-                            Speichern
-                        </button>
-                    </div>
-                </div>
-                {{ form_end(addProfileForm) }}
-            </div>
+    {% set modal_content %}
+        <p>
+            Kopiere einfach den Link zu einem Profil aus einem sozialen Netzwerk hier hinein!
+        </p>
+        <div class="form-group">
+            <label class="control-label" for="identifier">
+                Link zum Profil:
+            </label>
+            {{ form_widget(addProfileForm.identifier, { 'attr' : { 'class': 'form-control' } }) }}
         </div>
-    </div>
+
+        <div class="form-group">
+            <label class="control-label" for="mainNetwork">
+                Hauptprofil:
+            </label>
+            {{ form_widget(addProfileForm.mainNetwork, { 'attr' : { 'class': 'form-control' } }) }}
+        </div>
+    {% endset %}
+
+    {% set modal_pre_content %}
+        {{ form_start(addProfileForm) }}
+    {% endset %}
+
+    {% set modal_post_content %}
+        {{ form_end(addProfileForm) }}
+    {% endset %}
+
+    {% set button_list = [
+        { caption: 'Abbrechen', href: null, attr: { 'data-dismiss': 'modal' }, class: 'btn-secondary' },
+        { caption: 'Speichern', href: null, attr: { 'type': 'submit' }, class: 'btn-primary' }
+    ] %}
+
+    {{ bootstrap.modal('profile-add-modal', 'Profil ergänzen', modal_content, { pre_content: modal_pre_content, post_content: modal_post_content }, button_list) }}
+
 {% endblock %}

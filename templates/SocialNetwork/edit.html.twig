@@ -1,5 +1,7 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set bootstrap4 = true %}
+
 {% block breadcrumb %}
     {% if profileAbleType == 'city' %}
         <li>
@@ -59,7 +61,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-12 col-md-6 offset-md-3">
                 <h2>
                     Soziales Netzwerk editieren
                 </h2>
@@ -67,7 +69,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-12 col-md-6 offset-md-3">
                 {{ form_start(form) }}
 
                 <div class="row">
@@ -97,7 +99,7 @@
                 <div class="row">
                      <div class="col-12 form-group">
                          <div class="btn-group pull-right">
-                             <a href="" class="btn btn-default">
+                             <a href="" class="btn btn-secondary">
                                  Abbrechen
                              </a>
 
