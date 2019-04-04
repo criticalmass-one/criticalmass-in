@@ -12,7 +12,9 @@
         Turnusse anzeigen
     </li>
 {% endblock %}
-    
+
+{% set bootstrap4 = true %}
+
 {% block content %}
     <div class="container">
         <div class="row">
@@ -101,12 +103,12 @@
                             <td>
                                 {% if not cycle.disabledAt %}
                                 <div class="btn-group">
-                                    <a class="btn btn-default btn-xs"
+                                    <a class="btn btn-secondary btn-xs"
                                        href="{{ objectPath(cycle, 'caldera_criticalmass_citycycle_edit') }}">
                                         <i class="fa fa-wrench"></i>
                                     </a>
 
-                                    <a class="btn btn-default btn-xs"
+                                    <a class="btn btn-secondary btn-xs"
                                        href="{{ objectPath(cycle, 'caldera_criticalmass_citycycle_disable') }}">
                                         <i class="fa fa-trash-o"></i>
                                     </a>
