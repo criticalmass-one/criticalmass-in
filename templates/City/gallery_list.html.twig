@@ -2,6 +2,8 @@
 
 {% block title %}Städte-Übersicht{% endblock %}
 
+{% set bootstrap4 = true %}
+
 {% block breadcrumb %}
 
     <li>
@@ -20,16 +22,15 @@
 {% endblock %}
     
 {% block content %}
-    <div class="container main-container">
+    <div class="container">
         <div class="row">
             <div class="col-12">
-                <h1>
+                <h2>
                     Fotos aus {{ city.city }}
-                </h1>
+                </h2>
 
                 <p class="lead">
-                    Hier siehst du eine Übersicht von Critical-Mass-Touren aus {{ city.city }}, zu denen Fotos
-                    hochgeladen wurden.
+                    Hier siehst du eine Übersicht von Critical-Mass-Touren aus {{ city.city }}, zu denen Fotos hochgeladen wurden.
                 </p>
             </div>
         </div>

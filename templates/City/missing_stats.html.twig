@@ -2,6 +2,8 @@
 
 {% block title %}Touren mit fehlenden Statistiken aus {{ city.city }}{% endblock %}
 
+{% set bootstrap4 = true %}
+
 {% block breadcrumb %}
     <li>
         <a href="{{ path('caldera_criticalmass_city_list') }}">
@@ -24,13 +26,12 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h1>
+                <h2>
                     Touren aus {{ city.city }} mit fehlenden Statistiken
-                </h1>
+                </h2>
 
                 <p class="lead">
-                    Bei den folgenden Touren wurden keine Statistiken abgespeichert. Du kannst auf den Seiten der
-                    jeweiligen Tour eine Teilnehmerzahl schätzen oder einen GPX-Track importieren.
+                    Bei den folgenden Touren wurden keine Statistiken abgespeichert. Du kannst auf den Seiten der jeweiligen Tour eine Teilnehmerzahl schätzen oder einen GPX-Track importieren.
                 </p>
             </div>
         </div>

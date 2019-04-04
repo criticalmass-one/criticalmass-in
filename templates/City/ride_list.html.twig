@@ -2,6 +2,8 @@
 
 {% block title %}Städte-Übersicht{% endblock %}
 
+{% set bootstrap4 = true %}
+
 {% block breadcrumb %}
 
     <li>
@@ -22,16 +24,16 @@
 {% endblock %}
     
 {% block content %}
-    <div class="container main-container">
+    <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="pull-right">
                     {% include 'City/Includes/_rideListSort.html.twig' %}
                 </div>
 
-                <h1>
+                <h2>
                     Touren in dieser Stadt
-                </h1>
+                </h2>
             </div>
         </div>
 
