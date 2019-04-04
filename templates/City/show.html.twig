@@ -4,6 +4,8 @@
 
 {% block title %}{{ city.title }}{% endblock %}
 
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+
 {% block breadcrumb %}
     <li>
         <a href="{{ path('caldera_criticalmass_city_list') }}">
@@ -18,41 +20,12 @@
 
 {% block optionsButton %}
     <div class="btn-group pull-right">
-        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
-            <i class="fa fa-cogs"></i>
-            Optionen
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu">
-            <li>
-                <a href="{{ objectPath(city, 'caldera_criticalmass_city_edit') }}">
-                    <i class="fa fa-cogs"></i>
-                    Stadt editieren
-                </a>
-            </li>
-
-            <li>
-                <a href="{{ objectPath(city, 'caldera_criticalmass_ride_add') }}">
-                    <i class="fa fa-plus"></i>
-                    Tour hinzufügen
-                </a>
-            </li>
-
-            <li>
-                <a href="{{ objectPath(city, 'caldera_criticalmass_citycycle_list') }}">
-                    <i class="fa fa-calendar-o"></i>
-                    Turnus verwalten
-                </a>
-            </li>
-
-            <li>
-                <a href="{{ objectPath(city, 'criticalmass_socialnetwork_city_list') }}">
-                    <i class="fa fa-at"></i>
-                    soziale Netzwerke verwalten
-                </a>
-            </li>
-        </ul>
+        {{ bootstrap.dropdown('<i class="fa fa-cogs"></i> Optionen <span class="caret"></span>', [
+            { href: objectPath(city, 'caldera_criticalmass_city_edit'), caption: '<i class="fa fa-cogs"></i> Stadt editieren' },
+            { href: objectPath(city, 'caldera_criticalmass_ride_add'), caption: '<i class="fa fa-plus"></i> Tour hinzufügen' },
+            { href: objectPath(city, 'caldera_criticalmass_citycycle_list'), caption: '<i class="fa fa-calendar-o"></i> Turnus verwalten' },
+            { href: objectPath(city, 'criticalmass_socialnetwork_city_list'), caption: '<i class="fa fa-at"></i> soziale Netzwerke verwalten' },
+        ], 'btn-primary', false) }}
     </div>
 {% endblock %}
 
