@@ -1,25 +1,29 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set bootstrap4 = true %}
+
 {% block title %}Suchergebnisse{% endblock %}
+
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
 
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h1>
+                <h2>
                     Deine Suchergebnisse
-                </h1>
+                </h2>
             </div>
         </div>
 
-        <div class="row">
-            <form action="{{ path('caldera_criticalmass_search_query') }}" method="get">
-                <div class="col-md-3">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Suche
-                        </div>
-                        <div class="panel-body form-group">
+        <div class="row mt-2">
+            <div class="col-12 col-md-3">
+                <div class="card">
+                    <div class="card-header">
+                        Suche
+                    </div>
+                    <div class="card-body form-group">
+                        <form action="{{ path('caldera_criticalmass_search_query') }}" method="get">
                             <label for="query-input">
                                 Deine Suchanfrage
                             </label>
@@ -28,53 +32,49 @@
                             <button type="submit" class="btn btn-primary pull-right mt-1">
                                 Finden
                             </button>
-                        </div>
+                        </form>
                     </div>
                 </div>
-            </form>
+            </div>
 
-            <div class="col-md-9">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active">
-                        <a href="#city-results" aria-controls="home" role="tab" data-toggle="tab">
-                            <i class="fa fa-university"></i>
-                            Städte
-                        </a>
-                    </li>
+            {% set tab_list = [
+                { href: 'cities', caption: '<i class="fa fa-university"></i> Städte', active: true },
+                { href: 'rides', caption: '<i class="fa fa-bicycle"></i> Touren' },
+            ] %}
 
-                    <li role="presentation">
-                        <a href="#ride-results" aria-controls="profile" role="tab" data-toggle="tab">
-                            <i class="fa fa-bicycle"></i>
-                            Touren
-                        </a>
-                    </li>
-                </ul>
+            {% set ride_tab_content %}
+                {% for cityResult in cityResults %}
+                    {% include 'Search/includes/_city.html.twig' with { city: cityResult } %}
+                {% endfor %}
 
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active pt-1" id="city-results">
-                        {% for cityResult in cityResults %}
-                        {% include 'Search/includes/_city.html.twig' with { city: cityResult } %}
-                        {% endfor %}
-
-                        {% if cityResults|length == 0 %}
-                            <div class="alert alert-info">
-                                Zu deiner Suchanfrage wurden leider keine Städte gefunden.
-                            </div>
-                        {% endif %}
+                {% if cityResults|length == 0 %}
+                    <div class="alert alert-info">
+                        Zu deiner Suchanfrage wurden leider keine Städte gefunden.
                     </div>
+                {% endif %}
+            {% endset %}
 
-                    <div role="tabpanel" class="tab-pane pt-1" id="ride-results">
-                        {% for rideResult in rideResults %}
-                        {% include 'Search/includes/_ride.html.twig' with { ride: rideResult } %}
-                        {% endfor %}
+            {% set city_tab_content %}
+                {% for rideResult in rideResults %}
+                    {% include 'Search/includes/_ride.html.twig' with { ride: rideResult } %}
+                {% endfor %}
 
-                        {% if rideResults|length == 0 %}
-                            <div class="alert alert-info">
-                                Zu deiner Suchanfrage wurden leider keine Touren gefunden.
-                            </div>
-                        {% endif %}
+                {% if rideResults|length == 0 %}
+                    <div class="alert alert-info">
+                        Zu deiner Suchanfrage wurden leider keine Touren gefunden.
                     </div>
-                </div>
+                {% endif %}
+            {% endset %}
+
+            {% set tab_content_list = [
+                { id: 'rides', active: true, content: ride_tab_content },
+                { id: 'cities', content: city_tab_content },
+            ] %}
+
+            <div class="col-12 col-md-9">
+                {{ bootstrap.tabs(tab_list) }}
+
+                {{ bootstrap.tab_panels(tab_content_list) }}
             </div>
         </div>
     </div>
