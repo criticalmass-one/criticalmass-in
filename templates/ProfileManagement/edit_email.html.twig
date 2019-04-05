@@ -1,5 +1,7 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set bootstrap4 = true %}
+
 {% form_theme userEmailForm 'Form/theme.html.twig' %}
 
 {% block title %}Dein Benutzerprofil{% endblock %}
@@ -19,31 +21,29 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-12 col-md-6 offset-md-3">
                 <h2>
                     E-Mail-Adresse ändern
                 </h2>
 
                 <p class="lead">
-                    Hier kannst du deine E-Mail-Adresse ändern &mdash; denk daran, dich beim nächsten Mal mit deiner
-                    neuen E-Mail-Adresse einzuloggen.
+                    Hier kannst du deine E-Mail-Adresse ändern &mdash; denk daran, dich beim nächsten Mal mit deiner neuen E-Mail-Adresse einzuloggen.
                 </p>
             </div>
         </div>
 
         {% if app.user.oauthAccount %}
             <div class="row">
-                <div class="col-md-6 col-md-offset-3">
+                <div class="col-12 col-md-6 offset-md-3">
                     <div class="alert alert-info" role="alert">
-                        Du kannst dein Kennwort nicht ändern, weil du dich über ein soziales Netzwerk bei
-                        criticalmass.in anmeldest.
+                        Du kannst dein Kennwort nicht ändern, weil du dich über ein soziales Netzwerk bei criticalmass.in anmeldest.
                     </div>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-md-6 col-md-offset-3 text-center">
-                    <a class="btn btn-default" href="{{ path('criticalmass_user_usermanagement') }}">
+                <div class="col-12 col-md-6 offset-md-3 text-center">
+                    <a class="btn btn-secondary" href="{{ path('criticalmass_user_usermanagement') }}">
                         Zurück
                     </a>
                 </div>
