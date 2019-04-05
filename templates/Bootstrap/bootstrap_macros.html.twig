@@ -163,7 +163,7 @@
     {% import _self as bootstrap %}
 
     {% if class is not defined or class is empty %}
-    {% set class = ['btn', 'btn-secondary'] %}
+        {% set class = ['btn', 'btn-secondary'] %}
     {% endif %}
     {% set class = class | split(' ') | merge(['btn']) %}
 
@@ -178,11 +178,46 @@
         {% set tag_name = 'button' %}
 
         {% if attr is not defined or attr is not iterable or attr.type is not defined or attr.type is empty %}
-        {% set attributes = attributes | merge( { 'type': 'button' } ) %}
+            {% set attributes = attributes | merge( { 'type': 'button' } ) %}
         {% endif %}
     {% endif %}
 
     {% set attributes = attributes | merge({'class': class|join(' ')}) %}
 
     {{ bootstrap.create_html_tag(tag_name, attributes, caption) }}
+{% endmacro %}
+
+{% macro link(caption, href, class, attr) %}
+    {% import _self as bootstrap %}
+
+    {% if class is not defined or class is empty %}
+        {% set class = [] %}
+    {% endif %}
+
+    {% set attributes = attr is defined and attr != null and attr is iterable ? attr : {} %}
+
+    {% if href is defined and href != null %}
+        {% set attributes = attributes | merge( { 'href': href } ) %}
+    {% endif %}
+
+    {% set attributes = attributes | merge({'class': class|join(' ')}) %}
+
+    {{ bootstrap.create_html_tag('a', attributes, caption) }}
+{% endmacro %}
+
+{% macro breadcrumb_item(caption, href, active) %}
+    {% import _self as bootstrap %}
+
+    {% set class = ['breadcrumb-item'] %}
+    {% set attributes = {} %}
+
+    {% if active == true %}
+    {% set class = class | merge(['active']) %}
+    {% set attributes = { 'aria-current': 'page' }  %}
+    {% endif %}
+
+    {% set attributes = attributes | merge({'class': class|join(' ')}) %}
+
+    {% set link = bootstrap.link(caption, href) %}
+    {{ bootstrap.create_html_tag('li', attributes, link) }}
 {% endmacro %}

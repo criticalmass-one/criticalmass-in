@@ -12,11 +12,6 @@
   text-align: left !important;
 }
 
-.breadcrumb > li + li:before {
-  content: "/\00a0";
-  color: $breadcrumb-bg;
-}
-
 input[type="file"] {
   display: inline !important;
 }
