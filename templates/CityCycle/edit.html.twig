@@ -6,11 +6,7 @@
     {% set title = 'Neuen Turnus hinzufügen' %}
 {% endif %}
 
-{% block title %}{{ title }}{% endblock %}
-
-{% set bootstrap4 = true %}
-
-{% block breadcrumb %}
+{% block title %}{{ title }}{% endblock %}{% block breadcrumb %}
     <li>
         <a href="{{ objectPath(city) }}">
             {{ city.city }}

@@ -1,10 +1,6 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
-{% block title %}Städte-Übersicht{% endblock %}
-
-{% set bootstrap4 = true %}
-
-{% block breadcrumb %}
+{% block title %}Städte-Übersicht{% endblock %}{% block breadcrumb %}
 
     <li>
         <a href="{{ path('caldera_criticalmass_city_list') }}">
