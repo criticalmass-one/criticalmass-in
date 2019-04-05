@@ -6,6 +6,8 @@
     {% set title = 'Mini-Mass hinzufügen' %}
 {% endif %}
 
+{% set bootstrap4 = true %}
+
 {% block title %}{{ title }}{% endblock %}
 
 {% block breadcrumb %}
@@ -41,18 +43,12 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h1>
+                <h2>
                     {{ title }}
-                </h1>
-            </div>
-        </div>
+                </h2>
 
-        <div class="row">
-            <div class="col-12">
                 <p>
-                    Eine Mini Mass ist eine gemeinsame Radtour zur eigentlichen Critical Mass. Das Prinzip der Mini Mass
-                    stammt aus größeren Städten, in denen sich Radfahrer der einzelnen Stadtteile zu einer gemeinsamen
-                    Radtour verabredet haben, um nicht alleine zur „großen Masse“ fahren zu müssen.
+                    Eine Mini Mass ist eine gemeinsame Radtour zur eigentlichen Critical Mass. Das Prinzip der Mini Mass stammt aus größeren Städten, in denen sich Radfahrer der einzelnen Stadtteile zu einer gemeinsamen Radtour verabredet haben, um nicht alleine zur „großen Masse“ fahren zu müssen.
                 </p>
             </div>
         </div>
@@ -67,7 +63,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-12 col-md-6">
                 <div class="row">
                     <div class="col-12">
                         <h3>
@@ -113,7 +109,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-12 col-md-6">
                 <div class="row">
                     <div class="col-12">
                         <h3>

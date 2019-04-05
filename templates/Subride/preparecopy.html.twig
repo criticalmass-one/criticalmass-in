@@ -2,13 +2,15 @@
 
 {% block title %}Mini-Masses kopieren{% endblock %}
 
+{% set bootstrap4 = true %}
+
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h1>
+                <h2>
                     Mini-Masses kopieren
-                </h1>
+                </h2>
             </div>
         </div>
 
@@ -41,8 +43,7 @@
                         Abbrechen
                     </a>
                     <a href="{{ objectPath(oldRide, 'caldera_criticalmass_subride_copy', { newDate: newRide.dateTime|date('Y-m-d') }) }}"
-                       class="btn btn-primary">
-                        Kopieren</a>
+                       class="btn btn-primary">Kopieren</a>
                 </div>
             </div>
         </div>
