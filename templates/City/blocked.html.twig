@@ -3,15 +3,8 @@
 {% block title %}{{ city.title }}{% endblock %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
-
-    <li class="active">
-        {{ city.city }}
-    </li>
+    {{ bootstrap.breadcrumb_item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ bootstrap.breadcrumb_item(city.city, '', true) }}
 {% endblock %}
 
 {% block content %}

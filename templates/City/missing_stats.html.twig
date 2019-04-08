@@ -1,23 +1,13 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
-{% block title %}Touren mit fehlenden Statistiken aus {{ city.city }}{% endblock %}{% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
+{% block title %}Touren mit fehlenden Statistiken aus {{ city.city }}{% endblock %}
 
-    <li>
-        <a href="{{ objectPath(city) }}">
-            {{ city.city }}
-        </a>
-    </li>
-
-    <li class="active">
-        Touren mit fehlenden Statistiken
-    </li>
+{% block breadcrumb %}
+    {{ bootstrap.breadcrumb_item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ bootstrap.breadcrumb_item(city.city, objectPath(city)) }}
+    {{ bootstrap.breadcrumb_item('Touren mit fehlenden Statistiken', '', true) }}
 {% endblock %}
-    
+
 {% block content %}
     <div class="container">
         <div class="row">

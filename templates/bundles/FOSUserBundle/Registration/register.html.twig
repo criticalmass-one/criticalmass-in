@@ -1,11 +1,11 @@
-{% extends 'Template/StandardTemplate.html.twig' %}{% block title %}Registrierung{% endblock %}
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Registrierung{% endblock %}
 
 {% form_theme form 'Form/theme.html.twig' %}
 
 {% block breadcrumb %}
-    <li class="active">
-        Registrierung
-    </li>
+    {{ bootstrap.breadcrumb_item('Registrierung', '', true) }}
 {% endblock %}
 
 {% block content %}

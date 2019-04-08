@@ -1,15 +1,10 @@
 {% extends 'Template/StandardTemplate.html.twig' %}{% block title %}{{ board.title }}{% endblock %}
 
-{% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_board_overview') }}">
-            Diskussionen
-        </a>
-    </li>
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
 
-    <li class="active">
-        {{ board.title }}
-    </li>
+{% block breadcrumb %}
+    {{ bootstrap.breadcrumb_item('Diskussionen', path('caldera_criticalmass_board_overview')) }}
+    {{ bootstrap.breadcrumb_item(board.title, '', true) }}
 {% endblock %}
 
 {% block content %}

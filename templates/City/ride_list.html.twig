@@ -1,24 +1,13 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
-{% block title %}Städte-Übersicht{% endblock %}{% block breadcrumb %}
+{% block title %}Städte-Übersicht{% endblock %}
 
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ objectPath(city) }}">
-            {{ city.city }}
-        </a>
-    </li>
-
-    <li class="active">
-        Tour-Übersicht
-    </li>
+{% block breadcrumb %}
+    {{ bootstrap.breadcrumb_item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ bootstrap.breadcrumb_item(city.city, objectPath(city)) }}
+    {{ bootstrap.breadcrumb_item('Tour-Übersicht', '', true) }}
 {% endblock %}
-    
+
 {% block content %}
     <div class="container">
         <div class="row">

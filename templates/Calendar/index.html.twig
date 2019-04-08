@@ -1,9 +1,9 @@
-{% extends 'Template/StandardTemplate.html.twig' %}{% block title %}Kalender{% endblock %}
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Kalender{% endblock %}
 
 {% block breadcrumb %}
-    <li class="active">
-        Critical-Mass-Kalender
-    </li>
+    {{ bootstrap.breadcrumb_item('Critical-Mass-Kalender', '', true) }}
 {% endblock %}
 
 {% block content %}

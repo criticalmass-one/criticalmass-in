@@ -1,9 +1,9 @@
 {% extends 'Template/StandardTemplate.html.twig' %}{% block title %}Diskussionen{% endblock %}
 
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+
 {% block breadcrumb %}
-    <li class="active">
-        Diskussionen
-    </li>
+    {{ bootstrap.breadcrumb_item('Diskussionen', '', true) }}
 {% endblock %}
 
 {% block content %}

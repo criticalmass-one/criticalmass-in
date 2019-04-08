@@ -1,5 +1,7 @@
 {% extends 'Template/StandardTemplate.html.twig' %}{% block title %}Dein Benutzerprofil{% endblock %}
 
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+
 {% block breadcrumb %}
     <li>
         <a href="{{ path('criticalmass_user_usermanagement') }}">

@@ -1,9 +1,9 @@
-{% extends 'Template/StandardTemplate.html.twig' %}{% block title %}Login{% endblock %}
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Login{% endblock %}
 
 {% block breadcrumb %}
-    <li class="active">
-        Login
-    </li>
+    {{ bootstrap.breadcrumb_item('Login', '', true) }}
 {% endblock %}
 
 {% block content %}
