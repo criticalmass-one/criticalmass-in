@@ -2,6 +2,8 @@
 
 {% block title %}Touren mit fehlenden Statistiken aus {{ city.city }}{% endblock %}
 
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+
 {% block breadcrumb %}
     {{ bootstrap.breadcrumb_item('Städteliste', path('caldera_criticalmass_city_list')) }}
     {{ bootstrap.breadcrumb_item(city.city, objectPath(city)) }}

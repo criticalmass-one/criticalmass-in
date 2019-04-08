@@ -6,15 +6,13 @@
     {% set title = 'Neuen Turnus hinzufügen' %}
 {% endif %}
 
-{% block title %}{{ title }}{% endblock %}{% block breadcrumb %}
-    <li>
-        <a href="{{ objectPath(city) }}">
-            {{ city.city }}
-        </a>
-    </li>
-    <li class="active">
-        {{ title }}
-    </li>
+{% block title %}{{ title }}{% endblock %}
+
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+
+{% block breadcrumb %}
+    {{ bootstrap.breadcrumb_item(city.city, objectPath(city)) }}
+    {{ bootstrap.breadcrumb_item(title, '', true) }}
 {% endblock %}
 
 {% block content %}

@@ -2,16 +2,14 @@
 
 {% block title %}Turnusse von {{ city.city }} anzeigen{% endblock %}
 
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+
 {% block breadcrumb %}
-    <li>
-        <a href="{{ objectPath(city) }}">
-            {{ city.city }}
-        </a>
-    </li>
-    <li class="active">
-        Turnusse anzeigen
-    </li>
-{% endblock %}{% block content %}
+    {{ bootstrap.breadcrumb_item(city.city, objectPath(city)) }}
+    {{ bootstrap.breadcrumb_item('Turnusse anzeigen', '', true) }}
+{% endblock %}
+
+{% block content %}
     <div class="container">
         <div class="row">
             <div class="col-12">

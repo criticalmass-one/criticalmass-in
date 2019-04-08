@@ -1,7 +1,9 @@
 {% extends 'Template/StandardTemplate.html.twig' %}{% block title %}Städte-Übersicht{% endblock %}
 
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+
 {% block breadcrumb %}
-    <li class="active">Städteliste</li>
+    {{ bootstrap.breadcrumb_item('Städteliste', '', true) }}
 {% endblock %}
     
 {% block content %}

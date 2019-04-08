@@ -3,6 +3,7 @@
 {% block title %}Registrierung{% endblock %}
 
 {% form_theme form 'Form/theme.html.twig' %}
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
 
 {% block breadcrumb %}
     {{ bootstrap.breadcrumb_item('Registrierung', '', true) }}
