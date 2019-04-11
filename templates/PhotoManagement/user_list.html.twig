@@ -2,10 +2,10 @@
 
 {% block title %}Fotos sortieren{% endblock %}
 
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+
 {% block breadcrumb %}
-    <li class="active">
-        Fotos sortieren
-    </li>
+    {{ bootstrap.breadcrumb_item('Fotos sortieren', '', true) }}
 {% endblock %}
 
 {% block content %}

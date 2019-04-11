@@ -2,25 +2,14 @@
 
 {% block title %}Fotos ausrichten{% endblock %}
 
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+
 {% block breadcrumb %}
-    <li>
-        <a href="{{ objectPath(ride.city) }}">
-            {{ ride.city.title }}
-        </a>
-    </li>
-    <li>
-        <a href="{{ objectPath(ride) }}">
-            {{ ride.title }}
-        </a>
-    </li>
-    <li>
-        <a href="{{ objectPath(ride, 'caldera_criticalmass_photo_manage') }}">
-            Fotos verwalten
-        </a>
-    </li>
-    <li class="active">
-        Fotos ausrichten
-    </li>
+    {{ bootstrap.breadcrumb_item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ bootstrap.breadcrumb_item(ride.city.title, objectPath(ride.city)) }}
+    {{ bootstrap.breadcrumb_item(ride.title, objectPath(ride)) }}
+    {{ bootstrap.breadcrumb_item('Fotos verwalten', path('caldera_criticalmass_photo_manage')) }}
+    {{ bootstrap.breadcrumb_item('Fotos ausrichten', '', true) }}
 {% endblock %}
 
 {% block content %}

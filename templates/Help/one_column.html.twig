@@ -1,11 +1,12 @@
-{% extends 'Template/StandardTemplate.html.twig' %}{% import 'Help/_macro.html.twig' as categoryMacro %}
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% import 'Help/_macro.html.twig' as categoryMacro %}
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
 
 {% block title %}{{ mainCategory.title }}{% endblock %}
 
 {% block breadcrumb %}
-    <li class="active">
-        {{ mainCategory.title }}
-    </li>
+    {{ bootstrap.breadcrumb_item(mainCategory.title, '', true) }}
 {% endblock %}
 
 {% block content %}

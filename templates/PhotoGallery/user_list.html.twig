@@ -1,7 +1,11 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
-{% block title %}Deine Fotos{% endblock %}{% block breadcrumb %}
-    <li class="active">Deine Fotos</li>
+{% block title %}Deine Fotos{% endblock %}
+
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+
+{% block breadcrumb %}
+    {{ bootstrap.breadcrumb_item('Deine Fotos', '', true) }}
 {% endblock %}
 
 {% block content %}

@@ -1,15 +1,10 @@
 {% extends 'Template/StandardTemplate.html.twig' %}{% block title %}Fotogalerie{% endblock %}
 
-{% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
 
-    <li class="active">
-        Fotogalerie
-    </li>
+{% block breadcrumb %}
+    {{ bootstrap.breadcrumb_item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ bootstrap.breadcrumb_item('Fotogalerie', '', true) }}
 {% endblock %}
 
 {% block content %}

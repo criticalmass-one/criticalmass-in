@@ -2,29 +2,16 @@
 
 {% block title %}Foto platzieren{% endblock %}
 
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+
 {% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
-    <li>
-        <a href="{{ objectPath(photo.ride.city) }}">
-            {{ photo.ride.city.title }}
-        </a>
-    </li>
-    <li>
-        <a href="{{ objectPath(photo.ride) }}">
-            {{ photo.ride.title }}
-        </a>
-    </li>
-    <li class="active">
-        Foto platzieren
-    </li>
+    {{ bootstrap.breadcrumb_item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ bootstrap.breadcrumb_item(ride.city.title, objectPath(ride.city)) }}
+    {{ bootstrap.breadcrumb_item(photo.ride.title, objectPath(photo.ride)) }}
+    {{ bootstrap.breadcrumb_item('Foto platzieren', '', true) }}
 {% endblock %}
 
 {% block content %}
-
     <div class="container">
         <div class="row">
             <div class="col-md-12">

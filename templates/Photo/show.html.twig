@@ -1,31 +1,13 @@
-{% extends 'Template/StandardTemplate.html.twig' %}{% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
+{% extends 'Template/StandardTemplate.html.twig' %}
 
-    <li>
-        <a href="{{ objectPath(city) }}">
-            {{ city.city }}
-        </a>
-    </li>
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
 
-    <li>
-        <a href="{{ objectPath(ride) }}">
-            {{ ride.title }}
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ objectPath(ride, 'caldera_criticalmass_photo_ride_list') }}">
-            Fotos
-        </a>
-    </li>
-
-    <li class="active">
-        Foto {{ photo.id }} aus {{ city.city }}
-    </li>
+{% block breadcrumb %}
+    {{ bootstrap.breadcrumb_item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ bootstrap.breadcrumb_item(city.city, objectPath(city)) }}
+    {{ bootstrap.breadcrumb_item(ride.title, objectPath(ride)) }}
+    {{ bootstrap.breadcrumb_item('Fotos', objectPath(ride, 'caldera_criticalmass_photo_ride_list')) }}
+    {{ bootstrap.breadcrumb_item('Foto ' ~ photo.id ~ ' aus ' ~ city.city, '', true) }}
 {% endblock %}
 
 {% block navigation %}
