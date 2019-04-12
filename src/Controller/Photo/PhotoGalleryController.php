@@ -12,10 +12,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use App\Criticalmass\Feature\Annotation\Feature as Feature;
+use Flagception\Bundle\FlagceptionBundle\Annotations\Feature;
 
 /**
- * @Feature(name="photos")
+ * @Feature("photos")
  */
 class PhotoGalleryController extends AbstractController
 {
@@ -44,7 +44,7 @@ class PhotoGalleryController extends AbstractController
 
     /**
      * @Security("has_role('ROLE_USER')")
-     * @Feature(name="photos")
+     * @Feature("photos")
      */
     public function userlistAction(UserInterface $user = null): Response
     {
@@ -55,8 +55,8 @@ class PhotoGalleryController extends AbstractController
         ]);
     }
 
-    /*
-     * @Feature(name="photos")
+    /**
+     * @Feature("photos")
      */
     public function examplegalleryAction(): Response
     {
