@@ -1,4 +1,15 @@
-{% extends 'Template/StandardTemplate.html.twig' %}{% block title %}Critical Mass in {{ region.name }}{% endblock %}
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Critical Mass in {{ region.name }}{% endblock %}
+
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+
+{% block breadcrumb %}
+    {{ bootstrap.breadcrumb_item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ bootstrap.breadcrumb_item(city.title, objectPath(city)) }}
+    {{ bootstrap.breadcrumb_item(ride.title, objectPath(ride)) }}
+    {{ bootstrap.breadcrumb_item('Fotos hochladen', '', true) }}
+{% endblock %}
 
 {% block breadcrumb %}
     <li>

@@ -1,7 +1,11 @@
-{% extends 'Template/StandardTemplate.html.twig' %}{% block title %}Dein Benutzerprofil{% endblock %}
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Dein Benutzerprofil{% endblock %}
+
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
 
 {% block breadcrumb %}
-    <li class="active">Dein Benutzerkonto</li>
+    {{ bootstrap.breadcrumb_item('Dein Benutzerkonto', '', true) }}
 {% endblock %}
 
 {% block content %}

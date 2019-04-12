@@ -1,17 +1,14 @@
-{% extends 'Template/StandardTemplate.html.twig' %}{% form_theme userEmailForm 'Form/theme.html.twig' %}
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% form_theme userEmailForm 'Form/theme.html.twig' %}
 
 {% block title %}Dein Benutzerprofil{% endblock %}
 
-{% block breadcrumb %}
-    <li>
-        <a href="{{ path('criticalmass_user_usermanagement') }}">
-            Dein Benutzerkonto
-        </a>
-    </li>
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
 
-    <li class="active">
-        E-Mail-Adresse ändern
-    </li>
+{% block breadcrumb %}
+    {{ bootstrap.breadcrumb_item('Dein Benutzerkonto', path('criticalmass_user_usermanagement')) }}
+    {{ bootstrap.breadcrumb_item('E-Mail-Adresse ändern', '', true) }}
 {% endblock %}
 
 {% block content %}

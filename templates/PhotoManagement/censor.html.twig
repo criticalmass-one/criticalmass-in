@@ -2,6 +2,15 @@
 
 {% block title %}Foto zensieren{% endblock %}
 
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+
+{% block breadcrumb %}
+    {{ bootstrap.breadcrumb_item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ bootstrap.breadcrumb_item(ride.city.title, objectPath(ride.city)) }}
+    {{ bootstrap.breadcrumb_item(photo.ride.title, objectPath(photo.ride)) }}
+    {{ bootstrap.breadcrumb_item('Foto zensieren', '', true) }}
+{% endblock %}
+
 {% block content %}
 <div class="container">
     <div class="row">
