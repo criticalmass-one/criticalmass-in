@@ -4,3 +4,5 @@ flagception:
             default: true
         photos:
             default: true
+        art11:
+            default: false
