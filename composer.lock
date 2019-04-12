@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "33bcc473209c264276f03cc0982e4dc7",
+    "content-hash": "ff5f1411e396c0a825da9c39deced229",
     "packages": [
         {
             "name": "basvandorst/stravaphp",
@@ -2150,6 +2150,140 @@
                 "sdk"
             ],
             "time": "2018-12-11T22:56:31+00:00"
+        },
+        {
+            "name": "flagception/flagception",
+            "version": "1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bestit/flagception-sdk.git",
+                "reference": "fad815f3905134cd47fd6ee45ca714f2bf82b0de"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bestit/flagception-sdk/zipball/fad815f3905134cd47fd6ee45ca714f2bf82b0de",
+                "reference": "fad815f3905134cd47fd6ee45ca714f2bf82b0de",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6||^7.0",
+                "psr/cache": "^1.0",
+                "symfony/expression-language": ">=2.7"
+            },
+            "require-dev": {
+                "phing/phing": "^2.15",
+                "php-coveralls/php-coveralls": "^1.0",
+                "phpunit/phpunit": "^5.5",
+                "squizlabs/php_codesniffer": "^2.8"
+            },
+            "suggest": {
+                "flagception/contentful-activator": "Fetch feature flags from contentful.",
+                "flagception/database-activator": "Fetch feature flags from database."
+            },
+            "type": "lib",
+            "autoload": {
+                "psr-4": {
+                    "Flagception\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michel Chowanski",
+                    "email": "michel.chowanski@bestit-online.de"
+                }
+            ],
+            "description": "Feature toggle on steroids.",
+            "keywords": [
+                "feature",
+                "feature-flags",
+                "feature-toggle",
+                "flagception",
+                "flags",
+                "rollout",
+                "testing",
+                "toggle"
+            ],
+            "time": "2018-07-10T18:15:01+00:00"
+        },
+        {
+            "name": "flagception/flagception-bundle",
+            "version": "3.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bestit/flagception-bundle.git",
+                "reference": "c6f31f3011a42c724935f8d9354d2d5d8ef9fb98"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bestit/flagception-bundle/zipball/c6f31f3011a42c724935f8d9354d2d5d8ef9fb98",
+                "reference": "c6f31f3011a42c724935f8d9354d2d5d8ef9fb98",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/annotations": "^1.0",
+                "flagception/flagception": "^1.3",
+                "php": "^5.6||^7.0",
+                "symfony/config": "^2.7|^3.0|^4.0",
+                "symfony/dependency-injection": "^2.7|^3.0|^4.0",
+                "symfony/http-kernel": "^2.7|^3.0|^4.0",
+                "symfony/yaml": "^2.7|^3.0|^4.0",
+                "twig/twig": "^1.18|^2.0"
+            },
+            "require-dev": {
+                "flagception/contentful-activator": "^1.0",
+                "flagception/database-activator": "^1.0",
+                "phing/phing": "^2.15",
+                "php-coveralls/php-coveralls": "^1.0",
+                "php-mock/php-mock-phpunit": "^1.1",
+                "phpunit/phpunit": "^5.5",
+                "squizlabs/php_codesniffer": "^2.8",
+                "symfony/phpunit-bridge": ">=2.7",
+                "symfony/twig-bridge": ">=2.7"
+            },
+            "suggest": {
+                "flagception/contentful-activator": "Fetch feature flags from contentful.",
+                "flagception/database-activator": "Fetch feature flags from a database."
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "thanks": {
+                    "name": "flagception/flagception",
+                    "url": "https://github.com/bestit/flagception-sdk"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Flagception\\Bundle\\FlagceptionBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michel Chowanski",
+                    "email": "michel.chowanski@bestit-online.de"
+                }
+            ],
+            "description": "Feature toggle bundle on steroids.",
+            "keywords": [
+                "bundle",
+                "feature",
+                "feature-flags",
+                "feature-toggle",
+                "flagception",
+                "flags",
+                "rollout",
+                "symfony",
+                "testing",
+                "toggle"
+            ],
+            "time": "2019-02-04T20:13:35+00:00"
         },
         {
             "name": "friendsofsymfony/elastica-bundle",
@@ -13112,7 +13246,8 @@
     "prefer-lowest": false,
     "platform": {
         "php": ">=7.3",
-        "ext-intl": "*"
+        "ext-intl": "*",
+        "ext-simplexml": "*"
     },
     "platform-dev": []
 }
