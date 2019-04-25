@@ -1,44 +1,29 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Criticalmass\ViewStorage;
 
 use App\Entity\User;
 use App\EntityInterface\ViewableInterface;
-use Symfony\Component\Cache\Adapter\AbstractAdapter;
-use Symfony\Component\Cache\Adapter\RedisAdapter;
+use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class ViewStorageCache implements ViewStorageCacheInterface
 {
-    /** @var AbstractAdapter $cache */
-    protected $cache;
+    /** @var ProducerInterface $producer */
+    protected $producer;
 
     /** @var TokenStorageInterface $tokenStorage */
     protected $tokenStorage;
 
-    public function __construct(TokenStorageInterface $tokenStorage)
+    public function __construct(TokenStorageInterface $tokenStorage, ProducerInterface $producer)
     {
-        $redisConnection = RedisAdapter::createConnection('redis://localhost');
-
-        $this->cache = new RedisAdapter(
-            $redisConnection,
-            $namespace = '',
-            $defaultLifetime = 0
-        );
+        $this->producer = $producer;
 
         $this->tokenStorage = $tokenStorage;
     }
 
-    public function countView(ViewableInterface $viewable)
+    public function countView(ViewableInterface $viewable): void
     {
-        $viewStorageItem = $this->cache->getItem('criticalmass-view_storage');
-
-        if (!$viewStorageItem->isHit()) {
-            $viewStorage = [];
-        } else {
-            $viewStorage = $viewStorageItem->get();
-        }
-
         $viewDateTime = new \DateTime('now', new \DateTimeZone('UTC'));
 
         $user = $this->tokenStorage->getToken()->getUser();
@@ -48,18 +33,14 @@ class ViewStorageCache implements ViewStorageCacheInterface
             $userId = $user->getId();
         }
 
-        $view =
-            [
-                'className' => $this->getClassName($viewable),
-                'entityId' => $viewable->getId(),
-                'userId' => $userId,
-                'dateTime' => $viewDateTime->format('Y-m-d H:i:s')
-            ];
+        $view = [
+            'className' => $this->getClassName($viewable),
+            'entityId' => $viewable->getId(),
+            'userId' => $userId,
+            'dateTime' => $viewDateTime->format('Y-m-d H:i:s'),
+        ];
 
-        $viewStorage[] = $view;
-        $viewStorageItem->set($viewStorage);
-
-        $this->cache->save($viewStorageItem);
+        $this->producer->publish(serialize($view));
     }
 
     protected function getClassName(ViewableInterface $viewable): string
@@ -67,8 +48,6 @@ class ViewStorageCache implements ViewStorageCacheInterface
         $namespaceClass = get_class($viewable);
         $namespaceParts = explode('\\', $namespaceClass);
 
-        $className = array_pop($namespaceParts);
-
-        return $className;
+        return array_pop($namespaceParts);
     }
 }

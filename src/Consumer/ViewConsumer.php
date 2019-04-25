@@ -2,28 +2,25 @@
 
 namespace App\Consumer;
 
+use App\Criticalmass\ViewStorage\ViewStoragePersisterInterface;
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
 
-class ValueConsumer implements ConsumerInterface
+class ViewConsumer implements ConsumerInterface
 {
-    /**
-     * @var ViewStoragePersisterInterface $viewSotragePersister
-     */
+    /** @var ViewStoragePersisterInterface $viewSotragePersister */
     protected $viewStoragePersister;
 
     public function __construct(ViewStoragePersisterInterface $viewStoragePersister)
     {
         $this->viewStoragePersister = $viewStoragePersister;
-
-        parent::__construct();
     }
 
     public function execute(AMQPMessage $message): int
     {
         $value = unserialize($message->getBody());
         
-        $this->persister->persistValues([$value]);
+        $this->viewStoragePersister->persistViews([$value]);
 
         return self::MSG_ACK;
     }

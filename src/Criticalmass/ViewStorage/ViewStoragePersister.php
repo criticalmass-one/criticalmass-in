@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Criticalmass\ViewStorage;
 
@@ -13,59 +13,26 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ViewStoragePersister implements ViewStoragePersisterInterface
 {
-    /** @var RegistryInterface $doctrine */
-    protected $doctrine;
+    /** @var RegistryInterface $registry */
+    protected $registry;
 
-    /** @var EntityManager $manager */
-    protected $manager;
-
-    /** @var OutputInterface $output */
-    protected $output = null;
-
-    /** @var AbstractAdapter $cache */
-    protected $cache = null;
-
-    public function __construct(RegistryInterface $doctrine)
+    public function __construct(RegistryInterface $registry)
     {
-        $redisConnection = RedisAdapter::createConnection('redis://localhost');
-
-        $this->cache = new RedisAdapter(
-            $redisConnection,
-            $namespace = '',
-            $defaultLifetime = 0
-        );
-
-        $this->doctrine = $doctrine;
-        $this->manager = $doctrine->getManager();
+        $this->registry = $registry;
     }
 
-    public function setOutput(OutputInterface $output): ViewStoragePersisterInterface
+    public function persistViews(array $viewList): ViewStoragePersisterInterface
     {
-        $this->output = $output;
-
-        return $this;
-    }
-
-    public function persistViews(): ViewStoragePersisterInterface
-    {
-        $viewStorageItem = $this->cache->getItem('criticalmass-view_storage');
-
-        if ($viewStorageItem->isHit()) {
-            $viewArrayList = $viewStorageItem->get();
-
-            foreach ($viewArrayList as $viewArray) {
-                $this->storeView($viewArray);
-            }
+        foreach ($viewList as $viewArray) {
+            $this->storeView($viewArray);
         }
 
-        $this->cache->deleteItem('criticalmass-view_storage');
-
-        $this->manager->flush();
+        $this->registry->getManager()->flush();
 
         return $this;
     }
 
-    protected function storeView(array $viewArray)
+    protected function storeView(array $viewArray): void
     {
         $view = $this->getView($viewArray['className']);
         $entity = $this->getEntity($viewArray['className'], $viewArray['entityId']);
@@ -87,49 +54,23 @@ class ViewStoragePersister implements ViewStoragePersisterInterface
 
         $entity->incViews();
 
-        $this->manager->persist($view);
-        $this->manager->persist($entity);
-
-        $this->log(sprintf(
-            'Saved view for <comment>%s</comment> <info>#%d</info> (%s)',
-            $viewArray['className'],
-            $viewArray['entityId'],
-            $dateTime->format('Y-m-d H:i:s')
-        ));
+        $this->registry->getManager()->persist($view);
     }
 
     protected function getView(string $className): ViewInterface
     {
         $viewClassName = 'App\Entity\\' . $className . 'View';
 
-        $view = new $viewClassName;
-
-        return $view;
+        return new $viewClassName;
     }
 
     protected function getUser(int $userId): User
     {
-        $user = $this->manager->getRepository('App:User')->find($userId);
-
-        return $user;
+        return $this->registry->getManager()->getRepository('App:User')->find($userId);
     }
 
     protected function getEntity(string $className, int $entityId): ViewableInterface
     {
-        $entity = $this->manager->getRepository('App:' . $className)->find($entityId);
-
-        return $entity;
-    }
-
-    protected function log(string $message): ViewStoragePersister
-    {
-        if ($this->output) {
-            $this->output->writeln($message);
-        } else {
-            echo $message . "\n";
-        }
-
-        return $this;
+        return $this->registry->getManager()->getRepository('App:' . $className)->find($entityId);
     }
 }
-
