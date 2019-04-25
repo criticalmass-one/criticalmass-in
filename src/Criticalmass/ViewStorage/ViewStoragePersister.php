@@ -32,29 +32,19 @@ class ViewStoragePersister implements ViewStoragePersisterInterface
         return $this;
     }
 
-    protected function storeView(array $viewArray): void
+    protected function storeView(View $view): void
     {
-        $view = $this->getView($viewArray['className']);
-        $entity = $this->getEntity($viewArray['className'], $viewArray['entityId']);
-        $viewSetEntityMethod = sprintf('set%s', $viewArray['className']);
+        $viewEntity = $this->getView($view->getEntityClassName());
+        $entity = $this->getEntity($view->getEntityClassName(), $view->getEntityId());
+        $viewSetEntityMethod = sprintf('set%s', $view->getEntityClassName());
 
-        $view->$viewSetEntityMethod($entity);
-
-        $userId = $viewArray['userId'];
-        $user = null;
-
-        if (is_int($userId)) {
-            $user = $this->getUser($userId);
-        }
-
-        $view->setUser($user);
-
-        $dateTime = new \DateTime($viewArray['dateTime']);
-        $view->setDateTime($dateTime);
+        $viewEntity->$viewSetEntityMethod($entity);
+        $viewEntity->setUser($view->getUser());
+        $viewEntity->setDateTime($view->getDateTime());
 
         $entity->incViews();
 
-        $this->registry->getManager()->persist($view);
+        $this->registry->getManager()->persist($viewEntity);
     }
 
     protected function getView(string $className): ViewInterface

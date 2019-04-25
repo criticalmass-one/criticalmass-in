@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\EntityInterface\ViewableInterface;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class ViewStorageCache implements ViewStorageCacheInterface
 {
@@ -28,18 +29,13 @@ class ViewStorageCache implements ViewStorageCacheInterface
         $viewDateTime = new \DateTime('now', new \DateTimeZone('UTC'));
 
         $user = $this->tokenStorage->getToken()->getUser();
-        $userId = null;
 
-        if ($user instanceof User) {
-            $userId = $user->getId();
-        }
-
-        $view = [
-            'className' => ClassUtil::getShortname($viewable),
-            'entityId' => $viewable->getId(),
-            'userId' => $userId,
-            'dateTime' => $viewDateTime->format('Y-m-d H:i:s'),
-        ];
+        $view = new View();
+        $view
+            ->setEntityClassName(ClassUtil::getShortname($viewable))
+            ->setEntityId($viewable->getId())
+            ->setUser($user instanceof UserInterface ? $user : null)
+            ->setDateTime($viewDateTime);
 
         $this->producer->publish(serialize($view));
     }
