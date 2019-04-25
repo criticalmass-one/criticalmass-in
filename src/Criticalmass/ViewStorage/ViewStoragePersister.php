@@ -36,7 +36,7 @@ class ViewStoragePersister implements ViewStoragePersisterInterface
     {
         $view = $this->getView($viewArray['className']);
         $entity = $this->getEntity($viewArray['className'], $viewArray['entityId']);
-        $viewSetEntityMethod = 'set' . $viewArray['className'];
+        $viewSetEntityMethod = sprintf('set%s', $viewArray['className']);
 
         $view->$viewSetEntityMethod($entity);
 
@@ -59,18 +59,18 @@ class ViewStoragePersister implements ViewStoragePersisterInterface
 
     protected function getView(string $className): ViewInterface
     {
-        $viewClassName = 'App\Entity\\' . $className . 'View';
+        $viewClassName = sprintf('App\Entity\\%sView', $className);
 
         return new $viewClassName;
     }
 
     protected function getUser(int $userId): User
     {
-        return $this->registry->getManager()->getRepository('App:User')->find($userId);
+        return $this->registry->getManager()->getRepository(User::class)->find($userId);
     }
 
     protected function getEntity(string $className, int $entityId): ViewableInterface
     {
-        return $this->registry->getManager()->getRepository('App:' . $className)->find($entityId);
+        return $this->registry->getManager()->getRepository(sprintf('App:%s', $className))->find($entityId);
     }
 }

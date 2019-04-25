@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\ViewStorage;
 
+use App\Criticalmass\Util\ClassUtil;
 use App\Entity\User;
 use App\EntityInterface\ViewableInterface;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
@@ -34,20 +35,12 @@ class ViewStorageCache implements ViewStorageCacheInterface
         }
 
         $view = [
-            'className' => $this->getClassName($viewable),
+            'className' => ClassUtil::getShortname($viewable),
             'entityId' => $viewable->getId(),
             'userId' => $userId,
             'dateTime' => $viewDateTime->format('Y-m-d H:i:s'),
         ];
 
         $this->producer->publish(serialize($view));
-    }
-
-    protected function getClassName(ViewableInterface $viewable): string
-    {
-        $namespaceClass = get_class($viewable);
-        $namespaceParts = explode('\\', $namespaceClass);
-
-        return array_pop($namespaceParts);
     }
 }
