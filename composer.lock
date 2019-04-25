@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "33bcc473209c264276f03cc0982e4dc7",
+    "content-hash": "7451ffccb6c6c80479d9157aac510fa2",
     "packages": [
         {
             "name": "basvandorst/stravaphp",
@@ -2150,6 +2150,140 @@
                 "sdk"
             ],
             "time": "2018-12-11T22:56:31+00:00"
+        },
+        {
+            "name": "flagception/flagception",
+            "version": "1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bestit/flagception-sdk.git",
+                "reference": "fad815f3905134cd47fd6ee45ca714f2bf82b0de"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bestit/flagception-sdk/zipball/fad815f3905134cd47fd6ee45ca714f2bf82b0de",
+                "reference": "fad815f3905134cd47fd6ee45ca714f2bf82b0de",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6||^7.0",
+                "psr/cache": "^1.0",
+                "symfony/expression-language": ">=2.7"
+            },
+            "require-dev": {
+                "phing/phing": "^2.15",
+                "php-coveralls/php-coveralls": "^1.0",
+                "phpunit/phpunit": "^5.5",
+                "squizlabs/php_codesniffer": "^2.8"
+            },
+            "suggest": {
+                "flagception/contentful-activator": "Fetch feature flags from contentful.",
+                "flagception/database-activator": "Fetch feature flags from database."
+            },
+            "type": "lib",
+            "autoload": {
+                "psr-4": {
+                    "Flagception\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michel Chowanski",
+                    "email": "michel.chowanski@bestit-online.de"
+                }
+            ],
+            "description": "Feature toggle on steroids.",
+            "keywords": [
+                "feature",
+                "feature-flags",
+                "feature-toggle",
+                "flagception",
+                "flags",
+                "rollout",
+                "testing",
+                "toggle"
+            ],
+            "time": "2018-07-10T18:15:01+00:00"
+        },
+        {
+            "name": "flagception/flagception-bundle",
+            "version": "3.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bestit/flagception-bundle.git",
+                "reference": "c6f31f3011a42c724935f8d9354d2d5d8ef9fb98"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bestit/flagception-bundle/zipball/c6f31f3011a42c724935f8d9354d2d5d8ef9fb98",
+                "reference": "c6f31f3011a42c724935f8d9354d2d5d8ef9fb98",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/annotations": "^1.0",
+                "flagception/flagception": "^1.3",
+                "php": "^5.6||^7.0",
+                "symfony/config": "^2.7|^3.0|^4.0",
+                "symfony/dependency-injection": "^2.7|^3.0|^4.0",
+                "symfony/http-kernel": "^2.7|^3.0|^4.0",
+                "symfony/yaml": "^2.7|^3.0|^4.0",
+                "twig/twig": "^1.18|^2.0"
+            },
+            "require-dev": {
+                "flagception/contentful-activator": "^1.0",
+                "flagception/database-activator": "^1.0",
+                "phing/phing": "^2.15",
+                "php-coveralls/php-coveralls": "^1.0",
+                "php-mock/php-mock-phpunit": "^1.1",
+                "phpunit/phpunit": "^5.5",
+                "squizlabs/php_codesniffer": "^2.8",
+                "symfony/phpunit-bridge": ">=2.7",
+                "symfony/twig-bridge": ">=2.7"
+            },
+            "suggest": {
+                "flagception/contentful-activator": "Fetch feature flags from contentful.",
+                "flagception/database-activator": "Fetch feature flags from a database."
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "thanks": {
+                    "name": "flagception/flagception",
+                    "url": "https://github.com/bestit/flagception-sdk"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Flagception\\Bundle\\FlagceptionBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michel Chowanski",
+                    "email": "michel.chowanski@bestit-online.de"
+                }
+            ],
+            "description": "Feature toggle bundle on steroids.",
+            "keywords": [
+                "bundle",
+                "feature",
+                "feature-flags",
+                "feature-toggle",
+                "flagception",
+                "flags",
+                "rollout",
+                "symfony",
+                "testing",
+                "toggle"
+            ],
+            "time": "2019-02-04T20:13:35+00:00"
         },
         {
             "name": "friendsofsymfony/elastica-bundle",
@@ -4686,6 +4820,151 @@
                 "random"
             ],
             "time": "2019-01-03T20:59:08+00:00"
+        },
+        {
+            "name": "php-amqplib/php-amqplib",
+            "version": "v2.9.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-amqplib/php-amqplib.git",
+                "reference": "76faddcd668dabb8d4f7c00e86b8a9decd781a59"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-amqplib/php-amqplib/zipball/76faddcd668dabb8d4f7c00e86b8a9decd781a59",
+                "reference": "76faddcd668dabb8d4f7c00e86b8a9decd781a59",
+                "shasum": ""
+            },
+            "require": {
+                "ext-bcmath": "*",
+                "ext-sockets": "*",
+                "php": ">=5.4.0"
+            },
+            "replace": {
+                "videlalvaro/php-amqplib": "self.version"
+            },
+            "require-dev": {
+                "ext-curl": "*",
+                "nategood/httpful": "^0.2.20",
+                "phpdocumentor/phpdocumentor": "^2.9",
+                "phpunit/phpunit": "^4.8",
+                "squizlabs/php_codesniffer": "^2.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.8-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PhpAmqpLib\\": "PhpAmqpLib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Alvaro Videla",
+                    "role": "Original Maintainer"
+                },
+                {
+                    "name": "John Kelly",
+                    "email": "johnmkelly86@gmail.com",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Raúl Araya",
+                    "email": "nubeiro@gmail.com",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Luke Bakken",
+                    "email": "luke@bakken.io",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "Formerly videlalvaro/php-amqplib.  This library is a pure PHP implementation of the AMQP protocol. It's been tested against RabbitMQ.",
+            "homepage": "https://github.com/php-amqplib/php-amqplib/",
+            "keywords": [
+                "message",
+                "queue",
+                "rabbitmq"
+            ],
+            "time": "2019-04-24T15:36:21+00:00"
+        },
+        {
+            "name": "php-amqplib/rabbitmq-bundle",
+            "version": "v1.14.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-amqplib/RabbitMqBundle.git",
+                "reference": "cf67adaa4e306d8e9cb6855a72d79263b425ded8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-amqplib/RabbitMqBundle/zipball/cf67adaa4e306d8e9cb6855a72d79263b425ded8",
+                "reference": "cf67adaa4e306d8e9cb6855a72d79263b425ded8",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3.9|^7.0",
+                "php-amqplib/php-amqplib": "^2.6",
+                "psr/log": "^1.0",
+                "symfony/config": "^2.7|^3.0|^4.0",
+                "symfony/console": "^2.7|^3.0|^4.0",
+                "symfony/dependency-injection": "^2.7|^3.0|^4.0",
+                "symfony/event-dispatcher": "^2.7|^3.0|^4.0",
+                "symfony/yaml": "^2.7|^3.0|^4.0"
+            },
+            "replace": {
+                "oldsound/rabbitmq-bundle": "self.version"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8.35|^5.4.3",
+                "symfony/debug": "^2.7|^3.0|^4.0",
+                "symfony/serializer": "^2.7|^3.0|^4.0"
+            },
+            "suggest": {
+                "symfony/framework-bundle": "To use this lib as a full Symfony Bundle and to use the profiler data collector"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.10.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "OldSound\\RabbitMqBundle\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alvaro Videla"
+                }
+            ],
+            "description": "Integrates php-amqplib with Symfony & RabbitMq. Formerly oldsound/rabbitmq-bundle.",
+            "keywords": [
+                "AMQP",
+                "Symfony2",
+                "message",
+                "queue",
+                "rabbitmq",
+                "symfony",
+                "symfony3",
+                "symfony4"
+            ],
+            "time": "2018-05-02T13:12:32+00:00"
         },
         {
             "name": "php-curl-class/php-curl-class",
@@ -13112,7 +13391,8 @@
     "prefer-lowest": false,
     "platform": {
         "php": ">=7.3",
-        "ext-intl": "*"
+        "ext-intl": "*",
+        "ext-simplexml": "*"
     },
     "platform-dev": []
 }
