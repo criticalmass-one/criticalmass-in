@@ -37,7 +37,7 @@ class ViewStorageCache implements ViewStorageCacheInterface
         $view
             ->setEntityClassName(ClassUtil::getShortname($viewable))
             ->setEntityId($viewable->getId())
-            ->setUser($user instanceof UserInterface ? $user : null)
+            ->setUserId($user instanceof UserInterface ? $user->getId() : null)
             ->setDateTime($viewDateTime);
 
         $this->producer->publish($this->serializer->serialize($view, 'json'));

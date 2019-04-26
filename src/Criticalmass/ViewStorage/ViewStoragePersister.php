@@ -25,6 +25,7 @@ class ViewStoragePersister implements ViewStoragePersisterInterface
     public function persistViews(array $viewList): ViewStoragePersisterInterface
     {
         foreach ($viewList as $unserializedView) {
+            /** @var View $view */
             $view = $this->serializer->deserialize($unserializedView, View::class, 'json');
 
             $this->storeView($view);
@@ -42,7 +43,7 @@ class ViewStoragePersister implements ViewStoragePersisterInterface
         $viewSetEntityMethod = sprintf('set%s', $view->getEntityClassName());
 
         $viewEntity->$viewSetEntityMethod($entity);
-        $viewEntity->setUser($view->getUser());
+        $viewEntity->setUser($this->getUser($view->getUserId()));
         $viewEntity->setDateTime($view->getDateTime());
 
         $entity->incViews();
@@ -57,7 +58,7 @@ class ViewStoragePersister implements ViewStoragePersisterInterface
         return new $viewClassName;
     }
 
-    protected function getUser(int $userId): User
+    protected function getUser(int $userId): ?User
     {
         return $this->registry->getManager()->getRepository(User::class)->find($userId);
     }

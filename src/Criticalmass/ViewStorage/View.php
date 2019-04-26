@@ -25,11 +25,11 @@ class View
     protected $entityClassName;
 
     /**
-     * @var User $user
+     * @var int $userId
      * @JMS\Expose
-     * @JMS\Type("App\Entity\User")
+     * @JMS\Type("int")
      */
-    protected $user;
+    protected $userId;
 
     /**
      * @var \DateTime $dateTime
@@ -62,14 +62,14 @@ class View
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getUserId(): ?int
     {
-        return $this->user;
+        return $this->userId;
     }
 
-    public function setUser(User $user = null): View
+    public function setUserId(int $userId = null): View
     {
-        $this->user = $user;
+        $this->userId = $userId;
 
         return $this;
     }

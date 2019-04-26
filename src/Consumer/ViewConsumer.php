@@ -18,9 +18,7 @@ class ViewConsumer implements ConsumerInterface
 
     public function execute(AMQPMessage $message): int
     {
-        $value = unserialize($message->getBody());
-        
-        $this->viewStoragePersister->persistViews([$value]);
+        $this->viewStoragePersister->persistViews([$message->getBody()]);
 
         return self::MSG_ACK;
     }
