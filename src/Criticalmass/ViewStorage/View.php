@@ -3,19 +3,39 @@
 namespace App\Criticalmass\ViewStorage;
 
 use App\Entity\User;
+use JMS\Serializer\Annotation as JMS;
 
+/**
+ * @JMS\ExclusionPolicy("all")
+ */
 class View
 {
-    /** @var int $entityId */
+    /**
+     * @var int $entityId
+     * @JMS\Expose
+     * @JMS\Type("int")
+     */
     protected $entityId;
 
-    /** @var string $entityClassName */
+    /**
+     * @var string $entityClassName
+     * @JMS\Expose
+     * @JMS\Type("string")
+     */
     protected $entityClassName;
 
-    /** @var User $user */
+    /**
+     * @var User $user
+     * @JMS\Expose
+     * @JMS\Type("App\Entity\User")
+     */
     protected $user;
 
-    /** @var \DateTime $dateTime */
+    /**
+     * @var \DateTime $dateTime
+     * @JMS\Expose
+     * @JMS\Type("DateTime<'U'>")
+     */
     protected $dateTime;
 
     public function getEntityId(): int

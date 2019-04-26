@@ -5,26 +5,29 @@ namespace App\Criticalmass\ViewStorage;
 use App\Entity\User;
 use App\EntityInterface\ViewableInterface;
 use App\EntityInterface\ViewInterface;
-use Doctrine\ORM\EntityManager;
+use JMS\Serializer\SerializerInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
-use Symfony\Component\Cache\Adapter\AbstractAdapter;
-use Symfony\Component\Cache\Adapter\RedisAdapter;
-use Symfony\Component\Console\Output\OutputInterface;
 
 class ViewStoragePersister implements ViewStoragePersisterInterface
 {
     /** @var RegistryInterface $registry */
     protected $registry;
 
-    public function __construct(RegistryInterface $registry)
+    /** @var SerializerInterface $serializer */
+    protected $serializer;
+
+    public function __construct(RegistryInterface $registry, SerializerInterface $serializer)
     {
         $this->registry = $registry;
+        $this->serializer = $serializer;
     }
 
     public function persistViews(array $viewList): ViewStoragePersisterInterface
     {
-        foreach ($viewList as $viewArray) {
-            $this->storeView($viewArray);
+        foreach ($viewList as $unserializedView) {
+            $view = $this->serializer->deserialize($unserializedView, View::class, 'json');
+
+            $this->storeView($view);
         }
 
         $this->registry->getManager()->flush();

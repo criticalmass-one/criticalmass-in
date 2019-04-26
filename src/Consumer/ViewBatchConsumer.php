@@ -18,17 +18,17 @@ class ViewBatchConsumer implements BatchConsumerInterface
 
     public function batchExecute(array $messages): array
     {
-        $valueList = [];
+        $viewList = [];
         $resultList = [];
 
         /** @var AMQPMessage $message */
         foreach ($messages as $message) {
-            $valueList[] = unserialize($message->getBody());
+            $viewList[] = $message->getBody();
 
             $resultList[(int) $message->delivery_info['delivery_tag']] = true;
         }
 
-        $this->viewStoragePersister->persistViews($valueList);
+        $this->viewStoragePersister->persistViews($viewList);
 
         return $resultList;
     }

@@ -3,8 +3,8 @@
 namespace App\Criticalmass\ViewStorage;
 
 use App\Criticalmass\Util\ClassUtil;
-use App\Entity\User;
 use App\EntityInterface\ViewableInterface;
+use JMS\Serializer\SerializerInterface;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -17,11 +17,14 @@ class ViewStorageCache implements ViewStorageCacheInterface
     /** @var TokenStorageInterface $tokenStorage */
     protected $tokenStorage;
 
-    public function __construct(TokenStorageInterface $tokenStorage, ProducerInterface $producer)
+    /** @var SerializerInterface $serializer */
+    protected $serializer;
+
+    public function __construct(TokenStorageInterface $tokenStorage, ProducerInterface $producer, SerializerInterface $serializer)
     {
         $this->producer = $producer;
-
         $this->tokenStorage = $tokenStorage;
+        $this->serializer = $serializer;
     }
 
     public function countView(ViewableInterface $viewable): void
@@ -37,6 +40,6 @@ class ViewStorageCache implements ViewStorageCacheInterface
             ->setUser($user instanceof UserInterface ? $user : null)
             ->setDateTime($viewDateTime);
 
-        $this->producer->publish(serialize($view));
+        $this->producer->publish($this->serializer->serialize($view, 'json'));
     }
 }
