@@ -1,5 +1,6 @@
 vich_uploader:
     db_driver: orm
+    storage: flysystem
 
     mappings:
         track_file:
@@ -8,8 +9,8 @@ vich_uploader:
             namer:              vich_uploader.namer_uniqid
 
         photo_photo:
-            uri_prefix:         /photos
-            upload_destination: '%upload_destination.photo%'
+            uri_prefix:         /
+            upload_destination: flysystem_photo_photo_filesystem
             namer:              vich_uploader.namer_uniqid
 
         city_photo:

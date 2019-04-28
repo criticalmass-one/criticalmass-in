@@ -1,10 +1,10 @@
-# Read the documentation: https://github.com/1up-lab/OneupFlysystemBundle/tree/master/Resources/doc/index.md
 oneup_flysystem:
     adapters:
-        default_adapter:
+        photo_photo_adapter:
             local:
-                directory: '%kernel.cache_dir%/flysystem'
+                directory: '%kernel.project_dir%/public/photos'
+
     filesystems:
-        default_filesystem:
-            adapter: default_adapter
-            alias: League\Flysystem\Filesystem
+        flysystem_photo_photo:
+            adapter: photo_photo_adapter
+            mount: flysystem_photo_photo
