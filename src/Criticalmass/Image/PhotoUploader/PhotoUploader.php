@@ -20,7 +20,7 @@ class PhotoUploader extends AbstractPhotoUploader
         return $this;
     }
 
-    public function addUploadedFile(UploadedFile $uploadedFile): PhotoUploader
+    public function addUploadedFile(UploadedFile $uploadedFile): PhotoUploaderInterface
     {
         $this->createUploadedPhotoEntity($uploadedFile);
 
