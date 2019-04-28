@@ -3,8 +3,15 @@ oneup_flysystem:
         photo_photo_adapter:
             local:
                 directory: '%kernel.project_dir%/public/photos'
+        user_photo_adapter:
+            local:
+                directory: '%kernel.project_dir%/public/users'
 
     filesystems:
         flysystem_photo_photo:
             adapter: photo_photo_adapter
             mount: flysystem_photo_photo
+
+        flysystem_user_photo:
+            adapter: user_photo_adapter
+            mount: flysystem_user_photo

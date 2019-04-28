@@ -3,14 +3,21 @@ vich_uploader:
     storage: flysystem
 
     mappings:
+        photo_photo:
+            uri_prefix:         /
+            upload_destination: flysystem_photo_photo
+            namer:              vich_uploader.namer_uniqid
+
+        user_photo:
+            uri_prefix:         /
+            upload_destination: flysystem_user_photo
+            namer:              vich_uploader.namer_uniqid
+            delete_on_remove:   true
+            delete_on_update:   true
+
         track_file:
             uri_prefix:         /tracks
             upload_destination: '%upload_destination.track%'
-            namer:              vich_uploader.namer_uniqid
-
-        photo_photo:
-            uri_prefix:         /
-            upload_destination: flysystem_photo_photo_filesystem
             namer:              vich_uploader.namer_uniqid
 
         city_photo:
@@ -27,10 +34,3 @@ vich_uploader:
             uri_prefix:         /teaser
             upload_destination: '%upload_destination.frontpage_teaser%'
             namer:              vich_uploader.namer_uniqid
-
-        user_photo:
-            uri_prefix:         /users
-            upload_destination: '%upload_destination.user_photo%'
-            namer:              vich_uploader.namer_uniqid
-            delete_on_remove:   true
-            delete_on_update:   true

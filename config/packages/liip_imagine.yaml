@@ -8,16 +8,19 @@ liip_imagine:
         photo_flystem_loader:
             flysystem:
                 filesystem_service:  oneup_flysystem.flysystem_photo_photo_filesystem
-
-    data_loader: photo_flystem_loader
+        user_photo_flystem_loader:
+            flysystem:
+                filesystem_service:  oneup_flysystem.flysystem_user_photo_filesystem
 
     filter_sets:
         cache: ~
         gallery_photo_thumb:
+            data_loader: photo_flystem_loader
             quality: 40
             filters:
                 thumbnail: { size: [400, 300], mode: inset }
         gallery_photo_standard:
+            data_loader: photo_flystem_loader
             quality: 60
             filters:
                 thumbnail: { size: [1600, 1600], mode: inset }
@@ -26,11 +29,13 @@ liip_imagine:
                     size: 0.15
                     position: bottomright
         gallery_photo_blurred:
+            data_loader: photo_flystem_loader
             quality: 30
             filters:
                 thumbnail: { size: [800, 800], mode: inset }
                 fast_blur_filter: ~
         gallery_photo_large:
+            data_loader: photo_flystem_loader
             quality: 60
             filters:
                 thumbnail: { size: [2000, 2000], mode: inset }
@@ -38,6 +43,23 @@ liip_imagine:
                     image: ../public/images/watermark/criticalmass.png
                     size: 0.15
                     position: bottomright
+
+        user_profile_photo_medium:
+            data_loader: user_photo_flystem_loader
+            quality: 75
+            filters:
+                thumbnail: { size: [512, 512], mode: inset }
+        user_profile_photo_small:
+            data_loader: user_photo_flystem_loader
+            quality: 50
+            filters:
+                thumbnail: { size: [128, 128], mode: inset }
+        user_profile_photo_timelapse:
+            data_loader: user_photo_flystem_loader
+            quality: 30
+            filters:
+                thumbnail: { size: [50, 50], mode: inset }
+                
         city_image_wide:
             quality: 60
             filters:
@@ -66,18 +88,7 @@ liip_imagine:
             quality: 75
             filters:
                 thumbnail: { size: [2000, 2000], mode: inset }
-        user_profile_photo_medium:
-            quality: 75
-            filters:
-                thumbnail: { size: [512, 512], mode: inset }
-        user_profile_photo_small:
-            quality: 50
-            filters:
-                thumbnail: { size: [128, 128], mode: inset }
-        user_profile_photo_timelapse:
-            quality: 30
-            filters:
-                thumbnail: { size: [50, 50], mode: inset }
+
         crawled_preview_image:
             cache: App\Criticalmass\Imagine\CacheResolver\RemoteCacheResolver
             data_loader: App\Criticalmass\Imagine\DataLoader\RemoteStreamLoader
