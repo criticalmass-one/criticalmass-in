@@ -50,7 +50,7 @@ class PhotoUploadController extends AbstractController
             $photoUploader
                 ->setRide($ride)
                 ->setUser($user)
-                ->addFile($uploadedFile->getPathname());
+                ->addUploadedFile($uploadedFile);
         }
 
         return new Response('');

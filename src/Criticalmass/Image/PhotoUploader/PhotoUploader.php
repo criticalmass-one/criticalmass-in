@@ -6,12 +6,23 @@ use App\Entity\Photo;
 use App\Event\Photo\PhotoUploadedEvent;
 use DirectoryIterator;
 use PHPExif\Reader\Reader;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class PhotoUploader extends AbstractPhotoUploader
 {
     public function addFile(string $filename): PhotoUploaderInterface
     {
         $this->createPhotoEntity($filename);
+
+        $this->doctrine->getManager()->flush();
+
+        return $this;
+    }
+
+    public function addUploadedFile(UploadedFile $uploadedFile): PhotoUploader
+    {
+        $this->createUploadedPhotoEntity($uploadedFile);
 
         $this->doctrine->getManager()->flush();
 
@@ -45,7 +56,7 @@ class PhotoUploader extends AbstractPhotoUploader
         $reader = Reader::factory(Reader::TYPE_NATIVE);
         $exif = $reader->getExifFromFile($photoFilename);
 
-        if ($dateTime = $exif->getCreationDate()) {
+        if ($exif !== false && $dateTime = $exif->getCreationDate()) {
             $photo->setDateTime($dateTime);
         }
 
@@ -62,21 +73,15 @@ class PhotoUploader extends AbstractPhotoUploader
         return $this;
     }
 
-    protected function createPhotoEntity(string $sourceFilename): Photo
+    protected function createUploadedPhotoEntity(UploadedFile $uploadedFile): Photo
     {
         $photo = new Photo();
 
-        $imageFilename = uniqid() . '.jpg';
-
-        $destinationFilename = sprintf('%s/%s', $this->uploadDestinationPhoto, $imageFilename);
-
-        copy($sourceFilename, $destinationFilename);
-
         $photo
-            ->setImageName($imageFilename)
             ->setUser($this->user)
             ->setRide($this->ride)
-            ->setCity($this->ride->getCity());
+            ->setCity($this->ride->getCity())
+            ->setImageFile($uploadedFile);
 
         $this->calculateDateTime($photo);
         $this->calculateLocation($photo);
@@ -86,6 +91,43 @@ class PhotoUploader extends AbstractPhotoUploader
         $this->doctrine->getManager()->persist($photo);
 
         $this->addedPhotoList[] = $photo;
+
+        return $photo;
+    }
+
+    protected function createPhotoEntity(string $sourceFilename): Photo
+    {
+        $photo = new Photo();
+
+        $photo
+            ->setUser($this->user)
+            ->setRide($this->ride)
+            ->setCity($this->ride->getCity());
+
+        $this->fakeUpload($photo, file_get_contents($sourceFilename));
+
+        $this->calculateDateTime($photo);
+        $this->calculateLocation($photo);
+
+        $this->eventDispatcher->dispatch(PhotoUploadedEvent::NAME, new PhotoUploadedEvent($photo));
+
+        $this->doctrine->getManager()->persist($photo);
+
+        $this->addedPhotoList[] = $photo;
+
+        return $photo;
+    }
+
+    protected function fakeUpload(Photo $photo, string $imageContent): Photo
+    {
+        $filename = sprintf('%s.jpg', uniqid('', true));
+        $path = sprintf('/tmp/%s', $filename);
+
+        $filesystem = new Filesystem();
+        $filesystem->dumpFile($path, $imageContent);
+
+        $file = new UploadedFile($path, $filename, null, null, true);
+        $photo->setImageFile($file);
 
         return $photo;
     }
