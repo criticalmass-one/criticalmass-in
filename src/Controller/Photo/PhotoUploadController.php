@@ -46,13 +46,15 @@ class PhotoUploadController extends AbstractController
         /** @var UploadedFile $uploadedFile */
         $uploadedFile = $request->files->get('file');
 
-        if ($uploadedFile) {
+        if ($uploadedFile instanceof UploadedFile) {
             $photoUploader
                 ->setRide($ride)
                 ->setUser($user)
-                ->addFile($uploadedFile->getPathname());
+                ->addUploadedFile($uploadedFile);
+
+            return new Response('Success', 200);
         }
 
-        return new Response('');
+        return new Response('', 403);
     }
 }
