@@ -31,12 +31,12 @@ parameters:
     jms_serializer.camel_case_naming_strategy.class: App\Serializer\JMSSerializer\Naming\CamelCaseNamingStrategy
     request_listener.http_port: 80
     request_listener.https_port: 443
-    upload_destination.track: '%kernel.root_dir%/../public/tracks'
-    upload_destination.photo: '%kernel.root_dir%/../public/photos'
-    upload_destination.city_photo: '%kernel.root_dir%/../public/cities'
-    upload_destination.ride_photo: '%kernel.root_dir%/../public/rides'
-    upload_destination.frontpage_teaser: '%kernel.root_dir%/../public/teaser'
-    upload_destination.user_photo: '%kernel.root_dir%/../public/users'
+    upload_destination.track: '%kernel.project_dir%/public/tracks'
+    upload_destination.photo: '%kernel.project_dir%/public/photos'
+    upload_destination.city_photo: '%kernel.project_dir%/public/cities'
+    upload_destination.ride_photo: '%kernel.project_dir%/public/rides'
+    upload_destination.frontpage_teaser: '%kernel.project_dir%/public/teaser'
+    upload_destination.user_photo: '%kernel.project_dir%/public/users'
     feature.photos: true
     feature.art11: false
     feature.bikeright: true
