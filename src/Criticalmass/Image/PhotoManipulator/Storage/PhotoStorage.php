@@ -20,7 +20,7 @@ class PhotoStorage extends AbstractPhotoStorage
     public function save(ManipulateablePhotoInterface $photo, ImageInterface $image): string
     {
         if (!$photo->getBackupName()) {
-            $newFilename = uniqid().'.JPG';
+            $newFilename = sprintf('%s.jpg', uniqid('', true));
 
             $photo->setBackupName($photo->getImageName());
 
@@ -30,7 +30,8 @@ class PhotoStorage extends AbstractPhotoStorage
         }
 
         $filename = $this->getImageFilename($photo);
-        $image->save($filename);
+
+        $this->filesystem->put($filename, $image->get('jpeg'));
 
         $this->photoCache->recachePhoto($photo);
 
@@ -39,10 +40,6 @@ class PhotoStorage extends AbstractPhotoStorage
 
     protected function getImageFilename(ManipulateablePhotoInterface $photo): string
     {
-        $path = $this->uploaderHelper->asset($photo, 'imageFile');
-
-        $filename = sprintf('%s/..%s', $this->uploadDestinationPhoto, $path);
-
-        return $filename;
+        return $this->uploaderHelper->asset($photo, 'imageFile');
     }
 }

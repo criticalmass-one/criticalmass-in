@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Criticalmass\Image\PhotoGps;
 
@@ -70,6 +70,7 @@ class PhotoGps extends AbstractPhotoGps
 
     protected function readExifData(): ?Exif
     {
+        /** @var TODO $filename */
         $filename = sprintf('%s/%s', $this->uploadDestinationPhoto, $this->photo->getImageName());
 
         $reader = Reader::factory(Reader::TYPE_NATIVE);

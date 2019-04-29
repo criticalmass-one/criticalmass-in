@@ -6,6 +6,7 @@ use App\Entity\Ride;
 use App\Entity\Track;
 use App\Entity\User;
 use App\Criticalmass\Image\PhotoGps\PhotoGps;
+use League\Flysystem\FilesystemInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -14,8 +15,8 @@ abstract class AbstractPhotoUploader implements PhotoUploaderInterface
     /** @var RegistryInterface $doctrine */
     protected $doctrine;
 
-    /** @var string $uploadDestinationPhoto */
-    protected $uploadDestinationPhoto;
+    /** @var FilesystemInterface $filesystem */
+    protected $filesystem;
 
     /** @var User $user */
     protected $user;
@@ -35,11 +36,11 @@ abstract class AbstractPhotoUploader implements PhotoUploaderInterface
     /** @var array $addedPhotoList */
     protected $addedPhotoList = [];
 
-    public function __construct(RegistryInterface $doctrine, PhotoGps $photoGps, string $uploadDestinationPhoto, EventDispatcherInterface $eventDispatcher)
+    public function __construct(RegistryInterface $doctrine, PhotoGps $photoGps, EventDispatcherInterface $eventDispatcher, FilesystemInterface $filesystem)
     {
         $this->doctrine = $doctrine;
         $this->photoGps = $photoGps;
-        $this->uploadDestinationPhoto = $uploadDestinationPhoto;
+        $this->filesystem = $filesystem;
         $this->eventDispatcher = $eventDispatcher;
     }
 

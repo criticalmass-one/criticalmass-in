@@ -51,6 +51,7 @@ class PhotoUploader extends AbstractPhotoUploader
 
     protected function calculateDateTime(Photo $photo): Photo
     {
+        /** @TODO */
         $photoFilename = sprintf('%s/%s', $this->uploadDestinationPhoto, $photo->getImageName());
 
         $reader = Reader::factory(Reader::TYPE_NATIVE);
