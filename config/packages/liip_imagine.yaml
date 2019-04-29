@@ -95,11 +95,6 @@ liip_imagine:
             filters:
                 thumbnail: { size: [800, 800], mode: inset }
 
-        blog_featuredphoto_standard:
-            quality: 80
-            filters:
-                thumbnail: { size: [1600, 1600], mode: inset }
-
         frontpage_teaser_large:
             quality: 75
             filters:
