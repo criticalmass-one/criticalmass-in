@@ -17,6 +17,9 @@ liip_imagine:
         ride_image_flystem_loader:
             flysystem:
                 filesystem_service:  oneup_flysystem.flysystem_ride_image_filesystem
+        frontpage_teaser_flystem_loader:
+            flysystem:
+                filesystem_service:  oneup_flysystem.flysystem_frontpage_teaser_filesystem
 
     filter_sets:
         cache: ~
@@ -96,6 +99,7 @@ liip_imagine:
                 thumbnail: { size: [800, 800], mode: inset }
 
         frontpage_teaser_large:
+            data_loader: frontpage_teaser_flystem_loader
             quality: 75
             filters:
                 thumbnail: { size: [2000, 2000], mode: inset }

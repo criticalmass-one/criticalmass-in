@@ -12,6 +12,9 @@ oneup_flysystem:
         ride_image_adapter:
             local:
                 directory: '%kernel.project_dir%/public/rides'
+        frontpage_teaser_adapter:
+            local:
+                directory: '%kernel.project_dir%/public/teaser'
 
     filesystems:
         flysystem_photo_photo:
@@ -29,3 +32,7 @@ oneup_flysystem:
         flysystem_ride_image:
             adapter: ride_image_adapter
             mount: flysystem_ride_image
+
+        flysystem_frontpage_teaser:
+            adapter: frontpage_teaser_adapter
+            mount: flysystem_frontpage_teaser

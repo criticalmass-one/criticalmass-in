@@ -25,12 +25,13 @@ vich_uploader:
             upload_destination: flysystem_ride_image
             namer:              vich_uploader.namer_uniqid
 
+        frontpage_teaser:
+            uri_prefix:         /
+            upload_destination: flysystem_frontpage_teaser
+            namer:              vich_uploader.namer_uniqid
+
         track_file:
             uri_prefix:         /tracks
             upload_destination: '%upload_destination.track%'
             namer:              vich_uploader.namer_uniqid
 
-        frontpage_teaser:
-            uri_prefix:         /teaser
-            upload_destination: '%upload_destination.frontpage_teaser%'
-            namer:              vich_uploader.namer_uniqid
