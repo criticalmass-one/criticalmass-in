@@ -12,8 +12,13 @@ liip_imagine:
             flysystem:
                 filesystem_service:  oneup_flysystem.flysystem_user_photo_filesystem
 
+        city_image_flystem_loader:
+            flysystem:
+                filesystem_service:  oneup_flysystem.flysystem_city_image_filesystem
+
     filter_sets:
         cache: ~
+
         gallery_photo_thumb:
             data_loader: photo_flystem_loader
             quality: 40
@@ -59,8 +64,9 @@ liip_imagine:
             quality: 30
             filters:
                 thumbnail: { size: [50, 50], mode: inset }
-                
+
         city_image_wide:
+            data_loader: city_image_flystem_loader
             quality: 60
             filters:
                 thumbnail: { size: [1140, 250], mode: inset }

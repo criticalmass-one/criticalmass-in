@@ -6,6 +6,9 @@ oneup_flysystem:
         user_photo_adapter:
             local:
                 directory: '%kernel.project_dir%/public/users'
+        city_image_adapter:
+            local:
+                directory: '%kernel.project_dir%/public/cities'
 
     filesystems:
         flysystem_photo_photo:
@@ -15,3 +18,7 @@ oneup_flysystem:
         flysystem_user_photo:
             adapter: user_photo_adapter
             mount: flysystem_user_photo
+
+        flysystem_city_image:
+            adapter: city_image_adapter
+            mount: flysystem_city_image
