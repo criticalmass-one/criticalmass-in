@@ -15,6 +15,9 @@ oneup_flysystem:
         frontpage_teaser_adapter:
             local:
                 directory: '%kernel.project_dir%/public/teaser'
+        track_track_adapter:
+            local:
+                directory: '%kernel.project_dir%/public/tracks'
 
     filesystems:
         flysystem_photo_photo:
@@ -36,3 +39,7 @@ oneup_flysystem:
         flysystem_frontpage_teaser:
             adapter: frontpage_teaser_adapter
             mount: flysystem_frontpage_teaser
+
+        flysystem_track_track:
+            adapter: frontpage_teaser_adapter
+            mount: flysystem_track_track

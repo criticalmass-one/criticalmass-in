@@ -31,7 +31,7 @@ vich_uploader:
             namer:              vich_uploader.namer_uniqid
 
         track_file:
-            uri_prefix:         /tracks
-            upload_destination: '%upload_destination.track%'
+            uri_prefix:         /
+            upload_destination: flysystem_track_track
             namer:              vich_uploader.namer_uniqid
 
