@@ -100,7 +100,7 @@ class PhotoUploader extends AbstractPhotoUploader
             ->setRide($this->ride)
             ->setCity($this->ride->getCity());
 
-        $this->fakeUpload($photo, file_get_contents($sourceFilename));
+        $this->uploadFaker->fakeUpload($photo, 'imageFile', file_get_contents($sourceFilename));
 
         $this->calculateDateTime($photo);
         $this->calculateLocation($photo);
@@ -110,20 +110,6 @@ class PhotoUploader extends AbstractPhotoUploader
         $this->doctrine->getManager()->persist($photo);
 
         $this->addedPhotoList[] = $photo;
-
-        return $photo;
-    }
-
-    protected function fakeUpload(Photo $photo, string $imageContent): Photo
-    {
-        $filename = sprintf('%s.jpg', uniqid('', true));
-        $path = sprintf('/tmp/%s', $filename);
-
-        $filesystem = new Filesystem();
-        $filesystem->dumpFile($path, $imageContent);
-
-        $file = new UploadedFile($path, $filename, null, null, true);
-        $photo->setImageFile($file);
 
         return $photo;
     }

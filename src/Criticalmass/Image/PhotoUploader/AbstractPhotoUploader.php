@@ -3,6 +3,7 @@
 namespace App\Criticalmass\Image\PhotoUploader;
 
 use App\Criticalmass\Image\ExifWrapper\ExifWrapperInterface;
+use App\Criticalmass\UploadFaker\UploadFakerInterface;
 use App\Entity\Ride;
 use App\Entity\Track;
 use App\Entity\User;
@@ -40,7 +41,10 @@ abstract class AbstractPhotoUploader implements PhotoUploaderInterface
     /** @var ExifWrapperInterface $exifWrapper */
     protected $exifWrapper;
 
-    public function __construct(RegistryInterface $doctrine, PhotoGps $photoGps, EventDispatcherInterface $eventDispatcher, FilesystemInterface $filesystem, ExifWrapperInterface $exifWrapper)
+    /** @var UploadFakerInterface $uploadFaker */
+    protected $uploadFaker;
+
+    public function __construct(RegistryInterface $doctrine, PhotoGps $photoGps, EventDispatcherInterface $eventDispatcher, FilesystemInterface $filesystem, ExifWrapperInterface $exifWrapper, UploadFakerInterface $uploadFaker)
     {
         $this->doctrine = $doctrine;
         $this->photoGps = $photoGps;
