@@ -5,7 +5,6 @@ namespace App\Criticalmass\Image\PhotoUploader;
 use App\Entity\Photo;
 use App\Event\Photo\PhotoUploadedEvent;
 use DirectoryIterator;
-use PHPExif\Reader\Reader;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -51,13 +50,9 @@ class PhotoUploader extends AbstractPhotoUploader
 
     protected function calculateDateTime(Photo $photo): Photo
     {
-        /** @TODO */
-        $photoFilename = sprintf('%s/%s', $this->uploadDestinationPhoto, $photo->getImageName());
+        $exif = $this->exifWrapper->getExifData($photo);
 
-        $reader = Reader::factory(Reader::TYPE_NATIVE);
-        $exif = $reader->getExifFromFile($photoFilename);
-
-        if ($exif !== false && $dateTime = $exif->getCreationDate()) {
+        if ($exif && $dateTime = $exif->getCreationDate()) {
             $photo->setDateTime($dateTime);
         }
 

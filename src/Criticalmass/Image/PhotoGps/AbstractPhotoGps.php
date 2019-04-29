@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\Image\PhotoGps;
 
+use App\Criticalmass\Image\ExifWrapper\ExifWrapperInterface;
 use App\Entity\Photo;
 use App\Entity\Track;
 use App\Criticalmass\Gps\GpxReader\TrackReader;
@@ -31,10 +32,15 @@ abstract class AbstractPhotoGps implements PhotoGpsInterface
     /** @var \DateTimeZone */
     protected $dateTimeZone;
 
-    public function __construct(UploaderHelper $uploaderHelper, TrackReader $trackReader, FilesystemInterface $filesystem) {
+    /** @var ExifWrapperInterface $exifWrapper */
+    protected $exifWrapper;
+
+    public function __construct(UploaderHelper $uploaderHelper, TrackReader $trackReader, FilesystemInterface $filesystem, ExifWrapperInterface $exifWrapper)
+    {
         $this->uploaderHelper = $uploaderHelper;
         $this->filesystem = $filesystem;
         $this->trackReader = $trackReader;
+        $this->exifWrapper = $exifWrapper;
     }
 
     public function setDateTimeZone(\DateTimeZone $dateTimeZone = null): PhotoGpsInterface
