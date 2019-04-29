@@ -11,10 +11,12 @@ liip_imagine:
         user_photo_flystem_loader:
             flysystem:
                 filesystem_service:  oneup_flysystem.flysystem_user_photo_filesystem
-
         city_image_flystem_loader:
             flysystem:
                 filesystem_service:  oneup_flysystem.flysystem_city_image_filesystem
+        ride_image_flystem_loader:
+            flysystem:
+                filesystem_service:  oneup_flysystem.flysystem_ride_image_filesystem
 
     filter_sets:
         cache: ~
@@ -70,26 +72,34 @@ liip_imagine:
             quality: 60
             filters:
                 thumbnail: { size: [1140, 250], mode: inset }
+
         ride_image_wide:
+            data_loader: ride_image_flystem_loader
             quality: 60
             filters:
                 thumbnail: { size: [1140, 250], mode: inset }
+        ride_photo_preview:
+            data_loader: ride_image_flystem_loader
+            quality: 50
+            filters:
+                thumbnail: { size: [600, 600], mode: inset }
+        facebook_preview_image:
+            data_loader: ride_image_flystem_loader
+            quality: 60
+            filters:
+                thumbnail: { size: [1600, 1600], mode: inset }
+
+        twitter_summary_large_image:
+            data_loader: ride_image_flystem_loader
+            quality: 50
+            filters:
+                thumbnail: { size: [800, 800], mode: inset }
+
         blog_featuredphoto_standard:
             quality: 80
             filters:
                 thumbnail: { size: [1600, 1600], mode: inset }
-        facebook_preview_image:
-            quality: 60
-            filters:
-                thumbnail: { size: [1600, 1600], mode: inset }
-        twitter_summary_large_image:
-            quality: 50
-            filters:
-                thumbnail: { size: [800, 800], mode: inset }
-        ride_photo_preview:
-            quality: 50
-            filters:
-                thumbnail: { size: [600, 600], mode: inset }
+
         frontpage_teaser_large:
             quality: 75
             filters:

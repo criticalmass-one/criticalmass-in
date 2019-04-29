@@ -9,6 +9,9 @@ oneup_flysystem:
         city_image_adapter:
             local:
                 directory: '%kernel.project_dir%/public/cities'
+        ride_image_adapter:
+            local:
+                directory: '%kernel.project_dir%/public/rides'
 
     filesystems:
         flysystem_photo_photo:
@@ -22,3 +25,7 @@ oneup_flysystem:
         flysystem_city_image:
             adapter: city_image_adapter
             mount: flysystem_city_image
+
+        flysystem_ride_image:
+            adapter: ride_image_adapter
+            mount: flysystem_ride_image

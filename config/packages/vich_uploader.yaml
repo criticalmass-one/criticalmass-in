@@ -20,14 +20,14 @@ vich_uploader:
             upload_destination: flysystem_city_image
             namer:              vich_uploader.namer_uniqid
 
+        ride_photo:
+            uri_prefix:         /
+            upload_destination: flysystem_ride_image
+            namer:              vich_uploader.namer_uniqid
+
         track_file:
             uri_prefix:         /tracks
             upload_destination: '%upload_destination.track%'
-            namer:              vich_uploader.namer_uniqid
-
-        ride_photo:
-            uri_prefix:         /rides
-            upload_destination: '%upload_destination.ride_photo%'
             namer:              vich_uploader.namer_uniqid
 
         frontpage_teaser:
