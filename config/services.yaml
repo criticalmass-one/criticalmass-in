@@ -64,6 +64,7 @@ services:
             #$twitterSecret: '%twitter.secret%'
             $cachedTimelineTtl: '%timeline.ttl%'
             $timezoneDbApiKey: '%timezone_db.api_key%'
+            $projectDirectory: '%kernel.project_dir%'
 
     App\:
         resource: '../src/*'
@@ -101,19 +102,15 @@ services:
 
     App\Criticalmass\Gps\GpxReader\GpxReader:
         arguments:
-            - '@vich_uploader.templating.helper.uploader_helper'
-            - '@oneup_flysystem.flysystem_track_track_filesystem'
+            $filesystem: '@oneup_flysystem.flysystem_track_track_filesystem'
 
     App\Criticalmass\Gps\GpxReader\TrackReader:
         arguments:
-            - '@vich_uploader.templating.helper.uploader_helper'
-            - '@oneup_flysystem.flysystem_track_track_filesystem'
+            $filesystem: '@oneup_flysystem.flysystem_track_track_filesystem'
 
     App\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGenerator:
         arguments:
-            - '@oneup_flysystem.flysystem_user_photo_filesystem'
-            - '%kernel.project_dir%'
-
+            $filesystem: '@oneup_flysystem.flysystem_user_photo_filesystem'
 
     App\Criticalmass\Geocoding\ReverseGeocoderInterface:
         alias: App\Criticalmass\Geocoding\CachedReverseGeocoder
