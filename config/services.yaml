@@ -63,7 +63,6 @@ services:
             #$twitterClientId: '%twitter.client_id%'
             #$twitterSecret: '%twitter.secret%'
             $uploadDestinationPhoto: '%upload_destination.photo%'
-            $uploadDestinationTrack: '%upload_destination.track%'
             $cachedTimelineTtl: '%timeline.ttl%'
             $timezoneDbApiKey: '%timezone_db.api_key%'
 
@@ -88,6 +87,16 @@ services:
 
     Sonata\SeoBundle\Seo\SeoPageInterface:
         alias: sonata.seo.page.default
+
+    App\Criticalmass\Gps\GpxReader\GpxReader:
+        arguments:
+            - '@vich_uploader.templating.helper.uploader_helper'
+            - '@oneup_flysystem.flysystem_track_track_filesystem'
+
+    App\Criticalmass\Gps\GpxReader\TrackReader:
+        arguments:
+            - '@vich_uploader.templating.helper.uploader_helper'
+            - '@oneup_flysystem.flysystem_track_track_filesystem'
 
     App\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGenerator:
         arguments:
