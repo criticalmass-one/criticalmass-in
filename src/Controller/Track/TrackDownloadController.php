@@ -2,6 +2,7 @@
 
 namespace App\Controller\Track;
 
+use League\Flysystem\Filesystem;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Controller\AbstractController;
@@ -17,7 +18,10 @@ class TrackDownloadController extends AbstractController
      */
     public function downloadAction(Track $track, UploaderHelper $uploaderHelper): Response
     {
-        $trackContent = file_get_contents($this->getTrackFilename($track, $uploaderHelper));
+        /** @var Filesystem $filesystem */
+        $filesystem = $this->get('oneup_flysystem.flysystem_track_track_filesystem');
+        $trackContent = $filesystem->read($this->generateFilename($track));
+
         $filename = $this->generateFilename($track);
 
         $response = new Response();
@@ -41,9 +45,6 @@ class TrackDownloadController extends AbstractController
 
     protected function getTrackFilename(Track $track, UploaderHelper $uploaderHelper): string
     {
-        $rootDirectory = $this->getParameter('kernel.root_dir');
-        $filename = $uploaderHelper->asset($track, 'trackFile');
-
-        return sprintf('%s/../public%s', $rootDirectory, $filename);
+        return $uploaderHelper->asset($track, 'trackFile');
     }
 }
