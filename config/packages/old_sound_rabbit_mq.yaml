@@ -5,18 +5,18 @@ old_sound_rabbit_mq:
     producers:
         view:
             connection:       default
-            exchange_options: { name: 'view', type: direct }
+            exchange_options: { name: 'criticalmass_view', type: direct }
     consumers:
         view:
             connection:       default
-            exchange_options: { name: 'view', type: direct }
-            queue_options:    { name: 'view'}
+            exchange_options: { name: 'criticalmass_view', type: direct }
+            queue_options:    { name: 'criticalmass_view'}
             callback:         App\Consumer\ViewConsumer
     batch_consumers:
         view:
             connection:       default
-            exchange_options: { name: 'view', type: fanout }
-            queue_options:    { name: 'view' }
+            exchange_options: { name: 'criticalmass_view', type: fanout }
+            queue_options:    { name: 'criticalmass_view' }
             callback:         App\Consumer\ViewBatchConsumer
             qos_options:      { prefetch_size: 0, prefetch_count: 50000, global: false }
             timeout_wait:     5
