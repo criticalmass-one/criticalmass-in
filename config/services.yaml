@@ -169,7 +169,6 @@ services:
     App\Criticalmass\Imagine\CacheResolver\RemoteCacheResolver:
         tags:
             - { name: liip_imagine.cache.resolver, resolver: App\Criticalmass\Imagine\CacheResolver\RemoteCacheResolver }
-            - { name: liip_imagine.cache.resolver, resolver: App\Criticalmass\Imagine\CacheResolver\RemoteCacheResolver }
 
     OldSound\RabbitMqBundle\RabbitMq\ProducerInterface:
         alias: old_sound_rabbit_mq.criticalmass_view_producer
