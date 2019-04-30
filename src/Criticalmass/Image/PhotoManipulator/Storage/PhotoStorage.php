@@ -12,9 +12,9 @@ class PhotoStorage extends AbstractPhotoStorage
     {
         $imagine = new Imagine();
 
-        $image = $imagine->open($this->getImageFilename($photo));
+        $photoContent = $this->filesystem->read($this->getImageFilename($photo));
 
-        return $image;
+        return $imagine->load($photoContent);
     }
 
     public function save(ManipulateablePhotoInterface $photo, ImageInterface $image): string
