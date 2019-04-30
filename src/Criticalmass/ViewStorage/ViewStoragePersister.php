@@ -58,8 +58,12 @@ class ViewStoragePersister implements ViewStoragePersisterInterface
         return new $viewClassName;
     }
 
-    protected function getUser(int $userId): ?User
+    protected function getUser(int $userId = null): ?User
     {
+        if (!$userId) {
+            return null;
+        }
+        
         return $this->registry->getManager()->getRepository(User::class)->find($userId);
     }
 
