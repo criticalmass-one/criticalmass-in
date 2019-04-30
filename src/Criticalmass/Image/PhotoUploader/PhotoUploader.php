@@ -57,9 +57,9 @@ class PhotoUploader extends AbstractPhotoUploader
             ->setCity($this->ride->getCity())
             ->setImageFile($uploadedFile);
 
-        $this->eventDispatcher->dispatch(PhotoUploadedEvent::NAME, new PhotoUploadedEvent($photo));
-
         $this->doctrine->getManager()->persist($photo);
+
+        $this->eventDispatcher->dispatch(PhotoUploadedEvent::NAME, new PhotoUploadedEvent($photo, true, $uploadedFile->getRealPath()));
 
         $this->addedPhotoList[] = $photo;
 
@@ -77,11 +77,11 @@ class PhotoUploader extends AbstractPhotoUploader
 
         $this->uploadFaker->fakeUpload($photo, 'imageFile', file_get_contents($sourceFilename));
 
-        $this->eventDispatcher->dispatch(PhotoUploadedEvent::NAME, new PhotoUploadedEvent($photo));
-
         $this->doctrine->getManager()->persist($photo);
 
         $this->addedPhotoList[] = $photo;
+
+        $this->eventDispatcher->dispatch(PhotoUploadedEvent::NAME, new PhotoUploadedEvent($photo));
 
         return $photo;
     }

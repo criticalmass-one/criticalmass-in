@@ -10,6 +10,7 @@ use App\Entity\Track;
 use App\Event\Photo\PhotoDeletedEvent;
 use App\Event\Photo\PhotoUpdatedEvent;
 use App\Event\Photo\PhotoUploadedEvent;
+use PHPExif\Reader\Reader;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -46,7 +47,7 @@ class PhotoEventSubscriber implements EventSubscriberInterface
 
     public function onPhotoUploaded(PhotoUploadedEvent $photoUploadedEvent): void
     {
-        $this->calculateDateTime($photoUploadedEvent->getPhoto());
+        $this->calculateDateTime($photoUploadedEvent->getPhoto(), $photoUploadedEvent->getTmpFilename());
         $this->reverseGeocode($photoUploadedEvent->getPhoto());
         $this->locate($photoUploadedEvent->getPhoto());
     }
@@ -62,9 +63,13 @@ class PhotoEventSubscriber implements EventSubscriberInterface
     {
     }
 
-    protected function calculateDateTime(Photo $photo): void
+    protected function calculateDateTime(Photo $photo, string $tmpFilename = null): void
     {
-        $exif = $this->exifWrapper->getExifData($photo);
+        if ($tmpFilename) {
+            $exif = Reader::factory(Reader::TYPE_NATIVE)->getExifFromFile($tmpFilename);
+        } else {
+            $exif = $this->exifWrapper->getExifData($photo);
+        }
 
         if ($exif && $dateTime = $exif->getCreationDate()) {
             $photo->setDateTime($dateTime);
