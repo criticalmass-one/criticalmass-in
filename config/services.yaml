@@ -37,9 +37,6 @@ parameters:
     upload_destination.ride_photo: '%kernel.project_dir%/public/rides'
     upload_destination.frontpage_teaser: '%kernel.project_dir%/public/teaser'
     upload_destination.user_photo: '%kernel.project_dir%/public/users'
-    feature.photos: true
-    feature.art11: false
-    feature.bikeright: true
     staticmaps.host: '%env(STATICMAPS_HOST)%'
     timezone_db.api_key: '%env(TIMEZONE_DB_API_KEY)%'
     yourls.api_hostname: '%env(YOURLS_API_HOSTNAME)%'
@@ -172,3 +169,7 @@ services:
     App\Criticalmass\Imagine\CacheResolver\RemoteCacheResolver:
         tags:
             - { name: liip_imagine.cache.resolver, resolver: App\Criticalmass\Imagine\CacheResolver\RemoteCacheResolver }
+            - { name: liip_imagine.cache.resolver, resolver: App\Criticalmass\Imagine\CacheResolver\RemoteCacheResolver }
+
+    OldSound\RabbitMqBundle\RabbitMq\ProducerInterface:
+        alias: old_sound_rabbit_mq.criticalmass_view_producer
