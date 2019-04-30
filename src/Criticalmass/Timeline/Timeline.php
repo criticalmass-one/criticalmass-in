@@ -2,11 +2,11 @@
 
 namespace App\Criticalmass\Timeline;
 
-use App\Criticalmass\Feature\FeatureManager\FeatureManagerInterface;
 use App\Criticalmass\Timeline\Collector\AbstractTimelineCollector;
 use App\Criticalmass\Timeline\Collector\TimelineCollectorInterface;
 use App\Criticalmass\Timeline\Item\ItemInterface;
 use Doctrine\Bundle\DoctrineBundle\Registry;
+use Flagception\Manager\FeatureManagerInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Bridge\Twig\TwigEngine;
 use Symfony\Component\Templating\EngineInterface;
@@ -150,7 +150,7 @@ class Timeline implements TimelineInterface
 
         if (count($requiredFeatures) > 0) {
             foreach ($requiredFeatures as $requiredFeature) {
-                if (!$this->featureManager->isFeatureEnabled($requiredFeature)) {
+                if (!$this->featureManager->isActive($requiredFeature)) {
                     return false;
                 }
             }
