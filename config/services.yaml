@@ -53,7 +53,6 @@ services:
         public: false
         bind:
             $openWeatherMapApiKey: '%openweather.appid%'
-            $rootDirectory: '%kernel.root_dir%'
             $webRootDir: '%kernel.root_dir%/../public'
             $staticmapsHost: '%staticmaps.host%'
             $gapWidth: '%track.gap_width%'
