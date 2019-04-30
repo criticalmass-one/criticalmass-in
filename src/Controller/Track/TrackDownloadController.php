@@ -20,14 +20,12 @@ class TrackDownloadController extends AbstractController
     {
         /** @var Filesystem $filesystem */
         $filesystem = $this->get('oneup_flysystem.flysystem_track_track_filesystem');
-        $trackContent = $filesystem->read($this->generateFilename($track));
-
-        $filename = $this->generateFilename($track);
+        $trackContent = $filesystem->read($track->getTrackFilename());
 
         $response = new Response();
 
         $response->headers->add([
-            'Content-disposition' => sprintf('attachment; filename=%s', $filename),
+            'Content-disposition' => sprintf('attachment; filename=%s', $this->generateHumanFriendlyFilename($track)),
             'Content-type' => 'application/gpx+xml',
         ]);
 
@@ -36,7 +34,7 @@ class TrackDownloadController extends AbstractController
         return $response;
     }
 
-    protected function generateFilename(Track $track): string
+    protected function generateHumanFriendlyFilename(Track $track): string
     {
         $filename = sprintf('Critical Mass %s %s', $track->getRide()->getCity()->getCity(), $track->getRide()->getDateTime()->format('Y-m-d'));
 
