@@ -13,10 +13,10 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use App\Criticalmass\Feature\Annotation\Feature as Feature;
+use Flagception\Bundle\FlagceptionBundle\Annotations\Feature;
 
 /**
- * @Feature(name="photos")
+ * @Feature("photos")
  */
 class PhotoController extends AbstractController
 {
