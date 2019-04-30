@@ -5,7 +5,6 @@ namespace App\Criticalmass\Image\PhotoUploader;
 use App\Entity\Photo;
 use App\Event\Photo\PhotoUploadedEvent;
 use DirectoryIterator;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class PhotoUploader extends AbstractPhotoUploader
@@ -48,27 +47,6 @@ class PhotoUploader extends AbstractPhotoUploader
         return $this->addedPhotoList;
     }
 
-    protected function calculateDateTime(Photo $photo): Photo
-    {
-        $exif = $this->exifWrapper->getExifData($photo);
-
-        if ($exif && $dateTime = $exif->getCreationDate()) {
-            $photo->setDateTime($dateTime);
-        }
-
-        return $photo;
-    }
-
-    protected function calculateLocation(Photo $photo): PhotoUploader
-    {
-        $this->photoGps
-            ->setPhoto($photo)
-            ->setTrack($this->track)
-            ->execute();
-
-        return $this;
-    }
-
     protected function createUploadedPhotoEntity(UploadedFile $uploadedFile): Photo
     {
         $photo = new Photo();
@@ -78,9 +56,6 @@ class PhotoUploader extends AbstractPhotoUploader
             ->setRide($this->ride)
             ->setCity($this->ride->getCity())
             ->setImageFile($uploadedFile);
-
-        $this->calculateDateTime($photo);
-        $this->calculateLocation($photo);
 
         $this->eventDispatcher->dispatch(PhotoUploadedEvent::NAME, new PhotoUploadedEvent($photo));
 
@@ -101,9 +76,6 @@ class PhotoUploader extends AbstractPhotoUploader
             ->setCity($this->ride->getCity());
 
         $this->uploadFaker->fakeUpload($photo, 'imageFile', file_get_contents($sourceFilename));
-
-        $this->calculateDateTime($photo);
-        $this->calculateLocation($photo);
 
         $this->eventDispatcher->dispatch(PhotoUploadedEvent::NAME, new PhotoUploadedEvent($photo));
 

@@ -29,28 +29,21 @@ abstract class AbstractPhotoUploader implements PhotoUploaderInterface
     /** @var Track $track */
     protected $track;
 
-    /** @var PhotoGps $photoGps */
-    protected $photoGps;
-
     /** @var EventDispatcherInterface $eventDispatcher */
     protected $eventDispatcher;
 
     /** @var array $addedPhotoList */
     protected $addedPhotoList = [];
 
-    /** @var ExifWrapperInterface $exifWrapper */
-    protected $exifWrapper;
-
     /** @var UploadFakerInterface $uploadFaker */
     protected $uploadFaker;
 
-    public function __construct(RegistryInterface $doctrine, PhotoGps $photoGps, EventDispatcherInterface $eventDispatcher, FilesystemInterface $filesystem, ExifWrapperInterface $exifWrapper, UploadFakerInterface $uploadFaker)
+    public function __construct(RegistryInterface $doctrine, EventDispatcherInterface $eventDispatcher, FilesystemInterface $filesystem, UploadFakerInterface $uploadFaker)
     {
         $this->doctrine = $doctrine;
-        $this->photoGps = $photoGps;
         $this->filesystem = $filesystem;
         $this->eventDispatcher = $eventDispatcher;
-        $this->exifWrapper = $exifWrapper;
+        $this->uploadFaker = $uploadFaker;
     }
 
     public function setUser(User $user): PhotoUploaderInterface

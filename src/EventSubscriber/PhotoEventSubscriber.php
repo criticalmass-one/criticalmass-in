@@ -3,6 +3,7 @@
 namespace App\EventSubscriber;
 
 use App\Criticalmass\Geocoding\ReverseGeocoderInterface;
+use App\Criticalmass\Image\ExifWrapper\ExifWrapperInterface;
 use App\Criticalmass\Image\PhotoGps\PhotoGpsInterface;
 use App\Entity\Photo;
 use App\Entity\Track;
@@ -23,11 +24,15 @@ class PhotoEventSubscriber implements EventSubscriberInterface
     /** @var PhotoGpsInterface $photoGps */
     protected $photoGps;
 
-    public function __construct(RegistryInterface $registry, ReverseGeocoderInterface $reverseGeocoder, PhotoGpsInterface $photoGps)
+    /** @var ExifWrapperInterface $exifWrapper */
+    protected $exifWrapper;
+
+    public function __construct(RegistryInterface $registry, ReverseGeocoderInterface $reverseGeocoder, PhotoGpsInterface $photoGps, ExifWrapperInterface $exifWrapper)
     {
         $this->registry = $registry;
         $this->reverseGeocoder = $reverseGeocoder;
         $this->photoGps = $photoGps;
+        $this->exifWrapper = $exifWrapper;
     }
 
     public static function getSubscribedEvents(): array
@@ -41,18 +46,29 @@ class PhotoEventSubscriber implements EventSubscriberInterface
 
     public function onPhotoUploaded(PhotoUploadedEvent $photoUploadedEvent): void
     {
+        $this->calculateDateTime($photoUploadedEvent->getPhoto());
         $this->reverseGeocode($photoUploadedEvent->getPhoto());
         $this->locate($photoUploadedEvent->getPhoto());
     }
 
     public function onPhotoUpdated(PhotoUpdatedEvent $photoUpdatedEvent): void
     {
+        $this->calculateDateTime($photoUpdatedEvent->getPhoto());
         $this->reverseGeocode($photoUpdatedEvent->getPhoto());
         $this->locate($photoUpdatedEvent->getPhoto());
     }
 
     public function onPhotoDeleted(PhotoDeletedEvent $photoDeletedEvent): void
     {
+    }
+
+    protected function calculateDateTime(Photo $photo): void
+    {
+        $exif = $this->exifWrapper->getExifData($photo);
+
+        if ($exif && $dateTime = $exif->getCreationDate()) {
+            $photo->setDateTime($dateTime);
+        }
     }
 
     protected function reverseGeocode(Photo $photo): void
