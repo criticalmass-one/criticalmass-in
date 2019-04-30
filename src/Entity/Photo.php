@@ -154,6 +154,41 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
      */
     protected $posts;
 
+    /**
+     * @var float $exifExposure
+     * @ORM\Column(type="float", nullable=true)
+     * @JMS\Expose
+     */
+    protected $exifExposure;
+
+    /**
+     * @var float $exifAperture
+     * @ORM\Column(type="float", nullable=true)
+     * @JMS\Expose
+     */
+    protected $exifAperture;
+
+    /**
+     * @var int $exifIso
+     * @ORM\Column(type="smallint", nullable=true)
+     * @JMS\Expose
+     */
+    protected $exifIso;
+
+    /**
+     * @var float $exifFocalLength
+     * @ORM\Column(type="float", nullable=true)
+     * @JMS\Expose
+     */
+    protected $exifFocalLength;
+
+    /**
+     * @var string $exifCamera
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Expose
+     */
+    protected $exifCamera;
+
     public function __construct()
     {
         $this->dateTime = new \DateTime();
@@ -397,6 +432,66 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
     public function getPosts(): Collection
     {
         return $this->posts;
+    }
+
+    public function getExifExposure(): ?float
+    {
+        return $this->exifExposure;
+    }
+
+    public function setExifExposure(float $exifExposure = null): Photo
+    {
+        $this->exifExposure = $exifExposure;
+
+        return $this;
+    }
+
+    public function getExifAperture(): ?float
+    {
+        return $this->exifAperture;
+    }
+
+    public function setExifAperture(float $exifAperture = null): Photo
+    {
+        $this->exifAperture = $exifAperture;
+
+        return $this;
+    }
+
+    public function getExifIso(): ?int
+    {
+        return $this->exifIso;
+    }
+
+    public function setExifIso(int $exifIso = null): Photo
+    {
+        $this->exifIso = $exifIso;
+
+        return $this;
+    }
+
+    public function getExifFocalLength(): ?float
+    {
+        return $this->exifFocalLength;
+    }
+
+    public function setExifFocalLength(float $exifFocalLength = null): Photo
+    {
+        $this->exifFocalLength = $exifFocalLength;
+
+        return $this;
+    }
+
+    public function getExifCamera(): ?string
+    {
+        return $this->exifCamera;
+    }
+
+    public function setExifCamera(string $exifCamera = null): Photo
+    {
+        $this->exifCamera = $exifCamera;
+
+        return $this;
     }
 
     public function __toString(): string
