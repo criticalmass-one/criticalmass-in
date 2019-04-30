@@ -3,19 +3,19 @@ old_sound_rabbit_mq:
         default:
             url: '%env(RABBITMQ_URL)%'
     producers:
-        view:
+        criticalmass_view:
             connection:       default
             exchange_options: { name: 'criticalmass_view', type: direct }
     consumers:
-        view:
+        criticalmass_view:
             connection:       default
             exchange_options: { name: 'criticalmass_view', type: direct }
             queue_options:    { name: 'criticalmass_view'}
             callback:         App\Consumer\ViewConsumer
     batch_consumers:
-        view:
+        criticalmass_view:
             connection:       default
-            exchange_options: { name: 'criticalmass_view', type: fanout }
+            exchange_options: { name: 'criticalmass_view', type: direct }
             queue_options:    { name: 'criticalmass_view' }
             callback:         App\Consumer\ViewBatchConsumer
             qos_options:      { prefetch_size: 0, prefetch_count: 50000, global: false }

@@ -147,4 +147,4 @@ services:
             - { name: liip_imagine.cache.resolver, resolver: App\Criticalmass\Imagine\CacheResolver\RemoteCacheResolver }
 
     OldSound\RabbitMqBundle\RabbitMq\ProducerInterface:
-        alias: old_sound_rabbit_mq.view_producer
+        alias: old_sound_rabbit_mq.criticalmass_view_producer
