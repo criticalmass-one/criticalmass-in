@@ -320,9 +320,6 @@
     "php-curl-class/php-curl-class": {
         "version": "8.1.0"
     },
-    "php-http/cache-plugin": {
-        "version": "v1.5.0"
-    },
     "php-http/client-common": {
         "version": "1.7.0"
     },
@@ -659,8 +656,14 @@
     "symfony/polyfill-ctype": {
         "version": "v1.8.0"
     },
+    "symfony/polyfill-iconv": {
+        "version": "v1.11.0"
+    },
     "symfony/polyfill-intl-icu": {
         "version": "v1.8.0"
+    },
+    "symfony/polyfill-intl-idn": {
+        "version": "v1.11.0"
     },
     "symfony/polyfill-mbstring": {
         "version": "v1.8.0"
