@@ -84,6 +84,25 @@ class PhotoRepository extends EntityRepository
         return $result;
     }
 
+    public function findPhotosWithoutExifData(): array
+    {
+        $builder = $this->createQueryBuilder('p');
+
+        $builder
+            ->select('p')
+            ->where($builder->expr()->isNull('p.exifExposure'))
+            ->andWhere($builder->expr()->isNull('p.exifAperture'))
+            ->andWhere($builder->expr()->isNull('p.exifIso'))
+            ->andWhere($builder->expr()->isNull('p.exifFocalLength'))
+            ->andWhere($builder->expr()->isNull('p.exifCamera'))
+            ->orderBy('p.dateTime', 'asc');
+
+        $query = $builder->getQuery();
+        $result = $query->getResult();
+
+        return $result;
+    }
+
     public function findGeocodeablePhotos(int $limit = 50, ?bool $emptyLocationOnly = false): array
     {
         $builder = $this->createQueryBuilder('p');
