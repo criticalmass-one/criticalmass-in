@@ -15,7 +15,7 @@ final class Version20190430213104 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE photo ADD exifExposure DOUBLE PRECISION DEFAULT NULL, ADD exifAperture DOUBLE PRECISION DEFAULT NULL, ADD exifIso SMALLINT DEFAULT NULL, ADD exifFocalLength DOUBLE PRECISION DEFAULT NULL, ADD exifCamera VARCHAR(255) DEFAULT NULL');
+        $this->addSql('ALTER TABLE photo ADD exifExposure VARCHAR(255) DEFAULT NULL, ADD exifAperture VARCHAR(255) DEFAULT NULL, ADD exifIso SMALLINT DEFAULT NULL, ADD exifFocalLength DOUBLE PRECISION DEFAULT NULL, ADD exifCamera VARCHAR(255) DEFAULT NULL');
     }
 
     public function down(Schema $schema) : void

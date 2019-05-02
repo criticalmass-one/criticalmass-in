@@ -155,15 +155,15 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
     protected $posts;
 
     /**
-     * @var float $exifExposure
-     * @ORM\Column(type="float", nullable=true)
+     * @var string $exifExposure
+     * @ORM\Column(type="string", nullable=true)
      * @JMS\Expose
      */
     protected $exifExposure;
 
     /**
-     * @var float $exifAperture
-     * @ORM\Column(type="float", nullable=true)
+     * @var string $exifAperture
+     * @ORM\Column(type="string", nullable=true)
      * @JMS\Expose
      */
     protected $exifAperture;
@@ -434,24 +434,24 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
         return $this->posts;
     }
 
-    public function getExifExposure(): ?float
+    public function getExifExposure(): ?string
     {
         return $this->exifExposure;
     }
 
-    public function setExifExposure(float $exifExposure = null): Photo
+    public function setExifExposure(string $exifExposure = null): Photo
     {
         $this->exifExposure = $exifExposure;
 
         return $this;
     }
 
-    public function getExifAperture(): ?float
+    public function getExifAperture(): ?string
     {
         return $this->exifAperture;
     }
 
-    public function setExifAperture(float $exifAperture = null): Photo
+    public function setExifAperture(string $exifAperture = null): Photo
     {
         $this->exifAperture = $exifAperture;
 
