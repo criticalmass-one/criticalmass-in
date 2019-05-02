@@ -26,13 +26,37 @@ class ExifHandler extends AbstractExifHandler
     {
         $reflection = new \ReflectionClass($photo);
 
-        /** @var \ReflectionProperty $property */
-        foreach ($reflection->getProperties() as $property) {
-            if (strpos($property->getName(), 'exif') !== 0) {
+        /** @var \ReflectionMethod $method */
+        foreach ($reflection->getMethods() as $method) {
+            if (strpos($method->getName(), 'setExif') !== 0) {
                 continue;
             }
 
+            $exifProperty = substr($method->getName(), 7);
+            $exifGetMethodName = sprintf('get%s', $exifProperty);
+            $photoSetMethodName = $method->getName();
 
+            $type = $method->getParameters()[0]->getType();
+
+            $this->typeawareAssignment($photo, $photoSetMethodName, $exif, $exifGetMethodName, $type->getName());
         }
+
+        dump($photo);
+
+        return $photo;
+    }
+
+    protected function typeawareAssignment(Photo $photo, string $setMethodName, Exif $exif, string $getMethodName, string $type): Photo
+    {
+        switch ($type) {
+            case 'string': $photo->$setMethodName((string) $exif->$getMethodName());
+                break;
+            case 'int': $photo->$setMethodName((int) $exif->$getMethodName());
+                break;
+            case 'float': $photo->$setMethodName((float) $exif->$getMethodName());
+                break;
+        }
+
+        return $photo;
     }
 }

@@ -95,7 +95,7 @@ class PhotoRepository extends EntityRepository
             ->andWhere($builder->expr()->isNull('p.exifIso'))
             ->andWhere($builder->expr()->isNull('p.exifFocalLength'))
             ->andWhere($builder->expr()->isNull('p.exifCamera'))
-            ->orderBy('p.dateTime', 'asc');
+            ->orderBy('p.dateTime', 'desc');
 
         $query = $builder->getQuery();
         $result = $query->getResult();

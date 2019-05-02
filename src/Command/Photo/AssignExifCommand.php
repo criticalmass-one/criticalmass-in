@@ -53,6 +53,8 @@ class AssignExifCommand extends Command
             $progressBar->advance();
         }
 
+        $this->registry->getManager()->flush();
+
         $progressBar->finish();
     }
 }
