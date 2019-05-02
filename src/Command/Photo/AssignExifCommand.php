@@ -4,13 +4,11 @@ namespace App\Command\Photo;
 
 use App\Criticalmass\Image\ExifHandler\ExifHandlerInterface;
 use App\Entity\Photo;
-use App\Entity\Track;
-use App\Entity\User;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
-use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class AssignExifCommand extends Command
@@ -33,12 +31,19 @@ class AssignExifCommand extends Command
     {
         $this
             ->setName('criticalmass:photos:assign-exif')
-            ->setDescription('Assign exif data to photos');
+            ->setDescription('Assign exif data to photos')
+            ->addOption('limit', 'l', InputOption::VALUE_REQUIRED, 'Number of photos to process at once')
+            ->addOption('offset', 'o', InputOption::VALUE_REQUIRED, 'Offset to start processing')
+            ->addOption('overwrite', 'ow', InputOption::VALUE_NONE, 'Overwrite existing data');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        $photoList = $this->registry->getRepository(Photo::class)->findPhotosWithoutExifData();
+        $limit = $input->getOption('limit') ? (int) $input->getOption('limit') : null;
+        $offset = $input->getOption('offset') ? (int) $input->getOption('offset') : null;
+        $overwrite = $input->getOption('overwrite') ? (bool) $input->getOption('overwrite') : false;
+
+        $photoList = $this->registry->getRepository(Photo::class)->findPhotosWithoutExifData($limit, $offset, $overwrite);
 
         $progressBar = new ProgressBar($output, count($photoList));
 
