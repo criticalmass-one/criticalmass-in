@@ -5,7 +5,6 @@ namespace App\Criticalmass\Image\PhotoUploader;
 use App\Entity\Ride;
 use App\Entity\Track;
 use App\Entity\User;
-use App\Criticalmass\Image\PhotoGps\PhotoGps;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -23,22 +22,15 @@ abstract class AbstractPhotoUploader implements PhotoUploaderInterface
     /** @var Ride $ride */
     protected $ride;
 
-    /** @var Track $track */
-    protected $track;
-
-    /** @var PhotoGps $photoGps */
-    protected $photoGps;
-
     /** @var EventDispatcherInterface $eventDispatcher */
     protected $eventDispatcher;
 
     /** @var array $addedPhotoList */
     protected $addedPhotoList = [];
 
-    public function __construct(RegistryInterface $doctrine, PhotoGps $photoGps, string $uploadDestinationPhoto, EventDispatcherInterface $eventDispatcher)
+    public function __construct(RegistryInterface $doctrine, string $uploadDestinationPhoto, EventDispatcherInterface $eventDispatcher)
     {
         $this->doctrine = $doctrine;
-        $this->photoGps = $photoGps;
         $this->uploadDestinationPhoto = $uploadDestinationPhoto;
         $this->eventDispatcher = $eventDispatcher;
     }
@@ -57,10 +49,9 @@ abstract class AbstractPhotoUploader implements PhotoUploaderInterface
         return $this;
     }
 
+    /** @deprecated  */
     public function setTrack(Track $track = null): PhotoUploaderInterface
     {
-        $this->track = $track;
-
         return $this;
     }
 }

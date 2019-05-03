@@ -3,6 +3,7 @@
 namespace App\EventSubscriber;
 
 use App\Criticalmass\Geocoding\ReverseGeocoderInterface;
+use App\Criticalmass\Image\ExifHandler\ExifHandlerInterface;
 use App\Criticalmass\Image\PhotoGps\PhotoGpsInterface;
 use App\Entity\Photo;
 use App\Entity\Track;
@@ -23,11 +24,15 @@ class PhotoEventSubscriber implements EventSubscriberInterface
     /** @var PhotoGpsInterface $photoGps */
     protected $photoGps;
 
-    public function __construct(RegistryInterface $registry, ReverseGeocoderInterface $reverseGeocoder, PhotoGpsInterface $photoGps)
+    /** @var ExifHandlerInterface $exifHandler */
+    protected $exifHandler;
+
+    public function __construct(RegistryInterface $registry, ReverseGeocoderInterface $reverseGeocoder, PhotoGpsInterface $photoGps, ExifHandlerInterface $exifHandler)
     {
         $this->registry = $registry;
         $this->reverseGeocoder = $reverseGeocoder;
         $this->photoGps = $photoGps;
+        $this->exifHandler = $exifHandler;
     }
 
     public static function getSubscribedEvents(): array
@@ -41,14 +46,23 @@ class PhotoEventSubscriber implements EventSubscriberInterface
 
     public function onPhotoUploaded(PhotoUploadedEvent $photoUploadedEvent): void
     {
+        // this is for persisting the uploaded file into the filesystem
+        $this->registry->getManager()->flush();
+
+        $this->handleExifData($photoUploadedEvent->getPhoto());
         $this->reverseGeocode($photoUploadedEvent->getPhoto());
         $this->locate($photoUploadedEvent->getPhoto());
+
+        // and this is to flush our changes to the filesystem
+        $this->registry->getManager()->flush();
     }
 
     public function onPhotoUpdated(PhotoUpdatedEvent $photoUpdatedEvent): void
     {
         $this->reverseGeocode($photoUpdatedEvent->getPhoto());
         $this->locate($photoUpdatedEvent->getPhoto());
+
+        $this->registry->getManager()->flush();
     }
 
     public function onPhotoDeleted(PhotoDeletedEvent $photoDeletedEvent): void
@@ -60,7 +74,7 @@ class PhotoEventSubscriber implements EventSubscriberInterface
         $this->reverseGeocoder->reverseGeocode($photo);
     }
 
-    protected function locate(Photo $photo, bool $flush = true): void
+    protected function locate(Photo $photo): void
     {
         $track = $this->registry->getRepository(Track::class)->findByUserAndRide($photo->getRide(), $photo->getUser());
 
@@ -71,13 +85,18 @@ class PhotoEventSubscriber implements EventSubscriberInterface
                     ->setTrack($track)
                     ->execute()
                     ->getPhoto();
-
-                if ($flush) {
-                    $this->registry->getManager()->flush();
-                }
             } catch (\Exception $exception) {
 
             }
+        }
+    }
+
+    protected function handleExifData(Photo $photo): void
+    {
+        $exif = $this->exifHandler->readExifDataFromPhotoFile($photo);
+
+        if ($exif) {
+            $this->exifHandler->assignExifDataToPhoto($photo, $exif);
         }
     }
 }

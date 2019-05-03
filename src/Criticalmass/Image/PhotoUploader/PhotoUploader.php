@@ -5,7 +5,6 @@ namespace App\Criticalmass\Image\PhotoUploader;
 use App\Entity\Photo;
 use App\Event\Photo\PhotoUploadedEvent;
 use DirectoryIterator;
-use PHPExif\Reader\Reader;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -49,30 +48,6 @@ class PhotoUploader extends AbstractPhotoUploader
         return $this->addedPhotoList;
     }
 
-    protected function calculateDateTime(Photo $photo): Photo
-    {
-        $photoFilename = sprintf('%s/%s', $this->uploadDestinationPhoto, $photo->getImageName());
-
-        $reader = Reader::factory(Reader::TYPE_NATIVE);
-        $exif = $reader->getExifFromFile($photoFilename);
-
-        if ($exif !== false && $dateTime = $exif->getCreationDate()) {
-            $photo->setDateTime($dateTime);
-        }
-
-        return $photo;
-    }
-
-    protected function calculateLocation(Photo $photo): PhotoUploader
-    {
-        $this->photoGps
-            ->setPhoto($photo)
-            ->setTrack($this->track)
-            ->execute();
-
-        return $this;
-    }
-
     protected function createUploadedPhotoEntity(UploadedFile $uploadedFile): Photo
     {
         $photo = new Photo();
@@ -83,12 +58,9 @@ class PhotoUploader extends AbstractPhotoUploader
             ->setCity($this->ride->getCity())
             ->setImageFile($uploadedFile);
 
-        $this->calculateDateTime($photo);
-        $this->calculateLocation($photo);
+        $this->doctrine->getManager()->persist($photo);
 
         $this->eventDispatcher->dispatch(PhotoUploadedEvent::NAME, new PhotoUploadedEvent($photo));
-
-        $this->doctrine->getManager()->persist($photo);
 
         $this->addedPhotoList[] = $photo;
 
@@ -106,12 +78,9 @@ class PhotoUploader extends AbstractPhotoUploader
 
         $this->fakeUpload($photo, file_get_contents($sourceFilename));
 
-        $this->calculateDateTime($photo);
-        $this->calculateLocation($photo);
+        $this->doctrine->getManager()->persist($photo);
 
         $this->eventDispatcher->dispatch(PhotoUploadedEvent::NAME, new PhotoUploadedEvent($photo));
-
-        $this->doctrine->getManager()->persist($photo);
 
         $this->addedPhotoList[] = $photo;
 

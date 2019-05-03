@@ -48,8 +48,6 @@ class PhotoController extends AbstractController
 
         $this->setSeoMetaDetails($seoPage, $photo);
 
-        $exifData = $this->readExifData($photo);
-
         return $this->render('Photo/show.html.twig', [
             'photo' => $photo,
             'nextPhoto' => $this->getPhotoRepository()->getNextPhoto($photo),
@@ -57,7 +55,6 @@ class PhotoController extends AbstractController
             'city' => $city,
             'ride' => $ride,
             'track' => $track,
-            'exifData' => $exifData ? $exifData->getData() : null,
         ]);
     }
 
@@ -73,19 +70,6 @@ class PhotoController extends AbstractController
         }
 
         return new Response(null);
-    }
-
-    protected function readExifData(Photo $photo): ?Exif
-    {
-        $filename = sprintf('%s/%s', $this->getParameter('upload_destination.photo'), $photo->getImageName());
-
-        $reader = Reader::factory(Reader::TYPE_NATIVE);
-
-        if ($exif = $reader->read($filename)) {
-            return $exif;
-        }
-
-        return null;
     }
 
     protected function setSeoMetaDetails(SeoPageInterface $seoPage, Photo $photo): void
