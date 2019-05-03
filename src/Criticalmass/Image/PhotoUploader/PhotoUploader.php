@@ -75,14 +75,21 @@ class PhotoUploader extends AbstractPhotoUploader
             ->setRide($this->ride)
             ->setCity($this->ride->getCity());
 
-        $this->uploadFaker->fakeUpload($photo, 'imageFile', file_get_contents($sourceFilename));
+        $tmpFilename = $this->uploadFaker->fakeUpload($photo, 'imageFile', file_get_contents($sourceFilename), $this->extractFilename($sourceFilename));
 
         $this->doctrine->getManager()->persist($photo);
-
-        $this->eventDispatcher->dispatch(PhotoUploadedEvent::NAME, new PhotoUploadedEvent($photo));
+        
+        $this->eventDispatcher->dispatch(PhotoUploadedEvent::NAME, new PhotoUploadedEvent($photo, true, $tmpFilename));
 
         $this->addedPhotoList[] = $photo;
 
         return $photo;
+    }
+
+    protected function extractFilename(string $sourceFilename): string
+    {
+        $filenameParts = explode('/', $sourceFilename);
+
+        return array_shift($filenameParts);
     }
 }

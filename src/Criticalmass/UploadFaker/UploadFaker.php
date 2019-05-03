@@ -6,19 +6,19 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UploadFaker extends AbstractUploadFaker
 {
-    public function fakeUpload(FakeUploadable $uploadable, string $propertyName, string $fileContent): FakeUploadable
+    public function fakeUpload(FakeUploadable $uploadable, string $propertyName, string $fileContent, string $originalFilename = null): string
     {
-        $filename = $this->generateFilename();
+        $tmpFilename = $this->generateFilename();
 
-        $this->dumpContentToTmp($filename, $fileContent);
+        $this->dumpContentToTmp($tmpFilename, $fileContent);
 
-        $file = $this->createUploadedFile($filename);
+        $file = $this->createUploadedFile($tmpFilename, $originalFilename);
 
         $setMethodName = $this->generateSetMethodName($propertyName);
 
         $uploadable->$setMethodName($file);
 
-        return $uploadable;
+        return $tmpFilename;
     }
 
     protected function generateSetMethodName(string $propertyName): string
@@ -26,9 +26,9 @@ class UploadFaker extends AbstractUploadFaker
         return sprintf('set%s', ucfirst($propertyName));
     }
 
-    protected function createUploadedFile(string $filename): UploadedFile
+    protected function createUploadedFile(string $filename, string $originalFilename): UploadedFile
     {
-        return new UploadedFile($filename, $filename, null, null, true);
+        return new UploadedFile($filename, $originalFilename, null, null, true);
     }
 
     protected function generateFilename(): string
@@ -38,7 +38,6 @@ class UploadFaker extends AbstractUploadFaker
 
     protected function dumpContentToTmp(string $filename, string $fileContent): UploadFaker
     {
-        dump($filename);
         $this->filesystem->dumpFile($filename, $fileContent);
 
         return $this;
