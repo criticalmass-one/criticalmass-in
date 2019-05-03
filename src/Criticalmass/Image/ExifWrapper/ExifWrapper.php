@@ -12,7 +12,7 @@ class ExifWrapper extends AbstractExifWrapper
     {
         $filename = $this->dumpFileToTmp($photo);
 
-        $exif = $this->readExifDataFromTmp($filename);
+        $exif = $this->readExifDataFromFile($filename);
 
         $this->deleteTmpFile($filename);
 
@@ -30,7 +30,7 @@ class ExifWrapper extends AbstractExifWrapper
         return $path;
     }
 
-    protected function readExifDataFromTmp($filename): ?Exif
+    public function readExifDataFromFile($filename): ?Exif
     {
         $reader = Reader::factory(Reader::TYPE_NATIVE);
         $exif = $reader->read($filename);

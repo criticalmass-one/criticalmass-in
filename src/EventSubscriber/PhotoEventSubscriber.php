@@ -10,7 +10,6 @@ use App\Entity\Track;
 use App\Event\Photo\PhotoDeletedEvent;
 use App\Event\Photo\PhotoUpdatedEvent;
 use App\Event\Photo\PhotoUploadedEvent;
-use PHPExif\Reader\Reader;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

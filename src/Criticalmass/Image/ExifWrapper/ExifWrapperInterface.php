@@ -8,4 +8,5 @@ use PHPExif\Exif;
 interface ExifWrapperInterface
 {
     public function getExifData(Photo $photo): ?Exif;
+    public function readExifDataFromFile($filename): ?Exif;
 }

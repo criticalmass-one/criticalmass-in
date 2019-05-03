@@ -82,7 +82,7 @@ class PhotoUploader extends AbstractPhotoUploader
         $this->eventDispatcher->dispatch(PhotoUploadedEvent::NAME, new PhotoUploadedEvent($photo));
 
         $this->addedPhotoList[] = $photo;
-        
+
         return $photo;
     }
 }

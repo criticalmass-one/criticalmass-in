@@ -28,7 +28,7 @@ class UploadFaker extends AbstractUploadFaker
 
     protected function createUploadedFile(string $filename): UploadedFile
     {
-        return new UploadedFile(self::TMP, $filename, null, null, true);
+        return new UploadedFile($filename, $filename, null, null, true);
     }
 
     protected function generateFilename(): string
@@ -38,6 +38,7 @@ class UploadFaker extends AbstractUploadFaker
 
     protected function dumpContentToTmp(string $filename, string $fileContent): UploadFaker
     {
+        dump($filename);
         $this->filesystem->dumpFile($filename, $fileContent);
 
         return $this;
