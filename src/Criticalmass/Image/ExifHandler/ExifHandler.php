@@ -46,8 +46,6 @@ class ExifHandler extends AbstractExifHandler
             $this->typeawareAssignment($photo, $photoSetMethodName, $exif, $exifGetMethodName, $type->getName());
         }
 
-        $this->typeawareAssignment($photo, 'setDateTime', $exif, 'getCreationDate', 'DateTime');
-
         return $photo;
     }
 
