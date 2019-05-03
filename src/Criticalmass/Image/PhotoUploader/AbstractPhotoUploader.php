@@ -2,12 +2,10 @@
 
 namespace App\Criticalmass\Image\PhotoUploader;
 
-use App\Criticalmass\Image\ExifWrapper\ExifWrapperInterface;
 use App\Criticalmass\UploadFaker\UploadFakerInterface;
 use App\Entity\Ride;
 use App\Entity\Track;
 use App\Entity\User;
-use App\Criticalmass\Image\PhotoGps\PhotoGps;
 use League\Flysystem\FilesystemInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -25,9 +23,6 @@ abstract class AbstractPhotoUploader implements PhotoUploaderInterface
 
     /** @var Ride $ride */
     protected $ride;
-
-    /** @var Track $track */
-    protected $track;
 
     /** @var EventDispatcherInterface $eventDispatcher */
     protected $eventDispatcher;
@@ -60,10 +55,9 @@ abstract class AbstractPhotoUploader implements PhotoUploaderInterface
         return $this;
     }
 
+    /** @deprecated  */
     public function setTrack(Track $track = null): PhotoUploaderInterface
     {
-        $this->track = $track;
-
         return $this;
     }
 }

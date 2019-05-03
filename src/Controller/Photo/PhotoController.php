@@ -8,7 +8,6 @@ use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Entity\Photo;
 use App\Entity\Track;
 use App\Event\View\ViewEvent;
-use PHPExif\Exif;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,8 +48,6 @@ class PhotoController extends AbstractController
 
         $this->setSeoMetaDetails($seoPage, $photo);
 
-        $exifData = $this->readExifData($exifWrapper, $photo);
-
         return $this->render('Photo/show.html.twig', [
             'photo' => $photo,
             'nextPhoto' => $this->getPhotoRepository()->getNextPhoto($photo),
@@ -58,7 +55,6 @@ class PhotoController extends AbstractController
             'city' => $city,
             'ride' => $ride,
             'track' => $track,
-            'exifData' => $exifData ? $exifData->getData() : null,
         ]);
     }
 
@@ -74,11 +70,6 @@ class PhotoController extends AbstractController
         }
 
         return new Response(null);
-    }
-
-    protected function readExifData(ExifWrapperInterface $exifWrapper, Photo $photo): ?Exif
-    {
-        return $exifWrapper->getExifData($photo);
     }
 
     protected function setSeoMetaDetails(SeoPageInterface $seoPage, Photo $photo): void
