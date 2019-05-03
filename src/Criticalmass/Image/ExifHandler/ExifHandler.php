@@ -12,6 +12,11 @@ class ExifHandler extends AbstractExifHandler
     {
         $filename = sprintf('%s/%s', $this->uploadDestinationPhoto, $photo->getImageName());
 
+        return $this->readExifDataFromFile($filename);
+    }
+
+    public function readExifDataFromFile(string $filename): ?Exif
+    {
         $reader = Reader::factory(Reader::TYPE_NATIVE);
         $exif = $reader->read($filename);
 

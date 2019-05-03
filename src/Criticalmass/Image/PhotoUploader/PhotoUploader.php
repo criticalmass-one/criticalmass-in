@@ -86,9 +86,9 @@ class PhotoUploader extends AbstractPhotoUploader
         $this->calculateDateTime($photo);
         $this->calculateLocation($photo);
 
-        $this->eventDispatcher->dispatch(PhotoUploadedEvent::NAME, new PhotoUploadedEvent($photo));
-
         $this->doctrine->getManager()->persist($photo);
+
+        $this->eventDispatcher->dispatch(PhotoUploadedEvent::NAME, new PhotoUploadedEvent($photo));
 
         $this->addedPhotoList[] = $photo;
 
@@ -109,9 +109,9 @@ class PhotoUploader extends AbstractPhotoUploader
         $this->calculateDateTime($photo);
         $this->calculateLocation($photo);
 
-        $this->eventDispatcher->dispatch(PhotoUploadedEvent::NAME, new PhotoUploadedEvent($photo));
-
         $this->doctrine->getManager()->persist($photo);
+
+        $this->eventDispatcher->dispatch(PhotoUploadedEvent::NAME, new PhotoUploadedEvent($photo));
 
         $this->addedPhotoList[] = $photo;
 
