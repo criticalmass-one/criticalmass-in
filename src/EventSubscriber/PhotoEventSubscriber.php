@@ -48,7 +48,7 @@ class PhotoEventSubscriber implements EventSubscriberInterface
     {
         // this is for persisting the uploaded file into the filesystem
         $this->registry->getManager()->flush();
-        
+
         $this->handleExifData($photoUploadedEvent->getPhoto());
         $this->reverseGeocode($photoUploadedEvent->getPhoto());
         $this->locate($photoUploadedEvent->getPhoto());
