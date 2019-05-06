@@ -342,13 +342,13 @@ class PhotoRepository extends EntityRepository
 
         if ($startDateTime) {
             $builder
-                ->andWhere($builder->expr()->gte('p.exifCreationDateTime', ':startDateTime'))
+                ->andWhere($builder->expr()->gte('p.exifCreationDate', ':startDateTime'))
                 ->setParameter('startDateTime', $startDateTime);
         }
 
         if ($endDateTime) {
             $builder
-                ->andWhere($builder->expr()->lte('p.exifCreationDateTime', ':endDateTime'))
+                ->andWhere($builder->expr()->lte('p.exifCreationDate', ':endDateTime'))
                 ->setParameter('endDateTime', $endDateTime);
         }
 
@@ -356,7 +356,7 @@ class PhotoRepository extends EntityRepository
             $builder->setMaxResults($limit);
         }
 
-        $builder->addOrderBy('p.exifCreationDateTime', 'DESC');
+        $builder->addOrderBy('p.exifCreationDate', 'DESC');
 
         $query = $builder->getQuery();
 
