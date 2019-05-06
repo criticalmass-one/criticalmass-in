@@ -20,13 +20,13 @@ class PhotoRepository extends EntityRepository
             ->select('p')
             ->where($builder->expr()->eq('p.ride', ':ride'))
             ->setParameter('ride', $photo->getRide())
-            ->andWhere($builder->expr()->lt('p.dateTime', ':dateTime'))
-            ->setParameter('dateTime', $photo->getDateTime())
+            ->andWhere($builder->expr()->lt('p.exifCreationDate', ':dateTime'))
+            ->setParameter('dateTime', $photo->getExifCreationDate())
             ->andWhere($builder->expr()->eq('p.enabled', ':enabled'))
             ->setParameter('enabled', true)
             ->andWhere($builder->expr()->eq('p.deleted', ':deleted'))
             ->setParameter('deleted', false)
-            ->addOrderBy('p.dateTime', 'DESC')
+            ->addOrderBy('p.exifCreationDate', 'DESC')
             ->setMaxResults(1);
 
         $query = $builder->getQuery();
@@ -44,13 +44,13 @@ class PhotoRepository extends EntityRepository
             ->select('p')
             ->where($builder->expr()->eq('p.ride', ':ride'))
             ->setParameter('ride', $photo->getRide())
-            ->andWhere($builder->expr()->gt('p.dateTime', ':dateTime'))
-            ->setParameter('dateTime', $photo->getDateTime())
+            ->andWhere($builder->expr()->gt('p.exifCreationDate', ':dateTime'))
+            ->setParameter('dateTime', $photo->getExifCreationDate())
             ->andWhere($builder->expr()->eq('p.enabled', ':enabled'))
             ->setParameter('enabled', true)
             ->andWhere($builder->expr()->eq('p.deleted', ':deleted'))
             ->setParameter('deleted', false)
-            ->addOrderBy('p.dateTime', 'ASC')
+            ->addOrderBy('p.exifCreationDate', 'ASC')
             ->setMaxResults(1);
 
         $query = $builder->getQuery();
@@ -122,7 +122,7 @@ class PhotoRepository extends EntityRepository
             ->select('p')
             ->where($builder->expr()->isNotNull('p.latitude'))
             ->andWhere($builder->expr()->isNotNull('p.longitude'))
-            ->orderBy('p.dateTime', 'asc')
+            ->orderBy('p.exifCreationDate', 'asc')
             ->setMaxResults($limit);
 
         if ($emptyLocationOnly) {
@@ -240,7 +240,7 @@ class PhotoRepository extends EntityRepository
             ->setParameter('ride', $ride)
             ->andWhere($builder->expr()->eq('p.deleted', ':deleted'))
             ->setParameter('deleted', false)
-            ->addOrderBy('p.dateTime', 'ASC');
+            ->addOrderBy('p.exifCreationDate', 'ASC');
 
         return $builder;
     }
@@ -281,7 +281,7 @@ class PhotoRepository extends EntityRepository
         ->setParameter('user', $user)
         ->andWhere($builder->expr()->eq('p.deleted', ':deleted'))
         ->setParameter('deleted', false)
-        ->addOrderBy('p.dateTime', 'ASC');
+        ->addOrderBy('p.exifCreationDate', 'ASC');
 
         return $builder->getQuery();
     }
@@ -342,13 +342,13 @@ class PhotoRepository extends EntityRepository
 
         if ($startDateTime) {
             $builder
-                ->andWhere($builder->expr()->gte('p.creationDateTime', ':startDateTime'))
+                ->andWhere($builder->expr()->gte('p.exifCreationDateTime', ':startDateTime'))
                 ->setParameter('startDateTime', $startDateTime);
         }
 
         if ($endDateTime) {
             $builder
-                ->andWhere($builder->expr()->lte('p.creationDateTime', ':endDateTime'))
+                ->andWhere($builder->expr()->lte('p.exifCreationDateTime', ':endDateTime'))
                 ->setParameter('endDateTime', $endDateTime);
         }
 
@@ -356,7 +356,7 @@ class PhotoRepository extends EntityRepository
             $builder->setMaxResults($limit);
         }
 
-        $builder->addOrderBy('p.creationDateTime', 'DESC');
+        $builder->addOrderBy('p.exifCreationDateTime', 'DESC');
 
         $query = $builder->getQuery();
 
