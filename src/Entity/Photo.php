@@ -95,12 +95,6 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
      * @ORM\Column(type="datetime")
      * @JMS\Expose
      */
-    protected $dateTime;
-
-    /**
-     * @ORM\Column(type="datetime")
-     * @JMS\Expose
-     */
     protected $creationDateTime;
 
     /**
@@ -189,9 +183,16 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
      */
     protected $exifCamera;
 
+    /**
+     * @var \DateTime $exifCreationDate
+     * @ORM\Column(type="datetime")
+     * @JMS\Expose
+     */
+    protected $exifCreationDate;
+
     public function __construct()
     {
-        $this->dateTime = new \DateTime();
+        $this->exifCreationDate = new \DateTime();
         $this->creationDateTime = new \DateTime();
         $this->updatedAt = new \DateTime();
         $this->description = '';
@@ -294,18 +295,6 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
     public function setDescription(string $description = null): Photo
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getDateTime(): \DateTime
-    {
-        return $this->dateTime;
-    }
-
-    public function setDateTime(\DateTime $dateTime): Photo
-    {
-        $this->dateTime = $dateTime;
 
         return $this;
     }
@@ -490,6 +479,18 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
     public function setExifCamera(string $exifCamera = null): Photo
     {
         $this->exifCamera = $exifCamera;
+
+        return $this;
+    }
+
+    public function getExifCreationDate(): \DateTime
+    {
+        return $this->exifCreationDate;
+    }
+
+    public function setExifCreationDate(\DateTime $exifCreationDate): Photo
+    {
+        $this->exifCreationDate = $exifCreationDate;
 
         return $this;
     }

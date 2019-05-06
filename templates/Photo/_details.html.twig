@@ -13,12 +13,14 @@
                 {{ photo.user.username }}
             </dd>
 
+            {% if photo.exifCreationDate %}
             <dt>
                 Aufnahmedatum
             </dt>
             <dd>
-                {{ photo.dateTime|date('d.m.y H:i:s', photo.ride.city.timezone) }} Uhr
+                {{ photo.exifCreationDate|date('d.m.y H:i:s', photo.ride.city.timezone) }} Uhr
             </dd>
+            {% endif %}
 
             {% if photo.location %}
                 <dt>
