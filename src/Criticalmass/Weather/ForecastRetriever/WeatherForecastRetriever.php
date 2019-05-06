@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\Weather\ForecastRetriever;
 
+use App\Criticalmass\Weather\EntityInterface\WeatherInterface;
 use App\Entity\Ride;
 use App\Entity\Weather;
 use Cmfcmf\OpenWeatherMap\Forecast;
@@ -58,7 +59,7 @@ class WeatherForecastRetriever extends AbstractWeatherForecastRetriever
         return $this->newWeatherList;
     }
 
-    protected function retrieveWeather(Ride $ride): ?Weather
+    protected function retrieveWeather(Ride $ride): ?WeatherInterface
     {
         try {
             /** @var WeatherForecast $owmWeatherForecast */
@@ -75,7 +76,7 @@ class WeatherForecastRetriever extends AbstractWeatherForecastRetriever
             }
 
             if ($owmWeather) {
-                $weather = $this->createWeatherEntity($owmWeather);
+                $weather = $this->weatherFactory->createWeather($owmWeather);
                 $weather->setRide($ride);
 
                 $this->doctrine->getManager()->persist($weather);
