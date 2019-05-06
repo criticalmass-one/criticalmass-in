@@ -14,32 +14,39 @@ class PhotoExportController extends AbstractController
 {
     public function listAction(): Response
     {
-        $photoBasePath = $this->getParameter('upload_destination.photo');
-
         $photoList = $this->getPhotoRepository()->findAll();
 
         $tsvList = [];
 
         /** @var Photo $photo */
         foreach ($photoList as $photo) {
-            if (!$photo->getImageName()) {
-                continue;
+            if ($photo->getImageName()) {
+                $this->addFile($photo, 'imageName', $tsvList);
             }
 
-            $filename = sprintf('%s/%s', $photoBasePath, $photo->getImageName());
-
-            if (!file_exists($filename)) {
-                continue;
+            if ($photo->getBackupName()) {
+                $this->addFile($photo, 'backupName', $tsvList);
             }
-
-            $size = filesize($filename);
-            $hash = md5_file($filename);
-
-            $webPath = sprintf('http://criticalmass.cm/photos/%s', $photo->getImageName());
-
-            $tsvList[] = sprintf("%s\t%s\t%s", $webPath, $size, base64_encode($hash));
         }
 
         return new Response(implode("\n", $tsvList), 200, ['Content-type: text/tab-separated-values']);
+    }
+
+    protected function addFile(Photo $photo, string $propertyName, array &$tsvList): void
+    {
+        $getMethodName = sprintf('get%s', ucfirst($propertyName));
+
+        $filename = sprintf('%s/%s', $this->getParameter('upload_destination.photo'), $photo->$getMethodName());
+
+        if (!file_exists($filename)) {
+            return;
+        }
+
+        $size = filesize($filename);
+        $hash = md5_file($filename);
+
+        $webPath = sprintf('http://criticalmass.cm/photos/%s', $photo->getImageName());
+
+        $tsvList[] = sprintf("%s\t%s\t%s", $webPath, $size, base64_encode($hash));
     }
 }
