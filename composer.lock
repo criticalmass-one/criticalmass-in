@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "42d652e07b5b9b3d3ad1c01042997909",
+    "content-hash": "7451ffccb6c6c80479d9157aac510fa2",
     "packages": [
         {
             "name": "basvandorst/stravaphp",
@@ -273,56 +273,6 @@
                 "markdown-extra"
             ],
             "time": "2018-03-26T11:24:36+00:00"
-        },
-        {
-            "name": "clover/text-ltsv",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/hiroy/clover-text-ltsv.git",
-                "reference": "21ba27b2a1b159ac741bcee00d1d1a8dfd41589a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/hiroy/clover-text-ltsv/zipball/21ba27b2a1b159ac741bcee00d1d1a8dfd41589a",
-                "reference": "21ba27b2a1b159ac741bcee00d1d1a8dfd41589a",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "3.7.*"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Clover": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Hiroyuki Yamaoka",
-                    "email": "yamaoka@428lab.jp"
-                }
-            ],
-            "description": "Labeled Tab-separated Values (LTSV; cf. http://ltsv.org/) parser for PHP.",
-            "homepage": "https://github.com/hiroy/clover-text-ltsv",
-            "keywords": [
-                "ltsv",
-                "parser",
-                "tsv"
-            ],
-            "time": "2013-02-23T16:37:34+00:00"
         },
         {
             "name": "clue/stream-filter",
