@@ -22,16 +22,24 @@ class PhotoExportController extends AbstractController
 
         /** @var Photo $photo */
         foreach ($photoList as $photo) {
+            if (!$photo->getImageName()) {
+                continue;
+            }
+
             $filename = sprintf('%s/%s', $photoBasePath, $photo->getImageName());
 
-            $size = @filesize($filename);
-            $hash = @sha1_file($filename);
+            if (!file_exists($filename)) {
+                continue;
+            }
+
+            $size = filesize($filename);
+            $hash = md5_file($filename);
 
             $webPath = sprintf('http://criticalmass.cm/photos/%s', $photo->getImageName());
 
-            $tsvList[] = sprintf('%s\t%s\t%s', $webPath, $size, $hash);
+            $tsvList[] = sprintf("%s\t%s\t%s", $webPath, $size, base64_encode($hash));
         }
 
-        return new Response(implode('\n', $tsvList), 200, ['Content-type: text/tab-separated-values']);
+        return new Response(implode("\n", $tsvList), 200, ['Content-type: text/tab-separated-values']);
     }
 }
