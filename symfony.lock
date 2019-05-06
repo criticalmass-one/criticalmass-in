@@ -17,6 +17,9 @@
     "cebe/markdown": {
         "version": "1.2.1"
     },
+    "clover/text-ltsv": {
+        "version": "1.0.0"
+    },
     "clue/stream-filter": {
         "version": "v1.4.0"
     },
