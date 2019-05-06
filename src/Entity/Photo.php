@@ -99,23 +99,26 @@ class Photo implements FakeUploadable, ViewableInterface, ManipulateablePhotoInt
     protected $creationDateTime;
 
     /**
-     * @Vich\UploadableField(mapping="photo_photo", fileNameProperty="imageName")
-     *
      * @var File
+     * @Vich\UploadableField(mapping="photo_photo", fileNameProperty="imageName")
      */
     protected $imageFile;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     *
      * @var string
+     * @ORM\Column(type="string", length=255)
      */
     protected $imageName;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     *
+     * @var File
+     * @Vich\UploadableField(mapping="photo_photo", fileNameProperty="backupName")
+     */
+    protected $backupFile;
+
+    /**
      * @var string
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $backupName;
 
@@ -345,6 +348,34 @@ class Photo implements FakeUploadable, ViewableInterface, ManipulateablePhotoInt
         return $this->imageName;
     }
 
+    public function setBackupFile(File $image = null): Photo
+    {
+        $this->backupFile = $image;
+
+        if ($image) {
+            $this->updatedAt = new \DateTime('now');
+        }
+
+        return $this;
+    }
+
+    public function setBackupName(string $backupName = null): ManipulateablePhotoInterface
+    {
+        $this->backupName = $backupName;
+
+        return $this;
+    }
+
+    public function getBackupName(): ?string
+    {
+        return $this->backupName;
+    }
+
+    public function getBackupFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
     public function setViews(int $views): ViewableInterface
     {
         $this->views = $views;
@@ -374,18 +405,6 @@ class Photo implements FakeUploadable, ViewableInterface, ManipulateablePhotoInt
     public function getUpdatedAt(): \DateTime
     {
         return $this->updatedAt;
-    }
-
-    public function setBackupName(string $backupName = null): ManipulateablePhotoInterface
-    {
-        $this->backupName = $backupName;
-
-        return $this;
-    }
-
-    public function getBackupName(): ?string
-    {
-        return $this->backupName;
     }
 
     public function setShorturl(string $shorturl): Photo
