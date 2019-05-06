@@ -32,6 +32,6 @@ class PhotoExportController extends AbstractController
             $tsvList[] = sprintf('%s\t%s\t%s', $webPath, $size, $hash);
         }
 
-        return new Response(implode('\n', $tsvList), 200, ['Content-type: text/tsv']);
+        return new Response(implode('\n', $tsvList), 200, ['Content-type: text/tab-separated-values']);
     }
 }
