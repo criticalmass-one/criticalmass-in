@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Criticalmass\Geocoding\ReverseGeocodeable;
 use App\Criticalmass\Image\PhotoManipulator\PhotoInterface\ManipulateablePhotoInterface;
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
+use App\Criticalmass\UploadableDataHandler\UploadableEntity;
 use App\EntityInterface\AutoParamConverterAble;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
@@ -26,7 +27,7 @@ use App\Criticalmass\Sharing\Annotation as Sharing;
  * @JMS\ExclusionPolicy("all")
  * @Routing\DefaultRoute(name="caldera_criticalmass_photo_show_ride")
  */
-class Photo implements ViewableInterface, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, Shareable, StaticMapableInterface, ReverseGeocodeable
+class Photo implements ViewableInterface, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, Shareable, StaticMapableInterface, ReverseGeocodeable, UploadableEntity
 {
     /**
      * @ORM\Id
