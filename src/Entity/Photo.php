@@ -122,6 +122,12 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
     protected $imageMimeType;
 
     /**
+     * @var string $imageGoogleCloudHash
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $imageGoogleCloudHash;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      *
      * @var string
@@ -139,6 +145,12 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $backupMimeType;
+
+    /**
+     * @var string $backupGoogleCloudHash
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $backupGoogleCloudHash;
 
     /**
      * @ORM\Column(type="datetime")
@@ -561,6 +573,30 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
     public function setExifCreationDate(\DateTime $exifCreationDate): Photo
     {
         $this->exifCreationDate = $exifCreationDate;
+
+        return $this;
+    }
+
+    public function getImageGoogleCloudHash(): ?string
+    {
+        return $this->imageGoogleCloudHash;
+    }
+
+    public function setImageGoogleCloudHash(string $imageGoogleCloudHash): Photo
+    {
+        $this->imageGoogleCloudHash = $imageGoogleCloudHash;
+
+        return $this;
+    }
+
+    public function getBackupGoogleCloudHash(): ?string
+    {
+        return $this->backupGoogleCloudHash;
+    }
+
+    public function setBackupGoogleCloudHash(string $backupGoogleCloudHash): Photo
+    {
+        $this->backupGoogleCloudHash = $backupGoogleCloudHash;
 
         return $this;
     }
