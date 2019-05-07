@@ -19,6 +19,8 @@ class PhotoExportController extends AbstractController
             throw $this->createAccessDeniedException();
         }
 
+        $hostname = $request->getSchemeAndHttpHost();
+
         $photoList = $this->getPhotoRepository()->findAll();
 
         $tsvList = [];
@@ -26,18 +28,18 @@ class PhotoExportController extends AbstractController
         /** @var Photo $photo */
         foreach ($photoList as $photo) {
             if ($photo->getImageName()) {
-                $this->addFile($photo, 'imageName', $tsvList);
+                $this->addFile($photo, 'imageName', $hostname, $tsvList);
             }
 
             if ($photo->getBackupName()) {
-                $this->addFile($photo, 'backupName', $tsvList);
+                $this->addFile($photo, 'backupName', $hostname, $tsvList);
             }
         }
 
         return new Response(implode("\n", $tsvList), 200, ['Content-type: text/tab-separated-values']);
     }
 
-    protected function addFile(Photo $photo, string $propertyName, array &$tsvList): void
+    protected function addFile(Photo $photo, string $propertyName, string $hostname, array &$tsvList): void
     {
         $getMethodName = sprintf('get%s', ucfirst($propertyName));
 
@@ -50,7 +52,7 @@ class PhotoExportController extends AbstractController
         $size = filesize($filename);
         $hash = md5_file($filename);
 
-        $webPath = sprintf('http://criticalmass.cm/photos/%s', $photo->getImageName());
+        $webPath = sprintf('%s/photos/%s', $hostname, $photo->getImageName());
 
         $tsvList[] = sprintf("%s\t%s\t%s", $webPath, $size, base64_encode($hash));
     }
