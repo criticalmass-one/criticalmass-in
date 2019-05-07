@@ -47,9 +47,7 @@ class CalculateUploadableEntityDataCommand extends Command
         $overwrite = $input->getOption('overwrite') ? (bool) $input->getOption('overwrite') : false;
         $entityClassname = $input->getArgument('entityClassname');
         $fqcn = $this->getFqcn($entityClassname);
-
-        $this->uploadableDataHandler->setEntityClassname($entityClassname);
-
+        
         $entityList = $this->registry->getRepository($fqcn)->findAll();
 
         $progressBar = new ProgressBar($output, count($entityList));

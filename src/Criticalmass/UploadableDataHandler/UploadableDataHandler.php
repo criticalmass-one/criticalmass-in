@@ -7,9 +7,6 @@ use Vich\UploaderBundle\Mapping\PropertyMappingFactory;
 
 class UploadableDataHandler implements UploadableDataHandlerInterface
 {
-    /** @var string $entityClassname */
-    protected $entityClassname;
-
     /** @var PropertyMappingFactory $propertyMappingFactory */
     protected $propertyMappingFactory;
 
@@ -21,13 +18,6 @@ class UploadableDataHandler implements UploadableDataHandlerInterface
     public function __construct(PropertyMappingFactory $propertyMappingFactory)
     {
         $this->propertyMappingFactory = $propertyMappingFactory;
-    }
-
-    public function setEntityClassname(string $entityClassname): UploadableDataHandlerInterface
-    {
-        $this->entityClassname = $entityClassname;
-
-        return $this;
     }
 
     public function calculateForEntity(UploadableEntity $entity): UploadableEntity
