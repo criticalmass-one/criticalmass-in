@@ -129,6 +129,18 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
     protected $backupName;
 
     /**
+     * @var int $backupSize
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $backupSize;
+
+    /**
+     * @var string $backupMimeType
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $backupMimeType;
+
+    /**
      * @ORM\Column(type="datetime")
      *
      * @var \DateTime
@@ -419,6 +431,30 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
     public function getBackupName(): ?string
     {
         return $this->backupName;
+    }
+
+    public function getBackupSize(): ?int
+    {
+        return $this->backupSize;
+    }
+
+    public function setBackupSize(int $backupSize): Photo
+    {
+        $this->backupSize = $backupSize;
+
+        return $this;
+    }
+
+    public function getBackupMimeType(): ?string
+    {
+        return $this->backupMimeType;
+    }
+
+    public function setBackupMimeType(string $backupMimeType): Photo
+    {
+        $this->backupMimeType = $backupMimeType;
+
+        return $this;
     }
 
     public function setShorturl(string $shorturl): Photo
