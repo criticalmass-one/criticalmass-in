@@ -499,6 +499,30 @@ class Track implements RouteableInterface, StaticMapableInterface, TrackInterfac
         return $this->trackFilename;
     }
 
+    public function getTrackSize(): ?int
+    {
+        return $this->trackSize;
+    }
+
+    public function setTrackSize(int $trackSize): Track
+    {
+        $this->trackSize = $trackSize;
+
+        return $this;
+    }
+
+    public function getTrackMimeType(): ?string
+    {
+        return $this->trackMimeType;
+    }
+
+    public function setTrackMimeType(string $trackMimeType): Track
+    {
+        $this->trackMimeType = $trackMimeType;
+
+        return $this;
+    }
+
     public function setStartPoint(int $startPoint): Track
     {
         if ($startPoint >= 1) {

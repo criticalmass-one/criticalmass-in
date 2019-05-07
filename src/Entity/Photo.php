@@ -354,6 +354,30 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
         return $this->imageName;
     }
 
+    public function getImageSize(): ?int
+    {
+        return $this->imageSize;
+    }
+
+    public function setImageSize(int $imageSize): Photo
+    {
+        $this->imageSize = $imageSize;
+
+        return $this;
+    }
+
+    public function getImageMimeType(): ?string
+    {
+        return $this->imageMimeType;
+    }
+
+    public function setImageMimeType(string $imageMimeType): Photo
+    {
+        $this->imageMimeType = $imageMimeType;
+
+        return $this;
+    }
+
     public function setViews(int $views): ViewableInterface
     {
         $this->views = $views;

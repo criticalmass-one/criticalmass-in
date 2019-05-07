@@ -665,6 +665,30 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this->imageName;
     }
 
+    public function getImageSize(): ?int
+    {
+        return $this->imageSize;
+    }
+
+    public function setImageSize(int $imageSize): City
+    {
+        $this->imageSize = $imageSize;
+
+        return $this;
+    }
+
+    public function getImageMimeType(): ?string
+    {
+        return $this->imageMimeType;
+    }
+
+    public function setImageMimeType(string $imageMimeType): City
+    {
+        $this->imageMimeType = $imageMimeType;
+
+        return $this;
+    }
+
     public function getPin(): string
     {
         return sprintf('%f,%f', $this->latitude, $this->longitude);

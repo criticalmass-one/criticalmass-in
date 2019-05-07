@@ -996,6 +996,30 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->imageName;
     }
 
+    public function getImageSize(): ?int
+    {
+        return $this->imageSize;
+    }
+
+    public function setImageSize(int $imageSize): Ride
+    {
+        $this->imageSize = $imageSize;
+
+        return $this;
+    }
+
+    public function getImageMimeType(): ?string
+    {
+        return $this->imageMimeType;
+    }
+
+    public function setImageMimeType(string $imageMimeType): Ride
+    {
+        $this->imageMimeType = $imageMimeType;
+
+        return $this;
+    }
+
     public function addSocialNetworkProfile(SocialNetworkProfile $socialNetworkProfile): Ride
     {
         $this->socialNetworkProfiles->add($socialNetworkProfile);
