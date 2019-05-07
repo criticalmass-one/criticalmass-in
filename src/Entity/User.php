@@ -152,6 +152,18 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     protected $imageName;
 
     /**
+     * @var int $imageSize
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $imageSize;
+
+    /**
+     * @var string $imageMimeType
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $imageMimeType;
+
+    /**
      * @ORM\Column(type="boolean", options={"default" = 0})
      */
     protected $ownProfilePhoto = false;

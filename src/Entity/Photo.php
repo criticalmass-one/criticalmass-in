@@ -98,18 +98,28 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
     protected $creationDateTime;
 
     /**
-     * @Vich\UploadableField(mapping="photo_photo", fileNameProperty="imageName")
-     *
-     * @var File
+     * @var File $imageFile
+     * @Vich\UploadableField(mapping="photo_photo", fileNameProperty="imageName", size="imageSize", mimeType="imageMimeType")
      */
     protected $imageFile;
 
     /**
+     * @var string $imageName
      * @ORM\Column(type="string", length=255)
-     *
-     * @var string
      */
     protected $imageName;
+
+    /**
+     * @var int $imageSize
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $imageSize;
+
+    /**
+     * @var string $imageMimeType
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $imageMimeType;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)

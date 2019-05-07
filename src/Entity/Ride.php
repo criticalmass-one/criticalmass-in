@@ -275,18 +275,28 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     protected $weathers;
 
     /**
+     * @var File $imageFile
      * @Vich\UploadableField(mapping="ride_photo", fileNameProperty="imageName")
-     *
-     * @var File
      */
-    private $imageFile;
+    protected $imageFile;
 
     /**
+     * @var string $imageName
      * @ORM\Column(type="string", length=255, nullable=true)
-     *
-     * @var string
      */
-    private $imageName;
+    protected $imageName;
+
+    /**
+     * @var int $imageSize
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $imageSize;
+
+    /**
+     * @var string $imageMimeType
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $imageMimeType;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)

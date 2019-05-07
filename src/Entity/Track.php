@@ -160,19 +160,28 @@ class Track implements RouteableInterface, StaticMapableInterface, TrackInterfac
     protected $reducedPolyline;
 
     /**
-     * NOTE: This is not a mapped field of entity metadata, just a simple property.
-     *
+     * @var File $trackFile
      * @Vich\UploadableField(mapping="track_file", fileNameProperty="trackFilename")
-     * @var File
      */
     protected $trackFile;
 
     /**
+     * @var string $trackFilename
      * @ORM\Column(type="string", length=255)
-     *
-     * @var string
      */
     protected $trackFilename;
+
+    /**
+     * @var int $trackSize
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $trackSize;
+
+    /**
+     * @var string $trackMimeType
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $trackMimeType;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
