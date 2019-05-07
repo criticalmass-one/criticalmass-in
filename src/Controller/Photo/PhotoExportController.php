@@ -19,9 +19,11 @@ class PhotoExportController extends AbstractController
             throw $this->createAccessDeniedException();
         }
 
+        $limit = $request->query->getInt('limit');
+        $offset = $request->query->getInt('offset');
         $hostname = $request->getSchemeAndHttpHost();
 
-        $photoList = $this->getPhotoRepository()->findAll();
+        $photoList = $this->getPhotoRepository()->findPhotosForExport($limit, $offset);
 
         $tsvList = [];
 

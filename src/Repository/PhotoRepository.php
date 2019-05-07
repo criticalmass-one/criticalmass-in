@@ -380,5 +380,26 @@ class PhotoRepository extends EntityRepository
 
         return (int) $query->getSingleScalarResult();
     }
+
+    public function findPhotosForExport(int $limit = null, int $offset = null): array
+    {
+        $builder = $this->createQueryBuilder('p');
+
+        $builder
+            ->select('p')
+            ->orderBy('p.exifCreationDate', 'desc');
+
+        if ($limit) {
+            $builder->setMaxResults($limit);
+        }
+
+        if ($offset) {
+            $builder->setFirstResult($offset);
+        }
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
 }
 
