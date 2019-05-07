@@ -276,7 +276,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
 
     /**
      * @var File $imageFile
-     * @Vich\UploadableField(mapping="ride_photo", fileNameProperty="imageName")
+     * @Vich\UploadableField(mapping="ride_photo", fileNameProperty="imageName",  size="imageSize", mimeType="imageMimeType")
      */
     protected $imageFile;
 

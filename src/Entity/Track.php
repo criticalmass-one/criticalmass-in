@@ -161,7 +161,7 @@ class Track implements RouteableInterface, StaticMapableInterface, TrackInterfac
 
     /**
      * @var File $trackFile
-     * @Vich\UploadableField(mapping="track_file", fileNameProperty="trackFilename")
+     * @Vich\UploadableField(mapping="track_file", fileNameProperty="trackFilename",  size="trackSize", mimeType="trackMimeType")
      */
     protected $trackFile;
 

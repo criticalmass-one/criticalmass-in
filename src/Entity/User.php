@@ -139,7 +139,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
 
     /**
      * @var File $imageFile
-     * @Vich\UploadableField(mapping="user_photo", fileNameProperty="imageName")
+     * @Vich\UploadableField(mapping="user_photo", fileNameProperty="imageName", size="imageSize", mimeType="imageMimeType")
      */
     protected $imageFile;
 

@@ -185,7 +185,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
 
     /**
      * @var File $imageFile
-     * @Vich\UploadableField(mapping="city_photo", fileNameProperty="imageName")
+     * @Vich\UploadableField(mapping="city_photo", fileNameProperty="imageName", size="imageSize", mimeType="imageMimeType")
      */
     protected $imageFile;
 

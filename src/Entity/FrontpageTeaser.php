@@ -46,7 +46,7 @@ class FrontpageTeaser
 
     /**
      * @var File $imageFile
-     * @Vich\UploadableField(mapping="frontpage_teaser", fileNameProperty="imageName")
+     * @Vich\UploadableField(mapping="frontpage_teaser", fileNameProperty="imageName",  size="imageSize", mimeType="imageMimeType")
      */
     protected $imageFile;
 
