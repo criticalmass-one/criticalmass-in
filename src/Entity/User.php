@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -21,7 +22,7 @@ use App\Criticalmass\Router\Annotation as Routing;
  * @Vich\Uploadable
  * @JMS\ExclusionPolicy("all")
  */
-class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterface
+class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterface, PhotoInterface
 {
     /**
      * @ORM\Id
@@ -491,7 +492,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         return $this;
     }
 
-    public function setImageFile(File $image = null): User
+    public function setImageFile(File $image = null): PhotoInterface
     {
         $this->imageFile = $image;
 
@@ -507,7 +508,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         return $this->imageFile;
     }
 
-    public function setImageName(string $imageName = null): User
+    public function setImageName(string $imageName = null): PhotoInterface
     {
         $this->imageName = $imageName;
 
@@ -524,7 +525,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         return $this->imageSize;
     }
 
-    public function setImageSize(int $imageSize): User
+    public function setImageSize(int $imageSize): PhotoInterface
     {
         $this->imageSize = $imageSize;
 
@@ -536,7 +537,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         return $this->imageMimeType;
     }
 
-    public function setImageMimeType(string $imageMimeType): User
+    public function setImageMimeType(string $imageMimeType): PhotoInterface
     {
         $this->imageMimeType = $imageMimeType;
 

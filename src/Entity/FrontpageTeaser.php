@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\EntityInterface\PhotoInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,7 +14,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Entity(repositoryClass="App\Repository\FrontpageTeaserRepository")
  * @Vich\Uploadable
  */
-class FrontpageTeaser
+class FrontpageTeaser implements PhotoInterface
 {
     /**
      * @ORM\Id
@@ -158,7 +159,7 @@ class FrontpageTeaser
         return $this->text;
     }
 
-    public function setImageFile(File $image = null): FrontpageTeaser
+    public function setImageFile(File $image = null): PhotoInterface
     {
         $this->imageFile = $image;
 
@@ -174,7 +175,7 @@ class FrontpageTeaser
         return $this->imageFile;
     }
 
-    public function setImageName(string $imageName = null): FrontpageTeaser
+    public function setImageName(string $imageName = null): PhotoInterface
     {
         $this->imageName = $imageName;
 
@@ -191,7 +192,7 @@ class FrontpageTeaser
         return $this->imageSize;
     }
 
-    public function setImageSize(int $imageSize): FrontpageTeaser
+    public function setImageSize(int $imageSize): PhotoInterface
     {
         $this->imageSize = $imageSize;
 
@@ -203,7 +204,7 @@ class FrontpageTeaser
         return $this->imageMimeType;
     }
 
-    public function setImageMimeType(string $imageMimeType): FrontpageTeaser
+    public function setImageMimeType(string $imageMimeType): PhotoInterface
     {
         $this->imageMimeType = $imageMimeType;
 

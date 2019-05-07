@@ -968,7 +968,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         $this->id = null;
     }
 
-    public function setImageFile(File $image = null): Ride
+    public function setImageFile(File $image = null): PhotoInterface
     {
         $this->imageFile = $image;
 
@@ -1001,7 +1001,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->imageSize;
     }
 
-    public function setImageSize(int $imageSize): Ride
+    public function setImageSize(int $imageSize): PhotoInterface
     {
         $this->imageSize = $imageSize;
 
@@ -1013,7 +1013,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->imageMimeType;
     }
 
-    public function setImageMimeType(string $imageMimeType): Ride
+    public function setImageMimeType(string $imageMimeType): PhotoInterface
     {
         $this->imageMimeType = $imageMimeType;
 

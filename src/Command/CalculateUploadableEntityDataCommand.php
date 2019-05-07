@@ -36,7 +36,6 @@ class CalculateUploadableEntityDataCommand extends Command
             ->setDescription('Calculate meta for uploadable entities')
             ->addOption('limit', 'l', InputOption::VALUE_REQUIRED, 'Number of photos to process at once')
             ->addOption('offset', 'o', InputOption::VALUE_REQUIRED, 'Offset to start processing')
-            ->addOption('overwrite', 'ow', InputOption::VALUE_NONE, 'Overwrite existing data')
             ->addArgument('entityClassname', InputArgument::REQUIRED, 'Classname of entity');
     }
 
@@ -44,11 +43,10 @@ class CalculateUploadableEntityDataCommand extends Command
     {
         $limit = $input->getOption('limit') ? (int) $input->getOption('limit') : null;
         $offset = $input->getOption('offset') ? (int) $input->getOption('offset') : null;
-        $overwrite = $input->getOption('overwrite') ? (bool) $input->getOption('overwrite') : false;
         $entityClassname = $input->getArgument('entityClassname');
         $fqcn = $this->getFqcn($entityClassname);
-        
-        $entityList = $this->registry->getRepository($fqcn)->findAll();
+
+        $entityList = $this->registry->getRepository($fqcn)->findBy([], [], $limit, $offset);
 
         $progressBar = new ProgressBar($output, count($entityList));
 

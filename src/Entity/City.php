@@ -637,7 +637,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this->photos;
     }
 
-    public function setImageFile(File $image = null): City
+    public function setImageFile(File $image = null): PhotoInterface
     {
         $this->imageFile = $image;
 
@@ -670,7 +670,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this->imageSize;
     }
 
-    public function setImageSize(int $imageSize): City
+    public function setImageSize(int $imageSize): PhotoInterface
     {
         $this->imageSize = $imageSize;
 
@@ -682,7 +682,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this->imageMimeType;
     }
 
-    public function setImageMimeType(string $imageMimeType): City
+    public function setImageMimeType(string $imageMimeType): PhotoInterface
     {
         $this->imageMimeType = $imageMimeType;
 

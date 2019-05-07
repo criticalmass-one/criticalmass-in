@@ -27,7 +27,7 @@ use App\Criticalmass\Sharing\Annotation as Sharing;
  * @JMS\ExclusionPolicy("all")
  * @Routing\DefaultRoute(name="caldera_criticalmass_photo_show_ride")
  */
-class Photo implements ViewableInterface, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, Shareable, StaticMapableInterface, ReverseGeocodeable, UploadableEntity
+class Photo implements ViewableInterface, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, Shareable, StaticMapableInterface, ReverseGeocodeable
 {
     /**
      * @ORM\Id
@@ -351,7 +351,7 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
         return $this->creationDateTime;
     }
 
-    public function setImageFile(File $image = null): Photo
+    public function setImageFile(File $image = null): PhotoInterface
     {
         $this->imageFile = $image;
 
@@ -384,7 +384,7 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
         return $this->imageSize;
     }
 
-    public function setImageSize(int $imageSize): Photo
+    public function setImageSize(int $imageSize): PhotoInterface
     {
         $this->imageSize = $imageSize;
 
@@ -396,7 +396,7 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
         return $this->imageMimeType;
     }
 
-    public function setImageMimeType(string $imageMimeType): Photo
+    public function setImageMimeType(string $imageMimeType): PhotoInterface
     {
         $this->imageMimeType = $imageMimeType;
 
