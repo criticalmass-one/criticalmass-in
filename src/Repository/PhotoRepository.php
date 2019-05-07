@@ -90,7 +90,7 @@ class PhotoRepository extends EntityRepository
 
         $builder
             ->select('p')
-            ->orderBy('p.dateTime', 'desc');
+            ->orderBy('p.exifCreationDate', 'desc');
 
         if (!$fetchExistingData) {
             $builder
