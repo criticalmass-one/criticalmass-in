@@ -26,6 +26,7 @@ parameters:
     twitter.client_id: '%env(TWITTER_CLIENT_ID)%'
     twitter.token: '%env(TWITTER_TOKEN)%'
     twitter.secret: '%env(TWITTER_SECRET)%'
+    photo_tsv.access_key: '%env(PHOTO_TSV_ACCESS_KEY)%'
     timeline.ttl: 60
     notification.mail.sender_address: malte@criticalmass.in
     jms_serializer.camel_case_naming_strategy.class: App\Serializer\JMSSerializer\Naming\CamelCaseNamingStrategy

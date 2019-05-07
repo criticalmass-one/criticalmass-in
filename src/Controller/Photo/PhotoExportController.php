@@ -4,6 +4,7 @@ namespace App\Controller\Photo;
 
 use App\Controller\AbstractController;
 use App\Entity\Photo;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Flagception\Bundle\FlagceptionBundle\Annotations\Feature;
 
@@ -12,8 +13,12 @@ use Flagception\Bundle\FlagceptionBundle\Annotations\Feature;
  */
 class PhotoExportController extends AbstractController
 {
-    public function listAction(): Response
+    public function listAction(Request $request): Response
     {
+        if ($request->get('access_key') !== $this->getParameter('photo_tsv.access_key')) {
+            throw $this->createAccessDeniedException();
+        }
+
         $photoList = $this->getPhotoRepository()->findAll();
 
         $tsvList = [];
