@@ -3,31 +3,14 @@
 namespace App\Criticalmass\UploadableDataHandler;
 
 use Vich\UploaderBundle\Mapping\PropertyMapping;
-use Vich\UploaderBundle\Mapping\PropertyMappingFactory;
 
-class UploadableDataHandler implements UploadableDataHandlerInterface
+class UploadableDataHandler extends AbstractUploadableDataHandler
 {
-    /** @var PropertyMappingFactory $propertyMappingFactory */
-    protected $propertyMappingFactory;
-
-    protected $propertyCallList = [
-        'size' => 'filesize',
-        'mimeType' => 'mime_content_type',
-    ];
-
-    public function __construct(PropertyMappingFactory $propertyMappingFactory)
-    {
-        $this->propertyMappingFactory = $propertyMappingFactory;
-    }
-
     public function calculateForEntity(UploadableEntity $entity): UploadableEntity
     {
-        /** @var PropertyMapping $mapping */
-        $mapping = $this->propertyMappingFactory->fromObject($entity)[0];
+        $mapping = $this->getMapping($entity);
 
-        $getFilenameMethod = sprintf('get%s', ucfirst($mapping->getFileNamePropertyName()));
-
-        $filename = sprintf('%s/%s', $mapping->getUploadDestination(), $entity->$getFilenameMethod());
+        $filename = $this->getFilename($mapping, $entity);
 
         if (!file_exists($filename)) {
             return $entity;
@@ -40,5 +23,22 @@ class UploadableDataHandler implements UploadableDataHandlerInterface
         }
 
         return $entity;
+    }
+
+    protected function getMapping(UploadableEntity $entity): PropertyMapping
+    {
+        return $this->propertyMappingFactory->fromObject($entity)[0];
+    }
+
+    protected function getFilenameGetMethod(PropertyMapping $propertyMapping): string
+    {
+        return sprintf('get%s', ucfirst($propertyMapping->getFileNamePropertyName()));
+    }
+
+    protected function getFilename(PropertyMapping $propertyMapping, UploadableEntity $entity): string
+    {
+        $getFilenameMethod = $this->getFilenameGetMethod($propertyMapping);
+
+        return sprintf('%s/%s', $propertyMapping->getUploadDestination(), $entity->$getFilenameMethod());
     }
 }
