@@ -3,15 +3,16 @@
 namespace App\Criticalmass\Image\GoogleCloud\ExportDataHandler;
 
 use App\Entity\Photo;
+use League\Flysystem\FilesystemInterface;
 
 class ExportDataHandler implements ExportDataHandlerInterface
 {
-    /** @var string $uploadDestinationPhoto */
-    protected $uploadDestinationPhoto;
+    /** @var FilesystemInterface $filesystem */
+    protected $filesystem;
 
-    public function __construct(string $uploadDestinationPhoto)
+    public function __construct(FilesystemInterface $filesystem)
     {
-        $this->uploadDestinationPhoto = $uploadDestinationPhoto;
+        $this->filesystem = $filesystem;
     }
 
     public function calculateForPhoto(Photo $photo): Photo
@@ -29,29 +30,25 @@ class ExportDataHandler implements ExportDataHandlerInterface
 
     protected function calculateImageProperties(Photo $photo): Photo
     {
-        $filename = sprintf('%s/%s', $this->uploadDestinationPhoto, $photo->getImageName());
-
-        if (!file_exists($filename)) {
+        if (!$this->filesystem->has($photo->getImageName())) {
             return $photo;
         }
 
         $photo
-            ->setImageMimeType(mime_content_type($filename))
-            ->setImageSize(filesize($filename))
-            ->setImageGoogleCloudHash(base64_encode(md5_file($filename)));
+            ->setImageMimeType($this->filesystem->getMimetype($photo->getImageName()))
+            ->setImageSize($this->filesystem->getSize($photo->getImageName()))
+            ->setImageGoogleCloudHash(base64_encode(md5($this->filesystem->read($photo->getImageName()))));
 
         return $photo;
     }
 
     protected function calculateBackupProperties(Photo $photo): Photo
     {
-        $filename = sprintf('%s/%s', $this->uploadDestinationPhoto, $photo->getBackupName());
-
-        if (!file_exists($filename)) {
+        if (!$this->filesystem->has($photo->getBackupName())) {
             return $photo;
         }
 
-        $photo->setImageGoogleCloudHash(base64_encode(md5_file($filename)));
+        $photo->setImageGoogleCloudHash(base64_encode(md5($this->filesystem->read($photo->getBackupName()))));
 
         return $photo;
     }
