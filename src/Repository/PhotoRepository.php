@@ -90,7 +90,7 @@ class PhotoRepository extends EntityRepository
 
         $builder
             ->select('p')
-            ->orderBy('p.dateTime', 'desc');
+            ->orderBy('p.exifCreationDate', 'desc');
 
         if (!$fetchExistingData) {
             $builder
@@ -99,6 +99,31 @@ class PhotoRepository extends EntityRepository
                 ->andWhere($builder->expr()->isNull('p.exifIso'))
                 ->andWhere($builder->expr()->isNull('p.exifFocalLength'))
                 ->andWhere($builder->expr()->isNull('p.exifCamera'));
+        }
+
+        if ($limit) {
+            $builder->setMaxResults($limit);
+        }
+
+        if ($offset) {
+            $builder->setFirstResult($offset);
+        }
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
+
+    public function findPhotosWithoutExportData(int $limit = null, int $offset = null, bool $fetchExistingData = false): array
+    {
+        $builder = $this->createQueryBuilder('p');
+
+        $builder
+            ->select('p')
+            ->orderBy('p.exifCreationDate', 'desc');
+
+        if (!$fetchExistingData) {
+            $builder->where($builder->expr()->isNull('p.imageGoogleCloudHash'));
         }
 
         if ($limit) {

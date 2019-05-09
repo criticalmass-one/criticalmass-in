@@ -99,16 +99,35 @@ class Photo implements FakeUploadable, ViewableInterface, ManipulateablePhotoInt
     protected $creationDateTime;
 
     /**
-     * @var File
-     * @Vich\UploadableField(mapping="photo_photo", fileNameProperty="imageName")
+     * @var File $imageFile
+     * @Vich\UploadableField(mapping="photo_photo", fileNameProperty="imageName", size="imageSize", mimeType="imageMimeType")
      */
     protected $imageFile;
 
     /**
      * @var string
+     * @var string $imageName
      * @ORM\Column(type="string", length=255)
      */
     protected $imageName;
+
+    /**
+     * @var int $imageSize
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $imageSize;
+
+    /**
+     * @var string $imageMimeType
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $imageMimeType;
+
+    /**
+     * @var string $imageGoogleCloudHash
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $imageGoogleCloudHash;
 
     /**
      * @var File
@@ -121,6 +140,24 @@ class Photo implements FakeUploadable, ViewableInterface, ManipulateablePhotoInt
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $backupName;
+
+    /**
+     * @var int $backupSize
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $backupSize;
+
+    /**
+     * @var string $backupMimeType
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $backupMimeType;
+
+    /**
+     * @var string $backupGoogleCloudHash
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $backupGoogleCloudHash;
 
     /**
      * @ORM\Column(type="datetime")
@@ -320,7 +357,7 @@ class Photo implements FakeUploadable, ViewableInterface, ManipulateablePhotoInt
         return $this->creationDateTime;
     }
 
-    public function setImageFile(File $image = null): Photo
+    public function setImageFile(File $image = null): PhotoInterface
     {
         $this->imageFile = $image;
 
@@ -348,6 +385,30 @@ class Photo implements FakeUploadable, ViewableInterface, ManipulateablePhotoInt
         return $this->imageName;
     }
 
+    public function getImageSize(): ?int
+    {
+        return $this->imageSize;
+    }
+
+    public function setImageSize(int $imageSize): PhotoInterface
+    {
+        $this->imageSize = $imageSize;
+
+        return $this;
+    }
+
+    public function getImageMimeType(): ?string
+    {
+        return $this->imageMimeType;
+    }
+
+    public function setImageMimeType(string $imageMimeType): PhotoInterface
+    {
+        $this->imageMimeType = $imageMimeType;
+
+        return $this;
+    }
+
     public function setBackupFile(File $image = null): Photo
     {
         $this->backupFile = $image;
@@ -357,6 +418,11 @@ class Photo implements FakeUploadable, ViewableInterface, ManipulateablePhotoInt
         }
 
         return $this;
+    }
+
+    public function getBackupFile(): ?File
+    {
+        return $this->imageFile;
     }
 
     public function setBackupName(string $backupName = null): ManipulateablePhotoInterface
@@ -371,9 +437,28 @@ class Photo implements FakeUploadable, ViewableInterface, ManipulateablePhotoInt
         return $this->backupName;
     }
 
-    public function getBackupFile(): ?File
+    public function getBackupSize(): ?int
     {
-        return $this->imageFile;
+        return $this->backupSize;
+    }
+
+    public function setBackupSize(int $backupSize): Photo
+    {
+        $this->backupSize = $backupSize;
+
+        return $this;
+    }
+
+    public function getBackupMimeType(): ?string
+    {
+        return $this->backupMimeType;
+    }
+
+    public function setBackupMimeType(string $backupMimeType): Photo
+    {
+        $this->backupMimeType = $backupMimeType;
+
+        return $this;
     }
 
     public function setViews(int $views): ViewableInterface
@@ -406,6 +491,7 @@ class Photo implements FakeUploadable, ViewableInterface, ManipulateablePhotoInt
     {
         return $this->updatedAt;
     }
+
 
     public function setShorturl(string $shorturl): Photo
     {
@@ -511,6 +597,30 @@ class Photo implements FakeUploadable, ViewableInterface, ManipulateablePhotoInt
     public function setExifCreationDate(\DateTime $exifCreationDate): Photo
     {
         $this->exifCreationDate = $exifCreationDate;
+
+        return $this;
+    }
+
+    public function getImageGoogleCloudHash(): ?string
+    {
+        return $this->imageGoogleCloudHash;
+    }
+
+    public function setImageGoogleCloudHash(string $imageGoogleCloudHash): Photo
+    {
+        $this->imageGoogleCloudHash = $imageGoogleCloudHash;
+
+        return $this;
+    }
+
+    public function getBackupGoogleCloudHash(): ?string
+    {
+        return $this->backupGoogleCloudHash;
+    }
+
+    public function setBackupGoogleCloudHash(string $backupGoogleCloudHash): Photo
+    {
+        $this->backupGoogleCloudHash = $backupGoogleCloudHash;
 
         return $this;
     }
