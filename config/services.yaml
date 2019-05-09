@@ -112,6 +112,10 @@ services:
         arguments:
             $filesystem: '@oneup_flysystem.flysystem_user_photo_filesystem'
 
+    App\Criticalmass\UploadableDataHandler\UploadableDataHandler:
+        arguments:
+            $filesystem: '@oneup_flysystem.flysystem_user_photo_filesystem'
+
     App\Criticalmass\Geocoding\ReverseGeocoderInterface:
         alias: App\Criticalmass\Geocoding\CachedReverseGeocoder
 

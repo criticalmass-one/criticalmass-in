@@ -12,12 +12,12 @@ class UploadableDataHandler extends AbstractUploadableDataHandler
 
         $filename = $this->getFilename($mapping, $entity);
 
-        if (!file_exists($filename)) {
+        if (!$this->filesystem->has($filename)) {
             return $entity;
         }
 
         foreach ($this->propertyCallList as $property => $functionName) {
-            $value = $functionName($filename);
+            $value = $this->filesystem->$functionName($filename);
 
             $mapping->writeProperty($entity, $property, $value);
         }
