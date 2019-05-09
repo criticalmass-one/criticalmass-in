@@ -25,6 +25,13 @@ class UploadableDataHandler extends AbstractUploadableDataHandler
         return $entity;
     }
 
+    public function getFilenameProperty(string $fqcn): string
+    {
+        $tmpObj = new $fqcn();
+
+        return $this->getMapping($tmpObj)->getFileNamePropertyName();
+    }
+
     protected function getMapping(UploadableEntity $entity): PropertyMapping
     {
         return $this->propertyMappingFactory->fromObject($entity)[0];
