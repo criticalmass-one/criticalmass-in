@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Criticalmass\Geocoding\ReverseGeocodeable;
 use App\Criticalmass\Image\PhotoManipulator\PhotoInterface\ManipulateablePhotoInterface;
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
+use App\Criticalmass\UploadableDataHandler\UploadableEntity;
 use App\EntityInterface\AutoParamConverterAble;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
@@ -98,18 +99,34 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
     protected $creationDateTime;
 
     /**
-     * @Vich\UploadableField(mapping="photo_photo", fileNameProperty="imageName")
-     *
-     * @var File
+     * @var File $imageFile
+     * @Vich\UploadableField(mapping="photo_photo", fileNameProperty="imageName", size="imageSize", mimeType="imageMimeType")
      */
     protected $imageFile;
 
     /**
+     * @var string $imageName
      * @ORM\Column(type="string", length=255)
-     *
-     * @var string
      */
     protected $imageName;
+
+    /**
+     * @var int $imageSize
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $imageSize;
+
+    /**
+     * @var string $imageMimeType
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $imageMimeType;
+
+    /**
+     * @var string $imageGoogleCloudHash
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $imageGoogleCloudHash;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -117,6 +134,24 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
      * @var string
      */
     protected $backupName;
+
+    /**
+     * @var int $backupSize
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $backupSize;
+
+    /**
+     * @var string $backupMimeType
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $backupMimeType;
+
+    /**
+     * @var string $backupGoogleCloudHash
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $backupGoogleCloudHash;
 
     /**
      * @ORM\Column(type="datetime")
@@ -316,7 +351,7 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
         return $this->creationDateTime;
     }
 
-    public function setImageFile(File $image = null): Photo
+    public function setImageFile(File $image = null): PhotoInterface
     {
         $this->imageFile = $image;
 
@@ -342,6 +377,30 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
     public function getImageName(): ?string
     {
         return $this->imageName;
+    }
+
+    public function getImageSize(): ?int
+    {
+        return $this->imageSize;
+    }
+
+    public function setImageSize(int $imageSize): PhotoInterface
+    {
+        $this->imageSize = $imageSize;
+
+        return $this;
+    }
+
+    public function getImageMimeType(): ?string
+    {
+        return $this->imageMimeType;
+    }
+
+    public function setImageMimeType(string $imageMimeType): PhotoInterface
+    {
+        $this->imageMimeType = $imageMimeType;
+
+        return $this;
     }
 
     public function setViews(int $views): ViewableInterface
@@ -385,6 +444,30 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
     public function getBackupName(): ?string
     {
         return $this->backupName;
+    }
+
+    public function getBackupSize(): ?int
+    {
+        return $this->backupSize;
+    }
+
+    public function setBackupSize(int $backupSize): Photo
+    {
+        $this->backupSize = $backupSize;
+
+        return $this;
+    }
+
+    public function getBackupMimeType(): ?string
+    {
+        return $this->backupMimeType;
+    }
+
+    public function setBackupMimeType(string $backupMimeType): Photo
+    {
+        $this->backupMimeType = $backupMimeType;
+
+        return $this;
     }
 
     public function setShorturl(string $shorturl): Photo
@@ -491,6 +574,30 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
     public function setExifCreationDate(\DateTime $exifCreationDate): Photo
     {
         $this->exifCreationDate = $exifCreationDate;
+
+        return $this;
+    }
+
+    public function getImageGoogleCloudHash(): ?string
+    {
+        return $this->imageGoogleCloudHash;
+    }
+
+    public function setImageGoogleCloudHash(string $imageGoogleCloudHash): Photo
+    {
+        $this->imageGoogleCloudHash = $imageGoogleCloudHash;
+
+        return $this;
+    }
+
+    public function getBackupGoogleCloudHash(): ?string
+    {
+        return $this->backupGoogleCloudHash;
+    }
+
+    public function setBackupGoogleCloudHash(string $backupGoogleCloudHash): Photo
+    {
+        $this->backupGoogleCloudHash = $backupGoogleCloudHash;
 
         return $this;
     }

@@ -114,6 +114,31 @@ class PhotoRepository extends EntityRepository
         return $query->getResult();
     }
 
+    public function findPhotosWithoutExportData(int $limit = null, int $offset = null, bool $fetchExistingData = false): array
+    {
+        $builder = $this->createQueryBuilder('p');
+
+        $builder
+            ->select('p')
+            ->orderBy('p.exifCreationDate', 'desc');
+
+        if (!$fetchExistingData) {
+            $builder->where($builder->expr()->isNull('p.imageGoogleCloudHash'));
+        }
+
+        if ($limit) {
+            $builder->setMaxResults($limit);
+        }
+
+        if ($offset) {
+            $builder->setFirstResult($offset);
+        }
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
+
     public function findGeocodeablePhotos(int $limit = 50, ?bool $emptyLocationOnly = false): array
     {
         $builder = $this->createQueryBuilder('p');
