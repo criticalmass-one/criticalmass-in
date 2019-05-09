@@ -6,6 +6,12 @@ use Vich\UploaderBundle\Mapping\PropertyMapping;
 
 class UploadableDataHandler extends AbstractUploadableDataHandler
 {
+    /** @var array $propertyList */
+    protected $propertyList = [
+        'size',
+        'mimeType',
+    ];
+
     public function calculateForEntity(UploadableEntity $entity): UploadableEntity
     {
         $mapping = $this->getMapping($entity);
@@ -16,8 +22,10 @@ class UploadableDataHandler extends AbstractUploadableDataHandler
             return $entity;
         }
 
-        foreach ($this->propertyCallList as $property => $functionName) {
-            $value = $this->filesystem->$functionName($filename);
+        foreach ($this->propertyList as $property) {
+            $calculateMethodName = sprintf('calculate%s', ucfirst($property));
+
+            $value = $this->$calculateMethodName($filename);
 
             $mapping->writeProperty($entity, $property, $value);
         }
@@ -47,5 +55,15 @@ class UploadableDataHandler extends AbstractUploadableDataHandler
         $getFilenameMethod = $this->getFilenameGetMethod($propertyMapping);
 
         return sprintf('%s/%s', $propertyMapping->getUploadDestination(), $entity->$getFilenameMethod());
+    }
+
+    protected function calculateSize(string $filename)
+    {
+        return $this->filesystem->getSize($filename);
+    }
+
+    protected function calculateMimeType(string $filename)
+    {
+        return $this->filesystem->getSize($filename);
     }
 }

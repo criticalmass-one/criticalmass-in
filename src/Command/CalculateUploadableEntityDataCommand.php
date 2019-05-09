@@ -41,20 +41,19 @@ class CalculateUploadableEntityDataCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        $limit = $input->getOption('limit') ? (int) $input->getOption('limit') : null;
-        $offset = $input->getOption('offset') ? (int) $input->getOption('offset') : null;
-        $overwrite = $input->getOption('overwrite') ? (bool) $input->getOption('overwrite') : false;
+        $limit = $input->getOption('limit') ? (int)$input->getOption('limit') : null;
+        $offset = $input->getOption('offset') ? (int)$input->getOption('offset') : null;
+        $overwrite = $input->getOption('overwrite') ? (bool)$input->getOption('overwrite') : false;
         $entityClassname = $input->getArgument('entityClassname');
         $fqcn = $this->getFqcn($entityClassname);
-        $fileNameProperty = $this->uploadableDataHandler->getFilenameProperty($fqcn);
 
         $criteria = new Criteria();
 
         if (!$overwrite) {
-            $criteria->where(Criteria::expr()->isNull($fileNameProperty));
+            $criteria = $this->calculateCriteria($criteria, $fqcn);
         }
 
-        $entityList = $this->registry->getRepository($fqcn)->findBy($criteria, [], $limit, $offset);
+        $entityList = $this->registry->getRepository($fqcn)->matching($criteria, [], $limit, $offset);
 
         $progressBar = new ProgressBar($output, count($entityList));
 
@@ -66,6 +65,40 @@ class CalculateUploadableEntityDataCommand extends Command
 
         $this->registry->getManager()->flush();
         $progressBar->finish();
+    }
+
+    protected function calculateCriteria(Criteria $criteria, string $fqcn): Criteria
+    {
+        $fileNameProperty = $this->uploadableDataHandler->getFilenameProperty($fqcn);
+        $filenamePrefix = $this->calculateFilenamePrefix($fileNameProperty);
+
+        $mappingProperties = $this->calculateMappingProperties($filenamePrefix);
+
+        /** @var string $property */
+        foreach ($mappingProperties as $property) {
+            $criteria->where(Criteria::expr()->isNull($property));
+        }
+
+        return $criteria;
+    }
+
+    protected function calculateMappingProperties(string $filenamePrefix): array
+    {
+        $propertySuffixList = [
+            'mimeType',
+            'size',
+        ];
+
+        array_walk($propertySuffixList, function(&$item) use ($filenamePrefix) {
+            $item = sprintf('%s%s', $filenamePrefix, ucfirst($item));
+        });
+
+        return $propertySuffixList;
+    }
+    
+    protected function calculateFilenamePrefix(string $filenameProperty): string
+    {
+        return substr($filenameProperty, 0, -4);
     }
 
     protected function getFqcn(string $classname): string

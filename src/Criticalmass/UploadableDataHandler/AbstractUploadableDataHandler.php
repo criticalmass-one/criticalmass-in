@@ -13,11 +13,6 @@ abstract class AbstractUploadableDataHandler implements UploadableDataHandlerInt
     /** @var FilesystemInterface $filesystem */
     protected $filesystem;
 
-    protected $propertyCallList = [
-        'size' => 'getSize',
-        'mimeType' => 'getMimetype',
-    ];
-
     public function __construct(PropertyMappingFactory $propertyMappingFactory, FilesystemInterface $filesystem)
     {
         $this->propertyMappingFactory = $propertyMappingFactory;
