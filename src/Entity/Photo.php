@@ -5,7 +5,7 @@ namespace App\Entity;
 use App\Criticalmass\Geocoding\ReverseGeocodeable;
 use App\Criticalmass\Image\PhotoManipulator\PhotoInterface\ManipulateablePhotoInterface;
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
-use App\Criticalmass\UploadableDataHandler\UploadableEntity;
+use App\Criticalmass\UploadFaker\FakeUploadable;
 use App\EntityInterface\AutoParamConverterAble;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
@@ -27,7 +27,7 @@ use App\Criticalmass\Sharing\Annotation as Sharing;
  * @JMS\ExclusionPolicy("all")
  * @Routing\DefaultRoute(name="caldera_criticalmass_photo_show_ride")
  */
-class Photo implements ViewableInterface, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, Shareable, StaticMapableInterface, ReverseGeocodeable
+class Photo implements FakeUploadable, ViewableInterface, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, Shareable, StaticMapableInterface, ReverseGeocodeable
 {
     /**
      * @ORM\Id
@@ -105,6 +105,7 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
     protected $imageFile;
 
     /**
+     * @var string
      * @var string $imageName
      * @ORM\Column(type="string", length=255)
      */
@@ -129,9 +130,14 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
     protected $imageGoogleCloudHash;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     *
+     * @var File
+     * @Vich\UploadableField(mapping="photo_photo", fileNameProperty="backupName")
+     */
+    protected $backupFile;
+
+    /**
      * @var string
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $backupName;
 
@@ -403,35 +409,20 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
         return $this;
     }
 
-    public function setViews(int $views): ViewableInterface
+    public function setBackupFile(File $image = null): Photo
     {
-        $this->views = $views;
+        $this->backupFile = $image;
+
+        if ($image) {
+            $this->updatedAt = new \DateTime('now');
+        }
 
         return $this;
     }
 
-    public function getViews(): int
+    public function getBackupFile(): ?File
     {
-        return $this->views;
-    }
-
-    public function incViews(): ViewableInterface
-    {
-        ++$this->views;
-
-        return $this;
-    }
-
-    public function setUpdatedAt($updatedAt): Photo
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): \DateTime
-    {
-        return $this->updatedAt;
+        return $this->imageFile;
     }
 
     public function setBackupName(string $backupName = null): ManipulateablePhotoInterface
@@ -469,6 +460,38 @@ class Photo implements ViewableInterface, ManipulateablePhotoInterface, Routeabl
 
         return $this;
     }
+
+    public function setViews(int $views): ViewableInterface
+    {
+        $this->views = $views;
+
+        return $this;
+    }
+
+    public function getViews(): int
+    {
+        return $this->views;
+    }
+
+    public function incViews(): ViewableInterface
+    {
+        ++$this->views;
+
+        return $this;
+    }
+
+    public function setUpdatedAt($updatedAt): Photo
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): \DateTime
+    {
+        return $this->updatedAt;
+    }
+
 
     public function setShorturl(string $shorturl): Photo
     {

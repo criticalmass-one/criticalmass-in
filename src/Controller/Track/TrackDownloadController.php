@@ -2,6 +2,7 @@
 
 namespace App\Controller\Track;
 
+use League\Flysystem\Filesystem;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Controller\AbstractController;
@@ -17,13 +18,14 @@ class TrackDownloadController extends AbstractController
      */
     public function downloadAction(Track $track, UploaderHelper $uploaderHelper): Response
     {
-        $trackContent = file_get_contents($this->getTrackFilename($track, $uploaderHelper));
-        $filename = $this->generateFilename($track);
+        /** @var Filesystem $filesystem */
+        $filesystem = $this->get('oneup_flysystem.flysystem_track_track_filesystem');
+        $trackContent = $filesystem->read($track->getTrackFilename());
 
         $response = new Response();
 
         $response->headers->add([
-            'Content-disposition' => sprintf('attachment; filename=%s', $filename),
+            'Content-disposition' => sprintf('attachment; filename=%s', $this->generateHumanFriendlyFilename($track)),
             'Content-type' => 'application/gpx+xml',
         ]);
 
@@ -32,7 +34,7 @@ class TrackDownloadController extends AbstractController
         return $response;
     }
 
-    protected function generateFilename(Track $track): string
+    protected function generateHumanFriendlyFilename(Track $track): string
     {
         $filename = sprintf('Critical Mass %s %s', $track->getRide()->getCity()->getCity(), $track->getRide()->getDateTime()->format('Y-m-d'));
 
@@ -41,9 +43,6 @@ class TrackDownloadController extends AbstractController
 
     protected function getTrackFilename(Track $track, UploaderHelper $uploaderHelper): string
     {
-        $rootDirectory = $this->getParameter('kernel.root_dir');
-        $filename = $uploaderHelper->asset($track, 'trackFile');
-
-        return sprintf('%s/../public%s', $rootDirectory, $filename);
+        return $uploaderHelper->asset($track, 'trackFile');
     }
 }

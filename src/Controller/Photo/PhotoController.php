@@ -3,12 +3,11 @@
 namespace App\Controller\Photo;
 
 use App\Controller\AbstractController;
+use App\Criticalmass\Image\ExifWrapper\ExifWrapperInterface;
 use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Entity\Photo;
 use App\Entity\Track;
 use App\Event\View\ViewEvent;
-use PHPExif\Exif;
-use PHPExif\Reader\Reader;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,6 +25,7 @@ class PhotoController extends AbstractController
     public function showAction(
         SeoPageInterface $seoPage,
         EventDispatcherInterface $eventDispatcher,
+        ExifWrapperInterface $exifWrapper,
         Photo $photo
     ): Response {
         $city = $photo->getCity();

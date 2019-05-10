@@ -31,9 +31,7 @@ class PhotoRepository extends EntityRepository
 
         $query = $builder->getQuery();
 
-        $result = $query->getOneOrNullResult();
-
-        return $result;
+        return $query->getOneOrNullResult();
     }
 
     public function getNextPhoto(Photo $photo): ?Photo
@@ -79,9 +77,8 @@ class PhotoRepository extends EntityRepository
             ->orderBy('ride.dateTime', 'desc');
 
         $query = $builder->getQuery();
-        $result = $query->getResult();
 
-        return $result;
+        return $query->getResult();
     }
 
     public function findPhotosWithoutExifData(int $limit = null, int $offset = null, bool $fetchExistingData = false): array
@@ -155,9 +152,8 @@ class PhotoRepository extends EntityRepository
         }
 
         $query = $builder->getQuery();
-        $result = $query->getResult();
 
-        return $result;
+        return $query->getResult();
     }
 
     /**

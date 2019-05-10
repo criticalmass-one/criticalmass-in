@@ -5,7 +5,6 @@ namespace App\Criticalmass\Image\PhotoUploader;
 use App\Entity\Photo;
 use App\Event\Photo\PhotoUploadedEvent;
 use DirectoryIterator;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class PhotoUploader extends AbstractPhotoUploader
@@ -60,7 +59,7 @@ class PhotoUploader extends AbstractPhotoUploader
 
         $this->doctrine->getManager()->persist($photo);
 
-        $this->eventDispatcher->dispatch(PhotoUploadedEvent::NAME, new PhotoUploadedEvent($photo));
+        $this->eventDispatcher->dispatch(PhotoUploadedEvent::NAME, new PhotoUploadedEvent($photo, true, $uploadedFile->getRealPath()));
 
         $this->addedPhotoList[] = $photo;
 
@@ -76,28 +75,21 @@ class PhotoUploader extends AbstractPhotoUploader
             ->setRide($this->ride)
             ->setCity($this->ride->getCity());
 
-        $this->fakeUpload($photo, file_get_contents($sourceFilename));
+        $tmpFilename = $this->uploadFaker->fakeUpload($photo, 'imageFile', file_get_contents($sourceFilename), $this->extractFilename($sourceFilename));
 
         $this->doctrine->getManager()->persist($photo);
-
-        $this->eventDispatcher->dispatch(PhotoUploadedEvent::NAME, new PhotoUploadedEvent($photo));
+        
+        $this->eventDispatcher->dispatch(PhotoUploadedEvent::NAME, new PhotoUploadedEvent($photo, true, $tmpFilename));
 
         $this->addedPhotoList[] = $photo;
 
         return $photo;
     }
 
-    protected function fakeUpload(Photo $photo, string $imageContent): Photo
+    protected function extractFilename(string $sourceFilename): string
     {
-        $filename = sprintf('%s.jpg', uniqid('', true));
-        $path = sprintf('/tmp/%s', $filename);
+        $filenameParts = explode('/', $sourceFilename);
 
-        $filesystem = new Filesystem();
-        $filesystem->dumpFile($path, $imageContent);
-
-        $file = new UploadedFile($path, $filename, null, null, true);
-        $photo->setImageFile($file);
-
-        return $photo;
+        return array_shift($filenameParts);
     }
 }

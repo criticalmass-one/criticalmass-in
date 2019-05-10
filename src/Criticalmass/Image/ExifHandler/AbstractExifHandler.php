@@ -2,13 +2,15 @@
 
 namespace App\Criticalmass\Image\ExifHandler;
 
+use App\Criticalmass\Image\ExifWrapper\ExifWrapperInterface;
+
 abstract class AbstractExifHandler implements ExifHandlerInterface
 {
-    /** @var string $uploadDestinationPhoto */
-    protected $uploadDestinationPhoto;
+    /** @var ExifWrapperInterface $exifWrapper */
+    protected $exifWrapper;
 
-    public function __construct(string $uploadDestinationPhoto)
+    public function __construct(ExifWrapperInterface $exifWrapper)
     {
-        $this->uploadDestinationPhoto = $uploadDestinationPhoto;
+        $this->exifWrapper = $exifWrapper;
     }
 }

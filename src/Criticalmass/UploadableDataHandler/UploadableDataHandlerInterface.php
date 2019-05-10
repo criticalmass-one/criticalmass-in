@@ -5,5 +5,5 @@ namespace App\Criticalmass\UploadableDataHandler;
 interface UploadableDataHandlerInterface
 {
     public function calculateForEntity(UploadableEntity $entity): UploadableEntity;
-    public function getFilenameProperty(string $fqcn): string;
+    public function getFilenameProperty(string $fqcn): array;
 }

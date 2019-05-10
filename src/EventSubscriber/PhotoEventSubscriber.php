@@ -54,11 +54,11 @@ class PhotoEventSubscriber implements EventSubscriberInterface
         // this is for persisting the uploaded file into the filesystem
         $this->registry->getManager()->flush();
 
-        $this->handleExifData($photoUploadedEvent->getPhoto());
+        $this->handleExifData($photoUploadedEvent->getPhoto(), $photoUploadedEvent->getTmpFilename());
         $this->reverseGeocode($photoUploadedEvent->getPhoto());
         $this->locate($photoUploadedEvent->getPhoto());
 
-        $this->exportDataHandler->calculateForPhoto($photoUploadedEvent->getPhoto());
+        $this->exportDataHandler->calculateForEntity($photoUploadedEvent->getPhoto());
 
         // and this is to flush our changes to the filesystem
         $this->registry->getManager()->flush();
@@ -66,6 +66,7 @@ class PhotoEventSubscriber implements EventSubscriberInterface
 
     public function onPhotoUpdated(PhotoUpdatedEvent $photoUpdatedEvent): void
     {
+        $this->handleExifData($photoUpdatedEvent->getPhoto(), $photoUpdatedEvent->getTmpFilename());
         $this->reverseGeocode($photoUpdatedEvent->getPhoto());
         $this->locate($photoUpdatedEvent->getPhoto());
 
@@ -98,9 +99,13 @@ class PhotoEventSubscriber implements EventSubscriberInterface
         }
     }
 
-    protected function handleExifData(Photo $photo): void
+    protected function handleExifData(Photo $photo, string $tmpFilename = null): void
     {
-        $exif = $this->exifHandler->readExifDataFromPhotoFile($photo);
+        if ($tmpFilename) {
+            $exif = $this->exifHandler->readExifDataFromFile($tmpFilename);
+        } else {
+            $exif = $this->exifHandler->readExifDataFromPhotoFile($photo);
+        }
 
         if ($exif) {
             $this->exifHandler->assignExifDataToPhoto($photo, $exif);

@@ -1,9 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Criticalmass\Image\PhotoGps;
 
 use PHPExif\Exif;
-use PHPExif\Reader\Reader;
 
 /**
  * @deprecated
@@ -70,15 +69,6 @@ class PhotoGps extends AbstractPhotoGps
 
     protected function readExifData(): ?Exif
     {
-        $filename = sprintf('%s/%s', $this->uploadDestinationPhoto, $this->photo->getImageName());
-
-        $reader = Reader::factory(Reader::TYPE_NATIVE);
-        $exif = $reader->read($filename);
-
-        if ($exif !== false) {
-            return $exif;
-        }
-
-        return null;
+        return $this->exifWrapper->getExifData($this->photo);
     }
 }
