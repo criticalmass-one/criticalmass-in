@@ -114,11 +114,11 @@ services:
 
     App\Criticalmass\UploadableDataHandler\UploadableDataHandler:
         arguments:
-            $filesystem: '@oneup_flysystem.flysystem_user_photo_filesystem'
+            $filesystem: '@oneup_flysystem.flysystem_photo_photo_filesystem'
 
     App\Criticalmass\Image\GoogleCloud\ExportDataHandler\ExportDataHandler:
         arguments:
-            $filesystem: '@oneup_flysystem.flysystem_user_photo_filesystem'
+            $filesystem: '@oneup_flysystem.flysystem_photo_photo_filesystem'
 
     App\Criticalmass\Geocoding\ReverseGeocoderInterface:
         alias: App\Criticalmass\Geocoding\CachedReverseGeocoder
@@ -180,3 +180,6 @@ services:
 
     OldSound\RabbitMqBundle\RabbitMq\ProducerInterface:
         alias: old_sound_rabbit_mq.criticalmass_view_producer
+
+    App\Criticalmass\UploadableDataHandler\UploadableDataHandlerInterface:
+        alias: App\Criticalmass\UploadableDataHandler\UploadableDataHandler
