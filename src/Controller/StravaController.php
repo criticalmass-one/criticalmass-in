@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Event\Track\TrackUploadedEvent;
+use League\Flysystem\FilesystemInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Entity\Position;
@@ -122,7 +123,6 @@ class StravaController extends AbstractController
     {
         $activityId = (int) $request->get('activityId');
 
-        $uploadDestinationTrack = $this->getParameter('upload_destination.track');
         $token = $this->getSession()->get('strava_token');
 
         $adapter = new \GuzzleHttp\Client(['base_uri' => 'https://www.strava.com/api/v3/']);
@@ -165,11 +165,11 @@ class StravaController extends AbstractController
 
         $exporter->execute();
 
-        $filename = sprintf('%s.gpx', uniqid());
+        $filename = sprintf('%s.gpx', uniqid('', true));
 
-        $fp = fopen(sprintf('%s/%s', $uploadDestinationTrack, $filename), 'w');
-        fwrite($fp, $exporter->getGpxContent());
-        fclose($fp);
+        /** @var FilesystemInterface $filesystem */
+        $filesystem = $this->container->get('oneup_flysystem.flysystem_track_track_filesystem');
+        $filesystem->put($filename, $exporter->getGpxContent());
 
         $track = new Track();
         $track

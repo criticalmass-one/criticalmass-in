@@ -2,9 +2,8 @@
 
 namespace App\Criticalmass\Image\GoogleCloud\ExportDataHandler;
 
-use App\Entity\Photo;
+use App\Criticalmass\UploadableDataHandler\UploadableDataHandlerInterface;
 
-interface ExportDataHandlerInterface
+interface ExportDataHandlerInterface extends UploadableDataHandlerInterface
 {
-    public function calculateForPhoto(Photo $photo): Photo;
 }

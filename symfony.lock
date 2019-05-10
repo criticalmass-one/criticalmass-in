@@ -248,6 +248,9 @@
     "knplabs/knp-paginator-bundle": {
         "version": "v2.8.0"
     },
+    "league/flysystem": {
+        "version": "1.0.51"
+    },
     "league/oauth2-client": {
         "version": "2.3.0"
     },
@@ -289,6 +292,15 @@
     },
     "ocramius/proxy-manager": {
         "version": "2.2.0"
+    },
+    "oneup/flysystem-bundle": {
+        "version": "3.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "0eb87bba411c227da027fe5f7c1dc7954b02f242"
+        }
     },
     "pagerfanta/pagerfanta": {
         "version": "v1.1.0"

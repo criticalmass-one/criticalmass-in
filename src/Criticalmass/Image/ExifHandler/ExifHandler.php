@@ -4,27 +4,17 @@ namespace App\Criticalmass\Image\ExifHandler;
 
 use App\Entity\Photo;
 use PHPExif\Exif;
-use PHPExif\Reader\Reader;
 
 class ExifHandler extends AbstractExifHandler
 {
     public function readExifDataFromPhotoFile(Photo $photo): ?Exif
     {
-        $filename = sprintf('%s/%s', $this->uploadDestinationPhoto, $photo->getImageName());
-
-        return $this->readExifDataFromFile($filename);
+        return $this->readExifDataFromFile($photo->getImageName());
     }
 
     public function readExifDataFromFile(string $filename): ?Exif
     {
-        $reader = Reader::factory(Reader::TYPE_NATIVE);
-        $exif = $reader->read($filename);
-
-        if ($exif !== false) {
-            return $exif;
-        }
-
-        return null;
+        return $this->exifWrapper->readExifDataFromFile($filename);
     }
 
     public function assignExifDataToPhoto(Photo $photo, Exif $exif): Photo

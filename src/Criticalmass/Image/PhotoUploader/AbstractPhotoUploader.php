@@ -2,9 +2,11 @@
 
 namespace App\Criticalmass\Image\PhotoUploader;
 
+use App\Criticalmass\UploadFaker\UploadFakerInterface;
 use App\Entity\Ride;
 use App\Entity\Track;
 use App\Entity\User;
+use League\Flysystem\FilesystemInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -13,8 +15,8 @@ abstract class AbstractPhotoUploader implements PhotoUploaderInterface
     /** @var RegistryInterface $doctrine */
     protected $doctrine;
 
-    /** @var string $uploadDestinationPhoto */
-    protected $uploadDestinationPhoto;
+    /** @var FilesystemInterface $filesystem */
+    protected $filesystem;
 
     /** @var User $user */
     protected $user;
@@ -28,11 +30,15 @@ abstract class AbstractPhotoUploader implements PhotoUploaderInterface
     /** @var array $addedPhotoList */
     protected $addedPhotoList = [];
 
-    public function __construct(RegistryInterface $doctrine, string $uploadDestinationPhoto, EventDispatcherInterface $eventDispatcher)
+    /** @var UploadFakerInterface $uploadFaker */
+    protected $uploadFaker;
+
+    public function __construct(RegistryInterface $doctrine, EventDispatcherInterface $eventDispatcher, FilesystemInterface $filesystem, UploadFakerInterface $uploadFaker)
     {
         $this->doctrine = $doctrine;
-        $this->uploadDestinationPhoto = $uploadDestinationPhoto;
+        $this->filesystem = $filesystem;
         $this->eventDispatcher = $eventDispatcher;
+        $this->uploadFaker = $uploadFaker;
     }
 
     public function setUser(User $user): PhotoUploaderInterface

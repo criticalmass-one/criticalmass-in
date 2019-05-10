@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\UploadableDataHandler;
 
+use League\Flysystem\FilesystemInterface;
 use Vich\UploaderBundle\Mapping\PropertyMappingFactory;
 
 abstract class AbstractUploadableDataHandler implements UploadableDataHandlerInterface
@@ -9,13 +10,12 @@ abstract class AbstractUploadableDataHandler implements UploadableDataHandlerInt
     /** @var PropertyMappingFactory $propertyMappingFactory */
     protected $propertyMappingFactory;
 
-    protected $propertyCallList = [
-        'size' => 'filesize',
-        'mimeType' => 'mime_content_type',
-    ];
+    /** @var FilesystemInterface $filesystem */
+    protected $filesystem;
 
-    public function __construct(PropertyMappingFactory $propertyMappingFactory)
+    public function __construct(PropertyMappingFactory $propertyMappingFactory, FilesystemInterface $filesystem)
     {
         $this->propertyMappingFactory = $propertyMappingFactory;
+        $this->filesystem = $filesystem;
     }
 }
