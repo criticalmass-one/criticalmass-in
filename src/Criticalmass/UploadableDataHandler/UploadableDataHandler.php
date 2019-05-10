@@ -21,7 +21,7 @@ class UploadableDataHandler extends AbstractUploadableDataHandler
         foreach ($mappingList as $mapping) {
             $filename = $this->getFilename($mapping, $entity);
 
-            if (!$this->filesystem->has($filename)) {
+            if (!$filename || !$this->filesystem->has($filename)) {
                 return $entity;
             }
 
@@ -35,10 +35,7 @@ class UploadableDataHandler extends AbstractUploadableDataHandler
                 try {
                     $mapping->writeProperty($entity, $property, $value);
                 } catch (InvalidArgumentException $exception) {
-                    $filenameSuffix = substr($property, 0, -4);
-                    
-                    $setMethodName = sprintf('set%s%s', ucfirst($property));
-                    $entity->$setMethodName($value);
+                    $this->assignPropertyWithoutMapping($entity, $property, $mapping->getFileNamePropertyName(), $value);
                 }
             }
         }
@@ -67,7 +64,7 @@ class UploadableDataHandler extends AbstractUploadableDataHandler
         return sprintf('get%s', ucfirst($propertyMapping->getFileNamePropertyName()));
     }
 
-    protected function getFilename(PropertyMapping $propertyMapping, UploadableEntity $entity): string
+    protected function getFilename(PropertyMapping $propertyMapping, UploadableEntity $entity): ?string
     {
         $getFilenameMethod = $this->getFilenameGetMethod($propertyMapping);
 
@@ -82,5 +79,22 @@ class UploadableDataHandler extends AbstractUploadableDataHandler
     protected function calculateMimeType(string $filename): string
     {
         return $this->filesystem->getMimetype($filename);
+    }
+
+    private function assignPropertyWithoutMapping(UploadableEntity $entity, string $property, string $filenamePropertyName, $value): UploadableEntity
+    {
+        $propertyPrefix = $this->guessPropertyPrefix($filenamePropertyName);
+
+        $setMethodName = sprintf('set%s%s', ucfirst($propertyPrefix), ucfirst($property));
+        $entity->$setMethodName($value);
+
+        return $entity;
+    }
+
+    protected function guessPropertyPrefix(string $filenamePropertyName): string
+    {
+        preg_match_all('/((?:^|[A-Z])[a-z]+)/', $filenamePropertyName,$matches);
+
+        return $matches[0][0];
     }
 }
