@@ -49,7 +49,7 @@ class CalculateExportDataCommand extends Command
 
         /** @var Photo $photo */
         foreach ($photoList as $photo) {
-            $this->exportDataHandler->calculateForPhoto($photo);
+            $this->exportDataHandler->calculateForEntity($photo);
 
             $progressBar->advance();
         }
