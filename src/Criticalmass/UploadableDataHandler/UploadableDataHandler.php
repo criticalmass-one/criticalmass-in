@@ -14,35 +14,42 @@ class UploadableDataHandler extends AbstractUploadableDataHandler
 
     public function calculateForEntity(UploadableEntity $entity): UploadableEntity
     {
-        $mapping = $this->getMapping($entity);
+        $mappingList = $this->propertyMappingFactory->fromObject($entity);
 
-        $filename = $this->getFilename($mapping, $entity);
+        /** @var PropertyMapping $mapping */
+        foreach ($mappingList as $mapping) {
+            $filename = $this->getFilename($mapping, $entity);
 
-        if (!$this->filesystem->has($filename)) {
-            return $entity;
-        }
+            if (!$this->filesystem->has($filename)) {
+                return $entity;
+            }
 
-        foreach ($this->propertyList as $property) {
-            $calculateMethodName = sprintf('calculate%s', ucfirst($property));
+            foreach ($this->propertyList as $property) {
+                $calculateMethodName = sprintf('calculate%s', ucfirst($property));
 
-            $value = $this->$calculateMethodName($filename);
+                $value = $this->$calculateMethodName($filename);
 
-            $mapping->writeProperty($entity, $property, $value);
+                $mapping->writeProperty($entity, $property, $value);
+            }
         }
 
         return $entity;
     }
 
-    public function getFilenameProperty(string $fqcn): string
+    public function getFilenameProperty(string $fqcn): array
     {
         $tmpObj = new $fqcn();
 
-        return $this->getMapping($tmpObj)->getFileNamePropertyName();
-    }
+        $mappingList = $this->propertyMappingFactory->fromObject($tmpObj);
 
-    protected function getMapping(UploadableEntity $entity): PropertyMapping
-    {
-        return $this->propertyMappingFactory->fromObject($entity)[0];
+        $list = [];
+
+        /** @var PropertyMapping $mapping */
+        foreach ($mappingList as $mapping) {
+            $list[] = $mapping->getFileNamePropertyName();
+        }
+
+        return $list;
     }
 
     protected function getFilenameGetMethod(PropertyMapping $propertyMapping): string

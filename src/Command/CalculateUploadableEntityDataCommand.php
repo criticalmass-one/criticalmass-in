@@ -69,14 +69,18 @@ class CalculateUploadableEntityDataCommand extends Command
 
     protected function calculateCriteria(Criteria $criteria, string $fqcn): Criteria
     {
-        $fileNameProperty = $this->uploadableDataHandler->getFilenameProperty($fqcn);
-        $filenamePrefix = $this->calculateFilenamePrefix($fileNameProperty);
+        $filenameList = $this->uploadableDataHandler->getFilenameProperty($fqcn);
 
-        $mappingProperties = $this->calculateMappingProperties($filenamePrefix);
+        /** @var string $filenameProperty */
+        foreach ($filenameList as $filenameProperty) {
+            $filenamePrefix = $this->calculateFilenamePrefix($filenameProperty);
 
-        /** @var string $property */
-        foreach ($mappingProperties as $property) {
-            $criteria->where(Criteria::expr()->isNull($property));
+            $mappingProperties = $this->calculateMappingProperties($filenamePrefix);
+
+            /** @var string $property */
+            foreach ($mappingProperties as $property) {
+                $criteria->andWhere(Criteria::expr()->isNull($property));
+            }
         }
 
         return $criteria;
