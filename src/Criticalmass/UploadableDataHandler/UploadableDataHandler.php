@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\UploadableDataHandler;
 
+use InvalidArgumentException;
 use Vich\UploaderBundle\Mapping\PropertyMapping;
 
 class UploadableDataHandler extends AbstractUploadableDataHandler
@@ -29,7 +30,16 @@ class UploadableDataHandler extends AbstractUploadableDataHandler
 
                 $value = $this->$calculateMethodName($filename);
 
-                $mapping->writeProperty($entity, $property, $value);
+                // unfortunately there is no way to access the entity mapping list,
+                // so we will just try and catch
+                try {
+                    $mapping->writeProperty($entity, $property, $value);
+                } catch (InvalidArgumentException $exception) {
+                    $filenameSuffix = substr($property, 0, -4);
+                    
+                    $setMethodName = sprintf('set%s%s', ucfirst($property));
+                    $entity->$setMethodName($value);
+                }
             }
         }
 
@@ -61,16 +71,16 @@ class UploadableDataHandler extends AbstractUploadableDataHandler
     {
         $getFilenameMethod = $this->getFilenameGetMethod($propertyMapping);
 
-        return sprintf('%s/%s', $propertyMapping->getUploadDestination(), $entity->$getFilenameMethod());
+        return $entity->$getFilenameMethod();
     }
 
-    protected function calculateSize(string $filename)
+    protected function calculateSize(string $filename): int
     {
         return $this->filesystem->getSize($filename);
     }
 
-    protected function calculateMimeType(string $filename)
+    protected function calculateMimeType(string $filename): string
     {
-        return $this->filesystem->getSize($filename);
+        return $this->filesystem->getMimetype($filename);
     }
 }
