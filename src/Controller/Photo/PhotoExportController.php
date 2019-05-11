@@ -21,7 +21,6 @@ class PhotoExportController extends AbstractController
 
         $limit = $request->query->getInt('limit');
         $offset = $request->query->getInt('offset');
-        $hostname = $request->getSchemeAndHttpHost();
 
         $photoList = $this->getPhotoRepository()->findPhotosForExport($limit, $offset);
 
@@ -30,32 +29,23 @@ class PhotoExportController extends AbstractController
         /** @var Photo $photo */
         foreach ($photoList as $photo) {
             if ($photo->getImageName()) {
-                $this->addFile($photo, 'imageName', $hostname, $tsvList);
+                $this->addFile($photo, 'image', $tsvList);
             }
 
             if ($photo->getBackupName()) {
-                $this->addFile($photo, 'backupName', $hostname, $tsvList);
+                $this->addFile($photo, 'backup', $tsvList);
             }
         }
 
         return new Response(implode("\n", $tsvList), 200, ['Content-type: text/tab-separated-values']);
     }
 
-    protected function addFile(Photo $photo, string $propertyName, string $hostname, array &$tsvList): void
+    protected function addFile(Photo $photo, string $propertyPrefix, array &$tsvList): void
     {
-        $getMethodName = sprintf('get%s', ucfirst($propertyName));
+        $imageNameGetMethodName = sprintf('get%sName', $propertyPrefix);
+        $imageSizeGetMethodName = sprintf('get%sSize', $propertyPrefix);
+        $imageHashGetMethodName = sprintf('get%sGoogleCloudHash', $propertyPrefix);
 
-        $filename = sprintf('%s/%s', $this->getParameter('upload_destination.photo'), $photo->$getMethodName());
-
-        if (!file_exists($filename)) {
-            return;
-        }
-
-        $size = filesize($filename);
-        $hash = md5_file($filename);
-
-        $webPath = sprintf('%s/photos/%s', $hostname, $photo->getImageName());
-
-        $tsvList[] = sprintf("%s\t%s\t%s", $webPath, $size, base64_encode($hash));
+        $tsvList[] = sprintf("%s\t%s\t%s", $photo->$imageNameGetMethodName(), $photo->$imageSizeGetMethodName(), $photo->$imageHashGetMethodName());
     }
 }

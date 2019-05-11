@@ -408,7 +408,8 @@ class PhotoRepository extends EntityRepository
 
         $builder
             ->select('p')
-            ->orderBy('p.exifCreationDate', 'desc');
+            ->orderBy('p.exifCreationDate', 'desc')
+            ->where($builder->expr()->isNotNull('p.imageGoogleCloudHash'));
 
         if ($limit) {
             $builder->setMaxResults($limit);
