@@ -76,7 +76,7 @@ class ImportImagesCommand extends Command
         foreach ($this->photoUploader->getAddedPhotoList() as $photo) {
             $table->addRow([
                 $photo->getImageName(),
-                $photo->getDateTime() ? $photo->getDateTime()->format('Y-m-d H:i:s') : '',
+                $photo->getExifCreationDate() ? $photo->getExifCreationDate()->format('Y-m-d H:i:s') : '',
                 $photo->hasCoordinates() ? sprintf('%f,%f', $photo->getLatitude(), $photo->getLongitude()) : ''
             ]);
         }

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -21,7 +22,7 @@ use App\Criticalmass\Router\Annotation as Routing;
  * @Vich\Uploadable
  * @JMS\ExclusionPolicy("all")
  */
-class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterface
+class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterface, PhotoInterface
 {
     /**
      * @ORM\Id
@@ -123,13 +124,23 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     protected $runkeeperAccessToken;
 
     /**
+     * @ORM\Column(name="twitter_id", type="string", length=255, nullable=true)
+     */
+    protected $twitterId;
+
+    /**
+     * @ORM\Column(name="twitter_access_token", type="string", length=255, nullable=true)
+     */
+    protected $twitterkAccessToken;
+
+    /**
      * @ORM\OneToMany(targetEntity="CityCycle", mappedBy="city", cascade={"persist", "remove"})
      */
     protected $cycles;
 
     /**
      * @var File $imageFile
-     * @Vich\UploadableField(mapping="user_photo", fileNameProperty="imageName")
+     * @Vich\UploadableField(mapping="user_photo", fileNameProperty="imageName", size="imageSize", mimeType="imageMimeType")
      */
     protected $imageFile;
 
@@ -140,6 +151,18 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $imageName;
+
+    /**
+     * @var int $imageSize
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $imageSize;
+
+    /**
+     * @var string $imageMimeType
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $imageMimeType;
 
     /**
      * @ORM\Column(type="boolean", options={"default" = 0})
@@ -363,6 +386,30 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         return $this->runkeeperAccessToken;
     }
 
+    public function setTwitterId(string $twitterId): User
+    {
+        $this->twitterId = $twitterId;
+
+        return $this;
+    }
+
+    public function getTwitterId(): ?string
+    {
+        return $this->twitterId;
+    }
+
+    public function setTwitterAccessToken(string $twitterkAccessToken): User
+    {
+        $this->twitterkAccessToken = $twitterkAccessToken;
+
+        return $this;
+    }
+
+    public function getTwitterAccessToken(): ?string
+    {
+        return $this->twitterkAccessToken;
+    }
+
     public function setBlurGalleries(bool $blurGalleries): User
     {
         $this->blurGalleries = $blurGalleries;
@@ -377,7 +424,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
 
     public function isOauthAccount(): bool
     {
-        return $this->runkeeperId || $this->stravaId || $this->facebookId;
+        return $this->runkeeperId || $this->stravaId || $this->facebookId || $this->isTwitterAccount();
     }
 
     public function isFacebookAccount(): bool
@@ -393,6 +440,11 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     public function isRunkeeperAccount(): bool
     {
         return $this->facebookId !== null;
+    }
+
+    public function isTwitterAccount(): bool
+    {
+        return $this->twitterId !== null;
     }
 
     public function addBikerightVoucher(BikerightVoucher $bikerightVoucher): User
@@ -440,7 +492,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         return $this;
     }
 
-    public function setImageFile(File $image = null): User
+    public function setImageFile(File $image = null): PhotoInterface
     {
         $this->imageFile = $image;
 
@@ -456,7 +508,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         return $this->imageFile;
     }
 
-    public function setImageName(string $imageName = null): User
+    public function setImageName(string $imageName = null): PhotoInterface
     {
         $this->imageName = $imageName;
 
@@ -466,6 +518,30 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     public function getImageName(): ?string
     {
         return $this->imageName;
+    }
+
+    public function getImageSize(): ?int
+    {
+        return $this->imageSize;
+    }
+
+    public function setImageSize(int $imageSize): PhotoInterface
+    {
+        $this->imageSize = $imageSize;
+
+        return $this;
+    }
+
+    public function getImageMimeType(): ?string
+    {
+        return $this->imageMimeType;
+    }
+
+    public function setImageMimeType(string $imageMimeType): PhotoInterface
+    {
+        $this->imageMimeType = $imageMimeType;
+
+        return $this;
     }
 
     public function hasOwnProfilePhoto(): bool

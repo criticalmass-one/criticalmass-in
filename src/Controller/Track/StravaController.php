@@ -6,6 +6,7 @@ use App\Controller\AbstractController;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Criticalmass\Util\DateTimeUtil;
 use App\Event\Track\TrackUploadedEvent;
+use League\Flysystem\FilesystemInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Entity\Position;
@@ -104,7 +105,6 @@ class StravaController extends AbstractController
     {
         $activityId = (int) $request->get('activityId');
 
-        $uploadDestinationTrack = $this->getParameter('upload_destination.track');
         $token = $this->getSession()->get('strava_token');
 
         $adapter = new \GuzzleHttp\Client(['base_uri' => 'https://www.strava.com/api/v3/']);
@@ -121,12 +121,11 @@ class StravaController extends AbstractController
         /* Now fetch all the gpx data we need */
         $activityStream = $client->getStreamsActivity($activityId, 'time,latlng,altitude', 'high');
 
+        $latLngList = $activityStream[1]['data'];
+        $timeList = $activityStream[3]['data'];
+        $altitudeList = $activityStream[0]['data'];
+
         $length = count($activityStream[0]['data']);
-
-        $latLngList = $activityStream[0]['data'];
-        $timeList = $activityStream[1]['data'];
-        $altitudeList = $activityStream[2]['data'];
-
         $positionArray = [];
 
         for ($i = 0; $i < $length; ++$i) {
@@ -147,11 +146,11 @@ class StravaController extends AbstractController
 
         $exporter->execute();
 
-        $filename = sprintf('%s.gpx', uniqid());
+        $filename = sprintf('%s.gpx', uniqid('', true));
 
-        $fp = fopen(sprintf('%s/%s', $uploadDestinationTrack, $filename), 'w');
-        fwrite($fp, $exporter->getGpxContent());
-        fclose($fp);
+        /** @var FilesystemInterface $filesystem */
+        $filesystem = $this->container->get('oneup_flysystem.flysystem_track_track_filesystem');
+        $filesystem->put($filename, $exporter->getGpxContent());
 
         $track = new Track();
         $track

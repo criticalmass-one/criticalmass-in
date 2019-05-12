@@ -46,9 +46,9 @@ class PrepareImagesCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $citySlug = $input->getArgument('citySlug');
-        $rideDate = $input->getArgument('rideDate');
+        $rideIdentifier = $input->getArgument('rideIdentifier');
 
-        $ride = $this->getRide($citySlug, $rideDate);
+        $ride = $this->getRide($citySlug, $rideIdentifier);
 
         if (!$ride) {
             return;

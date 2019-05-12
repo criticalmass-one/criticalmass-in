@@ -65,10 +65,12 @@
             </div>
         </div>
 
-        <div class="col-xs-12 col-sm-8 col-sm-pull-4">
-            {% if ride.description %}
+        {% if ride.description %}
+            <div itemprop="description" class="col-xs-12 col-sm-8 col-sm-pull-4">
                 {{ ride.description|markdown }}
+            </div>
             {% else %}
+            <div class="col-xs-12 col-sm-8 col-sm-pull-4">
                 <div class="alert alert-info">
                     <strong>Huch?</strong>
                     Schade, bislang hat noch niemand Informationen über diese Tour hinterlegt. Wenn du Lust und Zeit
@@ -95,7 +97,7 @@
                         </a>
                     </p>
                 </div>
-            {% endif %}
-        </div>
+            </div>
+        {% endif %}
     </div>
 </div>

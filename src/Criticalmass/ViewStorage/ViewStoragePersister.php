@@ -1,135 +1,74 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Criticalmass\ViewStorage;
 
 use App\Entity\User;
 use App\EntityInterface\ViewableInterface;
 use App\EntityInterface\ViewInterface;
-use Doctrine\ORM\EntityManager;
+use JMS\Serializer\SerializerInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
-use Symfony\Component\Cache\Adapter\AbstractAdapter;
-use Symfony\Component\Cache\Adapter\RedisAdapter;
-use Symfony\Component\Console\Output\OutputInterface;
 
 class ViewStoragePersister implements ViewStoragePersisterInterface
 {
-    /** @var RegistryInterface $doctrine */
-    protected $doctrine;
+    /** @var RegistryInterface $registry */
+    protected $registry;
 
-    /** @var EntityManager $manager */
-    protected $manager;
+    /** @var SerializerInterface $serializer */
+    protected $serializer;
 
-    /** @var OutputInterface $output */
-    protected $output = null;
-
-    /** @var AbstractAdapter $cache */
-    protected $cache = null;
-
-    public function __construct(RegistryInterface $doctrine)
+    public function __construct(RegistryInterface $registry, SerializerInterface $serializer)
     {
-        $redisConnection = RedisAdapter::createConnection('redis://localhost');
-
-        $this->cache = new RedisAdapter(
-            $redisConnection,
-            $namespace = '',
-            $defaultLifetime = 0
-        );
-
-        $this->doctrine = $doctrine;
-        $this->manager = $doctrine->getManager();
+        $this->registry = $registry;
+        $this->serializer = $serializer;
     }
 
-    public function setOutput(OutputInterface $output): ViewStoragePersisterInterface
+    public function persistViews(array $viewList): ViewStoragePersisterInterface
     {
-        $this->output = $output;
+        foreach ($viewList as $unserializedView) {
+            /** @var View $view */
+            $view = $this->serializer->deserialize($unserializedView, View::class, 'json');
+
+            $this->storeView($view);
+        }
+
+        $this->registry->getManager()->flush();
 
         return $this;
     }
 
-    public function persistViews(): ViewStoragePersisterInterface
+    protected function storeView(View $view): void
     {
-        $viewStorageItem = $this->cache->getItem('criticalmass-view_storage');
+        $viewEntity = $this->getView($view->getEntityClassName());
+        $entity = $this->getEntity($view->getEntityClassName(), $view->getEntityId());
+        $viewSetEntityMethod = sprintf('set%s', $view->getEntityClassName());
 
-        if ($viewStorageItem->isHit()) {
-            $viewArrayList = $viewStorageItem->get();
-
-            foreach ($viewArrayList as $viewArray) {
-                $this->storeView($viewArray);
-            }
-        }
-
-        $this->cache->deleteItem('criticalmass-view_storage');
-
-        $this->manager->flush();
-
-        return $this;
-    }
-
-    protected function storeView(array $viewArray)
-    {
-        $view = $this->getView($viewArray['className']);
-        $entity = $this->getEntity($viewArray['className'], $viewArray['entityId']);
-        $viewSetEntityMethod = 'set' . $viewArray['className'];
-
-        $view->$viewSetEntityMethod($entity);
-
-        $userId = $viewArray['userId'];
-        $user = null;
-
-        if (is_int($userId)) {
-            $user = $this->getUser($userId);
-        }
-
-        $view->setUser($user);
-
-        $dateTime = new \DateTime($viewArray['dateTime']);
-        $view->setDateTime($dateTime);
+        $viewEntity->$viewSetEntityMethod($entity);
+        $viewEntity->setUser($this->getUser($view->getUserId()));
+        $viewEntity->setDateTime($view->getDateTime());
 
         $entity->incViews();
 
-        $this->manager->persist($view);
-        $this->manager->persist($entity);
-
-        $this->log(sprintf(
-            'Saved view for <comment>%s</comment> <info>#%d</info> (%s)',
-            $viewArray['className'],
-            $viewArray['entityId'],
-            $dateTime->format('Y-m-d H:i:s')
-        ));
+        $this->registry->getManager()->persist($viewEntity);
     }
 
     protected function getView(string $className): ViewInterface
     {
-        $viewClassName = 'App\Entity\\' . $className . 'View';
+        $viewClassName = sprintf('App\Entity\\%sView', $className);
 
-        $view = new $viewClassName;
-
-        return $view;
+        return new $viewClassName;
     }
 
-    protected function getUser(int $userId): User
+    protected function getUser(int $userId = null): ?User
     {
-        $user = $this->manager->getRepository('App:User')->find($userId);
-
-        return $user;
+        if (!$userId) {
+            return null;
+        }
+        
+        return $this->registry->getManager()->getRepository(User::class)->find($userId);
     }
 
     protected function getEntity(string $className, int $entityId): ViewableInterface
     {
-        $entity = $this->manager->getRepository('App:' . $className)->find($entityId);
-
-        return $entity;
-    }
-
-    protected function log(string $message): ViewStoragePersister
-    {
-        if ($this->output) {
-            $this->output->writeln($message);
-        } else {
-            echo $message . "\n";
-        }
-
-        return $this;
+        return $this->registry->getManager()->getRepository(sprintf('App:%s', $className))->find($entityId);
     }
 }
-

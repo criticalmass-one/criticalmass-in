@@ -9,7 +9,7 @@
 <div class="row">
     <div class="col-md-12">
         {% include('Ride/Includes/_participation.html.twig') with { 'pastRide': pastRide, 'participation': participation } %}
-        <h1>
+        <h1 itemprop="name">
             {{ ride.title }}
         </h1>
     </div>
@@ -20,7 +20,6 @@
         <div id="map" style="height: 350px;"></div>
     </div>
 </div>
-
 
 <div class="row" style="margin-top: 1em;">
     <div class="col-md-12">
@@ -51,16 +50,16 @@
                     </a>
                 </li>
                 {% if pastRide %}
-                    {% if feature_enabled('photos') %}
-                    <li role="presentation">
-                        <a href="{{ objectPath(ride, 'caldera_criticalmass_photo_ride_list') }}">
-                            <i class="fa fa-camera"></i>
-                            Galerie
-                            <span class="badge">
+                    {% if feature('photos') %}
+                        <li role="presentation">
+                            <a href="{{ objectPath(ride, 'caldera_criticalmass_photo_ride_list') }}">
+                                <i class="fa fa-camera"></i>
+                                Galerie
+                                <span class="badge">
                             {{ photos|length }}
                         </span>
-                        </a>
-                    </li>
+                            </a>
+                        </li>
                     {% endif %}
                     <li role="presentation">
                         <a href="#tracks" aria-controls="profile" role="tab" data-toggle="tab">
@@ -106,7 +105,7 @@
         ridePage.addTrack('{{ track|serialize('json', serialization_context().setGroups('timelapse'))|raw|e('js') }}');
         {% endfor %}
 
-        {% if feature_enabled('photos') %}
+        {% if feature('photos') %}
         {% for photo in photos %}
         {% if photo.hasCoordinates() %}
         {% if photo.user.blurGalleries %}
@@ -127,4 +126,6 @@
 
         ridePage.focus();
     });
+
+    CriticalMass.loadModule('ScrollToPost');
 </script>
