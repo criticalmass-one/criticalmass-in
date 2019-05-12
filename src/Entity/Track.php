@@ -197,7 +197,7 @@ class Track implements RouteableInterface, StaticMapableInterface, TrackInterfac
     protected $source = self::TRACK_SOURCE_UNKNOWN;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="bigint", nullable=true)
      *
      * @var integer
      */
