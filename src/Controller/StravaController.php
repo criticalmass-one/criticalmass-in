@@ -139,12 +139,11 @@ class StravaController extends AbstractController
         /* Now fetch all the gpx data we need */
         $activityStream = $client->getStreamsActivity($activityId, 'time,latlng,altitude', 'high');
 
+        $latLngList = $activityStream[1]['data'];
+        $timeList = $activityStream[3]['data'];
+        $altitudeList = $activityStream[0]['data'];
+
         $length = count($activityStream[0]['data']);
-
-        $latLngList = $activityStream[0]['data'];
-        $timeList = $activityStream[1]['data'];
-        $altitudeList = $activityStream[2]['data'];
-
         $positionArray = [];
 
         for ($i = 0; $i < $length; ++$i) {
