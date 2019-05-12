@@ -31,23 +31,25 @@ class PhotoExportController extends AbstractController
         /** @var Photo $photo */
         foreach ($photoList as $photo) {
             if ($photo->getImageName()) {
-                $this->addFile($photo, 'image', $tsvList);
+                $this->addFile($request, $photo, 'image', $tsvList);
             }
 
             if ($photo->getBackupName()) {
-                $this->addFile($photo, 'backup', $tsvList);
+                $this->addFile($request, $photo, 'backup', $tsvList);
             }
         }
 
         return new Response(implode("\n", $tsvList), 200, ['Content-type: text/tab-separated-values']);
     }
 
-    protected function addFile(Photo $photo, string $propertyPrefix, array &$tsvList): void
+    protected function addFile(Request $request, Photo $photo, string $propertyPrefix, array &$tsvList): void
     {
+        $webPrefix = $request->getSchemeAndHttpHost();
+
         $imageNameGetMethodName = sprintf('get%sName', $propertyPrefix);
         $imageSizeGetMethodName = sprintf('get%sSize', $propertyPrefix);
         $imageHashGetMethodName = sprintf('get%sGoogleCloudHash', $propertyPrefix);
 
-        $tsvList[] = sprintf("%s\t%s\t%s", $photo->$imageNameGetMethodName(), $photo->$imageSizeGetMethodName(), $photo->$imageHashGetMethodName());
+        $tsvList[] = sprintf("%s\t%s\t%s", sprintf('%s/photos/%s', $webPrefix, $photo->$imageNameGetMethodName()), $photo->$imageSizeGetMethodName(), $photo->$imageHashGetMethodName());
     }
 }
