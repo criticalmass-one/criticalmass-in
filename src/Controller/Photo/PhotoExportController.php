@@ -24,7 +24,9 @@ class PhotoExportController extends AbstractController
 
         $photoList = $this->getPhotoRepository()->findPhotosForExport($limit, $offset);
 
-        $tsvList = [];
+        $tsvList = [
+            'TsvHttpData-1.0',
+        ];
 
         /** @var Photo $photo */
         foreach ($photoList as $photo) {
