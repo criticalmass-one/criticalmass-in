@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\Strava\TrackImporter;
+namespace App\Criticalmass\Strava\Stream;
 
 class Stream
 {

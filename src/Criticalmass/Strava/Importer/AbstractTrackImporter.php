@@ -1,20 +1,18 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\Strava\TrackImporter;
+namespace App\Criticalmass\Strava\Importer;
 
 use App\Criticalmass\Geo\GpxWriter\GpxWriter;
-use App\Criticalmass\Geo\PositionList\PositionList;
 use App\Criticalmass\UploadFaker\UploadFakerInterface;
 use App\Entity\Ride;
-use App\Entity\Track;
 use App\Entity\User;
 use JMS\Serializer\SerializerInterface;
+use Strava\API\Service\REST;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Strava\API\Client;
-use Strava\API\Service\REST;
 
-class TrackImporter implements TrackImporterInterface
+abstract class AbstractTrackImporter implements TrackImporterInterface
 {
     /** @var int $activityId */
     protected $activityId;
@@ -71,74 +69,6 @@ class TrackImporter implements TrackImporterInterface
         $service = new REST($token, $adapter);
 
         return new Client($service);
-    }
-
-    protected function getActivity(bool $allEfforts = true): array
-    {
-        return $this->client->getActivity($this->activityId, $allEfforts);
-    }
-
-    protected function getActivityStreamList(): StreamList
-    {
-        $response = $this->client->getStreamsActivity($this->activityId, implode(',', $this->types), self::RESOULUTION);
-
-        return StreamFactory::build($response);
-    }
-
-    protected function getStartDateTime(): \DateTime
-    {
-        $activity = $this->getActivity();
-
-        $startDateTime = new \DateTime($activity['start_date']);
-        $startDateTime->setTimezone(new \DateTimeZone($activity['timezone']));
-
-        return $startDateTime;
-    }
-
-    protected function getStartDateTimestamp(): int
-    {
-        return $this->getStartDateTime()->getTimestamp();
-    }
-
-    protected function createPositionList(): PositionList
-    {
-        $startDateTime = $this->getStartDateTime();
-
-        $streamList = $this->getActivityStreamList();
-
-        return StreamListConverter::convert($streamList, $startDateTime);
-    }
-
-    protected function createTrack(): Track
-    {
-        $track = new Track();
-        $track
-            ->setStravaActivityId($this->activityId)
-            ->setSource(Track::TRACK_SOURCE_STRAVA)
-            ->setUser($this->user)
-            ->setRide($this->ride)
-            ->setUsername($this->user->getUsername());
-
-        return $track;
-    }
-
-    public function importTrack(): Track
-    {
-        $positionList = $this->createPositionList();
-
-        $this->gpxWriter->setPositionList($positionList)->generateGpxContent();
-
-        $fileContent = $this->gpxWriter->getGpxContent();
-
-        $track = $this->createTrack();
-
-        $this->uploadFaker->fakeUpload($track, 'trackFile', $fileContent, 'upload.gpx');
-
-        $em = $this->registry->getManager();
-        $em->persist($track);
-        $em->flush();
-
-        return $track;
     }
 
     public function setUser(User $user): TrackImporterInterface

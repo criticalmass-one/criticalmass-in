@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\Strava\TrackImporter;
+namespace App\Criticalmass\Strava\Importer;
 
 use App\Entity\Ride;
 use App\Entity\Track;

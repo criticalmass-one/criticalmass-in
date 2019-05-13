@@ -4,15 +4,11 @@ namespace App\Controller\Track;
 
 use App\Controller\AbstractController;
 use App\Criticalmass\Router\ObjectRouterInterface;
-use App\Criticalmass\Strava\TrackImporter\TrackImporterInterface;
+use App\Criticalmass\Strava\Importer\TrackImporterInterface;
 use App\Criticalmass\Util\DateTimeUtil;
-use App\Event\Track\TrackUploadedEvent;
-use League\Flysystem\FilesystemInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use App\Entity\Position;
 use App\Entity\Ride;
-use App\Entity\Track;
 use App\Criticalmass\Gps\GpxExporter\GpxExporter;
 use Strava\API\Client;
 use Strava\API\OAuth;
@@ -106,7 +102,12 @@ class StravaController extends AbstractController
     {
         $activityId = (int) $request->get('activityId');
 
-        $trackImporter->doMagic($activityId);
+        $track = $trackImporter
+            ->setStravaActivityId($activityId)
+            ->setRide($ride)
+            ->setUser($user)
+            ->importTrack();
+        
 //        $token = $this->getSession()->get('strava_token');
 //
 //        $adapter = new \GuzzleHttp\Client(['base_uri' => 'https://www.strava.com/api/v3/']);
