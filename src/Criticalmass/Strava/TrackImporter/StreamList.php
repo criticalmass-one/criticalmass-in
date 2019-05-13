@@ -4,6 +4,7 @@ namespace App\Criticalmass\Strava\TrackImporter;
 
 class StreamList
 {
+    /** @var array $streamList */
     protected $streamList;
 
     public function getStreamList(): array
@@ -14,6 +15,13 @@ class StreamList
     public function setStreamList(array $streamList): StreamList
     {
         $this->streamList = $streamList;
+
+        return $this;
+    }
+
+    public function addStream(string $type, Stream $stream): StreamList
+    {
+        $this->streamList[$type] = $stream;
 
         return $this;
     }

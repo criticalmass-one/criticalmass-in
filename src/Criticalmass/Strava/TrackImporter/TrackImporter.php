@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Strava\API\Client;
 use Strava\API\Service\REST;
 
-class TrackImporter
+class TrackImporter implements TrackImporterInterface
 {
     /** @var GpxWriter $gpxWriter */
     protected $gpxWriter;
@@ -34,7 +34,7 @@ class TrackImporter
     /** @var SerializerInterface $serializer */
     protected $serializer;
 
-    const API_URI = 'https://www.strava.com/api/v3';
+    const API_URI = 'https://www.strava.com/api/v3/';
     const RESOULUTION = 'high';
 
     protected $types = [
@@ -58,7 +58,7 @@ class TrackImporter
     {
         $token = $this->session->get('strava_token');
 
-        $adapter = new Pest(self::API_URI);
+        $adapter = new \GuzzleHttp\Client(['base_uri' => self::API_URI]);
         $service = new REST($token, $adapter);
 
         return new Client($service);
@@ -69,9 +69,11 @@ class TrackImporter
         return $this->client->getActivity($activityId, $allEfforts);
     }
 
-    protected function getActivityStream(int $activityId): array
+    protected function getActivityStreamList(int $activityId): StreamList
     {
-        return $this->client->getStreamsActivity($activityId, implode(',', $this->types), self::RESOULUTION);
+        $response = $this->client->getStreamsActivity($activityId, implode(',', $this->types), self::RESOULUTION);
+
+        return StreamFactory::build($response);
     }
 
     protected function getStartDateTime(array $activity): \DateTime
@@ -91,6 +93,8 @@ class TrackImporter
     {
         $startTimestamp = $this->getStartDateTimestamp($activityId);
 
+        $streamList = $this->getActivityStreamList($activityId);
+        
         $length = count($activityStream[0]['data']);
 
         $latLngList = $activityStream[0]['data'];

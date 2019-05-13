@@ -4,6 +4,7 @@ namespace App\Controller\Track;
 
 use App\Controller\AbstractController;
 use App\Criticalmass\Router\ObjectRouterInterface;
+use App\Criticalmass\Strava\TrackImporter\TrackImporterInterface;
 use App\Criticalmass\Util\DateTimeUtil;
 use App\Event\Track\TrackUploadedEvent;
 use League\Flysystem\FilesystemInterface;
@@ -101,71 +102,72 @@ class StravaController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function importAction(Request $request, UserInterface $user, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, GpxExporter $exporter, Ride $ride): Response
+    public function importAction(Request $request, UserInterface $user, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, GpxExporter $exporter, Ride $ride, TrackImporterInterface $trackImporter): Response
     {
         $activityId = (int) $request->get('activityId');
 
-        $token = $this->getSession()->get('strava_token');
-
-        $adapter = new \GuzzleHttp\Client(['base_uri' => 'https://www.strava.com/api/v3/']);
-        $service = new REST($token, $adapter);  // Define your user token here.
-        $client = new Client($service);
-
-        /* Catch the activity to retrieve the start dateTime */
-        $activity = $client->getActivity($activityId, true);
-
-        $startDateTime = new \DateTime($activity['start_date']);
-        $startDateTime->setTimezone(new \DateTimeZone($activity['timezone']));
-        $startTimestamp = $startDateTime->getTimestamp();
-
-        /* Now fetch all the gpx data we need */
-        $activityStream = $client->getStreamsActivity($activityId, 'time,latlng,altitude', 'high');
-
-        $latLngList = $activityStream[1]['data'];
-        $timeList = $activityStream[3]['data'];
-        $altitudeList = $activityStream[0]['data'];
-
-        $length = count($activityStream[0]['data']);
-        $positionArray = [];
-
-        for ($i = 0; $i < $length; ++$i) {
-            $altitude = round($i > 0 ? $altitudeList[$i] - $altitudeList[$i - 1] : $altitudeList[$i], 2);
-
-            $position = new Position();
-
-            $position->setLatitude($latLngList[$i][0]);
-            $position->setLongitude($latLngList[$i][1]);
-            $position->setAltitude($altitude);
-            $position->setTimestamp($startTimestamp + $timeList[$i]);
-            $position->setCreationDateTime(new \DateTime());
-
-            $positionArray[] = $position;
-        }
-
-        $exporter->setPositionArray($positionArray);
-
-        $exporter->execute();
-
-        $filename = sprintf('%s.gpx', uniqid('', true));
-
-        /** @var FilesystemInterface $filesystem */
-        $filesystem = $this->container->get('oneup_flysystem.flysystem_track_track_filesystem');
-        $filesystem->put($filename, $exporter->getGpxContent());
-
-        $track = new Track();
-        $track
-            ->setSource(Track::TRACK_SOURCE_STRAVA)
-            ->setStravaActivityId($activityId)
-            ->setUser($user)
-            ->setTrackFilename($filename)
-            ->setUsername($user->getUsername())
-            ->setRide($ride);
-
-        $eventDispatcher->dispatch(TrackUploadedEvent::NAME, new TrackUploadedEvent($track));
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($track);
-        $em->flush();
+        $trackImporter->doMagic($activityId);
+//        $token = $this->getSession()->get('strava_token');
+//
+//        $adapter = new \GuzzleHttp\Client(['base_uri' => 'https://www.strava.com/api/v3/']);
+//        $service = new REST($token, $adapter);  // Define your user token here.
+//        $client = new Client($service);
+//
+//        /* Catch the activity to retrieve the start dateTime */
+//        $activity = $client->getActivity($activityId, true);
+//
+//        $startDateTime = new \DateTime($activity['start_date']);
+//        $startDateTime->setTimezone(new \DateTimeZone($activity['timezone']));
+//        $startTimestamp = $startDateTime->getTimestamp();
+//
+//        /* Now fetch all the gpx data we need */
+//        $activityStream = $client->getStreamsActivity($activityId, 'time,latlng,altitude', 'high');
+//
+//        $latLngList = $activityStream[1]['data'];
+//        $timeList = $activityStream[3]['data'];
+//        $altitudeList = $activityStream[0]['data'];
+//
+//        $length = count($activityStream[0]['data']);
+//        $positionArray = [];
+//
+//        for ($i = 0; $i < $length; ++$i) {
+//            $altitude = round($i > 0 ? $altitudeList[$i] - $altitudeList[$i - 1] : $altitudeList[$i], 2);
+//
+//            $position = new Position();
+//
+//            $position->setLatitude($latLngList[$i][0]);
+//            $position->setLongitude($latLngList[$i][1]);
+//            $position->setAltitude($altitude);
+//            $position->setTimestamp($startTimestamp + $timeList[$i]);
+//            $position->setCreationDateTime(new \DateTime());
+//
+//            $positionArray[] = $position;
+//        }
+//
+//        $exporter->setPositionArray($positionArray);
+//
+//        $exporter->execute();
+//
+//        $filename = sprintf('%s.gpx', uniqid('', true));
+//
+//        /** @var FilesystemInterface $filesystem */
+//        $filesystem = $this->container->get('oneup_flysystem.flysystem_track_track_filesystem');
+//        $filesystem->put($filename, $exporter->getGpxContent());
+//
+//        $track = new Track();
+//        $track
+//            ->setSource(Track::TRACK_SOURCE_STRAVA)
+//            ->setStravaActivityId($activityId)
+//            ->setUser($user)
+//            ->setTrackFilename($filename)
+//            ->setUsername($user->getUsername())
+//            ->setRide($ride);
+//
+//        $eventDispatcher->dispatch(TrackUploadedEvent::NAME, new TrackUploadedEvent($track));
+//
+//        $em = $this->getDoctrine()->getManager();
+//        $em->persist($track);
+//        $em->flush();
 
         return $this->redirect($objectRouter->generate($track));
     }
