@@ -94,30 +94,8 @@ class TrackImporter implements TrackImporterInterface
         $startTimestamp = $this->getStartDateTimestamp($activityId);
 
         $streamList = $this->getActivityStreamList($activityId);
-        
-        $length = count($activityStream[0]['data']);
 
-        $latLngList = $activityStream[0]['data'];
-        $timeList = $activityStream[1]['data'];
-        $altitudeList = $activityStream[2]['data'];
-
-        $positionList = new PositionList();
-
-        for ($i = 0; $i < $length; ++$i) {
-            $latitude = $latLngList[$i][0];
-            $longitude = $latLngList[$i][1];
-
-            $position = new Position($latitude, $longitude);
-
-            $altitude = round($i > 0 ? $altitudeList[$i] - $altitudeList[$i - 1] : $altitudeList[$i], 2);
-
-            $position->setAltitude($altitude);
-            $position->setTimestamp($startTimestamp + $timeList[$i]);
-
-            $positionList->add($position);
-        }
-
-        return $positionList;
+        return StreamListConverter::convert($streamList, $startTimestamp);
     }
 
     public function doMagic(int $activityId): Track
@@ -138,5 +116,7 @@ class TrackImporter implements TrackImporterInterface
         $em = $this->registry->getManager();
         $em->persist($track);
         $em->flush();
+
+        return $track;
     }
 }
