@@ -101,7 +101,7 @@ class PositionList implements PositionListInterface
         return $this;
     }
 
-    public function current(): PositionInterface
+    public function current()
     {
         return current($this->list);
     }

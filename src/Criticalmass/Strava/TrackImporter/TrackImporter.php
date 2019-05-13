@@ -102,7 +102,7 @@ class TrackImporter implements TrackImporterInterface
     {
         $positionList = $this->createPositionList($activityId);
 
-        $this->gpxWriter->setPositionList($positionList);
+        $this->gpxWriter->setPositionList($positionList)->generateGpxContent();
 
         $fileContent = $this->gpxWriter->getGpxContent();
 

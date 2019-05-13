@@ -32,7 +32,8 @@ class StreamListConverter
 
             $position
                 ->setAltitude($altitude)
-                ->setTimestamp($timestamp);
+                ->setTimestamp($timestamp)
+                ->setDateTime(new \DateTime(sprintf('@%d', $timestamp)));
 
             $positionList->add($position);
         }

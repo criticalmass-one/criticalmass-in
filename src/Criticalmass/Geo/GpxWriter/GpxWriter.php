@@ -2,8 +2,8 @@
 
 namespace App\Criticalmass\Geo\GpxWriter;
 
+use App\Criticalmass\Geo\EntityInterface\PositionInterface;
 use App\Criticalmass\Geo\PositionList\PositionListInterface;
-use Caldera\GeoBundle\EntityInterface\PositionInterface;
 
 class GpxWriter implements GpxWriterInterface
 {
@@ -98,12 +98,12 @@ class GpxWriter implements GpxWriterInterface
 
     protected function generateGpxMetadata(): GpxWriterInterface
     {
-        if (count($this->coordList) > 0) {
+        if (count($this->positionList) > 0) {
             $this->writer->startElement('metadata');
             $this->writer->startElement('time');
 
             /** @var \DateTime $dateTime */
-            $dateTime = $this->coordList[0]->getDateTime();
+            $dateTime = $this->positionList->get(0)->getDateTime();
             $this->writer->text($dateTime->format('Y-m-d') . 'T' . $dateTime->format('H:i:s') . 'Z');
 
             $this->writer->endElement();
@@ -116,12 +116,12 @@ class GpxWriter implements GpxWriterInterface
     protected function generateGpxPosition(PositionInterface $position): GpxWriterInterface
     {
         $this->writer->startElement('trkpt');
-        $this->writer->writeAttribute('lat', $position->getLatitude());
-        $this->writer->writeAttribute('lon', $position->getLongitude());
+        $this->writer->writeAttribute('lat', (string) $position->getLatitude());
+        $this->writer->writeAttribute('lon', (string) $position->getLongitude());
 
         if ($position->getAltitude()) {
             $this->writer->startElement('ele');
-            $this->writer->text($position->getAltitude());
+            $this->writer->text((string) $position->getAltitude());
             $this->writer->endElement();
         }
 
