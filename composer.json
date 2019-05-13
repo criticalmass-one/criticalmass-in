@@ -89,7 +89,8 @@
         "oneup/flysystem-bundle": "^3.1",
         "flagception/flagception-bundle": "^3.1",
         "php-amqplib/rabbitmq-bundle": "^1.14",
-        "ext-fileinfo": "*"
+        "ext-fileinfo": "*",
+        "ext-xmlwriter": "*"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "*",
