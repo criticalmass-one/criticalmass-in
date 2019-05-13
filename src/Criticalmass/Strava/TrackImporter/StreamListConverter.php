@@ -11,10 +11,11 @@ class StreamListConverter
     {
     }
 
-    public static function convert(StreamList $streamList, int $startTimestamp): PositionList
+    public static function convert(StreamList $streamList, \DateTime $startDateTime): PositionList
     {
         $positionList = new PositionList();
         $length = $streamList->getLength();
+        $startTimestamp = (int) $startDateTime->format('U');
 
         for ($i = 0; $i < $length; ++$i) {
             $latitude = $streamList->getStream('latlng')->getData()[$i][0];

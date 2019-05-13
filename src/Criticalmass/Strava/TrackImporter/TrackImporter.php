@@ -91,11 +91,11 @@ class TrackImporter implements TrackImporterInterface
 
     protected function createPositionList(int $activityId): PositionList
     {
-        $startTimestamp = $this->getStartDateTimestamp($activityId);
+        $startDateTime = $this->getStartDateTime($activityId);
 
         $streamList = $this->getActivityStreamList($activityId);
 
-        return StreamListConverter::convert($streamList, $startTimestamp);
+        return StreamListConverter::convert($streamList, $startDateTime);
     }
 
     public function doMagic(int $activityId): Track
