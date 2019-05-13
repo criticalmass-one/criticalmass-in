@@ -2,7 +2,6 @@
 
 namespace App\Criticalmass\ViewStorage;
 
-use App\Entity\User;
 use JMS\Serializer\Annotation as JMS;
 
 /**

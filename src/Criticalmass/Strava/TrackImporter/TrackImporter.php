@@ -5,8 +5,11 @@ namespace App\Criticalmass\Strava\TrackImporter;
 use App\Criticalmass\Geo\Entity\Position;
 use App\Criticalmass\Geo\GpxWriter\GpxWriter;
 use App\Criticalmass\Geo\PositionList\PositionList;
+use App\Criticalmass\UploadFaker\UploadFakerInterface;
 use App\Entity\Track;
+use JMS\Serializer\SerializerInterface;
 use Pest;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Strava\API\Client;
 use Strava\API\Service\REST;
@@ -16,23 +19,37 @@ class TrackImporter
     /** @var GpxWriter $gpxWriter */
     protected $gpxWriter;
 
-    /** @var string $uploadDestinationTrack */
-    protected $uploadDestinationTrack;
-
     /** @var SessionInterface $session */
     protected $session;
 
     /** @var Client $client */
     protected $client;
 
+    /** @var UploadFakerInterface $uploadFaker */
+    protected $uploadFaker;
+
+    /** @var RegistryInterface $registry */
+    protected $registry;
+
+    /** @var SerializerInterface $serializer */
+    protected $serializer;
+
     const API_URI = 'https://www.strava.com/api/v3';
     const RESOULUTION = 'high';
 
-    public function __construct(GpxWriter $gpxWriter, SessionInterface $session, string $uploadDestinationTrack)
+    protected $types = [
+        'time',
+        'latlng',
+        'altitude',
+    ];
+
+    public function __construct(GpxWriter $gpxWriter, SessionInterface $session, RegistryInterface $registry, UploadFakerInterface $uploadFaker, SerializerInterface $serializer)
     {
         $this->gpxWriter = $gpxWriter;
         $this->session = $session;
-        $this->uploadDestinationTrack = $uploadDestinationTrack;
+        $this->uploadFaker = $uploadFaker;
+        $this->registry = $registry;
+        $this->serializer = $serializer;
 
         $this->client = $this->createClient();
     }
@@ -49,10 +66,12 @@ class TrackImporter
 
     protected function getActivity(int $activityId, bool $allEfforts = true): array
     {
-        /* Catch the activity to retrieve the start dateTime */
-        $activity = $this->client->getActivity($activityId, $allEfforts);
+        return $this->client->getActivity($activityId, $allEfforts);
+    }
 
-        return $activity;
+    protected function getActivityStream(int $activityId): array
+    {
+        return $this->client->getStreamsActivity($activityId, implode(',', $this->types), self::RESOULUTION);
     }
 
     protected function getStartDateTime(array $activity): \DateTime
@@ -63,13 +82,14 @@ class TrackImporter
         return $startDateTime;
     }
 
+    protected function getStartDateTimestamp(int $activityId): int
+    {
+        return $this->getStartDateTime($this->getActivity($activityId))->getTimestamp();
+    }
+
     protected function createPositionList(int $activityId): PositionList
     {
-        /* Now fetch all the gpx data we need */
-        $activityStream = $this->client->getStreamsActivity($activityId, 'time,latlng,altitude', self::RESOULUTION);
-        $activity = $this->getActivity($activityId);
-
-        $startTimestamp = $this->getStartDateTime($activity)->getTimestamp();
+        $startTimestamp = $this->getStartDateTimestamp($activityId);
 
         $length = count($activityStream[0]['data']);
 
@@ -96,33 +116,22 @@ class TrackImporter
         return $positionList;
     }
 
-    protected function createTrack(int $activityId, string $filename): Track
-    {
-        $track = new Track();
-        $track
-            ->setStravaActivityId($activityId)
-            ->setTrackFilename($filename);
-
-        return $track;
-    }
-
     public function doMagic(int $activityId): Track
     {
         $positionList = $this->createPositionList($activityId);
 
         $this->gpxWriter->setPositionList($positionList);
 
-        $this->gpxWriter->saveGpxContent();
+        $fileContent = $this->gpxWriter->getGpxContent();
 
-        $filename = sprintf('%s.gpx', uniqid());
+        $track = new Track();
+        $track
+            ->setStravaActivityId($activityId)
+            ->setSource(Track::TRACK_SOURCE_STRAVA);
 
-        $fp = fopen(sprintf('%s/%s', $this->uploadDestinationTrack, $filename), 'w');
-        fwrite($fp, $exporter->getGpxContent());
-        fclose($fp);
+        $this->uploadFaker->fakeUpload($track, 'trackFile', $fileContent);
 
-
-
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->registry->getManager();
         $em->persist($track);
         $em->flush();
     }
