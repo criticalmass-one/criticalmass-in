@@ -73,7 +73,7 @@ abstract class AbstractTrackImporter implements TrackImporterInterface
 
     public function setUser(User $user): TrackImporterInterface
     {
-        $this->setUser($user);
+        $this->user = $user;
 
         return $this;
     }
