@@ -11,7 +11,7 @@ class StreamListConverter
     {
     }
 
-    public static function convert(StreamList $streamList, int $starTimestamp): PositionList
+    public static function convert(StreamList $streamList, int $startTimestamp): PositionList
     {
         $positionList = new PositionList();
         $length = $streamList->getLength();
@@ -28,7 +28,7 @@ class StreamListConverter
                 $altitude = round($streamList->getStream('altitude')->getData()[$i], 2);
             }
 
-            $timestamp = $starTimestamp + $streamList->getStream('time')->getData()[$i];
+            $timestamp = $startTimestamp + $streamList->getStream('time')->getData()[$i];
 
             $position
                 ->setAltitude($altitude)
