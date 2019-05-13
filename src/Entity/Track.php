@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Criticalmass\Geo\EntityInterface\TrackInterface;
 use App\Criticalmass\UploadableDataHandler\UploadableEntity;
+use App\Criticalmass\UploadFaker\FakeUploadable;
 use App\EntityInterface\RouteableInterface;
 use App\EntityInterface\StaticMapableInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -20,7 +21,7 @@ use Caldera\GeoBasic\Track\TrackInterface as BaseTrackInterface;
  * @JMS\ExclusionPolicy("all")
  * @Routing\DefaultRoute(name="caldera_criticalmass_track_view")
  */
-class Track implements RouteableInterface, StaticMapableInterface, TrackInterface, UploadableEntity
+class Track implements RouteableInterface, StaticMapableInterface, TrackInterface, UploadableEntity, FakeUploadable
 {
     const TRACK_SOURCE_GPX = 'TRACK_SOURCE_GPX';
     const TRACK_SOURCE_STRAVA = 'TRACK_SOURCE_STRAVA';
