@@ -9,6 +9,8 @@ use cebe\markdown\inline as inline;
 
 class CriticalMarkdown extends Parser
 {
+    use block\HeadlineTrait;
+    
     use block\HtmlTrait {
         parseInlineHtml as private;
     }
