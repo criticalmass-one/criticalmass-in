@@ -2,9 +2,14 @@
 
 namespace App\Criticalmass\Strava\TrackImporter;
 
+use App\Entity\Ride;
 use App\Entity\Track;
+use App\Entity\User;
 
 interface TrackImporterInterface
 {
-    public function doMagic(int $activityId): Track;
+    public function setUser(User $user): TrackImporterInterface;
+    public function setRide(Ride $ride): TrackImporterInterface;
+    public function setStravaActivityId(int $activityId): TrackImporterInterface;
+    public function importTrack(): Track;
 }

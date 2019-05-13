@@ -73,8 +73,8 @@ class GpxWriter implements GpxWriterInterface
         $this->writer->startElement('trkseg');
 
         /** @var PositionInterface $position */
-        foreach ($this->positionList as $position) {
-            $this->generateGpxPosition($position);
+        for ($n = 0; $n < $this->positionList->count(); ++$n) {
+            $this->generateGpxPosition($this->positionList->get($n));
         }
 
         $this->writer->endElement();
