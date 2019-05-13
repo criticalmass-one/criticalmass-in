@@ -2,45 +2,30 @@
 
 namespace App\Criticalmass\Strava\TrackImporter;
 
-use JMS\Serializer\Annotation as JMS;
-
-/**
- * @JMS\ExclusionPolicy("all")
- */
 class Stream
 {
     /**
      * @var string $type
-     * @JMS\Expose
-     * @JMS\Type("string")
      */
     protected $type;
 
     /**
      * @var string $type
-     * @JMS\Expose
-     * @JMS\Type("string")
      */
     protected $seriesType;
 
     /**
      * @var int $type
-     * @JMS\Expose
-     * @JMS\Type("integer")
      */
     protected $originalSize;
 
     /**
      * @var string $type
-     * @JMS\Expose
-     * @JMS\Type("string")
      */
     protected $resolution;
 
     /**
      * @var array $type
-     * @JMS\Expose
-     * @JMS\Type("array")
      */
     protected $data;
 
