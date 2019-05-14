@@ -29,6 +29,13 @@ class ViewStorageCache implements ViewStorageCacheInterface
 
     public function countView(ViewableInterface $viewable): void
     {
+        $view = $this->createView($viewable);
+
+        $this->producer->publish($this->serializer->serialize($view, 'json'));
+    }
+
+    protected function createView(ViewableInterface $viewable): View
+    {
         $viewDateTime = new \DateTime('now', new \DateTimeZone('UTC'));
 
         $user = $this->tokenStorage->getToken()->getUser();
@@ -40,6 +47,6 @@ class ViewStorageCache implements ViewStorageCacheInterface
             ->setUserId($user instanceof UserInterface ? $user->getId() : null)
             ->setDateTime($viewDateTime);
 
-        $this->producer->publish($this->serializer->serialize($view, 'json'));
+        return $view;
     }
 }

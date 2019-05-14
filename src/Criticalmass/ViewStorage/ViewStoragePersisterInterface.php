@@ -5,5 +5,6 @@ namespace App\Criticalmass\ViewStorage;
 interface ViewStoragePersisterInterface
 {
     public function persistViews(array $viewList): ViewStoragePersisterInterface;
+    public function storeView(View $view): ViewStoragePersisterInterface;
 }
 

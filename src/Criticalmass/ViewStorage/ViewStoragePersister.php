@@ -36,7 +36,7 @@ class ViewStoragePersister implements ViewStoragePersisterInterface
         return $this;
     }
 
-    protected function storeView(View $view): void
+    public function storeView(View $view): ViewStoragePersisterInterface
     {
         $viewEntity = $this->getView($view->getEntityClassName());
         $entity = $this->getEntity($view->getEntityClassName(), $view->getEntityId());
@@ -49,6 +49,8 @@ class ViewStoragePersister implements ViewStoragePersisterInterface
         $entity->incViews();
 
         $this->registry->getManager()->persist($viewEntity);
+
+        return $this;
     }
 
     protected function getView(string $className): ViewInterface
