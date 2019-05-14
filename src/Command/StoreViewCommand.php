@@ -1,8 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Criticalmass\ViewStorage\ViewStoragePersisterInterface;
+use App\Criticalmass\ViewStorage\Persister\ViewStoragePersisterInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

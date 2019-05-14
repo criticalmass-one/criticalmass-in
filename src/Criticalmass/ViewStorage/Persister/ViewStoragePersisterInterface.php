@@ -1,6 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\ViewStorage;
+namespace App\Criticalmass\ViewStorage\Persister;
+
+use App\Criticalmass\ViewStorage\View\View;
 
 interface ViewStoragePersisterInterface
 {

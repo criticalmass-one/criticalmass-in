@@ -1,7 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\ViewStorage;
+namespace App\Criticalmass\ViewStorage\Persister;
 
+use App\Criticalmass\ViewStorage\View\View;
 use App\Entity\User;
 use App\EntityInterface\ViewableInterface;
 use App\EntityInterface\ViewInterface;

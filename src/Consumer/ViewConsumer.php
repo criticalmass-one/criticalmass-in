@@ -2,7 +2,7 @@
 
 namespace App\Consumer;
 
-use App\Criticalmass\ViewStorage\ViewStoragePersisterInterface;
+use App\Criticalmass\ViewStorage\Persister\ViewStoragePersisterInterface;
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
 

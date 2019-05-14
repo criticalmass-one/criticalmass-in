@@ -1,7 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\ViewStorage;
+namespace App\Criticalmass\ViewStorage\Cache;
 
+use App\Criticalmass\ViewStorage\Persister\ViewStoragePersisterInterface;
 use App\EntityInterface\ViewableInterface;
 use JMS\Serializer\SerializerInterface;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;

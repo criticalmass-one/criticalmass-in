@@ -184,5 +184,5 @@ services:
     App\Criticalmass\UploadableDataHandler\UploadableDataHandlerInterface:
         alias: App\Criticalmass\UploadableDataHandler\UploadableDataHandler
 
-    App\Criticalmass\ViewStorage\ViewStorageCacheInterface:
-        alias: App\Criticalmass\ViewStorage\RobustViewStorageCache
+    App\Criticalmass\ViewStorage\Cache\ViewStorageCacheInterface:
+        alias: App\Criticalmass\ViewStorage\Cache\RobustViewStorageCache
