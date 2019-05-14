@@ -3,6 +3,7 @@
 namespace App\Criticalmass\ViewStorage\Cache;
 
 use App\Criticalmass\ViewStorage\Persister\ViewStoragePersisterInterface;
+use App\Criticalmass\ViewStorage\View\ViewFactory;
 use App\EntityInterface\ViewableInterface;
 use JMS\Serializer\SerializerInterface;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
@@ -33,7 +34,7 @@ class RobustViewStorageCache extends ViewStorageCache
         } catch (AMQPIOException $exception) {
             // rabbit is not available, so just throw everything into the database and do not care about performance
 
-            $view = $this->createView($viewable);
+            $view = ViewFactory::createView($viewable, $this->tokenStorage->getToken()->getUser());
 
             $this->viewStoragePersister->storeView($view);
 

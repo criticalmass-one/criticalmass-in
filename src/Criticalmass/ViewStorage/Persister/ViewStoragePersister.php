@@ -6,23 +6,9 @@ use App\Criticalmass\ViewStorage\View\View;
 use App\Entity\User;
 use App\EntityInterface\ViewableInterface;
 use App\EntityInterface\ViewInterface;
-use JMS\Serializer\SerializerInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
-class ViewStoragePersister implements ViewStoragePersisterInterface
+class ViewStoragePersister extends AbstractViewStoragePersister
 {
-    /** @var RegistryInterface $registry */
-    protected $registry;
-
-    /** @var SerializerInterface $serializer */
-    protected $serializer;
-
-    public function __construct(RegistryInterface $registry, SerializerInterface $serializer)
-    {
-        $this->registry = $registry;
-        $this->serializer = $serializer;
-    }
-
     public function persistViews(array $viewList): ViewStoragePersisterInterface
     {
         foreach ($viewList as $unserializedView) {

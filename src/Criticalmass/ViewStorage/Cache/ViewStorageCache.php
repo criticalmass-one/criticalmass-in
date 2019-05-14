@@ -4,6 +4,7 @@ namespace App\Criticalmass\ViewStorage\Cache;
 
 use App\Criticalmass\Util\ClassUtil;
 use App\Criticalmass\ViewStorage\View\View;
+use App\Criticalmass\ViewStorage\View\ViewFactory;
 use App\EntityInterface\ViewableInterface;
 use JMS\Serializer\SerializerInterface;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
@@ -30,24 +31,8 @@ class ViewStorageCache implements ViewStorageCacheInterface
 
     public function countView(ViewableInterface $viewable): void
     {
-        $view = $this->createView($viewable);
+        $view = ViewFactory::createView($viewable, $this->tokenStorage->getToken()->getUser());
 
         $this->producer->publish($this->serializer->serialize($view, 'json'));
-    }
-
-    protected function createView(ViewableInterface $viewable): View
-    {
-        $viewDateTime = new \DateTime('now', new \DateTimeZone('UTC'));
-
-        $user = $this->tokenStorage->getToken()->getUser();
-
-        $view = new View();
-        $view
-            ->setEntityClassName(ClassUtil::getShortname($viewable))
-            ->setEntityId($viewable->getId())
-            ->setUserId($user instanceof UserInterface ? $user->getId() : null)
-            ->setDateTime($viewDateTime);
-
-        return $view;
     }
 }
