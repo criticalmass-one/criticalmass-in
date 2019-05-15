@@ -38,6 +38,10 @@ caldera_criticalmass_photo:
     resource: 'photo.yml'
     prefix:   /
 
+caldera_criticalmass_photo_export:
+    resource: 'photoexport.yml'
+    prefix:   /
+
 caldera_criticalmass_photogallery:
     resource: 'photogallery.yml'
     prefix:   /

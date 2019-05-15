@@ -15,6 +15,6 @@ class ExportDataHandler extends UploadableDataHandler implements ExportDataHandl
 
     protected function calculateGoogleCloudHash(string $filename): string
     {
-        return base64_encode(md5($this->filesystem->read($filename)));
+        return Md5Base64Hasher::hash($this->filesystem->read($filename));
     }
 }
