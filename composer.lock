@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "aebf1a53ff554673144bbe1bd8ed8a29",
+    "content-hash": "8628cb4f85d0472197288b93ef38c361",
     "packages": [
         {
             "name": "basvandorst/stravaphp",
@@ -13663,7 +13663,9 @@
     "platform": {
         "php": ">=7.3",
         "ext-intl": "*",
-        "ext-simplexml": "*"
+        "ext-simplexml": "*",
+        "ext-fileinfo": "*",
+        "ext-xmlwriter": "*"
     },
     "platform-dev": []
 }
