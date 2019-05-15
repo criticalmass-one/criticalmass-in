@@ -91,7 +91,7 @@ class CriticalMarkdown extends Parser
 
     public function prepareText(string $text): string
     {
-        return str_replace('*', '\\$', $text);
+        return str_replace('\\*', '\\$', $text);
     }
 
     public function cleanupMarkup(string $markup): string
