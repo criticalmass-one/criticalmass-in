@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\ViewStorage;
+namespace App\Criticalmass\ViewStorage\Cache;
 
 use App\EntityInterface\ViewableInterface;
 

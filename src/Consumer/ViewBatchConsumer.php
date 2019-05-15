@@ -2,20 +2,11 @@
 
 namespace App\Consumer;
 
-use App\Criticalmass\ViewStorage\ViewStoragePersisterInterface;
 use OldSound\RabbitMqBundle\RabbitMq\BatchConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
 
-class ViewBatchConsumer implements BatchConsumerInterface
+class ViewBatchConsumer extends AbstractViewConsumer implements BatchConsumerInterface
 {
-    /** @var ViewStoragePersisterInterface $viewSotragePersister */
-    protected $viewStoragePersister;
-
-    public function __construct(ViewStoragePersisterInterface $viewStoragePersister)
-    {
-        $this->viewStoragePersister = $viewStoragePersister;
-    }
-
     public function batchExecute(array $messages): array
     {
         $viewList = [];

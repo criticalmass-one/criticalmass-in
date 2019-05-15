@@ -1,27 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\ViewStorage;
+namespace App\Criticalmass\ViewStorage\Persister;
 
+use App\Criticalmass\ViewStorage\View\View;
 use App\Entity\User;
 use App\EntityInterface\ViewableInterface;
 use App\EntityInterface\ViewInterface;
-use JMS\Serializer\SerializerInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
-class ViewStoragePersister implements ViewStoragePersisterInterface
+class ViewStoragePersister extends AbstractViewStoragePersister
 {
-    /** @var RegistryInterface $registry */
-    protected $registry;
-
-    /** @var SerializerInterface $serializer */
-    protected $serializer;
-
-    public function __construct(RegistryInterface $registry, SerializerInterface $serializer)
-    {
-        $this->registry = $registry;
-        $this->serializer = $serializer;
-    }
-
     public function persistViews(array $viewList): ViewStoragePersisterInterface
     {
         foreach ($viewList as $unserializedView) {
@@ -36,7 +23,7 @@ class ViewStoragePersister implements ViewStoragePersisterInterface
         return $this;
     }
 
-    protected function storeView(View $view): void
+    public function storeView(View $view): ViewStoragePersisterInterface
     {
         $viewEntity = $this->getView($view->getEntityClassName());
         $entity = $this->getEntity($view->getEntityClassName(), $view->getEntityId());
@@ -49,6 +36,8 @@ class ViewStoragePersister implements ViewStoragePersisterInterface
         $entity->incViews();
 
         $this->registry->getManager()->persist($viewEntity);
+
+        return $this;
     }
 
     protected function getView(string $className): ViewInterface

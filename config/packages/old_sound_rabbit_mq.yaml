@@ -2,6 +2,7 @@ old_sound_rabbit_mq:
     connections:
         default:
             url: '%env(RABBITMQ_URL)%'
+            lazy: true
     producers:
         criticalmass_view:
             connection:       default
