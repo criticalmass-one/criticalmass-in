@@ -1,10 +1,12 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Criticalmass\Image\PhotoGps;
 
+use App\Criticalmass\Image\ExifWrapper\ExifWrapperInterface;
 use App\Entity\Photo;
 use App\Entity\Track;
 use App\Criticalmass\Gps\GpxReader\TrackReader;
+use League\Flysystem\FilesystemInterface;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 abstract class AbstractPhotoGps implements PhotoGpsInterface
@@ -21,8 +23,8 @@ abstract class AbstractPhotoGps implements PhotoGpsInterface
     /** @var UploaderHelper $uploaderHelper */
     protected $uploaderHelper;
 
-    /** @var string $uploadDestinationPhoto */
-    protected $uploadDestinationPhoto;
+    /** @var FilesystemInterface $filesystem */
+    protected $filesystem;
 
     /** @var TrackReader $trackReader */
     protected $trackReader;
@@ -30,14 +32,15 @@ abstract class AbstractPhotoGps implements PhotoGpsInterface
     /** @var \DateTimeZone */
     protected $dateTimeZone;
 
-    public function __construct(
-        UploaderHelper $uploaderHelper,
-        TrackReader $trackReader,
-        string $uploadDestinationPhoto
-    ) {
+    /** @var ExifWrapperInterface $exifWrapper */
+    protected $exifWrapper;
+
+    public function __construct(UploaderHelper $uploaderHelper, TrackReader $trackReader, FilesystemInterface $filesystem, ExifWrapperInterface $exifWrapper)
+    {
         $this->uploaderHelper = $uploaderHelper;
-        $this->uploadDestinationPhoto = $uploadDestinationPhoto;
+        $this->filesystem = $filesystem;
         $this->trackReader = $trackReader;
+        $this->exifWrapper = $exifWrapper;
     }
 
     public function setDateTimeZone(\DateTimeZone $dateTimeZone = null): PhotoGpsInterface

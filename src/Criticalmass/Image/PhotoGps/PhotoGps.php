@@ -1,9 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Criticalmass\Image\PhotoGps;
 
 use PHPExif\Exif;
-use PHPExif\Reader\Reader;
 
 /**
  * @deprecated
@@ -41,7 +40,7 @@ class PhotoGps extends AbstractPhotoGps
     {
         $exif = $this->readExifData();
 
-        if ($dateTime = $exif->getCreationDate()) {
+        if ($exif && $dateTime = $exif->getCreationDate()) {
             return $dateTime;
         }
 
@@ -52,7 +51,7 @@ class PhotoGps extends AbstractPhotoGps
     {
         $exif = $this->readExifData();
 
-        if ($gps = $exif->getGPS()) {
+        if ($exif && $gps = $exif->getGPS()) {
             if (is_string($gps)) {
                 list($lat, $lon) = explode(',', $gps);
 
@@ -68,13 +67,8 @@ class PhotoGps extends AbstractPhotoGps
         return null;
     }
 
-    protected function readExifData(): Exif
+    protected function readExifData(): ?Exif
     {
-        $filename = sprintf('%s/%s', $this->uploadDestinationPhoto, $this->photo->getImageName());
-
-        $reader = Reader::factory(Reader::TYPE_NATIVE);
-        $exif = $reader->read($filename);
-
-        return $exif;
+        return $this->exifWrapper->getExifData($this->photo);
     }
 }

@@ -78,7 +78,7 @@
         ridePage.addTrack('{{ track|serialize('json', serialization_context().setGroups('timelapse'))|raw|e('js') }}');
         {% endfor %}
 
-        {% if feature_enabled('photos') %}
+        {% if feature('photos') %}
         {% for photo in photos %}
         {% if photo.hasCoordinates() %}
         {% if photo.user.blurGalleries %}

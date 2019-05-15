@@ -2,12 +2,14 @@
 
 namespace App\Twig\Extension;
 
-use App\Criticalmass\Feature\FeatureManager\FeatureManagerInterface;
 use App\Criticalmass\Website\Crawler\Crawlable;
 use App\Criticalmass\Website\Crawler\CrawlerInterface;
 use App\Criticalmass\Website\Obfuscator\ObfuscatorInterface;
 use App\Entity\BlacklistedWebsite;
 use App\Entity\CrawledWebsite;
+use Flagception\Activator\CacheActivator;
+use Flagception\Manager\FeatureManager;
+use Flagception\Manager\FeatureManagerInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
@@ -60,7 +62,7 @@ class CrawlTwigExtension extends \Twig_Extension
                 $crawledWebsite = $this->registry->getRepository(CrawledWebsite::class)->findOneByUrl($url);
 
                 if ($crawledWebsite) {
-                    if ($this->featureManager->isFeatureEnabled('art11')) {
+                    if ($this->featureManager->isActive('art11')) {
                         $crawledWebsite = $this->obfuscateWebsite($crawledWebsite);
                     }
 

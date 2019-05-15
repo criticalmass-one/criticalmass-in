@@ -62,7 +62,10 @@ class WeatherFactory implements WeatherFactoryInterface
                     $weather->$methodName($owmWeather->{$prop1}->{$prop2}->getValue());
                 }
 
-                if (is_string($owmWeather->{$prop1}->{$prop2}) || is_int($owmWeather->{$prop1}->{$prop2})) {
+                if (is_string($owmWeather->{$prop1}->{$prop2})
+                    || is_int($owmWeather->{$prop1}->{$prop2})
+                    || $owmWeather->{$prop1}->{$prop2} instanceof \DateTimeInterface
+                ) {
                     $weather->$methodName($owmWeather->{$prop1}->{$prop2});
                 }
             }

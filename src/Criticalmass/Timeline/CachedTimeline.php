@@ -2,13 +2,14 @@
 
 namespace App\Criticalmass\Timeline;
 
-use App\Criticalmass\Feature\FeatureManager\FeatureManagerInterface;
+use Flagception\Manager\FeatureManagerInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 use Symfony\Component\Templating\EngineInterface;
 
 class CachedTimeline extends Timeline
 {
+    /** @var int $ttl */
     protected $ttl;
 
     public function __construct(RegistryInterface $doctrine, EngineInterface $templating, FeatureManagerInterface $featureManager, int $cachedTimelineTtl = 300)

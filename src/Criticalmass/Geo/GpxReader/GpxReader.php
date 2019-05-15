@@ -7,6 +7,7 @@ use App\Criticalmass\Geo\EntityInterface\PositionInterface;
 use App\Criticalmass\Geo\Exception\GpxFileNotFoundException;
 use App\Criticalmass\Geo\PositionList\PositionList;
 use App\Criticalmass\Geo\PositionList\PositionListInterface;
+use League\Flysystem\FilesystemInterface;
 
 class GpxReader implements GpxReaderInterface
 {
@@ -15,6 +16,14 @@ class GpxReader implements GpxReaderInterface
 
     /** @var \SimpleXMLElement[]  $trackPointList */
     protected $trackPointList = [];
+
+    /** @var FilesystemInterface $filesystem */
+    protected $filesystem;
+
+    public function __construct(FilesystemInterface $filesystem)
+    {
+        $this->filesystem = $filesystem;
+    }
 
     public function loadFromString(string $gpxString): GpxReaderInterface
     {
@@ -26,7 +35,7 @@ class GpxReader implements GpxReaderInterface
     public function loadFromFile(string $filename): GpxReaderInterface
     {
         try {
-            $gpxString = file_get_contents($filename);
+            $gpxString = $this->filesystem->read($filename);
         } catch (\Exception $exception) {
             throw new GpxFileNotFoundException($exception);
         }
