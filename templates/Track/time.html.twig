@@ -1,21 +1,11 @@
 {% extends 'Template/StandardTemplate.html.twig' %}{% block title %}Track-Zeitstempel anpassen{% endblock %}
 
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+
 {% block breadcrumb %}
-    <li>
-        <a href="{{ path('criticalmass_user_usermanagement') }}">
-            Dein Benutzerkonto
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ path('caldera_criticalmass_track_list') }}">
-            Deine Tracks
-        </a>
-    </li>
-
-    <li class="active">
-        Track-Zeitstempel anpassen
-    </li>
+    {{ bootstrap.breadcrumb_item('Dein Benutzerkonto', path('criticalmass_user_usermanagement')) }}
+    {{ bootstrap.breadcrumb_item('Deine Tracks', path('caldera_criticalmass_track_list')) }}
+    {{ bootstrap.breadcrumb_item('Track-Zeitstempel anpassen', '', true) }}
 {% endblock %}
 
 {% block content %}

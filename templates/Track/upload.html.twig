@@ -1,24 +1,12 @@
 {% extends 'Template/StandardTemplate.html.twig' %}{% block title %}Gpx-Datei hochladen{% endblock %}
 
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+
 {% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
-    <li>
-        <a href="{{ objectPath(ride.city) }}">
-            {{ ride.city.city }}
-        </a>
-    </li>
-    <li>
-        <a href="{{ objectPath(ride) }}">
-            {{ ride.title }}
-        </a>
-    </li>
-    <li class="active">
-        Track hochladen
-    </li>
+    {{ bootstrap.breadcrumb_item('Städteliste', objectPath('caldera_criticalmass_city_list')) }}
+    {{ bootstrap.breadcrumb_item(ride.city.city, objectPath(ride.city)) }}
+    {{ bootstrap.breadcrumb_item(ride.title, objectPath(ride)) }}
+    {{ bootstrap.breadcrumb_item('Track hochladen', '', true) }}
 {% endblock %}
 
 {% block content %}

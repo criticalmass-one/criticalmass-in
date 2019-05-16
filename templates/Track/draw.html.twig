@@ -2,16 +2,11 @@
 
 {% block title %}Deine Tracks{% endblock %}
 
-{% block breadcrumb %}
-    <li>
-        <a href="{{ path('criticalmass_user_usermanagement') }}">
-            Dein Benutzerkonto
-        </a>
-    </li>
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
 
-    <li class="active">
-        Deine Tracks
-    </li>
+{% block breadcrumb %}
+    {{ bootstrap.breadcrumb_item('Dein Benutzerkonto', path('criticalmass_user_usermanagement')) }}
+    {{ bootstrap.breadcrumb_item('Deine Tracks', '', true)) }}
 {% endblock %}
 
 {% block content %}
