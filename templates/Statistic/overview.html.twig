@@ -1,0 +1,126 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Statistiken{% endblock %}
+
+{% block breadcrumb %}
+    <li class="active">
+        Statistiken
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    Statistiken
+                </h1>
+
+                <p class="lead">
+                    Wie viele, wie lange, wohin? Diese Seite bereitet die statistischen Daten auf, die von Teilnehmern
+                    der Critical Mass in den verschiedenen Städten nach einer Tour eingearbeitet worden sind &mdash;
+                    entweder von den importieren GPX-Tracks oder mit Schätzungen der Teilnehmerzahlen.
+                </p>
+
+                <p>
+                    Die Statistiken enthalten alle Städte aus Deutschland, bei denen innerhalb der letzten zwei Jahre
+                    mindestens 18 Schätzungen zu Teilnehmer-Zahlen abgegeben wurden.
+                </p>
+            </div>
+        </div>
+
+        <div>
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#tab-participiants" aria-controls="" role="tab" data-toggle="tab">
+                        Teilnehmerzahl
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a href="#tab-duration" aria-controls="" role="tab" data-toggle="tab">
+                        Fahrtdauer
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a href="#tab-distance" aria-controls="" role="tab" data-toggle="tab">
+                        Fahrtlänge
+                    </a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="tab-participiants">
+                    <div class="row margin-top-small">
+                        <div class="col-md-12">
+                            <p>
+                                Bei der angezeigten Teilnehmerzahl handelt es sich um den Durchschnitt der Werte, die
+                                von den
+                                Teilnehmern geschätzt wurden.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <canvas id="participants" style="width: 100%; height: 250px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="tab-duration">
+                    <div class="row margin-top-small">
+                        <div class="col-md-12">
+                            <p>
+                                Die Fahrtdauer wird anhand der importierten GPX-Tracks ermittelt und in Stunden
+                                angegeben.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <canvas id="duration" style="width: 100%; height: 250px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="tab-distance">
+                    <div class="row margin-top-small">
+                        <div class="col-md-12">
+                            <p>
+                                Die Fahrtlänge wird anhand der importierten GPX-Tracks ermittelt und in Kilometern
+                                angegeben.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <canvas id="distance" style="width: 100%; height: 250px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        CriticalMass.loadModule('StatisticPage', null, null, function (page) {
+            {% for rideMonth in rideMonths %}
+            page.addRideMonth('{{ rideMonth }}');
+            {% endfor %}
+
+            {% for city in cities %}
+            page.addCity('{{ city.city }}', '{{ city.slug }}', {{ city.colorRed }}, {{ city.colorGreen }}, {{ city.colorBlue }});
+            {% endfor %}
+
+            {% for ride in rides %}
+            page.addRideData('{{ ride.city.slug }}', '{{ ride.dateTime|date('Y-m') }}', {{ ride.estimatedParticipants|default(0) }}, {{ ride.estimatedDuration|default(0) }}, {{ ride.estimatedDistance|default(0) }});
+            {% endfor %}
+
+            page.createParticipantsChart($('#participants'));
+            page.createDurationChart($('#duration'));
+            page.createDistanceChart($('#distance'));
+        });
+    </script>
+{% endblock %}

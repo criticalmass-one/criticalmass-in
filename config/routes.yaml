@@ -1,0 +1,14 @@
+criticalmass:
+     resource: routes/criticalmass/routing.yml
+
+facebook_login:
+    path: /login/check-facebook
+
+strava_login:
+    path: /login/check-strava
+
+runkeeper_login:
+    path: /login/check-runkeeper
+
+twitter_login:
+    path: /login/check-twitter
