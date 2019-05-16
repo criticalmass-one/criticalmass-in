@@ -6,32 +6,17 @@
     {% set title = 'Mini-Mass hinzufügen' %}
 {% endif %}{% block title %}{{ title }}{% endblock %}
 
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+
 {% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
+    {{ bootstrap.breadcrumb_item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ bootstrap.breadcrumb_item(ride.city.city, objectPath(ride.city)) }}
+    {{ bootstrap.breadcrumb_item(ride.title, objectPath(ride)) }}
 
-    <li>
-        <a href="{{ objectPath(ride.city) }}">
-            {{ ride.city.city }}
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ objectPath(ride) }}">
-            {{ ride.title }}
-        </a>
-    </li>
     {% if subride %}
-        <li class="active">
-            Mini-Mass editieren
-        </li>
+        {{ bootstrap.breadcrumb_item('Mini-Mass editieren', '', true) }}
     {% else %}
-        <li class="active">
-            Mini-Mass hinzufügen
-        </li>
+        {{ bootstrap.breadcrumb_item('Mini-Mass hinzufügen', '', true) }}
     {% endif %}
 {% endblock %}
 

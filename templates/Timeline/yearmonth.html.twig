@@ -1,15 +1,10 @@
 {% extends 'Template/StandardTemplate.html.twig' %}{% block title %}Critical Mass im {{ startDateTime|format_date('MMMM YYYY') }}{% endblock %}
 
-{% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_timeline_index') }}">
-            Timeline
-        </a>
-    </li>
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
 
-    <li class="active">
-        {{ startDateTime|format_date('MMMM YYYY') }}
-    </li>
+{% block breadcrumb %}
+    {{ bootstrap.breadcrumb_item('Timeline', path('caldera_criticalmass_timeline_index')) }}
+    {{ bootstrap.breadcrumb_item(startDateTime|format_date('MMMM YYYY'), '', true) }}
 {% endblock %}
 
 {% block content %}

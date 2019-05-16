@@ -1,11 +1,10 @@
 {% extends 'Template/StandardTemplate.html.twig' %}{% block title %}Critical-Mass-Teilnehmerzahlen im {{ dateTime|format_date('MMMM YYYY') }}{% endblock %}
 
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+
 {% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_statistic_ride_month', { year: dateTime|date('Y'), month: dateTime|date('m') }) }}">
-            Critical-Mass-Teilnehmerzahlen im {{ dateTime|format_date('MMMM YYYY') }}
-        </a>
-    </li>
+    {{ bootstrap.breadcrumb_item('Städteliste', path('caldera_criticalmass_statistic_ride_month', { year: dateTime|date('Y'), month: dateTime|date('m') })) }}
+    {{ bootstrap.breadcrumb_item('Critical-Mass-Teilnehmerzahlen im ' ~ dateTime|format_date('MMMM YYYY'), '', true) }}
 {% endblock %}
 
 {% block content %}

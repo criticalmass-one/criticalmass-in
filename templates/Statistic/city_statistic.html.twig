@@ -2,22 +2,12 @@
 
 {% block title %}Statistiken aus {{ city.city }}{% endblock %}
 
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+
 {% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ objectPath(city) }}">
-            {{ city.city }}
-        </a>
-    </li>
-
-    <li class="active">
-        Statistiken
-    </li>
+    {{ bootstrap.breadcrumb_item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ bootstrap.breadcrumb_item(city.city, objectPath(city)) }}
+    {{ bootstrap.breadcrumb_item('Statistiken', '', true) }}
 {% endblock %}
 
 {% block content %}
