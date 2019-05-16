@@ -85,6 +85,7 @@ class RideTabsController extends AbstractController
             'estimateForm' => $estimateForm->createView(),
             'weatherForecast' => $weatherForecast,
             'location' => $location,
+            'socialNetworkProfiles' => $this->getSocialNetworkProfileRepository()->findByRide($ride),
         ]);
     }
 }

@@ -39,7 +39,11 @@ class Parser implements ParserInterface
         if (200 === $response->getStatusCode()) {
             $htmlString = $response->getBody()->getContents();
 
-            $htmlDomElement = \Sunra\PhpSimple\HtmlDomParser::str_get_html($htmlString);
+            try {
+                $htmlDomElement = \Sunra\PhpSimple\HtmlDomParser::str_get_html($htmlString);
+            } catch (\Exception $exception) {
+                return null;
+            }
 
             if ($htmlDomElement === false) {
                 return null;

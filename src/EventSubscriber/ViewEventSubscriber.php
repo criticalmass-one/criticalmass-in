@@ -2,7 +2,7 @@
 
 namespace App\EventSubscriber;
 
-use App\Criticalmass\ViewStorage\ViewStorageCacheInterface;
+use App\Criticalmass\ViewStorage\Cache\ViewStorageCacheInterface;
 use App\Event\View\ViewEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

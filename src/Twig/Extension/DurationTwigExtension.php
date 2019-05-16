@@ -15,8 +15,12 @@ class DurationTwigExtension extends \Twig_Extension
         ];
     }
 
-    public function duration(string $duration): string
+    public function duration(string $duration = null): ?string
     {
+        if (!$duration) {
+            return null;
+        }
+
         return (new Duration())->humanize($duration);
     }
 

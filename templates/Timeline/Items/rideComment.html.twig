@@ -11,9 +11,9 @@
             </div>
         </div>
 
-        <div class="row margin-top-medium">
+        <div class="row">
             <div class="col-md-12">
-                <a href="{{ objectPath(item.ride) }}">
+                <a href="{{ objectPath(item.ride) }}#post-{{ item.post.id }}">
                     <h4>
                         {{ item.rideTitle }}
                     </h4>
@@ -30,7 +30,3 @@
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-    CriticalMass.loadModule('AutoMap', 'map-{{ item.uniqId }}');
-</script>

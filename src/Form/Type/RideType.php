@@ -3,10 +3,10 @@
 namespace App\Form\Type;
 
 use Caldera\MapTypeBundle\Form\Type\MapType;
+use App\Entity\Ride;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -16,12 +16,18 @@ class RideType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        /** @var Ride $ride */
+        $ride = $builder->getData();
+
+        /** @var string $timezone */
+        $timezone = $ride->getCity()->getTimezone();
+
         $builder
             ->add('title', TextType::class, ['required' => true])
             ->add('description', TextareaType::class, ['required' => false])
             ->add('dateTime', DateTimeType::class, [
                 'model_timezone' => 'UTC',
-                'view_timezone' => 'Europe/Berlin',
+                'view_timezone' => $timezone,
                 'date_widget' => 'single_text',
                 'date_format' => 'dd.MM.yyyy', //here
                 'time_widget' => 'single_text',

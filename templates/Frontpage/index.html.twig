@@ -46,11 +46,13 @@
             </div>
 
             <div class="col-md-4">
+                {% if feature('bikeright') %}
                 <div class="row">
                     <div class="col-md-12">
                         {{ include('Frontpage/_bikeright.html.twig') }}
                     </div>
                 </div>
+                {% endif %}
 
                 <div class="row">
                     <div class="col-md-12">
@@ -69,38 +71,7 @@
                     </div>
                 </div>
 
-                <div class="row hidden-xs hidden-sm">
-                    <div class="col-md-12">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">
-                                    Bald unterwegs
-                                </h3>
-                            </div>
-                            <div class="panel-body">
-                                <ul class="list-unstyled">
-                                    {% for rideDate, rides in rideList %}
-                                        <li>
-                                            <h4>
-                                                {{ rideDate|format_date('dd. MMMM YYYY') }}
-                                            </h4>
-
-                                            <ul>
-                                                {% for ride in rides %}
-                                                    <li>
-                                                        <a href="{{ objectPath(ride) }}">
-                                                            {{ ride.city.city }}
-                                                        </a>
-                                                    </li>
-                                                {% endfor %}
-                                            </ul>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {{ render(controller('App\\Controller\\FrontpageController::rideListAction')) }}
             </div>
         </div>
     </div>

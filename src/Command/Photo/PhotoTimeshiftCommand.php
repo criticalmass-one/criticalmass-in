@@ -94,15 +94,15 @@ class PhotoTimeshiftCommand extends Command
 
         /** @var Photo $photo */
         foreach ($photos as $photo) {
-            $dateTimeImmutable = \DateTimeImmutable::createFromMutable($photo->getDateTime());
+            $dateTimeImmutable = \DateTimeImmutable::createFromMutable($photo->getExifCreationDate());
             $dateTimeImmutable = $dateTimeImmutable->$modificationMethodName($interval);
-            $photo->setDateTime(new \DateTime(sprintf('@%d', $dateTimeImmutable->getTimestamp())));
+            $photo->setExifCreationDate(new \DateTime(sprintf('@%d', $dateTimeImmutable->getTimestamp())));
 
             $this->eventDispatcher->dispatch(PhotoUpdatedEvent::NAME, new PhotoUpdatedEvent($photo, false));
 
             $table->addRow([
                 $photo->getId(),
-                $photo->getDateTime()->format('Y-m-d H:i:s'),
+                $photo->getExifCreationDate()->format('Y-m-d H:i:s'),
                 $photo->getLatitude(),
                 $photo->getLongitude(),
                 $photo->getLocation(),

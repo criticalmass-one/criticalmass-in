@@ -79,17 +79,17 @@
                             </td>
 
                             <td>
-                                {{ cycle.time|date('H:i', city.timezone) }} Uhr
+                                {{ cycle.time|date('H:i', 'UTC') }} Uhr
                             </td>
 
                             <td>
                                 {% if (cycle.range) %}
                                     {% if cycle.validFrom %}
-                                        vom {{ cycle.validFrom|date('d.m.Y') }}
+                                        vom {{ cycle.validFrom|date('d.m.Y', city.timezone) }}
                                     {% endif %}
 
                                     {% if cycle.validUntil %}
-                                        bis {{ cycle.validUntil|date('d.m.Y') }}
+                                        bis {{ cycle.validUntil|date('d.m.Y', city.timezone) }}
                                     {% endif %}
                                 {% else %}
                                     <em>

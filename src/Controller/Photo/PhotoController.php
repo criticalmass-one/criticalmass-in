@@ -3,20 +3,19 @@
 namespace App\Controller\Photo;
 
 use App\Controller\AbstractController;
+use App\Criticalmass\Image\ExifWrapper\ExifWrapperInterface;
+use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Entity\Photo;
 use App\Entity\Track;
-use App\Criticalmass\SeoPage\SeoPage;
 use App\Event\View\ViewEvent;
-use PHPExif\Exif;
-use PHPExif\Reader\Reader;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use App\Criticalmass\Feature\Annotation\Feature as Feature;
+use Flagception\Bundle\FlagceptionBundle\Annotations\Feature;
 
 /**
- * @Feature(name="photos")
+ * @Feature("photos")
  */
 class PhotoController extends AbstractController
 {
@@ -24,8 +23,9 @@ class PhotoController extends AbstractController
      * @ParamConverter("photo", class="App:Photo", options={"id" = "photoId"})
      */
     public function showAction(
-        SeoPage $seoPage,
+        SeoPageInterface $seoPage,
         EventDispatcherInterface $eventDispatcher,
+        ExifWrapperInterface $exifWrapper,
         Photo $photo
     ): Response {
         $city = $photo->getCity();
@@ -46,9 +46,7 @@ class PhotoController extends AbstractController
             $track = $this->getTrackRepository()->findByUserAndRide($ride, $photo->getUser());
         }
 
-        $seoPage->setPreviewPhoto($photo);
-
-        $exifData = $this->readExifData($photo);
+        $this->setSeoMetaDetails($seoPage, $photo);
 
         return $this->render('Photo/show.html.twig', [
             'photo' => $photo,
@@ -57,7 +55,6 @@ class PhotoController extends AbstractController
             'city' => $city,
             'ride' => $ride,
             'track' => $track,
-            'exifData' => $exifData ? $exifData->getData() : null,
         ]);
     }
 
@@ -75,16 +72,20 @@ class PhotoController extends AbstractController
         return new Response(null);
     }
 
-    protected function readExifData(Photo $photo): ?Exif
+    protected function setSeoMetaDetails(SeoPageInterface $seoPage, Photo $photo): void
     {
-        $filename = sprintf('%s/%s', $this->getParameter('upload_destination.photo'), $photo->getImageName());
+        $seoPage->setPreviewPhoto($photo);
 
-        $reader = Reader::factory(Reader::TYPE_NATIVE);
-
-        if ($exif = $reader->read($filename)) {
-            return $exif;
+        if ($photo->getLocation()) {
+            $title = sprintf('Fotos von der Critical Mass in %s am %s, %s', $photo->getRide()->getCity()->getCity(), $photo->getRide()->getDateTime()->format('d.m.Y'), $photo->getLocation());
+            $description = sprintf('Schau dir Fotos von der %s an, aufgenommen am %s', $photo->getRide()->getTitle(), $photo->getLocation());
+        } else {
+            $title = sprintf('Fotos von der Critical Mass in %s am %s', $photo->getRide()->getCity()->getCity(), $photo->getRide()->getDateTime()->format('d.m.Y'));
+            $description = sprintf('Schau dir Fotos von der %s an', $photo->getRide()->getTitle());
         }
 
-        return null;
+        $seoPage
+            ->setTitle($title)
+            ->setDescription($description);
     }
 }

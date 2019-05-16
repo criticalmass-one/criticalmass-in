@@ -26,19 +26,18 @@ parameters:
     twitter.client_id: '%env(TWITTER_CLIENT_ID)%'
     twitter.token: '%env(TWITTER_TOKEN)%'
     twitter.secret: '%env(TWITTER_SECRET)%'
+    photo_tsv.access_key: '%env(PHOTO_TSV_ACCESS_KEY)%'
     timeline.ttl: 60
     notification.mail.sender_address: malte@criticalmass.in
     jms_serializer.camel_case_naming_strategy.class: App\Serializer\JMSSerializer\Naming\CamelCaseNamingStrategy
     request_listener.http_port: 80
     request_listener.https_port: 443
-    bikeright.visible: true
-    upload_destination.track: '%kernel.root_dir%/../public/tracks'
-    upload_destination.photo: '%kernel.root_dir%/../public/photos'
-    upload_destination.city_photo: '%kernel.root_dir%/../public/cities'
-    upload_destination.ride_photo: '%kernel.root_dir%/../public/rides'
-    upload_destination.frontpage_teaser: '%kernel.root_dir%/../public/teaser'
-    upload_destination.user_photo: '%kernel.root_dir%/../public/users'
-    feature.photos: true
+    upload_destination.track: '%kernel.project_dir%/public/tracks'
+    upload_destination.photo: '%kernel.project_dir%/public/photos'
+    upload_destination.city_photo: '%kernel.project_dir%/public/cities'
+    upload_destination.ride_photo: '%kernel.project_dir%/public/rides'
+    upload_destination.frontpage_teaser: '%kernel.project_dir%/public/teaser'
+    upload_destination.user_photo: '%kernel.project_dir%/public/users'
     staticmaps.host: '%env(STATICMAPS_HOST)%'
     timezone_db.api_key: '%env(TIMEZONE_DB_API_KEY)%'
     yourls.api_hostname: '%env(YOURLS_API_HOSTNAME)%'
@@ -52,22 +51,17 @@ services:
         public: false
         bind:
             $openWeatherMapApiKey: '%openweather.appid%'
-            $rootDirectory: '%kernel.root_dir%'
             $webRootDir: '%kernel.root_dir%/../public'
-            $projectDirectory: '%kernel.project_dir%'
             $staticmapsHost: '%staticmaps.host%'
-            $featurePhotos: '%feature.photos%'
             $gapWidth: '%track.gap_width%'
             $facebookAppId: '%facebook.app_id%'
             $facebookAppSecret: '%facebook.app_secret%'
             $facebookDefaultToken: '%facebook.default_token%'
-            $twitterClientId: '%twitter.client_id%'
-            $twitterSecret: '%twitter.secret%'
-            $uploadDestinationPhoto: '%upload_destination.photo%'
-            $uploadDestinationTrack: '%upload_destination.track%'
-            $uploadDestinationUserPhoto: '%upload_destination.user_photo%'
+            #$twitterClientId: '%twitter.client_id%'
+            #$twitterSecret: '%twitter.secret%'
             $cachedTimelineTtl: '%timeline.ttl%'
             $timezoneDbApiKey: '%timezone_db.api_key%'
+            $projectDirectory: '%kernel.project_dir%'
 
     App\:
         resource: '../src/*'
@@ -91,6 +85,51 @@ services:
     Sonata\SeoBundle\Seo\SeoPageInterface:
         alias: sonata.seo.page.default
 
+    App\Criticalmass\Image\ExifWrapper\ExifWrapper:
+        arguments:
+            $flysystemFilesystem: '@oneup_flysystem.flysystem_photo_photo_filesystem'
+
+    App\Criticalmass\Image\PhotoGps\PhotoGps:
+        arguments:
+            $filesystem: '@oneup_flysystem.flysystem_photo_photo_filesystem'
+
+    App\Criticalmass\Image\PhotoManipulator\Storage\PhotoStorage:
+        arguments:
+            $filesystem: '@oneup_flysystem.flysystem_photo_photo_filesystem'
+
+    App\Criticalmass\Image\PhotoUploader\PhotoUploader:
+        arguments:
+            $filesystem: '@oneup_flysystem.flysystem_photo_photo_filesystem'
+
+    App\Criticalmass\Gps\GpxReader\GpxReader:
+        arguments:
+            $filesystem: '@oneup_flysystem.flysystem_track_track_filesystem'
+
+    App\Criticalmass\Gps\GpxReader\TrackReader:
+        arguments:
+            $filesystem: '@oneup_flysystem.flysystem_track_track_filesystem'
+
+    App\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGenerator:
+        arguments:
+            $filesystem: '@oneup_flysystem.flysystem_user_photo_filesystem'
+
+    App\Criticalmass\UploadableDataHandler\UploadableDataHandler:
+        arguments:
+            $filesystem: '@oneup_flysystem.flysystem_photo_photo_filesystem'
+
+    App\Criticalmass\Image\GoogleCloud\ExportDataHandler\ExportDataHandler:
+        arguments:
+            $filesystem: '@oneup_flysystem.flysystem_photo_photo_filesystem'
+
+    App\Criticalmass\Geocoding\ReverseGeocoderInterface:
+        alias: App\Criticalmass\Geocoding\CachedReverseGeocoder
+
+    App\Criticalmass\Website\Obfuscator\ObfuscatorInterface:
+        alias: App\Criticalmass\Website\Obfuscator\CaseAwareObfuscator
+
+    App\Criticalmass\Timeline\TimelineInterface:
+        alias: App\Criticalmass\Timeline\CachedTimeline
+
     App\Request\ParamConverter\RideParamConverter:
         tags:
             - { name: request.param_converter, priority: 0, converter: ride_converter }
@@ -98,6 +137,10 @@ services:
     App\Request\ParamConverter\CityParamConverter:
         tags:
             - { name: request.param_converter, priority: 0, converter: city_converter }
+
+    App\Request\ParamConverter\CityCycleParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: citycycle_converter }
 
     App\Request\ParamConverter\LocationParamConverter:
         tags:
@@ -119,6 +162,14 @@ services:
         tags:
             - { name: request.param_converter, priority: 10, converter: user_converter }
 
+    App\Request\ParamConverter\SocialNetworkProfileParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: socialnetworkprofile_converter }
+
+    App\Request\ParamConverter\TrackParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: track_converter }
+
     App\Criticalmass\Imagine\DataLoader\RemoteStreamLoader:
         arguments: ['@liip_imagine']
         tags:
@@ -127,3 +178,12 @@ services:
     App\Criticalmass\Imagine\CacheResolver\RemoteCacheResolver:
         tags:
             - { name: liip_imagine.cache.resolver, resolver: App\Criticalmass\Imagine\CacheResolver\RemoteCacheResolver }
+
+    OldSound\RabbitMqBundle\RabbitMq\ProducerInterface:
+        alias: old_sound_rabbit_mq.criticalmass_view_producer
+
+    App\Criticalmass\UploadableDataHandler\UploadableDataHandlerInterface:
+        alias: App\Criticalmass\UploadableDataHandler\UploadableDataHandler
+
+    App\Criticalmass\ViewStorage\Cache\ViewStorageCacheInterface:
+        alias: App\Criticalmass\ViewStorage\Cache\RobustViewStorageCache

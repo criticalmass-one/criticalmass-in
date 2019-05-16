@@ -39,27 +39,6 @@ class TrackManagementController extends AbstractController
      * @Security("is_granted('edit', track)")
      * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
      */
-    public function downloadAction(Track $track): Response
-    {
-        $trackContent = file_get_contents($this->getTrackFilename($track));
-
-        $response = new Response();
-
-        $response->headers->add([
-            'Content-disposition' => 'attachment; filename=track.gpx',
-            'Content-type',
-            'text/plain',
-        ]);
-
-        $response->setContent($trackContent);
-
-        return $response;
-    }
-
-    /**
-     * @Security("is_granted('edit', track)")
-     * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
-     */
     public function toggleAction(EventDispatcherInterface $eventDispatcher, Track $track): Response
     {
         $track->setEnabled(!$track->getEnabled());
@@ -88,14 +67,5 @@ class TrackManagementController extends AbstractController
         $eventDispatcher->dispatch(TrackDeletedEvent::NAME, new TrackDeletedEvent($track));
 
         return $this->redirectToRoute('caldera_criticalmass_track_list');
-    }
-
-    protected function getTrackFilename(Track $track): string
-    {
-        $rootDirectory = $this->getParameter('kernel.root_dir');
-        $helper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
-        $filename = $helper->asset($track, 'trackFile');
-
-        return $rootDirectory . '/../web' . $filename;
     }
 }
