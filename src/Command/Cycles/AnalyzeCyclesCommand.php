@@ -12,6 +12,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class AnalyzeCyclesCommand extends Command
@@ -35,11 +36,9 @@ class AnalyzeCyclesCommand extends Command
         $this
             ->setName('criticalmass:cycles:analyze')
             ->setDescription('Compare city cycles to existing rides')
-            ->addArgument(
-                'citySlug',
-                InputArgument::REQUIRED,
-                'City to analyze'
-            );
+            ->addArgument('citySlug', InputArgument::REQUIRED, 'City to analyze')
+            ->addOption('from', null, InputOption::VALUE_OPTIONAL, 'DateTime of period to start')
+            ->addOption('until', null, InputOption::VALUE_OPTIONAL, 'DateTime of period to end');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): void
@@ -48,7 +47,15 @@ class AnalyzeCyclesCommand extends Command
 
         $city = $this->getCityBySlug($input->getArgument('citySlug'));
 
-        $this->cycleAnalyzer->setCity($city)->analyze();
+        if ($input->getOption('from') && $input->getOption('until')) {
+            $this->cycleAnalyzer
+                ->setStartDateTime(new \DateTime($input->getOption('from')))
+                ->setEndDateTime(new \DateTime($input->getOption('until')));
+        }
+
+        $this->cycleAnalyzer
+            ->setCity($city)
+            ->analyze();
 
         $table = new Table($output);
 

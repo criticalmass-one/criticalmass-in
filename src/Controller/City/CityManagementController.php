@@ -2,6 +2,7 @@
 
 namespace App\Controller\City;
 
+use App\Criticalmass\CityPopulationFetcher\CityPopulationFetcherInterface;
 use App\Criticalmass\OpenStreetMap\NominatimCityBridge\NominatimCityBridge;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Event\City\CityCreatedEvent;
@@ -232,5 +233,16 @@ class CityManagementController extends AbstractController
             'slug2' => $region->getParent()->getSlug(),
             'slug3' => $region->getSlug(),
         ];
+    }
+
+    public function populationAction(CityPopulationFetcherInterface $cityPopulationFetcher, string $cityName): Response
+    {
+        try {
+            $populationNumber = $cityPopulationFetcher->fetch($cityName);
+
+            return new Response($populationNumber, Response::HTTP_OK);
+        } catch (\Exception $exception) {
+            return new Response($exception->getMessage(), Response::HTTP_NOT_FOUND);
+        }
     }
 }

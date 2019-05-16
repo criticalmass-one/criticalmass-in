@@ -8,38 +8,21 @@ use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 
-/**
- * Class TrackRepository
- *
- * Reposity for Track entites.
- *
- * @package App\Repository
- * @author maltehuebner
- * @since 2015-09-18
- */
 class TrackRepository extends EntityRepository
 {
-    /**
-     * Get the previous track of the parameterized track. Only collects tracks of the same user and sorts them by the
-     * datetime of the ride.
-     *
-     * @param Track $track
-     * @return Track
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @author maltehuebner
-     * @since 2015-09-18
-     */
-    public function getPreviousTrack(Track $track)
+    public function getPreviousTrack(Track $track): ?Track
     {
-        $builder = $this->createQueryBuilder('track');
+        $builder = $this->createQueryBuilder('t');
 
-        $builder->select('track');
-        $builder->join('track.ride', 'ride');
-        $builder->where($builder->expr()->lt('ride.dateTime',
-            '\'' . $track->getRide()->getDateTime()->format('Y-m-d H:i:s') . '\''));
-        $builder->andWhere($builder->expr()->eq('track.user', $track->getUser()->getId()));
-        $builder->addOrderBy('track.startDateTime', 'DESC');
-        $builder->setMaxResults(1);
+        $builder
+            ->select('t')
+            ->join('t.ride', 'ride')
+            ->where($builder->expr()->lt('ride.dateTime', ':dateTime'))
+            ->setParameter('dateTime', $track->getRide()->getDateTime())
+            ->andWhere($builder->expr()->eq('t.user', ':user'))
+            ->setParameter('user', $track->getUser())
+            ->addOrderBy('t.startDateTime', 'DESC')
+            ->setMaxResults(1);
 
         $query = $builder->getQuery();
 
@@ -48,27 +31,19 @@ class TrackRepository extends EntityRepository
         return $result;
     }
 
-    /**
-     * Get the next track of the parameterized track. Only collects tracks of the same user and sorts them by the
-     * datetime of the ride.
-     *
-     * @param Track $track
-     * @return Track
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @author maltehuebner
-     * @since 2015-09-18
-     */
-    public function getNextTrack(Track $track)
+    public function getNextTrack(Track $track): ?Track
     {
-        $builder = $this->createQueryBuilder('track');
+        $builder = $this->createQueryBuilder('t');
 
-        $builder->select('track');
-        $builder->join('track.ride', 'ride');
-        $builder->where($builder->expr()->gt('ride.dateTime',
-            '\'' . $track->getRide()->getDateTime()->format('Y-m-d H:i:s') . '\''));
-        $builder->andWhere($builder->expr()->eq('track.user', $track->getUser()->getId()));
-        $builder->addOrderBy('track.startDateTime', 'ASC');
-        $builder->setMaxResults(1);
+        $builder
+            ->select('t')
+            ->join('t.ride', 'ride')
+            ->where($builder->expr()->gt('ride.dateTime', ':dateTime'))
+            ->setParameter('dateTime', $track->getRide()->getDateTime())
+            ->andWhere($builder->expr()->eq('t.user', ':user'))
+            ->setParameter('user', $track->getUser())
+            ->addOrderBy('t.startDateTime', 'ASC')
+            ->setMaxResults(1);
 
         $query = $builder->getQuery();
 
@@ -77,15 +52,19 @@ class TrackRepository extends EntityRepository
         return $result;
     }
 
-    public function findTracksByRide(Ride $ride)
+    public function findTracksByRide(Ride $ride): array
     {
-        $builder = $this->createQueryBuilder('track');
+        $builder = $this->createQueryBuilder('t');
 
-        $builder->select('track');
-        $builder->where($builder->expr()->eq('track.ride', $ride->getId()));
-        $builder->andWhere($builder->expr()->eq('track.enabled', 1));
-        $builder->andWhere($builder->expr()->eq('track.deleted', 0));
-        $builder->addOrderBy('track.startDateTime', 'ASC');
+        $builder
+            ->select('t')
+            ->where($builder->expr()->eq('t.ride', ':ride'))
+            ->setParameter('ride', $ride)
+            ->andWhere($builder->expr()->eq('t.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->eq('t.deleted', ':deleted'))
+            ->setParameter('deleted', false)
+            ->addOrderBy('t.startDateTime', 'ASC');
 
         $query = $builder->getQuery();
 
@@ -94,36 +73,19 @@ class TrackRepository extends EntityRepository
         return $result;
     }
 
-    public function findSuitableTracksByRide(Ride $ride)
+    public function findByUserAndRide(Ride $ride, User $user): ?Track
     {
-        $builder = $this->createQueryBuilder('track');
+        $builder = $this->createQueryBuilder('t');
 
-        $builder->select('track');
-
-        $builder->where($builder->expr()->eq('track.ride', $ride->getId()));
-        $builder->andWhere($builder->expr()->eq('track.enabled', 1));
-        $builder->andWhere($builder->expr()->eq('track.deleted', 0));
-        $builder->andWhere($builder->expr()->gt('track.distance', 5));
-        $builder->andWhere($builder->expr()->gt('track.points', 100));
-
-        $builder->addOrderBy('track.startDateTime', 'ASC');
-
-        $query = $builder->getQuery();
-
-        $result = $query->getResult();
-
-        return $result;
-    }
-
-    public function findByUserAndRide(Ride $ride, User $user)
-    {
-        $builder = $this->createQueryBuilder('track');
-
-        $builder->select('track');
-        $builder->where($builder->expr()->eq('track.ride', $ride->getId()));
-        $builder->andWhere($builder->expr()->eq('track.user', $user->getId()));
-        $builder->andWhere($builder->expr()->eq('track.enabled', 1));
-        $builder->andWhere($builder->expr()->eq('track.deleted', 0));
+        $builder->select('t')
+            ->where($builder->expr()->eq('t.ride', ':ride'))
+            ->setParameter('ride', $ride)
+            ->andWhere($builder->expr()->eq('t.user', ':user'))
+            ->setParameter('user', $user)
+            ->andWhere($builder->expr()->eq('t.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->eq('t.deleted', ':deleted'))
+            ->setParameter('deleted', false);
 
         $query = $builder->getQuery();
 
@@ -132,28 +94,29 @@ class TrackRepository extends EntityRepository
         return $result;
     }
 
-    public function findForTimelineRideTrackCollector(
-        \DateTime $startDateTime = null,
-        \DateTime $endDateTime = null,
-        $limit = null
-    ) {
-        $builder = $this->createQueryBuilder('track');
+    public function findForTimelineRideTrackCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null): array
+    {
+        $builder = $this->createQueryBuilder('t');
 
-        $builder->select('track');
-
-        $builder->where($builder->expr()->isNotNull('track.ride'));
-        $builder->andWhere($builder->expr()->isNotNull('track.user'));
-        $builder->andWhere($builder->expr()->eq('track.enabled', 1));
-        $builder->andWhere($builder->expr()->eq('track.deleted', 0));
+        $builder
+            ->select('t')
+            ->where($builder->expr()->isNotNull('t.ride'))
+            ->andWhere($builder->expr()->isNotNull('t.user'))
+            ->andWhere($builder->expr()->eq('t.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->eq('t.deleted', ':deleted'))
+            ->setParameter('deleted', false);
 
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gte('track.creationDateTime',
-                '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder
+                ->andWhere($builder->expr()->gte('t.creationDateTime', ':startDateTime'))
+                ->setParameter('startDateTime', $startDateTime);
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lte('track.creationDateTime',
-                '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder
+                ->andWhere($builder->expr()->lte('t.creationDateTime', ':endDateTime'))
+                ->setParameter('endDateTime', $endDateTime);
         }
 
         if ($limit) {

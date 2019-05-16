@@ -3,12 +3,11 @@
 namespace App\Controller\Ride;
 
 use App\Entity\Ride;
-use App\Criticalmass\SeoPage\SeoPage;
+use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Event\View\ViewEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Controller\AbstractController;
 use App\Entity\Weather;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,7 +33,7 @@ class RideController extends AbstractController
     /**
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function showAction(Request $request, SeoPage $seoPage, EventDispatcherInterface $eventDispatcher, Ride $ride): Response
+    public function showAction(Request $request, SeoPageInterface $seoPage, EventDispatcherInterface $eventDispatcher, Ride $ride): Response
     {
         $nextRide = $this->getRideRepository()->getNextRide($ride);
         $previousRide = $this->getRideRepository()->getPreviousRide($ride);

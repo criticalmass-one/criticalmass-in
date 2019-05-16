@@ -55,7 +55,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
+    <div class="container" itemscope itemtype="http://schema.org/Organization">
         <div class="row">
             <div class="col-md-12">
                 {% if city.imageName %}
@@ -63,7 +63,7 @@
                          style="height: 250px; background-image: url({{ vich_uploader_asset(city, 'imageFile')|imagine_filter('city_image_wide') }});">
                         <div class="row">
                             <div class="col-md-12">
-                                <h1 class="pull-right no-margin-top">
+                                <h1 class="pull-right no-margin-top" itemprop="name">
                                     {{ city.title }}
                                 </h1>
                             </div>
@@ -138,7 +138,7 @@
                     </div>
                 </div>
 
-                {% if feature_enabled('photos') and photos|length > 0 %}
+                {% if feature('photos') and photos|length > 0 %}
                     <div class="row">
                         <div class="col-md-12">
                             <h2>

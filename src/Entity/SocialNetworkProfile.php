@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="social_network_profile")
@@ -43,6 +44,7 @@ class SocialNetworkProfile
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank
      */
     protected $identifier;
 

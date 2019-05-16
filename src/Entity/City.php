@@ -184,18 +184,28 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     protected $longDescription;
 
     /**
-     * @Vich\UploadableField(mapping="city_photo", fileNameProperty="imageName")
-     *
-     * @var File
+     * @var File $imageFile
+     * @Vich\UploadableField(mapping="city_photo", fileNameProperty="imageName", size="imageSize", mimeType="imageMimeType")
      */
-    private $imageFile;
+    protected $imageFile;
 
     /**
+     * @var string $imageName
      * @ORM\Column(type="string", length=255, nullable=true)
-     *
-     * @var string
      */
-    private $imageName;
+    protected $imageName;
+
+    /**
+     * @var int $imageSize
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $imageSize;
+
+    /**
+     * @var string $imageMimeType
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $imageMimeType;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -271,6 +281,11 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      * @Sharing\Shorturl()
      */
     protected $shorturl;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $rideNamer;
 
     public function __construct()
     {
@@ -622,7 +637,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
         return $this->photos;
     }
 
-    public function setImageFile(File $image = null): City
+    public function setImageFile(File $image = null): PhotoInterface
     {
         $this->imageFile = $image;
 
@@ -648,6 +663,30 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     public function getImageName(): ?string
     {
         return $this->imageName;
+    }
+
+    public function getImageSize(): ?int
+    {
+        return $this->imageSize;
+    }
+
+    public function setImageSize(int $imageSize): PhotoInterface
+    {
+        $this->imageSize = $imageSize;
+
+        return $this;
+    }
+
+    public function getImageMimeType(): ?string
+    {
+        return $this->imageMimeType;
+    }
+
+    public function setImageMimeType(string $imageMimeType): PhotoInterface
+    {
+        $this->imageMimeType = $imageMimeType;
+
+        return $this;
     }
 
     public function getPin(): string
@@ -903,5 +942,17 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
     public function getShorturl(): ?string
     {
         return $this->shorturl;
+    }
+
+    public function setRideNamer(string $rideNamer): City
+    {
+        $this->rideNamer = $rideNamer;
+
+        return $this;
+    }
+
+    public function getRideNamer(): ?string
+    {
+        return $this->rideNamer;
     }
 }

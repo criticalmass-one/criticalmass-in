@@ -18,6 +18,10 @@
 /public/tracks
 /public/photos
 /public/cities
+/public/images
+/public/img
+/public/js
+/node_modules
 
 # Backup entities generated with doctrine:generate:entities command
 **/Entity/*~

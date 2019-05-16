@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\RideGenerator\RideCalculator;
 
+use App\Criticalmass\RideNamer\RideNamerListInterface;
 use App\Entity\CityCycle;
 
 abstract class AbstractRideCalculator implements RideCalculatorInterface
@@ -18,11 +19,15 @@ abstract class AbstractRideCalculator implements RideCalculatorInterface
     /** @var array $rideList */
     protected $rideList;
 
+    /** @var RideNamerListInterface $rideNamerList */
+    protected $rideNamerList;
+
     /** @var \DateTimeZone $timezone */
     protected $timezone = null;
 
-    public function __construct()
+    public function __construct(RideNamerListInterface $rideNamerList)
     {
+        $this->rideNamerList = $rideNamerList;
     }
 
     public function setTimezone(\DateTimeZone $timezone): RideCalculatorInterface

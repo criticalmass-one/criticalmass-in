@@ -6,14 +6,29 @@ use App\Entity\Thread;
 
 class ThreadPostItem extends AbstractItem
 {
+    /** @var int $postId */
+    protected $postId;
+
     /** @var Thread $thread */
-    public $thread;
+    protected $thread;
 
     /** @var string $threadTitle */
-    public $threadTitle;
+    protected $threadTitle;
 
     /** @var string $text */
-    public $text;
+    protected $text;
+
+    public function getPostId(): int
+    {
+        return $this->postId;
+    }
+
+    public function setPostId(int $postId): ThreadPostItem
+    {
+        $this->postId = $postId;
+
+        return $this;
+    }
 
     public function getThread(): Thread
     {

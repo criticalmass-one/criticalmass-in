@@ -48,7 +48,7 @@
                     </dt>
 
                     <dd>
-                        {{ ride.dateTime|date('d.m.Y') }}
+                        {{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}
                     </dd>
                 </dl>
             </div>
@@ -60,7 +60,7 @@
                     </dt>
 
                     <dd>
-                        {{ ride.dateTime|date('H:i') }} Uhr
+                        {{ ride.dateTime|date('H:i', ride.city.timezone) }} Uhr
                     </dd>
                 </dl>
             </div>
