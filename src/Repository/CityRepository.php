@@ -5,90 +5,96 @@ namespace App\Repository;
 use App\Entity\Region;
 use Doctrine\ORM\EntityRepository;
 
-/**
- * Dieses Repository erbt vom EntityRepository und stellt eine zusaetzliche Me-
- * thode bereit, um Staedte nach ihrer Entfernung zu einer angegebenen Koor-
- * dinate sortiert auszugeben.
- */
 class CityRepository extends EntityRepository
 {
-    public function findCitiesWithFacebook()
+    /**
+     * @deprecated
+     */
+    public function findCitiesWithFacebook(): array
     {
-        $builder = $this->createQueryBuilder('city');
+        $builder = $this->createQueryBuilder('c');
 
-        $builder->select('city');
-
-        $builder->where($builder->expr()->isNotNull('city.facebook'));
-
-        $builder->orderBy('city.city', 'ASC');
+        $builder
+            ->select('c')
+            ->where($builder->expr()->isNotNull('c.facebook'))
+            ->orderBy('c.city', 'ASC');
 
         $query = $builder->getQuery();
 
         return $query->getResult();
     }
 
-    public function findCitiesOfRegion(Region $region)
+    public function findCitiesOfRegion(Region $region): array
     {
-        $builder = $this->createQueryBuilder('city');
+        $builder = $this->createQueryBuilder('c');
 
-        $builder->select('city');
+        $builder->select('c');
 
-        $builder->where($builder->expr()->eq('city.enabled', 1));
-        $builder->andWhere($builder->expr()->eq('city.region', $region->getId()));
-        $builder->andWhere($builder->expr()->neq('city.latitude', 0));
-        $builder->andWhere($builder->expr()->neq('city.longitude', 0));
+        $builder
+            ->where($builder->expr()->eq('c.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->eq('c.region', ':region'))
+            ->setParameter('region', $region)
+            ->andWhere($builder->expr()->neq('c.latitude', ':notLatitude'))
+            ->setParameter('notLatitude', 0)
+            ->andWhere($builder->expr()->neq('c.longitude', ':notLongitude'))
+            ->setParameter('notLongitude', 0);
 
-        $builder->orderBy('city.city', 'ASC');
+        $builder->orderBy('c.city', 'ASC');
 
         $query = $builder->getQuery();
 
         return $query->getResult();
     }
 
-    public function countChildrenCitiesOfRegion(Region $region)
+    public function countChildrenCitiesOfRegion(Region $region): int
     {
-        $builder = $this->createQueryBuilder('city');
+        $builder = $this->createQueryBuilder('c');
 
-        $builder->select('COUNT(city)');
-
-        $builder->leftJoin('city.region', 'region1');
-        $builder->leftJoin('region1.parent', 'region2');
-        $builder->leftJoin('region2.parent', 'region3');
-
-        $builder->where($builder->expr()->eq('city.enabled', 1));
-
-        $builder->andWhere(
-            $builder->expr()->orX(
-                $builder->expr()->eq('region1.id', $region->getId()),
-                $builder->expr()->eq('region2.id', $region->getId()),
-                $builder->expr()->eq('region3.id', $region->getId())
+        $builder
+            ->select('COUNT(c)')
+            ->leftJoin('c.region', 'r1')
+            ->leftJoin('r1.parent', 'r2')
+            ->leftJoin('r2.parent', 'r3')
+            ->where($builder->expr()->eq('c.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere(
+                $builder->expr()->orX(
+                   $builder->expr()->eq('r1', ':region1'),
+                    $builder->expr()->eq('r2', ':region2'),
+                    $builder->expr()->eq('r3', ':region3')
+                )
             )
-        );
+            ->setParameter('region1', $region)
+            ->setParameter('region2', $region)
+            ->setParameter('region3', $region);
 
         $query = $builder->getQuery();
 
         return (int) $query->getSingleScalarResult();
     }
 
-    public function findChildrenCitiesOfRegion(Region $region)
+    public function findChildrenCitiesOfRegion(Region $region): array
     {
         $builder = $this->createQueryBuilder('city');
 
-        $builder->select('city');
-
-        $builder->leftJoin('city.region', 'region1');
-        $builder->leftJoin('region1.parent', 'region2');
-        $builder->leftJoin('region2.parent', 'region3');
-
-        $builder->where($builder->expr()->eq('city.enabled', 1));
-
-        $builder->andWhere(
-            $builder->expr()->orX(
-                $builder->expr()->eq('region1.id', $region->getId()),
-                $builder->expr()->eq('region2.id', $region->getId()),
-                $builder->expr()->eq('region3.id', $region->getId())
+        $builder
+            ->select('city')
+            ->leftJoin('city.region', 'r1')
+            ->leftJoin('r1.parent', 'r2')
+            ->leftJoin('r2.parent', 'r3')
+            ->where($builder->expr()->eq('city.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere(
+                $builder->expr()->orX(
+                    $builder->expr()->eq('r1', ':region1'),
+                    $builder->expr()->eq('r2', ':region2'),
+                    $builder->expr()->eq('r3', ':region3')
+                )
             )
-        );
+            ->setParameter('region1', $region)
+            ->setParameter('region2', $region)
+            ->setParameter('region3', $region);
 
         $query = $builder->getQuery();
 
@@ -115,25 +121,19 @@ class CityRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findCitiesWithBoard()
+    public function findCitiesWithBoard(): array
     {
-        $builder = $this->createQueryBuilder('city');
+        $builder = $this->createQueryBuilder('c');
 
-        $builder->select('city');
-
-        $builder->where($builder->expr()->eq('city.enabled', 1));
-        $builder->andWhere($builder->expr()->eq('city.enableBoard', 1));
-
-        $builder->orderBy('city.city', 'ASC');
+        $builder
+            ->select('c')
+            ->where($builder->expr()->eq('c.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->eq('c.enableBoard', ':enableBoard'))
+            ->setParameter('enableBoard', true)
+            ->orderBy('c.city', 'ASC');
 
         $query = $builder->getQuery();
-
-        return $query->getResult();
-    }
-
-    public function findCitiesByAverageParticipants($limit = 10)
-    {
-        $query = $this->getEntityManager()->createQuery("SELECT IDENTITY(r.city) AS city, c.city AS cityName, SUM(r.estimatedParticipants) / COUNT(c.id) AS averageParticipants FROM App:Ride r JOIN r.city c GROUP BY r.city ORDER BY averageParticipants DESC")->setMaxResults($limit);
 
         return $query->getResult();
     }
@@ -222,4 +222,3 @@ class CityRepository extends EntityRepository
         return $query->getResult();
     }
 }
-

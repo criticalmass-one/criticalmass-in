@@ -12,6 +12,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 class GenerateRidesCommand extends Command
 {
@@ -34,51 +35,67 @@ class GenerateRidesCommand extends Command
         $this
             ->setName('criticalmass:cycles:generate-rides')
             ->setDescription('Create rides for a parameterized year and month automatically')
-            ->addArgument(
-                'year',
-                InputArgument::REQUIRED,
-                'Year of the rides to create'
+            ->addOption(
+                'dateTime',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'DateTime of month to generate'
             )
-            ->addArgument(
-                'month',
-                InputArgument::REQUIRED,
-                'Month of the rides to create'
+            ->addOption(
+                'from',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'DateTime of period to start'
+            )
+            ->addOption(
+                'until',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'DateTime of period to start'
             )
             ->addArgument(
                 'cities',
                 InputArgument::IS_ARRAY,
                 'List of cities'
-            )
-            ->addOption(
-                'save',
-                null,
-                InputOption::VALUE_NONE,
-                'Save the generated stuff'
             );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /** @var int $year */
-        $year = (int) $input->getArgument('year');
-
-        /** @var int $month */
-        $month = (int) $input->getArgument('month');
+        $dateTime = $input->getOption('dateTime') ? new \DateTime($input->getOption('dateTime')) : null;
+        $fromDateTime = $input->getOption('from') ? new \DateTime($input->getOption('from')) : null;
+        $untilDateTime = $input->getOption('until') ? new \DateTime($input->getOption('until')) : null;
 
         $manager = $this->registry->getManager();
 
         $cityList = $this->getCityList($input);
 
-        $this->rideGenerator
-            ->setMonth($month)
-            ->setYear($year)
-            ->setCityList($cityList)
-            ->execute();
+        if ($fromDateTime && $untilDateTime) {
+            $monthInterval = new \DateInterval('P1M');
+
+            do {
+                $this->rideGenerator
+                    ->setMonth((int) $fromDateTime->format('m'))
+                    ->setYear((int) $fromDateTime->format('Y'))
+                    ->setCityList($cityList)
+                    ->execute();
+
+                $fromDateTime->add($monthInterval);
+            } while ($fromDateTime <= $untilDateTime);
+        } elseif ($dateTime) {
+            $this->rideGenerator
+                ->setMonth((int) $dateTime->format('m'))
+                ->setYear((int) $dateTime->format('Y'))
+                ->setCityList($cityList)
+                ->execute();
+        }
 
         $table = new Table($output);
-        $table->setHeaders(['City', 'DateTime Location', 'DateTime UTC', 'Location']);
+        $table->setHeaders(['City', 'DateTime Location', 'DateTime UTC', 'Location', 'Title', 'Cycle Id']);
 
         $utc = new \DateTimeZone('UTC');
+
+        $counter = 0;
 
         /** @var Ride $ride */
         foreach ($this->rideGenerator->getRideList() as $ride) {
@@ -87,20 +104,27 @@ class GenerateRidesCommand extends Command
                 $ride->getDateTime()->format('Y-m-d H:i'),
                 $ride->getDateTime()->setTimezone($utc)->format('Y-m-d H:i'),
                 $ride->getLocation(),
+                $ride->getTitle(),
+                $ride->getCycle()->getId(),
             ]);
 
             $manager->persist($ride);
+
+            ++$counter;
         }
 
         $table->render();
 
-        if ($input->getOption('save')) {
-            $output->writeln('Saved all those rides');
+        $helper = $this->getHelper('question');
+        $question = new ConfirmationQuestion('Save all created rides?', false);
 
-            $manager->flush();
-        } else {
-            $output->writeln('Did not save any of these rides, run with --save to persist.');
+        if (!$helper->ask($input, $output, $question)) {
+            return;
         }
+
+        $manager->flush();
+
+        $output->writeln(sprintf('Saved %d rides', $counter));
     }
 
     protected function getCityList(InputInterface $input): array

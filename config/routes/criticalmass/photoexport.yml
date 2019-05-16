@@ -1,0 +1,3 @@
+caldera_criticalmass_photos_export_list:
+    path: /photoexport
+    controller: App\Controller\Photo\PhotoExportController::listAction

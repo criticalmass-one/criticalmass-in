@@ -1,3 +1,7 @@
+caldera_criticalmass_profile:
+    resource: 'profile.xml'
+    prefix: /
+
 caldera_criticalmass_api:
     resource: 'api.yml'
     prefix: /api
@@ -32,6 +36,10 @@ caldera_criticalmass_help:
 
 caldera_criticalmass_photo:
     resource: 'photo.yml'
+    prefix:   /
+
+caldera_criticalmass_photo_export:
+    resource: 'photoexport.yml'
     prefix:   /
 
 caldera_criticalmass_photogallery:
@@ -88,10 +96,6 @@ caldera_criticalmass_citymanagement:
 
 caldera_criticalmass_citycycle:
     resource: 'citycycle.yml'
-    prefix: /
-
-caldera_criticalmass_profile:
-    resource: 'profile.xml'
     prefix: /
 
 caldera_criticalmass_social_network:

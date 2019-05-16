@@ -4,6 +4,7 @@ namespace App\Criticalmass\Geocoding;
 
 use App\Criticalmass\Geocoding\LocationBuilder\LocationBuilderInterface;
 use Geocoder\Geocoder;
+use Geocoder\Location;
 use Geocoder\Provider\Provider;
 use Geocoder\Query\ReverseQuery;
 
@@ -34,18 +35,29 @@ class ReverseGeocoder implements ReverseGeocoderInterface
         $this->locationBuilder = $locationBuilder;
     }
 
-    public function reverseGeocode(ReverseGeocodeable $geocodeable): ReverseGeocodeable
+    public function query(ReverseGeocodeable $geocodeable): ?Location
     {
         if (!$geocodeable->getLatitude() || !$geocodeable->getLongitude()) {
-            return $geocodeable;
+            return null;
         }
 
-        $result = $this->geocoder->reverseQuery(ReverseQuery::fromCoordinates($geocodeable->getLatitude(), $geocodeable->getLongitude()));
+        try {
+            $result = $this->geocoder->reverseQuery(ReverseQuery::fromCoordinates($geocodeable->getLatitude(), $geocodeable->getLongitude()));
+        } catch (\Exception $exception) {
+            return null;
+        }
 
         $firstResult = $result->first();
 
-        if ($firstResult) {
-            $geocodeable = $this->locationBuilder->build($geocodeable, $firstResult);
+        return $firstResult;
+    }
+
+    public function reverseGeocode(ReverseGeocodeable $geocodeable): ReverseGeocodeable
+    {
+        $resultLocation = $this->query($geocodeable);
+
+        if ($resultLocation) {
+            $geocodeable = $this->locationBuilder->build($geocodeable, $resultLocation);
         }
 
         return $geocodeable;

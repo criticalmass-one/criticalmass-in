@@ -16,7 +16,7 @@
 
                 <p class="lead">
                     Willkommen in deinem Benutzerkonto!
-                    Hier kannst du deine {% if feature_enabled('photos') %}Fotos, {% endif %}Tracks und Teilnahmen verwalten und deine Kontoeinstellungen ändern.
+                    Hier kannst du deine {% if feature('photos') %}Fotos, {% endif %}Tracks und Teilnahmen verwalten und deine Kontoeinstellungen ändern.
                 </p>
             </div>
         </div>
@@ -137,7 +137,7 @@
                         </div>
                     </div>
 
-                    {% if feature_enabled('photos') %}
+                    {% if feature('photos') %}
                     <div class="col-md-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -240,7 +240,7 @@
                         </div>
                     </div>
 
-                    {% if bikeright_visible %}
+                    {% if feature('bikeright') %}
                         <div class="col-md-6">
                             <div class="panel panel-bikeright">
                                 <div class="panel-heading">

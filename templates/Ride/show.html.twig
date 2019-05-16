@@ -21,7 +21,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
+    <div class="container" itemscope itemtype="http://schema.org/Event">
         {% include('Ride/Includes/_registrationHint.html.twig') %}
 
         {% include('Ride/Ride.html.twig') with { 'ride': ride, 'tracks': tracks, 'participation': participation } %}

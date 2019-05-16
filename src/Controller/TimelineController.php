@@ -2,15 +2,13 @@
 
 namespace App\Controller;
 
-use App\Criticalmass\Timeline\CachedTimeline;
-use App\Criticalmass\Timeline\Timeline;
+use App\Criticalmass\Timeline\TimelineInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class TimelineController extends AbstractController
 {
-    public function yearmonthAction(Timeline $cachedTimeline, int $year, int $month): Response
+    public function yearmonthAction(TimelineInterface $cachedTimeline, int $year, int $month): Response
     {
         $lowerLimitDateTime = new \DateTime('2010-01-01');
 

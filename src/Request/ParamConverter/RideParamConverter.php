@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Request\ParamConverter;
 
@@ -66,7 +66,11 @@ class RideParamConverter extends AbstractCriticalmassParamConverter
         $citySlug = $request->get('citySlug');
         $rideIdentifier = $request->get('rideIdentifier');
 
-        preg_match('/^([0-9]{4,4})\-([0-9]{1,2})(?:\-?)([0-9]{1,2})?$/', $rideIdentifier,$matches);
+        if (!$citySlug || !$rideIdentifier) {
+            return null;
+        }
+
+        preg_match('/^([0-9]{4,4})\-([0-9]{1,2})(?:\-?)([0-9]{1,2})?$/', $rideIdentifier, $matches);
 
         if ($citySlug && count($matches) === 0) {
             $city = $this->findCityBySlug($request);
