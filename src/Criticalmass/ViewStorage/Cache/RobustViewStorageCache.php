@@ -2,9 +2,9 @@
 
 namespace App\Criticalmass\ViewStorage\Cache;
 
+use App\Criticalmass\View\ViewInterface\ViewableEntity;
 use App\Criticalmass\ViewStorage\Persister\ViewStoragePersisterInterface;
-use App\Criticalmass\ViewStorage\View\ViewFactory;
-use App\EntityInterface\ViewableInterface;
+use App\Criticalmass\ViewStorage\ViewModel\ViewFactory;
 use JMS\Serializer\SerializerInterface;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use PhpAmqpLib\Exception\AMQPIOException;
@@ -27,7 +27,7 @@ class RobustViewStorageCache extends ViewStorageCache
         parent::__construct($tokenStorage, $producer, $serializer);
     }
 
-    public function countView(ViewableInterface $viewable): void
+    public function countView(ViewableEntity $viewable): void
     {
         try {
             parent::countView($viewable);

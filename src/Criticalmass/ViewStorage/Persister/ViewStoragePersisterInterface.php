@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\ViewStorage\Persister;
 
-use App\Criticalmass\ViewStorage\View\View;
+use App\Criticalmass\ViewStorage\ViewModel\View;
 
 interface ViewStoragePersisterInterface
 {
