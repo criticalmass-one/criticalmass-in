@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Criticalmass\Gps\GpxReader;
 
@@ -6,6 +6,7 @@ use App\Entity\Position;
 use App\Criticalmass\Gps\BoundingBox;
 use App\Criticalmass\Gps\Coord;
 use App\Criticalmass\Gps\GpxReader\GpxCoordLoop\GpxCoordLoop;
+use League\Flysystem\FilesystemInterface;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 /**
@@ -17,15 +18,17 @@ class GpxReader
     protected $rawFileContent;
     protected $simpleXml;
     protected $uploaderHelper;
-    protected $rootDirectory;
 
     /** @var \DateTimeZone */
     protected $dateTimeZone = null;
 
-    public function __construct(UploaderHelper $uploaderHelper, string $uploadDestinationTrack)
+    /** @var FilesystemInterface $filesystem */
+    protected $filesystem;
+
+    public function __construct(UploaderHelper $uploaderHelper, FilesystemInterface $filesystem)
     {
         $this->uploaderHelper = $uploaderHelper;
-        $this->rootDirectory = $uploadDestinationTrack.'/../';
+        $this->filesystem = $filesystem;
     }
 
     public function setDateTimeZone(\DateTimeZone $dateTimeZone = null)
@@ -37,8 +40,7 @@ class GpxReader
 
     public function loadFile($path)
     {
-        $this->path = $path;
-        $this->rawFileContent = file_get_contents($this->rootDirectory . $path);
+        $this->rawFileContent = $this->filesystem->read($path);
         $result = true;
 
         try {

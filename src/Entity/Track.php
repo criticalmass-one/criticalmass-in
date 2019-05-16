@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Criticalmass\Geo\EntityInterface\TrackInterface;
+use App\Criticalmass\UploadableDataHandler\UploadableEntity;
+use App\Criticalmass\UploadFaker\FakeUploadable;
 use App\EntityInterface\RouteableInterface;
 use App\EntityInterface\StaticMapableInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -19,7 +21,7 @@ use Caldera\GeoBasic\Track\TrackInterface as BaseTrackInterface;
  * @JMS\ExclusionPolicy("all")
  * @Routing\DefaultRoute(name="caldera_criticalmass_track_view")
  */
-class Track implements RouteableInterface, StaticMapableInterface, TrackInterface
+class Track implements RouteableInterface, StaticMapableInterface, TrackInterface, UploadableEntity, FakeUploadable
 {
     const TRACK_SOURCE_GPX = 'TRACK_SOURCE_GPX';
     const TRACK_SOURCE_STRAVA = 'TRACK_SOURCE_STRAVA';
@@ -160,19 +162,28 @@ class Track implements RouteableInterface, StaticMapableInterface, TrackInterfac
     protected $reducedPolyline;
 
     /**
-     * NOTE: This is not a mapped field of entity metadata, just a simple property.
-     *
-     * @Vich\UploadableField(mapping="track_file", fileNameProperty="trackFilename")
-     * @var File
+     * @var File $trackFile
+     * @Vich\UploadableField(mapping="track_file", fileNameProperty="trackFilename",  size="trackSize", mimeType="trackMimeType")
      */
     protected $trackFile;
 
     /**
+     * @var string $trackFilename
      * @ORM\Column(type="string", length=255)
-     *
-     * @var string
      */
     protected $trackFilename;
+
+    /**
+     * @var int $trackSize
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $trackSize;
+
+    /**
+     * @var string $trackMimeType
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $trackMimeType;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -187,7 +198,7 @@ class Track implements RouteableInterface, StaticMapableInterface, TrackInterfac
     protected $source = self::TRACK_SOURCE_UNKNOWN;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="bigint", nullable=true)
      *
      * @var integer
      */
@@ -488,6 +499,30 @@ class Track implements RouteableInterface, StaticMapableInterface, TrackInterfac
     public function getTrackFilename(): ?string
     {
         return $this->trackFilename;
+    }
+
+    public function getTrackSize(): ?int
+    {
+        return $this->trackSize;
+    }
+
+    public function setTrackSize(int $trackSize): Track
+    {
+        $this->trackSize = $trackSize;
+
+        return $this;
+    }
+
+    public function getTrackMimeType(): ?string
+    {
+        return $this->trackMimeType;
+    }
+
+    public function setTrackMimeType(string $trackMimeType): Track
+    {
+        $this->trackMimeType = $trackMimeType;
+
+        return $this;
     }
 
     public function setStartPoint(int $startPoint): Track

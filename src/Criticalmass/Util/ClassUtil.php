@@ -4,6 +4,18 @@ namespace App\Criticalmass\Util;
 
 class ClassUtil
 {
+    public static function getShortnameFromFqcn(string $fqcn): string
+    {
+        $parts = explode('\\', $fqcn);
+
+        return array_pop($parts);
+    }
+
+    public static function getLowercaseShortnameFromFqcn(string $fqcn): string
+    {
+        return strtolower(self::getShortnameFromFqcn($fqcn));
+    }
+
     public static function getShortname($object): string
     {
         $reflectionClass = new \ReflectionClass($object);

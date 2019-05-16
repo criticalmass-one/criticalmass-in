@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Request\ParamConverter;
 
@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AbstractCriticalmassParamConverter extends AbstractParamConverter
 {
+    /** @var array $autoGuessOrder */
     protected $autoGuessOrder = ['id', 'slug'];
 
     public function apply(Request $request, ParamConverter $configuration): void

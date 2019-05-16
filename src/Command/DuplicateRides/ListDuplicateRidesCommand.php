@@ -68,11 +68,13 @@ class ListDuplicateRidesCommand extends Command
 
     protected function handleDuplicates(InputInterface $input, OutputInterface $output, array $duplicateRides): void
     {
+        $firstKey = array_key_first($duplicateRides);
+
         /** @var City $city */
-        $city = $duplicateRides[0]->getCity();
+        $city = $duplicateRides[$firstKey]->getCity();
 
         /** @var \DateTime $dateTime */
-        $dateTime = $duplicateRides[0]->getDateTime();
+        $dateTime = $duplicateRides[$firstKey]->getDateTime();
 
         $output->writeln(sprintf('Duplicates found for <info>%s</info> in <comment>%s</comment>', $city->getCity(), $dateTime->format('Y-m-d')));
 

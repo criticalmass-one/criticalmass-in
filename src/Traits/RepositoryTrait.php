@@ -18,6 +18,7 @@ use App\Entity\Post;
 use App\Entity\Region;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
+use App\Entity\SocialNetworkProfile;
 use App\Entity\Subride;
 use App\Entity\Thread;
 use App\Entity\Track;
@@ -35,6 +36,7 @@ use App\Repository\PostRepository;
 use App\Repository\RegionRepository;
 use App\Repository\RideEstimateRepository;
 use App\Repository\RideRepository;
+use App\Repository\SocialNetworkProfileRepository;
 use App\Repository\SubrideRepository;
 use App\Repository\ThreadRepository;
 use App\Repository\TrackRepository;
@@ -126,6 +128,11 @@ trait RepositoryTrait
     protected function getParticipationRepository(): ParticipationRepository
     {
         return $this->getDoctrine()->getRepository(Participation::class);
+    }
+
+    protected function getSocialNetworkProfileRepository(): SocialNetworkProfileRepository
+    {
+        return $this->getDoctrine()->getRepository(SocialNetworkProfile::class);
     }
 
     protected function getSubrideRepository(): SubrideRepository

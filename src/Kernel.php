@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Criticalmass\Feature\Feature\FeatureInterface;
+use App\Criticalmass\RideNamer\RideNamerInterface;
 use App\Criticalmass\Router\DelegatedRouter\DelegatedRouterInterface;
 use App\Criticalmass\Sharing\Network\ShareNetworkInterface;
 use App\Criticalmass\SocialNetwork\Network\NetworkInterface;
@@ -10,6 +11,7 @@ use App\Criticalmass\SocialNetwork\NetworkFeedFetcher\NetworkFeedFetcherInterfac
 use App\Criticalmass\Timeline\Collector\TimelineCollectorInterface;
 use App\DependencyInjection\Compiler\FeaturePass;
 use App\DependencyInjection\Compiler\ObjectRouterPass;
+use App\DependencyInjection\Compiler\RideNamerPass;
 use App\DependencyInjection\Compiler\ShareNetworkPass;
 use App\DependencyInjection\Compiler\SocialNetworkPass;
 use App\DependencyInjection\Compiler\TimelineCollectorPass;
@@ -64,18 +66,14 @@ class Kernel extends BaseKernel
         $container->registerForAutoconfiguration(TimelineCollectorInterface::class)->addTag('timeline.collector');
         $container->addCompilerPass(new TimelineCollectorPass());
 
-        $container->registerForAutoconfiguration(NetworkInterface::class)->addTag('social_network.network');
-        $container->registerForAutoconfiguration(NetworkFeedFetcherInterface::class)->addTag('social_network.network_fetcher');
-        $container->addCompilerPass(new SocialNetworkPass());
-
-        $container->addCompilerPass(new FeaturePass());
-        $container->registerForAutoconfiguration(FeatureInterface::class)->addTag('feature');
-
         $container->registerForAutoconfiguration(DelegatedRouterInterface::class)->addTag('object_router.delegated_router');
         $container->addCompilerPass(new ObjectRouterPass());
 
         $container->addCompilerPass(new ShareNetworkPass());
         $container->registerForAutoconfiguration(ShareNetworkInterface::class)->addTag('share.network');
+
+        $container->addCompilerPass(new RideNamerPass());
+        $container->registerForAutoconfiguration(RideNamerInterface::class)->addTag('ride_namer');
 
         $container->addCompilerPass(new TwigSeoExtensionPass());
 

@@ -1,4 +1,4 @@
-define(['typeahead.jquery', 'bloodhound', 'dateformat'], function () {
+define(['dateformat', 'typeahead.jquery', 'bloodhound'], function (dateFormat) {
 
     Search = function (context, options) {
         this._$input = $(context);
@@ -63,7 +63,7 @@ define(['typeahead.jquery', 'bloodhound', 'dateformat'], function () {
         html += '</div>';
         html += '</div>';
 
-        if (data.meta.location.length > 0) {
+        if (data.meta && data.meta.location && data.meta.location.length > 0) {
             html += '<div class="row">';
             html += '<div class="col-md-12">';
             html += data.meta.location;
@@ -75,7 +75,7 @@ define(['typeahead.jquery', 'bloodhound', 'dateformat'], function () {
 
         html += '<div class="row">';
         html += '<div class="col-md-12">';
-        html += dateTime.format('dd.mm.yyyy HH:MM') + '&nbsp;Uhr';
+        html += dateFormat(dateTime, 'dd.mm.yyyy HH:MM') + '&nbsp;Uhr';
         html += '</div>';
         html += '</div>';
         html += '</a>';
