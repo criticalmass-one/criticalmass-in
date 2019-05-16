@@ -6,11 +6,11 @@ use App\Criticalmass\Geocoding\ReverseGeocodeable;
 use App\Criticalmass\Image\PhotoManipulator\PhotoInterface\ManipulateablePhotoInterface;
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
 use App\Criticalmass\UploadFaker\FakeUploadable;
+use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AutoParamConverterAble;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
-use App\EntityInterface\ViewableInterface;
 use App\EntityInterface\StaticMapableInterface;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -27,7 +27,7 @@ use App\Criticalmass\Sharing\Annotation as Sharing;
  * @JMS\ExclusionPolicy("all")
  * @Routing\DefaultRoute(name="caldera_criticalmass_photo_show_ride")
  */
-class Photo implements FakeUploadable, ViewableInterface, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, Shareable, StaticMapableInterface, ReverseGeocodeable
+class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, Shareable, StaticMapableInterface, ReverseGeocodeable
 {
     /**
      * @ORM\Id
@@ -461,7 +461,7 @@ class Photo implements FakeUploadable, ViewableInterface, ManipulateablePhotoInt
         return $this;
     }
 
-    public function setViews(int $views): ViewableInterface
+    public function setViews(int $views): ViewableEntity
     {
         $this->views = $views;
 
@@ -473,7 +473,7 @@ class Photo implements FakeUploadable, ViewableInterface, ManipulateablePhotoInt
         return $this->views;
     }
 
-    public function incViews(): ViewableInterface
+    public function incViews(): ViewableEntity
     {
         ++$this->views;
 
