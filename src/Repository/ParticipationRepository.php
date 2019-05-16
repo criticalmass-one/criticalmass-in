@@ -11,30 +11,54 @@ class ParticipationRepository extends EntityRepository
 {
     public function findParticipationForUserAndRide(User $user, Ride $ride): ?Participation
     {
-        $builder = $this->createQueryBuilder('participation');
+        $builder = $this->createQueryBuilder('p');
 
-        $builder->select('participation');
-        $builder->where($builder->expr()->eq('participation.user', $user->getId()));
-        $builder->andWhere($builder->expr()->eq('participation.ride', $ride->getId()));
-        $builder->setMaxResults(1);
+        $builder
+            ->select('p')
+            ->where($builder->expr()->eq('p.user', ':user'))
+            ->setParameter('user', $user)
+            ->andWhere($builder->expr()->eq('p.ride', ':ride'))
+            ->setParameter('ride', $ride)
+            ->setMaxResults(1);
 
         $query = $builder->getQuery();
 
         return $query->getOneOrNullResult();
     }
 
-    public function countParticipationsForRide(Ride $ride, $status): int
+    public function countParticipationsForRide(Ride $ride, string $status): int
     {
-        $builder = $this->createQueryBuilder('participation');
+        if ($status === 'yes') {
+            $goingYes = true;
+        } else {
+            $goingYes = false;
+        }
 
-        $builder->select('COUNT(participation)');
-        $builder->where($builder->expr()->eq('participation.ride', $ride->getId()));
+        if ($status === 'maybe') {
+            $goingMaybe = true;
+        } else {
+            $goingMaybe = false;
+        }
 
-        $builder->andWhere($builder->expr()->eq('participation.goingYes', ($status == 'yes' ? 1 : 0)));
-        $builder->andWhere($builder->expr()->eq('participation.goingMaybe', ($status == 'maybe' ? 1 : 0)));
-        $builder->andWhere($builder->expr()->eq('participation.goingNo', ($status == 'no' ? 1 : 0)));
+        if ($status === 'no') {
+            $goingNo = true;
+        } else {
+            $goingNo = false;
+        }
 
-        $builder->setMaxResults(1);
+        $builder = $this->createQueryBuilder('p');
+
+        $builder
+            ->select('COUNT(p)')
+            ->where($builder->expr()->eq('p.ride', ':ride'))
+            ->setParameter('ride', $ride)
+            ->andWhere($builder->expr()->eq('p.goingYes', ':goingYes'))
+            ->setParameter('goingYes', $goingYes)
+            ->andWhere($builder->expr()->eq('p.goingMaybe', ':goingMaybe'))
+            ->setParameter('goingMaybe', $goingMaybe)
+            ->andWhere($builder->expr()->eq('p.goingNo', ':goingNo'))
+            ->setParameter('goingNo', $goingNo)
+            ->setMaxResults(1);
 
         $query = $builder->getQuery();
 

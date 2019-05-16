@@ -10,7 +10,7 @@ caldera_criticalmass_track_toggle:
 
 caldera_criticalmass_track_download:
     path:  /track/download/{trackId}
-    controller: App\Controller\Track\TrackManagementController::downloadAction
+    controller: App\Controller\Track\TrackDownloadController::downloadAction
 
 caldera_criticalmass_track_gpxgenerate:
     path:  /track/generate/{rideId}

@@ -46,8 +46,11 @@
 
 {% block content %}
     <div class="container">
+
+        {{ include('Flash/_flash.html.twig') }}
+
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-md-12">
                 <button class="btn btn-success pull-right" data-toggle="modal" data-target="#profile-add-modal">
                     <i class="fa fa-plus"></i>
                     Profil ergänzen
@@ -59,24 +62,20 @@
 
                 {% if profileAbleType == 'city' %}
                     <p class="lead">
-                        Die folgende Liste enthält Konten in sozialen Netzwerken und Links zu Webseiten, die mit der Critical Mass in {{ profileAble.city }} in Verbindung stehen.
+                        Die folgende Liste enthält Konten in sozialen Netzwerken und Links zu Webseiten, die mit der Critical Mass in <strong>{{ profileAble.city }}</strong> in Verbindung stehen.
                     </p>
                 {% endif %}
 
                 {% if profileAbleType == 'ride' %}
                     <p class="lead">
-                        Die folgende Liste enthält Konten in sozialen Netzwerken und Links zu Webseiten, die zu der Tour am {{ profileAble.dateTime|date('d.m.Y') }} in Verbindung stehen.
-                    </p>
-
-                    <p>
-                        Die Profile der übergeordneten Stadt {{ profileAble.city.city }} werden getrennt von dieser Liste verwaltet: <a class="btn btn-default" href="{{ objectPath(profileAble.city, 'criticalmass_socialnetwork_city_list') }}">Profile der Stadt verwalten</a>
+                        Die folgende Liste enthält Konten in sozialen Netzwerken und Links zu Webseiten, die zu der Tour am <strong>{{ profileAble.dateTime|date('d.m.Y') }}</strong> in Verbindung stehen.
                     </p>
                 {% endif %}
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-md-12">
                 <table class="table">
                     <thead>
                         <tr>
@@ -109,16 +108,46 @@
                                 </a>
                             </td>
                             <td>
-                                <a href="{{ path('criticalmass_socialnetwork_disable', { profileId: profile.id }) }}" class="btn btn-default btn-xs">
-                                    <i class="fa fa-trash-o"></i>
-                                </a>
+                                <div class="btn-group">
+                                    <a href="{{ path('criticalmass_socialnetwork_edit', { profileId: profile.id }) }}" class="btn btn-default btn-xs">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                    <a href="{{ path('criticalmass_socialnetwork_disable', { profileId: profile.id }) }}" class="btn btn-default btn-xs">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                         {% endfor %}
+
+                        {% if list|length == 0 %}
+                            <tr>
+                                <td colspan="4">
+                                    <div class="alert alert-info">
+                                        {% if profileAbleType == 'ride' %}
+                                        Schade, zu dieser Tour wurden noch keine sozialen Netzwerke gespeichert.
+                                        {% else %}
+                                        Schade, zu dieser Stadt wurden noch keine sozialen Netzwerke gespeichert.
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endif %}
                     </tbody>
                 </table>
             </div>
         </div>
+
+        {% if profileAbleType == 'ride' %}
+        <div class="row">
+            <div class="col-md-12">
+                <p class="text-center">
+                    Die Profile der übergeordneten Stadt {{ profileAble.city.city }} werden getrennt von dieser Liste verwaltet:<br />
+                    <a class="btn btn-default margin-top-small" href="{{ objectPath(profileAble.city, 'criticalmass_socialnetwork_city_list') }}">Profile der Stadt verwalten</a>
+                </p>
+            </div>
+        </div>
+        {% endif %}
     </div>
 
     <div class="modal fade" id="profile-add-modal" tabindex="-1" role="dialog" aria-labelledby="profile-add-modal-label">

@@ -26,23 +26,17 @@ class PostRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function countPosts()
+    public function getPostsForRide(Ride $ride): array
     {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('COUNT(post.id)');
-        $qb->from('App:Post', 'post');
+        $builder = $this->createQueryBuilder('p');
 
-        return (int) $qb->getQuery()->getSingleScalarResult();
-    }
-
-    public function getPostsForRide(Ride $ride)
-    {
-        $builder = $this->createQueryBuilder('post');
-
-        $builder->select('post');
-        $builder->where($builder->expr()->eq('post.ride', $ride->getId()));
-        $builder->andWhere($builder->expr()->eq('post.enabled', true));
-        $builder->addOrderBy('post.dateTime', 'ASC');
+        $builder
+            ->select('p')
+            ->where($builder->expr()->eq('p.ride', ':ride'))
+            ->setParameter('ride', $ride)
+            ->andWhere($builder->expr()->eq('p.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->addOrderBy('p.dateTime', 'ASC');
 
         $query = $builder->getQuery();
 
@@ -51,139 +45,85 @@ class PostRepository extends EntityRepository
         return $result;
     }
 
-    public function countPostsForCityRides(City $city)
+    public function countPostsForCityRides(City $city): int
     {
-        $builder = $this->createQueryBuilder('post');
+        $builder = $this->createQueryBuilder('p');
 
-        $builder->select('COUNT(post.id)');
-
-        $builder->join('post.ride', 'ride');
-
-        $builder->where($builder->expr()->eq('ride.city', $city->getId()));
+        $builder
+            ->select('COUNT(p.id)')
+            ->join('p.ride', 'ride')
+            ->where($builder->expr()->eq('ride.city', ':city'))
+            ->setParameter('city', $city);
 
         $query = $builder->getQuery();
 
         return (int) $query->getSingleScalarResult();
     }
 
-    public function getPostsForCityRides(City $city)
+    public function getPostsForCityRides(City $city): array
     {
-        $builder = $this->createQueryBuilder('post');
+        $builder = $this->createQueryBuilder('p');
 
-        $builder->select('post');
-
-        $builder->join('post.ride', 'ride');
-
-        $builder->where($builder->expr()->eq('ride.city', $city->getId()));
-
+        $builder
+            ->select('p')
+            ->join('p.ride', 'ride')
+            ->where($builder->expr()->eq('ride.city', ':city'))
+            ->setParameter('city', $city);
 
         $query = $builder->getQuery();
 
         return $query->getResult();
     }
 
-    public function findPostsForThread(Thread $thread)
+    public function findPostsForThread(Thread $thread): array
     {
-        $builder = $this->createQueryBuilder('post');
+        $builder = $this->createQueryBuilder('p');
 
-        $builder->select('post');
-
-        $builder->where($builder->expr()->eq('post.thread', $thread->getId()));
-        $builder->andWhere($builder->expr()->eq('post.enabled', 1));
-        $builder->addOrderBy('post.dateTime', 'ASC');
+        $builder
+            ->select('p')
+            ->where($builder->expr()->eq('p.thread', ':thread'))
+            ->setParameter('thread', $thread)
+            ->andWhere($builder->expr()->eq('p.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->addOrderBy('p.dateTime', 'ASC');
 
         $query = $builder->getQuery();
 
         return $query->getResult();
-    }
-
-    public function findRecentChatMessages($limit = 25)
-    {
-        $builder = $this->createQueryBuilder('post');
-
-        $builder->select('post');
-
-        $builder->where($builder->expr()->eq('post.enabled', 1));
-        $builder->andWhere($builder->expr()->eq('post.chat', 1));
-
-        if ($limit) {
-            $builder->setMaxResults($limit);
-        }
-
-        $builder->addOrderBy('post.dateTime', 'DESC');
-
-        $query = $builder->getQuery();
-
-        $result = $query->getResult();
-
-        return $result;
     }
 
     public function findForTimelineThreadPostCollector(
         \DateTime $startDateTime = null,
         \DateTime $endDateTime = null,
         $limit = null
-    ) {
-        $builder = $this->createQueryBuilder('post');
+    ): array {
+        $builder = $this->createQueryBuilder('p');
 
-        $builder->select('post');
-
-        $builder->join('post.thread', 'thread');
-
-        $builder->where($builder->expr()->eq('post.enabled', 1));
-        $builder->andWhere($builder->expr()->isNotNull('post.thread'));
-        $builder->andWhere($builder->expr()->neq('post', 'thread.firstPost'));
+        $builder
+            ->select('p')
+            ->join('p.thread', 'thread')
+            ->where($builder->expr()->eq('p.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->isNotNull('p.thread'))
+            ->andWhere($builder->expr()->neq('p', 'thread.firstPost'));
 
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gte('post.dateTime',
-                '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder
+                ->andWhere($builder->expr()->gte('p.dateTime', ':startDateTime'))
+                ->setParameter('startDateTime', $startDateTime);
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lte('post.dateTime',
-                '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder
+                ->andWhere($builder->expr()->lte('p.dateTime', ':endDateTime'))
+                ->setParameter('endDateTime', $endDateTime);
         }
 
         if ($limit) {
             $builder->setMaxResults($limit);
         }
 
-        $builder->addOrderBy('post.dateTime', 'DESC');
-
-        $query = $builder->getQuery();
-
-        $result = $query->getResult();
-
-        return $result;
-    }
-
-    public function findForTimelineBlogPostCommentCollector(
-        \DateTime $startDateTime = null,
-        \DateTime $endDateTime = null,
-        $limit = null
-    ) {
-        $builder = $this->createQueryBuilder('post');
-
-        $builder->select('post');
-
-        $builder->where($builder->expr()->eq('post.enabled', 1));
-        $builder->andWhere($builder->expr()->isNotNull('post.blogPost'));
-
-        if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gte('post.dateTime',
-                '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
-        }
-
-        if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lte('post.dateTime',
-                '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
-        }
-
-        if ($limit) {
-            $builder->setMaxResults($limit);
-        }
-
-        $builder->addOrderBy('post.dateTime', 'DESC');
+        $builder->addOrderBy('p.dateTime', 'DESC');
 
         $query = $builder->getQuery();
 
@@ -196,29 +136,32 @@ class PostRepository extends EntityRepository
         \DateTime $startDateTime = null,
         \DateTime $endDateTime = null,
         $limit = null
-    ) {
-        $builder = $this->createQueryBuilder('post');
+    ): array {
+        $builder = $this->createQueryBuilder('p');
 
-        $builder->select('post');
-
-        $builder->where($builder->expr()->eq('post.enabled', 1));
-        $builder->andWhere($builder->expr()->isNotNull('post.ride'));
+        $builder
+            ->select('p')
+            ->where($builder->expr()->eq('p.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->isNotNull('p.ride'));
 
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gte('post.dateTime',
-                '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder
+                ->andWhere($builder->expr()->gte('p.dateTime', ':startDateTime'))
+                ->setParameter('startDateTime', $startDateTime);
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lte('post.dateTime',
-                '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder
+                ->andWhere($builder->expr()->lte('p.dateTime', ':endDateTime'))
+                ->setParameter('endDateTime', $endDateTime);
         }
 
         if ($limit) {
             $builder->setMaxResults($limit);
         }
 
-        $builder->addOrderBy('post.dateTime', 'DESC');
+        $builder->addOrderBy('p.dateTime', 'DESC');
 
         $query = $builder->getQuery();
 
@@ -231,29 +174,32 @@ class PostRepository extends EntityRepository
         \DateTime $startDateTime = null,
         \DateTime $endDateTime = null,
         $limit = null
-    ) {
-        $builder = $this->createQueryBuilder('post');
+    ): array {
+        $builder = $this->createQueryBuilder('p');
 
-        $builder->select('post');
-
-        $builder->where($builder->expr()->eq('post.enabled', 1));
-        $builder->andWhere($builder->expr()->isNotNull('post.photo'));
+        $builder
+            ->select('p')
+            ->where($builder->expr()->eq('p.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->isNotNull('p.photo'));
 
         if ($startDateTime) {
-            $builder->andWhere($builder->expr()->gte('post.dateTime',
-                '\'' . $startDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder
+                ->andWhere($builder->expr()->gte('p.dateTime', ':startDateTime'))
+                ->setParameter('startDateTime', $startDateTime);
         }
 
         if ($endDateTime) {
-            $builder->andWhere($builder->expr()->lte('post.dateTime',
-                '\'' . $endDateTime->format('Y-m-d H:i:s') . '\''));
+            $builder
+                ->andWhere($builder->expr()->lte('p.dateTime', ':endDateTime'))
+                ->setParameter('endDateTime', $endDateTime);
         }
 
         if ($limit) {
             $builder->setMaxResults($limit);
         }
 
-        $builder->addOrderBy('post.dateTime', 'DESC');
+        $builder->addOrderBy('p.dateTime', 'DESC');
 
         $query = $builder->getQuery();
 
@@ -262,4 +208,3 @@ class PostRepository extends EntityRepository
         return $result;
     }
 }
-

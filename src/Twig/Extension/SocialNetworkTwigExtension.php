@@ -1,9 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Twig\Extension;
 
-use App\Criticalmass\SocialNetwork\Network\NetworkInterface;
-use App\Criticalmass\SocialNetwork\NetworkManager\NetworkManagerInterface;
+use Caldera\SocialNetworkBundle\Network\NetworkInterface;
+use Caldera\SocialNetworkBundle\NetworkManager\NetworkManagerInterface;
 
 class SocialNetworkTwigExtension extends \Twig_Extension
 {

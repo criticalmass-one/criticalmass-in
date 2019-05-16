@@ -22,19 +22,22 @@ class PostAdmin extends AbstractAdmin
     {
         $formMapper
             ->with('Post', ['class' => 'col-md-6'])
-            ->add('user', EntityType::class, ['class' => User::class])
-            ->add('message', TextareaType::class)
+            ->add('user', EntityType::class, ['class' => User::class, 'required' => true])
+            ->add('message', TextareaType::class, ['required' => false])
             ->end()
+
             ->with('Context', ['class' => 'col-md-6'])
-            ->add('ride', EntityType::class, ['class' => Ride::class])
-            ->add('city', EntityType::class, ['class' => City::class])
-            ->add('thread', EntityType::class, ['class' => Thread::class])
+            ->add('ride', EntityType::class, ['class' => Ride::class, 'required' => false])
+            ->add('city', EntityType::class, ['class' => City::class, 'required' => false])
+            ->add('thread', EntityType::class, ['class' => Thread::class, 'required' => false])
             //->add('photo') too much data, admin will explode
             ->end()
+
             ->with('Coord', ['class' => 'col-md-6'])
             ->add('latitude', TextType::class, ['required' => false])
             ->add('longitude', TextType::class, ['required' => false])
             ->end()
+
             ->with('Settings', ['class' => 'col-md-6'])
             ->add('dateTime', DateTimeType::class, ['required' => false])
             ->add('enabled', CheckboxType::class, ['required' => false])

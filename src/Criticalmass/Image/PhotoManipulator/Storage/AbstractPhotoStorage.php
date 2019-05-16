@@ -3,6 +3,7 @@
 namespace App\Criticalmass\Image\PhotoManipulator\Storage;
 
 use App\Criticalmass\Image\PhotoManipulator\Cache\PhotoCacheInterface;
+use League\Flysystem\FilesystemInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
@@ -14,16 +15,16 @@ abstract class AbstractPhotoStorage implements PhotoStorageInterface
     /** @var PhotoCacheInterface $photoCache */
     protected $photoCache;
 
-    /** @var string $uploadDestinationPhoto */
-    protected $uploadDestinationPhoto;
+    /** @var FilesystemInterface $filesystem */
+    protected $filesystem;
 
     /** @var RegistryInterface $registry */
     protected $registry;
 
-    public function __construct(UploaderHelper $uploaderHelper, PhotoCacheInterface $photoCache, RegistryInterface $registry, string $uploadDestinationPhoto)
+    public function __construct(UploaderHelper $uploaderHelper, PhotoCacheInterface $photoCache, RegistryInterface $registry, FilesystemInterface $filesystem)
     {
         $this->uploaderHelper = $uploaderHelper;
-        $this->uploadDestinationPhoto = $uploadDestinationPhoto;
+        $this->filesystem = $filesystem;
         $this->photoCache = $photoCache;
         $this->registry = $registry;
     }

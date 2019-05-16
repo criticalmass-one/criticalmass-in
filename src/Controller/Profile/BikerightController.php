@@ -8,7 +8,11 @@ use App\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Flagception\Bundle\FlagceptionBundle\Annotations\Feature;
 
+/**
+ * @Feature("bikeright")
+ */
 class BikerightController extends AbstractController
 {
     /**
