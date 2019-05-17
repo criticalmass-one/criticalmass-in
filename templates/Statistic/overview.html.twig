@@ -2,10 +2,10 @@
 
 {% block title %}Statistiken{% endblock %}
 
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+
 {% block breadcrumb %}
-    <li class="active">
-        Statistiken
-    </li>
+    {{ bootstrap.breadcrumb_item('Statistiken', '', true) }}
 {% endblock %}
 
 {% block content %}

@@ -1,9 +1,9 @@
 {% extends 'Template/StandardTemplate.html.twig' %}{% block title %}Impressum{% endblock %}
 
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+
 {% block breadcrumb %}
-    <li class="active">
-        Impressum
-    </li>
+    {{ bootstrap.breadcrumb_item('Impressum', '', true) }}
 {% endblock %}
 
 {% block content %}

@@ -1,9 +1,9 @@
 {% extends 'Template/StandardTemplate.html.twig' %}{% block title %}Datenschutzerklärung{% endblock %}
 
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+
 {% block breadcrumb %}
-    <li class="active">
-        Datenschutzerklärung
-    </li>
+    {{ bootstrap.breadcrumb_item('Datenschutzerklärung', '', true) }}
 {% endblock %}
 
 {% block content %}

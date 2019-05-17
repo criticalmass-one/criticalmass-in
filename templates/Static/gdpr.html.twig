@@ -1,9 +1,9 @@
 {% extends 'Template/StandardTemplate.html.twig' %}{% block title %}Deine persönlichen Daten{% endblock %}
 
+{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+
 {% block breadcrumb %}
-    <li class="active">
-        Deine persönlichen Daten
-    </li>
+    {{ bootstrap.breadcrumb_item('Deine persönlichen Daten', '', true) }}
 {% endblock %}
 
 {% block content %}
