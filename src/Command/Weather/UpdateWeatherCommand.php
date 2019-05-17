@@ -1,9 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Command\Weather;
 
+use App\Criticalmass\Weather\ForecastRetriever\WeatherForecastRetrieverInterface;
 use App\Entity\Weather;
-use App\Criticalmass\Weather\WeatherForecastRetriever;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class UpdateWeatherCommand extends Command
 {
-    /** @var WeatherForecastRetriever $weatherForecastRetriever */
+    /** @var WeatherForecastRetrieverInterface $weatherForecastRetriever */
     protected $weatherForecastRetriever;
 
     /** @var OutputInterface $output */
@@ -21,7 +21,7 @@ class UpdateWeatherCommand extends Command
     /** @var InputInterface $input */
     protected $input;
 
-    public function __construct(WeatherForecastRetriever $weatherForecastRetriever)
+    public function __construct(WeatherForecastRetrieverInterface $weatherForecastRetriever)
     {
         $this->weatherForecastRetriever = $weatherForecastRetriever;
 

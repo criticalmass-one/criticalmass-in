@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\Weather\EntityInterface\WeatherInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="weather")
  * @ORM\Entity(repositoryClass="App\Repository\WeatherRepository")
  */
-class Weather
+class Weather implements WeatherInterface
 {
     /**
      * @ORM\Id
@@ -104,19 +105,19 @@ class Weather
     protected $windSpeed;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
      */
-    protected $windDeg;
+    protected $windDirection;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
      */
     protected $clouds;
 
     /**
      * @ORM\Column(type="float")
      */
-    protected $rain;
+    protected $precipitation;
 
     public function __construct()
     {
@@ -145,7 +146,7 @@ class Weather
         return $this->weatherDateTime;
     }
 
-    public function setWeatherDateTime(\DateTime $weatherDateTime = null): Weather
+    public function setWeatherDateTime(\DateTime $weatherDateTime = null): WeatherInterface
     {
         $this->weatherDateTime = $weatherDateTime;
 
@@ -157,7 +158,7 @@ class Weather
         return $this->creationDateTime;
     }
 
-    public function setCreationDateTime(\DateTime $creationDateTime = null): Weather
+    public function setCreationDateTime(\DateTime $creationDateTime = null): WeatherInterface
     {
         $this->creationDateTime = $creationDateTime;
 
@@ -169,7 +170,7 @@ class Weather
         return $this->temperatureMin;
     }
 
-    public function setTemperatureMin(float $temperatureMin = null): Weather
+    public function setTemperatureMin(float $temperatureMin = null): WeatherInterface
     {
         $this->temperatureMin = $temperatureMin;
 
@@ -181,7 +182,7 @@ class Weather
         return $this->temperatureMax;
     }
 
-    public function setTemperatureMax(float $temperatureMax = null): Weather
+    public function setTemperatureMax(float $temperatureMax = null): WeatherInterface
     {
         $this->temperatureMax = $temperatureMax;
 
@@ -193,7 +194,7 @@ class Weather
         return $this->temperatureMorning;
     }
 
-    public function setTemperatureMorning(float $temperatureMorning = null): Weather
+    public function setTemperatureMorning(float $temperatureMorning = null): WeatherInterface
     {
         $this->temperatureMorning = $temperatureMorning;
 
@@ -205,7 +206,7 @@ class Weather
         return $this->temperatureDay;
     }
 
-    public function setTemperatureDay(float $temperatureDay = null): Weather
+    public function setTemperatureDay(float $temperatureDay = null): WeatherInterface
     {
         $this->temperatureDay = $temperatureDay;
 
@@ -217,7 +218,7 @@ class Weather
         return $this->temperatureEvening;
     }
 
-    public function setTemperatureEvening(float $temperatureEvening = null): Weather
+    public function setTemperatureEvening(float $temperatureEvening = null): WeatherInterface
     {
         $this->temperatureEvening = $temperatureEvening;
 
@@ -229,7 +230,7 @@ class Weather
         return $this->temperatureNight;
     }
 
-    public function setTemperatureNight(float $temperatureNight = null): Weather
+    public function setTemperatureNight(float $temperatureNight = null): WeatherInterface
     {
         $this->temperatureNight = $temperatureNight;
 
@@ -241,7 +242,7 @@ class Weather
         return $this->pressure;
     }
 
-    public function setPressure(float $pressure = null): Weather
+    public function setPressure(float $pressure = null): WeatherInterface
     {
         $this->pressure = $pressure;
 
@@ -253,7 +254,7 @@ class Weather
         return $this->humidity;
     }
 
-    public function setHumidity(float $humidity = null): Weather
+    public function setHumidity(float $humidity = null): WeatherInterface
     {
         $this->humidity = $humidity;
 
@@ -265,7 +266,7 @@ class Weather
         return $this->weatherCode;
     }
 
-    public function setWeatherCode(int $weatherCode = null): Weather
+    public function setWeatherCode(int $weatherCode = null): WeatherInterface
     {
         $this->weatherCode = $weatherCode;
 
@@ -277,7 +278,7 @@ class Weather
         return $this->weather;
     }
 
-    public function setWeather(string $weather = null): Weather
+    public function setWeather(string $weather = null): WeatherInterface
     {
         $this->weather = $weather;
 
@@ -289,7 +290,7 @@ class Weather
         return $this->weatherDescription;
     }
 
-    public function setWeatherDescription(string $weatherDescription = null): Weather
+    public function setWeatherDescription(string $weatherDescription = null): WeatherInterface
     {
         $this->weatherDescription = $weatherDescription;
 
@@ -301,45 +302,45 @@ class Weather
         return $this->windSpeed;
     }
 
-    public function setWindSpeed(float $windSpeed = null): Weather
+    public function setWindSpeed(float $windSpeed = null): WeatherInterface
     {
         $this->windSpeed = $windSpeed;
 
         return $this;
     }
 
-    public function getWindDeg(): ?int
+    public function getWindDirection(): ?float
     {
-        return $this->windDeg;
+        return $this->windDirection;
     }
 
-    public function setWindDeg(int $windDeg = null): Weather
+    public function setWindDirection(float $windDirection = null): WeatherInterface
     {
-        $this->windDeg = $windDeg;
+        $this->windDirection = $windDirection;
 
         return $this;
     }
 
-    public function getClouds(): ?int
+    public function getClouds(): ?float
     {
         return $this->clouds;
     }
 
-    public function setClouds(int $clouds = null): Weather
+    public function setClouds(float $clouds = null): WeatherInterface
     {
         $this->clouds = $clouds;
 
         return $this;
     }
 
-    public function getRain(): ?float
+    public function getPrecipitation(): ?float
     {
-        return $this->rain;
+        return $this->precipitation;
     }
 
-    public function setRain(float $rain = null): Weather
+    public function setPrecipitation(float $precipitation = null): WeatherInterface
     {
-        $this->rain = $rain;
+        $this->precipitation = $precipitation;
 
         return $this;
     }
@@ -349,7 +350,7 @@ class Weather
         return $this->ride;
     }
 
-    public function setRide(Ride $ride = null): Weather
+    public function setRide(Ride $ride = null): WeatherInterface
     {
         $this->ride = $ride;
 
@@ -361,7 +362,7 @@ class Weather
         return $this->weatherIcon;
     }
 
-    public function setWeatherIcon(string $weatherIcon = null): Weather
+    public function setWeatherIcon(string $weatherIcon = null): WeatherInterface
     {
         $this->weatherIcon = $weatherIcon;
 

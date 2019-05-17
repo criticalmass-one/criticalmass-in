@@ -9,6 +9,7 @@ use App\Criticalmass\UploadValidator\UploadValidatorException\TrackValidatorExce
 use App\Criticalmass\UploadValidator\UploadValidatorException\TrackValidatorException\NoValidGpxStructureException;
 use App\Criticalmass\UploadValidator\UploadValidatorException\TrackValidatorException\NoXmlException;
 use Exception;
+use League\Flysystem\FilesystemInterface;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class TrackValidator implements UploadValidatorInterface
@@ -19,8 +20,8 @@ class TrackValidator implements UploadValidatorInterface
     /** @var UploaderHelper $uploaderHelper */
     protected $uploaderHelper;
 
-    /** @var string $uploadDestinationTrack */
-    protected $uploadDestinationTrack;
+    /** @var FilesystemInterface $filesystem */
+    protected $filesystem;
 
     /** @var \SimpleXMLElement $simpleXml */
     protected $simpleXml;
@@ -28,19 +29,19 @@ class TrackValidator implements UploadValidatorInterface
     /** @var string $rawFileContent */
     protected $rawFileContent;
 
-    public function __construct(UploaderHelper $uploaderHelper, $uploadDestinationTrack)
+    public function __construct(UploaderHelper $uploaderHelper, FilesystemInterface $filesystem)
     {
         $this->uploaderHelper = $uploaderHelper;
-        $this->uploadDestinationTrack = $uploadDestinationTrack;
+        $this->filesystem = $filesystem;
     }
 
     public function loadTrack(Track $track): TrackValidator
     {
         $this->track = $track;
 
-        $filename = sprintf('%s/../%s', $this->uploadDestinationTrack, $this->uploaderHelper->asset($track, 'trackFile'));
+        $filename = $this->uploaderHelper->asset($track, 'trackFile');
 
-        $this->rawFileContent = file_get_contents($filename);
+        $this->rawFileContent = $this->filesystem->get($filename);
 
         return $this;
     }

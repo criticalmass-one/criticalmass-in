@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Criticalmass\Geocoding\ReverseGeocodeable;
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
+use App\Criticalmass\Weather\EntityInterface\WeatherableInterface;
+use App\Criticalmass\Weather\EntityInterface\WeatherInterface;
 use App\EntityInterface\StaticMapableInterface;
 use Caldera\GeoBasic\Coord\Coord;
 use App\EntityInterface\AuditableInterface;
@@ -33,7 +35,7 @@ use App\Criticalmass\Sharing\Annotation as Sharing;
  * @Vich\Uploadable
  * @Routing\DefaultRoute(name="caldera_criticalmass_ride_show")
  */
-class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, Shareable, ReverseGeocodeable
+class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, Shareable, ReverseGeocodeable, WeatherableInterface
 {
     /**
      * @ORM\Id
@@ -53,6 +55,8 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     /**
      * @ORM\ManyToOne(targetEntity="CityCycle", inversedBy="rides", fetch="LAZY")
      * @ORM\JoinColumn(name="cycle_id", referencedColumnName="id")
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $cycle;
 
@@ -271,18 +275,28 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     protected $weathers;
 
     /**
-     * @Vich\UploadableField(mapping="ride_photo", fileNameProperty="imageName")
-     *
-     * @var File
+     * @var File $imageFile
+     * @Vich\UploadableField(mapping="ride_photo", fileNameProperty="imageName",  size="imageSize", mimeType="imageMimeType")
      */
-    private $imageFile;
+    protected $imageFile;
 
     /**
+     * @var string $imageName
      * @ORM\Column(type="string", length=255, nullable=true)
-     *
-     * @var string
      */
-    private $imageName;
+    protected $imageName;
+
+    /**
+     * @var int $imageSize
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $imageSize;
+
+    /**
+     * @var string $imageMimeType
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $imageMimeType;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -923,14 +937,14 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this;
     }
 
-    public function addWeather(Weather $weather): Ride
+    public function addWeather(WeatherInterface $weather): WeatherableInterface
     {
         $this->weathers->add($weather);
 
         return $this;
     }
 
-    public function removeWeather(Weather $weathers): Ride
+    public function removeWeather(WeatherInterface $weathers): WeatherableInterface
     {
         $this->weathers->removeElement($weathers);
 
@@ -942,7 +956,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->weathers;
     }
 
-    public function setWeathers(Collection $weathers): Ride
+    public function setWeathers(Collection $weathers): WeatherableInterface
     {
         $this->weathers = $weathers;
 
@@ -954,7 +968,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         $this->id = null;
     }
 
-    public function setImageFile(File $image = null): Ride
+    public function setImageFile(File $image = null): PhotoInterface
     {
         $this->imageFile = $image;
 
@@ -980,6 +994,30 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     public function getImageName(): ?string
     {
         return $this->imageName;
+    }
+
+    public function getImageSize(): ?int
+    {
+        return $this->imageSize;
+    }
+
+    public function setImageSize(int $imageSize): PhotoInterface
+    {
+        $this->imageSize = $imageSize;
+
+        return $this;
+    }
+
+    public function getImageMimeType(): ?string
+    {
+        return $this->imageMimeType;
+    }
+
+    public function setImageMimeType(string $imageMimeType): PhotoInterface
+    {
+        $this->imageMimeType = $imageMimeType;
+
+        return $this;
     }
 
     public function addSocialNetworkProfile(SocialNetworkProfile $socialNetworkProfile): Ride

@@ -11,6 +11,7 @@ use App\Criticalmass\Util\DateTimeUtil;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -45,9 +46,13 @@ class RideController extends BaseController
      * )
      * @ParamConverter("city", class="App:City")
      */
-    public function showCurrentAction(City $city): Response
+    public function showCurrentAction(Request $request, City $city): Response
     {
-        $ride = $this->getRideRepository()->findCurrentRideForCity($city);
+        $ride = $this->getRideRepository()->findCurrentRideForCity($city, (bool) $request->get('cycleMandatory', false), (bool) $request->get('slugsAllowd', true));
+
+        if (!$ride) {
+            return new JsonResponse([], 200, []); // @todo this should return 404, but i have no clue how to handle multiple jquery requests then
+        }
 
         $view = View::create();
         $view
