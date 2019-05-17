@@ -1,0 +1,30 @@
+hwi_oauth:
+    firewall_names: ['main']
+
+    fosub:
+        username_iterations: 30
+        properties:
+            facebook: facebookId
+            strava: stravaId
+            runkeeper: runkeeperId
+            twitter: twitterId
+
+    resource_owners:
+        facebook:
+            type:                facebook
+            client_id:           '%facebook.app_id%'
+            client_secret:       '%facebook.app_secret%'
+            scope:               email
+            infos_url:           https://graph.facebook.com/me?fields=id,name,email,first_name,last_name,gender
+        strava:
+            type:                strava
+            client_id:           '%strava.client_id%'
+            client_secret:       '%strava.secret%'
+        runkeeper:
+            type:                runkeeper
+            client_id:           '%runkeeper.client_id%'
+            client_secret:       '%runkeeper.secret%'
+        twitter:
+            type:                twitter
+            client_id:           '%twitter.client_id%'
+            client_secret:       '%twitter.secret%'

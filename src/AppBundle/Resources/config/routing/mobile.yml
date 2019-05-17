@@ -1,7 +1,0 @@
-caldera_criticalmass_multipage_index:
-    path: /
-    defaults: { _controller: CalderaCriticalmassMobileBundle:MultiPage:main }
-
-caldera_criticalmass_multipage_slugindex:
-    path: /{slug}
-    defaults: { _controller: CalderaCriticalmassMobileBundle:MultiPage:slugindex }

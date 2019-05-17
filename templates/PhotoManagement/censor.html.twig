@@ -1,0 +1,45 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Foto zensieren{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>
+                Foto zensieren
+            </h2>
+
+            <p class="lead">
+                Markiere mit der Maus auf dem Foto jene Bereiche, die du unkenntlich machen möchtest.
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <img id="photo" class="img-responsive" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}"/>
+        </div>
+    </div>
+
+    <div class="row margin-top-medium">
+        <div class="col-md-12">
+            <div class="btn-group pull-right" role="group">
+                <a href="javascript:window.location=document.referrer;" class="btn btn-default">
+                    Abbrechen
+                </a>
+                <button id="save" class="btn btn-primary">
+                    Speichern
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        CriticalMass.loadModule('PhotoCensorPage', null, null, function (page) {
+            page.setPhoto('{{ photo|serialize|raw|e('js') }}', '{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}');
+            page.init();
+        });
+    </script>
+</div>
+{% endblock %}
