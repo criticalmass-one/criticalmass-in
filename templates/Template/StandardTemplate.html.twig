@@ -11,7 +11,11 @@
         <div class="container pt-4">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item active" aria-current="page">Home</li>
+                    <li class="breadcrumb-item" aria-current="page">
+                        <a href="{{ path('caldera_criticalmass_frontpage') }}">
+                            Critical Mass
+                        </a>
+                    </li>
                 {% block breadcrumb %}{% endblock %}
                 </ol>
             </nav>
