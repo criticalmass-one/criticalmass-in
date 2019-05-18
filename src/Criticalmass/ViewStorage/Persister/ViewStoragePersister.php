@@ -2,8 +2,9 @@
 
 namespace App\Criticalmass\ViewStorage\Persister;
 
-use App\Criticalmass\View\ViewInterface\ViewableEntity;
-use App\Criticalmass\View\ViewInterface\ViewEntity;
+use App\Criticalmass\ViewStorage\ViewEntityFactory\ViewEntityFactory;
+use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
+use App\Criticalmass\ViewStorage\ViewInterface\ViewEntity;
 use App\Criticalmass\ViewStorage\ViewModel\View;
 use App\Entity\User;
 
@@ -23,19 +24,20 @@ class ViewStoragePersister extends AbstractViewStoragePersister
         return $this;
     }
 
-    public function storeView(View $view): ViewStoragePersisterInterface
+    public function storeView(View $view, bool $flush = false): ViewStoragePersisterInterface
     {
-        $viewEntity = $this->getView($view->getEntityClassName());
+        $user = $this->getUser($view->getUserId());
         $entity = $this->getEntity($view->getEntityClassName(), $view->getEntityId());
-        $viewSetEntityMethod = sprintf('set%s', $view->getEntityClassName());
 
-        $viewEntity->$viewSetEntityMethod($entity);
-        $viewEntity->setUser($this->getUser($view->getUserId()));
-        $viewEntity->setDateTime($view->getDateTime());
+        $viewEntity = ViewEntityFactory::createViewEntity($view, $entity, $user);
 
         $entity->incViews();
 
         $this->registry->getManager()->persist($viewEntity);
+
+        if ($flush) {
+            $this->registry->getManager()->flush();
+        }
 
         return $this;
     }

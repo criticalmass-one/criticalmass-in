@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Tests\RideGenerator;
+namespace App\Criticalmass\ViewStorage\Tests;
 
 use App\Criticalmass\ViewStorage\Tests\TestClass;
 use App\Criticalmass\ViewStorage\ViewModel\View;
