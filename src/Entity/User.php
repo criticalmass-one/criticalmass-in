@@ -182,6 +182,13 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         $this->bikerightVouchers = new ArrayCollection();
     }
 
+    public function setId(int $id): User
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
