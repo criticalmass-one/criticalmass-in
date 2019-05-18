@@ -3,7 +3,7 @@
 namespace App\Criticalmass\ViewStorage\ViewModel;
 
 use App\Criticalmass\Util\ClassUtil;
-use App\Criticalmass\View\ViewInterface\ViewableEntity;
+use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class ViewFactory

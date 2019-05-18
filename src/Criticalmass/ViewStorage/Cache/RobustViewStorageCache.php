@@ -2,8 +2,8 @@
 
 namespace App\Criticalmass\ViewStorage\Cache;
 
-use App\Criticalmass\View\ViewInterface\ViewableEntity;
 use App\Criticalmass\ViewStorage\Persister\ViewStoragePersisterInterface;
+use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\Criticalmass\ViewStorage\ViewModel\ViewFactory;
 use JMS\Serializer\SerializerInterface;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
