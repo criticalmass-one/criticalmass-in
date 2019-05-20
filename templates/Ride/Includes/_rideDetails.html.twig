@@ -17,7 +17,7 @@
                     {% endif %}
                     <div itemprop="location" itemscope itemtype="http://schema.org/Place">
                         <dt>Treffpunkt</dt>
-                        {% if ride.hasLocation() and ride.location %}
+                        {% if ride.location and ride.latitude and ride.longitude %}
                             {% if location %}
                                 <dd itemprop="name">
                                     <a href="{{ objectPath(ride, 'caldera_criticalmass_location_ride') }}">
