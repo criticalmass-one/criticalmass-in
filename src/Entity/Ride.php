@@ -120,6 +120,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      * @JMS\Type("boolean")
+     * @deprecated
      */
     protected $hasTime = false;
 
@@ -128,6 +129,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      * @JMS\Type("boolean")
+     * @deprecated
      */
     protected $hasLocation = false;
 
@@ -371,6 +373,9 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->dateTime->format('Y-m-d');
     }
 
+    /**
+     * @deprecated
+     */
     public function setHasTime(bool $hasTime): Ride
     {
         $this->hasTime = $hasTime;
@@ -378,11 +383,17 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function getHasTime(): bool
     {
         return $this->hasTime;
     }
 
+    /**
+     * @deprecated
+     */
     public function setHasLocation(bool $hasLocation): Ride
     {
         $this->hasLocation = $hasLocation;
@@ -390,6 +401,9 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function getHasLocation(): bool
     {
         return $this->hasLocation;
