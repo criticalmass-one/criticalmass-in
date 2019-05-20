@@ -9,10 +9,8 @@ define(['Map', 'LocationMarker', 'typeahead.jquery', 'bloodhound', 'bootstrap-da
         citySlug: 'hamburg',
         rideLatitudeInputSelector: '#ride_latitude',
         rideLongitudeInputSelector: '#ride_longitude',
-        rideHasLocationInputSelector: '#ride_hasLocation',
         rideLocationInputSelector: '#ride_location',
         rideDateSelector: '#ride_dateTime_date',
-        rideHasTimeInputSelector: '#ride_hasTime',
         messageDoubleMonthRideSelector: '#doubleMonthRide',
         messageDoubleDayRideSelector: '#doubleDayRide',
         submitButtonSelector: '#rideSubmitButton',
@@ -40,18 +38,6 @@ define(['Map', 'LocationMarker', 'typeahead.jquery', 'bloodhound', 'bootstrap-da
         this.cityLatLng = cityLatLng;
     };
 
-    EditRidePage.prototype._toggleLocationInput = function () {
-
-        $(this.settings.rideLocationInputSelector).prop('disabled', !$(this.settings.rideHasLocationInputSelector).prop('checked'));
-    };
-
-    EditRidePage.prototype._toggleTimeInput = function () {
-        var $hasTimeInput = $(this.settings.rideHasTimeInputSelector);
-
-        $(this.settings.rideTimeMinuteInputSelector).prop('disabled', !$hasTimeInput.prop('checked'));
-        $(this.settings.rideTimeHourInputSelector).prop('disabled', !$hasTimeInput.prop('checked'));
-    };
-
     EditRidePage.prototype.init = function () {
         this._initLatLngs();
         this._initMap();
@@ -65,20 +51,9 @@ define(['Map', 'LocationMarker', 'typeahead.jquery', 'bloodhound', 'bootstrap-da
     EditRidePage.prototype._initEventListeners = function () {
         var that = this;
 
-        function toggleLocationFunction() {
-            that._toggleLocationInput.call(that, this)
-        }
-
-        function toggleTimeFunction() {
-            that._toggleTimeInput.call(that, this)
-        }
-
         function checkFunction() {
             that._checkRideDate.call(that, this);
         }
-
-        $(this.settings.rideHasLocationInputSelector).on('click', toggleLocationFunction);
-        $(this.settings.rideHasTimeInputSelector).on('click', toggleTimeFunction);
 
         $(this.settings.rideDateSelector).on('change', checkFunction);
     };
@@ -118,20 +93,7 @@ define(['Map', 'LocationMarker', 'typeahead.jquery', 'bloodhound', 'bootstrap-da
     EditRidePage.prototype._initLocationMarker = function () {
         var that = this;
 
-        if ($(this.settings.rideHasLocationInputSelector).prop('checked')) {
-            this._addStandardLocationMarker();
-        }
-
-        $(this.settings.rideHasLocationInputSelector).on('click', function () {
-            if ($(this).prop('checked')) {
-                that._addStandardLocationMarker();
-                //$(that.settings.cityIsLocationInputSelector).prop('disabled', '');
-            }
-            else {
-                that._removeStandardLocationMarker();
-                //$(that.settings.cityIsLocationInputSelector).prop('disabled', 'disabled');
-            }
-        });
+        this._addStandardLocationMarker();
     };
 
     EditRidePage.prototype._addStandardLocationMarker = function () {
