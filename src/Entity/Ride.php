@@ -116,24 +116,6 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     protected $dateTime;
 
     /**
-     * @ORM\Column(type="boolean")
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
-     * @JMS\Type("boolean")
-     * @deprecated
-     */
-    protected $hasTime = false;
-
-    /**
-     * @ORM\Column(type="boolean")
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
-     * @JMS\Type("boolean")
-     * @deprecated
-     */
-    protected $hasLocation = false;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
@@ -371,42 +353,6 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     public function getSimpleDate(): string
     {
         return $this->dateTime->format('Y-m-d');
-    }
-
-    /**
-     * @deprecated
-     */
-    public function setHasTime(bool $hasTime): Ride
-    {
-        $this->hasTime = $hasTime;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function getHasTime(): bool
-    {
-        return $this->hasTime;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function setHasLocation(bool $hasLocation): Ride
-    {
-        $this->hasLocation = $hasLocation;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function getHasLocation(): bool
-    {
-        return $this->hasLocation;
     }
 
     public function setLocation(string $location = null): ReverseGeocodeable
