@@ -308,7 +308,6 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     {
         $this->dateTime = new \DateTime();
         $this->createdAt = new \DateTime();
-        $this->expectedStartDateTime = new \DateTime();
 
         $this->weathers = new ArrayCollection();
         $this->estimates = new ArrayCollection();
