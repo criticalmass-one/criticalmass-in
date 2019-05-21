@@ -21,6 +21,7 @@
             </div>
         </div>
 
+        {% if item.ride.latitude and item.ride.longitude %}
         <div class="row">
             <div class="col-md-12">
                 <div id="map-{{ item.uniqId }}" style="height: 150px;"
@@ -36,9 +37,10 @@
                 ></div>
             </div>
         </div>
+
+        <script type="text/javascript">
+            CriticalMass.loadModule('AutoMap', 'map-{{ item.uniqId }}');
+        </script>
+        {% endif %}
     </div>
 </div>
-
-<script type="text/javascript">
-    CriticalMass.loadModule('AutoMap', 'map-{{ item.uniqId }}');
-</script>
