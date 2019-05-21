@@ -21,6 +21,7 @@
             </div>
         </div>
 
+        {% if item.polyline %}
         <div class="row">
             <div class="col-12">
                 <div id="map-{{ item.uniqId }}"
@@ -32,6 +33,7 @@
                 </div>
             </div>
         </div>
+        {% endif %}
 
         <div class="row">
             <div class="col-4">
