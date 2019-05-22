@@ -31,7 +31,7 @@ class CalendarController extends AbstractController
             'DESCRIPTION' => $ride->getDescription(),
         ];
 
-        if ($ride->getHasLocation() && $ride->getLocation() && $ride->getLatitude() && $ride->getLongitude()) {
+        if ($ride->getLocation() && $ride->getLatitude() && $ride->getLongitude()) {
             $vevent['LOCATION'] = $ride->getLocation();
             $vevent['GEO'] = sprintf('%f;%f', $ride->getLatitude(), $ride->getLongitude());
         }
