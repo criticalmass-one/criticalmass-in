@@ -15,15 +15,17 @@ class CalendarController extends AbstractController
      */
     public function icalAction(Ride $ride, RideIcalGenerator $rideIcalGenerator): Response
     {
-        $filename = sprintf('%s.ics', $ride->getTitle());
-        
-        $content = $rideIcalGenerator->getSerializedContent();
+        $content = $rideIcalGenerator
+            ->generateForRide($ride)
+            ->getSerializedContent();
 
         $response = new Response($content);
 
+        $filename = sprintf('%s.ics', $ride->getTitle());
+
         $response->headers->set('Cache-Control', 'private');
         $response->headers->set('Content-type', 'text/calendar');
-        $response->headers->set('Content-Disposition', 'attachment; filename="' . $filename . '";');
+        $response->headers->set('Content-Disposition', sprintf('attachment; filename="%s";', $filename));
         $response->headers->set('Content-length', strlen($content));
 
         return $response;

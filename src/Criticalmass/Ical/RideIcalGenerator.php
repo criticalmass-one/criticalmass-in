@@ -27,8 +27,11 @@ class RideIcalGenerator extends AbstractIcalGenerator
             $vevent['DTEND'] = $endDateTime;
         }
 
-        if ($ride->getHasLocation() && $ride->getLocation() && $ride->getLatitude() && $ride->getLongitude()) {
+        if ($ride->getLocation()) {
             $vevent['LOCATION'] = $ride->getLocation();
+        }
+
+        if ($ride->getLatitude() && $ride->getLongitude()) {
             $vevent['GEO'] = sprintf('%f;%f', $ride->getLatitude(), $ride->getLongitude());
         }
 
