@@ -55,7 +55,7 @@
                         Treffpunkt:
                     </dt>
                     <dd>
-                        {% if track.ride.getHasLocation and track.ride.location %}
+                        {% if track.ride.location and track.ride.latitude and track.ride.longitude %}
                             {{ track.ride.location }}
                         {% else %}
                             nicht bekannt

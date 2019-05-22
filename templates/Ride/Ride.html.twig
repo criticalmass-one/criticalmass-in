@@ -68,7 +68,7 @@
     };
 
     CriticalMass.loadModule('RidePage', null, pageOptions, function (ridePage) {
-        {% if ride.getHasLocation() and ride.latitude != 0 and ride.getLongitude != 0 %}
+        {% if ride.location and ride.latitude and ride.longitude and ride.latitude != 0 and ride.getLongitude != 0 %}
         ridePage.addRide('{{ ride|serialize|raw|e('js') }}');
         {% else %}
         ridePage.addCity('{{ city|serialize|raw|e('js') }}');

@@ -38,8 +38,8 @@ abstract class AbstractWeatherForecastRetriever implements WeatherForecastRetrie
 
     protected function getLatLng(Ride $ride): array
     {
-        if ($ride->getHasLocation() && $ride->getCoord()) {
-            $ride->getCoord()->toLatLonArray();
+        if ($ride->getLocation() && $ride->getCoord()) {
+            return $ride->getCoord()->toLatLonArray();
         }
 
         return $ride->getCity()->getCoord()->toLatLonArray();

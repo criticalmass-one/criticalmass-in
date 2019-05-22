@@ -4,7 +4,6 @@ namespace App\Form\Type;
 
 use App\Entity\Ride;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -36,8 +35,6 @@ class RideType extends AbstractType
             ->add('location', TextType::class, ['required' => false])
             ->add('latitude', HiddenType::class, ['required' => false])
             ->add('longitude', HiddenType::class, ['required' => false])
-            ->add('hasLocation', CheckboxType::class, ['required' => false])
-            ->add('hasTime', CheckboxType::class, ['required' => false])
             ->add('save', SubmitType::class);
     }
 
