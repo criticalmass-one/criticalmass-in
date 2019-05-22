@@ -8,10 +8,15 @@ class RideIcalGenerator extends AbstractIcalGenerator
 {
     public function generateForRide(Ride $ride): RideIcalGenerator
     {
-        $vevent = [
-            'SUMMARY' => $ride->getTitle(),
-            'DESCRIPTION' => $ride->getDescription(),
-        ];
+        $vevent = [];
+
+        if ($ride->getTitle()) {
+            $vevent['SUMMARY'] = $ride->getTitle();
+        }
+
+        if ($ride->getDescription()) {
+            $vevent['DESCRIPTION'] = $ride->getDescription();
+        }
 
         if ($ride->getDateTime()) {
             $timezone = $this->retrieveTimezone($ride);
