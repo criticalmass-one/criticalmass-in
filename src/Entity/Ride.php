@@ -332,14 +332,14 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this;
     }
 
-    public function setDateTime(\DateTime $dateTime): Ride
+    public function setDateTime(\DateTime $dateTime = null): Ride
     {
         $this->dateTime = $dateTime;
 
         return $this;
     }
 
-    public function getDateTime(): \DateTime
+    public function getDateTime(): ?\DateTime
     {
         return $this->dateTime;
     }
