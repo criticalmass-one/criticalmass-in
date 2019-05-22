@@ -10,14 +10,14 @@
                     <dd itemprop="startDate" content="{{ ride.dateTime|date('Y-m-dTH:i') }}">{{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}</dd>
                     <meta itemprop="endDate" content="{{ date_time_add(ride.dateTime, 'PT2H')|date('Y-m-dTH:i') }}" />
                     <dt>Uhrzeit</dt>
-                    {% if ride.hasTime %}
+                    {% if ride.dateTime %}
                         <dd>{{ ride.dateTime|date('H:i', ride.city.timezone) }} Uhr</dd>
                     {% else %}
                         <dd>die Uhrzeit ist noch nicht bekannt</dd>
                     {% endif %}
                     <div itemprop="location" itemscope itemtype="http://schema.org/Place">
                         <dt>Treffpunkt</dt>
-                        {% if ride.hasLocation() and ride.location %}
+                        {% if ride.location and ride.latitude and ride.longitude %}
                             {% if location %}
                                 <dd itemprop="name">
                                     <a href="{{ objectPath(ride, 'caldera_criticalmass_location_ride') }}">
@@ -59,7 +59,7 @@
                     {% endif %}
                 </dl>
 
-                {% if ride.hasTime %}
+                {% if ride.dateTime %}
                     <p class="text-center">
                         <a href="{{ objectPath(ride, 'caldera_criticalmass_ride_ical') }}" class="btn btn-success">
                             <i class="fa fa-calendar"></i>
