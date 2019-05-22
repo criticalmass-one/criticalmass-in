@@ -15,7 +15,6 @@ class CalendarController extends AbstractController
      */
     public function icalAction(Ride $ride, RideIcalGenerator $rideIcalGenerator): Response
     {
-
         $filename = sprintf('%s.ics', $ride->getTitle());
         
         $content = $rideIcalGenerator->getSerializedContent();
