@@ -33,7 +33,7 @@ class RideIcalGenerator extends AbstractIcalGenerator
         }
 
         if ($uid = $this->generateUid($ride)) {
-            $vevent->UID = $uid;
+            $vevent['UID'] = $uid;
         }
 
         $this->calendar->VEVENT = $vevent;
