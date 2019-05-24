@@ -82,7 +82,14 @@
 
     {% set li_attr = { class: 'nav-item' } %}
 
-    {% set a_attr = { 'data-toggle': 'tab', role: 'tab', id: item.href ~ '-tab', href: '#' ~ item.href, 'aria-controls': item.href } %}
+    {% if item.tab is defined and item.tab %}
+    {% set a_attr = { 'data-toggle': 'tab', role: 'tab', id: item.tab ~ '-tab', href: '#' ~ item.tab, 'aria-controls': item.tab } %}
+    {% elseif item.href is defined and item.href %}
+    {% set a_attr = { href: item.href } %}
+    {% else %}
+    {% set a_attr = { 'data-toggle': 'tab', role: 'tab' } %}
+    {% endif %}
+
     {% set a_class = ['nav-link'] %}
 
     {% if item.active is defined and item.active == true %}
