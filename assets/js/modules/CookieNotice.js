@@ -11,6 +11,7 @@ define(['cookie.notice'], function () {
             'noticeBgColor': '#000',
             'noticeTextColor': '#fff',
             'linkColor':'#fff',
+            'fontSize': '1em',
             'buttonLocales': {
                 'de': 'Einverstanden'
             },
