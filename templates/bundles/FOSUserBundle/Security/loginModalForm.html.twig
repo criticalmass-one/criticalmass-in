@@ -39,6 +39,15 @@
             </div>
 
             <div class="row">
+                <div class="col-12">
+                    <button type="submit" id="_submit" name="_submit" class="btn btn-primary pull-right">
+                        <i class="fa fa-bicycle"></i>
+                        Anmelden
+                    </button>
+                </div>
+            </div>
+
+            <div class="row mt-2">
                 <div class="col-12 text-center">
                     <p>
                         Oder logge dich über eines dieser Netzwerke ein:
@@ -75,26 +84,17 @@
             </div>
         </div>
 
-        <div class="modal-footer">
-            <div class="row">
-                <div class="col-4">
-                    <a href="{{ path('fos_user_registration_register') }}">
-                        Jetzt Registrieren?
-                    </a>
-                </div>
+        <div class="modal-footer text-muted row">
+            <div class="col-6">
+                <a href="{{ path('fos_user_registration_register') }}">
+                    Jetzt Registrieren?
+                </a>
+            </div>
 
-                <div class="col-4">
-                    <a href="{{ path('fos_user_resetting_request') }}">
-                        Kennwort vergessen?
-                    </a>
-                </div>
-
-                <div class="col-4">
-                    <button type="submit" id="_submit" name="_submit" class="btn btn-primary pull-right">
-                        <i class="fa fa-bicycle"></i>
-                        Anmelden
-                    </button>
-                </div>
+            <div class="col-6">
+                <a href="{{ path('fos_user_resetting_request') }}">
+                    Kennwort vergessen?
+                </a>
             </div>
         </div>
     </div>
