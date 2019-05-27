@@ -105,7 +105,9 @@ class TrackRepository extends EntityRepository
             ->andWhere($builder->expr()->eq('t.enabled', ':enabled'))
             ->setParameter('enabled', true)
             ->andWhere($builder->expr()->eq('t.deleted', ':deleted'))
-            ->setParameter('deleted', false);
+            ->setParameter('deleted', false)
+            ->andWhere($builder->expr()->isNotNull('t.polyline'))
+            ->andWhere($builder->expr()->isNotNull('t.reducedPolyline'));
 
         if ($startDateTime) {
             $builder
