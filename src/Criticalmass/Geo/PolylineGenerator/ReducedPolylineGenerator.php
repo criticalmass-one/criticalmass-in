@@ -1,13 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\Gps\PolylineGenerator;
+namespace App\Criticalmass\Geo\PolylineGenerator;
 
 use PointReduction\Algorithms\RadialDistance;
 use PointReduction\Common\Point;
 
-/**
- * @deprecated
- */
 class ReducedPolylineGenerator extends AbstractPolylineGenerator
 {
     public function execute(float $tolerance = 0.005): PolylineGeneratorInterface

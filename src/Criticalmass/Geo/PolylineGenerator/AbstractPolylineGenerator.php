@@ -1,13 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\Gps\PolylineGenerator;
+namespace App\Criticalmass\Geo\PolylineGenerator;
 
 use App\Entity\Track;
-use App\Criticalmass\Gps\GpxReader\TrackReader;
+use App\Criticalmass\Geo\GpxReader\TrackReader;
 
-/**
- * @deprecated
- */
 abstract class AbstractPolylineGenerator implements PolylineGeneratorInterface
 {
     /** @var Track $track */
