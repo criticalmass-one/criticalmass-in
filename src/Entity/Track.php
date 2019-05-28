@@ -506,7 +506,7 @@ class Track implements RouteableInterface, StaticMapableInterface, TrackInterfac
         return $this->trackSize;
     }
 
-    public function setTrackSize(int $trackSize): Track
+    public function setTrackSize(int $trackSize = null): Track
     {
         $this->trackSize = $trackSize;
 
@@ -518,7 +518,7 @@ class Track implements RouteableInterface, StaticMapableInterface, TrackInterfac
         return $this->trackMimeType;
     }
 
-    public function setTrackMimeType(string $trackMimeType): Track
+    public function setTrackMimeType(string $trackMimeType = null): Track
     {
         $this->trackMimeType = $trackMimeType;
 
