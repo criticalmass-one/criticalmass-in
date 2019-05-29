@@ -2,11 +2,9 @@
 
 namespace App\Criticalmass\Geo\PolylineGenerator;
 
-use App\Entity\Track;
+use App\Criticalmass\Geo\PositionList\PositionList;
 
 interface PolylineGeneratorInterface
 {
-    public function loadTrack(Track $track): PolylineGeneratorInterface;
-    public function execute(): PolylineGeneratorInterface;
-    public function getPolyline(): string;
+    public function execute(PositionList $positionList): string;
 }

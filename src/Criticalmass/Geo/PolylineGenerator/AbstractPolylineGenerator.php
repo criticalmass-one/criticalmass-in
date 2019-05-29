@@ -2,41 +2,17 @@
 
 namespace App\Criticalmass\Geo\PolylineGenerator;
 
-use App\Entity\Track;
-use App\Criticalmass\Geo\GpxReader\TrackReader;
+use App\Criticalmass\Geo\PolylineGenerator\PolylineStrategy\PolylineStrategyInterface;
 
 abstract class AbstractPolylineGenerator implements PolylineGeneratorInterface
 {
-    /** @var Track $track */
-    protected $track;
+    /** @var PolylineStrategyInterface $polylineStrategy */
+    protected $polylineStrategy;
 
-    /** @var string $polyline */
-    protected $polyline = null;
-
-    /** @var TrackReader $trackReader */
-    protected $trackReader;
-
-    /** @var int $gapWidth */
-    protected $gapWidth;
-
-    public function __construct(TrackReader $trackReader, int $gapWidth)
+    public function setStrategy(PolylineStrategyInterface $polylineStrategy): PolylineGeneratorInterface
     {
-        $this->trackReader = $trackReader;
-
-        $this->gapWidth = $gapWidth;
-    }
-
-    public function loadTrack(Track $track): PolylineGeneratorInterface
-    {
-        $this->track = $track;
-
-        $this->trackReader->loadTrack($this->track);
+        $this->polylineStrategy = $polylineStrategy;
 
         return $this;
-    }
-
-    public function getPolyline(): string
-    {
-        return $this->polyline;
     }
 }

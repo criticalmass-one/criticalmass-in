@@ -2,16 +2,15 @@
 
 namespace App\Criticalmass\Geo\PolylineGenerator;
 
+use App\Criticalmass\Geo\Converter\PositionListToPointListConverter;
+use App\Criticalmass\Geo\PositionList\PositionList;
+
 class PolylineGenerator extends AbstractPolylineGenerator
 {
-    public function execute(): PolylineGeneratorInterface
+    public function execute(PositionList $positionList): string
     {
-        $list = $this->trackReader->slicePublicCoords();
+        $pointList = PositionListToPointListConverter::convert($positionList);
 
-        $polyline = \Polyline::Encode($list);
-
-        $this->polyline = $polyline;
-
-        return $this;
+        return $this->polylineStrategy->generate($pointList);
     }
 } 
