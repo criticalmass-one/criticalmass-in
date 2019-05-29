@@ -27,4 +27,16 @@ class PolylineStrategyTest extends TestCase
 
         $this->assertEquals('_y{zI_c`|@?~hbE~hbE??_ibE', $polyline);
     }
+
+    public function testPolylineGeneratorWithEmptyPositionList(): void
+    {
+        $positionList = new PositionList();
+
+        $polylineGenerator = new PolylineGenerator();
+        $polyline = $polylineGenerator
+            ->setStrategy(new FullPolylineStrategy())
+            ->execute($positionList);
+
+        $this->assertEquals('', $polyline);
+    }
 }
