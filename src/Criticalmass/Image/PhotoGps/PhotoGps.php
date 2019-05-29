@@ -56,8 +56,8 @@ class PhotoGps extends AbstractPhotoGps
                 list($lat, $lon) = explode(',', $gps);
 
                 $gps = [
-                    'lat' => $lat,
-                    'lon' => $lon,
+                    'lat' => (float) $lat,
+                    'lon' => (float) $lon,
                 ];
             }
 
