@@ -10,22 +10,11 @@ class TrackReader extends GpxReader
     /** @var Track $track */
     protected $track;
 
-    /** @var string $uploadDestination */
-    protected $uploadDestination;
-
-    public function __construct(string $uploadDestination)
-    {
-        $this->uploadDestination = $uploadDestination;
-
-        parent::__construct();
-    }
-
     public function loadTrack(Track $track): TrackReader
     {
         $this->track = $track;
-        $filename = sprintf('%s%s', $this->uploadDestination, $track->getTrackFilename());
 
-        $this->loadFromFile($filename);
+        $this->loadFromFile($track->getTrackFilename());
 
         return $this;
     }

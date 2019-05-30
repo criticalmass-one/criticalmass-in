@@ -3,7 +3,7 @@
 namespace App\Criticalmass\Geo\TrackPolylineHandler;
 
 use App\Criticalmass\Geo\Converter\TrackToPositionListConverter;
-use App\Criticalmass\Geo\Entity\Track;
+use App\Entity\Track;
 use App\Criticalmass\Geo\PolylineGenerator\PolylineGenerator;
 use App\Criticalmass\Geo\PolylineGenerator\PolylineGeneratorInterface;
 use App\Criticalmass\Geo\PolylineGenerator\PolylineStrategy\FullPolylineStrategy;
