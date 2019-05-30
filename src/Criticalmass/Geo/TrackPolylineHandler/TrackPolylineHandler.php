@@ -30,7 +30,7 @@ class TrackPolylineHandler implements TrackPolylineHandlerInterface
 
         $track
             ->setPolyline($this->generateFullPolyline($positionList))
-            ->setPreviewPolyline($this->generateReducedPolyline($positionList));
+            ->setReducedPolyline($this->generateReducedPolyline($positionList));
 
         return $track;
     }

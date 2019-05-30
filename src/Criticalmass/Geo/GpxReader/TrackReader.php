@@ -2,8 +2,7 @@
 
 namespace App\Criticalmass\Geo\GpxReader;
 
-use Caldera\GeoBundle\Entity\Track;
-use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
+use App\Entity\Track;
 
 class TrackReader extends GpxReader
 {
