@@ -57,7 +57,7 @@ class UrlGenerator extends AbstractUrlGenerator
 
             /** @var Track $track */
             foreach ($ride->getTracks() as $track) {
-                if (!$track->getEnabled() || $track->getDeleted()) {
+                if (!$track->getEnabled() || $track->getDeleted() || !$track->getReducedPolyline()) {
                     continue;
                 }
 
