@@ -19,6 +19,8 @@ class TrackToPositionListConverter
 
     public function convert(Track $track): PositionListInterface
     {
+        $this->trackReader->loadTrack($track);
+        
         $positionList = new PositionList();
 
         for ($n = 0; $n < $this->trackReader->countPoints(); ++$n) {
