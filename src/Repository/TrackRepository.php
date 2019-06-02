@@ -165,6 +165,8 @@ class TrackRepository extends EntityRepository
         $builder
             ->join('t.ride', 'r')
             ->where($builder->expr()->eq('t.user', ':user'))
+            ->andWhere($builder->expr()->isNotNull('t.polyline'))
+            ->andWhere($builder->expr()->isNotNull('t.reducedPolyline'))
             ->setParameter('user', $user)
             ->orderBy('r.dateTime', $order);
 
