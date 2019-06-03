@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\Geo\GpxReader;
 
-use App\Entity\Track;
+use App\Criticalmass\Geo\Entity\Track;
 
 class TrackReader extends GpxReader
 {

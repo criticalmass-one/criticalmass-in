@@ -16,8 +16,7 @@ class CalculatorTest extends TestCase
 
         $positionList
             ->add(new Position(53.550556, 9.993333))
-            ->add(new Position(52.518611, 13.408333))
-        ;
+            ->add(new Position(52.518611, 13.408333));
 
         return $positionList;
     }

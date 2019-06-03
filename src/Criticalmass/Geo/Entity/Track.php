@@ -67,7 +67,7 @@ class Track extends BaseTrack implements TrackInterface
     protected $previewPolyline;
 
     /**
-     * @Vich\UploadableField(mapping="track_file", fileNameProperty="trackFilename")
+     * @Vich\UploadableField(mapping="track_file", fileNameProperty="trackFilename", size="trackSize", mimeType="trackMimeType")
      */
     protected $trackFile;
 
@@ -75,6 +75,16 @@ class Track extends BaseTrack implements TrackInterface
      * @ORM\Column(type="string", length=255)
      */
     protected $trackFilename;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $trackSize;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $trackMimeType;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)

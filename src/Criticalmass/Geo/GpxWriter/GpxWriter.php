@@ -3,6 +3,7 @@
 namespace App\Criticalmass\Geo\GpxWriter;
 
 use App\Criticalmass\Geo\EntityInterface\PositionInterface;
+use App\Criticalmass\Geo\PositionList\PositionList;
 use App\Criticalmass\Geo\PositionList\PositionListInterface;
 
 class GpxWriter implements GpxWriterInterface
@@ -14,7 +15,7 @@ class GpxWriter implements GpxWriterInterface
     protected $gpxAttributes = [];
 
     /** @var string $gpxContent */
-    protected $gpxContent = null;
+    protected $gpxContent = '';
 
     /** @var \XMLWriter $writer */
     protected $writer;
@@ -22,6 +23,7 @@ class GpxWriter implements GpxWriterInterface
     public function __construct()
     {
         $this->writer = new \XMLWriter();
+        $this->positionList = new PositionList();
     }
 
     public function setPositionList(PositionListInterface $positionList): GpxWriterInterface
@@ -57,7 +59,7 @@ class GpxWriter implements GpxWriterInterface
         return $this;
     }
 
-    public function generateGpxContent(): void
+    public function generateGpxContent(): GpxWriterInterface
     {
         $this->writer->openMemory();
         $this->writer->startDocument('1.0');
@@ -86,6 +88,8 @@ class GpxWriter implements GpxWriterInterface
         $this->gpxContent = $this->writer->outputMemory(true);
 
         $this->writer->flush();
+
+        return $this;
     }
 
     protected function generateGpxAttributes(): GpxWriterInterface
@@ -99,17 +103,23 @@ class GpxWriter implements GpxWriterInterface
 
     protected function generateGpxMetadata(): GpxWriterInterface
     {
-        if (count($this->positionList) > 0) {
-            $this->writer->startElement('metadata');
-            $this->writer->startElement('time');
-
-            /** @var \DateTime $dateTime */
-            $dateTime = $this->positionList->get(0)->getDateTime();
-            $this->writer->text($dateTime->format('Y-m-d') . 'T' . $dateTime->format('H:i:s') . 'Z');
-
-            $this->writer->endElement();
-            $this->writer->endElement();
+        if (count($this->positionList) === 0) {
+            return $this;
         }
+
+        if (!$this->positionList->get(0)->getDateTime()) {
+            return $this;
+        }
+
+        $this->writer->startElement('metadata');
+        $this->writer->startElement('time');
+
+        /** @var \DateTime $dateTime */
+        $dateTime = $this->positionList->get(0)->getDateTime();
+        $this->writer->text($dateTime->format('Y-m-d') . 'T' . $dateTime->format('H:i:s') . 'Z');
+
+        $this->writer->endElement();
+        $this->writer->endElement();
 
         return $this;
     }
