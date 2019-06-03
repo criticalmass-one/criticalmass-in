@@ -122,6 +122,9 @@ class GpxReader implements GpxReaderInterface
         return $this->trackPointList[$n];
     }
 
+    /**
+     * @deprecated Use GpxPointToPositionConverter instead
+     */
     public function createPosition(int $n): PositionInterface
     {
         /** @var PositionInterface $position */
@@ -138,6 +141,9 @@ class GpxReader implements GpxReaderInterface
         return $position;
     }
 
+    /**
+     * @deprecated
+     */
     public function createPositionList(): PositionListInterface
     {
         $positionList = new PositionList();

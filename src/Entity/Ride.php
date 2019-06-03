@@ -116,22 +116,6 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     protected $dateTime;
 
     /**
-     * @ORM\Column(type="boolean")
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
-     * @JMS\Type("boolean")
-     */
-    protected $hasTime = false;
-
-    /**
-     * @ORM\Column(type="boolean")
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
-     * @JMS\Type("boolean")
-     */
-    protected $hasLocation = false;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
@@ -308,9 +292,6 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     {
         $this->dateTime = new \DateTime();
         $this->createdAt = new \DateTime();
-        $this->visibleSince = new \DateTime();
-        $this->visibleUntil = new \DateTime();
-        $this->expectedStartDateTime = new \DateTime();
 
         $this->weathers = new ArrayCollection();
         $this->estimates = new ArrayCollection();
@@ -351,14 +332,14 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this;
     }
 
-    public function setDateTime(\DateTime $dateTime): Ride
+    public function setDateTime(\DateTime $dateTime = null): Ride
     {
         $this->dateTime = $dateTime;
 
         return $this;
     }
 
-    public function getDateTime(): \DateTime
+    public function getDateTime(): ?\DateTime
     {
         return $this->dateTime;
     }
@@ -369,30 +350,6 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     public function getSimpleDate(): string
     {
         return $this->dateTime->format('Y-m-d');
-    }
-
-    public function setHasTime(bool $hasTime): Ride
-    {
-        $this->hasTime = $hasTime;
-
-        return $this;
-    }
-
-    public function getHasTime(): bool
-    {
-        return $this->hasTime;
-    }
-
-    public function setHasLocation(bool $hasLocation): Ride
-    {
-        $this->hasLocation = $hasLocation;
-
-        return $this;
-    }
-
-    public function getHasLocation(): bool
-    {
-        return $this->hasLocation;
     }
 
     public function setLocation(string $location = null): ReverseGeocodeable
@@ -1001,7 +958,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->imageSize;
     }
 
-    public function setImageSize(int $imageSize): PhotoInterface
+    public function setImageSize(int $imageSize = null): PhotoInterface
     {
         $this->imageSize = $imageSize;
 
@@ -1013,7 +970,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->imageMimeType;
     }
 
-    public function setImageMimeType(string $imageMimeType): PhotoInterface
+    public function setImageMimeType(string $imageMimeType = null): PhotoInterface
     {
         $this->imageMimeType = $imageMimeType;
 

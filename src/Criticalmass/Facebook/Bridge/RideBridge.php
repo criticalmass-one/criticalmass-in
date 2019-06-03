@@ -39,25 +39,13 @@ class RideBridge extends AbstractBridge
         if ($place) {
             $location = $place->getLocation();
 
-            $ride
-                ->setHasLocation(true)
-                ->setLocation($place->getName());
+            $ride->setLocation($place->getName());
 
             if ($location) {
                 $ride
                     ->setLatitude($location->getLatitude())
                     ->setLongitude($location->getLongitude());
             }
-        } else {
-            $ride
-                ->setHasLocation(false)
-                ->setLocation(null);
-        }
-
-        if (!$event->getIsDateOnly()) {
-            $ride->setHasTime(true);
-        } else {
-            $ride->setHasTime(false);
         }
 
         return $ride;

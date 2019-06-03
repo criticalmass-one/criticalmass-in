@@ -525,7 +525,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         return $this->imageSize;
     }
 
-    public function setImageSize(int $imageSize): PhotoInterface
+    public function setImageSize(int $imageSize = null): PhotoInterface
     {
         $this->imageSize = $imageSize;
 
@@ -537,7 +537,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         return $this->imageMimeType;
     }
 
-    public function setImageMimeType(string $imageMimeType): PhotoInterface
+    public function setImageMimeType(string $imageMimeType = null): PhotoInterface
     {
         $this->imageMimeType = $imageMimeType;
 

@@ -2,32 +2,34 @@
 
 namespace Tests\PhotoGps;
 
-use App\Criticalmass\Image\PhotoGps\PhotoGpsInterface;
+use App\Criticalmass\Gps\GpxReader\TrackReader;
+use App\Criticalmass\Image\ExifWrapper\ExifWrapper;
+use App\Criticalmass\Image\PhotoGps\PhotoGps;
 use App\Entity\City;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use App\Entity\Photo;
+use App\Entity\Track;
+use League\Flysystem\Filesystem;
+use PHPExif\Exif;
+use PHPUnit\Framework\TestCase;
 use Tests\PhotoGps\Mocks\GpsPhoto;
 use Tests\PhotoGps\Mocks\MockTrack;
 use Tests\PhotoGps\Mocks\NoGpsPhoto;
+use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
-class PhotoGpsTest extends KernelTestCase
+class PhotoGpsTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        self::bootKernel();
-    }
-
-    protected function getPhotoGps(): PhotoGpsInterface
-    {
-        $container = self::$container;
-
-        return $container->get(PhotoGpsInterface::class);
-    }
-
     public function testPhotoWithoutCoords(): void
     {
-        $photo = new NoGpsPhoto();
+        $uploadHelper = $this->createMock(UploaderHelper::class);
+        $trackReader = $this->createMock(TrackReader::class);
+        $filesystem = $this->createMock(Filesystem::class);
+        $exifWrapper = $this->createMock(ExifWrapper::class);
 
-        $this->getPhotoGps()->setPhoto($photo)->execute();
+        $photoGps = new PhotoGps($uploadHelper, $trackReader, $filesystem, $exifWrapper);
+
+        $photo = $this->createMock(Photo::class);
+
+        $photoGps->setPhoto($photo)->execute();
 
         $this->assertFalse($photo->hasCoordinates());
         $this->assertNull($photo->getLatitude());
@@ -36,9 +38,20 @@ class PhotoGpsTest extends KernelTestCase
 
     public function testPhotoWithCoords(): void
     {
-        $photo = new GpsPhoto();
+        $uploadHelper = $this->createMock(UploaderHelper::class);
+        $trackReader = $this->createMock(TrackReader::class);
+        $filesystem = $this->createMock(Filesystem::class);
+        $exifWrapper = $this->createMock(ExifWrapper::class);
+        $exif = $this->createMock(Exif::class);
 
-        $this->getPhotoGps()->setPhoto($photo)->execute();
+        $exif->method('getGPS')->willReturn('52.266666666667,10.5');
+        $exifWrapper->method('getExifData')->willReturn($exif);
+
+        $photoGps = new PhotoGps($uploadHelper, $trackReader, $filesystem, $exifWrapper);
+
+        $photo = new Photo();
+
+        $photoGps->setPhoto($photo)->execute();
 
         $this->assertTrue($photo->hasCoordinates());
         $this->assertEquals(52.266666666667, $photo->getLatitude());
@@ -47,10 +60,28 @@ class PhotoGpsTest extends KernelTestCase
 
     public function testPhotoTrackCoords(): void
     {
-        $photo = new NoGpsPhoto();
-        $track = new MockTrack();
+        $uploadHelper = $this->createMock(UploaderHelper::class);
+        $filesystem = $this->createMock(Filesystem::class);
+        $exifWrapper = $this->createMock(ExifWrapper::class);
+        $exif = $this->createMock(Exif::class);
 
-        $this->getPhotoGps()->setPhoto($photo)->setDateTimeZone(new \DateTimeZone('Europe/Berlin'))->setTrack($track)->execute();
+        $trackReader = $this->createMock(TrackReader::class);
+        $trackReader->method('findCoordNearDateTime')->willReturn(['latitude' => 52.268021, 'longitude' => 10.500126]);
+
+        $exif->method('getCreationDate')->willReturn(new \DateTime());
+        $exifWrapper->method('getExifData')->willReturn($exif);
+
+        $photoGps = new PhotoGps($uploadHelper, $trackReader, $filesystem, $exifWrapper);
+
+        $track = $this->createMock(Track::class);
+
+        $photo = new Photo();
+
+        $photoGps
+            ->setPhoto($photo)
+            ->setDateTimeZone(new \DateTimeZone('Europe/Berlin'))
+            ->setTrack($track)
+            ->execute();
 
         $this->assertTrue($photo->hasCoordinates());
         $this->assertEquals(52.268021, $photo->getLatitude());
@@ -59,15 +90,31 @@ class PhotoGpsTest extends KernelTestCase
 
     public function testPhotoTrackCoordsAutoTimezone(): void
     {
-        $city = new City();
-        $city->setTimezone('Europe/Berlin');
+        $uploadHelper = $this->createMock(UploaderHelper::class);
+        $filesystem = $this->createMock(Filesystem::class);
+        $exifWrapper = $this->createMock(ExifWrapper::class);
+        $exif = $this->createMock(Exif::class);
 
-        $photo = new NoGpsPhoto();
+        $trackReader = $this->createMock(TrackReader::class);
+        $trackReader->method('findCoordNearDateTime')->willReturn(['latitude' => 52.268021, 'longitude' => 10.500126]);
+
+        $exif->method('getCreationDate')->willReturn(new \DateTime());
+        $exifWrapper->method('getExifData')->willReturn($exif);
+
+        $photoGps = new PhotoGps($uploadHelper, $trackReader, $filesystem, $exifWrapper);
+
+        $track = $this->createMock(Track::class);
+
+        $city = $this->createMock(City::class);
+        $city->method('getTimezone')->willReturn('Europe/Berlin');
+
+        $photo = new Photo();
         $photo->setCity($city);
-
-        $track = new MockTrack();
-
-        $this->getPhotoGps()->setPhoto($photo)->setTrack($track)->execute();
+        
+        $photoGps
+            ->setPhoto($photo)
+            ->setTrack($track)
+            ->execute();
 
         $this->assertTrue($photo->hasCoordinates());
         $this->assertEquals(52.268021, $photo->getLatitude());

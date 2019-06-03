@@ -24,7 +24,7 @@ class PrefetchController extends AbstractController
                 'value' => $ride->getTitle(),
                 'meta' => [
                     'dateTime' => $ride->getDateTime()->format('Y-m-d\TH:i:s'),
-                    'location' => ($ride->getHasLocation() ? $ride->getLocation() : '')
+                    'location' => $ride->getLocation() ?? '',
                 ]
             ];
         }
