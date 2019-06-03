@@ -4,6 +4,10 @@
 version: "3.1"
 services:
 
+    rabbitmq:
+      image: rabbitmq
+      container_name: criticalmass-rabbitmq
+
     memcached:
       image: memcached:alpine
       container_name: criticalmass-memcached
