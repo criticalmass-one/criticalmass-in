@@ -38,7 +38,7 @@ class TrackTimeShifter extends TimeShifter
     {
         $this->gpxWriter
             ->setPositionList($this->positionList)
-            ->saveGpxContent();
+            ->saveGpxContent($this->track->getTrackFilename());
 
         return $this;
     }

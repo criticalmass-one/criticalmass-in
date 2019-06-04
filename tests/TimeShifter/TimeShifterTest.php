@@ -20,13 +20,12 @@ class TimeShifterTest extends TestCase
         $positionList = new PositionList();
         $positionList
             ->add($position1)
-            ->add($position2)
-        ;
+            ->add($position2);
 
         return $positionList;
     }
 
-    public function testTimeShifter1(): void
+    public function testTimeShifterNoop(): void
     {
         $positionList = $this->createPositionList();
 
@@ -37,7 +36,7 @@ class TimeShifterTest extends TestCase
         $this->assertEquals((new \DateTime('2011-06-24 19:15:00'))->format('U'), $position2->getTimestamp());
     }
 
-    public function testTimeShifter2(): void
+    public function testTimeShifterOneHour(): void
     {
         $timeShifter = new TimeShifter();
         $timeShifter->setPositionList($this->createPositionList());
