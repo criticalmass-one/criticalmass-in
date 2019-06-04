@@ -21,14 +21,13 @@ class CalculatorTest extends TestCase
         return $positionList;
     }
 
-    public function testDistanceCalculator1(): void
+    public function testDistanceCalculator(): void
     {
         $distanceCalculator = new DistanceCalculator();
 
         $distance = $distanceCalculator
             ->setPositionList($this->createPositionList())
-            ->calculate()
-        ;
+            ->calculate();
 
         $this->assertEquals(269.83697059097, $distance);
     }
