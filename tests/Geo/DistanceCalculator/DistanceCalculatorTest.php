@@ -10,6 +10,26 @@ use PHPUnit\Framework\TestCase;
 
 class DistanceCalculatorTest extends TestCase
 {
+    public function testDistanceCalculatorWithoutPositions(): void
+    {
+        $distanceCalculator = new DistanceCalculator();
+
+        $actualDistance = $distanceCalculator->calculate();
+
+        $this->assertEquals(0.0, $actualDistance);
+    }
+
+    public function testDistanceCalculatorWithPositionList(): void
+    {
+        $distanceCalculator = new DistanceCalculator();
+
+        $actualDistance = $distanceCalculator
+            ->setPositionList($this->createPositionList())
+            ->calculate();
+
+        $this->assertEquals(269.83697059097, $actualDistance);
+    }
+
     protected function createPositionList(): PositionListInterface
     {
         $positionList = new PositionList();
@@ -19,16 +39,5 @@ class DistanceCalculatorTest extends TestCase
             ->add(new Position(52.518611, 13.408333));
 
         return $positionList;
-    }
-
-    public function testDistanceCalculator(): void
-    {
-        $distanceCalculator = new DistanceCalculator();
-
-        $distance = $distanceCalculator
-            ->setPositionList($this->createPositionList())
-            ->calculate();
-
-        $this->assertEquals(269.83697059097, $distance);
     }
 }

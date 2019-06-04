@@ -11,7 +11,18 @@ use PHPUnit\Framework\TestCase;
 
 class TrackDistanceCalculatorTest extends TestCase
 {
-    public function testFoo(): void
+    public function testTrackDistanceCalculatorTestWithoutTrack(): void
+    {
+        $trackReader = new TrackReader($this->createFilesystemMock());
+
+        $distanceCalculator = new TrackDistanceCalculator($trackReader);
+
+        $actualDistance = $distanceCalculator->calculate();
+
+        $this->assertEquals(0.0, $actualDistance);
+    }
+
+    public function testTrackDistanceCalculatorTestWithTrack(): void
     {
         $trackReader = new TrackReader($this->createFilesystemMock());
         $track = new Track();

@@ -9,7 +9,7 @@ class DistanceCalculator extends AbstractDistanceCalculator
         $distance = 0.0;
 
         if (1 >= count($this->positionList)) {
-            return 0.0;
+            return $distance;
         }
 
         $position1 = $this->positionList->get(0);
