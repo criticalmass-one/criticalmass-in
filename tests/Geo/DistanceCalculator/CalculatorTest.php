@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Tests\DistanceCalculator;
+namespace Tests\Geo\DistanceCalculator;
 
 use App\Criticalmass\Geo\DistanceCalculator\DistanceCalculator;
 use App\Criticalmass\Geo\Entity\Position;

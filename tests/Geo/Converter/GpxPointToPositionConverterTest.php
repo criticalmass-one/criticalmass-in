@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Tests\Converter;
+namespace Tests\Geo\Converter;
 
 use App\Criticalmass\Geo\Converter\GpxPointToPositionConverter;
 use App\Criticalmass\Geo\Entity\Position;

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Tests\GpxReader;
+namespace Tests\Geo\GpxReader;
 
 use App\Criticalmass\Geo\GpxReader\GpxReader;
 use PHPUnit\Framework\TestCase;

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Tests\PositionList;
+namespace Tests\Geo\PositionList;
 
 use App\Criticalmass\Geo\Entity\Position;
 use App\Criticalmass\Geo\PositionList\PositionList;
