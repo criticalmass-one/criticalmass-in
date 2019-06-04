@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\Geo\GpxWriter;
 
+use App\Criticalmass\Geo\Converter\PositionToXmlTrackPointConverter;
 use App\Criticalmass\Geo\EntityInterface\PositionInterface;
 use App\Criticalmass\Geo\PositionList\PositionList;
 use App\Criticalmass\Geo\PositionList\PositionListInterface;
@@ -77,7 +78,9 @@ class GpxWriter implements GpxWriterInterface
 
         /** @var PositionInterface $position */
         for ($n = 0; $n < $this->positionList->count(); ++$n) {
-            $this->generateGpxPosition($this->positionList->get($n));
+            $position = $this->positionList->get($n);
+
+            PositionToXmlTrackPointConverter::convert($position, $this->writer);
         }
 
         $this->writer->endElement();
@@ -119,30 +122,6 @@ class GpxWriter implements GpxWriterInterface
         $this->writer->text($dateTime->format('Y-m-d') . 'T' . $dateTime->format('H:i:s') . 'Z');
 
         $this->writer->endElement();
-        $this->writer->endElement();
-
-        return $this;
-    }
-
-    protected function generateGpxPosition(PositionInterface $position): GpxWriterInterface
-    {
-        $this->writer->startElement('trkpt');
-        $this->writer->writeAttribute('lat', (string) $position->getLatitude());
-        $this->writer->writeAttribute('lon', (string) $position->getLongitude());
-
-        if ($position->getAltitude()) {
-            $this->writer->startElement('ele');
-            $this->writer->text((string) $position->getAltitude());
-            $this->writer->endElement();
-        }
-
-        if ($position->getDateTime()) {
-            $this->writer->startElement('time');
-            $dateTime = $position->getDateTime();
-            $this->writer->text($dateTime->format('Y-m-d') . 'T' . $dateTime->format('H:i:s') . 'Z');
-            $this->writer->endElement();
-        }
-
         $this->writer->endElement();
 
         return $this;
