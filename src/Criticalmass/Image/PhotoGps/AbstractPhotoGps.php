@@ -2,10 +2,10 @@
 
 namespace App\Criticalmass\Image\PhotoGps;
 
+use App\Criticalmass\Geo\GpxReader\TrackReader;
 use App\Criticalmass\Image\ExifWrapper\ExifWrapperInterface;
 use App\Entity\Photo;
 use App\Entity\Track;
-use App\Criticalmass\Gps\GpxReader\TrackReader;
 use League\Flysystem\FilesystemInterface;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 

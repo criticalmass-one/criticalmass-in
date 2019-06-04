@@ -2,9 +2,9 @@
 
 namespace App\Controller\Track;
 
+use App\Criticalmass\Geo\LatLngListGenerator\SimpleLatLngListGenerator;
 use App\Event\Track\TrackTrimmedEvent;
 use App\Form\Type\TrackRangeType;
-use App\Criticalmass\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Controller\AbstractController;

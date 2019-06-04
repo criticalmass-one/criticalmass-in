@@ -14,7 +14,7 @@ class DistanceCalculator extends AbstractDistanceCalculator
 
         $position1 = $this->positionList->get(0);
 
-        for ($i = 1; $i < count($this->positionList); ++$i) {
+        for ($i = 1, $iMax = count($this->positionList); $i < $iMax; ++$i) {
             $position2 = $this->positionList->get($i);
 
             $dx = 71.5 * ($position1->getLongitude() - $position2->getLongitude());
