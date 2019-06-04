@@ -5,13 +5,15 @@ namespace Tests\GpxWriter;
 use App\Criticalmass\Geo\Entity\Position;
 use App\Criticalmass\Geo\GpxWriter\GpxWriter;
 use App\Criticalmass\Geo\PositionList\PositionList;
+use League\Flysystem\Filesystem;
 use PHPUnit\Framework\TestCase;
 
 class GpxWriterTest extends TestCase
 {
     public function testGpxWriterReturnsEmptyStringBeforeGeneration(): void
     {
-        $gpxWriter = new GpxWriter();
+        $filesystem = $this->createMock(Filesystem::class);
+        $gpxWriter = new GpxWriter($filesystem);
 
         $actualContent = $gpxWriter->getGpxContent();
 
@@ -22,7 +24,8 @@ class GpxWriterTest extends TestCase
 
     public function testGpxWriterWithoutPositions(): void
     {
-        $gpxWriter = new GpxWriter();
+        $filesystem = $this->createMock(Filesystem::class);
+        $gpxWriter = new GpxWriter($filesystem);
 
         $actualContent = $gpxWriter->generateGpxContent()->getGpxContent();
 
@@ -44,7 +47,8 @@ class GpxWriterTest extends TestCase
             ->add(new Position(53.550556, 9.993333))
             ->add(new Position(52.518611, 13.408333));
 
-        $gpxWriter = new GpxWriter();
+        $filesystem = $this->createMock(Filesystem::class);
+        $gpxWriter = new GpxWriter($filesystem);
 
         $actualContent = $gpxWriter
             ->setPositionList($positionList)
@@ -72,7 +76,8 @@ class GpxWriterTest extends TestCase
             ->add((new Position(53.550556, 9.993333))->setDateTime(new \DateTime('2011-06-24 19:00:00')))
             ->add((new Position(52.518611, 13.408333))->setDateTime(new \DateTime('2011-06-24 19:10:00')));
 
-        $gpxWriter = new GpxWriter();
+        $filesystem = $this->createMock(Filesystem::class);
+        $gpxWriter = new GpxWriter($filesystem);
 
         $actualContent = $gpxWriter
             ->setPositionList($positionList)
@@ -107,7 +112,8 @@ class GpxWriterTest extends TestCase
             ->add((new Position(53.550556, 9.993333))->setAltitude(5))
             ->add((new Position(52.518611, 13.408333))->setAltitude(10));
 
-        $gpxWriter = new GpxWriter();
+        $filesystem = $this->createMock(Filesystem::class);
+        $gpxWriter = new GpxWriter($filesystem);
 
         $actualContent = $gpxWriter
             ->setPositionList($positionList)

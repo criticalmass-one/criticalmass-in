@@ -117,6 +117,10 @@ services:
         arguments:
             $filesystem: '@oneup_flysystem.flysystem_track_track_filesystem'
 
+    App\Criticalmass\Geo\GpxWriter\GpxWriter:
+        arguments:
+            $filesystem: '@oneup_flysystem.flysystem_track_track_filesystem'
+
     App\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGenerator:
         arguments:
             $filesystem: '@oneup_flysystem.flysystem_user_photo_filesystem'
