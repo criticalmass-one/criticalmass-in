@@ -7,12 +7,25 @@ use Caldera\GeoBasic\Coord\Coord;
 
 class Position extends Coord implements PositionInterface
 {
+    /** @var float $accuracy */
     protected $accuracy;
+
+    /** @var float $altitude */
     protected $altitude;
+
+    /** @var float $altitudeAccuracy */
     protected $altitudeAccuracy;
+
+    /** @var float $heading */
     protected $heading;
+
+    /** @var float $speed */
     protected $speed;
+
+    /** @var int $timestamp */
     protected $timestamp;
+
+    /** @var \DateTime $dateTime */
     protected $dateTime;
 
     public function setLatitude(float $latitude): PositionInterface
