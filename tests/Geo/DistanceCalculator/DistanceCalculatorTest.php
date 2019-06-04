@@ -8,7 +8,7 @@ use App\Criticalmass\Geo\PositionList\PositionList;
 use App\Criticalmass\Geo\PositionList\PositionListInterface;
 use PHPUnit\Framework\TestCase;
 
-class CalculatorTest extends TestCase
+class DistanceCalculatorTest extends TestCase
 {
     protected function createPositionList(): PositionListInterface
     {
