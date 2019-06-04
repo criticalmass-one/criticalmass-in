@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\Geo\Loop;
 
-use Caldera\GeoBundle\PositionList\PositionListInterface;
+use App\Criticalmass\Geo\PositionList\PositionListInterface;
 
 interface LoopInterface
 {
