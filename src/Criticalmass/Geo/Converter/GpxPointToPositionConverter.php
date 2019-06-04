@@ -12,11 +12,25 @@ class GpxPointToPositionConverter
 
     }
 
-    public static function convert(\SimpleXMLElement $simpleXMLElement): PositionInterface
+    public static function convert(\SimpleXMLElement $simpleXMLElement): ?PositionInterface
     {
+        if (!$simpleXMLElement['lat'] || !$simpleXMLElement['lon']) {
+            return null;
+        }
+
         $latitude = (float) $simpleXMLElement['lat'];
         $longitude = (float) $simpleXMLElement['lon'];
 
-        return new Position($latitude, $longitude);
+        $position = new Position($latitude, $longitude);
+
+        if ($simpleXMLElement->ele) {
+            $position->setAltitude((float) $simpleXMLElement->ele[0]);
+        }
+
+        if ($simpleXMLElement->time) {
+            $position->setDateTime(new \DateTime((string) $simpleXMLElement->time));
+        }
+
+        return $position;
     }
 }
