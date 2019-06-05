@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 
 class RangeLatLngListGeneratorTest extends TestCase
 {
-    public function testFoo(): void
+    public function testLatLngGeneratorWithGapWidth1(): void
     {
         $trackReader = new TrackReader($this->createFilesystemMock());
 
@@ -19,15 +19,38 @@ class RangeLatLngListGeneratorTest extends TestCase
 
         $track = new Track();
         $track->setTrackFilename('test.gpx')
+            ->setPoints(17)
             ->setStartPoint(0)
-            ->setEndPoint(22);
+            ->setEndPoint(16);
 
         $actualList = $simpleLatLngListGenerator
             ->loadTrack($track)
             ->execute()
             ->getList();
 
-        $expectedList = '[[52.50221,13.42493],[52.5022483,13.4249933],[52.5022967,13.4250517],[52.5023483,13.425095],[52.5023967,13.4251417],[52.5024483,13.4251733],[52.5024983,13.4252117],[52.50254,13.425255],[52.5025717,13.42533],[52.5026167,13.4253517],[52.50266,13.4253933],[52.5028583,13.425535],[52.5029117,13.42556],[52.50296,13.42559],[52.50301,13.4256233],[52.50306,13.42565],[52.5031017,13.4256917]]';
+        $expectedList = '[[52.5022483,13.4249933],[52.5022967,13.4250517],[52.5023483,13.425095],[52.5023967,13.4251417],[52.5024483,13.4251733],[52.5024983,13.4252117],[52.50254,13.425255],[52.5025717,13.42533],[52.5026167,13.4253517],[52.50266,13.4253933],[52.5028583,13.425535],[52.5029117,13.42556],[52.50296,13.42559],[52.50301,13.4256233],[52.50306,13.42565]]';
+
+        $this->assertEquals($expectedList, $actualList);
+    }
+
+    public function testLatLngGeneratorWithGapWidth5(): void
+    {
+        $trackReader = new TrackReader($this->createFilesystemMock());
+
+        $simpleLatLngListGenerator = new RangeLatLngListGenerator($trackReader, 5);
+
+        $track = new Track();
+        $track->setTrackFilename('test.gpx')
+            ->setPoints(17)
+            ->setStartPoint(0)
+            ->setEndPoint(16);
+
+        $actualList = $simpleLatLngListGenerator
+            ->loadTrack($track)
+            ->execute()
+            ->getList();
+
+        $expectedList = '[[52.5024483,13.4251733],[52.50266,13.4253933],[52.50306,13.42565]]';
 
         $this->assertEquals($expectedList, $actualList);
     }
