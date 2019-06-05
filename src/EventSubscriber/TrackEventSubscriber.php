@@ -182,8 +182,6 @@ class TrackEventSubscriber implements EventSubscriberInterface
             ->calculate();
 
         $track->setDistance($distance);
-
-        $track->setMd5Hash($this->trackReader->getMd5Hash());
     }
 
     protected function updateTrackProperties(Track $track): void
