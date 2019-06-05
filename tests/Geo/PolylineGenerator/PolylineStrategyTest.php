@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Tests\PolylineStrategy;
+namespace Tests\Geo\PolylineGenerator;
 
 use App\Criticalmass\Geo\Entity\Position;
 use App\Criticalmass\Geo\PolylineGenerator\PolylineGenerator;
