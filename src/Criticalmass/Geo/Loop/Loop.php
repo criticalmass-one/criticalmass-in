@@ -80,7 +80,7 @@ class Loop implements LoopInterface
         }
     }
 
-    public function searchPositionForDateTime(\DateTime $dateTime): PositionInterface
+    public function searchPositionForDateTime(\DateTime $dateTime): ?PositionInterface
     {
         $index = $this->searchIndexForDateTime($dateTime);
 
