@@ -8,5 +8,5 @@ interface LoopInterface
 {
     public function setPositionList(PositionListInterface $positionList): LoopInterface;
     public function setDateTimeZone(\DateTimeZone $dateTimeZone): LoopInterface;
-    public function searchIndexForDateTime(\DateTimeInterface $dateTime): int;
+    public function searchIndexForDateTime(\DateTimeInterface $dateTime): ?int;
 }
