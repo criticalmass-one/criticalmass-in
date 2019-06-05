@@ -89,10 +89,6 @@ services:
         arguments:
             $flysystemFilesystem: '@oneup_flysystem.flysystem_photo_photo_filesystem'
 
-    App\Criticalmass\Image\PhotoGps\PhotoGps:
-        arguments:
-            $filesystem: '@oneup_flysystem.flysystem_photo_photo_filesystem'
-
     App\Criticalmass\Image\PhotoManipulator\Storage\PhotoStorage:
         arguments:
             $filesystem: '@oneup_flysystem.flysystem_photo_photo_filesystem'
@@ -138,6 +134,9 @@ services:
     App\Criticalmass\Timeline\TimelineInterface:
         alias: App\Criticalmass\Timeline\CachedTimeline
 
+    App\Criticalmass\Geo\Loop\LoopInterface:
+        alias: App\Criticalmass\Geo\Loop\TrackLoop
+        
     App\Request\ParamConverter\RideParamConverter:
         tags:
             - { name: request.param_converter, priority: 0, converter: ride_converter }
