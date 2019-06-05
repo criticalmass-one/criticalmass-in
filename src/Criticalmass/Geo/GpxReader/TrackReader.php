@@ -22,13 +22,13 @@ class TrackReader extends GpxReader
     {
         $startPoint = $this->track->getStartPoint();
 
-        return new \DateTime($this->rootNode->trk->trkseg->trkpt[$startPoint]->time);
+        return new \DateTime((string) $this->trackPointList[$startPoint]->time);
     }
 
     public function getEndDateTime(): \DateTime
     {
         $endPoint = $this->track->getEndPoint() - 1;
 
-        return new \DateTime($this->rootNode->trk->trkseg->trkpt[$endPoint]->time);
+        return new \DateTime((string) $this->trackPointList[$endPoint]->time);
     }
 }
