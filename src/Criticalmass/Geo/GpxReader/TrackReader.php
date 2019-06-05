@@ -20,14 +20,14 @@ class TrackReader extends GpxReader
 
     public function getStartDateTime(): \DateTime
     {
-        $startPoint = intval($this->track->getStartPoint());
+        $startPoint = $this->track->getStartPoint();
 
         return new \DateTime($this->rootNode->trk->trkseg->trkpt[$startPoint]->time);
     }
 
     public function getEndDateTime(): \DateTime
     {
-        $endPoint = intval($this->track->getEndPoint()) - 1;
+        $endPoint = $this->track->getEndPoint() - 1;
 
         return new \DateTime($this->rootNode->trk->trkseg->trkpt[$endPoint]->time);
     }

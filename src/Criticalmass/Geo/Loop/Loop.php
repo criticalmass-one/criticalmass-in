@@ -84,6 +84,10 @@ class Loop implements LoopInterface
     {
         $index = $this->searchIndexForDateTime($dateTime);
 
+        if (!$index) {
+            return null;
+        }
+
         return $this->positionList->get($index);
     }
 }
