@@ -18,7 +18,7 @@ class ExtendedGpxPointsTest extends TestCase
         $actualPosition = GpxPointToPositionConverter::convert($xmlGpx);
 
         $expectedPosition = new Position(57.5, 10.5);
-        $expectedPosition->setAccuracy(12.3);
+        $expectedPosition->setAltitudeAccuracy(12.3);
 
         $this->assertEquals($expectedPosition, $actualPosition);
     }
