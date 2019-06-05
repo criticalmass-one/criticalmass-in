@@ -47,7 +47,15 @@ class Loop implements LoopInterface
         $found = false;
 
         $this->startIndex = 0;
-        $this->endIndex = count($this->positionList);
+        $this->endIndex = count($this->positionList) - 1;
+
+        if ($dateTime < $this->positionList->getStartDateTime()) {
+            return $this->startIndex;
+        }
+
+        if ($dateTime > $this->positionList->getEndDateTime()) {
+            return $this->endIndex;
+        }
 
         while (!$found) {
             $mid = $this->startIndex + (int)floor(($this->endIndex - $this->startIndex) / 2);
@@ -57,7 +65,7 @@ class Loop implements LoopInterface
             if ($this->dateTimeZone) {
                 $midDateTime->setTimezone($this->dateTimeZone);
             }
-            
+
             if ($midDateTime < $dateTime) {
                 $this->startIndex = $mid;
             } elseif ($midDateTime > $dateTime) {

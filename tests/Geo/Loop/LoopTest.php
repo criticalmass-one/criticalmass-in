@@ -42,6 +42,23 @@ class LoopTest extends TestCase
         $this->assertEquals(4, $actualIndex3);
     }
 
+    public function testLoopWithPositionListAndOutboundDateTime(): void
+    {
+        $loop = new Loop();
+
+        $actualIndex1 = $loop
+            ->setPositionList($this->createPositionList())
+            ->searchIndexForDateTime(new \DateTime('2011-06-24 18:00:00'));
+
+        $this->assertEquals(0, $actualIndex1);
+
+        $actualIndex2 = $loop
+            ->setPositionList($this->createPositionList())
+            ->searchIndexForDateTime(new \DateTime('2011-06-24 22:00:00'));
+
+        $this->assertEquals(10, $actualIndex2);
+    }
+
     protected function createPositionList(): PositionListInterface
     {
         $positionList = new PositionList();
