@@ -1,7 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Tests\TimeShifter;
+namespace Tests\Geo\TimeShifter;
 
+use App\Criticalmass\Geo\Converter\GpxToPositionListConverter;
 use App\Criticalmass\Geo\GpxReader\GpxReader;
 use App\Criticalmass\Geo\TimeShifter\GpxTimeShifter;
 use League\Flysystem\Filesystem;
@@ -23,7 +24,9 @@ class GpxTimeShifterTest extends TestCase
     public function testGpxTimeShifterFiveMinutes()
     {
         $gpxReader = new GpxReader($this->createFilesystemMock());
-        $timeShifter = new GpxTimeShifter($gpxReader);
+        $gpxToPositionListConverter = new GpxToPositionListConverter($gpxReader);
+
+        $timeShifter = new GpxTimeShifter($gpxToPositionListConverter);
 
         $interval = new \DateInterval('PT5M');
 

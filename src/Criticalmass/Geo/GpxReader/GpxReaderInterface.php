@@ -28,8 +28,4 @@ interface GpxReaderInterface
     public function getDateTimeOfPoint(int $n): \DateTime;
 
     public function getPoint(int $n): \SimpleXMLElement;
-
-    public function createPosition(int $n): PositionInterface;
-
-    public function createPositionList(): PositionListInterface;
 }
