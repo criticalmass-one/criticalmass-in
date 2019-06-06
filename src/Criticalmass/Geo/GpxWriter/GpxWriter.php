@@ -46,7 +46,9 @@ class GpxWriter implements GpxWriterInterface
 
     public function saveGpxContent(string $filename): void
     {
-        $this->filesystem->put($filename, $this->gpxContent);
+        if ($this->gpxContent) {
+            $this->filesystem->put($filename, $this->gpxContent);
+        }
     }
 
     public function addGpxAttribute(string $attributeName, string $attributeValue): GpxWriterInterface

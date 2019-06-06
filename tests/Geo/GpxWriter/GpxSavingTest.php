@@ -39,4 +39,24 @@ class GpxSavingTest extends TestCase
             ->generateGpxContent()
             ->saveGpxContent('test.gpx');
     }
+
+    public function testGpxWriterDoesNotSaveEmptyFiles(): void
+    {
+        $positionList = new PositionList();
+        $positionList
+            ->add(new Position(53.550556, 9.993333));
+
+        $filesystem = $this->createMock(Filesystem::class);
+        $filesystem->expects($this->never())
+            ->method('put')
+            ->with(
+                $this->equalTo('test.gpx'),
+                $this->equalTo(''));
+
+        $gpxWriter = new GpxWriter($filesystem);
+
+        $gpxWriter
+            ->setPositionList($positionList)
+            ->saveGpxContent('test.gpx');
+    }
 }
