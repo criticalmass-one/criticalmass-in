@@ -1,7 +1,10 @@
+{% set previous_ride = previous_entity(ride) %}
+{% set next_ride = next_entity(ride) %}
+
 <ul class="pager">
-    {% if previousRide %}
+    {% if previous_ride %}
         <li class="previous">
-            <a href="{{ objectPath(previousRide) }}">
+            <a href="{{ objectPath(previous_ride) }}">
                 &larr; Vorige Tour
             </a>
         </li>
@@ -13,9 +16,9 @@
         </li>
     {% endif %}
 
-    {% if nextRide %}
+    {% if next_ride %}
         <li class="next">
-            <a href="{{ objectPath(nextRide) }}">
+            <a href="{{ objectPath(next_ride) }}">
                 Nächste Tour &rarr;
             </a>
         </li>

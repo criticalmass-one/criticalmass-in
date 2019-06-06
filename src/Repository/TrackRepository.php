@@ -10,48 +10,6 @@ use Doctrine\ORM\Query;
 
 class TrackRepository extends EntityRepository
 {
-    public function getPreviousTrack(Track $track): ?Track
-    {
-        $builder = $this->createQueryBuilder('t');
-
-        $builder
-            ->select('t')
-            ->join('t.ride', 'ride')
-            ->where($builder->expr()->lt('ride.dateTime', ':dateTime'))
-            ->setParameter('dateTime', $track->getRide()->getDateTime())
-            ->andWhere($builder->expr()->eq('t.user', ':user'))
-            ->setParameter('user', $track->getUser())
-            ->addOrderBy('t.startDateTime', 'DESC')
-            ->setMaxResults(1);
-
-        $query = $builder->getQuery();
-
-        $result = $query->getOneOrNullResult();
-
-        return $result;
-    }
-
-    public function getNextTrack(Track $track): ?Track
-    {
-        $builder = $this->createQueryBuilder('t');
-
-        $builder
-            ->select('t')
-            ->join('t.ride', 'ride')
-            ->where($builder->expr()->gt('ride.dateTime', ':dateTime'))
-            ->setParameter('dateTime', $track->getRide()->getDateTime())
-            ->andWhere($builder->expr()->eq('t.user', ':user'))
-            ->setParameter('user', $track->getUser())
-            ->addOrderBy('t.startDateTime', 'ASC')
-            ->setMaxResults(1);
-
-        $query = $builder->getQuery();
-
-        $result = $query->getOneOrNullResult();
-
-        return $result;
-    }
-
     public function findTracksByRide(Ride $ride): array
     {
         $builder = $this->createQueryBuilder('t');
