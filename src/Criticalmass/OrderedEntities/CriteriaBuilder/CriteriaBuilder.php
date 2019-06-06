@@ -25,30 +25,28 @@ class CriteriaBuilder implements CriteriaBuilderInterface
         $criteria->where($expr->lt('dateTime', $orderedEntity->getDateTime()))
             ->andWhere($expr->eq('city', $orderedEntity->getCity()));
 
-        $criteria->orderBy(['dateTime' => 'asc']);
-
-        $this->handleAnnotations($orderedEntity);
+        $criteria = $this->handleAnnotations($orderedEntity, $criteria);
 
         return $criteria;
     }
 
-    protected function handleAnnotations(OrderedEntityInterface $orderedEntity): void
+    protected function handleAnnotations(OrderedEntityInterface $orderedEntity, Criteria $criteria): Criteria
     {
         $reflectionClass = new \ReflectionClass($orderedEntity);
         $properties = $reflectionClass->getProperties();
 
         foreach ($properties as $key => $property) {
             $annotations = $this->annotationReader->getPropertyAnnotations($property);
-            
+
             /** @var AbstractAnnotation $parameterAnnotation */
             foreach ($annotations as $annotation) {
                 if ($annotation instanceof Order) {
-                    dump($annotation);die;
+
+                    $criteria->orderBy([$property->getName() => $annotation->getDirection()]);
                 }
             }
         }
 
-        return;
+        return $criteria;
     }
-
 }

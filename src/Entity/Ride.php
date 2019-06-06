@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Criticalmass\Geocoding\ReverseGeocodeable;
+use App\Criticalmass\OrderedEntities\Annotation as OE;
 use App\Criticalmass\OrderedEntities\OrderedEntityInterface;
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
 use App\Criticalmass\Weather\EntityInterface\WeatherableInterface;
@@ -113,6 +114,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      * @JMS\Type("DateTime<'U'>")
+     * @OE\Order(direction="asc")
      */
     protected $dateTime;
 
