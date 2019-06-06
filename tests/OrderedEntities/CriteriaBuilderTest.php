@@ -32,7 +32,8 @@ class CriteriaBuilderTest extends TestCase
         $expectedCriteria = new Criteria();
         $expectedCriteria
             ->orderBy(['dateTime' => SortOrder::ASC])
-            ->andWhere(Criteria::expr()->gt('dateTime', new \DateTime('2019-06-11 19:00:00')));
+            ->andWhere(Criteria::expr()->gt('dateTime', new \DateTime('2019-06-11 19:00:00')))
+            ->andWhere(Criteria::expr()->eq('city', 'Hamburg'));
 
         $this->assertEquals($expectedCriteria, $actualCriteria);
     }
@@ -41,7 +42,9 @@ class CriteriaBuilderTest extends TestCase
     {
         $entity = new TestEntity();
 
-        $entity->setDateTime(new \DateTime('2019-06-11 19:00:00'));
+        $entity
+            ->setDateTime(new \DateTime('2019-06-11 19:00:00'))
+            ->setCity('Hamburg');
 
         return $entity;
     }
