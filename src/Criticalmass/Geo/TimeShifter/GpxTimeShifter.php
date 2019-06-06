@@ -4,7 +4,7 @@ namespace App\Criticalmass\Geo\TimeShifter;
 
 use App\Criticalmass\Geo\Converter\GpxToPositionListConverter;
 
-class GpxTimeShifter extends TimeShifter
+class GpxTimeShifter extends TimeShifter implements GpxTimeShifterInterface
 {
     /** @var GpxToPositionListConverter $gpxToPositionListConverter */
     protected $gpxToPositionListConverter;
@@ -14,7 +14,7 @@ class GpxTimeShifter extends TimeShifter
         $this->gpxToPositionListConverter = $gpxToPositionListConverter;
     }
 
-    public function loadGpxFile(string $filename): GpxTimeShifter
+    public function loadGpxFile(string $filename): GpxTimeShifterInterface
     {
         $this->positionList = $this->gpxToPositionListConverter->convert($filename);
 

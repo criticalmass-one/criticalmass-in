@@ -6,7 +6,7 @@ use App\Criticalmass\Geo\Converter\TrackToPositionListConverter;
 use App\Criticalmass\Geo\Entity\Track;
 use App\Criticalmass\Geo\GpxWriter\GpxWriterInterface;
 
-class TrackTimeShifter extends TimeShifter
+class TrackTimeShifter extends TimeShifter implements TrackTimeShifterInterface
 {
     /** @var TrackToPositionListConverter $trackToPositionListConverter */
     protected $trackToPositionListConverter;
@@ -23,7 +23,7 @@ class TrackTimeShifter extends TimeShifter
         $this->gpxWriter = $gpxWriter;
     }
 
-    public function loadTrack(Track $track): TrackTimeShifter
+    public function loadTrack(Track $track): TrackTimeShifterInterface
     {
         $this->track = $track;
 
@@ -32,7 +32,7 @@ class TrackTimeShifter extends TimeShifter
         return $this;
     }
 
-    public function saveTrack(): TrackTimeShifter
+    public function saveTrack(): TrackTimeShifterInterface
     {
         $this->gpxWriter
             ->setPositionList($this->positionList)

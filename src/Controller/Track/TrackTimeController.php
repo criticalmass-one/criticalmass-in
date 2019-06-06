@@ -32,9 +32,9 @@ class TrackTimeController extends AbstractController
 
         if (Request::METHOD_POST === $request->getMethod()) {
             return $this->timePostAction($request, $eventDispatcher, $track, $form, $trackTimeshift);
-        } else {
-            return $this->timeGetAction($request, $eventDispatcher, $track, $form, $trackTimeshift);
         }
+
+        return $this->timeGetAction($request, $eventDispatcher, $track, $form, $trackTimeshift);
     }
 
     protected function timeGetAction(Request $request, EventDispatcherInterface $eventDispatcher, Track $track, FormInterface $form, TrackTimeShifter $trackTimeshift): Response
