@@ -3,6 +3,7 @@
 namespace App\Criticalmass\OrderedEntities\CriteriaBuilder;
 
 use App\Criticalmass\OrderedEntities\Annotation\AbstractAnnotation;
+use App\Criticalmass\OrderedEntities\Annotation\Boolean;
 use App\Criticalmass\OrderedEntities\Annotation\Identical;
 use App\Criticalmass\OrderedEntities\Annotation\Order;
 use App\Criticalmass\OrderedEntities\OrderedEntityInterface;
@@ -53,6 +54,10 @@ class CriteriaBuilder implements CriteriaBuilderInterface
                     $getMethodName = sprintf('get%s', ucfirst($property->getName()));
 
                     $criteria->andWhere(Criteria::expr()->eq($property->getName(), $orderedEntity->$getMethodName()));
+                }
+
+                if ($annotation instanceof Boolean) {
+                    $criteria->andWhere(Criteria::expr()->eq($property->getName(), $annotation->getValue()));
                 }
             }
         }

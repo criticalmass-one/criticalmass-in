@@ -12,6 +12,6 @@ class Boolean extends AbstractAnnotation
 
     public function getValue(): ?bool
     {
-        return $this->value();
+        return $this->value;
     }
 }

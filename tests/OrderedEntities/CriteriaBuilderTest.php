@@ -2,7 +2,6 @@
 
 namespace Tests\OrderedEntities;
 
-use App\Criticalmass\OrderedEntities\Annotation\OrderedEntity;
 use App\Criticalmass\OrderedEntities\CriteriaBuilder\CriteriaBuilder;
 use App\Criticalmass\OrderedEntities\OrderedEntityInterface;
 use App\Criticalmass\OrderedEntities\SortOrder;
@@ -33,7 +32,9 @@ class CriteriaBuilderTest extends TestCase
         $expectedCriteria
             ->orderBy(['dateTime' => SortOrder::ASC])
             ->andWhere(Criteria::expr()->gt('dateTime', new \DateTime('2019-06-11 19:00:00')))
-            ->andWhere(Criteria::expr()->eq('city', 'Hamburg'));
+            ->andWhere(Criteria::expr()->eq('city', 'Hamburg'))
+            ->andWhere(Criteria::expr()->eq('enabled', true))
+            ->andWhere(Criteria::expr()->eq('deleted', false));
 
         $this->assertEquals($expectedCriteria, $actualCriteria);
     }
@@ -44,7 +45,9 @@ class CriteriaBuilderTest extends TestCase
 
         $entity
             ->setDateTime(new \DateTime('2019-06-11 19:00:00'))
-            ->setCity('Hamburg');
+            ->setCity('Hamburg')
+            ->setEnabled(true)
+            ->setDeleted(false);
 
         return $entity;
     }
