@@ -2,12 +2,21 @@
 
 namespace App\Criticalmass\OrderedEntities\TwigExtension;
 
+use App\Criticalmass\OrderedEntities\OrderedEntitiesManagerInterface;
 use App\Criticalmass\OrderedEntities\OrderedEntityInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class OrderedEntityExtension extends AbstractExtension
 {
+    /** @var OrderedEntitiesManagerInterface $orderedEntitiesManager */
+    protected $orderedEntitiesManager;
+
+    public function __construct(OrderedEntitiesManagerInterface $orderedEntitiesManager)
+    {
+        $this->orderedEntitiesManager = $orderedEntitiesManager;
+    }
+
     public function getFunctions(): array
     {
         return [
@@ -18,13 +27,13 @@ class OrderedEntityExtension extends AbstractExtension
 
     public function previousEntity(OrderedEntityInterface $entity): OrderedEntityInterface
     {
-        return $entity;
+        return $this->orderedEntitiesManager->getPrevious($entity);
     }
 
 
     public function nextEntity(OrderedEntityInterface $entity): OrderedEntityInterface
     {
-        return $entity;
+        return $this->orderedEntitiesManager->getNextEntity($entity);
     }
 
     public function getName(): string

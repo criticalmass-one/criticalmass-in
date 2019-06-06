@@ -7,11 +7,11 @@ namespace App\Criticalmass\OrderedEntities\Annotation;
  */
 class Order extends AbstractAnnotation
 {
-    /** @var string $directory */
-    protected $directory;
+    /** @var string $direction */
+    protected $direction;
 
-    public function getDirectory(): ?string
+    public function getDirection(): ?string
     {
-        return $this->directory;
+        return $this->direction;
     }
 }

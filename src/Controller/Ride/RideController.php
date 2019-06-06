@@ -35,9 +35,6 @@ class RideController extends AbstractController
      */
     public function showAction(Request $request, SeoPageInterface $seoPage, EventDispatcherInterface $eventDispatcher, Ride $ride): Response
     {
-        $nextRide = $this->getRideRepository()->getNextRide($ride);
-        $previousRide = $this->getRideRepository()->getPreviousRide($ride);
-
         $eventDispatcher->dispatch(ViewEvent::NAME, new ViewEvent($ride));
 
         $seoPage
@@ -82,8 +79,6 @@ class RideController extends AbstractController
             'tracks' => $this->getTrackRepository()->findTracksByRide($ride),
             'photos' => $this->getPhotoRepository()->findPhotosByRide($ride),
             'subrides' => $this->getSubrideRepository()->getSubridesForRide($ride),
-            'nextRide' => $nextRide,
-            'previousRide' => $previousRide,
             'dateTime' => new \DateTime(),
             'weatherForecast' => $weatherForecast,
             'participation' => $participation,
