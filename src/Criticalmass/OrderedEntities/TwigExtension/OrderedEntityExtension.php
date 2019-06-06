@@ -25,13 +25,13 @@ class OrderedEntityExtension extends AbstractExtension
         ];
     }
 
-    public function previousEntity(OrderedEntityInterface $entity): OrderedEntityInterface
+    public function previousEntity(OrderedEntityInterface $entity): ?OrderedEntityInterface
     {
         return $this->orderedEntitiesManager->getPrevious($entity);
     }
 
 
-    public function nextEntity(OrderedEntityInterface $entity): OrderedEntityInterface
+    public function nextEntity(OrderedEntityInterface $entity): ?OrderedEntityInterface
     {
         return $this->orderedEntitiesManager->getNextEntity($entity);
     }

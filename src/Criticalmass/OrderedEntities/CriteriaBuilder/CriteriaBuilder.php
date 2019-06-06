@@ -6,6 +6,7 @@ use App\Criticalmass\OrderedEntities\Annotation\AbstractAnnotation;
 use App\Criticalmass\OrderedEntities\Annotation\Identical;
 use App\Criticalmass\OrderedEntities\Annotation\Order;
 use App\Criticalmass\OrderedEntities\OrderedEntityInterface;
+use App\Criticalmass\OrderedEntities\SortOrder;
 use Doctrine\Common\Annotations\Reader;
 use Doctrine\Common\Collections\Criteria;
 
@@ -21,17 +22,14 @@ class CriteriaBuilder implements CriteriaBuilderInterface
 
     public function build(OrderedEntityInterface $orderedEntity, string $direction): Criteria
     {
-        $expr = Criteria::expr();
         $criteria = Criteria::create();
 
-        $criteria->where($expr->lt('dateTime', $orderedEntity->getDateTime()));
-
-        $criteria = $this->handleAnnotations($orderedEntity, $criteria);
+        $criteria = $this->handleAnnotations($orderedEntity, $criteria, $direction);
 
         return $criteria;
     }
 
-    protected function handleAnnotations(OrderedEntityInterface $orderedEntity, Criteria $criteria): Criteria
+    protected function handleAnnotations(OrderedEntityInterface $orderedEntity, Criteria $criteria, string $direction): Criteria
     {
         $reflectionClass = new \ReflectionClass($orderedEntity);
         $properties = $reflectionClass->getProperties();
@@ -42,8 +40,13 @@ class CriteriaBuilder implements CriteriaBuilderInterface
             /** @var AbstractAnnotation $parameterAnnotation */
             foreach ($annotations as $annotation) {
                 if ($annotation instanceof Order) {
+                    $getMethodName = sprintf('get%s', ucfirst($property->getName()));
 
-                    $criteria->orderBy([$property->getName() => $annotation->getDirection()]);
+                    $compareMethodName = $direction === SortOrder::DESC ? 'lt' : 'gt';
+
+                    $criteria
+                        ->orderBy([$property->getName() => $annotation->getDirection()])
+                        ->andWhere(Criteria::expr()->$compareMethodName($property->getName(), $orderedEntity->$getMethodName()));
                 }
 
                 if ($annotation instanceof Identical) {
