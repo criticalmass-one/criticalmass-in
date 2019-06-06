@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Criticalmass\Geo\EntityInterface\TrackInterface;
+use App\Criticalmass\OrderedEntities\Annotation as OE;
+use App\Criticalmass\OrderedEntities\OrderedEntityInterface;
 use App\Criticalmass\UploadableDataHandler\UploadableEntity;
 use App\Criticalmass\UploadFaker\FakeUploadable;
 use App\EntityInterface\RouteableInterface;
@@ -20,8 +22,9 @@ use Caldera\GeoBasic\Track\TrackInterface as BaseTrackInterface;
  * @Vich\Uploadable
  * @JMS\ExclusionPolicy("all")
  * @Routing\DefaultRoute(name="caldera_criticalmass_track_view")
+ * @OE\OrderedEntity()
  */
-class Track implements RouteableInterface, StaticMapableInterface, TrackInterface, UploadableEntity, FakeUploadable
+class Track implements RouteableInterface, StaticMapableInterface, TrackInterface, UploadableEntity, FakeUploadable, OrderedEntityInterface
 {
     const TRACK_SOURCE_GPX = 'TRACK_SOURCE_GPX';
     const TRACK_SOURCE_STRAVA = 'TRACK_SOURCE_STRAVA';
@@ -60,6 +63,7 @@ class Track implements RouteableInterface, StaticMapableInterface, TrackInterfac
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
+     * @OE\Identical()
      */
     protected $user;
 
@@ -80,6 +84,7 @@ class Track implements RouteableInterface, StaticMapableInterface, TrackInterfac
      * @ORM\Column(type="datetime", nullable=true)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
+     * @OE\Order(direction="asc")
      */
     protected $startDateTime;
 
@@ -130,6 +135,7 @@ class Track implements RouteableInterface, StaticMapableInterface, TrackInterfac
 
     /**
      * @ORM\Column(type="boolean")
+     * @OE\Boolean(value=false)
      */
     protected $deleted = false;
 
