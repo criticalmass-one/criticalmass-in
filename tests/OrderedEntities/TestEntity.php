@@ -16,4 +16,16 @@ class TestEntity implements OrderedEntityInterface
      * @var \DateTime $dateTime
      */
     protected $dateTime;
+
+    public function getDateTime(): \DateTime
+    {
+        return $this->dateTime;
+    }
+
+    public function setDateTime(\DateTime $dateTime): TestEntity
+    {
+        $this->dateTime = $dateTime;
+
+        return $this;
+    }
 }
