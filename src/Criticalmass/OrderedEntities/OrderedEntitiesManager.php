@@ -3,6 +3,7 @@
 namespace App\Criticalmass\OrderedEntities;
 
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\LazyCriteriaCollection;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class OrderedEntitiesManager implements OrderedEntitiesManagerInterface
@@ -17,20 +18,29 @@ class OrderedEntitiesManager implements OrderedEntitiesManagerInterface
 
     public function getPrevious(OrderedEntityInterface $orderedEntity): ?OrderedEntityInterface
     {
-        return $orderedEntity;
+        return $this->findEntity($orderedEntity, 'desc');
     }
 
     public function getNextEntity(OrderedEntityInterface $orderedEntity): ?OrderedEntityInterface
     {
-        return $orderedEntity;
+        return $this->findEntity($orderedEntity, 'asc');
     }
 
     protected function findEntity(OrderedEntityInterface $orderedEntity, string $direction): ?OrderedEntityInterface
     {
         $className = get_class($orderedEntity);
 
-        $criteria = new Criteria();
+        $expr = Criteria::expr();
+        $criteria = Criteria::create();
+        $criteria->where($expr->lt('dateTime', $orderedEntity->getDateTime()))
+            ->andWhere($expr->eq('city', $orderedEntity->getCity()));
 
-        return $this->registry->getRepository($className)->findOneBy($criteria);
+        $criteria->orderBy(['dateTime' => 'asc']);
+
+        $resultList = $this->registry->getRepository($className)
+            ->matching($criteria)
+            ->getValues();
+
+        return array_pop($resultList);
     }
 }
