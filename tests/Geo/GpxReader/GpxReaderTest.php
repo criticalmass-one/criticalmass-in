@@ -25,7 +25,7 @@ class GpxReaderTest extends TestCase
             ->loadFromFile('test.gpx')
             ->getCreationDateTime();
 
-        $expectedCreationDatetime = new \DateTime('2016-11-25 15:39:38');
+        $expectedCreationDatetime = new \DateTime('2016-11-25 15:39:38', new \DateTimeZone('UTC'));
 
         $this->assertEquals($expectedCreationDatetime, $actualCreationDateTime);
     }
@@ -38,7 +38,7 @@ class GpxReaderTest extends TestCase
             ->loadFromFile('test.gpx')
             ->getStartDateTime();
 
-        $expectedStartDateTime = new \DateTime('2017-04-28 18:26:33');
+        $expectedStartDateTime = new \DateTime('2017-04-28 18:26:33', new \DateTimeZone('UTC'));
 
         $this->assertEquals($expectedStartDateTime, $actualStartDateTime);
     }
@@ -51,7 +51,7 @@ class GpxReaderTest extends TestCase
             ->loadFromFile('test.gpx')
             ->getEndDateTime();
 
-        $expectedEndDateTime = new \DateTime('2017-04-28 18:27:51');
+        $expectedEndDateTime = new \DateTime('2017-04-28 18:27:51', new \DateTimeZone('UTC'));
 
         $this->assertEquals($expectedEndDateTime, $actualEndDateTime);
     }
@@ -108,7 +108,7 @@ class GpxReaderTest extends TestCase
             ->loadFromFile('test.gpx')
             ->getDateTimeOfPoint(5);
 
-        $this->assertEquals(new \DateTime('2017-04-28 18:26:50'), $dateTime);
+        $this->assertEquals(new \DateTime('2017-04-28 18:26:50', new \DateTimeZone('UTC')), $dateTime);
     }
 
     protected function createFilesystemMock(): FilesystemInterface

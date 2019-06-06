@@ -47,7 +47,7 @@ class StandardGpxPointsTest extends TestCase
         $actualPosition = GpxPointToPositionConverter::convert($xmlGpx);
 
         $expectedPosition = new Position(57.5, 10.5);
-        $expectedPosition->setDateTime(new \DateTime('2011-06-24 19:00:00'));
+        $expectedPosition->setDateTime(new \DateTime('2011-06-24 19:00:00', new \DateTimeZone('UTC')));
 
         $this->assertEquals($expectedPosition, $actualPosition);
     }
@@ -64,7 +64,7 @@ class StandardGpxPointsTest extends TestCase
         $expectedPosition = new Position(57.5, 10.5);
         $expectedPosition
             ->setAltitude(42.3)
-            ->setDateTime(new \DateTime('2011-06-24 19:00:00'));
+            ->setDateTime(new \DateTime('2011-06-24 19:00:00', new \DateTimeZone('UTC')));
 
         $this->assertEquals($expectedPosition, $actualPosition);
     }

@@ -18,7 +18,7 @@ class GpxTimeShifterTest extends TestCase
             ->loadFromFile('test.gpx')
             ->getDateTimeOfPoint(5);
 
-        $this->assertEquals(new \DateTime('2016-11-25 15:40:29'), $dateTime);
+        $this->assertEquals(new \DateTime('2016-11-25 15:40:29', new \DateTimeZone('UTC')), $dateTime);
     }
 
     public function testGpxTimeShifterFiveMinutes()
@@ -38,10 +38,9 @@ class GpxTimeShifterTest extends TestCase
 
         $dateTime = $positionList
             ->get(5)
-            ->getDateTime()
-        ;
+            ->getDateTime();
 
-        $this->assertEquals(new \DateTime('2016-11-25 15:40:29'), $dateTime);
+        $this->assertEquals(new \DateTime('2016-11-25 15:40:29', new \DateTimeZone('UTC')), $dateTime);
     }
 
     protected function createFilesystemMock()

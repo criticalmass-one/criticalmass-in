@@ -49,12 +49,12 @@ class TrackToPositionListConverterTest extends TestCase
 
         $expectedPositionList = new PositionList();
         $expectedPositionList
-            ->add((new Position(53.5487830, 9.9790980))->setDateTime(new \DateTime('2016-11-25 15:39:38')))
-            ->add((new Position(53.5493770, 9.9789250))->setDateTime(new \DateTime('2016-11-25 15:40:13')))
-            ->add((new Position(53.5493620, 9.9789640))->setDateTime(new \DateTime('2016-11-25 15:40:20')))
-            ->add((new Position(53.5493660, 9.9790330))->setDateTime(new \DateTime('2016-11-25 15:40:24')))
-            ->add((new Position(53.5493650, 9.9790790))->setDateTime(new \DateTime('2016-11-25 15:40:26')))
-            ->add((new Position(53.5493610, 9.9791320))->setDateTime(new \DateTime('2016-11-25 15:40:29')));
+            ->add((new Position(53.5487830, 9.9790980))->setDateTime(new \DateTime('2016-11-25 15:39:38', new \DateTimeZone('UTC'))))
+            ->add((new Position(53.5493770, 9.9789250))->setDateTime(new \DateTime('2016-11-25 15:40:13', new \DateTimeZone('UTC'))))
+            ->add((new Position(53.5493620, 9.9789640))->setDateTime(new \DateTime('2016-11-25 15:40:20', new \DateTimeZone('UTC'))))
+            ->add((new Position(53.5493660, 9.9790330))->setDateTime(new \DateTime('2016-11-25 15:40:24', new \DateTimeZone('UTC'))))
+            ->add((new Position(53.5493650, 9.9790790))->setDateTime(new \DateTime('2016-11-25 15:40:26', new \DateTimeZone('UTC'))))
+            ->add((new Position(53.5493610, 9.9791320))->setDateTime(new \DateTime('2016-11-25 15:40:29', new \DateTimeZone('UTC'))));
 
         $this->assertEquals($expectedPositionList, $actualPositionList);
     }
@@ -95,12 +95,12 @@ class TrackToPositionListConverterTest extends TestCase
 
         $expectedPositionList = new PositionList();
         $expectedPositionList
-            ->add((new Position(53.5487830, 9.9790980))->setAltitude(23.3)->setDateTime(new \DateTime('2016-11-25 15:39:38')))
-            ->add((new Position(53.5493770, 9.9789250))->setAltitude(25.5)->setDateTime(new \DateTime('2016-11-25 15:40:13')))
-            ->add((new Position(53.5493620, 9.9789640))->setAltitude(25.3)->setDateTime(new \DateTime('2016-11-25 15:40:20')))
-            ->add((new Position(53.5493660, 9.9790330))->setAltitude(25.0)->setDateTime(new \DateTime('2016-11-25 15:40:24')))
-            ->add((new Position(53.5493650, 9.9790790))->setAltitude(24.8)->setDateTime(new \DateTime('2016-11-25 15:40:26')))
-            ->add((new Position(53.5493610, 9.9791320))->setAltitude(24.6)->setDateTime(new \DateTime('2016-11-25 15:40:29')));
+            ->add((new Position(53.5487830, 9.9790980))->setAltitude(23.3)->setDateTime(new \DateTime('2016-11-25 15:39:38', new \DateTimeZone('UTC'))))
+            ->add((new Position(53.5493770, 9.9789250))->setAltitude(25.5)->setDateTime(new \DateTime('2016-11-25 15:40:13', new \DateTimeZone('UTC'))))
+            ->add((new Position(53.5493620, 9.9789640))->setAltitude(25.3)->setDateTime(new \DateTime('2016-11-25 15:40:20', new \DateTimeZone('UTC'))))
+            ->add((new Position(53.5493660, 9.9790330))->setAltitude(25.0)->setDateTime(new \DateTime('2016-11-25 15:40:24', new \DateTimeZone('UTC'))))
+            ->add((new Position(53.5493650, 9.9790790))->setAltitude(24.8)->setDateTime(new \DateTime('2016-11-25 15:40:26', new \DateTimeZone('UTC'))))
+            ->add((new Position(53.5493610, 9.9791320))->setAltitude(24.6)->setDateTime(new \DateTime('2016-11-25 15:40:29', new \DateTimeZone('UTC'))));
 
         $this->assertEquals($expectedPositionList, $actualPositionList);
     }

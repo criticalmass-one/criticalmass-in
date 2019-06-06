@@ -45,8 +45,8 @@ class PositionListToJsonConverterTest extends TestCase
     {
         $positionList = new PositionList();
         $positionList
-            ->add((new Position(53.5, 10.5))->setDateTime(new \DateTime('2011-06-24 19:00:00')))
-            ->add((new Position(53.6, 10.6))->setDateTime(new \DateTime('2011-06-24 19:15:00')));
+            ->add((new Position(53.5, 10.5))->setDateTime(new \DateTime('2011-06-24 19:00:00', new \DateTimeZone('UTC'))))
+            ->add((new Position(53.6, 10.6))->setDateTime(new \DateTime('2011-06-24 19:15:00', new \DateTimeZone('UTC'))));
 
         $converter = new PositionListToJsonConverter($this->createSerializer());
 
