@@ -68,6 +68,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      * @Routing\RouteParameter(name="citySlug")
+     * @OE\Identical()
      */
     protected $city;
 
