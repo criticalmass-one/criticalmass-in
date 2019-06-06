@@ -36,6 +36,7 @@ class TrackTimeShifter extends TimeShifter implements TrackTimeShifterInterface
     {
         $this->gpxWriter
             ->setPositionList($this->positionList)
+            ->generateGpxContent()
             ->saveGpxContent($this->track->getTrackFilename());
 
         return $this;

@@ -27,9 +27,9 @@ class TrackRangeController extends AbstractController
 
         if (Request::METHOD_POST === $request->getMethod()) {
             return $this->rangePostAction($request, $track, $form, $latLngListGenerator, $eventDispatcher);
-        } else {
-            return $this->rangeGetAction($request, $track, $form, $latLngListGenerator, $eventDispatcher);
         }
+
+        return $this->rangeGetAction($request, $track, $form, $latLngListGenerator, $eventDispatcher);
     }
 
     protected function rangeGetAction(Request $request, Track $track, FormInterface $form, SimpleLatLngListGenerator $latLngListGenerator, EventDispatcherInterface $eventDispatcher): Response
