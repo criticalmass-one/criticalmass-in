@@ -18,8 +18,6 @@ class TrackController extends AbstractController
     {
         return $this->render('Track/view.html.twig', [
             'track' => $track,
-            'nextTrack' => $this->getTrackRepository()->getNextTrack($track),
-            'previousTrack' => $this->getTrackRepository()->getPreviousTrack($track),
         ]);
     }
 }
