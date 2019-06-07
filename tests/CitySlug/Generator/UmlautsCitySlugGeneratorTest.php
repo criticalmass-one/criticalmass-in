@@ -2,7 +2,6 @@
 
 namespace Tests\CitySlug\Generator;
 
-use App\Criticalmass\CitySlug\Generator\SimpleCitySlugGenerator;
 use App\Criticalmass\CitySlug\Generator\UmlautsCitySlugGenerator;
 use App\Entity\City;
 use App\Entity\CitySlug;
@@ -28,7 +27,7 @@ class UmlautsCitySlugGeneratorTest extends TestCase
 
     public function testKoeln(): void
     {
-        $generator = new SimpleCitySlugGenerator();
+        $generator = new UmlautsCitySlugGenerator();
 
         $city = new City();
         $city->setCity('Köln');
@@ -37,14 +36,14 @@ class UmlautsCitySlugGeneratorTest extends TestCase
 
         $expectedCitySlug = new CitySlug();
         $expectedCitySlug->setCity($city)
-            ->setSlug('koln');
+            ->setSlug('koeln');
 
         $this->assertEquals($expectedCitySlug, $actualCitySlug);
     }
 
     public function testDuesseldorf(): void
     {
-        $generator = new SimpleCitySlugGenerator();
+        $generator = new UmlautsCitySlugGenerator();
 
         $city = new City();
         $city->setCity('Düsseldorf');
@@ -60,7 +59,7 @@ class UmlautsCitySlugGeneratorTest extends TestCase
 
     public function testAUmlautCity(): void
     {
-        $generator = new SimpleCitySlugGenerator();
+        $generator = new UmlautsCitySlugGenerator();
 
         $city = new City();
         $city->setCity('Ästadt');
@@ -76,7 +75,7 @@ class UmlautsCitySlugGeneratorTest extends TestCase
 
     public function testFassbach(): void
     {
-        $generator = new SimpleCitySlugGenerator();
+        $generator = new UmlautsCitySlugGenerator();
 
         $city = new City();
         $city->setCity('Faßbach');
@@ -85,7 +84,7 @@ class UmlautsCitySlugGeneratorTest extends TestCase
 
         $expectedCitySlug = new CitySlug();
         $expectedCitySlug->setCity($city)
-            ->setSlug('fa-bach');
+            ->setSlug('fassbach');
 
         $this->assertEquals($expectedCitySlug, $actualCitySlug);
     }

@@ -4,9 +4,8 @@ namespace App\Criticalmass\CitySlug\Generator;
 
 use App\Entity\City;
 use App\Entity\CitySlug;
-use Malenki\Slug;
 
-class SimpleCitySlugGenerator implements CitySlugGeneratorInterface
+class SimpleCitySlugGenerator extends AbstractCitySlugGenerator
 {
     public function generate(City $city): CitySlug
     {
@@ -15,9 +14,9 @@ class SimpleCitySlugGenerator implements CitySlugGeneratorInterface
 
         $cityName = $city->getCity();
 
-        $lowercaseCityName = strtolower($cityName);
+        $lowercaseCityName = mb_strtolower($cityName);
 
-        $citySlug->setSlug((string) new Slug($lowercaseCityName));
+        $citySlug->setSlug($this->createSlug($lowercaseCityName));
 
         return $citySlug;
     }

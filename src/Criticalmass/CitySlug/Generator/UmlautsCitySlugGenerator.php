@@ -4,9 +4,8 @@ namespace App\Criticalmass\CitySlug\Generator;
 
 use App\Entity\City;
 use App\Entity\CitySlug;
-use Malenki\Slug;
 
-class UmlautsCitySlugGenerator implements CitySlugGeneratorInterface
+class UmlautsCitySlugGenerator extends AbstractCitySlugGenerator
 {
     public function generate(City $city): CitySlug
     {
@@ -15,11 +14,11 @@ class UmlautsCitySlugGenerator implements CitySlugGeneratorInterface
 
         $cityName = $city->getCity();
 
-        $lowercaseCityName = strtolower($cityName);
+        $lowercaseCityName = mb_strtolower($cityName);
 
         $umlautsLowercaseCityName = str_replace(['ä', 'ö', 'ü', 'ß'], ['ae', 'oe', 'ue', 'ss'], $lowercaseCityName);
 
-        $citySlug->setSlug((string) new Slug($umlautsLowercaseCityName));
+        $citySlug->setSlug($this->createSlug($umlautsLowercaseCityName));
 
         return $citySlug;
     }
