@@ -16,6 +16,12 @@ class CitySlugHandler
 
         $citySlugs[] = (new UmlautsCitySlugGenerator())->generate($city);
 
-        return array_unique($citySlugs);
+        $citySlugs = array_unique($citySlugs); // kicks out umlaut slug if there are no umlauts
+
+        foreach ($citySlugs as $citySlug) {
+            $city->addSlug($citySlug);
+        }
+
+        return $citySlugs;
     }
 }

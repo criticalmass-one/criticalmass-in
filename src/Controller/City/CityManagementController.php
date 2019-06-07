@@ -3,6 +3,7 @@
 namespace App\Controller\City;
 
 use App\Criticalmass\CityPopulationFetcher\CityPopulationFetcherInterface;
+use App\Criticalmass\CitySlug\Handler\CitySlugHandler;
 use App\Criticalmass\OpenStreetMap\NominatimCityBridge\NominatimCityBridge;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Event\City\CityCreatedEvent;
@@ -94,10 +95,12 @@ class CityManagementController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
 
-            $citySlug = $this->createCitySlug($city);
-            $city->addSlug($citySlug);
+            $citySlugs = CitySlugHandler::createSlugsForCity($city);
 
-            $em->persist($citySlug);
+            foreach ($citySlugs as $citySlug) {
+                $em->persist($citySlug);
+            }
+
             $em->persist($city);
 
             $em->flush();
@@ -192,18 +195,6 @@ class CityManagementController extends AbstractController
             'state' => $city->getRegion()->getName(),
             'region' => $city->getRegion(),
         ]);
-    }
-
-    protected function createCitySlug(City $city): CitySlug
-    {
-        $slugString = new Slug($city->getCity());
-
-        $citySlug = new CitySlug();
-        $citySlug
-            ->setCity($city)
-            ->setSlug($slugString->render());
-
-        return $citySlug;
     }
 
     protected function getRegion(
