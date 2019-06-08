@@ -131,4 +131,23 @@ class CityFactoryTest extends TestCase
 
         $this->assertEquals($expectedCity, $actualCity);
     }
+
+    public function testCityName(): void
+    {
+        $dateTime = new \DateTime();
+
+        $cityFactory = new CityFactory();
+        $cityFactory
+            ->withName('Hamburg')
+            ->withCreatedAt($dateTime);
+
+        $actualCity = $cityFactory->build();
+
+        $expectedCity = new City();
+        $expectedCity
+            ->setCity('Hamburg')
+            ->setCreatedAt($dateTime);
+
+        $this->assertEquals($expectedCity, $actualCity);
+    }
 }
