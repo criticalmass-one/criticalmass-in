@@ -12,7 +12,7 @@ class CityFactory implements CityFactoryInterface
      */
     protected $city;
 
-    private function __construct()
+    public function __construct()
     {
         $this->city = new City();
     }
@@ -85,6 +85,13 @@ class CityFactory implements CityFactoryInterface
     public function withRideNamer(string $rideNamerFqcn): CityFactoryInterface
     {
         $this->city->setRideNamer($rideNamerFqcn);
+
+        return $this;
+    }
+
+    public function withCreatedAt(\DateTime $createdAt): CityFactoryInterface
+    {
+        $this->city->setCreatedAt($createdAt);
 
         return $this;
     }

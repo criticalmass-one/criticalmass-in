@@ -16,5 +16,6 @@ interface CityFactoryInterface
     public function withDateTimezone(\DateTimeZone $dateTimeZone): CityFactoryInterface;
     public function withTimezone(string $timezone): CityFactoryInterface;
     public function withRideNamer(string $rideNamerFqcn): CityFactoryInterface;
+    public function withCreatedAt(\DateTime $createdAt): CityFactoryInterface;
     public function build(): City;
 }
