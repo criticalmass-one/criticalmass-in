@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Tests\Geocoding\LocationBuilder;
+namespace Tests\Geocoding;
 
 use App\Criticalmass\Geocoding\ReverseGeocodeable;
 

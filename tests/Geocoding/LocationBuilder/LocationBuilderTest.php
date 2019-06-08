@@ -10,6 +10,7 @@ use Geocoder\Model\AdminLevelCollection;
 use Geocoder\Model\Coordinates;
 use Geocoder\Model\Country;
 use PHPUnit\Framework\TestCase;
+use Tests\Geocoding\TestGeocodeable;
 
 class LocationBuilderTest extends TestCase
 {
