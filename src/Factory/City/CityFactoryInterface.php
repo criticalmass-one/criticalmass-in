@@ -3,7 +3,9 @@
 namespace App\Factory\City;
 
 use App\Entity\City;
+use App\Entity\Region;
 use Caldera\GeoBasic\Coord\CoordInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 interface CityFactoryInterface
 {
@@ -17,5 +19,7 @@ interface CityFactoryInterface
     public function withTimezone(string $timezone): CityFactoryInterface;
     public function withRideNamer(string $rideNamerFqcn): CityFactoryInterface;
     public function withCreatedAt(\DateTime $createdAt): CityFactoryInterface;
+    public function withRegion(Region $region): CityFactoryInterface;
+    public function withUser(UserInterface $user): CityFactoryInterface;
     public function build(): City;
 }

@@ -3,7 +3,9 @@
 namespace App\Factory\City;
 
 use App\Entity\City;
+use App\Entity\Region;
 use Caldera\GeoBasic\Coord\CoordInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class CityFactory implements CityFactoryInterface
 {
@@ -92,6 +94,20 @@ class CityFactory implements CityFactoryInterface
     public function withCreatedAt(\DateTime $createdAt): CityFactoryInterface
     {
         $this->city->setCreatedAt($createdAt);
+
+        return $this;
+    }
+
+    public function withRegion(Region $region): CityFactoryInterface
+    {
+        $this->city->setRegion($region);
+
+        return $this;
+    }
+
+    public function withUser(UserInterface $user): CityFactoryInterface
+    {
+        $this->city->setUser($user);
 
         return $this;
     }

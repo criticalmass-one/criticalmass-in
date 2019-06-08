@@ -3,6 +3,8 @@
 namespace Tests\Factory\City;
 
 use App\Entity\City;
+use App\Entity\Region;
+use App\Entity\User;
 use App\Factory\City\CityFactory;
 use Doctrine\Common\Collections\Collection;
 use PHPUnit\Framework\TestCase;
@@ -87,5 +89,46 @@ class CityFactoryTest extends TestCase
         $this->assertNotEquals($city1->getColorRed(), $city2->getColorRed());
         $this->assertNotEquals($city1->getColorGreen(), $city2->getColorGreen());
         $this->assertNotEquals($city1->getColorBlue(), $city2->getColorBlue());
+    }
+
+    public function testRegion(): void
+    {
+        $dateTime = new \DateTime();
+
+        $region = new Region();
+
+        $cityFactory = new CityFactory();
+        $cityFactory
+            ->withRegion($region)
+            ->withCreatedAt($dateTime);
+
+        $actualCity = $cityFactory->build();
+
+        $expectedCity = new City();
+        $expectedCity
+            ->setRegion($region)
+            ->setCreatedAt($dateTime);
+
+        $this->assertEquals($expectedCity, $actualCity);
+    }
+
+    public function testUser(): void
+    {
+        $dateTime = new \DateTime();
+        $user = new User();
+
+        $cityFactory = new CityFactory();
+        $cityFactory
+            ->withUser($user)
+            ->withCreatedAt($dateTime);
+
+        $actualCity = $cityFactory->build();
+
+        $expectedCity = new City();
+        $expectedCity
+            ->setUser($user)
+            ->setCreatedAt($dateTime);
+
+        $this->assertEquals($expectedCity, $actualCity);
     }
 }
