@@ -6,6 +6,7 @@ use App\Criticalmass\ViewStorage\ViewModel\View;
 use App\Criticalmass\ViewStorage\ViewModel\ViewFactory;
 use App\Entity\User;
 use PHPUnit\Framework\TestCase;
+use Tests\ViewStorage\TestClass;
 
 class ViewFactoryTest extends TestCase
 {

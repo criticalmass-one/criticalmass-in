@@ -11,6 +11,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use JMS\Serializer\SerializerBuilder;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Tests\ViewStorage\TestClass;
+use Tests\ViewStorage\TestView;
 
 class ViewStoragePersisterTest extends TestCase
 {

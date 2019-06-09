@@ -9,6 +9,7 @@ use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Tests\ViewStorage\TestClass;
 
 class ViewStorageCacheTest extends TestCase
 {
@@ -37,7 +38,7 @@ class ViewStorageCacheTest extends TestCase
 
         $viewStorageCache = new ViewStorageCache($tokenStorage, $producer, $serializer);
 
-        $testClass = new TestClass;
+        $testClass = new TestClass();
 
         $viewStorageCache->countView($testClass);
     }

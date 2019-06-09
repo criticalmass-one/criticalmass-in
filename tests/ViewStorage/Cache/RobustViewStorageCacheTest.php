@@ -15,6 +15,8 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Tests\ViewStorage\TestClass;
+use Tests\ViewStorage\TestClassView;
 
 class RobustViewStorageCacheTest extends TestCase
 {

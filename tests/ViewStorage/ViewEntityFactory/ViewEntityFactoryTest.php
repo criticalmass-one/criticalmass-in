@@ -8,6 +8,8 @@ use App\Entity\User;
 use Doctrine\Common\Persistence\ObjectRepository;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Tests\ViewStorage\TestClass;
+use Tests\ViewStorage\TestClassView;
 
 class ViewEntityFactoryTest extends TestCase
 {
