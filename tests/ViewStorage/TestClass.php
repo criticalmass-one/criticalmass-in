@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\ViewStorage\Tests;
+namespace Tests\ViewStorage;
 
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 

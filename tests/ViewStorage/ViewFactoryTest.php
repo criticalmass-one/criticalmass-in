@@ -1,8 +1,7 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\ViewStorage\Tests;
+namespace Tests\ViewStorage;
 
-use App\Criticalmass\ViewStorage\Tests\TestClass;
 use App\Criticalmass\ViewStorage\ViewModel\View;
 use App\Criticalmass\ViewStorage\ViewModel\ViewFactory;
 use App\Entity\User;
