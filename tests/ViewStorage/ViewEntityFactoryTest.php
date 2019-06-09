@@ -4,6 +4,8 @@ namespace Tests\ViewStorage;
 
 use App\Criticalmass\ViewStorage\ViewEntityFactory\ViewEntityFactory;
 use App\Criticalmass\ViewStorage\ViewModel\View;
+use App\Entity\User;
+use Doctrine\Common\Persistence\ObjectRepository;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -23,7 +25,7 @@ class ViewEntityFactoryTest extends TestCase
             ->setEntityId(1)
             ->setEntityClassName('TestClass');
 
-        $actualViewEntity = $viewEntityFactory->createViewEntity($viewModel, $testClass, null, 'Tests\\ViewStorage\\');
+        $actualViewEntity = $viewEntityFactory->createViewEntity($viewModel, $testClass, 'Tests\\ViewStorage\\');
 
         $expectedViewEntity = new TestClassView();
         $expectedViewEntity
@@ -36,7 +38,22 @@ class ViewEntityFactoryTest extends TestCase
 
     public function testFactoryWithUser(): void
     {
+        $user = new User();
+        $user->setId(1);
+
+        $repository = $this->createMock(ObjectRepository::class);
+        $repository
+            ->expects($this->once())
+            ->method('find')
+            ->with($this->equalTo(1))
+            ->will($this->returnValue($user));
+
         $registry = $this->createMock(RegistryInterface::class);
+        $registry
+            ->expects($this->once())
+            ->method('getRepository')
+            ->with($this->equalTo(User::class))
+            ->will($this->returnValue($repository));
 
         $dateTime = new \DateTime();
         $testClass = new TestClass();
@@ -49,13 +66,14 @@ class ViewEntityFactoryTest extends TestCase
             ->setUserId(1)
             ->setEntityClassName('TestClass');
 
-        $actualViewEntity = $viewEntityFactory->createViewEntity($viewModel, $testClass, null, 'Tests\\ViewStorage\\');
+        $actualViewEntity = $viewEntityFactory->createViewEntity($viewModel, $testClass, 'Tests\\ViewStorage\\');
 
         $expectedViewEntity = new TestClassView();
         $expectedViewEntity
             ->setId(1)
             ->setTestClass($testClass)
-            ->setDateTime($dateTime);
+            ->setDateTime($dateTime)
+            ->setUser($user);
 
         $this->assertEquals($expectedViewEntity, $actualViewEntity);
     }

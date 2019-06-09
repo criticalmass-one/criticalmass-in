@@ -6,7 +6,6 @@ use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewEntity;
 use App\Criticalmass\ViewStorage\ViewModel\View;
 use App\Entity\User;
-use FOS\UserBundle\Model\UserInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class ViewEntityFactory implements ViewEntityFactoryInterface
@@ -19,7 +18,7 @@ class ViewEntityFactory implements ViewEntityFactoryInterface
         $this->registry = $registry;
     }
 
-    public function createViewEntity(View $view, ViewableEntity $viewableEntity, UserInterface $user = null, string $namespace = 'App\\Entity\\'): ViewEntity
+    public function createViewEntity(View $view, ViewableEntity $viewableEntity, string $namespace = 'App\\Entity\\'): ViewEntity
     {
         $viewEntity = $this->getViewEntity($view->getEntityClassName(), $namespace);
 
@@ -28,7 +27,7 @@ class ViewEntityFactory implements ViewEntityFactoryInterface
         $viewEntity
             ->setId($viewableEntity->getId())
             ->$viewSetEntityMethod($viewableEntity)
-            ->setUser($user)
+            ->setUser($this->getUser($view->getUserId()))
             ->setDateTime($view->getDateTime());
 
         return $viewEntity;
