@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Criticalmass\Geocoding\ReverseGeocodeable;
 use App\Criticalmass\Image\PhotoManipulator\PhotoInterface\ManipulateablePhotoInterface;
+use App\Criticalmass\OrderedEntities\Annotation as OE;
+use App\Criticalmass\OrderedEntities\OrderedEntityInterface;
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
 use App\Criticalmass\UploadFaker\FakeUploadable;
 use App\EntityInterface\AutoParamConverterAble;
@@ -26,8 +28,9 @@ use App\Criticalmass\Sharing\Annotation as Sharing;
  * @ORM\Entity(repositoryClass="App\Repository\PhotoRepository")
  * @JMS\ExclusionPolicy("all")
  * @Routing\DefaultRoute(name="caldera_criticalmass_photo_show_ride")
+ * @OE\OrderedEntity()
  */
-class Photo implements FakeUploadable, ViewableInterface, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, Shareable, StaticMapableInterface, ReverseGeocodeable
+class Photo implements FakeUploadable, ViewableInterface, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, Shareable, StaticMapableInterface, ReverseGeocodeable, OrderedEntityInterface
 {
     /**
      * @ORM\Id
@@ -48,6 +51,7 @@ class Photo implements FakeUploadable, ViewableInterface, ManipulateablePhotoInt
      * @ORM\ManyToOne(targetEntity="Ride", inversedBy="photos")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      * @Routing\RouteParameter(name="rideIdentifier")
+     * @OE\Identical()
      */
     protected $ride;
 
@@ -84,17 +88,20 @@ class Photo implements FakeUploadable, ViewableInterface, ManipulateablePhotoInt
 
     /**
      * @ORM\Column(type="boolean")
+     * @OE\Boolean(value=true)
      */
     protected $enabled = true;
 
     /**
      * @ORM\Column(type="boolean")
+     * @OE\Boolean(value=false)
      */
     protected $deleted = false;
 
     /**
      * @ORM\Column(type="datetime")
      * @JMS\Expose
+     * @OE\Order(direction="asc")
      */
     protected $creationDateTime;
 
@@ -390,7 +397,7 @@ class Photo implements FakeUploadable, ViewableInterface, ManipulateablePhotoInt
         return $this->imageSize;
     }
 
-    public function setImageSize(int $imageSize): PhotoInterface
+    public function setImageSize(int $imageSize = null): PhotoInterface
     {
         $this->imageSize = $imageSize;
 
@@ -402,7 +409,7 @@ class Photo implements FakeUploadable, ViewableInterface, ManipulateablePhotoInt
         return $this->imageMimeType;
     }
 
-    public function setImageMimeType(string $imageMimeType): PhotoInterface
+    public function setImageMimeType(string $imageMimeType = null): PhotoInterface
     {
         $this->imageMimeType = $imageMimeType;
 

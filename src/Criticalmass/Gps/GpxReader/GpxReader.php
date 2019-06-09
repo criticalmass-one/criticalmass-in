@@ -111,7 +111,9 @@ class GpxReader
 
     public function getDateTimeOfPoint($n)
     {
-        return new \DateTime($this->getTimestampOfPoint($n));
+        $dateTimeSpec = '@%d';
+
+        return new \DateTime(sprintf($dateTimeSpec, $this->getTimestampOfPoint($n)));
     }
 
     public function getTimeOfPoint($n)

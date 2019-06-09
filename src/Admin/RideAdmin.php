@@ -28,12 +28,10 @@ class RideAdmin extends AbstractAdmin
             ->end()
 
             ->with('Uhrzeit', ['class' => 'col-md-6'])
-            ->add('hasTime')
             ->add('dateTime')
             ->end()
 
             ->with('Treffpunkt', ['class' => 'col-md-6'])
-            ->add('hasLocation')
             ->add('location')
             ->add('latitude')
             ->add('longitude')

@@ -66,6 +66,7 @@ class GpxWriter implements GpxWriterInterface
 
         $this->writer->startElement('gpx');
 
+        $this->addStandardGpxAttributes();
         $this->generateGpxAttributes();
         $this->generateGpxMetadata();
 
