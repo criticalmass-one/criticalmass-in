@@ -233,7 +233,7 @@ class City implements BoardInterface, ViewableInterface, ElasticSearchPinInterfa
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      */
-    protected $timezone;
+    protected $timezone = 'Europe/Berlin';
 
     /**
      * @ORM\Column(type="integer")

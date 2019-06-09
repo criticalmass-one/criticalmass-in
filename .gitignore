@@ -30,6 +30,7 @@ criticalmass.iml
 
 ###> symfony/framework-bundle ###
 /.env
+/.env.test
 /public/bundles/
 /var/
 /vendor/
