@@ -16,6 +16,9 @@ class TestView implements ViewEntity
     /** @var \DateTime $dateTime */
     protected $dateTime;
 
+    /** @var TestClass $testClass */
+    protected $testClass;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -50,5 +53,17 @@ class TestView implements ViewEntity
     public function getDateTime(): \DateTime
     {
         return $this->dateTime;
+    }
+
+    public function setTest(TestClass $testClass): TestView
+    {
+        $this->testClass = $testClass;
+
+        return $this;
+    }
+
+    public function getTest(): TestClass
+    {
+        return $this->testClass;
     }
 }
