@@ -5,21 +5,28 @@ namespace App\Criticalmass\ViewStorage\ViewEntityFactory;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewEntity;
 use App\Criticalmass\ViewStorage\ViewModel\View;
+use App\Entity\User;
 use FOS\UserBundle\Model\UserInterface;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
-class ViewEntityFactory
+class ViewEntityFactory implements ViewEntityFactoryInterface
 {
-    private function __construct()
+    /** @var RegistryInterface $registry */
+    protected $registry;
+
+    public function __construct(RegistryInterface $registry)
     {
+        $this->registry = $registry;
     }
 
-    public static function createViewEntity(View $view, ViewableEntity $viewableEntity, UserInterface $user): ViewEntity
+    public function createViewEntity(View $view, ViewableEntity $viewableEntity, UserInterface $user = null, string $namespace = 'App\\Entity\\'): ViewEntity
     {
-        $viewEntity = self::getViewEntity($view->getEntityClassName());
+        $viewEntity = $this->getViewEntity($view->getEntityClassName(), $namespace);
 
         $viewSetEntityMethod = sprintf('set%s', $view->getEntityClassName());
 
         $viewEntity
+            ->setId($viewableEntity->getId())
             ->$viewSetEntityMethod($viewableEntity)
             ->setUser($user)
             ->setDateTime($view->getDateTime());
@@ -27,10 +34,19 @@ class ViewEntityFactory
         return $viewEntity;
     }
 
-    protected static function getViewEntity(string $className): ViewEntity
+    protected function getViewEntity(string $className, string $namespace = 'App\\Entity\\'): ViewEntity
     {
-        $viewClassName = sprintf('App\Entity\\%sView', $className);
+        $viewClassName = sprintf('%s%sView', $namespace, $className);
 
         return new $viewClassName;
+    }
+
+    protected function getUser(int $userId = null): ?User
+    {
+        if (!$userId) {
+            return null;
+        }
+
+        return $this->registry->getRepository(User::class)->find($userId);
     }
 }
