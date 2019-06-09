@@ -2,7 +2,6 @@
 
 namespace App\Criticalmass\ViewStorage\Persister;
 
-use App\Criticalmass\ViewStorage\ViewEntityFactory\ViewEntityFactory;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewEntity;
 use App\Criticalmass\ViewStorage\ViewModel\View;
@@ -42,13 +41,13 @@ class ViewStoragePersister extends AbstractViewStoragePersister
 
     protected function getView(string $className): ViewEntity
     {
-        $viewClassName = sprintf('App\\Entity\\%sView', $className);
+        $viewClassName = sprintf('%s%sView', $this->entityNamespace, $className);
 
         return new $viewClassName;
     }
 
     protected function getEntity(string $className, int $entityId): ViewableEntity
     {
-        return $this->registry->getManager()->getRepository(sprintf('App:%s', $className))->find($entityId);
+        return $this->registry->getRepository(sprintf('App:%s', $className))->find($entityId);
     }
 }

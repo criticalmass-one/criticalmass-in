@@ -17,10 +17,20 @@ abstract class AbstractViewStoragePersister implements ViewStoragePersisterInter
     /** @var ViewEntityFactoryInterface $viewEntityFactory */
     protected $viewEntityFactory;
 
+    /** @var string $entityNamespace */
+    protected $entityNamespace = 'App\\Entity\\';
+
     public function __construct(RegistryInterface $registry, SerializerInterface $serializer, ViewEntityFactoryInterface $viewEntityFactory)
     {
         $this->registry = $registry;
         $this->serializer = $serializer;
         $this->viewEntityFactory = $viewEntityFactory;
+    }
+
+    public function setEntityNamespace(string $entityNamespace): ViewStoragePersisterInterface
+    {
+        $this->entityNamespace = $entityNamespace;
+
+        return $this;
     }
 }

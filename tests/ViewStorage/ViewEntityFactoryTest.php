@@ -18,6 +18,7 @@ class ViewEntityFactoryTest extends TestCase
         $dateTime = new \DateTime();
         $testClass = new TestClass();
         $viewEntityFactory = new ViewEntityFactory($registry);
+        $viewEntityFactory->setEntityNamespace('Tests\\ViewStorage\\');
 
         $viewModel = new View();
         $viewModel
@@ -25,7 +26,7 @@ class ViewEntityFactoryTest extends TestCase
             ->setEntityId(1)
             ->setEntityClassName('TestClass');
 
-        $actualViewEntity = $viewEntityFactory->createViewEntity($viewModel, $testClass, 'Tests\\ViewStorage\\');
+        $actualViewEntity = $viewEntityFactory->createViewEntity($viewModel, $testClass);
 
         $expectedViewEntity = new TestClassView();
         $expectedViewEntity
@@ -58,6 +59,7 @@ class ViewEntityFactoryTest extends TestCase
         $dateTime = new \DateTime();
         $testClass = new TestClass();
         $viewEntityFactory = new ViewEntityFactory($registry);
+        $viewEntityFactory->setEntityNamespace('Tests\\ViewStorage\\');
 
         $viewModel = new View();
         $viewModel
@@ -66,7 +68,7 @@ class ViewEntityFactoryTest extends TestCase
             ->setUserId(1)
             ->setEntityClassName('TestClass');
 
-        $actualViewEntity = $viewEntityFactory->createViewEntity($viewModel, $testClass, 'Tests\\ViewStorage\\');
+        $actualViewEntity = $viewEntityFactory->createViewEntity($viewModel, $testClass);
 
         $expectedViewEntity = new TestClassView();
         $expectedViewEntity

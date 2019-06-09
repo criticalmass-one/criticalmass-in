@@ -8,5 +8,6 @@ use App\Criticalmass\ViewStorage\ViewModel\View;
 
 interface ViewEntityFactoryInterface
 {
-    public function createViewEntity(View $view, ViewableEntity $viewableEntity, string $namespace = 'App\\Entity\\'): ViewEntity;
+    public function createViewEntity(View $view, ViewableEntity $viewableEntity): ViewEntity;
+    public function setEntityNamespace(string $entityNamespace): ViewEntityFactory;
 }

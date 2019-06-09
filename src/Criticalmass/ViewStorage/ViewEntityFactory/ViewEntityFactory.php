@@ -13,14 +13,17 @@ class ViewEntityFactory implements ViewEntityFactoryInterface
     /** @var RegistryInterface $registry */
     protected $registry;
 
+    /** @var string $entityNamespace */
+    protected $entityNamespace = 'App\\Entity\\';
+
     public function __construct(RegistryInterface $registry)
     {
         $this->registry = $registry;
     }
 
-    public function createViewEntity(View $view, ViewableEntity $viewableEntity, string $namespace = 'App\\Entity\\'): ViewEntity
+    public function createViewEntity(View $view, ViewableEntity $viewableEntity): ViewEntity
     {
-        $viewEntity = $this->getViewEntity($view->getEntityClassName(), $namespace);
+        $viewEntity = $this->getViewEntity($view->getEntityClassName());
 
         $viewSetEntityMethod = sprintf('set%s', $view->getEntityClassName());
 
@@ -33,9 +36,16 @@ class ViewEntityFactory implements ViewEntityFactoryInterface
         return $viewEntity;
     }
 
-    protected function getViewEntity(string $className, string $namespace = 'App\\Entity\\'): ViewEntity
+    public function setEntityNamespace(string $entityNamespace): ViewEntityFactory
     {
-        $viewClassName = sprintf('%s%sView', $namespace, $className);
+        $this->entityNamespace = $entityNamespace;
+
+        return $this;
+    }
+
+    protected function getViewEntity(string $className): ViewEntity
+    {
+        $viewClassName = sprintf('%s%sView', $this->entityNamespace, $className);
 
         return new $viewClassName;
     }
