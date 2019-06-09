@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Criticalmass\Geocoding\ReverseGeocodeable;
+use App\Criticalmass\OrderedEntities\Annotation as OE;
+use App\Criticalmass\OrderedEntities\OrderedEntityInterface;
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\Criticalmass\Weather\EntityInterface\WeatherableInterface;
@@ -35,7 +37,7 @@ use App\Criticalmass\Sharing\Annotation as Sharing;
  * @Vich\Uploadable
  * @Routing\DefaultRoute(name="caldera_criticalmass_ride_show")
  */
-class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, Shareable, ReverseGeocodeable, WeatherableInterface
+class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, Shareable, ReverseGeocodeable, WeatherableInterface, OrderedEntityInterface
 {
     /**
      * @ORM\Id
@@ -66,6 +68,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      * @Routing\RouteParameter(name="citySlug")
+     * @OE\Identical()
      */
     protected $city;
 
@@ -112,24 +115,9 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      * @JMS\Type("DateTime<'U'>")
+     * @OE\Order(direction="asc")
      */
     protected $dateTime;
-
-    /**
-     * @ORM\Column(type="boolean")
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
-     * @JMS\Type("boolean")
-     */
-    protected $hasTime = false;
-
-    /**
-     * @ORM\Column(type="boolean")
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
-     * @JMS\Type("boolean")
-     */
-    protected $hasLocation = false;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -308,9 +296,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     {
         $this->dateTime = new \DateTime();
         $this->createdAt = new \DateTime();
-        $this->visibleSince = new \DateTime();
-        $this->visibleUntil = new \DateTime();
-        $this->expectedStartDateTime = new \DateTime();
 
         $this->weathers = new ArrayCollection();
         $this->estimates = new ArrayCollection();
@@ -351,14 +336,14 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         return $this;
     }
 
-    public function setDateTime(\DateTime $dateTime): Ride
+    public function setDateTime(\DateTime $dateTime = null): Ride
     {
         $this->dateTime = $dateTime;
 
         return $this;
     }
 
-    public function getDateTime(): \DateTime
+    public function getDateTime(): ?\DateTime
     {
         return $this->dateTime;
     }
@@ -369,30 +354,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     public function getSimpleDate(): string
     {
         return $this->dateTime->format('Y-m-d');
-    }
-
-    public function setHasTime(bool $hasTime): Ride
-    {
-        $this->hasTime = $hasTime;
-
-        return $this;
-    }
-
-    public function getHasTime(): bool
-    {
-        return $this->hasTime;
-    }
-
-    public function setHasLocation(bool $hasLocation): Ride
-    {
-        $this->hasLocation = $hasLocation;
-
-        return $this;
-    }
-
-    public function getHasLocation(): bool
-    {
-        return $this->hasLocation;
     }
 
     public function setLocation(string $location = null): ReverseGeocodeable
@@ -1001,7 +962,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         return $this->imageSize;
     }
 
-    public function setImageSize(int $imageSize): PhotoInterface
+    public function setImageSize(int $imageSize = null): PhotoInterface
     {
         $this->imageSize = $imageSize;
 
@@ -1013,7 +974,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         return $this->imageMimeType;
     }
 
-    public function setImageMimeType(string $imageMimeType): PhotoInterface
+    public function setImageMimeType(string $imageMimeType = null): PhotoInterface
     {
         $this->imageMimeType = $imageMimeType;
 

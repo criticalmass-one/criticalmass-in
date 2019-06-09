@@ -98,9 +98,7 @@ class RideCalculator extends AbstractRideCalculator
         $rideDateTime = new \DateTime($dateTimeSpec, $cityTimezone);
         $rideDateTime->add($timeInterval);
         
-        $ride
-            ->setDateTime($rideDateTime)
-            ->setHasTime(true);
+        $ride->setDateTime($rideDateTime);
 
         return $ride;
     }
@@ -121,9 +119,7 @@ class RideCalculator extends AbstractRideCalculator
         $ride
             ->setLatitude($cityCycle->getLatitude())
             ->setLongitude($cityCycle->getLongitude())
-            ->setLocation($cityCycle->getLocation())
-            ->setHasLocation(true)
-        ;
+            ->setLocation($cityCycle->getLocation());
 
         return $ride;
     }

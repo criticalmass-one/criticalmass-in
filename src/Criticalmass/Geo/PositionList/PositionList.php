@@ -125,4 +125,16 @@ class PositionList implements PositionListInterface
     {
         reset($this->list);
     }
+
+    public function getList(): array
+    {
+        return $this->list;
+    }
+
+    public function setList(array $list): PositionListInterface
+    {
+        $this->list = $list;
+
+        return $this;
+    }
 }

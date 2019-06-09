@@ -147,7 +147,7 @@
                                                 </div>
                                             {% endif %}
 
-                                            {% if ride.hasLocation() and ride.latitude and ride.longitude %}
+                                            {% if ride.location and ride.latitude and ride.longitude %}
                                                 <div style="display: inline-block; margin-bottom: 10px; margin-right: 0px; vertical-align: bottom;">
                                                     <img src="{{ staticmaps(ride, 800, 200, 13) }}" class="img-fluid" />
                                                 </div>

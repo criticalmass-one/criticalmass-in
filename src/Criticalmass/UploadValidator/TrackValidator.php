@@ -41,7 +41,7 @@ class TrackValidator implements UploadValidatorInterface
 
         $filename = $this->uploaderHelper->asset($track, 'trackFile');
 
-        $this->rawFileContent = $this->filesystem->get($filename);
+        $this->rawFileContent = $this->filesystem->read($filename);
 
         return $this;
     }
