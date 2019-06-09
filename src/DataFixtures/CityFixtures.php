@@ -2,11 +2,13 @@
 
 namespace App\DataFixtures;
 
+use App\Criticalmass\CitySlug\Handler\CitySlugHandler;
 use App\Entity\City;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class CityFixtures extends Fixture
+class CityFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -24,12 +26,22 @@ class CityFixtures extends Fixture
     {
         $city = new City();
         $city
+            ->setUser($this->getReference('user-maltehuebner'))
             ->setTitle(sprintf('Critical Mass %s', $cityName))
             ->setCity($cityName)
             ->setTimezone($timezone);
 
+        $citySlugs = CitySlugHandler::createSlugsForCity($city);
+
         $this->setReference(sprintf('city-%s', strtolower($cityName)), $city);
 
         return $city;
+    }
+
+    public function getDependencies(): array
+    {
+        return [
+            UserFixtures::class,
+        ];
     }
 }

@@ -95,6 +95,7 @@ class CityCycleFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             CityFixtures::class,
+            UserFixtures::class,
         ];
     }
 }
