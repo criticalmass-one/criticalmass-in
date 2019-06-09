@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Tests\ViewStorage;
+namespace Tests\ViewStorage\ViewModel;
 
 use App\Criticalmass\ViewStorage\ViewModel\View;
 use App\Criticalmass\ViewStorage\ViewModel\ViewFactory;

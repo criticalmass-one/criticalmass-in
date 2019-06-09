@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Tests\ViewStorage;
+namespace Tests\ViewStorage\Persister;
 
 use App\Criticalmass\ViewStorage\Persister\ViewStoragePersister;
 use App\Criticalmass\ViewStorage\ViewEntityFactory\ViewEntityFactory;

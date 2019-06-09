@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Tests\ViewStorage;
+namespace Tests\ViewStorage\Cache;
 
 use App\Criticalmass\ViewStorage\Cache\ViewStorageCache;
 use App\Entity\User;
