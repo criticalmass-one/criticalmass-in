@@ -2,9 +2,9 @@
 
 namespace App\Controller\Track;
 
+use App\Criticalmass\Geo\LatLngListGenerator\SimpleLatLngListGenerator;
 use App\Event\Track\TrackTrimmedEvent;
 use App\Form\Type\TrackRangeType;
-use App\Criticalmass\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Controller\AbstractController;
@@ -27,9 +27,9 @@ class TrackRangeController extends AbstractController
 
         if (Request::METHOD_POST === $request->getMethod()) {
             return $this->rangePostAction($request, $track, $form, $latLngListGenerator, $eventDispatcher);
-        } else {
-            return $this->rangeGetAction($request, $track, $form, $latLngListGenerator, $eventDispatcher);
         }
+
+        return $this->rangeGetAction($request, $track, $form, $latLngListGenerator, $eventDispatcher);
     }
 
     protected function rangeGetAction(Request $request, Track $track, FormInterface $form, SimpleLatLngListGenerator $latLngListGenerator, EventDispatcherInterface $eventDispatcher): Response

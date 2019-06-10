@@ -2,11 +2,10 @@
 
 namespace App\Criticalmass\Image\PhotoGps;
 
+use App\Criticalmass\Geo\Converter\TrackToPositionListConverter;
+use App\Criticalmass\Geo\Loop\Loop;
 use PHPExif\Exif;
 
-/**
- * @deprecated
- */
 class PhotoGps extends AbstractPhotoGps
 {
     public function execute(): PhotoGpsInterface
@@ -27,10 +26,18 @@ class PhotoGps extends AbstractPhotoGps
         $this->trackReader->loadTrack($this->track);
 
         if ($dateTime = $this->getExifDateTime()) {
-            $result = $this->trackReader->findCoordNearDateTime($dateTime);
+            $converter = new TrackToPositionListConverter($this->trackReader);
+            $positionList = $converter->convert($this->track);
 
-            $this->photo->setLatitude($result['latitude']);
-            $this->photo->setLongitude($result['longitude']);
+            $position = $this->loop
+                ->setPositionList($positionList)
+                ->searchPositionForDateTime($dateTime);
+
+            if ($position) {
+                $this->photo
+                    ->setLatitude($position->getLatitude())
+                    ->setLongitude($position->getLongitude());
+            }
         }
 
         return $this;

@@ -2,25 +2,23 @@
 
 namespace App\Criticalmass\Geo\Loop;
 
-use Caldera\GeoBundle\GpxReader\GpxReader;
+use App\Criticalmass\Geo\Converter\GpxToPositionListConverter;
 
 class GpxLoop extends Loop
 {
-    /** @var GpxReader $gpxReader */
-    protected $gpxReader;
+    /** @var GpxToPositionListConverter $gpxToPositionListConverter */
+    protected $gpxToPositionListConverter;
 
-    public function __construct(GpxReader $gpxReader)
+    public function __construct(GpxToPositionListConverter $gpxToPositionListConverter)
     {
-        $this->gpxReader = $gpxReader;
+        $this->gpxToPositionListConverter = $gpxToPositionListConverter;
+
+        parent::__construct();
     }
 
     public function loadGpxFile(string $filename): GpxLoop
     {
-        $this->positionList = $this
-            ->gpxReader
-            ->loadFromFile($filename)
-            ->createPositionList()
-        ;
+        $this->positionList = $this->gpxToPositionListConverter->convert($filename);
 
         return $this;
     }

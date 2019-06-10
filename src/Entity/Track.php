@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use App\Criticalmass\Router\Annotation as Routing;
 use Caldera\GeoBasic\Track\TrackInterface as BaseTrackInterface;
+use App\Criticalmass\Geo\Entity\Track as GeoTrack;
 
 /**
  * @ORM\Table(name="track")
@@ -24,7 +25,7 @@ use Caldera\GeoBasic\Track\TrackInterface as BaseTrackInterface;
  * @Routing\DefaultRoute(name="caldera_criticalmass_track_view")
  * @OE\OrderedEntity()
  */
-class Track implements RouteableInterface, StaticMapableInterface, TrackInterface, UploadableEntity, FakeUploadable, OrderedEntityInterface
+class Track extends GeoTrack implements RouteableInterface, StaticMapableInterface, TrackInterface, UploadableEntity, FakeUploadable, OrderedEntityInterface
 {
     const TRACK_SOURCE_GPX = 'TRACK_SOURCE_GPX';
     const TRACK_SOURCE_STRAVA = 'TRACK_SOURCE_STRAVA';
@@ -210,11 +211,6 @@ class Track implements RouteableInterface, StaticMapableInterface, TrackInterfac
      */
     protected $stravaActitityId;
 
-    public function __construct()
-    {
-        $this->setCreationDateTime(new \DateTime());
-    }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -256,18 +252,6 @@ class Track implements RouteableInterface, StaticMapableInterface, TrackInterfac
         return $this->user;
     }
 
-    public function setCreationDateTime(\DateTime $creationDateTime): Track
-    {
-        $this->creationDateTime = $creationDateTime;
-
-        return $this;
-    }
-
-    public function getCreationDateTime(): \DateTime
-    {
-        return $this->creationDateTime;
-    }
-
     public function setMd5Hash(string $md5Hash): Track
     {
         $this->md5Hash = $md5Hash;
@@ -278,62 +262,6 @@ class Track implements RouteableInterface, StaticMapableInterface, TrackInterfac
     public function getMd5Hash(): ?string
     {
         return $this->md5Hash;
-    }
-
-    public function setStartDateTime(\DateTime $startDateTime): Track
-    {
-        $this->startDateTime = $startDateTime;
-
-        return $this;
-    }
-
-    public function getStartDateTime(): ?\DateTime
-    {
-        if ($this->startDateTime) {
-            return $this->startDateTime->setTimezone(new \DateTimeZone('UTC'));
-        }
-
-        return null;
-    }
-
-    public function setEndDateTime(\DateTime $endDateTime): Track
-    {
-        $this->endDateTime = $endDateTime;
-
-        return $this;
-    }
-
-    public function getEndDateTime(): ?\DateTime
-    {
-        if ($this->endDateTime) {
-            return $this->endDateTime->setTimezone(new \DateTimeZone('UTC'));
-        }
-
-        return null;
-    }
-
-    public function setDistance(float $distance): Track
-    {
-        $this->distance = $distance;
-
-        return $this;
-    }
-
-    public function getDistance(): float
-    {
-        return $this->distance;
-    }
-
-    public function setPoints(int $points): Track
-    {
-        $this->points = $points;
-
-        return $this;
-    }
-
-    public function getPoints(): int
-    {
-        return $this->points;
     }
 
     public function getEnabled(): bool
@@ -479,34 +407,6 @@ class Track implements RouteableInterface, StaticMapableInterface, TrackInterfac
         return $result;
     }
 
-    public function setTrackFile(File $track = null): Track
-    {
-        $this->trackFile = $track;
-
-        if ($track) {
-            $this->updatedAt = new \DateTime('now');
-        }
-
-        return $this;
-    }
-
-    public function getTrackFile(): ?File
-    {
-        return $this->trackFile;
-    }
-
-    public function setTrackFilename(string $trackFilename = null): Track
-    {
-        $this->trackFilename = $trackFilename;
-
-        return $this;
-    }
-
-    public function getTrackFilename(): ?string
-    {
-        return $this->trackFilename;
-    }
-
     public function getTrackSize(): ?int
     {
         return $this->trackSize;
@@ -529,50 +429,6 @@ class Track implements RouteableInterface, StaticMapableInterface, TrackInterfac
         $this->trackMimeType = $trackMimeType;
 
         return $this;
-    }
-
-    public function setStartPoint(int $startPoint): Track
-    {
-        if ($startPoint >= 1) {
-            $this->startPoint = $startPoint;
-        } else {
-            $this->startPoint = 1;
-        }
-
-        return $this;
-    }
-
-    public function getStartPoint(): int
-    {
-        return $this->startPoint;
-    }
-
-    public function setEndPoint(int $endPoint): Track
-    {
-        if ($endPoint <= $this->points) {
-            $this->endPoint = $endPoint;
-        } else {
-            $this->endPoint = $this->points - 1;
-        }
-
-        return $this;
-    }
-
-    public function getEndPoint(): int
-    {
-        return $this->endPoint;
-    }
-
-    public function setUpdatedAt(\DateTime $updatedAt): Track
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTime
-    {
-        return $this->updatedAt;
     }
 
     /** @deprecated  */

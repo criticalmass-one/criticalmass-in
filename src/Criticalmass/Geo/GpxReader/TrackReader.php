@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\Geo\GpxReader;
 
-use App\Entity\Track;
+use App\Criticalmass\Geo\Entity\Track;
 
 class TrackReader extends GpxReader
 {
@@ -20,34 +20,15 @@ class TrackReader extends GpxReader
 
     public function getStartDateTime(): \DateTime
     {
-        $startPoint = intval($this->track->getStartPoint());
+        $startPoint = $this->track->getStartPoint();
 
-        return new \DateTime($this->rootNode->trk->trkseg->trkpt[$startPoint]->time);
+        return new \DateTime((string) $this->trackPointList[$startPoint]->time);
     }
 
     public function getEndDateTime(): \DateTime
     {
-        $endPoint = intval($this->track->getEndPoint()) - 1;
+        $endPoint = $this->track->getEndPoint() - 1;
 
-        return new \DateTime($this->rootNode->trk->trkseg->trkpt[$endPoint]->time);
-    }
-
-    public function slicePublicCoords(): array
-    {
-        // array_slice will not work on xml tree, so we do this manually
-
-        $startPoint = intval($this->track->getStartPoint());
-        $endPoint = intval($this->track->getEndPoint());
-
-        $coordArray = [];
-
-        for ($index = $startPoint; $index < $endPoint; ++$index) {
-            $coordArray[$index] = [
-                $this->getLatitudeOfPoint($index),
-                $this->getLongitudeOfPoint($index)
-            ];
-        }
-
-        return $coordArray;
+        return new \DateTime((string) $this->trackPointList[$endPoint]->time);
     }
 }

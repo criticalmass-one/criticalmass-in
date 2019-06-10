@@ -2,9 +2,9 @@
 
 namespace App\Command\Track;
 
-use App\Criticalmass\Gps\DistanceCalculator\TrackDistanceCalculatorInterface;
+use App\Criticalmass\Geo\DistanceCalculator\TrackDistanceCalculatorInterface;
+use App\Criticalmass\Geo\LatLngListGenerator\RangeLatLngListGenerator;
 use App\Entity\Track;
-use App\Criticalmass\Gps\LatLngListGenerator\RangeLatLngListGenerator;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
@@ -81,9 +81,11 @@ class OptimizeTracksCommand extends Command
 
         $track->setLatLngList($list);
 
-        $this->trackDistanceCalculator->loadTrack($track);
+        $distance = $this->trackDistanceCalculator
+            ->setTrack($track)
+            ->calculate();
 
-        $track->setDistance($this->trackDistanceCalculator->calculate());
+        $track->setDistance($distance);
 
         $track->setUpdatedAt(new \DateTime());
 

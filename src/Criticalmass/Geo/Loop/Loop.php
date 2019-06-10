@@ -2,8 +2,8 @@
 
 namespace App\Criticalmass\Geo\Loop;
 
-use Caldera\GeoBundle\EntityInterface\PositionInterface;
-use Caldera\GeoBundle\PositionList\PositionListInterface;
+use App\Criticalmass\Geo\EntityInterface\PositionInterface;
+use App\Criticalmass\Geo\PositionList\PositionListInterface;
 
 class Loop implements LoopInterface
 {
@@ -38,12 +38,24 @@ class Loop implements LoopInterface
         return $this;
     }
 
-    public function searchIndexForDateTime(\DateTimeInterface $dateTime): int
+    public function searchIndexForDateTime(\DateTimeInterface $dateTime): ?int
     {
+        if (!$this->positionList || count($this->positionList) === 0) {
+            return null;
+        }
+
         $found = false;
 
         $this->startIndex = 0;
-        $this->endIndex = count($this->positionList);
+        $this->endIndex = count($this->positionList) - 1;
+
+        if ($dateTime < $this->positionList->getStartDateTime()) {
+            return $this->startIndex;
+        }
+
+        if ($dateTime > $this->positionList->getEndDateTime()) {
+            return $this->endIndex;
+        }
 
         while (!$found) {
             $mid = $this->startIndex + (int)floor(($this->endIndex - $this->startIndex) / 2);
@@ -68,9 +80,13 @@ class Loop implements LoopInterface
         }
     }
 
-    public function searchPositionForDateTime(\DateTime $dateTime): PositionInterface
+    public function searchPositionForDateTime(\DateTime $dateTime): ?PositionInterface
     {
         $index = $this->searchIndexForDateTime($dateTime);
+
+        if (!$index) {
+            return null;
+        }
 
         return $this->positionList->get($index);
     }
