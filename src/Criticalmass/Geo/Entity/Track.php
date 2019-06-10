@@ -240,7 +240,7 @@ class Track extends BaseTrack
         return $this->updatedAt;
     }
 
-    public function setPreviewPolyline(string $previewPolyline = null): TrackInterface
+    public function setPreviewPolyline(string $previewPolyline = null): Track
     {
         $this->previewPolyline = $previewPolyline;
 
