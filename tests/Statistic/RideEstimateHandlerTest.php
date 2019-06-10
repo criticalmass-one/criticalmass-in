@@ -100,45 +100,4 @@ class RideEstimateHandlerTest extends TestCase
         $this->assertEquals(0, $ride->getEstimatedDuration());
         $this->assertEquals(0, $ride->getEstimatedParticipants());
     }
-
-    public function testAddEstimatesFromTrack(): void
-    {
-        $track = new Track();
-        $track->setDistance(44.2);
-
-        $ride = new Ride();
-
-        $repository = $this->createMock(RideEstimateRepository::class);
-        $repository
-            ->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('findByRide'))
-            ->will($this->returnValue([]));
-
-        $objectManager = $this->createMock(ObjectManager::class);
-        $objectManager
-            ->expects($this->exactly(2))
-            ->method('flush');
-
-        $registry = $this->createMock(RegistryInterface::class);
-
-        $registry
-            ->method('getManager')
-            ->will($this->returnValue($objectManager));
-
-        $registry
-            ->expects($this->once())
-            ->method('getRepository')
-            ->with($this->equalTo(RideEstimate::class))
-            ->will($this->returnValue($repository));
-
-        $rideEstimateCalculator = new RideEstimateCalculator();
-        $rideEstimateHandler = new RideEstimateHandler($registry, $rideEstimateCalculator);
-
-        $rideEstimateHandler->setRide($ride)->addEstimateFromTrack($track)->calculateEstimates();
-
-        $this->assertEquals(44.2, $ride->getEstimatedDistance());
-        $this->assertEquals(0, $ride->getEstimatedDuration());
-        $this->assertEquals(0, $ride->getEstimatedParticipants());
-    }
 }
