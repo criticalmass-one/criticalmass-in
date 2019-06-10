@@ -55,13 +55,15 @@ class CityController extends AbstractController
         $query->setSort([
             '_geo_distance' => [
                 'pin' => [
-                    $city->getLatitude(),
                     $city->getLongitude(),
+                    $city->getLatitude(),
                 ],
                 'order' => 'desc',
                 'unit' => 'km',
             ]
         ]);
+
+        //dump(json_encode($query->toArray()));die;
 
         $results = $finder->find($query);
 
