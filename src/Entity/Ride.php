@@ -6,6 +6,7 @@ use App\Criticalmass\Geocoding\ReverseGeocodeable;
 use App\Criticalmass\OrderedEntities\Annotation as OE;
 use App\Criticalmass\OrderedEntities\OrderedEntityInterface;
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
+use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\Criticalmass\Weather\EntityInterface\WeatherableInterface;
 use App\Criticalmass\Weather\EntityInterface\WeatherInterface;
 use App\EntityInterface\StaticMapableInterface;
@@ -16,7 +17,6 @@ use App\EntityInterface\ParticipateableInterface;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
-use App\EntityInterface\ViewableInterface;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -37,7 +37,7 @@ use App\Criticalmass\Sharing\Annotation as Sharing;
  * @Vich\Uploadable
  * @Routing\DefaultRoute(name="caldera_criticalmass_ride_show")
  */
-class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, Shareable, ReverseGeocodeable, WeatherableInterface, OrderedEntityInterface
+class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, Shareable, ReverseGeocodeable, WeatherableInterface, OrderedEntityInterface
 {
     /**
      * @ORM\Id
@@ -790,7 +790,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->participationsNumberNo;
     }
 
-    public function setViews(int $views): ViewableInterface
+    public function setViews(int $views): ViewableEntity
     {
         $this->views = $views;
 
@@ -802,7 +802,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->views;
     }
 
-    public function incViews(): ViewableInterface
+    public function incViews(): ViewableEntity
     {
         ++$this->views;
 
