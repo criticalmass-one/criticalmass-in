@@ -4,6 +4,7 @@ namespace App\EventSubscriber;
 
 use App\Criticalmass\Geo\TrackPolylineHandler\TrackPolylineHandlerInterface;
 use App\Criticalmass\Gps\DistanceCalculator\TrackDistanceCalculatorInterface;
+use App\Criticalmass\Statistic\RideEstimateConverter\RideEstimateConverterInterface;
 use App\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandler;
 use App\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandlerInterface;
 use App\Entity\Ride;
@@ -37,12 +38,16 @@ class TrackEventSubscriber implements EventSubscriberInterface
     /** @var TrackDistanceCalculatorInterface $trackDistanceCalculator */
     protected $trackDistanceCalculator;
 
+    /** @var RideEstimateConverterInterface $rideEstimateConverter */
+    protected $rideEstimateConverter;
+
     /** @var RegistryInterface $registry */
     protected $registry;
 
     public function __construct(
         RegistryInterface $registry,
         RideEstimateHandler $rideEstimateHandler,
+        RideEstimateConverterInterface $rideEstimateConverter,
         TrackReader $trackReader,
         RangeLatLngListGenerator $rangeLatLngListGenerator,
         TrackDistanceCalculatorInterface $trackDistanceCalculator,
@@ -55,6 +60,8 @@ class TrackEventSubscriber implements EventSubscriberInterface
         $this->rideEstimateHandler = $rideEstimateHandler;
 
         $this->trackDistanceCalculator = $trackDistanceCalculator;
+
+        $this->rideEstimateConverter = $rideEstimateConverter;
 
         $this->registry = $registry;
 
@@ -144,9 +151,7 @@ class TrackEventSubscriber implements EventSubscriberInterface
 
     protected function addRideEstimate(Track $track, Ride $ride)
     {
-        $this->rideEstimateHandler
-            ->setRide($ride)
-            ->addEstimateFromTrack($track);
+        $this->rideEstimateConverter->addEstimateFromTrack($track);
 
         $this->rideEstimateHandler->calculateEstimates();
     }
