@@ -6,7 +6,6 @@ use App\Criticalmass\Statistic\RideEstimateCalculator\RideEstimateCalculator;
 use App\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandler;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
-use App\Entity\Track;
 use App\Repository\RideEstimateRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use PHPUnit\Framework\TestCase;
