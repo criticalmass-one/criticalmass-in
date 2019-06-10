@@ -153,7 +153,9 @@ class TrackEventSubscriber implements EventSubscriberInterface
     {
         $this->rideEstimateConverter->addEstimateFromTrack($track);
 
-        $this->rideEstimateHandler->calculateEstimates();
+        $this->rideEstimateHandler
+            ->setRide($ride)
+            ->calculateEstimates();
     }
 
     protected function updatePolyline(Track $track): void
@@ -202,7 +204,9 @@ class TrackEventSubscriber implements EventSubscriberInterface
     {
         $this->rideEstimateConverter->addEstimateFromTrack($track);
 
-        $this->rideEstimateHandler->calculateEstimates();
+        $this->rideEstimateHandler
+            ->setRide($track->getRide())
+            ->calculateEstimates();
     }
 
     protected function removeEstimateFromTrack(Track $track): void

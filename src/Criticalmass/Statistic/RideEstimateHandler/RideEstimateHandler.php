@@ -2,8 +2,6 @@
 
 namespace App\Criticalmass\Statistic\RideEstimateHandler;
 
-use App\Entity\Track;
-
 class RideEstimateHandler extends AbstractRideEstimateHandler
 {
     public function flushEstimates(bool $flush = true): RideEstimateHandlerInterface
