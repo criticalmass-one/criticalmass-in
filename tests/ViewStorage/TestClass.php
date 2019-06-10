@@ -6,6 +6,7 @@ use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 
 class TestClass implements ViewableEntity
 {
+    /** @var int $view */
     protected $views;
 
     public function getId(): ?int
