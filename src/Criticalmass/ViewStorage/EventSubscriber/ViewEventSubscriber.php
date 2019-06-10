@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\EventSubscriber;
+namespace App\Criticalmass\ViewStorage\EventSubscriber;
 
 use App\Criticalmass\ViewStorage\Cache\ViewStorageCacheInterface;
 use App\Event\View\ViewEvent;

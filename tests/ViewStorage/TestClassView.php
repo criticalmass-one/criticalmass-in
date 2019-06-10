@@ -1,44 +1,29 @@
 <?php declare(strict_types=1);
 
-namespace App\Entity;
+namespace Tests\ViewStorage;
 
 use App\Criticalmass\ViewStorage\ViewInterface\ViewEntity;
-use Doctrine\ORM\Mapping as ORM;
+use App\Entity\User;
 
-/**
- * @ORM\Table(name="ride_view")
- * @ORM\Entity()
- */
-class RideView implements ViewEntity
+class TestClassView implements ViewEntity
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    /** @var int $id */
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="ride_views")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @var User $user
      */
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="ride_views")
-     * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
+     * @var TestClass $ride
      */
-    protected $ride;
+    protected $testClass;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @var \DateTime $dateTime
      */
     protected $dateTime;
-
-    public function __construct()
-    {
-        $this->dateTime = new \DateTime();
-    }
 
     public function getId(): ?int
     {
@@ -76,14 +61,14 @@ class RideView implements ViewEntity
         return $this;
     }
 
-    public function getRide(): ?Ride
+    public function getTestClass(): ?TestClass
     {
-        return $this->ride;
+        return $this->testClass;
     }
 
-    public function setRide(Ride $ride): RideView
+    public function setTestClass(TestClass $testClass): TestClassView
     {
-        $this->ride = $ride;
+        $this->testClass = $testClass;
 
         return $this;
     }

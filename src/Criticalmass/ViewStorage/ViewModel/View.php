@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\ViewStorage\View;
+namespace App\Criticalmass\ViewStorage\ViewModel;
 
 use JMS\Serializer\Annotation as JMS;
 

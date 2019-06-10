@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\ViewStorage\View;
+namespace App\Criticalmass\ViewStorage\ViewModel;
 
 use App\Criticalmass\Util\ClassUtil;
-use App\EntityInterface\ViewableInterface;
+use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class ViewFactory
@@ -12,9 +12,9 @@ class ViewFactory
     {
     }
 
-    public static function createView(ViewableInterface $viewable, $user): View
+    public static function createView(ViewableEntity $viewable, $user = null, \DateTime $dateTime = null): View
     {
-        $viewDateTime = new \DateTime('now', new \DateTimeZone('UTC'));
+        $viewDateTime = $dateTime ?? new \DateTime('now', new \DateTimeZone('UTC'));
 
         $view = new View();
         $view
