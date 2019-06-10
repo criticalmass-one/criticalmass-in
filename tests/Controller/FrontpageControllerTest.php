@@ -28,5 +28,6 @@ class FrontpageControllerTest extends WebTestCase
         $this->assertSelectorTextContains('#footer a#footer-about-link', 'Über die Critical Mass');
         $this->assertSelectorTextContains('#footer a#footer-faq-link', 'Häufig gestellte Fragen');
         $this->assertSelectorTextContains('#footer a#footer-citylist-link', 'Städteliste');
+        $this->assertSelectorTextContains('#footer a#footer-status-link', 'Status');
     }
 }
