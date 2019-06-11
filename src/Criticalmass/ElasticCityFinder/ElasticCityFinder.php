@@ -3,6 +3,7 @@
 namespace App\Criticalmass\ElasticCityFinder;
 
 use App\Entity\City;
+use Elastica\Query;
 use FOS\ElasticaBundle\Finder\FinderInterface;
 
 class ElasticCityFinder implements ElasticCityFinderInterface
@@ -16,6 +17,17 @@ class ElasticCityFinder implements ElasticCityFinderInterface
     }
 
     public function findNearCities(City $city, int $size = 15, int $distance = 50): array
+    {
+        if (!$city->getLatitude() || !$city->getLongitude()) {
+            return [];
+        }
+
+        $query = $this->createQuery($city, $size, $distance);
+
+        return $this->finder->find($query);
+    }
+
+    public function createQuery(City $city, int $size = 15, int $distance = 50): Query
     {
         $kmDistance = sprintf('%dkm', $distance);
 
@@ -52,8 +64,6 @@ class ElasticCityFinder implements ElasticCityFinderInterface
             ]
         ]);
 
-        //dump(json_encode($query->toArray()));die;
-
-        return $this->finder->find($query);
+        return $query;
     }
 }
