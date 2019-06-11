@@ -4,7 +4,6 @@ namespace Tests\ElasticCityFinder;
 
 use App\Criticalmass\ElasticCityFinder\ElasticCityFinder;
 use App\Entity\City;
-use Elastica\Query;
 use FOS\ElasticaBundle\Finder\FinderInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -51,6 +50,25 @@ class ElasticCityFinderTest extends TestCase
         $this->assertEquals([$returnCity], $actualCityList);
     }
 
+    public function testBrokenElasticsearch(): void
+    {
+        $city = new City();
+        $city
+            ->setId(42)
+            ->setLatitude(57.5)
+            ->setLongitude(10.5);
+
+        $finder = $this->createMock(FinderInterface::class);
+        $finder
+            ->expects($this->once())
+            ->method('find')
+            ->will($this->throwException(new \Exception('Fake')));
+
+        $elasticCityFinder = new ElasticCityFinder($finder);
+
+        $elasticCityFinder->findNearCities($city);
+    }
+
     public function testQueryForCityWihLatLng(): void
     {
         $city = new City();
@@ -63,7 +81,9 @@ class ElasticCityFinderTest extends TestCase
 
         $elasticCityFinder = new ElasticCityFinder($finder);
 
-        $query = $elasticCityFinder->createQuery($city);
+        $queryMethod = new \ReflectionMethod($elasticCityFinder, 'createQuery');
+        $queryMethod->setAccessible(true);
+        $query = $queryMethod->invoke($elasticCityFinder, $city, 15, 50);
 
         $expectedQuery = '{"query":{"bool":{"must":[{"geo_distance":{"distance":"50km","pin":{"lat":57.5,"lon":10.5}}},{"term":{"isEnabled":true}},{"bool":{"must_not":[{"term":{"id":42}}]}}]}},"size":15,"sort":{"_geo_distance":{"pin":[10.5,57.5],"order":"desc","unit":"km"}}}';
 

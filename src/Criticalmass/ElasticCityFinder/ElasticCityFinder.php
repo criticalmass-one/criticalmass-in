@@ -24,10 +24,14 @@ class ElasticCityFinder implements ElasticCityFinderInterface
 
         $query = $this->createQuery($city, $size, $distance);
 
-        return $this->finder->find($query);
+        try {
+            return $this->finder->find($query);
+        } catch (\Exception $exception) {
+            return [];
+        }
     }
 
-    public function createQuery(City $city, int $size = 15, int $distance = 50): Query
+    protected function createQuery(City $city, int $size = 15, int $distance = 50): Query
     {
         $kmDistance = sprintf('%dkm', $distance);
 
