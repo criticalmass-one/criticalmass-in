@@ -2,6 +2,9 @@
 
 {% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
 
+{% set previous_photo = previous_entity(photo) %}
+{% set next_photo = next_entity(photo) %}
+
 {% block breadcrumb %}
     {{ bootstrap.breadcrumb_item('Städteliste', path('caldera_criticalmass_city_list')) }}
     {{ bootstrap.breadcrumb_item(city.city, objectPath(city)) }}
@@ -15,9 +18,9 @@
         <div class="col-12">
             <nav aria-label="Photo navigation" class="text-center">
                 <ul class="pagination justify-content-center">
-                    {% if previousPhoto %}
+                    {% if previous_photo %}
                         <li class="page-item">
-                            <a class="page-link" href="{{ objectPath(previousPhoto) }}">
+                            <a class="page-link" href="{{ objectPath(previous_photo) }}">
                                 &larr; Voriges Foto
                             </a>
                         </li>
@@ -29,9 +32,9 @@
                         </li>
                     {% endif %}
 
-                    {% if nextPhoto %}
+                    {% if next_photo %}
                         <li class="page-item">
-                            <a class="page-link" href="{{ objectPath(nextPhoto) }}">
+                            <a class="page-link" href="{{ objectPath(next_photo) }}">
                                 Nächstes Photo &rarr;
                             </a>
                         </li>
@@ -131,12 +134,12 @@
 
     <script>
         CriticalMass.loadModule('ViewPhotoPage', null, null, function (page) {
-            {% if previousPhoto %}
-            page.setPreviousPhotoUrl('{{ objectPath(previousPhoto) }}');
+            {% if previous_photo %}
+            page.setPreviousPhotoUrl('{{ objectPath(previous_photo) }}');
             {% endif %}
 
-            {% if nextPhoto %}
-            page.setNextPhotoUrl('{{ objectPath(nextPhoto) }}');
+            {% if next_photo %}
+            page.setNextPhotoUrl('{{ objectPath(next_photo) }}');
             {% endif %}
 
             {% if photo.hasCoordinates() %}

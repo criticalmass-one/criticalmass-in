@@ -97,5 +97,9 @@ define(['CriticalService', 'dateformat', 'leaflet', 'MarkerEntity', 'leaflet.ext
         return this._date;
     };
 
+    RideEntity.prototype.getLocation = function () {
+        return this._location;
+    };
+
     return RideEntity;
 });

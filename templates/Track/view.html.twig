@@ -87,13 +87,15 @@
             </div>
         </div>
 
+        {% set previous_track = previous_entity(track) %}
+        {% set next_track = next_entity(track) %}
         <div class="row">
             <div class="col-12">
                 <nav aria-label="Track navigation" class="text-center m-4">
                     <ul class="pagination justify-content-center">
-                        {% if previousTrack %}
+                        {% if previous_track %}
                             <li class="page-item">
-                                <a class="page-link" href="{{ objectPath(previousTrack) }}">
+                                <a class="page-link" href="{{ objectPath(previous_track) }}">
                                     &larr; Voriger Track
                                 </a>
                             </li>
@@ -105,9 +107,9 @@
                             </li>
                         {% endif %}
 
-                        {% if nextTrack %}
+                        {% if next_track %}
                             <li class="page-item">
-                                <a class="page-link" href="{{ objectPath(nextTrack) }}">
+                                <a class="page-link" href="{{ objectPath(next_track) }}">
                                     Nächster Track &rarr;
                                 </a>
                             </li>

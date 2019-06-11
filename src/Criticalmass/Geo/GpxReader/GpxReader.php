@@ -121,33 +121,4 @@ class GpxReader implements GpxReaderInterface
     {
         return $this->trackPointList[$n];
     }
-
-    public function createPosition(int $n): PositionInterface
-    {
-        /** @var PositionInterface $position */
-        $position = new Position(
-            $this->getLatitudeOfPoint($n),
-            $this->getLongitudeOfPoint($n)
-        );
-
-        $position
-            ->setAltitude($this->getElevationOfPoint($n))
-            ->setDateTime($this->getDateTimeOfPoint($n))
-        ;
-
-        return $position;
-    }
-
-    public function createPositionList(): PositionListInterface
-    {
-        $positionList = new PositionList();
-
-        for ($n = 0; $n < $this->countPoints(); ++$n) {
-            $position = $this->createPosition($n);
-
-            $positionList->add($position);
-        }
-
-        return $positionList;
-    }
 }

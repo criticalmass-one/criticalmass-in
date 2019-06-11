@@ -331,45 +331,6 @@ class RideRepository extends EntityRepository
         return $result;
     }
 
-    public function getPreviousRide(Ride $ride): ?Ride
-    {
-        $builder = $this->createQueryBuilder('r');
-
-        $builder->select('r')
-            ->where($builder->expr()->lt('r.dateTime', ':dateTime'))
-            ->andWhere($builder->expr()->eq('r.city', ':city'))
-            ->addOrderBy('r.dateTime', 'DESC')
-            ->setMaxResults(1)
-            ->setParameter('city', $ride->getCity())
-            ->setParameter('dateTime', $ride->getDateTime());
-
-        $query = $builder->getQuery();
-
-        $result = $query->getOneOrNullResult();
-
-        return $result;
-    }
-
-    public function getNextRide(Ride $ride): ?Ride
-    {
-        $builder = $this->createQueryBuilder('r');
-
-        $builder
-            ->select('r')
-            ->where($builder->expr()->gt('r.dateTime', ':dateTime'))
-            ->andWhere($builder->expr()->eq('r.city', ':city'))
-            ->addOrderBy('r.dateTime', 'ASC')
-            ->setMaxResults(1)
-            ->setParameter('city', $ride->getCity())
-            ->setParameter('dateTime', $ride->getDateTime());
-
-        $query = $builder->getQuery();
-
-        $result = $query->getOneOrNullResult();
-
-        return $result;
-    }
-
     public function getLocationsForCity(City $city): array
     {
         $builder = $this->createQueryBuilder('r');

@@ -16,6 +16,6 @@
 
         {% include('Ride/Ride.html.twig') with { 'ride': ride, 'tracks': tracks, 'participation': participation } %}
 
-        {% include('Ride/Includes/_pagination.html.twig') with { 'previousRide': previousRide, 'nextRide': nextRide } %}
+        {% include('Ride/Includes/_pagination.html.twig') with { 'ride': ride } %}
     </div>
 {% endblock %}

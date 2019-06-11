@@ -1,8 +1,11 @@
+{% set previous_ride = previous_entity(ride) %}
+{% set next_ride = next_entity(ride) %}
+
 <nav aria-label="Ride navigation" class="text-center m-4">
     <ul class="pagination justify-content-center">
-        {% if previousRide %}
+        {% if previous_ride %}
         <li class="page-item">
-            <a class="page-link" href="{{ objectPath(previousRide) }}">
+            <a class="page-link" href="{{ objectPath(previous_ride) }}">
                 &larr; Vorige Tour
             </a>
         </li>
@@ -14,7 +17,7 @@
         </li>
         {% endif %}
 
-        {% if nextRide %}
+        {% if next_ride %}
         <li class="page-item">
             <a class="page-link" href="{{ objectPath(nextRide) }}">
                 Nächste Tour &rarr;

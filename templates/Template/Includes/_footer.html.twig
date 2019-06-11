@@ -40,38 +40,44 @@
             <div class="col-md-4">
                 <ul class="list-unstyled">
                     <li>
-                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'impress' }) }}">
+                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'impress' }) }}" id="footer-impress-link">
                             Impressum
                         </a>
                     </li>
 
                     <li>
-                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'privacy' }) }}">
+                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'privacy' }) }}" id="footer-privacy-link">
                             Datenschutz
                         </a>
                     </li>
 
                     <li>
-                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'gdpr' }) }}">
+                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'gdpr' }) }}" id="footer-gdpr-link">
                             Deine privaten Daten
                         </a>
                     </li>
 
                     <li>
-                        <a href="{{ path('caldera_criticalmass_help_about') }}">
+                        <a href="{{ path('caldera_criticalmass_help_about') }}" id="footer-about-link">
                             {% trans %}criticalmass.navigation.criticalmass.about{% endtrans %}
                         </a>
                     </li>
 
                     <li>
-                        <a href="{{ path('caldera_criticalmass_help_faq') }}">
+                        <a href="{{ path('caldera_criticalmass_help_faq') }}" id="footer-faq-link">
                             {% trans %}criticalmass.navigation.criticalmass.faq{% endtrans %}
                         </a>
                     </li>
 
                     <li>
-                        <a href="{{ path('caldera_criticalmass_city_list') }}">
+                        <a href="{{ path('caldera_criticalmass_city_list') }}" id="footer-citylist-link">
                             Städteliste
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="https://sqi.be/status" id="footer-status-link">
+                            Status
                         </a>
                     </li>
                 </ul>

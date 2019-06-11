@@ -2,29 +2,42 @@
 
 namespace App\Criticalmass\Geo\TimeShifter;
 
-use Caldera\GeoBundle\Entity\Track;
-use Caldera\GeoBundle\GpxReader\TrackReader;
+use App\Criticalmass\Geo\Converter\TrackToPositionListConverter;
+use App\Criticalmass\Geo\Entity\Track;
+use App\Criticalmass\Geo\GpxWriter\GpxWriterInterface;
 
-class TrackTimeShifter extends TimeShifter
+class TrackTimeShifter extends TimeShifter implements TrackTimeShifterInterface
 {
-    /** @var TrackReader $trackReader */
-    protected $trackReader;
+    /** @var TrackToPositionListConverter $trackToPositionListConverter */
+    protected $trackToPositionListConverter;
 
     /** @var Track $track */
     protected $track;
 
-    public function __construct(TrackReader $trackReader)
+    /** @var GpxWriterInterface $gpxWriter */
+    protected $gpxWriter;
+
+    public function __construct(TrackToPositionListConverter $trackToPositionListConverter, GpxWriterInterface $gpxWriter)
     {
-        $this->trackReader = $trackReader;
+        $this->trackToPositionListConverter = $trackToPositionListConverter;
+        $this->gpxWriter = $gpxWriter;
     }
 
-    public function loadTrack(Track $track): TrackTimeShifter
+    public function loadTrack(Track $track): TrackTimeShifterInterface
     {
         $this->track = $track;
 
-        $this->trackReader->loadTrack($this->track);
+        $this->positionList = $this->trackToPositionListConverter->convert($track);
 
-        $this->positionList = $this->trackReader->createPositionList();
+        return $this;
+    }
+
+    public function saveTrack(): TrackTimeShifterInterface
+    {
+        $this->gpxWriter
+            ->setPositionList($this->positionList)
+            ->generateGpxContent()
+            ->saveGpxContent($this->track->getTrackFilename());
 
         return $this;
     }
