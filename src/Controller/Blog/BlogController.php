@@ -22,7 +22,7 @@ class BlogController extends AbstractController
      */
     public function showAction(BlogPost $blogPost): Response
     {
-        return $this->render('Blog/overview.html.twig', [
+        return $this->render('Blog/blog_post.html.twig', [
             'blog_post' => $blogPost,
         ]);
     }

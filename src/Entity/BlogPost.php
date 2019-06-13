@@ -2,18 +2,21 @@
 
 namespace App\Entity;
 
+use App\EntityInterface\RouteableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use App\Criticalmass\Router\Annotation as Routing;
 
 /**
  * @ORM\Table(name="blog_post")
  * @Vich\Uploadable
  * @ORM\Entity(repositoryClass="App\Repository\BlogPostRepository")
+ * @Routing\DefaultRoute(name="caldera_criticalmass_blog_post")
  */
-class BlogPost
+class BlogPost implements RouteableInterface
 {
     /**
      * @ORM\Id()
@@ -29,6 +32,7 @@ class BlogPost
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Routing\RouteParameter(name="slug")
      */
     private $slug;
 
