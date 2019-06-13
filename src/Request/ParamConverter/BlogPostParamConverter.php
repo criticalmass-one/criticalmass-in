@@ -10,7 +10,7 @@ class BlogPostParamConverter extends AbstractParamConverter
 {
     public function apply(Request $request, ParamConverter $configuration): void
     {
-        $blogPost = null;
+        $blogPost = $this->findBlogPostById($request);
 
         $blogPostSlug = $request->get('slug');
 
@@ -23,5 +23,18 @@ class BlogPostParamConverter extends AbstractParamConverter
         } else {
             $this->notFound($configuration);
         }
+    }
+
+    protected function findBlogPostById(Request $request): ?BlogPost
+    {
+        $blogPostId = $request->get('blogPostId');
+
+        if ($blogPostId) {
+            $blogPost = $this->registry->getRepository(BlogPost::class)->find($blogPostId);
+
+            return $blogPost;
+        }
+
+        return null;
     }
 }

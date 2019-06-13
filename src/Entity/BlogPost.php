@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -16,12 +17,13 @@ use App\Criticalmass\Router\Annotation as Routing;
  * @ORM\Entity(repositoryClass="App\Repository\BlogPostRepository")
  * @Routing\DefaultRoute(name="caldera_criticalmass_blog_post")
  */
-class BlogPost implements RouteableInterface
+class BlogPost implements RouteableInterface, PostableInterface
 {
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Routing\RouteParameter(name="blogPostId")
      */
     private $id;
 
