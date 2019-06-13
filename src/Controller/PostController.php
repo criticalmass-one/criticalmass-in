@@ -128,7 +128,8 @@ class PostController extends AbstractController
     public function listAction(
         int $cityId = null,
         int $rideId = null,
-        int $photoId = null
+        int $photoId = null,
+        int $blogPostId = null
     ): Response {
         /* We do not want disabled posts. */
         $criteria = ['enabled' => true];
@@ -145,6 +146,10 @@ class PostController extends AbstractController
 
         if ($photoId) {
             $criteria['photo'] = $photoId;
+        }
+
+        if ($blogPostId) {
+            $criteria['blogPost'] = $blogPostId;
         }
 
         /* Now fetch all posts with matching criteria. */

@@ -54,6 +54,20 @@
                         </p>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>
+                            Kommentare zu diesem Beitrag
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        {{ render(controller('App\\Controller\\PostController::listAction', { 'blogPostId': blog_post.id })) }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
