@@ -59,6 +59,11 @@ class BlogPost
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $intro;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -180,6 +185,18 @@ class BlogPost
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getIntro(): ?string
+    {
+        return $this->intro;
+    }
+
+    public function setIntro(?string $intro): self
+    {
+        $this->intro = $intro;
 
         return $this;
     }

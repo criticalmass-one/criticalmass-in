@@ -44,6 +44,11 @@ class Blog
      */
     protected $slug;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $intro;
+
     public function __construct()
     {
         $this->dateTime = new \DateTime();
@@ -124,5 +129,17 @@ class Blog
     public function __toString(): string
     {
         return $this->title;
+    }
+
+    public function getIntro(): ?string
+    {
+        return $this->intro;
+    }
+
+    public function setIntro(?string $intro): self
+    {
+        $this->intro = $intro;
+
+        return $this;
     }
 }
