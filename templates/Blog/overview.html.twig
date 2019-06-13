@@ -10,12 +10,43 @@
 
 {% block content %}
     <div class="container">
-        {% for blog_post in blog_posts %}
         <div class="row">
-            <div class="col-md-12">
-                {{ blog_post.title }}
+            <div class="col-md-10 col-md-offset-1">
+                {% for blog_post in blog_posts %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2>
+                                {{ blog_post.title }}
+                            </h2>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-9">
+                            {{ blog_post.text|markdown }}
+                        </div>
+
+                        <div class="col-md-3 text-center">
+                            {% if blog_post.user.imageName %}
+                                <img class="media-object round-media-object img-responsive img-fluid"
+                                     src="{{ vich_uploader_asset(blog_post.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}"/>
+                            {% endif %}
+
+                            <p>
+                                <strong>
+                                    {{ blog_post.user.username }}
+                                </strong>
+                                <br />
+                                <small>
+                                    <time>
+                                        {{ blog_post.createdAt|time_ago_in_words }}
+                                    </time>
+                                </small>
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
         </div>
-        {% endfor %}
     </div>
 {% endblock %}
