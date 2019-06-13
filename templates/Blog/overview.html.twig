@@ -1,0 +1,21 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Blog{% endblock %}
+
+{% block breadcrumb %}
+    <li class="active">
+        Blog
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% for blog_post in blog_posts %}
+        <div class="row">
+            <div class="col-md-12">
+                {{ blog_post.title }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
