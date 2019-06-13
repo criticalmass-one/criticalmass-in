@@ -13,6 +13,12 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 {% for blog_post in blog_posts %}
+                    {% if blog_post.imageName %}
+                        <div class="jumbotron" id="city-jumbotron" style="height: 250px; background-image: url({{ vich_uploader_asset(blog_post, 'imageFile')|imagine_filter('blog_post_teaser') }});">
+
+                        </div>
+                    {% endif %}
+
                     <div class="row">
                         <div class="col-md-12">
                             <h2>
@@ -29,7 +35,7 @@
                         <div class="col-md-3 text-center">
                             {% if blog_post.user.imageName %}
                                 <img class="media-object round-media-object img-responsive img-fluid"
-                                     src="{{ vich_uploader_asset(blog_post.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}"/>
+                                     src="{{ vich_uploader_asset(blog_post.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}" style="margin: 10px auto;"/>
                             {% endif %}
 
                             <p>

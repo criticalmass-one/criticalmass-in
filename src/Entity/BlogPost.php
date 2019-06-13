@@ -5,9 +5,12 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Table(name="blog_post")
+ * @Vich\Uploadable
  * @ORM\Entity(repositoryClass="App\Repository\BlogPostRepository")
  */
 class BlogPost
@@ -65,6 +68,30 @@ class BlogPost
      */
     private $intro;
 
+    /**
+     * @var File $imageFile
+     * @Vich\UploadableField(mapping="blog_post_teaser", fileNameProperty="imageName", size="imageSize", mimeType="imageMimeType")
+     */
+    protected $imageFile;
+
+    /**
+     * @var string $imageName
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $imageName;
+
+    /**
+     * @var int $imageSize
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $imageSize;
+
+    /**
+     * @var string $imageMimeType
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $imageMimeType;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -80,7 +107,7 @@ class BlogPost
         return $this->title;
     }
 
-    public function setTitle(?string $title): self
+    public function setTitle(?string $title): BlogPost
     {
         $this->title = $title;
 
@@ -92,7 +119,7 @@ class BlogPost
         return $this->slug;
     }
 
-    public function setSlug(?string $slug): self
+    public function setSlug(?string $slug): BlogPost
     {
         $this->slug = $slug;
 
@@ -104,7 +131,7 @@ class BlogPost
         return $this->blog;
     }
 
-    public function setBlog(?Blog $blog): self
+    public function setBlog(?Blog $blog): BlogPost
     {
         $this->blog = $blog;
 
@@ -116,7 +143,7 @@ class BlogPost
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(\DateTimeInterface $createdAt): BlogPost
     {
         $this->createdAt = $createdAt;
 
@@ -128,7 +155,7 @@ class BlogPost
         return $this->enabled;
     }
 
-    public function setEnabled(bool $enabled): self
+    public function setEnabled(bool $enabled): BlogPost
     {
         $this->enabled = $enabled;
 
@@ -143,7 +170,7 @@ class BlogPost
         return $this->comments;
     }
 
-    public function addComment(Post $comment): self
+    public function addComment(Post $comment): BlogPost
     {
         if (!$this->comments->contains($comment)) {
             $this->comments[] = $comment;
@@ -153,7 +180,7 @@ class BlogPost
         return $this;
     }
 
-    public function removeComment(Post $comment): self
+    public function removeComment(Post $comment): BlogPost
     {
         if ($this->comments->contains($comment)) {
             $this->comments->removeElement($comment);
@@ -171,7 +198,7 @@ class BlogPost
         return $this->text;
     }
 
-    public function setText(?string $text): self
+    public function setText(?string $text): BlogPost
     {
         $this->text = $text;
 
@@ -183,7 +210,7 @@ class BlogPost
         return $this->user;
     }
 
-    public function setUser(?User $user): self
+    public function setUser(?User $user): BlogPost
     {
         $this->user = $user;
 
@@ -195,9 +222,61 @@ class BlogPost
         return $this->intro;
     }
 
-    public function setIntro(?string $intro): self
+    public function setIntro(?string $intro): BlogPost
     {
         $this->intro = $intro;
+
+        return $this;
+    }
+
+    public function setImageFile(File $image = null): BlogPost
+    {
+        $this->imageFile = $image;
+
+        if ($image) {
+            $this->updatedAt = new \DateTime('now');
+        }
+
+        return $this;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageName(string $imageName = null): BlogPost
+    {
+        $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    public function getImageSize(): ?int
+    {
+        return $this->imageSize;
+    }
+
+    public function setImageSize(int $imageSize = null): BlogPost
+    {
+        $this->imageSize = $imageSize;
+
+        return $this;
+    }
+
+    public function getImageMimeType(): ?string
+    {
+        return $this->imageMimeType;
+    }
+
+    public function setImageMimeType(string $imageMimeType = null): BlogPost
+    {
+        $this->imageMimeType = $imageMimeType;
 
         return $this;
     }
