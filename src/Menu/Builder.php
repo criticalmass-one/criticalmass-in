@@ -71,6 +71,9 @@ class Builder extends AbstractBuilder
         $menu['Community']
             ->addChild('Fotos', ['route' => 'caldera_criticalmass_photo_examplegallery']);
 
+        $menu['Community']
+            ->addChild('Blog', ['route' => 'caldera_criticalmass_blog_overview']);
+
         if ($this->isUserLoggedIn()) {
             $menu->addChild('Benutzerkonto', ['uri' => '#'])
                 ->setExtra('dropdown', true);
