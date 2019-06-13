@@ -98,7 +98,8 @@
         "codedungeon/phpunit-result-printer": "^0.6.0",
         "symfony/profiler-pack": "^1.0",
         "symfony/browser-kit": "^4.1",
-        "vimeo/psalm": "^3.3"
+        "vimeo/psalm": "^3.3",
+        "symfony/maker-bundle": "^1.11"
     },
     "conflict": {
         "symfony/symfony": "*"
