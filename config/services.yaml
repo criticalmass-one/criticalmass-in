@@ -141,6 +141,10 @@ services:
     App\Request\ParamConverter\RideParamConverter:
         tags:
             - { name: request.param_converter, priority: 0, converter: ride_converter }
+            
+    App\Request\ParamConverter\BlogPostParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: blogpost_converter }
 
     App\Request\ParamConverter\CityParamConverter:
         tags:
