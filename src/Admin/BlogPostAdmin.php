@@ -7,6 +7,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 final class BlogPostAdmin extends AbstractAdmin
 {
@@ -32,14 +33,9 @@ final class BlogPostAdmin extends AbstractAdmin
         $listMapper
             ->add('id')
             ->add('title')
-            ->add('slug')
             ->add('createdAt')
             ->add('enabled')
-            ->add('text')
             ->add('intro')
-            ->add('imageName')
-            ->add('imageSize')
-            ->add('imageMimeType')
             ->add('_action', null, [
                 'actions' => [
                     'show' => [],
@@ -59,9 +55,7 @@ final class BlogPostAdmin extends AbstractAdmin
             ->add('enabled')
             ->add('text')
             ->add('intro')
-            ->add('imageName')
-            ->add('imageSize')
-            ->add('imageMimeType')
+            ->add('imageFile', VichFileType::class)
             ;
     }
 

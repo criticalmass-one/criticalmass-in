@@ -14,7 +14,7 @@
             <div class="col-md-10 col-md-offset-1">
                 {% for blog_post in blog_posts %}
                     {% if blog_post.imageName %}
-                        <div class="jumbotron" id="city-jumbotron" style="height: 250px; background-image: url({{ vich_uploader_asset(blog_post, 'imageFile')|imagine_filter('blog_post_teaser') }});">
+                        <div class="jumbotron" id="city-jumbotron" style="height: 250px; background-image: url({{ vich_uploader_asset(blog_post, 'imageFile')|imagine_filter('blogpost_teaser') }});">
 
                         </div>
                     {% endif %}
