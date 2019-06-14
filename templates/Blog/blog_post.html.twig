@@ -58,9 +58,20 @@
                                 </time>
                             </small>
                         </p>
+
+                        <p>
+                            <a href="#comments">
+                                {% if blog_post.comments|length == 1 %}
+                                1 Kommentar
+                                {% else %}
+                                {{ blog_post.comments|length }} Kommentare
+                                {% endif %}
+                            </a>
+                        </p>
                     </div>
                 </div>
 
+                <a name="comments" />
                 <div class="row">
                     <div class="col-md-12">
                         {% if app.getUser() %}

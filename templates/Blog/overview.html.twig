@@ -57,6 +57,16 @@
                                     </time>
                                 </small>
                             </p>
+
+                            <p>
+                                <a href="{{ objectPath(blog_post) }}#comments">
+                                    {% if blog_post.comments|length == 1 %}
+                                        1 Kommentar
+                                    {% else %}
+                                        {{ blog_post.comments|length }} Kommentare
+                                    {% endif %}
+                                </a>
+                            </p>
                         </div>
                     </div>
                 {% endfor %}
