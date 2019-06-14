@@ -7,7 +7,11 @@ use App\Entity\BlogPost;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Flagception\Bundle\FlagceptionBundle\Annotations\Feature;
 
+/**
+ * @Feature("photos")
+ */
 class BlogController extends AbstractController
 {
     public function overviewAction(RegistryInterface $registry): Response
