@@ -31,7 +31,13 @@
 
                     <div class="row">
                         <div class="col-md-9">
+                            {% if blog_post.intro %}
+                            <p class="lead">
+                                {{ blog_post.intro }}
+                            </p>
+                            {% else %}
                             {{ blog_post.text|markdown }}
+                            {% endif %}
                         </div>
 
                         <div class="col-md-3 text-center">

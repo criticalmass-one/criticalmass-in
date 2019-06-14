@@ -27,6 +27,12 @@
                         <h2>
                             {{ blog_post.title }}
                         </h2>
+
+                        {% if blog_post.intro %}
+                            <p class="lead">
+                                {{ blog_post.intro }}
+                            </p>
+                        {% endif %}
                     </div>
                 </div>
 
