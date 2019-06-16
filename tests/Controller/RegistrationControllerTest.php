@@ -108,4 +108,52 @@ das Team.', $testUser->getUsername(), $user->getConfirmationToken()),
             $message->getBody()
         );
     }
+
+    /**
+     * @depends testConfirmationMail
+     */
+    public function testConfirmation(): void
+    {
+        $testUser = $this->createTestUser();
+
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/register/');
+        $form = $crawler->filter('.fos_user_registration_register')->form();
+
+        $form->setValues([
+            'fos_user_registration_form[username]' => $testUser->getUsername(),
+            'fos_user_registration_form[email]' => $testUser->getEmail(),
+            'fos_user_registration_form[plainPassword][first]' => $testUser->getPlainPassword(),
+            'fos_user_registration_form[plainPassword][second]' => $testUser->getPlainPassword(),
+        ]);
+
+        $client->enableProfiler();
+
+        $client->submit($form);
+
+        $mailCollector = $client->getProfile()->getCollector('swiftmailer');
+
+        $client->followRedirect();
+
+        $collectedMessages = $mailCollector->getMessages();
+        $message = $collectedMessages[0];
+
+        preg_match_all('/http:\/\/localhost\/register\/confirm\/(.*)/', $message->getBody(), $matches);
+
+        $this->assertCount(2, $matches);
+
+        $confirmationUrl = $matches[0][0];
+
+        $confirmationUrl = str_replace('localhost', 'criticalmass.cm', $confirmationUrl);
+
+        $client->request('GET', $confirmationUrl);
+
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+
+        $client->followRedirect();
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSelectorTextContains('html h2', sprintf('Hej %s! Willkommen in der Masse!', $testUser->getUsername()));
+    }
 }
