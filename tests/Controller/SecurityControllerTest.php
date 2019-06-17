@@ -196,4 +196,83 @@ class SecurityControllerTest extends WebTestCase
 
         $this->assertSelectorExists('body.not-logged-in');
     }
+
+    public function testLastLoginDateTime(): void
+    {
+        $testUser = $this->createTestUser();
+
+        $client = static::createClient();
+
+        $client->request('GET', '/login/');
+
+        $crawler = $client->followRedirect();
+
+        $this->assertNull($testUser->getLastLogin());
+
+        $form = $crawler->filter('.form-horizontal')->form();
+
+        $form->setValues([
+            '_username' => $testUser->getUsername(),
+            '_password' => 'test-123456',
+        ]);
+
+        $client->submit($form);
+
+        /** @var User $testUser */
+        $testUser = self::$container->get('doctrine')->getRepository(User::class)->findOneByEmail($testUser->getEmail());
+
+        $this->assertEqualsWithDelta(new \DateTime(), $testUser->getLastLogin(), 1.5);
+    }
+
+    public function testLastLoginDateTimeTwice(): void
+    {
+        $testUser = $this->createTestUser();
+
+        $client = static::createClient();
+
+        $client->request('GET', '/login/');
+
+        $crawler = $client->followRedirect();
+
+        $this->assertNull($testUser->getLastLogin());
+
+        $form = $crawler->filter('.form-horizontal')->form();
+
+        $form->setValues([
+            '_username' => $testUser->getUsername(),
+            '_password' => 'test-123456',
+        ]);
+
+        $client->submit($form);
+
+        /** @var User $testUser */
+        $testUser = self::$container->get('doctrine')->getRepository(User::class)->findOneByEmail($testUser->getEmail());
+
+        $firstLoginDateTime = $testUser->getLastLogin();
+
+        $this->assertEqualsWithDelta(new \DateTime(), $testUser->getLastLogin(), 1.5);
+
+        $client->request('GET', '/logout/');
+
+        $client->request('GET', '/login/');
+
+        $crawler = $client->followRedirect();
+        
+        $form = $crawler->filter('.form-horizontal')->form();
+
+        $form->setValues([
+            '_username' => $testUser->getUsername(),
+            '_password' => 'test-123456',
+        ]);
+
+        $client->submit($form);
+
+        /** @var User $testUser */
+        $testUser = self::$container->get('doctrine')->getRepository(User::class)->findOneByEmail($testUser->getEmail());
+
+        $secondLoginDateTime = $testUser->getLastLogin();
+
+        $this->assertEqualsWithDelta(new \DateTime(), $testUser->getLastLogin(), 1.5);
+        $this->assertNotEquals($firstLoginDateTime, $secondLoginDateTime);
+    }
 }
