@@ -10,6 +10,10 @@ class ResettingControllerTest extends WebTestCase
 {
     protected function createTestUser(): User
     {
+        if (!self::$container) {
+            self::bootKernel();
+        }
+
         /** @var UserManagerInterface $fosUserManager */
         $fosUserManager = self::$container->get('fos_user.user_manager');
         $user = $fosUserManager->createUser();
@@ -18,10 +22,6 @@ class ResettingControllerTest extends WebTestCase
             ->setUsername(uniqid('criticalmass-test-', false))
             ->setEmail($email = sprintf('%s@caldera.cc', $user->getUsername()))
             ->setPlainPassword('test-123456');
-
-        $registry = self::$container->get('doctrine');
-        $registry->getManager()->persist($user);
-        $registry->getManager()->flush();
 
         $fosUserManager->updateUser($user);
 
