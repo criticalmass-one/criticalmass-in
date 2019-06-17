@@ -40,7 +40,7 @@ class ResettingControllerTest extends WebTestCase
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertSelectorTextContains('html h2', 'Kennwort vergessen?');
-        $this->assertEquals(1, $crawler->filter('input[name=username]')->count());
+        $this->assertSelectorExists('input[name=username]');
     }
 
     public function testResettingFormWithNewUser(): void
@@ -213,8 +213,8 @@ das Team.', $testUser->getUsername(), $testUser->getConfirmationToken()),
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertSelectorTextContains('html h2', 'Kennwort vergessen?');
-        $this->assertEquals(1, $crawler->filter('input#fos_user_resetting_form_plainPassword_first')->count());
-        $this->assertEquals(1, $crawler->filter('input#fos_user_resetting_form_plainPassword_second')->count());
+        $this->assertSelectorExists('input#fos_user_resetting_form_plainPassword_first');
+        $this->assertSelectorExists('input#fos_user_resetting_form_plainPassword_second');
     }
 
     public function testNewPasswordSetting(): void
@@ -339,7 +339,8 @@ das Team.', $testUser->getUsername(), $testUser->getConfirmationToken()),
         $this->assertEquals(301, $client->getResponse()->getStatusCode());
 
         $client->followRedirect();
-        
-        $this->assertSelectorTextContains('html h1', 'Hej, wir fahren Fahrrad!');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSelectorExists('body.logged-in');
     }
 }
