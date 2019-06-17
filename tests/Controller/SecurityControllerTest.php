@@ -296,4 +296,46 @@ class SecurityControllerTest extends WebTestCase
         $this->assertEqualsWithDelta(new \DateTime(), $testUser->getLastLogin(), 1.5);
         $this->assertNotEquals($firstLoginDateTime, $secondLoginDateTime);
     }
+
+    /**
+     * @depends testLoginWithRightCredentials
+     */
+    public function testLogout(): void
+    {
+        $testUser = $this->createTestUser();
+
+        $client = static::createClient();
+
+        $client->request('GET', '/login/');
+
+        $crawler = $client->followRedirect();
+
+        $this->assertSelectorExists('body.not-logged-in');
+
+        $form = $crawler->filter('.form-horizontal')->form();
+
+        $form->setValues([
+            '_username' => $testUser->getUsername(),
+            '_password' => 'test-123456',
+        ]);
+
+        $client->submit($form);
+
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+
+        $client->followRedirect();
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $this->assertSelectorExists('body.logged-in');
+
+        $client->request('GET', '/login/');
+
+        $this->assertEquals(301, $client->getResponse()->getStatusCode());
+
+        $client->followRedirect();
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSelectorExists('body.not-logged-in');
+    }
 }
