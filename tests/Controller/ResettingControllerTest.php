@@ -43,6 +43,9 @@ class ResettingControllerTest extends WebTestCase
         $this->assertSelectorExists('input[name=username]');
     }
 
+    /**
+     * @depends testResettingFormVisible
+     */
     public function testResettingFormWithNewUser(): void
     {
         $client = static::createClient();
@@ -68,6 +71,9 @@ class ResettingControllerTest extends WebTestCase
         $this->assertSelectorTextContains('html h2', 'Okay, rufe jetzt deine E-Mails ab');
     }
 
+    /**
+     * @depends testResettingFormVisible
+     */
     public function testResettingFormWithNonExistingUser(): void
     {
         $client = static::createClient();
@@ -95,6 +101,9 @@ class ResettingControllerTest extends WebTestCase
         $this->assertSelectorTextContains('html h2', 'Okay, rufe jetzt deine E-Mails ab');
     }
 
+    /**
+     * @depends testResettingFormVisible
+     */
     public function testResettingConfirmationMail(): void
     {
         $client = static::createClient();
@@ -140,6 +149,9 @@ das Team.', $testUser->getUsername(), $testUser->getConfirmationToken()),
         );
     }
 
+    /**
+     * @depends testResettingConfirmationMail
+     */
     public function testResettingConfirmationMailLink(): void
     {
         $client = static::createClient();
@@ -177,6 +189,9 @@ das Team.', $testUser->getUsername(), $testUser->getConfirmationToken()),
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
+    /**
+     * @depends testResettingConfirmationMailLink
+     */
     public function testNewPasswordForm(): void
     {
         $client = static::createClient();
@@ -217,6 +232,9 @@ das Team.', $testUser->getUsername(), $testUser->getConfirmationToken()),
         $this->assertSelectorExists('input#fos_user_resetting_form_plainPassword_second');
     }
 
+    /**
+     * @depends testNewPasswordForm
+     */
     public function testNewPasswordSetting(): void
     {
         $client = static::createClient();
@@ -273,6 +291,9 @@ das Team.', $testUser->getUsername(), $testUser->getConfirmationToken()),
         $this->assertSelectorTextContains('html div.alert.alert-dismissable.alert-success', 'Das Passwort wurde erfolgreich zurückgesetzt.');
     }
 
+    /**
+     * @depends testNewPasswordSetting
+     */
     public function testNewPasswordLogin(): void
     {
         $client = static::createClient();

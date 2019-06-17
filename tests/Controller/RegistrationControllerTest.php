@@ -30,6 +30,9 @@ class RegistrationControllerTest extends WebTestCase
         $this->assertEquals(5, $crawler->filter('.fos_user_registration_register input')->count());
     }
 
+    /**
+     * @depends testRegistrationFormVisible
+     */
     public function testRegistrationForm(): void
     {
         $testUser = $this->createTestUser();

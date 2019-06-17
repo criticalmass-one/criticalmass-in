@@ -47,6 +47,9 @@ class SecurityControllerTest extends WebTestCase
         $this->assertSelectorExists('input[name=_password]');
     }
 
+    /**
+     * @depends testLoginPage
+     */
     public function testLoginWithRightCredentials(): void
     {
         $testUser = $this->createTestUser();
@@ -77,6 +80,9 @@ class SecurityControllerTest extends WebTestCase
         $this->assertSelectorExists('body.logged-in');
     }
 
+    /**
+     * @depends testLoginPage
+     */
     public function testLoginWithWrongUsername(): void
     {
         $testUser = $this->createTestUser();
@@ -107,6 +113,9 @@ class SecurityControllerTest extends WebTestCase
         $this->assertSelectorExists('body.not-logged-in');
     }
 
+    /**
+     * @depends testLoginPage
+     */
     public function testLoginWithWrongPassword(): void
     {
         $testUser = $this->createTestUser();
@@ -137,6 +146,9 @@ class SecurityControllerTest extends WebTestCase
         $this->assertSelectorExists('body.not-logged-in');
     }
 
+    /**
+     * @depends testLoginPage
+     */
     public function testLoginWithWrongCredentials(): void
     {
         $testUser = $this->createTestUser();
@@ -167,6 +179,9 @@ class SecurityControllerTest extends WebTestCase
         $this->assertSelectorExists('body.not-logged-in');
     }
 
+    /**
+     * @depends testLoginPage
+     */
     public function testLoginWithDisabledUser(): void
     {
         $testUser = $this->createTestUser(false);
@@ -197,6 +212,9 @@ class SecurityControllerTest extends WebTestCase
         $this->assertSelectorExists('body.not-logged-in');
     }
 
+    /**
+     * @depends testLoginWithRightCredentials
+     */
     public function testLastLoginDateTime(): void
     {
         $testUser = $this->createTestUser();
@@ -224,6 +242,9 @@ class SecurityControllerTest extends WebTestCase
         $this->assertEqualsWithDelta(new \DateTime(), $testUser->getLastLogin(), 1.5);
     }
 
+    /**
+     * @depends testLastLoginDateTime
+     */
     public function testLastLoginDateTimeTwice(): void
     {
         $testUser = $this->createTestUser();
@@ -257,7 +278,7 @@ class SecurityControllerTest extends WebTestCase
         $client->request('GET', '/login/');
 
         $crawler = $client->followRedirect();
-        
+
         $form = $crawler->filter('.form-horizontal')->form();
 
         $form->setValues([
