@@ -46,8 +46,6 @@ class RegistrationControllerTest extends WebTestCase
             'fos_user_registration_form[plainPassword][second]' => $testUser->getPlainPassword(),
         ]);
 
-        $client->enableProfiler();
-
         $client->submit($form);
 
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
