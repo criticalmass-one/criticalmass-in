@@ -295,7 +295,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
 
     /**
      * @var bool $enabled
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default"=true})
      */
     protected $enabled = true;
 
