@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6fdf4914260389ff9293507d3669099b",
+    "content-hash": "991c528b04028d2406bbfdb002d6ec52",
     "packages": [
         {
             "name": "basvandorst/stravaphp",
@@ -2303,6 +2303,89 @@
                 "toggle"
             ],
             "time": "2019-05-05T09:25:21+00:00"
+        },
+        {
+            "name": "fresh/doctrine-enum-bundle",
+            "version": "v6.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fre5h/DoctrineEnumBundle.git",
+                "reference": "a453a75b2178dac395974713b874204381833b85"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fre5h/DoctrineEnumBundle/zipball/a453a75b2178dac395974713b874204381833b85",
+                "reference": "a453a75b2178dac395974713b874204381833b85",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/common": "^2.8",
+                "doctrine/doctrine-bundle": "^1.6.10",
+                "doctrine/orm": "~2.4",
+                "php": ">=7.1.3",
+                "symfony/config": "^4.0",
+                "symfony/dependency-injection": "^4.0",
+                "symfony/doctrine-bridge": "^4.0",
+                "symfony/framework-bundle": "^4.0",
+                "symfony/http-kernel": "^4.0",
+                "symfony/validator": "^4.0",
+                "twig/twig": "~2.4"
+            },
+            "require-dev": {
+                "escapestudios/symfony2-coding-standard": "^3.4",
+                "phpstan/phpstan": "^0.10",
+                "phpstan/phpstan-doctrine": "^0.10",
+                "phpstan/phpstan-phpunit": "^0.10",
+                "phpunit/phpunit": "^7.5",
+                "squizlabs/php_codesniffer": "^3.3",
+                "symfony/form": "^4.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "6.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Fresh\\DoctrineEnumBundle\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Community",
+                    "homepage": "https://github.com/fre5h/DoctrineEnumBundle/graphs/contributors",
+                    "role": "Contributors"
+                },
+                {
+                    "name": "Artem Henvald",
+                    "email": "genvaldartem@gmail.com",
+                    "role": "Creator"
+                }
+            ],
+            "description": "Provides support of ENUM type for Doctrine2 in Symfony applications.",
+            "homepage": "https://github.com/fre5h/DoctrineEnumBundle",
+            "keywords": [
+                "bundle",
+                "dbal",
+                "doctrine",
+                "entity",
+                "enum",
+                "mssql",
+                "mysql",
+                "postgresql",
+                "sqlite",
+                "symfony",
+                "type"
+            ],
+            "time": "2019-03-21T08:30:57+00:00"
         },
         {
             "name": "friendsofsymfony/elastica-bundle",
