@@ -4,7 +4,7 @@ namespace App\DBAL\Type;
 
 use Fresh\DoctrineEnumBundle\DBAL\Types\AbstractEnumType;
 
-final class RideDisabledType extends AbstractEnumType
+final class RideDisabledReasonType extends AbstractEnumType
 {
     public const DUPLICATE = 'DUPLICATE';
     public const WRONG_WEBSITE_HANDLING = 'WRONG_WEBSITE_HANDLING';

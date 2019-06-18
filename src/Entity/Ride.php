@@ -28,6 +28,7 @@ use App\Validator\Constraint as CriticalAssert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use App\Criticalmass\Router\Annotation as Routing;
 use App\Criticalmass\Sharing\Annotation as Sharing;
+use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 
 /**
  * @ORM\Table(name="ride")
@@ -291,6 +292,18 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @Sharing\Shorturl()
      */
     protected $shorturl;
+
+    /**
+     * @var bool $enabled
+     * @ORM\Column(type="boolean")
+     */
+    protected $enabled = true;
+
+    /**
+     * @ORM\Column(type="RideDisabledReasonType", nullable=true)
+     * @DoctrineAssert\Enum(entity="App\DBAL\Types\RideDisabledReasonType")
+     */
+    protected $disabledReason;
 
     public function __construct()
     {
@@ -1017,5 +1030,29 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     public function getShorturl(): ?string
     {
         return $this->shorturl;
+    }
+
+    public function setEnabled(bool $enabled): Ride
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    public function getDisabledReason(): string
+    {
+        return $this->disabledReason;
+    }
+
+    public function setDisabledReason(string $disabledReason): Ride
+    {
+        $this->disabledReason = $disabledReason;
+
+        return $this;
     }
 }
