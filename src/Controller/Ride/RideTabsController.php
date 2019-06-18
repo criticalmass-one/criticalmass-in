@@ -7,6 +7,7 @@ use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
 use App\Entity\Weather;
+use App\Form\Type\RideDisableType;
 use App\Form\Type\RideEstimateType;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -86,6 +87,7 @@ class RideTabsController extends AbstractController
             'weatherForecast' => $weatherForecast,
             'location' => $location,
             'socialNetworkProfiles' => $this->getSocialNetworkProfileRepository()->findByRide($ride),
+            'disableForm' => $this->createForm(RideDisableType::class, $ride)->createView(),
         ]);
     }
 }

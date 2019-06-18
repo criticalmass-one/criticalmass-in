@@ -1044,7 +1044,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         return $this->enabled;
     }
 
-    public function getDisabledReason(): string
+    public function getDisabledReason(): ?string
     {
         return $this->disabledReason;
     }

@@ -30,7 +30,7 @@
                     </li>
 
                     <li>
-                        <a href="{{ objectPath(ride, 'caldera_criticalmass_ride_disable') }}">
+                        <a href="#" data-toggle="modal" data-target="#disable-modal">
                             diese Tour deaktivieren
                         </a>
                     </li>
@@ -47,6 +47,8 @@
             </h3>
         </div>
     </div>
+
+    {% include 'Ride/Includes/_disable.html.twig' with { 'ride': ride, 'disableForm': disableForm } %}
 
     <div class="row">
         <div class="col-xs-12 col-sm-4 col-sm-push-8">
