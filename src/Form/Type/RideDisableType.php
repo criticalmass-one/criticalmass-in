@@ -14,6 +14,8 @@ class RideDisableType extends AbstractType
         $builder->add('disabledReason', ChoiceType::class, [
             'required' => true,
             'choices' => array_flip(RideDisabledReasonType::$choices),
+            'expanded' => true,
+            'multiple' => false,
         ]);
     }
 

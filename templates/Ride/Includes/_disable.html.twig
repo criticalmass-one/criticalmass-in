@@ -1,5 +1,5 @@
 <div class="modal fade" id="disable-modal" tabindex="-1" role="dialog" aria-labelledby="disable-modal-label">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             {{ form_start(disableForm) }}
             <div class="modal-header">
@@ -14,7 +14,7 @@
                     <label class="control-label" for="estimatedParticipants">
                         Grund für die Deaktivierung:
                     </label>
-                    {{ form_widget(disableForm.disabledReason, { 'attr' : { 'class': 'form-control' } }) }}
+                    {{ form_widget(disableForm.disabledReason) }}
                 </div>
             </div>
             <div class="modal-footer">
