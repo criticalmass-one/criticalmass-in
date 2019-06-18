@@ -6,4 +6,8 @@ body.ride.ride-disabled {
   div.container.ride {
     color: #aaa;
   }
+
+  div#map img {
+    filter: grayscale(100%) brightness(75%);
+  }
 }
