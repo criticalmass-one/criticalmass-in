@@ -10,11 +10,47 @@
                 </h4>
             </div>
             <div class="modal-body">
-                <div class="form-group">
-                    <label class="control-label" for="estimatedParticipants">
-                        Grund für die Deaktivierung:
+                Grund für die Deaktivierung:
+                <div class="radio">
+                    <label>
+                        {{ form_widget(disableForm.disabledReason[0]) }}
+                        {{ form_label(disableForm.disabledReason[0]) }}
                     </label>
-                    {{ form_widget(disableForm.disabledReason) }}
+                </div>
+
+                <div class="radio">
+                    <label>
+                        {{ form_widget(disableForm.disabledReason[1]) }}
+                        {{ form_label(disableForm.disabledReason[1]) }}
+                    </label>
+                </div>
+
+                <div class="radio">
+                    <label>
+                        {{ form_widget(disableForm.disabledReason[2]) }}
+                        {{ form_label(disableForm.disabledReason[2]) }}
+                    </label>
+                </div>
+
+                <div class="radio">
+                    <label>
+                        {{ form_widget(disableForm.disabledReason[3]) }}
+                        {{ form_label(disableForm.disabledReason[3]) }}
+                    </label>
+                </div>
+
+                <div class="radio">
+                    <label>
+                        {{ form_widget(disableForm.disabledReason[4]) }}
+                        {{ form_label(disableForm.disabledReason[4]) }}
+                    </label>
+                </div>
+
+                <div class="radio">
+                    <label>
+                        {{ form_widget(disableForm.disabledReason[5]) }}
+                        {{ form_label(disableForm.disabledReason[5]) }}
+                    </label>
                 </div>
             </div>
             <div class="modal-footer">
