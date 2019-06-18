@@ -80,6 +80,12 @@ class RideTabsController extends AbstractController
 
         $location = $this->getLocationRepository()->findLocationForRide($ride);
 
+        $disableForm = $this
+            ->createForm(RideDisableType::class, $ride, [
+                'action' => $objectRouter->generate($ride, 'caldera_criticalmass_ride_disable'),
+            ])
+            ->createView();
+
         return $this->render('RideTabs/DetailsTab.html.twig', [
             'ride' => $ride,
             'dateTime' => new \DateTime(),
@@ -87,7 +93,7 @@ class RideTabsController extends AbstractController
             'weatherForecast' => $weatherForecast,
             'location' => $location,
             'socialNetworkProfiles' => $this->getSocialNetworkProfileRepository()->findByRide($ride),
-            'disableForm' => $this->createForm(RideDisableType::class, $ride)->createView(),
+            'disableForm' => $disableForm
         ]);
     }
 }
