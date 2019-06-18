@@ -11,3 +11,10 @@ body.ride.ride-disabled {
     filter: grayscale(100%) brightness(75%);
   }
 }
+
+#cityRideList tr.ride.disabled,
+#cityRideList tr.ride.disabled a
+{
+  text-decoration: line-through;
+  color: #aaa;
+}
