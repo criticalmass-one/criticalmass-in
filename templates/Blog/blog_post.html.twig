@@ -8,8 +8,10 @@
     </li>
 {% endblock %}
 
+{% block bodyClass %}blog-post{% endblock %}
+
 {% block content %}
-    <div class="container">
+    <div class="container blog-post">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <div class="row">
@@ -37,7 +39,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-9">
+                    <div class="col-md-9 blog-post-content">
                         {{ blog_post.text|markdown }}
                     </div>
 
@@ -80,7 +82,7 @@
                                 Kommentar hinzufügen
                             </button>
                         {% else %}
-                            <span class="btn btn-success pull-right modal-hint" data-modal-hint-title="{{ 'hint_modal.ride.post_write_button.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.ride.post_write_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
+                            <span class="btn btn-success pull-right modal-hint" data-modal-hint-title="{{ 'hint_modal.ride.post_write_button.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.ride.post_write_button.text'|trans }}" data-hint-modal-size="md">
                                 Kommentar hinzufügen
                             </span>
                         {% endif %}
