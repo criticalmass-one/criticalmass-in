@@ -71,7 +71,6 @@ class Kernel extends BaseKernel
         $container->registerForAutoconfiguration(RideNamerInterface::class)->addTag('ride_namer');
 
         $container->addCompilerPass(new TwigSeoExtensionPass());
-
     }
 
     protected function configureRoutes(RouteCollectionBuilder $routes): void
