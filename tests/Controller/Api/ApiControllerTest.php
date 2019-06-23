@@ -2,9 +2,7 @@
 
 namespace Tests\Controller\Api;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-
-class ApiControllerTest extends WebTestCase
+class ApiControllerTest extends AbstractApiControllerTest
 {
     public function testApiDocVisible(): void
     {
@@ -15,5 +13,4 @@ class ApiControllerTest extends WebTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertSelectorTextContains('html h1', 'API documentation');
     }
-
 }
