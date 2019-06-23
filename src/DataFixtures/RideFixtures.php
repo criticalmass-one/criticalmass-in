@@ -21,17 +21,19 @@ class RideFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($this->createRide('hamburg', new \DateTime('2011-06-29 19:00:00')));
         $manager->persist($this->createRide('hamburg', new \DateTime('2011-06-30 19:00:00')));
         $manager->persist($this->createRide('hamburg', new \DateTime('2050-09-24 19:00:00')));
+        $manager->persist($this->createRide('hamburg', new \DateTime('2035-06-24 19:00:00'), 'kidical-mass-hamburg-2035'));
 
         $manager->flush();
     }
 
-    protected function createRide(string $citySlug, \DateTime $dateTime): Ride
+    protected function createRide(string $citySlug, \DateTime $dateTime, string $rideSlug = null): Ride
     {
         $ride = new Ride();
         $ride
             ->setCity($this->getReference(sprintf('city-%s', $citySlug)))
             ->setTitle(sprintf('Critical Mass %s', $dateTime->format('d.m.Y')))
-            ->setDateTime($dateTime);
+            ->setDateTime($dateTime)
+            ->setSlug($rideSlug);
 
         $this->setReference(sprintf('ride-%s-%d', $citySlug, $dateTime->format('U')), $ride);
 

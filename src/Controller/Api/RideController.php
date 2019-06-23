@@ -48,7 +48,7 @@ class RideController extends BaseController
      */
     public function showCurrentAction(Request $request, City $city): Response
     {
-        $ride = $this->getRideRepository()->findCurrentRideForCity($city, (bool) $request->get('cycleMandatory', false), (bool) $request->get('slugsAllowd', true));
+        $ride = $this->getRideRepository()->findCurrentRideForCity($city, (bool) $request->get('cycleMandatory', false), (bool) $request->get('slugsAllowed', true));
 
         if (!$ride) {
             return new JsonResponse([], 200, []); // @todo this should return 404, but i have no clue how to handle multiple jquery requests then

@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class ApiControllerTest extends WebTestCase
 {
-    public function testFrontpageVisible(): void
+    public function testApiDocVisible(): void
     {
         $client = static::createClient();
 
