@@ -116,34 +116,41 @@
         {% else %}
             <div class="col-xs-12 col-sm-8 col-sm-pull-4">
                 <div class="alert alert-warning">
-                    <strong>Huch?</strong>
+                    <p>
+                        <strong>
+                            Diese Tour wurde als abgesagt markiert:
+                        </strong>
+                    </p>
+                    
+                    <p>
                     {% if ride.disabledReason == 'DUPLICATE'|enum_constant('RideDisabledReasonType') %}
-                        Grund 1
+                        Diese Tour ist ein Duplikat einer anderen Tour dieses Monats.
                     {% endif %}
 
                     {% if ride.disabledReason == 'WRONG_WEBSITE_HANDLING'|enum_constant('RideDisabledReasonType') %}
-                        Grund 2
+                        Diese Tour wurde mit falschen Daten angelegt.
                     {% endif %}
 
                     {% if ride.disabledReason == 'WRONG_AUTO_GNERATION'|enum_constant('RideDisabledReasonType') %}
-                        Grund 3
+                        Diese Tour wurde fehlerhafterweise automatisch generiert.
                     {% endif %}
 
                     {% if ride.disabledReason == 'CANCELLED_WEATHER'|enum_constant('RideDisabledReasonType') %}
-                        Grund 4
+                        Diese Tour wurde witterungsbedingt abgesagt.
                     {% endif %}
 
                     {% if ride.disabledReason == 'CANCELLED_PARTICIPANTS'|enum_constant('RideDisabledReasonType') %}
-                        Grund 5
+                        Diese Tour fand aufgrund geringer Teilnehmerzahlen nicht statt.
                     {% endif %}
 
                     {% if ride.disabledReason == 'CANCELLED_AUTHORITIES'|enum_constant('RideDisabledReasonType') %}
-                        Grund 6
+                        Diese Tour wurde von der Polizei oder anderen Behörden untersagt.
                     {% endif %}
 
                     {% if ride.disabledReason == 'CANCELLED'|enum_constant('RideDisabledReasonType') %}
-                        Grund 7
+                        Diese Tour wurde abgesagt.
                     {% endif %}
+                    </p>
                 </div>
             </div>
         {% endif %}
