@@ -80,11 +80,11 @@
             </div>
         </div>
 
-        {% if ride.description %}
+        {% if ride.description and ride.enabled %}
             <div itemprop="description" class="col-xs-12 col-sm-8 col-sm-pull-4">
                 {{ ride.description|markdown }}
             </div>
-            {% else %}
+        {% elseif ride.enabled %}
             <div class="col-xs-12 col-sm-8 col-sm-pull-4">
                 <div class="alert alert-info">
                     <strong>Huch?</strong>
@@ -111,6 +111,39 @@
                             Tour editieren
                         </a>
                     </p>
+                </div>
+            </div>
+        {% else %}
+            <div class="col-xs-12 col-sm-8 col-sm-pull-4">
+                <div class="alert alert-warning">
+                    <strong>Huch?</strong>
+                    {% if ride.disabledReason == 'DUPLICATE'|enum_constant('RideDisabledReasonType') %}
+                        Grund 1
+                    {% endif %}
+
+                    {% if ride.disabledReason == 'WRONG_WEBSITE_HANDLING'|enum_constant('RideDisabledReasonType') %}
+                        Grund 2
+                    {% endif %}
+
+                    {% if ride.disabledReason == 'WRONG_AUTO_GNERATION'|enum_constant('RideDisabledReasonType') %}
+                        Grund 3
+                    {% endif %}
+
+                    {% if ride.disabledReason == 'CANCELLED_WEATHER'|enum_constant('RideDisabledReasonType') %}
+                        Grund 4
+                    {% endif %}
+
+                    {% if ride.disabledReason == 'CANCELLED_PARTICIPANTS'|enum_constant('RideDisabledReasonType') %}
+                        Grund 5
+                    {% endif %}
+
+                    {% if ride.disabledReason == 'CANCELLED_AUTHORITIES'|enum_constant('RideDisabledReasonType') %}
+                        Grund 6
+                    {% endif %}
+
+                    {% if ride.disabledReason == 'CANCELLED'|enum_constant('RideDisabledReasonType') %}
+                        Grund 7
+                    {% endif %}
                 </div>
             </div>
         {% endif %}
