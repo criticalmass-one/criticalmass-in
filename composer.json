@@ -119,8 +119,7 @@
         "reset-test-db": [
             "bin/console --env=test doctrine:database:drop --force",
             "bin/console --env=test doctrine:database:create",
-            "bin/console --env=test doctrine:schema:create",
-            "bin/console --env=test doctrine:fixtures:load -n"
+            "bin/console --env=test doctrine:schema:create"
         ],
         "reset-fixtures": [
             "@reset-test-db",
