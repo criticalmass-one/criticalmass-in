@@ -115,7 +115,21 @@
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
-        }
+        },
+        "reset-test-db": [
+            "bin/console --env=test doctrine:database:drop --force",
+            "bin/console --env=test doctrine:database:create",
+            "bin/console --env=test doctrine:schema:create",
+            "bin/console --env=test doctrine:fixtures:load -n"
+        ],
+        "reset-fixtures": [
+            "@reset-test-db",
+            "bin/console --env=test doctrine:fixtures:load -n"
+        ],
+        "functional-tests": [
+            "@reset-fixtures",
+            "vendor/bin/phpunit tests/Controller"
+        ]
     },
     "config": {
 
