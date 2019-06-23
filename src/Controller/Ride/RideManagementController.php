@@ -3,6 +3,7 @@
 namespace App\Controller\Ride;
 
 use App\Criticalmass\Router\ObjectRouterInterface;
+use App\Form\Type\RideDisableType;
 use App\Form\Type\RideSocialPreviewType;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -207,11 +208,18 @@ class RideManagementController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function disableAction(RegistryInterface $registry, UserInterface $user = null, Ride $ride, ObjectRouterInterface $objectRouter): RedirectResponse
+    public function disableAction(Request $request, RegistryInterface $registry, UserInterface $user = null, Ride $ride, ObjectRouterInterface $objectRouter): RedirectResponse
     {
-        $ride->setEnabled(false);
+        if (Request::METHOD_POST === $request->getMethod()) {
+            $disableForm = $this->createForm(RideDisableType::class, $ride);
+            $disableForm->handleRequest($request);
 
-        $registry->getManager()->flush();
+            if ($disableForm->isSubmitted() && $disableForm->isValid()) {
+                $ride->setEnabled(false);
+
+                $registry->getManager()->flush();
+            }
+        }
 
         return $this->redirect($objectRouter->generate($ride));
     }

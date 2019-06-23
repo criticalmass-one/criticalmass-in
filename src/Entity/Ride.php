@@ -302,7 +302,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
 
     /**
      * @ORM\Column(type="RideDisabledReasonType", nullable=true)
-     * @DoctrineAssert\Enum(entity="App\DBAL\Types\RideDisabledReasonType")
+     * @DoctrineAssert\Enum(entity="App\DBAL\Type\RideDisabledReasonType")
      */
     protected $disabledReason;
 
