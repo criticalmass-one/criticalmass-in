@@ -7,8 +7,8 @@ body.ride.ride-disabled {
     color: #aaa;
   }
 
-  div#map img {
-    filter: grayscale(100%) brightness(75%);
+  div#map {
+    filter: grayscale(100%) brightness(75%) blur(1px);
   }
 }
 
