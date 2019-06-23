@@ -90,7 +90,8 @@
         "flagception/flagception-bundle": "^3.1",
         "php-amqplib/rabbitmq-bundle": "^1.14",
         "ext-fileinfo": "*",
-        "ext-xmlwriter": "*"
+        "ext-xmlwriter": "*",
+        "ext-json": "*"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "*",
