@@ -6,6 +6,8 @@ let urlAdjuster = require('gulp-css-replace-url');
 let flatten = require('gulp-flatten');
 let sass = require('gulp-sass');
 sass.compiler = require('node-sass');
+let ts = require('gulp-typescript');
+let tsProject = ts.createProject('tsconfig.json');
 
 /* jQuery Select Areas */
 
@@ -138,6 +140,13 @@ gulp.task('compress-css', ['leaflet-css', 'extramarkers-css', 'sass'], function 
 
 gulp.task('build-css', ['sass', 'compress-css']);
 
+/* Typescript */
+
+gulp.task('typescript', function () {
+	return tsProject.src()
+		.pipe(tsProject())
+		.js.pipe(gulp.dest('assets/js/dist'));
+});
 
 /* Javascript */
 
