@@ -18,8 +18,26 @@ class DisableRideTest extends AbstractControllerTest
         $this->assertSelectorNotExists('body.ride-disabled');
     }
 
+    public function testDisableRideFormVisibility(): void
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/hamburg/2011-06-24');
+
+        $this->assertSelectorExists('body.not-logged-in');
+        $this->assertSelectorNotExists('#disable-modal');
+
+        $client = $this->loginViaForm($client, 'maltehuebner', '123456');
+
+        $client->request('GET', '/hamburg/2011-06-24');
+
+        $this->assertSelectorExists('body.logged-in');
+        $this->assertSelectorExists('#disable-modal');
+    }
+
     /**
      * @depends testEnabledRide
+     * @depends testDisableRideFormVisibility
      */
     public function testDisableRide(): void
     {
