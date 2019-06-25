@@ -2,9 +2,9 @@
 
 namespace Tests\Controller\Ride;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Tests\Controller\AbstractControllerTest;
 
-class DisableRideTest extends WebTestCase
+class DisableRideTest extends AbstractControllerTest
 {
     public function testEnabledRide(): void
     {
@@ -14,5 +14,58 @@ class DisableRideTest extends WebTestCase
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertSelectorTextContains('html h1', 'Critical Mass 24.06.2011');
+        $this->assertSelectorExists('body.ride');
+        $this->assertSelectorNotExists('body.ride-disabled');
+    }
+
+    /**
+     * @depends testEnabledRide
+     */
+    public function testDisableRide(): void
+    {
+        $client = static::createClient();
+
+        $client = $this->loginViaForm($client, 'maltehuebner', '123456');
+
+        $crawler = $client->request('GET', '/hamburg/2011-06-24');
+
+        $this->assertSelectorExists('body.logged-in');
+
+        $form = $crawler->filter('#disable-modal form')->form();
+
+        $form['ride_disable[disabledReason]']->select('DUPLICATE');
+
+        $client->submit($form);
+
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+
+        $client->followRedirect();
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertSelectorTextContains('html h1', 'Critical Mass 24.06.2011');
+        $this->assertSelectorExists('body.ride');
+        $this->assertSelectorExists('body.ride-disabled');
+    }
+
+    /**
+     * @depends testDisableRide
+     */
+    public function testNavigationWithoutDisabledRide(): void
+    {
+        $client = static::createClient();
+
+        $client = $this->loginViaForm($client, 'maltehuebner', '123456');
+
+        $crawler = $client->request('GET', '/hamburg/2011-03-25');
+
+        $nextLink = $crawler->filter('.pager .next a')->link();
+
+        $this->assertEquals('http://localhost/hamburg/2011-07-29', $nextLink->getUri());
+
+        $crawler = $client->request('GET', '/hamburg/2011-07-29');
+
+        $prevLink = $crawler->filter('.pager .previous a')->link();
+
+        $this->assertEquals('http://localhost/hamburg/2011-03-25', $prevLink->getUri());
     }
 }
