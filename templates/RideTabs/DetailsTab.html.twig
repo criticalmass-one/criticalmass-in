@@ -24,6 +24,19 @@
                             Vorschau für soziale Netzwerke
                         </a>
                     </li>
+
+                    {% if ride.enabled %}
+
+                    <li class="divider">
+
+                    </li>
+
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#disable-modal">
+                            diese Tour deaktivieren
+                        </a>
+                    </li>
+                    {% endif %}
                 </ul>
             {% else %}
                 <span class="btn btn-success modal-hint" data-modal-hint-title="{{ 'hint_modal.ride.edit_button.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.ride.edit_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
@@ -37,6 +50,8 @@
             </h3>
         </div>
     </div>
+
+    {% include 'Ride/Includes/_disable.html.twig' with { 'ride': ride, 'disableForm': disableForm } %}
 
     <div class="row">
         <div class="col-xs-12 col-sm-4 col-sm-push-8">
@@ -65,11 +80,11 @@
             </div>
         </div>
 
-        {% if ride.description %}
+        {% if ride.description and ride.enabled %}
             <div itemprop="description" class="col-xs-12 col-sm-8 col-sm-pull-4">
                 {{ ride.description|markdown }}
             </div>
-            {% else %}
+        {% elseif ride.enabled %}
             <div class="col-xs-12 col-sm-8 col-sm-pull-4">
                 <div class="alert alert-info">
                     <strong>Huch?</strong>
@@ -95,6 +110,46 @@
                            class="btn btn-primary btn-lg">
                             Tour editieren
                         </a>
+                    </p>
+                </div>
+            </div>
+        {% else %}
+            <div class="col-xs-12 col-sm-8 col-sm-pull-4">
+                <div class="alert alert-warning" id="ride-disabled-reason">
+                    <p>
+                        <strong>
+                            Diese Tour wurde als abgesagt markiert:
+                        </strong>
+                    </p>
+
+                    <p>
+                    {% if ride.disabledReason == 'DUPLICATE'|enum_constant('RideDisabledReasonType') %}
+                        Diese Tour ist ein Duplikat einer anderen Tour dieses Monats.
+                    {% endif %}
+
+                    {% if ride.disabledReason == 'WRONG_WEBSITE_HANDLING'|enum_constant('RideDisabledReasonType') %}
+                        Diese Tour wurde mit falschen Daten angelegt.
+                    {% endif %}
+
+                    {% if ride.disabledReason == 'WRONG_AUTO_GNERATION'|enum_constant('RideDisabledReasonType') %}
+                        Diese Tour wurde fehlerhafterweise automatisch generiert.
+                    {% endif %}
+
+                    {% if ride.disabledReason == 'CANCELLED_WEATHER'|enum_constant('RideDisabledReasonType') %}
+                        Diese Tour wurde witterungsbedingt abgesagt.
+                    {% endif %}
+
+                    {% if ride.disabledReason == 'CANCELLED_PARTICIPANTS'|enum_constant('RideDisabledReasonType') %}
+                        Diese Tour fand aufgrund geringer Teilnehmerzahlen nicht statt.
+                    {% endif %}
+
+                    {% if ride.disabledReason == 'CANCELLED_AUTHORITIES'|enum_constant('RideDisabledReasonType') %}
+                        Diese Tour wurde von der Polizei oder anderen Behörden untersagt.
+                    {% endif %}
+
+                    {% if ride.disabledReason == 'CANCELLED'|enum_constant('RideDisabledReasonType') %}
+                        Diese Tour wurde abgesagt.
+                    {% endif %}
                     </p>
                 </div>
             </div>

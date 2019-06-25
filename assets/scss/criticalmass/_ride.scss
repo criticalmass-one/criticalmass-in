@@ -1,0 +1,20 @@
+body.ride.ride-disabled {
+  h1 {
+    text-decoration: line-through;
+  }
+
+  div.container.ride {
+    color: #aaa;
+  }
+
+  div#map {
+    filter: grayscale(100%) brightness(75%) blur(1px);
+  }
+}
+
+#cityRideList tr.ride.disabled,
+#cityRideList tr.ride.disabled a
+{
+  text-decoration: line-through;
+  color: #aaa;
+}

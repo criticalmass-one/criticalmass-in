@@ -21,6 +21,7 @@ doctrine:
             datetime: App\DBAL\Type\UTCDateTimeType
             date: App\DBAL\Type\UTCDateType
             time: App\DBAL\Type\UTCTimeType
+            RideDisabledReasonType: App\DBAL\Type\RideDisabledReasonType
         mapping_types:
             enum: string
 
