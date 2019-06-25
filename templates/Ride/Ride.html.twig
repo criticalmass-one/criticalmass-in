@@ -49,7 +49,7 @@
                         </span>
                     </a>
                 </li>
-                {% if pastRide %}
+                {% if pastRide and ride.enabled %}
                     {% if feature('photos') %}
                         <li role="presentation">
                             <a href="{{ objectPath(ride, 'caldera_criticalmass_photo_ride_list') }}">
@@ -78,7 +78,7 @@
                 {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderSubridesTabAction', { 'ride': ride } )) }}
                 {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderPostsTabAction', { 'ride': ride } )) }}
 
-                {% if pastRide %}
+                {% if pastRide and ride.enabled %}
                     {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderTracksTabAction', { 'ride': ride } )) }}
                 {% endif %}
             </div>

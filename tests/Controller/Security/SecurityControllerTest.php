@@ -1,34 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace Tests\Controller;
+namespace Tests\Controller\Security;
 
 use App\Entity\User;
-use FOS\UserBundle\Model\UserManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Tests\Controller\AbstractControllerTest;
 
-class SecurityControllerTest extends WebTestCase
+class SecurityControllerTest extends AbstractControllerTest
 {
-    protected function createTestUser(bool $enabled = true): User
-    {
-        if (!self::$container) {
-            self::bootKernel();
-        }
-
-        /** @var UserManagerInterface $fosUserManager */
-        $fosUserManager = self::$container->get('fos_user.user_manager');
-        $user = $fosUserManager->createUser();
-
-        $user
-            ->setUsername(uniqid('criticalmass-test-', false))
-            ->setEmail($email = sprintf('%s@caldera.cc', $user->getUsername()))
-            ->setPlainPassword('test-123456')
-            ->setEnabled($enabled);
-
-        $fosUserManager->updateUser($user);
-
-        return $user;
-    }
-
     public function testLoginPage(): void
     {
         $client = static::createClient();
