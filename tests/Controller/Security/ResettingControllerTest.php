@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace Tests\Controller;
+namespace Tests\Controller\Security;
 
 use App\Entity\User;
 use FOS\UserBundle\Model\UserManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Tests\Controller\AbstractControllerTest;
 
-class ResettingControllerTest extends WebTestCase
+class ResettingControllerTest extends AbstractControllerTest
 {
     protected function createTestUser(): User
     {
