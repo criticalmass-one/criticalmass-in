@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace Tests\Controller;
+namespace Tests\Controller\Security;
 
+use App\Controller\AbstractController;
 use App\Entity\User;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class RegistrationControllerTest extends WebTestCase
+class RegistrationControllerTest extends AbstractController
 {
     protected function createTestUser(): User
     {
