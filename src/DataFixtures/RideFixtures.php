@@ -2,8 +2,6 @@
 
 namespace App\DataFixtures;
 
-use App\Criticalmass\CitySlug\Handler\CitySlugHandler;
-use App\Entity\City;
 use App\Entity\Ride;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -13,7 +11,9 @@ class RideFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
+        $manager->persist($this->createRide('hamburg', new \DateTime('2011-03-25 19:00:00'), 53.5, 10.5));
         $manager->persist($this->createRide('hamburg', new \DateTime('2011-06-24 19:00:00'), 53.5, 10.5));
+        $manager->persist($this->createRide('hamburg', new \DateTime('2011-07-29 19:00:00'), 53.5, 10.5));
 
         $manager->flush();
     }
