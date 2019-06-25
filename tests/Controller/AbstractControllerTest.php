@@ -3,6 +3,7 @@
 namespace Tests\Controller;
 
 use App\Entity\User;
+use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\Client;
 use Symfony\Component\BrowserKit\Cookie;
@@ -29,5 +30,46 @@ class AbstractControllerTest extends WebTestCase
         $client->getCookieJar()->set($cookie);
 
         return $client;
+    }
+
+    protected function loginViaForm(Client $client, string $username, string $password): Client
+    {
+        $client->request('GET', '/login/');
+
+        $crawler = $client->followRedirect();
+
+        $form = $crawler->filter('.form-horizontal')->form();
+
+        $form->setValues([
+            '_username' => $username,
+            '_password' => $password,
+        ]);
+
+        $client->submit($form);
+
+        $client->followRedirect();
+
+        return $client;
+    }
+
+    protected function createTestUser(bool $enabled = true): User
+    {
+        if (!self::$container) {
+            self::bootKernel();
+        }
+
+        /** @var UserManagerInterface $fosUserManager */
+        $fosUserManager = self::$container->get('fos_user.user_manager');
+        $user = $fosUserManager->createUser();
+
+        $user
+            ->setUsername(uniqid('criticalmass-test-', false))
+            ->setEmail($email = sprintf('%s@caldera.cc', $user->getUsername()))
+            ->setPlainPassword('test-123456')
+            ->setEnabled($enabled);
+
+        $fosUserManager->updateUser($user);
+
+        return $user;
     }
 }

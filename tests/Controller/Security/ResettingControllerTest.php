@@ -3,31 +3,10 @@
 namespace Tests\Controller\Security;
 
 use App\Entity\User;
-use FOS\UserBundle\Model\UserManagerInterface;
 use Tests\Controller\AbstractControllerTest;
 
 class ResettingControllerTest extends AbstractControllerTest
 {
-    protected function createTestUser(): User
-    {
-        if (!self::$container) {
-            self::bootKernel();
-        }
-
-        /** @var UserManagerInterface $fosUserManager */
-        $fosUserManager = self::$container->get('fos_user.user_manager');
-        $user = $fosUserManager->createUser();
-
-        $user
-            ->setUsername(uniqid('criticalmass-test-', false))
-            ->setEmail($email = sprintf('%s@caldera.cc', $user->getUsername()))
-            ->setPlainPassword('test-123456');
-
-        $fosUserManager->updateUser($user);
-
-        return $user;
-    }
-
     public function testResettingFormVisible(): void
     {
         $client = static::createClient();
