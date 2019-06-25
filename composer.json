@@ -91,14 +91,17 @@
         "flagception/flagception-bundle": "^3.1",
         "php-amqplib/rabbitmq-bundle": "^1.14",
         "ext-fileinfo": "*",
-        "ext-xmlwriter": "*"
+        "ext-xmlwriter": "*",
+        "fresh/doctrine-enum-bundle": "^6.3"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "*",
         "phpunit/phpunit": "^7",
         "codedungeon/phpunit-result-printer": "^0.6.0",
         "symfony/profiler-pack": "^1.0",
-        "vimeo/psalm": "^3.3"
+        "symfony/browser-kit": "^4.1",
+        "vimeo/psalm": "^3.3",
+        "symfony/maker-bundle": "^1.11"
     },
     "conflict": {
         "symfony/symfony": "*"
@@ -113,7 +116,20 @@
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
-        }
+        },
+        "reset-test-db": [
+            "bin/console --env=test doctrine:database:drop --force",
+            "bin/console --env=test doctrine:database:create",
+            "bin/console --env=test doctrine:schema:create"
+        ],
+        "reset-fixtures": [
+            "@reset-test-db",
+            "bin/console --env=test doctrine:fixtures:load -n"
+        ],
+        "functional-tests": [
+            "@reset-fixtures",
+            "vendor/bin/phpunit tests/Controller"
+        ]
     },
     "config": {
 

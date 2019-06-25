@@ -2,10 +2,10 @@
 
 namespace App\Criticalmass\Geo\Converter;
 
+use App\Criticalmass\Geo\Entity\Track;
 use App\Criticalmass\Geo\GpxReader\TrackReader;
 use App\Criticalmass\Geo\PositionList\PositionList;
 use App\Criticalmass\Geo\PositionList\PositionListInterface;
-use App\Entity\Track;
 
 class TrackToPositionListConverter
 {

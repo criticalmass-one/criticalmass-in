@@ -4,7 +4,6 @@ namespace App\Criticalmass\Geocoding;
 
 use App\Criticalmass\Geocoding\LocationBuilder\LocationBuilderInterface;
 use Geocoder\Location;
-use Geocoder\Query\ReverseQuery;
 use Symfony\Component\Cache\Adapter\AbstractAdapter;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 use Symfony\Component\Cache\CacheItem;

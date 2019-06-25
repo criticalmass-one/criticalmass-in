@@ -6,6 +6,7 @@ use App\Criticalmass\Geocoding\ReverseGeocodeable;
 use App\Criticalmass\OrderedEntities\Annotation as OE;
 use App\Criticalmass\OrderedEntities\OrderedEntityInterface;
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
+use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\Criticalmass\Weather\EntityInterface\WeatherableInterface;
 use App\Criticalmass\Weather\EntityInterface\WeatherInterface;
 use App\EntityInterface\StaticMapableInterface;
@@ -16,7 +17,6 @@ use App\EntityInterface\ParticipateableInterface;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
-use App\EntityInterface\ViewableInterface;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -28,6 +28,7 @@ use App\Validator\Constraint as CriticalAssert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use App\Criticalmass\Router\Annotation as Routing;
 use App\Criticalmass\Sharing\Annotation as Sharing;
+use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 
 /**
  * @ORM\Table(name="ride")
@@ -37,7 +38,7 @@ use App\Criticalmass\Sharing\Annotation as Sharing;
  * @Vich\Uploadable
  * @Routing\DefaultRoute(name="caldera_criticalmass_ride_show")
  */
-class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, Shareable, ReverseGeocodeable, WeatherableInterface, OrderedEntityInterface
+class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, Shareable, ReverseGeocodeable, WeatherableInterface, OrderedEntityInterface
 {
     /**
      * @ORM\Id
@@ -291,6 +292,19 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @Sharing\Shorturl()
      */
     protected $shorturl;
+
+    /**
+     * @var bool $enabled
+     * @ORM\Column(type="boolean", options={"default"=true})
+     * @OE\Boolean(true)
+     */
+    protected $enabled = true;
+
+    /**
+     * @ORM\Column(type="RideDisabledReasonType", nullable=true)
+     * @DoctrineAssert\Enum(entity="App\DBAL\Type\RideDisabledReasonType")
+     */
+    protected $disabledReason;
 
     public function __construct()
     {
@@ -790,7 +804,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->participationsNumberNo;
     }
 
-    public function setViews(int $views): ViewableInterface
+    public function setViews(int $views): ViewableEntity
     {
         $this->views = $views;
 
@@ -802,7 +816,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->views;
     }
 
-    public function incViews(): ViewableInterface
+    public function incViews(): ViewableEntity
     {
         ++$this->views;
 
@@ -1017,5 +1031,29 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     public function getShorturl(): ?string
     {
         return $this->shorturl;
+    }
+
+    public function setEnabled(bool $enabled): Ride
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    public function getDisabledReason(): ?string
+    {
+        return $this->disabledReason;
+    }
+
+    public function setDisabledReason(string $disabledReason): Ride
+    {
+        $this->disabledReason = $disabledReason;
+
+        return $this;
     }
 }

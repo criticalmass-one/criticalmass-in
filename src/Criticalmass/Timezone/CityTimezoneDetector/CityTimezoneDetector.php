@@ -12,20 +12,26 @@ class CityTimezoneDetector implements CityTimezoneDetectorInterface
     /** @var string $timezoneDbApiKey */
     protected $timezoneDbApiKey;
 
+    /** @var Curl $curl */
+    protected $curl;
+
     public function __construct(string $timezoneDbApiKey)
     {
         $this->timezoneDbApiKey = $timezoneDbApiKey;
+        $this->curl = new Curl();
     }
 
     public function queryForCity(City $city): ?string
     {
+        if (!$city->getLatitude() || !$city->getLongitude()) {
+            return null;
+        }
+
         $query = sprintf('%s?%s', self::HOSTNAME, $this->buildQueryString($city));
 
-        $curl = new Curl();
+        $this->curl->get($query);
 
-        $curl->get($query);
-
-        if (200 === $curl->httpStatusCode && $timezone = $curl->response->zoneName) {
+        if (200 === $this->curl->httpStatusCode && $timezone = $this->curl->response->zoneName) {
             return $timezone;
         }
 
