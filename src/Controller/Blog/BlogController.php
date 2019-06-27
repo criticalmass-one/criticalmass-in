@@ -26,6 +26,10 @@ class BlogController extends AbstractController
      */
     public function showAction(BlogPost $blogPost): Response
     {
+        if (!$blogPost->isEnabled()) {
+            throw $this->createNotFoundException();
+        }
+
         return $this->render('Blog/blog_post.html.twig', [
             'blog_post' => $blogPost,
         ]);

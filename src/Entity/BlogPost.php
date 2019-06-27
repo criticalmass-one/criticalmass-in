@@ -156,7 +156,7 @@ class BlogPost implements RouteableInterface, PostableInterface
         return $this;
     }
 
-    public function getEnabled(): ?bool
+    public function isEnabled(): ?bool
     {
         return $this->enabled;
     }
