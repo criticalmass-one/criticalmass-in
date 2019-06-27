@@ -18,7 +18,29 @@ class BlogTest extends AbstractControllerTest
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-        $this->assertSelectorTextContains('html h2', 'Testeintrag');
-        $this->assertSelectorTextContains('html h2', 'Testeintrag ohne Intro');
+        $this->assertSelectorTextContains('article[data-blog-post-slug="testeintrag"] h2', 'Testeintrag');
+    }
+
+    public function testTwoBlogPostsAreVisible(): void
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/blog/');
+
+        $this->assertEquals(301, $client->getResponse()->getStatusCode());
+
+        $client->followRedirect();
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $this->assertSelectorTextContains('article[data-blog-post-slug="testeintrag"] h2.blog-post-title', 'Testeintrag');
+        $this->assertSelectorTextContains('article[data-blog-post-slug="testeintrag"] p.blog-post-intro', 'Testeintrag');
+        $this->assertSelectorTextContains('article[data-blog-post-slug="testeintrag"] div.blog-post-content', 'Testeintrag');
+
+        $this->assertSelectorNotExists('article[data-blog-post-slug="unsichtbarer-testeintrag"]');
+
+        $this->assertSelectorTextContains('article[data-blog-post-slug="testeintrag-ohne-intro"] h2.blog-post-title', 'Testeintrag ohne Intro');
+        $this->assertSelectorNotExists('article[data-blog-post-slug="testeintrag-ohne-intro"] p.blog-post-intro');
+        $this->assertSelectorTextContains('article[data-blog-post-slug="testeintrag-ohne-intro"] div.blog-post-content', 'Testtext ohne Intro');
     }
 }
