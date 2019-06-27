@@ -17,7 +17,7 @@ class BlogController extends AbstractController
     public function overviewAction(RegistryInterface $registry): Response
     {
         return $this->render('Blog/overview.html.twig', [
-            'blog_posts' => $registry->getRepository(BlogPost::class)->findAll(),
+            'blog_posts' => $registry->getRepository(BlogPost::class)->findForBlogFrontpage(),
         ]);
     }
 

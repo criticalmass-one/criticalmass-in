@@ -34,8 +34,8 @@ class BlogTest extends AbstractControllerTest
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $this->assertSelectorTextContains('article[data-blog-post-slug="testeintrag"] h2.blog-post-title', 'Testeintrag');
-        $this->assertSelectorTextContains('article[data-blog-post-slug="testeintrag"] p.blog-post-intro', 'Testeintrag');
-        $this->assertSelectorTextContains('article[data-blog-post-slug="testeintrag"] div.blog-post-content', 'Testeintrag');
+        $this->assertSelectorTextContains('article[data-blog-post-slug="testeintrag"] p.blog-post-intro', 'Testintro');
+        $this->assertSelectorNotExists('article[data-blog-post-slug="testeintrag"] div.blog-post-content');
 
         $this->assertSelectorNotExists('article[data-blog-post-slug="unsichtbarer-testeintrag"]');
 

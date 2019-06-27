@@ -6,5 +6,14 @@ use Doctrine\ORM\EntityRepository;
 
 class BlogPostRepository extends EntityRepository
 {
+    public function findForBlogFrontpage(): array
+    {
+        $qb = $this->createQueryBuilder('bp');
+        $qb
+            ->where($qb->expr()->eq('bp.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->orderBy('bp.createdAt');
 
+        return $qb->getQuery()->getResult();
+    }
 }
