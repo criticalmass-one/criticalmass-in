@@ -15,64 +15,66 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 {% for blog_post in blog_posts %}
-                    {% if blog_post.imageName %}
-                        <div class="jumbotron" id="city-jumbotron" style="height: 250px; background-image: url({{ vich_uploader_asset(blog_post, 'imageFile')|imagine_filter('blogpost_teaser') }});">
+                    <article class="blog-post" data-blog-post-slug="{{ blog_post.slug }}">
+                        {% if blog_post.imageName %}
+                            <div class="jumbotron" id="city-jumbotron" style="height: 250px; background-image: url({{ vich_uploader_asset(blog_post, 'imageFile')|imagine_filter('blogpost_teaser') }});">
 
-                        </div>
-                    {% endif %}
+                            </div>
+                        {% endif %}
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h2>
-                                <a href="{{ objectPath(blog_post) }}">
-                                    {{ blog_post.title }}
-                                </a>
-                            </h2>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-9">
-                            {% if blog_post.intro %}
-                            <p class="lead blog-post-intro">
-                                {{ blog_post.intro }}
-                            </p>
-                            {% else %}
-                            <p class="blog-post-content">
-                                {{ blog_post.text|markdown }}
-                            </p>
-                            {% endif %}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2 class="blog-post-title">
+                                    <a href="{{ objectPath(blog_post) }}">
+                                        {{ blog_post.title }}
+                                    </a>
+                                </h2>
+                            </div>
                         </div>
 
-                        <div class="col-md-3 text-center">
-                            {% if blog_post.user.imageName %}
-                                <img class="media-object round-media-object img-responsive img-fluid"
-                                     src="{{ vich_uploader_asset(blog_post.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}" style="margin: 10px auto;"/>
-                            {% endif %}
+                        <div class="row">
+                            <div class="col-md-9">
+                                {% if blog_post.intro %}
+                                    <p class="lead blog-post-intro">
+                                        {{ blog_post.intro }}
+                                    </p>
+                                {% else %}
+                                    <p class="blog-post-content">
+                                        {{ blog_post.text|markdown }}
+                                    </p>
+                                {% endif %}
+                            </div>
 
-                            <p>
-                                <strong>
-                                    {{ blog_post.user.username }}
-                                </strong>
-                                <br />
-                                <small>
-                                    <time>
-                                        {{ blog_post.createdAt|time_ago_in_words }}
-                                    </time>
-                                </small>
-                            </p>
+                            <div class="col-md-3 text-center">
+                                {% if blog_post.user.imageName %}
+                                    <img class="media-object round-media-object img-responsive img-fluid"
+                                         src="{{ vich_uploader_asset(blog_post.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}" style="margin: 10px auto;"/>
+                                {% endif %}
 
-                            <p>
-                                <a href="{{ objectPath(blog_post) }}#comments">
-                                    {% if blog_post.comments|length == 1 %}
-                                        1 Kommentar
-                                    {% else %}
-                                        {{ blog_post.comments|length }} Kommentare
-                                    {% endif %}
-                                </a>
-                            </p>
+                                <p>
+                                    <strong>
+                                        {{ blog_post.user.username }}
+                                    </strong>
+                                    <br />
+                                    <small>
+                                        <time>
+                                            {{ blog_post.createdAt|time_ago_in_words }}
+                                        </time>
+                                    </small>
+                                </p>
+
+                                <p>
+                                    <a href="{{ objectPath(blog_post) }}#comments">
+                                        {% if blog_post.comments|length == 1 %}
+                                            1 Kommentar
+                                        {% else %}
+                                            {{ blog_post.comments|length }} Kommentare
+                                        {% endif %}
+                                    </a>
+                                </p>
+                            </div>
                         </div>
-                    </div>
+                    </article>
                 {% endfor %}
             </div>
         </div>
