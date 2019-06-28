@@ -2,25 +2,25 @@
 
 namespace Tests\ParamConverter;
 
-use App\Entity\Photo;
-use App\Repository\PhotoRepository;
-use App\Request\ParamConverter\PhotoParamConverter;
+use App\Entity\Track;
+use App\Repository\TrackRepository;
+use App\Request\ParamConverter\TrackParamConverter;
 use PHPUnit\Framework\TestCase;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter as ParamConverterConfig;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class PhotoParamConverterTest extends TestCase
+class TrackParamConverterTest extends TestCase
 {
-    public function testPhotoParamConverterSupportsPhoto(): void
+    public function testTrackParamConverterSupportsLocaction(): void
     {
         $registry = $this->createMock(RegistryInterface::class);
 
-        $paramConverter = new PhotoParamConverter($registry);
+        $paramConverter = new TrackParamConverter($registry);
 
         $config = new ParamConverterConfig([
-            'class' => 'App:Photo',
+            'class' => 'App:Track',
         ]);
 
         $this->assertTrue($paramConverter->supports($config));
@@ -32,14 +32,14 @@ class PhotoParamConverterTest extends TestCase
         $this->assertFalse($paramConverter->supports($config));
     }
 
-    public function testPhotoParamConverterWithEmptyRequest(): void
+    public function testTrackParamConverterWithEmptyRequest(): void
     {
         $registry = $this->createMock(RegistryInterface::class);
 
-        $paramConverter = new PhotoParamConverter($registry);
+        $paramConverter = new TrackParamConverter($registry);
 
         $config = new ParamConverterConfig([
-            'class' => 'App:Photo',
+            'class' => 'App:Track',
         ]);
 
         $request = new Request();
@@ -49,36 +49,36 @@ class PhotoParamConverterTest extends TestCase
         $paramConverter->apply($request, $config);
     }
 
-    public function testPhotoParamConverterWithPhotoId(): void
+    public function testTrackParamConverterWithTrackId(): void
     {
-        $photo = new Photo();
+        $track = new Track();
 
-        $photoRepository = $this->createMock(PhotoRepository::class);
-        $photoRepository
+        $trackRepository = $this->createMock(TrackRepository::class);
+        $trackRepository
             ->expects($this->once())
             ->method('find')
             ->with($this->equalTo(51))
-            ->will($this->returnValue($photo));
+            ->will($this->returnValue($track));
 
         $registry = $this->createMock(RegistryInterface::class);
         $registry
             ->expects($this->once())
             ->method('getRepository')
-            ->with($this->equalTo(Photo::class))
-            ->will($this->returnValue($photoRepository));
+            ->with($this->equalTo(Track::class))
+            ->will($this->returnValue($trackRepository));
 
-        $paramConverter = new PhotoParamConverter($registry);
+        $paramConverter = new TrackParamConverter($registry);
 
         $config = new ParamConverterConfig([
-            'class' => 'App:Photo',
-            'name' => 'photo',
+            'class' => 'App:Track',
+            'name' => 'track',
         ]);
 
-        $request = new Request(['photoId' => 51]);
+        $request = new Request(['trackId' => 51]);
 
         $paramConverter->apply($request, $config);
 
         $this->assertCount(1, $request->attributes);
-        $this->assertEquals($photo, $request->attributes->get('photo'));
+        $this->assertEquals($track, $request->attributes->get('track'));
     }
 }
