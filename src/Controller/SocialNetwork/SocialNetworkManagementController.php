@@ -81,5 +81,4 @@ class SocialNetworkManagementController extends AbstractSocialNetworkController
 
         return $this->redirect($this->getRouteName($router, $this->getProfileAble($socialNetworkProfile), 'list'));
     }
-
 }

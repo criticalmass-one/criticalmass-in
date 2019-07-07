@@ -64,13 +64,13 @@ class SocialNetworkProfile
      * @var bool $mainNetwork
      * @ORM\Column(type="boolean")
      */
-    protected $mainNetwork = false;
+    protected $mainNetwork;
 
     /**
      * @var bool $enabled
      * @ORM\Column(type="boolean")
      */
-    protected $enabled = true;
+    protected $enabled;
 
     /**
      * @var \DateTime $createdAt
