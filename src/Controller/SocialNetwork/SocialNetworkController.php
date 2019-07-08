@@ -5,7 +5,7 @@ namespace App\Controller\SocialNetwork;
 use App\Controller\AbstractController;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Criticalmass\SocialNetwork\EntityNetworkDetector\EntityNetworkDetectorInterface;
-use App\Criticalmass\SocialNetwork\Helper\SocialNetworkHelper;
+use App\Criticalmass\SocialNetwork\Helper\SocialNetworkHelperInterface;
 use App\Criticalmass\Util\ClassUtil;
 use App\Entity\SocialNetworkProfile;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
@@ -30,7 +30,7 @@ class SocialNetworkController extends AbstractController
         EntityNetworkDetectorInterface $networkDetector,
         ObjectRouterInterface $objectRouter,
         SocialNetworkProfileFactoryInterface $networkProfileFactory,
-        SocialNetworkHelper $socialNetworkHelper,
+        SocialNetworkHelperInterface $socialNetworkHelper,
         UserInterface $user = null
     ): Response {
         $socialNetworkProfile = $networkProfileFactory
@@ -56,7 +56,7 @@ class SocialNetworkController extends AbstractController
         FormInterface $form,
         EntityNetworkDetectorInterface $networkDetector,
         ObjectRouterInterface $objectRouter,
-        SocialNetworkHelper $socialNetworkHelper
+        SocialNetworkHelperInterface $socialNetworkHelper
     ): Response {
         $form->handleRequest($request);
 
@@ -91,7 +91,7 @@ class SocialNetworkController extends AbstractController
         FormInterface $form,
         EntityNetworkDetectorInterface $networkDetector,
         ObjectRouterInterface $objectRouter,
-        SocialNetworkHelper $socialNetworkHelper
+        SocialNetworkHelperInterface $socialNetworkHelper
     ): Response {
         $socialNetworkProfile = $form->getData();
 
@@ -103,7 +103,7 @@ class SocialNetworkController extends AbstractController
         );
     }
 
-    protected function getAddProfileForm(ObjectRouterInterface $router, SocialNetworkProfileAble $profileAble, SocialNetworkHelper $socialNetworkHelper): FormInterface
+    protected function getAddProfileForm(ObjectRouterInterface $router, SocialNetworkProfileAble $profileAble, SocialNetworkHelperInterface $socialNetworkHelper): FormInterface
     {
         $socialNetworkProfile = new SocialNetworkProfile();
 
