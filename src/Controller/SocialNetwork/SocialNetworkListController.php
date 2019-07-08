@@ -4,7 +4,7 @@ namespace App\Controller\SocialNetwork;
 
 use App\Controller\AbstractController;
 use App\Criticalmass\Router\ObjectRouterInterface;
-use App\Criticalmass\SocialNetwork\Helper\SocialNetworkHelper;
+use App\Criticalmass\SocialNetwork\Helper\SocialNetworkHelperInterface;
 use App\Entity\City;
 use App\Entity\Ride;
 use App\Factory\SocialNetworkProfile\SocialNetworkProfileFactory;
@@ -22,7 +22,7 @@ class SocialNetworkListController extends AbstractController
     /**
      * @ParamConverter("city", class="App:City")
      */
-    public function listCityAction(ObjectRouterInterface $router, City $city, SocialNetworkProfileFactory $socialNetworkProfileFactory, SocialNetworkHelper $socialNetworkHelper, UserInterface $user): Response
+    public function listCityAction(ObjectRouterInterface $router, City $city, SocialNetworkProfileFactory $socialNetworkProfileFactory, SocialNetworkHelperInterface $socialNetworkHelper, UserInterface $user): Response
     {
         $addProfileForm = $this->getAddProfileForm($router, $city, $socialNetworkProfileFactory, $user, $socialNetworkHelper);
 
@@ -37,7 +37,7 @@ class SocialNetworkListController extends AbstractController
     /**
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function listRideAction(ObjectRouterInterface $router, Ride $ride, SocialNetworkProfileFactoryInterface $socialNetworkProfileFactory, SocialNetworkHelper $socialNetworkHelper, UserInterface $user = null): Response
+    public function listRideAction(ObjectRouterInterface $router, Ride $ride, SocialNetworkProfileFactoryInterface $socialNetworkProfileFactory, SocialNetworkHelperInterface $socialNetworkHelper, UserInterface $user = null): Response
     {
         $addProfileForm = $this->getAddProfileForm($router, $ride, $socialNetworkProfileFactory, $user, $socialNetworkHelper);
 
@@ -49,7 +49,7 @@ class SocialNetworkListController extends AbstractController
         ]);
     }
 
-    protected function getAddProfileForm(ObjectRouterInterface $router, SocialNetworkProfileAble $profileAble, SocialNetworkProfileFactoryInterface $socialNetworkProfileFactory, UserInterface $user, SocialNetworkHelper $socialNetworkHelper): FormInterface
+    protected function getAddProfileForm(ObjectRouterInterface $router, SocialNetworkProfileAble $profileAble, SocialNetworkProfileFactoryInterface $socialNetworkProfileFactory, UserInterface $user, SocialNetworkHelperInterface $socialNetworkHelper): FormInterface
     {
         $socialNetworkProfile = $socialNetworkProfileFactory
             ->withUser($user)

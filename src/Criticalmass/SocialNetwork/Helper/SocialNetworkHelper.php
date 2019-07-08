@@ -13,7 +13,7 @@ use App\Entity\User;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class SocialNetworkHelper
+class SocialNetworkHelper implements SocialNetworkHelperInterface
 {
     /**
      * @var RegistryInterface $registry
