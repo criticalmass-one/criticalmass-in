@@ -35,9 +35,9 @@
                         <div class="row">
                             <div class="col-md-9">
                                 {% if blog_post.intro %}
-                                    <p class="blog-post-intro">
-                                        {{ blog_post.intro|raw }}
-                                    </p>
+                                    <div class="blog-post-intro">
+                                        {{ blog_post.intro|nl2br|raw }}
+                                    </div>
                                 {% else %}
                                     <div class="blog-post-content">
                                         {{ blog_post.text|markdown }}
