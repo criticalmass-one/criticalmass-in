@@ -3,8 +3,14 @@
 {% block title %}Blog{% endblock %}
 
 {% block breadcrumb %}
+    <li>
+        <a href="{{ path('caldera_criticalmass_blog_overview') }}">
+            Blog
+        </a>
+    </li>
+
     <li class="active">
-        Blog
+        {{ blog_post.title }}
     </li>
 {% endblock %}
 
