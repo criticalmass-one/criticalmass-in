@@ -56,8 +56,8 @@ class PhotoParamConverterTest extends TestCase
         $photoRepository = $this->createMock(PhotoRepository::class);
         $photoRepository
             ->expects($this->once())
-            ->method('find')
-            ->with($this->equalTo(51))
+            ->method('__call')
+            ->with($this->equalTo('findOneById'), $this->equalTo([51]))
             ->will($this->returnValue($photo));
 
         $registry = $this->createMock(RegistryInterface::class);
