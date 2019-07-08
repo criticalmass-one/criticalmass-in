@@ -36,11 +36,11 @@
                             <div class="col-md-9">
                                 {% if blog_post.intro %}
                                     <div class="blog-post-intro">
-                                        {{ blog_post.intro|nl2br|raw }}
+                                        {{ blog_post.intro|raw|nl2br }}
                                     </div>
                                 {% else %}
                                     <div class="blog-post-content">
-                                        {{ blog_post.text|markdown }}
+                                        {{ blog_post.text|raw|nl2br }}
                                     </div>
                                 {% endif %}
                             </div>
