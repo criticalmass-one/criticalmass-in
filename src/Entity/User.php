@@ -170,6 +170,11 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     protected $ownProfilePhoto = false;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\SocialNetworkProfile", mappedBy="createdBy")
+     */
+    private $socialNetworkProfiles;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\BlogPost", mappedBy="user")
      */
     private $blogPosts;
@@ -186,6 +191,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         $this->participations = new ArrayCollection();
         $this->bikerightVouchers = new ArrayCollection();
         $this->blogPosts = new ArrayCollection();
+        $this->socialNetworkProfiles = new ArrayCollection();
     }
 
     public function setId(int $id): User
@@ -594,6 +600,37 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
             // set the owning side to null (unless already changed)
             if ($blogPost->getUser() === $this) {
                 $blogPost->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SocialNetworkProfile[]
+     */
+    public function getSocialNetworkProfiles(): Collection
+    {
+        return $this->socialNetworkProfiles;
+    }
+
+    public function addSocialNetworkProfile(SocialNetworkProfile $socialNetworkProfile): self
+    {
+        if (!$this->socialNetworkProfiles->contains($socialNetworkProfile)) {
+            $this->socialNetworkProfiles[] = $socialNetworkProfile;
+            $socialNetworkProfile->setCreatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSocialNetworkProfile(SocialNetworkProfile $socialNetworkProfile): self
+    {
+        if ($this->socialNetworkProfiles->contains($socialNetworkProfile)) {
+            $this->socialNetworkProfiles->removeElement($socialNetworkProfile);
+            // set the owning side to null (unless already changed)
+            if ($socialNetworkProfile->getCreatedBy() === $this) {
+                $socialNetworkProfile->setCreatedBy(null);
             }
         }
 

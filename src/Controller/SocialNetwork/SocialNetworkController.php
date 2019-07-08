@@ -7,11 +7,13 @@ use App\Criticalmass\SocialNetwork\EntityNetworkDetector\EntityNetworkDetectorIn
 use App\Criticalmass\Util\ClassUtil;
 use App\Entity\SocialNetworkProfile;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use App\Factory\SocialNetworkProfile\SocialNetworkProfileFactoryInterface;
 use App\Form\Type\SocialNetworkProfileAddType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class SocialNetworkController extends AbstractSocialNetworkController
 {
@@ -24,9 +26,13 @@ class SocialNetworkController extends AbstractSocialNetworkController
     public function addAction(
         Request $request,
         EntityNetworkDetectorInterface $networkDetector,
-        ObjectRouterInterface $objectRouter
+        ObjectRouterInterface $objectRouter,
+        SocialNetworkProfileFactoryInterface $networkProfileFactory,
+        UserInterface $user = null
     ): Response {
-        $socialNetworkProfile = new SocialNetworkProfile();
+        $socialNetworkProfile = $networkProfileFactory
+            ->withCreatedBy($user)
+            ->build();
 
         $socialNetworkProfile = $this->assignProfileAble($socialNetworkProfile, $request);
 

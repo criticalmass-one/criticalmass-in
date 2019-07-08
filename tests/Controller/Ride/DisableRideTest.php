@@ -72,8 +72,6 @@ class DisableRideTest extends AbstractControllerTest
     {
         $client = static::createClient();
 
-        $client = $this->loginViaForm($client, 'maltehuebner', '123456');
-
         $crawler = $client->request('GET', '/hamburg/2011-03-25');
 
         $nextLink = $crawler->filter('.pager .next a')->link();
@@ -85,5 +83,31 @@ class DisableRideTest extends AbstractControllerTest
         $prevLink = $crawler->filter('.pager .previous a')->link();
 
         $this->assertEquals('http://localhost/hamburg/2011-03-25', $prevLink->getUri());
+    }
+
+    /**
+     * @depends testDisableRide
+     */
+    public function testEnableRide(): void
+    {
+        $client = static::createClient();
+
+        $client = $this->loginViaForm($client, 'maltehuebner', '123456');
+
+        $crawler = $client->request('GET', '/hamburg/2011-06-24/edit');
+
+        $form = $crawler->filter('form[name="ride"]')->form();
+
+        $form['ride[enabled]']->tick();
+
+        $client->submit($form);
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $client->request('GET', '/hamburg/2011-06-24');
+
+        $this->assertSelectorTextContains('html h1', 'Critical Mass 24.06.2011');
+        $this->assertSelectorExists('body.ride');
+        $this->assertSelectorNotExists('body.ride-disabled');
     }
 }
