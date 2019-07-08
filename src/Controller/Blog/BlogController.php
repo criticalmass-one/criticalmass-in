@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Flagception\Bundle\FlagceptionBundle\Annotations\Feature;
 
 /**
- * @Feature("photos")
+ * @Feature("blog")
  */
 class BlogController extends AbstractController
 {
