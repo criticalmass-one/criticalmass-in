@@ -12,7 +12,7 @@ class BlogPostRepository extends EntityRepository
         $qb
             ->where($qb->expr()->eq('bp.enabled', ':enabled'))
             ->setParameter('enabled', true)
-            ->orderBy('bp.createdAt');
+            ->orderBy('bp.createdAt', 'DESC');
 
         return $qb->getQuery()->getResult();
     }
