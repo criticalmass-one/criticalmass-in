@@ -2,7 +2,10 @@
 
 namespace Tests\ParamConverter;
 
+use App\Entity\City;
+use App\Entity\CitySlug;
 use App\Entity\Ride;
+use App\Repository\CitySlugRepository;
 use App\Repository\RideRepository;
 use App\Repository\RideSlugRepository;
 use App\Request\ParamConverter\RideParamConverter;
@@ -83,21 +86,36 @@ class RideParamConverterTest extends TestCase
         $this->assertEquals($ride, $request->attributes->get('ride'));
     }
 
-    public function testRideParamConverterWithRideSlug(): void
+    public function testRideParamConverterWithRideIdentifier(): void
     {
+        $city = new City();
         $ride = new Ride();
+        $ride->setCity($city);
+
+        $citySlug = new CitySlug();
+        $citySlug->setCity($city);
+
+        $citySlugRepository = $this->createMock(CitySlugRepository::class);
+        $citySlugRepository
+            ->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('findOneBySlug'), $this->equalTo(['test-city-slug']))
+            ->will($this->returnValue($citySlug));
 
         $rideRepository = $this->createMock(RideRepository::class);
         $rideRepository
-            ->expects($this->never())
-            ->method('find');
+            ->expects($this->once())
+            ->method('findOneByCityAndSlug')
+            ->with($this->equalTo($city), $this->equalTo('test-ride-identifier'))
+            ->will($this->returnValue($ride));
 
         $registry = $this->createMock(RegistryInterface::class);
 
         $registry
+            ->expects($this->any())
             ->method('getRepository')
-            ->with($this->equalTo(Ride::class))
-            ->will($this->returnValue($rideRepository));
+            ->withConsecutive($this->equalTo(CitySlug::class), $this->equalTo(Ride::class))
+            ->willReturnOnConsecutiveCalls($citySlugRepository, $rideRepository);
 
         $paramConverter = new RideParamConverter($registry);
 
@@ -106,7 +124,10 @@ class RideParamConverterTest extends TestCase
             'name' => 'ride',
         ]);
 
-        $request = new Request(['rideIdentifier' => 'test-ride-identifier']);
+        $request = new Request([
+            'citySlug' => 'test-city-slug',
+            'rideIdentifier' => 'test-ride-identifier'
+        ]);
 
         $paramConverter->apply($request, $config);
 
