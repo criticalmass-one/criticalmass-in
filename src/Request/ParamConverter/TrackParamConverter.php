@@ -17,6 +17,7 @@ class TrackParamConverter extends AbstractCriticalmassParamConverter
     public function apply(Request $request, ParamConverter $configuration): void
     {
         $trackId = $request->get('trackId');
+        $track = null;
 
         if ($trackId) {
             $track = $this->registry->getRepository(Track::class)->find($trackId);
