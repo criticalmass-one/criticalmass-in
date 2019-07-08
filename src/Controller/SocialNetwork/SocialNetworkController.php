@@ -31,7 +31,7 @@ class SocialNetworkController extends AbstractSocialNetworkController
         UserInterface $user = null
     ): Response {
         $socialNetworkProfile = $networkProfileFactory
-            ->withUser($user)
+            ->withCreatedBy($user)
             ->build();
 
         $socialNetworkProfile = $this->assignProfileAble($socialNetworkProfile, $request);
