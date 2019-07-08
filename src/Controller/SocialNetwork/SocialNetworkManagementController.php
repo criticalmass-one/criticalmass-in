@@ -2,7 +2,9 @@
 
 namespace App\Controller\SocialNetwork;
 
+use App\Controller\AbstractController;
 use App\Criticalmass\Router\ObjectRouterInterface;
+use App\Criticalmass\SocialNetwork\Helper\SocialNetworkHelper;
 use App\Criticalmass\Util\ClassUtil;
 use App\Entity\SocialNetworkProfile;
 use App\Form\Type\SocialNetworkProfileEditType;
@@ -12,7 +14,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class SocialNetworkManagementController extends AbstractSocialNetworkController
+class SocialNetworkManagementController extends AbstractController
 {
     /**
      * @ParamConverter("socialNetworkProfile", class="App:SocialNetworkProfile", options={"id" = "profileId"})
@@ -71,14 +73,14 @@ class SocialNetworkManagementController extends AbstractSocialNetworkController
      * @ParamConverter("socialNetworkProfile", class="App:SocialNetworkProfile", options={"id" = "profileId"})
      */
     public function disableAction(
-        ObjectRouterInterface $router,
         EntityManagerInterface $entityManager,
-        SocialNetworkProfile $socialNetworkProfile
+        SocialNetworkProfile $socialNetworkProfile,
+        SocialNetworkHelper $socialNetworkHelper
     ): Response {
         $socialNetworkProfile->setEnabled(false);
 
         $entityManager->flush();
 
-        return $this->redirect($this->getRouteName($router, $this->getProfileAble($socialNetworkProfile), 'list'));
+        return $this->redirect($socialNetworkHelper->getRouteName($socialNetworkHelper->getProfileAble($socialNetworkProfile), 'list'));
     }
 }
