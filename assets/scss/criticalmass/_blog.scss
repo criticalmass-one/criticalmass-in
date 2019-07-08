@@ -8,3 +8,16 @@ body.blog-post div.container.blog-post .blog-post-intro {
   font-weight: normal;
   line-height: 31px;
 }
+
+.blog-post .author-box {
+  width: 150px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -150px;
+  text-align: center;
+
+  img {
+    border-radius: 100%;
+    border: 10px solid white;
+  }
+}
