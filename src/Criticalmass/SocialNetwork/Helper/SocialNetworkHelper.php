@@ -55,7 +55,7 @@ class SocialNetworkHelper
         return $socialNetworkProfile;
     }
 
-    public function getProfileAble(SocialNetworkProfile $socialNetworkProfile): SocialNetworkProfileAble
+    public function getProfileAble(SocialNetworkProfile $socialNetworkProfile): ?SocialNetworkProfileAble
     {
         return $socialNetworkProfile->getUser() ?? $socialNetworkProfile->getRide() ?? $socialNetworkProfile->getCity() ?? $socialNetworkProfile->getSubride();
     }
