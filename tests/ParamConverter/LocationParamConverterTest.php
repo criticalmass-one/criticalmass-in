@@ -56,8 +56,8 @@ class LocationParamConverterTest extends TestCase
         $locationRepository = $this->createMock(LocationRepository::class);
         $locationRepository
             ->expects($this->once())
-            ->method('find')
-            ->with($this->equalTo(23))
+            ->method('__call')
+            ->with($this->equalTo('findOneById'), $this->equalTo([23]))
             ->will($this->returnValue($location));
 
         $registry = $this->createMock(RegistryInterface::class);
@@ -88,8 +88,10 @@ class LocationParamConverterTest extends TestCase
 
         $locationRepository = $this->createMock(LocationRepository::class);
         $locationRepository
-            ->expects($this->never())
-            ->method('find');
+            ->expects($this->once())
+            ->method('__call')
+            ->with($this->equalTo('findOneBySlug'), $this->equalTo(['test-location-slug']))
+            ->will($this->returnValue($location));
 
         $registry = $this->createMock(RegistryInterface::class);
 
