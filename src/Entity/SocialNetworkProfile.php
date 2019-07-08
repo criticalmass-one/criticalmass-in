@@ -168,7 +168,15 @@ class SocialNetworkProfile
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function getMainNetwork(): bool
+    {
+        return $this->mainNetwork;
+    }
+
+    public function isMainNetwork(): bool
     {
         return $this->mainNetwork;
     }

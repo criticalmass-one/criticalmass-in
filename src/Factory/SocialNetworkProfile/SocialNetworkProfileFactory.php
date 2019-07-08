@@ -6,6 +6,7 @@ use App\Entity\City;
 use App\Entity\Ride;
 use App\Entity\SocialNetworkProfile;
 use App\Entity\Subride;
+use App\Entity\User;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class SocialNetworkProfileFactory implements SocialNetworkProfileFactoryInterface
@@ -28,6 +29,13 @@ class SocialNetworkProfileFactory implements SocialNetworkProfileFactoryInterfac
     public function withEnabled(bool $enabled): SocialNetworkProfileFactoryInterface
     {
         $this->socialNetworkProfile->setEnabled($enabled);
+
+        return $this;
+    }
+
+    public function withMainNetwork(bool $mainNetwork): SocialNetworkProfileFactoryInterface
+    {
+        $this->socialNetworkProfile->setMainNetwork($mainNetwork);
 
         return $this;
     }
@@ -63,6 +71,13 @@ class SocialNetworkProfileFactory implements SocialNetworkProfileFactoryInterfac
     public function withCreatedAt(\DateTime $createdAt): SocialNetworkProfileFactoryInterface
     {
         $this->socialNetworkProfile->setCreatedAt($createdAt);
+
+        return $this;
+    }
+
+    public function withCreatedBy(User $user): SocialNetworkProfileFactoryInterface
+    {
+        $this->socialNetworkProfile->setCreatedBy($user);
 
         return $this;
     }
