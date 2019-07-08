@@ -32,8 +32,8 @@
                             </h2>
 
                             {% if blog_post.intro %}
-                                <p class="lead blog-post-intro">
-                                    {{ blog_post.intro }}
+                                <p class="blog-post-intro">
+                                    {{ blog_post.intro|raw }}
                                 </p>
                             {% endif %}
                         </div>
@@ -41,7 +41,7 @@
 
                     <div class="row">
                         <div class="col-md-9 blog-post-content">
-                            {{ blog_post.text|markdown }}
+                            {{ blog_post.text|raw }}
                         </div>
 
                         <div class="col-md-3 text-center">
