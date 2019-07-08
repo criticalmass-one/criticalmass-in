@@ -56,8 +56,8 @@ class ThreadParamConverterTest extends TestCase
         $threadRepository = $this->createMock(ThreadRepository::class);
         $threadRepository
             ->expects($this->once())
-            ->method('find')
-            ->with($this->equalTo(51))
+            ->method('__call')
+            ->with($this->equalTo('findOneById'), $this->equalTo([51]))
             ->will($this->returnValue($thread));
 
         $registry = $this->createMock(RegistryInterface::class);
