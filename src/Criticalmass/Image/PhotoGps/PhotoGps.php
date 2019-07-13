@@ -14,6 +14,7 @@ class PhotoGps extends AbstractPhotoGps
             $this->photo
                 ->setLatitude($gps['lat'])
                 ->setLongitude($gps['lon']);
+
         } elseif ($this->track) {
             $this->approximateCoordinates();
         }
@@ -48,6 +49,8 @@ class PhotoGps extends AbstractPhotoGps
         $exif = $this->readExifData();
 
         if ($exif && $dateTime = $exif->getCreationDate()) {
+
+            $dateTime = new \DateTime(sprintf('@%d', $dateTime->format('U')), new \DateTimeZone('Europe/Berlin'));
             return $dateTime;
         }
 

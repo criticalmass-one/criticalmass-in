@@ -9,6 +9,10 @@ use Tests\PhotoGps\Mocks\GpsPhoto;
 use Tests\PhotoGps\Mocks\MockTrack;
 use Tests\PhotoGps\Mocks\NoGpsPhoto;
 
+/**
+ * @ignore
+ * @skip
+ */
 class GpsTest extends KernelTestCase
 {
     protected function setUp(): void
