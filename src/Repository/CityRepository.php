@@ -7,6 +7,34 @@ use Doctrine\ORM\EntityRepository;
 
 class CityRepository extends EntityRepository
 {
+    public function findCitiesWithoutWikidataEntityId(): array
+    {
+        $builder = $this->createQueryBuilder('c');
+
+        $builder
+            ->select('c')
+            ->where($builder->expr()->isNull('c.wikidataEntityId'))
+            ->orderBy('c.city', 'ASC');
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
+
+    public function findCitiesWithWikidataEntityId(): array
+    {
+        $builder = $this->createQueryBuilder('c');
+
+        $builder
+            ->select('c')
+            ->where($builder->expr()->isNotNull('c.wikidataEntityId'))
+            ->orderBy('c.city', 'ASC');
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
+
     /**
      * @deprecated
      */
@@ -143,11 +171,13 @@ class CityRepository extends EntityRepository
         \DateTime $endDateTime = null,
         int $limit = null
     ): array {
+        return [];// TODO remove this
         $builder = $this->createQueryBuilder('c');
 
         $builder
             ->select('c')
             ->where($builder->expr()->isNotNull('c.updatedAt'))
+            ->andWhere($builder->expr()->isNotNull('c.user'))
             ->addOrderBy('c.updatedAt', 'DESC');
 
         if ($startDateTime) {
@@ -182,6 +212,7 @@ class CityRepository extends EntityRepository
         $builder
             ->select('c')
             ->where($builder->expr()->isNull('c.updatedAt'))
+            ->andWhere($builder->expr()->isNotNull('c.user'))
             ->addOrderBy('c.createdAt', 'DESC');
 
         if ($startDateTime) {
