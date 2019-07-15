@@ -7,6 +7,20 @@ use Doctrine\ORM\EntityRepository;
 
 class CityRepository extends EntityRepository
 {
+    public function findCitiesWithoutWikidataEntityId(): array
+    {
+        $builder = $this->createQueryBuilder('c');
+
+        $builder
+            ->select('c')
+            ->where($builder->expr()->isNull('c.wikidataEntityId'))
+            ->orderBy('c.city', 'ASC');
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
+
     /**
      * @deprecated
      */
