@@ -176,6 +176,7 @@ class CityRepository extends EntityRepository
         $builder
             ->select('c')
             ->where($builder->expr()->isNotNull('c.updatedAt'))
+            ->andWhere($builder->expr()->isNotNull('c.user'))
             ->addOrderBy('c.updatedAt', 'DESC');
 
         if ($startDateTime) {
@@ -210,6 +211,7 @@ class CityRepository extends EntityRepository
         $builder
             ->select('c')
             ->where($builder->expr()->isNull('c.updatedAt'))
+            ->andWhere($builder->expr()->isNotNull('c.user'))
             ->addOrderBy('c.createdAt', 'DESC');
 
         if ($startDateTime) {
