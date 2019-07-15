@@ -562,7 +562,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
         return $this;
     }
 
-    public function getCityPopulation(): int
+    public function getCityPopulation(): ?int
     {
         return $this->cityPopulation;
     }
