@@ -3,6 +3,7 @@
 namespace App\Controller\City;
 
 use App\Criticalmass\CityPopulationFetcher\CityPopulationFetcherInterface;
+use App\Criticalmass\CityPopulationFetcher\WikidataCityPopulationFetcher;
 use App\Criticalmass\CitySlug\Handler\CitySlugHandler;
 use App\Criticalmass\OpenStreetMap\NominatimCityBridge\NominatimCityBridge;
 use App\Criticalmass\Router\ObjectRouterInterface;
@@ -227,7 +228,7 @@ class CityManagementController extends AbstractController
         ];
     }
 
-    public function populationAction(CityPopulationFetcherInterface $cityPopulationFetcher, string $cityName): Response
+    public function populationAction(WikidataCityPopulationFetcher $cityPopulationFetcher, string $cityName): Response
     {
         try {
             $populationNumber = $cityPopulationFetcher->fetch($cityName);
