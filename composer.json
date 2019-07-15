@@ -91,7 +91,8 @@
         "php-amqplib/rabbitmq-bundle": "^1.14",
         "ext-fileinfo": "*",
         "ext-xmlwriter": "*",
-        "fresh/doctrine-enum-bundle": "^6.3"
+        "fresh/doctrine-enum-bundle": "^6.3",
+        "freearhey/wikidata": "^3.1"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "*",
