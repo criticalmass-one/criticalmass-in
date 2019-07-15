@@ -154,20 +154,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group{% if form_errors(form.cityPopulation) %} has-error has-feedback{% endif %}">
-                            <button id="fetch-population-button" class="btn btn-default btn-xs pull-right" type="button">
-                                <i class="fa fa-users"></i>
-                            </button>
-                            <label class="control-label" for="">Einwohnerzahl:</label>
-                            {{ form_widget(form.cityPopulation, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">Für die Berechnung bestimmter Statistiken wird die Einwohnerzahl einer
-                                Stadt benötigt.</p>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <div class="col-md-6">

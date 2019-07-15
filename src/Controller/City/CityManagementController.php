@@ -227,15 +227,4 @@ class CityManagementController extends AbstractController
             'slug3' => $region->getSlug(),
         ];
     }
-
-    public function populationAction(WikidataCityPopulationFetcher $cityPopulationFetcher, string $cityName): Response
-    {
-        try {
-            $populationNumber = $cityPopulationFetcher->fetch($cityName);
-
-            return new Response($populationNumber, Response::HTTP_OK);
-        } catch (\Exception $exception) {
-            return new Response($exception->getMessage(), Response::HTTP_NOT_FOUND);
-        }
-    }
 }
