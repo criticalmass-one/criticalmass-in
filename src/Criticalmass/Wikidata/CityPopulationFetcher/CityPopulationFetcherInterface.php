@@ -2,7 +2,9 @@
 
 namespace App\Criticalmass\Wikidata\CityPopulationFetcher;
 
+use App\Entity\City;
+
 interface CityPopulationFetcherInterface
 {
-    public function fetch(string $cityName): ?int;
+    public function fetch(City $city): ?int;
 }
