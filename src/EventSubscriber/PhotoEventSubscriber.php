@@ -55,8 +55,8 @@ class PhotoEventSubscriber implements EventSubscriberInterface
         $this->registry->getManager()->flush();
 
         $this->handleExifData($photoUploadedEvent->getPhoto(), $photoUploadedEvent->getTmpFilename());
-        $this->reverseGeocode($photoUploadedEvent->getPhoto());
         $this->locate($photoUploadedEvent->getPhoto());
+        $this->reverseGeocode($photoUploadedEvent->getPhoto());
 
         $this->exportDataHandler->calculateForEntity($photoUploadedEvent->getPhoto());
 
