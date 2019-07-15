@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\CityPopulationFetcher;
+namespace App\Criticalmass\Wikidata\CityPopulationFetcher;
 
 use App\Criticalmass\CityPopulationFetcher\Exception\CityNotFoundException;
 use App\Criticalmass\CityPopulationFetcher\Exception\ValueNotFoundException;
