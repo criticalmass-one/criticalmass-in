@@ -171,6 +171,7 @@ class CityRepository extends EntityRepository
         \DateTime $endDateTime = null,
         int $limit = null
     ): array {
+        return [];// TODO remove this
         $builder = $this->createQueryBuilder('c');
 
         $builder
