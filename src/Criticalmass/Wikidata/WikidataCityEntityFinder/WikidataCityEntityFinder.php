@@ -18,6 +18,6 @@ class WikidataCityEntityFinder
     public function queryForIds(string $cityName, string $language = 'de', int $limit = 5): array
     {
         /** @var \Illuminate\Support\Collection $results */
-        return $this->wikidata->search($cityName, $language, $limit);
+        return $this->wikidata->search($cityName, $language, $limit)->toArray();
     }
 }
