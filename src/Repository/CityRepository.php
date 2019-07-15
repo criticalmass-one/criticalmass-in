@@ -21,6 +21,20 @@ class CityRepository extends EntityRepository
         return $query->getResult();
     }
 
+    public function findCitiesWithWikidataEntityId(): array
+    {
+        $builder = $this->createQueryBuilder('c');
+
+        $builder
+            ->select('c')
+            ->where($builder->expr()->isNotNull('c.wikidataEntityId'))
+            ->orderBy('c.city', 'ASC');
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
+
     /**
      * @deprecated
      */
