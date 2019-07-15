@@ -12,6 +12,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
 use Wikidata\SearchResult;
 
@@ -43,9 +44,9 @@ class FindCityIdsCommand extends Command
         $questionHelper = $this->getHelper('question');
 
         if ($input->getArgument('citySlug')) {
-            $city = $this->registry->getRepository(CitySlug::class)->findOneBySlug($input->getArgument('citySlug'));
+            $citySlug = $this->registry->getRepository(CitySlug::class)->findOneBySlug($input->getArgument('citySlug'));
 
-            $cityList = [$city];
+            $cityList = [$citySlug->getCity()];
         } else {
             $cityList = $this->registry->getRepository(City::class)->findCitiesWithoutWikidataEntityId();
         }
@@ -86,7 +87,15 @@ class FindCityIdsCommand extends Command
             $entityId = $questionHelper->ask($input, $output, $question);
 
             if ($entityId) {
-                $city->setWikidataEntityId($entityId);
+                $city
+                    ->setWikidataEntityId($entityId)
+                    ->setUpdatedAt(new \DateTime());
+            } else {
+                $question = new ConfirmationQuestion('Proceed with next cities?');
+
+                if (!$questionHelper->ask($input, $output, $question)) {
+                    break;
+                }
             }
         }
 
