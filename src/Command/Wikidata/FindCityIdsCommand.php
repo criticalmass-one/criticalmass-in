@@ -89,7 +89,8 @@ class FindCityIdsCommand extends Command
             if ($entityId) {
                 $city
                     ->setWikidataEntityId($entityId)
-                    ->setUpdatedAt(new \DateTime());
+                    ->setUpdatedAt(new \DateTime())
+                    ->setUser(null);
             } else {
                 $question = new ConfirmationQuestion('Proceed with next cities?');
 

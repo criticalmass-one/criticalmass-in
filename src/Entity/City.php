@@ -321,7 +321,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
         return $this->user;
     }
 
-    public function setUser(User $user): City
+    public function setUser(User $user = null): City
     {
         $this->user = $user;
 
