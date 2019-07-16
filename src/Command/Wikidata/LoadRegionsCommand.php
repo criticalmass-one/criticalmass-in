@@ -2,6 +2,7 @@
 
 namespace App\Command\Wikidata;
 
+use App\Criticalmass\Wikidata\RegionFetcher\RegionFetcherInterface;
 use App\Criticalmass\Wikidata\WikidataCityEntityFinder\WikidataCityEntityFinder;
 use App\Entity\City;
 use App\Entity\CitySlug;
@@ -19,15 +20,15 @@ use Wikidata\SearchResult;
 
 class LoadRegionsCommand extends Command
 {
-    /** @var WikidataCityEntityFinder $wikidataCityFinder */
-    protected $wikidataCityFinder;
+    /** @var RegionFetcherInterface $regionFetcher */
+    protected $regionFetcher;
 
     /** @var RegistryInterface $registry */
     protected $registry;
 
-    public function __construct($name = null, WikidataCityEntityFinder $wikidataCityEntityFinder, RegistryInterface $registry)
+    public function __construct($name = null, RegionFetcherInterface $regionFetcher, RegistryInterface $registry)
     {
-        $this->wikidataCityFinder = $wikidataCityEntityFinder;
+        $this->regionFetcher = $regionFetcher;
         $this->registry = $registry;
 
         parent::__construct($name);
@@ -45,52 +46,24 @@ class LoadRegionsCommand extends Command
 
         $region = $this->registry->getRepository(Region::class)->findOneBySlug($input->getArgument('regionSlug'));
 
-        /** @var Region $subRegion */
-        foreach ($region->get as $city) {
-            $output->writeln(sprintf('Current city: <info>%s</info>', $city->getCity()));
+        $result = $this->regionFetcher->fetch($region);
 
-            $results = $this->wikidataCityFinder->queryForIds($city->getCity(), 'de', $proposalNumber);
+        $table = new Table($output);
+        $table->setHeaders([
+            'Entity id',
+            'Label',
+            'Description',
+        ]);
 
-            $table = new Table($output);
-            $table->setHeaders([
-                'Entity Id',
-                'Label',
-                'Description',
+        /** @var SearchResult $regionData */
+        foreach ($result as $regionData) {
+            $table->addRow([
+                $regionData->id,
+                $regionData->label,
+                $regionData->description,
             ]);
-
-            $entityIdList = [];
-
-            /** @var SearchResult $searchResult */
-            foreach ($results as $searchResult) {
-                $table->addRow([
-                    $searchResult->id,
-                    $searchResult->label,
-                    $searchResult->description,
-                ]);
-
-                $entityIdList[] = $searchResult->id;
-            }
-
-            $table->render();
-
-            $question = new Question(sprintf('Please submit WikiData entity id or press enter to proceed:'));
-            $question->setAutocompleterValues($entityIdList);
-
-            $entityId = $questionHelper->ask($input, $output, $question);
-
-            if ($entityId) {
-                $city
-                    ->setWikidataEntityId($entityId)
-                    ->setUpdatedAt(new \DateTime());
-            } else {
-                $question = new ConfirmationQuestion('Proceed with next cities?');
-
-                if (!$questionHelper->ask($input, $output, $question)) {
-                    break;
-                }
-            }
         }
 
-        $this->registry->getManager()->flush();
+        $table->render();
     }
 }
