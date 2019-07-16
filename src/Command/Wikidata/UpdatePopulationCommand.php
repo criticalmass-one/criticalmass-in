@@ -48,6 +48,7 @@ class UpdatePopulationCommand extends Command
         $table = new Table($output);
         $table->setHeaders([
             'City',
+            'Wikidata entity id',
             'New population',
             'Old population',
             'Delta',
@@ -66,6 +67,7 @@ class UpdatePopulationCommand extends Command
 
             $table->addRow([
                 $city->getCity(),
+                $city->getWikidataEntityId(),
                 $newPopulation,
                 $oldPopulation,
                 ($oldPopulation && $newPopulation ? $newPopulation - $oldPopulation : ''),
