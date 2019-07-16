@@ -19,6 +19,10 @@ class WikidataCityPopulationFetcher implements CityPopulationFetcherInterface
 
         $cityData = $wikidata->get($city->getWikidataEntityId());
 
+        if (!$cityData || !array_key_exists(self::POPULATION_PROPERTY, $cityData->properties)) {
+            return null;
+        }
+
         return (int) $cityData->properties[self::POPULATION_PROPERTY]->value;
     }
 }
