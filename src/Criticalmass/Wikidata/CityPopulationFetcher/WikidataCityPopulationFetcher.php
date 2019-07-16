@@ -3,6 +3,7 @@
 namespace App\Criticalmass\Wikidata\CityPopulationFetcher;
 
 use App\Entity\City;
+use Wikidata\Entity;
 use Wikidata\Wikidata;
 
 class WikidataCityPopulationFetcher implements CityPopulationFetcherInterface
@@ -17,9 +18,10 @@ class WikidataCityPopulationFetcher implements CityPopulationFetcherInterface
 
         $wikidata = new Wikidata();
 
+        /** @var Entity $cityData */
         $cityData = $wikidata->get($city->getWikidataEntityId());
 
-        if (!$cityData || !array_key_exists(self::POPULATION_PROPERTY, $cityData->properties)) {
+        if (!$cityData || !$cityData->properties->has(self::POPULATION_PROPERTY)) {
             return null;
         }
 
