@@ -28,7 +28,7 @@ class RegionFetcher implements RegionFetcherInterface
         $collection = collect($data);
 
         $output = $collection->map(function($item) use ($language) {
-            return new SearchResult($item, $language, 'sparql');
+            return SearchResultToRegionConverter::convert(new SearchResult($item, $language, 'sparql'));
         });
 
         return $output->toArray();

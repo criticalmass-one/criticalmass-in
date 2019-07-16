@@ -44,26 +44,35 @@ class LoadRegionsCommand extends Command
     {
         $questionHelper = $this->getHelper('question');
 
-        $region = $this->registry->getRepository(Region::class)->findOneBySlug($input->getArgument('regionSlug'));
+        $parentRegion = $this->registry->getRepository(Region::class)->findOneBySlug($input->getArgument('regionSlug'));
 
-        $result = $this->regionFetcher->fetch($region);
+        $regionList = $this->regionFetcher->fetch($parentRegion);
+
+        $output->writeln(sprintf('I found these <info>%d</info> regions for <comment>%s</comment>', count($regionList), $parentRegion->getName()));
 
         $table = new Table($output);
         $table->setHeaders([
             'Entity id',
             'Label',
-            'Description',
         ]);
 
-        /** @var SearchResult $regionData */
-        foreach ($result as $regionData) {
+        /** @var Region $region */
+        foreach ($regionList as $region) {
+            $region->setParent($parentRegion);
+            $this->registry->getManager()->persist($region);
+
             $table->addRow([
-                $regionData->id,
-                $regionData->label,
-                $regionData->description,
+                $region->getWikidataEntityId(),
+                $region->getName(),
             ]);
         }
 
         $table->render();
+
+        $question = new ConfirmationQuestion('Save these regions?');
+
+        if ($questionHelper->ask($input, $output, $question)) {
+            $this->registry->getManager()->flush();
+        }
     }
 }
