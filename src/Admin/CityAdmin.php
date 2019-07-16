@@ -44,6 +44,10 @@ class CityAdmin extends AbstractAdmin
             ->add('longitude')
             ->end()
 
+            ->with('Wikidata', ['class' => 'col-md-6'])
+            ->add('wikidataEntityId', TextType::class, ['required' => false])
+            ->end()
+
             ->with('Technisches', ['class' => 'col-md-6'])
             ->add('rideNamer', ChoiceType::class, [
                 'choices' => $this->getRideNamerList(),
@@ -62,13 +66,15 @@ class CityAdmin extends AbstractAdmin
     {
         $datagridMapper
             ->add('title')
-            ->add('description');
+            ->add('description')
+            ->add('wikidataEntityId');
     }
 
     protected function configureListFields(ListMapper $listMapper): void
     {
         $listMapper
-            ->addIdentifier('title');
+            ->addIdentifier('title')
+            ->add('wikidataEntityId');
     }
 
     protected function getRideNamerList(): array
