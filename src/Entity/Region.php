@@ -50,6 +50,11 @@ class Region implements RouteableInterface, AuditableInterface
      */
     protected $cities;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $wikidataEntityId;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -126,6 +131,18 @@ class Region implements RouteableInterface, AuditableInterface
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    public function getWikidataEntityId(): ?string
+    {
+        return $this->wikidataEntityId;
+    }
+
+    public function setWikidataEntityId(?string $wikidataEntityId): self
+    {
+        $this->wikidataEntityId = $wikidataEntityId;
+
+        return $this;
     }
 
 }
