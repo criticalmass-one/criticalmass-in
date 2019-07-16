@@ -141,16 +141,16 @@
         },
         {
             "name": "calderacc/socialnetwork-bundle",
-            "version": "0.1.0",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/calderacc/socialnetwork-bundle.git",
-                "reference": "b9a7d310fc25cdecb09511fcc30c19a9a8bea6f9"
+                "reference": "fd44451c30b09b76904a3260a1c8fab1ca41bcbc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/calderacc/socialnetwork-bundle/zipball/b9a7d310fc25cdecb09511fcc30c19a9a8bea6f9",
-                "reference": "b9a7d310fc25cdecb09511fcc30c19a9a8bea6f9",
+                "url": "https://api.github.com/repos/calderacc/socialnetwork-bundle/zipball/fd44451c30b09b76904a3260a1c8fab1ca41bcbc",
+                "reference": "fd44451c30b09b76904a3260a1c8fab1ca41bcbc",
                 "shasum": ""
             },
             "require": {
@@ -176,7 +176,7 @@
                 }
             ],
             "description": "Handle links to social network profiles.",
-            "time": "2019-03-19T21:44:55+00:00"
+            "time": "2019-07-16T20:43:35+00:00"
         },
         {
             "name": "calderacc/yourls-api-manager",
