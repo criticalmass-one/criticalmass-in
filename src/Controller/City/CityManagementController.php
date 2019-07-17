@@ -15,7 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Controller\AbstractController;
 use App\Entity\City;
 use App\Entity\Region;
-use App\Form\Type\StandardCityType;
+use App\Form\Type\CityType;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,7 +51,7 @@ class CityManagementController extends AbstractController
             $city = $cityFactory->build();
         }
 
-        $form = $this->createForm(StandardCityType::class, $city, [
+        $form = $this->createForm(CityType::class, $city, [
             'action' => $this->generateUrl('caldera_criticalmass_city_add',
                 $this->getRegionSlugParameterArray($region)),
         ]);
@@ -107,7 +107,7 @@ class CityManagementController extends AbstractController
 
             $em->flush();
 
-            $form = $this->createForm(StandardCityType::class, $city, [
+            $form = $this->createForm(CityType::class, $city, [
                 'action' => $objectRouter->generate($city, 'caldera_criticalmass_city_edit'),
             ]);
 
@@ -142,7 +142,7 @@ class CityManagementController extends AbstractController
         City $city,
         ObjectRouterInterface $objectRouter
     ): Response {
-        $form = $this->createForm(StandardCityType::class, $city, [
+        $form = $this->createForm(CityType::class, $city, [
             'action' => $objectRouter->generate($city, 'caldera_criticalmass_city_edit'),
         ]);
 
