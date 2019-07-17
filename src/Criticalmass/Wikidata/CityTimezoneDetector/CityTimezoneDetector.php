@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\Timezone\CityTimezoneDetector;
+namespace App\Criticalmass\Wikidata\CityTimezoneDetector;
 
 use App\Entity\City;
 use Curl\Curl;
