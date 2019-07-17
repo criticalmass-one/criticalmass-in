@@ -39,11 +39,6 @@ class StandardCityType extends AbstractType
             ->add('latitude',
                 HiddenType::class
             )
-            ->add('cityPopulation',
-                IntegerType::class, [
-                    'required' => false
-                ]
-            )
             ->add('region',
                 EntityType::class,
                 [
