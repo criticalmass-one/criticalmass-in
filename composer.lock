@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f14cd514c8176644dfadfa4ef35d604d",
+    "content-hash": "4b88763b5a5b7e6a40b9ea3c686084ab",
     "packages": [
         {
             "name": "basvandorst/stravaphp",
@@ -4545,7 +4545,7 @@
         },
         {
             "name": "miljar/php-exif",
-            "version": "dev-master",
+            "version": "v0.6.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPExif/php-exif.git",
@@ -14834,7 +14834,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "miljar/php-exif": 20,
         "symfony/dependency-injection": 20
     },
     "prefer-stable": false,
