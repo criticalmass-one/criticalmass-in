@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -17,7 +18,7 @@ use App\Criticalmass\Router\Annotation as Routing;
  * @ORM\Entity(repositoryClass="App\Repository\BlogPostRepository")
  * @Routing\DefaultRoute(name="caldera_criticalmass_blog_post")
  */
-class BlogPost implements RouteableInterface, PostableInterface
+class BlogPost implements RouteableInterface, PostableInterface, ViewableEntity
 {
     /**
      * @ORM\Id()
@@ -97,6 +98,11 @@ class BlogPost implements RouteableInterface, PostableInterface
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $imageMimeType;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $views = 0;
 
     public function __construct()
     {
@@ -283,6 +289,25 @@ class BlogPost implements RouteableInterface, PostableInterface
     public function setImageMimeType(string $imageMimeType = null): BlogPost
     {
         $this->imageMimeType = $imageMimeType;
+
+        return $this;
+    }
+
+    public function setViews(int $views): ViewableEntity
+    {
+        $this->views = $views;
+
+        return $this;
+    }
+
+    public function getViews(): int
+    {
+        return $this->views;
+    }
+
+    public function incViews(): ViewableEntity
+    {
+        ++$this->views;
 
         return $this;
     }
