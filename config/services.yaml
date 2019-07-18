@@ -38,6 +38,7 @@ parameters:
     upload_destination.ride_photo: '%kernel.project_dir%/public/rides'
     upload_destination.frontpage_teaser: '%kernel.project_dir%/public/teaser'
     upload_destination.user_photo: '%kernel.project_dir%/public/users'
+    upload_destination.blogpost_teaser: '%kernel.project_dir%/public/blogposts'
     staticmaps.host: '%env(STATICMAPS_HOST)%'
     timezone_db.api_key: '%env(TIMEZONE_DB_API_KEY)%'
     yourls.api_hostname: '%env(YOURLS_API_HOSTNAME)%'
@@ -140,6 +141,10 @@ services:
     App\Request\ParamConverter\RideParamConverter:
         tags:
             - { name: request.param_converter, priority: 0, converter: ride_converter }
+
+    App\Request\ParamConverter\BlogPostParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: blogpost_converter }
 
     App\Request\ParamConverter\CityParamConverter:
         tags:

@@ -7,8 +7,6 @@ use App\Criticalmass\Website\Crawler\CrawlerInterface;
 use App\Criticalmass\Website\Obfuscator\ObfuscatorInterface;
 use App\Entity\BlacklistedWebsite;
 use App\Entity\CrawledWebsite;
-use Flagception\Activator\CacheActivator;
-use Flagception\Manager\FeatureManager;
 use Flagception\Manager\FeatureManagerInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
