@@ -2,7 +2,7 @@
 
 namespace App\EventSubscriber;
 
-use App\Criticalmass\Timezone\CityTimezoneDetector\CityTimezoneDetectorInterface;
+use App\Criticalmass\Wikidata\CityTimezoneDetector\CityTimezoneDetectorInterface;
 use App\Event\City\CityCreatedEvent;
 use App\Event\City\CityUpdatedEvent;
 use Symfony\Bridge\Doctrine\RegistryInterface;
