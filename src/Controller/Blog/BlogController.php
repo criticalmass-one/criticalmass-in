@@ -4,7 +4,9 @@ namespace App\Controller\Blog;
 
 use App\Controller\AbstractController;
 use App\Entity\BlogPost;
+use App\Event\View\ViewEvent;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Flagception\Bundle\FlagceptionBundle\Annotations\Feature;
@@ -24,11 +26,13 @@ class BlogController extends AbstractController
     /**
      * @ParamConverter("blogPost", class="App:BlogPost", isOptional="false")
      */
-    public function showAction(BlogPost $blogPost): Response
+    public function showAction(BlogPost $blogPost, EventDispatcherInterface $eventDispatcher): Response
     {
         if (!$blogPost->isEnabled()) {
             throw $this->createNotFoundException();
         }
+
+        $eventDispatcher->dispatch(ViewEvent::NAME, new ViewEvent($blogPost));
 
         return $this->render('Blog/blog_post.html.twig', [
             'blog_post' => $blogPost,
