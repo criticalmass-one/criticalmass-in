@@ -98,7 +98,7 @@ class RelocatePhotosCommand extends Command
 
             $table->addRow([
                 $photo->getId(),
-                $photo->getDateTime()->format('Y-m-d H:i:s'),
+                $photo->getExifCreationDate()->format('Y-m-d H:i:s'),
                 $photo->getLatitude(),
                 $photo->getLongitude(),
                 $photo->getLocation(),

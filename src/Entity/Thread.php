@@ -2,10 +2,10 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AutoParamConverterAble;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
-use App\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Criticalmass\Router\Annotation as Routing;
@@ -15,7 +15,7 @@ use App\Criticalmass\Router\Annotation as Routing;
  * @ORM\Entity(repositoryClass="App\Repository\ThreadRepository")
 
  */
-class Thread implements ViewableInterface, RouteableInterface, AutoParamConverterAble, PostableInterface
+class Thread implements ViewableEntity, RouteableInterface, AutoParamConverterAble, PostableInterface
 {
     /**
      * @ORM\Id
@@ -158,7 +158,7 @@ class Thread implements ViewableInterface, RouteableInterface, AutoParamConverte
         return $this->lastPost;
     }
 
-    public function setViews(int $views): ViewableInterface
+    public function setViews(int $views): ViewableEntity
     {
         $this->views = $views;
 
@@ -170,7 +170,7 @@ class Thread implements ViewableInterface, RouteableInterface, AutoParamConverte
         return $this->views;
     }
 
-    public function incViews(): ViewableInterface
+    public function incViews(): ViewableEntity
     {
         ++$this->views;
 

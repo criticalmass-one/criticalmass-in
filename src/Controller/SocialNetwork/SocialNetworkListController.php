@@ -4,28 +4,30 @@ namespace App\Controller\SocialNetwork;
 
 use App\Controller\AbstractController;
 use App\Criticalmass\Router\ObjectRouterInterface;
+use App\Criticalmass\SocialNetwork\Helper\SocialNetworkHelperInterface;
 use App\Entity\City;
 use App\Entity\Ride;
-use App\Entity\SocialNetworkProfile;
-use App\Form\Type\SocialNetworkProfileType;
+use App\Factory\SocialNetworkProfile\SocialNetworkProfileFactory;
+use App\Factory\SocialNetworkProfile\SocialNetworkProfileFactoryInterface;
+use App\Form\Type\SocialNetworkProfileAddType;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Criticalmass\Util\ClassUtil;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class SocialNetworkListController extends AbstractController
 {
     /**
      * @ParamConverter("city", class="App:City")
      */
-    public function listCityAction(ObjectRouterInterface $router, City $city): Response
+    public function listCityAction(ObjectRouterInterface $router, City $city, SocialNetworkProfileFactory $socialNetworkProfileFactory, SocialNetworkHelperInterface $socialNetworkHelper, UserInterface $user): Response
     {
-        $addProfileForm = $this->getAddProfileForm($router, $city);
+        $addProfileForm = $this->getAddProfileForm($router, $city, $socialNetworkProfileFactory, $user, $socialNetworkHelper);
 
         return $this->render('SocialNetwork/list.html.twig', [
-            'list' => $this->getProfileList($city),
+            'list' => $socialNetworkHelper->getProfileList($city),
             'addProfileForm' => $addProfileForm->createView(),
             'profileAbleType' => ClassUtil::getLowercaseShortname($city),
             'profileAble' => $city,
@@ -35,48 +37,34 @@ class SocialNetworkListController extends AbstractController
     /**
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function listRideAction(ObjectRouterInterface $router, Ride $ride): Response
+    public function listRideAction(ObjectRouterInterface $router, Ride $ride, SocialNetworkProfileFactoryInterface $socialNetworkProfileFactory, SocialNetworkHelperInterface $socialNetworkHelper, UserInterface $user = null): Response
     {
-        $addProfileForm = $this->getAddProfileForm($router, $ride);
+        $addProfileForm = $this->getAddProfileForm($router, $ride, $socialNetworkProfileFactory, $user, $socialNetworkHelper);
 
         return $this->render('SocialNetwork/list.html.twig', [
-            'list' => $this->getProfileList($ride),
+            'list' => $socialNetworkHelper->getProfileList($ride),
             'addProfileForm' => $addProfileForm->createView(),
             'profileAbleType' => ClassUtil::getLowercaseShortname($ride),
             'profileAble' => $ride,
         ]);
     }
 
-    protected function getAddProfileForm(ObjectRouterInterface $router, SocialNetworkProfileAble $profileAble): FormInterface
+    protected function getAddProfileForm(ObjectRouterInterface $router, SocialNetworkProfileAble $profileAble, SocialNetworkProfileFactoryInterface $socialNetworkProfileFactory, UserInterface $user, SocialNetworkHelperInterface $socialNetworkHelper): FormInterface
     {
-        $socialNetworkProfile = new SocialNetworkProfile();
+        $socialNetworkProfile = $socialNetworkProfileFactory
+            ->withUser($user)
+            ->build();
 
         $setMethodName = sprintf('set%s', ClassUtil::getShortname($profileAble));
         $socialNetworkProfile->$setMethodName($profileAble);
 
         $form = $this->createForm(
-            SocialNetworkProfileType::class,
+            SocialNetworkProfileAddType::class,
             $socialNetworkProfile, [
-                'action' => $this->getRouteName($router, $profileAble, 'add'),
+                'action' => $socialNetworkHelper->getRouteName($profileAble, 'add'),
             ]
         );
 
         return $form;
-    }
-
-    protected function getProfileList(SocialNetworkProfileAble $profileAble): array
-    {
-        $methodName = sprintf('findBy%s', ClassUtil::getShortname($profileAble));
-
-        $list = $this->getDoctrine()->getRepository(SocialNetworkProfile::class)->$methodName($profileAble);
-
-        return $list;
-    }
-
-    protected function getRouteName(ObjectRouterInterface $router, SocialNetworkProfileAble $profileAble, string $actionName): string
-    {
-        $routeName = sprintf('criticalmass_socialnetwork_%s_%s', ClassUtil::getLowercaseShortname($profileAble), $actionName);
-
-        return $router->generate($profileAble, $routeName);
     }
 }

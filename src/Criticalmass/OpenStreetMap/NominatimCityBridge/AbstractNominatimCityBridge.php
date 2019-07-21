@@ -1,7 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Criticalmass\OpenStreetMap\NominatimCityBridge;
 
+use App\Factory\City\CityFactoryInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 abstract class AbstractNominatimCityBridge implements NominatimCityBridgeInterface
@@ -11,8 +12,12 @@ abstract class AbstractNominatimCityBridge implements NominatimCityBridgeInterfa
     /** @var RegistryInterface $doctrine */
     protected $doctrine;
 
-    public function __construct(RegistryInterface $doctrine)
+    /** @var CityFactoryInterface $cityFactory */
+    protected $cityFactory;
+
+    public function __construct(RegistryInterface $doctrine, CityFactoryInterface $cityFactory)
     {
         $this->doctrine = $doctrine;
+        $this->cityFactory = $cityFactory;
     }
 }

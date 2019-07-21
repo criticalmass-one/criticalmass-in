@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Request\ParamConverter;
 
@@ -34,9 +34,7 @@ class CityParamConverter extends AbstractCriticalmassParamConverter
         $cityId = $request->get('cityId');
 
         if ($cityId) {
-            $city = $this->registry->getRepository(City::class)->find($cityId);
-
-            return $city;
+            return $this->registry->getRepository(City::class)->find($cityId);
         }
 
         return null;

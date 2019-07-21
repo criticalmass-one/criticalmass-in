@@ -6,7 +6,9 @@ use App\Criticalmass\Geo\EntityInterface\PositionInterface;
 
 class PositionList implements PositionListInterface
 {
-    /** @var array $list */
+    /**
+     * @var array $list
+     */
     protected $list = [];
 
     public function __construct(array $list = [])
@@ -97,6 +99,43 @@ class PositionList implements PositionListInterface
     public function remove(int $n): PositionListInterface
     {
         unset($this->list[$n]);
+
+        return $this;
+    }
+
+    public function current()
+    {
+        return current($this->list);
+    }
+
+    public function next(): void
+    {
+        next($this->list);
+    }
+
+    public function key()
+    {
+        return key($this->list);
+    }
+
+    public function valid(): bool
+    {
+        return true;
+    }
+
+    public function rewind(): void
+    {
+        reset($this->list);
+    }
+
+    public function getList(): array
+    {
+        return $this->list;
+    }
+
+    public function setList(array $list): PositionListInterface
+    {
+        $this->list = $list;
 
         return $this;
     }

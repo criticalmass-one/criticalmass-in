@@ -4,7 +4,7 @@ namespace App\Criticalmass\Geo\PositionList;
 
 use App\Criticalmass\Geo\EntityInterface\PositionInterface;
 
-interface PositionListInterface extends \Countable
+interface PositionListInterface extends \Countable, \Iterator
 {
     public function getStartDateTime(): \DateTime;
 
@@ -35,4 +35,8 @@ interface PositionListInterface extends \Countable
     public function add(PositionInterface $position): PositionListInterface;
 
     public function remove(int $n): PositionListInterface;
+
+    public function getList(): array;
+
+    public function setList(array $list): PositionListInterface;
 }

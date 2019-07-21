@@ -20,12 +20,14 @@
     </li>
 {% endblock %}
 
+{% block bodyClass %}ride{% if not ride.enabled %} ride-disabled{% endif %}{% endblock %}
+
 {% block content %}
-    <div class="container" itemscope itemtype="http://schema.org/Event">
+    <div class="container ride" itemscope itemtype="http://schema.org/Event">
         {% include('Ride/Includes/_registrationHint.html.twig') %}
 
         {% include('Ride/Ride.html.twig') with { 'ride': ride, 'tracks': tracks, 'participation': participation } %}
 
-        {% include('Ride/Includes/_pagination.html.twig') with { 'previousRide': previousRide, 'nextRide': nextRide } %}
+        {% include('Ride/Includes/_pagination.html.twig') with { 'ride': ride } %}
     </div>
 {% endblock %}

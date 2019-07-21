@@ -40,10 +40,10 @@ class UrlGenerator extends AbstractUrlGenerator
 
     public function staticmapsRide(Ride $ride, int $width = null, int $height = null, int $zoom = null): string
     {
-        if ($ride->getHasLocation() && $ride->getLatitude() && $ride->getLongitude()) {
+        if ($ride->getLocation() && $ride->getLatitude() && $ride->getLongitude()) {
             $latitude = $ride->getLatitude();
             $longitude = $ride->getLongitude();
-        } else {
+        } elseif ($ride->getCity()->getLatitude() && $ride->getCity()->getLongitude()) {
             $latitude = $ride->getCity()->getLatitude();
             $longitude = $ride->getCity()->getLongitude();
         }
@@ -55,7 +55,12 @@ class UrlGenerator extends AbstractUrlGenerator
         if (count($ride->getTracks()) !== 0) {
             $maps = [];
 
+            /** @var Track $track */
             foreach ($ride->getTracks() as $track) {
+                if (!$track->getEnabled() || $track->getDeleted() || !$track->getReducedPolyline()) {
+                    continue;
+                }
+
                 $maps[] = sprintf('%s,%d,%d,%d', base64_encode($track->getReducedPolyline()), $track->getColorRed(), $track->getColorGreen(), $track->getColorBlue());
             }
 
@@ -71,8 +76,9 @@ class UrlGenerator extends AbstractUrlGenerator
             'markers' => sprintf('%f,%f,%s,%s,%s', $photo->getLatitude(), $photo->getLongitude(), 'square', 'yellow', 'camera'),
         ];
 
+        /** @var Track $track */
         if ($track = $this->findTrackForPhoto($photo)) {
-            if ($track->getReducedPolyline()) {
+            if ($track->getEnabled() && !$track->getDeleted() && $track->getReducedPolyline()) {
                 $parameters['polylines'] = sprintf('%s,%d,%d,%d', base64_encode($track->getReducedPolyline()), $track->getColorRed(), $track->getColorGreen(), $track->getColorBlue());
             }
         }

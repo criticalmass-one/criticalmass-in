@@ -3,7 +3,12 @@
 namespace App\Entity;
 
 use App\Criticalmass\Geocoding\ReverseGeocodeable;
+use App\Criticalmass\OrderedEntities\Annotation as OE;
+use App\Criticalmass\OrderedEntities\OrderedEntityInterface;
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
+use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
+use App\Criticalmass\Weather\EntityInterface\WeatherableInterface;
+use App\Criticalmass\Weather\EntityInterface\WeatherInterface;
 use App\EntityInterface\StaticMapableInterface;
 use Caldera\GeoBasic\Coord\Coord;
 use App\EntityInterface\AuditableInterface;
@@ -12,7 +17,6 @@ use App\EntityInterface\ParticipateableInterface;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
-use App\EntityInterface\ViewableInterface;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -24,6 +28,7 @@ use App\Validator\Constraint as CriticalAssert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use App\Criticalmass\Router\Annotation as Routing;
 use App\Criticalmass\Sharing\Annotation as Sharing;
+use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 
 /**
  * @ORM\Table(name="ride")
@@ -33,7 +38,7 @@ use App\Criticalmass\Sharing\Annotation as Sharing;
  * @Vich\Uploadable
  * @Routing\DefaultRoute(name="caldera_criticalmass_ride_show")
  */
-class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, Shareable, ReverseGeocodeable
+class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, Shareable, ReverseGeocodeable, WeatherableInterface, OrderedEntityInterface
 {
     /**
      * @ORM\Id
@@ -53,6 +58,8 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     /**
      * @ORM\ManyToOne(targetEntity="CityCycle", inversedBy="rides", fetch="LAZY")
      * @ORM\JoinColumn(name="cycle_id", referencedColumnName="id")
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $cycle;
 
@@ -62,6 +69,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      * @Routing\RouteParameter(name="citySlug")
+     * @OE\Identical()
      */
     protected $city;
 
@@ -108,24 +116,9 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      * @JMS\Type("DateTime<'U'>")
+     * @OE\Order(direction="asc")
      */
     protected $dateTime;
-
-    /**
-     * @ORM\Column(type="boolean")
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
-     * @JMS\Type("boolean")
-     */
-    protected $hasTime = false;
-
-    /**
-     * @ORM\Column(type="boolean")
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
-     * @JMS\Type("boolean")
-     */
-    protected $hasLocation = false;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -210,7 +203,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
 
     /**
      * @var \DateTime
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $createdAt;
 
@@ -271,18 +264,28 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     protected $weathers;
 
     /**
-     * @Vich\UploadableField(mapping="ride_photo", fileNameProperty="imageName")
-     *
-     * @var File
+     * @var File $imageFile
+     * @Vich\UploadableField(mapping="ride_photo", fileNameProperty="imageName",  size="imageSize", mimeType="imageMimeType")
      */
-    private $imageFile;
+    protected $imageFile;
 
     /**
+     * @var string $imageName
      * @ORM\Column(type="string", length=255, nullable=true)
-     *
-     * @var string
      */
-    private $imageName;
+    protected $imageName;
+
+    /**
+     * @var int $imageSize
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $imageSize;
+
+    /**
+     * @var string $imageMimeType
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $imageMimeType;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -290,13 +293,23 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      */
     protected $shorturl;
 
+    /**
+     * @var bool $enabled
+     * @ORM\Column(type="boolean", options={"default"=true})
+     * @OE\Boolean(true)
+     */
+    protected $enabled = true;
+
+    /**
+     * @ORM\Column(type="RideDisabledReasonType", nullable=true)
+     * @DoctrineAssert\Enum(entity="App\DBAL\Type\RideDisabledReasonType")
+     */
+    protected $disabledReason;
+
     public function __construct()
     {
         $this->dateTime = new \DateTime();
         $this->createdAt = new \DateTime();
-        $this->visibleSince = new \DateTime();
-        $this->visibleUntil = new \DateTime();
-        $this->expectedStartDateTime = new \DateTime();
 
         $this->weathers = new ArrayCollection();
         $this->estimates = new ArrayCollection();
@@ -337,14 +350,14 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this;
     }
 
-    public function setDateTime(\DateTime $dateTime): Ride
+    public function setDateTime(\DateTime $dateTime = null): Ride
     {
         $this->dateTime = $dateTime;
 
         return $this;
     }
 
-    public function getDateTime(): \DateTime
+    public function getDateTime(): ?\DateTime
     {
         return $this->dateTime;
     }
@@ -355,30 +368,6 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     public function getSimpleDate(): string
     {
         return $this->dateTime->format('Y-m-d');
-    }
-
-    public function setHasTime(bool $hasTime): Ride
-    {
-        $this->hasTime = $hasTime;
-
-        return $this;
-    }
-
-    public function getHasTime(): bool
-    {
-        return $this->hasTime;
-    }
-
-    public function setHasLocation(bool $hasLocation): Ride
-    {
-        $this->hasLocation = $hasLocation;
-
-        return $this;
-    }
-
-    public function getHasLocation(): bool
-    {
-        return $this->hasLocation;
     }
 
     public function setLocation(string $location = null): ReverseGeocodeable
@@ -815,9 +804,11 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->participationsNumberNo;
     }
 
-    public function setViews(int $views): ViewableInterface
+    public function setViews(int $views): ViewableEntity
     {
         $this->views = $views;
+
+        return $this;
     }
 
     public function getViews(): int
@@ -825,7 +816,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->views;
     }
 
-    public function incViews(): ViewableInterface
+    public function incViews(): ViewableEntity
     {
         ++$this->views;
 
@@ -914,14 +905,21 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->estimates;
     }
 
-    public function addWeather(Weather $weather): Ride
+    public function setEstimates(Collection $estimates): Ride
+    {
+        $this->estimates = $estimates;
+
+        return $this;
+    }
+
+    public function addWeather(WeatherInterface $weather): WeatherableInterface
     {
         $this->weathers->add($weather);
 
         return $this;
     }
 
-    public function removeWeather(Weather $weathers): Ride
+    public function removeWeather(WeatherInterface $weathers): WeatherableInterface
     {
         $this->weathers->removeElement($weathers);
 
@@ -933,12 +931,19 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->weathers;
     }
 
+    public function setWeathers(Collection $weathers): WeatherableInterface
+    {
+        $this->weathers = $weathers;
+
+        return $this;
+    }
+
     public function __clone()
     {
         $this->id = null;
     }
 
-    public function setImageFile(File $image = null): Ride
+    public function setImageFile(File $image = null): PhotoInterface
     {
         $this->imageFile = $image;
 
@@ -964,6 +969,30 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     public function getImageName(): ?string
     {
         return $this->imageName;
+    }
+
+    public function getImageSize(): ?int
+    {
+        return $this->imageSize;
+    }
+
+    public function setImageSize(int $imageSize = null): PhotoInterface
+    {
+        $this->imageSize = $imageSize;
+
+        return $this;
+    }
+
+    public function getImageMimeType(): ?string
+    {
+        return $this->imageMimeType;
+    }
+
+    public function setImageMimeType(string $imageMimeType = null): PhotoInterface
+    {
+        $this->imageMimeType = $imageMimeType;
+
+        return $this;
     }
 
     public function addSocialNetworkProfile(SocialNetworkProfile $socialNetworkProfile): Ride
@@ -1002,5 +1031,29 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     public function getShorturl(): ?string
     {
         return $this->shorturl;
+    }
+
+    public function setEnabled(bool $enabled): Ride
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    public function getDisabledReason(): ?string
+    {
+        return $this->disabledReason;
+    }
+
+    public function setDisabledReason(string $disabledReason = null): Ride
+    {
+        $this->disabledReason = $disabledReason;
+
+        return $this;
     }
 }

@@ -6,78 +6,94 @@
                     <li>
                         Seit {{ daysSince('2011-06-24 19:00:00') }} Tagen im Sattel
                     </li>
-                    <li>
-                        <a href="http://sqi.be/v4px3">
-                            facebook
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://sqi.be/y1aw6">
-                            GitHub
-                        </a>
-                    </li>
-                    <li>
-                        Betrieben mit Öko-Strom auf Servern von <a href="http://sqi.be/m2l5s">manitu</a>
-                    </li>
-                </ul>
-            </div>
 
-            <div class="col-md-4">
-                <ul class="list-unstyled">
                     <li>
-                        Kartendaten und Geocoding von <a href="http://sqi.be/gojuq">OpenStreetMap</a>, <span
-                                class="text-nowrap">&copy; OpenStreetMap-Mitwirkende</span>, <a
-                                href="http://sqi.be/dc9ux">lizensiert unter <span
-                                    class="text-nowrap">CC BY-SA 2.0</span></a>
-                    </li>
-                    <li>
-                        Wetterdaten von <a href="http://sqi.be/fedj6">OpenWeatherMap</a>, <a href="http://sqi.be/hzo71">lizensiert
-                            unter <span class="text-nowrap">CC BY-SA 4.0</span></a>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="col-md-4">
-                <ul class="list-unstyled">
-                    <li>
-                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'impress' }) }}">
+                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'impress' }) }}" id="footer-impress-link">
                             Impressum
                         </a>
                     </li>
 
                     <li>
-                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'privacy' }) }}">
+                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'privacy' }) }}" id="footer-privacy-link">
                             Datenschutz
                         </a>
                     </li>
 
                     <li>
-                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'gdpr' }) }}">
+                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'gdpr' }) }}" id="footer-gdpr-link">
                             Deine privaten Daten
                         </a>
                     </li>
+                </ul>
+            </div>
 
+            <div class="col-md-4">
+                <ul class="list-unstyled">
                     <li>
-                        <a href="{{ path('caldera_criticalmass_help_about') }}">
+                        <a href="{{ path('caldera_criticalmass_help_about') }}" id="footer-about-link">
                             {% trans %}criticalmass.navigation.criticalmass.about{% endtrans %}
                         </a>
                     </li>
 
                     <li>
-                        <a href="{{ path('caldera_criticalmass_help_faq') }}">
+                        <a href="{{ path('caldera_criticalmass_help_faq') }}" id="footer-faq-link">
                             {% trans %}criticalmass.navigation.criticalmass.faq{% endtrans %}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-md-4">
+                <ul class="list-unstyled">
+                    <li>
+                        <a href="{{ path('caldera_criticalmass_city_list') }}" id="footer-citylist-link">
+                            Städteliste
                         </a>
                     </li>
 
                     <li>
-                        <a href="{{ path('caldera_criticalmass_city_list') }}">
-                            Städteliste
+                        <a href="https://sqi.be/status" id="footer-status-link">
+                            Status
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="http://sqi.be/y1aw6">
+                            GitHub-Repository
                         </a>
                     </li>
                 </ul>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <ul class="list-unstyled">
+                    <li>
+                        Kartendaten und Geocoding von <a href="http://sqi.be/gojuq">OpenStreetMap</a>,
+                        <span class="text-nowrap">&copy; OpenStreetMap-Mitwirkende</span>,
+                        <a href="http://sqi.be/dc9ux">lizensiert unter <span class="text-nowrap">CC BY-SA 2.0</span></a>
+                    </li>
+                    <li>
+                        Wetterdaten von <a href="http://sqi.be/fedj6">OpenWeatherMap</a>,
+                        <a href="http://sqi.be/hzo71">lizensiert unter <span class="text-nowrap">CC BY-SA 4.0</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 text-center">
+                Betrieben mit Öko-Strom auf Servern von <a href="http://sqi.be/m2l5s">manitu</a>.
+
+                <!-- Revive Adserver Asynchronous JS Tag - Generated with Revive Adserver v4.1.3 -->
+                <ins data-revive-zoneid="22" data-revive-id="41009926173ca0d1c900a7dc0a6dd401"></ins>
+                <script async src="//adserver.caldera.cc/delivery/asyncjs.php"></script>
+            </div>
+        </div>
     </div>
 </footer>
 
-
+<div id="warming-stripes" class="text-center">
+    Keep it in the ground.
+</div>

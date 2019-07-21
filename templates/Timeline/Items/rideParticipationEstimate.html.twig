@@ -16,9 +16,41 @@
                 teilgenommen haben.
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="flipcounter">
+                    {% set counter = item.estimatedParticipants %}
+
+                    {% if counter < 1000 %}
+                        {% set counter = 0 ~ counter %}
+                    {% endif %}
+
+                    {% if counter < 100 %}
+                        {% set counter = 0 ~ counter %}
+                    {% endif %}
+
+                    {% if counter < 10 %}
+                        {% set counter = 0 ~ counter %}
+                    {% endif %}
+
+                    <div class="flipbreak">
+
+                    </div>
+                    <div class="digit">
+                        {{ counter[0:1] }}
+                    </div>
+                    <div class="digit">
+                        {{ counter[1:1] }}
+                    </div>
+                    <div class="digit">
+                        {{ counter[2:1] }}
+                    </div>
+                    <div class="digit">
+                        {{ counter[3:1] }}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
-<script type="text/javascript">
-    CriticalMass.loadModule('AutoMap', 'map-{{ item.uniqId }}');
-</script>

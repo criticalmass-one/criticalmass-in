@@ -1,11 +1,12 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Criticalmass\Image\PhotoGps;
 
+use App\Criticalmass\Geo\GpxReader\TrackReader;
+use App\Criticalmass\Geo\Loop\LoopInterface;
+use App\Criticalmass\Image\ExifWrapper\ExifWrapperInterface;
 use App\Entity\Photo;
 use App\Entity\Track;
-use App\Criticalmass\Gps\GpxReader\TrackReader;
-use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 abstract class AbstractPhotoGps implements PhotoGpsInterface
 {
@@ -18,32 +19,28 @@ abstract class AbstractPhotoGps implements PhotoGpsInterface
     /** @var array $exifData */
     protected $exifData;
 
-    /** @var UploaderHelper $uploaderHelper */
-    protected $uploaderHelper;
-
-    /** @var string $uploadDestinationPhoto */
-    protected $uploadDestinationPhoto;
-
     /** @var TrackReader $trackReader */
     protected $trackReader;
 
     /** @var \DateTimeZone */
     protected $dateTimeZone;
 
-    public function __construct(
-        UploaderHelper $uploaderHelper,
-        TrackReader $trackReader,
-        string $uploadDestinationPhoto
-    ) {
-        $this->uploaderHelper = $uploaderHelper;
-        $this->uploadDestinationPhoto = $uploadDestinationPhoto;
+    /** @var ExifWrapperInterface $exifWrapper */
+    protected $exifWrapper;
+
+    /** @var LoopInterface $loop */
+    protected $loop;
+
+    public function __construct(TrackReader $trackReader, ExifWrapperInterface $exifWrapper, LoopInterface $loop)
+    {
         $this->trackReader = $trackReader;
+        $this->exifWrapper = $exifWrapper;
+        $this->loop = $loop;
     }
 
     public function setDateTimeZone(\DateTimeZone $dateTimeZone = null): PhotoGpsInterface
     {
         $this->dateTimeZone = $dateTimeZone;
-        $this->trackReader->setDateTimeZone($dateTimeZone);
 
         return $this;
     }
@@ -56,7 +53,6 @@ abstract class AbstractPhotoGps implements PhotoGpsInterface
             $timezone = $photo->getCity()->getTimezone();
 
             $this->dateTimeZone = new \DateTimeZone($timezone);
-            $this->trackReader->setDateTimeZone($this->dateTimeZone);
         }
 
         return $this;

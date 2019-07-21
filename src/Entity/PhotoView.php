@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\EntityInterface\ViewInterface;
+use App\Criticalmass\ViewStorage\ViewInterface\ViewEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="photo_view")
  * @ORM\Entity()
  */
-class PhotoView implements ViewInterface
+class PhotoView implements ViewEntity
 {
     /**
      * @ORM\Id
@@ -40,6 +40,13 @@ class PhotoView implements ViewInterface
         $this->dateTime = new \DateTime();
     }
 
+    public function setId(int $id): ViewEntity
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -50,7 +57,7 @@ class PhotoView implements ViewInterface
         return $this->user;
     }
 
-    public function setUser(User $user = null): ViewInterface
+    public function setUser(User $user = null): ViewEntity
     {
         $this->user = $user;
 
@@ -62,7 +69,7 @@ class PhotoView implements ViewInterface
         return $this->dateTime;
     }
 
-    public function setDateTime(\DateTime $dateTime): ViewInterface
+    public function setDateTime(\DateTime $dateTime): ViewEntity
     {
         $this->dateTime = $dateTime;
 

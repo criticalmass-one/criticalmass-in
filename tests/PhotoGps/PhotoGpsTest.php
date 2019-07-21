@@ -2,32 +2,29 @@
 
 namespace Tests\PhotoGps;
 
-use App\Criticalmass\Image\PhotoGps\PhotoGpsInterface;
-use App\Entity\City;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Tests\PhotoGps\Mocks\GpsPhoto;
-use Tests\PhotoGps\Mocks\MockTrack;
-use Tests\PhotoGps\Mocks\NoGpsPhoto;
+use App\Criticalmass\Geo\Entity\Position;
+use App\Criticalmass\Geo\GpxReader\TrackReader;
+use App\Criticalmass\Geo\Loop\Loop;
+use App\Criticalmass\Image\ExifWrapper\ExifWrapper;
+use App\Criticalmass\Image\PhotoGps\PhotoGps;
+use App\Entity\Photo;
+use App\Entity\Track;
+use PHPExif\Exif;
+use PHPUnit\Framework\TestCase;
 
-class PhotoGpsTest extends KernelTestCase
+class PhotoGpsTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        self::bootKernel();
-    }
-
-    protected function getPhotoGps(): PhotoGpsInterface
-    {
-        $container = self::$container;
-
-        return $container->get(PhotoGpsInterface::class);
-    }
-
     public function testPhotoWithoutCoords(): void
     {
-        $photo = new NoGpsPhoto();
+        $exifWrapper = $this->createMock(ExifWrapper::class);
+        $trackReader = $this->createMock(TrackReader::class);
+        $loop = $this->createMock(Loop::class);
 
-        $this->getPhotoGps()->setPhoto($photo)->execute();
+        $photo = new Photo();
+
+        $photoGps = new PhotoGps($trackReader, $exifWrapper, $loop);
+
+        $photoGps->setPhoto($photo)->execute();
 
         $this->assertFalse($photo->hasCoordinates());
         $this->assertNull($photo->getLatitude());
@@ -36,9 +33,20 @@ class PhotoGpsTest extends KernelTestCase
 
     public function testPhotoWithCoords(): void
     {
-        $photo = new GpsPhoto();
+        $trackReader = $this->createMock(TrackReader::class);
+        $exifWrapper = $this->createMock(ExifWrapper::class);
+        $exif = $this->createMock(Exif::class);
 
-        $this->getPhotoGps()->setPhoto($photo)->execute();
+        $loop = $this->createMock(Loop::class);
+
+        $exif->method('getGPS')->willReturn('52.266666666667,10.5');
+        $exifWrapper->method('getExifData')->willReturn($exif);
+
+        $photoGps = new PhotoGps($trackReader, $exifWrapper, $loop);
+
+        $photo = new Photo();
+
+        $photoGps->setPhoto($photo)->execute();
 
         $this->assertTrue($photo->hasCoordinates());
         $this->assertEquals(52.266666666667, $photo->getLatitude());
@@ -47,27 +55,28 @@ class PhotoGpsTest extends KernelTestCase
 
     public function testPhotoTrackCoords(): void
     {
-        $photo = new NoGpsPhoto();
-        $track = new MockTrack();
+        $exif = $this->createMock(Exif::class);
+        $exif->method('getCreationDate')->willReturn(new \DateTime('2019-06-24 19:25:00'));
 
-        $this->getPhotoGps()->setPhoto($photo)->setDateTimeZone(new \DateTimeZone('Europe/Berlin'))->setTrack($track)->execute();
+        $exifWrapper = $this->createMock(ExifWrapper::class);
+        $exifWrapper->method('getExifData')->willReturn($exif);
 
-        $this->assertTrue($photo->hasCoordinates());
-        $this->assertEquals(52.268021, $photo->getLatitude());
-        $this->assertEquals(10.500126, $photo->getLongitude());
-    }
+        $trackReader = $this->createMock(TrackReader::class);
 
-    public function testPhotoTrackCoordsAutoTimezone(): void
-    {
-        $city = new City();
-        $city->setTimezone('Europe/Berlin');
+        $loop = $this->createMock(Loop::class);
+        $loop->method('setPositionList')->will($this->returnSelf());
+        $loop->method('searchPositionForDateTime')->willReturn(new Position(52.268021, 10.500126));
 
-        $photo = new NoGpsPhoto();
-        $photo->setCity($city);
+        $photoGps = new PhotoGps($trackReader, $exifWrapper, $loop);
 
-        $track = new MockTrack();
+        $track = $this->createMock(Track::class);
 
-        $this->getPhotoGps()->setPhoto($photo)->setTrack($track)->execute();
+        $photo = new Photo();
+
+        $photoGps
+            ->setPhoto($photo)
+            ->setTrack($track)
+            ->execute();
 
         $this->assertTrue($photo->hasCoordinates());
         $this->assertEquals(52.268021, $photo->getLatitude());

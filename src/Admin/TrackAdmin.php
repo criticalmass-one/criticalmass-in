@@ -18,13 +18,15 @@ class TrackAdmin extends AbstractAdmin
     {
         $formMapper
             ->with('Track', ['class' => 'col-md-6'])
-            ->add('ride', EntityType::class, ['class' => Ride::class])
-            ->add('user', EntityType::class, ['class' => User::class])
+            ->add('ride', EntityType::class, ['class' => Ride::class, 'required' => true])
+            ->add('user', EntityType::class, ['class' => User::class, 'required' => true])
             ->end()
+
             ->with('Settings', ['class' => 'col-md-6'])
             ->add('enabled', CheckboxType::class, ['required' => false])
             ->add('deleted', CheckboxType::class, ['required' => false])
             ->end()
+
             ->with('Track file', ['class' => 'col-md-6'])
             ->add('trackFile', VichFileType::class, ['required' => false])
             ->end();

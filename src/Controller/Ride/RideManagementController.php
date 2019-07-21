@@ -3,6 +3,7 @@
 namespace App\Controller\Ride;
 
 use App\Criticalmass\Router\ObjectRouterInterface;
+use App\Form\Type\RideDisableType;
 use App\Form\Type\RideSocialPreviewType;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -11,8 +12,10 @@ use App\Controller\AbstractController;
 use App\Entity\City;
 use App\Entity\Ride;
 use App\Form\Type\RideType;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -131,6 +134,10 @@ class RideManagementController extends AbstractController
                 ->setUpdatedAt(new \DateTime())
                 ->setUser($user);
 
+            if ($ride->isEnabled()) {
+                $ride->setDisabledReason(null);
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
@@ -199,5 +206,25 @@ class RideManagementController extends AbstractController
         }
 
         return $this->socialPreviewGetAction($entityManager, $request, $user, $ride, $form);
+    }
+
+    /**
+     * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("ride", class="App:Ride")
+     */
+    public function disableAction(Request $request, RegistryInterface $registry, UserInterface $user = null, Ride $ride, ObjectRouterInterface $objectRouter): RedirectResponse
+    {
+        if (Request::METHOD_POST === $request->getMethod()) {
+            $disableForm = $this->createForm(RideDisableType::class, $ride);
+            $disableForm->handleRequest($request);
+
+            if ($disableForm->isSubmitted() && $disableForm->isValid()) {
+                $ride->setEnabled(false);
+
+                $registry->getManager()->flush();
+            }
+        }
+
+        return $this->redirect($objectRouter->generate($ride));
     }
 }

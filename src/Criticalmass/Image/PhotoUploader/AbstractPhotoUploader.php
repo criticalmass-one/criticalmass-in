@@ -2,10 +2,11 @@
 
 namespace App\Criticalmass\Image\PhotoUploader;
 
+use App\Criticalmass\UploadFaker\UploadFakerInterface;
 use App\Entity\Ride;
 use App\Entity\Track;
 use App\Entity\User;
-use App\Criticalmass\Image\PhotoGps\PhotoGps;
+use League\Flysystem\FilesystemInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -14,8 +15,8 @@ abstract class AbstractPhotoUploader implements PhotoUploaderInterface
     /** @var RegistryInterface $doctrine */
     protected $doctrine;
 
-    /** @var string $uploadDestinationPhoto */
-    protected $uploadDestinationPhoto;
+    /** @var FilesystemInterface $filesystem */
+    protected $filesystem;
 
     /** @var User $user */
     protected $user;
@@ -23,24 +24,21 @@ abstract class AbstractPhotoUploader implements PhotoUploaderInterface
     /** @var Ride $ride */
     protected $ride;
 
-    /** @var Track $track */
-    protected $track;
-
-    /** @var PhotoGps $photoGps */
-    protected $photoGps;
-
     /** @var EventDispatcherInterface $eventDispatcher */
     protected $eventDispatcher;
 
     /** @var array $addedPhotoList */
     protected $addedPhotoList = [];
 
-    public function __construct(RegistryInterface $doctrine, PhotoGps $photoGps, string $uploadDestinationPhoto, EventDispatcherInterface $eventDispatcher)
+    /** @var UploadFakerInterface $uploadFaker */
+    protected $uploadFaker;
+
+    public function __construct(RegistryInterface $doctrine, EventDispatcherInterface $eventDispatcher, FilesystemInterface $filesystem, UploadFakerInterface $uploadFaker)
     {
         $this->doctrine = $doctrine;
-        $this->photoGps = $photoGps;
-        $this->uploadDestinationPhoto = $uploadDestinationPhoto;
+        $this->filesystem = $filesystem;
         $this->eventDispatcher = $eventDispatcher;
+        $this->uploadFaker = $uploadFaker;
     }
 
     public function setUser(User $user): PhotoUploaderInterface
@@ -57,10 +55,9 @@ abstract class AbstractPhotoUploader implements PhotoUploaderInterface
         return $this;
     }
 
+    /** @deprecated  */
     public function setTrack(Track $track = null): PhotoUploaderInterface
     {
-        $this->track = $track;
-
         return $this;
     }
 }

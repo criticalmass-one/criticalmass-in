@@ -2,27 +2,41 @@
 
 namespace App\Criticalmass\Geo\GpxWriter;
 
-use Caldera\GeoBundle\EntityInterface\PositionInterface;
+use App\Criticalmass\Geo\Converter\PositionToXmlTrackPointConverter;
+use App\Criticalmass\Geo\EntityInterface\PositionInterface;
+use App\Criticalmass\Geo\PositionList\PositionList;
+use App\Criticalmass\Geo\PositionList\PositionListInterface;
+use League\Flysystem\FilesystemInterface;
 
 class GpxWriter implements GpxWriterInterface
 {
-    /** @var array $coordList */
-    protected $coordList;
+    /** @var PositionListInterface $positionList */
+    protected $positionList;
 
     /** @var array $gpxAttributes */
     protected $gpxAttributes = [];
 
     /** @var string $gpxContent */
-    protected $gpxContent = null;
+    protected $gpxContent = '';
 
     /** @var \XMLWriter $writer */
     protected $writer;
 
-    public function __construct(array $coordList = [])
-    {
-        $this->coordList = $coordList;
+    /** @var FilesystemInterface $filesystem */
+    protected $filesystem;
 
+    public function __construct(FilesystemInterface $filesystem)
+    {
         $this->writer = new \XMLWriter();
+        $this->positionList = new PositionList();
+        $this->filesystem = $filesystem;
+    }
+
+    public function setPositionList(PositionListInterface $positionList): GpxWriterInterface
+    {
+        $this->positionList = $positionList;
+
+        return $this;
     }
 
     public function getGpxContent(): string
@@ -32,7 +46,9 @@ class GpxWriter implements GpxWriterInterface
 
     public function saveGpxContent(string $filename): void
     {
-        file_put_contents($filename, $this->gpxContent);
+        if ($this->gpxContent) {
+            $this->filesystem->put($filename, $this->gpxContent);
+        }
     }
 
     public function addGpxAttribute(string $attributeName, string $attributeValue): GpxWriterInterface
@@ -51,7 +67,7 @@ class GpxWriter implements GpxWriterInterface
         return $this;
     }
 
-    public function generateGpxContent(): void
+    public function generateGpxContent(): GpxWriterInterface
     {
         $this->writer->openMemory();
         $this->writer->startDocument('1.0');
@@ -60,6 +76,7 @@ class GpxWriter implements GpxWriterInterface
 
         $this->writer->startElement('gpx');
 
+        $this->addStandardGpxAttributes();
         $this->generateGpxAttributes();
         $this->generateGpxMetadata();
 
@@ -67,8 +84,10 @@ class GpxWriter implements GpxWriterInterface
         $this->writer->startElement('trkseg');
 
         /** @var PositionInterface $position */
-        foreach ($this->coordList as $position) {
-            $this->generateGpxPosition($position);
+        for ($n = 0; $n < $this->positionList->count(); ++$n) {
+            $position = $this->positionList->get($n);
+
+            PositionToXmlTrackPointConverter::convert($position, $this->writer);
         }
 
         $this->writer->endElement();
@@ -79,6 +98,8 @@ class GpxWriter implements GpxWriterInterface
         $this->gpxContent = $this->writer->outputMemory(true);
 
         $this->writer->flush();
+
+        return $this;
     }
 
     protected function generateGpxAttributes(): GpxWriterInterface
@@ -92,40 +113,22 @@ class GpxWriter implements GpxWriterInterface
 
     protected function generateGpxMetadata(): GpxWriterInterface
     {
-        if (count($this->coordList) > 0) {
-            $this->writer->startElement('metadata');
-            $this->writer->startElement('time');
-
-            /** @var \DateTime $dateTime */
-            $dateTime = $this->coordList[0]->getDateTime();
-            $this->writer->text($dateTime->format('Y-m-d') . 'T' . $dateTime->format('H:i:s') . 'Z');
-
-            $this->writer->endElement();
-            $this->writer->endElement();
+        if (count($this->positionList) === 0) {
+            return $this;
         }
 
-        return $this;
-    }
-
-    protected function generateGpxPosition(PositionInterface $position): GpxWriterInterface
-    {
-        $this->writer->startElement('trkpt');
-        $this->writer->writeAttribute('lat', $position->getLatitude());
-        $this->writer->writeAttribute('lon', $position->getLongitude());
-
-        if ($position->getAltitude()) {
-            $this->writer->startElement('ele');
-            $this->writer->text($position->getAltitude());
-            $this->writer->endElement();
+        if (!$this->positionList->get(0)->getDateTime()) {
+            return $this;
         }
 
-        if ($position->getDateTime()) {
-            $this->writer->startElement('time');
-            $dateTime = $position->getDateTime();
-            $this->writer->text($dateTime->format('Y-m-d') . 'T' . $dateTime->format('H:i:s') . 'Z');
-            $this->writer->endElement();
-        }
+        $this->writer->startElement('metadata');
+        $this->writer->startElement('time');
 
+        /** @var \DateTime $dateTime */
+        $dateTime = $this->positionList->get(0)->getDateTime();
+        $this->writer->text($dateTime->format('Y-m-d') . 'T' . $dateTime->format('H:i:s') . 'Z');
+
+        $this->writer->endElement();
         $this->writer->endElement();
 
         return $this;

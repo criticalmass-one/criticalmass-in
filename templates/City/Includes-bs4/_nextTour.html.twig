@@ -36,7 +36,7 @@
                 <div class="col-md-12">
                     <dl>
                         <dt>Treffpunkt</dt>
-                        {% if currentRide.hasLocation() %}
+                        {% if currentRide.location and currentRide.latitude and currentRide.longitude %}
                             <dd>{{ currentRide.location }}</dd>
                         {% else %}
                             <dd>noch nicht bekannt</dd>

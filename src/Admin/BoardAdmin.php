@@ -17,9 +17,10 @@ class BoardAdmin extends AbstractAdmin
     {
         $formMapper
             ->with('Board', ['class' => 'col-md-6'])
-            ->add('title', TextType::class)
-            ->add('description', TextareaType::class)
+            ->add('title', TextType::class, ['required' => true])
+            ->add('description', TextareaType::class, ['required' => false])
             ->end()
+
             ->with('Settings', ['class' => 'col-md-6'])
             ->add('slug', TextType::class)
             ->add('position', NumberType::class, ['required' => false])

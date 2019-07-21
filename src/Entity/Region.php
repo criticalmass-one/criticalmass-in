@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\EntityInterface\AuditableInterface;
 use App\EntityInterface\RouteableInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -30,7 +32,7 @@ class Region implements RouteableInterface, AuditableInterface
     protected $name;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     protected $description;
 
@@ -50,6 +52,16 @@ class Region implements RouteableInterface, AuditableInterface
      */
     protected $cities;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $wikidataEntityId;
+
+    public function __construct()
+    {
+        $this->children = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -67,12 +79,12 @@ class Region implements RouteableInterface, AuditableInterface
         return $this;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function setDescription(string $description): Region
+    public function setDescription(string $description = null): Region
     {
         $this->description = $description;
 
@@ -128,4 +140,27 @@ class Region implements RouteableInterface, AuditableInterface
         return $this->name;
     }
 
+    public function getWikidataEntityId(): ?string
+    {
+        return $this->wikidataEntityId;
+    }
+
+    public function setWikidataEntityId(?string $wikidataEntityId): Region
+    {
+        $this->wikidataEntityId = $wikidataEntityId;
+
+        return $this;
+    }
+
+    public function getChildren(): Collection
+    {
+        return $this->children;
+    }
+
+    public function setChildren(Collection $children): Region
+    {
+        $this->children = $children;
+
+        return $this;
+    }
 }

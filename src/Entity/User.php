@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -21,7 +22,7 @@ use App\Criticalmass\Router\Annotation as Routing;
  * @Vich\Uploadable
  * @JMS\ExclusionPolicy("all")
  */
-class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterface
+class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterface, PhotoInterface
 {
     /**
      * @ORM\Id
@@ -139,7 +140,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
 
     /**
      * @var File $imageFile
-     * @Vich\UploadableField(mapping="user_photo", fileNameProperty="imageName")
+     * @Vich\UploadableField(mapping="user_photo", fileNameProperty="imageName", size="imageSize", mimeType="imageMimeType")
      */
     protected $imageFile;
 
@@ -152,9 +153,31 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     protected $imageName;
 
     /**
+     * @var int $imageSize
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $imageSize;
+
+    /**
+     * @var string $imageMimeType
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $imageMimeType;
+
+    /**
      * @ORM\Column(type="boolean", options={"default" = 0})
      */
     protected $ownProfilePhoto = false;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\SocialNetworkProfile", mappedBy="createdBy")
+     */
+    private $socialNetworkProfiles;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\BlogPost", mappedBy="user")
+     */
+    private $blogPosts;
 
     public function __construct()
     {
@@ -167,6 +190,15 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         $this->tracks = new ArrayCollection();
         $this->participations = new ArrayCollection();
         $this->bikerightVouchers = new ArrayCollection();
+        $this->blogPosts = new ArrayCollection();
+        $this->socialNetworkProfiles = new ArrayCollection();
+    }
+
+    public function setId(int $id): User
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getId(): ?int
@@ -479,7 +511,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         return $this;
     }
 
-    public function setImageFile(File $image = null): User
+    public function setImageFile(File $image = null): PhotoInterface
     {
         $this->imageFile = $image;
 
@@ -495,7 +527,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         return $this->imageFile;
     }
 
-    public function setImageName(string $imageName = null): User
+    public function setImageName(string $imageName = null): PhotoInterface
     {
         $this->imageName = $imageName;
 
@@ -507,6 +539,30 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         return $this->imageName;
     }
 
+    public function getImageSize(): ?int
+    {
+        return $this->imageSize;
+    }
+
+    public function setImageSize(int $imageSize = null): PhotoInterface
+    {
+        $this->imageSize = $imageSize;
+
+        return $this;
+    }
+
+    public function getImageMimeType(): ?string
+    {
+        return $this->imageMimeType;
+    }
+
+    public function setImageMimeType(string $imageMimeType = null): PhotoInterface
+    {
+        $this->imageMimeType = $imageMimeType;
+
+        return $this;
+    }
+
     public function hasOwnProfilePhoto(): bool
     {
         return $this->ownProfilePhoto;
@@ -515,6 +571,68 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     public function setOwnProfilePhoto(bool $ownProfilePhoto): User
     {
         $this->ownProfilePhoto = $ownProfilePhoto;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|BlogPost[]
+     */
+    public function getBlogPosts(): Collection
+    {
+        return $this->blogPosts;
+    }
+
+    public function addBlogPost(BlogPost $blogPost): self
+    {
+        if (!$this->blogPosts->contains($blogPost)) {
+            $this->blogPosts[] = $blogPost;
+            $blogPost->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBlogPost(BlogPost $blogPost): self
+    {
+        if ($this->blogPosts->contains($blogPost)) {
+            $this->blogPosts->removeElement($blogPost);
+            // set the owning side to null (unless already changed)
+            if ($blogPost->getUser() === $this) {
+                $blogPost->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SocialNetworkProfile[]
+     */
+    public function getSocialNetworkProfiles(): Collection
+    {
+        return $this->socialNetworkProfiles;
+    }
+
+    public function addSocialNetworkProfile(SocialNetworkProfile $socialNetworkProfile): self
+    {
+        if (!$this->socialNetworkProfiles->contains($socialNetworkProfile)) {
+            $this->socialNetworkProfiles[] = $socialNetworkProfile;
+            $socialNetworkProfile->setCreatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSocialNetworkProfile(SocialNetworkProfile $socialNetworkProfile): self
+    {
+        if ($this->socialNetworkProfiles->contains($socialNetworkProfile)) {
+            $this->socialNetworkProfiles->removeElement($socialNetworkProfile);
+            // set the owning side to null (unless already changed)
+            if ($socialNetworkProfile->getCreatedBy() === $this) {
+                $socialNetworkProfile->setCreatedBy(null);
+            }
+        }
 
         return $this;
     }
