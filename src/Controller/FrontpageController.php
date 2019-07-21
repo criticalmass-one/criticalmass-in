@@ -9,12 +9,23 @@ use Symfony\Component\HttpFoundation\Response;
 
 class FrontpageController extends AbstractController
 {
-    public function indexAction(SeoPageInterface $seoPage, TimelineInterface $cachedTimeline): Response
+    public function indexAction(SeoPageInterface $seoPage): Response
     {
         $seoPage->setDescription('criticalmass.in sammelt Fotos, Tracks und Informationen über weltweite Critical-Mass-Touren');
 
         $frontpageTeaserList = $this->getFrontpageTeaserRepository()->findForFrontpage();
 
+        $response = $this->render('Frontpage/index.html.twig', [
+            'frontpageTeaserList' => $frontpageTeaserList,
+        ]);
+
+        $response->setSharedMaxAge(60);
+
+        return $response;
+    }
+
+    public function timelineAction(TimelineInterface $cachedTimeline): Response
+    {
         $endDateTime = new \DateTime();
         $startDateTime = new \DateTime();
         $monthInterval = new \DateInterval('P1M');
@@ -25,10 +36,10 @@ class FrontpageController extends AbstractController
             ->execute()
             ->getTimelineContent();
 
-        return $this->render('Frontpage/index.html.twig', [
-            'timelineContent' => $timelineContent,
-            'frontpageTeaserList' => $frontpageTeaserList,
-        ]);
+        $response = new Response($timelineContent);
+        $response->setSharedMaxAge(300);
+
+        return $response;
     }
 
     public function rideListAction(FrontpageRideListFactory $frontpageRideListFactory): Response

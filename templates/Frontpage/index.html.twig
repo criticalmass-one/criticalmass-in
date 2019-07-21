@@ -40,7 +40,7 @@
 
                 <div class="row margin-top-medium">
                     <div class="col-md-12">
-                        {{ timelineContent|raw }}
+                        {{ render_esi(controller('App\\Controller\\FrontpageController::timelineAction')) }}
                     </div>
                 </div>
             </div>
