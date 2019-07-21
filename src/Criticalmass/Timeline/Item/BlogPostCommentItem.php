@@ -2,16 +2,16 @@
 
 namespace App\Criticalmass\Timeline\Item;
 
+use App\Entity\BlogPost;
 use App\Entity\Post;
-use App\Entity\Ride;
 
 class BlogPostCommentItem extends AbstractItem
 {
-    /* @var Ride $ride */
-    protected $ride;
+    /* @var BlogPost $blogPost */
+    protected $blogPost;
 
-    /** @var string $rideTitle */
-    protected $rideTitle;
+    /** @var string $blogPostTitle */
+    protected $blogPostTitle;
 
     /** @var string $text */
     protected $text;
@@ -19,19 +19,19 @@ class BlogPostCommentItem extends AbstractItem
     /** @var Post $post */
     protected $post;
 
-    public function getRide(): Ride
+    public function getBlogPost(): BlogPost
     {
-        return $this->ride;
+        return $this->blogPost;
     }
 
-    public function setRide(Ride $ride): RideCommentItem
+    public function setBlogPost(BlogPost $blogPost): BlogPostCommentItem
     {
-        $this->ride = $ride;
+        $this->blogPost = $blogPost;
 
         return $this;
     }
 
-    public function setPost(Post $post): RideCommentItem
+    public function setPost(Post $post): BlogPostCommentItem
     {
         $this->post = $post;
 
@@ -43,14 +43,14 @@ class BlogPostCommentItem extends AbstractItem
         return $this->post;
     }
 
-    public function getRideTitle(): string
+    public function getBlogPostTitle(): string
     {
-        return $this->rideTitle;
+        return $this->blogPostTitle;
     }
 
-    public function setRideTitle(string $rideTitle): RideCommentItem
+    public function setBlogPostTitle(string $blogPostTitle): BlogPostCommentItem
     {
-        $this->rideTitle = $rideTitle;
+        $this->blogPostTitle = $blogPostTitle;
 
         return $this;
     }
@@ -60,7 +60,7 @@ class BlogPostCommentItem extends AbstractItem
         return $this->text;
     }
 
-    public function setText(string $text): RideCommentItem
+    public function setText(string $text): BlogPostCommentItem
     {
         $this->text = $text;
 

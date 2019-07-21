@@ -20,9 +20,9 @@ class BlogPostItem extends AbstractItem
         return $this->blogPost;
     }
 
-    public function setBlogPost(BlogPost $thread): BlogPostItem
+    public function setBlogPost(BlogPost $blogPost): BlogPostItem
     {
-        $this->thread = $thread;
+        $this->blogPost = $blogPost;
 
         return $this;
     }
