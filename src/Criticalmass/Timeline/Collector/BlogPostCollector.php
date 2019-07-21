@@ -2,8 +2,8 @@
 
 namespace App\Criticalmass\Timeline\Collector;
 
+use App\Criticalmass\Timeline\Item\BlogPostItem;
 use App\Entity\BlogPost;
-use App\Criticalmass\Timeline\Item\ThreadItem;
 
 class BlogPostCollector extends AbstractTimelineCollector
 {
@@ -13,14 +13,14 @@ class BlogPostCollector extends AbstractTimelineCollector
     {
         /** @var BlogPost $blogPostEntity */
         foreach ($groupedEntities as $blogPostEntity) {
-            $item = new ThreadItem();
+            $item = new BlogPostItem();
 
             $item
-                ->setUser($blogPostEntity->getUser())
                 ->setBlogPost($blogPostEntity)
                 ->setTitle($blogPostEntity->getTitle())
                 ->setIntro($blogPostEntity->getIntro())
-                ->setDateTime($blogPostEntity->getDateTime());
+                ->setUser($blogPostEntity->getUser())
+                ->setDateTime($blogPostEntity->getCreatedAt());
 
             $this->addItem($item);
         }
