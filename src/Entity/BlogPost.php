@@ -26,54 +26,54 @@ class BlogPost implements RouteableInterface, PostableInterface, ViewableEntity
      * @ORM\Column(type="integer")
      * @Routing\RouteParameter(name="blogPostId")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $title;
+    protected $title;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Routing\RouteParameter(name="slug")
      */
-    private $slug;
+    protected $slug;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Blog", inversedBy="blogPosts")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $blog;
+    protected $blog;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $enabled;
+    protected $enabled;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="blogPost")
      */
-    private $comments;
+    protected $comments;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $text;
+    protected $text;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="blogPosts")
      */
-    private $user;
+    protected $user;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $intro;
+    protected $intro;
 
     /**
      * @var File $imageFile
