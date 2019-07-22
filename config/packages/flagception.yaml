@@ -8,3 +8,5 @@ flagception:
             default: false
         blog:
             default: false
+        frontpage_advertisment:
+            default: false
