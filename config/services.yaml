@@ -40,7 +40,6 @@ parameters:
     upload_destination.user_photo: '%kernel.project_dir%/public/users'
     upload_destination.blogpost_teaser: '%kernel.project_dir%/public/blogposts'
     staticmaps.host: '%env(STATICMAPS_HOST)%'
-    timezone_db.api_key: '%env(TIMEZONE_DB_API_KEY)%'
     yourls.api_hostname: '%env(YOURLS_API_HOSTNAME)%'
     yourls.api_username: '%env(YOURLS_API_USERNAME)%'
     yourls.api_password: '%env(YOURLS_API_PASSWORD)%'
@@ -61,7 +60,6 @@ services:
             #$twitterClientId: '%twitter.client_id%'
             #$twitterSecret: '%twitter.secret%'
             $cachedTimelineTtl: '%timeline.ttl%'
-            $timezoneDbApiKey: '%timezone_db.api_key%'
             $projectDirectory: '%kernel.project_dir%'
 
     App\:
