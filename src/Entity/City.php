@@ -287,6 +287,11 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
      */
     protected $rideNamer;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $wikidataEntityId;
+
     public function __construct()
     {
         $this->rides = new ArrayCollection();
@@ -316,7 +321,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
         return $this->user;
     }
 
-    public function setUser(User $user): City
+    public function setUser(User $user = null): City
     {
         $this->user = $user;
 
@@ -557,7 +562,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
         return $this;
     }
 
-    public function getCityPopulation(): int
+    public function getCityPopulation(): ?int
     {
         return $this->cityPopulation;
     }
@@ -954,5 +959,17 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     public function getRideNamer(): ?string
     {
         return $this->rideNamer;
+    }
+
+    public function setWikidataEntityId(string $wikidataEntityId): City
+    {
+        $this->wikidataEntityId = $wikidataEntityId;
+
+        return $this;
+    }
+
+    public function getWikidataEntityId(): ?string
+    {
+        return $this->wikidataEntityId;
     }
 }

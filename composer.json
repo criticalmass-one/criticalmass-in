@@ -44,7 +44,7 @@
         "sonata-project/intl-bundle": "^2.3",
         "nelmio/api-doc-bundle": "^2.13",
         "predis/predis": "^1.1",
-        "miljar/php-exif": "^0.6.3",
+        "miljar/php-exif": "^0.6.5",
         "sonata-project/admin-bundle": "^3.18",
         "sonata-project/doctrine-orm-admin-bundle": "^3.1",
         "simplethings/entity-audit-bundle": "^1.0",
@@ -92,7 +92,8 @@
         "php-amqplib/rabbitmq-bundle": "^1.14",
         "ext-fileinfo": "*",
         "ext-xmlwriter": "*",
-        "fresh/doctrine-enum-bundle": "^6.3"
+        "fresh/doctrine-enum-bundle": "^6.3",
+        "freearhey/wikidata": "^3.1"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "*",

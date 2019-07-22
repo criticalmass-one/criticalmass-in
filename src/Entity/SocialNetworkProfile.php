@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class SocialNetworkProfile
 {
     /**
+     * @var int $id
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -19,49 +20,69 @@ class SocialNetworkProfile
     protected $id;
 
     /**
+     * @var User $user
      * @ORM\ManyToOne(targetEntity="User", inversedBy="socialNetworkProfiles")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
 
     /**
+     * @var City $city
      * @ORM\ManyToOne(targetEntity="City", inversedBy="socialNetworkProfiles")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected $city;
 
     /**
+     * @var Ride $ride
      * @ORM\ManyToOne(targetEntity="Ride", inversedBy="socialNetworkProfiles")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
     protected $ride;
 
     /**
+     * @var Subride $subride
      * @ORM\ManyToOne(targetEntity="Subride", inversedBy="socialNetworkProfiles")
      * @ORM\JoinColumn(name="subride_id", referencedColumnName="id")
      */
     protected $subride;
 
     /**
+     * @var string $identifier
      * @ORM\Column(type="string")
      * @Assert\NotBlank
      */
     protected $identifier;
 
     /**
+     * @var string $network
      * @ORM\Column(type="string")
      */
     protected $network;
 
     /**
+     * @var bool $mainNetwork
      * @ORM\Column(type="boolean")
      */
-    protected $mainNetwork = false;
+    protected $mainNetwork;
 
     /**
+     * @var bool $enabled
      * @ORM\Column(type="boolean")
      */
-    protected $enabled = true;
+    protected $enabled;
+
+    /**
+     * @var \DateTime $createdAt
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $createdAt;
+
+    /**
+     * @var User $createdBy
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="socialNetworkProfiles")
+     */
+    private $createdBy;
 
     public function getId(): ?int
     {
@@ -147,7 +168,15 @@ class SocialNetworkProfile
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function getMainNetwork(): bool
+    {
+        return $this->mainNetwork;
+    }
+
+    public function isMainNetwork(): bool
     {
         return $this->mainNetwork;
     }
@@ -167,6 +196,30 @@ class SocialNetworkProfile
     public function setEnabled(bool $enabled): SocialNetworkProfile
     {
         $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(?User $createdBy): self
+    {
+        $this->createdBy = $createdBy;
 
         return $this;
     }

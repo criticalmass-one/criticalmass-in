@@ -30,6 +30,7 @@ class PhotoGps extends AbstractPhotoGps
             $positionList = $converter->convert($this->track);
 
             $position = $this->loop
+                ->setDateTimeZone($this->dateTimeZone)
                 ->setPositionList($positionList)
                 ->searchPositionForDateTime($dateTime);
 
@@ -48,6 +49,10 @@ class PhotoGps extends AbstractPhotoGps
         $exif = $this->readExifData();
 
         if ($exif && $dateTime = $exif->getCreationDate()) {
+            $dateTime = new \DateTime(sprintf($dateTime->format('Y-m-d H:i:s')), new \DateTimeZone('Europe/Berlin'));
+
+            $dateTime->setTimezone(new \DateTimeZone('UTC'))->getTimezone();
+
             return $dateTime;
         }
 

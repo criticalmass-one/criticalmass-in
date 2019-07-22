@@ -100,7 +100,7 @@ fos_elastica:
                             umlauts_analyzer:
                                 type: custom
                                 tokenizer: lowercase
-                                filter   : [umlauts_filter]
+                                filter: [umlauts_filter]
                         filter:
                             umlauts_filter:
                                 type: "asciifolding"
@@ -118,6 +118,36 @@ fos_elastica:
                     persistence:
                         driver: orm
                         model: App\Entity\City
+                        provider: ~
+                        listener: ~
+                        finder: ~
+
+        criticalmass_blog_post:
+            client: default
+            finder:
+            settings:
+                index:
+                    analysis:
+                        analyzer:
+                            umlauts_analyzer:
+                                type: custom
+                                tokenizer: lowercase
+                                filter   : [umlauts_filter]
+                        filter:
+                            umlauts_filter:
+                                type: "asciifolding"
+            types:
+                blog_post:
+                    properties:
+                        id: ~
+                        title: ~
+                        intro: ~
+                        text: ~
+                        enabled: ~
+                        createdAt: ~
+                    persistence:
+                        driver: orm
+                        model: App\Entity\BlogPost
                         provider: ~
                         listener: ~
                         finder: ~

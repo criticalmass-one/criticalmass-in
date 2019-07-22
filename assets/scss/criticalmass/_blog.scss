@@ -1,0 +1,23 @@
+body.blog div.container.blog .blog-post-content,
+body.blog div.container.blog .blog-post-intro,
+body.blog-post div.container.blog-post .blog-post-content,
+body.blog-post div.container.blog-post .blog-post-intro {
+  font-family: "Noto Serif", serif;
+  font-size: 19px;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 31px;
+}
+
+.blog-post .author-box {
+  width: 150px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -150px;
+  text-align: center;
+
+  img {
+    border-radius: 100%;
+    border: 10px solid white;
+  }
+}

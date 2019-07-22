@@ -134,6 +134,10 @@ class RideManagementController extends AbstractController
                 ->setUpdatedAt(new \DateTime())
                 ->setUser($user);
 
+            if ($ride->isEnabled()) {
+                $ride->setDisabledReason(null);
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');

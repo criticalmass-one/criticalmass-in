@@ -35,3 +35,8 @@ vich_uploader:
             upload_destination: flysystem_track_track
             namer:              vich_uploader.namer_uniqid
 
+        blog_post_teaser:
+            uri_prefix:         /
+            upload_destination: flysystem_blogpost_teaser
+            namer:              vich_uploader.namer_uniqid
+
