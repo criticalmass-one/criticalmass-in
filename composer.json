@@ -1,6 +1,7 @@
 {
     "name": "calderacc/criticalmass",
     "type": "project",
+    "version": "0.1",
     "description": "Much critical mass stuff",
     "authors": [
         {
