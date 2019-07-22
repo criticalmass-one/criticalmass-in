@@ -3,9 +3,7 @@
 namespace App\Criticalmass\Wikidata\CityTimezoneDetector;
 
 use App\Entity\City;
-use Wikidata\Entity;
-use Wikidata\Property;
-use Wikidata\Wikidata;
+use Wikidata\SparqlClient;
 
 class CityTimezoneDetector implements CityTimezoneDetectorInterface
 {
@@ -17,19 +15,19 @@ class CityTimezoneDetector implements CityTimezoneDetectorInterface
             return null;
         }
 
-        $wikidata = new Wikidata();
+        $query = sprintf('SELECT ?Timezone ?TimezoneLabel ?TimezoneOffset WHERE {
+SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+?Timezone wdt:P31/wdt:P279* wd:Q12143.
+wd:%s wdt:P421 ?Timezone.
+?Timezone wdt:P2907 ?TimezoneOffset
+}
+ORDER BY ASC(?TimezoneOffset)', $city->getWikidataEntityId());
 
-        /** @var Entity $cityData */
-        $cityData = $wikidata->get($city->getWikidataEntityId());
-        
-        if (!$cityData || !$cityData->properties->has(self::TIMEZONE_PROPERTY_KEY)) {
-            return null;
-        }
+        $client = new SparqlClient();
 
-        /** @var Property $timezoneProperty */
-        $timezoneProperty = $cityData->properties[self::TIMEZONE_PROPERTY_KEY];
+        $data = $client->execute($query);
 
-        dump($timezoneProperty);die;
-        return DateTimezoneFactory::createFromWikidataProperty($timezoneProperty)->getName();
+        dump($query, $data);die;
+
     }
 }
