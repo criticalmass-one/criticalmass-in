@@ -27,4 +27,9 @@ class ClassUtil
     {
         return strtolower(self::getShortname($object));
     }
+
+    public static function getLcfirstShortname($object): string
+    {
+        return lcfirst(self::getShortname($object));
+    }
 }

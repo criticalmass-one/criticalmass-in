@@ -174,6 +174,11 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
      */
     private $socialNetworkProfiles;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\BlogPost", mappedBy="user")
+     */
+    private $blogPosts;
+
     public function __construct()
     {
         parent::__construct();
@@ -185,6 +190,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         $this->tracks = new ArrayCollection();
         $this->participations = new ArrayCollection();
         $this->bikerightVouchers = new ArrayCollection();
+        $this->blogPosts = new ArrayCollection();
         $this->socialNetworkProfiles = new ArrayCollection();
     }
 
@@ -565,6 +571,37 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     public function setOwnProfilePhoto(bool $ownProfilePhoto): User
     {
         $this->ownProfilePhoto = $ownProfilePhoto;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|BlogPost[]
+     */
+    public function getBlogPosts(): Collection
+    {
+        return $this->blogPosts;
+    }
+
+    public function addBlogPost(BlogPost $blogPost): self
+    {
+        if (!$this->blogPosts->contains($blogPost)) {
+            $this->blogPosts[] = $blogPost;
+            $blogPost->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBlogPost(BlogPost $blogPost): self
+    {
+        if ($this->blogPosts->contains($blogPost)) {
+            $this->blogPosts->removeElement($blogPost);
+            // set the owning side to null (unless already changed)
+            if ($blogPost->getUser() === $this) {
+                $blogPost->setUser(null);
+            }
+        }
 
         return $this;
     }

@@ -6,3 +6,7 @@ flagception:
             default: true
         art11:
             default: false
+        blog:
+            default: false
+        frontpage_advertisment:
+            default: false

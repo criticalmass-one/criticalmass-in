@@ -17,6 +17,20 @@
             <tag name="sonata.admin" manager-type="orm" group="Crawler" label="Blacklist"/>
         </service>
 
+        <service id="App\Admin\BlogAdmin">
+            <argument/>
+            <argument type="string">App\Entity\Blog</argument>
+            <argument/>
+            <tag name="sonata.admin" manager-type="orm" group="Blog" label="Blog" />
+        </service>
+
+        <service id="App\Admin\BlogPostAdmin">
+            <argument/>
+            <argument type="string">App\Entity\BlogPost</argument>
+            <argument/>
+            <tag name="sonata.admin" manager-type="orm" group="Blog" label="Blog Post"/>
+        </service>
+
         <service id="App\Admin\BoardAdmin">
             <argument/>
             <argument type="string">App\Entity\Board</argument>

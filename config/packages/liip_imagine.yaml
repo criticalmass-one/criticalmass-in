@@ -5,32 +5,35 @@ liip_imagine:
     driver: imagick
 
     loaders:
-        photo_flystem_loader:
+        photo_flysystem_loader:
             flysystem:
                 filesystem_service:  oneup_flysystem.flysystem_photo_photo_filesystem
-        user_photo_flystem_loader:
+        user_photo_flysystem_loader:
             flysystem:
                 filesystem_service:  oneup_flysystem.flysystem_user_photo_filesystem
-        city_image_flystem_loader:
+        city_image_flysystem_loader:
             flysystem:
                 filesystem_service:  oneup_flysystem.flysystem_city_image_filesystem
-        ride_image_flystem_loader:
+        ride_image_flysystem_loader:
             flysystem:
                 filesystem_service:  oneup_flysystem.flysystem_ride_image_filesystem
-        frontpage_teaser_flystem_loader:
+        frontpage_teaser_flysystem_loader:
             flysystem:
                 filesystem_service:  oneup_flysystem.flysystem_frontpage_teaser_filesystem
+        blogpost_teaser_flysystem_loader:
+            flysystem:
+                filesystem_service:  oneup_flysystem.flysystem_blogpost_teaser_filesystem
 
     filter_sets:
         cache: ~
 
         gallery_photo_thumb:
-            data_loader: photo_flystem_loader
+            data_loader: photo_flysystem_loader
             quality: 40
             filters:
                 thumbnail: { size: [400, 300], mode: inset }
         gallery_photo_standard:
-            data_loader: photo_flystem_loader
+            data_loader: photo_flysystem_loader
             quality: 60
             filters:
                 thumbnail: { size: [1600, 1600], mode: inset }
@@ -39,13 +42,13 @@ liip_imagine:
                     size: 0.15
                     position: bottomright
         gallery_photo_blurred:
-            data_loader: photo_flystem_loader
+            data_loader: photo_flysystem_loader
             quality: 30
             filters:
                 thumbnail: { size: [800, 800], mode: inset }
                 fast_blur_filter: ~
         gallery_photo_large:
-            data_loader: photo_flystem_loader
+            data_loader: photo_flysystem_loader
             quality: 60
             filters:
                 thumbnail: { size: [2000, 2000], mode: inset }
@@ -55,51 +58,57 @@ liip_imagine:
                     position: bottomright
 
         user_profile_photo_medium:
-            data_loader: user_photo_flystem_loader
+            data_loader: user_photo_flysystem_loader
             quality: 75
             filters:
                 thumbnail: { size: [512, 512], mode: inset }
         user_profile_photo_small:
-            data_loader: user_photo_flystem_loader
+            data_loader: user_photo_flysystem_loader
             quality: 50
             filters:
                 thumbnail: { size: [128, 128], mode: inset }
         user_profile_photo_timelapse:
-            data_loader: user_photo_flystem_loader
+            data_loader: user_photo_flysystem_loader
             quality: 30
             filters:
                 thumbnail: { size: [50, 50], mode: inset }
 
         city_image_wide:
-            data_loader: city_image_flystem_loader
+            data_loader: city_image_flysystem_loader
             quality: 60
             filters:
                 thumbnail: { size: [1140, 250], mode: inset }
 
         ride_image_wide:
-            data_loader: ride_image_flystem_loader
+            data_loader: ride_image_flysystem_loader
             quality: 60
             filters:
                 thumbnail: { size: [1140, 250], mode: inset }
         ride_photo_preview:
-            data_loader: ride_image_flystem_loader
+            data_loader: ride_image_flysystem_loader
             quality: 50
             filters:
                 thumbnail: { size: [600, 600], mode: inset }
         facebook_preview_image:
-            data_loader: ride_image_flystem_loader
+            data_loader: ride_image_flysystem_loader
             quality: 60
             filters:
                 thumbnail: { size: [1600, 1600], mode: inset }
 
         twitter_summary_large_image:
-            data_loader: ride_image_flystem_loader
+            data_loader: ride_image_flysystem_loader
             quality: 50
             filters:
                 thumbnail: { size: [800, 800], mode: inset }
 
         frontpage_teaser_large:
-            data_loader: frontpage_teaser_flystem_loader
+            data_loader: frontpage_teaser_flysystem_loader
+            quality: 75
+            filters:
+                thumbnail: { size: [2000, 2000], mode: inset }
+
+        blogpost_teaser:
+            data_loader: blogpost_teaser_flysystem_loader
             quality: 75
             filters:
                 thumbnail: { size: [2000, 2000], mode: inset }
