@@ -19,7 +19,7 @@ class FrontpageController extends AbstractController
             'frontpageTeaserList' => $frontpageTeaserList,
         ]);
 
-        $response->setSharedMaxAge(60);
+        $response->setSharedMaxAge(3600);
 
         return $response;
     }
