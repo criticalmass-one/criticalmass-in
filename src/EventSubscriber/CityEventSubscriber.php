@@ -43,12 +43,6 @@ class CityEventSubscriber implements EventSubscriberInterface
 
     public function onCityUpdated(CityUpdatedEvent $cityUpdatedEvent): void
     {
-        $city = $cityUpdatedEvent->getCity();
-
-        if ($timezone = $this->cityTimezoneDetector->queryForCity($city)) {
-            $city->setTimezone($timezone);
-
-            $this->registry->getManager()->flush();
-        }
+        
     }
 }
