@@ -2,8 +2,6 @@
 
 namespace App\Criticalmass\Wikidata\CityTimezoneDetector;
 
-use Wikidata\Property;
-
 class DateTimezoneFactory
 {
     private function __construct()
@@ -11,12 +9,14 @@ class DateTimezoneFactory
 
     }
 
-    public static function createFromWikidataProperty(Property $timezoneProperty): \DateTimeZone
+    public static function createFromOffset(float $offset): \DateTimeZone
     {
-        $timezones = explode(' ', $timezoneProperty->value);
+        if ($offset >= 0) {
+            $spec = sprintf('+%02d00', $offset);
+        } else {
+            $spec = sprintf('-%02d00', abs($offset));
+        }
 
-        $timezone = new \DateTimeZone(str_replace(['UTC+', ':'], ['+', ''], array_pop($timezones)));
-
-        return $timezone;
+        return new \DateTimeZone($spec);
     }
 }

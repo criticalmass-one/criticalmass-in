@@ -25,9 +25,16 @@ ORDER BY ASC(?TimezoneOffset)', $city->getWikidataEntityId());
 
         $client = new SparqlClient();
 
-        $data = $client->execute($query);
+        $timezoneList = $client->execute($query);
 
-        dump($query, $data);die;
+        if (is_array($timezoneList) && count($timezoneList) >= 1) {
+            $firstTimezone = array_shift($timezoneList);
 
+            if ($timezone = DateTimezoneFactory::createFromOffset((float) $firstTimezone['TimezoneOffset'])) {
+                return $timezone->getName();
+            }
+        }
+
+        return null;
     }
 }
