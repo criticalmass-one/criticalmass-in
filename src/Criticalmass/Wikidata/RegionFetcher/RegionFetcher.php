@@ -16,14 +16,16 @@ class RegionFetcher implements RegionFetcherInterface
             return null;
         }
 
-        $client = new SparqlClient();
-
-        $data = $client->execute('SELECT ?item ?itemLabel ?itemDescription WHERE {
-  ?item wdt:P131 wd:Q183;
+        $query = sprintf('SELECT ?item ?itemLabel ?itemDescription WHERE {
+  ?item wdt:P131 wd:%s;
     wdt:P31 ?administrativeLevel.
   ?administrativeLevel wdt:P279 wd:Q10864048.
     SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],de". }
-}');
+}', $region->getWikidataEntityId());
+
+        $client = new SparqlClient();
+
+        $data = $client->execute();
 
         $collection = collect($data);
 
