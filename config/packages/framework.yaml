@@ -5,11 +5,10 @@ framework:
     #http_method_override: true
 
     esi: true
+    fragments: { path: /_fragment }
     php_errors:
         log: true
-
     cache: ~
-    fragments: ~
     translator: { fallbacks: [de] }
     form: ~
     csrf_protection:
