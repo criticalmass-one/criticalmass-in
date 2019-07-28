@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\Heatmap;
 
-class Tile
+class OldTile
 {
     protected $pixelList;
     protected $size = 256;
