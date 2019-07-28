@@ -1,8 +1,6 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace Caldera\CriticalmassStatisticBundle\Utility\Heatmap;
-
-use Caldera\CriticalmassStatisticBundle\Entity\Heatmap;
+namespace App\Criticalmass\Heatmap\TilePrinter;
 
 abstract class AbstractTilePrinter
 {

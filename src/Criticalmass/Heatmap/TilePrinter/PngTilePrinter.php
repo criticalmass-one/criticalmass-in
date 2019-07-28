@@ -1,6 +1,6 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace Caldera\CriticalmassStatisticBundle\Utility\Heatmap;
+namespace App\Criticalmass\Heatmap\TilePrinter;
 
 class PNGTilePrinter extends AbstractTilePrinter
 {
