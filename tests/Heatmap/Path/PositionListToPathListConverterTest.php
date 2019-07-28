@@ -12,7 +12,18 @@ use PHPUnit\Framework\TestCase;
 
 class PositionListToPathListConverterTest extends TestCase
 {
-    public function testFoo(): void
+    public function testConverterWithEmptyList(): void
+    {
+        $expectedPathList = new PathList();
+
+        $positionList = new PositionList();
+        
+        $actualPathList = PositionListToPathListConverter::convert($positionList);
+
+        $this->assertEquals($expectedPathList, $actualPathList);
+    }
+
+    public function testConverterWithFourPositions(): void
     {
         $expectedPathList = new PathList();
         $expectedPathList->add(new Path(new Coord(57.1, 10.0), new Coord(57.2, 9.9)));
