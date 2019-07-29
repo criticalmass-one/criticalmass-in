@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\Heatmap\TilePrinter;
 
-class PNGTilePrinter extends AbstractTilePrinter
+class PngTilePrinter extends AbstractTilePrinter
 {
     public function printTile()
     {

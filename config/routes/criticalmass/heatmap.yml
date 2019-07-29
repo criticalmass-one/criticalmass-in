@@ -1,0 +1,3 @@
+caldera_criticalmass_heatmap_foo:
+    path:     /heatmap/foobar/lala
+    controller: App\Controller\Heatmap\HeatmapController::fooAction

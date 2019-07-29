@@ -13,7 +13,7 @@ class FilenameGenerator
             $heatmap->getIdentifier(),
             $tile->getZoomLevel(),
             $tile->getTileX(),
-            $tile->getTileY(),
+            $tile->getTileY()
         );
     }
 }
