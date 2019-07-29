@@ -3,7 +3,7 @@
 namespace App\Criticalmass\Heatmap\FilenameGenerator;
 
 use App\Criticalmass\Heatmap\HeatmapInterface;
-use App\Criticalmass\Heatmap\Tile;
+use App\Criticalmass\Heatmap\Tile\Tile;
 
 class FilenameGenerator
 {
