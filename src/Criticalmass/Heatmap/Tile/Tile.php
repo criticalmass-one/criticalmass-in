@@ -1,6 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\Heatmap;
+namespace App\Criticalmass\Heatmap\Tile;
+
+use Imagine\Image\ImageInterface;
 
 class Tile
 {
@@ -13,6 +15,7 @@ class Tile
     /** @var int $zoomLevel */
     protected $zoomLevel;
 
+    /** @var ImageInterface $image */
     protected $image;
 
     public function __construct(int $tileX, int $tileY, int $zoomLevel)
@@ -35,5 +38,17 @@ class Tile
     public function getZoomLevel(): int
     {
         return $this->zoomLevel;
+    }
+
+    public function image(): ImageInterface
+    {
+        return $this->image;
+    }
+
+    public function setImage(ImageInterface $image): Tile
+    {
+        $this->image = $image;
+
+        return $this;
     }
 }
