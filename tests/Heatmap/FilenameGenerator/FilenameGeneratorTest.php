@@ -4,7 +4,7 @@ namespace Tests\Heatmap\FilenameGenerator;
 
 use App\Criticalmass\Heatmap\FilenameGenerator\FilenameGenerator;
 use App\Criticalmass\Heatmap\HeatmapInterface;
-use App\Criticalmass\Heatmap\Tile;
+use App\Criticalmass\Heatmap\Tile\Tile;
 use PHPUnit\Framework\TestCase;
 
 class FilenameGeneratorTest extends TestCase

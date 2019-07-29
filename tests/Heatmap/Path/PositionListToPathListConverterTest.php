@@ -17,7 +17,7 @@ class PositionListToPathListConverterTest extends TestCase
         $expectedPathList = new PathList();
 
         $positionList = new PositionList();
-        
+
         $actualPathList = PositionListToPathListConverter::convert($positionList);
 
         $this->assertEquals($expectedPathList, $actualPathList);
