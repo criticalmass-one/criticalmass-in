@@ -6,17 +6,24 @@ use App\Criticalmass\Geo\Converter\TrackToPositionListConverter;
 use App\Criticalmass\Geo\EntityInterface\TrackInterface;
 use App\Criticalmass\Heatmap\HeatmapInterface;
 use App\Criticalmass\Heatmap\Path\PositionListToPathListConverter;
+use App\Criticalmass\Util\ClassUtil;
+use App\Entity\Track;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class HeatmapGenerator
 {
     /** @var HeatmapInterface $heatmap */
     protected $heatmap;
 
-    /** @var  */
+    /** @var TrackToPositionListConverter $trackToPositionListConverter */
     protected $trackToPositionListConverter;
 
-    public function __construct(TrackToPositionListConverter $trackToPositionListConverter)
+    /** @var RegistryInterface $registry */
+    protected $registry;
+
+    public function __construct(RegistryInterface $registry, TrackToPositionListConverter $trackToPositionListConverter)
     {
+        $this->registry = $registry;
         $this->trackToPositionListConverter = $trackToPositionListConverter;
     }
 
@@ -27,11 +34,21 @@ class HeatmapGenerator
         return $this;
     }
 
-    public function addTrack(TrackInterface $track)
+    public function generate(): HeatmapGenerator
     {
-        $positionList = $this->trackToPositionListConverter->convert($track);
-        $pathList = PositionListToPathListConverter::convert($positionList);
+        $trackList = $this->collectUnpaintedTracks();
 
-        
+        return $this;
+    }
+
+    protected function collectUnpaintedTracks(): array
+    {
+        $parentEntity = $this->heatmap->getUser() ?? $this->heatmap->getCity() ?? $this->heatmap->getRide();
+
+        $className = ClassUtil::getShortname($parentEntity);
+
+        $repositoryMethod = sprintf('findBy%s', $className);
+
+        return $this->registry->getRepository(Track::class)->$repositoryMethod($parentEntity);
     }
 }

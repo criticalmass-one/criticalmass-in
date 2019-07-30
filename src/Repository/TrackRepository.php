@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\City;
 use App\Entity\Ride;
 use App\Entity\Track;
 use App\Entity\User;
@@ -10,6 +11,7 @@ use Doctrine\ORM\Query;
 
 class TrackRepository extends EntityRepository
 {
+    /** @deprecated  */
     public function findTracksByRide(Ride $ride): array
     {
         $builder = $this->createQueryBuilder('t');
@@ -108,6 +110,48 @@ class TrackRepository extends EntityRepository
         return (int) $query->getSingleScalarResult();
     }
 
+    public function findByCity(City $city): array
+    {
+        $builder = $this->createQueryBuilder('t');
+
+        $builder
+            ->select('t')
+            ->join('t.ride', 'r')
+            ->where($builder->expr()->eq('r.city', ':city'))
+            ->setParameter('city', $city)
+            ->andWhere($builder->expr()->eq('t.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->eq('t.deleted', ':deleted'))
+            ->setParameter('deleted', false)
+            ->addOrderBy('t.startDateTime', 'ASC');
+
+        $query = $builder->getQuery();
+
+        $result = $query->getResult();
+
+        return $result;
+    }
+
+    public function findByRide(Ride $ride): array
+    {
+        $builder = $this->createQueryBuilder('t');
+
+        $builder
+            ->select('t')
+            ->where($builder->expr()->eq('t.ride', ':ride'))
+            ->setParameter('ride', $ride)
+            ->andWhere($builder->expr()->eq('t.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->eq('t.deleted', ':deleted'))
+            ->setParameter('deleted', false)
+            ->addOrderBy('t.startDateTime', 'ASC');
+
+        $query = $builder->getQuery();
+
+        $result = $query->getResult();
+
+        return $result;
+    }
 
     public function findByUser(User $user, bool $enabled = true, bool $deleted = false, string $order = 'DESC'): array
     {

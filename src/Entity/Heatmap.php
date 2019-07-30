@@ -1,7 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Criticalmass\Heatmap\HeatmapInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="heatmap")
  * @ORM\Entity(repositoryClass="App\Repository\HeatmapRepository")
  */
-class Heatmap
+class Heatmap implements HeatmapInterface
 {
     /**
      * @ORM\Id()
@@ -54,7 +55,7 @@ class Heatmap
         return $this->id;
     }
 
-    public function getIdentifier(): ?string
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
