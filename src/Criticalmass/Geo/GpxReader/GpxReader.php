@@ -37,7 +37,7 @@ class GpxReader implements GpxReaderInterface
         try {
             $gpxString = $this->filesystem->read($filename);
         } catch (\Exception $exception) {
-            throw new GpxFileNotFoundException($exception);
+            throw new GpxFileNotFoundException(sprintf('File %s was not found.', $filename));
         }
 
         $this->prepareGpx($gpxString);
