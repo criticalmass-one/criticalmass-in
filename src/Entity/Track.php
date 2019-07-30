@@ -9,6 +9,8 @@ use App\Criticalmass\UploadableDataHandler\UploadableEntity;
 use App\Criticalmass\UploadFaker\FakeUploadable;
 use App\EntityInterface\RouteableInterface;
 use App\EntityInterface\StaticMapableInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
@@ -210,6 +212,17 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
      * @var integer
      */
     protected $stravaActitityId;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Heatmap", mappedBy="tracks")
+     */
+    private $heatmaps;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->heatmaps = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -526,5 +539,33 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
     public function getWaypointList(): string
     {
         return $this->geoJson;
+    }
+
+    /**
+     * @return Collection|Heatmap[]
+     */
+    public function getHeatmaps(): Collection
+    {
+        return $this->heatmaps;
+    }
+
+    public function addHeatmap(Heatmap $heatmap): self
+    {
+        if (!$this->heatmaps->contains($heatmap)) {
+            $this->heatmaps[] = $heatmap;
+            $heatmap->addTrack($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHeatmap(Heatmap $heatmap): self
+    {
+        if ($this->heatmaps->contains($heatmap)) {
+            $this->heatmaps->removeElement($heatmap);
+            $heatmap->removeTrack($this);
+        }
+
+        return $this;
     }
 }

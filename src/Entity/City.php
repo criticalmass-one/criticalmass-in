@@ -292,6 +292,11 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
      */
     protected $wikidataEntityId;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Heatmap", mappedBy="city", cascade={"persist", "remove"})
+     */
+    private $heatmap;
+
     public function __construct()
     {
         $this->rides = new ArrayCollection();
@@ -971,5 +976,23 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     public function getWikidataEntityId(): ?string
     {
         return $this->wikidataEntityId;
+    }
+
+    public function getHeatmap(): ?Heatmap
+    {
+        return $this->heatmap;
+    }
+
+    public function setHeatmap(?Heatmap $heatmap): self
+    {
+        $this->heatmap = $heatmap;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newCity = $heatmap === null ? null : $this;
+        if ($newCity !== $heatmap->getCity()) {
+            $heatmap->setCity($newCity);
+        }
+
+        return $this;
     }
 }
