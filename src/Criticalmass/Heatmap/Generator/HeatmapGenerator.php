@@ -7,6 +7,7 @@ use App\Criticalmass\Geo\EntityInterface\TrackInterface;
 use App\Criticalmass\Heatmap\Brush\Brush;
 use App\Criticalmass\Heatmap\Brush\Pencil;
 use App\Criticalmass\Heatmap\Canvas\Canvas;
+use App\Criticalmass\Heatmap\Canvas\CanvasFactory;
 use App\Criticalmass\Heatmap\CoordCalculator\CoordCalculator;
 use App\Criticalmass\Heatmap\DimensionCalculator\DimensionCalculator;
 use App\Criticalmass\Heatmap\HeatmapInterface;
@@ -58,7 +59,7 @@ class HeatmapGenerator
 
             $heatmapDimension = DimensionCalculator::calculate($pathList, 15);
 
-            $canvas = Canvas::fromHeatmapDimension($heatmapDimension);
+            $canvas = (new CanvasFactory())->createFromHeatmapDimension($heatmapDimension, 15);
 
             /** @var Path $path */
             foreach ($pathList as $path) {

@@ -4,6 +4,7 @@ namespace App\Criticalmass\Heatmap\Canvas;
 
 use App\Criticalmass\Heatmap\DimensionCalculator\HeatmapDimension;
 use App\Criticalmass\Heatmap\Tile\Tile;
+use Caldera\GeoBasic\Coord\CoordInterface;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
@@ -16,22 +17,20 @@ class Canvas
     /** @var int $height */
     protected $height;
 
+    /** @var CoordInterface $topLeftCoord */
+    protected $topLeftCoord;
+
     protected $image;
 
-    public static function fromHeatmapDimension(HeatmapDimension $heatmapDimension): Canvas
-    {
-        return new Canvas($heatmapDimension->getWidth(), $heatmapDimension->getHeight());
-    }
+    /** @var array $tiles */
+    protected $tiles = [];
 
-    public static function fromWidthHeight(int $width, int $height): Canvas
-    {
-        return new Canvas($width, $height);
-    }
-
-    private function __construct(int $width, int $height)
+    public function __construct(int $width, int $height, CoordInterface $topLeftCoord = null)
     {
         $this->width = $width;
         $this->height = $height;
+
+        $this->topLeftCoord = $topLeftCoord;
 
         $box = new Box(256 * $this->width, 256 * $this->height);
         $this->image = (new Imagine())->create($box);
@@ -50,5 +49,30 @@ class Canvas
     public function image(): ImageInterface
     {
         return $this->image;
+    }
+
+    public function getTopLeftCoord(): ?CoordInterface
+    {
+        return $this->topLeftCoord;
+    }
+
+    public function getTile(int $x, int $y): ?Tile
+    {
+        if (!array_key_exists($x, $this->tiles) || !array_key_exists($y, $this->tiles[$x])) {
+            return null;
+        }
+
+        return $this->tiles[$x][$y];
+    }
+
+    public function setTile(int $x, int $y, Tile $tile): Canvas
+    {
+        if (!array_key_exists($x, $this->tiles)) {
+            $this->tiles[$x] = [];
+        }
+
+        $this->tiles[$x][$y] = $tile;
+
+        return $this;
     }
 }
