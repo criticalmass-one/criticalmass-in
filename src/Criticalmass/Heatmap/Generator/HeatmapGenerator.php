@@ -8,6 +8,7 @@ use App\Criticalmass\Heatmap\Brush\Brush;
 use App\Criticalmass\Heatmap\Brush\Pencil;
 use App\Criticalmass\Heatmap\Canvas\Canvas;
 use App\Criticalmass\Heatmap\Canvas\CanvasFactory;
+use App\Criticalmass\Heatmap\CanvasCutter\CanvasCutter;
 use App\Criticalmass\Heatmap\CoordCalculator\CoordCalculator;
 use App\Criticalmass\Heatmap\DimensionCalculator\DimensionCalculator;
 use App\Criticalmass\Heatmap\HeatmapInterface;
@@ -32,10 +33,14 @@ class HeatmapGenerator
     /** @var RegistryInterface $registry */
     protected $registry;
 
-    public function __construct(RegistryInterface $registry, TrackToPositionListConverter $trackToPositionListConverter)
+    /** @var CanvasCutter $canvasCutter */
+    protected $canvasCutter;
+
+    public function __construct(RegistryInterface $registry, TrackToPositionListConverter $trackToPositionListConverter, CanvasCutter $canvasCutter)
     {
         $this->registry = $registry;
         $this->trackToPositionListConverter = $trackToPositionListConverter;
+        $this->canvasCutter = $canvasCutter;
     }
 
     public function setHeatmap(HeatmapInterface $heatmap): HeatmapGenerator
@@ -104,8 +109,7 @@ class HeatmapGenerator
                 }
             }
 
-            header('Content-type: image/png');
-            echo $canvas->image()->get('png');
+            $this->canvasCutter->cutCanvas($this->heatmap, $canvas, 15);
             die;
         }
 
