@@ -4,6 +4,7 @@ namespace App\Criticalmass\Heatmap\Generator;
 
 use App\Criticalmass\Geo\Converter\TrackToPositionListConverter;
 use App\Criticalmass\Geo\EntityInterface\TrackInterface;
+use App\Criticalmass\Heatmap\Brush\Brush;
 use App\Criticalmass\Heatmap\Brush\Pencil;
 use App\Criticalmass\Heatmap\Canvas\Canvas;
 use App\Criticalmass\Heatmap\CoordCalculator\CoordCalculator;
@@ -79,7 +80,7 @@ class HeatmapGenerator
                     $point = new Point((int) round($x), (int) round($y));
                     $color = (new RGBPalette())->color('#FF0000');
 
-                    Pencil::paint($canvas, $point, $color);
+                    Brush::paint($canvas, $point, $color);
                 }
             }
 
