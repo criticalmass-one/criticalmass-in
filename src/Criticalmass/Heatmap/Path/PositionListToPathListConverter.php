@@ -3,7 +3,7 @@
 namespace App\Criticalmass\Heatmap\Path;
 
 use App\Criticalmass\Geo\Entity\Position;
-use App\Criticalmass\Geo\PositionList\PositionList;
+use App\Criticalmass\Geo\PositionList\PositionListInterface;
 use Caldera\GeoBasic\Coord\Coord;
 
 class PositionListToPathListConverter
@@ -13,7 +13,7 @@ class PositionListToPathListConverter
 
     }
 
-    public static function convert(PositionList $positionList): PathList
+    public static function convert(PositionListInterface $positionList): PathList
     {
         $pathList = new PathList();
 

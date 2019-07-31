@@ -18,14 +18,14 @@ class DimensionCalculator
         $heatmapDimension = new HeatmapDimension($zoomLevel);
 
         /** @var Path $path */
-        $path = $pathList->get();
+        $path = $pathList->current();
 
         $minLat = $path->getStartCoord()->getLatitude();
         $minLon = $path->getStartCoord()->getLongitude();
         $maxLat = $path->getStartCoord()->getLatitude();
         $maxLon = $path->getStartCoord()->getLongitude();
 
-        while ($path !== null) {
+        while ($path) {
             $endCoord = $path->getEndCoord();
 
             if ($endCoord->getLatitude() < $minLat) {
@@ -44,7 +44,8 @@ class DimensionCalculator
                 $maxLon = $endCoord->getLongitude();
             }
 
-            $path = $pathList->get();
+            $pathList->next();
+            $path = $pathList->current();
         }
 
         $heatmapDimension
