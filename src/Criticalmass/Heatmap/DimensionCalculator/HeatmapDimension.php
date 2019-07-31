@@ -19,6 +19,18 @@ class HeatmapDimension
     /** @var int $rightTile */
     protected $rightTile;
 
+    /** @var float $topLatitude */
+    protected $topLatitude;
+
+    /** @var float $bottomLatitude */
+    protected $bottomLatitude;
+
+    /** @var float $leftLongitude */
+    protected $leftLongitude;
+
+    /** @var float $rightLongitude */
+    protected $rightLongitude;
+
     public function __construct(?int $zoomLevel)
     {
         $this->zoomLevel = $zoomLevel;
@@ -80,6 +92,64 @@ class HeatmapDimension
     public function setRightTile(int $rightTile): HeatmapDimension
     {
         $this->rightTile = $rightTile;
+
+        return $this;
+    }
+
+    public function getWidth(): int
+    {
+        return $this->getRightTile() - $this->getLeftTile();
+    }
+
+    public function getHeight(): int
+    {
+        return $this->topTile - $this->bottomTile;
+    }
+
+    public function getTopLatitude(): float
+    {
+        return $this->topLatitude;
+    }
+
+    public function setTopLatitude(float $topLatitude): HeatmapDimension
+    {
+        $this->topLatitude = $topLatitude;
+
+        return $this;
+    }
+
+    public function getBottomLatitude(): float
+    {
+        return $this->bottomLatitude;
+    }
+
+    public function setBottomLatitude(float $bottomLatitude): HeatmapDimension
+    {
+        $this->bottomLatitude = $bottomLatitude;
+
+        return $this;
+    }
+
+    public function getLeftLongitude(): float
+    {
+        return $this->leftLongitude;
+    }
+
+    public function setLeftLongitude(float $leftLongitude): HeatmapDimension
+    {
+        $this->leftLongitude = $leftLongitude;
+
+        return $this;
+    }
+
+    public function getRightLongitude(): float
+    {
+        return $this->rightLongitude;
+    }
+
+    public function setRightLongitude(float $rightLongitude): HeatmapDimension
+    {
+        $this->rightLongitude = $rightLongitude;
 
         return $this;
     }
