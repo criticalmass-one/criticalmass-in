@@ -13,6 +13,7 @@ use App\Criticalmass\Heatmap\DimensionCalculator\DimensionCalculator;
 use App\Criticalmass\Heatmap\HeatmapInterface;
 use App\Criticalmass\Heatmap\Path\Path;
 use App\Criticalmass\Heatmap\Path\PositionListToPathListConverter;
+use App\Criticalmass\Heatmap\Pipette\Pipette;
 use App\Criticalmass\Heatmap\Tile\Tile;
 use App\Criticalmass\Util\ClassUtil;
 use App\Entity\Track;
@@ -61,6 +62,9 @@ class HeatmapGenerator
 
             $canvas = (new CanvasFactory())->createFromHeatmapDimension($heatmapDimension, 15);
 
+            $offsetLatitude = $canvas->getTopLeftCoord()->getLatitude() - $heatmapDimension->getTopLatitude();
+            $offsetLongitude = $canvas->getTopLeftCoord()->getLongitude() - $heatmapDimension->getLeftLongitude();
+            //dump($heatmapDimension, $canvas, $offsetLatitude, $offsetLongitude);die;
             /** @var Path $path */
             foreach ($pathList as $path) {
                 if (!$path) {
@@ -70,21 +74,35 @@ class HeatmapGenerator
                 $vector[0] = (float) $path->getEndCoord()->getLatitude() - $path->getStartCoord()->getLatitude();
                 $vector[1] = (float) $path->getEndCoord()->getLongitude() - $path->getStartCoord()->getLongitude();
 
-                $n = 25;
+                $n = 1;
                 for ($i = 0; $i < $n; ++$i)
                 {
                     $latitude = (float) $path->getStartCoord()->getLatitude() + (float) $i * $vector[0] * (1 / $n);
                     $longitude = (float) $path->getStartCoord()->getLongitude() + (float) $i * $vector[1] * (1 / $n);
-                    $x = (float) $canvas->getWidth() * Tile::SIZE / ($heatmapDimension->getRightLongitude() - $heatmapDimension->getLeftLongitude()) * ($longitude - $heatmapDimension->getLeftLongitude());
-                    $y = (float) $canvas->getHeight() * Tile::SIZE / ($heatmapDimension->getBottomLatitude() - $heatmapDimension->getTopLatitude()) * ($latitude - $heatmapDimension->getTopLatitude());
+
+                    $y = (float) $canvas->getHeight() * Tile::SIZE / ($heatmapDimension->getRightLongitude() - $heatmapDimension->getLeftLongitude()) * ($longitude - $heatmapDimension->getLeftLongitude());
+                    $x = (float) $canvas->getWidth() * Tile::SIZE / ($heatmapDimension->getBottomLatitude() - $heatmapDimension->getTopLatitude()) * ($latitude - $heatmapDimension->getTopLatitude());
 
                     $point = new Point((int) round($x), (int) round($y));
-                    $color = (new RGBPalette())->color('#FF0000');
+                    $white = (new RGBPalette())->color('#FFFFFF');
+                    $red = (new RGBPalette())->color('#FF0000');
+                    $blue = (new RGBPalette())->color('#0000FF');
 
-                    Brush::paint($canvas, $point, $color);
+                    try {
+                        $oldColor = Pipette::getColor($canvas, $point);
+
+                        if ($oldColor !== $white) {
+                            Brush::paint($canvas, $point, $red);
+                        } else {
+                            Brush::paint($canvas, $point, $blue);
+                        }
+                    } catch (\RuntimeException $exception) {
+                        Brush::paint($canvas, $point, $blue);
+                    }
+
+
                 }
             }
-
 
             header('Content-type: image/png');
             echo $canvas->image()->get('png');
