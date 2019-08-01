@@ -108,16 +108,6 @@ class HeatmapDimension
         return $this;
     }
 
-    public function getWidth(): int
-    {
-        return $this->rightTile - $this->leftTile;
-    }
-
-    public function getHeight(): int
-    {
-        return $this->bottomTile - $this->topTile;
-    }
-
     public function getTopLatitude(): float
     {
         return $this->topLatitude;
@@ -212,5 +202,15 @@ class HeatmapDimension
         $this->bottomOffset = $bottomOffset;
 
         return $this;
+    }
+
+    public function getWidth(): int
+    {
+        return $this->rightTile - $this->leftTile + 1;
+    }
+
+    public function getHeight(): int
+    {
+        return $this->bottomTile - $this->topTile + 1;
     }
 }
