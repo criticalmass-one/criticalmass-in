@@ -67,9 +67,7 @@ class HeatmapGenerator
 
             $canvas = (new CanvasFactory())->createFromHeatmapDimension($heatmapDimension, 15);
 
-            $offsetLatitude = $canvas->getTopLeftCoord()->getLatitude() - $heatmapDimension->getTopLatitude();
-            $offsetLongitude = $canvas->getTopLeftCoord()->getLongitude() - $heatmapDimension->getLeftLongitude();
-            //dump($heatmapDimension, $canvas, $offsetLatitude, $offsetLongitude);die;
+            dump($heatmapDimension, $canvas);die;
             /** @var Path $path */
             foreach ($pathList as $path) {
                 if (!$path) {

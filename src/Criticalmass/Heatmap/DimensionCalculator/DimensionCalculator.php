@@ -5,7 +5,6 @@ namespace App\Criticalmass\Heatmap\DimensionCalculator;
 use App\Criticalmass\Heatmap\CoordCalculator\CoordCalculator;
 use App\Criticalmass\Heatmap\Path\Path;
 use App\Criticalmass\Heatmap\Path\PathList;
-use Caldera\GeoBasic\Coord\Coord;
 
 class DimensionCalculator
 {
@@ -51,19 +50,22 @@ class DimensionCalculator
 
         $heatmapDimension
             ->setTopLatitude($maxLat)
-            ->setTopTile(CoordCalculator::latitudeToYTile($maxLat, $zoomLevel))
             ->setBottomLatitude($minLat)
-            ->setBottomTile(CoordCalculator::latitudeToYTile($minLat, $zoomLevel))
-            ->setLeftLongitude($minLon)
-            ->setLeftTile(CoordCalculator::longitudeToXTile($minLon, $zoomLevel))
             ->setRightLongitude($maxLon)
+            ->setLeftLongitude($minLon);
+
+        $heatmapDimension
+            ->setTopTile(CoordCalculator::latitudeToYTile($maxLat, $zoomLevel))
+            ->setBottomTile(CoordCalculator::latitudeToYTile($minLat, $zoomLevel))
+            ->setLeftTile(CoordCalculator::longitudeToXTile($minLon, $zoomLevel))
             ->setRightTile(CoordCalculator::longitudeToXTile($maxLon, $zoomLevel));
 
+        $heatmapDimension
+            ->setLeftOffset($minLon - CoordCalculator::xTileToLongitude(CoordCalculator::longitudeToXTile($minLon, $zoomLevel), $zoomLevel))
+            ->setTopOffset(CoordCalculator::yTileToLatitude(CoordCalculator::latitudeToYTile($maxLat, $zoomLevel), $zoomLevel) - $maxLat)
+            ->setRightOffset($maxLon - CoordCalculator::xTileToLongitude($heatmapDimension->getRightTile(), $zoomLevel))
+            ->setBottomOffset(CoordCalculator::yTileToLatitude($heatmapDimension->getBottomTile(), $zoomLevel) - $minLat);
+
         return $heatmapDimension;
-    }
-
-    protected static function calculateOffset(): void
-    {
-
     }
 }
