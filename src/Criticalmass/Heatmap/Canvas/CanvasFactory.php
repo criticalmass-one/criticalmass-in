@@ -9,18 +9,18 @@ use Caldera\GeoBasic\Coord\Coord;
 
 class CanvasFactory
 {
-    public function createFromHeatmapDimension(HeatmapDimension $heatmapDimension, int $zoomLevel): Canvas
+    public function createFromHeatmapDimension(HeatmapDimension $heatmapDimension): Canvas
     {
         $topLeftCoord = new Coord(
-            CoordCalculator::yTileToLatitude($heatmapDimension->getTopTile(), $zoomLevel),
-            CoordCalculator::xTileToLongitude($heatmapDimension->getLeftTile(), $zoomLevel)
+            CoordCalculator::yTileToLatitude($heatmapDimension->getTopTile(), $heatmapDimension->getZoomLevel()),
+            CoordCalculator::xTileToLongitude($heatmapDimension->getLeftTile(), $heatmapDimension->getZoomLevel())
         );
 
         $canvas = new Canvas($heatmapDimension->getWidth(), $heatmapDimension->getHeight(), $topLeftCoord);
 
         for ($x = $heatmapDimension->getLeftTile(); $x < $heatmapDimension->getWidth(); ++$x) {
             for ($y = $heatmapDimension->getTopTile(); $y < $heatmapDimension->getHeight(); ++$y) {
-                $canvas->setTile($x, $y, new Tile($x, $y, $zoomLevel));
+                $canvas->setTile($x, $y, new Tile($x, $y, $heatmapDimension->getZoomLevel()));
             }
         }
 

@@ -3,13 +3,10 @@
 namespace App\Criticalmass\Heatmap\Generator;
 
 use App\Criticalmass\Geo\Converter\TrackToPositionListConverter;
-use App\Criticalmass\Geo\EntityInterface\TrackInterface;
 use App\Criticalmass\Heatmap\Brush\Brush;
-use App\Criticalmass\Heatmap\Brush\Pencil;
 use App\Criticalmass\Heatmap\Canvas\Canvas;
 use App\Criticalmass\Heatmap\Canvas\CanvasFactory;
 use App\Criticalmass\Heatmap\CanvasCutter\CanvasCutter;
-use App\Criticalmass\Heatmap\CoordCalculator\CoordCalculator;
 use App\Criticalmass\Heatmap\DimensionCalculator\DimensionCalculator;
 use App\Criticalmass\Heatmap\DimensionCalculator\HeatmapDimension;
 use App\Criticalmass\Heatmap\HeatmapInterface;
@@ -20,7 +17,6 @@ use App\Criticalmass\Heatmap\Pipette\Pipette;
 use App\Criticalmass\Heatmap\Tile\Tile;
 use App\Criticalmass\Util\ClassUtil;
 use App\Entity\Track;
-use Imagine\Filter\Basic\Fill;
 use Imagine\Image\Palette\RGB as RGBPalette;
 use Imagine\Image\Point;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -70,7 +66,7 @@ class HeatmapGenerator
 
             $heatmapDimension = DimensionCalculator::calculate($pathList, $zoomLevel);
 
-            $canvas = (new CanvasFactory())->createFromHeatmapDimension($heatmapDimension, $zoomLevel);
+            $canvas = (new CanvasFactory())->createFromHeatmapDimension($heatmapDimension);
 
             $this->paintPathList($pathList, $canvas, $heatmapDimension);
 
@@ -109,8 +105,8 @@ class HeatmapGenerator
     {
         $canvasWidthPixel = $canvas->getWidth() * Tile::SIZE;
         $canvasHeightPixel = $canvas->getHeight() * Tile::SIZE;
-        $canvasWidthCoords = $heatmapDimension->getRightLongitude() - $heatmapDimension->getLeftLongitude() + $heatmapDimension->getLeftOffset();
-        $canvasHeightCoords = $heatmapDimension->getTopLatitude() - $heatmapDimension->getBottomLatitude() + $heatmapDimension->getTopOffset();
+        $canvasWidthCoords = $heatmapDimension->getRightLongitude() - $heatmapDimension->getLeftLongitude();
+        $canvasHeightCoords = $heatmapDimension->getTopLatitude() - $heatmapDimension->getBottomLatitude();
 
         $yFactor = (float) $canvasHeightPixel / $canvasHeightCoords;
         $xFactor = (float) $canvasWidthPixel / $canvasWidthCoords;
@@ -129,31 +125,38 @@ class HeatmapGenerator
                 $latitude = $path->getStartCoord()->getLatitude() + (float)$i * $vector[0] * (1 / $n);
                 $longitude = $path->getStartCoord()->getLongitude() + (float)$i * $vector[1] * (1 / $n);
 
-                $y = (float)$yFactor * ($latitude - $heatmapDimension->getTopLatitude());
-                $x = (float)$xFactor * ($longitude - $heatmapDimension->getLeftLongitude());
+                $y = (int) round($yFactor * ($latitude - $heatmapDimension->getBottomLatitude()));
+                $x = (int) round($xFactor * ($longitude - $heatmapDimension->getLeftLongitude()));
 
-                try {
-                    $point = new Point((int)round($x), (int)round($y));
-
-                    $white = (new RGBPalette())->color('#FFFFFF');
-                    $red = (new RGBPalette())->color('#FF0000');
-                    $blue = (new RGBPalette())->color('#0000FF');
-
-                    try {
-                        $oldColor = Pipette::getColor($canvas, $point);
-
-                        if ($oldColor !== $white) {
-                            Brush::paint($canvas, $point, $red);
-                        } else {
-                            Brush::paint($canvas, $point, $blue);
-                        }
-                    } catch (\RuntimeException $exception) {
-                        //Brush::paint($canvas, $point, $blue);
-                    }
-                } catch (\InvalidArgumentException $exception) {
-
-                }
+                //dump($x, $y, $xFactor, $yFactor, $latitude - $heatmapDimension->getTopLatitude(), $longitude - $heatmapDimension->getLeftLongitude());
+                //die;
+                $this->draw($canvas, $x, $y);
             }
+        }
+    }
+
+    protected function draw(Canvas $canvas, int $x, int $y): void
+    {
+        try {
+            $point = new Point((int)round($x), (int)round($y));
+
+            $white = (new RGBPalette())->color('#FFFFFF');
+            $red = (new RGBPalette())->color('#FF0000');
+            $blue = (new RGBPalette())->color('#0000FF');
+
+            try {
+                $oldColor = Pipette::getColor($canvas, $point);
+
+                if ($oldColor !== $white) {
+                    Brush::paint($canvas, $point, $red);
+                } else {
+                    Brush::paint($canvas, $point, $blue);
+                }
+            } catch (\RuntimeException $exception) {
+                //Brush::paint($canvas, $point, $blue);
+            }
+        } catch (\InvalidArgumentException $exception) {
+
         }
     }
 }
