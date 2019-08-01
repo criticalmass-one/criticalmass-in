@@ -30,7 +30,7 @@ class CanvasCutter
                 $tile = $canvas->getTile($x, $y);
 
                 if (!$tile) {
-                    $tile = new Tile($x, $y);
+                    $tile = new Tile($x, $y, $zoomLevel);
                 }
 
                 $tile->setImage($canvas->image()->copy());
