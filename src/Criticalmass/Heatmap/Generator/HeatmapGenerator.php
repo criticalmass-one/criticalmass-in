@@ -66,7 +66,7 @@ class HeatmapGenerator
                 continue;
             }
 
-            $zoomLevel = 10;
+            $zoomLevel = 15;
 
             $heatmapDimension = DimensionCalculator::calculate($pathList, $zoomLevel);
 
@@ -76,7 +76,7 @@ class HeatmapGenerator
 
             header('Content-type: image/png');
             echo $canvas->image()->get('png');
-            $this->canvasCutter->cutCanvas($this->heatmap, $canvas, $zoomLevel);
+            //$this->canvasCutter->cutCanvas($this->heatmap, $canvas, $zoomLevel);
 
             die;
         }
@@ -107,6 +107,14 @@ class HeatmapGenerator
 
     protected function paintPathList(PathList $pathList, Canvas $canvas, HeatmapDimension $heatmapDimension): void
     {
+        $canvasWidthPixel = $canvas->getWidth() * Tile::SIZE;
+        $canvasHeightPixel = $canvas->getHeight() * Tile::SIZE;
+        $canvasWidthCoords = $heatmapDimension->getRightLongitude() - $heatmapDimension->getLeftLongitude() + $heatmapDimension->getLeftOffset();
+        $canvasHeightCoords = $heatmapDimension->getTopLatitude() - $heatmapDimension->getBottomLatitude() + $heatmapDimension->getTopOffset();
+
+        $yFactor = (float) $canvasHeightPixel / $canvasHeightCoords;
+        $xFactor = (float) $canvasWidthPixel / $canvasWidthCoords;
+
         /** @var Path $path */
         foreach ($pathList as $path) {
             if (!$path) {
@@ -115,14 +123,6 @@ class HeatmapGenerator
 
             $vector[0] = (float)$path->getEndCoord()->getLatitude() - $path->getStartCoord()->getLatitude();
             $vector[1] = (float)$path->getEndCoord()->getLongitude() - $path->getStartCoord()->getLongitude();
-
-            $canvasWidthPixel = $canvas->getWidth() * Tile::SIZE;
-            $canvasHeightPixel = $canvas->getHeight() * Tile::SIZE;
-            $canvasWidthCoords = $heatmapDimension->getRightLongitude() - $heatmapDimension->getLeftLongitude();
-            $canvasHeightCoords = $heatmapDimension->getBottomLatitude() - $heatmapDimension->getTopLatitude();
-
-            $yFactor = (float) $canvasHeightPixel / $canvasHeightCoords;
-            $xFactor = (float) $canvasWidthPixel / $canvasWidthCoords;
 
             $n = 1;
             for ($i = 0; $i < $n; ++$i) {
@@ -134,6 +134,7 @@ class HeatmapGenerator
 
                 try {
                     $point = new Point((int)round($x), (int)round($y));
+
                     $white = (new RGBPalette())->color('#FFFFFF');
                     $red = (new RGBPalette())->color('#FF0000');
                     $blue = (new RGBPalette())->color('#0000FF');
