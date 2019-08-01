@@ -67,7 +67,6 @@ class HeatmapGenerator
 
             $canvas = (new CanvasFactory())->createFromHeatmapDimension($heatmapDimension, 15);
 
-            dump($heatmapDimension, $canvas);die;
             /** @var Path $path */
             foreach ($pathList as $path) {
                 if (!$path) {
@@ -83,8 +82,13 @@ class HeatmapGenerator
                     $latitude = (float) $path->getStartCoord()->getLatitude() + (float) $i * $vector[0] * (1 / $n);
                     $longitude = (float) $path->getStartCoord()->getLongitude() + (float) $i * $vector[1] * (1 / $n);
 
-                    $y = (float) $canvas->getHeight() * Tile::SIZE / ($heatmapDimension->getRightLongitude() - $heatmapDimension->getLeftLongitude()) * ($longitude - $heatmapDimension->getLeftLongitude());
-                    $x = (float) $canvas->getWidth() * Tile::SIZE / ($heatmapDimension->getBottomLatitude() - $heatmapDimension->getTopLatitude()) * ($latitude - $heatmapDimension->getTopLatitude());
+                    $canvasWidthPixel = $canvas->getWidth() * Tile::SIZE;
+                    $canvasHeightPixel = $canvas->getHeight() * Tile::SIZE;
+                    $canvasWidthCoords = $heatmapDimension->getRightLongitude() - $heatmapDimension->getLeftLongitude();
+                    $canvasHeightCoords = $heatmapDimension->getBottomLatitude() - $heatmapDimension->getTopLatitude();
+
+                    $y = (float) $canvasHeightPixel / $canvasHeightCoords * ($latitude - $heatmapDimension->getTopLatitude());
+                    $x = (float) $canvasWidthPixel / $canvasWidthCoords * ($longitude - $heatmapDimension->getLeftLongitude());
 
                     $point = new Point((int) round($x), (int) round($y));
                     $white = (new RGBPalette())->color('#FFFFFF');
@@ -107,6 +111,9 @@ class HeatmapGenerator
                 }
             }
 
+            header('Content-type: image/png');
+            echo $canvas->image()->get('png');
+            die;
             $this->canvasCutter->cutCanvas($this->heatmap, $canvas, 15);
             die;
         }
