@@ -11,13 +11,16 @@ use App\Criticalmass\Heatmap\Canvas\CanvasFactory;
 use App\Criticalmass\Heatmap\CanvasCutter\CanvasCutter;
 use App\Criticalmass\Heatmap\CoordCalculator\CoordCalculator;
 use App\Criticalmass\Heatmap\DimensionCalculator\DimensionCalculator;
+use App\Criticalmass\Heatmap\DimensionCalculator\HeatmapDimension;
 use App\Criticalmass\Heatmap\HeatmapInterface;
 use App\Criticalmass\Heatmap\Path\Path;
+use App\Criticalmass\Heatmap\Path\PathList;
 use App\Criticalmass\Heatmap\Path\PositionListToPathListConverter;
 use App\Criticalmass\Heatmap\Pipette\Pipette;
 use App\Criticalmass\Heatmap\Tile\Tile;
 use App\Criticalmass\Util\ClassUtil;
 use App\Entity\Track;
+use Imagine\Filter\Basic\Fill;
 use Imagine\Image\Palette\RGB as RGBPalette;
 use Imagine\Image\Point;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -63,58 +66,18 @@ class HeatmapGenerator
                 continue;
             }
 
-            $heatmapDimension = DimensionCalculator::calculate($pathList, 15);
+            $zoomLevel = 10;
 
-            $canvas = (new CanvasFactory())->createFromHeatmapDimension($heatmapDimension, 15);
+            $heatmapDimension = DimensionCalculator::calculate($pathList, $zoomLevel);
 
-            /** @var Path $path */
-            foreach ($pathList as $path) {
-                if (!$path) {
-                    break;
-                }
+            $canvas = (new CanvasFactory())->createFromHeatmapDimension($heatmapDimension, $zoomLevel);
 
-                $vector[0] = (float) $path->getEndCoord()->getLatitude() - $path->getStartCoord()->getLatitude();
-                $vector[1] = (float) $path->getEndCoord()->getLongitude() - $path->getStartCoord()->getLongitude();
-
-                $n = 1;
-                for ($i = 0; $i < $n; ++$i)
-                {
-                    $latitude = (float) $path->getStartCoord()->getLatitude() + (float) $i * $vector[0] * (1 / $n);
-                    $longitude = (float) $path->getStartCoord()->getLongitude() + (float) $i * $vector[1] * (1 / $n);
-
-                    $canvasWidthPixel = $canvas->getWidth() * Tile::SIZE;
-                    $canvasHeightPixel = $canvas->getHeight() * Tile::SIZE;
-                    $canvasWidthCoords = $heatmapDimension->getRightLongitude() - $heatmapDimension->getLeftLongitude();
-                    $canvasHeightCoords = $heatmapDimension->getBottomLatitude() - $heatmapDimension->getTopLatitude();
-
-                    $y = (float) $canvasHeightPixel / $canvasHeightCoords * ($latitude - $heatmapDimension->getTopLatitude());
-                    $x = (float) $canvasWidthPixel / $canvasWidthCoords * ($longitude - $heatmapDimension->getLeftLongitude());
-
-                    $point = new Point((int) round($x), (int) round($y));
-                    $white = (new RGBPalette())->color('#FFFFFF');
-                    $red = (new RGBPalette())->color('#FF0000');
-                    $blue = (new RGBPalette())->color('#0000FF');
-
-                    try {
-                        $oldColor = Pipette::getColor($canvas, $point);
-
-                        if ($oldColor !== $white) {
-                            Brush::paint($canvas, $point, $red);
-                        } else {
-                            Brush::paint($canvas, $point, $blue);
-                        }
-                    } catch (\RuntimeException $exception) {
-                        Brush::paint($canvas, $point, $blue);
-                    }
-
-
-                }
-            }
+            $this->paintPathList($pathList, $canvas, $heatmapDimension);
 
             header('Content-type: image/png');
             echo $canvas->image()->get('png');
-            die;
-            $this->canvasCutter->cutCanvas($this->heatmap, $canvas, 15);
+            $this->canvasCutter->cutCanvas($this->heatmap, $canvas, $zoomLevel);
+
             die;
         }
 
@@ -140,5 +103,56 @@ class HeatmapGenerator
         }
 
         return $trackList;
+    }
+
+    protected function paintPathList(PathList $pathList, Canvas $canvas, HeatmapDimension $heatmapDimension): void
+    {
+        /** @var Path $path */
+        foreach ($pathList as $path) {
+            if (!$path) {
+                break;
+            }
+
+            $vector[0] = (float)$path->getEndCoord()->getLatitude() - $path->getStartCoord()->getLatitude();
+            $vector[1] = (float)$path->getEndCoord()->getLongitude() - $path->getStartCoord()->getLongitude();
+
+            $canvasWidthPixel = $canvas->getWidth() * Tile::SIZE;
+            $canvasHeightPixel = $canvas->getHeight() * Tile::SIZE;
+            $canvasWidthCoords = $heatmapDimension->getRightLongitude() - $heatmapDimension->getLeftLongitude();
+            $canvasHeightCoords = $heatmapDimension->getBottomLatitude() - $heatmapDimension->getTopLatitude();
+
+            $yFactor = (float) $canvasHeightPixel / $canvasHeightCoords;
+            $xFactor = (float) $canvasWidthPixel / $canvasWidthCoords;
+
+            $n = 1;
+            for ($i = 0; $i < $n; ++$i) {
+                $latitude = $path->getStartCoord()->getLatitude() + (float)$i * $vector[0] * (1 / $n);
+                $longitude = $path->getStartCoord()->getLongitude() + (float)$i * $vector[1] * (1 / $n);
+
+                $y = (float)$yFactor * ($latitude - $heatmapDimension->getTopLatitude());
+                $x = (float)$xFactor * ($longitude - $heatmapDimension->getLeftLongitude());
+
+                try {
+                    $point = new Point((int)round($x), (int)round($y));
+                    $white = (new RGBPalette())->color('#FFFFFF');
+                    $red = (new RGBPalette())->color('#FF0000');
+                    $blue = (new RGBPalette())->color('#0000FF');
+
+                    try {
+                        $oldColor = Pipette::getColor($canvas, $point);
+
+                        if ($oldColor !== $white) {
+                            Brush::paint($canvas, $point, $red);
+                        } else {
+                            Brush::paint($canvas, $point, $blue);
+                        }
+                    } catch (\RuntimeException $exception) {
+                        //Brush::paint($canvas, $point, $blue);
+                    }
+                } catch (\InvalidArgumentException $exception) {
+
+                }
+            }
+        }
     }
 }
