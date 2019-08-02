@@ -3,20 +3,39 @@
 namespace App\Controller\Heatmap;
 
 use App\Controller\AbstractController;
-use App\Criticalmass\Heatmap\Generator\HeatmapGenerator;
-use App\Entity\Heatmap;
-use App\Repository\TrackRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use App\Entity\City;
+use App\Entity\Ride;
+use App\Entity\User;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 
 class HeatmapController extends AbstractController
 {
-    public function fooAction(RegistryInterface $registry, HeatmapGenerator $heatmapGenerator): Response
+    /**
+     * @ParamConverter("city", class="App:City")
+     */
+    public function cityAction(City $city): Response
     {
-        $heatmap = $registry->getRepository(Heatmap::class)->find(1);
+        return $this->render('Heatmap/city.html.twig', [
+            'city' => $city,
+        ]);
+    }
 
-        $heatmapGenerator->setHeatmap($heatmap)->generate();
+    /**
+     * @ParamConverter("ride", class="App:Ride")
+     */
+    public function rideAction(Ride $ride): Response
+    {
+        return $this->render('Heatmap/ride.html.twig', [
+            'ride' => $ride,
+        ]);
+    }
 
-        return new Response('foo');
+    /**
+     * @ParamConverter("user", class="App:User")
+     */
+    public function userAction(User $user): Response
+    {
+        return $this->render('Heatmap/user.html.twig');
     }
 }
