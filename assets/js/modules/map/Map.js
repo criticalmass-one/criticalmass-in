@@ -24,6 +24,7 @@ define(['leaflet', 'CityMarker', 'LocationMarker'], function () {
     Map.prototype._init = function () {
         this._initMap();
         this._addTileLayer();
+        L.tileLayer('/heatmaps/foo/{z}/{x}/{y}.png').addTo(this.map);
     };
 
     Map.prototype._initMap = function () {

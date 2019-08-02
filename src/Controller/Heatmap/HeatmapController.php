@@ -8,6 +8,7 @@ use App\Entity\Ride;
 use App\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class HeatmapController extends AbstractController
 {
@@ -16,6 +17,10 @@ class HeatmapController extends AbstractController
      */
     public function cityAction(City $city): Response
     {
+        if (!$city->getHeatmap()) {
+            throw new NotFoundHttpException(sprintf('No heatmap defined for City #%d', $city->getId()));
+        }
+
         return $this->render('Heatmap/city.html.twig', [
             'city' => $city,
         ]);
@@ -26,6 +31,10 @@ class HeatmapController extends AbstractController
      */
     public function rideAction(Ride $ride): Response
     {
+        if (!$ride->getHeatmap()) {
+            throw new NotFoundHttpException(sprintf('No heatmap defined for Ride #%d', $ride->getId()));
+        }
+
         return $this->render('Heatmap/ride.html.twig', [
             'ride' => $ride,
         ]);
