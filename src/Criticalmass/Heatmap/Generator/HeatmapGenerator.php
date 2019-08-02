@@ -7,6 +7,7 @@ use App\Criticalmass\Heatmap\Brush\Brush;
 use App\Criticalmass\Heatmap\Canvas\Canvas;
 use App\Criticalmass\Heatmap\Canvas\CanvasFactory;
 use App\Criticalmass\Heatmap\CanvasCutter\CanvasCutter;
+use App\Criticalmass\Heatmap\CoordCalculator\CoordCalculator;
 use App\Criticalmass\Heatmap\DimensionCalculator\DimensionCalculator;
 use App\Criticalmass\Heatmap\DimensionCalculator\HeatmapDimension;
 use App\Criticalmass\Heatmap\HeatmapInterface;
@@ -62,7 +63,7 @@ class HeatmapGenerator
                 continue;
             }
 
-            $zoomLevel = 15;
+            $zoomLevel = 13;
 
             $heatmapDimension = DimensionCalculator::calculate($pathList, $zoomLevel);
 
@@ -72,7 +73,7 @@ class HeatmapGenerator
 
             header('Content-type: image/png');
             echo $canvas->image()->get('png');
-            //$this->canvasCutter->cutCanvas($this->heatmap, $canvas, $zoomLevel);
+            $this->canvasCutter->cutCanvas($this->heatmap, $canvas, $zoomLevel);
 
             die;
         }
@@ -105,8 +106,14 @@ class HeatmapGenerator
     {
         $canvasWidthPixel = $canvas->getWidth() * Tile::SIZE;
         $canvasHeightPixel = $canvas->getHeight() * Tile::SIZE;
-        $canvasWidthCoords = $heatmapDimension->getRightLongitude() - $heatmapDimension->getLeftLongitude();
-        $canvasHeightCoords = $heatmapDimension->getTopLatitude() - $heatmapDimension->getBottomLatitude();
+
+        $leftCanvasLongitude = CoordCalculator::xTileToLongitude($heatmapDimension->getLeftTile(), $heatmapDimension->getZoomLevel());
+        $rightCanvasLongitude = CoordCalculator::xTileToLongitude($heatmapDimension->getRightTile(), $heatmapDimension->getZoomLevel());
+        $topCanvasLongitude = CoordCalculator::yTileToLatitude($heatmapDimension->getTopTile(), $heatmapDimension->getZoomLevel());
+        $bottomCanvasLongitude = CoordCalculator::yTileToLatitude($heatmapDimension->getBottomTile(), $heatmapDimension->getZoomLevel());
+
+        $canvasWidthCoords = $rightCanvasLongitude - $leftCanvasLongitude;
+        $canvasHeightCoords = $topCanvasLongitude - $bottomCanvasLongitude;
 
         $yFactor = (float) $canvasHeightPixel / $canvasHeightCoords;
         $xFactor = (float) $canvasWidthPixel / $canvasWidthCoords;
