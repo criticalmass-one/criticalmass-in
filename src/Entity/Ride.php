@@ -309,7 +309,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Heatmap", mappedBy="ride", cascade={"persist", "remove"})
      */
-    private $yes;
+    private $heatmap;
 
     public function __construct()
     {
@@ -1062,19 +1062,19 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         return $this;
     }
 
-    public function getYes(): ?Heatmap
+    public function getHeatmap(): ?Heatmap
     {
-        return $this->yes;
+        return $this->heatmap;
     }
 
-    public function setYes(?Heatmap $yes): self
+    public function setHeatmap(?Heatmap $heatmap): self
     {
-        $this->yes = $yes;
+        $this->heatmap = $heatmap;
 
         // set (or unset) the owning side of the relation if necessary
-        $newRide = $yes === null ? null : $this;
-        if ($newRide !== $yes->getRide()) {
-            $yes->setRide($newRide);
+        $newRide = $heatmap === null ? null : $this;
+        if ($newRide !== $heatmap->getRide()) {
+            $heatmap->setRide($newRide);
         }
 
         return $this;
