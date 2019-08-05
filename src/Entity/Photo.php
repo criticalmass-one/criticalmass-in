@@ -101,7 +101,6 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     /**
      * @ORM\Column(type="datetime")
      * @JMS\Expose
-     * @OE\Order(direction="asc")
      */
     protected $creationDateTime;
 
@@ -234,6 +233,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     /**
      * @var \DateTime $exifCreationDate
      * @ORM\Column(type="datetime")
+     * @OE\Order(direction="asc")
      * @JMS\Expose
      */
     protected $exifCreationDate;
