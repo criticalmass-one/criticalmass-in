@@ -8,6 +8,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Vich\UploaderBundle\Form\Type\VichFileType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 final class BlogPostAdmin extends AbstractAdmin
 {
@@ -15,7 +16,7 @@ final class BlogPostAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
     {
         $datagridMapper
-            ->add('id')
+            ->add('user')
             ->add('title')
             ->add('slug')
             ->add('createdAt')
@@ -32,6 +33,7 @@ final class BlogPostAdmin extends AbstractAdmin
     {
         $listMapper
             ->add('id')
+            ->add('user')
             ->add('title')
             ->add('createdAt')
             ->add('enabled')
@@ -48,15 +50,25 @@ final class BlogPostAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper): void
     {
         $formMapper
-            ->add('id')
+            ->with('Title', ['class' => 'col-md-6'])
             ->add('title')
             ->add('slug')
+            ->end()
+
+            ->with('Settings', ['class' => 'col-md-6'])
             ->add('createdAt')
             ->add('enabled')
+            ->add('user')
+            ->end()
+
+            ->with('Text', ['class' => 'col-md-6'])
             ->add('text')
             ->add('intro')
-            ->add('imageFile', VichFileType::class)
-            ;
+            ->end()
+
+            ->with('Header', ['class' => 'col-md-6'])
+            ->add('imageFile', VichImageType::class, ['required' => false])
+            ->end();
     }
 
     protected function configureShowFields(ShowMapper $showMapper): void
