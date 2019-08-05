@@ -7,6 +7,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
@@ -56,7 +57,12 @@ final class BlogPostAdmin extends AbstractAdmin
             ->end()
 
             ->with('Settings', ['class' => 'col-md-6'])
-            ->add('createdAt')
+            ->add('createdAt', DateTimeType::class, [
+                'date_widget' => 'single_text',
+                'date_format' => 'dd.MM.yyyy',
+                'time_widget' => 'single_text',
+                'compound' => true,
+            ])
             ->add('enabled')
             ->add('user')
             ->end()
