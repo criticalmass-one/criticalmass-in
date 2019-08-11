@@ -55,6 +55,7 @@ final class BlogPostAdmin extends AbstractAdmin
             ->with('Title', ['class' => 'col-md-6'])
             ->add('title')
             ->add('slug')
+            ->add('blog')
             ->end()
 
             ->with('Settings', ['class' => 'col-md-6'])
