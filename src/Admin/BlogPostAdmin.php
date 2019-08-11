@@ -9,7 +9,10 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
@@ -53,8 +56,8 @@ final class BlogPostAdmin extends AbstractAdmin
     {
         $formMapper
             ->with('Title', ['class' => 'col-md-6'])
-            ->add('title')
-            ->add('slug')
+            ->add('title', TextType::class, ['required' => true])
+            ->add('slug', TextType::class, ['required' => true])
             ->add('blog')
             ->end()
 
@@ -65,13 +68,13 @@ final class BlogPostAdmin extends AbstractAdmin
                 'time_widget' => 'single_text',
                 'compound' => true,
             ])
-            ->add('enabled')
+            ->add('enabled', CheckboxType::class, ['required' => false])
             ->add('user')
             ->end()
 
             ->with('Text', ['class' => 'col-md-6'])
-            ->add('text')
-            ->add('intro')
+            ->add('intro', TextareaType::class, ['required' => false])
+            ->add('text', TextareaType::class, ['required' => true])
             ->end()
 
             ->with('Header', ['class' => 'col-md-6'])
