@@ -3,11 +3,14 @@
 namespace App\Criticalmass\Router;
 
 use App\Criticalmass\Router\Annotation\AbstractAnnotation;
+use App\Criticalmass\Router\Annotation\DefaultParameter;
 use App\Criticalmass\Router\Annotation\DefaultRoute;
 use App\Criticalmass\Router\Annotation\RouteParameter;
 use App\Criticalmass\Router\DelegatedRouter\DelegatedRouterInterface;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\Common\Annotations\Reader;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 abstract class AbstractObjectRouter
@@ -21,10 +24,14 @@ abstract class AbstractObjectRouter
     /** @var array $delegatedRouterList */
     protected $delegatedRouterList = [];
 
-    public function __construct(RouterInterface $router, Reader $annotationReader)
+    /** @var ParameterBagInterface $parameterBag */
+    protected $parameterBag;
+
+    public function __construct(RouterInterface $router, Reader $annotationReader, ParameterBagInterface $parameterBag)
     {
         $this->router = $router;
         $this->annotationReader = $annotationReader;
+        $this->parameterBag = $parameterBag;
     }
 
     protected function getDefaultRouteName(RouteableInterface $routeable): ?string
@@ -48,6 +55,21 @@ abstract class AbstractObjectRouter
     public function getRouteParameter(RouteableInterface $routeable, string $variableName): ?string
     {
         $reflectionClass = new \ReflectionClass($routeable);
+
+        $classAnnotations = $this->annotationReader->getClassAnnotations($reflectionClass);
+
+        foreach ($classAnnotations as $classAnnotation) {
+            if ($classAnnotation instanceof DefaultParameter) {
+                if ($classAnnotation->getRouteParameterName() !== $variableName) {
+                    continue;
+                }
+
+                if ($this->parameterBag->has($classAnnotation->getParameterName())) {
+                    return $this->parameterBag->get($classAnnotation->getParameterName());
+                }
+            }
+        }
+
         $properties = $reflectionClass->getProperties();
 
         foreach ($properties as $key => $property) {
