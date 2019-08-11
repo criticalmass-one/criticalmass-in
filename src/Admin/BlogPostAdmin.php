@@ -2,6 +2,8 @@
 
 namespace App\Admin;
 
+use App\Entity\BlogPost;
+use App\Factory\BlogPost\BlogPostFactory;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -13,7 +15,6 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
 
 final class BlogPostAdmin extends AbstractAdmin
 {
-
     protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
     {
         $datagridMapper
@@ -91,5 +92,10 @@ final class BlogPostAdmin extends AbstractAdmin
             ->add('imageSize')
             ->add('imageMimeType')
             ;
+    }
+
+    public function getNewInstance(): BlogPost
+    {
+        return (new BlogPostFactory())->build();
     }
 }
