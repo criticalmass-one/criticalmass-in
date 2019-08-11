@@ -213,7 +213,7 @@ class PostRepository extends EntityRepository
         $builder = $this->createQueryBuilder('p');
 
         $builder
-            ->select('p')
+            ->select('p', 'bp')
             ->where($builder->expr()->eq('p.enabled', ':enabled'))
             ->join('p.blogPost', 'bp')
             ->andWhere($builder->expr()->eq('bp.enabled', ':enabled'))

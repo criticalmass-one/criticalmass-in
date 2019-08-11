@@ -28,6 +28,7 @@ parameters:
     twitter.secret: '%env(TWITTER_SECRET)%'
     photo_tsv.access_key: '%env(PHOTO_TSV_ACCESS_KEY)%'
     timeline.ttl: 60
+    domain.blog: '%env(DOMAIN_BLOG)%'
     notification.mail.sender_address: malte@criticalmass.in
     jms_serializer.camel_case_naming_strategy.class: App\Serializer\JMSSerializer\Naming\CamelCaseNamingStrategy
     request_listener.http_port: 80

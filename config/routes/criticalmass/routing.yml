@@ -29,6 +29,11 @@ caldera_criticalmass_search:
 caldera_criticalmass_blog:
     resource: 'blog.yml'
     prefix:   /
+    host:       '{host}'
+    defaults:
+        host: '%domain.blog%'
+    requirements:
+        host: '%domain.blog%'
 
 caldera_criticalmass_board:
     resource: 'board.yml'
