@@ -1,15 +1,17 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Twig\Extension;
 
 use League\CommonMark\CommonMarkConverter;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 
-class MarkdownTwigExtension extends \Twig_Extension
+class MarkdownTwigExtension extends AbstractExtension
 {
     public function getFilters(): array
     {
         return [
-            new \Twig_SimpleFilter('markdown', [$this, 'markdown'], ['is_safe' => ['html']]),
+            new TwigFilter('markdown', [$this, 'markdown'], ['is_safe' => ['html']]),
         ];
     }
 
