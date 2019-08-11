@@ -94,7 +94,8 @@
         "ext-xmlwriter": "*",
         "fresh/doctrine-enum-bundle": "^6.3",
         "freearhey/wikidata": "^3.1",
-        "doctrine/annotations": "^1.7"
+        "doctrine/annotations": "^1.7",
+        "league/commonmark": "^1.0"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "*",
