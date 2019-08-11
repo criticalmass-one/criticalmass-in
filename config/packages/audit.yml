@@ -10,6 +10,7 @@ simple_things_entity_audit:
         - App\Entity\Subride
         - App\Entity\SocialNetworkProfile
         - App\Entity\SocialNetworkFeedItem
+        - App\Entity\BlogPost
 
     global_ignore_columns:
         - created_at

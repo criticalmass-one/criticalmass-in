@@ -1,28 +1,28 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Twig\Extension;
 
-use App\Criticalmass\Markdown\CriticalMarkdown;
+use League\CommonMark\CommonMarkConverter;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 
-class MarkdownTwigExtension extends \Twig_Extension
+class MarkdownTwigExtension extends AbstractExtension
 {
-    protected $markdownParser;
-
-    public function __construct(CriticalMarkdown $criticalMarkdown)
-    {
-        $this->markdownParser = $criticalMarkdown;
-    }
-
     public function getFilters(): array
     {
         return [
-            new \Twig_SimpleFilter('markdown', [$this, 'markdown'], ['is_safe' => ['html']]),
+            new TwigFilter('markdown', [$this, 'markdown'], ['is_safe' => ['html']]),
         ];
     }
 
     public function markdown(string $text): string
     {
-        return $this->markdownParser->parse($text);
+        $converter = new CommonMarkConverter([
+            'html_input' => 'strip',
+            'allow_unsafe_links' => false,
+        ]);
+
+        return $converter->convertToHtml($text);
     }
 
     public function getName(): string
@@ -30,4 +30,3 @@ class MarkdownTwigExtension extends \Twig_Extension
         return 'markdown_extension';
     }
 }
-
