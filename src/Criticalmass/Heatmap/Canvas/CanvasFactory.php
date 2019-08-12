@@ -44,14 +44,14 @@ class CanvasFactory
             CoordCalculator::xTileToLongitude($heatmapDimension->getLeftTile(), $heatmapDimension->getZoomLevel())
         );
 
-        $canvas = new Canvas($heatmapDimension->getWidth(), $heatmapDimension->getHeight(), $topLeftCoord);
+        $canvas = new Canvas($heatmapDimension->getWidth(), $heatmapDimension->getHeight(), $topLeftCoord, $heatmapDimension->getTopTile(), $heatmapDimension->getLeftTile());
 
         for ($x = $heatmapDimension->getLeftTile(); $x < $heatmapDimension->getLeftTile() + $heatmapDimension->getWidth(); ++$x) {
             for ($y = $heatmapDimension->getTopTile(); $y < $heatmapDimension->getTopTile() + $heatmapDimension->getHeight(); ++$y) {
                 $canvas->setTile($x, $y, $this->loader->load($heatmap, $x, $y, $zoomLevel));
             }
         }
-
+        
         return $canvas;
     }
 }

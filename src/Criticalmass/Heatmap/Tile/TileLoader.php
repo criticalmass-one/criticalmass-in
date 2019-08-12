@@ -44,7 +44,7 @@ class TileLoader
 
         $filename = sprintf('https://tiles.caldera.cc/wikimedia-intl/%d/%d/%d.png', $zoomLevel, $tileX, $tileY);
 
-        $image = (new Imagine())->load($filename);
+        $image = (new Imagine())->open($filename);
 
         $tile->setImage($image);
 

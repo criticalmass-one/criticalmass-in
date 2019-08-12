@@ -8,6 +8,7 @@ use Caldera\GeoBasic\Coord\CoordInterface;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 use Imagine\Image\ImageInterface;
+use Imagine\Image\Point;
 
 class Canvas
 {
@@ -20,15 +21,24 @@ class Canvas
     /** @var CoordInterface $topLeftCoord */
     protected $topLeftCoord;
 
+    /** @var int $topTileNumber */
+    protected $topTileNumber;
+
+    /** @var int $leftTileNumber */
+    protected $leftTileNumber;
+
     protected $image;
 
     /** @var array $tiles */
     protected $tiles = [];
 
-    public function __construct(int $width, int $height, CoordInterface $topLeftCoord = null)
+    public function __construct(int $width, int $height, CoordInterface $topLeftCoord = null, int $topTileNumber = null, int $leftTileNumber = null)
     {
         $this->width = $width;
         $this->height = $height;
+
+        $this->topTileNumber = $topTileNumber;
+        $this->leftTileNumber = $leftTileNumber;
 
         $this->topLeftCoord = $topLeftCoord;
 
@@ -72,6 +82,33 @@ class Canvas
         }
 
         $this->tiles[$x][$y] = $tile;
+
+        $point = new Point(($x - $this->leftTileNumber) * Tile::SIZE, ($y - $this->topTileNumber) * Tile::SIZE);
+        $this->image->paste($tile->image(), $point);
+
+        return $this;
+    }
+
+    public function getTopTileNumber(): int
+    {
+        return $this->topTileNumber;
+    }
+
+    public function setTopTileNumber(int $topTileNumber): Canvas
+    {
+        $this->topTileNumber = $topTileNumber;
+
+        return $this;
+    }
+
+    public function getLeftTileNumber(): int
+    {
+        return $this->leftTileNumber;
+    }
+
+    public function setLeftTileNumber(int $leftTileNumber): Canvas
+    {
+        $this->leftTileNumber = $leftTileNumber;
 
         return $this;
     }
