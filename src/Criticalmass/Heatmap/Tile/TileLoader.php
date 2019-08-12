@@ -19,6 +19,7 @@ class TileLoader
         $this->filesystem = $filesystem;
     }
 
+    /*
     public function load(HeatmapInterface $heatmap, int $tileX, int $tileY, int $zoomLevel): Tile
     {
         $tile = new Tile($tileX, $tileY, $zoomLevel);
@@ -29,8 +30,21 @@ class TileLoader
             $box = new Box(256, 256);
             $image = (new Imagine())->create($box);
         } else {
-            (new Imagine())->read($this->filesystem->read($filename));
+            $image = (new Imagine())->read($this->filesystem->read($filename));
         }
+
+        $tile->setImage($image);
+
+        return $tile;
+    }*/
+
+    public function load(HeatmapInterface $heatmap, int $tileX, int $tileY, int $zoomLevel): Tile
+    {
+        $tile = new Tile($tileX, $tileY, $zoomLevel);
+
+        $filename = sprintf('https://tiles.caldera.cc/wikimedia-intl/%d/%d/%d.png', $zoomLevel, $tileX, $tileY);
+
+        $image = (new Imagine())->load($filename);
 
         $tile->setImage($image);
 
