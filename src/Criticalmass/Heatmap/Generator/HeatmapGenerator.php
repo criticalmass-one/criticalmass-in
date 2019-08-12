@@ -139,21 +139,15 @@ die;
                 break;
             }
 
-            $vector[1] = $path->getStartCoord()->getLatitude() - $path->getEndCoord()->getLatitude();
-            $vector[0] = $path->getStartCoord()->getLongitude() - $path->getEndCoord()->getLongitude();
+            $latitude = $path->getStartCoord()->getLatitude();
+            $longitude = $path->getStartCoord()->getLongitude();
 
-            $n = 1;
-            for ($i = 0; $i < $n; ++$i) {
-                $latitude = $path->getStartCoord()->getLatitude() + (float)$i * $vector[1] * (1 / $n);
-                $longitude = $path->getStartCoord()->getLongitude() + (float)$i * $vector[0] * (1 / $n);
+            $y = (int) round($yFactor * ($heatmapDimension->getTopLatitude() - $latitude));
+            $x = (int) round($xFactor * ($longitude - $heatmapDimension->getLeftLongitude()));
 
-                $y = (int) round($yFactor * ($heatmapDimension->getTopLatitude() - $latitude));
-                $x = (int) round($xFactor * ($longitude - $heatmapDimension->getLeftLongitude()));
-
-                //dump($x, $y, $xFactor, $yFactor, $latitude - $heatmapDimension->getTopLatitude(), $longitude - $heatmapDimension->getLeftLongitude());
-                //die;
-                $this->draw($canvas, $x, $y);
-            }
+            //dump($x, $y, $xFactor, $yFactor, $latitude - $heatmapDimension->getTopLatitude(), $longitude - $heatmapDimension->getLeftLongitude());
+            //die;
+            $this->draw($canvas, $x, $y);
         }
     }
 

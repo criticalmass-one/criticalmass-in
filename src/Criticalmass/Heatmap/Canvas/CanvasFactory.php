@@ -51,7 +51,7 @@ class CanvasFactory
                 $canvas->setTile($x, $y, $this->loader->load($heatmap, $x, $y, $zoomLevel));
             }
         }
-        
+
         return $canvas;
     }
 }
