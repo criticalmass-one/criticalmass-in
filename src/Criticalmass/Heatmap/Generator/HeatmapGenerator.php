@@ -36,6 +36,9 @@ class HeatmapGenerator
     /** @var CanvasCutter $canvasCutter */
     protected $canvasCutter;
 
+    /** @var array $zoomLevels */
+    protected $zoomLevels = [];
+
     public function __construct(RegistryInterface $registry, TrackToPositionListConverter $trackToPositionListConverter, CanvasCutter $canvasCutter)
     {
         $this->registry = $registry;
@@ -47,6 +50,11 @@ class HeatmapGenerator
     {
         $this->heatmap = $heatmap;
 
+        return $this;
+    }
+
+    public function setZoomLevels(array $zoomLevels): HeatmapGenerator
+    {
         return $this;
     }
 
@@ -63,20 +71,21 @@ class HeatmapGenerator
                 continue;
             }
 
-            $zoomLevel = 13;
+            foreach ($this->zoomLevels as $zoomLevel) {
+                $heatmapDimension = DimensionCalculator::calculate($pathList, $zoomLevel);
 
-            $heatmapDimension = DimensionCalculator::calculate($pathList, $zoomLevel);
+                $canvas = (new CanvasFactory())->createFromHeatmapDimension($heatmapDimension);
 
-            $canvas = (new CanvasFactory())->createFromHeatmapDimension($heatmapDimension);
+                $this->paintPathList($pathList, $canvas, $heatmapDimension);
 
-            $this->paintPathList($pathList, $canvas, $heatmapDimension);
+                //header('Content-type: image/png');
+                //echo $canvas->image()->get('png');
+                $this->canvasCutter->cutCanvas($this->heatmap, $canvas, $zoomLevel);
 
-            header('Content-type: image/png');
-            echo $canvas->image()->get('png');
-            $this->canvasCutter->cutCanvas($this->heatmap, $canvas, $zoomLevel);
-
-            die;
+                //die;
+            }
         }
+die;
 
         return $this;
     }
