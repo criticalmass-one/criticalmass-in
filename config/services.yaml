@@ -130,6 +130,10 @@ services:
         arguments:
             $filesystem: '@oneup_flysystem.flysystem_heatmap_tile_filesystem'
 
+    App\Criticalmass\Heatmap\Remover\HeatmapRemover:
+        arguments:
+            $filesystem: '@oneup_flysystem.flysystem_heatmap_tile_filesystem'
+
     App\Criticalmass\Geocoding\ReverseGeocoderInterface:
         alias: App\Criticalmass\Geocoding\CachedReverseGeocoder
 
