@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\Heatmap\Pipette;
 
-use App\Criticalmass\Heatmap\Canvas\Canvas;
+use App\Criticalmass\Heatmap\Tile\Tile;
 use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\PointInterface;
 
@@ -13,8 +13,8 @@ class Pipette
 
     }
 
-    public static function getColor(Canvas $canvas, PointInterface $point): ColorInterface
+    public static function getColor(Tile $tile, PointInterface $point): ColorInterface
     {
-        return $canvas->image()->getColorAt($point);
+        return $tile->image()->getColorAt($point);
     }
 }

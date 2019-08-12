@@ -3,7 +3,6 @@
 namespace App\Criticalmass\Heatmap\Generator;
 
 use App\Criticalmass\Geo\Converter\TrackToPositionListConverter;
-use App\Criticalmass\Heatmap\Brush\Brush;
 use App\Criticalmass\Heatmap\Canvas\Canvas;
 use App\Criticalmass\Heatmap\Canvas\CanvasFactory;
 use App\Criticalmass\Heatmap\CanvasCutter\CanvasCutter;
@@ -14,13 +13,9 @@ use App\Criticalmass\Heatmap\HeatmapInterface;
 use App\Criticalmass\Heatmap\Path\Path;
 use App\Criticalmass\Heatmap\Path\PathList;
 use App\Criticalmass\Heatmap\Path\PositionListToPathListConverter;
-use App\Criticalmass\Heatmap\Pipette\Pipette;
-use App\Criticalmass\Heatmap\Tile\Tile;
+use App\Criticalmass\Heatmap\TilePrinter\TilePrinter;
 use App\Criticalmass\Util\ClassUtil;
 use App\Entity\Track;
-use Imagine\Image\Box;
-use Imagine\Image\Palette\RGB as RGBPalette;
-use Imagine\Image\Point;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class HeatmapGenerator
@@ -79,6 +74,8 @@ class HeatmapGenerator
             }
 
             foreach ($this->zoomLevels as $zoomLevel) {
+                $zoomLevel = (int) $zoomLevel;
+
                 $heatmapDimension = DimensionCalculator::calculate($pathList, $zoomLevel);
 
                 $canvas = $this->canvasFactory->create($heatmapDimension, $this->heatmap, $zoomLevel);
@@ -123,54 +120,12 @@ class HeatmapGenerator
                 break;
             }
 
-            $latitude = $path->getStartCoord()->getLatitude();
-            $longitude = $path->getStartCoord()->getLongitude();
+            $tileX = CoordCalculator::longitudeToXTile($path->getStartCoord()->getLongitude(), $heatmapDimension->getZoomLevel());
+            $tileY = CoordCalculator::latitudeToYTile($path->getStartCoord()->getLatitude(), $heatmapDimension->getZoomLevel());
 
-            $tileX = CoordCalculator::longitudeToXTile($longitude, $heatmapDimension->getZoomLevel());
-            $tileY = CoordCalculator::latitudeToYTile($latitude, $heatmapDimension->getZoomLevel());
-
-            $tileTopLatitude = CoordCalculator::yTileToLatitude($tileY, $heatmapDimension->getZoomLevel());
-            $tileLeftLongitude = CoordCalculator::xTileToLongitude($tileX, $heatmapDimension->getZoomLevel());
-            $tileBottomLatitude = CoordCalculator::yTileToLatitude($tileY + 1, $heatmapDimension->getZoomLevel());
-            $tileRightLongitude = CoordCalculator::xTileToLongitude($tileX + 1, $heatmapDimension->getZoomLevel());
-                        $y = Tile::SIZE * ($tileTopLatitude - $path->getStartCoord()->getLatitude()) / ($tileTopLatitude - $tileBottomLatitude);
-
-                      $x = Tile::SIZE * ($path->getStartCoord()->getLongitude() - $tileLeftLongitude) / ($tileRightLongitude - $tileLeftLongitude);
-
-            $point = new Point($x, $y);
-            $canvas->getTile($tileX, $tileY)->image()->draw()->ellipse($point, new Box(2, 2), (new RGBPalette())->color('#FF0000'));
-
-//            $y = 512 * ($heatmapDimension->getTopLatitude() - $path->getStartCoord()->getLatitude()) / ($heatmapDimension->getTopLatitude() - $heatmapDimension->getBottomLatitude());
-
-  //          $x = 512 * ($path->getStartCoord()->getLongitude() - $heatmapDimension->getLeftLongitude()) / ($heatmapDimension->getRightLongitude() - $heatmapDimension->getLeftLongitude());
-
-            //$this->draw($canvas, (int) round($x), (int) round($y));
-        }
-
-    }
-
-    protected function draw(Canvas $canvas, int $x, int $y): void
-    {
-        try {
-            $point = new Point((int)round($x), (int)round($y));
-
-            $white = (new RGBPalette())->color('#FFFFFF');
-            $red = (new RGBPalette())->color('#FF0000');
-            $blue = (new RGBPalette())->color('#0000FF');
-
-            try {
-                $oldColor = Pipette::getColor($canvas, $point);
-
-                if ($oldColor !== $white) {
-                    Brush::paint($canvas, $point, $red);
-                } else {
-                    Brush::paint($canvas, $point, $blue);
-                }
-            } catch (\RuntimeException $exception) {
-                //Brush::paint($canvas, $point, $blue);
+            if ($tile = $canvas->getTile($tileX, $tileY)) {
+                TilePrinter::printTile($tile, $path->getStartCoord());
             }
-        } catch (\InvalidArgumentException $exception) {
-
         }
     }
 }

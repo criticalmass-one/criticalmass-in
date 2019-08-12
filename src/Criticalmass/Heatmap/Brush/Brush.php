@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\Heatmap\Brush;
 
-use App\Criticalmass\Heatmap\Canvas\Canvas;
+use App\Criticalmass\Heatmap\Tile\Tile;
 use Imagine\Image\Box;
 use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\PointInterface;
@@ -14,10 +14,10 @@ class Brush
 
     }
 
-    public static function paint(Canvas $canvas, PointInterface $point, ColorInterface $color): void
+    public static function paint(Tile $tile, PointInterface $point, ColorInterface $color): void
     {
         $box = new Box(2, 2);
 
-        $canvas->image()->draw()->ellipse($point, $box, $color);
+        $tile->image()->draw()->ellipse($point, $box, $color);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\Heatmap\Brush;
 
-use App\Criticalmass\Heatmap\Canvas\Canvas;
+use App\Criticalmass\Heatmap\Tile\Tile;
 use Imagine\Image\Palette\Color\ColorInterface;
 use Imagine\Image\PointInterface;
 
@@ -13,8 +13,8 @@ class Pencil
 
     }
 
-    public static function paint(Canvas $canvas, PointInterface $point, ColorInterface $color): void
+    public static function paint(Tile $tile, PointInterface $point, ColorInterface $color): void
     {
-        $canvas->image()->draw()->dot($point, $color);
+        $tile->image()->draw()->dot($point, $color);
     }
 }
