@@ -18,6 +18,7 @@ use App\Criticalmass\Heatmap\Pipette\Pipette;
 use App\Criticalmass\Heatmap\Tile\Tile;
 use App\Criticalmass\Util\ClassUtil;
 use App\Entity\Track;
+use Imagine\Image\Box;
 use Imagine\Image\Palette\RGB as RGBPalette;
 use Imagine\Image\Point;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -84,14 +85,11 @@ class HeatmapGenerator
 
                 $this->paintPathList($pathList, $canvas, $heatmapDimension);
 
-                header('Content-type: image/png');
-                echo $canvas->image()->get('png');
-                //$this->canvasCutter->cutCanvas($this->heatmap, $canvas, $zoomLevel);
-
-                die;
+                $this->canvasCutter->cutCanvas($this->heatmap, $canvas, $zoomLevel);
             }
+
+            die;
         }
-die;
 
         return $this;
     }
@@ -119,38 +117,36 @@ die;
 
     protected function paintPathList(PathList $pathList, Canvas $canvas, HeatmapDimension $heatmapDimension): void
     {
-        $canvasWidthPixel = $canvas->getWidth() * Tile::SIZE;
-        $canvasHeightPixel = $canvas->getHeight() * Tile::SIZE;
-
-        $leftCanvasLongitude = CoordCalculator::xTileToLongitude($heatmapDimension->getLeftTile(), $heatmapDimension->getZoomLevel());
-        $rightCanvasLongitude = CoordCalculator::xTileToLongitude($heatmapDimension->getRightTile(), $heatmapDimension->getZoomLevel());
-        $topCanvasLatitude = CoordCalculator::yTileToLatitude($heatmapDimension->getTopTile(), $heatmapDimension->getZoomLevel());
-        $bottomCanvasLatitude = CoordCalculator::yTileToLatitude($heatmapDimension->getBottomTile(), $heatmapDimension->getZoomLevel());
-
-        $canvasWidthCoords = $rightCanvasLongitude - $leftCanvasLongitude;
-        $canvasHeightCoords = $topCanvasLatitude - $bottomCanvasLatitude;
-
-        $pathWidthCoords = $canvasWidthCoords - $heatmapDimension->getLeftOffset() - $heatmapDimension->getRightOffset();
-        $pathHeightCoords = $canvasHeightCoords - $heatmapDimension->getTopOffset() - $heatmapDimension->getBottomOffset();
-
-        $pathPixelHeight = 512 * $pathHeightCoords / $canvasHeightCoords;
-
-        dump($pathPixelHeight);die;
-        //$yFactor = (float) $canvasHeightPixel / $canvasHeightCoords;
-        //$xFactor = (float) $canvasWidthPixel / $canvasWidthCoords;
-
         /** @var Path $path */
         foreach ($pathList as $path) {
             if (!$path) {
                 break;
             }
 
-            $y = 512 * ($heatmapDimension->getTopLatitude() - $path->getStartCoord()->getLatitude()) / ($heatmapDimension->getTopLatitude() - $heatmapDimension->getBottomLatitude());
+            $latitude = $path->getStartCoord()->getLatitude();
+            $longitude = $path->getStartCoord()->getLongitude();
 
-            $x = 512 * ($path->getStartCoord()->getLongitude() - $heatmapDimension->getLeftLongitude()) / ($heatmapDimension->getRightLongitude() - $heatmapDimension->getLeftLongitude());
+            $tileX = CoordCalculator::longitudeToXTile($longitude, $heatmapDimension->getZoomLevel());
+            $tileY = CoordCalculator::latitudeToYTile($latitude, $heatmapDimension->getZoomLevel());
 
-            $this->draw($canvas, (int) round($x), (int) round($y));
+            $tileTopLatitude = CoordCalculator::yTileToLatitude($tileY, $heatmapDimension->getZoomLevel());
+            $tileLeftLongitude = CoordCalculator::xTileToLongitude($tileX, $heatmapDimension->getZoomLevel());
+            $tileBottomLatitude = CoordCalculator::yTileToLatitude($tileY + 1, $heatmapDimension->getZoomLevel());
+            $tileRightLongitude = CoordCalculator::xTileToLongitude($tileX + 1, $heatmapDimension->getZoomLevel());
+                        $y = Tile::SIZE * ($tileTopLatitude - $path->getStartCoord()->getLatitude()) / ($tileTopLatitude - $tileBottomLatitude);
+
+                      $x = Tile::SIZE * ($path->getStartCoord()->getLongitude() - $tileLeftLongitude) / ($tileRightLongitude - $tileLeftLongitude);
+
+            $point = new Point($x, $y);
+            $canvas->getTile($tileX, $tileY)->image()->draw()->ellipse($point, new Box(2, 2), (new RGBPalette())->color('#FF0000'));
+
+//            $y = 512 * ($heatmapDimension->getTopLatitude() - $path->getStartCoord()->getLatitude()) / ($heatmapDimension->getTopLatitude() - $heatmapDimension->getBottomLatitude());
+
+  //          $x = 512 * ($path->getStartCoord()->getLongitude() - $heatmapDimension->getLeftLongitude()) / ($heatmapDimension->getRightLongitude() - $heatmapDimension->getLeftLongitude());
+
+            //$this->draw($canvas, (int) round($x), (int) round($y));
         }
+
     }
 
     protected function draw(Canvas $canvas, int $x, int $y): void

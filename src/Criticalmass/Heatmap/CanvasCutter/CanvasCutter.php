@@ -29,17 +29,6 @@ class CanvasCutter
             for ($y = $startY; $y < $startY + $canvas->getHeight(); ++$y) {
                 $tile = $canvas->getTile($x, $y);
 
-                if (!$tile) {
-                    $tile = new Tile($x, $y, $zoomLevel);
-                }
-
-                $tile->setImage($canvas->image()->copy());
-
-                $point = new Point(($x - $startX) * Tile::SIZE, ($y - $startY) * Tile::SIZE);
-                $box = new Box(Tile::SIZE, Tile::SIZE);
-
-                $tile->image()->crop($point, $box);
-
                 $this->tilePersister->save($heatmap, $tile);
             }
         }
