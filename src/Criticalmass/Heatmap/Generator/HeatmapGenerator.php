@@ -124,14 +124,20 @@ die;
 
         $leftCanvasLongitude = CoordCalculator::xTileToLongitude($heatmapDimension->getLeftTile(), $heatmapDimension->getZoomLevel());
         $rightCanvasLongitude = CoordCalculator::xTileToLongitude($heatmapDimension->getRightTile(), $heatmapDimension->getZoomLevel());
-        $topCanvasLongitude = CoordCalculator::yTileToLatitude($heatmapDimension->getTopTile(), $heatmapDimension->getZoomLevel());
-        $bottomCanvasLongitude = CoordCalculator::yTileToLatitude($heatmapDimension->getBottomTile(), $heatmapDimension->getZoomLevel());
+        $topCanvasLatitude = CoordCalculator::yTileToLatitude($heatmapDimension->getTopTile(), $heatmapDimension->getZoomLevel());
+        $bottomCanvasLatitude = CoordCalculator::yTileToLatitude($heatmapDimension->getBottomTile(), $heatmapDimension->getZoomLevel());
 
         $canvasWidthCoords = $rightCanvasLongitude - $leftCanvasLongitude;
-        $canvasHeightCoords = $topCanvasLongitude - $bottomCanvasLongitude;
+        $canvasHeightCoords = $topCanvasLatitude - $bottomCanvasLatitude;
 
-        $yFactor = (float) $canvasHeightPixel / $canvasHeightCoords;
-        $xFactor = (float) $canvasWidthPixel / $canvasWidthCoords;
+        $pathWidthCoords = $canvasWidthCoords - $heatmapDimension->getLeftOffset() - $heatmapDimension->getRightOffset();
+        $pathHeightCoords = $canvasHeightCoords - $heatmapDimension->getTopOffset() - $heatmapDimension->getBottomOffset();
+
+        $pathPixelHeight = 512 * $pathHeightCoords / $canvasHeightCoords;
+
+        dump($pathPixelHeight);die;
+        //$yFactor = (float) $canvasHeightPixel / $canvasHeightCoords;
+        //$xFactor = (float) $canvasWidthPixel / $canvasWidthCoords;
 
         /** @var Path $path */
         foreach ($pathList as $path) {
@@ -139,15 +145,11 @@ die;
                 break;
             }
 
-            $latitude = $path->getStartCoord()->getLatitude();
-            $longitude = $path->getStartCoord()->getLongitude();
+            $y = 512 * ($heatmapDimension->getTopLatitude() - $path->getStartCoord()->getLatitude()) / ($heatmapDimension->getTopLatitude() - $heatmapDimension->getBottomLatitude());
 
-            $y = (int) round($yFactor * ($heatmapDimension->getTopLatitude() - $latitude));
-            $x = (int) round($xFactor * ($longitude - $heatmapDimension->getLeftLongitude()));
+            $x = 512 * ($path->getStartCoord()->getLongitude() - $heatmapDimension->getLeftLongitude()) / ($heatmapDimension->getRightLongitude() - $heatmapDimension->getLeftLongitude());
 
-            //dump($x, $y, $xFactor, $yFactor, $latitude - $heatmapDimension->getTopLatitude(), $longitude - $heatmapDimension->getLeftLongitude());
-            //die;
-            $this->draw($canvas, $x, $y);
+            $this->draw($canvas, (int) round($x), (int) round($y));
         }
     }
 
