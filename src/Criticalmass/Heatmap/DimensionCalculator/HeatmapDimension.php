@@ -31,18 +31,6 @@ class HeatmapDimension
     /** @var float $rightLongitude */
     protected $rightLongitude;
 
-    /** @var float $leftOffset */
-    protected $leftOffset;
-
-    /** @var float $rightOffset */
-    protected $rightOffset;
-
-    /** @var float $topOffset */
-    protected $topOffset;
-
-    /** @var float $bottomOffset */
-    protected $bottomOffset;
-
     public function __construct(?int $zoomLevel)
     {
         $this->zoomLevel = $zoomLevel;
@@ -152,54 +140,6 @@ class HeatmapDimension
     public function setRightLongitude(float $rightLongitude): HeatmapDimension
     {
         $this->rightLongitude = $rightLongitude;
-
-        return $this;
-    }
-
-    public function getLeftOffset(): float
-    {
-        return $this->leftOffset;
-    }
-
-    public function setLeftOffset(float $leftOffset): HeatmapDimension
-    {
-        $this->leftOffset = $leftOffset;
-
-        return $this;
-    }
-
-    public function getRightOffset(): float
-    {
-        return $this->rightOffset;
-    }
-
-    public function setRightOffset(float $rightOffset): HeatmapDimension
-    {
-        $this->rightOffset = $rightOffset;
-
-        return $this;
-    }
-
-    public function getTopOffset(): float
-    {
-        return $this->topOffset;
-    }
-
-    public function setTopOffset(float $topOffset): HeatmapDimension
-    {
-        $this->topOffset = $topOffset;
-
-        return $this;
-    }
-
-    public function getBottomOffset(): float
-    {
-        return $this->bottomOffset;
-    }
-
-    public function setBottomOffset(float $bottomOffset): HeatmapDimension
-    {
-        $this->bottomOffset = $bottomOffset;
 
         return $this;
     }

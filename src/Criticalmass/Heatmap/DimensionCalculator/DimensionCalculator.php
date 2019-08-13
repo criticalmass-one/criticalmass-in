@@ -60,12 +60,6 @@ class DimensionCalculator
             ->setLeftTile(CoordCalculator::longitudeToXTile($minLon, $zoomLevel))
             ->setRightTile(CoordCalculator::longitudeToXTile($maxLon, $zoomLevel));
 
-        $heatmapDimension
-            ->setLeftOffset($minLon - CoordCalculator::xTileToLongitude(CoordCalculator::longitudeToXTile($minLon, $zoomLevel), $zoomLevel))
-            ->setTopOffset(CoordCalculator::yTileToLatitude(CoordCalculator::latitudeToYTile($maxLat, $zoomLevel), $zoomLevel) - $maxLat)
-            ->setRightOffset(CoordCalculator::xTileToLongitude($heatmapDimension->getRightTile() + 1, $zoomLevel) - $maxLon)
-            ->setBottomOffset($minLat - CoordCalculator::yTileToLatitude($heatmapDimension->getBottomTile() + 1, $zoomLevel));
-
         return $heatmapDimension;
     }
 }
