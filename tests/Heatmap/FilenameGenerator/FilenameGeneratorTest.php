@@ -5,6 +5,10 @@ namespace Tests\Heatmap\FilenameGenerator;
 use App\Criticalmass\Heatmap\FilenameGenerator\FilenameGenerator;
 use App\Criticalmass\Heatmap\HeatmapInterface;
 use App\Criticalmass\Heatmap\Tile\Tile;
+use App\Entity\City;
+use App\Entity\Ride;
+use App\Entity\User;
+use Doctrine\Common\Collections\Collection;
 use PHPUnit\Framework\TestCase;
 
 class FilenameGeneratorTest extends TestCase
@@ -16,6 +20,22 @@ class FilenameGeneratorTest extends TestCase
             public function getIdentifier(): string
             {
                 return 'testidentifier';
+            }
+
+            public function getUser(): ?User
+            {
+            }
+
+            public function getCity(): ?City
+            {
+            }
+
+            public function getRide(): ?Ride
+            {
+            }
+
+            public function getTracks(): Collection
+            {
             }
         };
 

@@ -100,56 +100,6 @@ class DimensionCalculatorTest extends TestCase
         $this->assertEquals(169449, $heatmapDimension->getBottomTile());
     }
 
-    public function testOffsetLatLngsZoomLevel0(): void
-    {
-        $heatmapDimension = DimensionCalculator::calculate($this->createTestPathList(), 0);
-
-        $this->assertEquals(189.920702, $heatmapDimension->getLeftOffset());
-        $this->assertEquals(189.998042, $heatmapDimension->getRightOffset());
-        $this->assertEquals(31.469759779807, $heatmapDimension->getTopOffset());
-        $this->assertEquals(31.501612779807, $heatmapDimension->getBottomOffset());
-    }
-
-    public function testOffsetLatLngsZoomLevel1(): void
-    {
-        $heatmapDimension = DimensionCalculator::calculate($this->createTestPathList(), 1);
-
-        $this->assertEquals(9.920702, $heatmapDimension->getLeftOffset());
-        $this->assertEquals(9.998042, $heatmapDimension->getRightOffset());
-        $this->assertEquals(31.469759779807, $heatmapDimension->getTopOffset());
-        $this->assertEquals(31.501612779807, $heatmapDimension->getBottomOffset());
-    }
-
-    public function testOffsetLatLngsZoomLevel10(): void
-    {
-        $heatmapDimension = DimensionCalculator::calculate($this->createTestPathList(), 10);
-
-        $this->assertEquals(0.076952, $heatmapDimension->getLeftOffset());
-        $this->assertEquals(0.154292, $heatmapDimension->getRightOffset());
-        $this->assertEquals(0.16734179689897, $heatmapDimension->getTopOffset());
-        $this->assertEquals(0.19919479689898, $heatmapDimension->getBottomOffset());
-    }
-
-    public function testOffsetLatLngsZoomLevel15(): void
-    {
-        $heatmapDimension = DimensionCalculator::calculate($this->createTestPathList(), 15);
-
-        $this->assertEquals(0.000047703125000353, $heatmapDimension->getLeftOffset());
-        $this->assertEquals(0.00048340624999987, $heatmapDimension->getRightOffset());
-        $this->assertEquals(0.004614654559802, $heatmapDimension->getTopOffset());
-        $this->assertEquals(0.0038467855280757, $heatmapDimension->getBottomOffset());
-    }
-
-    public function testOffsetLatLngsZoomLevel19(): void
-    {
-        $heatmapDimension = DimensionCalculator::calculate($this->createTestPathList(), 19);
-
-        $this->assertEquals(0.000047703125000353, $heatmapDimension->getLeftOffset());
-        $this->assertEquals(0.00048340624999987, $heatmapDimension->getRightOffset());
-        $this->assertEquals(0.00013077709895271, $heatmapDimension->getTopOffset());
-        $this->assertEquals(0.00017536298834386, $heatmapDimension->getBottomOffset());
-    }
-
     protected function createTestPathList(): PathList
     {
         $icans = new Coord(53.554971, 9.986380);

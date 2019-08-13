@@ -64,28 +64,12 @@ class HeatmapDimensionTest extends TestCase
         $this->assertEquals(55.121, $heatmapDimension->getTopLatitude());
     }
 
-    public function testTopOffset(): void
-    {
-        $heatmapDimension = new HeatmapDimension(15);
-        $heatmapDimension->setTopOffset(1.634);
-
-        $this->assertEquals(1.634, $heatmapDimension->getTopOffset());
-    }
-
     public function testBottomTile(): void
     {
         $heatmapDimension = new HeatmapDimension(15);
         $heatmapDimension->setBottomTile(912);
 
         $this->assertEquals(912, $heatmapDimension->getBottomTile());
-    }
-
-    public function testBottomOffset(): void
-    {
-        $heatmapDimension = new HeatmapDimension(15);
-        $heatmapDimension->setBottomOffset(0.12);
-
-        $this->assertEquals(0.12, $heatmapDimension->getBottomOffset());
     }
 
     public function testBottomLatitude(): void
@@ -104,28 +88,12 @@ class HeatmapDimensionTest extends TestCase
         $this->assertEquals(9.131, $heatmapDimension->getLeftLongitude());
     }
 
-    public function testRightOffset(): void
-    {
-        $heatmapDimension = new HeatmapDimension(15);
-        $heatmapDimension->setRightOffset(0.001214);
-
-        $this->assertEquals(0.001214, $heatmapDimension->getRightOffset());
-    }
-
     public function testTopTile(): void
     {
         $heatmapDimension = new HeatmapDimension(15);
         $heatmapDimension->setTopTile(351);
 
         $this->assertEquals(351, $heatmapDimension->getTopTile());
-    }
-
-    public function testLeftOffset(): void
-    {
-        $heatmapDimension = new HeatmapDimension(15);
-        $heatmapDimension->setLeftOffset(0.26);
-
-        $this->assertEquals(0.26, $heatmapDimension->getLeftOffset());
     }
 
     public function testRightLongitude(): void
