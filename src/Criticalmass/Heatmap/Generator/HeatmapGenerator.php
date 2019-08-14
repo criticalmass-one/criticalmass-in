@@ -18,6 +18,9 @@ class HeatmapGenerator extends AbstractHeatmapGenerator
     /** @var Status $status */
     protected $status;
 
+    const MIN_ZOOMLEVEL = 5;
+    const MAX_ZOOMLEVEL = 18;
+
     public function generate(): HeatmapGeneratorInterface
     {
         $manager = $this->registry->getManager();
@@ -39,9 +42,7 @@ class HeatmapGenerator extends AbstractHeatmapGenerator
                 continue;
             }
 
-            foreach ($this->zoomLevels as $zoomLevel) {
-                $zoomLevel = (int) $zoomLevel;
-
+            for ($zoomLevel = self::MIN_ZOOMLEVEL; $zoomLevel <= self::MAX_ZOOMLEVEL; ++$zoomLevel) {
                 $heatmapDimension = DimensionCalculator::calculate($pathList, $zoomLevel);
 
                 $this->status

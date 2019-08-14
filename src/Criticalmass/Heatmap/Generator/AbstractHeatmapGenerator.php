@@ -35,9 +35,6 @@ abstract class AbstractHeatmapGenerator implements HeatmapGeneratorInterface
     /** @var CanvasFactory $canvasFactory */
     protected $canvasFactory;
 
-    /** @var array $zoomLevels */
-    protected $zoomLevels = [];
-
     /** @var int $paintedTracks */
     protected $paintedTracks = 0;
 
@@ -58,13 +55,6 @@ abstract class AbstractHeatmapGenerator implements HeatmapGeneratorInterface
     public function setHeatmap(HeatmapInterface $heatmap): HeatmapGeneratorInterface
     {
         $this->heatmap = $heatmap;
-
-        return $this;
-    }
-
-    public function setZoomLevels(array $zoomLevels): HeatmapGeneratorInterface
-    {
-        $this->zoomLevels = $zoomLevels;
 
         return $this;
     }

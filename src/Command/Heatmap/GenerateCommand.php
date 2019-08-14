@@ -30,7 +30,6 @@ class GenerateCommand extends Command
         $this
             ->setDescription('Generate heatmap')
             ->addArgument('identifier', InputArgument::REQUIRED, 'Heatmap identifier')
-            ->addArgument('zoom-levels', InputArgument::IS_ARRAY, 'Zoom levels')
             ->addOption('max-tracks', 'mt', InputOption::VALUE_REQUIRED, 'Number of tracks to paint per call', self::DEFAULT_TRACKS);
     }
 
@@ -48,7 +47,6 @@ class GenerateCommand extends Command
 
         $this->heatmapGenerator
             ->setHeatmap($heatmap)
-            ->setZoomLevels($input->getArgument('zoom-levels'))
             ->setMaxPaintedTracks((int) $input->getOption('max-tracks'))
             ->setCallback(function (Status $status) use ($output) {
                 $output->writeln(sprintf('Current zoom level: %d', $status->getZoomLevel()));

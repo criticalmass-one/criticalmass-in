@@ -8,7 +8,6 @@ interface HeatmapGeneratorInterface
 {
     public function generate(): HeatmapGeneratorInterface;
     public function setHeatmap(HeatmapInterface $heatmap): HeatmapGeneratorInterface;
-    public function setZoomLevels(array $zoomLevels): HeatmapGeneratorInterface;
     public function setPaintedTracks(int $paintedTracks): HeatmapGeneratorInterface;
     public function setMaxPaintedTracks(int $maxPaintedTracks): HeatmapGeneratorInterface;
     public function setCallback(callable $callback): HeatmapGeneratorInterface;
