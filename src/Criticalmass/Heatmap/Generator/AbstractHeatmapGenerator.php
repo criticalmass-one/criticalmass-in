@@ -44,6 +44,9 @@ abstract class AbstractHeatmapGenerator implements HeatmapGeneratorInterface
     /** @var int $maxPaintedTracks */
     protected $maxPaintedTracks = 0;
 
+    /** @var callable $callback */
+    protected $callback;
+
     public function __construct(RegistryInterface $registry, TrackToPositionListConverter $trackToPositionListConverter, CanvasCutter $canvasCutter, CanvasFactory $canvasFactory)
     {
         $this->registry = $registry;
@@ -76,6 +79,13 @@ abstract class AbstractHeatmapGenerator implements HeatmapGeneratorInterface
     public function setMaxPaintedTracks(int $maxPaintedTracks): HeatmapGeneratorInterface
     {
         $this->maxPaintedTracks = $maxPaintedTracks;
+
+        return $this;
+    }
+
+    public function setCallback(callable $callback): HeatmapGeneratorInterface
+    {
+        $this->callback = $callback;
 
         return $this;
     }
