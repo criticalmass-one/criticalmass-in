@@ -20,6 +20,8 @@ class HeatmapGenerator extends AbstractHeatmapGenerator
 
     public function generate(): HeatmapGeneratorInterface
     {
+        $manager = $this->registry->getManager();
+
         $trackList = $this->collectUnpaintedTracks();
 
         $this->status = new Status(count($trackList));
@@ -55,7 +57,6 @@ class HeatmapGenerator extends AbstractHeatmapGenerator
                 $this->canvasCutter->cutCanvas($this->heatmap, $canvas, $zoomLevel);
             }
 
-            $manager = $this->registry->getManager();
             $track->addHeatmap($this->heatmap);
 
             ++$this->paintedTracks;
