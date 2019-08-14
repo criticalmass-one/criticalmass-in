@@ -29,7 +29,9 @@ class CanvasCutter
             for ($y = $startY; $y < $startY + $canvas->getHeight(); ++$y) {
                 $tile = $canvas->getTile($x, $y);
 
-                $this->tilePersister->save($heatmap, $tile);
+                if ($tile) {
+                    $this->tilePersister->save($heatmap, $tile);
+                }
             }
         }
 
