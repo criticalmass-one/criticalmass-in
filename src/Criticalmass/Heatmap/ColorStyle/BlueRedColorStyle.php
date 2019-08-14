@@ -16,7 +16,7 @@ class BlueRedColorStyle extends AbstractColorStyle
         if (!$oldColor->isOpaque()) {
             return $this->getStartColor();
         }
-        
+
         $red = $oldColor->getValue(ColorInterface::COLOR_RED);
         $blue = $oldColor->getValue(ColorInterface::COLOR_BLUE);
 
