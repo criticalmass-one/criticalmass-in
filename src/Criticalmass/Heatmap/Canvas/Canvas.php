@@ -84,7 +84,7 @@ class Canvas
         $this->tiles[$x][$y] = $tile;
 
         $point = new Point(($x - $this->leftTileNumber) * Tile::SIZE, ($y - $this->topTileNumber) * Tile::SIZE);
-        $this->image->paste($tile->image(), $point);
+        //$this->image->paste($tile->image(), $point);
 
         return $this;
     }

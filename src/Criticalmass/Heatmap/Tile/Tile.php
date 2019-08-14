@@ -18,8 +18,11 @@ class Tile
     /** @var int $zoomLevel */
     protected $zoomLevel;
 
-    /** @var ImageInterface $image */
-    protected $image;
+    /** @var ImageInterface $oldImage */
+    protected $oldImage;
+
+    /** @var ImageInterface $newImage */
+    protected $newImage;
 
     public function __construct(int $tileX, int $tileY, int $zoomLevel = null)
     {
@@ -43,14 +46,26 @@ class Tile
         return $this->zoomLevel;
     }
 
-    public function image(): ImageInterface
+    public function oldImage(): ImageInterface
     {
-        return $this->image;
+        return $this->oldImage;
     }
 
-    public function setImage(ImageInterface $image): Tile
+    public function newImage(): ImageInterface
     {
-        $this->image = $image;
+        return $this->newImage;
+    }
+
+    public function setOldImage(ImageInterface $oldImage): Tile
+    {
+        $this->oldImage = $oldImage;
+
+        return $this;
+    }
+
+    public function setNewImage(ImageInterface $newImage): Tile
+    {
+        $this->newImage = $newImage;
 
         return $this;
     }

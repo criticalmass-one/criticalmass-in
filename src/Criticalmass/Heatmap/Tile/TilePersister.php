@@ -20,6 +20,6 @@ class TilePersister
     {
         $filename = FilenameGenerator::generateForTile($heatmap, $tile);
 
-        return $this->filesystem->put($filename, $tile->image()->get('png'));
+        return $this->filesystem->put($filename, $tile->newImage()->get('png'));
     }
 }

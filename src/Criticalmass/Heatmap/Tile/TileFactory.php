@@ -18,17 +18,19 @@ class TileFactory
         $this->imagine = (new Imagine());
     }
 
-    public function create(int $tileX, int $tileY, int $zoomLevel, ImageInterface $image = null): Tile
+    public function create(int $tileX, int $tileY, int $zoomLevel, ImageInterface $oldImage = null): Tile
     {
         $tile = new Tile($tileX, $tileY, $zoomLevel);
 
-        if (!$image) {
+        if (!$oldImage) {
             $box = new Box(Tile::SIZE, Tile::SIZE);
             $transparency = (new RGBPalette())->color('#FFFFFF', 0);
-            $image = $this->imagine->create($box, $transparency);
+            $oldImage = $this->imagine->create($box, $transparency);
         }
 
-        $tile->setImage($image);
+        $tile
+            ->setOldImage($oldImage)
+            ->setNewImage($oldImage->copy());
 
         return $tile;
     }
