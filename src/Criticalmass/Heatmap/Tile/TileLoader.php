@@ -22,7 +22,7 @@ class TileLoader
     {
         $tile = new Tile($tileX, $tileY, $zoomLevel);
 
-        $filename = FilenameGenerator::generate($heatmap, $tile);
+        $filename = FilenameGenerator::generateForXYZ($heatmap, $tileX, $tileY, $zoomLevel);
 
         if (!$this->filesystem->has($filename)) {
             $box = new Box(Tile::SIZE, Tile::SIZE);

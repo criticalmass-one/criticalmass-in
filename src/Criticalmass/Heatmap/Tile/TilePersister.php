@@ -18,7 +18,7 @@ class TilePersister
 
     public function save(HeatmapInterface $heatmap, Tile $tile): bool
     {
-        $filename = FilenameGenerator::generate($heatmap, $tile);
+        $filename = FilenameGenerator::generateForTile($heatmap, $tile);
 
         return $this->filesystem->put($filename, $tile->image()->get('png'));
     }
