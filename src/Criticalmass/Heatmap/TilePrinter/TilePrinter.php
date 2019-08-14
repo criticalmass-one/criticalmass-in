@@ -3,17 +3,25 @@
 namespace App\Criticalmass\Heatmap\TilePrinter;
 
 use App\Criticalmass\Heatmap\Brush\Brush;
+use App\Criticalmass\Heatmap\ColorStyle\ColorStyleInterface;
 use App\Criticalmass\Heatmap\CoordCalculator\CoordCalculator;
 use App\Criticalmass\Heatmap\Pipette\Pipette;
 use App\Criticalmass\Heatmap\Tile\Tile;
 use Caldera\GeoBasic\Coord\CoordInterface;
-use Imagine\Image\Palette\RGB as RGBPalette;
 use Imagine\Image\Point;
 use Imagine\Image\PointInterface;
 
 class TilePrinter
 {
-    public static function printTile(Tile $tile, CoordInterface $coord): Tile
+    /** @var ColorStyleInterface $colorStyle */
+    protected $colorStyle;
+
+    public function __construct(ColorStyleInterface $colorStyle)
+    {
+        $this->colorStyle = $colorStyle;
+    }
+
+    public function printTile(Tile $tile, CoordInterface $coord): Tile
     {
         $tileTopLatitude = CoordCalculator::yTileToLatitude($tile->getTileY(), $tile->getZoomLevel());
         $tileLeftLongitude = CoordCalculator::xTileToLongitude($tile->getTileX(), $tile->getZoomLevel());
@@ -25,29 +33,19 @@ class TilePrinter
 
         $point = new Point($x, $y);
 
-        $tile = self::draw($tile, $point);
+        $tile = $this->draw($tile, $point);
 
         return $tile;
     }
 
-    protected static function draw(Tile $tile, PointInterface $point): Tile
+    protected function draw(Tile $tile, PointInterface $point): Tile
     {
         try {
-            $white = (new RGBPalette())->color('#FFFFFF');
-            $red = (new RGBPalette())->color('#FF0000');
-            $blue = (new RGBPalette())->color('#0000FF');
+            $oldColor = Pipette::getColor($tile, $point);
 
-            try {
-                $oldColor = Pipette::getColor($tile, $point);
+            $newColor = $this->colorStyle->colorize($oldColor);
 
-                if ($oldColor !== $white) {
-                    Brush::paint($tile, $point, $red);
-                } else {
-                    Brush::paint($tile, $point, $blue);
-                }
-            } catch (\RuntimeException $exception) {
-                //Brush::paint($canvas, $point, $blue);
-            }
+            Brush::paint($tile, $point, $newColor);
         } catch (\InvalidArgumentException $exception) {
 
         }

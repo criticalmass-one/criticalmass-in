@@ -102,7 +102,7 @@ class HeatmapGenerator extends AbstractHeatmapGenerator
             $tileY = CoordCalculator::latitudeToYTile($path->getStartCoord()->getLatitude(), $heatmapDimension->getZoomLevel());
 
             if ($tile = $canvas->getTile($tileX, $tileY)) {
-                TilePrinter::printTile($tile, $path->getStartCoord());
+                $this->tilePrinter->printTile($tile, $path->getStartCoord());
             }
         }
     }
