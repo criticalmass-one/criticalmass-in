@@ -17,6 +17,8 @@ class DimensionCalculator
     {
         $heatmapDimension = new HeatmapDimension($zoomLevel);
 
+        $pathList->rewind();
+
         /** @var Path $path */
         $path = $pathList->current();
 
