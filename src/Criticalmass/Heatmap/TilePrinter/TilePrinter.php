@@ -5,7 +5,7 @@ namespace App\Criticalmass\Heatmap\TilePrinter;
 use App\Criticalmass\Heatmap\Brush\Brush;
 use App\Criticalmass\Heatmap\ColorStyle\ColorStyleInterface;
 use App\Criticalmass\Heatmap\CoordCalculator\CoordCalculator;
-use App\Criticalmass\Heatmap\Pipette\Pipette;
+use App\Criticalmass\Heatmap\Pipette\AveragePipette;
 use App\Criticalmass\Heatmap\Tile\Tile;
 use Caldera\GeoBasic\Coord\CoordInterface;
 use Imagine\Image\Point;
@@ -41,7 +41,7 @@ class TilePrinter
     protected function draw(Tile $tile, PointInterface $point): Tile
     {
         try {
-            $oldColor = Pipette::getColor($tile, $point);
+            $oldColor = AveragePipette::getColor($tile, $point);
 
             $newColor = $this->colorStyle->colorize($oldColor);
 
