@@ -5,10 +5,7 @@ namespace App\Criticalmass\Heatmap\CanvasCutter;
 use App\Criticalmass\Heatmap\Canvas\Canvas;
 use App\Criticalmass\Heatmap\CoordCalculator\CoordCalculator;
 use App\Criticalmass\Heatmap\HeatmapInterface;
-use App\Criticalmass\Heatmap\Tile\Tile;
 use App\Criticalmass\Heatmap\Tile\TilePersister;
-use Imagine\Image\Box;
-use Imagine\Image\Point;
 
 class CanvasCutter
 {

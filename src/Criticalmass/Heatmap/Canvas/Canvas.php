@@ -27,8 +27,6 @@ class Canvas
     /** @var int $leftTileNumber */
     protected $leftTileNumber;
 
-    protected $image;
-
     /** @var array $tiles */
     protected $tiles = [];
 
@@ -41,9 +39,6 @@ class Canvas
         $this->leftTileNumber = $leftTileNumber;
 
         $this->topLeftCoord = $topLeftCoord;
-
-        $box = new Box(256 * $this->width, 256 * $this->height);
-        $this->image = (new Imagine())->create($box);
     }
 
     public function getWidth(): int
@@ -54,11 +49,6 @@ class Canvas
     public function getHeight(): int
     {
         return $this->height;
-    }
-
-    public function image(): ImageInterface
-    {
-        return $this->image;
     }
 
     public function getTopLeftCoord(): ?CoordInterface
@@ -82,9 +72,6 @@ class Canvas
         }
 
         $this->tiles[$x][$y] = $tile;
-
-        $point = new Point(($x - $this->leftTileNumber) * Tile::SIZE, ($y - $this->topTileNumber) * Tile::SIZE);
-        //$this->image->paste($tile->image(), $point);
 
         return $this;
     }

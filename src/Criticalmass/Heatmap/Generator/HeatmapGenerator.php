@@ -9,7 +9,6 @@ use App\Criticalmass\Heatmap\DimensionCalculator\HeatmapDimension;
 use App\Criticalmass\Heatmap\Path\Path;
 use App\Criticalmass\Heatmap\Path\PathList;
 use App\Criticalmass\Heatmap\Path\PositionListToPathListConverter;
-use App\Criticalmass\Heatmap\TilePrinter\TilePrinter;
 use App\Criticalmass\Util\ClassUtil;
 use App\Entity\Track;
 
@@ -59,12 +58,11 @@ class HeatmapGenerator extends AbstractHeatmapGenerator
             }
 
             $track->addHeatmap($this->heatmap);
+            $manager->flush();
 
             ++$this->paintedTracks;
             $this->status->incPaintedTracks();
         }
-
-        $manager->flush();
 
         return $this;
     }

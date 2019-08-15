@@ -7,7 +7,6 @@ use App\Criticalmass\Heatmap\Generator\Status;
 use App\Entity\Heatmap;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -15,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class GenerateCommand extends Command
 {
-    protected const DEFAULT_TRACKS = 3;
+    protected const DEFAULT_TRACKS = 1;
 
     protected static $defaultName = 'criticalmass:heatmap:generate';
 
