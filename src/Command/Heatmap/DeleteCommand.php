@@ -29,15 +29,27 @@ class DeleteCommand extends Command
             ->addOption('delete-tiles', 'dt', InputOption::VALUE_NONE, 'Only remove tiles and keep heatmap');
     }
 
-    public function __construct(string $name = null, HeatmapRemoverInterface $heatmapRemover)
+    public function __construct(string $name = null, HeatmapRemoverInterface $heatmapRemover, RegistryInterface $registry)
     {
         $this->heatmapRemover = $heatmapRemover;
+        $this->registry = $registry;
 
         parent::__construct($name);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
+        /** @var Heatmap $heatmap */
         $heatmap = $this->registry->getRepository(Heatmap::class)->findOneByIdentifier($input->getArgument('identifier'));
+
+        if ($input->getOption('delete-tiles')) {
+            $this->heatmapRemover->flush($heatmap);
+
+            $output->writeln(sprintf('Removed heatmap <info>%s</info>', $heatmap->getIdentifier()));
+        } else {
+            $this->heatmapRemover->remove($heatmap);
+
+            $output->writeln(sprintf('Flushed heatmap <info>%s</info>', $heatmap->getIdentifier()));
+        }
     }
 }
