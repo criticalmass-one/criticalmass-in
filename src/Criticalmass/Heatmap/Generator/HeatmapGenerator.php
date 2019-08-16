@@ -9,6 +9,7 @@ use App\Criticalmass\Heatmap\DimensionCalculator\HeatmapDimension;
 use App\Criticalmass\Heatmap\Path\Path;
 use App\Criticalmass\Heatmap\Path\PathList;
 use App\Criticalmass\Heatmap\Path\PositionListToPathListConverter;
+use App\Criticalmass\Heatmap\Status\Status;
 use App\Criticalmass\Util\ClassUtil;
 use App\Entity\Track;
 
@@ -46,7 +47,8 @@ class HeatmapGenerator extends AbstractHeatmapGenerator
 
                 $this->status
                     ->setZoomLevel($zoomLevel)
-                    ->resetPaintedTiles()->setMaxTiles($heatmapDimension->getWidth() * $heatmapDimension->getHeight());
+                    ->resetPaintedTiles()->setMaxTiles($heatmapDimension->getWidth() * $heatmapDimension->getHeight())
+                    ->setMemoryUsage(memory_get_usage(true));
 
                 call_user_func($this->callback, $this->status);
 
@@ -55,6 +57,8 @@ class HeatmapGenerator extends AbstractHeatmapGenerator
                 $this->paintPathList($pathList, $canvas, $heatmapDimension);
 
                 $this->canvasCutter->cutCanvas($this->heatmap, $canvas, $zoomLevel);
+
+                unset($canvas);
             }
 
             $track->addHeatmap($this->heatmap);

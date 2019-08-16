@@ -11,21 +11,21 @@ class BlueRedColorStyle extends AbstractColorStyle
         return $this->palette->color([0, 0, 255]);
     }
 
-    public function colorize(ColorInterface $oldColor): ColorInterface
+    public function colorize(ColorInterface $oldColor = null): ColorInterface
     {
-        if (!$oldColor->isOpaque()) {
+        if (!$oldColor) {
             return $this->getStartColor();
         }
 
         $red = $oldColor->getValue(ColorInterface::COLOR_RED);
         $blue = $oldColor->getValue(ColorInterface::COLOR_BLUE);
 
-        if ($red <= 245) {
-            $red += 10;
+        if ($red <= 205) {
+            $red += 50;
         }
 
-        if ($blue >= 10) {
-            $blue -= 10;
+        if ($blue >= 50) {
+            $blue -= 50;
         }
 
         return $this->palette->color([$red, 0, $blue]);

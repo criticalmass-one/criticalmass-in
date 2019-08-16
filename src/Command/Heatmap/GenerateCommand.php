@@ -3,7 +3,7 @@
 namespace App\Command\Heatmap;
 
 use App\Criticalmass\Heatmap\Generator\HeatmapGenerator;
-use App\Criticalmass\Heatmap\Generator\Status;
+use App\Criticalmass\Heatmap\Status\Status;
 use App\Entity\Heatmap;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
@@ -48,9 +48,10 @@ class GenerateCommand extends Command
             ->setHeatmap($heatmap)
             ->setMaxPaintedTracks((int) $input->getOption('max-tracks'))
             ->setCallback(function (Status $status) use ($output) {
-                $output->writeln(sprintf('Current zoom level: %d', $status->getZoomLevel()));
-                $output->writeln(sprintf('Current tiles: %d / %d', $status->getPaintedTiles(), $status->getMaxTiles()));
-                $output->writeln(sprintf('Current tracks: %d / %d', $status->getPaintedTracks(), $status->getMaxTracks()));
+                $output->writeln(sprintf('Current zoom level: <comment>%d</comment>', $status->getZoomLevel()));
+                $output->writeln(sprintf('Current tiles: <comment>%d / %d</comment>', $status->getPaintedTiles(), $status->getMaxTiles()));
+                $output->writeln(sprintf('Current tracks: <comment>%d / %d</comment>', $status->getPaintedTracks(), $status->getMaxTracks()));
+                $output->writeln(sprintf('Current memory usage: <comment>%d megabytes</comment>', $status->getMemoryUsage() / 1024 / 1024));
             })
             ->generate();
     }

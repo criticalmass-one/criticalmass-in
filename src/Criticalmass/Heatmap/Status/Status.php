@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\Heatmap\Generator;
+namespace App\Criticalmass\Heatmap\Status;
 
 class Status
 {
@@ -18,6 +18,9 @@ class Status
 
     /** @var int $paintedTiles */
     protected $paintedTiles = 0;
+
+    /** @var int $memoryUsage */
+    protected $memoryUsage = 0;
 
     public function __construct(int $maxTracks)
     {
@@ -82,5 +85,17 @@ class Status
     public function getPaintedTiles(): int
     {
         return $this->paintedTiles;
+    }
+
+    public function getMemoryUsage(): int
+    {
+        return $this->memoryUsage;
+    }
+
+    public function setMemoryUsage(int $memoryUsage): Status
+    {
+        $this->memoryUsage = $memoryUsage;
+
+        return $this;
     }
 }
