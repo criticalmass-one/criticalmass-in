@@ -21,7 +21,7 @@ class DeleteCommand extends Command
     /** @var RegistryInterface $registry */
     protected $registry;
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Delete heatmap')
@@ -36,7 +36,7 @@ class DeleteCommand extends Command
         parent::__construct($name);
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $heatmap = $this->registry->getRepository(Heatmap::class)->findOneByIdentifier($input->getArgument('identifier'));
     }
