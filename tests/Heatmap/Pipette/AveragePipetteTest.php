@@ -70,6 +70,24 @@ class AveragePipetteTest extends TestCase
         $this->assertEquals($this->createColor(51, 52, 53), $actualColor);
     }
 
+    public function testTransparentBackgroundReturnsNull(): void
+    {
+        $image = $this->createMock(ImageInterface::class);
+        $tile = new Tile(5, 5, 10);
+        $tile->setOldImage($image);
+
+        $color = $this->createColor(255, 127, 0, 0);
+
+        $image
+            ->expects($this->exactly(9))
+            ->method($this->equalTo('getColorAt'))
+            ->will($this->returnValue($color));
+
+        $point = new Point(5, 5);
+
+        $this->assertNull(AveragePipette::getColor($tile, $point));
+    }
+
     protected function createColor(int $red, int $green, int $blue, int $alpha = 100): ColorInterface
     {
         return (new RGB())->color([$red, $green, $blue], $alpha);

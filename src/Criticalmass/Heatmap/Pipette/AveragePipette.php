@@ -10,18 +10,26 @@ use Imagine\Image\PointInterface;
 
 class AveragePipette extends Pipette
 {
-    public static function getColor(Tile $tile, PointInterface $point, int $radius = 1): ColorInterface
+    public static function getColor(Tile $tile, PointInterface $point, int $radius = 1): ?ColorInterface
     {
         $colorList = [];
 
         for ($x = $point->getX() - $radius; $x <= $point->getX() + $radius; ++$x) {
             for ($y = $point->getY() - $radius; $y <= $point->getY() + $radius; ++$y) {
                 try {
-                    $colorList[] = $tile->oldImage()->getColorAt(new Point($x, $y));
+                    $color = $tile->oldImage()->getColorAt(new Point($x, $y));
+
+                    if ($color->isOpaque()) {
+                        $colorList[] = $color;
+                    }
                 } catch (\Exception $exception) {
 
                 }
             }
+        }
+
+        if (0 === count($colorList)) {
+            return null;
         }
 
         $averageColor = [
@@ -38,7 +46,7 @@ class AveragePipette extends Pipette
         }
 
         foreach ($averageColor as $component => $value) {
-            $averageColor[$component] = $value / count($colorList);
+            $averageColor[$component] = (int) round($value / count($colorList));
         }
 
         return (new RGB())->color($averageColor);

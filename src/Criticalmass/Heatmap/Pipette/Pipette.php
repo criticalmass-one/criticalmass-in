@@ -13,7 +13,7 @@ class Pipette
 
     }
 
-    public static function getColor(Tile $tile, PointInterface $point): ColorInterface
+    public static function getColor(Tile $tile, PointInterface $point): ?ColorInterface
     {
         return $tile->oldImage()->getColorAt($point);
     }

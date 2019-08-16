@@ -6,6 +6,6 @@ use Imagine\Image\Palette\Color\ColorInterface;
 
 interface ColorStyleInterface
 {
-    public function colorize(ColorInterface $color): ColorInterface;
+    public function colorize(ColorInterface $color = null): ColorInterface;
     public function getStartColor(): ColorInterface;
 }
