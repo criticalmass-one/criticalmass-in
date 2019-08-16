@@ -42,12 +42,12 @@ class DeleteCommand extends Command
         /** @var Heatmap $heatmap */
         $heatmap = $this->registry->getRepository(Heatmap::class)->findOneByIdentifier($input->getArgument('identifier'));
 
-        if ($input->getOption('delete-tiles')) {
-            $this->heatmapRemover->flush($heatmap);
+        if (!$input->getOption('delete-tiles')) {
+            $this->heatmapRemover->remove($heatmap);
 
             $output->writeln(sprintf('Removed heatmap <info>%s</info>', $heatmap->getIdentifier()));
         } else {
-            $this->heatmapRemover->remove($heatmap);
+            $this->heatmapRemover->flush($heatmap);
 
             $output->writeln(sprintf('Flushed heatmap <info>%s</info>', $heatmap->getIdentifier()));
         }

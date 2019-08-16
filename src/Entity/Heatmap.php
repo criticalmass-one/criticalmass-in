@@ -26,17 +26,17 @@ class Heatmap implements HeatmapInterface
     private $identifier;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="heatmap", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="heatmap", cascade={"persist"})
      */
     private $user;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Ride", inversedBy="heatmap", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Ride", inversedBy="heatmap", cascade={"persist"})
      */
     private $ride;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\City", inversedBy="heatmap", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\City", inversedBy="heatmap", cascade={"persist"})
      */
     private $city;
 

@@ -35,10 +35,10 @@ class HeatmapRemover implements HeatmapRemoverInterface
 
     public function flush(Heatmap $heatmap): HeatmapRemoverInterface
     {
-        $this->filesystem->delete($heatmap->getIdentifier());
+        $this->filesystem->deleteDir($heatmap->getIdentifier());
 
         $manager = $this->registry->getManager();
-        
+
         foreach ($heatmap->getTracks() as $track) {
             $heatmap->getTracks()->removeElement($track);
         }
