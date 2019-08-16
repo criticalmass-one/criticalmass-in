@@ -18,6 +18,6 @@ class Brush
     {
         $box = new Box(2, 2);
 
-        $tile->newImage()->draw()->ellipse($point, $box, $color);
+        $tile->newImage()->draw()->ellipse($point, $box, $color, true);
     }
 }
