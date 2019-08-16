@@ -18,10 +18,18 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div id="heatmap" style="height: 0.75vh;">
+                <div id="heatmap" style="height: 75vh;">
 
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        CriticalMass.loadModule('HeatmapPage', null, null, function (heatmapPage) {
+            heatmapPage.setHeatmapIdentifier('{{ city.heatmap.identifier }}');
+            heatmapPage.setMapCenter({{ city.latitude }}, {{ city.longitude }});
+            heatmapPage.init();
+        });
+    </script>
 {% endblock %}
