@@ -15,9 +15,6 @@ use App\Entity\Track;
 
 class HeatmapGenerator extends AbstractHeatmapGenerator
 {
-    /** @var Status $status */
-    protected $status;
-
     const MIN_ZOOMLEVEL = 5;
     const MAX_ZOOMLEVEL = 18;
 
@@ -27,7 +24,7 @@ class HeatmapGenerator extends AbstractHeatmapGenerator
 
         $trackList = $this->collectUnpaintedTracks();
 
-        $this->status = new Status(count($trackList));
+        $status = new Status(count($trackList));
 
         /** @var Track $track */
         foreach ($trackList as $track) {
@@ -45,12 +42,11 @@ class HeatmapGenerator extends AbstractHeatmapGenerator
             for ($zoomLevel = self::MIN_ZOOMLEVEL; $zoomLevel <= self::MAX_ZOOMLEVEL; ++$zoomLevel) {
                 $heatmapDimension = DimensionCalculator::calculate($pathList, $zoomLevel);
 
-                $this->status
-                    ->setZoomLevel($zoomLevel)
+                $status = $status->setZoomLevel($zoomLevel)
                     ->resetPaintedTiles()->setMaxTiles($heatmapDimension->getWidth() * $heatmapDimension->getHeight())
                     ->setMemoryUsage(memory_get_usage(true));
 
-                call_user_func($this->callback, $this->status);
+                $this->statusCallback->onZoomLevel($status);
 
                 $canvas = $this->canvasFactory->create($heatmapDimension, $this->heatmap, $zoomLevel);
 
@@ -65,7 +61,8 @@ class HeatmapGenerator extends AbstractHeatmapGenerator
             $manager->flush();
 
             ++$this->paintedTracks;
-            $this->status->incPaintedTracks();
+
+            $status->incPaintedTracks();
         }
 
         return $this;

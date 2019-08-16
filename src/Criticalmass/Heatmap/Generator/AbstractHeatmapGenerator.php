@@ -13,6 +13,8 @@ use App\Criticalmass\Heatmap\HeatmapInterface;
 use App\Criticalmass\Heatmap\Path\Path;
 use App\Criticalmass\Heatmap\Path\PathList;
 use App\Criticalmass\Heatmap\Path\PositionListToPathListConverter;
+use App\Criticalmass\Heatmap\Status\Status;
+use App\Criticalmass\Heatmap\Status\StatusCallback;
 use App\Criticalmass\Heatmap\TilePrinter\TilePrinter;
 use App\Criticalmass\Util\ClassUtil;
 use App\Entity\Track;
@@ -41,8 +43,8 @@ abstract class AbstractHeatmapGenerator implements HeatmapGeneratorInterface
     /** @var int $maxPaintedTracks */
     protected $maxPaintedTracks = 0;
 
-    /** @var callable $callback */
-    protected $callback;
+    /** @var StatusCallback $statusCallback */
+    protected $statusCallback;
 
     /** @var TilePrinter $tilePrinter */
     protected $tilePrinter;
@@ -77,9 +79,9 @@ abstract class AbstractHeatmapGenerator implements HeatmapGeneratorInterface
         return $this;
     }
 
-    public function setCallback(callable $callback): HeatmapGeneratorInterface
+    public function setStatusCallback(StatusCallback $statusCallback): HeatmapGeneratorInterface
     {
-        $this->callback = $callback;
+        $this->statusCallback = $statusCallback;
 
         return $this;
     }

@@ -3,6 +3,7 @@
 namespace App\Criticalmass\Heatmap\Generator;
 
 use App\Criticalmass\Heatmap\HeatmapInterface;
+use App\Criticalmass\Heatmap\Status\StatusCallback;
 
 interface HeatmapGeneratorInterface
 {
@@ -10,5 +11,5 @@ interface HeatmapGeneratorInterface
     public function setHeatmap(HeatmapInterface $heatmap): HeatmapGeneratorInterface;
     public function setPaintedTracks(int $paintedTracks): HeatmapGeneratorInterface;
     public function setMaxPaintedTracks(int $maxPaintedTracks): HeatmapGeneratorInterface;
-    public function setCallback(callable $callback): HeatmapGeneratorInterface;
+    public function setStatusCallback(StatusCallback $statusCallback): HeatmapGeneratorInterface;
 }
