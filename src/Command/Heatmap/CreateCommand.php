@@ -53,8 +53,7 @@ class CreateCommand extends Command
             $this->heatmapFactory->withCity($citySlug->getCity());
         }
 
-        $heatmap = $this->heatmapFactory
-            ->build();
+        $heatmap = $this->heatmapFactory->build();
 
         $manager = $this->registry->getManager();
 

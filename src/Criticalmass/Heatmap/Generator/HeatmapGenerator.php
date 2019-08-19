@@ -22,7 +22,7 @@ class HeatmapGenerator extends AbstractHeatmapGenerator
     {
         $manager = $this->registry->getManager();
 
-        $trackList = $this->collectUnpaintedTracks();
+        $trackList = $this->registry->getRepository(Track::class)->findUnpaintedTracksForHeatmap($this->heatmap);
 
         $status = new Status(count($trackList));
 
@@ -66,27 +66,6 @@ class HeatmapGenerator extends AbstractHeatmapGenerator
         }
 
         return $this;
-    }
-
-    protected function collectUnpaintedTracks(): array
-    {
-        $parentEntity = $this->heatmap->getUser() ?? $this->heatmap->getCity() ?? $this->heatmap->getRide();
-
-        $className = ClassUtil::getShortname($parentEntity);
-
-        $repositoryMethod = sprintf('findBy%s', $className);
-
-        $trackList = $this->registry->getRepository(Track::class)->$repositoryMethod($parentEntity);
-
-        /** TODO move this check into repository */
-        /** @var Track $track */
-        foreach ($trackList as $key => $track) {
-            if ($track->getHeatmaps()->contains($this->heatmap)) {
-                unset($trackList[$key]);
-            }
-        }
-
-        return $trackList;
     }
 
     protected function paintPathList(PathList $pathList, Canvas $canvas, HeatmapDimension $heatmapDimension): void

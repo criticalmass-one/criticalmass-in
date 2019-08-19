@@ -3,15 +3,17 @@
 namespace App\Repository;
 
 use App\Entity\City;
+use App\Entity\Heatmap;
 use App\Entity\Ride;
 use App\Entity\Track;
 use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
+use function Doctrine\ORM\QueryBuilder;
 
 class TrackRepository extends EntityRepository
 {
-    /** @deprecated  */
+    /** @deprecated */
     public function findTracksByRide(Ride $ride): array
     {
         $builder = $this->createQueryBuilder('t');
@@ -107,7 +109,7 @@ class TrackRepository extends EntityRepository
 
         $query = $builder->getQuery();
 
-        return (int) $query->getSingleScalarResult();
+        return (int)$query->getSingleScalarResult();
     }
 
     public function findByCity(City $city): array
@@ -186,5 +188,29 @@ class TrackRepository extends EntityRepository
 
         return $builder->getQuery();
     }
-}
 
+    public function findUnpaintedTracksForHeatmap(Heatmap $heatmap, int $maxResults = 5): array
+    {
+        $qb = $this->createQueryBuilder('t');
+
+        if ($heatmap->getRide()) {
+            $qb->join('t.ride', 'r')
+                ->join('r.heatmap', 'h');
+        }
+
+        if ($heatmap->getCity()) {
+            $qb->join('t.ride', 'r')
+                ->join('r.city', 'c')
+                ->join('c.heatmap', 'h');
+        }
+
+        $qb
+            ->andWhere($qb->expr()->notIn('t.heatmaps', ':heatmap')) // TODO
+            ->andWhere($qb->expr()->eq('h', ':heatmap'))
+            ->orderBy('r.dateTime')
+            ->setMaxResults($maxResults)
+            ->setParameter('heatmap', $heatmap);
+
+        return $qb->getQuery()->getResult();
+    }
+}
