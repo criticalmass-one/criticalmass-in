@@ -214,14 +214,15 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
     protected $stravaActitityId;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Heatmap", mappedBy="tracks")
+     * @ORM\OneToMany(targetEntity="App\Entity\HeatmapTrack", mappedBy="track")
      */
-    private $heatmaps;
+    private $heatmapTracks;
 
     public function __construct()
     {
         parent::__construct();
         $this->heatmaps = new ArrayCollection();
+        $this->heatmapTracks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -542,28 +543,31 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
     }
 
     /**
-     * @return Collection|Heatmap[]
+     * @return Collection|HeatmapTrack[]
      */
-    public function getHeatmaps(): Collection
+    public function getHeatmapTracks(): Collection
     {
-        return $this->heatmaps;
+        return $this->heatmapTracks;
     }
 
-    public function addHeatmap(Heatmap $heatmap): self
+    public function addHeatmapTrack(HeatmapTrack $heatmapTrack): self
     {
-        if (!$this->heatmaps->contains($heatmap)) {
-            $this->heatmaps[] = $heatmap;
-            $heatmap->addTrack($this);
+        if (!$this->heatmapTracks->contains($heatmapTrack)) {
+            $this->heatmapTracks[] = $heatmapTrack;
+            $heatmapTrack->setTrack($this);
         }
 
         return $this;
     }
 
-    public function removeHeatmap(Heatmap $heatmap): self
+    public function removeHeatmapTrack(HeatmapTrack $heatmapTrack): self
     {
-        if ($this->heatmaps->contains($heatmap)) {
-            $this->heatmaps->removeElement($heatmap);
-            $heatmap->removeTrack($this);
+        if ($this->heatmapTracks->contains($heatmapTrack)) {
+            $this->heatmapTracks->removeElement($heatmapTrack);
+            // set the owning side to null (unless already changed)
+            if ($heatmapTrack->getTrack() === $this) {
+                $heatmapTrack->setTrack(null);
+            }
         }
 
         return $this;

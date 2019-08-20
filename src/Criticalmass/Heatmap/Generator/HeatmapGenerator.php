@@ -22,7 +22,7 @@ class HeatmapGenerator extends AbstractHeatmapGenerator
     {
         $manager = $this->registry->getManager();
 
-        $trackList = $this->registry->getRepository(Track::class)->findUnpaintedTracksForHeatmap($this->heatmap);
+        $trackList = $this->registry->getRepository(Track::class)->findUnpaintedTracksForHeatmap($this->heatmap, 1);
 
         $status = new Status(count($trackList));
 

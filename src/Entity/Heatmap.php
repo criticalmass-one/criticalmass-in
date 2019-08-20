@@ -41,13 +41,14 @@ class Heatmap implements HeatmapInterface
     private $city;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Track", inversedBy="heatmaps")
+     * @ORM\OneToMany(targetEntity="App\Entity\HeatmapTrack", mappedBy="heatmap")
      */
-    private $tracks;
+    private $heatmapTracks;
 
     public function __construct()
     {
         $this->tracks = new ArrayCollection();
+        $this->heatmapTracks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -104,26 +105,31 @@ class Heatmap implements HeatmapInterface
     }
 
     /**
-     * @return Collection|Track[]
+     * @return Collection|HeatmapTrack[]
      */
-    public function getTracks(): Collection
+    public function getHeatmapTracks(): Collection
     {
-        return $this->tracks;
+        return $this->heatmapTracks;
     }
 
-    public function addTrack(Track $track): self
+    public function addHeatmapTrack(HeatmapTrack $heatmapTrack): self
     {
-        if (!$this->tracks->contains($track)) {
-            $this->tracks[] = $track;
+        if (!$this->heatmapTracks->contains($heatmapTrack)) {
+            $this->heatmapTracks[] = $heatmapTrack;
+            $heatmapTrack->setHeatmap($this);
         }
 
         return $this;
     }
 
-    public function removeTrack(Track $track): self
+    public function removeHeatmapTrack(HeatmapTrack $heatmapTrack): self
     {
-        if ($this->tracks->contains($track)) {
-            $this->tracks->removeElement($track);
+        if ($this->heatmapTracks->contains($heatmapTrack)) {
+            $this->heatmapTracks->removeElement($heatmapTrack);
+            // set the owning side to null (unless already changed)
+            if ($heatmapTrack->getHeatmap() === $this) {
+                $heatmapTrack->setHeatmap(null);
+            }
         }
 
         return $this;

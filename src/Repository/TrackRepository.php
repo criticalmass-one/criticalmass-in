@@ -205,7 +205,6 @@ class TrackRepository extends EntityRepository
         }
 
         $qb
-            ->andWhere($qb->expr()->notIn('t.heatmaps', ':heatmap')) // TODO
             ->andWhere($qb->expr()->eq('h', ':heatmap'))
             ->orderBy('r.dateTime')
             ->setMaxResults($maxResults)

@@ -13,5 +13,5 @@ interface HeatmapInterface
     public function getUser(): ?User;
     public function getCity(): ?City;
     public function getRide(): ?Ride;
-    public function getTracks(): Collection;
+    public function getHeatmapTracks(): Collection;
 }
