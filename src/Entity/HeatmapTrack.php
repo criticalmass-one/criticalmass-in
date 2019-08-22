@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\Table(name="heatmap_track")
  * @ORM\Entity(repositoryClass="App\Repository\HeatmapTrackRepository")
  */
 class HeatmapTrack

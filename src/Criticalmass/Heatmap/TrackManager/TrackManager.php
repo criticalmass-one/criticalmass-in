@@ -4,7 +4,6 @@ namespace App\Criticalmass\Heatmap\TrackManager;
 
 use App\Criticalmass\Heatmap\HeatmapTrackFactory\HeatmapTrackFactoryInterface;
 use App\Entity\Heatmap;
-use App\Entity\HeatmapTrack;
 use App\Entity\Track;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
