@@ -10,7 +10,6 @@ use App\Criticalmass\Heatmap\Path\Path;
 use App\Criticalmass\Heatmap\Path\PathList;
 use App\Criticalmass\Heatmap\Path\PositionListToPathListConverter;
 use App\Criticalmass\Heatmap\Status\Status;
-use App\Criticalmass\Util\ClassUtil;
 use App\Entity\Track;
 
 class HeatmapGenerator extends AbstractHeatmapGenerator
@@ -20,9 +19,7 @@ class HeatmapGenerator extends AbstractHeatmapGenerator
 
     public function generate(): HeatmapGeneratorInterface
     {
-        $manager = $this->registry->getManager();
-
-        $trackList = $this->registry->getRepository(Track::class)->findUnpaintedTracksForHeatmap($this->heatmap, 1);
+        $trackList = $this->trackManager->findUnpaintedTracksForHeatmap($this->heatmap);
 
         $status = new Status(count($trackList));
 
@@ -57,8 +54,7 @@ class HeatmapGenerator extends AbstractHeatmapGenerator
                 unset($canvas);
             }
 
-            $track->addHeatmap($this->heatmap);
-            $manager->flush();
+            $this->trackManager->linkTrackToHeatmap($track, $this->heatmap);
 
             ++$this->paintedTracks;
 

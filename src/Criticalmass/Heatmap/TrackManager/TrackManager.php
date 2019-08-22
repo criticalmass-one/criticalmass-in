@@ -7,7 +7,7 @@ use App\Entity\Heatmap;
 use App\Entity\Track;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
-class TrackManager
+class TrackManager implements TrackManagerInterface
 {
     /** @var RegistryInterface $registry */
     protected $registry;
