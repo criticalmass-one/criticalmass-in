@@ -23,7 +23,7 @@ class TrackManager implements TrackManagerInterface
 
     public function findUnpaintedTracksForHeatmap(Heatmap $heatmap): array
     {
-        return $this->registry->getRepository(Track::class)->findUnpaintedTracksForHeatmap($heatmap);
+        return $this->registry->getRepository(Track::class)->findUnpaintedTracksForHeatmap($heatmap, null);
     }
 
     public function linkTrackToHeatmap(Track $track, Heatmap $heatmap): void

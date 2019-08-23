@@ -189,7 +189,7 @@ class TrackRepository extends EntityRepository
         return $builder->getQuery();
     }
 
-    public function findUnpaintedTracksForHeatmap(Heatmap $heatmap, int $maxResults = 5): array
+    public function findUnpaintedTracksForHeatmap(Heatmap $heatmap, ?int $maxResults = 5): array
     {
         $sqb = $this->createQueryBuilder('st');
         $sqb
@@ -217,8 +217,11 @@ class TrackRepository extends EntityRepository
             ->andWhere($qb->expr()->eq('h', ':heatmap'))
             ->andWhere($qb->expr()->notIn('t.id', $subQuery->getDQL()))
             ->orderBy('r.dateTime')
-            ->setMaxResults($maxResults)
             ->setParameter('heatmap', $heatmap);
+
+        if ($maxResults) {
+            $qb->setMaxResults($maxResults);
+        }
 
         return $qb->getQuery()->getResult();
     }
