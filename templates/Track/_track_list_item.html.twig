@@ -98,11 +98,13 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-12">
-                    {% include('Track/_track_options_menu.html.twig') with { 'track': track } %}
+            {% if is_granted('edit', track) %}
+                <div class="row">
+                    <div class="col-md-12">
+                        {% include('Track/_track_options_menu.html.twig') with { 'track': track } %}
+                    </div>
                 </div>
-            </div>
+            {% endif %}
         </div>
     </div>
 </div>
