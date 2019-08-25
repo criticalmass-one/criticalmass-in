@@ -84,67 +84,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="btn-group pull-right">
-                        <button type="button" class="btn btn-default btn-xs dropdown-toggle"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Bearbeiten <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            {% if track.source == constant('TRACK_SOURCE_DRAW', track) %}
-                                <li>
-                                    <a href="{{ objectPath(track, 'caldera_criticalmass_track_edit') }}">
-                                        <i class="fa fa-pencil-square-o"></i>
-                                        Track editieren
-                                    </a>
-                                </li>
-                            {% else %}
-                                <li>
-                                    <a href="{{ objectPath(track, 'caldera_criticalmass_track_download') }}">
-                                        <i class="fa fa-file"></i>
-                                        Herunterladen
-                                    </a>
-                                </li>
-                                {% if track.enabled %}
-                                    <li>
-                                        <a href="{{ objectPath(track, 'caldera_criticalmass_track_toggle') }}">
-                                            <i class="fa fa-eye-slash"></i>
-                                            Deaktivieren
-                                        </a>
-                                    </li>
-                                {% else %}
-                                    <li>
-                                        <a href="{{ objectPath(track, 'caldera_criticalmass_track_toggle') }}">
-                                            <i class="fa fa-eye"></i>
-                                            Aktivieren
-                                        </a>
-                                    </li>
-                                {% endif %}
-
-                                <li role="separator" class="divider"></li>
-
-                                <li>
-                                    <a href="{{ objectPath(track, 'caldera_criticalmass_track_range') }}">
-                                        <i class="fa fa-scissors"></i>
-                                        Beschneiden
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="{{ objectPath(track, 'caldera_criticalmass_track_time') }}">
-                                        <i class="fa fa-clock-o"></i>
-                                        Zeit anpassen
-                                    </a>
-                                </li>
-
-                            {% endif %}
-                            <li>
-                                <a class="delete-track" href="#" data-track-id="{{ track.id }}">
-                                    <i class="fa fa-trash-o"></i>
-                                    Löschen
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    {% include('Track/_track_options_menu.html.twig') with { 'track': track } %}
                 </div>
             </div>
         </div>
