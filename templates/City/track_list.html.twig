@@ -1,0 +1,48 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Track-Übersicht{% endblock %}
+
+{% block breadcrumb %}
+
+    <li>
+        <a href="{{ path('caldera_criticalmass_city_list') }}">
+            Städteliste
+        </a>
+    </li>
+
+    <li>
+        <a href="{{ objectPath(city) }}">
+            {{ city.city }}
+        </a>
+    </li>
+
+    <li class="active">
+        Track-Übersicht
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container main-container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>
+                    Track-Übersicht
+                </h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    {% for track in trackList %}
+                        <tr>
+                            <td>
+                                {{ track.id }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
