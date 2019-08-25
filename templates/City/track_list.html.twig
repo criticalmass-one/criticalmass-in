@@ -34,7 +34,7 @@
         <div class="row">
             <div class="col-md-12">
                 {% for track in pagination %}
-                    {% include('Track/_track_list_item.html.twig') with { 'track': track } %}
+                    {% include('Track/_track_list_item.html.twig') with { 'track': track, 'show_city': false } %}
                 {% endfor %}
             </div>
         </div>

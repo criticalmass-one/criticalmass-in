@@ -40,7 +40,7 @@
 
         <div class="row">
             {% for track in pagination %}
-                {% include('Track/_track_list_item.html.twig') with { 'track': track } %}
+                {% include('Track/_track_list_item.html.twig') with { 'track': track, 'show_user': false } %}
             {% endfor %}
         </div>
     </div>
