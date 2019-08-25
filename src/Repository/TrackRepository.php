@@ -144,7 +144,7 @@ class TrackRepository extends EntityRepository
         return $builder->getQuery();
     }
 
-    public function findByCity(City $city, string $order = 'ASC'): array
+    public function findByCityQuery(City $city, string $order = 'ASC'): Query
     {
         $builder = $this->createQueryBuilder('t');
 
@@ -158,9 +158,7 @@ class TrackRepository extends EntityRepository
             ->setParameter('deleted', false)
             ->orderBy('r.dateTime', $order);
 
-        $query = $builder->getQuery();
-
-        return $query->getArrayResult();
+        return $builder->getQuery();
     }
 }
 
