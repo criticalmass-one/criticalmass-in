@@ -2,13 +2,8 @@
 
 namespace App\Criticalmass\Heatmap\Canvas;
 
-use App\Criticalmass\Heatmap\DimensionCalculator\HeatmapDimension;
 use App\Criticalmass\Heatmap\Tile\Tile;
 use Caldera\GeoBasic\Coord\CoordInterface;
-use Imagine\Gd\Imagine;
-use Imagine\Image\Box;
-use Imagine\Image\ImageInterface;
-use Imagine\Image\Point;
 
 class Canvas
 {
@@ -98,5 +93,14 @@ class Canvas
         $this->leftTileNumber = $leftTileNumber;
 
         return $this;
+    }
+
+    public function __destruct()
+    {
+        for ($x = $this->leftTileNumber; $x < $this->leftTileNumber + $this->width; ++$x) {
+            for ($y = $this->topTileNumber; $y < $this->topTileNumber + $this->height; ++$y) {
+                unset($this->tiles[$x][$y]);
+            }
+        }
     }
 }

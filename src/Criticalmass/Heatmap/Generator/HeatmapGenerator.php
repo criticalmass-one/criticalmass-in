@@ -50,7 +50,7 @@ class HeatmapGenerator extends AbstractHeatmapGenerator
                 $this->paintPathList($pathList, $canvas, $heatmapDimension);
 
                 $this->canvasCutter->cutCanvas($this->heatmap, $canvas, $zoomLevel);
-
+                
                 unset($canvas);
             }
 

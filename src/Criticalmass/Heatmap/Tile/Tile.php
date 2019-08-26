@@ -69,4 +69,10 @@ class Tile
 
         return $this;
     }
+
+    public function __destruct()
+    {
+        unset($this->newImage);
+        unset($this->oldImage);
+    }
 }
