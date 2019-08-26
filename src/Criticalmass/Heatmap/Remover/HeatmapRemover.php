@@ -39,8 +39,8 @@ class HeatmapRemover implements HeatmapRemoverInterface
 
         $manager = $this->registry->getManager();
 
-        foreach ($heatmap->getTracks() as $track) {
-            $heatmap->getTracks()->removeElement($track);
+        foreach ($heatmap->getHeatmapTracks() as $heatmapTrack) {
+            $manager->remove($heatmapTrack);
         }
 
         $manager->flush();
