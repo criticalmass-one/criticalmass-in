@@ -15,7 +15,7 @@ use App\Entity\Track;
 class HeatmapGenerator extends AbstractHeatmapGenerator
 {
     const MIN_ZOOMLEVEL = 5;
-    const MAX_ZOOMLEVEL = 18;
+    const MAX_ZOOMLEVEL = 16;
 
     public function generate(): HeatmapGeneratorInterface
     {
@@ -50,7 +50,7 @@ class HeatmapGenerator extends AbstractHeatmapGenerator
                 $this->paintPathList($pathList, $canvas, $heatmapDimension);
 
                 $this->canvasCutter->cutCanvas($this->heatmap, $canvas, $zoomLevel);
-                
+
                 unset($canvas);
             }
 
