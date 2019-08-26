@@ -189,6 +189,23 @@ class TrackRepository extends EntityRepository
         return $builder->getQuery();
     }
 
+    public function findByCityQuery(City $city, string $order = 'ASC'): Query
+    {
+        $builder = $this->createQueryBuilder('t');
+
+        $builder->select('t')
+            ->join('t.ride', 'r')
+            ->where($builder->expr()->eq('r.city', ':city'))
+            ->setParameter('city', $city)
+            ->andWhere($builder->expr()->eq('t.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->eq('t.deleted', ':deleted'))
+            ->setParameter('deleted', false)
+            ->orderBy('r.dateTime', $order);
+
+        return $builder->getQuery();
+    }
+
     public function findUnpaintedTracksForHeatmap(Heatmap $heatmap, ?int $maxResults = 5): array
     {
         $sqb = $this->createQueryBuilder('st');
@@ -199,7 +216,7 @@ class TrackRepository extends EntityRepository
             ->setParameter('heatmap', $heatmap);
 
         $subQuery = $sqb->getQuery();
-        
+
         $qb = $this->createQueryBuilder('t');
 
         if ($heatmap->getRide()) {
