@@ -17,7 +17,7 @@ define(['Map', 'leaflet'], function (Map) {
     HeatmapPage.prototype.init = function () {
         this._map = new Map('heatmap');
         this._map.setMaxZoom(16);
-        this._map.setMinZoom(5);
+        this._map.setMinZoom(10);
 
         L.tileLayer('/heatmaps/' + this._heatmapIdentifier + '/{z}/{x}/{y}.png').addTo(this._map);
 

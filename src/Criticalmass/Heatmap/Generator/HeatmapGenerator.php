@@ -14,7 +14,7 @@ use App\Entity\Track;
 
 class HeatmapGenerator extends AbstractHeatmapGenerator
 {
-    const MIN_ZOOMLEVEL = 5;
+    const MIN_ZOOMLEVEL = 10;
     const MAX_ZOOMLEVEL = 16;
 
     public function generate(): HeatmapGeneratorInterface
