@@ -58,8 +58,10 @@ define(['Polyline.encoded', 'leaflet.extra-markers', 'Container', 'jquery', 'Map
 
             polyline.addTo(this.map);
 
+            console.log(polyline);
+
             if (!this._mapViewSet) {
-                this.map.fitBounds(polyline);
+                this.map.fitBounds(polyline.getBounds());
             }
         }
     };
