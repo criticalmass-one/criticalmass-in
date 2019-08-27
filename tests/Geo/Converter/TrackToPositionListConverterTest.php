@@ -103,9 +103,9 @@ class TrackToPositionListConverterTest extends TestCase
 
     public function testConverterWithStartEndPoints(): void
     {
-        $track = $this->createTestTrack();
+        $track = $this->createTestTrack(7, 2, 4);
 
-        $trackReader = new TrackReader($this->createFilesystemMockForLatLngDateTimeAltitudePosition());
+        $trackReader = new TrackReader($this->createFilesystemMockForLatLngPosition());
         $trackReader->loadTrack($track);
 
         $converter = new TrackToPositionListConverter($trackReader);
@@ -113,12 +113,9 @@ class TrackToPositionListConverterTest extends TestCase
 
         $expectedPositionList = new PositionList();
         $expectedPositionList
-            ->add((new Position(53.5487830, 9.9790980))->setAltitude(23.3)->setDateTime(new \DateTime('2016-11-25 15:39:38', new \DateTimeZone('UTC'))))
-            ->add((new Position(53.5493770, 9.9789250))->setAltitude(25.5)->setDateTime(new \DateTime('2016-11-25 15:40:13', new \DateTimeZone('UTC'))))
-            ->add((new Position(53.5493620, 9.9789640))->setAltitude(25.3)->setDateTime(new \DateTime('2016-11-25 15:40:20', new \DateTimeZone('UTC'))))
-            ->add((new Position(53.5493660, 9.9790330))->setAltitude(25.0)->setDateTime(new \DateTime('2016-11-25 15:40:24', new \DateTimeZone('UTC'))))
-            ->add((new Position(53.5493650, 9.9790790))->setAltitude(24.8)->setDateTime(new \DateTime('2016-11-25 15:40:26', new \DateTimeZone('UTC'))))
-            ->add((new Position(53.5493610, 9.9791320))->setAltitude(24.6)->setDateTime(new \DateTime('2016-11-25 15:40:29', new \DateTimeZone('UTC'))));
+            ->add(new Position(53.5493620, 9.9789640))
+            ->add(new Position(53.5493660, 9.9790330))
+            ->add(new Position(53.5493650, 9.9790790));
 
         $this->assertEquals($expectedPositionList, $actualPositionList);
     }
@@ -273,14 +270,14 @@ class TrackToPositionListConverterTest extends TestCase
         return $filesystem;
     }
 
-    protected function createTestTrack(): Track
+    protected function createTestTrack(int $points = 6, int $startPoint = 0, int $endPoint = 5): Track
     {
         $track = new Track();
         $track
             ->setTrackFilename('test.gpx')
-            ->setStartPoint(0)
-            ->setPoints(7)
-            ->setEndPoint(6);
+            ->setStartPoint($startPoint)
+            ->setPoints($points)
+            ->setEndPoint($endPoint);
 
         return $track;
     }
