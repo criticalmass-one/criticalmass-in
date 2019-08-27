@@ -2,11 +2,7 @@
 
 namespace App\Criticalmass\Geo\GpxReader;
 
-use App\Criticalmass\Geo\Entity\Position;
-use App\Criticalmass\Geo\EntityInterface\PositionInterface;
 use App\Criticalmass\Geo\Exception\GpxFileNotFoundException;
-use App\Criticalmass\Geo\PositionList\PositionList;
-use App\Criticalmass\Geo\PositionList\PositionListInterface;
 use League\Flysystem\FilesystemInterface;
 
 class GpxReader implements GpxReaderInterface
