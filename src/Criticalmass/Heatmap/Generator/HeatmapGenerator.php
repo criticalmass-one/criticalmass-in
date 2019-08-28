@@ -75,9 +75,11 @@ class HeatmapGenerator extends AbstractHeatmapGenerator
             $vectorX = $path->getEndCoord()->getLongitude() - $path->getStartCoord()->getLongitude();
             $vectorY = $path->getEndCoord()->getLatitude() - $path->getStartCoord()->getLatitude();
 
-            for ($part = 1; $part <= 25; ++$part) {
-                $longitude = $vectorX / 25 * $part;
-                $latitude = $vectorY / 25 * $part;
+            $partsPerPath = (int)floor($heatmapDimension->getZoomLevel() / 2);
+
+            for ($part = 1; $part <= $partsPerPath; ++$part) {
+                $longitude = $path->getStartCoord()->getLongitude() + (float)$vectorX / $partsPerPath * $part;
+                $latitude = $path->getStartCoord()->getLatitude() + (float)$vectorY / $partsPerPath * $part;
 
                 $tileX = CoordCalculator::longitudeToXTile($longitude, $heatmapDimension->getZoomLevel());
                 $tileY = CoordCalculator::latitudeToYTile($latitude, $heatmapDimension->getZoomLevel());
