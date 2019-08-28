@@ -73,7 +73,7 @@ class HeatmapGenerator extends AbstractHeatmapGenerator
             }
 
             $vectorX = $path->getEndCoord()->getLongitude() - $path->getStartCoord()->getLongitude();
-            $vectorY = $path->getEndCoord()->getLatitude() - $path->getEndCoord()->getLatitude();
+            $vectorY = $path->getEndCoord()->getLatitude() - $path->getStartCoord()->getLatitude();
 
             for ($part = 1; $part <= 25; ++$part) {
                 $longitude = $vectorX / 25 * $part;
