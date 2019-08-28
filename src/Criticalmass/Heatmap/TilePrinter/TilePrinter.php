@@ -4,9 +4,8 @@ namespace App\Criticalmass\Heatmap\TilePrinter;
 
 use App\Criticalmass\Heatmap\Brush\Brush;
 use App\Criticalmass\Heatmap\ColorStyle\ColorStyleInterface;
-use App\Criticalmass\Heatmap\CoordCalculator\CoordCalculator;
+use App\Criticalmass\Heatmap\DimensionCalculator\TileDimensionCalculator;
 use App\Criticalmass\Heatmap\Pipette\AveragePipette;
-use App\Criticalmass\Heatmap\Pipette\Pipette;
 use App\Criticalmass\Heatmap\Tile\Tile;
 use Caldera\GeoBasic\Coord\CoordInterface;
 use Imagine\Image\Point;
@@ -24,13 +23,10 @@ class TilePrinter
 
     public function printTile(Tile $tile, CoordInterface $coord): Tile
     {
-        $tileTopLatitude = CoordCalculator::yTileToLatitude($tile->getTileY(), $tile->getZoomLevel());
-        $tileLeftLongitude = CoordCalculator::xTileToLongitude($tile->getTileX(), $tile->getZoomLevel());
-        $tileBottomLatitude = CoordCalculator::yTileToLatitude($tile->getTileY() + 1, $tile->getZoomLevel());
-        $tileRightLongitude = CoordCalculator::xTileToLongitude($tile->getTileX() + 1, $tile->getZoomLevel());
+        $tileDimension = TileDimensionCalculator::calculate($tile);
 
-        $y = Tile::SIZE * ($tileTopLatitude - $coord->getLatitude()) / ($tileTopLatitude - $tileBottomLatitude);
-        $x = Tile::SIZE * ($coord->getLongitude() - $tileLeftLongitude) / ($tileRightLongitude - $tileLeftLongitude);
+        $y = Tile::SIZE * ($tileDimension->getTileTopLatitude() - $coord->getLatitude()) / ($tileDimension->getTileTopLatitude() - $tileDimension->getTileBottomLatitude());
+        $x = Tile::SIZE * ($coord->getLongitude() - $tileDimension->getTileLeftLongitude()) / ($tileDimension->getTileRightLongitude() - $tileDimension->getTileLeftLongitude());
 
         $point = new Point($x, $y);
 
