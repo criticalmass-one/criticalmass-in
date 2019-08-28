@@ -72,11 +72,19 @@ class HeatmapGenerator extends AbstractHeatmapGenerator
                 break;
             }
 
-            $tileX = CoordCalculator::longitudeToXTile($path->getStartCoord()->getLongitude(), $heatmapDimension->getZoomLevel());
-            $tileY = CoordCalculator::latitudeToYTile($path->getStartCoord()->getLatitude(), $heatmapDimension->getZoomLevel());
+            $vectorX = $path->getEndCoord()->getLongitude() - $path->getStartCoord()->getLongitude();
+            $vectorY = $path->getEndCoord()->getLatitude() - $path->getEndCoord()->getLatitude();
 
-            if ($tile = $canvas->getTile($tileX, $tileY)) {
-                $this->tilePrinter->printTile($tile, $path->getStartCoord());
+            for ($part = 1; $part <= 25; ++$part) {
+                $longitude = $vectorX / 25 * $part;
+                $latitude = $vectorY / 25 * $part;
+
+                $tileX = CoordCalculator::longitudeToXTile($longitude, $heatmapDimension->getZoomLevel());
+                $tileY = CoordCalculator::latitudeToYTile($latitude, $heatmapDimension->getZoomLevel());
+
+                if ($tile = $canvas->getTile($tileX, $tileY)) {
+                    $this->tilePrinter->printTile($tile, $path->getStartCoord());
+                }
             }
         }
     }
