@@ -21,7 +21,7 @@ class UserHeatmapTrackFactory implements UserHeatmapTrackFactoryInterface
     {
         $list = [];
 
-        $heatmapTrackList = $this->registry->getRepository(HeatmapTrack::class)->findAll();
+        $heatmapTrackList = $this->registry->getRepository(HeatmapTrack::class)->findByHeatmap($heatmap);
 
         /** @var HeatmapTrack $heatmapTrack */
         foreach ($heatmapTrackList as $heatmapTrack) {
