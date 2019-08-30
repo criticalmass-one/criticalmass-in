@@ -233,6 +233,10 @@ class TrackRepository extends EntityRepository
         $qb
             ->andWhere($qb->expr()->eq('h', ':heatmap'))
             ->andWhere($qb->expr()->notIn('t.id', $subQuery->getDQL()))
+            ->andWhere($qb->expr()->eq('t.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($qb->expr()->eq('t.deleted', ':deleted'))
+            ->setParameter('deleted', false)
             ->orderBy('r.dateTime')
             ->setParameter('heatmap', $heatmap);
 
