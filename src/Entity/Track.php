@@ -2,20 +2,20 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\Geo\Entity\Track as GeoTrack;
 use App\Criticalmass\Geo\EntityInterface\TrackInterface;
 use App\Criticalmass\OrderedEntities\Annotation as OE;
 use App\Criticalmass\OrderedEntities\OrderedEntityInterface;
+use App\Criticalmass\Router\Annotation as Routing;
 use App\Criticalmass\UploadableDataHandler\UploadableEntity;
 use App\Criticalmass\UploadFaker\FakeUploadable;
 use App\EntityInterface\RouteableInterface;
 use App\EntityInterface\StaticMapableInterface;
+use Caldera\GeoBasic\Track\TrackInterface as BaseTrackInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use App\Criticalmass\Router\Annotation as Routing;
-use Caldera\GeoBasic\Track\TrackInterface as BaseTrackInterface;
-use App\Criticalmass\Geo\Entity\Track as GeoTrack;
 
 /**
  * @ORM\Table(name="track")
@@ -513,7 +513,7 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
 
     public function getStravaActivityId(): ?int
     {
-        return $this->stravaActitityId;
+        return (int)$this->stravaActitityId;
     }
 
     public function setGeoJson(string $geoJson): Track
