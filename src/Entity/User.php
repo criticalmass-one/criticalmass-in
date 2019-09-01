@@ -179,6 +179,11 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
      */
     private $blogPosts;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Heatmap", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $heatmap;
+
     public function __construct()
     {
         parent::__construct();
@@ -632,6 +637,24 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
             if ($socialNetworkProfile->getCreatedBy() === $this) {
                 $socialNetworkProfile->setCreatedBy(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getHeatmap(): ?Heatmap
+    {
+        return $this->heatmap;
+    }
+
+    public function setHeatmap(?Heatmap $heatmap): self
+    {
+        $this->heatmap = $heatmap;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newUser = $heatmap === null ? null : $this;
+        if ($newUser !== $heatmap->getUser()) {
+            $heatmap->setUser($newUser);
         }
 
         return $this;

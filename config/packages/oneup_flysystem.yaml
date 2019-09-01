@@ -21,6 +21,9 @@ oneup_flysystem:
         blogpost_teaser_adapter:
             local:
                 directory: '%upload_destination.blogpost_teaser%'
+        heatmap_tile_adapter:
+            local:
+                directory: '%upload_destination.heatmap_tile%'
 
     filesystems:
         flysystem_photo_photo:
@@ -50,3 +53,7 @@ oneup_flysystem:
         flysystem_blogpost_teaser:
             adapter: blogpost_teaser_adapter
             mount: flysystem_blogpost_teaser
+
+        flysystem_heatmap_tile:
+            adapter: heatmap_tile_adapter
+            mount: flysystem_heatmap_tile
