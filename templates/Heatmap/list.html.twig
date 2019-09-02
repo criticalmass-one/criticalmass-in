@@ -26,14 +26,43 @@
                         <th>
                             Stadt
                         </th>
+
+                        <th>
+                            Tracks
+                        </th>
+
+                        <th>
+                            letzte Aktualisierung
+                        </th>
+
+                        <th>
+                            
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for heatmap in heatmapList %}
+                    {% for heatmapListModel in heatmapList %}
                         <tr>
                             <td>
-                                <a href="{{ objectPath(heatmap.city) }}">
-                                    {{ heatmap.city.city }}
+                                <a href="{{ objectPath(heatmapListModel.city) }}">
+                                    {{ heatmapListModel.city.city }}
+                                </a>
+                            </td>
+
+                            <td>
+                                {{ heatmapListModel.trackCounter }}
+                            </td>
+
+                            <td>
+                                {% if heatmapListModel.lastUpdate %}
+                                    {{ heatmapListModel.lastUpdate|date('d.m.Y H:i') }} Uhr
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                <a class="btn btn-xs btn-default"
+                                   href="{{ objectPath(heatmapListModel.city, 'caldera_criticalmass_heatmap_city') }}">
+                                    <i class="fa fa-map"></i>&nbsp;zur Heatmap
                                 </a>
                             </td>
                         </tr>

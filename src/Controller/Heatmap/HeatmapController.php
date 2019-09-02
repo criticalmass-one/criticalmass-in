@@ -4,12 +4,11 @@ namespace App\Controller\Heatmap;
 
 use App\Controller\AbstractController;
 use App\Entity\City;
-use App\Entity\Heatmap;
 use App\Entity\Ride;
 use App\Entity\User;
+use App\Factory\Heatmap\HeatmapListFactoryInterface;
 use App\Factory\Heatmap\UserHeatmapTrackFactoryInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -30,10 +29,10 @@ class HeatmapController extends AbstractController
         ]);
     }
 
-    public function listAction(RegistryInterface $registry): Response
+    public function listAction(HeatmapListFactoryInterface $heatmapListFactory): Response
     {
         return $this->render('Heatmap/list.html.twig', [
-            'heatmapList' => $registry->getRepository(Heatmap::class)->findAll(),
+            'heatmapList' => $heatmapListFactory->build(),
         ]);
     }
 
