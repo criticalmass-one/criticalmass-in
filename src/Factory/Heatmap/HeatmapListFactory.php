@@ -38,6 +38,17 @@ class HeatmapListFactory implements HeatmapListFactoryInterface
             $modelList[] = $model;
         }
 
+        usort($modelList, function (HeatmapListModel $hlm1, HeatmapListModel $hlm2) {
+            $cityName1 = $hlm1->getCity()->getCity();
+            $cityName2 = $hlm2->getCity()->getCity();
+
+            if ($cityName1 === $cityName2) {
+                return 0;
+            }
+
+            return $hlm1->getCity()->getCity() < $hlm2->getCity()->getCity() ? -1 : 1;
+        });
+
         return $modelList;
     }
 }
