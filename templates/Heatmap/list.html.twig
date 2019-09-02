@@ -20,7 +20,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <table class="table">
+                <table class="table" id="heatmap-list">
                     <thead>
                     <tr>
                         <th>
@@ -72,4 +72,9 @@
             </div>
         </div>
     </div>
+
+
+    <script>
+        CriticalMass.loadModule('HeatmapListPage', '#heatmap-list', null);
+    </script>
 {% endblock %}
