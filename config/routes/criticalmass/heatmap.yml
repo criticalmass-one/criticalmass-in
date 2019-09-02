@@ -2,9 +2,9 @@ caldera_criticalmass_heatmap_city:
     path:     /{citySlug}/heatmap
     controller: App\Controller\Heatmap\HeatmapController::cityAction
 
-caldera_criticalmass_heatmap_test:
-    path:     /{citySlug}/heatmap-test
-    controller: App\Controller\Heatmap\HeatmapController::testAction
+caldera_criticalmass_heatmap_list:
+    path:     /heatmap-list
+    controller: App\Controller\Heatmap\HeatmapController::listAction
 
 caldera_criticalmass_heatmap_user:
     path:     /{citySlug}/{rideIdentifier}/heatmap

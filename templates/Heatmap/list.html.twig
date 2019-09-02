@@ -1,0 +1,46 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Heatmaps{% endblock %}
+
+{% block breadcrumb %}
+    <li class="active">
+        Heatmaps
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>
+                    Heatmaps!
+                </h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>
+                            Stadt
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for heatmap in heatmapList %}
+                        <tr>
+                            <td>
+                                <a href="{{ objectPath(heatmap.city) }}">
+                                    {{ heatmap.city.city }}
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
