@@ -2,22 +2,22 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\Geo\Entity\Track as GeoTrack;
 use App\Criticalmass\Geo\EntityInterface\TrackInterface;
 use App\Criticalmass\OrderedEntities\Annotation as OE;
 use App\Criticalmass\OrderedEntities\OrderedEntityInterface;
+use App\Criticalmass\Router\Annotation as Routing;
 use App\Criticalmass\UploadableDataHandler\UploadableEntity;
 use App\Criticalmass\UploadFaker\FakeUploadable;
 use App\EntityInterface\RouteableInterface;
 use App\EntityInterface\StaticMapableInterface;
+use Caldera\GeoBasic\Track\TrackInterface as BaseTrackInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use App\Criticalmass\Router\Annotation as Routing;
-use Caldera\GeoBasic\Track\TrackInterface as BaseTrackInterface;
-use App\Criticalmass\Geo\Entity\Track as GeoTrack;
 
 /**
  * @ORM\Table(name="track")
@@ -217,6 +217,11 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
      * @ORM\OneToMany(targetEntity="App\Entity\HeatmapTrack", mappedBy="track")
      */
     private $heatmapTracks;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $reviewed = false;
 
     public function __construct()
     {
@@ -569,6 +574,18 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
                 $heatmapTrack->setTrack(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isReviewed(): bool
+    {
+        return $this->reviewed;
+    }
+
+    public function setReviewed(bool $reviewed): self
+    {
+        $this->reviewed = $reviewed;
 
         return $this;
     }

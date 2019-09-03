@@ -36,6 +36,15 @@
 
             <li role="separator" class="divider"></li>
 
+            {% if not track.isReviewed %}
+                <li>
+                    <a href="{{ objectPath(track, 'caldera_criticalmass_track_approve') }}">
+                        <i class="fa fa-check"></i>
+                        Bestätigen
+                    </a>
+                </li>
+            {% endif %}
+
             <li>
                 <a href="{{ objectPath(track, 'caldera_criticalmass_track_range') }}">
                     <i class="fa fa-scissors"></i>
