@@ -6,6 +6,7 @@ use App\Controller\AbstractController;
 use App\Entity\City;
 use App\Entity\Ride;
 use App\Entity\User;
+use App\Factory\Heatmap\HeatmapListFactoryInterface;
 use App\Factory\Heatmap\UserHeatmapTrackFactoryInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,6 +26,13 @@ class HeatmapController extends AbstractController
         return $this->render('Heatmap/city.html.twig', [
             'city' => $city,
             'userHeatmapTrackList' => $userHeatmapTrackFactory->generateList($city->getHeatmap()),
+        ]);
+    }
+
+    public function listAction(HeatmapListFactoryInterface $heatmapListFactory): Response
+    {
+        return $this->render('Heatmap/list.html.twig', [
+            'heatmapList' => $heatmapListFactory->build(),
         ]);
     }
 

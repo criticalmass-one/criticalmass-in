@@ -1,0 +1,85 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Heatmaps{% endblock %}
+
+{% block breadcrumb %}
+    <li class="active">
+        Heatmaps
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>
+                    Übersicht über Critical-Mass-Heatmaps
+                </h2>
+
+                <p class="lead">
+                    Heatmaps zeigen an, in welchen Straßen die Critical Mass häufiger unterwegs war: Je röter der Weg
+                    eingezeichnet ist, desto häufiger rollten dort die Räder.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table" id="heatmap-list">
+                    <thead>
+                    <tr>
+                        <th>
+                            Stadt
+                        </th>
+
+                        <th>
+                            Tracks
+                        </th>
+
+                        <th>
+                            letzte Aktualisierung
+                        </th>
+
+                        <th>
+
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for heatmapListModel in heatmapList %}
+                        <tr>
+                            <td>
+                                <a href="{{ objectPath(heatmapListModel.city) }}">
+                                    {{ heatmapListModel.city.city }}
+                                </a>
+                            </td>
+
+                            <td>
+                                {{ heatmapListModel.trackCounter }} von {{ heatmapListModel.cityTrackCounter }}
+                            </td>
+
+                            <td>
+                                {% if heatmapListModel.lastUpdate %}
+                                    {{ heatmapListModel.lastUpdate|date('d.m.Y H:i') }} Uhr
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                <a class="btn btn-xs btn-default"
+                                   href="{{ objectPath(heatmapListModel.city, 'caldera_criticalmass_heatmap_city') }}">
+                                    <i class="fa fa-map"></i>&nbsp;zur Heatmap
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        CriticalMass.loadModule('HeatmapListPage', '#heatmap-list', null);
+    </script>
+{% endblock %}
