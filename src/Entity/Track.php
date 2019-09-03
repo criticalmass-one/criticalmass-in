@@ -532,7 +532,7 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
 
     public function getStravaActivityId(): ?int
     {
-        return $this->stravaActitityId;
+        return (int)$this->stravaActitityId;
     }
 
     public function setGeoJson(string $geoJson): Track
