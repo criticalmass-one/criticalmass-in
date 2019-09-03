@@ -24,6 +24,7 @@ define(['leaflet', 'CityMarker', 'LocationMarker'], function () {
     Map.prototype._init = function () {
         this._initMap();
         this._addTileLayer();
+        L.tileLayer('/heatmaps/foo/{z}/{x}/{y}.png').addTo(this.map);
     };
 
     Map.prototype._initMap = function () {
@@ -111,6 +112,14 @@ define(['leaflet', 'CityMarker', 'LocationMarker'], function () {
         if (this.map.tap) {
             this.map.tap.enable();
         }
+    };
+
+    Map.prototype.setMaxZoom = function (maxZoom) {
+        this.map.setMaxZoom(maxZoom);
+    };
+
+    Map.prototype.setMinZoom = function (minZoom) {
+        this.map.setMinZoom(minZoom);
     };
 
     return Map;

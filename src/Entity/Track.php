@@ -12,6 +12,8 @@ use App\Criticalmass\UploadFaker\FakeUploadable;
 use App\EntityInterface\RouteableInterface;
 use App\EntityInterface\StaticMapableInterface;
 use Caldera\GeoBasic\Track\TrackInterface as BaseTrackInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
@@ -210,6 +212,23 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
      * @var integer
      */
     protected $stravaActitityId;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\HeatmapTrack", mappedBy="track")
+     */
+    private $heatmapTracks;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $reviewed = false;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->heatmaps = new ArrayCollection();
+        $this->heatmapTracks = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -526,5 +545,48 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
     public function getWaypointList(): string
     {
         return $this->geoJson;
+    }
+
+    /**
+     * @return Collection|HeatmapTrack[]
+     */
+    public function getHeatmapTracks(): Collection
+    {
+        return $this->heatmapTracks;
+    }
+
+    public function addHeatmapTrack(HeatmapTrack $heatmapTrack): self
+    {
+        if (!$this->heatmapTracks->contains($heatmapTrack)) {
+            $this->heatmapTracks[] = $heatmapTrack;
+            $heatmapTrack->setTrack($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHeatmapTrack(HeatmapTrack $heatmapTrack): self
+    {
+        if ($this->heatmapTracks->contains($heatmapTrack)) {
+            $this->heatmapTracks->removeElement($heatmapTrack);
+            // set the owning side to null (unless already changed)
+            if ($heatmapTrack->getTrack() === $this) {
+                $heatmapTrack->setTrack(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function isReviewed(): bool
+    {
+        return $this->reviewed;
+    }
+
+    public function setReviewed(bool $reviewed): self
+    {
+        $this->reviewed = $reviewed;
+
+        return $this;
     }
 }

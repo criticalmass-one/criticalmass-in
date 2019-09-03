@@ -306,6 +306,11 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      */
     protected $disabledReason;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Heatmap", mappedBy="ride", cascade={"persist", "remove"})
+     */
+    private $heatmap;
+
     public function __construct()
     {
         $this->dateTime = new \DateTime();
@@ -1053,6 +1058,24 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     public function setDisabledReason(string $disabledReason = null): Ride
     {
         $this->disabledReason = $disabledReason;
+
+        return $this;
+    }
+
+    public function getHeatmap(): ?Heatmap
+    {
+        return $this->heatmap;
+    }
+
+    public function setHeatmap(?Heatmap $heatmap): self
+    {
+        $this->heatmap = $heatmap;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newRide = $heatmap === null ? null : $this;
+        if ($newRide !== $heatmap->getRide()) {
+            $heatmap->setRide($newRide);
+        }
 
         return $this;
     }
