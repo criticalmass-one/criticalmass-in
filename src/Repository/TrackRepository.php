@@ -112,28 +112,6 @@ class TrackRepository extends EntityRepository
         return (int)$query->getSingleScalarResult();
     }
 
-    public function findByCity(City $city): array
-    {
-        $builder = $this->createQueryBuilder('t');
-
-        $builder
-            ->select('t')
-            ->join('t.ride', 'r')
-            ->where($builder->expr()->eq('r.city', ':city'))
-            ->setParameter('city', $city)
-            ->andWhere($builder->expr()->eq('t.enabled', ':enabled'))
-            ->setParameter('enabled', true)
-            ->andWhere($builder->expr()->eq('t.deleted', ':deleted'))
-            ->setParameter('deleted', false)
-            ->addOrderBy('t.startDateTime', 'ASC');
-
-        $query = $builder->getQuery();
-
-        $result = $query->getResult();
-
-        return $result;
-    }
-
     public function findByRide(Ride $ride): array
     {
         $builder = $this->createQueryBuilder('t');
@@ -187,6 +165,29 @@ class TrackRepository extends EntityRepository
         }
 
         return $builder->getQuery();
+    }
+
+    public function countByCity(City $city): int
+    {
+        $builder = $this->createQueryBuilder('t');
+
+        $builder->select('COUNT(t)')
+            ->join('t.ride', 'r')
+            ->where($builder->expr()->eq('r.city', ':city'))
+            ->setParameter('city', $city)
+            ->andWhere($builder->expr()->eq('t.enabled', ':enabled'))
+            ->setParameter('enabled', true)
+            ->andWhere($builder->expr()->eq('t.deleted', ':deleted'))
+            ->setParameter('deleted', false);
+
+        return (int)$builder->getQuery()->getSingleScalarResult();
+    }
+
+    public function findByCity(City $city, string $order = 'ASC'): array
+    {
+        $query = $this->findByCityQuery($city, $order);
+
+        return $query->getResult();
     }
 
     public function findByCityQuery(City $city, string $order = 'ASC'): Query

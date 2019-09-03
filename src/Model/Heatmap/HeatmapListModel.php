@@ -16,14 +16,18 @@ class HeatmapListModel
     /** @var int $trackCounter */
     protected $trackCounter;
 
+    /** @var int $cityTrackCounter */
+    protected $cityTrackCounter;
+
     /** @var \DateTime $lastUpdate */
     protected $lastUpdate;
 
-    public function __construct(City $city, Heatmap $heatmap, int $trackCounter, \DateTime $lastUpdate)
+    public function __construct(City $city, Heatmap $heatmap, int $trackCounter, int $cityTrackCounter, \DateTime $lastUpdate)
     {
         $this->city = $city;
         $this->heatmap = $heatmap;
         $this->trackCounter = $trackCounter;
+        $this->cityTrackCounter = $cityTrackCounter;
         $this->lastUpdate = $lastUpdate;
     }
 
@@ -42,6 +46,11 @@ class HeatmapListModel
         return $this->trackCounter;
     }
 
+    public function getCityTrackCounter(): int
+    {
+        return $this->cityTrackCounter;
+    }
+    
     public function getLastUpdate(): \DateTime
     {
         return $this->lastUpdate;

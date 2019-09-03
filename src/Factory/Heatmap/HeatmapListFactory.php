@@ -3,6 +3,7 @@
 namespace App\Factory\Heatmap;
 
 use App\Entity\Heatmap;
+use App\Entity\Track;
 use App\Model\Heatmap\HeatmapListModel;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -27,11 +28,14 @@ class HeatmapListFactory implements HeatmapListFactoryInterface
         /** @var Heatmap $heatmap */
         foreach ($heatmapList as $heatmap) {
             $heatmapTracks = $heatmap->getHeatmapTracks();
+            $city = $heatmap->getCity();
+            $trackCounter = $this->registry->getRepository(Track::class)->countByCity($city);
 
             $model = new HeatmapListModel(
-                $heatmap->getCity(),
+                $city,
                 $heatmap,
                 count($heatmapTracks),
+                $trackCounter,
                 count($heatmapTracks) > 0 ? $heatmapTracks->last()->getCreatedAt() : null
             );
 
