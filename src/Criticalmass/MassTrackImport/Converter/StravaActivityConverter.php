@@ -3,6 +3,7 @@
 namespace App\Criticalmass\MassTrackImport\Converter;
 
 use App\Criticalmass\MassTrackImport\Model\StravaActivityModel;
+use Caldera\GeoBasic\Coord\Coord;
 
 class StravaActivityConverter
 {
@@ -13,13 +14,18 @@ class StravaActivityConverter
 
     public static function convert(array $content): StravaActivityModel
     {
+        $startCoord = new Coord($content['start_latlng'][0], $content['start_latlng'][1]);
+        $endCoord = new Coord($content['end_latlng'][0], $content['end_latlng'][1]);
+
         $model = new StravaActivityModel();
         $model
             ->setId($content['id'])
             ->setName($content['name'])
             ->setDistance($content['distance'])
             ->setElapsedTime($content['elapsed_time'])
-            ->setStartDate(new \DateTime($content['start_date']))
+            ->setStartDateTime(new \DateTime($content['start_date']))
+            ->setStartCoord($startCoord)
+            ->setEndCoord($endCoord)
             ->setType($content['type'])
             ->setPolyline($content['map']['summary_polyline']);
 

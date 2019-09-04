@@ -2,6 +2,8 @@
 
 namespace App\Criticalmass\MassTrackImport\Model;
 
+use Caldera\GeoBasic\Coord\CoordInterface;
+
 class StravaActivityModel
 {
     /** @var int $id */
@@ -19,8 +21,14 @@ class StravaActivityModel
     /** @var string $type */
     protected $type;
 
-    /** @var \DateTime $startDate */
-    protected $startDate;
+    /** @var \DateTime $startDateTime */
+    protected $startDateTime;
+
+    /** @var CoordInterface $startCoord */
+    protected $startCoord;
+
+    /** @var CoordInterface $endCoord */
+    protected $endCoord;
 
     /** @var string $polyline */
     protected $polyline;
@@ -85,14 +93,38 @@ class StravaActivityModel
         return $this;
     }
 
-    public function getStartDate(): \DateTime
+    public function getStartDateTime(): \DateTime
     {
-        return $this->startDate;
+        return $this->startDateTime;
     }
 
-    public function setStartDate(\DateTime $startDate): StravaActivityModel
+    public function setStartDateTime(\DateTime $startDateTime): StravaActivityModel
     {
-        $this->startDate = $startDate;
+        $this->startDateTime = $startDateTime;
+
+        return $this;
+    }
+
+    public function getStartCoord(): CoordInterface
+    {
+        return $this->startCoord;
+    }
+
+    public function setStartCoord(CoordInterface $startCoord): StravaActivityModel
+    {
+        $this->startCoord = $startCoord;
+
+        return $this;
+    }
+
+    public function getEndCoord(): CoordInterface
+    {
+        return $this->endCoord;
+    }
+
+    public function setEndCoord(CoordInterface $endCoord): StravaActivityModel
+    {
+        $this->endCoord = $endCoord;
 
         return $this;
     }
