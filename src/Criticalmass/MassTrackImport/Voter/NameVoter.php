@@ -9,16 +9,27 @@ class NameVoter implements VoterInterface
 {
     public function vote(Ride $ride, StravaActivityModel $model): float
     {
-        if ($ride->getTitle() === $model->getName()) {
+        $rideTitle = $ride->getTitle();
+        $modelName = $model->getName();
+
+        if ($rideTitle === $modelName) {
             return 1.0;
         }
 
-        if (strpos('Critical', $model->getName()) !== false && strpos('Mass', $model->getName()) !== false) {
-            return 0.9;
+        if (strpos($modelName, 'Critical Mass') !== false) {
+            return 0.95;
         }
 
-        if (strpos('Critical', $model->getName()) !== false || strpos('Mass', $model->getName()) !== false) {
+        if (strpos($modelName, 'Critical') !== false && strpos($modelName, 'Mass') !== false) {
+            return 0.95;
+        }
+
+        if (strpos($modelName, 'Critical') !== false || strpos($modelName, 'Mass') !== false) {
             return 0.8;
+        }
+
+        if (strpos($modelName, $ride->getCity()->getCity()) !== false) {
+            return 0.5;
         }
 
         return 0.0;
