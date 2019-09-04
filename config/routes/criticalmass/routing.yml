@@ -2,6 +2,10 @@ caldera_criticalmass_heatmap:
     resource: 'heatmap.yml'
     prefix: /
 
+caldera_criticalmass_trackmassimport:
+    resource: 'track_mass_import.yml'
+    prefix: /
+
 caldera_criticalmass_profile:
     resource: 'profile.xml'
     prefix: /
