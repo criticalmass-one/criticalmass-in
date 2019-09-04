@@ -22,6 +22,9 @@ class StravaActivityModel
     /** @var \DateTime $startDate */
     protected $startDate;
 
+    /** @var string $polyline */
+    protected $polyline;
+
     public function getId(): int
     {
         return $this->id;
@@ -90,6 +93,18 @@ class StravaActivityModel
     public function setStartDate(\DateTime $startDate): StravaActivityModel
     {
         $this->startDate = $startDate;
+
+        return $this;
+    }
+
+    public function getPolyline(): string
+    {
+        return $this->polyline;
+    }
+
+    public function setPolyline(string $polyline): StravaActivityModel
+    {
+        $this->polyline = $polyline;
 
         return $this;
     }

@@ -20,7 +20,8 @@ class StravaActivityConverter
             ->setDistance($content['distance'])
             ->setElapsedTime($content['elapsed_time'])
             ->setStartDate(new \DateTime($content['start_date']))
-            ->setType($content['type']);
+            ->setType($content['type'])
+            ->setPolyline($content['map']['summary_polyline']);
 
         return $model;
     }
