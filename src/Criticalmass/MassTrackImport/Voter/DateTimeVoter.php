@@ -18,12 +18,12 @@ class DateTimeVoter implements VoterInterface
         }
 
         if ($rideDateTime->equalTo($modelDateTime)) {
-            return 1;
+            //return 1;
         }
 
         $diff = $rideDateTime->diffInMinutes($modelDateTime, false);
 
-        if (abs($diff) < 15) {
+        if (abs($diff) <= 15) {
             return 1.0;
         }
 
@@ -39,19 +39,19 @@ class DateTimeVoter implements VoterInterface
             return 0.8;
         }
 
-        if (45 >= $diff) {
+        if (45 >= $diff && 90 < $diff) {
             return 0.9;
         }
 
-        if (-90 <= $diff || 90 >= $diff) {
+        if (abs($diff) <= 90) {
             return 0.6;
         }
 
-        if (-180 <= $diff || 180 >= $diff) {
+        if (abs($diff) <= 180) {
             return 0.5;
         }
 
-        if (-240 <= $diff || 240 >= $diff) {
+        if (abs($diff) <= 240) {
             return 0.3;
         }
 
