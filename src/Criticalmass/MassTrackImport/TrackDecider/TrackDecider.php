@@ -34,7 +34,7 @@ class TrackDecider implements TrackDeciderInterface
         $resultList = [];
 
         foreach ($rides as $ride) {
-            $rideResult = 0;
+            $rideResult = new RideResult($ride, $model);
 
             /** @var VoterInterface $voter */
             foreach ($this->voterList as $voter) {
@@ -44,19 +44,30 @@ class TrackDecider implements TrackDeciderInterface
                     break;
                 }
 
-                $rideResult += $voterResult;
+                $rideResult->addVoterResult($voter, $voterResult);
             }
 
-            $result = new RideResult(
-                $ride,
-                $rideResult / count($this->voterList)
-            );
+            $voterResultSum = 0;
 
-            $resultList[] = $result;
+            foreach ($rideResult->getVoterResults() as $voterName => $voterResult) {
+                $voterResultSum += $voterResult;
+            }
+
+            $rideResult->setResult($voterResultSum / count($this->voterList));
+
+            $resultList[] = $rideResult;
         }
 
         if (count($resultList) > 0) {
-            return array_pop($resultList);
+            usort($resultList, function (RideResult $rideResult1, RideResult $rideResult2): int {
+                if ($rideResult1->getResult() === $rideResult2->getResult()) {
+                    return 0;
+                }
+
+                return $rideResult1->getResult() > $rideResult2->getResult() ? -1 : 1;
+            });
+
+            return array_shift($resultList);
         }
 
         return null;

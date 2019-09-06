@@ -4,6 +4,7 @@ namespace App\Controller\Track;
 
 use App\Controller\AbstractController;
 use App\Criticalmass\MassTrackImport\MassTrackImporterInterface;
+use App\Criticalmass\MassTrackImport\TrackDecider\TrackDeciderInterface;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Criticalmass\Strava\Importer\TrackImporterInterface;
 use App\Entity\Ride;
@@ -69,12 +70,22 @@ class StravaMassImportController extends AbstractController
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function listridesAction(MassTrackImporterInterface $massTrackImporter): Response
+    public function listridesAction(MassTrackImporterInterface $massTrackImporter, TrackDeciderInterface $trackDecider): Response
     {
-        $massTrackImporter
-            ->setStartDateTime(new \DateTime('2019-09-01 00:00:00'))
-            ->setEndDateTime(new \DateTime('2019-09-03 23:59:59'))
+        $modelList = $massTrackImporter
+            ->setStartDateTime(new \DateTime('2019-07-01 00:00:00'))
+            ->setEndDateTime(new \DateTime('2019-07-14 23:59:59'))
             ->load();
+
+        $resultList = [];
+
+        foreach ($modelList as $model) {
+            if ($result = $trackDecider->decide($model)) {
+                $resultList[] = $result;
+            }
+        }
+
+        dump($resultList);
 
         return new Response();
     }

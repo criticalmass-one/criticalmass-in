@@ -11,6 +11,10 @@ class LocationVoter implements VoterInterface
 {
     public function vote(Ride $ride, StravaActivityModel $model): float
     {
+        if (!$ride->getLatitude() || !$ride->getLongitude()) {
+            return -1;
+        }
+
         $rideCoord = new Coord($ride->getLatitude(), $ride->getLongitude());
         $activityCoord = $model->getStartCoord();
 

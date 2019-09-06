@@ -56,7 +56,6 @@ class MassTrackImporter implements MassTrackImporterInterface
             $list[$key] = $activity;
         }
 
-        dump($list);
         return $list;
     }
 }
