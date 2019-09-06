@@ -76,7 +76,7 @@ class DateTimeVoterTest extends TestCase
         $stravaActivitiy = new StravaActivityModel();
         $stravaActivitiy->setStartDateTime(new \DateTime('2011-06-24 19:30:00', new \DateTimeZone('Europe/Berlin')));
 
-        $this->assertEquals(1.0, (new DateTimeVoter())->vote($ride, $stravaActivitiy));
+        $this->assertEquals(0.9, (new DateTimeVoter())->vote($ride, $stravaActivitiy));
     }
 
     public function test45MinutesBeforeDiff(): void
@@ -96,7 +96,7 @@ class DateTimeVoterTest extends TestCase
         $stravaActivitiy = new StravaActivityModel();
         $stravaActivitiy->setStartDateTime(new \DateTime('2011-06-24 19:45:00', new \DateTimeZone('Europe/Berlin')));
 
-        $this->assertEquals(0.9, (new DateTimeVoter())->vote($ride, $stravaActivitiy));
+        $this->assertEquals(0.8, (new DateTimeVoter())->vote($ride, $stravaActivitiy));
     }
 
     public function test90MinutesBeforeDiff(): void
@@ -104,9 +104,9 @@ class DateTimeVoterTest extends TestCase
         $ride = $this->createRide();
 
         $stravaActivitiy = new StravaActivityModel();
-        $stravaActivitiy->setStartDateTime(new \DateTime('2011-06-24 16:00:00', new \DateTimeZone('Europe/Berlin')));
+        $stravaActivitiy->setStartDateTime(new \DateTime('2011-06-24 17:30:00', new \DateTimeZone('Europe/Berlin')));
 
-        $this->assertEquals(0.6, (new DateTimeVoter())->vote($ride, $stravaActivitiy));
+        $this->assertEquals(0.7, (new DateTimeVoter())->vote($ride, $stravaActivitiy));
     }
 
     public function test90MinutesPastDiff(): void
@@ -116,7 +116,7 @@ class DateTimeVoterTest extends TestCase
         $stravaActivitiy = new StravaActivityModel();
         $stravaActivitiy->setStartDateTime(new \DateTime('2011-06-24 20:30:00', new \DateTimeZone('Europe/Berlin')));
 
-        $this->assertEquals(0.6, (new DateTimeVoter())->vote($ride, $stravaActivitiy));
+        $this->assertEquals(0.7, (new DateTimeVoter())->vote($ride, $stravaActivitiy));
     }
 
     public function test180MinutesBeforeDiff(): void
@@ -124,7 +124,7 @@ class DateTimeVoterTest extends TestCase
         $ride = $this->createRide();
 
         $stravaActivitiy = new StravaActivityModel();
-        $stravaActivitiy->setStartDateTime(new \DateTime('2011-06-24 15:00:00', new \DateTimeZone('Europe/Berlin')));
+        $stravaActivitiy->setStartDateTime(new \DateTime('2011-06-24 16:00:00', new \DateTimeZone('Europe/Berlin')));
 
         $this->assertEquals(0.5, (new DateTimeVoter())->vote($ride, $stravaActivitiy));
     }
