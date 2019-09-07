@@ -17,6 +17,9 @@ class TrackDecider implements TrackDeciderInterface
     /** @var RegistryInterface $registry */
     protected $registry;
 
+    /** @var bool $debug */
+    protected $debug = true;
+
     public function __construct(RegistryInterface $registry)
     {
         $this->registry = $registry;
@@ -52,7 +55,7 @@ class TrackDecider implements TrackDeciderInterface
         foreach ($this->voterList as $voter) {
             $voterResult = $voter->vote($ride, $model);
 
-            if ($voterResult < 0) {
+            if ($voterResult < 0 && !$this->debug) {
                 return null;
             }
 
@@ -85,6 +88,12 @@ class TrackDecider implements TrackDeciderInterface
             $bestResult = array_shift($resultList);
 
             if ($bestResult->getResult() >= self::THRESHOLD) {
+                $bestResult->setMatch(true);
+
+                return $bestResult;
+            }
+
+            if ($this->debug) {
                 return $bestResult;
             }
         }

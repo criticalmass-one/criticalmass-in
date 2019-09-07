@@ -20,6 +20,9 @@ class RideResult
     /** @var array $voterResults */
     protected $voterResults;
 
+    /** @var bool $match */
+    protected $match;
+
     public function __construct(Ride $ride, StravaActivityModel $activity)
     {
         $this->ride = $ride;
@@ -62,5 +65,15 @@ class RideResult
         return $this;
     }
 
+    public function isMatch(): bool
+    {
+        return $this->match;
+    }
 
+    public function setMatch(bool $match): RideResult
+    {
+        $this->match = $match;
+
+        return $this;
+    }
 }
