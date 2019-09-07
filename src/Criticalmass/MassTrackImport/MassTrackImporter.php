@@ -3,6 +3,7 @@
 namespace App\Criticalmass\MassTrackImport;
 
 use App\Criticalmass\MassTrackImport\Converter\StravaActivityConverter;
+use App\Criticalmass\MassTrackImport\TrackDecider\TrackDeciderInterface;
 use JMS\Serializer\SerializerInterface;
 use Strava\API\Client;
 use Strava\API\Service\REST;
@@ -22,9 +23,13 @@ class MassTrackImporter implements MassTrackImporterInterface
     /** @var \DateTime $endDateTime */
     protected $endDateTime;
 
-    public function __construct(SessionInterface $session, SerializerInterface $serializer)
+    /** @var TrackDeciderInterface $trackDecider */
+    protected $trackDecider;
+
+    public function __construct(SessionInterface $session, SerializerInterface $serializer, TrackDeciderInterface $trackDecider)
     {
         $this->serializer = $serializer;
+        $this->trackDecider = $trackDecider;
 
         $token = $session->get('strava_token');
         $adapter = new \GuzzleHttp\Client(['base_uri' => 'https://www.strava.com/api/v3/']);
@@ -46,16 +51,24 @@ class MassTrackImporter implements MassTrackImporterInterface
         return $this;
     }
 
-    public function load(): array
+    public function execute(): array
     {
-        $list = $this->client->getAthleteActivities($this->endDateTime->getTimestamp(), $this->startDateTime->getTimestamp());
+        $modelList = $this->client->getAthleteActivities($this->endDateTime->getTimestamp(), $this->startDateTime->getTimestamp());
 
-        foreach ($list as $key => $activityData) {
+        foreach ($modelList as $key => $activityData) {
             $activity = StravaActivityConverter::convert($activityData);
 
-            $list[$key] = $activity;
+            $modelList[$key] = $activity;
         }
 
-        return $list;
+        $resultList = [];
+
+        foreach ($modelList as $model) {
+            if ($result = $this->trackDecider->decide($model)) {
+                $resultList[] = $result;
+            }
+        }
+
+        return $resultList;
     }
 }

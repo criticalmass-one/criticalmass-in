@@ -8,5 +8,5 @@ interface MassTrackImporterInterface
 
     public function setEndDateTime(\DateTime $endDateTime): MassTrackImporterInterface;
 
-    public function load(): array;
+    public function execute(): array;
 }

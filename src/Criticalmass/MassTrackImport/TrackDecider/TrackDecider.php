@@ -18,7 +18,7 @@ class TrackDecider implements TrackDeciderInterface
     protected $registry;
 
     /** @var bool $debug */
-    protected $debug = true;
+    protected $debug = false;
 
     public function __construct(RegistryInterface $registry)
     {
