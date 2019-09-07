@@ -13,6 +13,6 @@ class TypeVoter implements VoterInterface
             return -1;
         }
 
-        return 0;
+        return 1;
     }
 }

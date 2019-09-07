@@ -58,7 +58,8 @@ class RideResult
 
     public function addVoterResult(VoterInterface $voter, float $result): RideResult
     {
-        $shortname = get_class($voter);
+        $reflectionClass = new \ReflectionClass($voter);
+        $shortname = $reflectionClass->getShortName();
 
         $this->voterResults[$shortname] = $result;
 

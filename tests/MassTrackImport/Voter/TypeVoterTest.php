@@ -16,7 +16,7 @@ class TypeVoterTest extends TestCase
         $stravaActivitiy = new StravaActivityModel();
         $stravaActivitiy->setType('Ride');
 
-        $this->assertEquals(0.0, (new TypeVoter())->vote($ride, $stravaActivitiy));
+        $this->assertEquals(1.0, (new TypeVoter())->vote($ride, $stravaActivitiy));
     }
 
     public function testRun(): void
