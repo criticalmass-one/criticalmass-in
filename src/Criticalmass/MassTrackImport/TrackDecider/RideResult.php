@@ -21,7 +21,7 @@ class RideResult
     protected $voterResults;
 
     /** @var bool $match */
-    protected $match;
+    protected $match = false;
 
     public function __construct(Ride $ride, StravaActivityModel $activity)
     {
