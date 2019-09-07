@@ -2,12 +2,12 @@
 
 namespace App\Criticalmass\MassTrackImport\TrackDecider;
 
-use App\Criticalmass\MassTrackImport\Model\StravaActivityModel;
 use App\Criticalmass\MassTrackImport\Voter\VoterInterface;
+use App\Entity\TrackImportProposal;
 
 interface TrackDeciderInterface
 {
-    public function decide(StravaActivityModel $model): ?RideResult;
+    public function decide(TrackImportProposal $model): ?RideResult;
 
     public function addVoter(VoterInterface $voter): TrackDeciderInterface;
 }

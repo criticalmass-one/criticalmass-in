@@ -2,10 +2,12 @@
 
 namespace App\Criticalmass\MassTrackImport\TrackDecider;
 
-use App\Criticalmass\MassTrackImport\Model\StravaActivityModel;
 use App\Criticalmass\MassTrackImport\Voter\VoterInterface;
 use App\Entity\Ride;
+use App\Entity\TrackImportProposal;
+use App\Entity\User;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class TrackDecider implements TrackDeciderInterface
 {
@@ -18,11 +20,15 @@ class TrackDecider implements TrackDeciderInterface
     protected $registry;
 
     /** @var bool $debug */
-    protected $debug = false;
+    protected $debug = true;
 
-    public function __construct(RegistryInterface $registry)
+    /** @var TokenStorageInterface $tokenStorage */
+    protected $tokenStorage;
+
+    public function __construct(RegistryInterface $registry, TokenStorageInterface $tokenStorage)
     {
         $this->registry = $registry;
+        $this->tokenStorage = $tokenStorage;
     }
 
     public function addVoter(VoterInterface $voter): TrackDeciderInterface
@@ -32,14 +38,14 @@ class TrackDecider implements TrackDeciderInterface
         return $this;
     }
 
-    public function decide(StravaActivityModel $model): ?RideResult
+    public function decide(TrackImportProposal $trackImportProposal): ?RideResult
     {
-        $rides = $this->registry->getRepository(Ride::class)->findByDate($model->getStartDateTime());
+        $rides = $this->registry->getRepository(Ride::class)->findByDate($trackImportProposal->getStartDateTime());
 
         $resultList = [];
 
         foreach ($rides as $ride) {
-            if ($rideResult = $this->vote($ride, $model)) {
+            if ($rideResult = $this->vote($ride, $trackImportProposal)) {
                 $resultList[] = $rideResult;
             }
         }
@@ -47,13 +53,13 @@ class TrackDecider implements TrackDeciderInterface
         return $this->handleResultList($resultList);
     }
 
-    protected function vote(Ride $ride, StravaActivityModel $model): ?RideResult
+    protected function vote(Ride $ride, TrackImportProposal $trackImportProposal): ?RideResult
     {
-        $rideResult = new RideResult($ride, $model);
+        $rideResult = new RideResult($ride, $trackImportProposal);
 
         /** @var VoterInterface $voter */
         foreach ($this->voterList as $voter) {
-            $voterResult = $voter->vote($ride, $model);
+            $voterResult = $voter->vote($ride, $trackImportProposal);
 
             if ($voterResult < 0 && !$this->debug) {
                 return null;
@@ -88,7 +94,11 @@ class TrackDecider implements TrackDeciderInterface
             $bestResult = array_shift($resultList);
 
             if ($bestResult->getResult() >= self::THRESHOLD) {
-                $bestResult->setMatch(true);
+                $bestResult
+                    ->setMatch(true)
+                    ->getActivity()
+                    ->setRide($bestResult->getRide())
+                    ->setUser($this->getUser());
 
                 return $bestResult;
             }
@@ -99,5 +109,10 @@ class TrackDecider implements TrackDeciderInterface
         }
 
         return null;
+    }
+
+    protected function getUser(): User
+    {
+        return $this->tokenStorage->getToken()->getUser();
     }
 }

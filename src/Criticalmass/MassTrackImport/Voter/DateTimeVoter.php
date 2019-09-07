@@ -2,13 +2,13 @@
 
 namespace App\Criticalmass\MassTrackImport\Voter;
 
-use App\Criticalmass\MassTrackImport\Model\StravaActivityModel;
 use App\Entity\Ride;
+use App\Entity\TrackImportProposal;
 use Carbon\Carbon;
 
 class DateTimeVoter implements VoterInterface
 {
-    public function vote(Ride $ride, StravaActivityModel $model): float
+    public function vote(Ride $ride, TrackImportProposal $model): float
     {
         $rideDateTime = Carbon::instance($ride->getDateTime());
         $modelDateTime = Carbon::instance($model->getStartDateTime());

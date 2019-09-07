@@ -2,16 +2,16 @@
 
 namespace App\Criticalmass\MassTrackImport\TrackDecider;
 
-use App\Criticalmass\MassTrackImport\Model\StravaActivityModel;
 use App\Criticalmass\MassTrackImport\Voter\VoterInterface;
 use App\Entity\Ride;
+use App\Entity\TrackImportProposal;
 
 class RideResult
 {
     /** @var Ride $ride */
     protected $ride;
 
-    /** @var StravaActivityModel $activity */
+    /** @var TrackImportProposal $activity */
     protected $activity;
 
     /** @var float $result */
@@ -23,7 +23,7 @@ class RideResult
     /** @var bool $match */
     protected $match = false;
 
-    public function __construct(Ride $ride, StravaActivityModel $activity)
+    public function __construct(Ride $ride, TrackImportProposal $activity)
     {
         $this->ride = $ride;
         $this->activity = $activity;
@@ -34,7 +34,7 @@ class RideResult
         return $this->ride;
     }
 
-    public function getActivity(): StravaActivityModel
+    public function getActivity(): TrackImportProposal
     {
         return $this->activity;
     }

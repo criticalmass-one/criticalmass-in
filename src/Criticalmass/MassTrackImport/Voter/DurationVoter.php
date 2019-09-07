@@ -2,12 +2,12 @@
 
 namespace App\Criticalmass\MassTrackImport\Voter;
 
-use App\Criticalmass\MassTrackImport\Model\StravaActivityModel;
 use App\Entity\Ride;
+use App\Entity\TrackImportProposal;
 
 class DurationVoter implements VoterInterface
 {
-    public function vote(Ride $ride, StravaActivityModel $model): float
+    public function vote(Ride $ride, TrackImportProposal $model): float
     {
         $duration = $model->getElapsedTime();
 

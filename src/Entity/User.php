@@ -184,6 +184,11 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
      */
     private $heatmap;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\TrackImportProposal", mappedBy="user", orphanRemoval=true)
+     */
+    private $trackImportProposals;
+
     public function __construct()
     {
         parent::__construct();
@@ -197,6 +202,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         $this->bikerightVouchers = new ArrayCollection();
         $this->blogPosts = new ArrayCollection();
         $this->socialNetworkProfiles = new ArrayCollection();
+        $this->trackImportProposals = new ArrayCollection();
     }
 
     public function setId(int $id): User
@@ -655,6 +661,37 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         $newUser = $heatmap === null ? null : $this;
         if ($newUser !== $heatmap->getUser()) {
             $heatmap->setUser($newUser);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TrackImportProposal[]
+     */
+    public function getTrackImportProposals(): Collection
+    {
+        return $this->trackImportProposals;
+    }
+
+    public function addTrackImportProposal(TrackImportProposal $trackImportProposal): self
+    {
+        if (!$this->trackImportProposals->contains($trackImportProposal)) {
+            $this->trackImportProposals[] = $trackImportProposal;
+            $trackImportProposal->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrackImportProposal(TrackImportProposal $trackImportProposal): self
+    {
+        if ($this->trackImportProposals->contains($trackImportProposal)) {
+            $this->trackImportProposals->removeElement($trackImportProposal);
+            // set the owning side to null (unless already changed)
+            if ($trackImportProposal->getUser() === $this) {
+                $trackImportProposal->setUser(null);
+            }
         }
 
         return $this;

@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\MassTrackImport\Converter;
 
-use App\Criticalmass\MassTrackImport\Model\StravaActivityModel;
+use App\Entity\TrackImportProposal;
 use Caldera\GeoBasic\Coord\Coord;
 
 class StravaActivityConverter
@@ -12,14 +12,14 @@ class StravaActivityConverter
 
     }
 
-    public static function convert(array $content): StravaActivityModel
+    public static function convert(array $content): TrackImportProposal
     {
         $startCoord = new Coord($content['start_latlng'][0], $content['start_latlng'][1]);
         $endCoord = new Coord($content['end_latlng'][0], $content['end_latlng'][1]);
 
-        $model = new StravaActivityModel();
+        $model = new TrackImportProposal();
         $model
-            ->setId($content['id'])
+            ->setActivityId($content['id'])
             ->setName($content['name'])
             ->setDistance($content['distance'])
             ->setElapsedTime($content['elapsed_time'])

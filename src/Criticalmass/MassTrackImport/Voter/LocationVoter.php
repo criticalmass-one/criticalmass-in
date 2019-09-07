@@ -3,13 +3,13 @@
 namespace App\Criticalmass\MassTrackImport\Voter;
 
 use App\Criticalmass\Geo\DistanceCalculator\DistanceCalculator;
-use App\Criticalmass\MassTrackImport\Model\StravaActivityModel;
 use App\Entity\Ride;
+use App\Entity\TrackImportProposal;
 use Caldera\GeoBasic\Coord\Coord;
 
 class LocationVoter implements VoterInterface
 {
-    public function vote(Ride $ride, StravaActivityModel $model): float
+    public function vote(Ride $ride, TrackImportProposal $model): float
     {
         if (!$ride->getLatitude() || !$ride->getLongitude()) {
             return -1;

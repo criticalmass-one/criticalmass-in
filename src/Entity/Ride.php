@@ -311,6 +311,11 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      */
     private $heatmap;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\TrackImportProposal", mappedBy="ride")
+     */
+    private $trackImportProposals;
+
     public function __construct()
     {
         $this->dateTime = new \DateTime();
@@ -324,6 +329,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         $this->subrides = new ArrayCollection();
         $this->participations = new ArrayCollection();
         $this->socialNetworkProfiles = new ArrayCollection();
+        $this->trackImportProposals = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -1075,6 +1081,37 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         $newRide = $heatmap === null ? null : $this;
         if ($newRide !== $heatmap->getRide()) {
             $heatmap->setRide($newRide);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TrackImportProposal[]
+     */
+    public function getTrackImportProposals(): Collection
+    {
+        return $this->trackImportProposals;
+    }
+
+    public function addTrackImportProposal(TrackImportProposal $trackImportProposal): self
+    {
+        if (!$this->trackImportProposals->contains($trackImportProposal)) {
+            $this->trackImportProposals[] = $trackImportProposal;
+            $trackImportProposal->setRide($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrackImportProposal(TrackImportProposal $trackImportProposal): self
+    {
+        if ($this->trackImportProposals->contains($trackImportProposal)) {
+            $this->trackImportProposals->removeElement($trackImportProposal);
+            // set the owning side to null (unless already changed)
+            if ($trackImportProposal->getRide() === $this) {
+                $trackImportProposal->setRide(null);
+            }
         }
 
         return $this;
