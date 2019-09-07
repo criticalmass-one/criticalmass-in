@@ -9,6 +9,8 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class TrackDecider implements TrackDeciderInterface
 {
+    const THRESHOLD = 0.75;
+
     /** @var array $voterList */
     protected $voterList = [];
 
@@ -34,30 +36,42 @@ class TrackDecider implements TrackDeciderInterface
         $resultList = [];
 
         foreach ($rides as $ride) {
-            $rideResult = new RideResult($ride, $model);
-
-            /** @var VoterInterface $voter */
-            foreach ($this->voterList as $voter) {
-                $voterResult = $voter->vote($ride, $model);
-
-                if ($voterResult < 0) {
-                    break;
-                }
-
-                $rideResult->addVoterResult($voter, $voterResult);
+            if ($rideResult = $this->vote($ride, $model)) {
+                $resultList[] = $rideResult;
             }
-
-            $voterResultSum = 0;
-
-            foreach ($rideResult->getVoterResults() as $voterName => $voterResult) {
-                $voterResultSum += $voterResult;
-            }
-
-            $rideResult->setResult($voterResultSum / count($this->voterList));
-
-            $resultList[] = $rideResult;
         }
 
+        return $this->handleResultList($resultList);
+    }
+
+    protected function vote(Ride $ride, StravaActivityModel $model): ?RideResult
+    {
+        $rideResult = new RideResult($ride, $model);
+
+        /** @var VoterInterface $voter */
+        foreach ($this->voterList as $voter) {
+            $voterResult = $voter->vote($ride, $model);
+
+            if ($voterResult < 0) {
+                return null;
+            }
+
+            $rideResult->addVoterResult($voter, $voterResult);
+        }
+
+        $voterResultSum = 0;
+
+        foreach ($rideResult->getVoterResults() as $voterName => $voterResult) {
+            $voterResultSum += $voterResult;
+        }
+
+        $rideResult->setResult($voterResultSum / count($this->voterList));
+
+        return $rideResult;
+    }
+
+    protected function handleResultList(array $resultList): ?RideResult
+    {
         if (count($resultList) > 0) {
             usort($resultList, function (RideResult $rideResult1, RideResult $rideResult2): int {
                 if ($rideResult1->getResult() === $rideResult2->getResult()) {
@@ -67,7 +81,12 @@ class TrackDecider implements TrackDeciderInterface
                 return $rideResult1->getResult() > $rideResult2->getResult() ? -1 : 1;
             });
 
-            return array_shift($resultList);
+            /** @var RideResult $bestResult */
+            $bestResult = array_shift($resultList);
+
+            if ($bestResult->getResult() >= self::THRESHOLD) {
+                return $bestResult;
+            }
         }
 
         return null;
