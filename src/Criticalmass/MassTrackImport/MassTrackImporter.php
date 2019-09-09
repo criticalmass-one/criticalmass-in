@@ -4,9 +4,9 @@ namespace App\Criticalmass\MassTrackImport;
 
 use App\Criticalmass\MassTrackImport\ActivityLoader\ActivityLoaderInterface;
 use App\Criticalmass\MassTrackImport\Converter\StravaActivityConverter;
+use App\Criticalmass\MassTrackImport\ProposalPersister\ProposalPersisterInterface;
 use App\Criticalmass\MassTrackImport\TrackDecider\TrackDeciderInterface;
 use JMS\Serializer\SerializerInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class MassTrackImporter implements MassTrackImporterInterface
 {
@@ -19,11 +19,15 @@ class MassTrackImporter implements MassTrackImporterInterface
     /** @var TrackDeciderInterface $trackDecider */
     protected $trackDecider;
 
-    public function __construct(SessionInterface $session, SerializerInterface $serializer, TrackDeciderInterface $trackDecider, ActivityLoaderInterface $activityLoader)
+    /** @var ProposalPersisterInterface $proposalPersister */
+    protected $proposalPersister;
+
+    public function __construct(ProposalPersisterInterface $proposalPersister, SerializerInterface $serializer, TrackDeciderInterface $trackDecider, ActivityLoaderInterface $activityLoader)
     {
         $this->serializer = $serializer;
         $this->trackDecider = $trackDecider;
         $this->activityLoader = $activityLoader;
+        $this->proposalPersister = $proposalPersister;
     }
 
     public function setStartDateTime(\DateTime $startDateTime): MassTrackImporterInterface
@@ -54,9 +58,11 @@ class MassTrackImporter implements MassTrackImporterInterface
 
         foreach ($modelList as $model) {
             if ($result = $this->trackDecider->decide($model)) {
-                $resultList[] = $result;
+                $resultList[$result->getActivity()->getActivityId()] = $result;
             }
         }
+
+        $this->proposalPersister->persist($resultList);
 
         return $resultList;
     }
