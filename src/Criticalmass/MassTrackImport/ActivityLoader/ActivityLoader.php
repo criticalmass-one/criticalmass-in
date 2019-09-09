@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class ActivityLoader implements ActivityLoaderInterface
 {
+    const PER_PAGE = 100;
+
     /** @var SessionInterface $session */
     protected $session;
 
@@ -46,6 +48,19 @@ class ActivityLoader implements ActivityLoaderInterface
         $service = new REST($token, $adapter);
         $this->client = new Client($service);
 
-        return $this->client->getAthleteActivities($this->endDateTime->getTimestamp(), $this->startDateTime->getTimestamp());
+        $activityList = [];
+        $pageNumber = 1;
+
+        do {
+            $results = $this->client->getAthleteActivities($this->endDateTime->getTimestamp(), $this->startDateTime->getTimestamp(), $pageNumber, 100);
+
+            if (is_array($results)) {
+                $activityList = array_merge($activityList, $results);
+
+                ++$pageNumber;
+            }
+        } while (is_array($results) && count($results) !== 0);
+        
+        return $activityList;
     }
 }

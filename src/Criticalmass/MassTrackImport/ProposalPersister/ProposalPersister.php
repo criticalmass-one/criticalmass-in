@@ -28,7 +28,7 @@ class ProposalPersister implements ProposalPersisterInterface
 
     public function persist(array $rideResultList): array
     {
-        //$this->loadOldStravaActivityIds();
+        $this->loadOldStravaActivityIds();
 
         $manager = $this->registry->getManager();
 
