@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\MassTrackImport\ProposalPersister;
 
+use App\Criticalmass\MassTrackImport\TrackDecider\RideResult;
 use App\Entity\Track;
 use App\Entity\TrackImportProposal;
 use App\Entity\User;
@@ -25,23 +26,29 @@ class ProposalPersister implements ProposalPersisterInterface
         $this->tokenStorage = $tokenStorage;
     }
 
-    public function persist(array $proposalList): array
+    public function persist(array $rideResultList): array
     {
-        $this->loadOldStravaActivityIds();
+        //$this->loadOldStravaActivityIds();
 
         $manager = $this->registry->getManager();
 
-        foreach ($proposalList as $stravaActivityId => $proposal) {
-            if (!in_array($stravaActivityId, $this->existentStravaActivityIds)) {
-                $this->persist($proposal);
+        /**
+         * @var int $stravaActivityId
+         * @var RideResult $rideResult
+         */
+        foreach ($rideResultList as $stravaActivityId => $rideResult) {
+            if (!$rideResult->isMatch() ||
+                !in_array($stravaActivityId, $this->existentStravaActivityIds)
+            ) {
+                $manager->persist($rideResult->getActivity());
             } else {
-                unset($proposalList[$stravaActivityId]);
+                unset($rideResultList[$stravaActivityId]);
             }
         }
 
         $manager->flush();
 
-        return $proposalList;
+        return $rideResultList;
     }
 
     protected function getUser(): User
@@ -64,7 +71,7 @@ class ProposalPersister implements ProposalPersisterInterface
 
         /** @var TrackImportProposal $proposal */
         foreach ($proposals as $proposal) {
-            $this->existentStravaActivityIds[] = $track->getStravaActivityId();
+            $this->existentStravaActivityIds[] = $proposal->getActivityId();
         }
 
         return $this;

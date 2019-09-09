@@ -148,7 +148,7 @@ class TrackImportProposal
 
     public function getActivityId(): int
     {
-        return $this->activityId;
+        return (int)$this->activityId;
     }
 
     public function setActivityId(int $activityId): TrackImportProposal
