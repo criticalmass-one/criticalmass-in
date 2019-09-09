@@ -35,7 +35,7 @@ class TrackImportProposal
 
     /**
      * @var int $activityId
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="bigint")
      */
     protected $activityId;
 
@@ -95,7 +95,7 @@ class TrackImportProposal
 
     /**
      * @var string $polyline
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text")
      */
     protected $polyline;
 

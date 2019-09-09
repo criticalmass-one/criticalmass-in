@@ -20,7 +20,7 @@ class TrackDecider implements TrackDeciderInterface
     protected $registry;
 
     /** @var bool $debug */
-    protected $debug = true;
+    protected $debug = false;
 
     /** @var TokenStorageInterface $tokenStorage */
     protected $tokenStorage;
@@ -93,12 +93,12 @@ class TrackDecider implements TrackDeciderInterface
             /** @var RideResult $bestResult */
             $bestResult = array_shift($resultList);
 
+            $bestResult->getActivity()
+                ->setRide($bestResult->getRide())
+                ->setUser($this->getUser());
+
             if ($bestResult->getResult() >= self::THRESHOLD) {
-                $bestResult
-                    ->setMatch(true)
-                    ->getActivity()
-                    ->setRide($bestResult->getRide())
-                    ->setUser($this->getUser());
+                $bestResult->setMatch(true);
 
                 return $bestResult;
             }

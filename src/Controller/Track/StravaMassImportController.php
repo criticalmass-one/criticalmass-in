@@ -73,13 +73,13 @@ class StravaMassImportController extends AbstractController
     public function listridesAction(MassTrackImporterInterface $massTrackImporter, TrackDeciderInterface $trackDecider): Response
     {
         $list = $massTrackImporter
-            ->setStartDateTime(new \DateTime('2019-09-02 00:00:00'))
-            ->setEndDateTime(new \DateTime('2019-09-02 23:59:59'))
+            ->setStartDateTime(new \DateTime('2019-08-01 00:00:00'))
+            ->setEndDateTime(new \DateTime())
             ->execute();
 
-        dump($list);
-
-        return new Response();
+        return $this->render('TrackMassImport/list.html.twig', [
+            'list' => $list,
+        ]);
     }
 
     /**

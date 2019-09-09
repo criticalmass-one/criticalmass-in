@@ -1,26 +1,9 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
-{% block title %}Track von Strava importieren{% endblock %}
+{% block title %}Tracks importieren{% endblock %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
-    <li>
-        <a href="{{ objectPath(ride.city) }}">
-            {{ ride.city.city }}
-        </a>
-    </li>
-    <li>
-        <a href="{{ objectPath(ride) }}">
-            {{ ride.title }}
-        </a>
-    </li>
-    <li class="active">
-        Track importieren
-    </li>
+
 {% endblock %}
 
 {% block content %}
@@ -34,30 +17,22 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
-                <p>
-                    Am <strong>{{ ride.dateTime.format('d.m.Y') }}</strong> hast du die folgenden Aktivitäten mit Strava
-                    aufgezeichnet. Bitte wähle die Aktivität aus, die du als Track importieren möchtest.
-                </p>
-            </div>
-        </div>
-
-        <div class="row">
-            {% if activities|length %}
-                {% for activity in activities %}
+            {% if list|length %}
+                {% for result in list %}
+                    {% set proposal = result.activity %}
                     <div class="col-md-4">
                         <div class="row">
                             <div class="col-md-12">
                                 <h3>
-                                    {{ activity.name }}
+                                    {{ proposal.name }}
                                 </h3>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-12">
-                                <div id="map-{{ activity.id }}" class="preview-map" style="height: 150px;"
-                                     data-polyline="{{ activity.map.summary_polyline }}">
+                                <div id="map-{{ proposal.activityId }}" class="preview-map" style="height: 150px;"
+                                     data-polyline="{{ proposal.polyline }}">
 
                                 </div>
                             </div>
@@ -67,19 +42,19 @@
                             <div class="col-md-4">
                                 <dl>
                                     <dt>Distanz:</dt>
-                                    <dd>{{ (activity.distance / 1000)|round(2) }}&nbsp;Kilometer</dd>
+                                    <dd>{{ (proposal.distance / 1000)|round(2) }}&nbsp;Kilometer</dd>
                                 </dl>
                             </div>
                             <div class="col-md-4">
                                 <dl>
                                     <dt>Start:</dt>
-                                    <dd>{{ activity.start_date|date('H:i') }}&nbsp;Uhr</dd>
+                                    <dd>{{ proposal.startDateTime|date('H:i') }}&nbsp;Uhr</dd>
                                 </dl>
                             </div>
                             <div class="col-md-4">
                                 <dl>
                                     <dt>Dauer:</dt>
-                                    <dd>{{ (activity.elapsed_time / 60)|round() }}&nbsp;Minuten</dd>
+                                    <dd>{{ (proposal.elapsedTime / 60)|round() }}&nbsp;Minuten</dd>
                                 </dl>
                             </div>
                         </div>
@@ -87,7 +62,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="text-center">
-                                    <a class="btn btn-success" href="{{ objectPath(ride, 'caldera_criticalmass_strava_import') }}?activityId={{ activity.id }}">
+                                    <a class="btn btn-success"
+                                       href="{{ objectPath(proposal.ride, 'caldera_criticalmass_strava_import') }}?activityId={{ proposal.activityId }}">
                                         {# TODO #}
                                         <i class="fa fa-cloud-download"></i>
                                         Track importieren
@@ -105,14 +81,6 @@
                     </div>
                 </div>
             {% endif %}
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <a href="{{ objectPath(ride) }}" class="btn btn-default pull-right">
-                    Abbrechen
-                </a>
-            </div>
         </div>
     </div>
 
