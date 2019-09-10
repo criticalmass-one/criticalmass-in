@@ -8,14 +8,17 @@ use App\Criticalmass\MassTrackImport\TrackDecider\TrackDeciderInterface;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Criticalmass\Strava\Importer\TrackImporterInterface;
 use App\Entity\Ride;
+use App\Entity\TrackImportProposal;
 use App\Event\Track\TrackUploadedEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Strava\API\OAuth;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -73,13 +76,34 @@ class StravaMassImportController extends AbstractController
     public function listridesAction(MassTrackImporterInterface $massTrackImporter, TrackDeciderInterface $trackDecider): Response
     {
         $list = $massTrackImporter
-            ->setStartDateTime(new \DateTime('2019-05-01 00:00:00'))
+            ->setStartDateTime(new \DateTime('2019-01-01 00:00:00'))
             ->setEndDateTime(new \DateTime())
             ->execute();
 
         return $this->render('TrackMassImport/list.html.twig', [
             'list' => $list,
         ]);
+    }
+
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function rejectAction(Request $request, UserInterface $user, ObjectRouterInterface $objectRouter, RegistryInterface $registry): Response
+    {
+        $activityId = (int)$request->get('activityId');
+
+        /** @var TrackImportProposal $proposal */
+        $proposal = $registry->getRepository(TrackImportProposal::class)->findOneByActivityId($activityId);
+
+        if ($proposal->getUser() !== $user) {
+            throw new AccessDeniedHttpException();
+        }
+
+        $proposal->setRejected(true);
+
+        $registry->getManager()->flush();
+
+        return $this->redirectToRoute('caldera_criticalmass_trackmassimport_list');
     }
 
     /**

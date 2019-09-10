@@ -62,12 +62,20 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="text-center">
-                                    <a class="btn btn-success"
-                                       href="{{ objectPath(proposal.ride, 'caldera_criticalmass_strava_import') }}?activityId={{ proposal.activityId }}">
-                                        {# TODO #}
-                                        <i class="fa fa-cloud-download"></i>
-                                        Track importieren
-                                    </a>
+                                    <div class="btn-group">
+                                        <a class="btn btn-success"
+                                           href="{{ objectPath(proposal.ride, 'caldera_criticalmass_strava_import') }}?activityId={{ proposal.activityId }}">
+                                            <i class="fa fa-check"></i>
+                                            Importieren
+                                        </a>
+
+                                        <a class="btn btn-danger"
+                                           href="{{ path('caldera_criticalmass_trackmassimport_reject') }}?activityId={{ proposal.activityId }}">
+                                            <i class="fa fa-times"></i>
+                                            Ablehnen
+                                        </a>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>

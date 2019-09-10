@@ -7,6 +7,7 @@ use Caldera\GeoBasic\Coord\CoordInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\Table(name="track_candidate")
  * @ORM\Entity(repositoryClass="App\Repository\TrackImportProposalRepository")
  */
 class TrackImportProposal
@@ -103,7 +104,13 @@ class TrackImportProposal
      * @var \DateTime $createdAt
      * @ORM\Column(type="datetime")
      */
-    private $createdAt;
+    protected $createdAt;
+
+    /**
+     * @var bool $rejected
+     * @ORM\Column(type="boolean")
+     */
+    protected $rejected = false;
 
     public function __construct()
     {
@@ -311,6 +318,18 @@ class TrackImportProposal
     public function setCreatedAt(\DateTimeInterface $createdAt): TrackImportProposal
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function isRejected(): ?bool
+    {
+        return $this->rejected;
+    }
+
+    public function setRejected(bool $rejected): TrackImportProposal
+    {
+        $this->rejected = $rejected;
 
         return $this;
     }
