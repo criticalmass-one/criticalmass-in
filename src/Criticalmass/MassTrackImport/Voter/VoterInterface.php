@@ -3,9 +3,9 @@
 namespace App\Criticalmass\MassTrackImport\Voter;
 
 use App\Entity\Ride;
-use App\Entity\TrackImportProposal;
+use App\Entity\TrackImportCandidate;
 
 interface VoterInterface
 {
-    public function vote(Ride $ride, TrackImportProposal $model): float;
+    public function vote(Ride $ride, TrackImportCandidate $model): float;
 }

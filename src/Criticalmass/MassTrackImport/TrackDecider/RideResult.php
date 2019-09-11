@@ -4,14 +4,14 @@ namespace App\Criticalmass\MassTrackImport\TrackDecider;
 
 use App\Criticalmass\MassTrackImport\Voter\VoterInterface;
 use App\Entity\Ride;
-use App\Entity\TrackImportProposal;
+use App\Entity\TrackImportCandidate;
 
 class RideResult
 {
     /** @var Ride $ride */
     protected $ride;
 
-    /** @var TrackImportProposal $activity */
+    /** @var TrackImportCandidate $activity */
     protected $activity;
 
     /** @var float $result */
@@ -23,7 +23,7 @@ class RideResult
     /** @var bool $match */
     protected $match = false;
 
-    public function __construct(Ride $ride, TrackImportProposal $activity)
+    public function __construct(Ride $ride, TrackImportCandidate $activity)
     {
         $this->ride = $ride;
         $this->activity = $activity;
@@ -34,7 +34,7 @@ class RideResult
         return $this->ride;
     }
 
-    public function getActivity(): TrackImportProposal
+    public function getActivity(): TrackImportCandidate
     {
         return $this->activity;
     }

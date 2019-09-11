@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\Router\Annotation as Routing;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\RouteableInterface;
@@ -13,7 +14,6 @@ use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use App\Criticalmass\Router\Annotation as Routing;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -185,9 +185,9 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     private $heatmap;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\TrackImportProposal", mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\TrackImportCandidate", mappedBy="user", orphanRemoval=true)
      */
-    private $trackImportProposals;
+    private $trackImportCandidates;
 
     public function __construct()
     {
@@ -202,7 +202,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         $this->bikerightVouchers = new ArrayCollection();
         $this->blogPosts = new ArrayCollection();
         $this->socialNetworkProfiles = new ArrayCollection();
-        $this->trackImportProposals = new ArrayCollection();
+        $this->trackImportCandidates = new ArrayCollection();
     }
 
     public function setId(int $id): User
@@ -667,30 +667,30 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     }
 
     /**
-     * @return Collection|TrackImportProposal[]
+     * @return Collection|TrackImportCandidate[]
      */
-    public function getTrackImportProposals(): Collection
+    public function getTrackImportCandidates(): Collection
     {
-        return $this->trackImportProposals;
+        return $this->trackImportCandidates;
     }
 
-    public function addTrackImportProposal(TrackImportProposal $trackImportProposal): self
+    public function addTrackImportCandidate(TrackImportCandidate $trackImportCandidate): self
     {
-        if (!$this->trackImportProposals->contains($trackImportProposal)) {
-            $this->trackImportProposals[] = $trackImportProposal;
-            $trackImportProposal->setUser($this);
+        if (!$this->trackImportCandidates->contains($trackImportCandidate)) {
+            $this->trackImportCandidates[] = $trackImportCandidate;
+            $trackImportCandidate->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeTrackImportProposal(TrackImportProposal $trackImportProposal): self
+    public function removeTrackImportCandidate(TrackImportCandidate $trackImportCandidate): self
     {
-        if ($this->trackImportProposals->contains($trackImportProposal)) {
-            $this->trackImportProposals->removeElement($trackImportProposal);
+        if ($this->trackImportCandidates->contains($trackImportCandidate)) {
+            $this->trackImportCandidates->removeElement($trackImportCandidate);
             // set the owning side to null (unless already changed)
-            if ($trackImportProposal->getUser() === $this) {
-                $trackImportProposal->setUser(null);
+            if ($trackImportCandidate->getUser() === $this) {
+                $trackImportCandidate->setUser(null);
             }
         }
 

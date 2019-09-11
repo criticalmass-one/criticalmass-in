@@ -5,30 +5,30 @@ namespace App\Entity;
 use App\Criticalmass\Geocoding\ReverseGeocodeable;
 use App\Criticalmass\OrderedEntities\Annotation as OE;
 use App\Criticalmass\OrderedEntities\OrderedEntityInterface;
+use App\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Sharing\Annotation as Sharing;
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
+use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\Criticalmass\Weather\EntityInterface\WeatherableInterface;
 use App\Criticalmass\Weather\EntityInterface\WeatherInterface;
-use App\EntityInterface\StaticMapableInterface;
-use Caldera\GeoBasic\Coord\Coord;
 use App\EntityInterface\AuditableInterface;
 use App\EntityInterface\ElasticSearchPinInterface;
 use App\EntityInterface\ParticipateableInterface;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
-use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use App\EntityInterface\StaticMapableInterface;
+use App\Validator\Constraint as CriticalAssert;
+use Caldera\GeoBasic\Coord\Coord;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Validator\Constraint as CriticalAssert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use App\Criticalmass\Router\Annotation as Routing;
-use App\Criticalmass\Sharing\Annotation as Sharing;
-use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 
 /**
  * @ORM\Table(name="ride")
@@ -312,9 +312,9 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     private $heatmap;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\TrackImportProposal", mappedBy="ride")
+     * @ORM\OneToMany(targetEntity="App\Entity\TrackImportCandidate", mappedBy="ride")
      */
-    private $trackImportProposals;
+    private $trackImportCandidates;
 
     public function __construct()
     {
@@ -329,7 +329,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         $this->subrides = new ArrayCollection();
         $this->participations = new ArrayCollection();
         $this->socialNetworkProfiles = new ArrayCollection();
-        $this->trackImportProposals = new ArrayCollection();
+        $this->trackImportCandidates = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -1087,30 +1087,30 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     }
 
     /**
-     * @return Collection|TrackImportProposal[]
+     * @return Collection|TrackImportCandidate[]
      */
-    public function getTrackImportProposals(): Collection
+    public function getTrackImportCandidates(): Collection
     {
-        return $this->trackImportProposals;
+        return $this->trackImportCandidates;
     }
 
-    public function addTrackImportProposal(TrackImportProposal $trackImportProposal): self
+    public function addTrackImportCandidate(TrackImportCandidate $trackImportCandidate): self
     {
-        if (!$this->trackImportProposals->contains($trackImportProposal)) {
-            $this->trackImportProposals[] = $trackImportProposal;
-            $trackImportProposal->setRide($this);
+        if (!$this->trackImportCandidates->contains($trackImportCandidate)) {
+            $this->trackImportCandidates[] = $trackImportCandidate;
+            $trackImportCandidate->setRide($this);
         }
 
         return $this;
     }
 
-    public function removeTrackImportProposal(TrackImportProposal $trackImportProposal): self
+    public function removeTrackImportCandidate(TrackImportCandidate $trackImportCandidate): self
     {
-        if ($this->trackImportProposals->contains($trackImportProposal)) {
-            $this->trackImportProposals->removeElement($trackImportProposal);
+        if ($this->trackImportCandidates->contains($trackImportCandidate)) {
+            $this->trackImportCandidates->removeElement($trackImportCandidate);
             // set the owning side to null (unless already changed)
-            if ($trackImportProposal->getRide() === $this) {
-                $trackImportProposal->setRide(null);
+            if ($trackImportCandidate->getRide() === $this) {
+                $trackImportCandidate->setRide(null);
             }
         }
 

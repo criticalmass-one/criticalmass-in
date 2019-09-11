@@ -3,11 +3,11 @@
 namespace App\Criticalmass\MassTrackImport\TrackDecider;
 
 use App\Criticalmass\MassTrackImport\Voter\VoterInterface;
-use App\Entity\TrackImportProposal;
+use App\Entity\TrackImportCandidate;
 
 interface TrackDeciderInterface
 {
-    public function decide(TrackImportProposal $model): ?RideResult;
+    public function decide(TrackImportCandidate $model): ?RideResult;
 
     public function addVoter(VoterInterface $voter): TrackDeciderInterface;
 }

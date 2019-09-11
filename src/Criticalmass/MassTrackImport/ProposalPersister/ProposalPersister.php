@@ -4,7 +4,7 @@ namespace App\Criticalmass\MassTrackImport\ProposalPersister;
 
 use App\Criticalmass\MassTrackImport\TrackDecider\RideResult;
 use App\Entity\Track;
-use App\Entity\TrackImportProposal;
+use App\Entity\TrackImportCandidate;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -67,9 +67,9 @@ class ProposalPersister implements ProposalPersisterInterface
             }
         }
 
-        $proposals = $this->registry->getRepository(TrackImportProposal::class)->findByUser($this->getUser());
+        $proposals = $this->registry->getRepository(TrackImportCandidate::class)->findByUser($this->getUser());
 
-        /** @var TrackImportProposal $proposal */
+        /** @var TrackImportCandidate $proposal */
         foreach ($proposals as $proposal) {
             $this->existentStravaActivityIds[] = $proposal->getActivityId();
         }

@@ -4,7 +4,7 @@ namespace App\Criticalmass\MassTrackImport\TrackDecider;
 
 use App\Criticalmass\MassTrackImport\Voter\VoterInterface;
 use App\Entity\Ride;
-use App\Entity\TrackImportProposal;
+use App\Entity\TrackImportCandidate;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -38,14 +38,14 @@ class TrackDecider implements TrackDeciderInterface
         return $this;
     }
 
-    public function decide(TrackImportProposal $trackImportProposal): ?RideResult
+    public function decide(TrackImportCandidate $trackImportCandidate): ?RideResult
     {
-        $rides = $this->registry->getRepository(Ride::class)->findByDate($trackImportProposal->getStartDateTime());
+        $rides = $this->registry->getRepository(Ride::class)->findByDate($trackImportCandidate->getStartDateTime());
 
         $resultList = [];
 
         foreach ($rides as $ride) {
-            if ($rideResult = $this->vote($ride, $trackImportProposal)) {
+            if ($rideResult = $this->vote($ride, $trackImportCandidate)) {
                 $resultList[] = $rideResult;
             }
         }
@@ -53,13 +53,13 @@ class TrackDecider implements TrackDeciderInterface
         return $this->handleResultList($resultList);
     }
 
-    protected function vote(Ride $ride, TrackImportProposal $trackImportProposal): ?RideResult
+    protected function vote(Ride $ride, TrackImportCandidate $trackImportCandidate): ?RideResult
     {
-        $rideResult = new RideResult($ride, $trackImportProposal);
+        $rideResult = new RideResult($ride, $trackImportCandidate);
 
         /** @var VoterInterface $voter */
         foreach ($this->voterList as $voter) {
-            $voterResult = $voter->vote($ride, $trackImportProposal);
+            $voterResult = $voter->vote($ride, $trackImportCandidate);
 
             if ($voterResult < 0 && !$this->debug) {
                 return null;

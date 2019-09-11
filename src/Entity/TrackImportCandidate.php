@@ -8,9 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="track_candidate")
- * @ORM\Entity(repositoryClass="App\Repository\TrackImportProposalRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\TrackImportCandidateRepository")
  */
-class TrackImportProposal
+class TrackImportCandidate
 {
     /**
      * @var int $id
@@ -22,14 +22,14 @@ class TrackImportProposal
 
     /**
      * @var User $user
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="trackImportProposals")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="trackImportCandidates")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $user;
 
     /**
      * @var Ride $ride
-     * @ORM\ManyToOne(targetEntity="App\Entity\Ride", inversedBy="trackImportProposals")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Ride", inversedBy="trackImportCandidates")
      * @ORM\JoinColumn(nullable=false)
      */
     private $ride;
@@ -122,7 +122,7 @@ class TrackImportProposal
         return $this->id;
     }
 
-    public function setId(int $id): TrackImportProposal
+    public function setId(int $id): TrackImportCandidate
     {
         $this->id = $id;
 
@@ -134,7 +134,7 @@ class TrackImportProposal
         return $this->user;
     }
 
-    public function setUser(User $user): TrackImportProposal
+    public function setUser(User $user): TrackImportCandidate
     {
         $this->user = $user;
 
@@ -146,7 +146,7 @@ class TrackImportProposal
         return $this->ride;
     }
 
-    public function setRide(Ride $ride): TrackImportProposal
+    public function setRide(Ride $ride): TrackImportCandidate
     {
         $this->ride = $ride;
 
@@ -158,7 +158,7 @@ class TrackImportProposal
         return (int)$this->activityId;
     }
 
-    public function setActivityId(int $activityId): TrackImportProposal
+    public function setActivityId(int $activityId): TrackImportCandidate
     {
         $this->activityId = $activityId;
 
@@ -170,7 +170,7 @@ class TrackImportProposal
         return $this->name;
     }
 
-    public function setName(string $name): TrackImportProposal
+    public function setName(string $name): TrackImportCandidate
     {
         $this->name = $name;
 
@@ -182,7 +182,7 @@ class TrackImportProposal
         return $this->distance;
     }
 
-    public function setDistance(float $distance): TrackImportProposal
+    public function setDistance(float $distance): TrackImportCandidate
     {
         $this->distance = $distance;
 
@@ -194,7 +194,7 @@ class TrackImportProposal
         return $this->elapsedTime;
     }
 
-    public function setElapsedTime(int $elapsedTime): TrackImportProposal
+    public function setElapsedTime(int $elapsedTime): TrackImportCandidate
     {
         $this->elapsedTime = $elapsedTime;
 
@@ -206,7 +206,7 @@ class TrackImportProposal
         return $this->type;
     }
 
-    public function setType(string $type): TrackImportProposal
+    public function setType(string $type): TrackImportCandidate
     {
         $this->type = $type;
 
@@ -218,7 +218,7 @@ class TrackImportProposal
         return $this->startDateTime;
     }
 
-    public function setStartDateTime(\DateTime $startDateTime): TrackImportProposal
+    public function setStartDateTime(\DateTime $startDateTime): TrackImportCandidate
     {
         $this->startDateTime = $startDateTime;
 
@@ -230,7 +230,7 @@ class TrackImportProposal
         return new Coord($this->startLatitude, $this->startLongitude);
     }
 
-    public function setStartCoord(CoordInterface $startCoord): TrackImportProposal
+    public function setStartCoord(CoordInterface $startCoord): TrackImportCandidate
     {
         $this->startLatitude = $startCoord->getLatitude();
         $this->startLongitude = $startCoord->getLongitude();
@@ -243,7 +243,7 @@ class TrackImportProposal
         return $this->startLatitude;
     }
 
-    public function setStartLatitude(float $startLatitude): TrackImportProposal
+    public function setStartLatitude(float $startLatitude): TrackImportCandidate
     {
         $this->startLatitude = $startLatitude;
         return $this;
@@ -254,7 +254,7 @@ class TrackImportProposal
         return $this->startLongitude;
     }
 
-    public function setStartLongitude(float $startLongitude): TrackImportProposal
+    public function setStartLongitude(float $startLongitude): TrackImportCandidate
     {
         $this->startLongitude = $startLongitude;
 
@@ -266,7 +266,7 @@ class TrackImportProposal
         return new Coord($this-$this->endLatitude, $this->endLongitude);
     }
 
-    public function setEndCoord(CoordInterface $endCoord): TrackImportProposal
+    public function setEndCoord(CoordInterface $endCoord): TrackImportCandidate
     {
         $this->endLatitude = $endCoord->getLatitude();
         $this->endLongitude = $endCoord->getLongitude();
@@ -279,7 +279,7 @@ class TrackImportProposal
         return $this->endLatitude;
     }
 
-    public function setEndLatitude(float $endLatitude): TrackImportProposal
+    public function setEndLatitude(float $endLatitude): TrackImportCandidate
     {
         $this->endLatitude = $endLatitude;
 
@@ -291,7 +291,7 @@ class TrackImportProposal
         return $this->endLongitude;
     }
 
-    public function setEndLongitude(float $endLongitude): TrackImportProposal
+    public function setEndLongitude(float $endLongitude): TrackImportCandidate
     {
         $this->endLongitude = $endLongitude;
 
@@ -303,7 +303,7 @@ class TrackImportProposal
         return $this->polyline;
     }
 
-    public function setPolyline(string $polyline): TrackImportProposal
+    public function setPolyline(string $polyline): TrackImportCandidate
     {
         $this->polyline = $polyline;
 
@@ -315,7 +315,7 @@ class TrackImportProposal
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): TrackImportProposal
+    public function setCreatedAt(\DateTimeInterface $createdAt): TrackImportCandidate
     {
         $this->createdAt = $createdAt;
 
@@ -327,7 +327,7 @@ class TrackImportProposal
         return $this->rejected;
     }
 
-    public function setRejected(bool $rejected): TrackImportProposal
+    public function setRejected(bool $rejected): TrackImportCandidate
     {
         $this->rejected = $rejected;
 

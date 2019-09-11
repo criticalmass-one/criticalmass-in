@@ -3,11 +3,11 @@
 namespace App\Criticalmass\MassTrackImport\Voter;
 
 use App\Entity\Ride;
-use App\Entity\TrackImportProposal;
+use App\Entity\TrackImportCandidate;
 
 class DurationVoter implements VoterInterface
 {
-    public function vote(Ride $ride, TrackImportProposal $model): float
+    public function vote(Ride $ride, TrackImportCandidate $model): float
     {
         $duration = $model->getElapsedTime();
 

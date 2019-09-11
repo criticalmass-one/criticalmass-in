@@ -3,11 +3,11 @@
 namespace App\Criticalmass\MassTrackImport\Voter;
 
 use App\Entity\Ride;
-use App\Entity\TrackImportProposal;
+use App\Entity\TrackImportCandidate;
 
 class NameVoter implements VoterInterface
 {
-    public function vote(Ride $ride, TrackImportProposal $model): float
+    public function vote(Ride $ride, TrackImportCandidate $model): float
     {
         $rideTitle = $ride->getTitle();
         $modelName = $model->getName();

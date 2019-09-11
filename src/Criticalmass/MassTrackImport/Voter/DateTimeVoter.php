@@ -3,12 +3,12 @@
 namespace App\Criticalmass\MassTrackImport\Voter;
 
 use App\Entity\Ride;
-use App\Entity\TrackImportProposal;
+use App\Entity\TrackImportCandidate;
 use Carbon\Carbon;
 
 class DateTimeVoter implements VoterInterface
 {
-    public function vote(Ride $ride, TrackImportProposal $model): float
+    public function vote(Ride $ride, TrackImportCandidate $model): float
     {
         $rideDateTime = Carbon::instance($ride->getDateTime());
         $modelDateTime = Carbon::instance($model->getStartDateTime());

@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
-class TrackImportProposalRepository extends EntityRepository
+class TrackImportCandidateRepository extends EntityRepository
 {
 
 }

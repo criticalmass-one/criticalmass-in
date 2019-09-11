@@ -7,7 +7,7 @@ use App\Criticalmass\MassTrackImport\MassTrackImporterInterface;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Criticalmass\Strava\Importer\TrackImporterInterface;
 use App\Entity\Ride;
-use App\Entity\TrackImportProposal;
+use App\Entity\TrackImportCandidate;
 use App\Event\Track\TrackUploadedEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -87,7 +87,7 @@ class StravaMassImportController extends AbstractController
      */
     public function listridesAction(UserInterface $user, RegistryInterface $registry): Response
     {
-        $list = $registry->getRepository(TrackImportProposal::class)->findByUser($user);
+        $list = $registry->getRepository(TrackImportCandidate::class)->findByUser($user);
 
         return $this->render('TrackMassImport/list.html.twig', [
             'list' => $list,
@@ -101,8 +101,8 @@ class StravaMassImportController extends AbstractController
     {
         $activityId = (int)$request->get('activityId');
 
-        /** @var TrackImportProposal $proposal */
-        $proposal = $registry->getRepository(TrackImportProposal::class)->findOneByActivityId($activityId);
+        /** @var TrackImportCandidate $proposal */
+        $proposal = $registry->getRepository(TrackImportCandidate::class)->findOneByActivityId($activityId);
 
         if ($proposal->getUser() !== $user) {
             throw new AccessDeniedHttpException();
