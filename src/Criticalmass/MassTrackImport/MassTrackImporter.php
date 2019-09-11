@@ -56,7 +56,9 @@ class MassTrackImporter implements MassTrackImporterInterface
         foreach ($modelList as $key => $activityData) {
             $activity = StravaActivityConverter::convert($activityData);
 
-            $this->producer->publish($activity);
+            $serializedActivity = $this->serializer->serialize($activity, 'json');
+
+            $this->producer->publish($serializedActivity);
         }
 
         return [];

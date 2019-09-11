@@ -5,6 +5,7 @@ namespace App\Entity;
 use Caldera\GeoBasic\Coord\Coord;
 use Caldera\GeoBasic\Coord\CoordInterface;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Table(name="track_candidate")
@@ -17,6 +18,7 @@ class TrackImportCandidate
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @JMS\Expose
      */
     protected $id;
 
@@ -24,6 +26,7 @@ class TrackImportCandidate
      * @var User $user
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="trackImportCandidates")
      * @ORM\JoinColumn(nullable=false)
+     * @JMS\Expose
      */
     protected $user;
 
@@ -31,84 +34,98 @@ class TrackImportCandidate
      * @var Ride $ride
      * @ORM\ManyToOne(targetEntity="App\Entity\Ride", inversedBy="trackImportCandidates")
      * @ORM\JoinColumn(nullable=false)
+     * @JMS\Expose
      */
     private $ride;
 
     /**
      * @var int $activityId
      * @ORM\Column(type="bigint")
+     * @JMS\Expose
      */
     protected $activityId;
 
     /**
      * @var string $name
      * @ORM\Column(type="string")
+     * @JMS\Expose
      */
     protected $name;
 
     /**
      * @var float $distance
      * @ORM\Column(type="float")
+     * @JMS\Expose
      */
     protected $distance;
 
     /**
      * @var int $elapsedTime
      * @ORM\Column(type="integer")
+     * @JMS\Expose
      */
     protected $elapsedTime;
 
     /**
      * @var string $type
      * @ORM\Column(type="string")
+     * @JMS\Expose
      */
     protected $type;
 
     /**
      * @var \DateTime $startDateTime
      * @ORM\Column(type="datetime")
+     * @JMS\Expose
      */
     protected $startDateTime;
 
     /**
      * @var float $startLatitude
      * @ORM\Column(type="float")
+     * @JMS\Expose
      */
     protected $startLatitude;
 
     /**
      * @var float $startLongitude
      * @ORM\Column(type="float")
+     * @JMS\Expose
      */
     protected $startLongitude;
 
     /**
      * @var float $endLatitude
      * @ORM\Column(type="float")
+     * @JMS\Expose
      */
     protected $endLatitude;
 
     /**
      * @var float $endLongitude
      * @ORM\Column(type="float")
+     * @JMS\Expose
      */
     protected $endLongitude;
 
     /**
      * @var string $polyline
      * @ORM\Column(type="text")
+     * @JMS\Expose
      */
     protected $polyline;
 
     /**
      * @var \DateTime $createdAt
      * @ORM\Column(type="datetime")
+     * @JMS\Expose
      */
     protected $createdAt;
 
     /**
      * @var bool $rejected
      * @ORM\Column(type="boolean")
+     * @JMS\Expose
      */
     protected $rejected = false;
 
