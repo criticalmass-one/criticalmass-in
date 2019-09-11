@@ -4,7 +4,6 @@ namespace App\Controller\Track;
 
 use App\Controller\AbstractController;
 use App\Criticalmass\MassTrackImport\MassTrackImporterInterface;
-use App\Criticalmass\MassTrackImport\TrackDecider\TrackDeciderInterface;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Criticalmass\Strava\Importer\TrackImporterInterface;
 use App\Entity\Ride;
@@ -64,7 +63,7 @@ class StravaMassImportController extends AbstractController
 
             $session->set('strava_token', $token);
 
-            return $this->redirect($router->generate('caldera_criticalmass_trackmassimport_list'));
+            return $this->redirect($router->generate('caldera_criticalmass_trackmassimport_massimport'));
         } catch (\Exception $e) {
             return $this->redirect($router->generate('caldera_criticalmass_trackmassimport_auth'));
         }
@@ -73,12 +72,22 @@ class StravaMassImportController extends AbstractController
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function listridesAction(MassTrackImporterInterface $massTrackImporter, TrackDeciderInterface $trackDecider): Response
+    public function massImportAction(MassTrackImporterInterface $massTrackImporter): Response
     {
-        $list = $massTrackImporter
+        $massTrackImporter
             ->setStartDateTime(new \DateTime('2019-01-01 00:00:00'))
             ->setEndDateTime(new \DateTime())
             ->execute();
+
+        return $this->redirectToRoute('caldera_criticalmass_trackmassimport_list');
+    }
+
+    /**
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function listridesAction(UserInterface $user, RegistryInterface $registry): Response
+    {
+        $list = $registry->getRepository(TrackImportProposal::class)->findByUser($user);
 
         return $this->render('TrackMassImport/list.html.twig', [
             'list' => $list,

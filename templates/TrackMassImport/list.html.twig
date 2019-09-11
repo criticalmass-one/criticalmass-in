@@ -18,21 +18,20 @@
 
         <div class="row">
             {% if list|length %}
-                {% for result in list %}
-                    {% set proposal = result.activity %}
+                {% for candidate in list %}
                     <div class="col-md-4">
                         <div class="row">
                             <div class="col-md-12">
                                 <h3>
-                                    {{ proposal.name }}
+                                    {{ candidate.name }}
                                 </h3>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-12">
-                                <div id="map-{{ proposal.activityId }}" class="preview-map" style="height: 150px;"
-                                     data-polyline="{{ proposal.polyline }}">
+                                <div id="map-{{ candidate.activityId }}" class="preview-map" style="height: 150px;"
+                                     data-polyline="{{ candidate.polyline }}">
 
                                 </div>
                             </div>
@@ -42,19 +41,19 @@
                             <div class="col-md-4">
                                 <dl>
                                     <dt>Distanz:</dt>
-                                    <dd>{{ (proposal.distance / 1000)|round(2) }}&nbsp;Kilometer</dd>
+                                    <dd>{{ (candidate.distance / 1000)|round(2) }}&nbsp;Kilometer</dd>
                                 </dl>
                             </div>
                             <div class="col-md-4">
                                 <dl>
                                     <dt>Start:</dt>
-                                    <dd>{{ proposal.startDateTime|date('H:i') }}&nbsp;Uhr</dd>
+                                    <dd>{{ candidate.startDateTime|date('H:i') }}&nbsp;Uhr</dd>
                                 </dl>
                             </div>
                             <div class="col-md-4">
                                 <dl>
                                     <dt>Dauer:</dt>
-                                    <dd>{{ (proposal.elapsedTime / 60)|round() }}&nbsp;Minuten</dd>
+                                    <dd>{{ (candidate.elapsedTime / 60)|round() }}&nbsp;Minuten</dd>
                                 </dl>
                             </div>
                         </div>
@@ -64,13 +63,13 @@
                                 <div class="text-center">
                                     <div class="btn-group">
                                         <a class="btn btn-success"
-                                           href="{{ objectPath(proposal.ride, 'caldera_criticalmass_strava_import') }}?activityId={{ proposal.activityId }}">
+                                           href="{{ objectPath(candidate.ride, 'caldera_criticalmass_strava_massimport') }}?activityId={{ candidate.activityId }}">
                                             <i class="fa fa-check"></i>
                                             Importieren
                                         </a>
 
                                         <a class="btn btn-danger"
-                                           href="{{ path('caldera_criticalmass_trackmassimport_reject') }}?activityId={{ proposal.activityId }}">
+                                           href="{{ path('caldera_criticalmass_trackmassimport_reject') }}?activityId={{ candidate.activityId }}">
                                             <i class="fa fa-times"></i>
                                             Ablehnen
                                         </a>
@@ -82,12 +81,6 @@
                     </div>
                 {% endfor %}
             {% else %}
-                <div class="col-md-12">
-                    <div class="alert alert-danger" role="alert">
-                        <strong>Keine Touren gefunden!</strong>
-                        Offenbar hast du mit Strava am {{ ride.dateTime.format('d.m.Y') }} keine Touren aufgezeichnet.
-                    </div>
-                </div>
             {% endif %}
         </div>
     </div>
