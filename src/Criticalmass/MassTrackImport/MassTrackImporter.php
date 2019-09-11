@@ -7,6 +7,7 @@ use App\Criticalmass\MassTrackImport\Converter\StravaActivityConverter;
 use App\Criticalmass\MassTrackImport\ProposalPersister\ProposalPersisterInterface;
 use App\Criticalmass\MassTrackImport\TrackDecider\TrackDeciderInterface;
 use JMS\Serializer\SerializerInterface;
+use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 
 class MassTrackImporter implements MassTrackImporterInterface
 {
@@ -22,12 +23,16 @@ class MassTrackImporter implements MassTrackImporterInterface
     /** @var ProposalPersisterInterface $proposalPersister */
     protected $proposalPersister;
 
-    public function __construct(ProposalPersisterInterface $proposalPersister, SerializerInterface $serializer, TrackDeciderInterface $trackDecider, ActivityLoaderInterface $activityLoader)
+    /** @var ProducerInterface $producer */
+    protected $producer;
+
+    public function __construct(ProducerInterface $producer, ProposalPersisterInterface $proposalPersister, SerializerInterface $serializer, TrackDeciderInterface $trackDecider, ActivityLoaderInterface $activityLoader)
     {
         $this->serializer = $serializer;
         $this->trackDecider = $trackDecider;
         $this->activityLoader = $activityLoader;
         $this->proposalPersister = $proposalPersister;
+        $this->producer = $producer;
     }
 
     public function setStartDateTime(\DateTime $startDateTime): MassTrackImporterInterface
@@ -51,19 +56,9 @@ class MassTrackImporter implements MassTrackImporterInterface
         foreach ($modelList as $key => $activityData) {
             $activity = StravaActivityConverter::convert($activityData);
 
-            $modelList[$key] = $activity;
+            $this->producer->publish($activity);
         }
 
-        $resultList = [];
-
-        foreach ($modelList as $model) {
-            if ($result = $this->trackDecider->decide($model)) {
-                $resultList[$result->getActivity()->getActivityId()] = $result;
-            }
-        }
-
-        $this->proposalPersister->persist($resultList);
-
-        return $resultList;
+        return [];
     }
 }
