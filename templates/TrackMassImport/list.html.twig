@@ -38,6 +38,42 @@
                         </div>
 
                         <div class="row">
+                            <div class="col-md-12">
+                                <dl>
+                                    <dt>Tour:</dt>
+                                    <dd>
+                                        <a href="{{ objectPath(candidate.ride) }}">{{ candidate.ride.title }}</a>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-4">
+                                <dl>
+                                    <dt>Datum:</dt>
+                                    <dd>{{ candidate.ride.dateTime|date('d.m.Y') }}</dd>
+                                </dl>
+                            </div>
+
+                            <div class="col-md-4">
+                                <dl>
+                                    <dt>Uhrzeit:</dt>
+                                    <dd>{{ candidate.ride.dateTime|date('H:i') }} Uhr</dd>
+                                </dl>
+                            </div>
+
+                            <div class="col-md-4">
+                                <dl>
+                                    <dt>Stadt:</dt>
+                                    <dd>
+                                        <a href="{{ objectPath(candidate.ride.city) }}">{{ candidate.ride.city.city }}</a>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+
+                        <div class="row">
                             <div class="col-md-4">
                                 <dl>
                                     <dt>Distanz:</dt>
