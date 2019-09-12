@@ -2,7 +2,9 @@
 
 namespace App\Criticalmass\MassTrackImport\ProposalPersister;
 
+use App\Criticalmass\MassTrackImport\TrackDecider\RideResult;
+
 interface ProposalPersisterInterface
 {
-    public function persist(array $proposalList): array;
+    public function persist(RideResult $rideResult): RideResult;
 }

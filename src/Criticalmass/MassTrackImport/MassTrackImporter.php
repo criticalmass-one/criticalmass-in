@@ -6,8 +6,10 @@ use App\Criticalmass\MassTrackImport\ActivityLoader\ActivityLoaderInterface;
 use App\Criticalmass\MassTrackImport\Converter\StravaActivityConverter;
 use App\Criticalmass\MassTrackImport\ProposalPersister\ProposalPersisterInterface;
 use App\Criticalmass\MassTrackImport\TrackDecider\TrackDeciderInterface;
+use App\Entity\User;
 use JMS\Serializer\SerializerInterface;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class MassTrackImporter implements MassTrackImporterInterface
 {
@@ -26,13 +28,17 @@ class MassTrackImporter implements MassTrackImporterInterface
     /** @var ProducerInterface $producer */
     protected $producer;
 
-    public function __construct(ProducerInterface $producer, ProposalPersisterInterface $proposalPersister, SerializerInterface $serializer, TrackDeciderInterface $trackDecider, ActivityLoaderInterface $activityLoader)
+    /** @var TokenStorageInterface $tokenStorage */
+    protected $tokenStorage;
+
+    public function __construct(ProducerInterface $producer, ProposalPersisterInterface $proposalPersister, SerializerInterface $serializer, TrackDeciderInterface $trackDecider, ActivityLoaderInterface $activityLoader, TokenStorageInterface $tokenStorage)
     {
         $this->serializer = $serializer;
         $this->trackDecider = $trackDecider;
         $this->activityLoader = $activityLoader;
         $this->proposalPersister = $proposalPersister;
         $this->producer = $producer;
+        $this->tokenStorage = $tokenStorage;
     }
 
     public function setStartDateTime(\DateTime $startDateTime): MassTrackImporterInterface
@@ -56,11 +62,18 @@ class MassTrackImporter implements MassTrackImporterInterface
         foreach ($modelList as $key => $activityData) {
             $activity = StravaActivityConverter::convert($activityData);
 
+            $activity->setUser($this->getUser());
+
             $serializedActivity = $this->serializer->serialize($activity, 'json');
 
             $this->producer->publish($serializedActivity);
         }
 
         return [];
+    }
+
+    protected function getUser(): User
+    {
+        return $this->tokenStorage->getToken()->getUser();
     }
 }

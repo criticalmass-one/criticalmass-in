@@ -10,7 +10,7 @@ class RideResult
 {
     /** @var Ride $ride */
     protected $ride;
-
+    
     /** @var TrackImportCandidate $activity */
     protected $activity;
 

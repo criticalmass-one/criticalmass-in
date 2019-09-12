@@ -5,9 +5,7 @@ namespace App\Criticalmass\MassTrackImport\TrackDecider;
 use App\Criticalmass\MassTrackImport\Voter\VoterInterface;
 use App\Entity\Ride;
 use App\Entity\TrackImportCandidate;
-use App\Entity\User;
 use Symfony\Bridge\Doctrine\RegistryInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class TrackDecider implements TrackDeciderInterface
 {
@@ -22,13 +20,9 @@ class TrackDecider implements TrackDeciderInterface
     /** @var bool $debug */
     protected $debug = false;
 
-    /** @var TokenStorageInterface $tokenStorage */
-    protected $tokenStorage;
-
-    public function __construct(RegistryInterface $registry, TokenStorageInterface $tokenStorage)
+    public function __construct(RegistryInterface $registry)
     {
         $this->registry = $registry;
-        $this->tokenStorage = $tokenStorage;
     }
 
     public function addVoter(VoterInterface $voter): TrackDeciderInterface
@@ -93,9 +87,7 @@ class TrackDecider implements TrackDeciderInterface
             /** @var RideResult $bestResult */
             $bestResult = array_shift($resultList);
 
-            $bestResult->getActivity()
-                ->setRide($bestResult->getRide())
-                ->setUser($this->getUser());
+            $bestResult->getActivity()->setRide($bestResult->getRide());
 
             if ($bestResult->getResult() >= self::THRESHOLD) {
                 $bestResult->setMatch(true);
@@ -109,10 +101,5 @@ class TrackDecider implements TrackDeciderInterface
         }
 
         return null;
-    }
-
-    protected function getUser(): User
-    {
-        return $this->tokenStorage->getToken()->getUser();
     }
 }

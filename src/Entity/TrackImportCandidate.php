@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
 /**
+ * @JMS\ExclusionPolicy("all")
  * @ORM\Table(name="track_candidate")
  * @ORM\Entity(repositoryClass="App\Repository\TrackImportCandidateRepository")
  */
@@ -19,6 +20,7 @@ class TrackImportCandidate
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      * @JMS\Expose
+     * @JMS\Type("int")
      */
     protected $id;
 
@@ -27,6 +29,7 @@ class TrackImportCandidate
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="trackImportCandidates")
      * @ORM\JoinColumn(nullable=false)
      * @JMS\Expose
+     * @JMS\Type("Relation<App\Entity\User>")
      */
     protected $user;
 
@@ -35,6 +38,7 @@ class TrackImportCandidate
      * @ORM\ManyToOne(targetEntity="App\Entity\Ride", inversedBy="trackImportCandidates")
      * @ORM\JoinColumn(nullable=false)
      * @JMS\Expose
+     * @JMS\Type("Relation<App\Entity\Ride>")
      */
     private $ride;
 
@@ -42,6 +46,7 @@ class TrackImportCandidate
      * @var int $activityId
      * @ORM\Column(type="bigint")
      * @JMS\Expose
+     * @JMS\Type("int")
      */
     protected $activityId;
 
@@ -49,6 +54,7 @@ class TrackImportCandidate
      * @var string $name
      * @ORM\Column(type="string")
      * @JMS\Expose
+     * @JMS\Type("string")
      */
     protected $name;
 
@@ -56,6 +62,7 @@ class TrackImportCandidate
      * @var float $distance
      * @ORM\Column(type="float")
      * @JMS\Expose
+     * @JMS\Type("float")
      */
     protected $distance;
 
@@ -63,6 +70,7 @@ class TrackImportCandidate
      * @var int $elapsedTime
      * @ORM\Column(type="integer")
      * @JMS\Expose
+     * @JMS\Type("int")
      */
     protected $elapsedTime;
 
@@ -70,6 +78,7 @@ class TrackImportCandidate
      * @var string $type
      * @ORM\Column(type="string")
      * @JMS\Expose
+     * @JMS\Type("string")
      */
     protected $type;
 
@@ -77,6 +86,7 @@ class TrackImportCandidate
      * @var \DateTime $startDateTime
      * @ORM\Column(type="datetime")
      * @JMS\Expose
+     * @JMS\Type("DateTime")
      */
     protected $startDateTime;
 
@@ -84,6 +94,7 @@ class TrackImportCandidate
      * @var float $startLatitude
      * @ORM\Column(type="float")
      * @JMS\Expose
+     * @JMS\Type("float")
      */
     protected $startLatitude;
 
@@ -91,6 +102,7 @@ class TrackImportCandidate
      * @var float $startLongitude
      * @ORM\Column(type="float")
      * @JMS\Expose
+     * @JMS\Type("float")
      */
     protected $startLongitude;
 
@@ -98,6 +110,7 @@ class TrackImportCandidate
      * @var float $endLatitude
      * @ORM\Column(type="float")
      * @JMS\Expose
+     * @JMS\Type("float")
      */
     protected $endLatitude;
 
@@ -105,6 +118,7 @@ class TrackImportCandidate
      * @var float $endLongitude
      * @ORM\Column(type="float")
      * @JMS\Expose
+     * @JMS\Type("float")
      */
     protected $endLongitude;
 
@@ -112,6 +126,7 @@ class TrackImportCandidate
      * @var string $polyline
      * @ORM\Column(type="text")
      * @JMS\Expose
+     * @JMS\Type("string")
      */
     protected $polyline;
 
@@ -119,6 +134,7 @@ class TrackImportCandidate
      * @var \DateTime $createdAt
      * @ORM\Column(type="datetime")
      * @JMS\Expose
+     * @JMS\Type("DateTime")
      */
     protected $createdAt;
 
@@ -126,6 +142,7 @@ class TrackImportCandidate
      * @var bool $rejected
      * @ORM\Column(type="boolean")
      * @JMS\Expose
+     * @JMS\Type("bool")
      */
     protected $rejected = false;
 

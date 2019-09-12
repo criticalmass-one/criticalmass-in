@@ -7,7 +7,6 @@ use App\Entity\Track;
 use App\Entity\TrackImportCandidate;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\RegistryInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class ProposalPersister implements ProposalPersisterInterface
 {
@@ -17,48 +16,33 @@ class ProposalPersister implements ProposalPersisterInterface
     /** @var array $existentStravaActivityIds */
     protected $existentStravaActivityIds = [];
 
-    /** @var TokenStorageInterface $tokenStorage */
-    protected $tokenStorage;
-
-    public function __construct(RegistryInterface $registry, TokenStorageInterface $tokenStorage)
+    public function __construct(RegistryInterface $registry)
     {
         $this->registry = $registry;
-        $this->tokenStorage = $tokenStorage;
     }
 
-    public function persist(array $rideResultList): array
+    public function persist(RideResult $rideResult): RideResult
     {
-        $this->loadOldStravaActivityIds();
+        $user = $rideResult->getActivity()->getUser();
+
+        $this->loadOldStravaActivityIds($user);
 
         $manager = $this->registry->getManager();
 
-        /**
-         * @var int $stravaActivityId
-         * @var RideResult $rideResult
-         */
-        foreach ($rideResultList as $stravaActivityId => $rideResult) {
-            if (!$rideResult->isMatch() ||
-                !in_array($stravaActivityId, $this->existentStravaActivityIds)
-            ) {
-                $manager->persist($rideResult->getActivity());
-            } else {
-                unset($rideResultList[$stravaActivityId]);
-            }
+        if (!$rideResult->isMatch() ||
+            !in_array($rideResult->getActivity()->getActivityId(), $this->existentStravaActivityIds)
+        ) {
+            $manager->persist($rideResult->getActivity());
         }
 
         $manager->flush();
 
-        return $rideResultList;
+        return $rideResult;
     }
 
-    protected function getUser(): User
+    protected function loadOldStravaActivityIds(User $user): ProposalPersister
     {
-        return $this->tokenStorage->getToken()->getUser();
-    }
-
-    protected function loadOldStravaActivityIds(): ProposalPersister
-    {
-        $tracks = $this->registry->getRepository(Track::class)->findByUser($this->getUser());
+        $tracks = $this->registry->getRepository(Track::class)->findByUser($user);
 
         /** @var Track $track */
         foreach ($tracks as $track) {
@@ -67,7 +51,7 @@ class ProposalPersister implements ProposalPersisterInterface
             }
         }
 
-        $proposals = $this->registry->getRepository(TrackImportCandidate::class)->findByUser($this->getUser());
+        $proposals = $this->registry->getRepository(TrackImportCandidate::class)->findByUser($user);
 
         /** @var TrackImportCandidate $proposal */
         foreach ($proposals as $proposal) {
