@@ -9,6 +9,7 @@ use App\Criticalmass\Strava\Importer\TrackImporterInterface;
 use App\Entity\Ride;
 use App\Entity\TrackImportCandidate;
 use App\Event\Track\TrackUploadedEvent;
+use Carbon\Carbon;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Strava\API\OAuth;
@@ -28,7 +29,7 @@ class StravaMassImportController extends AbstractController
      */
     public function authAction(Request $request, RouterInterface $router): Response
     {
-        $oauth = $this->initOauthForRide($request, $router);
+        $oauth = $this->initOauth($request, $router);
 
         $authorizationOptions = [
             'state' => '',
@@ -49,12 +50,13 @@ class StravaMassImportController extends AbstractController
     public function tokenAction(Request $request, SessionInterface $session, RouterInterface $router): Response
     {
         $error = $request->get('error');
+        $year = $request->query->getInt('year', (new \DateTime())->format('Y'));
 
         if ($error) {
             return $this->redirect($router->generate('caldera_criticalmass_trackmassimport_auth'));
         }
 
-        $oauth = $this->initOauthForRide($request, $router);
+        $oauth = $this->initOauth($request, $router);
 
         try {
             $token = $oauth->getAccessToken('authorization_code', [
@@ -63,7 +65,9 @@ class StravaMassImportController extends AbstractController
 
             $session->set('strava_token', $token);
 
-            return $this->redirect($router->generate('caldera_criticalmass_trackmassimport_massimport'));
+            return $this->redirect($router->generate('caldera_criticalmass_trackmassimport_massimport', [
+                'year' => $year,
+            ]));
         } catch (\Exception $e) {
             return $this->redirect($router->generate('caldera_criticalmass_trackmassimport_auth'));
         }
@@ -72,11 +76,21 @@ class StravaMassImportController extends AbstractController
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function massImportAction(MassTrackImporterInterface $massTrackImporter): Response
+    public function massImportAction(Request $request, MassTrackImporterInterface $massTrackImporter): Response
     {
+        $year = $request->query->getInt('year', (new \DateTime())->format('Y'));
+
+        $carbon = Carbon::createFromDate($year);
+        $startCarbon = $carbon->startOfYear();
+        $endCarbon = $carbon->endOfYear();
+
+        if ($endCarbon->greaterThanOrEqualTo(Carbon::now())) {
+            $endCarbon = Carbon::now();
+        }
+
         $massTrackImporter
-            ->setStartDateTime(new \DateTime('2019-01-01 00:00:00'))
-            ->setEndDateTime(new \DateTime())
+            ->setStartDateTime($startCarbon)
+            ->setEndDateTime($endCarbon)
             ->execute();
 
         return $this->redirectToRoute('caldera_criticalmass_trackmassimport_list');
@@ -85,9 +99,9 @@ class StravaMassImportController extends AbstractController
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function listridesAction(UserInterface $user, RegistryInterface $registry): Response
+    public function listridesAction(RegistryInterface $registry, UserInterface $user = null): Response
     {
-        $list = $registry->getRepository(TrackImportCandidate::class)->findByUser($user);
+        $list = $registry->getRepository(TrackImportCandidate::class)->findCandidatesForUser($user);
 
         return $this->render('TrackMassImport/list.html.twig', [
             'list' => $list,
@@ -134,9 +148,13 @@ class StravaMassImportController extends AbstractController
         return $this->redirect($objectRouter->generate($track));
     }
 
-    protected function initOauthForRide(Request $request, RouterInterface $router): OAuth
+    protected function initOauth(Request $request, RouterInterface $router): OAuth
     {
-        $redirectUri = $request->getUriForPath($router->generate('caldera_criticalmass_trackmassimport_token'));
+        $year = $request->query->getInt('year', (new \DateTime())->format('Y'));
+
+        $redirectUri = $request->getUriForPath($router->generate('caldera_criticalmass_trackmassimport_token', [
+            'year' => $year,
+        ]));
 
         $oauthOptions = [
             'clientId' => $this->getParameter('strava.client_id'),
