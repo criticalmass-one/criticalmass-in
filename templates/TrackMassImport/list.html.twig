@@ -1,0 +1,127 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Tracks importieren{% endblock %}
+
+{% block breadcrumb %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    Wähle eine Aktivität
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            {% if list|length %}
+                {% for candidate in list %}
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>
+                                    {{ candidate.name }}
+                                </h3>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div id="map-{{ candidate.activityId }}" class="preview-map" style="height: 150px;"
+                                     data-polyline="{{ candidate.polyline }}">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <dl>
+                                    <dt>Tour:</dt>
+                                    <dd>
+                                        <a href="{{ objectPath(candidate.ride) }}">{{ candidate.ride.title }}</a>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <dl>
+                                    <dt>Datum:</dt>
+                                    <dd>{{ candidate.ride.dateTime|date('d.m.Y') }}</dd>
+                                </dl>
+                            </div>
+
+                            <div class="col-md-4">
+                                <dl>
+                                    <dt>Uhrzeit:</dt>
+                                    <dd>{{ candidate.ride.dateTime|date('H:i') }} Uhr</dd>
+                                </dl>
+                            </div>
+
+                            <div class="col-md-4">
+                                <dl>
+                                    <dt>Stadt:</dt>
+                                    <dd>
+                                        <a href="{{ objectPath(candidate.ride.city) }}">{{ candidate.ride.city.city }}</a>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <dl>
+                                    <dt>Distanz:</dt>
+                                    <dd>{{ (candidate.distance / 1000)|round(2) }}&nbsp;Kilometer</dd>
+                                </dl>
+                            </div>
+                            <div class="col-md-4">
+                                <dl>
+                                    <dt>Start:</dt>
+                                    <dd>{{ candidate.startDateTime|date('H:i') }}&nbsp;Uhr</dd>
+                                </dl>
+                            </div>
+                            <div class="col-md-4">
+                                <dl>
+                                    <dt>Dauer:</dt>
+                                    <dd>{{ (candidate.elapsedTime / 60)|round() }}&nbsp;Minuten</dd>
+                                </dl>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="text-center">
+                                    <div class="btn-group">
+                                        <a class="btn btn-success"
+                                           href="{{ objectPath(candidate.ride, 'caldera_criticalmass_strava_import') }}?activityId={{ candidate.activityId }}">
+                                            <i class="fa fa-check"></i>
+                                            Importieren
+                                        </a>
+
+                                        <a class="btn btn-danger"
+                                           href="{{ path('caldera_criticalmass_trackmassimport_reject') }}?activityId={{ candidate.activityId }}">
+                                            <i class="fa fa-times"></i>
+                                            Ablehnen
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        CriticalMass.loadModule('StravaImportPage');
+    </script>
+{% endblock %}
