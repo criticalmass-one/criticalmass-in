@@ -37,9 +37,17 @@
                 <p class="text-muted">Diese Heatmap enthält Tracks von:
                     {% for userHeatmapTrack in userHeatmapTrackList %}
                         {% set trackCounter = userHeatmapTrack.trackList|length %}
-                        
+
                         {{ userHeatmapTrack.user.username }}{% if trackCounter > 1 %}&nbsp;({{ trackCounter }}&times;){% endif %}{% if not loop.last %}, {% endif %}
                     {% endfor %}
+                </p>
+            </div>
+        </div>
+
+        <div class="row margin-top-medium">
+            <div class="col-md-12">
+                <p>
+                    Du kannst deine Touren zu dieser Heatmap hinzufügen, wenn du auf der jeweiligen Seite einer Tour deinen GPX-Track hochlädst oder deine Tracks <a href="{{ path('caldera_criticalmass_trackmassimport_auth') }}">automatisch importieren lässt</a>.
                 </p>
             </div>
         </div>
