@@ -5,7 +5,7 @@ namespace App\Criticalmass\ViewStorage\BlackList;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class BlackList
+class BlackList implements BlackListInterface
 {
     /** @var Request $request */
     protected $request;
