@@ -26,10 +26,6 @@ caldera_criticalmass_track:
     resource: 'track.yml'
     prefix: /
 
-caldera_criticalmass_frontpage:
-    resource: 'frontpage.yml'
-    prefix: /
-
 caldera_criticalmass_search:
     resource: 'search.yml'
     prefix: /
@@ -43,6 +39,10 @@ caldera_criticalmass_blog:
     requirements:
         host: '%domain.blog%'
 
+caldera_criticalmass_frontpage:
+    resource: 'frontpage.yml'
+    prefix: /
+    
 caldera_criticalmass_board:
     resource: 'board.yml'
     prefix:   /
