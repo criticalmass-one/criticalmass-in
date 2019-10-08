@@ -61,7 +61,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
                 }
             }
         }
-        
+
         return $criteria;
     }
 }
