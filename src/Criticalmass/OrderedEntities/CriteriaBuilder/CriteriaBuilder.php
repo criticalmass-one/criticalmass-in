@@ -43,10 +43,10 @@ class CriteriaBuilder implements CriteriaBuilderInterface
                 if ($annotation instanceof Order) {
                     $getMethodName = sprintf('get%s', ucfirst($property->getName()));
 
-                    $compareMethodName = $direction === SortOrder::DESC ? 'lt' : 'gt';
+                    $compareMethodName = $direction === SortOrder::ASC ? 'lt' : 'gt';
 
                     $criteria
-                        ->orderBy([$property->getName() => $annotation->getDirection()])
+                        ->orderBy([$property->getName() => $direction])
                         ->andWhere(Criteria::expr()->$compareMethodName($property->getName(), $orderedEntity->$getMethodName()));
                 }
 
@@ -61,7 +61,7 @@ class CriteriaBuilder implements CriteriaBuilderInterface
                 }
             }
         }
-
+        
         return $criteria;
     }
 }
