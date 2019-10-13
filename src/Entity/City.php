@@ -160,6 +160,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
 
     /**
      * @ORM\OneToMany(targetEntity="SocialNetworkProfile", mappedBy="city", cascade={"persist", "remove"})
+     * @JMS\Expose
      */
     protected $socialNetworkProfiles;
 

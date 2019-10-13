@@ -198,6 +198,8 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
 
     /**
      * @ORM\OneToMany(targetEntity="SocialNetworkProfile", mappedBy="ride", cascade={"persist", "remove"})
+     * @JMS\Groups({"ride-list"})
+     * @JMS\Expose
      */
     protected $socialNetworkProfiles;
 
