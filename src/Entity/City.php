@@ -249,19 +249,16 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
 
     /**
      * @ORM\Column(type="integer")
-     * @JMS\Expose
      */
     protected $colorRed = 0;
 
     /**
      * @ORM\Column(type="integer")
-     * @JMS\Expose
      */
     protected $colorGreen = 0;
 
     /**
      * @ORM\Column(type="integer")
-     * @JMS\Expose
      */
     protected $colorBlue = 0;
 
