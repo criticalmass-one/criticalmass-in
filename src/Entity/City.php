@@ -244,19 +244,16 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
 
     /**
      * @ORM\Column(type="integer")
-     * @JMS\Expose
      */
     protected $colorRed = 0;
 
     /**
      * @ORM\Column(type="integer")
-     * @JMS\Expose
      */
     protected $colorGreen = 0;
 
     /**
      * @ORM\Column(type="integer")
-     * @JMS\Expose
      */
     protected $colorBlue = 0;
 
@@ -989,5 +986,19 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
         }
 
         return $this;
+    }
+
+    /**
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("color")
+     * @JMS\Type("array")
+     */
+    public function getColor(): array
+    {
+        return [
+            'red' => $this->colorRed,
+            'green' => $this->colorGreen,
+            'blue' => $this->colorBlue,
+        ];
     }
 }
