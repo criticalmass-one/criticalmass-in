@@ -995,4 +995,18 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
 
         return $this;
     }
+
+    /**
+     * @JMS\VirtualProperty
+     * @JMS\SerializedName("color")
+     * @JMS\Type("array")
+     */
+    public function getColor(): array
+    {
+        return [
+            'red' => $this->colorRed,
+            'green' => $this->colorGreen,
+            'blue' => $this->colorBlue,
+        ];
+    }
 }
