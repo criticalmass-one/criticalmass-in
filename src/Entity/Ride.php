@@ -165,24 +165,18 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
      */
     protected $facebook;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
      */
     protected $twitter;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
      */
     protected $url;
 
@@ -198,6 +192,8 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
 
     /**
      * @ORM\OneToMany(targetEntity="SocialNetworkProfile", mappedBy="ride", cascade={"persist", "remove"})
+     * @JMS\Groups({"ride-list"})
+     * @JMS\Expose
      */
     protected $socialNetworkProfiles;
 

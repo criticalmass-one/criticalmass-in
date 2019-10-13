@@ -3,11 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="social_network_profile")
  * @ORM\Entity(repositoryClass="App\Repository\SocialNetworkProfileRepository")
+ * @JMS\ExclusionPolicy("all")
  */
 class SocialNetworkProfile
 {
@@ -51,12 +53,16 @@ class SocialNetworkProfile
      * @var string $identifier
      * @ORM\Column(type="string")
      * @Assert\NotBlank
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $identifier;
 
     /**
      * @var string $network
      * @ORM\Column(type="string")
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $network;
 
