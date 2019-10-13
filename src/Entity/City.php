@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
-use App\EntityInterface\StaticMapableInterface;
+use App\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Sharing\Annotation as Sharing;
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
-use Caldera\GeoBasic\Coord\Coord;
+use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AuditableInterface;
 use App\EntityInterface\AutoParamConverterAble;
 use App\EntityInterface\BoardInterface;
@@ -13,16 +14,15 @@ use App\EntityInterface\ElasticSearchPinInterface;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
-use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use App\EntityInterface\StaticMapableInterface;
+use Caldera\GeoBasic\Coord\Coord;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use App\Criticalmass\Router\Annotation as Routing;
-use App\Criticalmass\Sharing\Annotation as Sharing;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CityRepository")
@@ -91,24 +91,18 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
      */
     protected $url;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
      */
     protected $facebook;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
      */
     protected $twitter;
 
