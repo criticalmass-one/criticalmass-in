@@ -47,7 +47,6 @@
         "miljar/php-exif": "^0.6.5",
         "sonata-project/admin-bundle": "^3.18",
         "sonata-project/doctrine-orm-admin-bundle": "^3.1",
-        "simplethings/entity-audit-bundle": "^1.0",
         "sonata-project/seo-bundle": "^2.2",
         "graylog2/gelf-php": "^1.5",
         "facebook/graph-sdk": "^5.6",
@@ -95,7 +94,8 @@
         "freearhey/wikidata": "^3.1",
         "doctrine/annotations": "^1.7",
         "league/commonmark": "^1.0",
-        "nesbot/carbon": "^2.24"
+        "nesbot/carbon": "^2.24",
+        "simplethings/entity-audit-bundle": "^1.0"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "*",
