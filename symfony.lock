@@ -536,9 +536,6 @@
             "ref": "fb7e19da7f013d0d422fa9bce16f5c510e27609b"
         }
     },
-    "simplethings/entity-audit-bundle": {
-        "version": "v1.0.9"
-    },
     "sonata-project/admin-bundle": {
         "version": "3.31",
         "recipe": {
