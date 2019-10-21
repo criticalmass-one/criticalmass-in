@@ -6,9 +6,9 @@ use App\Entity\City;
 use App\Traits\RepositoryTrait;
 use App\Traits\UtilTrait;
 use FOS\RestBundle\View\View;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class CityController extends BaseController
 {
@@ -16,6 +16,8 @@ class CityController extends BaseController
     use UtilTrait;
 
     /**
+     * This endpoint will return a list of all critical mass rides. It will be a pretty long list and might not be the list you are looking for.
+     *
      * @ApiDoc(
      *  resource=true,
      *  description="Returns a list of critical mass cities"
@@ -35,6 +37,8 @@ class CityController extends BaseController
     }
 
     /**
+     * Retrieve information for a city, which is identified by the parameter <code>citySlug</code>.
+     *
      * @ApiDoc(
      *  resource=true,
      *  description="Shows a critical mass city"
