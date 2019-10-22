@@ -20,7 +20,8 @@ class CityController extends BaseController
      *
      * @ApiDoc(
      *  resource=true,
-     *  description="Returns a list of critical mass cities"
+     *  description="Returns a list of critical mass cities",
+     *  section="City"
      * )
      */
     public function listAction(): Response
@@ -41,7 +42,8 @@ class CityController extends BaseController
      *
      * @ApiDoc(
      *  resource=true,
-     *  description="Shows a critical mass city"
+     *  description="Shows a critical mass city",
+     *  section="City"
      * )
      * @ParamConverter("city", class="App:City")
      */

@@ -4,10 +4,9 @@ namespace App\Controller\Api;
 
 use App\Traits\RepositoryTrait;
 use App\Traits\UtilTrait;
-use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
-use Symfony\Component\HttpFoundation\Response;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\HttpFoundation\Response;
 
 class PhotoController extends BaseController
 {
@@ -17,7 +16,8 @@ class PhotoController extends BaseController
     /**
      * @ApiDoc(
      *  resource=true,
-     *  description="Does bullshit"
+     *  description="Does bullshit",
+     *  section="Photo"
      * )
      */
     public function galleryAction(): Response

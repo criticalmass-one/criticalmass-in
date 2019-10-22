@@ -2,19 +2,19 @@
 
 namespace App\Controller\Api;
 
+use App\Criticalmass\Util\DateTimeUtil;
 use App\Entity\City;
 use App\Entity\CitySlug;
 use App\Entity\Ride;
 use App\Traits\RepositoryTrait;
 use App\Traits\UtilTrait;
-use App\Criticalmass\Util\DateTimeUtil;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class RideController extends BaseController
 {
@@ -24,7 +24,8 @@ class RideController extends BaseController
     /**
      * @ApiDoc(
      *  resource=true,
-     *  description="Returns ride details"
+     *  description="Returns ride details",
+     *  section="Ride"
      * )
      * @ParamConverter("ride", class="App:Ride")
      */
@@ -42,7 +43,8 @@ class RideController extends BaseController
     /**
      * @ApiDoc(
      *  resource=true,
-     *  description="Returns details of the next ride in the city"
+     *  description="Returns details of the next ride in the city",
+     *  section="Ride"
      * )
      * @ParamConverter("city", class="App:City")
      */
@@ -79,7 +81,8 @@ class RideController extends BaseController
      *     {"name"="year", "dataType"="string", "required"=false, "description"="Limit the result set to this year. If not set, we will search in the current month."},
      *     {"name"="month", "dataType"="string", "required"=false, "description"="Limit the result set to this year. Must be combined with 'year'. If not set, we will search in the current month."},
      *     {"name"="day", "dataType"="string", "required"=false, "description"="Limit the result set to this day."}
-     *  }
+     *  },
+     *  section="Ride"
      * )
      */
     public function listAction(Request $request): Response
