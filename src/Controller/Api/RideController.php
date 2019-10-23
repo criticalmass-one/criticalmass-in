@@ -22,6 +22,10 @@ class RideController extends BaseController
     use UtilTrait;
 
     /**
+     * Retrieve information about a ride identified by <code>rideIdentifier</code> of a city identified by <code>citySlug</code>.
+     *
+     * As the parameter <code>citySlug</code> is just a string like <code>hamburg-harburg</code> or <code>muenchen</code> the parameter <code>rideIdentifier</code> is either the date of the ride like <code>2011-06-24</code> or a special identifier like <code>kidical-mass-hamburg-september-2019</code>.
+     *
      * @ApiDoc(
      *  resource=true,
      *  description="Returns ride details",
@@ -41,6 +45,8 @@ class RideController extends BaseController
     }
 
     /**
+     * Retrieve information about the current ride of a city identified by <code>citySlug</code>.
+     *
      * @ApiDoc(
      *  resource=true,
      *  description="Returns details of the next ride in the city",

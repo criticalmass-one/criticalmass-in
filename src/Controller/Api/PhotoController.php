@@ -14,6 +14,8 @@ class PhotoController extends BaseController
     use UtilTrait;
 
     /**
+     * This is a pretty useless endpoint which is not ready for usage now.
+     *
      * @ApiDoc(
      *  resource=true,
      *  description="Does bullshit",

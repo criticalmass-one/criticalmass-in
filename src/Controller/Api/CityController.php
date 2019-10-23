@@ -16,7 +16,7 @@ class CityController extends BaseController
     use UtilTrait;
 
     /**
-     * This endpoint will return a list of all critical mass rides. It will be a pretty long list and might not be the list you are looking for.
+     * This endpoint will return a list of all known critical mass cities known to our database.
      *
      * @ApiDoc(
      *  resource=true,
