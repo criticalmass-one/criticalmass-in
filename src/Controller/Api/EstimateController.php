@@ -12,10 +12,10 @@ use App\Traits\UtilTrait;
 use FOS\ElasticaBundle\Finder\FinderInterface;
 use FOS\RestBundle\View\View;
 use JMS\Serializer\Serializer;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class EstimateController extends BaseController
@@ -45,7 +45,8 @@ class EstimateController extends BaseController
      *
      * @ApiDoc(
      *  resource=true,
-     *  description="Adds an estimation to statistic"
+     *  description="Adds an estimation to statistic",
+     *  section="Estimate"
      * )
      */
     public function createAction(Request $request, UserInterface $user, Serializer $serializer, EventDispatcherInterface $eventDispatcher): Response
