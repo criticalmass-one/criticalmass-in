@@ -84,7 +84,7 @@ define(['dateformat', 'typeahead.jquery', 'bloodhound'], function (dateFormat) {
     };
 
     Search.prototype._renderContentSuggestion = function (data) {
-        return '<a href="' + data.url + '"><i class="fa fa-file-text-o"></i> ' + data.value + '</a>';
+        return '<a href="' + data.url + '"><i class="far fa-file-text"></i> ' + data.value + '</a>';
     };
 
     Search.prototype._templateSuggestionFunction = function (data) {
