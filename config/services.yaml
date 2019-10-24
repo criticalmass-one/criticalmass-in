@@ -45,6 +45,7 @@ parameters:
     yourls.api_hostname: '%env(YOURLS_API_HOSTNAME)%'
     yourls.api_username: '%env(YOURLS_API_USERNAME)%'
     yourls.api_password: '%env(YOURLS_API_PASSWORD)%'
+    assets_version: '%env(ASSETS_VERSION)%'
 
 services:
     _defaults:
