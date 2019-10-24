@@ -49,7 +49,7 @@ define(['dateformat', 'typeahead.jquery', 'bloodhound'], function (dateFormat) {
     };
 
     Search.prototype._renderCitySuggestion = function (data) {
-        return '<a href="' + data.url + '"><i class="fa fa-university"></i> ' + data.value + '</a>';
+        return '<a href="' + data.url + '"><i class="far fa-university"></i> ' + data.value + '</a>';
     };
 
     Search.prototype._renderRideSuggestion = function (data) {

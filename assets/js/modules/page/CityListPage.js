@@ -89,7 +89,7 @@ define(['jquery', 'dateformat', 'jquery.dataTables', 'Map', 'CityMarker', 'Locat
 
                 const cityUrl = Routing.generate('caldera_criticalmass_city_show', { citySlug: citySlug});
 
-                html += '<p><a href="' + cityUrl + '" class="btn btn-primary"><i class="fa fa-university"></i> Mehr erfahren</a></p>';
+                html += '<p><a href="' + cityUrl + '" class="btn btn-primary"><i class="far fa-university"></i> Mehr erfahren</a></p>';
             }
 
             html += '</div>';
