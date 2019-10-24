@@ -58,7 +58,7 @@ define(['dateformat', 'typeahead.jquery', 'bloodhound'], function (dateFormat) {
         html += '<a href="' + data.url + '">';
         html += '<div class="row">';
         html += '<div class="col-md-12">';
-        html += '<i class="fa fa-bicycle"></i> ';
+        html += '<i class="far fa-bicycle"></i> ';
         html += data.value;
         html += '</div>';
         html += '</div>';
