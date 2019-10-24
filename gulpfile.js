@@ -83,7 +83,7 @@ gulp.task('build-leaflet-extramarkers', ['extramarkers-images', 'extramarkers-cs
 /* Font Awesome */
 
 gulp.task('copy-fontawesome-fonts', function () {
-    return gulp.src('node_modules/font-awesome/fonts/*')
+    return gulp.src('node_modules/@fortawesome/fontawesome-pro/webfonts/*')
         .pipe(gulp.dest('public/fonts'));
 });
 
@@ -130,9 +130,13 @@ gulp.task('compress-css', ['leaflet-css', 'extramarkers-css', 'sass'], function 
             'node_modules/leaflet.locatecontrol/dist/L.Control.Locate.min.css',
             'node_modules/datatables/media/css/jquery.dataTables.min.css',
             'node_modules/leaflet-groupedlayercontrol/dist/leaflet.groupedlayercontrol.min.css',
+            'node_modules/@fortawesome/fontawesome-pro/css/all.min.css',
         ])
         .pipe(cleanCSS())
         .pipe(concat('criticalmass.min.css'))
+        .pipe(urlAdjuster({
+            replace: ['webfonts/','fonts/'],
+        }))
         .pipe(gulp.dest('public/css/'));
 });
 

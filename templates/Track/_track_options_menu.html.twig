@@ -7,28 +7,28 @@
         {% if track.source == constant('TRACK_SOURCE_DRAW', track) %}
             <li>
                 <a href="{{ objectPath(track, 'caldera_criticalmass_track_edit') }}">
-                    <i class="fa fa-pencil-square-o"></i>
+                    <i class="far fa-pencil"></i>
                     Track editieren
                 </a>
             </li>
         {% else %}
             <li>
                 <a href="{{ objectPath(track, 'caldera_criticalmass_track_download') }}">
-                    <i class="fa fa-file"></i>
+                    <i class="far fa-download"></i>
                     Herunterladen
                 </a>
             </li>
             {% if track.enabled %}
                 <li>
                     <a href="{{ objectPath(track, 'caldera_criticalmass_track_toggle') }}">
-                        <i class="fa fa-eye-slash"></i>
+                        <i class="far fa-eye-slash"></i>
                         Deaktivieren
                     </a>
                 </li>
             {% else %}
                 <li>
                     <a href="{{ objectPath(track, 'caldera_criticalmass_track_toggle') }}">
-                        <i class="fa fa-eye"></i>
+                        <i class="far fa-eye"></i>
                         Aktivieren
                     </a>
                 </li>
@@ -39,7 +39,7 @@
             {% if not track.isReviewed %}
                 <li>
                     <a href="{{ objectPath(track, 'caldera_criticalmass_track_approve') }}">
-                        <i class="fa fa-check"></i>
+                        <i class="far fa-check"></i>
                         Bestätigen
                     </a>
                 </li>
@@ -47,14 +47,14 @@
 
             <li>
                 <a href="{{ objectPath(track, 'caldera_criticalmass_track_range') }}">
-                    <i class="fa fa-scissors"></i>
+                    <i class="far fa-cut"></i>
                     Beschneiden
                 </a>
             </li>
 
             <li>
                 <a href="{{ objectPath(track, 'caldera_criticalmass_track_time') }}">
-                    <i class="fa fa-clock-o"></i>
+                    <i class="far fa-clock"></i>
                     Zeit anpassen
                 </a>
             </li>
@@ -62,7 +62,7 @@
         {% endif %}
         <li>
             <a class="delete-track" href="#" data-track-id="{{ track.id }}">
-                <i class="fa fa-trash-o"></i>
+                <i class="far fa-trash-alt"></i>
                 Löschen
             </a>
         </li>

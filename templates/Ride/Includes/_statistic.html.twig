@@ -44,12 +44,12 @@
                 <div class="col-md-12 text-center">
                 {% if app.user %}
                     <button class="btn btn-success" data-toggle="modal" data-target="#estimate-modal">
-                        <i class="fa fa-users"></i>
+                        <i class="far fa-users"></i>
                         Teilnehmerzahl schätzen
                     </button>
                 {% else %}
                     <span class="btn btn-success modal-hint" data-modal-hint-title="{{ 'hint_modal.ride.estimate_add_button.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.ride.estimate_add_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
-                        <i class="fa fa-users"></i>
+                        <i class="far fa-users"></i>
                         Teilnehmerzahl schätzen
                     </span>
                 {% endif %}
