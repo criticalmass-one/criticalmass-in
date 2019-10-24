@@ -5,14 +5,14 @@
                 {% if app.user %}
                 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-map-o"></i>
+                    <i class="far fa-map"></i>
                     Track hinzufügen
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
                     <li>
                         <a href="{{ objectPath(ride, 'caldera_criticalmass_strava_auth') }}">
-                            <i class="fa fa-map-o"></i>
+                            <i class="far fa-map"></i>
                             Track von Strava importieren
                         </a>
                     </li>
@@ -26,14 +26,14 @@
                     {#<li>
                           <a href="{{ path('caldera_criticalmass_track_draw', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}"
                              title="Track manuell zeichnen">
-                              <i class="fa fa-map-signs"></i>
+                              <i class="far fa-map"></i>
                               Track manuell zeichnen
                           </a>
                       </li>#}
                 </ul>
                 {% else %}
                     <span class="btn btn-success modal-hint" data-modal-hint-title="{{ 'hint_modal.ride.track_upload_button.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.ride.track_upload_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
-                        <i class="fa fa-map-o"></i>
+                        <i class="far fa-map"></i>
                         Track hinzufügen
                         <span class="caret"></span>
                     </span>
