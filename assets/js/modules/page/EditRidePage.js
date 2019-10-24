@@ -232,7 +232,7 @@ define(['Map', 'LocationMarker', 'typeahead.jquery', 'bloodhound', 'bootstrap-da
                         var html = '';
                         html += '<div class="row padding-top-small padding-bottom-small">';
                         html += '<div class="col-md-12">';
-                        html += '<i class="fa fa-map-marker"></i>&nbsp;' + data.location;
+                        html += '<i class="far fa-map-marker"></i>&nbsp;' + data.location;
                         html += '</div>';
                         html += '</div>';
 
