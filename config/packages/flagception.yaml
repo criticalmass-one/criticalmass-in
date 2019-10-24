@@ -10,3 +10,5 @@ flagception:
             default: true
         frontpage_advertisment:
             default: false
+        track_massupload:
+            default: false
