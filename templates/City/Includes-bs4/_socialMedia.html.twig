@@ -9,7 +9,7 @@
         <ul class="list-unstyled list-spaced">
             {% if city.url %}
             <li>
-                <span class="text-muted fa fa-home"></span>
+                <span class="text-muted far fa-browser"></span>
                 <a href="{{ city.url }}">
                     {{ hostname(city.url) }}
                 </a>
@@ -18,7 +18,7 @@
 
             {% if city.facebook %}
             <li>
-                <span class="text-muted fa fa-facebook"></span>
+                <span class="text-muted fab fa-facebook-f"></span>
                 <a href="{{ city.facebook }}">
                     {{ facebookIdentifier(city.facebook) }}
                 </a>
@@ -27,7 +27,7 @@
 
             {% if city.twitter %}
             <li>
-                <span class="text-muted fa fa-twitter"></span>
+                <span class="text-muted fab fa-twitter"></span>
                 <a href="{{ city.twitter }}">
                     {{ twitterUsername(city.twitter) }}
                 </a>

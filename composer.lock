@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9cbc98aaf7538b3e4bff502fcc3bd940",
+    "content-hash": "0ee759445f43c7daaec299f5a56b63e1",
     "packages": [
         {
             "name": "basvandorst/stravaphp",
@@ -6959,58 +6959,6 @@
                 "controllers"
             ],
             "time": "2019-07-08T08:31:25+00:00"
-        },
-        {
-            "name": "simplethings/entity-audit-bundle",
-            "version": "v1.0.9",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/simplethings/EntityAuditBundle.git",
-                "reference": "5725ecab2d132288842d9a075d1a8662520829c5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/simplethings/EntityAuditBundle/zipball/5725ecab2d132288842d9a075d1a8662520829c5",
-                "reference": "5725ecab2d132288842d9a075d1a8662520829c5",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/dbal": "~2.5",
-                "doctrine/orm": "~2.4",
-                "php": "^5.3.9|~7.0"
-            },
-            "conflict": {
-                "doctrine/dbal": "2.7.0",
-                "doctrine/doctrine-bundle": "<1.4",
-                "gedmo/doctrine-extensions": "<2.3.1",
-                "symfony/framework-bundle": "<2.7"
-            },
-            "require-dev": {
-                "doctrine/doctrine-bundle": "~1.4",
-                "fabpot/php-cs-fixer": "^1.11",
-                "gedmo/doctrine-extensions": "^2.3.1",
-                "matthiasnoback/symfony-dependency-injection-test": "^1.0",
-                "phpunit/phpunit": "^4.8",
-                "symfony/framework-bundle": "~2.7|~3.0",
-                "symfony/var-dumper": "^2.7"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-4": {
-                    "SimpleThings\\EntityAudit\\": "src/SimpleThings/EntityAudit"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-2.1"
-            ],
-            "description": "Audit for Doctrine Entities",
-            "keywords": [
-                "Audit",
-                "database",
-                "persistence"
-            ],
-            "time": "2018-04-10T08:14:31+00:00"
         },
         {
             "name": "sonata-project/admin-bundle",

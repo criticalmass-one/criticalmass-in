@@ -80,7 +80,7 @@ define(['Polyline.encoded', 'leaflet.extra-markers', 'Container', 'jquery', 'Map
                 icon: markerIcon,
                 markerColor: markerColor,
                 shape: markerShape,
-                prefix: 'fa'
+                prefix: 'far'
             });
 
             var marker = L.marker([latitude, longitude], {icon: extraMarkerIcon, clickable: markerClickable});
@@ -108,7 +108,7 @@ define(['Polyline.encoded', 'leaflet.extra-markers', 'Container', 'jquery', 'Map
                     icon: 'fa-bicycle',
                     markerColor: 'yellow',
                     shape: 'square',
-                    prefix: 'fa'
+                    prefix: 'far'
                 });
 
                 var marker = L.marker(latLng, {icon: extraMarkerIcon, clickable: markerClickable});
