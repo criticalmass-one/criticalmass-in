@@ -22,7 +22,7 @@
                 {% if pastRide %}
                     <li>
                         <a href="{{ objectPath(ride, 'caldera_criticalmass_participation_ride', { status: 'no' }) }}">
-                            <i class="fa fa-times"></i>
+                            <i class="far fa-times"></i>
                             Nein
                         </a>
                     </li>
@@ -58,7 +58,7 @@
                     {% endif %}
                     <li>
                         <a href="{{ objectPath(ride, 'caldera_criticalmass_participation_ride', { status: 'no' }) }}">
-                            <i class="fa fa-times"></i>
+                            <i class="far fa-times"></i>
                             {% if pastRide %}
                                 Nicht teilgenommen
                             {% else %}
@@ -86,7 +86,7 @@
 
                     <li>
                         <a href="{{ objectPath(ride, 'caldera_criticalmass_participation_ride', { status: 'no' }) }}">
-                            <i class="fa fa-times"></i>
+                            <i class="far fa-times"></i>
                             Absagen
                         </a>
                     </li>
@@ -96,7 +96,7 @@
             {% if participation.goingNo %}
                 <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false">
-                    <i class="fa fa-times"></i>
+                    <i class="far fa-times"></i>
                     {% if pastRide %}
                         Du hast nicht teilgenommen
                     {% else %}
