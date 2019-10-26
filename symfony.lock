@@ -5,9 +5,6 @@
     "amphp/byte-stream": {
         "version": "v1.5.1"
     },
-    "basvandorst/stravaphp": {
-        "version": "1.2.0"
-    },
     "behat/transliterator": {
         "version": "v1.2.0"
     },
@@ -280,9 +277,6 @@
     },
     "league/flysystem": {
         "version": "1.0.51"
-    },
-    "league/oauth2-client": {
-        "version": "2.3.0"
     },
     "liip/imagine-bundle": {
         "version": "1.8",
