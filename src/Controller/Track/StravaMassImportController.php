@@ -34,7 +34,7 @@ class StravaMassImportController extends AbstractController
         $authorizationOptions = [
             'state' => '',
             'approval_prompt' => 'force',
-            'scope' => 'public',
+            'scope' => 'read',
         ];
 
         $authorizationUrl = $oauth->getAuthorizationUrl($authorizationOptions);
@@ -160,7 +160,7 @@ class StravaMassImportController extends AbstractController
             'clientId' => $this->getParameter('strava.client_id'),
             'clientSecret' => $this->getParameter('strava.secret'),
             'redirectUri' => $redirectUri,
-            'scopes' => ['view_private'],
+            'scope' => 'read',
         ];
 
         return new OAuth($oauthOptions);

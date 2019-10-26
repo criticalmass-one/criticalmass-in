@@ -10,12 +10,14 @@
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
+                    {% if feature('strava_track_upload') %}
                     <li>
                         <a href="{{ objectPath(ride, 'caldera_criticalmass_strava_auth') }}">
                             <i class="fab fa-strava"></i>
                             Track von Strava importieren
                         </a>
                     </li>
+                    {% endif %}
                     <li>
                         <a href="{{ objectPath(ride, 'caldera_criticalmass_track_upload') }}"
                            title="Track hochladen">
