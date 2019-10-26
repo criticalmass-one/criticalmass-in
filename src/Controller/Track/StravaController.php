@@ -6,10 +6,10 @@ use App\Controller\AbstractController;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Criticalmass\Strava\Importer\TrackImporterInterface;
 use App\Criticalmass\Util\DateTimeUtil;
+use App\Entity\Ride;
 use App\Event\Track\TrackUploadedEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use App\Entity\Ride;
 use Strava\API\Client;
 use Strava\API\OAuth;
 use Strava\API\Service\REST;
@@ -32,7 +32,7 @@ class StravaController extends AbstractController
         $authorizationOptions = [
             'state' => '',
             'approval_prompt' => 'force',
-            'scope' => 'public',
+            'scope' => 'read',
         ];
 
         $authorizationUrl = $oauth->getAuthorizationUrl($authorizationOptions);
@@ -121,7 +121,7 @@ class StravaController extends AbstractController
             'clientId' => $this->getParameter('strava.client_id'),
             'clientSecret' => $this->getParameter('strava.secret'),
             'redirectUri' => $redirectUri,
-            'scopes' => ['view_private'],
+            'scope' => 'read',
         ];
 
         return new OAuth($oauthOptions);
