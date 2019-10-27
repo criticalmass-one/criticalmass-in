@@ -11,9 +11,7 @@ use App\Event\Track\TrackUploadedEvent;
 use Iamstuartwilson\StravaApi;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Strava\API\Client;
 use Strava\API\OAuth;
-use Strava\API\Service\REST;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,7 +30,12 @@ class StravaController extends AbstractController
 
         $api = $this->createApi();
 
-        $authenticationUrl = $api->authenticationUrl($redirect, $approvalPrompt = 'auto', $scope = null, $state = null);
+        $authenticationUrl = $api->authenticationUrl(
+            $redirect,
+            'auto',
+            'activity:read_all',
+            null
+        );
 
         return $this->render('Strava/auth.html.twig', [
             'authorizationUrl' => $authenticationUrl,
@@ -71,14 +74,20 @@ class StravaController extends AbstractController
         $afterDateTime = DateTimeUtil::getDayStartDateTime($ride->getDateTime());
         $beforeDateTime = DateTimeUtil::getDayEndDateTime($ride->getDateTime());
 
-        $token = $session->get('strava_token');
+        $api = $this->createApi();
 
-        $adapter = new \GuzzleHttp\Client(['base_uri' => 'https://www.strava.com/api/v3/']);
-        $service = new REST($token, $adapter);
-        $client = new Client($service);
+        $api->setAccessToken($session->get('strava_access_token'), $session->get('strava_refresh_token'), $session->get('strava_expires_at'));
 
-        $activities = $client->getAthleteActivities($beforeDateTime->getTimestamp(), $afterDateTime->getTimestamp());
+        $activities = $api->get(
+            '/athlete/activities', [
+                'before' => $beforeDateTime->getTimestamp(),
+                'after' => $afterDateTime->getTimestamp(),
+                'page' => 1,
+                'per_page' => 50,
+            ]
+        );
 
+        dump($activities);
         return $this->render('Strava/list.html.twig', [
             'activities' => $activities,
             'ride' => $ride,
