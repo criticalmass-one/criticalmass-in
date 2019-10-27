@@ -11,4 +11,4 @@ flagception:
         frontpage_advertisment:
             default: false
         strava_track_upload:
-            default: false
+            default: true

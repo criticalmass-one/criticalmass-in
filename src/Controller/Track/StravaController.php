@@ -8,6 +8,7 @@ use App\Criticalmass\Strava\Importer\TrackImporterInterface;
 use App\Criticalmass\Util\DateTimeUtil;
 use App\Entity\Ride;
 use App\Event\Track\TrackUploadedEvent;
+use Iamstuartwilson\StravaApi;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Strava\API\Client;
@@ -27,18 +28,14 @@ class StravaController extends AbstractController
      */
     public function authAction(Request $request, Ride $ride, ObjectRouterInterface $objectRouter): Response
     {
-        $oauth = $this->initOauthForRide($request, $ride, $objectRouter);
+        $redirect = $request->getUriForPath($objectRouter->generate($ride, 'caldera_criticalmass_strava_token'));
 
-        $authorizationOptions = [
-            'state' => '',
-            'approval_prompt' => 'force',
-            'scope' => 'read',
-        ];
+        $api = $this->createApi();
 
-        $authorizationUrl = $oauth->getAuthorizationUrl($authorizationOptions);
+        $authenticationUrl = $api->authenticationUrl($redirect, $approvalPrompt = 'auto', $scope = null, $state = null);
 
         return $this->render('Strava/auth.html.twig', [
-            'authorizationUrl' => $authorizationUrl,
+            'authorizationUrl' => $authenticationUrl,
             'ride' => $ride,
         ]);
     }
@@ -47,23 +44,17 @@ class StravaController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function tokenAction(Request $request, Ride $ride, ObjectRouterInterface $objectRouter): Response
+    public function tokenAction(Request $request, Ride $ride, ObjectRouterInterface $objectRouter, SessionInterface $session): Response
     {
-        $error = $request->get('error');
+        $api = $this->createApi();
 
-        if ($error) {
-            return $this->redirect($objectRouter->generate($ride, 'caldera_criticalmass_strava_auth'));
-        }
-
-        $oauth = $this->initOauthForRide($request, $ride, $objectRouter);
+        $code = $request->query->get('code');
+        $result = $api->tokenExchange($code);
 
         try {
-            $token = $oauth->getAccessToken('authorization_code', [
-                'code' => $request->get('code')
-            ]);
-
-            $session = $this->getSession();
-            $session->set('strava_token', $token);
+            $session->set('strava_access_token', $result->access_token);
+            $session->set('strava_refresh_token', $result->refresh_token);
+            $session->set('strava_expires_at', $result->expires_at);
 
             return $this->redirect($objectRouter->generate($ride, 'caldera_criticalmass_strava_list'));
         } catch (\Exception $e) {
@@ -125,5 +116,12 @@ class StravaController extends AbstractController
         ];
 
         return new OAuth($oauthOptions);
+    }
+
+    protected function createApi(): StravaApi
+    {
+        $api = new StravaApi($this->getParameter('strava.client_id'), $this->getParameter('strava.secret'));
+
+        return $api;
     }
 }
