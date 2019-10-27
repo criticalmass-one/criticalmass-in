@@ -227,6 +227,9 @@
             "ref": "7dcf0116eef13eb83e9eadf5e0ddf14d572cd036"
         }
     },
+    "iamstuartwilson/strava": {
+        "version": "1.4.0"
+    },
     "imagine/imagine": {
         "version": "v0.7.1"
     },

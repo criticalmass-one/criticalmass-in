@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8249289edf863e60637e69674b3e577c",
+    "content-hash": "46656d48fca26d26755f4f8c46afe91c",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -3274,6 +3274,45 @@
                 "youtube"
             ],
             "time": "2018-07-31T10:19:28+00:00"
+        },
+        {
+            "name": "iamstuartwilson/strava",
+            "version": "1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/iamstuartwilson/strava.git",
+                "reference": "2196338ee4961f81ef9ac23f6214549525e3a89f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/iamstuartwilson/strava/zipball/2196338ee4961f81ef9ac23f6214549525e3a89f",
+                "reference": "2196338ee4961f81ef9ac23f6214549525e3a89f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Iamstuartwilson\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Stuart Wilson",
+                    "email": "bonjour@iamstuartwilson.com"
+                }
+            ],
+            "description": "PHP implementation of the Strava V3 API",
+            "time": "2019-09-23T08:46:48+00:00"
         },
         {
             "name": "imagine/imagine",
