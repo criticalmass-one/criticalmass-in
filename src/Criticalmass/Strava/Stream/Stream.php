@@ -4,42 +4,17 @@ namespace App\Criticalmass\Strava\Stream;
 
 class Stream
 {
-    /**
-     * @var string $type
-     */
-    protected $type;
-
-    /**
-     * @var string $type
-     */
+    /** @var string $type */
     protected $seriesType;
 
-    /**
-     * @var int $type
-     */
+    /** @var int $type */
     protected $originalSize;
 
-    /**
-     * @var string $type
-     */
+    /** @var string $type */
     protected $resolution;
 
-    /**
-     * @var array $type
-     */
+    /** @var array $type */
     protected $data;
-
-    public function getType(): string
-    {
-        return $this->type;
-    }
-
-    public function setType(string $type): Stream
-    {
-        $this->type = $type;
-
-        return $this;
-    }
 
     public function getSeriesType(): string
     {

@@ -12,13 +12,12 @@ class StreamFactory
         foreach ($streamsArray as $streamArray) {
             $stream = new Stream();
             $stream
-                ->setType($streamArray['type'])
                 ->setSeriesType($streamArray['series_type'])
                 ->setResolution($streamArray['resolution'])
                 ->setOriginalSize($streamArray['original_size'])
                 ->setData($streamArray['data']);
 
-            $streamList->addStream($stream->getType(), $stream);
+            $streamList->addStream($stream->getSeriesType(), $stream);
         }
 
         return $streamList;
