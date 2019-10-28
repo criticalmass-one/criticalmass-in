@@ -87,7 +87,6 @@ class StravaController extends AbstractController
             ]
         );
 
-        dump($activities);
         return $this->render('Strava/list.html.twig', [
             'activities' => $activities,
             'ride' => $ride,
