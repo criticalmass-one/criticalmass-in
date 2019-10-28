@@ -5,6 +5,7 @@ namespace App\Controller\Track;
 use App\Controller\AbstractController;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Criticalmass\Strava\Importer\TrackImporterInterface;
+use App\Criticalmass\Strava\Token\StravaTokenStorage;
 use App\Criticalmass\Util\DateTimeUtil;
 use App\Entity\Ride;
 use App\Event\Track\TrackUploadedEvent;
@@ -55,10 +56,9 @@ class StravaController extends AbstractController
         $result = $api->tokenExchange($code);
 
         try {
-            $session->set('strava_access_token', $result->access_token);
-            $session->set('strava_refresh_token', $result->refresh_token);
-            $session->set('strava_expires_at', $result->expires_at);
+            $token = StravaTokenStorage::createFromStravaResponse($result);
 
+            $session->set('strava_token', $token);
             return $this->redirect($objectRouter->generate($ride, 'caldera_criticalmass_strava_list'));
         } catch (\Exception $e) {
             return $this->redirect($objectRouter->generate($ride, 'caldera_criticalmass_strava_auth'));
@@ -76,7 +76,7 @@ class StravaController extends AbstractController
 
         $api = $this->createApi();
 
-        $api->setAccessToken($session->get('strava_access_token'), $session->get('strava_refresh_token'), $session->get('strava_expires_at'));
+        StravaTokenStorage::setAccessToken($api, $session->get('strava_token'));
 
         $activities = $api->get(
             '/athlete/activities', [

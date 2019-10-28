@@ -3,6 +3,7 @@
 namespace App\Criticalmass\Strava\Importer;
 
 use App\Criticalmass\Geo\GpxWriter\GpxWriter;
+use App\Criticalmass\Strava\Token\StravaTokenStorage;
 use App\Criticalmass\UploadFaker\UploadFakerInterface;
 use App\Entity\Ride;
 use App\Entity\User;
@@ -64,11 +65,9 @@ abstract class AbstractTrackImporter implements TrackImporterInterface
     {
         $api = new StravaApi($stravaClientId, $stravaSecret);
 
-        $accessToken = $this->session->get('strava_access_token');
-        $refreshToken = $this->session->get('strava_refresh_token');
-        $expiresAt = $this->session->get('strava_expires_at');
-
-        $api->setAccessToken($accessToken, $refreshToken, $expiresAt);
+        /** @var StravaTokenStorage $token */
+        $token = $this->session->get('strava_token');
+        $api = StravaTokenStorage::setAccessToken($api, $token);
 
         return $api;
     }
