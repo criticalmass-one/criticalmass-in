@@ -23,7 +23,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bootstrap": "^3.4.0",
+    "bootstrap": "^3.4.1",
     "bootstrap-colorpicker": "^2.5.3",
     "bootstrap-datepicker": "^1.8.0",
     "bootstrap-sass": "^3.4.0",
