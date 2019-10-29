@@ -62,6 +62,8 @@ services:
             $facebookDefaultToken: '%facebook.default_token%'
             #$twitterClientId: '%twitter.client_id%'
             #$twitterSecret: '%twitter.secret%'
+            $stravaClientId: '%strava.client_id%'
+            $stravaSecret: '%strava.secret%'
             $cachedTimelineTtl: '%timeline.ttl%'
             $projectDirectory: '%kernel.project_dir%'
 
