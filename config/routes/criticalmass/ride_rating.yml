@@ -1,0 +1,3 @@
+caldera_criticalmass_ride_rate:
+  path:  /{citySlug}/{rideIdentifier}/rating
+  controller: App\Controller\Ride\RatingController::rateAction
