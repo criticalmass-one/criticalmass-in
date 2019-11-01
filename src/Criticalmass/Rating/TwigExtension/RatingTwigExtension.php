@@ -24,7 +24,7 @@ class RatingTwigExtension extends AbstractExtension
         ];
     }
 
-    public function rideRating(Ride $ride): float
+    public function rideRating(Ride $ride): ?float
     {
         return $this->ratingCalculator->calculateRide($ride);
     }
