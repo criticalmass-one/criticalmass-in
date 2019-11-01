@@ -7,6 +7,10 @@ use App\Entity\Ride;
 
 class StarGenerator implements StarGeneratorInterface
 {
+    const HTML_STAR_FULL = '<i class="fas fa-star"></i>';
+    const HTML_STAR_HALF = '<i class="fad fa-star-half-alt"></i>';
+    const HTML_STAR_EMPTY = '<i class="far fa-star"></i>';
+
     /** @var RatingCalculatorInterface $ratingCalculator */
     protected $ratingCalculator;
 
@@ -22,17 +26,17 @@ class StarGenerator implements StarGeneratorInterface
         $stars = [];
 
         while ($rating && $rating >= 1) {
-            $stars[] = '<i class="fas fa-star"></i>';
+            $stars[] = self::HTML_STAR_FULL;
 
             $rating -= 1;
         }
 
         if ($rating && $rating < 1) {
-            $stars[] = '<i class="fad fa-star-half-alt"></i>';
+            $stars[] = self::HTML_STAR_HALF;
         }
 
         for ($i = count($stars); $i < 5; ++$i) {
-            $stars[] = '<i class="far fa-star"></i>';
+            $stars[] = self::HTML_STAR_EMPTY;
         }
 
         return join('', $stars);

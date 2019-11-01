@@ -53,4 +53,49 @@ class StarGeneratorTest extends TestCase
 
         $this->assertEquals('<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>', $starString);
     }
+
+    public function testRatingTwoAndAHalfStars(): void
+    {
+        $ride = new Ride();
+        $ratingCalculator = $this->createMock(RatingCalculatorInterface::class);
+        $ratingCalculator
+            ->method('calculateRide')
+            ->will($this->returnValue(2.5));
+
+        $starGenerator = new StarGenerator($ratingCalculator);
+
+        $starString = $starGenerator->generateForRide($ride);
+
+        $this->assertEquals('<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fad fa-star-half-alt"></i><i class="far fa-star"></i><i class="far fa-star"></i>', $starString);
+    }
+
+    public function testRatingTwoAndAThirdStars(): void
+    {
+        $ride = new Ride();
+        $ratingCalculator = $this->createMock(RatingCalculatorInterface::class);
+        $ratingCalculator
+            ->method('calculateRide')
+            ->will($this->returnValue(2.3333));
+
+        $starGenerator = new StarGenerator($ratingCalculator);
+
+        $starString = $starGenerator->generateForRide($ride);
+
+        $this->assertEquals('<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fad fa-star-half-alt"></i><i class="far fa-star"></i><i class="far fa-star"></i>', $starString);
+    }
+
+    public function testRatingTwoAndAQuarterStars(): void
+    {
+        $ride = new Ride();
+        $ratingCalculator = $this->createMock(RatingCalculatorInterface::class);
+        $ratingCalculator
+            ->method('calculateRide')
+            ->will($this->returnValue(2.25));
+
+        $starGenerator = new StarGenerator($ratingCalculator);
+
+        $starString = $starGenerator->generateForRide($ride);
+
+        $this->assertEquals('<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fad fa-star-half-alt"></i><i class="far fa-star"></i><i class="far fa-star"></i>', $starString);
+    }
 }
