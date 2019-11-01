@@ -6,5 +6,5 @@ use App\Entity\Ride;
 
 interface RatingCalculatorInterface
 {
-    public function calculateRide(Ride $ride): float;
+    public function calculateRide(Ride $ride): ?float;
 }

@@ -16,9 +16,13 @@ class RatingCalculator implements RatingCalculatorInterface
         $this->registry = $registry;
     }
 
-    public function calculateRide(Ride $ride): float
+    public function calculateRide(Ride $ride): ?float
     {
         $ratings = $this->registry->getRepository(Rating::class)->findByRide($ride);
+
+        if (count($ratings) === 0) {
+            return null;
+        }
 
         $ratingSum = 0;
 
