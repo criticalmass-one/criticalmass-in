@@ -21,12 +21,20 @@ class RatingTwigExtension extends AbstractExtension
     {
         return [
             new TwigFunction('ride_rating', [$this, 'rideRating'], ['is_safe' => ['html']]),
+            new TwigFunction('ride_rating_stars', [$this, 'rideRatingStars'], ['is_safe' => ['html']]),
         ];
     }
 
     public function rideRating(Ride $ride): ?float
     {
         return $this->ratingCalculator->calculateRide($ride);
+    }
+
+    public function rideRatingStars(Ride $ride): string
+    {
+        
+
+        return 'foo';
     }
 
     public function getName(): string
