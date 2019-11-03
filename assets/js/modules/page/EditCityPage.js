@@ -25,7 +25,6 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function () {
     EditCityPage.prototype.mapCenter = null;
     EditCityPage.prototype.mapZoom = null;
     EditCityPage.prototype.cityMarker = null;
-    EditCityPage.prototype.locationMarker = null;
     EditCityPage.prototype._geocoding = null;
 
     EditCityPage.prototype._init = function () {
@@ -57,7 +56,6 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function () {
             this.map.setView(this.mapCenter, this.mapZoom);
 
             this._initCityMarker();
-            this._initLocationMarker();
         } else {
             this._geocoding.searchState(this.settings.state, function (data) {
                 if (data) {
@@ -71,7 +69,6 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function () {
                 that.map.setView(that.mapCenter, that.mapZoom);
 
                 that._initCityMarker();
-                that._initLocationMarker();
             });
         }
     };
@@ -91,51 +88,6 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function () {
         });
     };
 
-    EditCityPage.prototype._initLocationMarker = function () {
-        var that = this;
-
-        if (this.standardLocationLatLng) {
-            this._addStandardLocationMarker();
-        }
-
-        $(this.settings.cityIsStandardableLocationInputSelector).on('click', function () {
-            if ($(this).prop('checked')) {
-                that._addStandardLocationMarker();
-                $(that.settings.cityIsLocationInputSelector).prop('disabled', '');
-            } else {
-                that._removeStandardLocationMarker();
-                $(that.settings.cityIsLocationInputSelector).prop('disabled', 'disabled');
-            }
-        });
-    };
-
-    EditCityPage.prototype._addStandardLocationMarker = function () {
-        var that = this;
-
-        var cityMarkerLatLng = this.cityMarker.getLatLng();
-
-        if (this.standardLocationLatLng) {
-            this.locationMarker = new LocationMarker(this.standardLocationLatLng, true);
-        } else {
-            this.locationMarker = new LocationMarker(cityMarkerLatLng, true);
-        }
-
-        this.locationMarker.addToMap(this.map);
-        this.locationMarker.addPopupText(this.settings.cityStandardLocationPopupText, true);
-
-        this.locationMarker.on('dragend', function (event) {
-            var marker = event.target;
-            var position = marker.getLatLng();
-
-            that._updateLocationPosition(position);
-        });
-
-    };
-
-    EditCityPage.prototype._removeStandardLocationMarker = function () {
-        this.locationMarker.removeFromMap(this.map);
-    };
-
     EditCityPage.prototype.isFloat = function (n) {
         n = parseFloat(n);
         return n === Number(n) && n % 1 !== 0;
@@ -152,18 +104,6 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function () {
 
     EditCityPage.prototype._moveLocationMarker = function (latLng) {
         this.locationMarker.setLatLng(latLng);
-    };
-
-    EditCityPage.prototype._getStandardLocationLatLng = function () {
-        return {
-            lat: $(this.settings.cityStandardLatitudeInputSelector).val(),
-            lng: $(this.settings.cityStandardLongitudeInputSelector).val()
-        };
-    };
-
-    EditCityPage.prototype._updateLocationPosition = function (position) {
-        $(this.settings.cityStandardLatitudeInputSelector).val(position.lat);
-        $(this.settings.cityStandardLongitudeInputSelector).val(position.lng);
     };
 
     EditCityPage.prototype._initGeolocationEvents = function () {
