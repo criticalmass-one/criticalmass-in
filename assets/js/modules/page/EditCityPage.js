@@ -14,19 +14,13 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function () {
         mapContainerId: 'map',
         cityLatitudeInputSelector: '#city_latitude',
         cityLongitudeInputSelector: '#city_longitude',
-        cityStandardLatitudeInputSelector: '#standard_city_standardLatitude',
-        cityStandardLongitudeInputSelector: '#standard_city_standardLongitude',
-        cityIsStandardableLocationInputSelector: '#standard_city_isStandardableLocation',
-        cityIsLocationInputSelector: '#standard_city_standardLocation',
         cityMarkerPopupText: 'Zieh mich auf den Mittelpunkt der Stadt!',
-        cityStandardLocationPopupText: 'Zieh mich auf den Treffpunkt!',
         defaultCenterLatitude: 51.163375,
         defaultCenterLongitude: 10.447683
     };
 
     EditCityPage.prototype.map = null;
     EditCityPage.prototype.cityLatLng = null;
-    EditCityPage.prototype.standardLocationLatLng = null;
     EditCityPage.prototype.defaultCenterLatLng = null;
     EditCityPage.prototype.mapCenter = null;
     EditCityPage.prototype.mapZoom = null;
@@ -47,13 +41,6 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function () {
 
         if (this.isFloat(cityLatitude) && this.isFloat(cityLongitude)) {
             this.cityLatLng = L.latLng(cityLatitude, cityLongitude);
-        }
-
-        var standardLocationLatitude = $(this.settings.cityStandardLatitudeInputSelector).val();
-        var standardLocationLongitude = $(this.settings.cityStandardLongitudeInputSelector).val();
-
-        if (this.isFloat(standardLocationLatitude) && this.isFloat(standardLocationLongitude)) {
-            this.standardLocationLatLng = L.latLng(standardLocationLatitude, standardLocationLongitude);
         }
 
         this.defaultCenterLatLng = L.latLng(this.settings.defaultCenterLatitude, this.settings.defaultCenterLongitude);
