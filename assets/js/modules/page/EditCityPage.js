@@ -9,7 +9,6 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function () {
         this._init();
     };
 
-
     EditCityPage.prototype._defaults = {
         mapContainerId: 'map',
         cityLatitudeInputSelector: '#city_latitude',
@@ -113,7 +112,7 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function () {
         this._$countrySelect = $('#city_region');
 
         this._$searchCityButton.on('click', function () {
-            var cityName = $('#standard_city_city').val();
+            var cityName = $('#city_city').val();
 
             that._geocoding.searchCity(cityName, function (data) {
                 that._handleGeocodingCity(data);
@@ -141,6 +140,6 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function () {
             alert('Die Stadt wurde nicht gefunden. Bitte schiebe den Marker mauell auf den Mittelpunkt der Stadt.');
         }
     };
-    
+
     return EditCityPage;
 });
