@@ -12,8 +12,8 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function () {
 
     EditCityPage.prototype._defaults = {
         mapContainerId: 'map',
-        cityLatitudeInputSelector: '#standard_city_latitude',
-        cityLongitudeInputSelector: '#standard_city_longitude',
+        cityLatitudeInputSelector: '#city_latitude',
+        cityLongitudeInputSelector: '#city_longitude',
         cityStandardLatitudeInputSelector: '#standard_city_standardLatitude',
         cityStandardLongitudeInputSelector: '#standard_city_standardLongitude',
         cityIsStandardableLocationInputSelector: '#standard_city_isStandardableLocation',
