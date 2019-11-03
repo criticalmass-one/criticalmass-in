@@ -110,7 +110,6 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function () {
         var that = this;
 
         this._$searchCityButton = $('#search-city-button');
-        this._$searchLocationButton = $('#search-location-button');
         this._$countrySelect = $('#city_region');
 
         this._$searchCityButton.on('click', function () {
@@ -119,19 +118,6 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function () {
             that._geocoding.searchCity(cityName, function (data) {
                 that._handleGeocodingCity(data);
             });
-        });
-
-        this._$searchLocationButton.on('click', function () {
-            var cityName = $('#standard_city_city').val();
-            var locationName = $('#city_standardLocation').val();
-
-            if (cityName.length == 0) {
-                alert('Bitte gib zuerst den Namen einer Stadt ein.');
-            } else {
-                that._geocoding.searchPlace(locationName, cityName, function (data) {
-                    that._handleGeocodingLocation(data);
-                });
-            }
         });
 
         this._$countrySelect.on('change', function (value) {
@@ -155,17 +141,6 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function () {
             alert('Die Stadt wurde nicht gefunden. Bitte schiebe den Marker mauell auf den Mittelpunkt der Stadt.');
         }
     };
-
-    EditCityPage.prototype._handleGeocodingLocation = function (data) {
-        var latLng = {
-            lat: data.lat,
-            lng: data.lon
-        };
-
-        this._updateLocationPosition(latLng);
-        this._moveLocationMarker(latLng);
-        this.map.setView(latLng, 15);
-    };
-
+    
     return EditCityPage;
 });
