@@ -32,7 +32,6 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function () {
         this._initLatLngs();
         this._initMap();
         this._initGeolocationEvents();
-        this._initPopulationEvent();
     };
 
     EditCityPage.prototype._initLatLngs = function () {
@@ -199,21 +198,6 @@ define(['Map', 'LocationMarker', 'CityMarker', 'Geocoding'], function () {
             var stateName = that._$countrySelect.find('option:selected').text();
 
             that._geocoding.setState(stateName);
-        });
-    };
-
-    EditCityPage.prototype._initPopulationEvent = function() {
-        this._$fetchPopulationButton = $('#fetch-population-button');
-        this._$fetchPopulationButton.on('click', function () {
-            var cityName = $('#standard_city_city').val();
-
-            var url = Routing.generate('caldera_criticalmass_city_population', { cityName: cityName });
-
-            $.get(url, null,function(data) {
-                $('#standard_city_cityPopulation').val(data);
-            }).fail(function() {
-                alert('Die Einwohnerzahl deiner Stadt konnte leider nicht automatisch ermittelt werden. Bitte füge die Zahl manuell hinzu.');
-            });
         });
     };
 
