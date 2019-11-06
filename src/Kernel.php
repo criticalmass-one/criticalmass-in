@@ -2,19 +2,16 @@
 
 namespace App;
 
-use App\Criticalmass\Feature\Feature\FeatureInterface;
+use App\Criticalmass\MassTrackImport\Voter\VoterInterface;
 use App\Criticalmass\RideNamer\RideNamerInterface;
 use App\Criticalmass\Router\DelegatedRouter\DelegatedRouterInterface;
 use App\Criticalmass\Sharing\Network\ShareNetworkInterface;
-use App\Criticalmass\SocialNetwork\Network\NetworkInterface;
-use App\Criticalmass\SocialNetwork\NetworkFeedFetcher\NetworkFeedFetcherInterface;
 use App\Criticalmass\Timeline\Collector\TimelineCollectorInterface;
-use App\DependencyInjection\Compiler\FeaturePass;
 use App\DependencyInjection\Compiler\ObjectRouterPass;
 use App\DependencyInjection\Compiler\RideNamerPass;
 use App\DependencyInjection\Compiler\ShareNetworkPass;
-use App\DependencyInjection\Compiler\SocialNetworkPass;
 use App\DependencyInjection\Compiler\TimelineCollectorPass;
+use App\DependencyInjection\Compiler\TrackVoterPass;
 use App\DependencyInjection\Compiler\TwigSeoExtensionPass;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -29,12 +26,12 @@ class Kernel extends BaseKernel
 
     const CONFIG_EXTS = '.{php,xml,yaml,yml}';
 
-    public function getCacheDir()
+    public function getCacheDir(): string
     {
         return $this->getProjectDir().'/var/cache/'.$this->environment;
     }
 
-    public function getLogDir()
+    public function getLogDir(): string
     {
         return $this->getProjectDir().'/var/log';
     }
@@ -49,7 +46,7 @@ class Kernel extends BaseKernel
         }
     }
 
-    protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
+    protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
     {
         $container->addResource(new FileResource($this->getProjectDir().'/config/bundles.php'));
         // Feel free to remove the "container.autowiring.strict_mode" parameter
@@ -77,9 +74,11 @@ class Kernel extends BaseKernel
 
         $container->addCompilerPass(new TwigSeoExtensionPass());
 
+        $container->addCompilerPass(new TrackVoterPass());
+        $container->registerForAutoconfiguration(VoterInterface::class)->addTag('mass_track_import.voter');
     }
 
-    protected function configureRoutes(RouteCollectionBuilder $routes)
+    protected function configureRoutes(RouteCollectionBuilder $routes): void
     {
         $confDir = $this->getProjectDir().'/config';
 

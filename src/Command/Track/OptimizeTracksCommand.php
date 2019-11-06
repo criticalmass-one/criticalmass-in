@@ -2,92 +2,115 @@
 
 namespace App\Command\Track;
 
-use App\Criticalmass\Gps\DistanceCalculator\TrackDistanceCalculatorInterface;
 use App\Entity\Track;
-use App\Criticalmass\Gps\LatLngListGenerator\RangeLatLngListGenerator;
-use Doctrine\ORM\EntityManager;
+use App\Event\Track\TrackTrimmedEvent;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class OptimizeTracksCommand extends Command
 {
     /** @var RegistryInterface $registry */
     protected $registry;
 
-    /** @var RangeLatLngListGenerator $rangeLatLngListGenerator */
-    protected $rangeLatLngListGenerator;
+    /** @var EventDispatcherInterface $eventDispatcher */
+    protected $eventDispatcher;
 
-    /** @var TrackDistanceCalculatorInterface $trackDistanceCalculator */
-    protected $trackDistanceCalculator;
-
-    /** @var EntityManager $manager */
-    protected $manager;
-
-    public function __construct(?string $name = null, RegistryInterface $registry, RangeLatLngListGenerator $rangeLatLngListGenerator, TrackDistanceCalculatorInterface $trackDistanceCalculator)
+    public function __construct(?string $name = null, RegistryInterface $registry, EventDispatcherInterface $eventDispatcher)
     {
         $this->registry = $registry;
-        $this->rangeLatLngListGenerator = $rangeLatLngListGenerator;
-        $this->trackDistanceCalculator = $trackDistanceCalculator;
+        $this->eventDispatcher = $eventDispatcher;
 
         parent::__construct($name);
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('criticalmass:tracks:optimize')
-            ->setDescription('Regenerate LatLng Tracks')
+            ->setDescription('Regenerate tracks')
             ->addArgument(
                 'trackId',
                 InputArgument::OPTIONAL,
-                'Id of the Track to optimize'
+                'Id of the track to optimize'
             )
-            ->addOption('all');
+            ->addOption('all', 'a', InputOption::VALUE_NONE, 'Optimize all tracks');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $repository = $this->registry->getRepository(Track::class);
+
+        $table = new Table($output);
+        $this->addHeaderToTable($table);
+
+        $trackList = [];
 
         /** @var Track $track */
         if ($input->hasArgument('trackId') && $input->getArgument('trackId')) {
             $trackId = $input->getArgument('trackId');
             $track = $repository->find($trackId);
 
+            $trackList = [$track];
+        } elseif ($input->hasOption('all') && $input->getOption('all')) {
+            $trackList = $repository->findAll();
+        }
+
+        foreach ($trackList as $track) {
             $this->optimizeTrack($track);
 
-            $output->writeln('Optimized Track #' . $track->getId());
-        } elseif ($input->hasOption('all') && $input->getOption('all')) {
-            $tracks = $repository->findAll();
-
-            foreach ($tracks as $track) {
-                $this->optimizeTrack($track);
-
-                $output->writeln('Optimized Track #' . $track->getId());
-                $output->writeln('Distance: ' . $track->getDistance());
-            }
+            $this->addTrackToTable($table, $track);
         }
+
+        $table->render();
     }
 
-    protected function optimizeTrack(Track $track)
+    protected function optimizeTrack(Track $track): void
     {
-        $list = $this->rangeLatLngListGenerator
-            ->loadTrack($track)
-            ->execute()
-            ->getList();
+        // little trick: We just fire a TrackTrimmedEvent, which will lead to regeneration of all properties
+        $this->eventDispatcher->dispatch(TrackTrimmedEvent::NAME, new TrackTrimmedEvent($track));
+    }
 
-        $track->setLatLngList($list);
+    protected function addHeaderToTable(Table $table): void
+    {
+        $table->setHeaders([
+            'Id',
+            'Username',
+            'City',
+            'Date',
+            'Distance',
+            'Points',
+            'Startpoint',
+            'Endpoint',
+            'Starttime',
+            'Endtime',
+            'Strava id',
+            'Enabled',
+            'Deleted',
+        ]);
+    }
 
-        $this->trackDistanceCalculator->loadTrack($track);
-
-        $track->setDistance($this->trackDistanceCalculator->calculate());
-
-        $track->setUpdatedAt(new \DateTime());
-
-        $this->registry->getManager()->persist($track);
-        $this->registry->getManager()->flush();
+    protected function addTrackToTable(Table $table, Track $track): void
+    {
+        $table->addRow([
+            $track->getId(),
+            $track->getUser()->getUsername(),
+            $track->getRide()->getCity()->getCity(),
+            $track->getRide()->getDateTime()->format('Y-m-d'),
+            $track->getDistance(),
+            $track->getPoints(),
+            $track->getStartPoint(),
+            $track->getEndPoint(),
+            $track->getStartDateTime()->format('H:i'),
+            $track->getEndDateTime()->format('H:i'),
+            $track->getStravaActivityId(),
+            $track->getEnabled(),
+            $track->getDeleted(),
+        ]);
     }
 }

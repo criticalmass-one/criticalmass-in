@@ -16,6 +16,10 @@ caldera_criticalmass_city_listgalleries:
     path:  /{citySlug}/galleries
     controller: App\Controller\City\CityController::listGalleriesAction
 
+caldera_criticalmass_city_listtracks:
+    path:  /{citySlug}/tracks
+    controller: App\Controller\City\CityTrackListController::listTracksAction
+
 caldera_criticalmass_city_locations:
     path:  /{citySlug}/locations
     controller: App\Controller\City\CityController::getlocationsAction

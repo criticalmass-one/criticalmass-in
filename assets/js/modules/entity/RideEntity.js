@@ -17,7 +17,7 @@ define(['CriticalService', 'dateformat', 'leaflet', 'MarkerEntity', 'leaflet.ext
             icon: 'fa-bicycle',
             markerColor: 'red',
             shape: 'round',
-            prefix: 'fa'
+            prefix: 'far'
         });
     };
 
@@ -95,6 +95,10 @@ define(['CriticalService', 'dateformat', 'leaflet', 'MarkerEntity', 'leaflet.ext
 
     RideEntity.prototype.getDate = function () {
         return this._date;
+    };
+
+    RideEntity.prototype.getLocation = function () {
+        return this._location;
     };
 
     return RideEntity;

@@ -10,14 +10,17 @@ use App\Entity\Track;
 
 class TrackImporter extends AbstractTrackImporter
 {
-    protected function getActivity(bool $allEfforts = true): array
+    protected function getActivity(bool $allEfforts = true): \stdClass
     {
-        return $this->client->getActivity($this->activityId, $allEfforts);
+        return $this->api->get(sprintf('activities/%d', $this->activityId));
     }
 
     protected function getActivityStreamList(): StreamList
     {
-        $response = $this->client->getStreamsActivity($this->activityId, implode(',', $this->types), self::RESOULUTION);
+        $response = $this->api->get(sprintf('/activities/%d/streams', $this->activityId), [
+            'keys' => implode(',', $this->types),
+            'key_by_type' => true,
+        ]);
 
         return StreamFactory::build($response);
     }
@@ -26,8 +29,8 @@ class TrackImporter extends AbstractTrackImporter
     {
         $activity = $this->getActivity();
 
-        $startDateTime = new \DateTime($activity['start_date']);
-        $startDateTime->setTimezone(new \DateTimeZone($activity['timezone']));
+        $startDateTime = new \DateTime($activity->start_date);
+        $startDateTime->setTimezone(new \DateTimeZone($activity->timezone));
 
         return $startDateTime;
     }

@@ -32,6 +32,10 @@ caldera_criticalmass_track_range:
     path:  /track/range/{trackId}
     controller: App\Controller\Track\TrackRangeController::rangeAction
 
+caldera_criticalmass_track_approve:
+    path:  /track/{trackId}/approve
+    controller: App\Controller\Track\TrackController::approveAction
+
 caldera_criticalmass_track_time:
     path:  /track/time/{trackId}
     controller: App\Controller\Track\TrackTimeController::timeAction

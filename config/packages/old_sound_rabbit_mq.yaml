@@ -7,12 +7,20 @@ old_sound_rabbit_mq:
         criticalmass_view:
             connection:       default
             exchange_options: { name: 'criticalmass_view', type: direct }
+        criticalmass_trackimportcandidate:
+            connection:       default
+            exchange_options: { name: 'criticalmass_trackimportcandidate', type: direct }
     consumers:
         criticalmass_view:
             connection:       default
             exchange_options: { name: 'criticalmass_view', type: direct }
             queue_options:    { name: 'criticalmass_view'}
             callback:         App\Consumer\ViewConsumer
+        criticalmass_trackimportcandidate:
+            connection:       default
+            exchange_options: { name: 'criticalmass_trackimportcandidate', type: direct }
+            queue_options:    { name: 'criticalmass_trackimportcandidate'}
+            callback:         App\Consumer\TrackImportCandidateConsumer
     batch_consumers:
         criticalmass_view:
             connection:       default

@@ -2,10 +2,9 @@
 
 namespace App\Criticalmass\Router;
 
-use App\Criticalmass\Router\Annotation\AbstractAnnotation;
 use App\Criticalmass\Router\Annotation\DefaultRoute;
-use App\Criticalmass\Router\Annotation\RouteParameter;
-use App\Criticalmass\Router\DelegatedRouter\DelegatedRouterInterface;
+use App\Criticalmass\Router\ParameterResolver\ClassParameterResolver;
+use App\Criticalmass\Router\ParameterResolver\PropertyParameterResolver;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\Common\Annotations\Reader;
 use Symfony\Component\Routing\RouterInterface;
@@ -18,13 +17,19 @@ abstract class AbstractObjectRouter
     /** @var Reader $annotationReader */
     protected $annotationReader;
 
-    /** @var array $delegatedRouterList */
-    protected $delegatedRouterList = [];
+    /** @var ClassParameterResolver $classParameterResolver */
+    protected $classParameterResolver;
 
-    public function __construct(RouterInterface $router, Reader $annotationReader)
+    /** @var PropertyParameterResolver $propertyParameterResolver */
+    protected $propertyParameterResolver;
+
+    public function __construct(RouterInterface $router, Reader $annotationReader, ClassParameterResolver $classParameterResolver, PropertyParameterResolver $propertyParameterResolver)
     {
         $this->router = $router;
         $this->annotationReader = $annotationReader;
+
+        $this->classParameterResolver = $classParameterResolver;
+        $this->propertyParameterResolver = $propertyParameterResolver;
     }
 
     protected function getDefaultRouteName(RouteableInterface $routeable): ?string
@@ -47,45 +52,7 @@ abstract class AbstractObjectRouter
 
     public function getRouteParameter(RouteableInterface $routeable, string $variableName): ?string
     {
-        $reflectionClass = new \ReflectionClass($routeable);
-        $properties = $reflectionClass->getProperties();
-
-        foreach ($properties as $key => $property) {
-            $parameterAnnotations = $this->annotationReader->getPropertyAnnotations($property);
-
-            /** @var AbstractAnnotation $parameterAnnotation */
-            foreach ($parameterAnnotations as $parameterAnnotation) {
-                if ($parameterAnnotation instanceof RouteParameter) {
-                    if ($parameterAnnotation->getName() !== $variableName) {
-                        continue;
-                    }
-
-                    $getMethodName = sprintf('get%s', ucfirst($property->getName()));
-
-                    if (!$reflectionClass->hasMethod($getMethodName)) {
-                        continue;
-                    }
-
-                    $value = $routeable->$getMethodName();
-
-                    if (is_object($value) && $value instanceof RouteableInterface) {
-                        if ($delegatedRouter = $this->findDelegatedRouter($value)) {
-                            $value = $delegatedRouter->getRouteParameter($value, $variableName);
-                        } else {
-                            $value = $this->getRouteParameter($value, $variableName);
-                        }
-                    }
-
-                    if (is_object($value) && $value instanceof \DateTime) {
-                        $value = $value->format($parameterAnnotation->getDateFormat());
-                    }
-
-                    return (string) $value;
-                }
-            }
-        }
-
-        return null;
+        return $this->classParameterResolver->resolve($routeable, $variableName) ?? $this->propertyParameterResolver->resolve($routeable, $variableName) ?? null;
     }
 
     protected function generateParameterList(RouteableInterface $routeable, string $routeName): array
@@ -110,17 +77,5 @@ abstract class AbstractObjectRouter
         $className = array_pop($classNameParts);
 
         return $className;
-    }
-
-    protected function findDelegatedRouter(RouteableInterface $routeable): ?DelegatedRouterInterface
-    {
-        /** @var DelegatedRouterInterface $delegatedRouter */
-        foreach ($this->delegatedRouterList as $delegatedRouter) {
-            if ($delegatedRouter->supports($routeable)) {
-                return $delegatedRouter;
-            }
-        }
-
-        return null;
     }
 }

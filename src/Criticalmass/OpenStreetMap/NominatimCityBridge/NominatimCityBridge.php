@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Criticalmass\OpenStreetMap\NominatimCityBridge;
 
@@ -38,14 +38,13 @@ class NominatimCityBridge extends AbstractNominatimCityBridge
             return null;
         }
 
-        $city = new City();
-        $city
-            ->setLatitude($result['lat'])
-            ->setLongitude($result['lon'])
-            ->setCity($cityName)
-            ->setRegion($region);
+        $this->cityFactory
+            ->withLatitude((float) $result['lat'])
+            ->withLongitude((float) $result['lon'])
+            ->withName($cityName)
+            ->withRegion($region);
 
-        return $city;
+        return $this->cityFactory->build();
     }
 
     protected function getCityNameFromResult(array $result): ?string

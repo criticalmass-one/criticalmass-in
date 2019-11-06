@@ -6,7 +6,9 @@ use App\Criticalmass\Geo\EntityInterface\PositionInterface;
 
 class PositionList implements PositionListInterface
 {
-    /** @var array $list */
+    /**
+     * @var array $list
+     */
     protected $list = [];
 
     public function __construct(array $list = [])

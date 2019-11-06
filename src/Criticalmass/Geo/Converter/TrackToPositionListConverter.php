@@ -2,10 +2,10 @@
 
 namespace App\Criticalmass\Geo\Converter;
 
+use App\Criticalmass\Geo\Entity\Track;
 use App\Criticalmass\Geo\GpxReader\TrackReader;
 use App\Criticalmass\Geo\PositionList\PositionList;
 use App\Criticalmass\Geo\PositionList\PositionListInterface;
-use App\Entity\Track;
 
 class TrackToPositionListConverter
 {
@@ -23,7 +23,7 @@ class TrackToPositionListConverter
 
         $positionList = new PositionList();
 
-        for ($n = 0; $n < $this->trackReader->countPoints(); ++$n) {
+        for ($n = $track->getStartPoint(); $n <= $track->getEndPoint(); ++$n) {
             $gpxPoint = $this->trackReader->getPoint($n);
 
             $position = GpxPointToPositionConverter::convert($gpxPoint);

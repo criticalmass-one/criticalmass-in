@@ -1,0 +1,31 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Verbinde dich mit Strava{% endblock %}
+
+{% block breadcrumb %}
+    <li class="active">
+        Tracks importieren
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    Verbinde dich mit Strava
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-center">
+                    <a href="{{ authorizationUrl }}">
+                        <img src="{{ asset('/images/strava/connect.png') }}" alt="Connect with Strava"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
