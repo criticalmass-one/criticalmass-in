@@ -5,9 +5,6 @@
     "amphp/byte-stream": {
         "version": "v1.5.1"
     },
-    "basvandorst/stravaphp": {
-        "version": "1.2.0"
-    },
     "behat/transliterator": {
         "version": "v1.2.0"
     },
@@ -230,6 +227,9 @@
             "ref": "7dcf0116eef13eb83e9eadf5e0ddf14d572cd036"
         }
     },
+    "iamstuartwilson/strava": {
+        "version": "1.4.0"
+    },
     "imagine/imagine": {
         "version": "v0.7.1"
     },
@@ -280,9 +280,6 @@
     },
     "league/flysystem": {
         "version": "1.0.51"
-    },
-    "league/oauth2-client": {
-        "version": "2.3.0"
     },
     "liip/imagine-bundle": {
         "version": "1.8",

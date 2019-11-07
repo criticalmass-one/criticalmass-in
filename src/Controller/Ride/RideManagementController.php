@@ -2,16 +2,16 @@
 
 namespace App\Controller\Ride;
 
+use App\Controller\AbstractController;
 use App\Criticalmass\Router\ObjectRouterInterface;
+use App\Entity\City;
+use App\Entity\Ride;
 use App\Form\Type\RideDisableType;
 use App\Form\Type\RideSocialPreviewType;
+use App\Form\Type\RideType;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use App\Controller\AbstractController;
-use App\Entity\City;
-use App\Entity\Ride;
-use App\Form\Type\RideType;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;
@@ -78,6 +78,8 @@ class RideManagementController extends AbstractController
             ]);
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
+
+            return $this->redirect($objectRouter->generate($ride));
         }
 
         return $this->render('RideManagement/edit.html.twig', [
@@ -141,6 +143,8 @@ class RideManagementController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
+
+            return $this->redirect($objectRouter->generate($ride));
         }
 
         return $this->render('RideManagement/edit.html.twig', [

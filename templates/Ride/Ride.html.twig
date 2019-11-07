@@ -27,13 +27,13 @@
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active">
                     <a href="#details" aria-controls="home" role="tab" data-toggle="tab">
-                        <i class="fa fa-flag"></i>
+                        <i class="far fa-flag"></i>
                         Details
                     </a>
                 </li>
                 <li role="presentation">
                     <a href="#minimass" aria-controls="settings" role="tab" data-toggle="tab">
-                        <i class="fa fa-map-marker"></i>
+                        <i class="far fa-map-marker"></i>
                         Mini-Masses
                         <span class="badge">
                             {{ ride.getSubrides|length }}
@@ -42,7 +42,7 @@
                 </li>
                 <li role="presentation">
                     <a href="#comments" aria-controls="messages" role="tab" data-toggle="tab">
-                        <i class="fa fa-pencil"></i>
+                        <i class="far fa-pencil"></i>
                         Kommentare
                         <span class="badge">
                             {{ ride.getPosts|length }}
@@ -53,7 +53,7 @@
                     {% if feature('photos') %}
                         <li role="presentation">
                             <a href="{{ objectPath(ride, 'caldera_criticalmass_photo_ride_list') }}">
-                                <i class="fa fa-camera"></i>
+                                <i class="far fa-camera"></i>
                                 Galerie
                                 <span class="badge">
                             {{ photos|length }}
@@ -63,7 +63,7 @@
                     {% endif %}
                     <li role="presentation">
                         <a href="#tracks" aria-controls="profile" role="tab" data-toggle="tab">
-                            <i class="fa fa-bicycle"></i>
+                            <i class="far fa-bicycle"></i>
                             Tracks
                             <span class="badge">
                             {{ tracks|length }}
