@@ -1,0 +1,7 @@
+Query:
+  type: object
+  config:
+    description: "Apartments ORM repository"
+    fields:
+      ride:
+        type: "Ride"

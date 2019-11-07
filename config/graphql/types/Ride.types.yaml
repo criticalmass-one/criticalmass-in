@@ -1,0 +1,7 @@
+Ride:
+  type: object
+  config:
+    description: "Ride ORM repository"
+    fields:
+      title:
+        type: "String"
