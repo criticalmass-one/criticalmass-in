@@ -238,3 +238,7 @@ services:
             - { name: jms_serializer.handler, type: Relation, direction: deserialization, format: json, method: deserializeRelation}
             - { name: jms_serializer.handler, type: Relation<?>, direction: serialization, format: json, method: serializeRelation}
             - { name: jms_serializer.handler, type: Relation<?>, direction: deserialization, format: json, method: deserializeRelation}
+
+    App\GraphQL\Type\Ride:
+        tags:
+            - { name: overblog_graphql.type, alias: Ride }
