@@ -1,7 +1,10 @@
 Ride:
   type: object
   config:
+    resolveField: '@=resolver("App\\GraphQL\\Resolver\\Ride", [args["id"]])'
     description: "Ride ORM repository"
     fields:
+      id:
+        type: "Int"
       title:
         type: "String"
