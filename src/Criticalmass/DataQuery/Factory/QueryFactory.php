@@ -3,11 +3,13 @@
 namespace App\Criticalmass\DataQuery\Factory;
 
 use App\Criticalmass\DataQuery\Query\BoundingBoxQuery;
+use App\Criticalmass\DataQuery\Query\CityQuery;
 use App\Criticalmass\DataQuery\Query\DateQuery;
 use App\Criticalmass\DataQuery\Query\MonthQuery;
 use App\Criticalmass\DataQuery\Query\RadiusQuery;
 use App\Criticalmass\DataQuery\Query\RegionQuery;
 use App\Criticalmass\DataQuery\Query\YearQuery;
+use App\Entity\CitySlug;
 use App\Entity\Region;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -64,6 +66,13 @@ class QueryFactory
             $region = $this->registry->getRepository(Region::class)->findOneBySlug($request->query->get('region'));
 
             $queryList[] = new RegionQuery($region);
+        }
+
+        if ($request->query->get('citySlug')) {
+            /** @var CitySlug $citySlug */
+            $citySlug = $this->registry->getRepository(CitySlug::class)->findOneBySlug($request->query->get('citySlug'));
+
+            $queryList[] = new CityQuery($citySlug->getCity());
         }
 
         return $queryList;
