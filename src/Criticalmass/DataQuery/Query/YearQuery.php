@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
-class YearQuery implements QueryInterface
+class YearQuery implements ElasticQueryInterface, DoctrineQueryInterface
 {
     /** @var int $year */
     protected $year;

@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
-class RadiusQuery implements QueryInterface
+class RadiusQuery implements ElasticQueryInterface
 {
     /** @var float $centerLatitude */
     protected $centerLatitude;

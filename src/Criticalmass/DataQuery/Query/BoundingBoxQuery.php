@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
-class BoundingBoxQuery implements QueryInterface
+class BoundingBoxQuery implements ElasticQueryInterface
 {
     /** @var float $northLatitude */
     protected $northLatitude;
