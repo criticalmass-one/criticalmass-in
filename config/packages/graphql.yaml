@@ -1,8 +1,14 @@
 overblog_graphql:
     definitions:
         schema:
-            query: Query
+            quickstart:
+                query: Query
+                resolver_maps:
+                    - App\GraphQL\Resolver\MyResolverMap
+
         mappings:
             auto_discover: false
             types:
-                - { type: yaml, dir: "%kernel.project_dir%/config/graphql/types", suffix: null }
+                - type: graphql
+                  dir: "%kernel.project_dir%/config/graphql/types"
+                  suffix: ~
