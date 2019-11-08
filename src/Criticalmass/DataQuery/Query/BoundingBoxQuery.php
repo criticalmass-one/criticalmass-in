@@ -2,6 +2,8 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
+use Elastica\Query\AbstractQuery;
+
 class BoundingBoxQuery implements ElasticQueryInterface
 {
     /** @var float $northLatitude */
@@ -42,5 +44,16 @@ class BoundingBoxQuery implements ElasticQueryInterface
     public function getWestLongitude(): float
     {
         return $this->westLongitude;
+    }
+
+    public function createElasticQuery(): AbstractQuery
+    {
+        $geoQuery = new \Elastica\Query\GeoBoundingBox('pin',
+            [
+                [$this->northLatitude, $this->westLongitude],
+                [$this->southLatitude, $this->eastLongitude],
+            ]);
+
+        return $geoQuery;
     }
 }

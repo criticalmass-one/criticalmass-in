@@ -2,9 +2,9 @@
 
 namespace App\Controller\Api;
 
-use App\Criticalmass\Util\DateTimeUtil;
+use App\Criticalmass\DataQuery\Factory\QueryFactoryInterface;
+use App\Criticalmass\DataQuery\Finder\FinderInterface;
 use App\Entity\City;
-use App\Entity\CitySlug;
 use App\Entity\Ride;
 use App\Traits\RepositoryTrait;
 use App\Traits\UtilTrait;
@@ -83,93 +83,31 @@ class RideController extends BaseController
      *  description="Lists rides",
      *  parameters={
      *     {"name"="region", "dataType"="string", "required"=false, "description"="Provide a region slug"},
-     *     {"name"="city", "dataType"="string", "required"=false, "description"="Provide a city slug"},
+     *     {"name"="citySlug", "dataType"="string", "required"=false, "description"="Provide a city slug"},
      *     {"name"="year", "dataType"="string", "required"=false, "description"="Limit the result set to this year. If not set, we will search in the current month."},
      *     {"name"="month", "dataType"="string", "required"=false, "description"="Limit the result set to this year. Must be combined with 'year'. If not set, we will search in the current month."},
-     *     {"name"="day", "dataType"="string", "required"=false, "description"="Limit the result set to this day."}
+     *     {"name"="day", "dataType"="string", "required"=false, "description"="Limit the result set to this day."},
+     *     {"name"="centerLatitude", "dataType"="float", "required"=false, "description"="Latitude of a coordinate to search rides around in a given radius."},
+     *     {"name"="centerLongitude", "dataType"="float", "required"=false, "description"="Longitude of a coordinate to search rides around in a given radius."},
+     *     {"name"="radius", "dataType"="float", "required"=false, "description"="Radius to look around for rides."},
+     *     {"name"="bbEastLongitude", "dataType"="float", "required"=false, "description"="East longitude of a bounding box to look for rides."},
+     *     {"name"="bbWestLongitude", "dataType"="float", "required"=false, "description"="West longitude of a bounding box to look for rides."},
+     *     {"name"="bbNorthLatitude", "dataType"="float", "required"=false, "description"="North latitude of a bounding box to look for rides."},
+     *     {"name"="bbSouthLatitude", "dataType"="float", "required"=false, "description"="South latitude of a bounding box to look for rides."}
      *  },
      *  section="Ride"
      * )
      */
-    public function listAction(Request $request): Response
+    public function listAction(Request $request, QueryFactoryInterface $queryFactory, FinderInterface $finder): Response
     {
-        $region = null;
-        $city = null;
-        $dateTime = new \DateTime();
-        $fromDateTime = null;
-        $untilDateTime = null;
+        $queryList = $queryFactory->createFromRequest($request);
 
-        if ($request->query->get('region')) {
-            $region = $this->getRegionRepository()->findOneBySlug($request->query->get('region'));
+        dump($queryList);
 
-            if (!$region) {
-                throw $this->createNotFoundException('Region not found');
-            }
-        }
+        $rideList = $finder->executeQuery($queryList);
 
-        if ($request->query->get('city')) {
-            /** @var CitySlug $citySlug */
-            $citySlug = $this->getCitySlugRepository()->findOneBySlug($request->query->get('city'));
-
-            if ($citySlug) {
-                $city = $citySlug->getCity();
-            }
-
-            if (!$city) {
-                throw $this->createNotFoundException('City not found');
-            }
-        }
-
-        if ($request->query->get('year') && $request->query->get('month') && $request->query->get('day')) {
-            try {
-                $dateTime = new \DateTime(
-                    sprintf('%d-%d-%d',
-                        $request->query->get('year'),
-                        $request->query->get('month'),
-                        $request->query->get('day')
-                    )
-                );
-
-                $fromDateTime = DateTimeUtil::getDayStartDateTime($dateTime);
-                $untilDateTime = DateTimeUtil::getDayEndDateTime($dateTime);
-            } catch (\Exception $e) {
-                throw $this->createNotFoundException('Date not found');
-            }
-        } elseif ($request->query->get('year') && $request->query->get('month')) {
-            try {
-                $dateTime = new \DateTime(
-                    sprintf('%d-%d-01',
-                        $request->query->get('year'),
-                        $request->query->get('month')
-                    )
-                );
-
-                $fromDateTime = DateTimeUtil::getMonthStartDateTime($dateTime);
-                $untilDateTime = DateTimeUtil::getMonthEndDateTime($dateTime);
-            } catch (\Exception $e) {
-                throw $this->createNotFoundException('Date not found');
-            }
-        } elseif ($request->query->get('year')) {
-            try {
-                $dateTime = new \DateTime(
-                    sprintf('%d-01-01',
-                        $request->query->get('year')
-                    )
-                );
-
-                $fromDateTime = DateTimeUtil::getYearStartDateTime($dateTime);
-                $untilDateTime = DateTimeUtil::getYearEndDateTime($dateTime);
-            } catch (\Exception $e) {
-                throw $this->createNotFoundException('Date not found');
-            }
-        }
-
-        $rideList = $this->getRideRepository()->findRides(
-            $fromDateTime,
-            $untilDateTime,
-            $city,
-            $region
-        );
+        dump($rideList);
+        die;
 
         $context = new Context();
         $context->addGroup('ride-list');

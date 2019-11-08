@@ -14,7 +14,7 @@ use App\Entity\Region;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class QueryFactory
+class QueryFactory implements QueryFactoryInterface
 {
     /** @var RegistryInterface $registry */
     protected $registry;

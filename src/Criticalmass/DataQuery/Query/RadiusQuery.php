@@ -2,6 +2,8 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
+use Elastica\Query\AbstractQuery;
+
 class RadiusQuery implements ElasticQueryInterface
 {
     /** @var float $centerLatitude */
@@ -33,5 +35,19 @@ class RadiusQuery implements ElasticQueryInterface
     public function getRadius(): float
     {
         return $this->radius;
+    }
+
+    public function createElasticQuery(): AbstractQuery
+    {
+        $kmDistance = sprintf('%dkm', $this->radius);
+
+        $geoQuery = new \Elastica\Query\GeoDistance('pin', [
+            'lat' => $this->centerLatitude,
+            'lon' => $this->centerLongitude,
+        ],
+            $kmDistance
+        );
+
+        return $geoQuery;
     }
 }
