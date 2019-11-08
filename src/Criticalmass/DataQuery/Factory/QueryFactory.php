@@ -6,11 +6,22 @@ use App\Criticalmass\DataQuery\Query\BoundingBoxQuery;
 use App\Criticalmass\DataQuery\Query\DateQuery;
 use App\Criticalmass\DataQuery\Query\MonthQuery;
 use App\Criticalmass\DataQuery\Query\RadiusQuery;
+use App\Criticalmass\DataQuery\Query\RegionQuery;
 use App\Criticalmass\DataQuery\Query\YearQuery;
+use App\Entity\Region;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class QueryFactory
 {
+    /** @var RegistryInterface $registry */
+    protected $registry;
+
+    public function __construct(RegistryInterface $registry)
+    {
+        $this->registry = $registry;
+    }
+
     public function createFromRequest(Request $request): array
     {
         $queryList = [];
@@ -48,7 +59,13 @@ class QueryFactory
 
             $queryList[] = new YearQuery($year);
         }
-        
+
+        if ($request->query->get('region')) {
+            $region = $this->registry->getRepository(Region::class)->findOneBySlug($request->query->get('region'));
+
+            $queryList[] = new RegionQuery($region);
+        }
+
         return $queryList;
     }
 }
