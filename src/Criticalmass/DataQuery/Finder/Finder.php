@@ -29,6 +29,26 @@ class Finder implements FinderInterface
             }
         }
 
+        if ($useElastic) {
+            return $this->executeElasticQuery($queryList);
+        }
+
+        return $this->executeOrmQuery($queryList);
+    }
+
+    protected function executeElasticQuery(array $queryList): array
+    {
+        $useElastic = false;
+
+        /** @var QueryInterface $query */
+        foreach ($queryList as $query) {
+            if ($query instanceof ElasticQueryInterface) {
+                $useElastic = true;
+
+                break;
+            }
+        }
+
         $boolQuery = new \Elastica\Query\BoolQuery();
 
         /** @var ElasticQueryInterface $query */
@@ -38,6 +58,12 @@ class Finder implements FinderInterface
 
         $query = new \Elastica\Query($boolQuery);
 
+        dump($query->toArray());
         return $this->elasticFinder->find($query);
+    }
+
+    protected function executeOrmQuery(array $queryList): array
+    {
+        return [];
     }
 }

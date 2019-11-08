@@ -2,7 +2,9 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
+use Elastica\Query\AbstractQuery;
+
 interface ElasticQueryInterface extends QueryInterface
 {
-    //public function createElasticQuery(): AbstractQuery;
+    public function createElasticQuery(): AbstractQuery;
 }
