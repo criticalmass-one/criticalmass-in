@@ -3,7 +3,10 @@
 namespace App\Criticalmass\DataQuery\Factory;
 
 use App\Criticalmass\DataQuery\Query\BoundingBoxQuery;
+use App\Criticalmass\DataQuery\Query\DateQuery;
+use App\Criticalmass\DataQuery\Query\MonthQuery;
 use App\Criticalmass\DataQuery\Query\RadiusQuery;
+use App\Criticalmass\DataQuery\Query\YearQuery;
 use Symfony\Component\HttpFoundation\Request;
 
 class QueryFactory
@@ -21,7 +24,6 @@ class QueryFactory
             $queryList[] = new BoundingBoxQuery($northLatitude, $southLatitude, $eastLongitude, $westLongitude);
         }
 
-
         if ($request->query->get('centerLatitude') && $request->query->get('centerLongitude') && $request->query->get('radius')) {
             $centerLatitude = (float)$request->query->get('centerLatitude');
             $centerLongitude = (float)$request->query->get('centerLongitude');
@@ -30,6 +32,23 @@ class QueryFactory
             $queryList[] = new RadiusQuery($centerLatitude, $centerLongitude, $radius);
         }
 
+        if ($request->query->get('year') && $request->query->get('month') && $request->query->get('day')) {
+            $year = (int)$request->query->get('year');
+            $month = (int)$request->query->get('month');
+            $day = (int)$request->query->get('day');
+
+            $queryList[] = new DateQuery($year, $month, $day);
+        } elseif ($request->query->get('year') && $request->query->get('month')) {
+            $year = (int)$request->query->get('year');
+            $month = (int)$request->query->get('month');
+
+            $queryList[] = new MonthQuery($year, $month);
+        } elseif ($request->query->get('year')) {
+            $year = (int)$request->query->get('year');
+
+            $queryList[] = new YearQuery($year);
+        }
+        
         return $queryList;
     }
 }
