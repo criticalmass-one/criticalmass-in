@@ -3,6 +3,7 @@
 namespace App\Criticalmass\DataQuery\Query;
 
 use App\Entity\City;
+use Elastica\Query\AbstractQuery;
 
 class CityQuery implements DoctrineQueryInterface, ElasticQueryInterface
 {
@@ -17,5 +18,10 @@ class CityQuery implements DoctrineQueryInterface, ElasticQueryInterface
     public function getCity(): City
     {
         return $this->city;
+    }
+
+    public function createElasticQuery(): AbstractQuery
+    {
+        return \Elastica\Query\Term(['city' => $this->getId()]);
     }
 }
