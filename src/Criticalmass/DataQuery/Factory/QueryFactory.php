@@ -3,6 +3,7 @@
 namespace App\Criticalmass\DataQuery\Factory;
 
 use App\Criticalmass\DataQuery\Query\BoundingBoxQuery;
+use App\Criticalmass\DataQuery\Query\RadiusQuery;
 use Symfony\Component\HttpFoundation\Request;
 
 class QueryFactory
@@ -19,7 +20,16 @@ class QueryFactory
 
             $queryList[] = new BoundingBoxQuery($northLatitude, $southLatitude, $eastLongitude, $westLongitude);
         }
-        
+
+
+        if ($request->query->get('centerLatitude') && $request->query->get('centerLongitude') && $request->query->get('radius')) {
+            $centerLatitude = (float)$request->query->get('centerLatitude');
+            $centerLongitude = (float)$request->query->get('centerLongitude');
+            $radius = (float)$request->query->get('radius');
+
+            $queryList[] = new RadiusQuery($centerLatitude, $centerLongitude, $radius);
+        }
+
         return $queryList;
     }
 }
