@@ -25,10 +25,10 @@ class YearQuery implements ElasticQueryInterface, DoctrineQueryInterface
         $fromDateTime = DateTimeUtil::getYearStartDateTime($this->toDateTime());
         $untilDateTime = DateTimeUtil::getYearEndDateTime($this->toDateTime());
 
-        $dateTimeQuery = new \Elastica\Query\Range('dateTime', [
-            'gt' => $fromDateTime->format('Y-m-d H:i:s'),
-            'lte' => $untilDateTime->format('Y-m-d H:i:s'),
-            'format' => 'yyyy-MM-dd HH:mm:ss',
+        $dateTimeQuery = new \Elastica\Query\Range('simpleDate', [
+            'gt' => $fromDateTime->format('Y-m-d'),
+            'lte' => $untilDateTime->format('Y-m-d'),
+            'format' => 'yyyy-MM-dd',
         ]);
 
         return $dateTimeQuery;

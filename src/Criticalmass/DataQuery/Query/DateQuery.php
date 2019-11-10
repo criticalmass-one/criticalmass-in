@@ -27,10 +27,10 @@ class DateQuery extends MonthQuery
         $fromDateTime = DateTimeUtil::getDayStartDateTime($this->toDateTime());
         $untilDateTime = DateTimeUtil::getDayEndDateTime($this->toDateTime());
 
-        $dateTimeQuery = new \Elastica\Query\Range('dateTime', [
-            'gt' => $fromDateTime->format('Y-m-d H:i:s'),
-            'lte' => $untilDateTime->format('Y-m-d H:i:s'),
-            'format' => 'yyyy-MM-dd HH:mm:ss',
+        $dateTimeQuery = new \Elastica\Query\Range('simpleDate', [
+            'gte' => $fromDateTime->format('Y-m-d'),
+            'lte' => $untilDateTime->format('Y-m-d'),
+            'format' => 'yyyy-MM-dd',
         ]);
 
         return $dateTimeQuery;
