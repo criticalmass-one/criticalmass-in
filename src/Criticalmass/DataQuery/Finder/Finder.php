@@ -50,10 +50,10 @@ class Finder implements FinderInterface
 
         $query = new \Elastica\Query($boolQuery);
 
-        /** @var ElasticQueryInterface $query */
+        /** @var ParameterInterface $parameter */
         foreach ($parameterList as $parameter) {
             if ($parameter instanceof ParameterInterface) {
-                $parameter->addToElasticQuery($query);
+                $query = $parameter->addToElasticQuery($query);
             }
         }
 

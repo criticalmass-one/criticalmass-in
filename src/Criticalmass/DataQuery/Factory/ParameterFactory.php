@@ -3,6 +3,7 @@
 namespace App\Criticalmass\DataQuery\Factory;
 
 use App\Criticalmass\DataQuery\Parameter\From;
+use App\Criticalmass\DataQuery\Parameter\Order;
 use App\Criticalmass\DataQuery\Parameter\Size;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -32,6 +33,13 @@ class ParameterFactory implements ParameterFactoryInterface
             $from = (int)$request->query->get('from');
 
             $parameterList[] = new From($from);
+        }
+
+        if ($request->query->get('orderBy') && $request->query->get('orderDirection')) {
+            $orderBy = (string)$request->query->get('orderBy');
+            $orderDirection = (string)$request->query->get('orderDirection');
+
+            $parameterList[] = new Order($orderBy, $orderDirection);
         }
 
         return $parameterList;
