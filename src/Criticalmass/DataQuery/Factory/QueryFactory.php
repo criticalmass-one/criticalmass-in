@@ -19,11 +19,21 @@ class QueryFactory implements QueryFactoryInterface
     /** @var RegistryInterface $registry */
     protected $registry;
 
+    /** @var string $entityFqcn */
+    protected $entityFqcn;
+
     public function __construct(RegistryInterface $registry)
     {
         $this->registry = $registry;
     }
 
+    public function setEntityFqcn(string $entityFqcn)
+    {
+        $this->entityFqcn = $entityFqcn;
+
+        return $this;
+    }
+    
     public function createFromRequest(Request $request): array
     {
         $queryList = [];

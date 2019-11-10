@@ -3,7 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Criticalmass\DataQuery\Factory\QueryFactoryInterface;
-use App\Criticalmass\DataQuery\Finder\FinderInterface;
+use App\Criticalmass\DataQuery\FinderFactory\FinderFactoryInterface;
 use App\Entity\City;
 use App\Entity\Ride;
 use App\Traits\RepositoryTrait;
@@ -98,12 +98,13 @@ class RideController extends BaseController
      *  section="Ride"
      * )
      */
-    public function listAction(Request $request, QueryFactoryInterface $queryFactory, FinderInterface $finder): Response
+    public function listAction(Request $request, QueryFactoryInterface $queryFactory, FinderFactoryInterface $finderFactory): Response
     {
         $queryList = $queryFactory->createFromRequest($request);
 
         dump($queryList);
 
+        $finder = $finderFactory->createFinderForFqcn(Ride::class);
         $rideList = $finder->executeQuery($queryList);
 
         dump($rideList);

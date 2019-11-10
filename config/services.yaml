@@ -238,7 +238,3 @@ services:
             - { name: jms_serializer.handler, type: Relation, direction: deserialization, format: json, method: deserializeRelation}
             - { name: jms_serializer.handler, type: Relation<?>, direction: serialization, format: json, method: serializeRelation}
             - { name: jms_serializer.handler, type: Relation<?>, direction: deserialization, format: json, method: deserializeRelation}
-
-    App\Criticalmass\DataQuery\Finder\Finder:
-        arguments:
-            $elasticFinder: '@fos_elastica.finder.criticalmass_ride.ride'
