@@ -2,6 +2,8 @@
 
 namespace App\Criticalmass\DataQuery\Factory;
 
+use App\Criticalmass\DataQuery\Parameter\From;
+use App\Criticalmass\DataQuery\Parameter\Size;
 use App\Criticalmass\DataQuery\Query\BoundingBoxQuery;
 use App\Criticalmass\DataQuery\Query\CityQuery;
 use App\Criticalmass\DataQuery\Query\DateQuery;
@@ -33,10 +35,11 @@ class QueryFactory implements QueryFactoryInterface
 
         return $this;
     }
-    
+
     public function createFromRequest(Request $request): array
     {
         $queryList = [];
+        $parameterList = [];
 
         if ($request->query->get('bbWestLongitude') && $request->query->get('bbEastLongitude') && $request->query->get('bbNorthLatitude') && $request->query->get('bbSouthLatitude')) {
             $westLongitude = (float)$request->query->get('bbWestLongitude');
@@ -83,6 +86,18 @@ class QueryFactory implements QueryFactoryInterface
             $citySlug = $this->registry->getRepository(CitySlug::class)->findOneBySlug($request->query->get('citySlug'));
 
             $queryList[] = new CityQuery($citySlug->getCity());
+        }
+
+        if ($request->query->get('size')) {
+            $size = (int)$request->query->get('size');
+
+            $parameterList[] = new Size($size);
+        }
+
+        if ($request->query->get('from')) {
+            $from = (int)$request->query->get('from');
+
+            $parameterList[] = new From($from);
         }
 
         return $queryList;

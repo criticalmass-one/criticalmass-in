@@ -4,5 +4,5 @@ namespace App\Criticalmass\DataQuery\Finder;
 
 interface FinderInterface
 {
-    public function executeQuery(array $queryList): array;
+    public function executeQuery(array $queryList, array $parameterList): array;
 }

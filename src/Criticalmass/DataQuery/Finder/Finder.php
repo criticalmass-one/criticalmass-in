@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\DataQuery\Finder;
 
+use App\Criticalmass\DataQuery\Parameter\ParameterInterface;
 use App\Criticalmass\DataQuery\Query\ElasticQueryInterface;
 use App\Criticalmass\DataQuery\Query\QueryInterface;
 use FOS\ElasticaBundle\Finder\FinderInterface as FOSFinderInterface;
@@ -16,7 +17,7 @@ class Finder implements FinderInterface
         $this->elasticFinder = $elasticFinder;
     }
 
-    public function executeQuery(array $queryList): array
+    public function executeQuery(array $queryList, array $parameterList): array
     {
         $useElastic = false;
 
@@ -30,33 +31,31 @@ class Finder implements FinderInterface
         }
 
         if ($useElastic) {
-            return $this->executeElasticQuery($queryList);
+            return $this->executeElasticQuery($queryList, $parameterList);
         }
 
         return $this->executeOrmQuery($queryList);
     }
 
-    protected function executeElasticQuery(array $queryList): array
+    protected function executeElasticQuery(array $queryList, array $parameterList): array
     {
-        $useElastic = false;
-
-        /** @var QueryInterface $query */
-        foreach ($queryList as $query) {
-            if ($query instanceof ElasticQueryInterface) {
-                $useElastic = true;
-
-                break;
-            }
-        }
-
         $boolQuery = new \Elastica\Query\BoolQuery();
 
         /** @var ElasticQueryInterface $query */
         foreach ($queryList as $query) {
-            $boolQuery->addMust($query->createElasticQuery());
+            if ($query instanceof QueryInterface) {
+                $boolQuery->addMust($query->createElasticQuery());
+            }
         }
 
         $query = new \Elastica\Query($boolQuery);
+
+        /** @var ElasticQueryInterface $query */
+        foreach ($parameterList as $parameter) {
+            if ($parameter instanceof ParameterInterface) {
+                $parameter->addToElasticQuery($query);
+            }
+        }
 
         dump($query->toArray());
         return $this->elasticFinder->find($query);
