@@ -36,7 +36,9 @@ class AnnotationHandler implements AnnotationHandlerInterface
         }
 
         foreach ($reflectionClass->getMethods() as $reflectionMethod) {
-            if ($propertyName !== $reflectionMethod->getName()) {
+            $expectedMethodName = sprintf('get%s', ucfirst($propertyName));
+
+            if ($expectedMethodName !== $reflectionMethod->getName()) {
                 continue;
             }
 
