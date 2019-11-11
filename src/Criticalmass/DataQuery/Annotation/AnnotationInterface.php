@@ -2,10 +2,7 @@
 
 namespace App\Criticalmass\DataQuery\Annotation;
 
-/**
- * @Annotation
- */
-class Sortable extends AbstractAnnotation
+interface AnnotationInterface
 {
 
 }

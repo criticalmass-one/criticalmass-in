@@ -71,6 +71,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Expose
      * @Routing\RouteParameter(name="citySlug")
      * @OE\Identical()
+     * @DataQuery\Queryable
      */
     protected $city;
 
@@ -89,6 +90,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
     protected $slug;
 
@@ -98,6 +100,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Expose
      * @Sharing\Title()
      * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
     protected $title;
 
@@ -107,12 +110,14 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Expose
      * @Sharing\Intro()
      * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
     protected $description;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
     protected $socialDescription;
 
@@ -130,6 +135,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
     protected $location;
 
@@ -138,6 +144,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
     protected $latitude;
 
@@ -146,6 +153,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
     protected $longitude;
 
@@ -154,6 +162,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
     protected $estimatedParticipants;
 
@@ -162,6 +171,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
     protected $estimatedDistance;
 
@@ -170,6 +180,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
     protected $estimatedDuration;
 
@@ -251,6 +262,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     /**
      * @ORM\Column(type="integer")
      * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
     protected $views = 0;
 
@@ -384,6 +396,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     /**
      * @deprecated
      * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
     public function getSimpleDate(): string
     {

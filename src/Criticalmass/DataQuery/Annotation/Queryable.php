@@ -5,7 +5,7 @@ namespace App\Criticalmass\DataQuery\Annotation;
 /**
  * @Annotation
  */
-class Sortable extends AbstractAnnotation
+class Queryable extends AbstractAnnotation
 {
 
 }

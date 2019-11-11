@@ -20,9 +20,7 @@ class AnnotationHandler implements AnnotationHandlerInterface
     public function hasEntityPropertyOrMethodWithAnnotation(string $entityFqcn, string $propertyName, string $annotationFqcn): bool
     {
         $reflectionClass = new \ReflectionClass($entityFqcn);
-
-        $annotationList = [];
-
+        
         foreach ($reflectionClass->getProperties() as $reflectionProperty) {
             if ($propertyName !== $reflectionProperty->getName()) {
                 continue;
