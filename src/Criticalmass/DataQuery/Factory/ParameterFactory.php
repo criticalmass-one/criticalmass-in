@@ -2,6 +2,8 @@
 
 namespace App\Criticalmass\DataQuery\Factory;
 
+use App\Criticalmass\DataQuery\Annotation\Sortable;
+use App\Criticalmass\DataQuery\AnnotationHandler\AnnotationHandlerInterface;
 use App\Criticalmass\DataQuery\Parameter\From;
 use App\Criticalmass\DataQuery\Parameter\Order;
 use App\Criticalmass\DataQuery\Parameter\Size;
@@ -11,6 +13,14 @@ class ParameterFactory implements ParameterFactoryInterface
 {
     /** @var string $entityFqcn */
     protected $entityFqcn;
+
+    /** @var AnnotationHandlerInterface */
+    protected $annotationHandler;
+
+    public function __construct(AnnotationHandlerInterface $annotationHandler)
+    {
+        $this->annotationHandler = $annotationHandler;
+    }
 
     public function setEntityFqcn(string $entityFqcn)
     {
@@ -36,6 +46,12 @@ class ParameterFactory implements ParameterFactoryInterface
         }
 
         if ($request->query->get('orderBy') && $request->query->get('orderDirection')) {
+            $propertyName = $request->query->get('orderBy');
+
+            $propertyIsSortable = $this->annotationHandler->hasEntityPropertyOrMethodWithAnnotation($this->entityFqcn, $propertyName, Sortable::class);
+
+            dump($propertyIsSortable);
+            die;
             $orderBy = (string)$request->query->get('orderBy');
             $orderDirection = (string)$request->query->get('orderDirection');
 

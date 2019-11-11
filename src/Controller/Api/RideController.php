@@ -102,7 +102,7 @@ class RideController extends BaseController
     public function listAction(Request $request, QueryFactoryInterface $queryFactory, ParameterFactoryInterface $parameterFactory, FinderFactoryInterface $finderFactory): Response
     {
         $queryList = $queryFactory->createFromRequest($request);
-        $parameterList = $parameterFactory->createFromRequest($request);
+        $parameterList = $parameterFactory->setEntityFqcn(Ride::class)->createFromRequest($request);
 
         dump($queryList);
 

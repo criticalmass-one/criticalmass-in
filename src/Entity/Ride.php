@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\DataQuery\Annotation as DataQuery;
 use App\Criticalmass\Geocoding\ReverseGeocodeable;
 use App\Criticalmass\OrderedEntities\Annotation as OE;
 use App\Criticalmass\OrderedEntities\OrderedEntityInterface;
@@ -87,6 +88,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @ORM\Column(type="string", nullable=true)
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
+     * @DataQuery\Sortable
      */
     protected $slug;
 
@@ -95,6 +97,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      * @Sharing\Title()
+     * @DataQuery\Sortable
      */
     protected $title;
 
@@ -103,11 +106,13 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      * @Sharing\Intro()
+     * @DataQuery\Sortable
      */
     protected $description;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @DataQuery\Sortable
      */
     protected $socialDescription;
 
@@ -124,6 +129,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @ORM\Column(type="string", length=255, nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
+     * @DataQuery\Sortable
      */
     protected $location;
 
@@ -131,6 +137,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @ORM\Column(type="float", nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
+     * @DataQuery\Sortable
      */
     protected $latitude;
 
@@ -138,6 +145,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @ORM\Column(type="float", nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
+     * @DataQuery\Sortable
      */
     protected $longitude;
 
@@ -145,6 +153,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @ORM\Column(type="smallint", nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
+     * @DataQuery\Sortable
      */
     protected $estimatedParticipants;
 
@@ -152,6 +161,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @ORM\Column(type="float", nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
+     * @DataQuery\Sortable
      */
     protected $estimatedDistance;
 
@@ -159,6 +169,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @ORM\Column(type="float", nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
+     * @DataQuery\Sortable
      */
     protected $estimatedDuration;
 
@@ -239,6 +250,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
 
     /**
      * @ORM\Column(type="integer")
+     * @DataQuery\Sortable
      */
     protected $views = 0;
 
@@ -371,6 +383,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
 
     /**
      * @deprecated
+     * @DataQuery\Sortable
      */
     public function getSimpleDate(): string
     {
