@@ -75,9 +75,7 @@ class AnnotationHandler implements AnnotationHandlerInterface
                 }
             }
         }
-
-        dump($requiredMethodList);
-
+        
         return $requiredMethodList;
     }
 }

@@ -49,22 +49,14 @@ class QueryFactory implements QueryFactoryInterface
 
         $bbQuery = $this->checkForQuery(BoundingBoxQuery::class, $request);
 
-        dump($bbQuery);
         if ($bbQuery) {
             $queryList[] = $bbQuery;
         }
 
-        if ($request->query->get('centerLatitude') && $request->query->get('centerLongitude') && $request->query->get('radius')) {
-            $propertyName = 'pin';
-            $propertyType = 'string';
+        $radiusQuery = $this->checkForQuery(RadiusQuery::class, $request);
 
-            if ($this->annotationHandler->hasEntityTypedPropertyOrMethodWithAnnotation(Ride::class, Queryable::class, $propertyName, $propertyType)) {
-                $centerLatitude = (float)$request->query->get('centerLatitude');
-                $centerLongitude = (float)$request->query->get('centerLongitude');
-                $radius = (float)$request->query->get('radius');
-
-                $queryList[] = new RadiusQuery($centerLatitude, $centerLongitude, $radius);
-            }
+        if ($radiusQuery) {
+            $queryList[] = $radiusQuery;
         }
 
         if ($request->query->get('year') && $request->query->get('month') && $request->query->get('day')) {

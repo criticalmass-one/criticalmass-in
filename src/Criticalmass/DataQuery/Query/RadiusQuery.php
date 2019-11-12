@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
+use App\Criticalmass\DataQuery\Annotation as DataQuery;
 use Elastica\Query\AbstractQuery;
 
 class RadiusQuery implements ElasticQueryInterface
@@ -15,26 +16,34 @@ class RadiusQuery implements ElasticQueryInterface
     /** @var float $radius */
     protected $radius;
 
-    public function __construct(float $centerLatitude, float $centerLongitude, float $radius)
+    /**
+     * @DataQuery\RequiredQueryParameter(parameterName="centerLatitude")
+     */
+    public function getCenterLatitude(float $centerLatitude): RadiusQuery
     {
         $this->centerLatitude = $centerLatitude;
+
+        return $this;
+    }
+
+    /**
+     * @DataQuery\RequiredQueryParameter(parameterName="centerLongitude")
+     */
+    public function setCenterLongitude(float $centerLongitude): RadiusQuery
+    {
         $this->centerLongitude = $centerLongitude;
+
+        return $this;
+    }
+
+    /**
+     * @DataQuery\RequiredQueryParameter(parameterName="radius")
+     */
+    public function setRadius(float $radius): RadiusQuery
+    {
         $this->radius = $radius;
-    }
 
-    public function getCenterLatitude(): float
-    {
-        return $this->centerLatitude;
-    }
-
-    public function getCenterLongitude(): float
-    {
-        return $this->centerLongitude;
-    }
-
-    public function getRadius(): float
-    {
-        return $this->radius;
+        return $this;
     }
 
     public function createElasticQuery(): AbstractQuery

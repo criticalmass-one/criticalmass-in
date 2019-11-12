@@ -7,24 +7,16 @@ use Elastica\Query\AbstractQuery;
 
 class BoundingBoxQuery implements ElasticQueryInterface
 {
-    /**
-     * @var float $northLatitude
-     */
+    /** @var float $northLatitude */
     protected $northLatitude;
 
-    /**
-     * @var float $southLatitude
-     */
+    /** @var float $southLatitude */
     protected $southLatitude;
 
-    /**
-     * @var float $eastLongitude
-     */
+    /** @var float $eastLongitude */
     protected $eastLongitude;
 
-    /**
-     * @var float $westLongitude
-     */
+    /** @var float $westLongitude */
     protected $westLongitude;
 
     /**
