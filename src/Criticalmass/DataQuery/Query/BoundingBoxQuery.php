@@ -26,7 +26,7 @@ class BoundingBoxQuery implements ElasticQueryInterface
      * @var float $westLongitude
      */
     protected $westLongitude;
-    
+
     /**
      * @DataQuery\RequiredQueryParameter(parameterName="bbNorthLatitude")
      */
@@ -72,8 +72,8 @@ class BoundingBoxQuery implements ElasticQueryInterface
     {
         $geoQuery = new \Elastica\Query\GeoBoundingBox('pin',
             [
-                [$this->northLatitude, $this->westLongitude],
-                [$this->southLatitude, $this->eastLongitude],
+                [$this->northLatitude, $this->southLatitude],
+                [$this->westLongitude, $this->eastLongitude],
             ]);
 
         return $geoQuery;
