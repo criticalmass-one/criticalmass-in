@@ -2,6 +2,8 @@
 
 namespace App\Criticalmass\DataQuery\AnnotationHandler;
 
+use App\Criticalmass\DataQuery\Annotation\RequiredQueryParameter;
+use App\Criticalmass\DataQuery\QueryProperty\QueryProperty;
 use Doctrine\Common\Annotations\Reader;
 
 class AnnotationHandler implements AnnotationHandlerInterface
@@ -51,5 +53,31 @@ class AnnotationHandler implements AnnotationHandlerInterface
         }
 
         return false;
+    }
+
+    public function listQueryRequiredMethods(string $queryFqcn): array
+    {
+        $requiredMethodList = [];
+
+        $reflectionClass = new \ReflectionClass($queryFqcn);
+
+        foreach ($reflectionClass->getMethods() as $reflectionMethod) {
+            foreach ($this->annotationReader->getMethodAnnotations($reflectionMethod) as $propertyAnnotation) {
+                if ($propertyAnnotation instanceof RequiredQueryParameter) {
+                    $parameterType = $reflectionMethod->getParameters()[0]->getType()->getName();
+                    
+                    $queryProperty = new QueryProperty();
+                    $queryProperty->setMethodName($reflectionMethod->getName())
+                        ->setType($parameterType)
+                        ->setParameterName($propertyAnnotation->getParameterName());
+
+                    $requiredMethodList[] = $queryProperty;
+                }
+            }
+        }
+
+        dump($requiredMethodList);
+
+        return $requiredMethodList;
     }
 }

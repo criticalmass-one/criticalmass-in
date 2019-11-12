@@ -5,4 +5,6 @@ namespace App\Criticalmass\DataQuery\AnnotationHandler;
 interface AnnotationHandlerInterface
 {
     public function hasEntityTypedPropertyOrMethodWithAnnotation(string $entityFqcn, string $annotationFqcn, string $propertyName, string $propertyType = null): bool;
+
+    public function listQueryRequiredMethods(string $queryFqcn): array;
 }

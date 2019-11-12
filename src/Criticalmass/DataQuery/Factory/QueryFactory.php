@@ -10,9 +10,11 @@ use App\Criticalmass\DataQuery\Query\BoundingBoxQuery;
 use App\Criticalmass\DataQuery\Query\CityQuery;
 use App\Criticalmass\DataQuery\Query\DateQuery;
 use App\Criticalmass\DataQuery\Query\MonthQuery;
+use App\Criticalmass\DataQuery\Query\QueryInterface;
 use App\Criticalmass\DataQuery\Query\RadiusQuery;
 use App\Criticalmass\DataQuery\Query\RegionQuery;
 use App\Criticalmass\DataQuery\Query\YearQuery;
+use App\Criticalmass\DataQuery\QueryProperty\QueryProperty;
 use App\Entity\CitySlug;
 use App\Entity\Region;
 use App\Entity\Ride;
@@ -48,19 +50,11 @@ class QueryFactory implements QueryFactoryInterface
         $queryList = [];
         $parameterList = [];
 
-        if ($request->query->get('bbWestLongitude') && $request->query->get('bbEastLongitude') && $request->query->get('bbNorthLatitude') && $request->query->get('bbSouthLatitude')) {
-            $propertyName = 'pin';
-            $propertyType = 'string';
+        $bbQuery = $this->checkForQuery(BoundingBoxQuery::class, $request);
 
-            if ($this->annotationHandler->hasEntityTypedPropertyOrMethodWithAnnotation(Ride::class, Queryable::class, $propertyName, $propertyType)) {
-
-                $westLongitude = (float)$request->query->get('bbWestLongitude');
-                $eastLongitude = (float)$request->query->get('bbEastLongitude');
-                $northLatitude = (float)$request->query->get('bbNorthLatitude');
-                $southLatitude = (float)$request->query->get('bbSouthLatitude');
-
-                $queryList[] = new BoundingBoxQuery($northLatitude, $southLatitude, $eastLongitude, $westLongitude);
-            }
+        dump($bbQuery);
+        if ($bbQuery) {
+            $queryList[] = $bbQuery;
         }
 
         if ($request->query->get('centerLatitude') && $request->query->get('centerLongitude') && $request->query->get('radius')) {
@@ -134,5 +128,63 @@ class QueryFactory implements QueryFactoryInterface
         }
 
         return $queryList;
+    }
+
+    protected function checkForQuery(string $queryFqcn, Request $request): ?QueryInterface
+    {
+        $requiredMethodList = $this->annotationHandler->listQueryRequiredMethods($queryFqcn);
+
+        $requiredPropertiesFound = true;
+
+        /** @var QueryProperty $requiredMethod */
+        foreach ($requiredMethodList as $requiredMethod) {
+            if (!$request->query->has($requiredMethod->getParameterName())) {
+                $requiredPropertiesFound = false;
+
+                break;
+            }
+        }
+
+        if ($requiredPropertiesFound) {
+            $propertyName = 'pin';
+            $propertyType = 'string';
+
+            if ($this->annotationHandler->hasEntityTypedPropertyOrMethodWithAnnotation(Ride::class, Queryable::class, $propertyName, $propertyType)) {
+
+                $query = new $queryFqcn();
+
+                /** @var QueryProperty $queryProperty */
+                foreach ($requiredMethodList as $queryProperty) {
+                    $this->assignPropertyValue($request, $query, $queryProperty);
+                }
+
+                return $query;
+            }
+        }
+
+        return null;
+    }
+
+    protected function assignPropertyValue(Request $request, QueryInterface $query, QueryProperty $property): QueryInterface
+    {
+        $methodName = $property->getMethodName();
+        $parameter = $request->query->get($property->getParameterName());
+        $type = $property->getType();
+
+        switch ($type) {
+            case 'float':
+                $query->$methodName((float)$parameter);
+                break;
+
+            case 'int':
+                $query->$methodName((int)$parameter);
+                break;
+
+            case 'string':
+                $query->$methodName((string)$parameter);
+                break;
+        }
+
+        return $query;
     }
 }
