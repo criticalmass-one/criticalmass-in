@@ -17,10 +17,10 @@ class AnnotationHandler implements AnnotationHandlerInterface
         $this->annotationReader = $annotationReader;
     }
 
-    public function hasEntityPropertyOrMethodWithAnnotation(string $entityFqcn, string $propertyName, string $annotationFqcn): bool
+    public function hasEntityTypedPropertyOrMethodWithAnnotation(string $entityFqcn, string $annotationFqcn, string $propertyName, string $propertyType = null): bool
     {
         $reflectionClass = new \ReflectionClass($entityFqcn);
-        
+
         foreach ($reflectionClass->getProperties() as $reflectionProperty) {
             if ($propertyName !== $reflectionProperty->getName()) {
                 continue;
@@ -42,6 +42,12 @@ class AnnotationHandler implements AnnotationHandlerInterface
 
             foreach ($this->annotationReader->getMethodAnnotations($reflectionMethod) as $methodAnnotation) {
                 if ($methodAnnotation instanceof $annotationFqcn) {
+                    if ($propertyType && $propertyType === $reflectionMethod->getReturnType()->getName()) {
+                        return true;
+                    } elseif ($propertyType) {
+                        return false;
+                    }
+
                     return true;
                 }
             }

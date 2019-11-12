@@ -4,5 +4,5 @@ namespace App\Criticalmass\DataQuery\AnnotationHandler;
 
 interface AnnotationHandlerInterface
 {
-    public function hasEntityPropertyOrMethodWithAnnotation(string $entityFqcn, string $propertyName, string $annotationFqcn): bool;
+    public function hasEntityTypedPropertyOrMethodWithAnnotation(string $entityFqcn, string $annotationFqcn, string $propertyName, string $propertyType = null): bool;
 }

@@ -48,10 +48,8 @@ class ParameterFactory implements ParameterFactoryInterface
         if ($request->query->get('orderBy') && $request->query->get('orderDirection')) {
             $propertyName = $request->query->get('orderBy');
 
-            $propertyIsSortable = $this->annotationHandler->hasEntityPropertyOrMethodWithAnnotation($this->entityFqcn, $propertyName, Sortable::class);
+            $propertyIsSortable = $this->annotationHandler->hasEntityTypedPropertyOrMethodWithAnnotation($this->entityFqcn, Sortable::class, $propertyName);
 
-            dump($propertyIsSortable);
-            die;
             $orderBy = (string)$request->query->get('orderBy');
             $orderDirection = (string)$request->query->get('orderDirection');
 

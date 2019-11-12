@@ -2,6 +2,8 @@
 
 namespace App\Criticalmass\DataQuery\Factory;
 
+use App\Criticalmass\DataQuery\Annotation\Queryable;
+use App\Criticalmass\DataQuery\AnnotationHandler\AnnotationHandlerInterface;
 use App\Criticalmass\DataQuery\Parameter\From;
 use App\Criticalmass\DataQuery\Parameter\Size;
 use App\Criticalmass\DataQuery\Query\BoundingBoxQuery;
@@ -13,6 +15,7 @@ use App\Criticalmass\DataQuery\Query\RegionQuery;
 use App\Criticalmass\DataQuery\Query\YearQuery;
 use App\Entity\CitySlug;
 use App\Entity\Region;
+use App\Entity\Ride;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -24,9 +27,13 @@ class QueryFactory implements QueryFactoryInterface
     /** @var string $entityFqcn */
     protected $entityFqcn;
 
-    public function __construct(RegistryInterface $registry)
+    /** @var AnnotationHandlerInterface $annotationHandler */
+    protected $annotationHandler;
+
+    public function __construct(RegistryInterface $registry, AnnotationHandlerInterface $annotationHandler)
     {
         $this->registry = $registry;
+        $this->annotationHandler = $annotationHandler;
     }
 
     public function setEntityFqcn(string $entityFqcn)
@@ -59,20 +66,36 @@ class QueryFactory implements QueryFactoryInterface
         }
 
         if ($request->query->get('year') && $request->query->get('month') && $request->query->get('day')) {
-            $year = (int)$request->query->get('year');
-            $month = (int)$request->query->get('month');
-            $day = (int)$request->query->get('day');
+            $propertyName = 'simpleDate';
+            $propertyType = 'string';
+            
+            if ($this->annotationHandler->hasEntityTypedPropertyOrMethodWithAnnotation(Ride::class, Queryable::class, $propertyName, $propertyType)) {
 
-            $queryList[] = new DateQuery($year, $month, $day);
+                $year = (int)$request->query->get('year');
+                $month = (int)$request->query->get('month');
+                $day = (int)$request->query->get('day');
+
+                $queryList[] = new DateQuery($year, $month, $day);
+            }
         } elseif ($request->query->get('year') && $request->query->get('month')) {
-            $year = (int)$request->query->get('year');
-            $month = (int)$request->query->get('month');
+            $propertyName = 'simpleDate';
+            $propertyType = 'string';
 
-            $queryList[] = new MonthQuery($year, $month);
+            if ($this->annotationHandler->hasEntityTypedPropertyOrMethodWithAnnotation(Ride::class, Queryable::class, $propertyName, $propertyType)) {
+                $year = (int)$request->query->get('year');
+                $month = (int)$request->query->get('month');
+
+                $queryList[] = new MonthQuery($year, $month);
+            }
         } elseif ($request->query->get('year')) {
-            $year = (int)$request->query->get('year');
+            $propertyName = 'simpleDate';
+            $propertyType = 'string';
 
-            $queryList[] = new YearQuery($year);
+            if ($this->annotationHandler->hasEntityTypedPropertyOrMethodWithAnnotation(Ride::class, Queryable::class, $propertyName, $propertyType)) {
+                $year = (int)$request->query->get('year');
+
+                $queryList[] = new YearQuery($year);
+            }
         }
 
         if ($request->query->get('region')) {
