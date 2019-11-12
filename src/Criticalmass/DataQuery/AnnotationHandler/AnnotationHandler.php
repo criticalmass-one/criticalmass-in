@@ -9,9 +9,6 @@ class AnnotationHandler implements AnnotationHandlerInterface
     /** @var Reader $annotationReader */
     protected $annotationReader;
 
-    /** @var string $entityFqcn */
-    protected $entityFqcn;
-
     public function __construct(Reader $annotationReader)
     {
         $this->annotationReader = $annotationReader;
@@ -33,9 +30,9 @@ class AnnotationHandler implements AnnotationHandlerInterface
             }
         }
 
-        foreach ($reflectionClass->getMethods() as $reflectionMethod) {
-            $expectedMethodName = sprintf('get%s', ucfirst($propertyName));
+        $expectedMethodName = sprintf('get%s', ucfirst($propertyName));
 
+        foreach ($reflectionClass->getMethods() as $reflectionMethod) {
             if ($expectedMethodName !== $reflectionMethod->getName()) {
                 continue;
             }

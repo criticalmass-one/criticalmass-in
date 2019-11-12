@@ -768,13 +768,16 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         return $this->getEstimatedDistance() / $this->getEstimatedDuration();
     }
 
+    /**
+     * @DataQuery\Queryable
+     */
     public function getPin(): string
     {
         if (!$this->latitude || !$this->longitude) {
             return '0,0';
         }
 
-        return $this->latitude . ',' . $this->longitude;
+        return sprintf('%f,%f', $this->latitude, $this->longitude);
     }
 
     public function getCreatedAt(): \DateTime
