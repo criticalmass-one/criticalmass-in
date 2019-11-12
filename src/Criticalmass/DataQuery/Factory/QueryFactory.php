@@ -4,8 +4,6 @@ namespace App\Criticalmass\DataQuery\Factory;
 
 use App\Criticalmass\DataQuery\Annotation\Queryable;
 use App\Criticalmass\DataQuery\AnnotationHandler\AnnotationHandlerInterface;
-use App\Criticalmass\DataQuery\Parameter\From;
-use App\Criticalmass\DataQuery\Parameter\Size;
 use App\Criticalmass\DataQuery\Query\BoundingBoxQuery;
 use App\Criticalmass\DataQuery\Query\CityQuery;
 use App\Criticalmass\DataQuery\Query\DateQuery;
@@ -48,7 +46,6 @@ class QueryFactory implements QueryFactoryInterface
     public function createFromRequest(Request $request): array
     {
         $queryList = [];
-        $parameterList = [];
 
         $bbQuery = $this->checkForQuery(BoundingBoxQuery::class, $request);
 
@@ -113,18 +110,6 @@ class QueryFactory implements QueryFactoryInterface
             $citySlug = $this->registry->getRepository(CitySlug::class)->findOneBySlug($request->query->get('citySlug'));
 
             $queryList[] = new CityQuery($citySlug->getCity());
-        }
-
-        if ($request->query->get('size')) {
-            $size = (int)$request->query->get('size');
-
-            $parameterList[] = new Size($size);
-        }
-
-        if ($request->query->get('from')) {
-            $from = (int)$request->query->get('from');
-
-            $parameterList[] = new From($from);
         }
 
         return $queryList;
