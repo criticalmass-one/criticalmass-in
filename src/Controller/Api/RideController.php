@@ -103,14 +103,9 @@ class RideController extends BaseController
     {
         $queryList = $queryFactory->createFromRequest($request);
         $parameterList = $parameterFactory->setEntityFqcn(Ride::class)->createFromRequest($request);
-
-        dump($queryList);
-
+        
         $finder = $finderFactory->createFinderForFqcn(Ride::class);
         $rideList = $finder->executeQuery($queryList, $parameterList);
-
-        dump($rideList);
-        die;
 
         $context = new Context();
         $context->addGroup('ride-list');

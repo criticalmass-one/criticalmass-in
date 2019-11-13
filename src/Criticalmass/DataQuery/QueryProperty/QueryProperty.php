@@ -63,6 +63,4 @@ class QueryProperty
 
         return $this;
     }
-
-
 }
