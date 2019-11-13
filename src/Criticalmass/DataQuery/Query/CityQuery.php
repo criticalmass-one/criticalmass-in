@@ -16,7 +16,7 @@ class CityQuery implements DoctrineQueryInterface, ElasticQueryInterface
      */
     public function setCity(City $city): CityQuery
     {
-        $this->region = $city;
+        $this->city = $city;
 
         return $this;
     }
@@ -28,6 +28,6 @@ class CityQuery implements DoctrineQueryInterface, ElasticQueryInterface
 
     public function createElasticQuery(): AbstractQuery
     {
-        return new \Elastica\Query\Term(['city' => $this->city->getId()]);
+        return new \Elastica\Query\Term(['city' => $this->city->getCity()]);
     }
 }

@@ -29,11 +29,15 @@ class QueryFactory implements QueryFactoryInterface
     /** @var QueryManagerInterface $queryManager */
     protected $queryManager;
 
-    public function __construct(RegistryInterface $registry, AnnotationHandlerInterface $annotationHandler, QueryManagerInterface $queryManager)
+    /** @var ValueAssignerInterface $valueAssignerInterface */
+    protected $valueAssigner;
+
+    public function __construct(RegistryInterface $registry, AnnotationHandlerInterface $annotationHandler, QueryManagerInterface $queryManager, ValueAssignerInterface $valueAssigner)
     {
         $this->registry = $registry;
         $this->annotationHandler = $annotationHandler;
         $this->queryManager = $queryManager;
+        $this->valueAssigner = $valueAssigner;
     }
 
     public function setEntityFqcn(string $entityFqcn)
@@ -73,7 +77,7 @@ class QueryFactory implements QueryFactoryInterface
                 }
             }
         }
-        
+
         return $queryList;
     }
 
@@ -106,7 +110,7 @@ class QueryFactory implements QueryFactoryInterface
 
             /** @var QueryProperty $queryProperty */
             foreach ($requiredQueriableMethodList as $queryProperty) {
-                ValueAssigner::assignPropertyValue($request, $query, $queryProperty);
+                $this->valueAssigner->assignPropertyValue($request, $query, $queryProperty);
             }
 
             return $query;
