@@ -7,4 +7,6 @@ interface AnnotationHandlerInterface
     public function hasEntityTypedPropertyOrMethodWithAnnotation(string $entityFqcn, string $annotationFqcn, string $propertyName, string $propertyType = null): bool;
 
     public function listQueryRequiredMethods(string $queryFqcn): array;
+
+    public function listRequiredEntityProperties(string $queryFqcn): array;
 }

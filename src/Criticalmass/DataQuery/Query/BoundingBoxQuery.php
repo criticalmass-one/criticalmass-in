@@ -5,6 +5,9 @@ namespace App\Criticalmass\DataQuery\Query;
 use App\Criticalmass\DataQuery\Annotation as DataQuery;
 use Elastica\Query\AbstractQuery;
 
+/**
+ * @DataQuery\RequiredEntityProperty(propertyName="pin", propertyType="string")
+ */
 class BoundingBoxQuery implements ElasticQueryInterface
 {
     /** @var float $northLatitude */

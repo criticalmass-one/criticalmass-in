@@ -2,7 +2,9 @@
 
 namespace App\Criticalmass\DataQuery\AnnotationHandler;
 
+use App\Criticalmass\DataQuery\Annotation\RequiredEntityProperty;
 use App\Criticalmass\DataQuery\Annotation\RequiredQueryParameter;
+use App\Criticalmass\DataQuery\EntityProperty\EntityProperty;
 use App\Criticalmass\DataQuery\QueryProperty\QueryProperty;
 use Doctrine\Common\Annotations\Reader;
 
@@ -65,7 +67,7 @@ class AnnotationHandler implements AnnotationHandlerInterface
             foreach ($this->annotationReader->getMethodAnnotations($reflectionMethod) as $propertyAnnotation) {
                 if ($propertyAnnotation instanceof RequiredQueryParameter) {
                     $parameterType = $reflectionMethod->getParameters()[0]->getType()->getName();
-                    
+
                     $queryProperty = new QueryProperty();
                     $queryProperty->setMethodName($reflectionMethod->getName())
                         ->setType($parameterType)
@@ -75,7 +77,27 @@ class AnnotationHandler implements AnnotationHandlerInterface
                 }
             }
         }
-        
+
         return $requiredMethodList;
+    }
+
+    public function listRequiredEntityProperties(string $queryFqcn): array
+    {
+        $requiredEntityPropertyList = [];
+
+        $reflectionClass = new \ReflectionClass($queryFqcn);
+
+        foreach ($this->annotationReader->getClassAnnotations($reflectionClass) as $classAnnotation) {
+            if ($classAnnotation instanceof RequiredEntityProperty) {
+                $entityProperty = new EntityProperty();
+                $entityProperty
+                    ->setPropertyName($classAnnotation->getPropertyName())
+                    ->setPropertyType($classAnnotation->getPropertyType());
+
+                $requiredEntityPropertyList[] = $entityProperty;
+            }
+        }
+
+        return $requiredEntityPropertyList;
     }
 }

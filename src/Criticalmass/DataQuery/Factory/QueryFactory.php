@@ -4,6 +4,7 @@ namespace App\Criticalmass\DataQuery\Factory;
 
 use App\Criticalmass\DataQuery\Annotation\Queryable;
 use App\Criticalmass\DataQuery\AnnotationHandler\AnnotationHandlerInterface;
+use App\Criticalmass\DataQuery\EntityProperty\EntityProperty;
 use App\Criticalmass\DataQuery\Query\BoundingBoxQuery;
 use App\Criticalmass\DataQuery\Query\CityQuery;
 use App\Criticalmass\DataQuery\Query\DateQuery;
@@ -109,13 +110,13 @@ class QueryFactory implements QueryFactoryInterface
 
     protected function checkForQuery(string $queryFqcn, Request $request): ?QueryInterface
     {
-        $requiredMethodList = $this->annotationHandler->listQueryRequiredMethods($queryFqcn);
+        $requiredQueriableMethodList = $this->annotationHandler->listQueryRequiredMethods($queryFqcn);
 
         $requiredPropertiesFound = true;
 
-        /** @var QueryProperty $requiredMethod */
-        foreach ($requiredMethodList as $requiredMethod) {
-            if (!$request->query->has($requiredMethod->getParameterName())) {
+        /** @var QueryProperty $requiredQuerieableMethod */
+        foreach ($requiredQueriableMethodList as $requiredQuerieableMethod) {
+            if (!$request->query->has($requiredQuerieableMethod->getParameterName())) {
                 $requiredPropertiesFound = false;
 
                 break;
@@ -123,20 +124,23 @@ class QueryFactory implements QueryFactoryInterface
         }
 
         if ($requiredPropertiesFound) {
-            $propertyName = 'pin';
-            $propertyType = 'string';
+            $requiredEntityPropertyList = $this->annotationHandler->listRequiredEntityProperties($queryFqcn);
 
-            if ($this->annotationHandler->hasEntityTypedPropertyOrMethodWithAnnotation(Ride::class, Queryable::class, $propertyName, $propertyType)) {
-
-                $query = new $queryFqcn();
-
-                /** @var QueryProperty $queryProperty */
-                foreach ($requiredMethodList as $queryProperty) {
-                    $this->assignPropertyValue($request, $query, $queryProperty);
+            /** @var EntityProperty $requiredEntityProperty */
+            foreach ($requiredEntityPropertyList as $requiredEntityProperty) {
+                if (!$this->annotationHandler->hasEntityTypedPropertyOrMethodWithAnnotation(Ride::class, Queryable::class, $requiredEntityProperty->getPropertyName(), $requiredEntityProperty->getPropertyType())) {
+                    return null;
                 }
-
-                return $query;
             }
+
+            $query = new $queryFqcn();
+
+            /** @var QueryProperty $queryProperty */
+            foreach ($requiredQueriableMethodList as $queryProperty) {
+                $this->assignPropertyValue($request, $query, $queryProperty);
+            }
+
+            return $query;
         }
 
         return null;
