@@ -66,6 +66,7 @@ services:
             $stravaSecret: '%strava.secret%'
             $cachedTimelineTtl: '%timeline.ttl%'
             $projectDirectory: '%kernel.project_dir%'
+            $redisUrl: '%env(REDIS_URL)%'
 
     App\:
         resource: '../src/*'
