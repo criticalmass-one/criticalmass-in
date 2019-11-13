@@ -137,35 +137,12 @@ class QueryFactory implements QueryFactoryInterface
 
             /** @var QueryProperty $queryProperty */
             foreach ($requiredQueriableMethodList as $queryProperty) {
-                $this->assignPropertyValue($request, $query, $queryProperty);
+                ValueAssigner::assignPropertyValue($request, $query, $queryProperty);
             }
 
             return $query;
         }
 
         return null;
-    }
-
-    protected function assignPropertyValue(Request $request, QueryInterface $query, QueryProperty $property): QueryInterface
-    {
-        $methodName = $property->getMethodName();
-        $parameter = $request->query->get($property->getParameterName());
-        $type = $property->getType();
-
-        switch ($type) {
-            case 'float':
-                $query->$methodName((float)$parameter);
-                break;
-
-            case 'int':
-                $query->$methodName((int)$parameter);
-                break;
-
-            case 'string':
-                $query->$methodName((string)$parameter);
-                break;
-        }
-
-        return $query;
     }
 }
