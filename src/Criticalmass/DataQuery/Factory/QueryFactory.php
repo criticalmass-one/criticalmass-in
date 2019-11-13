@@ -60,35 +60,21 @@ class QueryFactory implements QueryFactoryInterface
             $queryList[] = $radiusQuery;
         }
 
-        if ($request->query->get('year') && $request->query->get('month') && $request->query->get('day')) {
-            $propertyName = 'simpleDate';
-            $propertyType = 'string';
+        $dateQuery = $this->checkForQuery(DateQuery::class, $request);
 
-            if ($this->annotationHandler->hasEntityTypedPropertyOrMethodWithAnnotation(Ride::class, Queryable::class, $propertyName, $propertyType)) {
-                $year = (int)$request->query->get('year');
-                $month = (int)$request->query->get('month');
-                $day = (int)$request->query->get('day');
+        if ($dateQuery) {
+            $queryList[] = $dateQuery;
+        } else {
+            $monthQuery = $this->checkForQuery(MonthQuery::class, $request);
 
-                $queryList[] = new DateQuery($year, $month, $day);
-            }
-        } elseif ($request->query->get('year') && $request->query->get('month')) {
-            $propertyName = 'simpleDate';
-            $propertyType = 'string';
+            if ($monthQuery) {
+                $queryList[] = $monthQuery;
+            } else {
+                $yearQuery = $this->checkForQuery(YearQuery::class, $request);
 
-            if ($this->annotationHandler->hasEntityTypedPropertyOrMethodWithAnnotation(Ride::class, Queryable::class, $propertyName, $propertyType)) {
-                $year = (int)$request->query->get('year');
-                $month = (int)$request->query->get('month');
-
-                $queryList[] = new MonthQuery($year, $month);
-            }
-        } elseif ($request->query->get('year')) {
-            $propertyName = 'simpleDate';
-            $propertyType = 'string';
-
-            if ($this->annotationHandler->hasEntityTypedPropertyOrMethodWithAnnotation(Ride::class, Queryable::class, $propertyName, $propertyType)) {
-                $year = (int)$request->query->get('year');
-
-                $queryList[] = new YearQuery($year);
+                if ($yearQuery) {
+                    $queryList[] = $yearQuery;
+                }
             }
         }
 

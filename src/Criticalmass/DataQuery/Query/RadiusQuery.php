@@ -22,7 +22,7 @@ class RadiusQuery implements ElasticQueryInterface
     /**
      * @DataQuery\RequiredQueryParameter(parameterName="centerLatitude")
      */
-    public function getCenterLatitude(float $centerLatitude): RadiusQuery
+    public function setCenterLatitude(float $centerLatitude): RadiusQuery
     {
         $this->centerLatitude = $centerLatitude;
 

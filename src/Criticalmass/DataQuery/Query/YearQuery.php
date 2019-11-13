@@ -2,22 +2,26 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
+use App\Criticalmass\DataQuery\Annotation as DataQuery;
 use App\Criticalmass\Util\DateTimeUtil;
 use Elastica\Query\AbstractQuery;
 
+/**
+ * @DataQuery\RequiredEntityProperty(propertyName="simpleDate", propertyType="string")
+ */
 class YearQuery implements ElasticQueryInterface, DoctrineQueryInterface
 {
     /** @var int $year */
     protected $year;
 
-    public function __construct(int $year)
+    /**
+     * @DataQuery\RequiredQueryParameter(parameterName="year")
+     */
+    public function setYear(int $year): YearQuery
     {
         $this->year = $year;
-    }
 
-    public function getYear(): int
-    {
-        return $this->year;
+        return $this;
     }
 
     public function createElasticQuery(): AbstractQuery

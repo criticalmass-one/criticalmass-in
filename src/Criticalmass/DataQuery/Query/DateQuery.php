@@ -2,24 +2,26 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
+use App\Criticalmass\DataQuery\Annotation as DataQuery;
 use App\Criticalmass\Util\DateTimeUtil;
 use Elastica\Query\AbstractQuery;
 
+/**
+ * @DataQuery\RequiredEntityProperty(propertyName="simpleDate", propertyType="string")
+ */
 class DateQuery extends MonthQuery
 {
     /** @var int $day */
     protected $day;
-
-    public function __construct(int $year, int $month, int $day)
+    
+    /**
+     * @DataQuery\RequiredQueryParameter(parameterName="day")
+     */
+    public function setDay(int $day): DateQuery
     {
         $this->day = $day;
 
-        parent::__construct($year, $month);
-    }
-
-    public function getDay(): int
-    {
-        return $this->day;
+        return $this;
     }
 
     public function createElasticQuery(): AbstractQuery
