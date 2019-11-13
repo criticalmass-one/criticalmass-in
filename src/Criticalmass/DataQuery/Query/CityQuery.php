@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
+use App\Criticalmass\DataQuery\Annotation as DataQuery;
 use App\Entity\City;
 use Elastica\Query\AbstractQuery;
 
@@ -10,9 +11,14 @@ class CityQuery implements DoctrineQueryInterface, ElasticQueryInterface
     /** @var City $city */
     protected $city;
 
-    public function __construct(City $city)
+    /**
+     * @DataQuery\RequiredQueryParameter(parameterName="citySlug")
+     */
+    public function setCity(City $city): CityQuery
     {
         $this->region = $city;
+
+        return $this;
     }
 
     public function getCity(): City
@@ -22,6 +28,6 @@ class CityQuery implements DoctrineQueryInterface, ElasticQueryInterface
 
     public function createElasticQuery(): AbstractQuery
     {
-        return \Elastica\Query\Term(['city' => $this->getId()]);
+        return new \Elastica\Query\Term(['city' => $this->city->getId()]);
     }
 }

@@ -5,17 +5,12 @@ namespace App\Criticalmass\DataQuery\Factory;
 use App\Criticalmass\DataQuery\Annotation\Queryable;
 use App\Criticalmass\DataQuery\AnnotationHandler\AnnotationHandlerInterface;
 use App\Criticalmass\DataQuery\EntityProperty\EntityProperty;
-use App\Criticalmass\DataQuery\Query\BoundingBoxQuery;
-use App\Criticalmass\DataQuery\Query\CityQuery;
+use App\Criticalmass\DataQuery\Manager\QueryManagerInterface;
 use App\Criticalmass\DataQuery\Query\DateQuery;
 use App\Criticalmass\DataQuery\Query\MonthQuery;
 use App\Criticalmass\DataQuery\Query\QueryInterface;
-use App\Criticalmass\DataQuery\Query\RadiusQuery;
-use App\Criticalmass\DataQuery\Query\RegionQuery;
 use App\Criticalmass\DataQuery\Query\YearQuery;
 use App\Criticalmass\DataQuery\QueryProperty\QueryProperty;
-use App\Entity\CitySlug;
-use App\Entity\Region;
 use App\Entity\Ride;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,10 +26,14 @@ class QueryFactory implements QueryFactoryInterface
     /** @var AnnotationHandlerInterface $annotationHandler */
     protected $annotationHandler;
 
-    public function __construct(RegistryInterface $registry, AnnotationHandlerInterface $annotationHandler)
+    /** @var QueryManagerInterface $queryManager */
+    protected $queryManager;
+
+    public function __construct(RegistryInterface $registry, AnnotationHandlerInterface $annotationHandler, QueryManagerInterface $queryManager)
     {
         $this->registry = $registry;
         $this->annotationHandler = $annotationHandler;
+        $this->queryManager = $queryManager;
     }
 
     public function setEntityFqcn(string $entityFqcn)
@@ -48,16 +47,13 @@ class QueryFactory implements QueryFactoryInterface
     {
         $queryList = [];
 
-        $bbQuery = $this->checkForQuery(BoundingBoxQuery::class, $request);
+        /** @var QueryInterface $query */
+        foreach ($this->queryManager->getQueryList() as $queryCandidate) {
+            $queryUnderTest = $this->checkForQuery(get_class($queryCandidate), $request);
 
-        if ($bbQuery) {
-            $queryList[] = $bbQuery;
-        }
-
-        $radiusQuery = $this->checkForQuery(RadiusQuery::class, $request);
-
-        if ($radiusQuery) {
-            $queryList[] = $radiusQuery;
+            if ($queryUnderTest) {
+                $queryList[] = $queryUnderTest;
+            }
         }
 
         $dateQuery = $this->checkForQuery(DateQuery::class, $request);
@@ -77,20 +73,7 @@ class QueryFactory implements QueryFactoryInterface
                 }
             }
         }
-
-        if ($request->query->get('region')) {
-            $region = $this->registry->getRepository(Region::class)->findOneBySlug($request->query->get('region'));
-
-            $queryList[] = new RegionQuery($region);
-        }
-
-        if ($request->query->get('citySlug')) {
-            /** @var CitySlug $citySlug */
-            $citySlug = $this->registry->getRepository(CitySlug::class)->findOneBySlug($request->query->get('citySlug'));
-
-            $queryList[] = new CityQuery($citySlug->getCity());
-        }
-
+        
         return $queryList;
     }
 
