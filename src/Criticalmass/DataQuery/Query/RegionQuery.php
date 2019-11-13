@@ -4,9 +4,8 @@ namespace App\Criticalmass\DataQuery\Query;
 
 use App\Criticalmass\DataQuery\Annotation as DataQuery;
 use App\Entity\Region;
-use Elastica\Query\AbstractQuery;
 
-class RegionQuery implements DoctrineQueryInterface, ElasticQueryInterface
+class RegionQuery extends AbstractQuery implements DoctrineQueryInterface, ElasticQueryInterface
 {
     /** @var Region $region */
     protected $region;
@@ -26,7 +25,7 @@ class RegionQuery implements DoctrineQueryInterface, ElasticQueryInterface
         return $this->region;
     }
 
-    public function createElasticQuery(): AbstractQuery
+    public function createElasticQuery(): \Elastica\Query\AbstractQuery
     {
         return \Elastica\Query\Term(['city.region' => $this->region->getId()]);
     }

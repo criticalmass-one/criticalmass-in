@@ -4,7 +4,6 @@ namespace App\Criticalmass\DataQuery\Query;
 
 use App\Criticalmass\DataQuery\Annotation as DataQuery;
 use App\Criticalmass\Util\DateTimeUtil;
-use Elastica\Query\AbstractQuery;
 
 /**
  * @DataQuery\RequiredEntityProperty(propertyName="simpleDate", propertyType="string")
@@ -24,7 +23,7 @@ class MonthQuery extends YearQuery
         return $this;
     }
 
-    public function createElasticQuery(): AbstractQuery
+    public function createElasticQuery(): \Elastica\Query\AbstractQuery
     {
         $fromDateTime = DateTimeUtil::getMonthStartDateTime($this->toDateTime());
         $untilDateTime = DateTimeUtil::getMonthEndDateTime($this->toDateTime());
@@ -41,5 +40,10 @@ class MonthQuery extends YearQuery
     protected function toDateTime(): \DateTime
     {
         return new \DateTime(sprintf('%d-%d-01 00:00:00', $this->year, $this->month));
+    }
+
+    public function isOverridenBy(): array
+    {
+        return [DateQuery::class];
     }
 }

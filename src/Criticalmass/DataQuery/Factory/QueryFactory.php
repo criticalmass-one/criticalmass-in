@@ -6,12 +6,9 @@ use App\Criticalmass\DataQuery\Annotation\Queryable;
 use App\Criticalmass\DataQuery\AnnotationHandler\AnnotationHandlerInterface;
 use App\Criticalmass\DataQuery\EntityProperty\EntityProperty;
 use App\Criticalmass\DataQuery\Manager\QueryManagerInterface;
-use App\Criticalmass\DataQuery\Query\DateQuery;
-use App\Criticalmass\DataQuery\Query\MonthQuery;
 use App\Criticalmass\DataQuery\Query\QueryInterface;
-use App\Criticalmass\DataQuery\Query\YearQuery;
 use App\Criticalmass\DataQuery\QueryProperty\QueryProperty;
-use App\Entity\Ride;
+use App\Criticalmass\Util\ClassUtil;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -56,28 +53,13 @@ class QueryFactory implements QueryFactoryInterface
             $queryUnderTest = $this->checkForQuery(get_class($queryCandidate), $request);
 
             if ($queryUnderTest) {
-                $queryList[] = $queryUnderTest;
+                $key = ClassUtil::getShortname($queryUnderTest);
+                $queryList[$key] = $queryUnderTest;
             }
         }
 
-        $dateQuery = $this->checkForQuery(DateQuery::class, $request);
-
-        if ($dateQuery) {
-            $queryList[] = $dateQuery;
-        } else {
-            $monthQuery = $this->checkForQuery(MonthQuery::class, $request);
-
-            if ($monthQuery) {
-                $queryList[] = $monthQuery;
-            } else {
-                $yearQuery = $this->checkForQuery(YearQuery::class, $request);
-
-                if ($yearQuery) {
-                    $queryList[] = $yearQuery;
-                }
-            }
-        }
-
+        $queryList = ConflictResolver::resolveConflicts($queryList);
+        
         return $queryList;
     }
 
@@ -101,7 +83,7 @@ class QueryFactory implements QueryFactoryInterface
 
             /** @var EntityProperty $requiredEntityProperty */
             foreach ($requiredEntityPropertyList as $requiredEntityProperty) {
-                if (!$this->annotationHandler->hasEntityTypedPropertyOrMethodWithAnnotation(Ride::class, Queryable::class, $requiredEntityProperty->getPropertyName(), $requiredEntityProperty->getPropertyType())) {
+                if (!$this->annotationHandler->hasEntityTypedPropertyOrMethodWithAnnotation($this->entityFqcn, Queryable::class, $requiredEntityProperty->getPropertyName(), $requiredEntityProperty->getPropertyType())) {
                     return null;
                 }
             }

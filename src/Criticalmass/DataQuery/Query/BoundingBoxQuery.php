@@ -3,12 +3,11 @@
 namespace App\Criticalmass\DataQuery\Query;
 
 use App\Criticalmass\DataQuery\Annotation as DataQuery;
-use Elastica\Query\AbstractQuery;
 
 /**
  * @DataQuery\RequiredEntityProperty(propertyName="pin", propertyType="string")
  */
-class BoundingBoxQuery implements ElasticQueryInterface
+class BoundingBoxQuery extends AbstractQuery implements ElasticQueryInterface
 {
     /** @var float $northLatitude */
     protected $northLatitude;
@@ -61,9 +60,8 @@ class BoundingBoxQuery implements ElasticQueryInterface
 
         return $this;
     }
-
-
-    public function createElasticQuery(): AbstractQuery
+    
+    public function createElasticQuery(): \Elastica\Query\AbstractQuery
     {
         $geoQuery = new \Elastica\Query\GeoBoundingBox('pin',
             [

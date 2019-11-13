@@ -4,12 +4,11 @@ namespace App\Criticalmass\DataQuery\Query;
 
 use App\Criticalmass\DataQuery\Annotation as DataQuery;
 use App\Criticalmass\Util\DateTimeUtil;
-use Elastica\Query\AbstractQuery;
 
 /**
  * @DataQuery\RequiredEntityProperty(propertyName="simpleDate", propertyType="string")
  */
-class YearQuery implements ElasticQueryInterface, DoctrineQueryInterface
+class YearQuery extends AbstractQuery implements ElasticQueryInterface, DoctrineQueryInterface
 {
     /** @var int $year */
     protected $year;
@@ -24,7 +23,7 @@ class YearQuery implements ElasticQueryInterface, DoctrineQueryInterface
         return $this;
     }
 
-    public function createElasticQuery(): AbstractQuery
+    public function createElasticQuery(): \Elastica\Query\AbstractQuery
     {
         $fromDateTime = DateTimeUtil::getYearStartDateTime($this->toDateTime());
         $untilDateTime = DateTimeUtil::getYearEndDateTime($this->toDateTime());
@@ -41,5 +40,13 @@ class YearQuery implements ElasticQueryInterface, DoctrineQueryInterface
     protected function toDateTime(): \DateTime
     {
         return new \DateTime(sprintf('%d-01-01 00:00:00', $this->year));
+    }
+
+    public function isOverridenBy(): array
+    {
+        return [
+            MonthQuery::class,
+            DateQuery::class,
+        ];
     }
 }

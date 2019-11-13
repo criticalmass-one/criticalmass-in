@@ -4,5 +4,5 @@ namespace App\Criticalmass\DataQuery\Query;
 
 interface QueryInterface
 {
-
+    public function isOverridenBy(): array;
 }

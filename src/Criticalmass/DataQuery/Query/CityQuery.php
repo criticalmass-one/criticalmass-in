@@ -4,9 +4,8 @@ namespace App\Criticalmass\DataQuery\Query;
 
 use App\Criticalmass\DataQuery\Annotation as DataQuery;
 use App\Entity\City;
-use Elastica\Query\AbstractQuery;
 
-class CityQuery implements DoctrineQueryInterface, ElasticQueryInterface
+class CityQuery extends AbstractQuery implements DoctrineQueryInterface, ElasticQueryInterface
 {
     /** @var City $city */
     protected $city;
@@ -26,7 +25,7 @@ class CityQuery implements DoctrineQueryInterface, ElasticQueryInterface
         return $this->city;
     }
 
-    public function createElasticQuery(): AbstractQuery
+    public function createElasticQuery(): \Elastica\Query\AbstractQuery
     {
         return new \Elastica\Query\Term(['city' => $this->city->getCity()]);
     }
