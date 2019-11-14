@@ -51,6 +51,7 @@ class ParameterFactory implements ParameterFactoryInterface
             }
         }
 
+        dump($parameterList);
         return $parameterList;
     }
 

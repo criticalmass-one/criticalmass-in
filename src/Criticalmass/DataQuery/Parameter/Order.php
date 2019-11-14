@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\DataQuery\Parameter;
 
+use App\Criticalmass\DataQuery\Annotation as DataQuery;
 use Elastica\Query;
 
 class Order implements ParameterInterface
@@ -12,6 +13,9 @@ class Order implements ParameterInterface
     /** @var string $direction */
     protected $direction;
 
+    /**
+     * @DataQuery\RequiredParameter(parameterName="orderBy")
+     */
     public function setPropertyName(string $propertyName): Order
     {
         $this->propertyName = $propertyName;
@@ -19,6 +23,9 @@ class Order implements ParameterInterface
         return $this;
     }
 
+    /**
+     * @DataQuery\RequiredParameter(parameterName="orderDirection")
+     */
     public function setDirection(string $direction): Order
     {
         $this->direction = $direction;
