@@ -2,11 +2,12 @@
 
 namespace App\Criticalmass\DataQuery\Factory;
 
-use App\Criticalmass\DataQuery\Annotation\Sortable;
 use App\Criticalmass\DataQuery\AnnotationHandler\AnnotationHandlerInterface;
-use App\Criticalmass\DataQuery\Parameter\From;
-use App\Criticalmass\DataQuery\Parameter\Order;
-use App\Criticalmass\DataQuery\Parameter\Size;
+use App\Criticalmass\DataQuery\Manager\ParameterManagerInterface;
+use App\Criticalmass\DataQuery\Parameter\ParameterInterface;
+use App\Criticalmass\DataQuery\Property\ParameterProperty;
+use App\Criticalmass\DataQuery\Property\QueryProperty;
+use App\Criticalmass\Util\ClassUtil;
 use Symfony\Component\HttpFoundation\Request;
 
 class ParameterFactory implements ParameterFactoryInterface
@@ -17,9 +18,17 @@ class ParameterFactory implements ParameterFactoryInterface
     /** @var AnnotationHandlerInterface */
     protected $annotationHandler;
 
-    public function __construct(AnnotationHandlerInterface $annotationHandler)
+    /** @var ParameterManagerInterface $parameterManager */
+    protected $parameterManager;
+
+    /** @var ValueAssignerInterface $valueAssigner */
+    protected $valueAssigner;
+
+    public function __construct(AnnotationHandlerInterface $annotationHandler, ParameterManagerInterface $parameterManager, ValueAssignerInterface $valueAssigner)
     {
         $this->annotationHandler = $annotationHandler;
+        $this->parameterManager = $parameterManager;
+        $this->valueAssigner = $valueAssigner;
     }
 
     public function setEntityFqcn(string $entityFqcn)
@@ -33,29 +42,44 @@ class ParameterFactory implements ParameterFactoryInterface
     {
         $parameterList = [];
 
-        if ($request->query->get('size')) {
-            $size = (int)$request->query->get('size');
+        /** @var ParameterInterface $parameter */
+        foreach ($this->parameterManager->getParameterList() as $parameterCandidate) {
+            $parameterUnderTest = $this->checkForParameter(get_class($parameterCandidate), $request);
 
-            $parameterList[] = new Size($size);
-        }
-
-        if ($request->query->get('from')) {
-            $from = (int)$request->query->get('from');
-
-            $parameterList[] = new From($from);
-        }
-
-        if ($request->query->get('orderBy') && $request->query->get('orderDirection')) {
-            $propertyName = $request->query->get('orderBy');
-
-            $propertyIsSortable = $this->annotationHandler->hasEntityTypedPropertyOrMethodWithAnnotation($this->entityFqcn, Sortable::class, $propertyName);
-
-            $orderBy = (string)$request->query->get('orderBy');
-            $orderDirection = (string)$request->query->get('orderDirection');
-
-            $parameterList[] = new Order($orderBy, $orderDirection);
+            if ($parameterUnderTest) {
+                $parameterList[ClassUtil::getShortname($parameterUnderTest)] = $parameterUnderTest;
+            }
         }
 
         return $parameterList;
+    }
+
+    protected function checkForParameter(string $queryFqcn, Request $request): ?ParameterInterface
+    {
+        $requiredParameterableList = $this->annotationHandler->listParameterRequiredMethods($queryFqcn);
+
+        $requiredPropertiesFound = true;
+
+        /** @var QueryProperty $requiredQuerieableMethod */
+        foreach ($requiredParameterableList as $requiredQuerieableMethod) {
+            if (!$request->query->has($requiredQuerieableMethod->getParameterName())) {
+                $requiredPropertiesFound = false;
+
+                break;
+            }
+        }
+
+        if ($requiredPropertiesFound) {
+            /** @var ParameterProperty $requiredParameterProperty */
+            foreach ($requiredParameterableList as $requiredParameterProperty) {
+                $parameter = new $queryFqcn();
+
+                $this->valueAssigner->assignParameterPropertyValue($request, $parameter, $requiredParameterProperty);
+
+                return $parameter;
+            }
+        }
+
+        return null;
     }
 }

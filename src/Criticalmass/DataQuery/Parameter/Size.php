@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\DataQuery\Parameter;
 
+use App\Criticalmass\DataQuery\Annotation as DataQuery;
 use Elastica\Query;
 
 class Size implements ParameterInterface
@@ -9,9 +10,14 @@ class Size implements ParameterInterface
     /** @var int $size */
     protected $size;
 
-    public function __construct(int $size)
+    /**
+     * @DataQuery\RequiredParameter(parameterName="size")
+     */
+    public function setSize(int $size): Size
     {
         $this->size = $size;
+
+        return $this;
     }
 
     public function addToElasticQuery(Query $query): Query

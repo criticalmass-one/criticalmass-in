@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\DataQuery\QueryProperty;
+namespace App\Criticalmass\DataQuery\Property;
 
-class QueryProperty
+class ParameterProperty
 {
     /** @var string $propertyName */
     protected $propertyName;
@@ -21,7 +21,7 @@ class QueryProperty
         return $this->propertyName;
     }
 
-    public function setPropertyName(string $propertyName): QueryProperty
+    public function setPropertyName(string $propertyName): ParameterProperty
     {
         $this->propertyName = $propertyName;
 
@@ -33,7 +33,7 @@ class QueryProperty
         return $this->methodName;
     }
 
-    public function setMethodName(string $methodName): QueryProperty
+    public function setMethodName(string $methodName): ParameterProperty
     {
         $this->methodName = $methodName;
 
@@ -45,7 +45,7 @@ class QueryProperty
         return $this->parameterName;
     }
 
-    public function setParameterName(string $parameterName): QueryProperty
+    public function setParameterName(string $parameterName): ParameterProperty
     {
         $this->parameterName = $parameterName;
 
@@ -57,7 +57,7 @@ class QueryProperty
         return $this->type;
     }
 
-    public function setType(string $type): QueryProperty
+    public function setType(string $type): ParameterProperty
     {
         $this->type = $type;
 

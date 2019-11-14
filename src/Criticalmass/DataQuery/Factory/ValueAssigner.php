@@ -2,8 +2,10 @@
 
 namespace App\Criticalmass\DataQuery\Factory;
 
+use App\Criticalmass\DataQuery\Parameter\ParameterInterface;
+use App\Criticalmass\DataQuery\Property\ParameterProperty;
+use App\Criticalmass\DataQuery\Property\QueryProperty;
 use App\Criticalmass\DataQuery\Query\QueryInterface;
-use App\Criticalmass\DataQuery\QueryProperty\QueryProperty;
 use App\Criticalmass\Util\ClassUtil;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,23 +20,23 @@ class ValueAssigner implements ValueAssignerInterface
         $this->paramConverterFactory = $paramConverterFactory;
     }
 
-    public function assignPropertyValue(Request $request, QueryInterface $query, QueryProperty $property): QueryInterface
+    public function assignQueryPropertyValue(Request $request, QueryInterface $query, QueryProperty $property): QueryInterface
     {
         $methodName = $property->getMethodName();
-        $parameter = $request->query->get($property->getParameterName());
+        $value = $request->query->get($property->getParameterName());
         $type = $property->getType();
 
         switch ($type) {
             case 'float':
-                $query->$methodName((float)$parameter);
+                $query->$methodName((float)$value);
                 break;
 
             case 'int':
-                $query->$methodName((int)$parameter);
+                $query->$methodName((int)$value);
                 break;
 
             case 'string':
-                $query->$methodName((string)$parameter);
+                $query->$methodName((string)$value);
                 break;
 
             default:
@@ -43,6 +45,29 @@ class ValueAssigner implements ValueAssignerInterface
         }
 
         return $query;
+    }
+
+    public function assignParameterPropertyValue(Request $request, ParameterInterface $parameter, ParameterProperty $property): ParameterInterface
+    {
+        $methodName = $property->getMethodName();
+        $value = $request->query->get($property->getParameterName());
+        $type = $property->getType();
+
+        switch ($type) {
+            case 'float':
+                $parameter->$methodName((float)$value);
+                break;
+
+            case 'int':
+                $parameter->$methodName((int)$value);
+                break;
+
+            case 'string':
+                $parameter->$methodName((string)$value);
+                break;
+        }
+
+        return $parameter;
     }
 
     protected function assignEntityValueFromParamConverter(Request $request, QueryInterface $query, QueryProperty $property): QueryInterface

@@ -3,9 +3,11 @@
 namespace App\Criticalmass\DataQuery\AnnotationHandler;
 
 use App\Criticalmass\DataQuery\Annotation\RequiredEntityProperty;
+use App\Criticalmass\DataQuery\Annotation\RequiredParameter;
 use App\Criticalmass\DataQuery\Annotation\RequiredQueryParameter;
-use App\Criticalmass\DataQuery\EntityProperty\EntityProperty;
-use App\Criticalmass\DataQuery\QueryProperty\QueryProperty;
+use App\Criticalmass\DataQuery\Property\EntityProperty;
+use App\Criticalmass\DataQuery\Property\ParameterProperty;
+use App\Criticalmass\DataQuery\Property\QueryProperty;
 use Doctrine\Common\Annotations\Reader;
 
 class AnnotationHandler implements AnnotationHandlerInterface
@@ -69,6 +71,30 @@ class AnnotationHandler implements AnnotationHandlerInterface
                     $parameterType = $reflectionMethod->getParameters()[0]->getType()->getName();
 
                     $queryProperty = new QueryProperty();
+                    $queryProperty->setMethodName($reflectionMethod->getName())
+                        ->setType($parameterType)
+                        ->setParameterName($propertyAnnotation->getParameterName());
+
+                    $requiredMethodList[] = $queryProperty;
+                }
+            }
+        }
+
+        return $requiredMethodList;
+    }
+
+    public function listParameterRequiredMethods(string $parameterFqcn): array
+    {
+        $requiredMethodList = [];
+
+        $reflectionClass = new \ReflectionClass($parameterFqcn);
+
+        foreach ($reflectionClass->getMethods() as $reflectionMethod) {
+            foreach ($this->annotationReader->getMethodAnnotations($reflectionMethod) as $propertyAnnotation) {
+                if ($propertyAnnotation instanceof RequiredParameter) {
+                    $parameterType = $reflectionMethod->getParameters()[0]->getType()->getName();
+
+                    $queryProperty = new ParameterProperty();
                     $queryProperty->setMethodName($reflectionMethod->getName())
                         ->setType($parameterType)
                         ->setParameterName($propertyAnnotation->getParameterName());

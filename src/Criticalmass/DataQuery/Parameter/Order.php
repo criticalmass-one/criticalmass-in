@@ -12,10 +12,18 @@ class Order implements ParameterInterface
     /** @var string $direction */
     protected $direction;
 
-    public function __construct(string $propertyName, string $direction)
+    public function setPropertyName(string $propertyName): Order
     {
         $this->propertyName = $propertyName;
+
+        return $this;
+    }
+
+    public function setDirection(string $direction): Order
+    {
         $this->direction = $direction;
+
+        return $this;
     }
 
     public function addToElasticQuery(Query $query): Query

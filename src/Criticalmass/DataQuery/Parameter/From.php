@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\DataQuery\Parameter;
 
+use App\Criticalmass\DataQuery\Annotation as DataQuery;
 use Elastica\Query;
 
 class From implements ParameterInterface
@@ -9,9 +10,14 @@ class From implements ParameterInterface
     /** @var int $from */
     protected $from;
 
-    public function __construct(int $from)
+    /**
+     * @DataQuery\RequiredParameter(parameterName="from")
+     */
+    public function setFrom(int $from): From
     {
         $this->from = $from;
+
+        return $this;
     }
 
     public function addToElasticQuery(Query $query): Query

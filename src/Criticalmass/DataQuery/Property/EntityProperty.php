@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\DataQuery\EntityProperty;
+namespace App\Criticalmass\DataQuery\Property;
 
 class EntityProperty
 {
@@ -18,6 +18,7 @@ class EntityProperty
     public function setPropertyName(string $propertyName): EntityProperty
     {
         $this->propertyName = $propertyName;
+        
         return $this;
     }
 

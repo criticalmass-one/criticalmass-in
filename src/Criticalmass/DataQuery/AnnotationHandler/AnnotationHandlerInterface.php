@@ -8,5 +8,7 @@ interface AnnotationHandlerInterface
 
     public function listQueryRequiredMethods(string $queryFqcn): array;
 
+    public function listParameterRequiredMethods(string $parameterFqcn): array;
+
     public function listRequiredEntityProperties(string $queryFqcn): array;
 }
