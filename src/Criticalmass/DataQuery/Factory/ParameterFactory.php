@@ -51,7 +51,6 @@ class ParameterFactory implements ParameterFactoryInterface
             }
         }
 
-        dump($parameterList);
         return $parameterList;
     }
 
@@ -71,14 +70,14 @@ class ParameterFactory implements ParameterFactoryInterface
         }
 
         if ($requiredPropertiesFound) {
+            $parameter = new $queryFqcn();
+
             /** @var ParameterProperty $requiredParameterProperty */
             foreach ($requiredParameterableList as $requiredParameterProperty) {
-                $parameter = new $queryFqcn();
-
                 $this->valueAssigner->assignParameterPropertyValue($request, $parameter, $requiredParameterProperty);
-
-                return $parameter;
             }
+
+            return $parameter;
         }
 
         return null;
