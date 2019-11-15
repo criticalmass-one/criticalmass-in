@@ -2,8 +2,8 @@
 
 namespace App\Controller\Api;
 
-use App\Criticalmass\DataQuery\Factory\ParameterFactoryInterface;
-use App\Criticalmass\DataQuery\Factory\QueryFactoryInterface;
+use App\Criticalmass\DataQuery\Factory\ParameterFactory\ParameterFactoryInterface;
+use App\Criticalmass\DataQuery\Factory\QueryFactory\QueryFactoryInterface;
 use App\Criticalmass\DataQuery\FinderFactory\FinderFactoryInterface;
 use App\Entity\City;
 use App\Entity\Ride;

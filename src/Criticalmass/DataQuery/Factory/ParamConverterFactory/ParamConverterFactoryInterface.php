@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\DataQuery\Factory;
+namespace App\Criticalmass\DataQuery\Factory\ParamConverterFactory;
 
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInterface;
 

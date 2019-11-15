@@ -1,8 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\DataQuery\Factory;
+namespace App\Criticalmass\DataQuery\Factory\ParameterFactory;
 
 use App\Criticalmass\DataQuery\AnnotationHandler\AnnotationHandlerInterface;
+use App\Criticalmass\DataQuery\Factory\ValueAssigner\ValueAssignerInterface;
 use App\Criticalmass\DataQuery\Manager\ParameterManagerInterface;
 use App\Criticalmass\DataQuery\Parameter\ParameterInterface;
 use App\Criticalmass\DataQuery\Property\ParameterProperty;

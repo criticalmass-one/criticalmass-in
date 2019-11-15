@@ -1,9 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\DataQuery\Factory;
+namespace App\Criticalmass\DataQuery\Factory\QueryFactory;
 
 use App\Criticalmass\DataQuery\Annotation\Queryable;
 use App\Criticalmass\DataQuery\AnnotationHandler\AnnotationHandlerInterface;
+use App\Criticalmass\DataQuery\Factory\ConflictResolver\ConflictResolver;
+use App\Criticalmass\DataQuery\Factory\ValueAssigner\ValueAssignerInterface;
 use App\Criticalmass\DataQuery\Manager\QueryManagerInterface;
 use App\Criticalmass\DataQuery\Property\EntityProperty;
 use App\Criticalmass\DataQuery\Property\QueryProperty;
