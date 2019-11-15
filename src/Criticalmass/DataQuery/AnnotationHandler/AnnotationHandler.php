@@ -5,6 +5,7 @@ namespace App\Criticalmass\DataQuery\AnnotationHandler;
 use App\Criticalmass\DataQuery\Annotation\RequiredEntityProperty;
 use App\Criticalmass\DataQuery\Annotation\RequiredParameter;
 use App\Criticalmass\DataQuery\Annotation\RequiredQueryParameter;
+use App\Criticalmass\DataQuery\Annotation\RequireSortableTargetProperty;
 use App\Criticalmass\DataQuery\Property\EntityProperty;
 use App\Criticalmass\DataQuery\Property\ParameterProperty;
 use App\Criticalmass\DataQuery\Property\QueryProperty;
@@ -94,12 +95,17 @@ class AnnotationHandler implements AnnotationHandlerInterface
                 if ($propertyAnnotation instanceof RequiredParameter) {
                     $parameterType = $reflectionMethod->getParameters()[0]->getType()->getName();
 
-                    $queryProperty = new ParameterProperty();
-                    $queryProperty->setMethodName($reflectionMethod->getName())
+                    $parameterProperty = new ParameterProperty();
+                    $parameterProperty->setMethodName($reflectionMethod->getName())
                         ->setType($parameterType)
                         ->setParameterName($propertyAnnotation->getParameterName());
 
-                    $requiredMethodList[] = $queryProperty;
+                    $requiredMethodList[$parameterProperty->getMethodName()] = $parameterProperty;
+                }
+
+                /** TODO null pointer checks here */
+                if ($propertyAnnotation instanceof RequireSortableTargetProperty) {
+                    $requiredMethodList[$reflectionMethod->getName()]->setRequiredSortableTargetEntity(true);
                 }
             }
         }
@@ -125,5 +131,22 @@ class AnnotationHandler implements AnnotationHandlerInterface
         }
 
         return $requiredEntityPropertyList;
+    }
+
+    public function hasEntityAnnotatedMethod(string $entityFqcn, string $methodName, string $annotationFqcn): bool
+    {
+        $reflectionClass = new \ReflectionClass($entityFqcn);
+
+        if (!$reflectionClass->hasMethod($methodName)) {
+            return false;
+        }
+
+        $reflectionMethod = $reflectionClass->getMethod($methodName);
+
+        $annotationList = $this->annotationReader->getMethodAnnotations($reflectionMethod);
+
+        dump($annotationList);
+
+        return false;
     }
 }

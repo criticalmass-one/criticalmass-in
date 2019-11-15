@@ -15,7 +15,10 @@ class ParameterProperty
 
     /** @var string $type */
     protected $type;
-    
+
+    /** @var bool $requiredSortableTargetEntity */
+    protected $requiredSortableTargetEntity = false;
+
     public function getPropertyName(): string
     {
         return $this->propertyName;
@@ -60,6 +63,18 @@ class ParameterProperty
     public function setType(string $type): ParameterProperty
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function hasRequiredSortableTargetEntity(): bool
+    {
+        return $this->requiredSortableTargetEntity;
+    }
+
+    public function setRequiredSortableTargetEntity(bool $requiredSortableTargetEntity): ParameterProperty
+    {
+        $this->requiredSortableTargetEntity = $requiredSortableTargetEntity;
 
         return $this;
     }

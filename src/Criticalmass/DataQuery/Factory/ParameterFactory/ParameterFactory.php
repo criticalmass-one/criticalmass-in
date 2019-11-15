@@ -2,12 +2,12 @@
 
 namespace App\Criticalmass\DataQuery\Factory\ParameterFactory;
 
+use App\Criticalmass\DataQuery\Annotation\Sortable;
 use App\Criticalmass\DataQuery\AnnotationHandler\AnnotationHandlerInterface;
 use App\Criticalmass\DataQuery\Factory\ValueAssigner\ValueAssignerInterface;
 use App\Criticalmass\DataQuery\Manager\ParameterManagerInterface;
 use App\Criticalmass\DataQuery\Parameter\ParameterInterface;
 use App\Criticalmass\DataQuery\Property\ParameterProperty;
-use App\Criticalmass\DataQuery\Property\QueryProperty;
 use App\Criticalmass\Util\ClassUtil;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -59,28 +59,24 @@ class ParameterFactory implements ParameterFactoryInterface
     {
         $requiredParameterableList = $this->annotationHandler->listParameterRequiredMethods($queryFqcn);
 
-        $requiredPropertiesFound = true;
+        /** @var ParameterProperty $requiredParameterProperty */
+        foreach ($requiredParameterableList as $requiredParameterProperty) {
+            if (!$request->query->has($requiredParameterProperty->getParameterName())) {
+                return null;
+            }
 
-        /** @var QueryProperty $requiredQuerieableMethod */
-        foreach ($requiredParameterableList as $requiredQuerieableMethod) {
-            if (!$request->query->has($requiredQuerieableMethod->getParameterName())) {
-                $requiredPropertiesFound = false;
-
-                break;
+            if ($requiredParameterProperty->hasRequiredSortableTargetEntity()) {
+                $this->annotationHandler->hasEntityAnnotatedMethod($this->entityFqcn, $requiredParameterProperty->getParameterName(), Sortable::class);
             }
         }
 
-        if ($requiredPropertiesFound) {
-            $parameter = new $queryFqcn();
+        $parameter = new $queryFqcn();
 
-            /** @var ParameterProperty $requiredParameterProperty */
-            foreach ($requiredParameterableList as $requiredParameterProperty) {
-                $this->valueAssigner->assignParameterPropertyValue($request, $parameter, $requiredParameterProperty);
-            }
-
-            return $parameter;
+        /** @var ParameterProperty $requiredParameterProperty */
+        foreach ($requiredParameterableList as $requiredParameterProperty) {
+            $this->valueAssigner->assignParameterPropertyValue($request, $parameter, $requiredParameterProperty);
         }
 
-        return null;
+        return $parameter;
     }
 }

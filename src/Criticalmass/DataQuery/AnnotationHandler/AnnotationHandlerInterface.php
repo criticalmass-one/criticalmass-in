@@ -11,4 +11,6 @@ interface AnnotationHandlerInterface
     public function listParameterRequiredMethods(string $parameterFqcn): array;
 
     public function listRequiredEntityProperties(string $queryFqcn): array;
+
+    public function hasEntityAnnotatedMethod(string $entityFqcn, string $propertyName, string $annotationFqcn): bool;
 }

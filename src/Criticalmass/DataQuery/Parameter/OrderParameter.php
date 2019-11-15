@@ -15,6 +15,7 @@ class OrderParameter implements ParameterInterface
 
     /**
      * @DataQuery\RequiredParameter(parameterName="orderBy")
+     * @DataQuery\RequireSortableTargetProperty
      */
     public function setPropertyName(string $propertyName): OrderParameter
     {
