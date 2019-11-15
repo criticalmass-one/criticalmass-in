@@ -5,7 +5,7 @@ namespace App\Criticalmass\DataQuery\Parameter;
 use App\Criticalmass\DataQuery\Annotation as DataQuery;
 use Elastica\Query;
 
-class From implements ParameterInterface
+class FromParameter implements ParameterInterface
 {
     /** @var int $from */
     protected $from;
@@ -13,7 +13,7 @@ class From implements ParameterInterface
     /**
      * @DataQuery\RequiredParameter(parameterName="from")
      */
-    public function setFrom(int $from): From
+    public function setFrom(int $from): FromParameter
     {
         $this->from = $from;
 
