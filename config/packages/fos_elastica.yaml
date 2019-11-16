@@ -78,6 +78,7 @@ fos_elastica:
                         description: ~
                         city: { type: keyword }
                         country: { type: keyword }
+                        region: { type: keyword }
                         location: ~
                         isEnabled: ~
                         dateTime: ~

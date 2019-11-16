@@ -859,7 +859,13 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         return $this;
     }
 
+    /** @deprecated */
     public function getCountry(): ?Region
+    {
+        return $this->getRegion();
+    }
+
+    public function getRegion(): ?Region
     {
         if ($this->city) {
             return $this->city->getCountry();

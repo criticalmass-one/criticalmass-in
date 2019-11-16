@@ -11,7 +11,7 @@ class RegionQuery extends AbstractQuery implements DoctrineQueryInterface, Elast
     protected $region;
 
     /**
-     * @DataQuery\RequiredQueryParameter(parameterName="region")
+     * @DataQuery\RequiredQueryParameter(parameterName="regionSlug")
      */
     public function setRegion(Region $region): RegionQuery
     {
@@ -27,6 +27,6 @@ class RegionQuery extends AbstractQuery implements DoctrineQueryInterface, Elast
 
     public function createElasticQuery(): \Elastica\Query\AbstractQuery
     {
-        return \Elastica\Query\Term(['city.region' => $this->region->getId()]);
+        return new \Elastica\Query\Term(['region' => $this->region->getId()]);
     }
 }
