@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\DataQuery\Factory\ValueAssigner;
 
+use App\Criticalmass\DataQuery\Exception\ParameterConverterException;
 use App\Criticalmass\DataQuery\Factory\ParamConverterFactory\ParamConverterFactoryInterface;
 use App\Criticalmass\DataQuery\Parameter\ParameterInterface;
 use App\Criticalmass\DataQuery\Property\ParameterProperty;
@@ -33,7 +34,8 @@ class ValueAssigner implements ValueAssignerInterface
                 break;
 
             case 'int':
-                $query->$methodName((int)$value);
+                $value = $this->convertToInt($value, $property->getParameterName());
+                $query->$methodName($value);
                 break;
 
             case 'string':
@@ -60,7 +62,8 @@ class ValueAssigner implements ValueAssignerInterface
                 break;
 
             case 'int':
-                $parameter->$methodName((int)$value);
+                $value = $this->convertToInt($value, $property->getParameterName());
+                $parameter->$methodName($value);
                 break;
 
             case 'string':
@@ -84,5 +87,14 @@ class ValueAssigner implements ValueAssignerInterface
         }
 
         return $query;
+    }
+
+    protected function convertToInt(string $stringValue, string $parameterValue): int
+    {
+        if (!ctype_digit($stringValue)) {
+            throw new ParameterConverterException('int', $stringValue, $parameterValue);
+        }
+
+        return (int)$stringValue;
     }
 }

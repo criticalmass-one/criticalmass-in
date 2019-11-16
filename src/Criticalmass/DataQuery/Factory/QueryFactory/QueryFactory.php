@@ -69,37 +69,29 @@ class QueryFactory implements QueryFactoryInterface
     {
         $requiredQueriableMethodList = $this->annotationHandler->listQueryRequiredMethods($queryFqcn);
 
-        $requiredPropertiesFound = true;
-
         /** @var QueryProperty $requiredQuerieableMethod */
         foreach ($requiredQueriableMethodList as $requiredQuerieableMethod) {
             if (!$request->query->has($requiredQuerieableMethod->getParameterName())) {
-                $requiredPropertiesFound = false;
-
-                break;
+                return null;
             }
         }
 
-        if ($requiredPropertiesFound) {
-            $requiredEntityPropertyList = $this->annotationHandler->listRequiredEntityProperties($queryFqcn);
+        $requiredEntityPropertyList = $this->annotationHandler->listRequiredEntityProperties($queryFqcn);
 
-            /** @var EntityProperty $requiredEntityProperty */
-            foreach ($requiredEntityPropertyList as $requiredEntityProperty) {
-                if (!$this->annotationHandler->hasEntityTypedPropertyOrMethodWithAnnotation($this->entityFqcn, Queryable::class, $requiredEntityProperty->getPropertyName(), $requiredEntityProperty->getPropertyType())) {
-                    return null;
-                }
+        /** @var EntityProperty $requiredEntityProperty */
+        foreach ($requiredEntityPropertyList as $requiredEntityProperty) {
+            if (!$this->annotationHandler->hasEntityTypedPropertyOrMethodWithAnnotation($this->entityFqcn, Queryable::class, $requiredEntityProperty->getPropertyName(), $requiredEntityProperty->getPropertyType())) {
+                return null;
             }
-
-            $query = new $queryFqcn();
-
-            /** @var QueryProperty $queryProperty */
-            foreach ($requiredQueriableMethodList as $queryProperty) {
-                $this->valueAssigner->assignQueryPropertyValue($request, $query, $queryProperty);
-            }
-
-            return $query;
         }
 
-        return null;
+        $query = new $queryFqcn();
+
+        /** @var QueryProperty $queryProperty */
+        foreach ($requiredQueriableMethodList as $queryProperty) {
+            $this->valueAssigner->assignQueryPropertyValue($request, $query, $queryProperty);
+        }
+
+        return $query;
     }
 }
