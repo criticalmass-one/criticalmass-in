@@ -4,13 +4,18 @@ namespace App\Criticalmass\DataQuery\Query;
 
 use App\Criticalmass\DataQuery\Annotation as DataQuery;
 use App\Criticalmass\Util\DateTimeUtil;
+use Symfony\Component\Validator\Constraints as Constraints;
 
 /**
  * @DataQuery\RequiredEntityProperty(propertyName="simpleDate", propertyType="string")
  */
 class DateQuery extends MonthQuery
 {
-    /** @var int $day */
+    /**
+     * @Constraints\NotNull()
+     * @Constraints\Range(min="1", max="31")
+     * @var int $day
+     */
     protected $day;
 
     /**

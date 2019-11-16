@@ -4,13 +4,18 @@ namespace App\Criticalmass\DataQuery\Query;
 
 use App\Criticalmass\DataQuery\Annotation as DataQuery;
 use App\Criticalmass\Util\DateTimeUtil;
+use Symfony\Component\Validator\Constraints as Constraints;
 
 /**
  * @DataQuery\RequiredEntityProperty(propertyName="simpleDate", propertyType="string")
  */
 class YearQuery extends AbstractQuery implements ElasticQueryInterface, DoctrineQueryInterface
 {
-    /** @var int $year */
+    /**
+     * @Constraints\NotNull()
+     * @Constraints\GreaterThanOrEqual(value="1990")
+     * @var int $year
+     */
     protected $year;
 
     /**

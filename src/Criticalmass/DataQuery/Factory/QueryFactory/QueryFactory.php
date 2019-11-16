@@ -4,6 +4,7 @@ namespace App\Criticalmass\DataQuery\Factory\QueryFactory;
 
 use App\Criticalmass\DataQuery\Annotation\Queryable;
 use App\Criticalmass\DataQuery\AnnotationHandler\AnnotationHandlerInterface;
+use App\Criticalmass\DataQuery\Exception\ValidationException;
 use App\Criticalmass\DataQuery\Factory\ConflictResolver\ConflictResolver;
 use App\Criticalmass\DataQuery\Factory\ValueAssigner\ValueAssignerInterface;
 use App\Criticalmass\DataQuery\Manager\QueryManagerInterface;
@@ -13,6 +14,8 @@ use App\Criticalmass\DataQuery\Query\QueryInterface;
 use App\Criticalmass\Util\ClassUtil;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class QueryFactory implements QueryFactoryInterface
 {
@@ -31,12 +34,16 @@ class QueryFactory implements QueryFactoryInterface
     /** @var ValueAssignerInterface $valueAssignerInterface */
     protected $valueAssigner;
 
-    public function __construct(RegistryInterface $registry, AnnotationHandlerInterface $annotationHandler, QueryManagerInterface $queryManager, ValueAssignerInterface $valueAssigner)
+    /** @var ValidatorInterface $validator */
+    protected $validator;
+
+    public function __construct(RegistryInterface $registry, AnnotationHandlerInterface $annotationHandler, QueryManagerInterface $queryManager, ValueAssignerInterface $valueAssigner, ValidatorInterface $validator)
     {
         $this->registry = $registry;
         $this->annotationHandler = $annotationHandler;
         $this->queryManager = $queryManager;
         $this->valueAssigner = $valueAssigner;
+        $this->validator = $validator;
     }
 
     public function setEntityFqcn(string $entityFqcn)
@@ -55,8 +62,16 @@ class QueryFactory implements QueryFactoryInterface
             $queryUnderTest = $this->checkForQuery(get_class($queryCandidate), $request);
 
             if ($queryUnderTest) {
-                $key = ClassUtil::getShortname($queryUnderTest);
-                $queryList[$key] = $queryUnderTest;
+                /** @var ConstraintViolationListInterface $constraintVioloationList */
+                $constraintVioloationList = $this->validator->validate($queryUnderTest);
+
+                if ($constraintVioloationList->count() === 0) {
+                    $key = ClassUtil::getShortname($queryUnderTest);
+                    $queryList[$key] = $queryUnderTest;
+                } else {
+                    $firstMessage = $constraintVioloationList->get(0);
+                    throw new ValidationException($firstMessage->getMessage());
+                }
             }
         }
 
