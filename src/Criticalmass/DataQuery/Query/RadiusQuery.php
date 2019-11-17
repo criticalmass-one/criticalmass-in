@@ -3,19 +3,35 @@
 namespace App\Criticalmass\DataQuery\Query;
 
 use App\Criticalmass\DataQuery\Annotation as DataQuery;
+use Symfony\Component\Validator\Constraints as Constraints;
 
 /**
  * @DataQuery\RequiredEntityProperty(propertyName="pin", propertyType="string")
  */
 class RadiusQuery extends AbstractQuery implements ElasticQueryInterface
 {
-    /** @var float $centerLatitude */
+    /**
+     * @Constraints\NotNull()
+     * @Constraints\Type("float")
+     * @Constraints\Range(min="-90", max="90")
+     * @var float $centerLatitude
+     */
     protected $centerLatitude;
 
-    /** @var float $centerLongitude */
+    /**
+     * @Constraints\NotNull()
+     * @Constraints\Type("float")
+     * @Constraints\Range(min="-90", max="90")
+     * @var float $centerLongitude
+     */
     protected $centerLongitude;
 
-    /** @var float $radius */
+    /**
+     * @Constraints\NotNull()
+     * @Constraints\Type("float")
+     * @Constraints\Range(min="0", max="50000")
+     * @var float $radius
+     */
     protected $radius;
 
     /**

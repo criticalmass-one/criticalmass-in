@@ -3,22 +3,43 @@
 namespace App\Criticalmass\DataQuery\Query;
 
 use App\Criticalmass\DataQuery\Annotation as DataQuery;
+use Symfony\Component\Validator\Constraints as Constraints;
 
 /**
  * @DataQuery\RequiredEntityProperty(propertyName="pin", propertyType="string")
  */
 class BoundingBoxQuery extends AbstractQuery implements ElasticQueryInterface
 {
-    /** @var float $northLatitude */
+    /**
+     * @Constraints\NotNull()
+     * @Constraints\Type("float")
+     * @Constraints\Range(min="-90", max="90")
+     * @var float $northLatitude
+     */
     protected $northLatitude;
 
-    /** @var float $southLatitude */
+    /**
+     * @Constraints\NotNull()
+     * @Constraints\Type("float")
+     * @Constraints\Range(min="-90", max="90")
+     * @var float $southLatitude
+     */
     protected $southLatitude;
 
-    /** @var float $eastLongitude */
+    /**
+     * @Constraints\NotNull()
+     * @Constraints\Type("float")
+     * @Constraints\Range(min="-180", max="180")
+     * @var float $eastLongitude
+     */
     protected $eastLongitude;
 
-    /** @var float $westLongitude */
+    /**
+     * @Constraints\NotNull()
+     * @Constraints\Type("float")
+     * @Constraints\Range(min="-180", max="180")
+     * @var float $westLongitude
+     */
     protected $westLongitude;
 
     /**
