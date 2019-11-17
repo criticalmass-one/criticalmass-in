@@ -4,10 +4,16 @@ namespace App\Criticalmass\DataQuery\Parameter;
 
 use App\Criticalmass\DataQuery\Annotation as DataQuery;
 use Elastica\Query;
+use Symfony\Component\Validator\Constraints as Constraints;
 
 class FromParameter implements ParameterInterface
 {
-    /** @var int $from */
+    /**
+     * @Constraints\NotNull()
+     * @Constraints\Type("int")
+     * @Constraints\Range(min="0")
+     * @var int $from
+     */
     protected $from;
 
     /**

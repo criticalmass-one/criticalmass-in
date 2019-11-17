@@ -4,12 +4,15 @@ namespace App\Criticalmass\DataQuery\Factory\ParameterFactory;
 
 use App\Criticalmass\DataQuery\Annotation\Sortable;
 use App\Criticalmass\DataQuery\AnnotationHandler\AnnotationHandlerInterface;
+use App\Criticalmass\DataQuery\Exception\ValidationException;
 use App\Criticalmass\DataQuery\Factory\ValueAssigner\ValueAssignerInterface;
 use App\Criticalmass\DataQuery\Manager\ParameterManagerInterface;
 use App\Criticalmass\DataQuery\Parameter\ParameterInterface;
 use App\Criticalmass\DataQuery\Property\ParameterProperty;
 use App\Criticalmass\Util\ClassUtil;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ParameterFactory implements ParameterFactoryInterface
 {
@@ -25,11 +28,15 @@ class ParameterFactory implements ParameterFactoryInterface
     /** @var ValueAssignerInterface $valueAssigner */
     protected $valueAssigner;
 
-    public function __construct(AnnotationHandlerInterface $annotationHandler, ParameterManagerInterface $parameterManager, ValueAssignerInterface $valueAssigner)
+    /** @var ValidatorInterface $validator */
+    protected $validator;
+
+    public function __construct(AnnotationHandlerInterface $annotationHandler, ParameterManagerInterface $parameterManager, ValueAssignerInterface $valueAssigner, ValidatorInterface $validator)
     {
         $this->annotationHandler = $annotationHandler;
         $this->parameterManager = $parameterManager;
         $this->valueAssigner = $valueAssigner;
+        $this->validator = $validator;
     }
 
     public function setEntityFqcn(string $entityFqcn)
@@ -48,7 +55,16 @@ class ParameterFactory implements ParameterFactoryInterface
             $parameterUnderTest = $this->checkForParameter(get_class($parameterCandidate), $request);
 
             if ($parameterUnderTest) {
-                $parameterList[ClassUtil::getShortname($parameterUnderTest)] = $parameterUnderTest;
+                /** @var ConstraintViolationListInterface $constraintViolationList */
+                $constraintViolationList = $this->validator->validate($parameterUnderTest);
+
+                if (0 === $constraintViolationList->count()) {
+                    $key = ClassUtil::getShortname($parameterUnderTest);
+                    $parameterList[$key] = $parameterUnderTest;
+                } else {
+                    $firstMessage = $constraintViolationList->get(0);
+                    throw new ValidationException($firstMessage->getMessage());
+                }
             }
         }
 

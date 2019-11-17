@@ -62,14 +62,14 @@ class QueryFactory implements QueryFactoryInterface
             $queryUnderTest = $this->checkForQuery(get_class($queryCandidate), $request);
 
             if ($queryUnderTest) {
-                /** @var ConstraintViolationListInterface $constraintVioloationList */
-                $constraintVioloationList = $this->validator->validate($queryUnderTest);
+                /** @var ConstraintViolationListInterface $constraintViolationList */
+                $constraintViolationList = $this->validator->validate($queryUnderTest);
 
-                if ($constraintVioloationList->count() === 0) {
+                if ($constraintViolationList->count() === 0) {
                     $key = ClassUtil::getShortname($queryUnderTest);
                     $queryList[$key] = $queryUnderTest;
                 } else {
-                    $firstMessage = $constraintVioloationList->get(0);
+                    $firstMessage = $constraintViolationList->get(0);
                     throw new ValidationException($firstMessage->getMessage());
                 }
             }

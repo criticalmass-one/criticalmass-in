@@ -4,13 +4,23 @@ namespace App\Criticalmass\DataQuery\Parameter;
 
 use App\Criticalmass\DataQuery\Annotation as DataQuery;
 use Elastica\Query;
+use Symfony\Component\Validator\Constraints as Constraints;
 
 class OrderParameter implements ParameterInterface
 {
-    /** @var string $propertyName */
+    /**
+     * @Constraints\NotNull()
+     * @Constraints\Type("string")
+     * @var string $propertyName
+     */
     protected $propertyName;
 
-    /** @var string $direction */
+    /**
+     * @Constraints\NotNull()
+     * @Constraints\Type("string")
+     * @Constraints\Choice(choices = {"ASC", "DESC"})
+     * @var string $direction
+     */
     protected $direction;
 
     /**
@@ -29,7 +39,7 @@ class OrderParameter implements ParameterInterface
      */
     public function setDirection(string $direction): OrderParameter
     {
-        $this->direction = $direction;
+        $this->direction = strtoupper($direction);
 
         return $this;
     }

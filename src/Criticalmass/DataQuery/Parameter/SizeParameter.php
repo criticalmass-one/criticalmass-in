@@ -7,7 +7,12 @@ use Elastica\Query;
 
 class SizeParameter implements ParameterInterface
 {
-    /** @var int $size */
+    /**
+     * @Constraints\NotNull()
+     * @Constraints\Type("int")
+     * @Constraints\Range(min="0", max="500")
+     * @var int $size
+     */
     protected $size;
 
     /**
