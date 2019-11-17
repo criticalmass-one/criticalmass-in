@@ -27,6 +27,6 @@ class RegionQuery extends AbstractQuery implements DoctrineQueryInterface, Elast
 
     public function createElasticQuery(): \Elastica\Query\AbstractQuery
     {
-        return new \Elastica\Query\Term(['region' => $this->region->getId()]);
+        return new \Elastica\Query\Term(['region' => $this->region->getName()]);
     }
 }
