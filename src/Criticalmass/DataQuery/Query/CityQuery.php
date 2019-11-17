@@ -4,10 +4,15 @@ namespace App\Criticalmass\DataQuery\Query;
 
 use App\Criticalmass\DataQuery\Annotation as DataQuery;
 use App\Entity\City;
+use Symfony\Component\Validator\Constraints as Constraints;
 
 class CityQuery extends AbstractQuery implements DoctrineQueryInterface, ElasticQueryInterface
 {
-    /** @var City $city */
+    /**
+     * @Constraints\NotNull()
+     * @Constraints\Type("App\Entity\City")
+     * @var City $city
+     */
     protected $city;
 
     /**

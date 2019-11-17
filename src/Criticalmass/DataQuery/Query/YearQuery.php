@@ -14,6 +14,7 @@ class YearQuery extends AbstractQuery implements ElasticQueryInterface, Doctrine
     /**
      * @Constraints\NotNull()
      * @Constraints\GreaterThanOrEqual(value="1990")
+     * @Constraints\Type("int")
      * @var int $year
      */
     protected $year;

@@ -4,10 +4,15 @@ namespace App\Criticalmass\DataQuery\Query;
 
 use App\Criticalmass\DataQuery\Annotation as DataQuery;
 use App\Entity\Region;
+use Symfony\Component\Validator\Constraints as Constraints;
 
 class RegionQuery extends AbstractQuery implements DoctrineQueryInterface, ElasticQueryInterface
 {
-    /** @var Region $region */
+    /**
+     * @Constraints\NotNull()
+     * @Constraints\Type("App\Entity\Region")
+     * @var Region $region
+     */
     protected $region;
 
     /**
