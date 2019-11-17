@@ -42,6 +42,10 @@ class ValueAssigner implements ValueAssignerInterface
                 $query->$methodName((string)$value);
                 break;
 
+            case 'mixed':
+                $query->$methodName($value);
+                break;
+
             default:
                 $query = $this->assignEntityValueFromParamConverter($request, $query, $property);
                 break;
@@ -68,6 +72,10 @@ class ValueAssigner implements ValueAssignerInterface
 
             case 'string':
                 $parameter->$methodName((string)$value);
+                break;
+
+            case 'mixed':
+                $parameter->$methodName($value);
                 break;
         }
 

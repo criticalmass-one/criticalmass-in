@@ -6,6 +6,7 @@ use App\Criticalmass\DataQuery\Annotation\RequiredEntityProperty;
 use App\Criticalmass\DataQuery\Annotation\RequiredParameter;
 use App\Criticalmass\DataQuery\Annotation\RequiredQueryParameter;
 use App\Criticalmass\DataQuery\Annotation\RequireSortableTargetProperty;
+use App\Criticalmass\DataQuery\Exception\MissingMethodParameterException;
 use App\Criticalmass\DataQuery\Property\EntityProperty;
 use App\Criticalmass\DataQuery\Property\ParameterProperty;
 use App\Criticalmass\DataQuery\Property\QueryProperty;
@@ -93,7 +94,13 @@ class AnnotationHandler implements AnnotationHandlerInterface
         foreach ($reflectionClass->getMethods() as $reflectionMethod) {
             foreach ($this->annotationReader->getMethodAnnotations($reflectionMethod) as $propertyAnnotation) {
                 if ($propertyAnnotation instanceof RequiredParameter) {
-                    $parameterType = $reflectionMethod->getParameters()[0]->getType()->getName();
+                    $firstParameter = $reflectionMethod->getParameters()[0];
+
+                    if (!$firstParameter) {
+                        throw new MissingMethodParameterException($reflectionMethod->getName(), $reflectionClass->getName());
+                    }
+
+                    $parameterType = $reflectionMethod->getParameters()[0]->getType() ? $reflectionMethod->getParameters()[0]->getType()->getName() : 'mixed';
 
                     $parameterProperty = new ParameterProperty();
                     $parameterProperty->setMethodName($reflectionMethod->getName())
