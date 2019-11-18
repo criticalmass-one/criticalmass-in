@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\DataQuery\Annotation as DataQuery;
 use App\Criticalmass\Router\Annotation as Routing;
 use App\Criticalmass\Sharing\Annotation as Sharing;
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
@@ -51,6 +52,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     /**
      * @ORM\ManyToOne(targetEntity="Region", inversedBy="cities", cascade={"persist"})
      * @ORM\JoinColumn(name="region_id", referencedColumnName="id")
+     * @DataQuery\Queryable
      */
     protected $region;
 
@@ -110,6 +112,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
      * @ORM\Column(type="float")
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
+     * @DataQuery\Queryable
      */
     protected $latitude = 0;
 
@@ -117,6 +120,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
      * @ORM\Column(type="float")
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
+     * @DataQuery\Queryable
      */
     protected $longitude = 0;
 
@@ -162,6 +166,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
      * @ORM\Column(type="integer", nullable=true)
      * @Assert\Type(type="int")
      * @JMS\Expose
+     * @DataQuery\Queryable
      */
     protected $cityPopulation = 0;
 
@@ -691,6 +696,9 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
         return $this;
     }
 
+    /**
+     * @DataQuery\Queryable
+     */
     public function getPin(): string
     {
         return sprintf('%f,%f', $this->latitude, $this->longitude);

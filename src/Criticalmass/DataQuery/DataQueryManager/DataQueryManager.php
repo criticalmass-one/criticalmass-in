@@ -5,7 +5,6 @@ namespace App\Criticalmass\DataQuery\DataQueryManager;
 use App\Criticalmass\DataQuery\Factory\ParameterFactory\ParameterFactoryInterface;
 use App\Criticalmass\DataQuery\Factory\QueryFactory\QueryFactoryInterface;
 use App\Criticalmass\DataQuery\FinderFactory\FinderFactoryInterface;
-use App\Entity\Ride;
 use Symfony\Component\HttpFoundation\Request;
 
 class DataQueryManager implements DataQueryManagerInterface
@@ -31,7 +30,7 @@ class DataQueryManager implements DataQueryManagerInterface
         $queryList = $this->queryFactory->setEntityFqcn($entityFqcn)->createFromRequest($request);
         $parameterList = $this->parameterFactory->setEntityFqcn($entityFqcn)->createFromRequest($request);
 
-        $finder = $this->finderFactory->createFinderForFqcn(Ride::class);
+        $finder = $this->finderFactory->createFinderForFqcn($entityFqcn);
 
         return $finder->executeQuery($queryList, $parameterList);
     }

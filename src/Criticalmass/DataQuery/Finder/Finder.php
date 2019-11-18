@@ -19,22 +19,7 @@ class Finder implements FinderInterface
 
     public function executeQuery(array $queryList, array $parameterList): array
     {
-        $useElastic = false;
-
-        /** @var QueryInterface $query */
-        foreach ($queryList as $query) {
-            if ($query instanceof ElasticQueryInterface) {
-                $useElastic = true;
-
-                break;
-            }
-        }
-
-        if ($useElastic) {
-            return $this->executeElasticQuery($queryList, $parameterList);
-        }
-
-        return $this->executeOrmQuery($queryList);
+        return $this->executeElasticQuery($queryList, $parameterList);
     }
 
     protected function executeElasticQuery(array $queryList, array $parameterList): array
