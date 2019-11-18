@@ -8,8 +8,10 @@ use App\Criticalmass\DataQuery\Exception\ValidationException;
 use App\Criticalmass\DataQuery\Factory\ConflictResolver\ConflictResolver;
 use App\Criticalmass\DataQuery\Factory\ValueAssigner\ValueAssignerInterface;
 use App\Criticalmass\DataQuery\Manager\QueryManagerInterface;
+use App\Criticalmass\DataQuery\Property\EntityBooleanValueProperty;
 use App\Criticalmass\DataQuery\Property\EntityProperty;
 use App\Criticalmass\DataQuery\Property\QueryProperty;
+use App\Criticalmass\DataQuery\Query\BooleanQuery;
 use App\Criticalmass\DataQuery\Query\QueryInterface;
 use App\Criticalmass\Util\ClassUtil;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -55,7 +57,7 @@ class QueryFactory implements QueryFactoryInterface
 
     public function createFromRequest(Request $request): array
     {
-        $queryList = [];
+        $queryList = $this->findEntityDefaultValuesAsQuery();
 
         /** @var QueryInterface $query */
         foreach ($this->queryManager->getQueryList() as $queryCandidate) {
@@ -93,6 +95,10 @@ class QueryFactory implements QueryFactoryInterface
 
         $requiredEntityPropertyList = $this->annotationHandler->listRequiredEntityProperties($queryFqcn);
 
+        if (0 === count($requiredEntityPropertyList)) {
+            return null;
+        }
+
         /** @var EntityProperty $requiredEntityProperty */
         foreach ($requiredEntityPropertyList as $requiredEntityProperty) {
             if (!$this->annotationHandler->hasEntityTypedPropertyOrMethodWithAnnotation($this->entityFqcn, Queryable::class, $requiredEntityProperty->getPropertyName(), $requiredEntityProperty->getPropertyType())) {
@@ -108,5 +114,23 @@ class QueryFactory implements QueryFactoryInterface
         }
 
         return $query;
+    }
+
+    protected function findEntityDefaultValuesAsQuery(): array
+    {
+        $defaultValueQueryList = [];
+        $entityDefaultValueList = $this->annotationHandler->listEntityDefaultValues($this->entityFqcn);
+
+        /** @var EntityBooleanValueProperty $entityDefaultValue */
+        foreach ($entityDefaultValueList as $entityDefaultValue) {
+            $booleanQuery = new BooleanQuery();
+            $booleanQuery
+                ->setPropertyName($entityDefaultValue->getPropertyName())
+                ->setValue($entityDefaultValue->getValue());
+
+            $defaultValueQueryList[] = $booleanQuery;
+        }
+
+        return $defaultValueQueryList;
     }
 }

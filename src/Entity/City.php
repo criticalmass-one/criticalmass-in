@@ -126,6 +126,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
 
     /**
      * @ORM\Column(type="boolean")
+     * @DataQuery\DefaultBooleanValue(value=true, alias="isEnabled")
      */
     protected $enabled = true;
 

@@ -2,11 +2,13 @@
 
 namespace App\Criticalmass\DataQuery\AnnotationHandler;
 
+use App\Criticalmass\DataQuery\Annotation\DefaultBooleanValue;
 use App\Criticalmass\DataQuery\Annotation\RequiredEntityProperty;
 use App\Criticalmass\DataQuery\Annotation\RequiredParameter;
 use App\Criticalmass\DataQuery\Annotation\RequiredQueryParameter;
 use App\Criticalmass\DataQuery\Annotation\RequireSortableTargetProperty;
 use App\Criticalmass\DataQuery\Exception\MissingMethodParameterException;
+use App\Criticalmass\DataQuery\Property\EntityBooleanValueProperty;
 use App\Criticalmass\DataQuery\Property\EntityProperty;
 use App\Criticalmass\DataQuery\Property\ParameterProperty;
 use App\Criticalmass\DataQuery\Property\QueryProperty;
@@ -138,6 +140,31 @@ class AnnotationHandler implements AnnotationHandlerInterface
         }
 
         return $requiredEntityPropertyList;
+    }
+
+    public function listEntityDefaultValues(string $entityFqcn): array
+    {
+        $entityDefaultValueList = [];
+
+        $reflectionClass = new \ReflectionClass($entityFqcn);
+
+        /** @var \ReflectionProperty $reflectionProperty */
+        foreach ($reflectionClass->getProperties() as $reflectionProperty) {
+            foreach ($this->annotationReader->getPropertyAnnotations($reflectionProperty) as $propertyAnnotation) {
+                if ($propertyAnnotation instanceof DefaultBooleanValue) {
+                    $propertyName = $propertyAnnotation->getAlias() ?? $reflectionProperty->getName();
+
+                    $entityProperty = new EntityBooleanValueProperty();
+                    $entityProperty
+                        ->setValue($propertyAnnotation->getValue())
+                        ->setPropertyName($propertyName);
+
+                    $entityDefaultValueList[] = $entityProperty;
+                }
+            }
+        }
+
+        return $entityDefaultValueList;
     }
 
     public function hasEntityAnnotatedMethod(string $entityFqcn, string $methodName, string $annotationFqcn): bool
