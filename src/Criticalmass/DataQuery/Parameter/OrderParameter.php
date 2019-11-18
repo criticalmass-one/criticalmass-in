@@ -34,6 +34,11 @@ class OrderParameter implements ParameterInterface
         return $this;
     }
 
+    public function getPropertyName(): string
+    {
+        return $this->propertyName;
+    }
+
     /**
      * @DataQuery\RequiredParameter(parameterName="orderDirection")
      */

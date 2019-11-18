@@ -102,17 +102,18 @@ class AnnotationHandler implements AnnotationHandlerInterface
                         throw new MissingMethodParameterException($reflectionMethod->getName(), $reflectionClass->getName());
                     }
 
-                    $parameterType = $reflectionMethod->getParameters()[0]->getType() ? $reflectionMethod->getParameters()[0]->getType()->getName() : 'mixed';
+                    $parameterType = $firstParameter->getType() ? $firstParameter->getType()->getName() : 'mixed';
 
                     $parameterProperty = new ParameterProperty();
-                    $parameterProperty->setMethodName($reflectionMethod->getName())
+                    $parameterProperty
+                        ->setMethodName($reflectionMethod->getName())
                         ->setType($parameterType)
                         ->setParameterName($propertyAnnotation->getParameterName());
 
                     $requiredMethodList[$parameterProperty->getMethodName()] = $parameterProperty;
                 }
 
-                /** TODO null pointer checks here */
+                // TODO null pointer
                 if ($propertyAnnotation instanceof RequireSortableTargetProperty) {
                     $requiredMethodList[$reflectionMethod->getName()]->setRequiredSortableTargetEntity(true);
                 }
@@ -179,8 +180,12 @@ class AnnotationHandler implements AnnotationHandlerInterface
 
         $annotationList = $this->annotationReader->getMethodAnnotations($reflectionMethod);
 
-        dump($annotationList);
-
+        foreach ($annotationList as $annotation) {
+            if ($annotation instanceof $annotationFqcn) {
+                return true;
+            }
+        }
+        
         return false;
     }
 }
