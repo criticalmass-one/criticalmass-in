@@ -40,6 +40,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
      * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
+     * @DataQuery\Sortable
      */
     protected $id;
 
@@ -53,6 +54,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
      * @ORM\ManyToOne(targetEntity="Region", inversedBy="cities", cascade={"persist"})
      * @ORM\JoinColumn(name="region_id", referencedColumnName="id")
      * @DataQuery\Queryable
+     * @DataQuery\Sortable
      */
     protected $region;
 
@@ -71,6 +73,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
      * @JMS\Expose
      * @JMS\SerializedName("name")
      * @JMS\Groups({"ride-list"})
+     * @DataQuery\Sortable
      */
     protected $city;
 
@@ -80,6 +83,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      * @Sharing\Title()
+     * @DataQuery\Sortable
      */
     protected $title;
 
@@ -168,6 +172,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
      * @Assert\Type(type="int")
      * @JMS\Expose
      * @DataQuery\Queryable
+     * @DataQuery\Sortable
      */
     protected $cityPopulation = 0;
 
@@ -209,16 +214,16 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     protected $imageMimeType;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     *
      * @var \DateTime
+     * @ORM\Column(type="datetime", nullable=true)
+     * @DataQuery\Sortable
      */
     private $updatedAt;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     *
      * @var \DateTime
+     * @ORM\Column(type="datetime", nullable=true)
+     * @DataQuery\Sortable
      */
     protected $createdAt;
 
@@ -228,9 +233,8 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     protected $enableBoard = false;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     *
      * @var string
+     * @ORM\Column(type="string", length=255)
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      */
