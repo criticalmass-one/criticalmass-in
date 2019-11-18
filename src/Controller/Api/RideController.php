@@ -2,9 +2,7 @@
 
 namespace App\Controller\Api;
 
-use App\Criticalmass\DataQuery\Factory\ParameterFactory\ParameterFactoryInterface;
-use App\Criticalmass\DataQuery\Factory\QueryFactory\QueryFactoryInterface;
-use App\Criticalmass\DataQuery\FinderFactory\FinderFactoryInterface;
+use App\Criticalmass\DataQuery\DataQueryManager\DataQueryManagerInterface;
 use App\Entity\City;
 use App\Entity\Ride;
 use App\Traits\RepositoryTrait;
@@ -99,13 +97,9 @@ class RideController extends BaseController
      *  section="Ride"
      * )
      */
-    public function listAction(Request $request, QueryFactoryInterface $queryFactory, ParameterFactoryInterface $parameterFactory, FinderFactoryInterface $finderFactory): Response
+    public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager): Response
     {
-        $queryList = $queryFactory->setEntityFqcn(Ride::class)->createFromRequest($request);
-        $parameterList = $parameterFactory->setEntityFqcn(Ride::class)->createFromRequest($request);
-
-        $finder = $finderFactory->createFinderForFqcn(Ride::class);
-        $rideList = $finder->executeQuery($queryList, $parameterList);
+        $rideList = $dataQueryManager->queryForRequest($request, Ride::class);
 
         $context = new Context();
         $context->addGroup('ride-list');
