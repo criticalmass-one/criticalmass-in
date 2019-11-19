@@ -6,7 +6,7 @@ use App\Criticalmass\DataQuery\Annotation as DataQuery;
 use Elastica\Query;
 use Symfony\Component\Validator\Constraints as Constraints;
 
-class OrderParameter implements ParameterInterface
+class OrderParameter implements PropertyTargetingParameterInterface
 {
     /**
      * @Constraints\NotNull()
