@@ -6,5 +6,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 interface QueryFactoryInterface
 {
+    public function setEntityFqcn(string $entityFqcn): QueryFactoryInterface;
     public function createFromRequest(Request $request): array;
 }

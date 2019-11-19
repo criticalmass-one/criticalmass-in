@@ -48,7 +48,7 @@ class QueryFactory implements QueryFactoryInterface
         $this->validator = $validator;
     }
 
-    public function setEntityFqcn(string $entityFqcn)
+    public function setEntityFqcn(string $entityFqcn): QueryFactoryInterface
     {
         $this->entityFqcn = $entityFqcn;
 

@@ -41,7 +41,7 @@ class ParameterFactory implements ParameterFactoryInterface
         $this->validator = $validator;
     }
 
-    public function setEntityFqcn(string $entityFqcn)
+    public function setEntityFqcn(string $entityFqcn): ParameterFactoryInterface
     {
         $this->entityFqcn = $entityFqcn;
 

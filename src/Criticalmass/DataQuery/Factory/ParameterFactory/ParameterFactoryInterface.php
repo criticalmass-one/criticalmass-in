@@ -6,5 +6,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 interface ParameterFactoryInterface
 {
+    public function setEntityFqcn(string $entityFqcn): ParameterFactoryInterface;
     public function createFromRequest(Request $request): array;
 }
