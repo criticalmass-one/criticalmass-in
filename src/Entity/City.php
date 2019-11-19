@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\DataQuery\Annotation as DataQuery;
 use App\Criticalmass\Router\Annotation as Routing;
 use App\Criticalmass\Sharing\Annotation as Sharing;
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
@@ -39,6 +40,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
      * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
+     * @DataQuery\Sortable
      */
     protected $id;
 
@@ -51,6 +53,8 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     /**
      * @ORM\ManyToOne(targetEntity="Region", inversedBy="cities", cascade={"persist"})
      * @ORM\JoinColumn(name="region_id", referencedColumnName="id")
+     * @DataQuery\Queryable
+     * @DataQuery\Sortable
      */
     protected $region;
 
@@ -69,6 +73,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
      * @JMS\Expose
      * @JMS\SerializedName("name")
      * @JMS\Groups({"ride-list"})
+     * @DataQuery\Sortable
      */
     protected $city;
 
@@ -78,6 +83,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      * @Sharing\Title()
+     * @DataQuery\Sortable
      */
     protected $title;
 
@@ -110,6 +116,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
      * @ORM\Column(type="float")
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
+     * @DataQuery\Queryable
      */
     protected $latitude = 0;
 
@@ -117,11 +124,13 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
      * @ORM\Column(type="float")
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
+     * @DataQuery\Queryable
      */
     protected $longitude = 0;
 
     /**
      * @ORM\Column(type="boolean")
+     * @DataQuery\DefaultBooleanValue(value=true, alias="isEnabled")
      */
     protected $enabled = true;
 
@@ -162,6 +171,8 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
      * @ORM\Column(type="integer", nullable=true)
      * @Assert\Type(type="int")
      * @JMS\Expose
+     * @DataQuery\Queryable
+     * @DataQuery\Sortable
      */
     protected $cityPopulation = 0;
 
@@ -203,16 +214,16 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     protected $imageMimeType;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     *
      * @var \DateTime
+     * @ORM\Column(type="datetime", nullable=true)
+     * @DataQuery\Sortable
      */
     private $updatedAt;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     *
      * @var \DateTime
+     * @ORM\Column(type="datetime", nullable=true)
+     * @DataQuery\Sortable
      */
     protected $createdAt;
 
@@ -222,9 +233,8 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     protected $enableBoard = false;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     *
      * @var string
+     * @ORM\Column(type="string", length=255)
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      */
@@ -691,6 +701,9 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
         return $this;
     }
 
+    /**
+     * @DataQuery\Queryable
+     */
     public function getPin(): string
     {
         return sprintf('%f,%f', $this->latitude, $this->longitude);

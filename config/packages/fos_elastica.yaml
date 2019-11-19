@@ -78,6 +78,7 @@ fos_elastica:
                         description: ~
                         city: { type: keyword }
                         country: { type: keyword }
+                        region: { type: keyword }
                         location: ~
                         isEnabled: ~
                         dateTime: ~
@@ -108,11 +109,14 @@ fos_elastica:
                 city:
                     properties:
                         id: ~
+                        city: ~
                         title: ~
                         description: ~
                         longDescription: ~
                         punchLine: ~
                         isEnabled: ~
+                        createdAt: { type: date, format: "yyyy-MM-dd" }
+                        updatedAt: { type: date, format: "yyyy-MM-dd" }
                         country: { type: keyword }
                         pin: { type: geo_point }
                     persistence:
