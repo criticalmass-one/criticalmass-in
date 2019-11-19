@@ -11,8 +11,8 @@ use App\Criticalmass\DataQuery\Manager\ParameterManagerInterface;
 use App\Criticalmass\DataQuery\Parameter\ParameterInterface;
 use App\Criticalmass\DataQuery\Parameter\PropertyTargetingParameterInterface;
 use App\Criticalmass\DataQuery\Property\ParameterProperty;
+use App\Criticalmass\DataQuery\RequestParameterList\RequestParameterList;
 use App\Criticalmass\Util\ClassUtil;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -48,13 +48,13 @@ class ParameterFactory implements ParameterFactoryInterface
         return $this;
     }
 
-    public function createFromRequest(Request $request): array
+    public function createFromList(RequestParameterList $requestParameterList): array
     {
         $parameterList = [];
 
         /** @var ParameterInterface $parameter */
         foreach ($this->parameterManager->getParameterList() as $parameterCandidate) {
-            $parameterUnderTest = $this->checkForParameter(get_class($parameterCandidate), $request);
+            $parameterUnderTest = $this->checkForParameter(get_class($parameterCandidate), $requestParameterList);
 
             if ($parameterUnderTest) {
                 /** @var ConstraintViolationListInterface $constraintViolationList */
@@ -73,7 +73,7 @@ class ParameterFactory implements ParameterFactoryInterface
         return $parameterList;
     }
 
-    protected function checkForParameter(string $queryFqcn, Request $request): ?ParameterInterface
+    protected function checkForParameter(string $queryFqcn, RequestParameterList $requestParameterList): ?ParameterInterface
     {
         $requiredParameterableList = $this->annotationHandler->listParameterRequiredMethods($queryFqcn);
 
@@ -82,11 +82,11 @@ class ParameterFactory implements ParameterFactoryInterface
 
         /** @var ParameterProperty $requiredParameterProperty */
         foreach ($requiredParameterableList as $requiredParameterProperty) {
-            if (!$request->query->has($requiredParameterProperty->getParameterName())) {
+            if (!$requestParameterList->has($requiredParameterProperty->getParameterName())) {
                 return null;
             }
 
-            $parameter = $this->valueAssigner->assignParameterPropertyValue($request, $parameter, $requiredParameterProperty);
+            $parameter = $this->valueAssigner->assignParameterPropertyValue($requestParameterList, $parameter, $requiredParameterProperty);
 
             if ($parameter instanceof PropertyTargetingParameterInterface) {
                 /** @var PropertyTargetingParameterInterface $parameter */

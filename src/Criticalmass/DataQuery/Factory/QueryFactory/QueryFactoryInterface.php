@@ -2,10 +2,11 @@
 
 namespace App\Criticalmass\DataQuery\Factory\QueryFactory;
 
-use Symfony\Component\HttpFoundation\Request;
+use App\Criticalmass\DataQuery\RequestParameterList\RequestParameterList;
 
 interface QueryFactoryInterface
 {
     public function setEntityFqcn(string $entityFqcn): QueryFactoryInterface;
-    public function createFromRequest(Request $request): array;
+
+    public function createFromList(RequestParameterList $requestParameterList): array;
 }

@@ -13,9 +13,9 @@ use App\Criticalmass\DataQuery\Property\EntityProperty;
 use App\Criticalmass\DataQuery\Property\QueryProperty;
 use App\Criticalmass\DataQuery\Query\BooleanQuery;
 use App\Criticalmass\DataQuery\Query\QueryInterface;
+use App\Criticalmass\DataQuery\RequestParameterList\RequestParameterList;
 use App\Criticalmass\Util\ClassUtil;
 use Symfony\Bridge\Doctrine\RegistryInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -55,13 +55,13 @@ class QueryFactory implements QueryFactoryInterface
         return $this;
     }
 
-    public function createFromRequest(Request $request): array
+    public function createFromList(RequestParameterList $requestParameterList): array
     {
         $queryList = $this->findEntityDefaultValuesAsQuery();
 
         /** @var QueryInterface $query */
         foreach ($this->queryManager->getQueryList() as $queryCandidate) {
-            $queryUnderTest = $this->checkForQuery(get_class($queryCandidate), $request);
+            $queryUnderTest = $this->checkForQuery(get_class($queryCandidate), $requestParameterList);
 
             if ($queryUnderTest) {
                 /** @var ConstraintViolationListInterface $constraintViolationList */
@@ -82,13 +82,13 @@ class QueryFactory implements QueryFactoryInterface
         return $queryList;
     }
 
-    protected function checkForQuery(string $queryFqcn, Request $request): ?QueryInterface
+    protected function checkForQuery(string $queryFqcn, RequestParameterList $requestParameterList): ?QueryInterface
     {
         $requiredQueriableMethodList = $this->annotationHandler->listQueryRequiredMethods($queryFqcn);
 
         /** @var QueryProperty $requiredQuerieableMethod */
         foreach ($requiredQueriableMethodList as $requiredQuerieableMethod) {
-            if (!$request->query->has($requiredQuerieableMethod->getParameterName())) {
+            if (!$requestParameterList->has($requiredQuerieableMethod->getParameterName())) {
                 return null;
             }
         }
@@ -110,7 +110,7 @@ class QueryFactory implements QueryFactoryInterface
 
         /** @var QueryProperty $queryProperty */
         foreach ($requiredQueriableMethodList as $queryProperty) {
-            $this->valueAssigner->assignQueryPropertyValue($request, $query, $queryProperty);
+            $this->valueAssigner->assignQueryPropertyValue($requestParameterList, $query, $queryProperty);
         }
 
         return $query;
