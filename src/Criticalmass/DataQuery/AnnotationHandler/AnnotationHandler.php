@@ -95,27 +95,31 @@ class AnnotationHandler implements AnnotationHandlerInterface
 
         foreach ($reflectionClass->getMethods() as $reflectionMethod) {
             foreach ($this->annotationReader->getMethodAnnotations($reflectionMethod) as $propertyAnnotation) {
-                if ($propertyAnnotation instanceof RequiredParameter) {
-                    $firstParameter = $reflectionMethod->getParameters()[0];
+                if ($propertyAnnotation instanceof RequiredParameter || $propertyAnnotation instanceof RequireSortableTargetProperty) {
+                    $listKey = $reflectionMethod->getName();
 
-                    if (!$firstParameter) {
-                        throw new MissingMethodParameterException($reflectionMethod->getName(), $reflectionClass->getName());
+                    if (!array_key_exists($listKey, $requiredMethodList)) {
+                        $requiredMethodList[$listKey] = new ParameterProperty();
+                        $requiredMethodList[$listKey]->setMethodName($reflectionMethod->getName());
                     }
 
-                    $parameterType = $firstParameter->getType() ? $firstParameter->getType()->getName() : 'mixed';
+                    if ($propertyAnnotation instanceof RequiredParameter) {
+                        $firstParameter = $reflectionMethod->getParameters()[0];
 
-                    $parameterProperty = new ParameterProperty();
-                    $parameterProperty
-                        ->setMethodName($reflectionMethod->getName())
-                        ->setType($parameterType)
-                        ->setParameterName($propertyAnnotation->getParameterName());
+                        if (!$firstParameter) {
+                            throw new MissingMethodParameterException($reflectionMethod->getName(), $reflectionClass->getName());
+                        }
 
-                    $requiredMethodList[$parameterProperty->getMethodName()] = $parameterProperty;
-                }
+                        $parameterType = $firstParameter->getType() ? $firstParameter->getType()->getName() : 'mixed';
 
-                // TODO null pointer
-                if ($propertyAnnotation instanceof RequireSortableTargetProperty) {
-                    $requiredMethodList[$reflectionMethod->getName()]->setRequiredSortableTargetEntity(true);
+                        $requiredMethodList[$listKey]
+                            ->setType($parameterType)
+                            ->setParameterName($propertyAnnotation->getParameterName());
+                    }
+
+                    if ($propertyAnnotation instanceof RequireSortableTargetProperty) {
+                        $requiredMethodList[$listKey]->setRequiredSortableTargetEntity(true);
+                    }
                 }
             }
         }
@@ -185,7 +189,7 @@ class AnnotationHandler implements AnnotationHandlerInterface
                 return true;
             }
         }
-        
+
         return false;
     }
 }
