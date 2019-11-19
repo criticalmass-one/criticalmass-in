@@ -2,17 +2,14 @@
 
 namespace App\Controller\Api;
 
-use App\Traits\RepositoryTrait;
-use App\Traits\UtilTrait;
+use App\Entity\Photo;
 use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class PhotoController extends BaseController
 {
-    use RepositoryTrait;
-    use UtilTrait;
-
     /**
      * This is a pretty useless endpoint which is not ready for usage now.
      *
@@ -22,9 +19,9 @@ class PhotoController extends BaseController
      *  section="Photo"
      * )
      */
-    public function galleryAction(): Response
+    public function galleryAction(RegistryInterface $registry): Response
     {
-        $photoRides = $this->getPhotoRepository()->findRidesForGallery();
+        $photoRides = $registry->getRepository(Photo::class)->findRidesForGallery();
 
         $view = View::create();
         $view

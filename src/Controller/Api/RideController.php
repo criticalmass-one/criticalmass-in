@@ -5,21 +5,17 @@ namespace App\Controller\Api;
 use App\Criticalmass\DataQuery\DataQueryManager\DataQueryManagerInterface;
 use App\Entity\City;
 use App\Entity\Ride;
-use App\Traits\RepositoryTrait;
-use App\Traits\UtilTrait;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class RideController extends BaseController
 {
-    use RepositoryTrait;
-    use UtilTrait;
-
     /**
      * Retrieve information about a ride identified by <code>rideIdentifier</code> of a city identified by <code>citySlug</code>.
      *
@@ -60,9 +56,9 @@ class RideController extends BaseController
      * )
      * @ParamConverter("city", class="App:City")
      */
-    public function showCurrentAction(Request $request, City $city): Response
+    public function showCurrentAction(Request $request, City $city, RegistryInterface $registry): Response
     {
-        $ride = $this->getRideRepository()->findCurrentRideForCity($city, (bool) $request->get('cycleMandatory', false), (bool) $request->get('slugsAllowd', true));
+        $ride = $registry->getRepository(Ride::class)->findCurrentRideForCity($city, (bool)$request->get('cycleMandatory', false), (bool)$request->get('slugsAllowed', true));
 
         if (!$ride) {
             return new JsonResponse([], 200, []); // @todo this should return 404, but i have no clue how to handle multiple jquery requests then
