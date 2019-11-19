@@ -86,13 +86,14 @@ class ValueAssigner implements ValueAssignerInterface
     protected function assignEntityValueFromParamConverter(RequestParameterList $requestParameterList, QueryInterface $query, QueryProperty $property): QueryInterface
     {
         if ($converter = $this->paramConverterFactory->createParamConverter($property->getType())) {
+            dump($converter);
             $methodName = $property->getMethodName();
             $newParameterName = ClassUtil::getLowercaseShortnameFromFqcn($property->getType());
 
             $paramConverterConfiguration = new ParamConverter(['name' => $newParameterName]);
 
             $request = new Request($requestParameterList->getList());
-            
+
             $converter->apply($request, $paramConverterConfiguration);
             $query->$methodName($request->get($newParameterName));
         }

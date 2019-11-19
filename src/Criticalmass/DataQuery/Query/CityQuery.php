@@ -6,6 +6,9 @@ use App\Criticalmass\DataQuery\Annotation as DataQuery;
 use App\Entity\City;
 use Symfony\Component\Validator\Constraints as Constraints;
 
+/**
+ * @DataQuery\RequiredEntityProperty(propertyName="slug")
+ */
 class CityQuery extends AbstractQuery implements DoctrineQueryInterface, ElasticQueryInterface
 {
     /**

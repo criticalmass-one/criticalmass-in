@@ -27,7 +27,7 @@ class EntityProperty
         return $this->propertyType;
     }
 
-    public function setPropertyType(string $propertyType): EntityProperty
+    public function setPropertyType(string $propertyType = null): EntityProperty
     {
         $this->propertyType = $propertyType;
 

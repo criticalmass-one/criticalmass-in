@@ -79,6 +79,7 @@ class QueryFactory implements QueryFactoryInterface
 
         $queryList = ConflictResolver::resolveConflicts($queryList);
 
+        dump($queryList);
         return $queryList;
     }
 
@@ -98,7 +99,7 @@ class QueryFactory implements QueryFactoryInterface
         if (0 === count($requiredEntityPropertyList)) {
             return null;
         }
-
+        
         /** @var EntityProperty $requiredEntityProperty */
         foreach ($requiredEntityPropertyList as $requiredEntityProperty) {
             if (!$this->annotationHandler->hasEntityTypedPropertyOrMethodWithAnnotation($this->entityFqcn, Queryable::class, $requiredEntityProperty->getPropertyName(), $requiredEntityProperty->getPropertyType())) {
