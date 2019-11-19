@@ -59,15 +59,15 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     /**
      * @ORM\ManyToOne(targetEntity="CityCycle", inversedBy="rides", fetch="LAZY")
      * @ORM\JoinColumn(name="cycle_id", referencedColumnName="id")
+     * @JMS\Groups({"extended-ride-list"})
      * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
      */
     protected $cycle;
 
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="rides", fetch="LAZY")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
-     * @JMS\Groups({"ride-list"})
+     * @JMS\Groups({"extended-ride-list"})
      * @JMS\Expose
      * @Routing\RouteParameter(name="citySlug")
      * @OE\Identical()
@@ -77,11 +77,13 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
 
     /**
      * @ORM\OneToMany(targetEntity="Track", mappedBy="ride", fetch="LAZY")
+     * @JMS\Groups({"extended-ride-list"})
      */
     protected $tracks;
 
     /**
      * @ORM\OneToMany(targetEntity="Subride", mappedBy="ride", fetch="LAZY")
+     * @JMS\Groups({"extended-ride-list"})
      */
     protected $subrides;
 
@@ -204,17 +206,19 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
 
     /**
      * @ORM\OneToMany(targetEntity="Post", mappedBy="ride", fetch="LAZY")
+     * @JMS\Groups({"extended-ride-list"})
      */
     protected $posts;
 
     /**
      * @ORM\OneToMany(targetEntity="Photo", mappedBy="ride", fetch="LAZY")
+     * @JMS\Groups({"extended-ride-list"})
      */
     protected $photos;
 
     /**
      * @ORM\OneToMany(targetEntity="SocialNetworkProfile", mappedBy="ride", cascade={"persist", "remove"})
-     * @JMS\Groups({"ride-list"})
+     * @JMS\Groups({"extended-ride-list"})
      * @JMS\Expose
      */
     protected $socialNetworkProfiles;
