@@ -102,7 +102,10 @@ class CityController extends BaseController
      * @ApiDoc(
      *  resource=true,
      *  description="Shows a critical mass city",
-     *  section="City"
+     *  section="City",
+     *  requirements={
+     *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Provide the slug of a city."}
+     *  }
      * )
      * @ParamConverter("city", class="App:City")
      */

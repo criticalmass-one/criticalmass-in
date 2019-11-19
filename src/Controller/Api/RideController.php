@@ -28,7 +28,11 @@ class RideController extends BaseController
      * @ApiDoc(
      *  resource=true,
      *  description="Returns ride details",
-     *  section="Ride"
+     *  section="Ride",
+     *  requirements={
+     *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Provide the slug of a city."},
+     *    {"name"="rideIdentifier", "dataType"="string", "required"=true, "description"="Provide the ride identifier of a ride."},
+     *  }
      * )
      * @ParamConverter("ride", class="App:Ride")
      */
@@ -49,7 +53,10 @@ class RideController extends BaseController
      * @ApiDoc(
      *  resource=true,
      *  description="Returns details of the next ride in the city",
-     *  section="Ride"
+     *  section="Ride",
+     *  requirements={
+     *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Provide the slug of a city."},
+     *  }
      * )
      * @ParamConverter("city", class="App:City")
      */
