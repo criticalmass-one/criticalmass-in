@@ -47,6 +47,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
+     * @DataQuery\Sortable
      */
     protected $id;
 
