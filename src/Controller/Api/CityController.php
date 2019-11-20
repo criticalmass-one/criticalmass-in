@@ -5,8 +5,6 @@ namespace App\Controller\Api;
 use App\Criticalmass\DataQuery\DataQueryManager\DataQueryManagerInterface;
 use App\Criticalmass\DataQuery\RequestParameterList\RequestToListConverter;
 use App\Entity\City;
-use App\Traits\RepositoryTrait;
-use App\Traits\UtilTrait;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -16,9 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CityController extends BaseController
 {
-    use RepositoryTrait;
-    use UtilTrait;
-
     /**
      * Get a list of critical mass cities.
      *

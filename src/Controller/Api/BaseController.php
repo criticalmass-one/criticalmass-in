@@ -2,14 +2,14 @@
 
 namespace App\Controller\Api;
 
-use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\AbstractFOSRestController;
 use JMS\Serializer\Context;
 use JMS\Serializer\DeserializationContext;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\Serializer;
 use Symfony\Component\HttpFoundation\Request;
 
-abstract class BaseController extends FOSRestController
+abstract class BaseController extends AbstractFOSRestController
 {
     protected function getDeserializationContext(): DeserializationContext
     {
