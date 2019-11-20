@@ -8,20 +8,16 @@ use App\Entity\Ride;
 use App\Entity\RideEstimate;
 use App\Event\RideEstimate\RideEstimateCreatedEvent;
 use App\Model\CreateEstimateModel;
-use App\Traits\RepositoryTrait;
-use App\Traits\UtilTrait;
 use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class EstimateController extends BaseController
 {
-    use RepositoryTrait;
-    use UtilTrait;
-
     /**
      * You can add an estimation of ride participants like this:
      *
@@ -48,7 +44,7 @@ class EstimateController extends BaseController
      *  section="Estimate"
      * )
      */
-    public function createAction(Request $request, SerializerInterface $serializer, EventDispatcherInterface $eventDispatcher, DataQueryManagerInterface $dataQueryManager): Response
+    public function createAction(Request $request, SerializerInterface $serializer, EventDispatcherInterface $eventDispatcher, DataQueryManagerInterface $dataQueryManager, RegistryInterface $registry): Response
     {
         $estimateModel = $this->deserializeRequest($request, $serializer,CreateEstimateModel::class);
 
@@ -58,8 +54,8 @@ class EstimateController extends BaseController
             throw $this->createNotFoundException();
         }
 
-        $this->getManager()->persist($rideEstimation);
-        $this->getManager()->flush();
+        $registry->getManager()->persist($rideEstimation);
+        $registry->getManager()->flush();
 
         $eventDispatcher->dispatch(RideEstimateCreatedEvent::NAME, new RideEstimateCreatedEvent($rideEstimation));
 
@@ -113,7 +109,7 @@ class EstimateController extends BaseController
         if (1 === count($rideResultList)) {
             return array_pop($rideResultList);
         }
-        
+
         return null;
     }
 }
