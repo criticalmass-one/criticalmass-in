@@ -7,7 +7,7 @@ use App\Criticalmass\Util\DateTimeUtil;
 use Symfony\Component\Validator\Constraints as Constraints;
 
 /**
- * @DataQuery\RequiredEntityProperty(propertyName="simpleDate", propertyType="string")
+ * @DataQuery\RequiredEntityProperty(propertyName="dateTime", propertyType="DateTime")
  */
 class YearQuery extends AbstractQuery implements ElasticQueryInterface, DoctrineQueryInterface
 {
@@ -34,10 +34,10 @@ class YearQuery extends AbstractQuery implements ElasticQueryInterface, Doctrine
         $fromDateTime = DateTimeUtil::getYearStartDateTime($this->toDateTime());
         $untilDateTime = DateTimeUtil::getYearEndDateTime($this->toDateTime());
 
-        $dateTimeQuery = new \Elastica\Query\Range('simpleDate', [
-            'gt' => $fromDateTime->format('Y-m-d'),
+        $dateTimeQuery = new \Elastica\Query\Range('dateTime', [
+            'gte' => $fromDateTime->format('Y-m-d'),
             'lte' => $untilDateTime->format('Y-m-d'),
-            'format' => 'yyyy-MM-dd',
+            'format' => 'strict_date_optional_time',
         ]);
 
         return $dateTimeQuery;
