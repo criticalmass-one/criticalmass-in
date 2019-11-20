@@ -393,21 +393,16 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         return $this;
     }
 
+    /**
+     * @DataQuery\Sortable
+     * @DataQuery\Queryable
+     * @return \DateTime|null
+     */
     public function getDateTime(): ?\DateTime
     {
         return $this->dateTime;
     }
-
-    /**
-     * @deprecated
-     * @DataQuery\Sortable
-     * @DataQuery\Queryable
-     */
-    public function getSimpleDate(): string
-    {
-        return $this->dateTime->format('Y-m-d');
-    }
-
+    
     public function setLocation(string $location = null): ReverseGeocodeable
     {
         $this->location = $location;
