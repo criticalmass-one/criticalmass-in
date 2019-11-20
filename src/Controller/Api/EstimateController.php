@@ -18,6 +18,26 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EstimateController extends BaseController
 {
+    /** @var SerializerInterface $serializer */
+    protected $serializer;
+
+    /** @var EventDispatcherInterface $eventDispatcher */
+    protected $eventDispatcher;
+
+    /** @var DataQueryManagerInterface $dataQueryManager */
+    protected $dataQueryManager;
+
+    /** @var RegistryInterface $registry */
+    protected $registry;
+
+    public function __construct(SerializerInterface $serializer, EventDispatcherInterface $eventDispatcher, DataQueryManagerInterface $dataQueryManager, RegistryInterface $registry)
+    {
+        $this->serializer = $serializer;
+        $this->eventDispatcher = $eventDispatcher;
+        $this->dataQueryManager = $dataQueryManager;
+        $this->registry = $registry;
+    }
+
     /**
      * You can add an estimation of ride participants like this:
      *
@@ -44,20 +64,21 @@ class EstimateController extends BaseController
      *  section="Estimate"
      * )
      */
-    public function createAction(Request $request, SerializerInterface $serializer, EventDispatcherInterface $eventDispatcher, DataQueryManagerInterface $dataQueryManager, RegistryInterface $registry): Response
+    public function createAction(Request $request): Response
     {
-        $estimateModel = $this->deserializeRequest($request, $serializer,CreateEstimateModel::class);
+        /** @var CreateEstimateModel $estimateModel */
+        $estimateModel = $this->deserializeRequest($request, $this->serializer, CreateEstimateModel::class);
 
-        $rideEstimation = $this->createRideEstimate($estimateModel, $dataQueryManager);
+        $rideEstimation = $this->createRideEstimate($estimateModel);
 
         if (!$rideEstimation) {
             throw $this->createNotFoundException();
         }
 
-        $registry->getManager()->persist($rideEstimation);
-        $registry->getManager()->flush();
+        $this->registry->getManager()->persist($rideEstimation);
+        $this->registry->getManager()->flush();
 
-        $eventDispatcher->dispatch(RideEstimateCreatedEvent::NAME, new RideEstimateCreatedEvent($rideEstimation));
+        $this->eventDispatcher->dispatch(RideEstimateCreatedEvent::NAME, new RideEstimateCreatedEvent($rideEstimation));
 
         $view = View::create();
         $view
@@ -68,9 +89,9 @@ class EstimateController extends BaseController
         return $this->handleView($view);
     }
 
-    protected function createRideEstimate(CreateEstimateModel $model, DataQueryManagerInterface $dataQueryManager): ?RideEstimate
+    protected function createRideEstimate(CreateEstimateModel $model): ?RideEstimate
     {
-        $ride = $this->findNearestRide($model, $dataQueryManager);
+        $ride = $this->findNearestRide($model);
 
         if (!$ride) {
             return null;
@@ -92,7 +113,7 @@ class EstimateController extends BaseController
         return $estimate;
     }
 
-    protected function findNearestRide(CreateEstimateModel $model, DataQueryManagerInterface $dataQueryManager): ?Ride
+    protected function findNearestRide(CreateEstimateModel $model): ?Ride
     {
         $requestParameterList = new RequestParameterList();
         $requestParameterList
@@ -104,7 +125,7 @@ class EstimateController extends BaseController
             ->add('day', $model->getDateTime()->format('d'))
             ->add('size', (string)1);
 
-        $rideResultList = $dataQueryManager->query($requestParameterList, Ride::class);
+        $rideResultList = $this->dataQueryManager->query($requestParameterList, Ride::class);
 
         if (1 === count($rideResultList)) {
             return array_pop($rideResultList);
