@@ -82,7 +82,6 @@ fos_elastica:
                         location: ~
                         isEnabled: ~
                         dateTime: { type: date, format: "strict_date_optional_time" }
-                        simpleDate: { type: date, format: "yyyy-MM-dd" }
                         pin: { type: geo_point }
                     persistence:
                         driver: orm
