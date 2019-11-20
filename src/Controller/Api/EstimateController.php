@@ -126,7 +126,7 @@ class EstimateController extends BaseController
         );
 
         $dateTimeQuery = new \Elastica\Query\Term([
-            'simpleDate' => $model->getDateTime()->format('Y-m-d')
+            'dateTime' => $model->getDateTime()->format('Y-m-d')
         ]);
 
         $boolQuery = new \Elastica\Query\BoolQuery();
