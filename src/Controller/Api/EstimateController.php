@@ -2,14 +2,14 @@
 
 namespace App\Controller\Api;
 
-use App\Entity\CitySlug;
+use App\Criticalmass\DataQuery\DataQueryManager\DataQueryManagerInterface;
+use App\Criticalmass\DataQuery\RequestParameterList\RequestParameterList;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
 use App\Event\RideEstimate\RideEstimateCreatedEvent;
 use App\Model\CreateEstimateModel;
 use App\Traits\RepositoryTrait;
 use App\Traits\UtilTrait;
-use FOS\ElasticaBundle\Finder\FinderInterface;
 use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -48,11 +48,15 @@ class EstimateController extends BaseController
      *  section="Estimate"
      * )
      */
-    public function createAction(Request $request, SerializerInterface $serializer, EventDispatcherInterface $eventDispatcher): Response
+    public function createAction(Request $request, SerializerInterface $serializer, EventDispatcherInterface $eventDispatcher, DataQueryManagerInterface $dataQueryManager): Response
     {
         $estimateModel = $this->deserializeRequest($request, $serializer,CreateEstimateModel::class);
 
-        $rideEstimation = $this->createRideEstimate($estimateModel);
+        $rideEstimation = $this->createRideEstimate($estimateModel, $dataQueryManager);
+
+        if (!$rideEstimation) {
+            throw $this->createNotFoundException();
+        }
 
         $this->getManager()->persist($rideEstimation);
         $this->getManager()->flush();
@@ -68,13 +72,17 @@ class EstimateController extends BaseController
         return $this->handleView($view);
     }
 
-    protected function createRideEstimate(CreateEstimateModel $model): RideEstimate
+    protected function createRideEstimate(CreateEstimateModel $model, DataQueryManagerInterface $dataQueryManager): ?RideEstimate
     {
+        $ride = $this->findNearestRide($model, $dataQueryManager);
+
+        if (!$ride) {
+            return null;
+        }
+
         if (!$model->getDateTime()) {
             $model->setDateTime(new \DateTime());
         }
-
-        $ride = $this->guessRide($model);
 
         $estimate = new RideEstimate();
 
@@ -88,71 +96,24 @@ class EstimateController extends BaseController
         return $estimate;
     }
 
-    protected function guessRide(CreateEstimateModel $model): ?Ride
+    protected function findNearestRide(CreateEstimateModel $model, DataQueryManagerInterface $dataQueryManager): ?Ride
     {
-        $ride = null;
+        $requestParameterList = new RequestParameterList();
+        $requestParameterList
+            ->add('centerLatitude', (string)$model->getLatitude())
+            ->add('centerLongitude', (string)$model->getLongitude())
+            ->add('distanceOrderDirection', 'ASC')
+            ->add('year', $model->getDateTime()->format('Y'))
+            ->add('month', $model->getDateTime()->format('m'))
+            ->add('day', $model->getDateTime()->format('d'))
+            ->add('size', (string)1);
 
-        if ($model->getCitySlug()) {
-            /** @var CitySlug $citySlug */
-            $citySlug = $this->getCitySlugRepository()->findOneBySlug($model->getCitySlug());
+        $rideResultList = $dataQueryManager->query($requestParameterList, Ride::class);
 
-            if ($citySlug) {
-                $city = $citySlug->getCity();
-
-                if ($city) {
-                    $ride = $this->getRideRepository()->findCityRideByDate($city, $model->getDateTime());
-                }
-            }
-
-            return null;
-        } elseif ($model->getLatitude() && $model->getLongitude()) {
-            $ride = $this->findNearestRide($model);
+        if (1 === count($rideResultList)) {
+            return array_pop($rideResultList);
         }
-
-        return $ride;
-    }
-
-    protected function findNearestRide(CreateEstimateModel $model): ?Ride
-    {
-        /** @var FinderInterface $finder */
-        $finder = $this->container->get('fos_elastica.finder.criticalmass_ride.ride');
-
-        $geoQuery = new \Elastica\Query\GeoDistance('pin', [
-            'lat' => $model->getLatitude(),
-            'lon' => $model->getLongitude(),
-        ],
-            '25km'
-        );
-
-        $dateTimeQuery = new \Elastica\Query\Term([
-            'dateTime' => $model->getDateTime()->format('Y-m-d')
-        ]);
-
-        $boolQuery = new \Elastica\Query\BoolQuery();
-        $boolQuery
-            ->addMust($geoQuery)
-            ->addMust($dateTimeQuery);
-
-        $query = new \Elastica\Query($boolQuery);
-
-        $query->setSize(1);
-        $query->setSort([
-            '_geo_distance' => [
-                'pin' => [
-                    $model->getLatitude(),
-                    $model->getLongitude(),
-                ],
-                'order' => 'asc',
-                'unit' => 'km',
-            ]
-        ]);
-
-        $results = $finder->find($query, 1);
-
-        if (is_array($results)) {
-            return array_pop($results);
-        }
-
+        
         return null;
     }
 }

@@ -4,6 +4,7 @@ namespace App\Criticalmass\DataQuery\Parameter;
 
 use App\Criticalmass\DataQuery\Annotation as DataQuery;
 use Elastica\Query;
+use Symfony\Component\Validator\Constraints as Constraints;
 
 class SizeParameter implements ParameterInterface
 {
