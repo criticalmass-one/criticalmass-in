@@ -6,7 +6,7 @@ use FOS\RestBundle\Controller\AbstractFOSRestController;
 use JMS\Serializer\Context;
 use JMS\Serializer\DeserializationContext;
 use JMS\Serializer\SerializationContext;
-use JMS\Serializer\Serializer;
+use JMS\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 abstract class BaseController extends AbstractFOSRestController
@@ -32,7 +32,7 @@ abstract class BaseController extends AbstractFOSRestController
         return $context;
     }
 
-    protected function deserializeRequest(Request $request, Serializer $serializer, string $modelClass)
+    protected function deserializeRequest(Request $request, SerializerInterface $serializer, string $modelClass)
     {
         $content = null;
 
