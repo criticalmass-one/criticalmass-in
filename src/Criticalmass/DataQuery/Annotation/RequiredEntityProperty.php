@@ -18,7 +18,7 @@ class RequiredEntityProperty extends AbstractAnnotation
         return $this->propertyName;
     }
 
-    public function getPropertyType(): string
+    public function getPropertyType(): ?string
     {
         return $this->propertyType;
     }

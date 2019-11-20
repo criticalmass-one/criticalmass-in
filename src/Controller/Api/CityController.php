@@ -3,6 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Criticalmass\DataQuery\DataQueryManager\DataQueryManagerInterface;
+use App\Criticalmass\DataQuery\RequestParameterList\RequestToListConverter;
 use App\Entity\City;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
@@ -71,7 +72,8 @@ class CityController extends BaseController
      */
     public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager): Response
     {
-        $cityList = $dataQueryManager->queryForRequest($request, City::class);
+        $queryParameterList = RequestToListConverter::convert($request);
+        $cityList = $dataQueryManager->query($queryParameterList, City::class);
 
         $context = new Context();
 

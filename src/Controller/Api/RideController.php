@@ -3,6 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Criticalmass\DataQuery\DataQueryManager\DataQueryManagerInterface;
+use App\Criticalmass\DataQuery\RequestParameterList\RequestToListConverter;
 use App\Entity\City;
 use App\Entity\Ride;
 use FOS\RestBundle\Context\Context;
@@ -149,7 +150,8 @@ class RideController extends BaseController
      */
     public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager): Response
     {
-        $rideList = $dataQueryManager->queryForRequest($request, Ride::class);
+        $queryParameterList = RequestToListConverter::convert($request);
+        $rideList = $dataQueryManager->query($queryParameterList, Ride::class);
 
         $context = new Context();
 

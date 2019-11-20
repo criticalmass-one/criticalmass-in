@@ -2,9 +2,9 @@
 
 namespace App\Criticalmass\DataQuery\DataQueryManager;
 
-use Symfony\Component\HttpFoundation\Request;
+use App\Criticalmass\DataQuery\RequestParameterList\RequestParameterList;
 
 interface DataQueryManagerInterface
 {
-    public function queryForRequest(Request $request, string $entityFqcn): array;
+    public function query(RequestParameterList $requestParameterList, string $entityFqcn): array;
 }
