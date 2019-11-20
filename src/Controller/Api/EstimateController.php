@@ -11,12 +11,11 @@ use App\Traits\RepositoryTrait;
 use App\Traits\UtilTrait;
 use FOS\ElasticaBundle\Finder\FinderInterface;
 use FOS\RestBundle\View\View;
-use JMS\Serializer\Serializer;
+use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class EstimateController extends BaseController
 {
@@ -49,7 +48,7 @@ class EstimateController extends BaseController
      *  section="Estimate"
      * )
      */
-    public function createAction(Request $request, UserInterface $user, Serializer $serializer, EventDispatcherInterface $eventDispatcher): Response
+    public function createAction(Request $request, SerializerInterface $serializer, EventDispatcherInterface $eventDispatcher): Response
     {
         $estimateModel = $this->deserializeRequest($request, $serializer,CreateEstimateModel::class);
 
