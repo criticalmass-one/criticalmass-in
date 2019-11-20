@@ -859,6 +859,9 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         return $this;
     }
 
+    /**
+     * @DataQuery\Queryable
+     */
     public function getRegion(): ?Region
     {
         if ($this->city) {
