@@ -11,34 +11,37 @@ sass.compiler = require('node-sass');
 
 /* jQuery Select Areas */
 
-gulp.task('areaselect-images', function () {
-    return gulp.src([
-        'node_modules/jquery-select-areas/resources/bt-delete.png',
-        'node_modules/jquery-select-areas/resources/filter.svg',
-        'node_modules/jquery-select-areas/resources/outline.gif'
+function areaselectImages() {
+    return gulp
+        .src([
+            'node_modules/jquery-select-areas/resources/bt-delete.png',
+            'node_modules/jquery-select-areas/resources/filter.svg',
+            'node_modules/jquery-select-areas/resources/outline.gif'
         ])
         .pipe(gulp.dest('public/img/areaselect'));
-});
+}
 
-gulp.task('areaselect-css', [], function() {
-    return gulp.src([
-        'node_modules/jquery-select-areas/resources/jquery.selectareas.css',
-        'node_modules/jquery-select-areas/resources/jquery.selectareas.ie8.css'
+function areaselectCss() {
+    return gulp
+        .src([
+            'node_modules/jquery-select-areas/resources/jquery.selectareas.css',
+            'node_modules/jquery-select-areas/resources/jquery.selectareas.ie8.css'
         ])
         .pipe(urlAdjuster({
             replace: ['','/img/areaselect/'],
         }))
         .pipe(gulp.dest('assets/css'));
-});
+}
 
-gulp.task('areaselect-js', function () {
-    return gulp.src([
-        'node_modules/jquery-select-areas/jquery.selectareas.js'
-    ])
+function areaselectJs() {
+    return gulp
+        .src([
+            'node_modules/jquery-select-areas/jquery.selectareas.js'
+        ])
         .pipe(gulp.dest('public/js/'));
-});
+}
 
-gulp.task('build-areaselect', ['areaselect-images', 'areaselect-css', 'areaselect-js']);
+const buildAreaselect = gulp.series(areaselectImages, areaselectCss, areaselectJs);
 
 
 /* Leaflet */
