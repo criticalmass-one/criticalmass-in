@@ -92,12 +92,13 @@ const buildExtramarkers = gulp.series(extramarkersImages, extramarkersCss, extra
 
 /* Font Awesome */
 
-gulp.task('copy-fontawesome-fonts', function () {
-    return gulp.src('node_modules/@fortawesome/fontawesome-pro/webfonts/*')
+function copyFontawesomeFonts() {
+    return gulp
+        .src('node_modules/font-awesome/fonts/*')
         .pipe(gulp.dest('public/fonts'));
-});
+}
 
-gulp.task('build-fontawesome', ['copy-fontawesome-fonts']);
+const buildFontawesome = gulp.series(copyFontawesomeFonts);
 
 
 /* Assets */
