@@ -8,9 +8,14 @@ caldera_criticalmass_rest_city_list:
     controller: App\Controller\Api\CityController::listAction
     methods:  [GET]
 
-caldera_criticalmass_rest_photo_gallery:
+caldera_criticalmass_rest_photo_ridelist:
     path:     /{citySlug}/{rideIdentifier}/listPhotos
-    controller: App\Controller\Api\PhotoController::listPhotosAction
+    controller: App\Controller\Api\PhotoController::listRidePhotosAction
+    methods:  [GET]
+
+caldera_criticalmass_rest_photo_list:
+    path:     /photo
+    controller: App\Controller\Api\PhotoController::listAction
     methods:  [GET]
 
 caldera_criticalmass_rest_city_show:
