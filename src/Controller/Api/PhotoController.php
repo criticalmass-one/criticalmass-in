@@ -3,29 +3,36 @@
 namespace App\Controller\Api;
 
 use App\Entity\Photo;
+use App\Entity\Ride;
 use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class PhotoController extends BaseController
 {
     /**
-     * This is a pretty useless endpoint which is not ready for usage now.
+     * Get a list of photos which were uploaded to a specified ride.
      *
      * @ApiDoc(
      *  resource=true,
-     *  description="Does bullshit",
-     *  section="Photo"
+     *  description="Retrieve a list of photos of a ride",
+     *  section="Photo",
+     *  requirements={
+     *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Provide the slug of a city."},
+     *    {"name"="rideIdentifier", "dataType"="string", "required"=true, "description"="Provide the ride identifier of a ride."},
+     *  }
      * )
+     * @ParamConverter("ride", class="App:Ride")
      */
-    public function galleryAction(RegistryInterface $registry): Response
+    public function listPhotosAction(RegistryInterface $registry, Ride $ride): Response
     {
-        $photoRides = $registry->getRepository(Photo::class)->findRidesForGallery();
+        $photoList = $registry->getRepository(Photo::class)->findPhotosByRide($ride);
 
         $view = View::create();
         $view
-            ->setData($photoRides)
+            ->setData($photoList)
             ->setFormat('json')
             ->setStatusCode(200);
 
