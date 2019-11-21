@@ -154,3 +154,45 @@ fos_elastica:
                         provider: ~
                         listener: ~
                         finder: ~
+
+        criticalmass_photo:
+            client: default
+            finder:
+            settings:
+                index:
+                    analysis:
+                        analyzer:
+                            umlauts_analyzer:
+                                type: custom
+                                tokenizer: lowercase
+                                filter: [umlauts_filter]
+                        filter:
+                            umlauts_filter:
+                                type: "asciifolding"
+            types:
+                photo:
+                    properties:
+                        id: ~
+                        description: ~
+                        city: { type: keyword }
+                        ride: { type: keyword }
+                        #region: { type: keyword }
+                        location: ~
+                        latitude: ~
+                        longitude: ~
+                        enabled: ~
+                        deleted: ~
+                        exifExposure: ~
+                        exifFocalLength: ~
+                        exifAperture: ~
+                        exifIso: ~
+                        exifCamera: ~
+                        exifCreationDate: ~
+                        creationDateTime: { type: date, format: "strict_date_optional_time" }
+                        pin: { type: geo_point }
+                    persistence:
+                        driver: orm
+                        model: App\Entity\Photo
+                        provider: ~
+                        listener: ~
+                        finder: ~

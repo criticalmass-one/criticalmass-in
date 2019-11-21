@@ -311,7 +311,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return $this;
     }
 
-    public function getRide(): Ride
+    public function getRide(): ?Ride
     {
         return $this->ride;
     }
@@ -635,5 +635,13 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     public function __toString(): string
     {
         return (string) $this->id;
+    }
+    public function getPin(): string
+    {
+        return sprintf('%f,%f', $this->latitude, $this->longitude);
+    }
+    public function getDateTime(): \DateTime
+    {
+        return $this->exifCreationDate;
     }
 }
