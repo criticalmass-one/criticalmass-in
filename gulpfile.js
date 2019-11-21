@@ -215,6 +215,6 @@ function compressJs() {
 
 const buildJs = gulp.series(copyJsExternal, compressJs)
 
-gulp.task('build', ['build-areaselect', 'build-leaflet', 'build-leaflet-extramarkers', 'build-fontawesome', 'build-assets', 'build-js', 'build-css'], function () {});
+const build = gulp.series(buildAreaselect, buildLeaflet, buildExtramarkers, buildFontawesome, buildAssets, buildJs, buildCss);
 
-gulp.task('default', ['build']);
+exports.default = build;
