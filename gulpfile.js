@@ -66,25 +66,28 @@ const buildLeaflet = gulp.series(leafletImages, leafletCss);
 
 /* Leaflet-Extramarkers */
 
-gulp.task('extramarkers-images', function () {
-    return gulp.src('node_modules/leaflet-extra-markers/dist/img/*')
+function extramarkersImages() {
+    return gulp
+        .src('node_modules/leaflet-extra-markers/dist/img/*')
         .pipe(gulp.dest('public/img/leaflet-extra-markers'));
-});
+}
 
-gulp.task('extramarkers-css', [], function() {
-    return gulp.src('node_modules/leaflet-extra-markers/dist/css/leaflet.extra-markers.min.css')
+function extramarkersCss() {
+    return gulp
+        .src('node_modules/leaflet-extra-markers/dist/css/leaflet.extra-markers.min.css')
         .pipe(urlAdjuster({
             replace: ['../img/','/img/leaflet-extra-markers/'],
         }))
         .pipe(gulp.dest('assets/css'));
-});
+}
 
-gulp.task('extramarkers-js', function () {
-    return gulp.src('node_modules/leaflet-extra-markers/src/assets/js/leaflet.extra-markers.js')
+function extramarkersJs() {
+    return gulp
+        .src('node_modules/leaflet-extra-markers/dist/js/leaflet.extra-markers.js')
         .pipe(gulp.dest('public/js/'));
-});
+}
 
-gulp.task('build-leaflet-extramarkers', ['extramarkers-images', 'extramarkers-css', 'extramarkers-js']);
+const buildExtramarkers = gulp.series(extramarkersImages, extramarkersCss, extramarkersJs);
 
 
 /* Font Awesome */
