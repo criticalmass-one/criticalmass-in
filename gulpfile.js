@@ -46,20 +46,22 @@ const buildAreaselect = gulp.series(areaselectImages, areaselectCss, areaselectJ
 
 /* Leaflet */
 
-gulp.task('leaflet-images', function () {
-    return gulp.src('node_modules/leaflet/dist/images/*')
+function leafletImages() {
+    return gulp
+        .src('node_modules/leaflet/dist/images/*')
         .pipe(gulp.dest('public/img/leaflet'));
-});
+}
 
-gulp.task('leaflet-css', [], function() {
-    return gulp.src('node_modules/leaflet/dist/leaflet.css')
+function leafletCss() {
+    return gulp
+        .src('node_modules/leaflet/dist/leaflet.css')
         .pipe(urlAdjuster({
             replace: ['images/','/img/leaflet/'],
         }))
         .pipe(gulp.dest('assets/css'));
-});
+}
 
-gulp.task('build-leaflet', ['leaflet-images', 'leaflet-css']);
+const buildLeaflet = gulp.series(leafletImages, leafletCss);
 
 
 /* Leaflet-Extramarkers */
