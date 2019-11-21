@@ -160,59 +160,60 @@ const buildCss = gulp.series(sass, leafletCss, extramarkersCss, sass, minifyCss)
 
 /* Javascript */
 
-gulp.task('copy-js-modules', function () {
-	return gulp.src([
-		'assets/js/**/**/**/*.js',
-	    ])
+function copyJsModules() {
+    return gulp
+        .src([
+            'assets/js/**/**/**/*.js',
+        ])
         .pipe(flatten())
-		.pipe(gulp.dest('public/js/'));
-});
-
-gulp.task('copy-js-external', function () {
-    return gulp.src([
-        'node_modules/bootstrap/dist/js/bootstrap.js',
-        'node_modules/bootstrap/dist/js/bootstrap.min.js',
-        'node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js',
-        'node_modules/dropzone/dist/dropzone-amd-module.js',
-        'node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
-        'node_modules/bootstrap-slider/dist/bootstrap-slider.js',
-        'node_modules/dateformat/lib/dateformat.js',
-        'node_modules/jquery/dist/jquery.js',
-        'node_modules/jquery/dist/jquery.min.js',
-        'node_modules/typeahead.js/dist/bloodhound.js',
-        'node_modules/typeahead.js/dist/typeahead.jquery.js',
-        'node_modules/leaflet/dist/leaflet.js',
-        'node_modules/leaflet.markercluster/dist/leaflet.markercluster.js',
-        'node_modules/leaflet.locatecontrol/src/L.Control.Locate.js',
-        'node_modules/chart.js/dist/Chart.bundle.js',
-        'node_modules/datatables/media/js/jquery.dataTables.js',
-        'node_modules/cookie-notice/dist/cookie.notice.js',
-        'node_modules/leaflet-sleep/Leaflet.Sleep.js',
-        'node_modules/jquery-select-areas/jquery.selectareas.js',
-        'node_modules/requirejs/require.js',
-        'node_modules/polyline-encoded/Polyline.encoded.js',
-        'node_modules/leaflet-groupedlayercontrol/src/leaflet.groupedlayercontrol.js',
-    ])
         .pipe(gulp.dest('public/js/'));
-});
+}
 
-gulp.task('compress-js', ['copy-js'], function () {
-	return gulp.src([
-		'public/js/*.js',
-	])
-		.pipe(minify({
-			ext: {
-				min: '.min.js'
-			},
-			noSource: true,
-			ignoreFiles: ['*.min.js']
-		}))
-		.pipe(gulp.dest('public/js/'));
-});
+function copyJsExternal() {
+    return gulp
+        .src([
+            'node_modules/bootstrap/dist/js/bootstrap.js',
+            'node_modules/bootstrap/dist/js/bootstrap.min.js',
+            'node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js',
+            'node_modules/dropzone/dist/dropzone-amd-module.js',
+            'node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
+            'node_modules/bootstrap-slider/dist/bootstrap-slider.js',
+            'node_modules/dateformat/lib/dateformat.js',
+            'node_modules/jquery/dist/jquery.js',
+            'node_modules/jquery/dist/jquery.min.js',
+            'node_modules/typeahead.js/dist/bloodhound.js',
+            'node_modules/typeahead.js/dist/typeahead.jquery.js',
+            'node_modules/leaflet/dist/leaflet.js',
+            'node_modules/leaflet.markercluster/dist/leaflet.markercluster.js',
+            'node_modules/leaflet.locatecontrol/src/L.Control.Locate.js',
+            'node_modules/chart.js/dist/Chart.bundle.js',
+            'node_modules/datatables/media/js/jquery.dataTables.js',
+            'node_modules/cookie-notice/dist/cookie.notice.js',
+            'node_modules/leaflet-sleep/Leaflet.Sleep.js',
+            'node_modules/jquery-select-areas/jquery.selectareas.js',
+            'node_modules/requirejs/require.js',
+            'node_modules/polyline-encoded/Polyline.encoded.js',
+            'node_modules/leaflet-groupedlayercontrol/src/leaflet.groupedlayercontrol.js',
+        ])
+        .pipe(gulp.dest('public/js/'));
+}
 
-gulp.task('copy-js', ['copy-js-modules', 'copy-js-external']);
+function compressJs() {
+    return gulp.src([
+        'public/js/*.js',
+    ])
+        .pipe(minify({
+            ext: {
+                min: '.min.js'
+            },
+            noSource: true,
+            ignoreFiles: ['*.min.js']
+        }))
+        .pipe(gulp.dest('public/js/'));
+}
 
-gulp.task('build-js', ['compress-js']);
+
+const buildJs = gulp.series(copyJsExternal, compressJs)
 
 gulp.task('build', ['build-areaselect', 'build-leaflet', 'build-leaflet-extramarkers', 'build-fontawesome', 'build-assets', 'build-js', 'build-css'], function () {});
 
