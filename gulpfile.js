@@ -125,14 +125,16 @@ const buildAssets = gulp.series(copyColorpickerImages, copyDatatableImages, copy
 
 /* CSS */
 
-gulp.task('sass', function () {
-    return gulp.src('assets/scss/criticalmass.scss')
+function sass() {
+    return gulp
+        .src('assets/scss/criticalmass.scss')
         .pipe(sass().on('error', sass.logError))
         .pipe(gulp.dest('assets/css'));
-});
+}
 
-gulp.task('compress-css', ['leaflet-css', 'extramarkers-css', 'sass'], function () {
-    return gulp.src([
+function minifyCss() {
+    return gulp
+        .src([
             'assets/css/*.css',
             'node_modules/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css',
             'node_modules/bootstrap-slider/dist/css/bootstrap-slider.min.css',
@@ -151,9 +153,9 @@ gulp.task('compress-css', ['leaflet-css', 'extramarkers-css', 'sass'], function 
             replace: ['webfonts/','fonts/'],
         }))
         .pipe(gulp.dest('public/css/'));
-});
+}
 
-gulp.task('build-css', ['sass', 'compress-css']);
+const buildCss = gulp.series(sass, leafletCss, extramarkersCss, sass, minifyCss);
 
 
 /* Javascript */
