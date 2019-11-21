@@ -1,10 +1,12 @@
-let gulp = require('gulp');
-let minify = require('gulp-minify');
-let cleanCSS = require('gulp-clean-css');
-let concat = require('gulp-concat');
-let urlAdjuster = require('gulp-css-replace-url');
-let flatten = require('gulp-flatten');
-let sass = require('gulp-sass');
+"use strict"
+
+const gulp = require('gulp');
+const minify = require('gulp-minify');
+const cleanCSS = require('gulp-clean-css');
+const concat = require('gulp-concat');
+const urlAdjuster = require('gulp-css-replace-url');
+const flatten = require('gulp-flatten');
+const sass = require('gulp-sass');
 sass.compiler = require('node-sass');
 
 /* jQuery Select Areas */
