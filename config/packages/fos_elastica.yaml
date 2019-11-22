@@ -180,15 +180,16 @@ fos_elastica:
                         location: ~
                         latitude: ~
                         longitude: ~
-                        enabled: ~
-                        deleted: ~
+                        isEnabled: ~
+                        isDeleted: ~
+                        dateTime: ~
                         exifExposure: ~
                         exifFocalLength: ~
                         exifAperture: ~
                         exifIso: ~
                         exifCamera: ~
-                        exifCreationDate: ~
-                        creationDateTime: { type: date, format: "strict_date_optional_time" }
+                        exifCreationDate: { type: date, format: "strict_date_hour_minute_second" }
+                        creationDateTime: { type: date, format: "strict_date_hour_minute_second" }
                         pin: { type: geo_point }
                     persistence:
                         driver: orm

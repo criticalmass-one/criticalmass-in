@@ -34,10 +34,10 @@ class YearQuery extends AbstractQuery implements ElasticQueryInterface, Doctrine
         $fromDateTime = DateTimeUtil::getYearStartDateTime($this->toDateTime());
         $untilDateTime = DateTimeUtil::getYearEndDateTime($this->toDateTime());
 
-        $dateTimeQuery = new \Elastica\Query\Range('dateTime', [
-            'gte' => $fromDateTime->format('Y-m-d'),
-            'lte' => $untilDateTime->format('Y-m-d'),
-            'format' => 'strict_date_optional_time',
+        $dateTimeQuery = new \Elastica\Query\Range('exifCreationDate', [
+            'gte' => $fromDateTime->format('Y-m-d\TH:i:s'),
+            'lte' => $untilDateTime->format('Y-m-d\TH:i:s'),
+            'format' => 'strict_date_hour_minute_second',
         ]);
 
         return $dateTimeQuery;
