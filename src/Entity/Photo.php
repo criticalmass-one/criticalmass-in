@@ -286,7 +286,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return $this;
     }
 
-    public function getEnabled(): bool
+    public function isEnabled(): bool
     {
         return $this->enabled;
     }
@@ -298,7 +298,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return $this;
     }
 
-    public function getDeleted(): bool
+    public function isDeleted(): bool
     {
         return $this->deleted;
     }
