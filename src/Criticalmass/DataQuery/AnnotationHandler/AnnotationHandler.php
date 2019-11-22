@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\DataQuery\AnnotationHandler;
 
+use App\Criticalmass\DataQuery\Annotation\AnnotationInterface;
 use App\Criticalmass\DataQuery\Annotation\DefaultBooleanValue;
 use App\Criticalmass\DataQuery\Annotation\RequiredEntityProperty;
 use App\Criticalmass\DataQuery\Annotation\RequiredParameter;
@@ -61,6 +62,39 @@ class AnnotationHandler implements AnnotationHandlerInterface
         }
 
         return false;
+    }
+
+    public function getEntityPropertyOrMethodWithAnnotation(string $entityFqcn, string $annotationFqcn, string $propertyName): ?AnnotationInterface
+    {
+        $reflectionClass = new \ReflectionClass($entityFqcn);
+
+        foreach ($reflectionClass->getProperties() as $reflectionProperty) {
+            if ($propertyName !== $reflectionProperty->getName()) {
+                continue;
+            }
+
+            foreach ($this->annotationReader->getPropertyAnnotations($reflectionProperty) as $propertyAnnotation) {
+                if ($propertyAnnotation instanceof $annotationFqcn) {
+                    return $propertyAnnotation;
+                }
+            }
+        }
+
+        $expectedMethodName = sprintf('get%s', ucfirst($propertyName));
+
+        foreach ($reflectionClass->getMethods() as $reflectionMethod) {
+            if ($expectedMethodName !== $reflectionMethod->getName()) {
+                continue;
+            }
+
+            foreach ($this->annotationReader->getMethodAnnotations($reflectionMethod) as $methodAnnotation) {
+                if ($methodAnnotation instanceof $annotationFqcn) {
+                    return $methodAnnotation;
+                }
+            }
+        }
+
+        return null;
     }
 
     public function listQueryRequiredMethods(string $queryFqcn): array

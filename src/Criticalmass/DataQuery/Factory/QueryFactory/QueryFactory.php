@@ -98,7 +98,7 @@ class QueryFactory implements QueryFactoryInterface
         if (0 === count($requiredEntityPropertyList)) {
             return null;
         }
-        
+
         /** @var EntityProperty $requiredEntityProperty */
         foreach ($requiredEntityPropertyList as $requiredEntityProperty) {
             if (!$this->annotationHandler->hasEntityTypedPropertyOrMethodWithAnnotation($this->entityFqcn, Queryable::class, $requiredEntityProperty->getPropertyName(), $requiredEntityProperty->getPropertyType())) {

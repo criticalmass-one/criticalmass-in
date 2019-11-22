@@ -28,7 +28,7 @@ class ValueAssigner implements ValueAssignerInterface
         $methodName = $property->getMethodName();
         $value = $requestParameterList->get($property->getParameterName());
         $type = $property->getType();
-
+        
         switch ($type) {
             case 'float':
                 $query->$methodName((float)$value);
