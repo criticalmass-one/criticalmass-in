@@ -115,7 +115,6 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
      * @ORM\Column(type="datetime")
      * @JMS\Expose
      * @DataQuery\Sortable
-     * @DataQuery\Queryable
      */
     protected $creationDateTime;
 
@@ -669,7 +668,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     }
 
     /**
-     * @DataQuery\Queryable
+     * @DataQuery\DateTimeQueryable(format="strict_date_hour_minute_second", pattern="Y-m-d\TH:i:s")
      */
     public function getDateTime(): \DateTime
     {

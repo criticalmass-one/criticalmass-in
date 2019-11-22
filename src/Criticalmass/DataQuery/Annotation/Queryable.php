@@ -7,5 +7,5 @@ namespace App\Criticalmass\DataQuery\Annotation;
  */
 class Queryable extends AbstractAnnotation
 {
-
+    
 }
