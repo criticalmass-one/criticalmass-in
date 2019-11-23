@@ -226,4 +226,18 @@ class AnnotationHandler implements AnnotationHandlerInterface
 
         return false;
     }
+
+    public function findChildAnnotationsForProperty(\ReflectionProperty $reflectionProperty, string $parentFqcn): array
+    {
+        $allPropertyAnnotations = $this->annotationReader->getPropertyAnnotations($reflectionProperty);
+        $childAnnotations = [];
+
+        foreach ($allPropertyAnnotations as $propertyAnnotation) {
+            if ($propertyAnnotation instanceof $parentFqcn) {
+                $childAnnotations[] = $propertyAnnotation;
+            }
+        }
+
+        return $childAnnotations;
+    }
 }
