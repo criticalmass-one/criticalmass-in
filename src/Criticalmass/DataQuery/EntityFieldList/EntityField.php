@@ -4,6 +4,12 @@ namespace App\Criticalmass\DataQuery\EntityFieldList;
 
 class EntityField
 {
+    /** @var bool $queryable */
+    protected $queryable = false;
+
+    /** @var bool $sortable */
+    protected $sortable = false;
+
     /** @var string $propertyName */
     protected $propertyName;
 
@@ -18,6 +24,30 @@ class EntityField
 
     /** @var string $dateTimePattern */
     protected $dateTimePattern;
+
+    public function isQueryable(): bool
+    {
+        return $this->queryable;
+    }
+
+    public function setQueryable(bool $queryable): EntityField
+    {
+        $this->queryable = $queryable;
+
+        return $this;
+    }
+
+    public function isSortable(): bool
+    {
+        return $this->sortable;
+    }
+
+    public function setSortable(bool $sortable): EntityField
+    {
+        $this->sortable = $sortable;
+
+        return $this;
+    }
 
     public function getPropertyName(): string
     {

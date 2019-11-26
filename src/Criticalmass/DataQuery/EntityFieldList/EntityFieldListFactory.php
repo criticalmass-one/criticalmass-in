@@ -3,6 +3,10 @@
 namespace App\Criticalmass\DataQuery\EntityFieldList;
 
 use App\Criticalmass\DataQuery\Annotation\AnnotationInterface;
+use App\Criticalmass\DataQuery\Annotation\DateTimeQueryable;
+use App\Criticalmass\DataQuery\Annotation\Queryable;
+use App\Criticalmass\DataQuery\Annotation\Sortable;
+use App\Criticalmass\DataQuery\Exception\NoReturnTypeForEntityMethodException;
 use Doctrine\Common\Annotations\Reader as AnnotationReader;
 
 class EntityFieldListFactory implements EntityFieldListFactoryInterface
@@ -61,8 +65,31 @@ class EntityFieldListFactory implements EntityFieldListFactoryInterface
 
             foreach ($methodAnnotations as $methodAnnotation) {
                 if ($methodAnnotation instanceof AnnotationInterface) {
+                    /** @var \ReflectionType $returnType */
+                    $returnType = $reflectionMethod->getReturnType();
+
+                    if (!$returnType) {
+                        throw new NoReturnTypeForEntityMethodException($reflectionMethod->getName(), $this->entityFqcn);
+                    }
+
                     $entityField = new EntityField();
-                    $entityField->setMethodName($reflectionMethod->getName());
+                    $entityField
+                        ->setMethodName($reflectionMethod->getName())
+                        ->setType($returnType->getName());
+
+                    if ($methodAnnotation instanceof Sortable) {
+                        $entityField->setSortable(true);
+                    }
+
+                    if ($methodAnnotation instanceof Queryable) {
+                        $entityField->setQueryable(true);
+                    }
+
+                    if ($methodAnnotation instanceof DateTimeQueryable) {
+                        $entityField
+                            ->setDateTimePattern($methodAnnotation->getPattern())
+                            ->setDateTimeFormat($methodAnnotation->getFormat());
+                    }
 
                     $this->entityFieldList->addField($reflectionMethod->getName(), $entityField);
                 }
