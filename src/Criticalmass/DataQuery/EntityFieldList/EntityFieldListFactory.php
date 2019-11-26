@@ -10,16 +10,31 @@ class EntityFieldListFactory implements EntityFieldListFactoryInterface
     /** @var AnnotationReader $annotationReader */
     protected $annotationReader;
 
+    /** @var string $entityFqcn */
+    protected $entityFqcn;
+
+    /** @var EntityFieldList $entityFieldList */
+    protected $entityFieldList;
+
     public function __construct(AnnotationReader $annotationReader)
     {
         $this->annotationReader = $annotationReader;
     }
 
-    public function createForFqcn(string $fqcn): EntityFieldList
+    public function createForFqcn(string $entityFqcn): EntityFieldList
     {
-        $entityFieldList = new EntityFieldList();
+        $this->entityFieldList = new EntityFieldList();
+        $this->entityFqcn = $entityFqcn;
 
-        $reflectionClass = new \ReflectionClass($fqcn);
+        $this->addEntityPropertiesToList();
+        $this->addEntityMethodsToList();
+
+        return $this->entityFieldList;
+    }
+
+    protected function addEntityPropertiesToList(): void
+    {
+        $reflectionClass = new \ReflectionClass($this->entityFqcn);
 
         /** @var \ReflectionProperty $reflectionProperty */
         foreach ($reflectionClass->getProperties() as $reflectionProperty) {
@@ -30,10 +45,15 @@ class EntityFieldListFactory implements EntityFieldListFactoryInterface
                     $entityField = new EntityField();
                     $entityField->setPropertyName($reflectionProperty->getName());
 
-                    $entityFieldList->addField($reflectionProperty->getName(), $entityField);
+                    $this->entityFieldList->addField($reflectionProperty->getName(), $entityField);
                 }
             }
         }
+    }
+
+    protected function addEntityMethodsToList(): void
+    {
+        $reflectionClass = new \ReflectionClass($this->entityFqcn);
 
         /** @var \ReflectionMethod $reflectionMethod */
         foreach ($reflectionClass->getMethods() as $reflectionMethod) {
@@ -44,12 +64,9 @@ class EntityFieldListFactory implements EntityFieldListFactoryInterface
                     $entityField = new EntityField();
                     $entityField->setMethodName($reflectionMethod->getName());
 
-                    $entityFieldList->addField($reflectionMethod->getName(), $entityField);
+                    $this->entityFieldList->addField($reflectionMethod->getName(), $entityField);
                 }
             }
         }
-
-        return $entityFieldList;
     }
-
 }
