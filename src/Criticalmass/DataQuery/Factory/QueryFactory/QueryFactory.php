@@ -4,6 +4,7 @@ namespace App\Criticalmass\DataQuery\Factory\QueryFactory;
 
 use App\Criticalmass\DataQuery\Annotation\Queryable;
 use App\Criticalmass\DataQuery\AnnotationHandler\AnnotationHandlerInterface;
+use App\Criticalmass\DataQuery\EntityFieldList\EntityFieldListFactoryInterface;
 use App\Criticalmass\DataQuery\Exception\ValidationException;
 use App\Criticalmass\DataQuery\Factory\ConflictResolver\ConflictResolver;
 use App\Criticalmass\DataQuery\Factory\ValueAssigner\ValueAssignerInterface;
@@ -39,13 +40,17 @@ class QueryFactory implements QueryFactoryInterface
     /** @var ValidatorInterface $validator */
     protected $validator;
 
-    public function __construct(RegistryInterface $registry, AnnotationHandlerInterface $annotationHandler, QueryManagerInterface $queryManager, ValueAssignerInterface $valueAssigner, ValidatorInterface $validator)
+    /** @var EntityFieldListFactoryInterface $entityFieldListFactory */
+    protected $entityFieldListFactory;
+
+    public function __construct(RegistryInterface $registry, AnnotationHandlerInterface $annotationHandler, QueryManagerInterface $queryManager, ValueAssignerInterface $valueAssigner, ValidatorInterface $validator, EntityFieldListFactoryInterface $entityFieldListFactory)
     {
         $this->registry = $registry;
         $this->annotationHandler = $annotationHandler;
         $this->queryManager = $queryManager;
         $this->valueAssigner = $valueAssigner;
         $this->validator = $validator;
+        $this->entityFieldListFactory = $entityFieldListFactory;
     }
 
     public function setEntityFqcn(string $entityFqcn): QueryFactoryInterface
@@ -58,6 +63,10 @@ class QueryFactory implements QueryFactoryInterface
     public function createFromList(RequestParameterList $requestParameterList): array
     {
         $queryList = $this->findEntityDefaultValuesAsQuery();
+        $entityFieldList = $this->entityFieldListFactory->createForFqcn($this->entityFqcn);
+
+        dump($entityFieldList);
+        die;
 
         /** @var QueryInterface $query */
         foreach ($this->queryManager->getQueryList() as $queryCandidate) {
