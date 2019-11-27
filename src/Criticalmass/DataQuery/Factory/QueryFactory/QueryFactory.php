@@ -13,6 +13,7 @@ use App\Criticalmass\DataQuery\Query\QueryInterface;
 use App\Criticalmass\DataQuery\QueryFieldList\QueryField;
 use App\Criticalmass\DataQuery\QueryFieldList\QueryFieldListFactoryInterface;
 use App\Criticalmass\DataQuery\RequestParameterList\RequestParameterList;
+use App\Criticalmass\Util\ClassUtil;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -71,7 +72,7 @@ class QueryFactory implements QueryFactoryInterface
             $query = $this->checkForQuery(get_class($queryCandidate), $requestParameterList);
 
             if ($query) {
-                $queryList[] = $query;
+                $queryList[ClassUtil::getShortname($query)] = $query;
             }
         }
 
