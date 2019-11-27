@@ -2,20 +2,16 @@
 
 namespace App\Criticalmass\DataQuery\Factory\QueryFactory;
 
-use App\Criticalmass\DataQuery\Annotation\Queryable;
 use App\Criticalmass\DataQuery\AnnotationHandler\AnnotationHandlerInterface;
 use App\Criticalmass\DataQuery\EntityFieldList\EntityFieldListFactoryInterface;
-use App\Criticalmass\DataQuery\Exception\ValidationException;
 use App\Criticalmass\DataQuery\Factory\ConflictResolver\ConflictResolver;
 use App\Criticalmass\DataQuery\Factory\ValueAssigner\ValueAssignerInterface;
 use App\Criticalmass\DataQuery\Manager\QueryManagerInterface;
 use App\Criticalmass\DataQuery\Property\EntityBooleanValueProperty;
-use App\Criticalmass\DataQuery\Property\EntityProperty;
 use App\Criticalmass\DataQuery\Property\QueryProperty;
 use App\Criticalmass\DataQuery\Query\BooleanQuery;
 use App\Criticalmass\DataQuery\Query\QueryInterface;
 use App\Criticalmass\DataQuery\RequestParameterList\RequestParameterList;
-use App\Criticalmass\Util\ClassUtil;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -65,61 +61,35 @@ class QueryFactory implements QueryFactoryInterface
         $queryList = $this->findEntityDefaultValuesAsQuery();
         $entityFieldList = $this->entityFieldListFactory->createForFqcn($this->entityFqcn);
 
-        dump($entityFieldList);
-        die;
-
-        /** @var QueryInterface $query */
+        /** @var QueryInterface $queryCandidate */
         foreach ($this->queryManager->getQueryList() as $queryCandidate) {
-            $queryUnderTest = $this->checkForQuery(get_class($queryCandidate), $requestParameterList);
+            $query = $this->checkForQuery(get_class($queryCandidate), $requestParameterList);
 
-            if ($queryUnderTest) {
-                /** @var ConstraintViolationListInterface $constraintViolationList */
-                $constraintViolationList = $this->validator->validate($queryUnderTest);
-
-                if ($constraintViolationList->count() === 0) {
-                    $key = ClassUtil::getShortname($queryUnderTest);
-                    $queryList[$key] = $queryUnderTest;
-                } else {
-                    $firstMessage = $constraintViolationList->get(0);
-                    throw new ValidationException($firstMessage->getMessage());
-                }
+            if ($query) {
+                $queryList[] = $query;
             }
         }
 
         $queryList = ConflictResolver::resolveConflicts($queryList);
+
+        dump($queryList);
 
         return $queryList;
     }
 
     protected function checkForQuery(string $queryFqcn, RequestParameterList $requestParameterList): ?QueryInterface
     {
-        $requiredQueriableMethodList = $this->annotationHandler->listQueryRequiredMethods($queryFqcn);
-
-        /** @var QueryProperty $requiredQuerieableMethod */
-        foreach ($requiredQueriableMethodList as $requiredQuerieableMethod) {
-            if (!$requestParameterList->has($requiredQuerieableMethod->getParameterName())) {
-                return null;
-            }
-        }
-
-        $requiredEntityPropertyList = $this->annotationHandler->listRequiredEntityProperties($queryFqcn);
-
-        if (0 === count($requiredEntityPropertyList)) {
-            return null;
-        }
-
-        /** @var EntityProperty $requiredEntityProperty */
-        foreach ($requiredEntityPropertyList as $requiredEntityProperty) {
-            if (!$this->annotationHandler->hasEntityTypedPropertyOrMethodWithAnnotation($this->entityFqcn, Queryable::class, $requiredEntityProperty->getPropertyName(), $requiredEntityProperty->getPropertyType())) {
-                return null;
-            }
-        }
-
         $query = new $queryFqcn();
+
+        $requiredQueriableMethodList = $this->annotationHandler->listQueryRequiredMethods($queryFqcn);
 
         /** @var QueryProperty $queryProperty */
         foreach ($requiredQueriableMethodList as $queryProperty) {
             $this->valueAssigner->assignQueryPropertyValue($requestParameterList, $query, $queryProperty);
+        }
+
+        if (!$this->isQueryValid($query)) {
+            return null;
         }
 
         return $query;
@@ -141,5 +111,13 @@ class QueryFactory implements QueryFactoryInterface
         }
 
         return $defaultValueQueryList;
+    }
+
+    protected function isQueryValid(QueryInterface $query): bool
+    {
+        /** @var ConstraintViolationListInterface $constraintViolationList */
+        $constraintViolationList = $this->validator->validate($query);
+
+        return $constraintViolationList->count() === 0;
     }
 }

@@ -25,6 +25,10 @@ class ValueAssigner implements ValueAssignerInterface
 
     public function assignQueryPropertyValue(RequestParameterList $requestParameterList, QueryInterface $query, QueryProperty $property): QueryInterface
     {
+        if (!$requestParameterList->has($property->getParameterName())) {
+            return $query;
+        }
+
         $methodName = $property->getMethodName();
         $value = $requestParameterList->get($property->getParameterName());
         $type = $property->getType();
