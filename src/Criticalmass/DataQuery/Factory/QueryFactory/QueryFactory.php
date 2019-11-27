@@ -11,6 +11,7 @@ use App\Criticalmass\DataQuery\Property\EntityBooleanValueProperty;
 use App\Criticalmass\DataQuery\Property\QueryProperty;
 use App\Criticalmass\DataQuery\Query\BooleanQuery;
 use App\Criticalmass\DataQuery\Query\QueryInterface;
+use App\Criticalmass\DataQuery\QueryFieldList\QueryFieldListFactoryInterface;
 use App\Criticalmass\DataQuery\RequestParameterList\RequestParameterList;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
@@ -39,7 +40,10 @@ class QueryFactory implements QueryFactoryInterface
     /** @var EntityFieldListFactoryInterface $entityFieldListFactory */
     protected $entityFieldListFactory;
 
-    public function __construct(RegistryInterface $registry, AnnotationHandlerInterface $annotationHandler, QueryManagerInterface $queryManager, ValueAssignerInterface $valueAssigner, ValidatorInterface $validator, EntityFieldListFactoryInterface $entityFieldListFactory)
+    /** @var QueryFieldListFactoryInterface $queryFieldListFactory */
+    protected $queryFieldListFactory;
+
+    public function __construct(RegistryInterface $registry, AnnotationHandlerInterface $annotationHandler, QueryManagerInterface $queryManager, ValueAssignerInterface $valueAssigner, ValidatorInterface $validator, EntityFieldListFactoryInterface $entityFieldListFactory, QueryFieldListFactoryInterface $queryFieldListFactory)
     {
         $this->registry = $registry;
         $this->annotationHandler = $annotationHandler;
@@ -47,6 +51,7 @@ class QueryFactory implements QueryFactoryInterface
         $this->valueAssigner = $valueAssigner;
         $this->validator = $validator;
         $this->entityFieldListFactory = $entityFieldListFactory;
+        $this->queryFieldListFactory = $queryFieldListFactory;
     }
 
     public function setEntityFqcn(string $entityFqcn): QueryFactoryInterface
@@ -71,9 +76,7 @@ class QueryFactory implements QueryFactoryInterface
         }
 
         $queryList = ConflictResolver::resolveConflicts($queryList);
-
-        dump($queryList);
-
+        die;
         return $queryList;
     }
 
@@ -81,6 +84,9 @@ class QueryFactory implements QueryFactoryInterface
     {
         $query = new $queryFqcn();
 
+        $queryFieldList = $this->queryFieldListFactory->createForFqcn($queryFqcn);
+
+        dump($queryFieldList);
         $requiredQueriableMethodList = $this->annotationHandler->listQueryRequiredMethods($queryFqcn);
 
         /** @var QueryProperty $queryProperty */

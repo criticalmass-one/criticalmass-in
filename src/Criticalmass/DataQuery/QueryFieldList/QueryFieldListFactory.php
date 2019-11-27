@@ -2,12 +2,9 @@
 
 namespace App\Criticalmass\DataQuery\QueryFieldList;
 
-use App\Criticalmass\DataQuery\Annotation\AnnotationInterface;
-use App\Criticalmass\DataQuery\Annotation\DateTimeQueryable;
-use App\Criticalmass\DataQuery\Annotation\Queryable;
 use App\Criticalmass\DataQuery\Annotation\RequiredQueryParameter;
-use App\Criticalmass\DataQuery\Annotation\Sortable;
-use App\Criticalmass\DataQuery\Exception\NoReturnTypeForEntityMethodException;
+use App\Criticalmass\DataQuery\Exception\NotOneParameterForRequiredMethodException;
+use App\Criticalmass\DataQuery\Exception\NoTypedParameterForRequiredMethodException;
 use Doctrine\Common\Annotations\Reader as AnnotationReader;
 
 class QueryFieldListFactory implements QueryFieldListFactoryInterface
@@ -28,7 +25,7 @@ class QueryFieldListFactory implements QueryFieldListFactoryInterface
 
     public function createForFqcn(string $queryFqcn): QueryFieldList
     {
-        $this->entityFieldList = new QueryFieldList();
+        $this->queryFieldList = new QueryFieldList();
         $this->queryFqcn = $queryFqcn;
 
         $this->addQueryPropertiesToList();
@@ -68,34 +65,26 @@ class QueryFieldListFactory implements QueryFieldListFactoryInterface
             $methodAnnotations = $this->annotationReader->getMethodAnnotations($reflectionMethod);
 
             foreach ($methodAnnotations as $methodAnnotation) {
-                if ($methodAnnotation instanceof AnnotationInterface) {
-                    /** @var \ReflectionType $returnType */
-                    $returnType = $reflectionMethod->getReturnType();
+                if ($methodAnnotation instanceof RequiredQueryParameter) {
 
-                    if (!$returnType) {
-                        throw new NoReturnTypeForEntityMethodException($reflectionMethod->getName(), $this->entityFqcn);
+                    if ($reflectionMethod->getNumberOfParameters() !== 1) {
+                        throw new NotOneParameterForRequiredMethodException($reflectionMethod->getName(), $this->queryFqcn);
                     }
 
-                    $entityField = new EntityField();
+                    $methodParameter = $reflectionMethod->getParameters()[0];
+                    $reflectionType = $methodParameter->getType();
+
+                    if (!$reflectionType) {
+                        throw new NoTypedParameterForRequiredMethodException($reflectionMethod->getName(), $this->queryFqcn);
+                    }
+
+                    $entityField = new QueryField();
                     $entityField
                         ->setMethodName($reflectionMethod->getName())
-                        ->setType($returnType->getName());
+                        ->setParameterName($methodAnnotation->getParameterName())
+                        ->setType($reflectionType->getName());
 
-                    if ($methodAnnotation instanceof Sortable) {
-                        $entityField->setSortable(true);
-                    }
-
-                    if ($methodAnnotation instanceof Queryable) {
-                        $entityField->setQueryable(true);
-                    }
-
-                    if ($methodAnnotation instanceof DateTimeQueryable) {
-                        $entityField
-                            ->setDateTimePattern($methodAnnotation->getPattern())
-                            ->setDateTimeFormat($methodAnnotation->getFormat());
-                    }
-
-                    $this->entityFieldList->addField($reflectionMethod->getName(), $entityField);
+                    $this->queryFieldList->addField($reflectionMethod->getName(), $entityField);
                 }
             }
         }
