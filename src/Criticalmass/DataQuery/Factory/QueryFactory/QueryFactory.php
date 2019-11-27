@@ -78,8 +78,6 @@ class QueryFactory implements QueryFactoryInterface
 
         $queryList = ConflictResolver::resolveConflicts($queryList);
 
-        dump($queryList);
-        die;
         return $queryList;
     }
 

@@ -2,17 +2,14 @@
 
 namespace App\Criticalmass\DataQuery\Factory\ParameterFactory;
 
-use App\Criticalmass\DataQuery\Annotation\Sortable;
 use App\Criticalmass\DataQuery\AnnotationHandler\AnnotationHandlerInterface;
-use App\Criticalmass\DataQuery\Exception\TargetPropertyNotSortableException;
-use App\Criticalmass\DataQuery\Exception\ValidationException;
 use App\Criticalmass\DataQuery\Factory\ValueAssigner\ValueAssignerInterface;
 use App\Criticalmass\DataQuery\Manager\ParameterManagerInterface;
 use App\Criticalmass\DataQuery\Parameter\ParameterInterface;
 use App\Criticalmass\DataQuery\Parameter\PropertyTargetingParameterInterface;
-use App\Criticalmass\DataQuery\Property\ParameterProperty;
+use App\Criticalmass\DataQuery\ParameterFieldList\ParameterField;
+use App\Criticalmass\DataQuery\ParameterFieldList\ParameterFieldListFactoryInterface;
 use App\Criticalmass\DataQuery\RequestParameterList\RequestParameterList;
-use App\Criticalmass\Util\ClassUtil;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -33,12 +30,16 @@ class ParameterFactory implements ParameterFactoryInterface
     /** @var ValidatorInterface $validator */
     protected $validator;
 
-    public function __construct(AnnotationHandlerInterface $annotationHandler, ParameterManagerInterface $parameterManager, ValueAssignerInterface $valueAssigner, ValidatorInterface $validator)
+    /** @var ParameterFieldListFactoryInterface */
+    protected $parameterListFactory;
+
+    public function __construct(AnnotationHandlerInterface $annotationHandler, ParameterManagerInterface $parameterManager, ValueAssignerInterface $valueAssigner, ValidatorInterface $validator, ParameterFieldListFactoryInterface $parameterFieldListFactory)
     {
         $this->annotationHandler = $annotationHandler;
         $this->parameterManager = $parameterManager;
         $this->valueAssigner = $valueAssigner;
         $this->validator = $validator;
+        $this->parameterListFactory = $parameterFieldListFactory;
     }
 
     public function setEntityFqcn(string $entityFqcn): ParameterFactoryInterface
@@ -60,13 +61,6 @@ class ParameterFactory implements ParameterFactoryInterface
                 /** @var ConstraintViolationListInterface $constraintViolationList */
                 $constraintViolationList = $this->validator->validate($parameterUnderTest);
 
-                if (0 === $constraintViolationList->count()) {
-                    $key = ClassUtil::getShortname($parameterUnderTest);
-                    $parameterList[$key] = $parameterUnderTest;
-                } else {
-                    $firstMessage = $constraintViolationList->get(0);
-                    throw new ValidationException($firstMessage->getMessage());
-                }
             }
         }
 
@@ -75,29 +69,36 @@ class ParameterFactory implements ParameterFactoryInterface
 
     protected function checkForParameter(string $queryFqcn, RequestParameterList $requestParameterList): ?ParameterInterface
     {
-        $requiredParameterableList = $this->annotationHandler->listParameterRequiredMethods($queryFqcn);
+        $parameterFieldList = $this->parameterListFactory->createForFqcn($queryFqcn);
 
         /** @var ParameterInterface $parameter */
         $parameter = new $queryFqcn();
 
-        /** @var ParameterProperty $requiredParameterProperty */
-        foreach ($requiredParameterableList as $requiredParameterProperty) {
-            if (!$requestParameterList->has($requiredParameterProperty->getParameterName())) {
-                return null;
-            }
-
-            $parameter = $this->valueAssigner->assignParameterPropertyValue($requestParameterList, $parameter, $requiredParameterProperty);
+        /** @var ParameterField $parameterField */
+        foreach ($parameterFieldList as $parameterField) {
+            $parameter = $this->valueAssigner->assignParameterPropertyValue($requestParameterList, $parameter, $parameterField);
 
             if ($parameter instanceof PropertyTargetingParameterInterface) {
                 /** @var PropertyTargetingParameterInterface $parameter */
                 $methodName = sprintf('get%s', ucfirst($parameter->getPropertyName()));
 
-                if ($requiredParameterProperty->hasRequiredSortableTargetEntity() && !$this->annotationHandler->hasEntityAnnotatedMethod($this->entityFqcn, $methodName, Sortable::class)) {
+                /*if ($requiredParameterProperty->hasRequiredSortableTargetEntity() && !$this->annotationHandler->hasEntityAnnotatedMethod($this->entityFqcn, $methodName, Sortable::class)) {
                     throw new TargetPropertyNotSortableException($parameter->getPropertyName(), $this->entityFqcn);
-                }
+                }*/
             }
         }
 
+        if (!$this->isParameterValid($parameter)) {
+            return null;
+        }
+
         return $parameter;
+    }
+
+    protected function isParameterValid(ParameterInterface $parameter): bool
+    {
+        $constraintViolationList = $this->validator->validate($parameter);
+
+        return $constraintViolationList->count() === 0;
     }
 }

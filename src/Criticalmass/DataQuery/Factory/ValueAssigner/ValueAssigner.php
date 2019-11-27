@@ -5,7 +5,7 @@ namespace App\Criticalmass\DataQuery\Factory\ValueAssigner;
 use App\Criticalmass\DataQuery\Exception\ParameterConverterException;
 use App\Criticalmass\DataQuery\Factory\ParamConverterFactory\ParamConverterFactoryInterface;
 use App\Criticalmass\DataQuery\Parameter\ParameterInterface;
-use App\Criticalmass\DataQuery\Property\ParameterProperty;
+use App\Criticalmass\DataQuery\ParameterFieldList\ParameterField;
 use App\Criticalmass\DataQuery\Query\QueryInterface;
 use App\Criticalmass\DataQuery\QueryFieldList\QueryField;
 use App\Criticalmass\DataQuery\RequestParameterList\RequestParameterList;
@@ -59,11 +59,11 @@ class ValueAssigner implements ValueAssignerInterface
         return $query;
     }
 
-    public function assignParameterPropertyValue(RequestParameterList $requestParameterList, ParameterInterface $parameter, ParameterProperty $property): ParameterInterface
+    public function assignParameterPropertyValue(RequestParameterList $requestParameterList, ParameterInterface $parameter, ParameterField $parameterField): ParameterInterface
     {
-        $methodName = $property->getMethodName();
-        $value = $requestParameterList->get($property->getParameterName());
-        $type = $property->getType();
+        $methodName = $parameterField->getMethodName();
+        $value = $requestParameterList->get($parameterField->getParameterName());
+        $type = $parameterField->getType();
 
         switch ($type) {
             case 'float':
@@ -71,7 +71,7 @@ class ValueAssigner implements ValueAssignerInterface
                 break;
 
             case 'int':
-                $value = $this->convertToInt($value, $property->getParameterName());
+                $value = $this->convertToInt($value, $parameterField->getParameterName());
                 $parameter->$methodName($value);
                 break;
 
