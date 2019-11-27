@@ -17,4 +17,9 @@ class QueryFieldList
 
         return $this;
     }
+
+    public function getList(): array
+    {
+        return $this->list;
+    }
 }

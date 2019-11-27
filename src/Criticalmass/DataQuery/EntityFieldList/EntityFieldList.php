@@ -17,4 +17,9 @@ class EntityFieldList
 
         return $this;
     }
+
+    public function getList(): array
+    {
+        return $this->list;
+    }
 }

@@ -8,9 +8,9 @@ use App\Criticalmass\DataQuery\Factory\ConflictResolver\ConflictResolver;
 use App\Criticalmass\DataQuery\Factory\ValueAssigner\ValueAssignerInterface;
 use App\Criticalmass\DataQuery\Manager\QueryManagerInterface;
 use App\Criticalmass\DataQuery\Property\EntityBooleanValueProperty;
-use App\Criticalmass\DataQuery\Property\QueryProperty;
 use App\Criticalmass\DataQuery\Query\BooleanQuery;
 use App\Criticalmass\DataQuery\Query\QueryInterface;
+use App\Criticalmass\DataQuery\QueryFieldList\QueryField;
 use App\Criticalmass\DataQuery\QueryFieldList\QueryFieldListFactoryInterface;
 use App\Criticalmass\DataQuery\RequestParameterList\RequestParameterList;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -76,6 +76,8 @@ class QueryFactory implements QueryFactoryInterface
         }
 
         $queryList = ConflictResolver::resolveConflicts($queryList);
+
+        dump($queryList);
         die;
         return $queryList;
     }
@@ -86,12 +88,15 @@ class QueryFactory implements QueryFactoryInterface
 
         $queryFieldList = $this->queryFieldListFactory->createForFqcn($queryFqcn);
 
-        dump($queryFieldList);
-        $requiredQueriableMethodList = $this->annotationHandler->listQueryRequiredMethods($queryFqcn);
-
-        /** @var QueryProperty $queryProperty */
-        foreach ($requiredQueriableMethodList as $queryProperty) {
-            $this->valueAssigner->assignQueryPropertyValue($requestParameterList, $query, $queryProperty);
+        /**
+         * @var string $fieldName
+         * @var array $queryFields
+         */
+        foreach ($queryFieldList->getList() as $fieldName => $queryFields) {
+            /** @var QueryField $queryField */
+            foreach ($queryFields as $queryField) {
+                $this->valueAssigner->assignQueryPropertyValue($requestParameterList, $query, $queryField);
+            }
         }
 
         if (!$this->isQueryValid($query)) {
