@@ -2,24 +2,14 @@
 
 namespace App\Criticalmass\DataQuery\FieldList\ParameterFieldList;
 
-class ParameterFieldList
-{
-    /** @var array $list */
-    protected $list = [];
+use App\Criticalmass\DataQuery\FieldList\AbstractFieldList;
 
+class ParameterFieldList extends AbstractFieldList
+{
     public function addField(string $fieldName, ParameterField $parameterField): ParameterFieldList
     {
-        if (!array_key_exists($fieldName, $this->list)) {
-            $this->list[$fieldName] = [];
-        }
-
-        $this->list[$fieldName][] = $parameterField;
+        $this->addToList($fieldName, $parameterField);
 
         return $this;
-    }
-
-    public function getList(): array
-    {
-        return $this->list;
     }
 }

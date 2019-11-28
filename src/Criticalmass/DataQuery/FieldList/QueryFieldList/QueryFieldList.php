@@ -2,24 +2,14 @@
 
 namespace App\Criticalmass\DataQuery\FieldList\QueryFieldList;
 
-class QueryFieldList
-{
-    /** @var array $list */
-    protected $list = [];
+use App\Criticalmass\DataQuery\FieldList\AbstractFieldList;
 
+class QueryFieldList extends AbstractFieldList
+{
     public function addField(string $fieldName, QueryField $queryField): QueryFieldList
     {
-        if (!array_key_exists($fieldName, $this->list)) {
-            $this->list[$fieldName] = [];
-        }
-
-        $this->list[$fieldName][] = $queryField;
+        $this->addToList($fieldName, $queryField);
 
         return $this;
-    }
-
-    public function getList(): array
-    {
-        return $this->list;
     }
 }

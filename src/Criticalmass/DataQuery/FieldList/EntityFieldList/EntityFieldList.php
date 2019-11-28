@@ -2,24 +2,14 @@
 
 namespace App\Criticalmass\DataQuery\FieldList\EntityFieldList;
 
-class EntityFieldList
-{
-    /** @var array $list */
-    protected $list = [];
+use App\Criticalmass\DataQuery\FieldList\AbstractFieldList;
 
+class EntityFieldList extends AbstractFieldList
+{
     public function addField(string $fieldName, EntityField $entityProperty): EntityFieldList
     {
-        if (!array_key_exists($fieldName, $this->list)) {
-            $this->list[$fieldName] = [];
-        }
-
-        $this->list[$fieldName][] = $entityProperty;
+        $this->addToList($fieldName, $entityProperty);
 
         return $this;
-    }
-
-    public function getList(): array
-    {
-        return $this->list;
     }
 }
