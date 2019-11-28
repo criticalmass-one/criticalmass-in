@@ -422,6 +422,9 @@
     "phpoption/phpoption": {
         "version": "1.5.0"
     },
+    "phpseclib/phpseclib": {
+        "version": "2.0.23"
+    },
     "phpspec/prophecy": {
         "version": "1.7.6"
     },
@@ -634,6 +637,9 @@
     },
     "symfony/dotenv": {
         "version": "v4.1.1"
+    },
+    "symfony/error-handler": {
+        "version": "v4.4.0"
     },
     "symfony/event-dispatcher": {
         "version": "v4.1.1"
