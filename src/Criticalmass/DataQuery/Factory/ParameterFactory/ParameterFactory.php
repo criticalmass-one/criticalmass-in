@@ -3,11 +3,11 @@
 namespace App\Criticalmass\DataQuery\Factory\ParameterFactory;
 
 use App\Criticalmass\DataQuery\Factory\ValueAssigner\ValueAssignerInterface;
+use App\Criticalmass\DataQuery\FieldList\ParameterFieldList\ParameterField;
+use App\Criticalmass\DataQuery\FieldList\ParameterFieldList\ParameterFieldListFactoryInterface;
 use App\Criticalmass\DataQuery\Manager\ParameterManagerInterface;
 use App\Criticalmass\DataQuery\Parameter\ParameterInterface;
 use App\Criticalmass\DataQuery\Parameter\PropertyTargetingParameterInterface;
-use App\Criticalmass\DataQuery\ParameterFieldList\ParameterField;
-use App\Criticalmass\DataQuery\ParameterFieldList\ParameterFieldListFactoryInterface;
 use App\Criticalmass\DataQuery\RequestParameterList\RequestParameterList;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;

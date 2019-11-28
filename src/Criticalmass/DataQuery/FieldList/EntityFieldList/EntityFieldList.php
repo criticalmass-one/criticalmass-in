@@ -1,19 +1,19 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\DataQuery\ParameterFieldList;
+namespace App\Criticalmass\DataQuery\FieldList\EntityFieldList;
 
-class ParameterFieldList
+class EntityFieldList
 {
     /** @var array $list */
     protected $list = [];
 
-    public function addField(string $fieldName, ParameterField $parameterField): ParameterFieldList
+    public function addField(string $fieldName, EntityField $entityProperty): EntityFieldList
     {
         if (!array_key_exists($fieldName, $this->list)) {
             $this->list[$fieldName] = [];
         }
 
-        $this->list[$fieldName][] = $parameterField;
+        $this->list[$fieldName][] = $entityProperty;
 
         return $this;
     }

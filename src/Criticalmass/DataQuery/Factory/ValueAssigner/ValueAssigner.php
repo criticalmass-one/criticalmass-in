@@ -4,10 +4,10 @@ namespace App\Criticalmass\DataQuery\Factory\ValueAssigner;
 
 use App\Criticalmass\DataQuery\Exception\ParameterConverterException;
 use App\Criticalmass\DataQuery\Factory\ParamConverterFactory\ParamConverterFactoryInterface;
+use App\Criticalmass\DataQuery\FieldList\ParameterFieldList\ParameterField;
+use App\Criticalmass\DataQuery\FieldList\QueryFieldList\QueryField;
 use App\Criticalmass\DataQuery\Parameter\ParameterInterface;
-use App\Criticalmass\DataQuery\ParameterFieldList\ParameterField;
 use App\Criticalmass\DataQuery\Query\QueryInterface;
-use App\Criticalmass\DataQuery\QueryFieldList\QueryField;
 use App\Criticalmass\DataQuery\RequestParameterList\RequestParameterList;
 use App\Criticalmass\Util\ClassUtil;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;

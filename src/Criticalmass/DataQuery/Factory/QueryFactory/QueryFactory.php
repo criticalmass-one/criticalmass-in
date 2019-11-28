@@ -2,15 +2,15 @@
 
 namespace App\Criticalmass\DataQuery\Factory\QueryFactory;
 
-use App\Criticalmass\DataQuery\EntityFieldList\EntityField;
-use App\Criticalmass\DataQuery\EntityFieldList\EntityFieldListFactoryInterface;
 use App\Criticalmass\DataQuery\Factory\ConflictResolver\ConflictResolver;
 use App\Criticalmass\DataQuery\Factory\ValueAssigner\ValueAssignerInterface;
+use App\Criticalmass\DataQuery\FieldList\EntityFieldList\EntityField;
+use App\Criticalmass\DataQuery\FieldList\EntityFieldList\EntityFieldListFactoryInterface;
+use App\Criticalmass\DataQuery\FieldList\QueryFieldList\QueryField;
+use App\Criticalmass\DataQuery\FieldList\QueryFieldList\QueryFieldListFactoryInterface;
 use App\Criticalmass\DataQuery\Manager\QueryManagerInterface;
 use App\Criticalmass\DataQuery\Query\BooleanQuery;
 use App\Criticalmass\DataQuery\Query\QueryInterface;
-use App\Criticalmass\DataQuery\QueryFieldList\QueryField;
-use App\Criticalmass\DataQuery\QueryFieldList\QueryFieldListFactoryInterface;
 use App\Criticalmass\DataQuery\RequestParameterList\RequestParameterList;
 use App\Criticalmass\Util\ClassUtil;
 use Symfony\Bridge\Doctrine\RegistryInterface;

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\DataQuery\EntityFieldList;
+namespace App\Criticalmass\DataQuery\FieldList\EntityFieldList;
 
 class EntityField
 {

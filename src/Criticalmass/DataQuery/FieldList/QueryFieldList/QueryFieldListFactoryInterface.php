@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\DataQuery\QueryFieldList;
+namespace App\Criticalmass\DataQuery\FieldList\QueryFieldList;
 
 interface QueryFieldListFactoryInterface
 {
