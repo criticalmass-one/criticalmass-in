@@ -10,6 +10,12 @@ class EntityField
     /** @var bool $sortable */
     protected $sortable = false;
 
+    /** @var bool $defaultQueryBoolValue */
+    protected $defaultQueryBoolValue = false;
+
+    /** @var bool $defaultQueryBool */
+    protected $defaultQueryBool = false;
+
     /** @var string $propertyName */
     protected $propertyName;
 
@@ -45,6 +51,30 @@ class EntityField
     public function setSortable(bool $sortable): EntityField
     {
         $this->sortable = $sortable;
+
+        return $this;
+    }
+
+    public function hasDefaultQueryBool(): bool
+    {
+        return $this->defaultQueryBool;
+    }
+
+    public function setDefaultQueryBool(bool $defaultQueryBool): EntityField
+    {
+        $this->defaultQueryBool = $defaultQueryBool;
+
+        return $this;
+    }
+
+    public function getDefaultQueryBoolValue(): bool
+    {
+        return $this->defaultQueryBoolValue;
+    }
+
+    public function setDefaultQueryBoolValue(bool $defaultQueryBoolValue): EntityField
+    {
+        $this->defaultQueryBoolValue = $defaultQueryBoolValue;
 
         return $this;
     }

@@ -2,12 +2,11 @@
 
 namespace App\Criticalmass\DataQuery\Factory\QueryFactory;
 
-use App\Criticalmass\DataQuery\AnnotationHandler\AnnotationHandlerInterface;
+use App\Criticalmass\DataQuery\EntityFieldList\EntityField;
 use App\Criticalmass\DataQuery\EntityFieldList\EntityFieldListFactoryInterface;
 use App\Criticalmass\DataQuery\Factory\ConflictResolver\ConflictResolver;
 use App\Criticalmass\DataQuery\Factory\ValueAssigner\ValueAssignerInterface;
 use App\Criticalmass\DataQuery\Manager\QueryManagerInterface;
-use App\Criticalmass\DataQuery\Property\EntityBooleanValueProperty;
 use App\Criticalmass\DataQuery\Query\BooleanQuery;
 use App\Criticalmass\DataQuery\Query\QueryInterface;
 use App\Criticalmass\DataQuery\QueryFieldList\QueryField;
@@ -26,9 +25,6 @@ class QueryFactory implements QueryFactoryInterface
     /** @var string $entityFqcn */
     protected $entityFqcn;
 
-    /** @var AnnotationHandlerInterface $annotationHandler */
-    protected $annotationHandler;
-
     /** @var QueryManagerInterface $queryManager */
     protected $queryManager;
 
@@ -44,10 +40,9 @@ class QueryFactory implements QueryFactoryInterface
     /** @var QueryFieldListFactoryInterface $queryFieldListFactory */
     protected $queryFieldListFactory;
 
-    public function __construct(RegistryInterface $registry, AnnotationHandlerInterface $annotationHandler, QueryManagerInterface $queryManager, ValueAssignerInterface $valueAssigner, ValidatorInterface $validator, EntityFieldListFactoryInterface $entityFieldListFactory, QueryFieldListFactoryInterface $queryFieldListFactory)
+    public function __construct(RegistryInterface $registry, QueryManagerInterface $queryManager, ValueAssignerInterface $valueAssigner, ValidatorInterface $validator, EntityFieldListFactoryInterface $entityFieldListFactory, QueryFieldListFactoryInterface $queryFieldListFactory)
     {
         $this->registry = $registry;
-        $this->annotationHandler = $annotationHandler;
         $this->queryManager = $queryManager;
         $this->valueAssigner = $valueAssigner;
         $this->validator = $validator;
@@ -65,7 +60,6 @@ class QueryFactory implements QueryFactoryInterface
     public function createFromList(RequestParameterList $requestParameterList): array
     {
         $queryList = $this->findEntityDefaultValuesAsQuery();
-        $entityFieldList = $this->entityFieldListFactory->createForFqcn($this->entityFqcn);
 
         /** @var QueryInterface $queryCandidate */
         foreach ($this->queryManager->getQueryList() as $queryCandidate) {
@@ -108,16 +102,20 @@ class QueryFactory implements QueryFactoryInterface
     protected function findEntityDefaultValuesAsQuery(): array
     {
         $defaultValueQueryList = [];
-        $entityDefaultValueList = $this->annotationHandler->listEntityDefaultValues($this->entityFqcn);
+        $entityFieldList = $this->entityFieldListFactory->createForFqcn($this->entityFqcn);
 
-        /** @var EntityBooleanValueProperty $entityDefaultValue */
-        foreach ($entityDefaultValueList as $entityDefaultValue) {
-            $booleanQuery = new BooleanQuery();
-            $booleanQuery
-                ->setPropertyName($entityDefaultValue->getPropertyName())
-                ->setValue($entityDefaultValue->getValue());
+        foreach ($entityFieldList->getList() as $entityFieldName => $entityFields) {
+            /** @var EntityField $entityField */
+            foreach ($entityFields as $entityField) {
+                if ($entityField->hasDefaultQueryBool()) {
+                    $booleanQuery = new BooleanQuery();
+                    $booleanQuery
+                        ->setPropertyName($entityField->getPropertyName())
+                        ->setValue($entityField->getDefaultQueryBoolValue());
 
-            $defaultValueQueryList[] = $booleanQuery;
+                    $defaultValueQueryList[] = $booleanQuery;
+                }
+            }
         }
 
         return $defaultValueQueryList;

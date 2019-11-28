@@ -2,7 +2,6 @@
 
 namespace App\Criticalmass\DataQuery\Factory\ParameterFactory;
 
-use App\Criticalmass\DataQuery\AnnotationHandler\AnnotationHandlerInterface;
 use App\Criticalmass\DataQuery\Factory\ValueAssigner\ValueAssignerInterface;
 use App\Criticalmass\DataQuery\Manager\ParameterManagerInterface;
 use App\Criticalmass\DataQuery\Parameter\ParameterInterface;
@@ -18,9 +17,6 @@ class ParameterFactory implements ParameterFactoryInterface
     /** @var string $entityFqcn */
     protected $entityFqcn;
 
-    /** @var AnnotationHandlerInterface */
-    protected $annotationHandler;
-
     /** @var ParameterManagerInterface $parameterManager */
     protected $parameterManager;
 
@@ -33,9 +29,8 @@ class ParameterFactory implements ParameterFactoryInterface
     /** @var ParameterFieldListFactoryInterface */
     protected $parameterListFactory;
 
-    public function __construct(AnnotationHandlerInterface $annotationHandler, ParameterManagerInterface $parameterManager, ValueAssignerInterface $valueAssigner, ValidatorInterface $validator, ParameterFieldListFactoryInterface $parameterFieldListFactory)
+    public function __construct(ParameterManagerInterface $parameterManager, ValueAssignerInterface $valueAssigner, ValidatorInterface $validator, ParameterFieldListFactoryInterface $parameterFieldListFactory)
     {
-        $this->annotationHandler = $annotationHandler;
         $this->parameterManager = $parameterManager;
         $this->valueAssigner = $valueAssigner;
         $this->validator = $validator;

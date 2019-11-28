@@ -4,6 +4,7 @@ namespace App\Criticalmass\DataQuery\EntityFieldList;
 
 use App\Criticalmass\DataQuery\Annotation\AnnotationInterface;
 use App\Criticalmass\DataQuery\Annotation\DateTimeQueryable;
+use App\Criticalmass\DataQuery\Annotation\DefaultBooleanValue;
 use App\Criticalmass\DataQuery\Annotation\Queryable;
 use App\Criticalmass\DataQuery\Annotation\Sortable;
 use App\Criticalmass\DataQuery\Exception\NoReturnTypeForEntityMethodException;
@@ -49,6 +50,8 @@ class EntityFieldListFactory implements EntityFieldListFactoryInterface
                     $entityField = new EntityField();
                     $entityField->setPropertyName($reflectionProperty->getName());
 
+                    $entityField = $this->processAnnotations($propertyAnnotation, $entityField);
+
                     $this->entityFieldList->addField($reflectionProperty->getName(), $entityField);
                 }
             }
@@ -77,23 +80,36 @@ class EntityFieldListFactory implements EntityFieldListFactoryInterface
                         ->setMethodName($reflectionMethod->getName())
                         ->setType($returnType->getName());
 
-                    if ($methodAnnotation instanceof Sortable) {
-                        $entityField->setSortable(true);
-                    }
-
-                    if ($methodAnnotation instanceof Queryable) {
-                        $entityField->setQueryable(true);
-                    }
-
-                    if ($methodAnnotation instanceof DateTimeQueryable) {
-                        $entityField
-                            ->setDateTimePattern($methodAnnotation->getPattern())
-                            ->setDateTimeFormat($methodAnnotation->getFormat());
-                    }
+                    $entityField = $this->processAnnotations($methodAnnotation, $entityField);
 
                     $this->entityFieldList->addField($reflectionMethod->getName(), $entityField);
                 }
             }
         }
+    }
+
+    protected function processAnnotations(AnnotationInterface $annotation, EntityField $entityField): EntityField
+    {
+        if ($annotation instanceof Sortable) {
+            $entityField->setSortable(true);
+        }
+
+        if ($annotation instanceof Queryable) {
+            $entityField->setQueryable(true);
+        }
+
+        if ($annotation instanceof DateTimeQueryable) {
+            $entityField
+                ->setDateTimePattern($annotation->getPattern())
+                ->setDateTimeFormat($annotation->getFormat());
+        }
+
+        if ($annotation instanceof DefaultBooleanValue) {
+            $entityField
+                ->setDefaultQueryBool(true)
+                ->setDefaultQueryBoolValue($annotation->getValue());
+        }
+
+        return $entityField;
     }
 }
