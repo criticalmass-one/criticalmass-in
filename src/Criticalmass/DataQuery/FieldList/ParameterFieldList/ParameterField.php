@@ -2,22 +2,15 @@
 
 namespace App\Criticalmass\DataQuery\FieldList\ParameterFieldList;
 
-class ParameterField
+use App\Criticalmass\DataQuery\FieldList\AbstractField;
+
+class ParameterField extends AbstractField
 {
     /** @var bool $requiresQueryable */
     protected $requiresQueryable = false;
 
     /** @var bool $requiresSortable */
     protected $requiresSortable = false;
-
-    /** @var string $propertyName */
-    protected $propertyName;
-
-    /** @var string $methodName */
-    protected $methodName;
-
-    /** @var string $type */
-    protected $type;
 
     /** @var string $dateTimeFormat */
     protected $dateTimeFormat;
@@ -45,42 +38,6 @@ class ParameterField
     public function setRequiresSortable(bool $requiresSortable): ParameterField
     {
         $this->requiresSortable = $requiresSortable;
-
-        return $this;
-    }
-
-    public function getPropertyName(): string
-    {
-        return $this->propertyName;
-    }
-
-    public function setPropertyName(string $propertyName): ParameterField
-    {
-        $this->propertyName = $propertyName;
-
-        return $this;
-    }
-
-    public function getMethodName(): string
-    {
-        return $this->methodName;
-    }
-
-    public function setMethodName(string $methodName): ParameterField
-    {
-        $this->methodName = $methodName;
-
-        return $this;
-    }
-
-    public function getType(): string
-    {
-        return $this->type;
-    }
-
-    public function setType(string $type): ParameterField
-    {
-        $this->type = $type;
 
         return $this;
     }
