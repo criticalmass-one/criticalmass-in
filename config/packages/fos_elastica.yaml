@@ -114,8 +114,9 @@ fos_elastica:
                         longDescription: ~
                         punchLine: ~
                         isEnabled: ~
-                        createdAt: { type: date, format: "yyyy-MM-dd" }
-                        updatedAt: { type: date, format: "yyyy-MM-dd" }
+                        enabled: ~
+                        createdAt: { type: date, format: "strict_date_optional_time" }
+                        updatedAt: { type: date, format: "strict_date_optional_time" }
                         country: { type: keyword }
                         pin: { type: geo_point }
                     persistence:

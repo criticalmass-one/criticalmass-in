@@ -130,7 +130,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
 
     /**
      * @ORM\Column(type="boolean")
-     * @DataQuery\DefaultBooleanValue(value=true, alias="isEnabled")
+     * @DataQuery\DefaultBooleanValue(value=true)
      */
     protected $enabled = true;
 
@@ -738,7 +738,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
         return $this->timezone;
     }
 
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
