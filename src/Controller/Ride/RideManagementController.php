@@ -101,9 +101,9 @@ class RideManagementController extends AbstractController
         ]);
 
         if (Request::METHOD_POST == $request->getMethod()) {
-            return $this->editPostAction($request, $user, $ride, $ride->getCity(), $form);
+            return $this->editPostAction($request, $user, $ride, $ride->getCity(), $form, $objectRouter);
         } else {
-            return $this->editGetAction($request, $user, $ride, $ride->getCity(), $form);
+            return $this->editGetAction($request, $user, $ride, $ride->getCity(), $form, $objectRouter);
         }
     }
 
@@ -112,7 +112,8 @@ class RideManagementController extends AbstractController
         UserInterface $user = null,
         Ride $ride,
         City $city,
-        FormInterface $form
+        FormInterface $form,
+        ObjectRouterInterface $objectRouter
     ): Response {
         return $this->render('RideManagement/edit.html.twig', [
             'ride' => $ride,
@@ -127,7 +128,8 @@ class RideManagementController extends AbstractController
         UserInterface $user = null,
         Ride $ride,
         City $city,
-        FormInterface $form
+        FormInterface $form,
+        ObjectRouterInterface $objectRouter
     ): Response {
         $form->handleRequest($request);
 

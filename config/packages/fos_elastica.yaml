@@ -78,10 +78,10 @@ fos_elastica:
                         description: ~
                         city: { type: keyword }
                         country: { type: keyword }
+                        region: { type: keyword }
                         location: ~
                         isEnabled: ~
-                        dateTime: ~
-                        simpleDate: { type: date, format: "yyyy-MM-dd" }
+                        dateTime: { type: date, format: "strict_date_optional_time" }
                         pin: { type: geo_point }
                     persistence:
                         driver: orm
@@ -108,11 +108,14 @@ fos_elastica:
                 city:
                     properties:
                         id: ~
+                        city: ~
                         title: ~
                         description: ~
                         longDescription: ~
                         punchLine: ~
                         isEnabled: ~
+                        createdAt: { type: date, format: "yyyy-MM-dd" }
+                        updatedAt: { type: date, format: "yyyy-MM-dd" }
                         country: { type: keyword }
                         pin: { type: geo_point }
                     persistence:

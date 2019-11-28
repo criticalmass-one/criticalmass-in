@@ -2,6 +2,10 @@
 
 namespace App;
 
+use App\Criticalmass\DataQuery\DependencyInjection\Compiler\ParameterPass;
+use App\Criticalmass\DataQuery\DependencyInjection\Compiler\QueryPass;
+use App\Criticalmass\DataQuery\Parameter\ParameterInterface;
+use App\Criticalmass\DataQuery\Query\QueryInterface;
 use App\Criticalmass\MassTrackImport\Voter\VoterInterface;
 use App\Criticalmass\RideNamer\RideNamerInterface;
 use App\Criticalmass\Router\DelegatedRouter\DelegatedRouterInterface;
@@ -76,6 +80,12 @@ class Kernel extends BaseKernel
 
         $container->addCompilerPass(new TrackVoterPass());
         $container->registerForAutoconfiguration(VoterInterface::class)->addTag('mass_track_import.voter');
+
+        $container->addCompilerPass(new QueryPass());
+        $container->registerForAutoconfiguration(QueryInterface::class)->addTag('data_query.query');
+
+        $container->addCompilerPass(new ParameterPass());
+        $container->registerForAutoconfiguration(ParameterInterface::class)->addTag('data_query.parameter');
     }
 
     protected function configureRoutes(RouteCollectionBuilder $routes): void
