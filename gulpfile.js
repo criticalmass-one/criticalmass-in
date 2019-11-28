@@ -125,7 +125,7 @@ const buildAssets = gulp.series(copyColorpickerImages, copyDatatableImages, copy
 
 /* CSS */
 
-function sass() {
+function buildSass() {
     return gulp
         .src('assets/scss/criticalmass.scss')
         .pipe(sass().on('error', sass.logError))
@@ -155,7 +155,7 @@ function minifyCss() {
         .pipe(gulp.dest('public/css/'));
 }
 
-const buildCss = gulp.series(sass, leafletCss, extramarkersCss, sass, minifyCss);
+const buildCss = gulp.series(leafletCss, extramarkersCss, buildSass, minifyCss);
 
 
 /* Javascript */
@@ -213,7 +213,7 @@ function compressJs() {
 }
 
 
-const buildJs = gulp.series(copyJsExternal, compressJs)
+const buildJs = gulp.series(copyJsExternal, compressJs);
 
 const build = gulp.series(buildAreaselect, buildLeaflet, buildExtramarkers, buildFontawesome, buildAssets, buildJs, buildCss);
 
