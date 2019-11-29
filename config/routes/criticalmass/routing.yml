@@ -1,3 +1,11 @@
+caldera_criticalmass_heatmap:
+    resource: 'heatmap.yml'
+    prefix: /
+
+caldera_criticalmass_trackmassimport:
+    resource: 'track_mass_import.yml'
+    prefix: /
+
 caldera_criticalmass_profile:
     resource: 'profile.xml'
     prefix: /
@@ -18,14 +26,23 @@ caldera_criticalmass_track:
     resource: 'track.yml'
     prefix: /
 
-caldera_criticalmass_frontpage:
-    resource: 'frontpage.yml'
-    prefix: /
-
 caldera_criticalmass_search:
     resource: 'search.yml'
     prefix: /
 
+caldera_criticalmass_blog:
+    resource: 'blog.yml'
+    prefix:   /
+    host:       '{host}'
+    defaults:
+        host: '%domain.blog%'
+    requirements:
+        host: '%domain.blog%'
+
+caldera_criticalmass_frontpage:
+    resource: 'frontpage.yml'
+    prefix: /
+    
 caldera_criticalmass_board:
     resource: 'board.yml'
     prefix:   /

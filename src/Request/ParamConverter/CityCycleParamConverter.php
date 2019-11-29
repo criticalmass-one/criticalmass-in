@@ -17,6 +17,7 @@ class CityCycleParamConverter extends AbstractCriticalmassParamConverter
     public function apply(Request $request, ParamConverter $configuration): void
     {
         $cityCycleId = $request->get('cityCycleId');
+        $cityCycle = null;
 
         if ($cityCycleId) {
             $cityCycle = $this->registry->getRepository(CityCycle::class)->find($cityCycleId);

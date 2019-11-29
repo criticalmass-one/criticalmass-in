@@ -21,12 +21,12 @@ class OrderedEntitiesManager implements OrderedEntitiesManagerInterface
 
     public function getPrevious(OrderedEntityInterface $orderedEntity): ?OrderedEntityInterface
     {
-        return $this->findEntity($orderedEntity, SortOrder::DESC);
+        return $this->findEntity($orderedEntity, SortOrder::ASC);
     }
 
     public function getNextEntity(OrderedEntityInterface $orderedEntity): ?OrderedEntityInterface
     {
-        return $this->findEntity($orderedEntity, SortOrder::ASC);
+        return $this->findEntity($orderedEntity, SortOrder::DESC);
     }
 
     protected function findEntity(OrderedEntityInterface $orderedEntity, string $direction): ?OrderedEntityInterface

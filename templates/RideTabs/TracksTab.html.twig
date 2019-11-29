@@ -5,35 +5,37 @@
                 {% if app.user %}
                 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-map-o"></i>
+                    <i class="far fa-map"></i>
                     Track hinzufügen
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
+                    {% if feature('strava_track_upload') %}
                     <li>
                         <a href="{{ objectPath(ride, 'caldera_criticalmass_strava_auth') }}">
-                            <i class="fa fa-map-o"></i>
+                            <i class="fab fa-strava"></i>
                             Track von Strava importieren
                         </a>
                     </li>
+                    {% endif %}
                     <li>
                         <a href="{{ objectPath(ride, 'caldera_criticalmass_track_upload') }}"
                            title="Track hochladen">
-                            <i class="fa fa-upload"></i>
+                            <i class="far fa-upload"></i>
                             GPX-Datei hochladen
                         </a>
                     </li>
                     {#<li>
                           <a href="{{ path('caldera_criticalmass_track_draw', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}"
                              title="Track manuell zeichnen">
-                              <i class="fa fa-map-signs"></i>
+                              <i class="far fa-map"></i>
                               Track manuell zeichnen
                           </a>
                       </li>#}
                 </ul>
                 {% else %}
                     <span class="btn btn-success modal-hint" data-modal-hint-title="{{ 'hint_modal.ride.track_upload_button.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.ride.track_upload_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
-                        <i class="fa fa-map-o"></i>
+                        <i class="far fa-map"></i>
                         Track hinzufügen
                         <span class="caret"></span>
                     </span>
@@ -130,19 +132,19 @@
                                 <div class="text-center">
                                     <div class="btn-group" id="control-buttons" role="group" aria-label="...">
                                         <button type="button" id="step-backward-button" class="btn btn-default">
-                                            <i class="fa fa-backward"></i>
+                                            <i class="far fa-backward"></i>
                                         </button>
                                         <button type="button" id="pause-button" class="btn btn-default">
-                                            <i class="fa fa-pause"></i>
+                                            <i class="far fa-pause"></i>
                                         </button>
                                         <button type="button" id="stop-button" class="btn btn-default">
-                                            <i class="fa fa-stop"></i>
+                                            <i class="far fa-stop"></i>
                                         </button>
                                         <button type="button" id="play-button" class="btn btn-default">
-                                            <i class="fa fa-play"></i>
+                                            <i class="far fa-play"></i>
                                         </button>
                                         <button type="button" id="step-forward-button" class="btn btn-default">
-                                            <i class="fa fa-forward"></i>
+                                            <i class="far fa-forward"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -178,7 +180,7 @@
                         <div class="text-center">
                             {% if tracks|length %}
                                 <button id="timelapse-start-button" class="btn btn-success">
-                                    <i class="fa fa-bicycle"></i>
+                                    <i class="far fa-bicycle"></i>
                                     Timelapse starten
                                 </button>
                             {% else %}

@@ -2,20 +2,34 @@
 
 namespace App\Criticalmass\Router;
 
-use App\Criticalmass\Router\DelegatedRouter\DelegatedRouterInterface;
+use App\Criticalmass\Router\DelegatedRouterManager\DelegatedRouterManagerInterface;
+use App\Criticalmass\Router\ParameterResolver\ClassParameterResolver;
+use App\Criticalmass\Router\ParameterResolver\PropertyParameterResolver;
 use App\EntityInterface\RouteableInterface;
+use Doctrine\Common\Annotations\Reader;
 use Symfony\Component\Routing\Exception\InvalidParameterException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
 
 class ObjectRouter extends AbstractObjectRouter implements ObjectRouterInterface
 {
+    /** @var DelegatedRouterManagerInterface $delegatedRouterManager */
+    protected $delegatedRouterManager;
+
+    public function __construct(RouterInterface $router, DelegatedRouterManagerInterface $delegatedRouterManager, Reader $annotationReader, ClassParameterResolver $classParameterResolver, PropertyParameterResolver $propertyParameterResolver)
+    {
+        $this->delegatedRouterManager = $delegatedRouterManager->setObjectRouter($this);
+
+        parent::__construct($router, $annotationReader, $classParameterResolver, $propertyParameterResolver);
+    }
+
     public function generate(RouteableInterface $routeable, string $routeName = null, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
     {
         if (!$routeName) {
             $routeName = $this->getDefaultRouteName($routeable);
         }
 
-        if ($delegatedRouter = $this->findDelegatedRouter($routeable)) {
+        if ($delegatedRouter = $this->delegatedRouterManager->findDelegatedRouter($routeable)) {
             return $delegatedRouter->generate($routeable, $routeName, $parameters, $referenceType);
         }
 
@@ -25,18 +39,10 @@ class ObjectRouter extends AbstractObjectRouter implements ObjectRouterInterface
             try {
                 return $this->router->generate($routeName, $parameterList, $referenceType);
             } catch (InvalidParameterException $exception) {
-                $delegatedRouter = $this->findDelegatedRouter($routeable);
+                $delegatedRouter = $this->delegatedRouterManager->findDelegatedRouter($routeable);
 
                 return $delegatedRouter->generate($routeable, $routeName, $parameters, $referenceType);
             }
         }
     }
-
-    public function addDelegatedRouter(DelegatedRouterInterface $delegatedRouter): ObjectRouterInterface
-    {
-        $this->delegatedRouterList[] = $delegatedRouter->setObjectRouter($this);
-
-        return $this;
-    }
-
 }

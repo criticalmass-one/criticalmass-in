@@ -2,7 +2,10 @@
 
 namespace App\Controller\SocialNetwork;
 
+use App\Controller\AbstractController;
 use App\Criticalmass\Router\ObjectRouterInterface;
+use App\Criticalmass\SocialNetwork\Helper\SocialNetworkHelper;
+use App\Criticalmass\SocialNetwork\Helper\SocialNetworkHelperInterface;
 use App\Criticalmass\Util\ClassUtil;
 use App\Entity\SocialNetworkProfile;
 use App\Form\Type\SocialNetworkProfileEditType;
@@ -12,12 +15,12 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class SocialNetworkManagementController extends AbstractSocialNetworkController
+class SocialNetworkManagementController extends AbstractController
 {
     /**
      * @ParamConverter("socialNetworkProfile", class="App:SocialNetworkProfile", options={"id" = "profileId"})
      */
-    public function editAction(Request $request, SocialNetworkProfile $socialNetworkProfile, ObjectRouterInterface $objectRouter): Response
+    public function editAction(Request $request, SocialNetworkProfile $socialNetworkProfile, ObjectRouterInterface $objectRouter, SocialNetworkHelperInterface $socialNetworkHelper): Response
     {
         $form = $this->createForm(
             SocialNetworkProfileEditType::class,
@@ -25,16 +28,17 @@ class SocialNetworkManagementController extends AbstractSocialNetworkController
         );
 
         if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->editPostAction($request, $form, $objectRouter);
+            return $this->editPostAction($request, $form, $objectRouter, $socialNetworkHelper);
         } else {
-            return $this->editGetAction($request, $form, $objectRouter);
+            return $this->editGetAction($request, $form, $objectRouter, $socialNetworkHelper);
         }
     }
 
     protected function editPostAction(
         Request $request,
         FormInterface $form,
-        ObjectRouterInterface $objectRouter
+        ObjectRouterInterface $objectRouter,
+        SocialNetworkHelperInterface $socialNetworkHelper
     ): Response {
         $form->handleRequest($request);
 
@@ -55,14 +59,15 @@ class SocialNetworkManagementController extends AbstractSocialNetworkController
     protected function editGetAction(
         Request $request,
         FormInterface $form,
-        ObjectRouterInterface $objectRouter
+        ObjectRouterInterface $objectRouter,
+        SocialNetworkHelperInterface $socialNetworkHelper
     ): Response {
         $socialNetworkProfile = $form->getData();
 
         return $this->render('SocialNetwork/edit.html.twig', [
                 'form' => $form->createView(),
-                'profileAbleType' => ClassUtil::getLowercaseShortname($this->getProfileAble($socialNetworkProfile)),
-                'profileAble' => $this->getProfileAble($socialNetworkProfile),
+                'profileAbleType' => ClassUtil::getLowercaseShortname($socialNetworkHelper->getProfileAble($socialNetworkProfile)),
+                'profileAble' => $socialNetworkHelper->getProfileAble($socialNetworkProfile),
             ]
         );
     }
@@ -71,15 +76,14 @@ class SocialNetworkManagementController extends AbstractSocialNetworkController
      * @ParamConverter("socialNetworkProfile", class="App:SocialNetworkProfile", options={"id" = "profileId"})
      */
     public function disableAction(
-        ObjectRouterInterface $router,
         EntityManagerInterface $entityManager,
-        SocialNetworkProfile $socialNetworkProfile
+        SocialNetworkProfile $socialNetworkProfile,
+        SocialNetworkHelper $socialNetworkHelper
     ): Response {
         $socialNetworkProfile->setEnabled(false);
 
         $entityManager->flush();
 
-        return $this->redirect($this->getRouteName($router, $this->getProfileAble($socialNetworkProfile), 'list'));
+        return $this->redirect($socialNetworkHelper->getRouteName($socialNetworkHelper->getProfileAble($socialNetworkProfile), 'list'));
     }
-
 }

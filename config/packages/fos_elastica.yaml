@@ -78,10 +78,10 @@ fos_elastica:
                         description: ~
                         city: { type: keyword }
                         country: { type: keyword }
+                        region: { type: keyword }
                         location: ~
                         isEnabled: ~
-                        dateTime: ~
-                        simpleDate: { type: date, format: "yyyy-MM-dd" }
+                        dateTime: { type: date, format: "strict_date_optional_time" }
                         pin: { type: geo_point }
                     persistence:
                         driver: orm
@@ -100,7 +100,7 @@ fos_elastica:
                             umlauts_analyzer:
                                 type: custom
                                 tokenizer: lowercase
-                                filter   : [umlauts_filter]
+                                filter: [umlauts_filter]
                         filter:
                             umlauts_filter:
                                 type: "asciifolding"
@@ -108,16 +108,92 @@ fos_elastica:
                 city:
                     properties:
                         id: ~
+                        city: ~
                         title: ~
                         description: ~
                         longDescription: ~
                         punchLine: ~
                         isEnabled: ~
+                        enabled: ~
+                        createdAt: { type: date, format: "strict_date_optional_time" }
+                        updatedAt: { type: date, format: "strict_date_optional_time" }
                         country: { type: keyword }
                         pin: { type: geo_point }
                     persistence:
                         driver: orm
                         model: App\Entity\City
+                        provider: ~
+                        listener: ~
+                        finder: ~
+
+        criticalmass_blog_post:
+            client: default
+            finder:
+            settings:
+                index:
+                    analysis:
+                        analyzer:
+                            umlauts_analyzer:
+                                type: custom
+                                tokenizer: lowercase
+                                filter   : [umlauts_filter]
+                        filter:
+                            umlauts_filter:
+                                type: "asciifolding"
+            types:
+                blog_post:
+                    properties:
+                        id: ~
+                        title: ~
+                        intro: ~
+                        text: ~
+                        enabled: ~
+                        createdAt: ~
+                    persistence:
+                        driver: orm
+                        model: App\Entity\BlogPost
+                        provider: ~
+                        listener: ~
+                        finder: ~
+
+        criticalmass_photo:
+            client: default
+            finder:
+            settings:
+                index:
+                    analysis:
+                        analyzer:
+                            umlauts_analyzer:
+                                type: custom
+                                tokenizer: lowercase
+                                filter: [umlauts_filter]
+                        filter:
+                            umlauts_filter:
+                                type: "asciifolding"
+            types:
+                photo:
+                    properties:
+                        id: ~
+                        description: ~
+                        city: { type: keyword }
+                        ride: { type: keyword }
+                        #region: { type: keyword }
+                        location: ~
+                        latitude: ~
+                        longitude: ~
+                        enabled: ~
+                        deleted: ~
+                        exifExposure: ~
+                        exifFocalLength: ~
+                        exifAperture: ~
+                        exifIso: ~
+                        exifCamera: ~
+                        exifCreationDate: { type: date, format: "strict_date_optional_time" } #{ type: date, format: "strict_date_hour_minute_second" }
+                        creationDateTime: ~ #{ type: date, format: "strict_date_hour_minute_second" }
+                        pin: { type: geo_point }
+                    persistence:
+                        driver: orm
+                        model: App\Entity\Photo
                         provider: ~
                         listener: ~
                         finder: ~
