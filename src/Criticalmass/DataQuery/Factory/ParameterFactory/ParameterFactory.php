@@ -81,11 +81,11 @@ class ParameterFactory implements ParameterFactoryInterface
                 }*/
             }
         }
-        
+
         if (!$this->isParameterValid($parameter)) {
             return null;
         }
-
+        
         return $parameter;
     }
 
