@@ -6,6 +6,9 @@ use App\Criticalmass\DataQuery\FieldList\AbstractField;
 
 class ParameterField extends AbstractField
 {
+    /** @var string $parameterName */
+    protected $parameterName;
+
     /** @var bool $requiresQueryable */
     protected $requiresQueryable = false;
 
@@ -17,6 +20,18 @@ class ParameterField extends AbstractField
 
     /** @var string $dateTimePattern */
     protected $dateTimePattern;
+
+    public function getParameterName(): string
+    {
+        return $this->parameterName;
+    }
+
+    public function setParameterName(string $parameterName): ParameterField
+    {
+        $this->parameterName = $parameterName;
+
+        return $this;
+    }
 
     public function requiresQueryable(): bool
     {

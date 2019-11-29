@@ -61,6 +61,10 @@ class ValueAssigner implements ValueAssignerInterface
 
     public function assignParameterPropertyValueFromRequest(RequestParameterList $requestParameterList, ParameterInterface $parameter, ParameterField $parameterField): ParameterInterface
     {
+        if (!$requestParameterList->has($parameterField->getParameterName())) {
+            return $parameter;
+        }
+
         $methodName = $parameterField->getMethodName();
         $value = $requestParameterList->get($parameterField->getParameterName());
         $type = $parameterField->getType();

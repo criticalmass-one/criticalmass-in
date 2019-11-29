@@ -183,7 +183,6 @@ fos_elastica:
                         longitude: ~
                         enabled: ~
                         deleted: ~
-                        dateTime: ~
                         exifExposure: ~
                         exifFocalLength: ~
                         exifAperture: ~
