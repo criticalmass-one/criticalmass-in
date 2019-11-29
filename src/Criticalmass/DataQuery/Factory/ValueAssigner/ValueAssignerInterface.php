@@ -10,7 +10,7 @@ use App\Criticalmass\DataQuery\RequestParameterList\RequestParameterList;
 
 interface ValueAssignerInterface
 {
-    public function assignQueryPropertyValue(RequestParameterList $requestParameterList, QueryInterface $query, QueryField $queryField): QueryInterface;
+    public function assignQueryPropertyValueFromRequest(RequestParameterList $requestParameterList, QueryInterface $query, QueryField $queryField): QueryInterface;
 
-    public function assignParameterPropertyValue(RequestParameterList $requestParameterList, ParameterInterface $parameter, ParameterField $parameterField): ParameterInterface;
+    public function assignParameterPropertyValueFromRequest(RequestParameterList $requestParameterList, ParameterInterface $parameter, ParameterField $parameterField): ParameterInterface;
 }

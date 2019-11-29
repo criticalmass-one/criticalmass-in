@@ -71,8 +71,8 @@ class EntityField extends AbstractField
 
         return $this;
     }
-    
-    public function getDateTimeFormat(): string
+
+    public function getDateTimeFormat(): ?string
     {
         return $this->dateTimeFormat;
     }
@@ -84,7 +84,7 @@ class EntityField extends AbstractField
         return $this;
     }
 
-    public function getDateTimePattern(): string
+    public function getDateTimePattern(): ?string
     {
         return $this->dateTimePattern;
     }

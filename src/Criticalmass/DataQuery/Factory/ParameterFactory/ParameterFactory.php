@@ -71,7 +71,7 @@ class ParameterFactory implements ParameterFactoryInterface
 
         /** @var ParameterField $parameterField */
         foreach ($parameterFieldList as $parameterField) {
-            $parameter = $this->valueAssigner->assignParameterPropertyValue($requestParameterList, $parameter, $parameterField);
+            $parameter = $this->valueAssigner->assignParameterPropertyValueFromRequest($requestParameterList, $parameter, $parameterField);
 
             if ($parameter instanceof PropertyTargetingParameterInterface) {
                 /** @var PropertyTargetingParameterInterface $parameter */

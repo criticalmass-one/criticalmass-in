@@ -11,6 +11,7 @@ use App\Criticalmass\DataQuery\FieldList\QueryFieldList\QueryFieldListFactoryInt
 use App\Criticalmass\DataQuery\Manager\QueryManagerInterface;
 use App\Criticalmass\DataQuery\Query\BooleanQuery;
 use App\Criticalmass\DataQuery\Query\QueryInterface;
+use App\Criticalmass\DataQuery\Query\YearQuery;
 use App\Criticalmass\DataQuery\RequestParameterList\RequestParameterList;
 use App\Criticalmass\Util\ClassUtil;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -80,6 +81,7 @@ class QueryFactory implements QueryFactoryInterface
         $query = new $queryFqcn();
 
         $queryFieldList = $this->queryFieldListFactory->createForFqcn($queryFqcn);
+        $entityFieldList = $this->entityFieldListFactory->createForFqcn($this->entityFqcn);
 
         /**
          * @var string $fieldName
@@ -88,7 +90,23 @@ class QueryFactory implements QueryFactoryInterface
         foreach ($queryFieldList->getList() as $fieldName => $queryFields) {
             /** @var QueryField $queryField */
             foreach ($queryFields as $queryField) {
-                $this->valueAssigner->assignQueryPropertyValue($requestParameterList, $query, $queryField);
+                $this->valueAssigner->assignQueryPropertyValueFromRequest($requestParameterList, $query, $queryField);
+            }
+        }
+
+        if ($query instanceof YearQuery) {
+            /** @var EntityField $entityField */
+            foreach ($entityFieldList->getList() as $entityFields) {
+                foreach ($entityFields as $entityField) {
+                    if ($entityField->getDateTimePattern() && $entityField->getDateTimeFormat()) {
+                        $query
+                            ->setDateTimePattern($entityField->getDateTimePattern())
+                            ->setDateTimeFormat($entityField->getDateTimeFormat())
+                            ->setPropertyName($entityField->getPropertyName());
+
+                        break 2;
+                    }
+                }
             }
         }
 

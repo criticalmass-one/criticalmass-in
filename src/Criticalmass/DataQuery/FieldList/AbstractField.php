@@ -25,7 +25,7 @@ abstract class AbstractField
         return $this;
     }
 
-    public function getPropertyName(): string
+    public function getPropertyName(): ?string
     {
         return $this->propertyName;
     }
@@ -37,7 +37,7 @@ abstract class AbstractField
         return $this;
     }
 
-    public function getMethodName(): string
+    public function getMethodName(): ?string
     {
         return $this->methodName;
     }

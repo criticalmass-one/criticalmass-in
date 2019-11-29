@@ -23,7 +23,7 @@ class ValueAssigner implements ValueAssignerInterface
         $this->paramConverterFactory = $paramConverterFactory;
     }
 
-    public function assignQueryPropertyValue(RequestParameterList $requestParameterList, QueryInterface $query, QueryField $queryField): QueryInterface
+    public function assignQueryPropertyValueFromRequest(RequestParameterList $requestParameterList, QueryInterface $query, QueryField $queryField): QueryInterface
     {
         if (!$requestParameterList->has($queryField->getParameterName())) {
             return $query;
@@ -59,7 +59,7 @@ class ValueAssigner implements ValueAssignerInterface
         return $query;
     }
 
-    public function assignParameterPropertyValue(RequestParameterList $requestParameterList, ParameterInterface $parameter, ParameterField $parameterField): ParameterInterface
+    public function assignParameterPropertyValueFromRequest(RequestParameterList $requestParameterList, ParameterInterface $parameter, ParameterField $parameterField): ParameterInterface
     {
         $methodName = $parameterField->getMethodName();
         $value = $requestParameterList->get($parameterField->getParameterName());

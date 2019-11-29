@@ -256,6 +256,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
      * @ORM\Column(type="datetime")
      * @OE\Order(direction="asc")
      * @JMS\Expose
+     * @DataQuery\DateTimeQueryable(format="strict_date_hour_minute_second", pattern="Y-m-d\TH:i:s")
      * @DataQuery\Sortable
      */
     protected $exifCreationDate;
@@ -667,11 +668,4 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return sprintf('%f,%f', $this->latitude, $this->longitude);
     }
 
-    /**
-     * @DataQuery\DateTimeQueryable(format="strict_date_hour_minute_second", pattern="Y-m-d\TH:i:s")
-     */
-    public function getDateTime(): \DateTime
-    {
-        return $this->exifCreationDate;
-    }
 }
