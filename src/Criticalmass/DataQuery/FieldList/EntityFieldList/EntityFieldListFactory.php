@@ -3,10 +3,10 @@
 namespace App\Criticalmass\DataQuery\FieldList\EntityFieldList;
 
 use App\Criticalmass\DataQuery\Annotation\AnnotationInterface;
-use App\Criticalmass\DataQuery\Annotation\DateTimeQueryable;
-use App\Criticalmass\DataQuery\Annotation\DefaultBooleanValue;
-use App\Criticalmass\DataQuery\Annotation\Queryable;
-use App\Criticalmass\DataQuery\Annotation\Sortable;
+use App\Criticalmass\DataQuery\Annotation\EntityAnnotation\DateTimeQueryable;
+use App\Criticalmass\DataQuery\Annotation\EntityAnnotation\DefaultBooleanValue;
+use App\Criticalmass\DataQuery\Annotation\EntityAnnotation\Queryable;
+use App\Criticalmass\DataQuery\Annotation\EntityAnnotation\Sortable;
 use App\Criticalmass\DataQuery\Exception\NoReturnTypeForEntityMethodException;
 use Doctrine\Common\Annotations\Reader as AnnotationReader;
 

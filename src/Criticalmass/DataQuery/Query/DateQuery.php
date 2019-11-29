@@ -34,7 +34,7 @@ class DateQuery extends MonthQuery
         $fromDateTime = DateTimeUtil::getDayStartDateTime($this->toDateTime());
         $untilDateTime = DateTimeUtil::getDayEndDateTime($this->toDateTime());
 
-        $dateTimeQuery = new \Elastica\Query\Range('exifCreationDate', [
+        $dateTimeQuery = new \Elastica\Query\Range($this->propertyName, [
             'gte' => $fromDateTime->format($this->dateTimePattern),
             'lte' => $untilDateTime->format($this->dateTimePattern),
             'format' => $this->dateTimeFormat,

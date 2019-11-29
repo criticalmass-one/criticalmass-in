@@ -131,7 +131,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Type("DateTime<'U'>")
      * @OE\Order(direction="asc")
      * @DataQuery\Sortable
-     * @DataQuery\DateTimeQueryable(format="strict_date_hour_minute_second", pattern="Y-m-d\TH:i:s")
+     * @DataQuery\DateTimeQueryable(format="strict_date", pattern="Y-m-d")
      */
     protected $dateTime;
 
