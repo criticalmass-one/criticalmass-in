@@ -1,11 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\DataQuery\Annotation;
+namespace App\Criticalmass\DataQuery\Annotation\QueryAnnotation;
+
+use App\Criticalmass\DataQuery\Annotation\AbstractAnnotation;
 
 /**
  * @Annotation
  */
-class RequiredEntityProperty extends AbstractAnnotation
+class RequiredEntityProperty extends AbstractAnnotation implements QueryAnnotationInterface
 {
     /** @var string $propertyName */
     protected $propertyName;

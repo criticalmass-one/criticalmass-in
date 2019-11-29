@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\DataQuery\Factory\ParameterFactory;
 
-use App\Criticalmass\DataQuery\Annotation\RequiredParameter;
+use App\Criticalmass\DataQuery\Annotation\ParameterAnnotation\RequiredParameter;
 use App\Criticalmass\DataQuery\Factory\ValueAssigner\ValueAssignerInterface;
 use App\Criticalmass\DataQuery\FieldList\ParameterFieldList\ParameterField;
 use App\Criticalmass\DataQuery\FieldList\ParameterFieldList\ParameterFieldListFactoryInterface;
@@ -84,7 +84,7 @@ class ParameterFactory implements ParameterFactoryInterface
                 }
             }
         }
-        
+
         if (!$this->isParameterValid($parameter)) {
             return null;
         }

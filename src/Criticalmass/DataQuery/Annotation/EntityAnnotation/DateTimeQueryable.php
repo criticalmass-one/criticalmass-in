@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\DataQuery\Annotation;
+namespace App\Criticalmass\DataQuery\Annotation\EntityAnnotation;
 
 /**
  * @Annotation
  */
-class DateTimeQueryable extends Queryable
+class DateTimeQueryable extends Queryable implements EntityAnnotationInterface
 {
     /** @var array $accepts */
     protected $accepts = [];
