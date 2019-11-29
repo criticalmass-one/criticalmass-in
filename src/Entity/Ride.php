@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\DataQuery\Annotation as DataQuery;
+use App\Criticalmass\DataQuery\Annotation\EntityAnnotation as DataQuery;
 use App\Criticalmass\Geocoding\ReverseGeocodeable;
 use App\Criticalmass\OrderedEntities\Annotation as OE;
 use App\Criticalmass\OrderedEntities\OrderedEntityInterface;
@@ -130,6 +130,8 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Expose
      * @JMS\Type("DateTime<'U'>")
      * @OE\Order(direction="asc")
+     * @DataQuery\Sortable
+     * @DataQuery\DateTimeQueryable(format="strict_date", pattern="Y-m-d")
      */
     protected $dateTime;
 
@@ -394,8 +396,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     }
 
     /**
-     * @DataQuery\Sortable
-     * @DataQuery\Queryable
      * @return \DateTime|null
      */
     public function getDateTime(): ?\DateTime

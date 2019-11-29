@@ -4,9 +4,9 @@ namespace App\Criticalmass\DataQuery\Factory\ValueAssigner;
 
 use App\Criticalmass\DataQuery\Exception\ParameterConverterException;
 use App\Criticalmass\DataQuery\Factory\ParamConverterFactory\ParamConverterFactoryInterface;
+use App\Criticalmass\DataQuery\FieldList\ParameterFieldList\ParameterField;
+use App\Criticalmass\DataQuery\FieldList\QueryFieldList\QueryField;
 use App\Criticalmass\DataQuery\Parameter\ParameterInterface;
-use App\Criticalmass\DataQuery\Property\ParameterProperty;
-use App\Criticalmass\DataQuery\Property\QueryProperty;
 use App\Criticalmass\DataQuery\Query\QueryInterface;
 use App\Criticalmass\DataQuery\RequestParameterList\RequestParameterList;
 use App\Criticalmass\Util\ClassUtil;
@@ -23,11 +23,15 @@ class ValueAssigner implements ValueAssignerInterface
         $this->paramConverterFactory = $paramConverterFactory;
     }
 
-    public function assignQueryPropertyValue(RequestParameterList $requestParameterList, QueryInterface $query, QueryProperty $property): QueryInterface
+    public function assignQueryPropertyValueFromRequest(RequestParameterList $requestParameterList, QueryInterface $query, QueryField $queryField): QueryInterface
     {
-        $methodName = $property->getMethodName();
-        $value = $requestParameterList->get($property->getParameterName());
-        $type = $property->getType();
+        if (!$requestParameterList->has($queryField->getParameterName())) {
+            return $query;
+        }
+
+        $methodName = $queryField->getMethodName();
+        $value = $requestParameterList->get($queryField->getParameterName());
+        $type = $queryField->getType();
 
         switch ($type) {
             case 'float':
@@ -35,7 +39,7 @@ class ValueAssigner implements ValueAssignerInterface
                 break;
 
             case 'int':
-                $value = $this->convertToInt($value, $property->getParameterName());
+                $value = $this->convertToInt($value, $queryField->getParameterName());
                 $query->$methodName($value);
                 break;
 
@@ -48,18 +52,22 @@ class ValueAssigner implements ValueAssignerInterface
                 break;
 
             default:
-                $query = $this->assignEntityValueFromParamConverter($requestParameterList, $query, $property);
+                $query = $this->assignEntityValueFromParamConverter($requestParameterList, $query, $queryField);
                 break;
         }
 
         return $query;
     }
 
-    public function assignParameterPropertyValue(RequestParameterList $requestParameterList, ParameterInterface $parameter, ParameterProperty $property): ParameterInterface
+    public function assignParameterPropertyValueFromRequest(RequestParameterList $requestParameterList, ParameterInterface $parameter, ParameterField $parameterField): ParameterInterface
     {
-        $methodName = $property->getMethodName();
-        $value = $requestParameterList->get($property->getParameterName());
-        $type = $property->getType();
+        if (!$parameterField->hasParameterName() || !$requestParameterList->has($parameterField->getParameterName())) {
+            return $parameter;
+        }
+
+        $methodName = $parameterField->getMethodName();
+        $value = $requestParameterList->get($parameterField->getParameterName());
+        $type = $parameterField->getType();
 
         switch ($type) {
             case 'float':
@@ -67,7 +75,7 @@ class ValueAssigner implements ValueAssignerInterface
                 break;
 
             case 'int':
-                $value = $this->convertToInt($value, $property->getParameterName());
+                $value = $this->convertToInt($value, $parameterField->getParameterName());
                 $parameter->$methodName($value);
                 break;
 
@@ -83,11 +91,11 @@ class ValueAssigner implements ValueAssignerInterface
         return $parameter;
     }
 
-    protected function assignEntityValueFromParamConverter(RequestParameterList $requestParameterList, QueryInterface $query, QueryProperty $property): QueryInterface
+    protected function assignEntityValueFromParamConverter(RequestParameterList $requestParameterList, QueryInterface $query, QueryField $queryField): QueryInterface
     {
-        if ($converter = $this->paramConverterFactory->createParamConverter($property->getType())) {
-            $methodName = $property->getMethodName();
-            $newParameterName = ClassUtil::getLowercaseShortnameFromFqcn($property->getType());
+        if ($converter = $this->paramConverterFactory->createParamConverter($queryField->getType())) {
+            $methodName = $queryField->getMethodName();
+            $newParameterName = ClassUtil::getLowercaseShortnameFromFqcn($queryField->getType());
 
             $paramConverterConfiguration = new ParamConverter(['name' => $newParameterName]);
 

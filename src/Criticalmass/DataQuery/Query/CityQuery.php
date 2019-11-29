@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
-use App\Criticalmass\DataQuery\Annotation as DataQuery;
+use App\Criticalmass\DataQuery\Annotation\QueryAnnotation as DataQuery;
 use App\Entity\City;
 use Symfony\Component\Validator\Constraints as Constraints;
 

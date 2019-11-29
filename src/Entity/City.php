@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\DataQuery\Annotation as DataQuery;
+use App\Criticalmass\DataQuery\Annotation\EntityAnnotation as DataQuery;
 use App\Criticalmass\Router\Annotation as Routing;
 use App\Criticalmass\Sharing\Annotation as Sharing;
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
@@ -130,7 +130,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
 
     /**
      * @ORM\Column(type="boolean")
-     * @DataQuery\DefaultBooleanValue(value=true, alias="isEnabled")
+     * @DataQuery\DefaultBooleanValue(value=true)
      */
     protected $enabled = true;
 
@@ -738,7 +738,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
         return $this->timezone;
     }
 
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }

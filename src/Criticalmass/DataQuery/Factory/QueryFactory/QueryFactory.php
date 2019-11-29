@@ -2,17 +2,16 @@
 
 namespace App\Criticalmass\DataQuery\Factory\QueryFactory;
 
-use App\Criticalmass\DataQuery\Annotation\Queryable;
-use App\Criticalmass\DataQuery\AnnotationHandler\AnnotationHandlerInterface;
-use App\Criticalmass\DataQuery\Exception\ValidationException;
 use App\Criticalmass\DataQuery\Factory\ConflictResolver\ConflictResolver;
 use App\Criticalmass\DataQuery\Factory\ValueAssigner\ValueAssignerInterface;
+use App\Criticalmass\DataQuery\FieldList\EntityFieldList\EntityField;
+use App\Criticalmass\DataQuery\FieldList\EntityFieldList\EntityFieldListFactoryInterface;
+use App\Criticalmass\DataQuery\FieldList\QueryFieldList\QueryField;
+use App\Criticalmass\DataQuery\FieldList\QueryFieldList\QueryFieldListFactoryInterface;
 use App\Criticalmass\DataQuery\Manager\QueryManagerInterface;
-use App\Criticalmass\DataQuery\Property\EntityBooleanValueProperty;
-use App\Criticalmass\DataQuery\Property\EntityProperty;
-use App\Criticalmass\DataQuery\Property\QueryProperty;
 use App\Criticalmass\DataQuery\Query\BooleanQuery;
 use App\Criticalmass\DataQuery\Query\QueryInterface;
+use App\Criticalmass\DataQuery\Query\YearQuery;
 use App\Criticalmass\DataQuery\RequestParameterList\RequestParameterList;
 use App\Criticalmass\Util\ClassUtil;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -27,9 +26,6 @@ class QueryFactory implements QueryFactoryInterface
     /** @var string $entityFqcn */
     protected $entityFqcn;
 
-    /** @var AnnotationHandlerInterface $annotationHandler */
-    protected $annotationHandler;
-
     /** @var QueryManagerInterface $queryManager */
     protected $queryManager;
 
@@ -39,13 +35,20 @@ class QueryFactory implements QueryFactoryInterface
     /** @var ValidatorInterface $validator */
     protected $validator;
 
-    public function __construct(RegistryInterface $registry, AnnotationHandlerInterface $annotationHandler, QueryManagerInterface $queryManager, ValueAssignerInterface $valueAssigner, ValidatorInterface $validator)
+    /** @var EntityFieldListFactoryInterface $entityFieldListFactory */
+    protected $entityFieldListFactory;
+
+    /** @var QueryFieldListFactoryInterface $queryFieldListFactory */
+    protected $queryFieldListFactory;
+
+    public function __construct(RegistryInterface $registry, QueryManagerInterface $queryManager, ValueAssignerInterface $valueAssigner, ValidatorInterface $validator, EntityFieldListFactoryInterface $entityFieldListFactory, QueryFieldListFactoryInterface $queryFieldListFactory)
     {
         $this->registry = $registry;
-        $this->annotationHandler = $annotationHandler;
         $this->queryManager = $queryManager;
         $this->valueAssigner = $valueAssigner;
         $this->validator = $validator;
+        $this->entityFieldListFactory = $entityFieldListFactory;
+        $this->queryFieldListFactory = $queryFieldListFactory;
     }
 
     public function setEntityFqcn(string $entityFqcn): QueryFactoryInterface
@@ -59,58 +62,57 @@ class QueryFactory implements QueryFactoryInterface
     {
         $queryList = $this->findEntityDefaultValuesAsQuery();
 
-        /** @var QueryInterface $query */
+        /** @var QueryInterface $queryCandidate */
         foreach ($this->queryManager->getQueryList() as $queryCandidate) {
-            $queryUnderTest = $this->checkForQuery(get_class($queryCandidate), $requestParameterList);
+            $query = $this->checkForQuery(get_class($queryCandidate), $requestParameterList);
 
-            if ($queryUnderTest) {
-                /** @var ConstraintViolationListInterface $constraintViolationList */
-                $constraintViolationList = $this->validator->validate($queryUnderTest);
-
-                if ($constraintViolationList->count() === 0) {
-                    $key = ClassUtil::getShortname($queryUnderTest);
-                    $queryList[$key] = $queryUnderTest;
-                } else {
-                    $firstMessage = $constraintViolationList->get(0);
-                    throw new ValidationException($firstMessage->getMessage());
-                }
+            if ($query) {
+                $queryList[ClassUtil::getShortname($query)] = $query;
             }
         }
 
         $queryList = ConflictResolver::resolveConflicts($queryList);
 
+        dump($queryList);
         return $queryList;
     }
 
     protected function checkForQuery(string $queryFqcn, RequestParameterList $requestParameterList): ?QueryInterface
     {
-        $requiredQueriableMethodList = $this->annotationHandler->listQueryRequiredMethods($queryFqcn);
-
-        /** @var QueryProperty $requiredQuerieableMethod */
-        foreach ($requiredQueriableMethodList as $requiredQuerieableMethod) {
-            if (!$requestParameterList->has($requiredQuerieableMethod->getParameterName())) {
-                return null;
-            }
-        }
-
-        $requiredEntityPropertyList = $this->annotationHandler->listRequiredEntityProperties($queryFqcn);
-
-        if (0 === count($requiredEntityPropertyList)) {
-            return null;
-        }
-        
-        /** @var EntityProperty $requiredEntityProperty */
-        foreach ($requiredEntityPropertyList as $requiredEntityProperty) {
-            if (!$this->annotationHandler->hasEntityTypedPropertyOrMethodWithAnnotation($this->entityFqcn, Queryable::class, $requiredEntityProperty->getPropertyName(), $requiredEntityProperty->getPropertyType())) {
-                return null;
-            }
-        }
-
         $query = new $queryFqcn();
 
-        /** @var QueryProperty $queryProperty */
-        foreach ($requiredQueriableMethodList as $queryProperty) {
-            $this->valueAssigner->assignQueryPropertyValue($requestParameterList, $query, $queryProperty);
+        $queryFieldList = $this->queryFieldListFactory->createForFqcn($queryFqcn);
+        $entityFieldList = $this->entityFieldListFactory->createForFqcn($this->entityFqcn);
+
+        /**
+         * @var string $fieldName
+         * @var array $queryFields
+         */
+        foreach ($queryFieldList->getList() as $fieldName => $queryFields) {
+            /** @var QueryField $queryField */
+            foreach ($queryFields as $queryField) {
+                $this->valueAssigner->assignQueryPropertyValueFromRequest($requestParameterList, $query, $queryField);
+            }
+        }
+
+        if ($query instanceof YearQuery) {
+            /** @var EntityField $entityField */
+            foreach ($entityFieldList->getList() as $entityFields) {
+                foreach ($entityFields as $entityField) {
+                    if ($entityField->getDateTimePattern() && $entityField->getDateTimeFormat()) {
+                        $query
+                            ->setDateTimePattern($entityField->getDateTimePattern())
+                            ->setDateTimeFormat($entityField->getDateTimeFormat())
+                            ->setPropertyName($entityField->getPropertyName());
+
+                        break 2;
+                    }
+                }
+            }
+        }
+
+        if (!$this->isQueryValid($query)) {
+            return null;
         }
 
         return $query;
@@ -119,18 +121,30 @@ class QueryFactory implements QueryFactoryInterface
     protected function findEntityDefaultValuesAsQuery(): array
     {
         $defaultValueQueryList = [];
-        $entityDefaultValueList = $this->annotationHandler->listEntityDefaultValues($this->entityFqcn);
+        $entityFieldList = $this->entityFieldListFactory->createForFqcn($this->entityFqcn);
 
-        /** @var EntityBooleanValueProperty $entityDefaultValue */
-        foreach ($entityDefaultValueList as $entityDefaultValue) {
-            $booleanQuery = new BooleanQuery();
-            $booleanQuery
-                ->setPropertyName($entityDefaultValue->getPropertyName())
-                ->setValue($entityDefaultValue->getValue());
+        foreach ($entityFieldList->getList() as $entityFieldName => $entityFields) {
+            /** @var EntityField $entityField */
+            foreach ($entityFields as $entityField) {
+                if ($entityField->hasDefaultQueryBool()) {
+                    $booleanQuery = new BooleanQuery();
+                    $booleanQuery
+                        ->setPropertyName($entityField->getPropertyName())
+                        ->setValue($entityField->getDefaultQueryBoolValue());
 
-            $defaultValueQueryList[] = $booleanQuery;
+                    $defaultValueQueryList[] = $booleanQuery;
+                }
+            }
         }
 
         return $defaultValueQueryList;
+    }
+
+    protected function isQueryValid(QueryInterface $query): bool
+    {
+        /** @var ConstraintViolationListInterface $constraintViolationList */
+        $constraintViolationList = $this->validator->validate($query);
+
+        return $constraintViolationList->count() === 0;
     }
 }
