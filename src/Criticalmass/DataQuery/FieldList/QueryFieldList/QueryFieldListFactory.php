@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\DataQuery\FieldList\QueryFieldList;
 
-use App\Criticalmass\DataQuery\Annotation\RequiredQueryParameter;
+use App\Criticalmass\DataQuery\Annotation\QueryAnnotation\RequiredQueryParameter;
 use App\Criticalmass\DataQuery\Exception\NotOneParameterForRequiredMethodException;
 use App\Criticalmass\DataQuery\Exception\NoTypedParameterForRequiredMethodException;
 use Doctrine\Common\Annotations\Reader as AnnotationReader;

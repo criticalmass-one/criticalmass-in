@@ -21,6 +21,11 @@ class ParameterField extends AbstractField
     /** @var string $dateTimePattern */
     protected $dateTimePattern;
 
+    public function hasParameterName(): bool
+    {
+        return $this->parameterName !== null;
+    }
+    
     public function getParameterName(): string
     {
         return $this->parameterName;

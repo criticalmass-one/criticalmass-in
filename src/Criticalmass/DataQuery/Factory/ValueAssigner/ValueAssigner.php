@@ -32,7 +32,7 @@ class ValueAssigner implements ValueAssignerInterface
         $methodName = $queryField->getMethodName();
         $value = $requestParameterList->get($queryField->getParameterName());
         $type = $queryField->getType();
-        
+
         switch ($type) {
             case 'float':
                 $query->$methodName((float)$value);
@@ -61,7 +61,7 @@ class ValueAssigner implements ValueAssignerInterface
 
     public function assignParameterPropertyValueFromRequest(RequestParameterList $requestParameterList, ParameterInterface $parameter, ParameterField $parameterField): ParameterInterface
     {
-        if (!$requestParameterList->has($parameterField->getParameterName())) {
+        if (!$parameterField->hasParameterName() || !$requestParameterList->has($parameterField->getParameterName())) {
             return $parameter;
         }
 

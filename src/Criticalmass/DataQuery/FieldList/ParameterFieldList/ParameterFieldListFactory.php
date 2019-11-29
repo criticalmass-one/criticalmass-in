@@ -3,9 +3,9 @@
 namespace App\Criticalmass\DataQuery\FieldList\ParameterFieldList;
 
 use App\Criticalmass\DataQuery\Annotation\AnnotationInterface;
-use App\Criticalmass\DataQuery\Annotation\RequiredParameter;
-use App\Criticalmass\DataQuery\Annotation\RequireSortableTargetProperty;
-use App\Criticalmass\DataQuery\Exception\NoTypedParameterForParameterMethodException;
+use App\Criticalmass\DataQuery\Annotation\ParameterAnnotation\RequiredParameter;
+use App\Criticalmass\DataQuery\Annotation\ParameterAnnotation\RequireSortableTargetProperty;
+use App\Criticalmass\DataQuery\Exception\NotOneParameterForRequiredMethodException;
 use Doctrine\Common\Annotations\Reader as AnnotationReader;
 
 class ParameterFieldListFactory implements ParameterFieldListFactoryInterface
@@ -68,17 +68,20 @@ class ParameterFieldListFactory implements ParameterFieldListFactoryInterface
 
             foreach ($methodAnnotations as $methodAnnotation) {
                 if ($methodAnnotation instanceof AnnotationInterface) {
-                    /** @var \ReflectionType $returnType */
-                    $returnType = $reflectionMethod->getReturnType();
 
-                    if (!$returnType) {
-                        throw new NoTypedParameterForParameterMethodException($reflectionMethod->getName(), $this->parameterFqcn);
+                    if ($reflectionMethod->getNumberOfParameters() !== 1) {
+                        throw new NotOneParameterForRequiredMethodException($reflectionMethod->getName(), $this->parameterFqcn);
                     }
 
                     $parameterField = new ParameterField();
-                    $parameterField
-                        ->setMethodName($reflectionMethod->getName())
-                        ->setType($returnType->getName());
+                    $parameterField->setMethodName($reflectionMethod->getName());
+
+                    $methodParameter = $reflectionMethod->getParameters()[0];
+                    $reflectionType = $methodParameter->getType();
+
+                    if ($reflectionType) {
+                        $parameterField->setType($reflectionType->getName());
+                    }
 
                     if ($methodAnnotation instanceof RequiredParameter) {
                         $parameterField->setParameterName($methodAnnotation->getParameterName());

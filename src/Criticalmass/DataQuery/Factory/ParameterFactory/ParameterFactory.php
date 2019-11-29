@@ -2,7 +2,6 @@
 
 namespace App\Criticalmass\DataQuery\Factory\ParameterFactory;
 
-use App\Criticalmass\DataQuery\Annotation\ParameterAnnotation\RequiredParameter;
 use App\Criticalmass\DataQuery\Factory\ValueAssigner\ValueAssignerInterface;
 use App\Criticalmass\DataQuery\FieldList\ParameterFieldList\ParameterField;
 use App\Criticalmass\DataQuery\FieldList\ParameterFieldList\ParameterFieldListFactoryInterface;
@@ -67,24 +66,22 @@ class ParameterFactory implements ParameterFactoryInterface
         /** @var ParameterInterface $parameter */
         $parameter = new $queryFqcn();
 
-        if ($parameter instanceof RequiredParameter) {
-            /** @var ParameterField $parameterField */
-            foreach ($parameterFieldList->getList() as $fieldName => $parameterFields) {
-                foreach ($parameterFields as $parameterField) {
-                    $parameter = $this->valueAssigner->assignParameterPropertyValueFromRequest($requestParameterList, $parameter, $parameterField);
-                }
+        /** @var ParameterField $parameterField */
+        foreach ($parameterFieldList->getList() as $fieldName => $parameterFields) {
+            foreach ($parameterFields as $parameterField) {
+                $parameter = $this->valueAssigner->assignParameterPropertyValueFromRequest($requestParameterList, $parameter, $parameterField);
+            }
 
-                if ($parameter instanceof PropertyTargetingParameterInterface) {
-                    /** @var PropertyTargetingParameterInterface $parameter */
-                    $methodName = sprintf('get%s', ucfirst($parameter->getPropertyName()));
+            if ($parameter instanceof PropertyTargetingParameterInterface) {
+                /** @var PropertyTargetingParameterInterface $parameter */
+                $methodName = $parameterField->getMethodName() ?? sprintf('get%s', ucfirst($parameterField->getPropertyName()));
 
-                    /*if ($requiredParameterProperty->hasRequiredSortableTargetEntity() && !$this->annotationHandler->hasEntityAnnotatedMethod($this->entityFqcn, $methodName, Sortable::class)) {
-                        throw new TargetPropertyNotSortableException($parameter->getPropertyName(), $this->entityFqcn);
-                    }*/
-                }
+                /*if ($requiredParameterProperty->hasRequiredSortableTargetEntity() && !$this->annotationHandler->hasEntityAnnotatedMethod($this->entityFqcn, $methodName, Sortable::class)) {
+                    throw new TargetPropertyNotSortableException($parameter->getPropertyName(), $this->entityFqcn);
+                }*/
             }
         }
-
+        
         if (!$this->isParameterValid($parameter)) {
             return null;
         }
