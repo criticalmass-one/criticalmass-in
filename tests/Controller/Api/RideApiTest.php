@@ -4,6 +4,9 @@ namespace Tests\Controller\Api;
 
 class RideApiTest extends AbstractApiControllerTest
 {
+    /**
+     * @ignore
+     */
     public function testCurrentRide(): void
     {
         $client = static::createClient();
