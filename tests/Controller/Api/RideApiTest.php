@@ -4,11 +4,10 @@ namespace Tests\Controller\Api;
 
 class RideApiTest extends AbstractApiControllerTest
 {
-    /**
-     * @ignore
-     */
     public function testCurrentRide(): void
     {
+        $this->markTestSkipped('This must be improved as it is date related.');
+
         $client = static::createClient();
 
         $client->request('GET', '/api/hamburg/current');
@@ -25,7 +24,7 @@ class RideApiTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/hamburg/2011-06-24');
 
-        $expectedContent = '{"id":1,"cycle":null,"city":{"slug":"hamburg","id":7,"mainSlug":{"id":7,"slug":"hamburg"},"name":"Hamburg","title":"Critical Mass Hamburg","description":null,"url":null,"facebook":null,"twitter":null,"latitude":0,"longitude":0,"slugs":[{"id":7,"slug":"hamburg"}],"cityPopulation":0,"punchLine":null,"longDescription":null,"timezone":"Europe\/Berlin","threadNumber":0,"postNumber":0,"colorRed":0,"colorGreen":0,"colorBlue":0},"slug":null,"title":"Critical Mass 24.06.2011","description":null,"dateTime":1308942000,"location":null,"latitude":null,"longitude":null,"estimatedParticipants":null,"estimatedDistance":null,"estimatedDuration":null,"facebook":null,"twitter":null,"url":null,"participationsNumberYes":0,"participationsNumberMaybe":0,"participationsNumberNo":0}';
+        $expectedContent = '{"cycle":null,"city":{"slug":"hamburg","color":{"red":0,"green":0,"blue":0},"mainSlug":{"slug":"hamburg"},"name":"Hamburg","title":"Critical Mass Hamburg","description":null,"latitude":53.550556,"longitude":9.993333,"slugs":[{"slug":"hamburg"}],"socialNetworkProfiles":[],"cityPopulation":0,"punchLine":null,"longDescription":null,"timezone":"Europe\/Berlin","threadNumber":0,"postNumber":0},"slug":null,"title":"Critical Mass Hamburg 24.06.2011","description":null,"dateTime":1308942000,"location":null,"latitude":53.5,"longitude":10.5,"estimatedParticipants":null,"estimatedDistance":null,"estimatedDuration":null,"socialNetworkProfiles":[],"participationsNumberYes":0,"participationsNumberMaybe":0,"participationsNumberNo":0}';
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertIdLessJsonEquals($expectedContent, $client->getResponse()->getContent());
