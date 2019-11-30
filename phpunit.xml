@@ -31,7 +31,7 @@
         <env name="ASSETS_VERSION" value="v2019-11-30" />
         <env name="DOMAIN_BLOG" value="criticalmassblog.cb" />
         <env name="REDIS_URL" value="redis://localhost"/>
-        <!--<env name="SYMFONY_DEPRECATIONS_HELPER" value="verbose=0" />-->
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="verbose=0"/>
     </php>
 
     <testsuites>
