@@ -51,10 +51,12 @@ class RideFixtures extends Fixture implements DependentFixtureInterface
     protected function createRide(string $citySlug, \DateTimeImmutable $dateTime, string $rideSlug = null, float $latitude, float $longitude): Ride
     {
         $rideDateTime = \DateTime::createFromImmutable($dateTime);
+        $city = $this->getReference(sprintf('city-%s', $citySlug));
+
         $ride = new Ride();
         $ride
-            ->setCity($this->getReference(sprintf('city-%s', $citySlug)))
-            ->setTitle(sprintf('Critical Mass %s', $dateTime->format('d.m.Y')))
+            ->setCity($city)
+            ->setTitle(sprintf('Critical Mass %s %s', $city->getCity(), $dateTime->format('d.m.Y')))
             ->setDateTime($rideDateTime)
             ->setSlug($rideSlug)
             ->setLatitude($latitude)
