@@ -44,8 +44,6 @@ class OrderByTest extends AbstractApiControllerTest
 
     public function testRideListOrderByInvalidOrder(): void
     {
-        $this->markTestIncomplete('This is broken');
-        
         $client = static::createClient();
 
         $client->request('GET', '/api/ride?orderBy=invalidField&orderDirection=DESC');
