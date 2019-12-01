@@ -15,7 +15,7 @@ class DateTimeTest extends AbstractApiControllerTest
 
         $expectedContent = '[{"slug":null,"title":"Critical Mass Hamburg 24.09.2050","description":null,"dateTime":2547658800,"location":null,"latitude":53.5,"longitude":10.5,"estimatedParticipants":null,"estimatedDistance":null,"estimatedDuration":null}]';
 
-        $actualRideList = ($this->deserializeEntityList($client->getResponse()->getContent(), Ride::class));
+        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
@@ -31,7 +31,7 @@ class DateTimeTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/ride?year=2016&month=2');
 
-        $actualRideList = ($this->deserializeEntityList($client->getResponse()->getContent(), Ride::class));
+        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
@@ -47,7 +47,7 @@ class DateTimeTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/ride?year=2015&month=6&day=1');
 
-        $actualRideList = ($this->deserializeEntityList($client->getResponse()->getContent(), Ride::class));
+        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
@@ -63,7 +63,7 @@ class DateTimeTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/ride?year=2011&month=6&day=24');
 
-        $actualRideList = ($this->deserializeEntityList($client->getResponse()->getContent(), Ride::class));
+        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 

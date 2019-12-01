@@ -16,7 +16,7 @@ class BoundingBoxTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/ride?bbNorthLatitude=53.606153&bbWestLongitude=9.905992&bbSouthLatitude=53.547299&bbEastLongitude=10.054452');
 
-        $actualRideList = ($this->deserializeEntityList($client->getResponse()->getContent(), Ride::class));
+        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
@@ -50,7 +50,7 @@ class BoundingBoxTest extends AbstractApiControllerTest
 
         $expectedContent = '[{"slug":null,"title":"Critical Mass Hamburg 24.06.2011","description":null,"dateTime":1308942000,"location":null,"latitude":53.566676,"longitude":9.984711,"estimatedParticipants":null,"estimatedDistance":null,"estimatedDuration":null}]';
 
-        $actualRideList = ($this->deserializeEntityList($client->getResponse()->getContent(), Ride::class));
+        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
@@ -71,7 +71,7 @@ class BoundingBoxTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/ride?bbNorthLatitude=51.527641&bbSouthLatitude=51.503026&bbWestLongitude=-0.153760&bbEastLongitude=0.003207');
 
-        $actualRideList = ($this->deserializeEntityList($client->getResponse()->getContent(), Ride::class));
+        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
