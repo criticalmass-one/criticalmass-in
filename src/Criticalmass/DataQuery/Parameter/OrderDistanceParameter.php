@@ -6,7 +6,7 @@ use App\Criticalmass\DataQuery\Annotation\ParameterAnnotation as DataQuery;
 use Elastica\Query;
 use Symfony\Component\Validator\Constraints as Constraints;
 
-class OrderDistanceParameter implements ParameterInterface
+class OrderDistanceParameter extends AbstractParameter
 {
     /**
      * @Constraints\NotNull()
