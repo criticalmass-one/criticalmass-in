@@ -12,9 +12,7 @@ class DateTimeTest extends AbstractApiControllerTest
         $client = static::createClient();
 
         $client->request('GET', '/api/ride?year=2050');
-
-        $expectedContent = '[{"slug":null,"title":"Critical Mass Hamburg 24.09.2050","description":null,"dateTime":2547658800,"location":null,"latitude":53.5,"longitude":10.5,"estimatedParticipants":null,"estimatedDistance":null,"estimatedDuration":null}]';
-
+        
         $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());

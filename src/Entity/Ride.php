@@ -22,6 +22,7 @@ use App\EntityInterface\RouteableInterface;
 use App\EntityInterface\StaticMapableInterface;
 use App\Validator\Constraint as CriticalAssert;
 use Caldera\GeoBasic\Coord\Coord;
+use Caldera\GeoBasic\Coord\CoordInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -1152,5 +1153,10 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         }
 
         return $this;
+    }
+
+    public function toCoord(): CoordInterface
+    {
+        return new Coord($this->latitude, $this->longitude);
     }
 }

@@ -70,6 +70,7 @@ class OrderDistanceParameter extends AbstractParameter
                 ],
                 'order' => $this->direction,
                 'unit' => 'km',
+                'distance_type' => 'arc',
             ]
         ]);
 
