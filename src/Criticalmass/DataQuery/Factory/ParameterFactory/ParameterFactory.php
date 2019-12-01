@@ -7,7 +7,6 @@ use App\Criticalmass\DataQuery\FieldList\ParameterFieldList\ParameterField;
 use App\Criticalmass\DataQuery\FieldList\ParameterFieldList\ParameterFieldListFactoryInterface;
 use App\Criticalmass\DataQuery\Manager\ParameterManagerInterface;
 use App\Criticalmass\DataQuery\Parameter\ParameterInterface;
-use App\Criticalmass\DataQuery\Parameter\PropertyTargetingParameterInterface;
 use App\Criticalmass\DataQuery\RequestParameterList\RequestParameterList;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -65,20 +64,12 @@ class ParameterFactory implements ParameterFactoryInterface
 
         /** @var ParameterInterface $parameter */
         $parameter = new $queryFqcn();
-
+        $parameter->setEntityFqcn($this->entityFqcn);
+        
         /** @var ParameterField $parameterField */
         foreach ($parameterFieldList->getList() as $fieldName => $parameterFields) {
             foreach ($parameterFields as $parameterField) {
                 $parameter = $this->valueAssigner->assignParameterPropertyValueFromRequest($requestParameterList, $parameter, $parameterField);
-            }
-
-            if ($parameter instanceof PropertyTargetingParameterInterface) {
-                /** @var PropertyTargetingParameterInterface $parameter */
-                $methodName = $parameterField->getMethodName() ?? sprintf('get%s', ucfirst($parameterField->getPropertyName()));
-
-                /*if ($requiredParameterProperty->hasRequiredSortableTargetEntity() && !$this->annotationHandler->hasEntityAnnotatedMethod($this->entityFqcn, $methodName, Sortable::class)) {
-                    throw new TargetPropertyNotSortableException($parameter->getPropertyName(), $this->entityFqcn);
-                }*/
             }
         }
 

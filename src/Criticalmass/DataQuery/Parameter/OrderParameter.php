@@ -3,14 +3,16 @@
 namespace App\Criticalmass\DataQuery\Parameter;
 
 use App\Criticalmass\DataQuery\Annotation\ParameterAnnotation as DataQuery;
+use App\Criticalmass\DataQuery\Validator\Constraint\Sortable;
 use Elastica\Query;
 use Symfony\Component\Validator\Constraints as Constraints;
 
-class OrderParameter implements PropertyTargetingParameterInterface
+class OrderParameter extends AbstractParameter implements PropertyTargetingParameterInterface
 {
     /**
      * @Constraints\NotNull()
      * @Constraints\Type("string")
+     * @Sortable
      * @var string $propertyName
      */
     protected $propertyName;
@@ -25,7 +27,6 @@ class OrderParameter implements PropertyTargetingParameterInterface
 
     /**
      * @DataQuery\RequiredParameter(parameterName="orderBy")
-     * @DataQuery\RequireSortableTargetProperty
      */
     public function setPropertyName(string $propertyName): OrderParameter
     {

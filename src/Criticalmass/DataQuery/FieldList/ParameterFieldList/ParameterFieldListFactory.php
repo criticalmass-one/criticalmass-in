@@ -4,7 +4,6 @@ namespace App\Criticalmass\DataQuery\FieldList\ParameterFieldList;
 
 use App\Criticalmass\DataQuery\Annotation\AnnotationInterface;
 use App\Criticalmass\DataQuery\Annotation\ParameterAnnotation\RequiredParameter;
-use App\Criticalmass\DataQuery\Annotation\ParameterAnnotation\RequireSortableTargetProperty;
 use App\Criticalmass\DataQuery\Exception\NotOneParameterForRequiredMethodException;
 use Doctrine\Common\Annotations\Reader as AnnotationReader;
 
@@ -86,11 +85,7 @@ class ParameterFieldListFactory implements ParameterFieldListFactoryInterface
                     if ($methodAnnotation instanceof RequiredParameter) {
                         $parameterField->setParameterName($methodAnnotation->getParameterName());
                     }
-
-                    if ($methodAnnotation instanceof RequireSortableTargetProperty) {
-                        $parameterField->setRequiresQueryable(true);
-                    }
-
+                    
                     $this->parameterFieldList->addField($reflectionMethod->getName(), $parameterField);
                 }
             }

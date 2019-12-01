@@ -12,9 +12,6 @@ class ParameterField extends AbstractField
     /** @var bool $requiresQueryable */
     protected $requiresQueryable = false;
 
-    /** @var bool $requiresSortable */
-    protected $requiresSortable = false;
-
     /** @var string $dateTimeFormat */
     protected $dateTimeFormat;
 
@@ -46,18 +43,6 @@ class ParameterField extends AbstractField
     public function setRequiresQueryable(bool $requiresQueryable): ParameterField
     {
         $this->requiresQueryable = $requiresQueryable;
-
-        return $this;
-    }
-
-    public function requiresSortable(): bool
-    {
-        return $this->requiresSortable;
-    }
-
-    public function setRequiresSortable(bool $requiresSortable): ParameterField
-    {
-        $this->requiresSortable = $requiresSortable;
 
         return $this;
     }
