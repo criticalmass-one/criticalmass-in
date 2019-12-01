@@ -104,6 +104,26 @@ class BoundingBoxQuery extends AbstractQuery implements ElasticQueryInterface
         return $this->westLongitude;
     }
 
+    public function hasNorthLatitude(): bool
+    {
+        return $this->northLatitude !== null;
+    }
+
+    public function hasSouthLatitude(): bool
+    {
+        return $this->southLatitude !== null;
+    }
+
+    public function hasEastLongitude(): bool
+    {
+        return $this->eastLongitude !== null;
+    }
+
+    public function hasWestLongitude(): bool
+    {
+        return $this->westLongitude !== null;
+    }
+
     public function createElasticQuery(): \Elastica\Query\AbstractQuery
     {
         $geoQuery = new \Elastica\Query\GeoBoundingBox('pin',
