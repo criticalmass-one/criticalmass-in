@@ -37,7 +37,7 @@ class RideFixtures extends Fixture implements DependentFixtureInterface
 
     protected function createOtherRides(ObjectManager $manager): void
     {
-        $citySlugs = ['hamburg', 'halle', 'berlin', 'mainz', 'london', 'esslingen'];
+        $citySlugs = ['hamburg', 'berlin', 'mainz', 'london', 'esslingen'];
 
         $endDateTime = new \DateTime('2029-12-31');
         $interval = new \DateInterval('P1M');
@@ -89,7 +89,6 @@ class RideFixtures extends Fixture implements DependentFixtureInterface
     {
         $this->rideLocationCoords = [
             'hamburg' => new Coord(53.566676, 9.984711),
-            'halle' => new Coord(51.491819, 11.968641),
             'berlin' => new Coord(52.500472, 13.423083),
             'mainz' => new Coord(50.001452, 8.276696),
             'london' => new Coord(51.507620, -0.114708),
