@@ -2,6 +2,7 @@
 
 namespace Tests\Controller\Api\RideApi;
 
+use App\Entity\Ride;
 use Tests\Controller\Api\AbstractApiControllerTest;
 
 class RideApiTest extends AbstractApiControllerTest
@@ -26,10 +27,13 @@ class RideApiTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/hamburg/2011-06-24');
 
-        $expectedContent = '{"cycle":null,"city":{"slug":"hamburg","color":{"red":0,"green":0,"blue":0},"mainSlug":{"slug":"hamburg"},"name":"Hamburg","title":"Critical Mass Hamburg","description":null,"latitude":53.550556,"longitude":9.993333,"slugs":[{"slug":"hamburg"}],"socialNetworkProfiles":[],"cityPopulation":0,"punchLine":null,"longDescription":null,"timezone":"Europe\/Berlin","threadNumber":0,"postNumber":0},"slug":null,"title":"Critical Mass Hamburg 24.06.2011","description":null,"dateTime":1308942000,"location":null,"latitude":53.5,"longitude":10.5,"estimatedParticipants":null,"estimatedDistance":null,"estimatedDuration":null,"socialNetworkProfiles":[],"participationsNumberYes":0,"participationsNumberMaybe":0,"participationsNumberNo":0}';
+        /** @var Ride $actualRide */
+        $actualRide = $this->deserializeEntity($client->getResponse()->getContent(), Ride::class);
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertIdLessJsonEquals($expectedContent, $client->getResponse()->getContent());
+
+        $this->assertEquals(new \DateTime('2011-06-24 19:00:00'), $actualRide->getDateTime());
+        $this->assertEquals('Hamburg', $actualRide->getCity()->getCity());
     }
 
     public function testCurrentRideWithoutSlugs(): void
@@ -60,12 +64,26 @@ class RideApiTest extends AbstractApiControllerTest
     {
         $client = static::createClient();
 
-        $client->request('GET', '/api/hamburg/kiddical-mass-hamburg-2035');
+        $client->request('GET', '/api/hamburg/kidical-mass-hamburg-2035');
 
-        $expectedContent = '{"id":9,"cycle":null,"city":{"slug":"hamburg","id":7,"mainSlug":{"id":7,"slug":"hamburg"},"name":"Hamburg","title":"Critical Mass Hamburg","description":null,"url":null,"facebook":null,"twitter":null,"latitude":0,"longitude":0,"slugs":[{"id":7,"slug":"hamburg"}],"cityPopulation":0,"punchLine":null,"longDescription":null,"timezone":"Europe\/Berlin","threadNumber":0,"postNumber":0,"colorRed":0,"colorGreen":0,"colorBlue":0},"slug":"kidical-mass-hamburg-2035","title":"Critical Mass 24.06.2035","description":null,"dateTime":2066324400,"location":null,"latitude":null,"longitude":null,"estimatedParticipants":null,"estimatedDistance":null,"estimatedDuration":null,"facebook":null,"twitter":null,"url":null,"participationsNumberYes":0,"participationsNumberMaybe":0,"participationsNumberNo":0}';
+        /** @var Ride $actualRide */
+        $actualRide = $this->deserializeEntity($client->getResponse()->getContent(), Ride::class);
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertIdLessJsonEquals($expectedContent, $client->getResponse()->getContent());
+
+        $this->assertEquals('kidical-mass-hamburg-2035', $actualRide->getSlug());
+        $this->assertEquals(new \DateTime('2035-06-24 19:00:00'), $actualRide->getDateTime());
+        $this->assertEquals('Hamburg', $actualRide->getCity()->getCity());
+    }
+
+    public function testCurrentRideByMisspelledSlug(): void
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/api/hamburg/kiddical-mass-hamburg-2035');
+
+        $this->assertEquals(404, $client->getResponse()->getStatusCode());
+
     }
 
     public function testRideListWithoutParameters(): void
