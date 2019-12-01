@@ -3,10 +3,12 @@
 namespace App\Criticalmass\DataQuery\Query;
 
 use App\Criticalmass\DataQuery\Annotation\QueryAnnotation as DataQuery;
+use App\Criticalmass\DataQuery\Validator\Constraint\BoundingBoxValues;
 use Symfony\Component\Validator\Constraints as Constraints;
 
 /**
  * @DataQuery\RequiredEntityProperty(propertyName="pin", propertyType="string")
+ * @BoundingBoxValues()
  */
 class BoundingBoxQuery extends AbstractQuery implements ElasticQueryInterface
 {
@@ -81,13 +83,53 @@ class BoundingBoxQuery extends AbstractQuery implements ElasticQueryInterface
 
         return $this;
     }
-    
+
+    public function getNorthLatitude(): float
+    {
+        return $this->northLatitude;
+    }
+
+    public function getSouthLatitude(): float
+    {
+        return $this->southLatitude;
+    }
+
+    public function getEastLongitude(): float
+    {
+        return $this->eastLongitude;
+    }
+
+    public function getWestLongitude(): float
+    {
+        return $this->westLongitude;
+    }
+
+    public function hasNorthLatitude(): bool
+    {
+        return $this->northLatitude !== null;
+    }
+
+    public function hasSouthLatitude(): bool
+    {
+        return $this->southLatitude !== null;
+    }
+
+    public function hasEastLongitude(): bool
+    {
+        return $this->eastLongitude !== null;
+    }
+
+    public function hasWestLongitude(): bool
+    {
+        return $this->westLongitude !== null;
+    }
+
     public function createElasticQuery(): \Elastica\Query\AbstractQuery
     {
         $geoQuery = new \Elastica\Query\GeoBoundingBox('pin',
             [
-                [$this->northLatitude, $this->southLatitude],
-                [$this->westLongitude, $this->eastLongitude],
+                [$this->westLongitude, $this->northLatitude,],
+                [$this->eastLongitude, $this->southLatitude,],
             ]);
 
         return $geoQuery;
