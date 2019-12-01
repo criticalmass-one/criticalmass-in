@@ -21,6 +21,10 @@ class SortableValidator extends ConstraintValidator
 
     public function validate($entityTargetPropertyName, Constraint $constraint): void
     {
+        if (!$entityTargetPropertyName) {
+            return;
+        }
+        
         /** @var ParameterInterface $parameter */
         $parameter = $this->context->getRoot();
 
