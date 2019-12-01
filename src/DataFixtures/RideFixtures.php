@@ -3,14 +3,20 @@
 namespace App\DataFixtures;
 
 use App\Entity\Ride;
+use Caldera\GeoBasic\Coord\Coord;
+use Caldera\GeoBasic\Coord\CoordInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class RideFixtures extends Fixture implements DependentFixtureInterface
 {
+    protected $rideLocationCoords = [];
+
     public function load(ObjectManager $manager): void
     {
+        $this->initRideLocationCoords();
+
         $this->createOtherRides($manager);
         $this->createSpecialHamburgRides($manager);
 
@@ -19,12 +25,14 @@ class RideFixtures extends Fixture implements DependentFixtureInterface
 
     protected function createSpecialHamburgRides(ObjectManager $manager): void
     {
-        $manager->persist($this->createRide('hamburg', new \DateTimeImmutable('2011-03-25 19:00:00'), null, 53.5, 10.5));
-        $manager->persist($this->createRide('hamburg', new \DateTimeImmutable('2011-06-24 19:00:00'), null, 53.5, 10.5));
-        $manager->persist($this->createRide('hamburg', new \DateTimeImmutable('2011-07-29 19:00:00'), null, 53.5, 10.5));
+        $hamburgLocationCoord = $this->rideLocationCoords['hamburg'];
 
-        $manager->persist($this->createRide('hamburg', new \DateTimeImmutable('2050-09-24 19:00:00'), null, 53.5, 10.5));
-        $manager->persist($this->createRide('hamburg', new \DateTimeImmutable('2035-06-24 19:00:00'), 'kidical-mass-hamburg-2035', 53.5, 10.5));
+        $manager->persist($this->createRide('hamburg', new \DateTimeImmutable('2011-03-25 19:00:00'), null, $hamburgLocationCoord->getLatitude(), $hamburgLocationCoord->getLongitude()));
+        $manager->persist($this->createRide('hamburg', new \DateTimeImmutable('2011-06-24 19:00:00'), null, $hamburgLocationCoord->getLatitude(), $hamburgLocationCoord->getLongitude()));
+        $manager->persist($this->createRide('hamburg', new \DateTimeImmutable('2011-07-29 19:00:00'), null, $hamburgLocationCoord->getLatitude(), $hamburgLocationCoord->getLongitude()));
+
+        $manager->persist($this->createRide('hamburg', new \DateTimeImmutable('2050-09-24 19:00:00'), null, $hamburgLocationCoord->getLatitude(), $hamburgLocationCoord->getLongitude()));
+        $manager->persist($this->createRide('hamburg', new \DateTimeImmutable('2035-06-24 19:00:00'), 'kidical-mass-hamburg-2035', $hamburgLocationCoord->getLatitude(), $hamburgLocationCoord->getLongitude()));
     }
 
     protected function createOtherRides(ObjectManager $manager): void
@@ -39,7 +47,10 @@ class RideFixtures extends Fixture implements DependentFixtureInterface
             $dateTime = new \DateTimeImmutable('2015-01-01 19:00:00', new \DateTimeZone('UTC'));
 
             while ($dateTime < $endDateTime) {
-                $ride = $this->createRide($citySlug, $dateTime, null,53.5, 10.5);
+                /** @var CoordInterface $locationCoord */
+                $locationCoord = $this->rideLocationCoords[$citySlug];
+
+                $ride = $this->createRide($citySlug, $dateTime, null, $locationCoord->getLatitude(), $locationCoord->getLongitude());
 
                 $manager->persist($ride);
 
@@ -71,6 +82,18 @@ class RideFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             CityFixtures::class,
+        ];
+    }
+
+    protected function initRideLocationCoords(): void
+    {
+        $this->rideLocationCoords = [
+            'hamburg' => new Coord(53.566676, 9.984711),
+            'halle' => new Coord(51.491819, 11.968641),
+            'berlin' => new Coord(52.500472, 13.423083),
+            'mainz' => new Coord(50.001452, 8.276696),
+            'london' => new Coord(51.507620, -0.114708),
+            'esslingen' => new Coord(48.739864, 9.307180),
         ];
     }
 }

@@ -42,6 +42,8 @@ class Finder implements FinderInterface
             }
         }
 
+        //dump(json_encode($query->toArray()));
+
         return $this->elasticFinder->find($query);
     }
 
