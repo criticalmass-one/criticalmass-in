@@ -86,8 +86,8 @@ class BoundingBoxQuery extends AbstractQuery implements ElasticQueryInterface
     {
         $geoQuery = new \Elastica\Query\GeoBoundingBox('pin',
             [
-                [$this->northLatitude, $this->southLatitude],
-                [$this->westLongitude, $this->eastLongitude],
+                [$this->westLongitude, $this->northLatitude,],
+                [$this->eastLongitude, $this->southLatitude,],
             ]);
 
         return $geoQuery;
