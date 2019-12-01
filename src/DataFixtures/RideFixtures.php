@@ -11,22 +11,56 @@ class RideFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
-        $manager->persist($this->createRide('hamburg', new \DateTime('2011-03-25 19:00:00'), 53.5, 10.5));
-        $manager->persist($this->createRide('hamburg', new \DateTime('2011-06-24 19:00:00'), 53.5, 10.5));
-        $manager->persist($this->createRide('hamburg', new \DateTime('2011-07-29 19:00:00'), 53.5, 10.5));
+        $this->createOtherRides($manager);
+        $this->createSpecialHamburgRides($manager);
 
         $manager->flush();
     }
 
-    protected function createRide(string $citySlug, \DateTime $dateTime, float $latitude, float $longitude): Ride
+    protected function createSpecialHamburgRides(ObjectManager $manager): void
     {
+        $manager->persist($this->createRide('hamburg', new \DateTimeImmutable('2011-03-25 19:00:00'), null, 53.5, 10.5));
+        $manager->persist($this->createRide('hamburg', new \DateTimeImmutable('2011-06-24 19:00:00'), null, 53.5, 10.5));
+        $manager->persist($this->createRide('hamburg', new \DateTimeImmutable('2011-07-29 19:00:00'), null, 53.5, 10.5));
+
+        $manager->persist($this->createRide('hamburg', new \DateTimeImmutable('2050-09-24 19:00:00'), null, 53.5, 10.5));
+        $manager->persist($this->createRide('hamburg', new \DateTimeImmutable('2035-06-24 19:00:00'), 'kidical-mass-hamburg-2035', 53.5, 10.5));
+    }
+
+    protected function createOtherRides(ObjectManager $manager): void
+    {
+        $citySlugs = ['hamburg', 'halle', 'berlin', 'mainz', 'london', 'esslingen'];
+
+        $endDateTime = new \DateTime('2029-12-31');
+        $interval = new \DateInterval('P1M');
+
+        /** @var string $citySlug */
+        foreach ($citySlugs as $citySlug) {
+            $dateTime = new \DateTimeImmutable('2015-01-01 19:00:00', new \DateTimeZone('UTC'));
+
+            while ($dateTime < $endDateTime) {
+                $ride = $this->createRide($citySlug, $dateTime, null,53.5, 10.5);
+
+                $manager->persist($ride);
+
+                $dateTime = $dateTime->add($interval);
+            }
+        }
+    }
+
+    protected function createRide(string $citySlug, \DateTimeImmutable $dateTime, string $rideSlug = null, float $latitude, float $longitude): Ride
+    {
+        $rideDateTime = \DateTime::createFromImmutable($dateTime);
+        $city = $this->getReference(sprintf('city-%s', $citySlug));
+
         $ride = new Ride();
         $ride
-            ->setCity($this->getReference(sprintf('city-%s', $citySlug)))
+            ->setCity($city)
+            ->setTitle(sprintf('Critical Mass %s %s', $city->getCity(), $dateTime->format('d.m.Y')))
+            ->setDateTime($rideDateTime)
+            ->setSlug($rideSlug)
             ->setLatitude($latitude)
-            ->setLongitude($longitude)
-            ->setTitle(sprintf('Critical Mass %s', $dateTime->format('d.m.Y')))
-            ->setDateTime($dateTime);
+            ->setLongitude($longitude);
 
         $this->setReference(sprintf('ride-%s-%d', $citySlug, $dateTime->format('U')), $ride);
 

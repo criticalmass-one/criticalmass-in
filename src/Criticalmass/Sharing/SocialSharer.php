@@ -8,6 +8,7 @@ class SocialSharer extends AbstractSocialSharer
 {
     public function createUrlForShareable(Shareable $shareable, string $network): string
     {
+        return 'foo';
         return $this->shareNetworkList[$network]->createUrlForShareable($shareable);
     }
 }
