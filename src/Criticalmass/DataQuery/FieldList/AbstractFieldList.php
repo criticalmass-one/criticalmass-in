@@ -18,6 +18,11 @@ abstract class AbstractFieldList
         return $this;
     }
 
+    public function hasField(string $fieldName): bool
+    {
+        return array_key_exists($fieldName, $this->list);
+    }
+
     public function getList(): array
     {
         return $this->list;
