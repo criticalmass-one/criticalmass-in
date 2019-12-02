@@ -3,22 +3,35 @@
 namespace Tests\Controller\Api\RideApi;
 
 use App\Entity\Ride;
+use App\Repository\RideRepository;
+use Symfony\Bridge\PhpUnit\ClockMock;
 use Tests\Controller\Api\AbstractApiControllerTest;
 
 class RideApiTest extends AbstractApiControllerTest
 {
+    public static function setUpBeforeClass()
+    {
+        ClockMock::register(__CLASS__);
+    }
+
+    /**
+     * @group time-sensitive
+     */
     public function testCurrentRide(): void
     {
-        $this->markTestSkipped('This must be improved as it is date related.');
+        ClockMock::register(RideRepository::class);
+        ClockMock::withClockMock((new \DateTime('2011-06-24 11:00:00'))->format('U'));
 
         $client = static::createClient();
 
         $client->request('GET', '/api/hamburg/current');
 
-        $expectedContent = '{"id":9,"cycle":null,"city":{"slug":"hamburg","id":7,"mainSlug":{"id":7,"slug":"hamburg"},"name":"Hamburg","title":"Critical Mass Hamburg","description":null,"url":null,"facebook":null,"twitter":null,"latitude":0,"longitude":0,"slugs":[{"id":7,"slug":"hamburg"}],"cityPopulation":0,"punchLine":null,"longDescription":null,"timezone":"Europe\/Berlin","threadNumber":0,"postNumber":0,"colorRed":0,"colorGreen":0,"colorBlue":0},"slug":"kidical-mass-hamburg-2035","title":"Critical Mass 24.06.2035","description":null,"dateTime":2066324400,"location":null,"latitude":null,"longitude":null,"estimatedParticipants":null,"estimatedDistance":null,"estimatedDuration":null,"facebook":null,"twitter":null,"url":null,"participationsNumberYes":0,"participationsNumberMaybe":0,"participationsNumberNo":0}';
+        $actualRide = $this->deserializeEntity($client->getResponse()->getContent(), Ride::class);
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertIdLessJsonEquals($expectedContent, $client->getResponse()->getContent());
+
+        $this->assertEquals(new \DateTime('2011-06-24 19:00:00'), $actualRide->getDateTime());
+        $this->assertEquals('Hamburg', $actualRide->getCity()->getCity());
     }
 
     public function testFirstRide(): void

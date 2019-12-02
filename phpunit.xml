@@ -51,6 +51,10 @@
         </exclude>
     </groups>
 
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener"/>
+    </listeners>
+
     <filter>
         <whitelist>
             <directory>./src/Symfony/</directory>
