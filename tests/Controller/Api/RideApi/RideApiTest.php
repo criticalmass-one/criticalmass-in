@@ -9,13 +9,10 @@ use Tests\Controller\Api\AbstractApiControllerTest;
 
 class RideApiTest extends AbstractApiControllerTest
 {
-    public static function setUpBeforeClass()
-    {
-        ClockMock::register(__CLASS__);
-    }
-
     /**
+     * @testdox Pretend to have mid 2011 and retrieve the current ride.
      * @group time-sensitive
+     * @testdox Return
      */
     public function testCurrentRide(): void
     {
@@ -34,6 +31,9 @@ class RideApiTest extends AbstractApiControllerTest
         $this->assertEquals('Hamburg', $actualRide->getCity()->getCity());
     }
 
+    /**
+     * @testdox Return a ride by a date-driven ride identifier and a city slug.
+     */
     public function testFirstRide(): void
     {
         $client = static::createClient();
@@ -49,30 +49,78 @@ class RideApiTest extends AbstractApiControllerTest
         $this->assertEquals('Hamburg', $actualRide->getCity()->getCity());
     }
 
+    /**
+     * @testdox Providing a wrong date but a valid city slug will return 404.
+     */
+    public function testRideWithWrongDate(): void
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/api/hamburg/2011-06-25');
+
+        $this->assertEquals(404, $client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * @testdox Providing a non existant city slug with a valid date will return 404.
+     */
+    public function testRideWithWrongCitySlug(): void
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/api/hamburggg/2011-06-24');
+
+        $this->assertEquals(404, $client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * @group time-sensitive
+     * @testdox Querying for rides without slugs from mid 2035 should return our prepared ride from 2050.
+     */
     public function testCurrentRideWithoutSlugs(): void
     {
+        ClockMock::register(RideRepository::class);
+        ClockMock::withClockMock((new \DateTime('2035-06-10 11:00:00'))->format('U'));
+
         $client = static::createClient();
 
-        $client->request('GET', '/api/hamburg/current?slugsAllowed=true');
+        $client->request('GET', '/api/hamburg/current?slugsAllowed=false');
 
-        $expectedContent = '{"id":9,"cycle":null,"city":{"slug":"hamburg","id":7,"mainSlug":{"id":7,"slug":"hamburg"},"name":"Hamburg","title":"Critical Mass Hamburg","description":null,"url":null,"facebook":null,"twitter":null,"latitude":0,"longitude":0,"slugs":[{"id":7,"slug":"hamburg"}],"cityPopulation":0,"punchLine":null,"longDescription":null,"timezone":"Europe\/Berlin","threadNumber":0,"postNumber":0,"colorRed":0,"colorGreen":0,"colorBlue":0},"slug":"kidical-mass-hamburg-2035","title":"Critical Mass 24.06.2035","description":null,"dateTime":2066324400,"location":null,"latitude":null,"longitude":null,"estimatedParticipants":null,"estimatedDistance":null,"estimatedDuration":null,"facebook":null,"twitter":null,"url":null,"participationsNumberYes":0,"participationsNumberMaybe":0,"participationsNumberNo":0}';
+        /** @var Ride $actualRide */
+        $actualRide = $this->deserializeEntity($client->getResponse()->getContent(), Ride::class);
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertIdLessJsonEquals($expectedContent, $client->getResponse()->getContent());
+
+        $this->assertEquals(new \DateTime('2050-09-24 19:00:00'), $actualRide->getDateTime());
+        $this->assertEquals('Hamburg', $actualRide->getCity()->getCity());
+        $this->assertNull($actualRide->getSlug());
     }
 
+    /**
+     * @testdox Allowing the ride result list to contain slugged rides will return the kidical mass 2035.
+     */
     public function testCurrentRideWithSlugs(): void
     {
+        ClockMock::register(RideRepository::class);
+        ClockMock::withClockMock((new \DateTime('2035-06-10 11:00:00'))->format('U'));
+
         $client = static::createClient();
 
         $client->request('GET', '/api/hamburg/current?slugsAllowed=true');
 
-        $expectedContent = '{"id":9,"cycle":null,"city":{"slug":"hamburg","id":7,"mainSlug":{"id":7,"slug":"hamburg"},"name":"Hamburg","title":"Critical Mass Hamburg","description":null,"url":null,"facebook":null,"twitter":null,"latitude":0,"longitude":0,"slugs":[{"id":7,"slug":"hamburg"}],"cityPopulation":0,"punchLine":null,"longDescription":null,"timezone":"Europe\/Berlin","threadNumber":0,"postNumber":0,"colorRed":0,"colorGreen":0,"colorBlue":0},"slug":"kidical-mass-hamburg-2035","title":"Critical Mass 24.06.2035","description":null,"dateTime":2066324400,"location":null,"latitude":null,"longitude":null,"estimatedParticipants":null,"estimatedDistance":null,"estimatedDuration":null,"facebook":null,"twitter":null,"url":null,"participationsNumberYes":0,"participationsNumberMaybe":0,"participationsNumberNo":0}';
+        /** @var Ride $actualRide */
+        $actualRide = $this->deserializeEntity($client->getResponse()->getContent(), Ride::class);
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertIdLessJsonEquals($expectedContent, $client->getResponse()->getContent());
+
+        $this->assertEquals(new \DateTime('2035-06-24 19:00:00'), $actualRide->getDateTime());
+        $this->assertEquals('Hamburg', $actualRide->getCity()->getCity());
+        $this->assertEquals('kidical-mass-hamburg-2035', $actualRide->getSlug());
     }
 
+    /**
+     * @testdox Query a ride by its ride identifier.
+     */
     public function testCurrentRideBySlug(): void
     {
         $client = static::createClient();
@@ -89,6 +137,9 @@ class RideApiTest extends AbstractApiControllerTest
         $this->assertEquals('Hamburg', $actualRide->getCity()->getCity());
     }
 
+    /**
+     * @testdox Expect 404 for unknown ride identifiers.
+     */
     public function testCurrentRideByMisspelledSlug(): void
     {
         $client = static::createClient();
@@ -99,15 +150,19 @@ class RideApiTest extends AbstractApiControllerTest
 
     }
 
+    /**
+     * @testdox This call should return a list of ten random rides.
+     */
     public function testRideListWithoutParameters(): void
     {
         $client = static::createClient();
 
         $client->request('GET', '/api/ride');
 
-        $expectedContent = '[{"slug":null,"title":"Critical Mass Hamburg 01.02.2015","description":null,"dateTime":1422817200,"location":null,"latitude":53.5,"longitude":10.5,"estimatedParticipants":null,"estimatedDistance":null,"estimatedDuration":null},{"slug":null,"title":"Critical Mass Hamburg 01.12.2015","description":null,"dateTime":1448996400,"location":null,"latitude":53.5,"longitude":10.5,"estimatedParticipants":null,"estimatedDistance":null,"estimatedDuration":null},{"slug":null,"title":"Critical Mass Hamburg 01.04.2016","description":null,"dateTime":1459537200,"location":null,"latitude":53.5,"longitude":10.5,"estimatedParticipants":null,"estimatedDistance":null,"estimatedDuration":null},{"slug":null,"title":"Critical Mass Hamburg 01.05.2016","description":null,"dateTime":1462129200,"location":null,"latitude":53.5,"longitude":10.5,"estimatedParticipants":null,"estimatedDistance":null,"estimatedDuration":null},{"slug":null,"title":"Critical Mass Hamburg 01.08.2016","description":null,"dateTime":1470078000,"location":null,"latitude":53.5,"longitude":10.5,"estimatedParticipants":null,"estimatedDistance":null,"estimatedDuration":null},{"slug":null,"title":"Critical Mass Hamburg 01.01.2017","description":null,"dateTime":1483297200,"location":null,"latitude":53.5,"longitude":10.5,"estimatedParticipants":null,"estimatedDistance":null,"estimatedDuration":null},{"slug":null,"title":"Critical Mass Hamburg 01.10.2017","description":null,"dateTime":1506884400,"location":null,"latitude":53.5,"longitude":10.5,"estimatedParticipants":null,"estimatedDistance":null,"estimatedDuration":null},{"slug":null,"title":"Critical Mass Hamburg 01.12.2017","description":null,"dateTime":1512154800,"location":null,"latitude":53.5,"longitude":10.5,"estimatedParticipants":null,"estimatedDistance":null,"estimatedDuration":null},{"slug":null,"title":"Critical Mass Hamburg 01.01.2018","description":null,"dateTime":1514833200,"location":null,"latitude":53.5,"longitude":10.5,"estimatedParticipants":null,"estimatedDistance":null,"estimatedDuration":null},{"slug":null,"title":"Critical Mass Hamburg 01.03.2018","description":null,"dateTime":1519930800,"location":null,"latitude":53.5,"longitude":10.5,"estimatedParticipants":null,"estimatedDistance":null,"estimatedDuration":null}]';
+        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertIdLessJsonEquals($expectedContent, $client->getResponse()->getContent());
+
+        $this->assertCount(10, $actualRideList);
     }
 }
