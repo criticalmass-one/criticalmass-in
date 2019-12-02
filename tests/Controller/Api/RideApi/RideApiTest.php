@@ -62,6 +62,7 @@ class RideApiTest extends AbstractApiControllerTest
     }
 
     /**
+     * @group time-sensitive
      * @testdox Providing a non existant city slug with a valid date will return 404.
      */
     public function testRideWithWrongCitySlug(): void
@@ -94,6 +95,53 @@ class RideApiTest extends AbstractApiControllerTest
         $this->assertEquals(new \DateTime('2050-09-24 19:00:00'), $actualRide->getDateTime());
         $this->assertEquals('Hamburg', $actualRide->getCity()->getCity());
         $this->assertNull($actualRide->getSlug());
+    }
+
+    /**
+     * @group time-sensitive
+     * @testdox When we request a cycle-generated ride we get an empty result as the test data does not contain any generated rides :(
+     */
+    public function testCurrentRideWithMandatoryCycles(): void
+    {
+        ClockMock::register(RideRepository::class);
+        ClockMock::withClockMock((new \DateTime('2035-06-10 11:00:00'))->format('U'));
+
+        $client = static::createClient();
+
+        $client->request('GET', '/api/hamburg/current?cycleMandatory=true');
+
+        /** @var Ride $actualRide */
+        $actualRide = $this->deserializeEntity($client->getResponse()->getContent(), Ride::class);
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $this->assertNull($actualRide->getDateTime());
+        $this->assertNull($actualRide->getCity());
+        $this->assertNull($actualRide->getSlug());
+        $this->assertNull($actualRide->getTitle());
+    }
+
+    /**
+     * @group time-sensitive
+     * @testdox When we do not need cycled rides we get the kidical mass ride.
+     */
+    public function testCurrentRideWithoutMandatoryCycles(): void
+    {
+        ClockMock::register(RideRepository::class);
+        ClockMock::withClockMock((new \DateTime('2035-06-10 11:00:00'))->format('U'));
+
+        $client = static::createClient();
+
+        $client->request('GET', '/api/hamburg/current?cycleMandatory=false');
+
+        /** @var Ride $actualRide */
+        $actualRide = $this->deserializeEntity($client->getResponse()->getContent(), Ride::class);
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $this->assertEquals(new \DateTime('2035-06-24 19:00:00'), $actualRide->getDateTime());
+        $this->assertEquals('Hamburg', $actualRide->getCity()->getCity());
+        $this->assertEquals('kidical-mass-hamburg-2035', $actualRide->getSlug());
     }
 
     /**
@@ -147,7 +195,6 @@ class RideApiTest extends AbstractApiControllerTest
         $client->request('GET', '/api/hamburg/kiddical-mass-hamburg-2035');
 
         $this->assertEquals(404, $client->getResponse()->getStatusCode());
-
     }
 
     /**
