@@ -24,4 +24,9 @@ abstract class AbstractApiControllerTest extends WebTestCase
 
         return $this->getSerializer()->deserialize($data, $type, 'json');
     }
+
+    protected function deserializeEntity(string $data, string $entityFqcn): object
+    {
+        return $this->getSerializer()->deserialize($data, $entityFqcn, 'json');
+    }
 }
