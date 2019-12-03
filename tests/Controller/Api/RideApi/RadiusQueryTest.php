@@ -7,6 +7,9 @@ use Tests\Controller\Api\AbstractApiControllerTest;
 
 class RadiusQueryTest extends AbstractApiControllerTest
 {
+    /**
+     * @testdox There are no rides in a 10 kilometer radius around Kiel.
+     */
     public function testRideListWithRadiusQueryAroundKielWithin10Kilometers(): void
     {
         $client = static::createClient();
@@ -19,6 +22,9 @@ class RadiusQueryTest extends AbstractApiControllerTest
         $this->assertCount(0, $actualRideList);
     }
 
+    /**
+     * @testdox Look up rides in a 200 kilometer radius around Kiel.
+     */
     public function testRideListWithRadiusQueryAroundKielWithin200Kilometers(): void
     {
         $client = static::createClient();
@@ -31,6 +37,9 @@ class RadiusQueryTest extends AbstractApiControllerTest
         $this->assertCount(10, $actualRideList);
     }
 
+    /**
+     * @testdox Look up rides within 10 kilometers around Hamburg.
+     */
     public function testRideListWithRadiusQueryAroundHamburg(): void
     {
         $client = static::createClient();
