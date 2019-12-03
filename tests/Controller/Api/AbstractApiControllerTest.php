@@ -8,6 +8,9 @@ use Tests\Controller\Api\Util\IdKiller;
 
 abstract class AbstractApiControllerTest extends WebTestCase
 {
+    /**
+     * @deprecated
+     */
     protected function assertIdLessJsonEquals(string $expected, string $actual): void
     {
         $this->assertEquals(IdKiller::removeIds($expected), IdKiller::removeIds($actual));
