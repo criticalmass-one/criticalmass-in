@@ -19,9 +19,9 @@ class RadiusQueryTest extends AbstractApiControllerTest
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
+        $actualCityList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
-        $this->assertCount(0, $actualRideList);
+        $this->assertCount(0, $actualCityList);
     }
 
     /**
@@ -35,15 +35,15 @@ class RadiusQueryTest extends AbstractApiControllerTest
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
+        $actualCityList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
-        $this->assertCount(1, $actualRideList);
+        $this->assertCount(1, $actualCityList);
     }
 
     /**
      * @testdox There are Berlin, Mainz and Hamburg in a 500 kilometer radius around Buedelsdorf.
      */
-    public function testThereAreNoRidesWithin500KilometersAroundBuedelsdorf(): void
+    public function testThereAreThreeCitiesWithin500KilometersAroundBuedelsdorf(): void
     {
         $client = static::createClient();
 
@@ -51,8 +51,8 @@ class RadiusQueryTest extends AbstractApiControllerTest
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), City::class);
+        $actualCityList = $this->deserializeEntityList($client->getResponse()->getContent(), City::class);
 
-        $this->assertCount(3, $actualRideList);
+        $this->assertCount(3, $actualCityList);
     }
 }
