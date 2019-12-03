@@ -4,7 +4,7 @@ namespace Tests\Controller\Api\RideApi;
 
 use Tests\Controller\Api\AbstractApiControllerTest;
 
-class OrderByTest extends AbstractApiControllerTest
+class OrderByParameterTest extends AbstractApiControllerTest
 {
     public function testRideListOrderByDateTimeAscending(): void
     {

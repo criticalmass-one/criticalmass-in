@@ -7,7 +7,7 @@ use App\Entity\Ride;
 use Tests\Controller\Api\AbstractApiControllerTest;
 use Tests\Coords;
 
-class OrderByDistanceTest extends AbstractApiControllerTest
+class OrderByDistanceParameterTest extends AbstractApiControllerTest
 {
     /**
      * @testdox Get rides ordered by their distance starting in Hamburg. The query is limited to 2020-01-01 to avoid non-testable mess.

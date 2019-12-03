@@ -5,7 +5,7 @@ namespace Tests\Controller\Api\RideApi;
 use App\Entity\Ride;
 use Tests\Controller\Api\AbstractApiControllerTest;
 
-class DateTimeTest extends AbstractApiControllerTest
+class DateTimeQueryTest extends AbstractApiControllerTest
 {
     public function testRideListWithYear2050Parameter(): void
     {

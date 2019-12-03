@@ -5,7 +5,7 @@ namespace Tests\Controller\Api\RideApi;
 use App\Entity\Ride;
 use Tests\Controller\Api\AbstractApiControllerTest;
 
-class BoundingBoxTest extends AbstractApiControllerTest
+class BoundingBoxQueryTest extends AbstractApiControllerTest
 {
     /**
      * @testdox This will test for any rides in a bounding box in Hamburg from Hamburg-Eidelstedt (northwest) to Hamburg-Hamm (southeast).
