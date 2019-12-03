@@ -12,6 +12,7 @@ use App\Criticalmass\DataQuery\RequestParameterList\RequestParameterList;
 use App\Criticalmass\Util\ClassUtil;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ValueAssigner implements ValueAssignerInterface
 {
@@ -101,7 +102,12 @@ class ValueAssigner implements ValueAssignerInterface
 
             $request = new Request($requestParameterList->getList());
 
-            $converter->apply($request, $paramConverterConfiguration);
+            try {
+                $converter->apply($request, $paramConverterConfiguration);
+            } catch (NotFoundHttpException $e) {
+                return $query;
+            }
+
             $query->$methodName($request->get($newParameterName));
         }
 
