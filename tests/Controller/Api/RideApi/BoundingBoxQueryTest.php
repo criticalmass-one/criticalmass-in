@@ -20,6 +20,8 @@ class BoundingBoxQueryTest extends AbstractApiControllerTest
 
         $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
+        $this->assertCount(10, $actualRideList);
+
         /** @var Ride $ride */
         foreach ($actualRideList as $ride) {
             $this->assertEquals(53.566676, $ride->getLatitude());
@@ -56,6 +58,8 @@ class BoundingBoxQueryTest extends AbstractApiControllerTest
 
         $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
+        $this->assertCount(1, $actualRideList);
+
         /** @var Ride $actualRide */
         $actualRide = array_pop($actualRideList);
 
@@ -76,7 +80,9 @@ class BoundingBoxQueryTest extends AbstractApiControllerTest
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
-        
+
+        $this->assertCount(10, $actualRideList);
+
         /** @var Ride $ride */
         foreach ($actualRideList as $ride) {
             $this->assertEquals(51.50762, $ride->getLatitude());
