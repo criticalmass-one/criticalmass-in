@@ -16,9 +16,10 @@ class OrderByParameterTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/ride?orderBy=dateTime&orderDirection=ASC');
 
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
         $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertCount(10, $actualRideList);
     }
 
@@ -31,9 +32,10 @@ class OrderByParameterTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/ride?orderBy=dateTime&orderDirection=DESC');
 
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
         $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertCount(10, $actualRideList);
     }
 
@@ -46,9 +48,10 @@ class OrderByParameterTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/ride?orderBy=dateTime&orderDirection=FOO');
 
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
         $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertCount(10, $actualRideList);
     }
 
@@ -61,9 +64,10 @@ class OrderByParameterTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/ride?orderBy=invalidField&orderDirection=DESC');
 
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
         $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertCount(10, $actualRideList);
     }
 }

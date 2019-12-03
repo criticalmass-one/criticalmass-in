@@ -22,9 +22,9 @@ class OrderByDistanceParameterTest extends AbstractApiControllerTest
 
         $client->request('GET', $uri);
 
-        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
-
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
         /** @var float $minDistance */
         $minDistance = null;
@@ -54,10 +54,10 @@ class OrderByDistanceParameterTest extends AbstractApiControllerTest
 
         $client->request('GET', $uri);
 
-        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
-
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
+        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
+        
         /** @var float $maxDistance */
         $maxDistance = null;
 

@@ -16,9 +16,9 @@ class BoundingBoxQueryTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/ride?bbNorthLatitude=53.606153&bbWestLongitude=9.905992&bbSouthLatitude=53.547299&bbEastLongitude=10.054452');
 
-        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
-
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
         /** @var Ride $ride */
         foreach ($actualRideList as $ride) {
@@ -36,9 +36,9 @@ class BoundingBoxQueryTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/ride?bbNorthLatitude=54&bbSouthLatitude=57&bbEastLongitude=9&bbWestLongitude=10.054470');
 
-        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
-
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
         $this->assertCount(10, $actualRideList);
     }
@@ -52,9 +52,9 @@ class BoundingBoxQueryTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/ride?year=2011&month=6&day=24&bbNorthLatitude=53.606120&bbSouthLatitude=53.547127&bbWestLongitude=9.906029&bbEastLongitude=10.054470');
 
-        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
-
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
         /** @var Ride $actualRide */
         $actualRide = array_pop($actualRideList);
@@ -73,10 +73,10 @@ class BoundingBoxQueryTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/ride?bbNorthLatitude=51.527641&bbSouthLatitude=51.503026&bbWestLongitude=-0.153760&bbEastLongitude=0.003207');
 
-        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
-
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
+        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
+        
         /** @var Ride $ride */
         foreach ($actualRideList as $ride) {
             $this->assertEquals(51.50762, $ride->getLatitude());

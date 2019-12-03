@@ -16,9 +16,9 @@ class CityQueryTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/ride?citySlug=hamburg');
 
-        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
-
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
         /** @var Ride $actualRide */
         foreach ($actualRideList as $actualRide) {
@@ -36,9 +36,9 @@ class CityQueryTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/ride?citySlug=london');
 
-        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
-
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
         /** @var Ride $actualRide */
         foreach ($actualRideList as $actualRide) {
@@ -56,9 +56,10 @@ class CityQueryTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/ride?citySlug=foobarcity');
 
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
         $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertCount(10, $actualRideList);
     }
 }

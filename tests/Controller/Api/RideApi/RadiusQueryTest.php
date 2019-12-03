@@ -16,9 +16,10 @@ class RadiusQueryTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/ride?centerLatitude=54.343024&centerLongitude=10.129730&radius=10');
 
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
         $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertCount(0, $actualRideList);
     }
 
@@ -31,9 +32,10 @@ class RadiusQueryTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/ride?centerLatitude=54.343024&centerLongitude=10.129730&radius=200');
 
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
         $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertCount(10, $actualRideList);
     }
 
@@ -46,9 +48,10 @@ class RadiusQueryTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/ride?centerLatitude=53.550823&centerLongitude=9.993163&radius=10');
 
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
         $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertCount(10, $actualRideList);
 
         /** @var Ride $actualRide */

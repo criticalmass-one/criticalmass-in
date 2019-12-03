@@ -16,9 +16,9 @@ class SizeParameterTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/ride');
 
-        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
-
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
         $this->assertCount(10, $actualRideList);
     }
@@ -32,9 +32,9 @@ class SizeParameterTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/ride?size=5');
 
-        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
-
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
         $this->assertCount(5, $actualRideList);
     }
@@ -48,9 +48,9 @@ class SizeParameterTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/ride?size=15');
 
-        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
-
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
         $this->assertCount(15, $actualRideList);
     }
@@ -64,9 +64,9 @@ class SizeParameterTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/ride?size=1');
 
-        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
-
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
         $this->assertCount(1, $actualRideList);
     }
@@ -80,9 +80,9 @@ class SizeParameterTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/ride?size=0');
 
-        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
-
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
         $this->assertCount(10, $actualRideList);
     }
@@ -96,9 +96,9 @@ class SizeParameterTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/ride?size=-1');
 
-        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
-
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
         $this->assertCount(10, $actualRideList);
     }
@@ -112,10 +112,10 @@ class SizeParameterTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/ride?size=abc');
 
-        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
-
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
+        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
+        
         $this->assertCount(10, $actualRideList);
     }
 }
