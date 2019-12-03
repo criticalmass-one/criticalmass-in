@@ -27,6 +27,9 @@ class BoundingBoxQueryTest extends AbstractApiControllerTest
         }
     }
 
+    /**
+     * @testdox Invalid coords for bounding box query will be ignored and result in 10 random rides.
+     */
     public function testRideListWithInvalidBoundingBoxQuery(): void
     {
         $client = static::createClient();
