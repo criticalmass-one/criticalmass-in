@@ -7,7 +7,7 @@ use App\Entity\Ride;
 use Tests\Controller\Api\AbstractApiControllerTest;
 use Tests\Coords;
 
-class OrderByDistanceTest extends AbstractApiControllerTest
+class OrderByDistanceParameterTest extends AbstractApiControllerTest
 {
     /**
      * @testdox Get rides ordered by their distance starting in Hamburg. The query is limited to 2020-01-01 to avoid non-testable mess.
@@ -22,9 +22,9 @@ class OrderByDistanceTest extends AbstractApiControllerTest
 
         $client->request('GET', $uri);
 
-        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
-
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
         /** @var float $minDistance */
         $minDistance = null;
@@ -54,10 +54,10 @@ class OrderByDistanceTest extends AbstractApiControllerTest
 
         $client->request('GET', $uri);
 
-        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
-
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
+        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
+        
         /** @var float $maxDistance */
         $maxDistance = null;
 

@@ -23,9 +23,10 @@ class RideApiTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/hamburg/current');
 
-        $actualRide = $this->deserializeEntity($client->getResponse()->getContent(), Ride::class);
-
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        /** @var Ride $actualRide */
+        $actualRide = $this->deserializeEntity($client->getResponse()->getContent(), Ride::class);
 
         $this->assertEquals(new \DateTime('2011-06-24 19:00:00'), $actualRide->getDateTime());
         $this->assertEquals('Hamburg', $actualRide->getCity()->getCity());
@@ -40,10 +41,10 @@ class RideApiTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/hamburg/2011-06-24');
 
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
         /** @var Ride $actualRide */
         $actualRide = $this->deserializeEntity($client->getResponse()->getContent(), Ride::class);
-
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $this->assertEquals(new \DateTime('2011-06-24 19:00:00'), $actualRide->getDateTime());
         $this->assertEquals('Hamburg', $actualRide->getCity()->getCity());
@@ -87,10 +88,10 @@ class RideApiTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/hamburg/current?slugsAllowed=false');
 
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
         /** @var Ride $actualRide */
         $actualRide = $this->deserializeEntity($client->getResponse()->getContent(), Ride::class);
-
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $this->assertEquals(new \DateTime('2050-09-24 19:00:00'), $actualRide->getDateTime());
         $this->assertEquals('Hamburg', $actualRide->getCity()->getCity());
@@ -110,10 +111,10 @@ class RideApiTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/hamburg/current?cycleMandatory=true');
 
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
         /** @var Ride $actualRide */
         $actualRide = $this->deserializeEntity($client->getResponse()->getContent(), Ride::class);
-
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $this->assertNull($actualRide->getDateTime());
         $this->assertNull($actualRide->getCity());
@@ -134,10 +135,10 @@ class RideApiTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/hamburg/current?cycleMandatory=false');
 
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
         /** @var Ride $actualRide */
         $actualRide = $this->deserializeEntity($client->getResponse()->getContent(), Ride::class);
-
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $this->assertEquals(new \DateTime('2035-06-24 19:00:00'), $actualRide->getDateTime());
         $this->assertEquals('Hamburg', $actualRide->getCity()->getCity());
@@ -156,10 +157,10 @@ class RideApiTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/hamburg/current?slugsAllowed=true');
 
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
         /** @var Ride $actualRide */
         $actualRide = $this->deserializeEntity($client->getResponse()->getContent(), Ride::class);
-
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $this->assertEquals(new \DateTime('2035-06-24 19:00:00'), $actualRide->getDateTime());
         $this->assertEquals('Hamburg', $actualRide->getCity()->getCity());
@@ -175,10 +176,10 @@ class RideApiTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/hamburg/kidical-mass-hamburg-2035');
 
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
         /** @var Ride $actualRide */
         $actualRide = $this->deserializeEntity($client->getResponse()->getContent(), Ride::class);
-
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $this->assertEquals('kidical-mass-hamburg-2035', $actualRide->getSlug());
         $this->assertEquals(new \DateTime('2035-06-24 19:00:00'), $actualRide->getDateTime());
@@ -206,10 +207,10 @@ class RideApiTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/ride');
 
-        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
-
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
+        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
+        
         $this->assertCount(10, $actualRideList);
     }
 }
