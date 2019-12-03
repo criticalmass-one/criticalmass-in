@@ -6,6 +6,9 @@ use Tests\Controller\Api\AbstractApiControllerTest;
 
 class OrderByParameterTest extends AbstractApiControllerTest
 {
+    /**
+     * @testdox Get 10 rides ordered by dateTime ascending.
+     */
     public function testRideListOrderByDateTimeAscending(): void
     {
         $client = static::createClient();
@@ -18,6 +21,9 @@ class OrderByParameterTest extends AbstractApiControllerTest
         $this->assertIdLessJsonEquals($expectedContent, $client->getResponse()->getContent());
     }
 
+    /**
+     * @testdox Get 10 rides ordered by dateTime descending.
+     */
     public function testRideListOrderByDateTimeDescending(): void
     {
         $client = static::createClient();
@@ -30,6 +36,9 @@ class OrderByParameterTest extends AbstractApiControllerTest
         $this->assertIdLessJsonEquals($expectedContent, $client->getResponse()->getContent());
     }
 
+    /**
+     * @testdox Providing invalid order direction will not break things.
+     */
     public function testRideListOrderByDateTimeInvalidOrder(): void
     {
         $client = static::createClient();
@@ -42,6 +51,9 @@ class OrderByParameterTest extends AbstractApiControllerTest
         $this->assertIdLessJsonEquals($expectedContent, $client->getResponse()->getContent());
     }
 
+    /**
+     * @testdox Providing invalid fields will not break api.
+     */
     public function testRideListOrderByInvalidOrder(): void
     {
         $client = static::createClient();
