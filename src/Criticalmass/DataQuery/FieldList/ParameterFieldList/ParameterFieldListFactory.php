@@ -80,6 +80,8 @@ class ParameterFieldListFactory implements ParameterFieldListFactoryInterface
 
                     if ($reflectionType) {
                         $parameterField->setType($reflectionType->getName());
+                    } else {
+                        $parameterField->setType('mixed');
                     }
 
                     if ($methodAnnotation instanceof RequiredParameter) {
