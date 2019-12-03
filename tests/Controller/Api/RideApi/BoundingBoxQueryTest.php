@@ -36,10 +36,11 @@ class BoundingBoxQueryTest extends AbstractApiControllerTest
 
         $client->request('GET', '/api/ride?bbNorthLatitude=54&bbSouthLatitude=57&bbEastLongitude=9&bbWestLongitude=10.054470');
 
-        $expectedContent = '[{"slug":null,"title":"Critical Mass Hamburg 01.01.2015","description":null,"dateTime":1420138800,"location":null,"latitude":53.566676,"longitude":9.984711,"estimatedParticipants":null,"estimatedDistance":null,"estimatedDuration":null},{"slug":null,"title":"Critical Mass Hamburg 01.03.2015","description":null,"dateTime":1425236400,"location":null,"latitude":53.566676,"longitude":9.984711,"estimatedParticipants":null,"estimatedDistance":null,"estimatedDuration":null},{"slug":null,"title":"Critical Mass Hamburg 01.03.2016","description":null,"dateTime":1456858800,"location":null,"latitude":53.566676,"longitude":9.984711,"estimatedParticipants":null,"estimatedDistance":null,"estimatedDuration":null},{"slug":null,"title":"Critical Mass Hamburg 01.08.2016","description":null,"dateTime":1470078000,"location":null,"latitude":53.566676,"longitude":9.984711,"estimatedParticipants":null,"estimatedDistance":null,"estimatedDuration":null},{"slug":null,"title":"Critical Mass Hamburg 01.09.2016","description":null,"dateTime":1472756400,"location":null,"latitude":53.566676,"longitude":9.984711,"estimatedParticipants":null,"estimatedDistance":null,"estimatedDuration":null},{"slug":null,"title":"Critical Mass Hamburg 01.03.2017","description":null,"dateTime":1488394800,"location":null,"latitude":53.566676,"longitude":9.984711,"estimatedParticipants":null,"estimatedDistance":null,"estimatedDuration":null},{"slug":null,"title":"Critical Mass Hamburg 01.08.2017","description":null,"dateTime":1501614000,"location":null,"latitude":53.566676,"longitude":9.984711,"estimatedParticipants":null,"estimatedDistance":null,"estimatedDuration":null},{"slug":null,"title":"Critical Mass Hamburg 01.02.2018","description":null,"dateTime":1517511600,"location":null,"latitude":53.566676,"longitude":9.984711,"estimatedParticipants":null,"estimatedDistance":null,"estimatedDuration":null},{"slug":null,"title":"Critical Mass Hamburg 01.12.2018","description":null,"dateTime":1543690800,"location":null,"latitude":53.566676,"longitude":9.984711,"estimatedParticipants":null,"estimatedDistance":null,"estimatedDuration":null},{"slug":null,"title":"Critical Mass Hamburg 01.08.2019","description":null,"dateTime":1564686000,"location":null,"latitude":53.566676,"longitude":9.984711,"estimatedParticipants":null,"estimatedDistance":null,"estimatedDuration":null}]';
+        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertIdLessJsonEquals($expectedContent, $client->getResponse()->getContent());
+
+        $this->assertCount(10, $actualRideList);
     }
 
     /**
@@ -50,8 +51,6 @@ class BoundingBoxQueryTest extends AbstractApiControllerTest
         $client = static::createClient();
 
         $client->request('GET', '/api/ride?year=2011&month=6&day=24&bbNorthLatitude=53.606120&bbSouthLatitude=53.547127&bbWestLongitude=9.906029&bbEastLongitude=10.054470');
-
-        $expectedContent = '[{"slug":null,"title":"Critical Mass Hamburg 24.06.2011","description":null,"dateTime":1308942000,"location":null,"latitude":53.566676,"longitude":9.984711,"estimatedParticipants":null,"estimatedDistance":null,"estimatedDuration":null}]';
 
         $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
