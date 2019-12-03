@@ -48,7 +48,7 @@ class CityQueryTest extends AbstractApiControllerTest
     }
 
     /**
-     * @testdox Expect zehn random cities when providing an non existent slug
+     * @testdox Expect 10 random cities when providing an non existent slug.
      */
     public function testRideListWithCityQueryForNonExistentCity(): void
     {
