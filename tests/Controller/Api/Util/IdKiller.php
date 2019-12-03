@@ -2,12 +2,18 @@
 
 namespace Tests\Controller\Api\Util;
 
+/**
+ * @deprecated
+ */
 class IdKiller
 {
     private function __construct()
     {
     }
 
+    /**
+     * @deprecated
+     */
     public static function removeIds(string $json): string
     {
         $json = json_decode($json, true);
