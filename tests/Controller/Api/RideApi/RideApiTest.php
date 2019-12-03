@@ -25,6 +25,7 @@ class RideApiTest extends AbstractApiControllerTest
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
+        /** @var Ride $actualRide */
         $actualRide = $this->deserializeEntity($client->getResponse()->getContent(), Ride::class);
 
         $this->assertEquals(new \DateTime('2011-06-24 19:00:00'), $actualRide->getDateTime());
