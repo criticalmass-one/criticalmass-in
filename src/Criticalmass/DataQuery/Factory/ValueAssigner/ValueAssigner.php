@@ -2,7 +2,6 @@
 
 namespace App\Criticalmass\DataQuery\Factory\ValueAssigner;
 
-use App\Criticalmass\DataQuery\Exception\ParameterConverterException;
 use App\Criticalmass\DataQuery\Factory\ParamConverterFactory\ParamConverterFactoryInterface;
 use App\Criticalmass\DataQuery\FieldList\ParameterFieldList\ParameterField;
 use App\Criticalmass\DataQuery\FieldList\QueryFieldList\QueryField;
@@ -116,9 +115,10 @@ class ValueAssigner implements ValueAssignerInterface
 
     protected function convertToInt(string $stringValue, string $parameterValue): int
     {
-        if (!ctype_digit($stringValue)) {
-            throw new ParameterConverterException('int', $stringValue, $parameterValue);
-        }
+        // ^-?(\d+|\d{1,3}(?:\,\d{3})+)?(\.\d+)?$
+//        if (!ctype_digit($stringValue)) {
+        //          throw new ParameterConverterException('int', $stringValue, $parameterValue);
+        //    }
 
         return (int)$stringValue;
     }
