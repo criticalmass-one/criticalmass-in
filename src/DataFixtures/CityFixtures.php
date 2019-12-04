@@ -27,7 +27,7 @@ class CityFixtures extends Fixture implements DependentFixtureInterface
         $this->createCity($manager, 'Potsdam', 52.395833, 13.061389, 'brandenburg');
         $this->createCity($manager, 'Berlin', 52.518611, 13.408333, 'berlin');
         $this->createCity($manager, 'München', 48.137222, 11.575556, 'bayern');
-        $this->createCity($manager, 'Stuttgart', 48.775556, 9.182778, 'stuttgart');
+        $this->createCity($manager, 'Stuttgart', 48.775556, 9.182778, 'baden-wuerttemberg');
 
         $manager->persist($this->createCity($manager, 'London', 51.50939, -0.11832, null, 'Europe/London'));
 
