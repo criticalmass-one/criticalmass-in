@@ -8,7 +8,7 @@ use Tests\Controller\Api\AbstractApiControllerTest;
 class SizeParameterTest extends AbstractApiControllerTest
 {
     /**
-     * @testdox Calling api without size parameter delivers 10 results, but we only have 5 fixtures.
+     * @testdox Calling api without size parameter delivers 10 results.
      */
     public function testCityListWithBoundingSizeParameter(): void
     {
@@ -20,7 +20,7 @@ class SizeParameterTest extends AbstractApiControllerTest
 
         $actualCityList = $this->deserializeEntityList($client->getResponse()->getContent(), City::class);
 
-        $this->assertCount(5, $actualCityList);
+        $this->assertCount(10, $actualCityList);
     }
 
     /**
@@ -56,7 +56,7 @@ class SizeParameterTest extends AbstractApiControllerTest
     }
 
     /**
-     * @testdox Calling size=0 will default to 10 results, but we only have 5 fixtures.
+     * @testdox Calling size=0 will default to 10 results.
      */
     public function testCityListWithSize0Returning5Results(): void
     {
@@ -68,11 +68,11 @@ class SizeParameterTest extends AbstractApiControllerTest
 
         $actualCityList = $this->deserializeEntityList($client->getResponse()->getContent(), City::class);
 
-        $this->assertCount(5, $actualCityList);
+        $this->assertCount(10, $actualCityList);
     }
 
     /**
-     * @testdox Calling size=-1 will default to 10 results, but we only have 5 fixtures.
+     * @testdox Calling size=-1 will default to 10 results.
      */
     public function testCityListWithNegativeParameter(): void
     {
@@ -84,11 +84,11 @@ class SizeParameterTest extends AbstractApiControllerTest
 
         $actualCityList = $this->deserializeEntityList($client->getResponse()->getContent(), City::class);
 
-        $this->assertCount(5, $actualCityList);
+        $this->assertCount(10, $actualCityList);
     }
 
     /**
-     * @testdox Using strings as parameter value will default to 10 results, but we only have 5 fixtures.
+     * @testdox Using strings as parameter value will default to 10 results.
      */
     public function testCityListWithInvalidParameter(): void
     {
@@ -100,6 +100,6 @@ class SizeParameterTest extends AbstractApiControllerTest
 
         $actualCityList = $this->deserializeEntityList($client->getResponse()->getContent(), City::class);
 
-        $this->assertCount(5, $actualCityList);
+        $this->assertCount(10, $actualCityList);
     }
 }
