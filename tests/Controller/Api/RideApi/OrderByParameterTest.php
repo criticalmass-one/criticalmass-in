@@ -20,7 +20,17 @@ class OrderByParameterTest extends AbstractApiControllerTest
 
         $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
-        $this->assertCount(10, $actualRideList);
+        /** @var \DateTime $minDateTime */
+        $minDateTime = null;
+
+        /** @var Ride $actualRide */
+        foreach ($actualRideList as $actualRide) {
+            if ($minDateTime) {
+                $this->assertGreaterThanOrEqual($minDateTime, $actualRide->getDateTime());
+            }
+
+            $minDateTime = $actualRide->getDateTime();
+        }
     }
 
     /**
@@ -36,7 +46,17 @@ class OrderByParameterTest extends AbstractApiControllerTest
 
         $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
-        $this->assertCount(10, $actualRideList);
+        /** @var \DateTime $maxDateTime */
+        $maxDateTime = null;
+
+        /** @var Ride $actualRide */
+        foreach ($actualRideList as $actualRide) {
+            if ($maxDateTime) {
+                $this->assertLessThanOrEqual($maxDateTime, $actualRide->getDateTime());
+            }
+
+            $maxDateTime = $actualRide->getDateTime();
+        }
     }
 
     /**
