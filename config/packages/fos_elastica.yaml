@@ -78,11 +78,11 @@ fos_elastica:
                     properties:
                         id: ~
                         title: { type: keyword }
-                        description: { type: keyword }
+                        description: { type: text }
                         city: { type: keyword }
                         country: { type: keyword }
                         region: { type: keyword }
-                        location: ~
+                        location: { type: keyword }
                         isEnabled: ~
                         dateTime: { type: date, format: "strict_date_optional_time" }
                         pin: { type: geo_point }
@@ -114,9 +114,9 @@ fos_elastica:
                         id: ~
                         city: { type: keyword }
                         title: { type: keyword }
-                        description: { type: keyword }
-                        longDescription: { type: keyword }
-                        punchLine: { type: keyword }
+                        description: { type: text }
+                        longDescription: { type: text }
+                        punchLine: { type: text }
                         isEnabled: ~
                         enabled: ~
                         createdAt: { type: date, format: "strict_date_optional_time" }
