@@ -25,9 +25,9 @@ class RadiusQueryTest extends AbstractApiControllerTest
     }
 
     /**
-     * @testdox There is Kiel around 35 kilometers of Hamburg.
+     * @testdox There is Kiel and Hamburg around 100 kilometers of Buedelsdorf.
      */
-    public function testThereIsHamburgWithin100KilometersAroundBuedelsdorf(): void
+    public function testThereAre2CitiesWithin100KilometersAroundBuedelsdorf(): void
     {
         $client = static::createClient();
 
@@ -37,22 +37,22 @@ class RadiusQueryTest extends AbstractApiControllerTest
 
         $actualCityList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
-        $this->assertCount(1, $actualCityList);
+        $this->assertCount(2, $actualCityList);
     }
 
     /**
-     * @testdox There are Berlin, Mainz and Hamburg in a 500 kilometer radius around Buedelsdorf.
+     * @testdox There are 5 cities in a 250 kilometer radius around Buedelsdorf.
      */
-    public function testThereAreThreeCitiesWithin500KilometersAroundBuedelsdorf(): void
+    public function testThereAre5CitiesWithin250KilometersAroundBuedelsdorf(): void
     {
         $client = static::createClient();
 
-        $client->request('GET', '/api/city?centerLatitude=54.318072&centerLongitude=9.696301&radius=500');
+        $client->request('GET', '/api/city?centerLatitude=54.318072&centerLongitude=9.696301&radius=250');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $actualCityList = $this->deserializeEntityList($client->getResponse()->getContent(), City::class);
 
-        $this->assertCount(3, $actualCityList);
+        $this->assertCount(5, $actualCityList);
     }
 }
