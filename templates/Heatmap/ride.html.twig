@@ -1,0 +1,41 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Heatmap der Critical Mass {{ ride.city.city }} am {{ ride.dateTime|date('d.m.Y') }}{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ objectPath(ride.city) }}">
+            {{ ride.city.city }}
+        </a>
+    </li>
+
+    <li>
+        <a href="{{ objectPath(ride) }}">
+            {{ ride.title }}
+        </a>
+    </li>
+
+    <li class="active">
+        Heatmap
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="heatmap" style="height: 75vh;">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        CriticalMass.loadModule('HeatmapPage', null, null, function (heatmapPage) {
+            heatmapPage.setHeatmapIdentifier('{{ ride.heatmap.identifier }}');
+            heatmapPage.setMapCenter({{ ride.latitude }}, {{ ride.longitude }});
+            heatmapPage.init();
+        });
+    </script>
+{% endblock %}

@@ -14,7 +14,7 @@ define(['MarkerEntity', 'leaflet.extra-markers'], function () {
             icon: 'fa-camera',
             markerColor: 'yellow',
             shape: 'square',
-            prefix: 'fa'
+            prefix: 'far'
         });
     };
 

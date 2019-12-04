@@ -13,7 +13,6 @@ class CityFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $manager->persist($this->createCity('Hamburg', 53.550556, 9.993333));
-        $manager->persist($this->createCity('Halle', 51.482778, 11.97));
         $manager->persist($this->createCity('Berlin', 52.518611, 13.408333));
         $manager->persist($this->createCity('Mainz', 50, 8.271111));
         $manager->persist($this->createCity('London', 51.50939, -0.11832, 'Europe/London'));

@@ -2,33 +2,35 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\DataQuery\Annotation\EntityAnnotation as DataQuery;
 use App\Criticalmass\Geocoding\ReverseGeocodeable;
 use App\Criticalmass\OrderedEntities\Annotation as OE;
 use App\Criticalmass\OrderedEntities\OrderedEntityInterface;
+use App\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Sharing\Annotation as Sharing;
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
+use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\Criticalmass\Weather\EntityInterface\WeatherableInterface;
 use App\Criticalmass\Weather\EntityInterface\WeatherInterface;
-use App\EntityInterface\StaticMapableInterface;
-use Caldera\GeoBasic\Coord\Coord;
 use App\EntityInterface\AuditableInterface;
 use App\EntityInterface\ElasticSearchPinInterface;
 use App\EntityInterface\ParticipateableInterface;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
-use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use App\EntityInterface\StaticMapableInterface;
+use App\Validator\Constraint as CriticalAssert;
+use Caldera\GeoBasic\Coord\Coord;
+use Caldera\GeoBasic\Coord\CoordInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Validator\Constraint as CriticalAssert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use App\Criticalmass\Router\Annotation as Routing;
-use App\Criticalmass\Sharing\Annotation as Sharing;
-use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 
 /**
  * @ORM\Table(name="ride")
@@ -46,6 +48,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
+     * @DataQuery\Sortable
      */
     protected $id;
 
@@ -58,28 +61,31 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     /**
      * @ORM\ManyToOne(targetEntity="CityCycle", inversedBy="rides", fetch="LAZY")
      * @ORM\JoinColumn(name="cycle_id", referencedColumnName="id")
+     * @JMS\Groups({"extended-ride-list"})
      * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
      */
     protected $cycle;
 
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="rides", fetch="LAZY")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
-     * @JMS\Groups({"ride-list"})
+     * @JMS\Groups({"extended-ride-list"})
      * @JMS\Expose
      * @Routing\RouteParameter(name="citySlug")
      * @OE\Identical()
+     * @DataQuery\Queryable
      */
     protected $city;
 
     /**
      * @ORM\OneToMany(targetEntity="Track", mappedBy="ride", fetch="LAZY")
+     * @JMS\Groups({"extended-ride-list"})
      */
     protected $tracks;
 
     /**
      * @ORM\OneToMany(targetEntity="Subride", mappedBy="ride", fetch="LAZY")
+     * @JMS\Groups({"extended-ride-list"})
      */
     protected $subrides;
 
@@ -87,6 +93,8 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @ORM\Column(type="string", nullable=true)
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
+     * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
     protected $slug;
 
@@ -95,6 +103,8 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      * @Sharing\Title()
+     * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
     protected $title;
 
@@ -103,11 +113,15 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      * @Sharing\Intro()
+     * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
     protected $description;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
     protected $socialDescription;
 
@@ -117,6 +131,8 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Expose
      * @JMS\Type("DateTime<'U'>")
      * @OE\Order(direction="asc")
+     * @DataQuery\Sortable
+     * @DataQuery\DateTimeQueryable(format="strict_date", pattern="Y-m-d")
      */
     protected $dateTime;
 
@@ -124,6 +140,8 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @ORM\Column(type="string", length=255, nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
+     * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
     protected $location;
 
@@ -131,6 +149,8 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @ORM\Column(type="float", nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
+     * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
     protected $latitude;
 
@@ -138,6 +158,8 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @ORM\Column(type="float", nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
+     * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
     protected $longitude;
 
@@ -145,6 +167,8 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @ORM\Column(type="smallint", nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
+     * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
     protected $estimatedParticipants;
 
@@ -152,6 +176,8 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @ORM\Column(type="float", nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
+     * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
     protected $estimatedDistance;
 
@@ -159,51 +185,51 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @ORM\Column(type="float", nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
+     * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
     protected $estimatedDuration;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
      */
     protected $facebook;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
      */
     protected $twitter;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Url()
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
      */
     protected $url;
 
     /**
      * @ORM\OneToMany(targetEntity="Post", mappedBy="ride", fetch="LAZY")
+     * @JMS\Groups({"extended-ride-list"})
      */
     protected $posts;
 
     /**
      * @ORM\OneToMany(targetEntity="Photo", mappedBy="ride", fetch="LAZY")
+     * @JMS\Groups({"extended-ride-list"})
      */
     protected $photos;
 
     /**
      * @ORM\OneToMany(targetEntity="SocialNetworkProfile", mappedBy="ride", cascade={"persist", "remove"})
+     * @JMS\Groups({"extended-ride-list"})
+     * @JMS\Expose
      */
     protected $socialNetworkProfiles;
 
     /**
      * @var \DateTime
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $createdAt;
 
@@ -243,6 +269,8 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
 
     /**
      * @ORM\Column(type="integer")
+     * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
     protected $views = 0;
 
@@ -306,6 +334,16 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      */
     protected $disabledReason;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Heatmap", mappedBy="ride", cascade={"persist", "remove"})
+     */
+    private $heatmap;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\TrackImportCandidate", mappedBy="ride")
+     */
+    private $trackImportCandidates;
+
     public function __construct()
     {
         $this->dateTime = new \DateTime();
@@ -319,6 +357,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         $this->subrides = new ArrayCollection();
         $this->participations = new ArrayCollection();
         $this->socialNetworkProfiles = new ArrayCollection();
+        $this->trackImportCandidates = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -357,19 +396,14 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         return $this;
     }
 
+    /**
+     * @return \DateTime|null
+     */
     public function getDateTime(): ?\DateTime
     {
         return $this->dateTime;
     }
-
-    /**
-     * @deprecated
-     */
-    public function getSimpleDate(): string
-    {
-        return $this->dateTime->format('Y-m-d');
-    }
-
+    
     public function setLocation(string $location = null): ReverseGeocodeable
     {
         $this->location = $location;
@@ -735,13 +769,16 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         return $this->getEstimatedDistance() / $this->getEstimatedDuration();
     }
 
+    /**
+     * @DataQuery\Queryable
+     */
     public function getPin(): string
     {
         if (!$this->latitude || !$this->longitude) {
             return '0,0';
         }
 
-        return $this->latitude . ',' . $this->longitude;
+        return sprintf('%f,%f', $this->latitude, $this->longitude);
     }
 
     public function getCreatedAt(): \DateTime
@@ -821,6 +858,18 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         ++$this->views;
 
         return $this;
+    }
+
+    /**
+     * @DataQuery\Queryable
+     */
+    public function getRegion(): ?Region
+    {
+        if ($this->city) {
+            return $this->city->getRegion();
+        }
+
+        return null;
     }
 
     public function getCountry(): ?Region
@@ -1055,5 +1104,59 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         $this->disabledReason = $disabledReason;
 
         return $this;
+    }
+
+    public function getHeatmap(): ?Heatmap
+    {
+        return $this->heatmap;
+    }
+
+    public function setHeatmap(?Heatmap $heatmap): self
+    {
+        $this->heatmap = $heatmap;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newRide = $heatmap === null ? null : $this;
+        if ($newRide !== $heatmap->getRide()) {
+            $heatmap->setRide($newRide);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TrackImportCandidate[]
+     */
+    public function getTrackImportCandidates(): Collection
+    {
+        return $this->trackImportCandidates;
+    }
+
+    public function addTrackImportCandidate(TrackImportCandidate $trackImportCandidate): self
+    {
+        if (!$this->trackImportCandidates->contains($trackImportCandidate)) {
+            $this->trackImportCandidates[] = $trackImportCandidate;
+            $trackImportCandidate->setRide($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrackImportCandidate(TrackImportCandidate $trackImportCandidate): self
+    {
+        if ($this->trackImportCandidates->contains($trackImportCandidate)) {
+            $this->trackImportCandidates->removeElement($trackImportCandidate);
+            // set the owning side to null (unless already changed)
+            if ($trackImportCandidate->getRide() === $this) {
+                $trackImportCandidate->setRide(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function toCoord(): CoordInterface
+    {
+        return new Coord($this->latitude, $this->longitude);
     }
 }

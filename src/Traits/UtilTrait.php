@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 
+/** @deprecated */
 trait UtilTrait
 {
     /** @deprecated  */
@@ -23,6 +24,7 @@ trait UtilTrait
         return $this->getDoctrine()->getManager();
     }
 
+    /** @deprecated */
     protected function saveReferer(Request $request): string
     {
         $referer = $request->headers->get('referer');
@@ -32,11 +34,13 @@ trait UtilTrait
         return $referer;
     }
 
+    /** @deprecated */
     protected function getSavedReferer(): ?string
     {
         return $this->getSession()->get('referer');
     }
 
+    /** @deprecated */
     protected function createRedirectResponseForSavedReferer(): RedirectResponse
     {
         $referer = $this->getSavedReferer();
