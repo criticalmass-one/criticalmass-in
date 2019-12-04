@@ -77,8 +77,8 @@ fos_elastica:
                 ride:
                     properties:
                         id: ~
-                        title: ~
-                        description: ~
+                        title: { type: keyword }
+                        description: { type: keyword }
                         city: { type: keyword }
                         country: { type: keyword }
                         region: { type: keyword }
@@ -112,11 +112,11 @@ fos_elastica:
                 city:
                     properties:
                         id: ~
-                        city: ~
-                        title: ~
-                        description: ~
-                        longDescription: ~
-                        punchLine: ~
+                        city: { type: keyword }
+                        title: { type: keyword }
+                        description: { type: keyword }
+                        longDescription: { type: keyword }
+                        punchLine: { type: keyword }
                         isEnabled: ~
                         enabled: ~
                         createdAt: { type: date, format: "strict_date_optional_time" }
