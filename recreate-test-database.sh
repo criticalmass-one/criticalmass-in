@@ -6,4 +6,4 @@ bin/console doctrine:schema:create --env=test
 
 bin/console doctrine:fixtures:load -n --env=test
 
-bin/console fos:elastica:populate --env=test
+APP_ENV="test" bin/console fos:elastica:populate
