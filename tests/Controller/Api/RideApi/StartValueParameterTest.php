@@ -24,11 +24,11 @@ class StartValueParameterTest extends AbstractApiControllerTest
      */
     public function testRideListWithStartValueAndOrderByParameterAscending(): void
     {
-        $startDateTime = new \DateTime('2022-07-01');
+        $dateTime = new \DateTime('2022-07-01');
 
         $client = static::createClient();
 
-        $client->request('GET', sprintf('/api/ride?orderBy=dateTime&orderDirection=ASC&startValue=%s', $startDateTime->format('Y-m-d')));
+        $client->request('GET', sprintf('/api/ride?orderBy=dateTime&orderDirection=ASC&startValue=%s', $dateTime->format('Y-m-d')));
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
@@ -38,7 +38,9 @@ class StartValueParameterTest extends AbstractApiControllerTest
 
         /** @var Ride $actualRide */
         foreach ($actualRideList as $actualRide) {
-            $this->assertGreaterThanOrEqual($startDateTime, $actualRide->getDateTime());
+            $this->assertGreaterThanOrEqual($dateTime, $actualRide->getDateTime());
+
+            $dateTime = $actualRide->getDateTime();
         }
     }
 
@@ -47,11 +49,11 @@ class StartValueParameterTest extends AbstractApiControllerTest
      */
     public function testRideListWithStartValueAndOrderByParameterDescending(): void
     {
-        $startDateTime = new \DateTime('2022-06-30');
+        $dateTime = new \DateTime('2022-06-30');
 
         $client = static::createClient();
 
-        $client->request('GET', sprintf('/api/ride?orderBy=dateTime&orderDirection=DESC&startValue=%s', $startDateTime->format('Y-m-d')));
+        $client->request('GET', sprintf('/api/ride?orderBy=dateTime&orderDirection=DESC&startValue=%s', $dateTime->format('Y-m-d')));
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
@@ -61,7 +63,9 @@ class StartValueParameterTest extends AbstractApiControllerTest
 
         /** @var Ride $actualRide */
         foreach ($actualRideList as $actualRide) {
-            $this->assertLessThanOrEqual($startDateTime, $actualRide->getDateTime());
+            $this->assertLessThanOrEqual($dateTime, $actualRide->getDateTime());
+
+            $dateTime = $actualRide->getDateTime();
         }
     }
 }
