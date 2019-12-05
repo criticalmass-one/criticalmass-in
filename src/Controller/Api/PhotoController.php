@@ -47,6 +47,10 @@ class PhotoController extends BaseController
      *
      * You may specify your query with the following parameters.
      *
+     * <strong>List length</strong>
+     *
+     * The length of your results defaults to 10. Use <code>size</code> to request more or less results.
+     *
      * <strong>Regional query parameters</strong>
      *
      * <ul>
@@ -95,6 +99,8 @@ class PhotoController extends BaseController
      *
      * You may use the <code>distanceOrderDirection</code> parameter in combination with the radius query to sort the result list by the photos geo position to the center coord.
      *
+     * Apply <code>startValue</code> to deliver a value to start your ordered list with.
+     *
      * @ApiDoc(
      *  resource=true,
      *  description="Lists photos",
@@ -113,7 +119,9 @@ class PhotoController extends BaseController
      *     {"name"="bbSouthLatitude", "dataType"="float", "required"=false, "description"="South latitude of a bounding box to look for photos."},
      *     {"name"="orderBy", "dataType"="string", "required"=false, "description"="Choose a property to sort the list by."},
      *     {"name"="orderDirection", "dataType"="string", "required"=false, "description"="Sort ascending or descending."},
-     *     {"name"="distanceOrderDirection", "dataType"="string", "required"=false, "description"="Enable distance sorting in combination with radius query."}
+     *     {"name"="distanceOrderDirection", "dataType"="string", "required"=false, "description"="Enable distance sorting in combination with radius query."},
+     *     {"name"="startValue", "dataType"="string", "required"=false, "description"="Start ordered list with provided value."},
+     *     {"name"="size", "dataType"="integer", "required"=false, "description"="Length of resulting list. Defaults to 10."}
      *  },
      *  section="Photo"
      * )
