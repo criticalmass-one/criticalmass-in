@@ -24,6 +24,8 @@
 
 {% block content %}
     <div class="container ride" itemscope itemtype="http://schema.org/Event">
+        {{ include('Flash/_flash.html.twig') }}
+
         {% include('Ride/Includes/_registrationHint.html.twig') %}
 
         {% include('Ride/Ride.html.twig') with { 'ride': ride, 'tracks': tracks, 'participation': participation } %}

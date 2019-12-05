@@ -12,3 +12,5 @@ flagception:
             default: false
         track_massupload:
             default: false
+        strava_track_upload:
+            default: true

@@ -56,6 +56,8 @@
 
 {% block content %}
     <div class="container" itemscope itemtype="http://schema.org/Organization">
+        {{ include('Flash/_flash.html.twig') }}
+
         <div class="row">
             <div class="col-md-12">
                 {% if city.imageName %}

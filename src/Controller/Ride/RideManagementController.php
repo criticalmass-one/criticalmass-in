@@ -2,16 +2,16 @@
 
 namespace App\Controller\Ride;
 
+use App\Controller\AbstractController;
 use App\Criticalmass\Router\ObjectRouterInterface;
+use App\Entity\City;
+use App\Entity\Ride;
 use App\Form\Type\RideDisableType;
 use App\Form\Type\RideSocialPreviewType;
+use App\Form\Type\RideType;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use App\Controller\AbstractController;
-use App\Entity\City;
-use App\Entity\Ride;
-use App\Form\Type\RideType;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;
@@ -78,6 +78,8 @@ class RideManagementController extends AbstractController
             ]);
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
+
+            return $this->redirect($objectRouter->generate($ride));
         }
 
         return $this->render('RideManagement/edit.html.twig', [
@@ -99,9 +101,9 @@ class RideManagementController extends AbstractController
         ]);
 
         if (Request::METHOD_POST == $request->getMethod()) {
-            return $this->editPostAction($request, $user, $ride, $ride->getCity(), $form);
+            return $this->editPostAction($request, $user, $ride, $ride->getCity(), $form, $objectRouter);
         } else {
-            return $this->editGetAction($request, $user, $ride, $ride->getCity(), $form);
+            return $this->editGetAction($request, $user, $ride, $ride->getCity(), $form, $objectRouter);
         }
     }
 
@@ -110,7 +112,8 @@ class RideManagementController extends AbstractController
         UserInterface $user = null,
         Ride $ride,
         City $city,
-        FormInterface $form
+        FormInterface $form,
+        ObjectRouterInterface $objectRouter
     ): Response {
         return $this->render('RideManagement/edit.html.twig', [
             'ride' => $ride,
@@ -125,7 +128,8 @@ class RideManagementController extends AbstractController
         UserInterface $user = null,
         Ride $ride,
         City $city,
-        FormInterface $form
+        FormInterface $form,
+        ObjectRouterInterface $objectRouter
     ): Response {
         $form->handleRequest($request);
 
@@ -141,6 +145,8 @@ class RideManagementController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
+
+            return $this->redirect($objectRouter->generate($ride));
         }
 
         return $this->render('RideManagement/edit.html.twig', [

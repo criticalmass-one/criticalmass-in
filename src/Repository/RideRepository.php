@@ -13,7 +13,7 @@ class RideRepository extends EntityRepository
 {
     public function findCurrentRideForCity(City $city, bool $cycleMandatory = false, bool $slugsAllowed = true): ?Ride
     {
-        $dateTime = new \DateTime();
+        $dateTime = \DateTime::createFromFormat('U', (string)time()); // this will allow to mock the clock in functional tests
 
         $builder = $this->createQueryBuilder('r');
 

@@ -13,6 +13,7 @@ define(['Map', 'LocationMarker', 'typeahead.jquery', 'bloodhound', 'bootstrap-da
         rideDateSelector: '#ride_dateTime_date',
         messageDoubleMonthRideSelector: '#doubleMonthRide',
         messageDoubleDayRideSelector: '#doubleDayRide',
+        missingLocationMessage: 'Du hast bislang leider keinen Treffpunkt auf der Karte markiert. Bitte ziehe den gelben Marker auf den Treffpunkt.',
         submitButtonSelector: '#rideSubmitButton',
         cityMarkerPopupText: 'Ich bin der Mittelpunkt der Stadt',
         cityStandardLocationPopupText: 'Zieh mich auf den Treffpunkt!',
@@ -56,6 +57,23 @@ define(['Map', 'LocationMarker', 'typeahead.jquery', 'bloodhound', 'bootstrap-da
         }
 
         $(this.settings.rideDateSelector).on('change', checkFunction);
+
+        function checkLocation(form) {
+            form.preventDefault();
+
+            var rideLocationLatitude = $(that.settings.rideLatitudeInputSelector).val();
+            var rideLocationLongitude = $(that.settings.rideLongitudeInputSelector).val();
+
+            if (!rideLocationLatitude || !rideLocationLongitude) {
+                alert(that.settings.missingLocationMessage);
+            } else {
+                $form = $('form');
+                $form.off('submit');
+                $form.submit();
+            }
+        }
+
+        $('form').on('submit', checkLocation);
     };
 
     EditRidePage.prototype._initLatLngs = function () {

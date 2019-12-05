@@ -12,7 +12,7 @@
                     {% set network = getNetwork(profile.network) %}
 
                     <a href="{{ profile.identifier }}" class="btn" style="background-color: {{ network.backgroundColor }}; color: {{ network.textColor }};">
-                        <i class="fa {{ network.icon }}"></i>
+                        <i class="{{ network.icon }}"></i>
                         {{ network.name }}
                     </a>
                 {% endfor %}
