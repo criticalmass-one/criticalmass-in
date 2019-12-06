@@ -213,7 +213,7 @@ function compressJs() {
 }
 
 
-const buildJs = gulp.series(copyJsExternal, compressJs);
+const buildJs = gulp.series(copyJsModules, copyJsExternal, compressJs);
 
 const build = gulp.series(buildAreaselect, buildLeaflet, buildExtramarkers, buildFontawesome, buildAssets, buildJs, buildCss);
 
