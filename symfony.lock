@@ -329,6 +329,9 @@
     "nikic/php-parser": {
         "version": "v4.2.2"
     },
+    "nmure/crawler-detect-bundle": {
+        "version": "v2.0.0"
+    },
     "ocramius/proxy-manager": {
         "version": "2.2.0"
     },
