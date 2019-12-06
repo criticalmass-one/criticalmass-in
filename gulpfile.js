@@ -180,7 +180,6 @@ function copyJsExternal() {
             'node_modules/bootstrap-slider/dist/bootstrap-slider.js',
             'node_modules/dateformat/lib/dateformat.js',
             'node_modules/jquery/dist/jquery.js',
-            'node_modules/jquery/dist/jquery.min.js',
             'node_modules/typeahead.js/dist/bloodhound.js',
             'node_modules/typeahead.js/dist/typeahead.jquery.js',
             'node_modules/leaflet/dist/leaflet.js',
@@ -213,7 +212,7 @@ function compressJs() {
 }
 
 
-const buildJs = gulp.series(copyJsExternal, compressJs);
+const buildJs = gulp.series(copyJsModules, copyJsExternal, compressJs);
 
 const build = gulp.series(buildAreaselect, buildLeaflet, buildExtramarkers, buildFontawesome, buildAssets, buildJs, buildCss);
 
