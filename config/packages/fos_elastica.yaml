@@ -183,7 +183,9 @@ fos_elastica:
                         id: ~
                         description: ~
                         city: { type: keyword }
-                        ride: { type: keyword }
+                        rideId:
+                            type: keyword
+                            property_path: ride.id
                         #region: { type: keyword }
                         location: ~
                         latitude: ~
