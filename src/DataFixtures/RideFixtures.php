@@ -73,7 +73,7 @@ class RideFixtures extends Fixture implements DependentFixtureInterface
             ->setLatitude($latitude)
             ->setLongitude($longitude);
 
-        $this->setReference(sprintf('ride-%s-%d', $citySlug, $dateTime->format('U')), $ride);
+        $this->setReference(sprintf('ride-%s-%s', $citySlug, $dateTime->format('Y-m-d')), $ride);
 
         return $ride;
     }
