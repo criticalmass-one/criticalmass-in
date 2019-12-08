@@ -37,4 +37,11 @@ class CityQuery extends AbstractQuery implements DoctrineQueryInterface, Elastic
     {
         return new \Elastica\Query\Term(['city' => $this->city->getCity()]);
     }
+
+    public function isOverridenBy(): array
+    {
+        return [
+            RideQuery::class,
+        ];
+    }
 }
