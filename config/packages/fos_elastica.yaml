@@ -178,6 +178,7 @@ fos_elastica:
                                 type: "asciifolding"
             types:
                 photo:
+                    indexable_callback: 'elasticable'
                     properties:
                         id: ~
                         description: ~

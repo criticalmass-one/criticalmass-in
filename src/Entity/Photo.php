@@ -668,4 +668,8 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return sprintf('%f,%f', $this->latitude, $this->longitude);
     }
 
+    public function elasticable(): bool
+    {
+        return $this->ride && $this->enabled && !$this->deleted;
+    }
 }
