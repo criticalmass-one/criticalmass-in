@@ -18,6 +18,7 @@ use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
 use App\EntityInterface\StaticMapableInterface;
+use Caldera\GeoBasic\Coord\Coord;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
@@ -671,5 +672,10 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     public function elasticable(): bool
     {
         return $this->ride && $this->enabled && !$this->deleted;
+    }
+
+    public function getCoord(): Coord
+    {
+        return new Coord($this->latitude, $this->longitude);
     }
 }
