@@ -2,6 +2,7 @@
 
 namespace Tests\Controller\Api;
 
+use App\Criticalmass\Util\ClassUtil;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Tests\Controller\Api\Util\IdKiller;
@@ -31,5 +32,10 @@ abstract class AbstractApiControllerTest extends WebTestCase
     protected function deserializeEntity(string $data, string $entityFqcn): object
     {
         return $this->getSerializer()->deserialize($data, $entityFqcn, 'json');
+    }
+
+    protected function getApiEndpointForFqcn(string $fqcn): string
+    {
+        return sprintf('/api/%s', ClassUtil::getLowercaseShortnameFromFqcn($fqcn));
     }
 }

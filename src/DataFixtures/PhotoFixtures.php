@@ -39,7 +39,7 @@ class PhotoFixtures extends Fixture implements DependentFixtureInterface
 
     protected function createPhoto(Ride $ride, int $number): Photo
     {
-        $dateIntervalSpec = sprintf('P%dM', $number);
+        $dateIntervalSpec = sprintf('PT%dM', $number);
         $dateInterval = new \DateInterval($dateIntervalSpec);
 
         $dateTime = clone $ride->getDateTime();
