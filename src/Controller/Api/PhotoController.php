@@ -56,6 +56,7 @@ class PhotoController extends BaseController
      * <ul>
      * <li><code>regionSlug</code>: Provide a slug like <code>schleswig-holstein</code> to retrieve only photos from rides in this region.</li>
      * <li><code>citySlug</code>: Limit the resulting list to a city like <code>hamburg</code>, <code>new-york</code> or <code>muenchen</code>.</li>
+     * <li><code>rideIdentifier</code>: Reduce the result list for photos uploaded to this specified ride. Must be combined with <code>citySlug</code>.</li>
      * </ul>
      *
      * <strong>Date-related query parameters</strong>
@@ -107,6 +108,7 @@ class PhotoController extends BaseController
      *  parameters={
      *     {"name"="regionSlug", "dataType"="string", "required"=false, "description"="Provide a region slug"},
      *     {"name"="citySlug", "dataType"="string", "required"=false, "description"="Provide a city slug"},
+     *     {"name"="rideIdentifier", "dataType"="string", "required"=false, "description"="Provide a ride identifier"},
      *     {"name"="year", "dataType"="string", "required"=false, "description"="Limit the result set to this year. If not set, we will search in the current month."},
      *     {"name"="month", "dataType"="string", "required"=false, "description"="Limit the result set to this year. Must be combined with 'year'. If not set, we will search in the current month."},
      *     {"name"="day", "dataType"="string", "required"=false, "description"="Limit the result set to this day."},

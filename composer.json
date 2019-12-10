@@ -95,7 +95,8 @@
         "doctrine/annotations": "^1.7",
         "league/commonmark": "^1.0",
         "nesbot/carbon": "^2.24",
-        "iamstuartwilson/strava": "^1.4"
+        "iamstuartwilson/strava": "^1.4",
+        "nmure/crawler-detect-bundle": "^2.0.0"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "*",

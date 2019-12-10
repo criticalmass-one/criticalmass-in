@@ -178,11 +178,14 @@ fos_elastica:
                                 type: "asciifolding"
             types:
                 photo:
+                    indexable_callback: 'elasticable'
                     properties:
                         id: ~
                         description: ~
                         city: { type: keyword }
-                        ride: { type: keyword }
+                        rideId:
+                            type: keyword
+                            property_path: ride.id
                         #region: { type: keyword }
                         location: ~
                         latitude: ~
@@ -194,8 +197,8 @@ fos_elastica:
                         exifAperture: ~
                         exifIso: ~
                         exifCamera: ~
-                        exifCreationDate: { type: date, format: "strict_date_optional_time" } #{ type: date, format: "strict_date_hour_minute_second" }
-                        creationDateTime: ~ #{ type: date, format: "strict_date_hour_minute_second" }
+                        exifCreationDate: { type: date, format: "strict_date_optional_time" }
+                        creationDateTime: { type: date, format: "strict_date_optional_time" }
                         pin: { type: geo_point }
                     persistence:
                         driver: orm
