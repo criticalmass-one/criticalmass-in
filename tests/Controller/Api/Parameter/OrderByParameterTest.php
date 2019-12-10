@@ -101,8 +101,11 @@ class OrderByParameterTest extends AbstractApiControllerTest
     {
         return [
             [City::class, 'title'],
+            [City::class, 'city'],
+            [Ride::class, 'title'],
             [Ride::class, 'dateTime'],
             [Photo::class, 'exifCreationDate'],
+            [Photo::class, 'creationDateTime'],
         ];
     }
 }
