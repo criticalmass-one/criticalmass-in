@@ -13,12 +13,14 @@ use App\Criticalmass\Sharing\ShareableInterface\Shareable;
 use App\Criticalmass\UploadFaker\FakeUploadable;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AutoParamConverterAble;
+use App\EntityInterface\CoordinateInterface;
 use App\EntityInterface\ElasticSearchPinInterface;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
 use App\EntityInterface\StaticMapableInterface;
 use Caldera\GeoBasic\Coord\Coord;
+use Caldera\GeoBasic\Coord\CoordInterface;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
@@ -33,7 +35,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Routing\DefaultRoute(name="caldera_criticalmass_photo_show_ride")
  * @OE\OrderedEntity()
  */
-class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, Shareable, StaticMapableInterface, ReverseGeocodeable, OrderedEntityInterface, ElasticSearchPinInterface
+class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, Shareable, StaticMapableInterface, ReverseGeocodeable, OrderedEntityInterface, ElasticSearchPinInterface, CoordinateInterface
 {
     /**
      * @ORM\Id
@@ -73,16 +75,18 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
      * @JMS\Expose
      * @DataQuery\Sortable
      * @DataQuery\Queryable
+     * @var float $latitude
      */
-    protected $latitude;
+    protected $latitude = null;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose
      * @DataQuery\Sortable
      * @DataQuery\Queryable
+     * @var float $longitude
      */
-    protected $longitude;
+    protected $longitude = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -316,7 +320,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return $this->latitude;
     }
 
-    public function setLatitude(float $latitude = null): Photo
+    public function setLatitude(float $latitude = null): CoordinateInterface
     {
         $this->latitude = $latitude;
 
@@ -328,7 +332,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return $this->longitude;
     }
 
-    public function setLongitude(float $longitude = null): Photo
+    public function setLongitude(float $longitude = null): CoordinateInterface
     {
         $this->longitude = $longitude;
 
@@ -674,7 +678,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return $this->ride && $this->enabled && !$this->deleted;
     }
 
-    public function getCoord(): Coord
+    public function toCoord(): CoordInterface
     {
         return new Coord($this->latitude, $this->longitude);
     }
