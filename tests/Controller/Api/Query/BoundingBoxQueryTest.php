@@ -1,31 +1,32 @@
 <?php declare(strict_types=1);
 
-namespace Tests\Controller\Api\RideApi;
+namespace Tests\Controller\Api\Query;
 
 use App\Entity\Ride;
+use Caldera\GeoBasic\Coord\Coord;
+use Caldera\GeoBasic\Coord\CoordInterface;
 use Tests\Controller\Api\AbstractApiControllerTest;
 
 class BoundingBoxQueryTest extends AbstractApiControllerTest
 {
     /**
-     * @testdox This will test for any rides in a bounding box in Hamburg from Hamburg-Eidelstedt (northwest) to Hamburg-Hamm (southeast).
+     * @dataProvider apiClassProvider
      */
-    public function testRideListWithBoundingBoxQueryForHamburg(): void
+    public function testRideListWithBoundingBoxQueryForHamburg(string $fqcn, array $query, CoordInterface $expectedCoord): void
     {
         $client = static::createClient();
 
-        $client->request('GET', '/api/ride?bbNorthLatitude=53.606153&bbWestLongitude=9.905992&bbSouthLatitude=53.547299&bbEastLongitude=10.054452');
+        $client->request('GET', sprintf('%s?%s', $this->getApiEndpointForFqcn($fqcn), http_build_query($query)));
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
+        $resultList = $this->deserializeEntityList($client->getResponse()->getContent(), $fqcn);
 
-        $this->assertCount(10, $actualRideList);
+        $this->assertCount(10, $resultList);
 
-        /** @var Ride $ride */
-        foreach ($actualRideList as $ride) {
-            $this->assertEquals(53.566676, $ride->getLatitude());
-            $this->assertEquals(9.984711, $ride->getLongitude());
+        foreach ($resultList as $result) {
+            $this->assertEquals($expectedCoord->getLatitude(), $result->getLatitude());
+            $this->assertEquals($expectedCoord->getLongitude(), $result->getLongitude());
         }
     }
 
@@ -67,26 +68,28 @@ class BoundingBoxQueryTest extends AbstractApiControllerTest
         $this->assertEquals(9.984711, $actualRide->getLongitude());
         $this->assertEquals(new \DateTime('2011-06-24 19:00:00'), $actualRide->getDateTime());
     }
-
-    /**
-     * @testdox This will test for rides in a bounding box in Hamburg from Hamburg-Eidelstedt (northwest) to Hamburg-Hamm (southeast) on 2011-06-24.
-     */
-    public function testRideListWithBoundingBoxQueryForLondon(): void
+    
+    public function apiClassProvider(): array
     {
-        $client = static::createClient();
-
-        $client->request('GET', '/api/ride?bbNorthLatitude=51.527641&bbSouthLatitude=51.503026&bbWestLongitude=-0.153760&bbEastLongitude=0.003207');
-
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-
-        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
-
-        $this->assertCount(10, $actualRideList);
-
-        /** @var Ride $ride */
-        foreach ($actualRideList as $ride) {
-            $this->assertEquals(51.50762, $ride->getLatitude());
-            $this->assertEquals(-0.114708, $ride->getLongitude());
-        }
+        return [
+            [
+                Ride::class, [
+                'bbNorthLatitude' => 53.606153,
+                'bbWestLongitude' => 9.905992,
+                'bbSouthLatitude' => 53.547299,
+                'bbEastLongitude' => 10.054452,
+                ],
+                new Coord(53.566676, 9.984711),
+            ],
+            [
+                Ride::class, [
+                'bbNorthLatitude' => 51.527641,
+                'bbWestLongitude' => -0.153760,
+                'bbSouthLatitude' => 51.503026,
+                'bbEastLongitude' => 0.003207,
+                ],
+                new Coord(51.50762, -0.114708),
+            ],
+        ];
     }
 }
