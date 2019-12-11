@@ -57,11 +57,16 @@ class StartValueParameterTest extends AbstractApiControllerTest
     {
         return [
             [City::class, 'city', 'ASC', 10, 'Hamburg'],
+            [City::class, 'city', 'ASC', 3, 'Schwerin'],
             [City::class, 'city', 'DESC', 6, 'Hamburg'],
+            [City::class, 'city', 'DESC', 3, 'Dresden'],
             [Ride::class, 'dateTime', 'ASC', 10, new \DateTime('2022-07-01 19:00:00')],
             [Ride::class, 'dateTime', 'DESC', 10, new \DateTime('2022-07-01 19:00:00')],
+            [Ride::class, 'dateTime', 'DESC', 2, new \DateTime('2011-06-24 19:00:00')],
+            [Ride::class, 'dateTime', 'DESC', 1, new \DateTime('2011-06-23 19:00:00')],
             [Photo::class, 'exifCreationDate', 'ASC', 10, new \DateTime('2019-01-01 19:00:00')],
             [Photo::class, 'exifCreationDate', 'DESC', 10, new \DateTime('2019-01-01 19:00:00')],
+            [Photo::class, 'exifCreationDate', 'DESC', 0, new \DateTime('2011-06-23 19:00:00')],
         ];
     }
 }
