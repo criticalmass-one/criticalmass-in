@@ -12,7 +12,7 @@ class StartValueParameterTest extends AbstractApiControllerTest
     /**
      * @dataProvider apiClassProvider
      */
-    public function testResultListWithStartValueParameterOnly(string $fqcn, string $propertyUnterTest, string $startValue): void
+    public function testResultListWithStartValueParameterOnly(string $fqcn, string $propertyUnterTest, $start): void
     {
         $client = static::createClient();
 
@@ -24,46 +24,30 @@ class StartValueParameterTest extends AbstractApiControllerTest
     /**
      * @dataProvider apiClassProvider
      */
-    public function testResultListWithStartValueAndOrderByParameterAscending(string $fqcn, string $propertyUnterTest, string $startValue): void
+    public function testResultListWithStartValueAndOrderByParameterAscending(string $fqcn, string $propertyUnterTest, string $direction, int $expectedResults, $startValue): void
     {
         $client = static::createClient();
 
-        $client->request('GET', sprintf('%s?orderBy=%s&orderDirection=ASC&startValue=%s', $this->getApiEndpointForFqcn($fqcn), $propertyUnterTest, $startValue));
-
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-
-        $resultList = $this->deserializeEntityList($client->getResponse()->getContent(), $fqcn);
-
-        $this->assertCount(10, $resultList);
-
-        $getMethodName = sprintf('get%s', ucfirst($propertyUnterTest));
-
-        foreach ($resultList as $result) {
-            $this->assertGreaterThanOrEqual($startValue, $result->$getMethodName());
-
-            $startValue = $result->$getMethodName();
+        if ($startValue instanceof \DateTime) {
+            $client->request('GET', sprintf('%s?orderBy=%s&orderDirection=%s&startValue=%s', $this->getApiEndpointForFqcn($fqcn), $propertyUnterTest, $direction, $startValue->format('Y-m-d')));
+        } else {
+            $client->request('GET', sprintf('%s?orderBy=%s&orderDirection=%s&startValue=%s', $this->getApiEndpointForFqcn($fqcn), $propertyUnterTest, $direction, $startValue));
         }
-    }
-
-    /**
-     * @dataProvider apiClassProvider
-     */
-    public function testResultListWithStartValueAndOrderByParameterDescending(string $fqcn, string $propertyUnterTest, string $startValue): void
-    {
-        $client = static::createClient();
-
-        $client->request('GET', sprintf('%s?orderBy=%s&orderDirection=DESC&startValue=%s', $this->getApiEndpointForFqcn($fqcn), $propertyUnterTest, $startValue));
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $resultList = $this->deserializeEntityList($client->getResponse()->getContent(), $fqcn);
 
-        $this->assertCount(10, $resultList);
+        $this->assertCount($expectedResults, $resultList);
 
         $getMethodName = sprintf('get%s', ucfirst($propertyUnterTest));
 
         foreach ($resultList as $result) {
-            $this->assertLessThanOrEqual($startValue, $result->$getMethodName());
+            if ($direction === 'ASC') {
+                $this->assertGreaterThanOrEqual($startValue, $result->$getMethodName());
+            } else {
+                $this->assertLessThanOrEqual($startValue, $result->$getMethodName());
+            }
 
             $startValue = $result->$getMethodName();
         }
@@ -72,9 +56,12 @@ class StartValueParameterTest extends AbstractApiControllerTest
     public function apiClassProvider(): array
     {
         return [
-            [City::class, 'title', 'Hamburg'],
-            [Ride::class, 'dateTime', '2022-07-01'],
-            [Photo::class, 'exifCreationDate', '2019-01-01'],
+            [City::class, 'city', 'ASC', 10, 'Hamburg'],
+            [City::class, 'city', 'DESC', 6, 'Hamburg'],
+            [Ride::class, 'dateTime', 'ASC', 10, new \DateTime('2022-07-01 19:00:00')],
+            [Ride::class, 'dateTime', 'DESC', 10, new \DateTime('2022-07-01 19:00:00')],
+            [Photo::class, 'exifCreationDate', 'ASC', 10, new \DateTime('2019-01-01 19:00:00')],
+            [Photo::class, 'exifCreationDate', 'DESC', 10, new \DateTime('2019-01-01 19:00:00')],
         ];
     }
 }
