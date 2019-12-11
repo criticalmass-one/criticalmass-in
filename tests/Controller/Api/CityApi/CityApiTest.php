@@ -27,7 +27,7 @@ class CityApiTest extends AbstractApiControllerTest
     /**
      * @testdox Ask for a unknown city and retrieve 404.
      */
-    public function testFirstRide(): void
+    public function testUnkownCity(): void
     {
         $client = static::createClient();
 
