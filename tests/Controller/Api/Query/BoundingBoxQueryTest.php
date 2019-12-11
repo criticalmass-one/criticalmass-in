@@ -3,6 +3,7 @@
 namespace Tests\Controller\Api\Query;
 
 use App\Entity\Ride;
+use App\EntityInterface\CoordinateInterface;
 use Caldera\GeoBasic\Coord\Coord;
 use Caldera\GeoBasic\Coord\CoordInterface;
 use Tests\Controller\Api\AbstractApiControllerTest;
@@ -24,6 +25,7 @@ class BoundingBoxQueryTest extends AbstractApiControllerTest
 
         $this->assertCount(10, $resultList);
 
+        /** @var CoordinateInterface $result */
         foreach ($resultList as $result) {
             $this->assertEquals($expectedCoord->getLatitude(), $result->getLatitude());
             $this->assertEquals($expectedCoord->getLongitude(), $result->getLongitude());
@@ -46,39 +48,25 @@ class BoundingBoxQueryTest extends AbstractApiControllerTest
         $this->assertCount(10, $actualRideList);
     }
 
-    /**
-     * @testdox This will test for rides in a bounding box in Hamburg from Hamburg-Eidelstedt (northwest) to Hamburg-Hamm (southeast) on 2011-06-24.
-     */
-    public function testRideListWithBoundingBoxForHamburgAndYearMonthDayQuery(): void
-    {
-        $client = static::createClient();
-
-        $client->request('GET', '/api/ride?year=2011&month=6&day=24&bbNorthLatitude=53.606120&bbSouthLatitude=53.547127&bbWestLongitude=9.906029&bbEastLongitude=10.054470');
-
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-
-        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
-
-        $this->assertCount(1, $actualRideList);
-
-        /** @var Ride $actualRide */
-        $actualRide = array_pop($actualRideList);
-
-        $this->assertEquals(53.566676, $actualRide->getLatitude());
-        $this->assertEquals(9.984711, $actualRide->getLongitude());
-        $this->assertEquals(new \DateTime('2011-06-24 19:00:00'), $actualRide->getDateTime());
-    }
-    
     public function apiClassProvider(): array
     {
         return [
+            [
+                Ride::class, [
+                'bbNorthLatitude' => 53.606120,
+                'bbWestLongitude' => 9.906029,
+                'bbSouthLatitude' => 53.547127,
+                'bbEastLongitude' => 10.054470,
+            ],
+                new Coord(53.566676, 9.984711),
+            ],
             [
                 Ride::class, [
                 'bbNorthLatitude' => 53.606153,
                 'bbWestLongitude' => 9.905992,
                 'bbSouthLatitude' => 53.547299,
                 'bbEastLongitude' => 10.054452,
-                ],
+            ],
                 new Coord(53.566676, 9.984711),
             ],
             [
