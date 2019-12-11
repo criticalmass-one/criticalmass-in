@@ -41,4 +41,9 @@ class Coords
     {
         return new Coord(48.739864, 9.307180);
     }
+
+    public static function buedelsdorf(): CoordInterface
+    {
+        return new Coord(54.318072, 9.696301);
+    }
 }
