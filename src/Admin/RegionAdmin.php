@@ -20,6 +20,11 @@ class RegionAdmin extends AbstractAdmin
             ->add('name', TextType::class)
             ->add('description', TextareaType::class, ['required' => false])
             ->end()
+
+            ->with('Wikidata', ['class' => 'col-md-6'])
+            ->add('wikidataEntityId', TextType::class, ['required' => false])
+            ->end()
+
             ->with('Settings', ['class' => 'col-md-6'])
             ->add('slug', TextType::class)
             ->add('parent', EntityType::class, ['class' => Region::class, 'required' => false])
@@ -31,13 +36,15 @@ class RegionAdmin extends AbstractAdmin
         $datagridMapper
             ->add('name')
             ->add('description')
-            ->add('parent');
+            ->add('parent')
+            ->add('wikidataEntityId');
     }
 
     protected function configureListFields(ListMapper $listMapper): void
     {
         $listMapper
             ->addIdentifier('name')
-            ->add('parent');
+            ->add('parent')
+            ->add('wikidataEntityId');
     }
 }

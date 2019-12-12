@@ -1,6 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\EntityInterface;
+
+use Caldera\GeoBasic\Coord\CoordInterface;
 
 interface CoordinateInterface
 {
@@ -11,4 +13,6 @@ interface CoordinateInterface
     public function setLongitude(float $longitude = null): CoordinateInterface;
 
     public function getLongitude(): ?float;
+
+    public function toCoord(): CoordInterface;
 }

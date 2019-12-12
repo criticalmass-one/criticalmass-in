@@ -26,11 +26,11 @@ class CriteriaBuilderTest extends TestCase
     {
         $criteriaBuilder = new CriteriaBuilder(new AnnotationReader());
 
-        $actualCriteria = $criteriaBuilder->build($this->createTestEntity(), SortOrder::ASC);
+        $actualCriteria = $criteriaBuilder->build($this->createTestEntity(), SortOrder::DESC);
 
         $expectedCriteria = new Criteria();
         $expectedCriteria
-            ->orderBy(['dateTime' => SortOrder::ASC])
+            ->orderBy(['dateTime' => SortOrder::DESC])
             ->andWhere(Criteria::expr()->gt('dateTime', new \DateTime('2019-06-11 19:00:00')))
             ->andWhere(Criteria::expr()->eq('city', 'Hamburg'))
             ->andWhere(Criteria::expr()->eq('enabled', true))

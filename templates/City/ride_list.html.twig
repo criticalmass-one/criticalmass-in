@@ -65,7 +65,7 @@
                     </thead>
                     <tbody>
                     {% for ride in rides %}
-                        <tr class="city"
+                        <tr class="city ride{% if not ride.enabled %} disabled{% endif %}"
                             data-rideDate="{{ ride.dateTime|date('Y-m-d H-i', 'Europe/Berlin') }}"
                             data-rideTitle="{{ ride.title }}"
                             data-rideLocation="{{ ride.location }}"

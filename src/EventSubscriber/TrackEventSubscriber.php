@@ -6,6 +6,7 @@ use App\Criticalmass\Geo\DistanceCalculator\TrackDistanceCalculatorInterface;
 use App\Criticalmass\Geo\GpxReader\TrackReader;
 use App\Criticalmass\Geo\LatLngListGenerator\RangeLatLngListGenerator;
 use App\Criticalmass\Geo\TrackPolylineHandler\TrackPolylineHandlerInterface;
+use App\Criticalmass\Participation\Manager\ParticipationManagerInterface;
 use App\Criticalmass\Statistic\RideEstimateConverter\RideEstimateConverterInterface;
 use App\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandler;
 use App\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandlerInterface;
@@ -44,6 +45,9 @@ class TrackEventSubscriber implements EventSubscriberInterface
     /** @var RegistryInterface $registry */
     protected $registry;
 
+    /** @var ParticipationManagerInterface $participationManager */
+    protected $participationManager;
+
     public function __construct(
         RegistryInterface $registry,
         RideEstimateHandler $rideEstimateHandler,
@@ -51,7 +55,8 @@ class TrackEventSubscriber implements EventSubscriberInterface
         TrackReader $trackReader,
         RangeLatLngListGenerator $rangeLatLngListGenerator,
         TrackDistanceCalculatorInterface $trackDistanceCalculator,
-        TrackPolylineHandlerInterface $trackPolylineHandler
+        TrackPolylineHandlerInterface $trackPolylineHandler,
+        ParticipationManagerInterface $participationManager
     ) {
         $this->rangeLatLngListGenerator = $rangeLatLngListGenerator;
 
@@ -66,6 +71,8 @@ class TrackEventSubscriber implements EventSubscriberInterface
         $this->registry = $registry;
 
         $this->trackPolylineHandler = $trackPolylineHandler;
+
+        $this->participationManager = $participationManager;
     }
 
     public static function getSubscribedEvents(): array
@@ -130,6 +137,8 @@ class TrackEventSubscriber implements EventSubscriberInterface
         $this->updatePolyline($track);
 
         $this->registry->getManager()->flush();
+
+        $this->participationManager->participate($track->getRide(), 'yes');
     }
 
     public function onTrackTrimmed(TrackTrimmedEvent $trackTrimmedEvent): void

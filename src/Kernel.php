@@ -2,6 +2,11 @@
 
 namespace App;
 
+use App\Criticalmass\DataQuery\DependencyInjection\Compiler\ParameterPass;
+use App\Criticalmass\DataQuery\DependencyInjection\Compiler\QueryPass;
+use App\Criticalmass\DataQuery\Parameter\ParameterInterface;
+use App\Criticalmass\DataQuery\Query\QueryInterface;
+use App\Criticalmass\MassTrackImport\Voter\VoterInterface;
 use App\Criticalmass\RideNamer\RideNamerInterface;
 use App\Criticalmass\Router\DelegatedRouter\DelegatedRouterInterface;
 use App\Criticalmass\Sharing\Network\ShareNetworkInterface;
@@ -10,6 +15,7 @@ use App\DependencyInjection\Compiler\ObjectRouterPass;
 use App\DependencyInjection\Compiler\RideNamerPass;
 use App\DependencyInjection\Compiler\ShareNetworkPass;
 use App\DependencyInjection\Compiler\TimelineCollectorPass;
+use App\DependencyInjection\Compiler\TrackVoterPass;
 use App\DependencyInjection\Compiler\TwigSeoExtensionPass;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -71,6 +77,15 @@ class Kernel extends BaseKernel
         $container->registerForAutoconfiguration(RideNamerInterface::class)->addTag('ride_namer');
 
         $container->addCompilerPass(new TwigSeoExtensionPass());
+
+        $container->addCompilerPass(new TrackVoterPass());
+        $container->registerForAutoconfiguration(VoterInterface::class)->addTag('mass_track_import.voter');
+
+        $container->addCompilerPass(new QueryPass());
+        $container->registerForAutoconfiguration(QueryInterface::class)->addTag('data_query.query');
+
+        $container->addCompilerPass(new ParameterPass());
+        $container->registerForAutoconfiguration(ParameterInterface::class)->addTag('data_query.parameter');
     }
 
     protected function configureRoutes(RouteCollectionBuilder $routes): void

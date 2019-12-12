@@ -1,0 +1,4 @@
+// this is a nasty hack to ensure only "foreign" tiles are grayscaled as own tile urls are beginning with a slash
+div#heatmap .leaflet-tile[src^="http"] {
+    filter: grayscale(100%);
+}

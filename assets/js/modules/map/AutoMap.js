@@ -58,8 +58,10 @@ define(['Polyline.encoded', 'leaflet.extra-markers', 'Container', 'jquery', 'Map
 
             polyline.addTo(this.map);
 
+            console.log(polyline);
+
             if (!this._mapViewSet) {
-                this.map.fitBounds(polyline);
+                this.map.fitBounds(polyline.getBounds());
             }
         }
     };
@@ -78,7 +80,7 @@ define(['Polyline.encoded', 'leaflet.extra-markers', 'Container', 'jquery', 'Map
                 icon: markerIcon,
                 markerColor: markerColor,
                 shape: markerShape,
-                prefix: 'fa'
+                prefix: 'far'
             });
 
             var marker = L.marker([latitude, longitude], {icon: extraMarkerIcon, clickable: markerClickable});
@@ -106,7 +108,7 @@ define(['Polyline.encoded', 'leaflet.extra-markers', 'Container', 'jquery', 'Map
                     icon: 'fa-bicycle',
                     markerColor: 'yellow',
                     shape: 'square',
-                    prefix: 'fa'
+                    prefix: 'far'
                 });
 
                 var marker = L.marker(latLng, {icon: extraMarkerIcon, clickable: markerClickable});

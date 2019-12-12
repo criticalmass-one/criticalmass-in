@@ -21,6 +21,10 @@
 /public/images
 /public/img
 /public/js
+/public/fonts
+/public/css
+/node_modules
+
 /node_modules
 
 # Backup entities generated with doctrine:generate:entities command
@@ -37,10 +41,10 @@ criticalmass.iml
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###
-/phpunit.xml
+#/phpunit.xml
 ###< phpunit/phpunit ###
 
 ###> symfony/phpunit-bridge ###
 .phpunit
-/phpunit.xml
+#/phpunit.xml
 ###< symfony/phpunit-bridge ###

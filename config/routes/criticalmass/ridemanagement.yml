@@ -6,6 +6,10 @@ caldera_criticalmass_ride_edit:
     path:  /{citySlug}/{rideIdentifier}/edit
     controller: App\Controller\Ride\RideManagementController::editAction
 
+caldera_criticalmass_ride_disable:
+    path:  /{citySlug}/{rideIdentifier}/disable
+    controller: App\Controller\Ride\RideManagementController::disableAction
+
 caldera_criticalmass_ride_socialpreview:
     path:  /{citySlug}/{rideIdentifier}/socialpreview
     controller: App\Controller\Ride\RideManagementController::socialPreviewAction
