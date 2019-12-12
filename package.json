@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "@fortawesome/fontawesome-pro": "^5.11.2",
+    "@symfony/webpack-encore": "^0.28.2",
     "gulp": "^4.0.2",
     "gulp-clean-css": "^2.0.4",
     "gulp-concat": "^2.6.1",
