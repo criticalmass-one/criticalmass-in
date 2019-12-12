@@ -76,7 +76,7 @@ class OrderByParameterTest extends AbstractApiControllerTest
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-        $resultList = $this->deserializeEntityList($client->getResponse()->getContent(), City::class);
+        $resultList = $this->deserializeEntityList($client->getResponse()->getContent(), $fqcn);
 
         $this->assertCount(10, $resultList);
     }
@@ -92,7 +92,7 @@ class OrderByParameterTest extends AbstractApiControllerTest
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-        $resultList = $this->deserializeEntityList($client->getResponse()->getContent(), City::class);
+        $resultList = $this->deserializeEntityList($client->getResponse()->getContent(), $fqcn);
 
         $this->assertCount(10, $resultList);
     }

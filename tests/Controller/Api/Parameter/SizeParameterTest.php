@@ -45,7 +45,6 @@ class SizeParameterTest extends AbstractApiControllerTest
 
     /**
      * @dataProvider apiClassProvider
-     * @testdox Requesting 1 city will result in a list with 1 city.
      */
     public function testResultListWith1Result(string $fqcn): void
     {
