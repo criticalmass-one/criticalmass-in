@@ -1,3 +1,3 @@
-require('../css/app.css');
+require('../scss/criticalmass.scss');
 
 console.log('Hello Webpack Encore');

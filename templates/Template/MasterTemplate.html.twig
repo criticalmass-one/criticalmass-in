@@ -17,7 +17,9 @@
     {{ sonata_seo_link_canonical() }}
     {{ sonata_seo_lang_alternates() }}
 
-    <link rel="stylesheet" href="{{ asset('/css/criticalmass.min.css') }}"/>
+    {#<link rel="stylesheet" href="{{ asset('/css/criticalmass.min.css') }}"/>#}
+
+    {{ encore_entry_link_tags('app') }}
 
     <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
@@ -42,8 +44,10 @@
 
 {% block masterContent %}{% endblock %}
 
-<script src="{{ asset('/js/jquery.min.js') }}"></script>
-<script src="{{ asset('/js/bootstrap.min.js') }}"></script>
+{{ encore_entry_script_tags('app') }}
+
+{#<script src="{{ asset('/js/jquery.min.js') }}"></script>
+<script src="{{ asset('/js/bootstrap.min.js') }}"></script>#}
 
 {% block additionalFooterElements %}{% endblock %}
 <script>
