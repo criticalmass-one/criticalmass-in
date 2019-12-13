@@ -1,3 +1,7 @@
+{% if entrypoint is not defined %}
+    {% set entrypoint = 'app' %}
+{% endif %}
+
 <!DOCTYPE html>
 <html {{ sonata_seo_html_attributes() }}>
 <head {{ sonata_seo_head_attributes() }}>
@@ -19,7 +23,7 @@
 
     {#<link rel="stylesheet" href="{{ asset('/css/criticalmass.min.css') }}"/>#}
 
-    {{ encore_entry_link_tags('app') }}
+    {{ encore_entry_link_tags(entrypoint) }}
 
     <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
@@ -44,7 +48,7 @@
 
 {% block masterContent %}{% endblock %}
 
-{{ encore_entry_script_tags('app') }}
+{{ encore_entry_script_tags(entrypoint) }}
 
 {#<script src="{{ asset('/js/jquery.min.js') }}"></script>
 <script src="{{ asset('/js/bootstrap.min.js') }}"></script>#}
