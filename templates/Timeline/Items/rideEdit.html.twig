@@ -38,9 +38,11 @@
             </div>
         </div>
 
-        <script type="text/javascript">
-            CriticalMass.loadModule('AutoMap', 'map-{{ item.uniqId }}');
-        </script>
+            <script type="text/javascript">
+                window.onload = function () {
+                    new window.AutoMap('map-{{ item.uniqId }}');
+                };
+            </script>
         {% endif %}
     </div>
 </div>
