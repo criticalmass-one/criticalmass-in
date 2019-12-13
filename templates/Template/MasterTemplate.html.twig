@@ -32,6 +32,9 @@
     <script src="{{ asset('/js/CriticalMass.js') }}"></script>
 
     {% block additionalHeaderElements %}{% endblock %}
+
+    {{ encore_entry_script_tags(entrypoint) }}
+
 </head>
 
 <body class="{% if app.user %}logged-in{% else %}not-logged-in{% endif %} {% block bodyClass %}{% endblock %} with-top-navbar">
@@ -55,7 +58,7 @@
 
 {% block additionalFooterElements %}{% endblock %}
 <script>
-    CriticalMass.loadModule('CookieNotice');
+    {#CriticalMass.loadModule('CookieNotice');#}
     CriticalMass.loadModule('HintModal', '.modal-hint');
     CriticalMass.loadModule('Sharing');
 </script>
