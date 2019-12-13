@@ -1,7 +1,8 @@
 import '../scss/criticalmass.scss';
 
 import bootstrap from 'bootstrap';
+import CookieNotice from '../js/modules/CookieNotice.js';
 
 window.bootstrap = bootstrap;
 
-console.log('Hello Webpack Encore');
+new CookieNotice();
