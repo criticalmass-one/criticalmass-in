@@ -1,9 +1,11 @@
-import CookieNoticeJS from 'cookie-notice/dist/cookie.notice.min';
+import cookieNoticeJS from 'cookie-notice/dist/cookie.notice.min';
 
 'use strict';
 
+let CookieNoticeJS;
+
 $(function () {
-    CookieNoticeJS({
+    CookieNoticeJS = new cookieNoticeJS({
         'cookieNoticePosition': 'bottom',
         'learnMoreLinkEnabled': true,
         'learnMoreLinkHref': '/content/privacy',
