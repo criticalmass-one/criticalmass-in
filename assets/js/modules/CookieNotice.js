@@ -1,6 +1,4 @@
-import cookieNoticeJS from 'cookie-notice/dist/cookie.notice.min';
-
-'use strict';
+define(['cookie.notice'], function () {
 
 let CookieNoticeJS;
 
