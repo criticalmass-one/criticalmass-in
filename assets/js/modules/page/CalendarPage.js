@@ -1,21 +1,21 @@
-define([], function () {
-    CalendarPage = function (selector) {
-        var $calendar = $(selector);
+'use strict';
 
-        $calendar.find('.day').each(function () {
-            var $day = $(this);
-            var $rideList = $day.find('ul.ride-list');
+const CalendarPage = function (selector) {
+    const $calendar = $(selector);
 
-            if ($rideList.length) {
-                var outerHeight = $day.innerHeight();
-                var innerheight = $rideList[0].scrollHeight;
+    $calendar.find('.day').each(function () {
+        const $day = $(this);
+        const $rideList = $day.find('ul.ride-list');
 
-                if (innerheight > outerHeight) {
-                    $day.addClass('shadow');
-                }
+        if ($rideList.length) {
+            const outerHeight = $day.innerHeight();
+            const innerheight = $rideList[0].scrollHeight;
+
+            if (innerheight > outerHeight) {
+                $day.addClass('shadow');
             }
-        });
-    };
+        }
+    });
+};
 
-    return CalendarPage;
-});
+export default CalendarPage;

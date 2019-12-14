@@ -104,7 +104,8 @@
     </div>
 
     <script type="text/javascript">
-        CriticalMass.loadModule('CalendarPage', '#calendar');
+        window.onload = function () {
+            new window.CalendarPage('#calendar');
+        };
     </script>
-
 {% endblock %}
