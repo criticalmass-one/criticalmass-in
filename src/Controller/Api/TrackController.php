@@ -38,4 +38,28 @@ class TrackController extends BaseController
 
         return $this->handleView($view);
     }
+
+    /**
+     * Show details of a specified track.
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Show details of a track",
+     *  section="Track",
+     *  requirements={
+     *    {"name"="trackId", "dataType"="int", "required"=true, "description"="Unique id of the track."}
+     *  }
+     * )
+     * @ParamConverter("track", class="App:Track")
+     */
+    public function viewAction(RegistryInterface $registry, Track $track): Response
+    {
+        $view = View::create();
+        $view
+            ->setData($track)
+            ->setFormat('json')
+            ->setStatusCode(200);
+
+        return $this->handleView($view);
+    }
 }
