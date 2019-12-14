@@ -2,7 +2,7 @@
 
 const CalendarPage = function (selector) {
     const $calendar = $(selector);
-
+    
     $calendar.find('.day').each(function () {
         const $day = $(this);
         const $rideList = $day.find('ul.ride-list');

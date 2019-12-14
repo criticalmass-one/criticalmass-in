@@ -1,9 +1,9 @@
+'use strict';
+
 import Map from './Map';
-import PolylineEncoded from 'polyline-encoded';
-import LeafletExtraMarkers from 'leaflet-extra-markers';
+import 'leaflet-extra-markers/dist/js/leaflet.extra-markers.min';
 
 let AutoMap = function (mapId, settings) {
-    alert('fooo');
     this._mapId = mapId;
 
     this.settings = $.extend(this._defaults, settings);
@@ -88,6 +88,7 @@ AutoMap.prototype._autoSetMarker = function () {
         });
 
         var marker = L.marker([latitude, longitude], {icon: extraMarkerIcon, clickable: markerClickable});
+
         marker.addTo(this.map);
     }
 };

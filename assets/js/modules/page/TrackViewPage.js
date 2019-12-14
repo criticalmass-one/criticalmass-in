@@ -1,13 +1,13 @@
-define(['CriticalService', 'Map', 'TrackEntity'], function (CriticalService) {
-    TrackViewPage = function (context, options) {
-        this._initMap();
+'use strict';
 
-        this._CriticalService = CriticalService;
+import Map from '../map/Map';
+
+const TrackViewPage = function (context, options) {
+        this._initMap();
     };
 
     TrackViewPage.prototype._map = null;
     TrackViewPage.prototype._track = null;
-    TrackViewPage.prototype._CriticalService = null;
 
     TrackViewPage.prototype.addTrack = function (trackJson) {
         this._track = this._CriticalService.factory.createTrack(trackJson);

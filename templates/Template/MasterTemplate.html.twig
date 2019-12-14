@@ -21,15 +21,10 @@
     {{ sonata_seo_link_canonical() }}
     {{ sonata_seo_lang_alternates() }}
 
-    {#<link rel="stylesheet" href="{{ asset('/css/criticalmass.min.css') }}"/>#}
-
     {{ encore_entry_link_tags(entrypoint) }}
 
     <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
-
-    <script src="{{ asset('/js/require.min.js') }}"></script>
-    <script src="{{ asset('/js/CriticalMass.js') }}"></script>
 
     {% block additionalHeaderElements %}{% endblock %}
 
@@ -53,14 +48,6 @@
 
 {{ encore_entry_script_tags(entrypoint) }}
 
-{#<script src="{{ asset('/js/jquery.min.js') }}"></script>
-<script src="{{ asset('/js/bootstrap.min.js') }}"></script>#}
-
 {% block additionalFooterElements %}{% endblock %}
-<script>
-    {#CriticalMass.loadModule('CookieNotice');#}
-    CriticalMass.loadModule('HintModal', '.modal-hint');
-    CriticalMass.loadModule('Sharing');
-</script>
 </body>
 </html>
