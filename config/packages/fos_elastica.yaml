@@ -206,3 +206,48 @@ fos_elastica:
                         provider: ~
                         listener: ~
                         finder: ~
+
+        criticalmass_track:
+            client: default
+            finder:
+            index_name: criticalmass_%env(APP_ENV)%_track
+            settings:
+                index:
+                    analysis:
+                        analyzer:
+                            umlauts_analyzer:
+                                type: custom
+                                tokenizer: lowercase
+                                filter: [umlauts_filter]
+                        filter:
+                            umlauts_filter:
+                                type: "asciifolding"
+            types:
+                track:
+                    indexable_callback: 'elasticable'
+                    properties:
+                        id: ~
+                        cityId:
+                            type: keyword
+                            property_path: ride.city.id
+                        rideId:
+                            type: keyword
+                            property_path: ride.id
+                        regionId:
+                            type: keyword
+                            property_path: ride.city.region.id
+                        startDateTime:
+                            type: date
+                            format: "strict_date_optional_time"
+                        endDateTime:
+                            type: date
+                            format: "strict_date_optional_time"
+                        creationDateTime:
+                            type: date
+                            format: "strict_date_optional_time"
+                    persistence:
+                        driver: orm
+                        model: App\Entity\Track
+                        provider: ~
+                        listener: ~
+                        finder: ~

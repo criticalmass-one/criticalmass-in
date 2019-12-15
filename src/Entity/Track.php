@@ -588,4 +588,9 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
 
         return $this;
     }
+
+    public function elasticable(): bool
+    {
+        return $this->enabled && !$this->deleted && $this->reviewed;
+    }
 }
