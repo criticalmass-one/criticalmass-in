@@ -4,11 +4,13 @@ namespace App\Controller\Api;
 
 use App\Entity\Ride;
 use App\Entity\Track;
+use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class TrackController extends BaseController
 {
@@ -52,13 +54,22 @@ class TrackController extends BaseController
      * )
      * @ParamConverter("track", class="App:Track")
      */
-    public function viewAction(RegistryInterface $registry, Track $track): Response
+    public function viewAction(Track $track, UserInterface $user = null): Response
     {
+        $context = new Context();
+
+        $context->addGroup('api-public');
+
+        if ($user) {
+            $context->addGroup('api-private');
+        }
+
         $view = View::create();
         $view
             ->setData($track)
             ->setFormat('json')
-            ->setStatusCode(200);
+            ->setStatusCode(200)
+            ->setContext($context);
 
         return $this->handleView($view);
     }
