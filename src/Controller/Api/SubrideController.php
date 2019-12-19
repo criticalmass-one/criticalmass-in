@@ -45,7 +45,7 @@ class SubrideController extends BaseController
      * @ApiDoc(
      *  resource=true,
      *  description="Show details of a subride",
-     *  section="Track",
+     *  section="Subride",
      *  requirements={
      *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Provide the slug of a city."},
      *    {"name"="rideIdentifier", "dataType"="string", "required"=true, "description"="Provide the ride identifier of a ride."},
