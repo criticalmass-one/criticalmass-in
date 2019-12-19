@@ -33,11 +33,11 @@ class TrackController extends BaseController
      */
     public function listRideTrackAction(RegistryInterface $registry, Ride $ride): Response
     {
-        $photoList = $registry->getRepository(Track::class)->findByRide($ride);
+        $trackList = $registry->getRepository(Track::class)->findByRide($ride);
 
         $view = View::create();
         $view
-            ->setData($photoList)
+            ->setData($trackList)
             ->setFormat('json')
             ->setStatusCode(200);
 
