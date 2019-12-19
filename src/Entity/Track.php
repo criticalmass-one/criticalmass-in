@@ -42,7 +42,7 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      * @Routing\RouteParameter(name="trackId")
      */
@@ -50,7 +50,7 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-private"})
      * @JMS\Expose
      */
     protected $username;
@@ -64,7 +64,7 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="tracks")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-private"})
      * @JMS\Expose
      * @OE\Identical()
      */
@@ -78,14 +78,14 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
 
     /**
      * @ORM\Column(type="datetime")
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      */
     protected $creationDateTime;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      * @OE\Order(direction="asc")
      */
@@ -93,35 +93,35 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      */
     protected $endDateTime;
 
     /**
      * @ORM\Column(type="float", nullable=true)
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      */
     protected $distance;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      */
     protected $points;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      */
     protected $startPoint;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      */
     protected $endPoint;
@@ -150,13 +150,12 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @JMS\Expose
      */
     protected $geoJson;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      * @JMS\SerializedName("polylineString")
      */
@@ -164,7 +163,7 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      * @JMS\SerializedName("reducedPolylineString")
      */
@@ -588,5 +587,10 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
         $this->reviewed = $reviewed;
 
         return $this;
+    }
+
+    public function elasticable(): bool
+    {
+        return $this->enabled && !$this->deleted && $this->reviewed;
     }
 }
