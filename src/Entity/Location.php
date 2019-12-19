@@ -2,16 +2,18 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\Router\Annotation as Routing;
 use App\EntityInterface\AuditableInterface;
 use App\EntityInterface\AutoParamConverterAble;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
-use App\Criticalmass\Router\Annotation as Routing;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Table(name="location")
  * @ORM\Entity(repositoryClass="App\Repository\LocationRepository")
  * @Routing\DefaultRoute(name="caldera_criticalmass_location_show")
+ * @JMS\ExclusionPolicy("all")
  */
 class Location implements RouteableInterface, AuditableInterface, AutoParamConverterAble
 {
@@ -19,6 +21,7 @@ class Location implements RouteableInterface, AuditableInterface, AutoParamConve
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Expose
      */
     protected $id;
 
@@ -32,26 +35,31 @@ class Location implements RouteableInterface, AuditableInterface, AutoParamConve
     /**
      * @ORM\Column(type="string", length=255)
      * @Routing\RouteParameter(name="locationSlug")
+     * @JMS\Expose
      */
     protected $slug;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @JMS\Expose
      */
     protected $latitude;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @JMS\Expose
      */
     protected $longitude;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @JMS\Expose
      */
     protected $title;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @JMS\Expose
      */
     protected $description;
 
