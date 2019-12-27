@@ -164,7 +164,7 @@
 
     <script>
         CriticalMass.loadModule('TrackViewPage', null, null, function (viewPage) {
-            viewPage.addTrack('{{ track|serialize|raw|e('js') }}');
+            viewPage.loadTrack({{ track.id }});
 
             viewPage.focus();
         });

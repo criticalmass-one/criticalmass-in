@@ -1,15 +1,19 @@
-define(['CriticalService', 'Map', 'TrackEntity'], function (CriticalService) {
+define(['Map'], function () {
     TrackViewPage = function (context, options) {
         this._initMap();
-
-        this._CriticalService = CriticalService;
     };
 
     TrackViewPage.prototype._map = null;
     TrackViewPage.prototype._track = null;
-    TrackViewPage.prototype._CriticalService = null;
 
-    TrackViewPage.prototype.addTrack = function (trackJson) {
+    TrackViewPage.prototype.loadTrack = function (trackId) {
+        const trackApiUrl = Routing.generate('caldera_criticalmass_rest_track_view', {
+            trackId: trackId
+        });
+
+        $.getJSON(trackApiUrl).ajaxSuccess(function (data) {
+            alert(data);
+        });
         this._track = this._CriticalService.factory.createTrack(trackJson);
 
         this._track.addToMap(this._map);
