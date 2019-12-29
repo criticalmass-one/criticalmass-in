@@ -94,8 +94,8 @@ const buildExtramarkers = gulp.series(extramarkersImages, extramarkersCss, extra
 
 function copyFontawesomeFonts() {
     return gulp
-        .src('node_modules/font-awesome/fonts/*')
-        .pipe(gulp.dest('public/fonts'));
+        .src('node_modules/@fortawesome/fontawesome-pro/webfonts/*')
+        .pipe(gulp.dest('public/fonts/'));
 }
 
 const buildFontawesome = gulp.series(copyFontawesomeFonts);
