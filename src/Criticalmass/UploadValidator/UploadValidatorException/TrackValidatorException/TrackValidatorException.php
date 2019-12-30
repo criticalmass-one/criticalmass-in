@@ -2,6 +2,8 @@
 
 namespace App\Criticalmass\UploadValidator\UploadValidatorException\TrackValidatorException;
 
+use App\Criticalmass\UploadValidator\UploadValidatorException\UploadValidatorException;
+
 class TrackValidatorException extends UploadValidatorException
 {
 
