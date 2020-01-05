@@ -13,7 +13,7 @@ class DateTimeListGenerator
     {
         $dateTimeList = [];
 
-        $dateTime = $cycleExecutable->getFromDate();
+        $dateTime = clone $cycleExecutable->getFromDate();
         $interval = new \DateInterval('P1M');
 
         while ($dateTime <= $cycleExecutable->getUntilDate()) {

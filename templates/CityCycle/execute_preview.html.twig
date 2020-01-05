@@ -1,0 +1,98 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Turnus auslösen{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ objectPath(cityCycle.city) }}">
+            {{ cityCycle.city.city }}
+        </a>
+    </li>
+    <li class="active">
+        Turnus auslösen
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h2>
+                    Vorschau
+                </h2>
+
+                <p class="lead">
+                    Für den Zeitraum vom
+                    <time>{{ executeable.fromDate|date('d.m.Y') }}</time>
+                    bis
+                    <time>{{ executeable.untilDate|date('d.m.Y') }}</time>
+                    können die folgenden Touren generiert werden:
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>
+                            Titel
+                        </th>
+
+                        <th>
+                            Datum
+                        </th>
+
+                        <th>
+                            Uhrzeit
+                        </th>
+
+                        <th>
+                            Treffpunkt
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for ride in rideList %}
+                        <tr>
+                            <td>
+                                {{ ride.title }}
+                            </td>
+
+                            <td>
+                                {{ ride.dateTime|date('d.m.Y') }}
+                            </td>
+
+                            <td>
+                                {{ ride.dateTime|date('H:i') }} Uhr
+                            </td>
+
+                            <td>
+                                {% if ride.location %}
+                                    {{ ride.location }}
+                                {% else %}
+                                    <em>nicht definiert</em>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="btn-group">
+                    <a href="" class="btn btn-default">
+                        Abbrechen
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        Touren speichern
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

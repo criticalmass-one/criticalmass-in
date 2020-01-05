@@ -1,0 +1,114 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Turnus auslösen{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ objectPath(cityCycle.city) }}">
+            {{ cityCycle.city.city }}
+        </a>
+    </li>
+    <li class="active">
+        Turnus auslösen
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Turnus
+                            </div>
+                            <div class="panel-body">
+                                <dl>
+                                    <dt>
+                                        Turnus
+                                    </dt>
+                                    <dd>
+                                        {{ ('cycle.event_date.month_week.' ~ cityCycle.weekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ cityCycle.dayOfWeek)|trans }}
+                                        im Monat
+                                    </dd>
+
+                                    <dt>
+                                        Uhrzeit
+                                    </dt>
+                                    <dd>
+                                        {{ cityCycle.time|date('H:i', 'UTC') }} Uhr
+                                    </dd>
+
+                                    <dt>
+                                        Treffpunkt
+                                    </dt>
+                                    <dd>
+                                        {% if cityCycle.location %}
+                                            {{ cityCycle.location }}
+                                        {% else %}
+                                            <em>nicht definiert</em>
+                                        {% endif %}
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2>
+                                    Touren automatisch generieren
+                                </h2>
+
+                                <p class="lead">
+                                    Du kannst anhand des ausgewählten Turnus’ die Touren in deiner Stadt generieren
+                                    lassen.</p>
+
+                                <p>
+                                    Normalerweise wird diese Generierung in regelmäßigen Abständen serverseitig
+                                    ausgeführt, aber immer wenn du einen neuen Turnus angelegt hast, werden dir vorerst
+                                    Touren fehlen. Das gilt natürlich auch rückwirkend für zu früheren Zeitpunkten
+                                    stattgefundene Touren.
+                                </p>
+
+                                <p>
+                                    Mit den folgenden beiden Eingabefeldern kannst du einen Zeitraum definieren, für den
+                                    die Touren anhand der Daten aus dem Turnus generiert werden sollen.
+                                </p>
+                            </div>
+                        </div>
+                        {{ form_start(form) }}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="">Startdatum:</label>
+                                    {{ form_widget(form.fromDate, { 'attr' : { 'class': 'form-control datepicker'} }) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="">Enddatum:</label>
+                                    {{ form_widget(form.untilDate, { 'attr' : { 'class': 'form-control datepicker'} }) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    {{ form_widget(form.submit, { 'label': 'Weiter zur Vorschau', 'attr' : { 'class': 'btn btn-success pull-right'} }) }}
+                                </div>
+                            </div>
+                        </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

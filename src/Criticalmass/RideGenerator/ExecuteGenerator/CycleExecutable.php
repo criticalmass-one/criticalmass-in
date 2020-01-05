@@ -10,6 +10,10 @@ class CycleExecutable
     /** @var \DateTime $untilDate */
     protected $untilDate;
 
+    public function __construct()
+    {
+    }
+
     public function getFromDate(): ?\DateTime
     {
         return $this->fromDate;
