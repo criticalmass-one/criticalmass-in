@@ -2,14 +2,19 @@
 
 namespace App\Controller\City;
 
+use App\Controller\AbstractController;
+use App\Criticalmass\RideGenerator\ExecuteGenerator\CycleExecutable;
+use App\Criticalmass\RideGenerator\ExecuteGenerator\DateTimeListGenerator;
+use App\Criticalmass\RideGenerator\RideGenerator\RideGeneratorInterface;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Form\Type\CityCycleType;
+use App\Form\Type\ExecuteCityCycleType;
 use Doctrine\Common\Persistence\ObjectManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use App\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -160,4 +165,36 @@ class CityCycleController extends AbstractController
 
         return $this->redirect($objectRouter->generate($cityCycle->getCity(), 'caldera_criticalmass_citycycle_list'));
     }
+
+    /**
+     * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("cityCycle", class="App:CityCycle", options={"id" = "cycleId"})
+     */
+    public function executeAction(Request $request, CityCycle $cityCycle, RideGeneratorInterface $generator): Response
+    {
+        $executeable = new CycleExecutable();
+
+        $form = $this->createForm(ExecuteCityCycleType::class, $executeable);
+        $form->add('submit', SubmitType::class);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $dateTimeList = DateTimeListGenerator::generateDateTimeList($executeable);
+
+            $generator->addCity($cityCycle->getCity())
+                ->setDateTimeList($dateTimeList)
+                ->execute();
+
+            $rideList = $generator->getRideList();
+
+            dump($rideList);
+        }
+
+        return $this->render('CityCycle/execute.html.twig', [
+            'cityCycle' => $cityCycle,
+            'form' => $form->createView(),
+        ]);
+    }
+
 }

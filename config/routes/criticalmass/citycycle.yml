@@ -13,3 +13,7 @@ caldera_criticalmass_citycycle_edit:
 caldera_criticalmass_citycycle_disable:
     path:  /{citySlug}/cycles/{cityCycleId}/disable
     controller: App\Controller\City\CityCycleController::disableAction
+
+caldera_criticalmass_citycycle_execute:
+    path:  /{citySlug}/cycles/{cityCycleId}/execute
+    controller: App\Controller\City\CityCycleController::executeAction

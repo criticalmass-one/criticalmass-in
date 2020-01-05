@@ -102,17 +102,22 @@
 
                             <td>
                                 {% if not cycle.disabledAt %}
-                                <div class="btn-group">
-                                    <a class="btn btn-default btn-xs"
-                                       href="{{ objectPath(cycle, 'caldera_criticalmass_citycycle_edit') }}">
-                                        <i class="far fa-wrench"></i>
-                                    </a>
+                                    <div class="btn-group">
+                                        <a class="btn btn-default btn-xs"
+                                           href="{{ objectPath(cycle, 'caldera_criticalmass_citycycle_edit') }}">
+                                            <i class="far fa-wrench"></i>
+                                        </a>
 
-                                    <a class="btn btn-default btn-xs"
-                                       href="{{ objectPath(cycle, 'caldera_criticalmass_citycycle_disable') }}">
-                                        <i class="far fa-trash-alt"></i>
-                                    </a>
-                                </div>
+                                        <a class="btn btn-default btn-xs"
+                                           href="{{ objectPath(cycle, 'caldera_criticalmass_citycycle_execute') }}">
+                                            <i class="far fa-bicycle"></i>
+                                        </a>
+
+                                        <a class="btn btn-default btn-xs"
+                                           href="{{ objectPath(cycle, 'caldera_criticalmass_citycycle_disable') }}">
+                                            <i class="far fa-trash-alt"></i>
+                                        </a>
+                                    </div>
                                 {% endif %}
                             </td>
                         </tr>
