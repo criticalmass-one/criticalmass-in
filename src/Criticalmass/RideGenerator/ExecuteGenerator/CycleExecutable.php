@@ -17,6 +17,8 @@ class CycleExecutable
 
     public function __construct()
     {
+        $this->fromDate = new \DateTime();
+        $this->untilDate = new \DateTime();
     }
 
     public function getFromDate(): ?\DateTime
