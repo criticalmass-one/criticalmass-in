@@ -84,6 +84,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label" for="">Startdatum:</label>
+                                    {{ form_errors(form.fromDate) }}
                                     {{ form_widget(form.fromDate, { 'attr' : { 'class': 'form-control datepicker'} }) }}
                                 </div>
                             </div>
@@ -93,6 +94,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label" for="">Enddatum:</label>
+                                    {{ form_errors(form.untilDate) }}
                                     {{ form_widget(form.untilDate, { 'attr' : { 'class': 'form-control datepicker'} }) }}
                                 </div>
                             </div>

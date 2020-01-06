@@ -2,6 +2,11 @@
 
 namespace App\Criticalmass\RideGenerator\ExecuteGenerator;
 
+use App\Criticalmass\RideGenerator\Validator\Constraint\ExecutorDateTime;
+
+/**
+ * @ExecutorDateTime
+ */
 class CycleExecutable
 {
     /** @var \DateTime $fromDate */
