@@ -45,4 +45,14 @@ class DateTimeUtil
 
         return new \DateTime($dateTime);
     }
+
+    public static function recreateAsUtc(\DateTime $dateTime): \DateTime
+    {
+        return new \DateTime($dateTime->format('Y-m-d H:i:s'), new \DateTimeZone('UTC'));
+    }
+
+    public static function recreateAsTimeZone(\DateTime $dateTime, \DateTimeZone $dateTimeZone): \DateTime
+    {
+        return new \DateTime($dateTime->format('Y-m-d H:i:s'), $dateTimeZone);
+    }
 }

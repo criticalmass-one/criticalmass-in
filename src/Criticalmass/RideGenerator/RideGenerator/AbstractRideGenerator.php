@@ -2,17 +2,14 @@
 
 namespace App\Criticalmass\RideGenerator\RideGenerator;
 
-use App\Entity\City;
 use App\Criticalmass\RideGenerator\RideCalculator\RideCalculatorInterface;
+use App\Entity\City;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 abstract class AbstractRideGenerator implements RideGeneratorInterface
 {
-    /** @var int year */
-    protected $year;
-
-    /** @var int $month */
-    protected $month;
+    /** @var array $dateTimeList */
+    protected $dateTimeList = [];
 
     /** @var array $cityList */
     protected $cityList;
@@ -46,16 +43,23 @@ abstract class AbstractRideGenerator implements RideGeneratorInterface
         return $this;
     }
 
-    public function setYear(int $year): RideGeneratorInterface
+    public function setDateTime(\DateTime $dateTime): RideGeneratorInterface
     {
-        $this->year = $year;
+        $this->dateTimeList = [$dateTime];
 
         return $this;
     }
 
-    public function setMonth(int $month): RideGeneratorInterface
+    public function addDateTime(\DateTime $dateTime): RideGeneratorInterface
     {
-        $this->month = $month;
+        $this->dateTimeList[] = $dateTime;
+
+        return $this;
+    }
+
+    public function setDateTimeList(array $dateTimeList): RideGeneratorInterface
+    {
+        $this->dateTimeList = $dateTimeList;
 
         return $this;
     }

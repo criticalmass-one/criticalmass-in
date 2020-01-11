@@ -29,11 +29,21 @@
                     {% include 'City/Includes/_rideListSort.html.twig' %}
                 </div>
 
-                <h1>
+                <h2>
                     Touren in dieser Stadt
-                </h1>
+                </h2>
             </div>
         </div>
+
+        {% for message in app.flashes('success') %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-success">
+                        {{ message|raw }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
 
         <div class="row">
             <div class="col-md-12">

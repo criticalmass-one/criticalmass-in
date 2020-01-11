@@ -7,20 +7,17 @@ use App\Entity\CityCycle;
 
 abstract class AbstractRideCalculator implements RideCalculatorInterface
 {
-    /** @var int year */
-    protected $year;
-
-    /** @var int $month */
-    protected $month;
+    /** @var array $dateTimeList */
+    protected $dateTimeList = [];
 
     /** @var array $cycle */
-    protected $cycleList;
+    protected $cycleList = [];
 
     /** @var array $rideList */
-    protected $rideList;
+    protected $rideList = [];
 
     /** @var RideNamerListInterface $rideNamerList */
-    protected $rideNamerList;
+    protected $rideNamerList = [];
 
     /** @var \DateTimeZone $timezone */
     protected $timezone = null;
@@ -36,25 +33,17 @@ abstract class AbstractRideCalculator implements RideCalculatorInterface
 
         return $this;
     }
-
-    public function setYear(int $year): RideCalculatorInterface
+    
+    public function addDateTime(\DateTime $dateTime): RideCalculatorInterface
     {
-        $this->year = $year;
-
-        return $this;
-    }
-
-    public function setMonth(int $month): RideCalculatorInterface
-    {
-        $this->month = $month;
+        $this->dateTimeList[] = $dateTime;
 
         return $this;
     }
 
     public function setDateTime(\DateTime $dateTime): RideCalculatorInterface
     {
-        $this->year = $dateTime->format('Y');
-        $this->month = $dateTime->format('m');
+        $this->dateTimeList = [$dateTime];
 
         return $this;
     }
