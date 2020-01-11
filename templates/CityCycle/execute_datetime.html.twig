@@ -2,6 +2,8 @@
 
 {% block title %}Turnus auslösen{% endblock %}
 
+{% form_theme form 'Form/theme.html.twig' %}
+
 {% block breadcrumb %}
     <li>
         <a href="{{ objectPath(cityCycle.city) }}">
