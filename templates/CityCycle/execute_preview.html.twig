@@ -84,6 +84,17 @@
                             </td>
                         </tr>
                     {% endfor %}
+                    {% if rideList|length == 0 %}
+                        <tr>
+                            <td colspan="5">
+                                <div class="alert alert-danger">
+                                    Für deinen gewählten Zeitraum können keine Touren angelegt werden, weil entweder
+                                    dieser Turnus für den gewählten Zeitraum noch nicht begonnen hat oder abgelaufen ist
+                                    oder die anzulegenden Touren bereits existieren.
+                                </div>
+                            </td>
+                        </tr>
+                    {% endif %}
                     </tbody>
                 </table>
             </div>
