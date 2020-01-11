@@ -107,7 +107,6 @@ class RideCalculatorTest extends TestCase
         $this->assertEquals('Stadtpark Hamburg', $ride->getLocation());
         $this->assertEquals(53.596812, $ride->getLatitude());
         $this->assertEquals(10.011008, $ride->getLongitude());
-        $this->assertTrue($ride->getHasLocation());
     }
 
     public function testTimezone(): void
