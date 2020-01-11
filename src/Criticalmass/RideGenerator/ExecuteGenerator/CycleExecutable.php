@@ -16,7 +16,10 @@ class CycleExecutable
      */
     protected $fromDate;
 
-    /** @var \DateTime $untilDate */
+    /**
+     * @var \DateTime $untilDate
+     * @Assert\LessThanOrEqual("+1 years", message="Touren können maximal zwölf Monate im Voraus angelegt werden.")
+     */
     protected $untilDate;
 
     public function __construct()
