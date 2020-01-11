@@ -157,7 +157,6 @@ class RideCalculatorTest extends TestCase
 
         $this->assertEquals(new \DateTime('2018-09-28 17:00:00', $utc), $ride->getDateTime());
         $this->assertEquals($europeBerlin, $ride->getDateTime()->getTimezone());
-        $this->assertTrue($ride->getHasTime());
     }
 
     public function testDaylightSavingTime(): void
@@ -175,6 +174,5 @@ class RideCalculatorTest extends TestCase
 
         $this->assertEquals(new \DateTime('2018-02-23 19:00:00', $europeBerlin), $ride->getDateTime());
         $this->assertEquals($europeBerlin, $ride->getDateTime()->getTimezone());
-        $this->assertTrue($ride->getHasTime());
     }
 }
