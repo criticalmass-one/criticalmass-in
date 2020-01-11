@@ -2,18 +2,23 @@
 
 namespace Tests\RideGenerator;
 
+use App\Criticalmass\RideGenerator\RideCalculator\RideCalculator;
+use App\Criticalmass\RideGenerator\RideCalculator\RideCalculatorInterface;
+use App\Criticalmass\RideNamer\GermanCityDateRideNamer;
+use App\Criticalmass\RideNamer\RideNamerList;
 use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Entity\Ride;
-use App\Criticalmass\RideGenerator\RideCalculator\RideCalculator;
-use App\Criticalmass\RideGenerator\RideCalculator\RideCalculatorInterface;
 use PHPUnit\Framework\TestCase;
 
 class RideCalculatorTest extends TestCase
 {
     protected function getRideCalculator(): RideCalculatorInterface
     {
-        return new RideCalculator();
+        $rideNamerList = new RideNamerList();
+        $rideNamerList->addRideNamer(new GermanCityDateRideNamer());
+
+        return new RideCalculator($rideNamerList);
     }
 
     protected function createLondonCycle(): CityCycle
