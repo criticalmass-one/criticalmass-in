@@ -3,13 +3,17 @@
 namespace App\Criticalmass\RideGenerator\ExecuteGenerator;
 
 use App\Criticalmass\RideGenerator\Validator\Constraint\ExecutorDateTime;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ExecutorDateTime
  */
 class CycleExecutable
 {
-    /** @var \DateTime $fromDate */
+    /**
+     * @var \DateTime $fromDate
+     * @Assert\GreaterThanOrEqual("1992-09-01", message="Vor September 1992 können keine Touren angelegt werden — das ist übrigens das Datum der allerersten Critical Mass in San Francisco.")
+     */
     protected $fromDate;
 
     /** @var \DateTime $untilDate */
