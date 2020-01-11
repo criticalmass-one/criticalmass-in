@@ -85,8 +85,7 @@ class RideCalculatorTest extends TestCase
     public function testCalculatedRides(): void
     {
         $rideList = $this->getRideCalculator()
-            ->setYear(2018)
-            ->setMonth(9)
+            ->setDateTime(new \DateTime('2018-09-01'))
             ->addCycle($this->createHamburgCycle())
             ->execute()
             ->getRideList();
@@ -97,8 +96,7 @@ class RideCalculatorTest extends TestCase
     public function testLocation(): void
     {
         $rideList = $this->getRideCalculator()
-            ->setYear(2018)
-            ->setMonth(9)
+            ->setDateTime(new \DateTime('2018-09-01'))
             ->addCycle($this->createHamburgCycle())
             ->execute()
             ->getRideList();
@@ -115,8 +113,7 @@ class RideCalculatorTest extends TestCase
     public function testTimezone(): void
     {
         $rideList = $this->getRideCalculator()
-            ->setYear(2018)
-            ->setMonth(9)
+            ->setDateTime(new \DateTime('2018-09-01'))
             ->addCycle($this->createHamburgCycle())
             ->execute()
             ->getRideList();
@@ -130,8 +127,7 @@ class RideCalculatorTest extends TestCase
     public function testLondon(): void
     {
         $rideList = $this->getRideCalculator()
-            ->setYear(2018)
-            ->setMonth(9)
+            ->setDateTime(new \DateTime('2018-09-01'))
             ->addCycle($this->createLondonCycle())
             ->execute()
             ->getRideList();
@@ -149,8 +145,7 @@ class RideCalculatorTest extends TestCase
     public function testTime(): void
     {
         $rideList = $this->getRideCalculator()
-            ->setYear(2018)
-            ->setMonth(9)
+            ->setDateTime(new \DateTime('2018-09-01'))
             ->addCycle($this->createHamburgCycle())
             ->execute()
             ->getRideList();
@@ -169,8 +164,7 @@ class RideCalculatorTest extends TestCase
     public function testDaylightSavingTime(): void
     {
         $rideList = $this->getRideCalculator()
-            ->setYear(2018)
-            ->setMonth(2)
+            ->setDateTime(new \DateTime('2018-09-01'))
             ->addCycle($this->createHamburgCycle())
             ->execute()
             ->getRideList();
