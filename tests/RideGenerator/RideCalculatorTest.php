@@ -162,7 +162,7 @@ class RideCalculatorTest extends TestCase
     public function testDaylightSavingTime(): void
     {
         $rideList = $this->getRideCalculator()
-            ->setDateTime(new \DateTime('2018-09-01'))
+            ->setDateTime(new \DateTime('2018-02-01'))
             ->addCycle($this->createHamburgCycle())
             ->execute()
             ->getRideList();
