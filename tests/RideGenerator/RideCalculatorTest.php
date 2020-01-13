@@ -175,4 +175,15 @@ class RideCalculatorTest extends TestCase
         $this->assertEquals(new \DateTime('2018-02-23 19:00:00', $europeBerlin), $ride->getDateTime());
         $this->assertEquals($europeBerlin, $ride->getDateTime()->getTimezone());
     }
+
+    public function testNoRideBeforeValidFromInHalle(): void
+    {
+        $rideList = $this->getRideCalculator()
+            ->setDateTime(new \DateTime('2018-03-29'))
+            ->setCycle($this->createHalleCycle())
+            ->execute()
+            ->getRideList();
+
+        $this->assertCount(0, $rideList);
+    }
 }

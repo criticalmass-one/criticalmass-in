@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\RideGenerator\RideCalculator;
 
+use App\Criticalmass\Cycles\DateTimeValidator\DateTimeValidator;
 use App\Criticalmass\RideNamer\GermanCityDateRideNamer;
 use App\Criticalmass\Util\DateTimeUtil;
 use App\Entity\CityCycle;
@@ -20,7 +21,11 @@ class RideCalculator extends AbstractRideCalculator
                 $ride = $this->createRide($cycle, $rideDateTime);
 
                 // yeah, first create ride and then check if it is matching the cycle range
-                if (!$cycle->isValid($ride->getDateTime())) {
+                if (!DateTimeValidator::isValidRide($cycle, $ride)) {
+                    continue;
+                }
+
+                if (!DateTimeValidator::isValidDateTime($cycle, $dateTime)) {
                     continue;
                 }
 
