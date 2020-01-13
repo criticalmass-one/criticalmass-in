@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\Router\Annotation as Routing;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use App\Criticalmass\Router\Annotation as Routing;
 use JMS\Serializer\Annotation as JMS;
 
 /**
@@ -305,15 +305,21 @@ class CityCycle implements RouteableInterface
         return ($this->validFrom && $this->validUntil);
     }
 
+    /**
+     * @param \DateTime|null $dateTime
+     * @return bool
+     * @throws \Exception
+     * @deprecated
+     */
     public function isValid(\DateTime $dateTime = null): bool
     {
         if (!$dateTime) {
             $dateTime = new \DateTime();
         }
 
-        return $this->validFrom <= $dateTime && $this->validUntil >= $dateTime ||
-            $this->validFrom <= $dateTime && $this->validUntil === null ||
-            $this->validFrom === null && $this->validUntil >= $dateTime;
+        return ($this->validFrom <= $dateTime && $this->validUntil >= $dateTime) ||
+            ($this->validFrom <= $dateTime && $this->validUntil === null) ||
+            ($this->validFrom === null && $this->validUntil >= $dateTime);
     }
 
     public function addRide(Ride $ride): CityCycle
