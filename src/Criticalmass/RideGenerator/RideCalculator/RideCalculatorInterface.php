@@ -9,7 +9,9 @@ interface RideCalculatorInterface
     public function setTimezone(\DateTimeZone $timezone): RideCalculatorInterface;
 
     public function setCycleList(array $cycleList): RideCalculatorInterface;
-    
+
+    public function setCycle(CityCycle $cycle): RideCalculatorInterface;
+
     public function addCycle(CityCycle $cityCycle): RideCalculatorInterface;
 
     public function addDateTime(\DateTime $dateTime): RideCalculatorInterface;
