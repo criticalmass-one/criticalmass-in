@@ -13,75 +13,6 @@ use PHPUnit\Framework\TestCase;
 
 class RideCalculatorTest extends TestCase
 {
-    protected function getRideCalculator(): RideCalculatorInterface
-    {
-        $rideNamerList = new RideNamerList();
-        $rideNamerList->addRideNamer(new GermanCityDateRideNamer());
-
-        return new RideCalculator($rideNamerList);
-    }
-
-    protected function createLondonCycle(): CityCycle
-    {
-        $city = new City();
-        $city
-            ->setCity('London')
-            ->setTimezone('Europe/London');
-
-        $cityCycle = new CityCycle();
-        $cityCycle
-            ->setWeekOfMonth(CityCycle::WEEK_LAST)
-            ->setDayOfWeek(CityCycle::DAY_FRIDAY)
-            ->setTime(new \DateTime('18:00:00'), new \DateTimeZone('Europe/London'))
-            ->setLocation('Southbank under Waterloo Bridge')
-            ->setLatitude(51.507320112865)
-            ->setLongitude(-0.11578559875488)
-            ->setCity($city);
-
-        return $cityCycle;
-    }
-
-    protected function createHamburgCycle(): CityCycle
-    {
-        $city = new City();
-        $city
-            ->setCity('Hamburg')
-            ->setTimezone('Europe/Berlin');
-
-        $cityCycle = new CityCycle();
-        $cityCycle
-            ->setWeekOfMonth(CityCycle::WEEK_LAST)
-            ->setDayOfWeek(CityCycle::DAY_FRIDAY)
-            ->setTime(new \DateTime('19:00:00'))
-            ->setLocation('Stadtpark Hamburg')
-            ->setLatitude(53.596812)
-            ->setLongitude(10.011008)
-            ->setCity($city);
-
-        return $cityCycle;
-    }
-
-    protected function createHalleCycle(): CityCycle
-    {
-        $city = new City();
-        $city
-            ->setCity('Halle')
-            ->setTimezone('Europe/Berlin');
-
-        $cityCycle = new CityCycle();
-        $cityCycle
-            ->setWeekOfMonth(CityCycle::WEEK_FIRST)
-            ->setDayOfWeek(CityCycle::DAY_FRIDAY)
-            ->setTime(new \DateTime('18:00:00'))
-            ->setLocation('August-Bebel-Platz')
-            ->setLatitude(51.491664696772)
-            ->setLongitude(11.96897149086)
-            ->setCity($city)
-            ->setValidFrom(new \DateTime('2018-03-30'));
-
-        return $cityCycle;
-    }
-
     public function testCalculatedRides(): void
     {
         $rideList = $this->getRideCalculator()
@@ -185,5 +116,205 @@ class RideCalculatorTest extends TestCase
             ->getRideList();
 
         $this->assertCount(0, $rideList);
+    }
+
+    public function testOneRideAfterValidFromInHalle(): void
+    {
+        $rideList = $this->getRideCalculator()
+            ->setDateTime(new \DateTime('2018-03-31'))
+            ->setCycle($this->createHalleCycle())
+            ->execute()
+            ->getRideList();
+
+        $this->assertCount(1, $rideList);
+    }
+
+    public function testNoRideAfterValidUntilInRendsburg(): void
+    {
+        $rideList = $this->getRideCalculator()
+            ->setDateTime(new \DateTime('2019-12-30'))
+            ->setCycle($this->createRendsburgCycle())
+            ->execute()
+            ->getRideList();
+
+        $this->assertCount(0, $rideList);
+    }
+
+    public function testOneRideBeforeValidUntilInRendsburg(): void
+    {
+        $rideList = $this->getRideCalculator()
+            ->setDateTime(new \DateTime('2019-11-30'))
+            ->setCycle($this->createRendsburgCycle())
+            ->execute()
+            ->getRideList();
+
+        $this->assertCount(1, $rideList);
+    }
+
+    public function testNoRideBeforeValidFromInHarburgInJanuary(): void
+    {
+        $rideList = $this->getRideCalculator()
+            ->setDateTime(new \DateTime('2019-01'))
+            ->setCycle($this->createHarburgCycle())
+            ->execute()
+            ->getRideList();
+
+        $this->assertCount(0, $rideList);
+    }
+
+    public function testNoRideBeforeValidFromInHarburgAt20190111(): void
+    {
+        $rideList = $this->getRideCalculator()
+            ->setDateTime(new \DateTime('2019-01-11'))
+            ->setCycle($this->createHarburgCycle())
+            ->execute()
+            ->getRideList();
+
+        $this->assertCount(0, $rideList);
+    }
+
+    public function testNoRideBeforeValidFromInHarburgAt20190121(): void
+    {
+        $rideList = $this->getRideCalculator()
+            ->setDateTime(new \DateTime('2019-01-21'))
+            ->setCycle($this->createHarburgCycle())
+            ->execute()
+            ->getRideList();
+
+        $this->assertCount(0, $rideList);
+    }
+
+    public function testOneRideAfterValidFromInHarburgInFebruary(): void
+    {
+        $rideList = $this->getRideCalculator()
+            ->setDateTime(new \DateTime('2019-02'))
+            ->setCycle($this->createHarburgCycle())
+            ->execute()
+            ->getRideList();
+
+        $this->assertCount(1, $rideList);
+    }
+
+    public function testNoRideBeforeValidUntilInHarburgInDecember(): void
+    {
+        $rideList = $this->getRideCalculator()
+            ->setDateTime(new \DateTime('2019-12'))
+            ->setCycle($this->createHarburgCycle())
+            ->execute()
+            ->getRideList();
+
+        $this->assertCount(1, $rideList);
+    }
+
+    protected function getRideCalculator(): RideCalculatorInterface
+    {
+        $rideNamerList = new RideNamerList();
+        $rideNamerList->addRideNamer(new GermanCityDateRideNamer());
+
+        return new RideCalculator($rideNamerList);
+    }
+
+    protected function createLondonCycle(): CityCycle
+    {
+        $city = new City();
+        $city
+            ->setCity('London')
+            ->setTimezone('Europe/London');
+
+        $cityCycle = new CityCycle();
+        $cityCycle
+            ->setWeekOfMonth(CityCycle::WEEK_LAST)
+            ->setDayOfWeek(CityCycle::DAY_FRIDAY)
+            ->setTime(new \DateTime('18:00:00'), new \DateTimeZone('Europe/London'))
+            ->setLocation('Southbank under Waterloo Bridge')
+            ->setLatitude(51.507320112865)
+            ->setLongitude(-0.11578559875488)
+            ->setCity($city);
+
+        return $cityCycle;
+    }
+
+    protected function createHamburgCycle(): CityCycle
+    {
+        $city = new City();
+        $city
+            ->setCity('Hamburg')
+            ->setTimezone('Europe/Berlin');
+
+        $cityCycle = new CityCycle();
+        $cityCycle
+            ->setWeekOfMonth(CityCycle::WEEK_LAST)
+            ->setDayOfWeek(CityCycle::DAY_FRIDAY)
+            ->setTime(new \DateTime('19:00:00'))
+            ->setLocation('Stadtpark Hamburg')
+            ->setLatitude(53.596812)
+            ->setLongitude(10.011008)
+            ->setCity($city);
+
+        return $cityCycle;
+    }
+
+    protected function createHalleCycle(): CityCycle
+    {
+        $city = new City();
+        $city
+            ->setCity('Halle')
+            ->setTimezone('Europe/Berlin');
+
+        $cityCycle = new CityCycle();
+        $cityCycle
+            ->setWeekOfMonth(CityCycle::WEEK_FIRST)
+            ->setDayOfWeek(CityCycle::DAY_FRIDAY)
+            ->setTime(new \DateTime('18:00:00'))
+            ->setLocation('August-Bebel-Platz')
+            ->setLatitude(51.491664696772)
+            ->setLongitude(11.96897149086)
+            ->setCity($city)
+            ->setValidFrom(new \DateTime('2018-03-30'));
+
+        return $cityCycle;
+    }
+
+    protected function createRendsburgCycle(): CityCycle
+    {
+        $city = new City();
+        $city
+            ->setCity('Rendsburg')
+            ->setTimezone('Europe/Berlin');
+
+        $cityCycle = new CityCycle();
+        $cityCycle
+            ->setWeekOfMonth(CityCycle::WEEK_LAST)
+            ->setDayOfWeek(CityCycle::DAY_FRIDAY)
+            ->setTime(new \DateTime('19:00:00'))
+            ->setLocation('Lornsendenkmal')
+            ->setLatitude(54.300527)
+            ->setLongitude(9.664402)
+            ->setCity($city)
+            ->setValidUntil(new \DateTime('2019-12-12'));
+
+        return $cityCycle;
+    }
+
+    protected function createHarburgCycle(): CityCycle
+    {
+        $city = new City();
+        $city
+            ->setCity('Harburg')
+            ->setTimezone('Europe/Berlin');
+
+        $cityCycle = new CityCycle();
+        $cityCycle
+            ->setWeekOfMonth(CityCycle::WEEK_SECOND)
+            ->setDayOfWeek(CityCycle::DAY_FRIDAY)
+            ->setTime(new \DateTime('19:00:00'))
+            ->setLocation('Karstadt')
+            ->setLatitude(53.461030)
+            ->setLongitude(9.978549)
+            ->setCity($city)
+            ->setValidFrom(new \DateTime('2019-01-20'))
+            ->setValidUntil(new \DateTime('2019-12-04'));
+
+        return $cityCycle;
     }
 }
