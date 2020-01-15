@@ -110,7 +110,7 @@ class RideCalculatorTest extends TestCase
     public function testNoRideBeforeValidFromInHalle(): void
     {
         $rideList = $this->getRideCalculator()
-            ->setDateTime(new \DateTime('2018-03-29'))
+            ->setDateTime(new \DateTime('2018-02'))
             ->setCycle($this->createHalleCycle())
             ->execute()
             ->getRideList();
@@ -121,7 +121,7 @@ class RideCalculatorTest extends TestCase
     public function testOneRideAfterValidFromInHalle(): void
     {
         $rideList = $this->getRideCalculator()
-            ->setDateTime(new \DateTime('2018-03-31'))
+            ->setDateTime(new \DateTime('2018-03-30'))
             ->setCycle($this->createHalleCycle())
             ->execute()
             ->getRideList();
@@ -203,7 +203,7 @@ class RideCalculatorTest extends TestCase
             ->execute()
             ->getRideList();
 
-        $this->assertCount(1, $rideList);
+        $this->assertCount(0, $rideList);
     }
 
     protected function getRideCalculator(): RideCalculatorInterface
@@ -270,7 +270,7 @@ class RideCalculatorTest extends TestCase
             ->setLatitude(51.491664696772)
             ->setLongitude(11.96897149086)
             ->setCity($city)
-            ->setValidFrom(new \DateTime('2018-03-30'));
+            ->setValidFrom(new \DateTime('2018-03-01'));
 
         return $cityCycle;
     }

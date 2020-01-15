@@ -15,8 +15,10 @@ class RideCalculator extends AbstractRideCalculator
         /** @var CityCycle $cycle */
         foreach ($this->cycleList as $cycle) {
             foreach ($this->dateTimeList as $dateTime) {
+                $monthStartDateTime = DateTimeUtil::getMonthStartDateTime($dateTime);
+
                 $cityTimeZone = new \DateTimeZone($cycle->getCity()->getTimezone());
-                $rideDateTime = DateTimeUtil::recreateAsTimeZone($dateTime, $cityTimeZone);
+                $rideDateTime = DateTimeUtil::recreateAsTimeZone($monthStartDateTime, $cityTimeZone);
 
                 $ride = $this->createRide($cycle, $rideDateTime);
 
