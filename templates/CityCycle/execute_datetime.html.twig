@@ -59,6 +59,28 @@
                                             <em>nicht definiert</em>
                                         {% endif %}
                                     </dd>
+
+                                    <dt>
+                                        Gültigkeitsbeginn
+                                    </dt>
+                                    <dd>
+                                        {% if cityCycle.validFrom %}
+                                            {{ cityCycle.validFrom|date('d.m.Y') }}
+                                        {% else %}
+                                            <em>nicht definiert</em>
+                                        {% endif %}
+                                    </dd>
+
+                                    <dt>
+                                        Gültigkeitsende
+                                    </dt>
+                                    <dd>
+                                        {% if cityCycle.validUntil %}
+                                            {{ cityCycle.validUntil|date('d.m.Y') }}
+                                        {% else %}
+                                            <em>nicht definiert</em>
+                                        {% endif %}
+                                    </dd>
                                 </dl>
                             </div>
                         </div>
