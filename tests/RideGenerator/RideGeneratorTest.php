@@ -2,121 +2,78 @@
 
 namespace Tests\RideGenerator;
 
+use App\Criticalmass\RideGenerator\RideCalculator\RideCalculator;
+use App\Criticalmass\RideGenerator\RideGenerator\RideGenerator;
+use App\Criticalmass\RideGenerator\RideGenerator\RideGeneratorInterface;
+use App\Criticalmass\RideNamer\GermanCityDateRideNamer;
+use App\Criticalmass\RideNamer\RideNamerList;
 use App\Entity\City;
 use App\Entity\CityCycle;
+use App\Entity\Ride;
 use App\Repository\CityCycleRepository;
-use App\Repository\CityRepository;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use App\Repository\RideRepository;
+use PHPUnit\Framework\TestCase;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
-class RideGeneratorTest extends KernelTestCase
+class RideGeneratorTest extends TestCase
 {
-    /** @var \Doctrine\ORM\EntityManager */
-    protected $entityManager;
-
-    protected function setUp(): void
+    public function testRideGeneratorForHamburgInJune2011(): void
     {
-        $kernel = self::bootKernel();
+        $dateTime = new \DateTime('2011-06');
 
-        $this->entityManager = $kernel->getContainer()
-            ->get('doctrine')
-            ->getManager();
+        $hamburg = new City();
+        $hamburg->setTitle('Critical Mass Hamburg');
+
+        $rideGenerator = $this->createPreparedRideGeneratorFor($hamburg);
+
+        $rideList = $rideGenerator
+            ->setDateTime($dateTime)
+            ->addCity($hamburg)
+            ->execute()
+            ->getRideList();
+
+        $this->assertCount(1, $rideList);
+
+        /** @var Ride $ride */
+        $ride = array_pop($rideList);
+
+        $this->assertEquals(new \DateTime('2011-06-24 19:00:00'), $ride->getDateTime());
+        $this->assertEquals('Moorweide', $ride->getLocation());
+        $this->assertEquals('53.562619', $ride->getLatitude());
+        $this->assertEquals('9.992445', $ride->getLongitude());
+        $this->assertEquals('Critical Mass Hamburg 24.06.2011', $ride->getTitle());
     }
-
-    protected function tearDown(): void
+    
+    protected function createPreparedRideGeneratorFor(City $city): RideGeneratorInterface
     {
-        parent::tearDown();
+        $hamburgCycle = new CityCycle();
+        $hamburgCycle
+            ->setCity($city)
+            ->setDayOfWeek(CityCycle::DAY_FRIDAY)
+            ->setWeekOfMonth(CityCycle::WEEK_LAST)
+            ->setTime(new \DateTime('19:00'))
+            ->setLocation('Moorweide')
+            ->setLatitude(53.562619)
+            ->setLongitude(9.992445);
 
-        $this->entityManager->close();
-        $this->entityManager = null;
-    }
+        $rideNamerList = new RideNamerList();
+        $rideNamerList->addRideNamer(new GermanCityDateRideNamer());
+        $rideCalculator = new RideCalculator($rideNamerList);
 
-    protected function getCityRepository(): CityRepository
-    {
-        return $this->entityManager->getRepository(City::class);
-    }
+        $cityCycleRepository = $this->createMock(CityCycleRepository::class);
+        $cityCycleRepository
+            ->method('findByCity')
+            ->with($this->equalTo($city), $this->anything(), $this->anything())
+            ->will($this->returnValue([$hamburgCycle]));
 
-    protected function getCityCycleRepository(): CityCycleRepository
-    {
-        return $this->entityManager->getRepository(CityCycle::class);
-    }
+        $rideRepository = $this->createMock(RideRepository::class);
 
-    public function tetsFoo(): void
-    {
-        /** @var City $hamburg */
-        $hamburg = $this->getCityRepository()->find(1);
+        $registry = $this->createMock(RegistryInterface::class);
 
-        $this->assertEquals('Hamburg', $hamburg->getCity());
-    }
+        $registry
+            ->method('getRepository')
+            ->willReturnOnConsecutiveCalls($this->returnValue($cityCycleRepository), $this->returnValue($rideRepository));
 
-    public function testHamburg(): void
-    {
-        $hamburg = $this->getCityRepository()->findOneByCity('Hamburg');
-
-        $from = new \DateTime('2018-12-01');
-        $until = new \DateTime('2018-12-31');
-
-        $hamburgCycles = $this->getCityCycleRepository()->findByCity($hamburg, $from, $until);
-
-        $this->assertEquals(1, count($hamburgCycles));
-    }
-
-    public function testBerlin(): void
-    {
-        $berlin = $this->getCityRepository()->findOneByCity('Berlin');
-
-        $from = new \DateTime('2018-12-01');
-        $until = new \DateTime('2018-12-31');
-
-        $berlinCycles = $this->getCityCycleRepository()->findByCity($berlin, $from, $until);
-
-        $this->assertEquals(2, count($berlinCycles));
-    }
-
-    public function testHalle(): void
-    {
-        $halle = $this->getCityRepository()->findOneByCity('Halle');
-
-        $from = new \DateTime('2018-12-01');
-        $until = new \DateTime('2018-12-31');
-
-        $halleCycles = $this->getCityCycleRepository()->findByCity($halle, $from, $until);
-
-        $this->assertEquals(1, count($halleCycles));
-    }
-
-    public function testMainz1(): void
-    {
-        $mainz = $this->getCityRepository()->findOneByCity('Mainz');
-
-        $from = new \DateTime('2018-09-01');
-        $until = new \DateTime('2018-09-30');
-
-        $mainzCycles = $this->getCityCycleRepository()->findByCity($mainz, $from, $until);
-
-        $this->assertEquals(1, count($mainzCycles));
-    }
-
-    public function testMainz2(): void
-    {
-        $mainz = $this->getCityRepository()->findOneByCity('Mainz');
-
-        $from = new \DateTime('2018-10-01');
-        $until = new \DateTime('2018-10-31');
-
-        $mainzCycles = $this->getCityCycleRepository()->findByCity($mainz, $from, $until);
-
-        $this->assertEquals(1, count($mainzCycles));
-    }
-
-    public function testEsslingen(): void
-    {
-        $esslingen = $this->getCityRepository()->findOneByCity('Esslingen');
-
-        $from = new \DateTime('2018-10-01');
-        $until = new \DateTime('2018-10-31');
-
-        $esslingenCycles = $this->getCityCycleRepository()->findByCity($esslingen, $from, $until);
-
-        $this->assertEquals(0, count($esslingenCycles));
+        return new RideGenerator($registry, $rideCalculator);
     }
 }

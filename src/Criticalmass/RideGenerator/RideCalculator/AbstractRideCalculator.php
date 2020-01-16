@@ -62,6 +62,13 @@ abstract class AbstractRideCalculator implements RideCalculatorInterface
         return $this;
     }
 
+    public function setCycle(CityCycle $cityCycle): RideCalculatorInterface
+    {
+        $this->cycleList = [$cityCycle];
+
+        return $this;
+    }
+
     public abstract function execute(): RideCalculatorInterface;
 
     public function getRideList(): array
