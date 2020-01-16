@@ -91,6 +91,37 @@ class RideGeneratorTest extends TestCase
         $this->assertEquals('Critical Mass Hamburg 24.06.2011', $ride->getTitle());
     }
 
+    public function testRideGeneratorFor7RidesInHamburgIn2011(): void
+    {
+        $dateTimeList = [
+            new \DateTime('2011-01'),
+            new \DateTime('2011-02'),
+            new \DateTime('2011-03'),
+            new \DateTime('2011-04'),
+            new \DateTime('2011-05'),
+            new \DateTime('2011-06'),
+            new \DateTime('2011-07'),
+            new \DateTime('2011-08'),
+            new \DateTime('2011-09'),
+            new \DateTime('2011-10'),
+            new \DateTime('2011-11'),
+            new \DateTime('2011-12'),
+        ];
+
+        $hamburg = new City();
+        $hamburg->setTitle('Critical Mass Hamburg');
+
+        $rideGenerator = $this->createPreparedRideGeneratorFor($hamburg);
+
+        $rideList = $rideGenerator
+            ->setDateTimeList($dateTimeList)
+            ->addCity($hamburg)
+            ->execute()
+            ->getRideList();
+
+        $this->assertCount(7, $rideList);
+    }
+
     protected function createPreparedRideGeneratorFor(City $city): RideGeneratorInterface
     {
         $hamburgCycle = new CityCycle();
@@ -101,7 +132,8 @@ class RideGeneratorTest extends TestCase
             ->setTime(new \DateTime('19:00'))
             ->setLocation('Moorweide')
             ->setLatitude(53.562619)
-            ->setLongitude(9.992445);
+            ->setLongitude(9.992445)
+            ->setValidFrom(new \DateTime('2011-06-24'));
 
         $rideNamerList = new RideNamerList();
         $rideNamerList->addRideNamer(new GermanCityDateRideNamer());
@@ -120,6 +152,24 @@ class RideGeneratorTest extends TestCase
         $registry
             ->method('getRepository')
             ->willReturnOnConsecutiveCalls(
+                $this->returnValue($cityCycleRepository),
+                $this->returnValue($rideRepository),
+                $this->returnValue($cityCycleRepository),
+                $this->returnValue($rideRepository),
+                $this->returnValue($cityCycleRepository),
+                $this->returnValue($rideRepository),
+                $this->returnValue($cityCycleRepository),
+                $this->returnValue($rideRepository),
+                $this->returnValue($cityCycleRepository),
+                $this->returnValue($rideRepository),
+                $this->returnValue($cityCycleRepository),
+                $this->returnValue($rideRepository),
+                $this->returnValue($cityCycleRepository),
+                $this->returnValue($rideRepository),
+                $this->returnValue($cityCycleRepository),
+                $this->returnValue($rideRepository),
+                $this->returnValue($cityCycleRepository),
+                $this->returnValue($rideRepository),
                 $this->returnValue($cityCycleRepository),
                 $this->returnValue($rideRepository),
                 $this->returnValue($cityCycleRepository),
