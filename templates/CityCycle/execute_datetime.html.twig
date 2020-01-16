@@ -59,6 +59,28 @@
                                             <em>nicht definiert</em>
                                         {% endif %}
                                     </dd>
+
+                                    <dt>
+                                        Gültigkeitsbeginn
+                                    </dt>
+                                    <dd>
+                                        {% if cityCycle.validFrom %}
+                                            {{ cityCycle.validFrom|date('d.m.Y') }}
+                                        {% else %}
+                                            <em>nicht definiert</em>
+                                        {% endif %}
+                                    </dd>
+
+                                    <dt>
+                                        Gültigkeitsende
+                                    </dt>
+                                    <dd>
+                                        {% if cityCycle.validUntil %}
+                                            {{ cityCycle.validUntil|date('d.m.Y') }}
+                                        {% else %}
+                                            <em>nicht definiert</em>
+                                        {% endif %}
+                                    </dd>
                                 </dl>
                             </div>
                         </div>
@@ -75,16 +97,36 @@
                                     Du kannst anhand des ausgewählten Turnus’ die Touren in deiner Stadt generieren
                                     lassen.</p>
 
-                                <p>
-                                    Normalerweise wird diese Generierung in regelmäßigen Abständen serverseitig
-                                    ausgeführt, aber immer wenn du einen neuen Turnus angelegt hast, werden dir vorerst
-                                    Touren fehlen. Das gilt natürlich auch rückwirkend für zu früheren Zeitpunkten
-                                    stattgefundene Touren.
-                                </p>
+                                <div class="alert alert-info">
+                                    <p>
+                                        Normalerweise wird diese Generierung in regelmäßigen Abständen serverseitig
+                                        ausgeführt und du musst überhaupt nichts weiter dafür tun.</p>
+
+                                    <p>
+                                        Diese „manuelle Generierung“ ist für dich in der Regel nur dann interessant,
+                                        wenn du
+                                    <ul>
+                                        <li>
+                                            gerade einen neuen Turnus angelegt hast und schon einmal für die nächsten
+                                            Monate Touren anlegen möchtest, bevor die automatische Generierung beginnt
+                                            oder
+                                        </li>
+                                        <li>
+                                            du oder jemand anders <strong>{{ cityCycle.city.city }}</strong> in unserer
+                                            Datenbank
+                                            angelegt hast und nun rückwirkend die Touren generieren lassen möchtest,
+                                            weil es deine Critical Mass bereits viel länger gibt als den Eintrag in
+                                            unserer Datenbank
+                                        </li>
+                                    </ul>
+                                    </p>
+                                </div>
 
                                 <p>
                                     Mit den folgenden beiden Eingabefeldern kannst du einen Zeitraum definieren, für den
-                                    die Touren anhand der Daten aus dem Turnus generiert werden sollen.
+                                    die Touren anhand der Daten aus dem Turnus generiert werden sollen. Der Generator
+                                    wird Monat für Monat eine einzelne Tour anlegen. Du kannst die Touren im nächsten
+                                    Schritt in einer Vorschau überprüfen, bevor sie abgespeichert werden.
                                 </p>
                             </div>
                         </div>
