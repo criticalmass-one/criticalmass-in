@@ -7,6 +7,7 @@ use App\Criticalmass\RideGenerator\ExecuteGenerator\CycleExecutable;
 use App\Criticalmass\RideGenerator\ExecuteGenerator\DateTimeListGenerator;
 use App\Criticalmass\RideGenerator\RideGenerator\RideGeneratorInterface;
 use App\Criticalmass\Router\ObjectRouterInterface;
+use App\Criticalmass\Util\DateTimeUtil;
 use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Entity\Ride;
@@ -175,7 +176,13 @@ class CityCycleController extends AbstractController
      */
     public function executeAction(Request $request, CityCycle $cityCycle, RideGeneratorInterface $generator): Response
     {
+        $dateTime = new \DateTime();
+        $threeMonthInterval = new \DateInterval('P6M');
+
         $executeable = new CycleExecutable();
+        $executeable
+            ->setFromDate(DateTimeUtil::getMonthStartDateTime($dateTime))
+            ->setUntilDate(DateTimeUtil::getMonthEndDateTime($dateTime->add($threeMonthInterval)));
 
         $form = $this->createForm(ExecuteCityCycleType::class, $executeable);
         $form->add('submit', SubmitType::class);
