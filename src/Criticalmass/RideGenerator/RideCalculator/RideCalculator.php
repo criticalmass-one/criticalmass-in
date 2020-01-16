@@ -32,7 +32,7 @@ class RideCalculator extends AbstractRideCalculator
                 }
 
                 if (!DateTimeValidator::isValidDateTime($cycle, $dateTime)) {
-                    continue;
+                    //continue;
                 }
 
                 $this->rideList[] = $ride;
