@@ -1,0 +1,74 @@
+{% if app.user %}
+<div class="modal fade" id="disable-modal" tabindex="-1" role="dialog" aria-labelledby="disable-modal-label">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            {{ form_start(disableForm) }}
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="disable-modal-label">
+                    Tour deaktivieren
+                </h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Grund für die Deaktivierung:
+                </p>
+
+                <div class="radio">
+                    <label>
+                        {{ form_widget(disableForm.disabledReason[0]) }}
+                        {{ form_label(disableForm.disabledReason[0]) }}
+                    </label>
+                </div>
+
+                <div class="radio">
+                    <label>
+                        {{ form_widget(disableForm.disabledReason[1]) }}
+                        {{ form_label(disableForm.disabledReason[1]) }}
+                    </label>
+                </div>
+
+                <div class="radio">
+                    <label>
+                        {{ form_widget(disableForm.disabledReason[2]) }}
+                        {{ form_label(disableForm.disabledReason[2]) }}
+                    </label>
+                </div>
+
+                <div class="radio">
+                    <label>
+                        {{ form_widget(disableForm.disabledReason[3]) }}
+                        {{ form_label(disableForm.disabledReason[3]) }}
+                    </label>
+                </div>
+
+                <div class="radio">
+                    <label>
+                        {{ form_widget(disableForm.disabledReason[4]) }}
+                        {{ form_label(disableForm.disabledReason[4]) }}
+                    </label>
+                </div>
+
+                <div class="radio">
+                    <label>
+                        {{ form_widget(disableForm.disabledReason[5]) }}
+                        {{ form_label(disableForm.disabledReason[5]) }}
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Abbrechen
+                    </button>
+                    <button type="submit" class="btn btn-danger">
+                        Deaktivieren
+                    </button>
+                </div>
+            </div>
+            {{ form_end(disableForm) }}
+        </div>
+    </div>
+</div>
+{% endif %}

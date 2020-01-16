@@ -12,7 +12,7 @@ define(['leaflet', 'leaflet.markercluster', 'Container', 'leaflet.extra-markers'
                     icon: 'fa-camera',
                     markerColor: 'yellow',
                     shape: 'square',
-                    prefix: 'fa'
+                    prefix: 'far'
                 });
             }
         });

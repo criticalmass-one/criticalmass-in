@@ -11,5 +11,5 @@ interface GpxWriterInterface
     public function saveGpxContent(string $filename): void;
     public function addGpxAttribute(string $attributeName, string $attributeValue): GpxWriterInterface;
     public function addStandardGpxAttributes(): GpxWriterInterface;
-    public function generateGpxContent(): void;
+    public function generateGpxContent(): GpxWriterInterface;
 }

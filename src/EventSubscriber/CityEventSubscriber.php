@@ -2,7 +2,7 @@
 
 namespace App\EventSubscriber;
 
-use App\Criticalmass\Timezone\CityTimezoneDetector\CityTimezoneDetectorInterface;
+use App\Criticalmass\Wikidata\CityTimezoneDetector\CityTimezoneDetectorInterface;
 use App\Event\City\CityCreatedEvent;
 use App\Event\City\CityUpdatedEvent;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -43,12 +43,6 @@ class CityEventSubscriber implements EventSubscriberInterface
 
     public function onCityUpdated(CityUpdatedEvent $cityUpdatedEvent): void
     {
-        $city = $cityUpdatedEvent->getCity();
-
-        if ($timezone = $this->cityTimezoneDetector->queryForCity($city)) {
-            $city->setTimezone($timezone);
-
-            $this->registry->getManager()->flush();
-        }
+        
     }
 }

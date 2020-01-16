@@ -52,7 +52,7 @@
         <div class="row">
             <div class="col-md-12">
                 <button class="btn btn-success pull-right" data-toggle="modal" data-target="#profile-add-modal">
-                    <i class="fa fa-plus"></i>
+                    <i class="far fa-plus"></i>
                     Profil ergänzen
                 </button>
 
@@ -97,7 +97,7 @@
 
                         <tr>
                             <td class="text-center" style="background-color: {{ network.backgroundColor }}; color: {{ network.textColor }};">
-                                <i class="fa {{ network.icon }}"></i>
+                                <i class="{{ network.icon }}"></i>
                             </td>
                             <td>
                                 {{ network.name }}
@@ -110,10 +110,10 @@
                             <td>
                                 <div class="btn-group">
                                     <a href="{{ path('criticalmass_socialnetwork_edit', { profileId: profile.id }) }}" class="btn btn-default btn-xs">
-                                        <i class="fa fa-pencil"></i>
+                                        <i class="far fa-pencil"></i>
                                     </a>
                                     <a href="{{ path('criticalmass_socialnetwork_disable', { profileId: profile.id }) }}" class="btn btn-default btn-xs">
-                                        <i class="fa fa-trash-o"></i>
+                                        <i class="far fa-trash-alt"></i>
                                     </a>
                                 </div>
                             </td>

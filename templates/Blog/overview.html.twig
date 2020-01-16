@@ -1,0 +1,91 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Blog{% endblock %}
+
+{% block breadcrumb %}
+    <li class="active">
+        Blog
+    </li>
+{% endblock %}
+
+{% block bodyClass %}blog{% endblock %}
+
+{% block content %}
+    <div class="container blog">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                {% for blog_post in blog_posts %}
+                    <article class="blog-post" data-blog-post-slug="{{ blog_post.slug }}">
+                        {% if blog_post.imageName %}
+                            <div class="jumbotron" id="city-jumbotron" style="height: 250px; background-image: url({{ vich_uploader_asset(blog_post, 'imageFile')|imagine_filter('blogpost_teaser') }});">
+
+                            </div>
+                        {% endif %}
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2 class="blog-post-title">
+                                    <a href="{{ objectPath(blog_post) }}">
+                                        {{ blog_post.title }}
+                                    </a>
+                                </h2>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-9">
+                                {% if blog_post.intro %}
+                                    <div class="blog-post-intro">
+                                        {{ blog_post.intro|markdown }}
+                                    </div>
+                                {% else %}
+                                    <div class="blog-post-content">
+                                        {{ blog_post.text|markdown }}
+                                    </div>
+                                {% endif %}
+
+                                <p class="text-center">
+                                    <a class="btn btn-primary" href="{{ objectPath(blog_post) }}">
+                                        <i class="far fa-bicycle" aria-hidden="true"></i>
+                                        Weiterlesen
+                                    </a>
+                                </p>
+                            </div>
+
+                            <div class="col-md-3 text-center">
+                                {% if blog_post.user.imageName %}
+                                    <img class="media-object round-media-object img-responsive img-fluid"
+                                         src="{{ vich_uploader_asset(blog_post.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}" style="margin: 10px auto;"/>
+                                {% endif %}
+
+                                <p>
+                                    <strong>
+                                        {{ blog_post.user.username }}
+                                    </strong>
+                                    <br />
+                                    <small>
+                                        <i class="far fa-clock" aria-hidden="true"></i>
+                                        <time>
+                                            {{ blog_post.createdAt|time_ago_in_words }}
+                                        </time>
+                                    </small>
+                                </p>
+
+                                <p>
+                                    <a href="{{ objectPath(blog_post) }}#comments">
+                                        <i class="far fa-comments" aria-hidden="true"></i>
+                                        {% if blog_post.comments|length == 1 %}
+                                            1 Kommentar
+                                        {% else %}
+                                            {{ blog_post.comments|length }} Kommentare
+                                        {% endif %}
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

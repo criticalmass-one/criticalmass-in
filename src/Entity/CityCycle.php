@@ -2,12 +2,13 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\Router\Annotation as Routing;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use App\Criticalmass\Router\Annotation as Routing;
 use JMS\Serializer\Annotation as JMS;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CityCycleRepository")
@@ -60,6 +61,7 @@ class CityCycle implements RouteableInterface
      * @ORM\Column(type="smallint", nullable=false)
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
+     * @Assert\Range(min="0", max="6")
      */
     protected $dayOfWeek;
 
@@ -67,11 +69,13 @@ class CityCycle implements RouteableInterface
      * @ORM\Column(type="smallint", nullable=true)
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
+     * @Assert\Range(min="0", max="4")
      */
     protected $weekOfMonth;
 
     /**
      * @ORM\Column(type="time", nullable=true)
+     * @Assert\Type(type="\DateTime")
      */
     protected $time;
 
@@ -305,15 +309,21 @@ class CityCycle implements RouteableInterface
         return ($this->validFrom && $this->validUntil);
     }
 
+    /**
+     * @param \DateTime|null $dateTime
+     * @return bool
+     * @throws \Exception
+     * @deprecated
+     */
     public function isValid(\DateTime $dateTime = null): bool
     {
         if (!$dateTime) {
             $dateTime = new \DateTime();
         }
 
-        return $this->validFrom <= $dateTime && $this->validUntil >= $dateTime ||
-            $this->validFrom <= $dateTime && $this->validUntil === null ||
-            $this->validFrom === null && $this->validUntil >= $dateTime;
+        return ($this->validFrom <= $dateTime && $this->validUntil >= $dateTime) ||
+            ($this->validFrom <= $dateTime && $this->validUntil === null) ||
+            ($this->validFrom === null && $this->validUntil >= $dateTime);
     }
 
     public function addRide(Ride $ride): CityCycle

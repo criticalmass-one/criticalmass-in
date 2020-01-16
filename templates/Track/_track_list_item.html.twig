@@ -1,0 +1,110 @@
+<div class="col-md-4 margin-bottom-medium">
+    <div class="panel panel-default{% if not track.enabled %} panel-warning{% elseif not track.reviewed %} panel-danger{% endif %}">
+        <div class="panel-heading">
+            <a href="{{ objectPath(track.ride) }}">
+                {{ track.ride.title }}
+            </a>
+        </div>
+        <div class="panel-body">
+            <div class="row margin-bottom-medium">
+                <div class="col-md-12">
+                    <div id="map-{{ track.id }}" class="preview-map" style="height: 150px;"
+                         data-polyline-color="rgb({{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }})"
+                         data-lock-map="true" data-polyline="{{ track.polyline }}"></div>
+                </div>
+            </div>
+
+            <div class="row">
+                {% if show_city is not defined or show_city == true %}
+                    <div class="col-md-6">
+                        <dl>
+                            <dt>
+                                Stadt
+                            </dt>
+
+                            <dd>
+                                <a href="{{ objectPath(track.ride.city) }}">
+                                    {{ track.ride.city.city }}
+                                </a>
+                            </dd>
+                        </dl>
+                    </div>
+                {% endif %}
+
+                {% if show_user is not defined or show_user == true %}
+                    <div class="col-md-6">
+                        <dl>
+                            <dt>
+                                Teilnehmer
+                            </dt>
+
+                            <dd>
+                                {{ track.user.username }}
+                            </dd>
+                        </dl>
+                    </div>
+                {% endif %}
+
+                <div class="col-md-6">
+                    <dl>
+                        <dt>
+                            Datum
+                        </dt>
+
+                        <dd>
+                            <a href="{{ objectPath(track) }}">
+                                {{ track.ride.dateTime|date('d.m.Y') }}
+                            </a>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <dl>
+                        <dt>
+                            Länge
+                        </dt>
+
+                        <dd>
+                            {{ track.distance|number_format(2) }}&nbsp;Kilometer
+                        </dd>
+                    </dl>
+                </div>
+
+                <div class="col-md-4">
+                    <dl>
+                        <dt>
+                            Beginn
+                        </dt>
+
+                        <dd>
+                            {{ track.startDateTime|date('H:i', track.ride.city.timezone) }}&nbsp;Uhr
+                        </dd>
+                    </dl>
+                </div>
+
+                <div class="col-md-4">
+                    <dl>
+                        <dt>
+                            Ende
+                        </dt>
+
+                        <dd>
+                            {{ track.endDateTime|date('H:i', track.ride.city.timezone) }}&nbsp;Uhr
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+            {% if is_granted('edit', track) %}
+                <div class="row">
+                    <div class="col-md-12">
+                        {% include('Track/_track_options_menu.html.twig') with { 'track': track } %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

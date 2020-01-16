@@ -2,18 +2,216 @@
 
 namespace Tests\RideGenerator;
 
+use App\Criticalmass\RideGenerator\RideCalculator\RideCalculator;
+use App\Criticalmass\RideGenerator\RideCalculator\RideCalculatorInterface;
+use App\Criticalmass\RideNamer\GermanCityDateRideNamer;
+use App\Criticalmass\RideNamer\RideNamerList;
 use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Entity\Ride;
-use App\Criticalmass\RideGenerator\RideCalculator\RideCalculator;
-use App\Criticalmass\RideGenerator\RideCalculator\RideCalculatorInterface;
 use PHPUnit\Framework\TestCase;
 
 class RideCalculatorTest extends TestCase
 {
+    public function testCalculatedRides(): void
+    {
+        $rideList = $this->getRideCalculator()
+            ->setDateTime(new \DateTime('2018-09-01'))
+            ->addCycle($this->createHamburgCycle())
+            ->execute()
+            ->getRideList();
+
+        $this->assertEquals(1, count($rideList));
+    }
+
+    public function testLocation(): void
+    {
+        $rideList = $this->getRideCalculator()
+            ->setDateTime(new \DateTime('2018-09-01'))
+            ->addCycle($this->createHamburgCycle())
+            ->execute()
+            ->getRideList();
+
+        /** @var Ride $ride */
+        $ride = array_pop($rideList);
+
+        $this->assertEquals('Stadtpark Hamburg', $ride->getLocation());
+        $this->assertEquals(53.596812, $ride->getLatitude());
+        $this->assertEquals(10.011008, $ride->getLongitude());
+    }
+
+    public function testTimezone(): void
+    {
+        $rideList = $this->getRideCalculator()
+            ->setDateTime(new \DateTime('2018-09-01'))
+            ->addCycle($this->createHamburgCycle())
+            ->execute()
+            ->getRideList();
+
+        /** @var Ride $ride */
+        $ride = array_pop($rideList);
+
+        $this->assertEquals(new \DateTimeZone('Europe/Berlin'), $ride->getDateTime()->getTimezone());
+    }
+
+    public function testLondon(): void
+    {
+        $rideList = $this->getRideCalculator()
+            ->setDateTime(new \DateTime('2018-09-01'))
+            ->addCycle($this->createLondonCycle())
+            ->execute()
+            ->getRideList();
+
+        /** @var Ride $ride */
+        $ride = array_pop($rideList);
+
+        $europeLondon = new \DateTimeZone('Europe/London');
+        $europeBerlin = new \DateTimeZone('Europe/Berlin');
+
+        $this->assertEquals($europeLondon, $ride->getDateTime()->getTimezone());
+        $this->assertEquals((new \DateTime('2018-09-28 18:00:00', $europeLondon))->format('Y-m-d H:i:s'), $ride->getDateTime()->format('Y-m-d H:i:s'));
+    }
+
+    public function testTime(): void
+    {
+        $rideList = $this->getRideCalculator()
+            ->setDateTime(new \DateTime('2018-09-01'))
+            ->addCycle($this->createHamburgCycle())
+            ->execute()
+            ->getRideList();
+
+        $utc = new \DateTimeZone('UTC');
+        $europeBerlin = new \DateTimeZone('Europe/Berlin');
+
+        /** @var Ride $ride */
+        $ride = array_pop($rideList);
+
+        $this->assertEquals(new \DateTime('2018-09-28 17:00:00', $utc), $ride->getDateTime());
+        $this->assertEquals($europeBerlin, $ride->getDateTime()->getTimezone());
+    }
+
+    public function testDaylightSavingTime(): void
+    {
+        $rideList = $this->getRideCalculator()
+            ->setDateTime(new \DateTime('2018-02-01'))
+            ->addCycle($this->createHamburgCycle())
+            ->execute()
+            ->getRideList();
+
+        $europeBerlin = new \DateTimeZone('Europe/Berlin');
+
+        /** @var Ride $ride */
+        $ride = array_pop($rideList);
+
+        $this->assertEquals(new \DateTime('2018-02-23 19:00:00', $europeBerlin), $ride->getDateTime());
+        $this->assertEquals($europeBerlin, $ride->getDateTime()->getTimezone());
+    }
+
+    public function testNoRideBeforeValidFromInHalle(): void
+    {
+        $rideList = $this->getRideCalculator()
+            ->setDateTime(new \DateTime('2018-02'))
+            ->setCycle($this->createHalleCycle())
+            ->execute()
+            ->getRideList();
+
+        $this->assertCount(0, $rideList);
+    }
+
+    public function testOneRideAfterValidFromInHalle(): void
+    {
+        $rideList = $this->getRideCalculator()
+            ->setDateTime(new \DateTime('2018-03-30'))
+            ->setCycle($this->createHalleCycle())
+            ->execute()
+            ->getRideList();
+
+        $this->assertCount(1, $rideList);
+    }
+
+    public function testNoRideAfterValidUntilInRendsburg(): void
+    {
+        $rideList = $this->getRideCalculator()
+            ->setDateTime(new \DateTime('2019-12-30'))
+            ->setCycle($this->createRendsburgCycle())
+            ->execute()
+            ->getRideList();
+
+        $this->assertCount(0, $rideList);
+    }
+
+    public function testOneRideBeforeValidUntilInRendsburg(): void
+    {
+        $rideList = $this->getRideCalculator()
+            ->setDateTime(new \DateTime('2019-11-30'))
+            ->setCycle($this->createRendsburgCycle())
+            ->execute()
+            ->getRideList();
+
+        $this->assertCount(1, $rideList);
+    }
+
+    public function testNoRideBeforeValidFromInHarburgInJanuary(): void
+    {
+        $rideList = $this->getRideCalculator()
+            ->setDateTime(new \DateTime('2019-01'))
+            ->setCycle($this->createHarburgCycle())
+            ->execute()
+            ->getRideList();
+
+        $this->assertCount(0, $rideList);
+    }
+
+    public function testNoRideBeforeValidFromInHarburgAt20190111(): void
+    {
+        $rideList = $this->getRideCalculator()
+            ->setDateTime(new \DateTime('2019-01-11'))
+            ->setCycle($this->createHarburgCycle())
+            ->execute()
+            ->getRideList();
+
+        $this->assertCount(0, $rideList);
+    }
+
+    public function testNoRideBeforeValidFromInHarburgAt20190121(): void
+    {
+        $rideList = $this->getRideCalculator()
+            ->setDateTime(new \DateTime('2019-01-21'))
+            ->setCycle($this->createHarburgCycle())
+            ->execute()
+            ->getRideList();
+
+        $this->assertCount(0, $rideList);
+    }
+
+    public function testOneRideAfterValidFromInHarburgInFebruary(): void
+    {
+        $rideList = $this->getRideCalculator()
+            ->setDateTime(new \DateTime('2019-02'))
+            ->setCycle($this->createHarburgCycle())
+            ->execute()
+            ->getRideList();
+
+        $this->assertCount(1, $rideList);
+    }
+
+    public function testNoRideBeforeValidUntilInHarburgInDecember(): void
+    {
+        $rideList = $this->getRideCalculator()
+            ->setDateTime(new \DateTime('2019-12'))
+            ->setCycle($this->createHarburgCycle())
+            ->execute()
+            ->getRideList();
+
+        $this->assertCount(0, $rideList);
+    }
+
     protected function getRideCalculator(): RideCalculatorInterface
     {
-        return new RideCalculator();
+        $rideNamerList = new RideNamerList();
+        $rideNamerList->addRideNamer(new GermanCityDateRideNamer());
+
+        return new RideCalculator($rideNamerList);
     }
 
     protected function createLondonCycle(): CityCycle
@@ -72,111 +270,51 @@ class RideCalculatorTest extends TestCase
             ->setLatitude(51.491664696772)
             ->setLongitude(11.96897149086)
             ->setCity($city)
-            ->setValidFrom(new \DateTime('2018-03-30'));
+            ->setValidFrom(new \DateTime('2018-03-01'));
 
         return $cityCycle;
     }
 
-    public function testCalculatedRides(): void
+    protected function createRendsburgCycle(): CityCycle
     {
-        $rideList = $this->getRideCalculator()
-            ->setYear(2018)
-            ->setMonth(9)
-            ->addCycle($this->createHamburgCycle())
-            ->execute()
-            ->getRideList();
+        $city = new City();
+        $city
+            ->setCity('Rendsburg')
+            ->setTimezone('Europe/Berlin');
 
-        $this->assertEquals(1, count($rideList));
+        $cityCycle = new CityCycle();
+        $cityCycle
+            ->setWeekOfMonth(CityCycle::WEEK_LAST)
+            ->setDayOfWeek(CityCycle::DAY_FRIDAY)
+            ->setTime(new \DateTime('19:00:00'))
+            ->setLocation('Lornsendenkmal')
+            ->setLatitude(54.300527)
+            ->setLongitude(9.664402)
+            ->setCity($city)
+            ->setValidUntil(new \DateTime('2019-12-12'));
+
+        return $cityCycle;
     }
 
-    public function testLocation(): void
+    protected function createHarburgCycle(): CityCycle
     {
-        $rideList = $this->getRideCalculator()
-            ->setYear(2018)
-            ->setMonth(9)
-            ->addCycle($this->createHamburgCycle())
-            ->execute()
-            ->getRideList();
+        $city = new City();
+        $city
+            ->setCity('Harburg')
+            ->setTimezone('Europe/Berlin');
 
-        /** @var Ride $ride */
-        $ride = array_pop($rideList);
+        $cityCycle = new CityCycle();
+        $cityCycle
+            ->setWeekOfMonth(CityCycle::WEEK_SECOND)
+            ->setDayOfWeek(CityCycle::DAY_FRIDAY)
+            ->setTime(new \DateTime('19:00:00'))
+            ->setLocation('Karstadt')
+            ->setLatitude(53.461030)
+            ->setLongitude(9.978549)
+            ->setCity($city)
+            ->setValidFrom(new \DateTime('2019-01-20'))
+            ->setValidUntil(new \DateTime('2019-12-04'));
 
-        $this->assertEquals('Stadtpark Hamburg', $ride->getLocation());
-        $this->assertEquals(53.596812, $ride->getLatitude());
-        $this->assertEquals(10.011008, $ride->getLongitude());
-        $this->assertTrue($ride->getHasLocation());
-    }
-
-    public function testTimezone(): void
-    {
-        $rideList = $this->getRideCalculator()
-            ->setYear(2018)
-            ->setMonth(9)
-            ->addCycle($this->createHamburgCycle())
-            ->execute()
-            ->getRideList();
-
-        /** @var Ride $ride */
-        $ride = array_pop($rideList);
-
-        $this->assertEquals(new \DateTimeZone('Europe/Berlin'), $ride->getDateTime()->getTimezone());
-    }
-
-    public function testLondon(): void
-    {
-        $rideList = $this->getRideCalculator()
-            ->setYear(2018)
-            ->setMonth(9)
-            ->addCycle($this->createLondonCycle())
-            ->execute()
-            ->getRideList();
-
-        /** @var Ride $ride */
-        $ride = array_pop($rideList);
-
-        $europeLondon = new \DateTimeZone('Europe/London');
-        $europeBerlin = new \DateTimeZone('Europe/Berlin');
-
-        $this->assertEquals($europeLondon, $ride->getDateTime()->getTimezone());
-        $this->assertEquals((new \DateTime('2018-09-28 18:00:00', $europeLondon))->format('Y-m-d H:i:s'), $ride->getDateTime()->format('Y-m-d H:i:s'));
-    }
-
-    public function testTime(): void
-    {
-        $rideList = $this->getRideCalculator()
-            ->setYear(2018)
-            ->setMonth(9)
-            ->addCycle($this->createHamburgCycle())
-            ->execute()
-            ->getRideList();
-
-        $utc = new \DateTimeZone('UTC');
-        $europeBerlin = new \DateTimeZone('Europe/Berlin');
-
-        /** @var Ride $ride */
-        $ride = array_pop($rideList);
-
-        $this->assertEquals(new \DateTime('2018-09-28 17:00:00', $utc), $ride->getDateTime());
-        $this->assertEquals($europeBerlin, $ride->getDateTime()->getTimezone());
-        $this->assertTrue($ride->getHasTime());
-    }
-
-    public function testDaylightSavingTime(): void
-    {
-        $rideList = $this->getRideCalculator()
-            ->setYear(2018)
-            ->setMonth(2)
-            ->addCycle($this->createHamburgCycle())
-            ->execute()
-            ->getRideList();
-
-        $europeBerlin = new \DateTimeZone('Europe/Berlin');
-
-        /** @var Ride $ride */
-        $ride = array_pop($rideList);
-
-        $this->assertEquals(new \DateTime('2018-02-23 19:00:00', $europeBerlin), $ride->getDateTime());
-        $this->assertEquals($europeBerlin, $ride->getDateTime()->getTimezone());
-        $this->assertTrue($ride->getHasTime());
+        return $cityCycle;
     }
 }
