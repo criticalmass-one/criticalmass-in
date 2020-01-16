@@ -43,7 +43,54 @@ class RideGeneratorTest extends TestCase
         $this->assertEquals('9.992445', $ride->getLongitude());
         $this->assertEquals('Critical Mass Hamburg 24.06.2011', $ride->getTitle());
     }
-    
+
+    public function testRideGeneratorForHamburgInSummer2011(): void
+    {
+        $dateTimeList = [
+            new \DateTime('2011-06'),
+            new \DateTime('2011-07'),
+            new \DateTime('2011-08'),
+        ];
+
+        $hamburg = new City();
+        $hamburg->setTitle('Critical Mass Hamburg');
+
+        $rideGenerator = $this->createPreparedRideGeneratorFor($hamburg);
+
+        $rideList = $rideGenerator
+            ->setDateTimeList($dateTimeList)
+            ->addCity($hamburg)
+            ->execute()
+            ->getRideList();
+
+        $this->assertCount(3, $rideList);
+
+        /** @var Ride $ride */
+        $ride = array_pop($rideList);
+
+        $this->assertEquals(new \DateTime('2011-08-26 19:00:00'), $ride->getDateTime());
+        $this->assertEquals('Moorweide', $ride->getLocation());
+        $this->assertEquals('53.562619', $ride->getLatitude());
+        $this->assertEquals('9.992445', $ride->getLongitude());
+        $this->assertEquals('Critical Mass Hamburg 26.08.2011', $ride->getTitle());
+
+        $ride = array_pop($rideList);
+
+        $this->assertEquals(new \DateTime('2011-07-29 19:00:00'), $ride->getDateTime());
+        $this->assertEquals('Moorweide', $ride->getLocation());
+        $this->assertEquals('53.562619', $ride->getLatitude());
+        $this->assertEquals('9.992445', $ride->getLongitude());
+        $this->assertEquals('Critical Mass Hamburg 29.07.2011', $ride->getTitle());
+
+        $ride = array_pop($rideList);
+
+        $this->assertEquals(new \DateTime('2011-06-24 19:00:00'), $ride->getDateTime());
+        $this->assertEquals('Moorweide', $ride->getLocation());
+        $this->assertEquals('53.562619', $ride->getLatitude());
+        $this->assertEquals('9.992445', $ride->getLongitude());
+        $this->assertEquals('Critical Mass Hamburg 24.06.2011', $ride->getTitle());
+    }
+
     protected function createPreparedRideGeneratorFor(City $city): RideGeneratorInterface
     {
         $hamburgCycle = new CityCycle();
@@ -72,7 +119,14 @@ class RideGeneratorTest extends TestCase
 
         $registry
             ->method('getRepository')
-            ->willReturnOnConsecutiveCalls($this->returnValue($cityCycleRepository), $this->returnValue($rideRepository));
+            ->willReturnOnConsecutiveCalls(
+                $this->returnValue($cityCycleRepository),
+                $this->returnValue($rideRepository),
+                $this->returnValue($cityCycleRepository),
+                $this->returnValue($rideRepository),
+                $this->returnValue($cityCycleRepository),
+                $this->returnValue($rideRepository),
+            );
 
         return new RideGenerator($registry, $rideCalculator);
     }
