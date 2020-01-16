@@ -201,6 +201,7 @@ class CityCycleController extends AbstractController
             return $this->render('CityCycle/execute_preview.html.twig', [
                 'cityCycle' => $cityCycle,
                 'executeable' => $executeable,
+                'dateTimeList' => $dateTimeList,
                 'form' => $form->createView(),
                 'rideList' => $rideList,
             ]);
