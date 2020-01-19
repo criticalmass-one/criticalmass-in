@@ -1,0 +1,30 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Turnusse von {{ city.city }} anzeigen{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ objectPath(city) }}">
+            {{ city.city }}
+        </a>
+    </li>
+
+    <li>
+        <a href="{{ objectPath(cityCycle.city, 'caldera_criticalmass_citycycle_list') }}">
+            Turnusliste
+        </a>
+    </li>
+
+    <li class="active">
+        Generierte Touren anzeigen
+    </li>
+{% endblock %}
+    
+{% block content %}
+    <div class="container">
+        {{ include('Flash/_flash.html.twig') }}
+
+    </div>
+{% endblock %}
+
+
