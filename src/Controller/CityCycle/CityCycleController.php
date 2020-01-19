@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Controller\City;
+namespace App\Controller\CityCycle;
 
 use App\Controller\AbstractController;
 use App\Criticalmass\RideGenerator\ExecuteGenerator\CycleExecutable;
