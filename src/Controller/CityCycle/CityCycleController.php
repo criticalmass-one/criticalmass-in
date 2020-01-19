@@ -5,6 +5,7 @@ namespace App\Controller\CityCycle;
 use App\Controller\AbstractController;
 use App\Entity\City;
 use App\Entity\CityCycle;
+use App\Entity\Ride;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -30,10 +31,12 @@ class CityCycleController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("cityCycle", class="App:CityCycle")
      */
-    public function listRidesAction(CityCycle $cityCycle): Response
+    public function listRidesAction(CityCycle $cityCycle, RegistryInterface $registry): Response
     {
+        $rideRepository = $registry->getRepository(Ride::class);
+
         return $this->render('CityCycle/ride_list.html.twig', [
-            'rides' => $this->getRideRepository()->findByCycle($cityCycle),
+            'rideList' => $rideRepository->findByCycle($cityCycle),
             'cityCycle' => $cityCycle,
             'city' => $cityCycle->getCity(),
         ]);
