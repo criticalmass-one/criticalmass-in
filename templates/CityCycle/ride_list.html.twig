@@ -119,6 +119,10 @@
                                         <th>
                                             Treffpunkt
                                         </th>
+
+                                        <th>
+                                            
+                                        </th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -141,6 +145,14 @@
                                             <td>
                                                 {{ ride.location }}
                                             </td>
+
+                                            <td>
+                                                <a class="btn btn-xs btn-default"
+                                                   href="{{ objectPath(ride, 'caldera_criticalmass_ride_edit') }}"
+                                                   title="Tour editieren">
+                                                    <i class="fa fa-wrench"></i>
+                                                </a>
+                                            </td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>
@@ -153,5 +165,3 @@
         </div>
     </div>
 {% endblock %}
-
-
