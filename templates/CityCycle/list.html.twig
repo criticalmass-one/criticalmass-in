@@ -103,17 +103,17 @@
                             <td>
                                 {% if not cycle.disabledAt %}
                                     <div class="btn-group">
-                                        <a class="btn btn-default btn-xs"
+                                        <a class="btn btn-default btn-xs" title="Turnus editieren"
                                            href="{{ objectPath(cycle, 'caldera_criticalmass_citycycle_edit') }}">
                                             <i class="far fa-wrench"></i>
                                         </a>
 
-                                        <a class="btn btn-default btn-xs"
+                                        <a class="btn btn-default btn-xs" title="Turnus manuell auslösen"
                                            href="{{ objectPath(cycle, 'caldera_criticalmass_citycycle_execute') }}">
-                                            <i class="far fa-bicycle"></i>
+                                            <i class="far fa-play"></i>
                                         </a>
 
-                                        <a class="btn btn-default btn-xs"
+                                        <a class="btn btn-default btn-xs" title="Turnus deaktivieren"
                                            href="{{ objectPath(cycle, 'caldera_criticalmass_citycycle_disable') }}">
                                             <i class="far fa-trash-alt"></i>
                                         </a>
