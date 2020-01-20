@@ -137,6 +137,11 @@ class CityCycle implements RouteableInterface
      */
     protected $validUntil;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $rideCalculatorFqcn;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -348,6 +353,18 @@ class CityCycle implements RouteableInterface
     public function removeRide(Ride $ride): CityCycle
     {
         $this->rides->removeElement($ride);
+
+        return $this;
+    }
+
+    public function getRideCalculatorFqcn(): ?string
+    {
+        return $this->rideCalculatorFqcn;
+    }
+
+    public function setRideCalculatorFqcn(?string $rideCalculatorFqcn): self
+    {
+        $this->rideCalculatorFqcn = $rideCalculatorFqcn;
 
         return $this;
     }
