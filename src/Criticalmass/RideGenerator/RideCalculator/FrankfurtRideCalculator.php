@@ -14,10 +14,6 @@ class FrankfurtRideCalculator extends RideCalculator
         /** @var CityCycle $cycle */
         foreach ($this->cycleList as $cycle) {
             foreach ($this->dateTimeList as $dateTime) {
-                if ($cycle->getDayOfWeek() === null || $cycle->getWeekOfMonth() === null) {
-                    continue;
-                }
-
                 $monthStartDateTime = DateTimeUtil::getMonthStartDateTime($dateTime);
 
                 $cityTimeZone = new \DateTimeZone($cycle->getCity()->getTimezone());
@@ -30,10 +26,6 @@ class FrankfurtRideCalculator extends RideCalculator
                     continue;
                 }
 
-                if (!DateTimeValidator::isValidDateTime($cycle, $dateTime)) {
-                    //continue;
-                }
-
                 $this->rideList[] = $ride;
             }
         }
@@ -44,27 +36,17 @@ class FrankfurtRideCalculator extends RideCalculator
     protected function calculateDate(CityCycle $cityCycle, Ride $ride, \DateTime $startDateTime): Ride
     {
         $dayInterval = new \DateInterval('P1D');
-        $weekInterval = new \DateInterval('P7D');
+        $sundayToFridayInterval = new \DateInterval('P5D');
 
         $dateTime = clone $startDateTime;
 
-        while ($dateTime->format('w') != $cityCycle->getDayOfWeek()) {
+        // first we look for the first sunday of the month
+        while ($dateTime->format('w') != CityCycle::DAY_SUNDAY) {
             $dateTime->add($dayInterval);
         }
 
-        if ($cityCycle->getWeekOfMonth() > 0) {
-            $weekOfMonth = $cityCycle->getWeekOfMonth();
-
-            for ($i = 1; $i < $weekOfMonth; ++$i) {
-                $dateTime->add($weekInterval);
-            }
-        } else {
-            while ($dateTime->format('m') == $startDateTime->format('m')) {
-                $dateTime->add($weekInterval);
-            }
-
-            $dateTime->sub($weekInterval);
-        }
+        // and then we add five days to get the friday ride date
+        $dateTime->add($sundayToFridayInterval);
 
         $ride->setDateTime($dateTime);
 
