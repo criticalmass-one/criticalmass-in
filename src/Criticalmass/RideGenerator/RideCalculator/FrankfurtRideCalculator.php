@@ -9,28 +9,22 @@ use App\Entity\Ride;
 
 class FrankfurtRideCalculator extends RideCalculator
 {
-    public function execute(): RideCalculatorInterface
+    public function execute(): Ride
     {
-        /** @var CityCycle $cycle */
-        foreach ($this->cycleList as $cycle) {
-            foreach ($this->dateTimeList as $dateTime) {
-                $monthStartDateTime = DateTimeUtil::getMonthStartDateTime($dateTime);
+        $dateTimeSpec = sprintf('%d-%d-01', $this->year, $this->month);
+        $dateTime = new \DateTime($dateTimeSpec);
 
-                $cityTimeZone = new \DateTimeZone($cycle->getCity()->getTimezone());
-                $rideDateTime = DateTimeUtil::recreateAsTimeZone($monthStartDateTime, $cityTimeZone);
+        $cityTimeZone = new \DateTimeZone($this->cycle->getCity()->getTimezone());
+        $rideDateTime = DateTimeUtil::recreateAsTimeZone($dateTime, $cityTimeZone);
 
-                $ride = $this->createRide($cycle, $rideDateTime);
+        $ride = $this->createRide($this->cycle, $rideDateTime);
 
-                // yeah, first create ride and then check if it is matching the cycle range
-                if (!DateTimeValidator::isValidRide($cycle, $ride)) {
-                    continue;
-                }
-
-                $this->rideList[] = $ride;
-            }
+        // yeah, first create ride and then check if it is matching the cycle range
+        if ($ride && DateTimeValidator::isValidRide($this->cycle, $ride)) {
+            return $ride;
         }
 
-        return $this;
+        return null;
     }
 
     protected function calculateDate(CityCycle $cityCycle, Ride $ride, \DateTime $startDateTime): Ride

@@ -14,30 +14,26 @@ class FrankfurtRideCalculatorTest extends TestCase
 {
     public function testFrankfurtInAugust2019(): void
     {
-        $rideList = $this->getRideCalculator()
-            ->setDateTime(new \DateTime('2019-08-01'))
-            ->addCycle($this->createFrankfurtCycle())
-            ->execute()
-            ->getRideList();
+        $ride = $this->getRideCalculator()
+            ->setYear(2019)
+            ->setMonth(8)
+            ->setCycle($this->createFrankfurtCycle())
+            ->execute();
 
-        $this->assertEquals(1, count($rideList));
-
-        $ride = array_pop($rideList);
+        $this->assertNotNull($ride);
 
         $this->assertEquals(new \DateTime('2019-08-09 19:00:00'), $ride->getDateTime());
     }
 
     public function testFrankfurtInSeptember2019(): void
     {
-        $rideList = $this->getRideCalculator()
-            ->setDateTime(new \DateTime('2019-09-01'))
-            ->addCycle($this->createFrankfurtCycle())
-            ->execute()
-            ->getRideList();
+        $ride = $this->getRideCalculator()
+            ->setYear(2019)
+            ->setMonth(9)
+            ->setCycle($this->createFrankfurtCycle())
+            ->execute();
 
-        $this->assertEquals(1, count($rideList));
-
-        $ride = array_pop($rideList);
+        $this->assertNotNull($ride);
 
         $this->assertEquals(new \DateTime('2019-09-06 19:00:00'), $ride->getDateTime());
     }
