@@ -122,6 +122,21 @@ class RideGeneratorTest extends TestCase
         $this->assertCount(7, $rideList);
     }
 
+
+    public function testNoRideBeforeValidAfterInHamburgAt201102(): void
+    {
+        $hamburg = new City();
+        $hamburg->setTitle('Critical Mass Hamburg');
+
+        $rideList = $this->createPreparedRideGeneratorFor($hamburg)
+            ->addCity($hamburg)
+            ->setDateTime(new \DateTime('2011-02-01'))
+            ->execute()
+            ->getRideList();
+
+        $this->assertCount(0, $rideList);
+    }
+
     protected function createPreparedRideGeneratorFor(City $city): RideGeneratorInterface
     {
         $hamburgCycle = new CityCycle();
@@ -133,7 +148,8 @@ class RideGeneratorTest extends TestCase
             ->setLocation('Moorweide')
             ->setLatitude(53.562619)
             ->setLongitude(9.992445)
-            ->setValidFrom(new \DateTime('2011-06-24'));
+            ->setValidFrom(new \DateTime('2011-06-24'))
+            ->setValidUntil(new \DateTime('2020-02-24'));
 
         $rideNamerList = new RideNamerList();
         $rideNamerList->addRideNamer(new GermanCityDateRideNamer());
