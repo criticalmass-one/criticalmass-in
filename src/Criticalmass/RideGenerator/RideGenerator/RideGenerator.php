@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\RideGenerator\RideGenerator;
 
+use App\Criticalmass\Cycles\DateTimeValidator\DateTimeValidator;
 use App\Criticalmass\Util\DateTimeUtil;
 use App\Entity\City;
 use App\Entity\CityCycle;
@@ -41,12 +42,22 @@ class RideGenerator extends AbstractRideGenerator
     {
         $cycles = $this->removeCreatedCycles($cycles, $startDateTime);
 
-        return $this->rideCalculator
-            ->reset()
-            ->setCycleList($cycles)
-            ->setDateTime($startDateTime)
-            ->execute()
-            ->getRideList();
+        $rideList = [];
+
+        foreach ($cycles as $cycle) {
+            $ride = $this->rideCalculator
+                ->reset()
+                ->setCycle($cycle)
+                ->setMonth((int)$startDateTime->format('m'))
+                ->setYear((int)$startDateTime->format('Y'))
+                ->execute();
+
+            if ($ride && DateTimeValidator::isValidRide($cycle, $ride)) {
+                $rideList[] = $ride;
+            }
+        }
+
+        return $rideList;
     }
 
     protected function removeCreatedCycles(array $cycles, \DateTime $startDateTime): array
