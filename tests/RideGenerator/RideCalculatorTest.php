@@ -146,62 +146,6 @@ class RideCalculatorTest extends TestCase
         $this->assertNull($ride);
     }
 
-    /**
-     * @ignore
-     */
-    public function testNoRideBeforeValidFromInHarburgAt20190111(): void
-    {
-        $rideList = $this->getRideCalculator()
-            ->setDateTime(new \DateTime('2019-01-11'))
-            ->setCycle($this->createHarburgCycle())
-            ->execute()
-            ->getRideList();
-
-        $this->assertCount(0, $rideList);
-    }
-
-    /**
-     * @ignore
-     */
-    public function testNoRideBeforeValidFromInHarburgAt20190121(): void
-    {
-        $rideList = $this->getRideCalculator()
-            ->setDateTime(new \DateTime('2019-01-21'))
-            ->setCycle($this->createHarburgCycle())
-            ->execute()
-            ->getRideList();
-
-        $this->assertCount(0, $rideList);
-    }
-
-    /**
-     * @ignore
-     */
-    public function testOneRideAfterValidFromInHarburgInFebruary(): void
-    {
-        $rideList = $this->getRideCalculator()
-            ->setDateTime(new \DateTime('2019-02'))
-            ->setCycle($this->createHarburgCycle())
-            ->execute()
-            ->getRideList();
-
-        $this->assertCount(1, $rideList);
-    }
-
-    /**
-     * @ignore
-     */
-    public function testNoRideBeforeValidUntilInHarburgInDecember(): void
-    {
-        $rideList = $this->getRideCalculator()
-            ->setDateTime(new \DateTime('2019-12'))
-            ->setCycle($this->createHarburgCycle())
-            ->execute()
-            ->getRideList();
-
-        $this->assertCount(0, $rideList);
-    }
-
     protected function getRideCalculator(): RideCalculatorInterface
     {
         $rideNamerList = new RideNamerList();
