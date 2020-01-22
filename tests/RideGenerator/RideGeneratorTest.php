@@ -168,44 +168,30 @@ class RideGeneratorTest extends TestCase
         $rideNamerList = new RideNamerList();
         $rideNamerList->addRideNamer(new GermanCityDateRideNamer());
 
+        $repositoryList = [];
+
         $cityCycleRepository = $this->createMock(CityCycleRepository::class);
         $cityCycleRepository
             ->method('findByCity')
             ->with($this->equalTo($city), $this->anything(), $this->anything())
             ->will($this->returnValue($cityCycleList));
 
+        $repositoryList[CityCycle::class] = $cityCycleRepository;
+
         $rideRepository = $this->createMock(RideRepository::class);
+        $rideRepository
+            ->method('findRidesByCycleInInterval')
+            ->will($this->returnValue([]));
+
+        $repositoryList[Ride::class] = $rideRepository;
 
         $registry = $this->createMock(RegistryInterface::class);
 
         $registry
             ->method('getRepository')
-            ->willReturnOnConsecutiveCalls(
-                $this->returnValue($cityCycleRepository),
-                $this->returnValue($rideRepository),
-                $this->returnValue($cityCycleRepository),
-                $this->returnValue($rideRepository),
-                $this->returnValue($cityCycleRepository),
-                $this->returnValue($rideRepository),
-                $this->returnValue($cityCycleRepository),
-                $this->returnValue($rideRepository),
-                $this->returnValue($cityCycleRepository),
-                $this->returnValue($rideRepository),
-                $this->returnValue($cityCycleRepository),
-                $this->returnValue($rideRepository),
-                $this->returnValue($cityCycleRepository),
-                $this->returnValue($rideRepository),
-                $this->returnValue($cityCycleRepository),
-                $this->returnValue($rideRepository),
-                $this->returnValue($cityCycleRepository),
-                $this->returnValue($rideRepository),
-                $this->returnValue($cityCycleRepository),
-                $this->returnValue($rideRepository),
-                $this->returnValue($cityCycleRepository),
-                $this->returnValue($rideRepository),
-                $this->returnValue($cityCycleRepository),
-                $this->returnValue($rideRepository),
-            );
+            ->will($this->returnCallback(function (string $entityFqcn) use ($repositoryList) {
+                return $repositoryList[$entityFqcn];
+            }));
 
         return new RideGenerator($registry, $rideNamerList);
     }
