@@ -16,6 +16,4 @@ interface RideCalculatorInterface
     public function setYear(int $year): RideCalculatorInterface;
 
     public function execute(): ?Ride;
-
-    public function reset(): RideCalculatorInterface;
 }
