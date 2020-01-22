@@ -2,7 +2,6 @@
 
 namespace Tests\RideGenerator;
 
-use App\Criticalmass\RideGenerator\RideCalculator\RideCalculator;
 use App\Criticalmass\RideGenerator\RideGenerator\RideGenerator;
 use App\Criticalmass\RideGenerator\RideGenerator\RideGeneratorInterface;
 use App\Criticalmass\RideNamer\GermanCityDateRideNamer;
@@ -153,7 +152,6 @@ class RideGeneratorTest extends TestCase
 
         $rideNamerList = new RideNamerList();
         $rideNamerList->addRideNamer(new GermanCityDateRideNamer());
-        $rideCalculator = new RideCalculator($rideNamerList);
 
         $cityCycleRepository = $this->createMock(CityCycleRepository::class);
         $cityCycleRepository
@@ -194,6 +192,6 @@ class RideGeneratorTest extends TestCase
                 $this->returnValue($rideRepository),
             );
 
-        return new RideGenerator($registry, $rideCalculator);
+        return new RideGenerator($registry, $rideNamerList);
     }
 }
