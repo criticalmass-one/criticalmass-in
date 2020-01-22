@@ -163,7 +163,7 @@ class RideGeneratorTest extends TestCase
         $this->assertEquals('Critical Mass Frankfurt 07.06.2019', $ride->getTitle());
     }
 
-    protected function createPreparedRideGeneratorFor(City $city, CityCycle $cityCycle): RideGeneratorInterface
+    protected function createPreparedRideGeneratorFor(City $city, array $cityCycleList): RideGeneratorInterface
     {
         $rideNamerList = new RideNamerList();
         $rideNamerList->addRideNamer(new GermanCityDateRideNamer());
@@ -172,7 +172,7 @@ class RideGeneratorTest extends TestCase
         $cityCycleRepository
             ->method('findByCity')
             ->with($this->equalTo($city), $this->anything(), $this->anything())
-            ->will($this->returnValue([$cityCycle]));
+            ->will($this->returnValue($cityCycleList));
 
         $rideRepository = $this->createMock(RideRepository::class);
 
@@ -210,9 +210,9 @@ class RideGeneratorTest extends TestCase
         return new RideGenerator($registry, $rideNamerList);
     }
 
-    protected function createCityCycleForHamburg(City $city): CityCycle
+    protected function createCityCycleForHamburg(City $city): array
     {
-        return (new CityCycle())
+        return [(new CityCycle())
             ->setCity($city)
             ->setDayOfWeek(CityCycle::DAY_FRIDAY)
             ->setWeekOfMonth(CityCycle::WEEK_LAST)
@@ -221,12 +221,12 @@ class RideGeneratorTest extends TestCase
             ->setLatitude(53.562619)
             ->setLongitude(9.992445)
             ->setValidFrom(new \DateTime('2011-06-24'))
-            ->setValidUntil(new \DateTime('2020-02-24'));
+            ->setValidUntil(new \DateTime('2020-02-24'))];
     }
 
-    protected function createCityCycleForFrankfurt(City $city): CityCycle
+    protected function createCityCycleForFrankfurt(City $city): array
     {
-        return (new CityCycle())
+        return [(new CityCycle())
             ->setCity($city)
             ->setDayOfWeek(CityCycle::DAY_FRIDAY)
             ->setWeekOfMonth(CityCycle::WEEK_LAST)
@@ -234,6 +234,6 @@ class RideGeneratorTest extends TestCase
             ->setLocation('Opernplatz')
             ->setLatitude(50.115446)
             ->setLongitude(8.671593)
-            ->setRideCalculatorFqcn(FrankfurtRideCalculator::class);
+            ->setRideCalculatorFqcn(FrankfurtRideCalculator::class)];
     }
 }
