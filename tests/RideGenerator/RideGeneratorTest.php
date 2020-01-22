@@ -151,7 +151,16 @@ class RideGeneratorTest extends TestCase
             ->execute()
             ->getRideList();
 
-        $this->assertCount(1, $rideList);
+        $this->assertCount(2, $rideList);
+
+        /** @var Ride $ride */
+        $ride = array_pop($rideList);
+
+        $this->assertEquals(new \DateTime('2019-06-02 19:00:00'), $ride->getDateTime());
+        $this->assertEquals('Opernplatz', $ride->getLocation());
+        $this->assertEquals('50.115446', $ride->getLatitude());
+        $this->assertEquals('8.671593', $ride->getLongitude());
+        $this->assertEquals('Critical Mass Frankfurt 02.06.2019', $ride->getTitle());
 
         /** @var Ride $ride */
         $ride = array_pop($rideList);
@@ -212,7 +221,16 @@ class RideGeneratorTest extends TestCase
 
     protected function createCityCycleForFrankfurt(City $city): array
     {
-        return [(new CityCycle())
+        $cycle1 = (new CityCycle())
+            ->setCity($city)
+            ->setDayOfWeek(CityCycle::DAY_SUNDAY)
+            ->setWeekOfMonth(CityCycle::WEEK_FIRST)
+            ->setTime(new \DateTime('19:00:00'))
+            ->setLocation('Opernplatz')
+            ->setLatitude(50.115446)
+            ->setLongitude(8.671593);
+
+        $cycle2 = (new CityCycle())
             ->setCity($city)
             ->setDayOfWeek(CityCycle::DAY_FRIDAY)
             ->setWeekOfMonth(CityCycle::WEEK_LAST)
@@ -220,6 +238,8 @@ class RideGeneratorTest extends TestCase
             ->setLocation('Opernplatz')
             ->setLatitude(50.115446)
             ->setLongitude(8.671593)
-            ->setRideCalculatorFqcn(FrankfurtRideCalculator::class)];
+            ->setRideCalculatorFqcn(FrankfurtRideCalculator::class);
+
+        return [$cycle2, $cycle1];
     }
 }
