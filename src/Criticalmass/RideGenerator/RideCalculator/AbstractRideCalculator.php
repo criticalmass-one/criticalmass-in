@@ -4,17 +4,18 @@ namespace App\Criticalmass\RideGenerator\RideCalculator;
 
 use App\Criticalmass\RideNamer\RideNamerListInterface;
 use App\Entity\CityCycle;
+use App\Entity\Ride;
 
 abstract class AbstractRideCalculator implements RideCalculatorInterface
 {
-    /** @var array $dateTimeList */
-    protected $dateTimeList = [];
+    /** @var int $month */
+    protected $month;
 
-    /** @var array $cycle */
-    protected $cycleList = [];
+    /** @var int $year */
+    protected $year;
 
-    /** @var array $rideList */
-    protected $rideList = [];
+    /** @var CityCycle $cycle */
+    protected $cycle;
 
     /** @var RideNamerListInterface $rideNamerList */
     protected $rideNamerList = [];
@@ -33,54 +34,27 @@ abstract class AbstractRideCalculator implements RideCalculatorInterface
 
         return $this;
     }
-    
-    public function addDateTime(\DateTime $dateTime): RideCalculatorInterface
-    {
-        $this->dateTimeList[] = $dateTime;
-
-        return $this;
-    }
-
-    public function setDateTime(\DateTime $dateTime): RideCalculatorInterface
-    {
-        $this->dateTimeList = [$dateTime];
-
-        return $this;
-    }
-
-    public function setCycleList(array $cycleList): RideCalculatorInterface
-    {
-        $this->cycleList = $cycleList;
-
-        return $this;
-    }
-
-    public function addCycle(CityCycle $cityCycle): RideCalculatorInterface
-    {
-        $this->cycleList[] = $cityCycle;
-
-        return $this;
-    }
 
     public function setCycle(CityCycle $cityCycle): RideCalculatorInterface
     {
-        $this->cycleList = [$cityCycle];
+        $this->cycle = $cityCycle;
 
         return $this;
     }
 
-    public abstract function execute(): RideCalculatorInterface;
-
-    public function getRideList(): array
+    public function setYear(int $year): RideCalculatorInterface
     {
-        return $this->rideList;
-    }
-
-    public function reset(): RideCalculatorInterface
-    {
-        $this->cycleList = [];
-        $this->rideList = [];
+        $this->year = $year;
 
         return $this;
     }
+
+    public function setMonth(int $month): RideCalculatorInterface
+    {
+        $this->month = $month;
+
+        return $this;
+    }
+
+    public abstract function execute(): ?Ride;
 }

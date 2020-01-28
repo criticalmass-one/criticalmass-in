@@ -10,36 +10,28 @@ use App\Entity\Ride;
 
 class RideCalculator extends AbstractRideCalculator
 {
-    public function execute(): RideCalculatorInterface
+    public function execute(): ?Ride
     {
-        /** @var CityCycle $cycle */
-        foreach ($this->cycleList as $cycle) {
-            foreach ($this->dateTimeList as $dateTime) {
-                if ($cycle->getDayOfWeek() === null || $cycle->getWeekOfMonth() === null) {
-                    continue;
-                }
-
-                $monthStartDateTime = DateTimeUtil::getMonthStartDateTime($dateTime);
-
-                $cityTimeZone = new \DateTimeZone($cycle->getCity()->getTimezone());
-                $rideDateTime = DateTimeUtil::recreateAsTimeZone($monthStartDateTime, $cityTimeZone);
-
-                $ride = $this->createRide($cycle, $rideDateTime);
-
-                // yeah, first create ride and then check if it is matching the cycle range
-                if (!DateTimeValidator::isValidRide($cycle, $ride)) {
-                    continue;
-                }
-
-                if (!DateTimeValidator::isValidDateTime($cycle, $dateTime)) {
-                    //continue;
-                }
-
-                $this->rideList[] = $ride;
-            }
+        if ($this->cycle->getDayOfWeek() === null || $this->cycle->getWeekOfMonth() === null) {
+            return null;
         }
 
-        return $this;
+        $dateTimeSpec = sprintf('%s-%s-01 00:00:00', $this->year, $this->month);
+        $dateTime = new \DateTime($dateTimeSpec);
+
+        $monthStartDateTime = DateTimeUtil::getMonthStartDateTime($dateTime);
+
+        $cityTimeZone = new \DateTimeZone($this->cycle->getCity()->getTimezone());
+        $rideDateTime = DateTimeUtil::recreateAsTimeZone($monthStartDateTime, $cityTimeZone);
+
+        $ride = $this->createRide($this->cycle, $rideDateTime);
+
+        // yeah, first create ride and then check if it is matching the cycle range
+        if (!DateTimeValidator::isValidRide($this->cycle, $ride)) {
+            return null;
+        }
+
+        return $ride;
     }
 
     protected function createRide(CityCycle $cycle, \DateTime $dateTime): Ride
