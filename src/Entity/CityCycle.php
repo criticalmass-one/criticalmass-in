@@ -147,6 +147,16 @@ class CityCycle implements RouteableInterface
      */
     private $description;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $specialDayOfWeek;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $specialWeekOfMonth;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -382,6 +392,35 @@ class CityCycle implements RouteableInterface
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function hasSpecialCalculator(): bool
+    {
+        return $this->rideCalculatorFqcn !== null;
+    }
+
+    public function getSpecialDayOfWeek(): ?string
+    {
+        return $this->specialDayOfWeek;
+    }
+
+    public function setSpecialDayOfWeek(?string $specialDayOfWeek): self
+    {
+        $this->specialDayOfWeek = $specialDayOfWeek;
+
+        return $this;
+    }
+
+    public function getSpecialWeekOfMonth(): ?string
+    {
+        return $this->specialWeekOfMonth;
+    }
+
+    public function setSpecialWeekOfMonth(?string $specialWeekOfMonth): self
+    {
+        $this->specialWeekOfMonth = $specialWeekOfMonth;
 
         return $this;
     }
