@@ -57,11 +57,4 @@ abstract class AbstractRideCalculator implements RideCalculatorInterface
     }
 
     public abstract function execute(): ?Ride;
-
-    public function reset(): RideCalculatorInterface
-    {
-        $this->cycle = null;
-
-        return $this;
-    }
 }

@@ -66,8 +66,12 @@
                     {% for cycle in cycles %}
                         <tr {% if cycle.disabledAt %}style="text-decoration: line-through;"{% endif %}>
                             <td>
-                                am {{ ('cycle.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ cycle.dayOfWeek)|trans }}
-                                im Monat
+                                {% if cycle.rideCalculatorFqcn %}
+                                    {{ cycle.description }}
+                                {% else %}
+                                    am {{ ('cycle.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ cycle.dayOfWeek)|trans }} im Monat
+                                {% endif %}
+
                             </td>
 
                             <td>

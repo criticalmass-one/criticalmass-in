@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\RideGenerator\RideGenerator;
 
-use App\Criticalmass\RideGenerator\RideCalculator\RideCalculatorInterface;
+use App\Criticalmass\RideNamer\RideNamerListInterface;
 use App\Entity\City;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -20,13 +20,13 @@ abstract class AbstractRideGenerator implements RideGeneratorInterface
     /** @var RegistryInterface $doctrine */
     protected $doctrine;
 
-    /** @var RideCalculatorInterface $rideCalculator */
-    protected $rideCalculator;
+    /** @var RideNamerListInterface $rideNamerList */
+    protected $rideNamerList;
 
-    public function __construct(RegistryInterface $doctrine, RideCalculatorInterface $rideCalculator)
+    public function __construct(RegistryInterface $doctrine, RideNamerListInterface $rideNamerList)
     {
         $this->doctrine = $doctrine;
-        $this->rideCalculator = $rideCalculator;
+        $this->rideNamerList = $rideNamerList;
     }
 
     public function addCity(City $city): RideGeneratorInterface

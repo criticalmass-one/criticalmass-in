@@ -3,6 +3,8 @@
 namespace App\Criticalmass\RideGenerator\RideGenerator;
 
 use App\Criticalmass\Cycles\DateTimeValidator\DateTimeValidator;
+use App\Criticalmass\RideGenerator\RideCalculator\RideCalculator;
+use App\Criticalmass\RideGenerator\RideCalculator\RideCalculatorInterface;
 use App\Criticalmass\Util\DateTimeUtil;
 use App\Entity\City;
 use App\Entity\CityCycle;
@@ -45,8 +47,7 @@ class RideGenerator extends AbstractRideGenerator
         $rideList = [];
 
         foreach ($cycles as $cycle) {
-            $ride = $this->rideCalculator
-                ->reset()
+            $ride = $this->getRideCalculatorForCycle($cycle)
                 ->setCycle($cycle)
                 ->setMonth((int)$startDateTime->format('m'))
                 ->setYear((int)$startDateTime->format('Y'))
@@ -78,5 +79,14 @@ class RideGenerator extends AbstractRideGenerator
         $existingRides = $this->doctrine->getRepository(Ride::class)->findRidesByCycleInInterval($cityCycle, $startDateTime, $endDateTime);
 
         return count($existingRides) > 0;
+    }
+
+    protected function getRideCalculatorForCycle(CityCycle $cityCycle): RideCalculatorInterface
+    {
+        if (($rideCalculatorFqcn = $cityCycle->getRideCalculatorFqcn()) && class_exists($rideCalculatorFqcn)) {
+            return new $rideCalculatorFqcn($this->rideNamerList);
+        }
+
+        return new RideCalculator($this->rideNamerList);
     }
 }
