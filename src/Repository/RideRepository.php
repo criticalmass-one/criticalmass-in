@@ -639,4 +639,20 @@ class RideRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function findByCycle(CityCycle $cityCycle, string $orderDireciton = 'DESC'): array
+    {
+        $builder = $this->createQueryBuilder('r');
+
+        $builder
+            ->select('r')
+            ->where($builder->expr()->eq('r.cycle', ':cycle'))
+            ->addOrderBy('r.dateTime', $orderDireciton)
+            ->setParameter('cycle', $cityCycle);
+
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
 }

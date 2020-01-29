@@ -8,32 +8,28 @@ use App\Criticalmass\RideNamer\GermanCityDateRideNamer;
 use App\Criticalmass\RideNamer\RideNamerList;
 use App\Entity\City;
 use App\Entity\CityCycle;
-use App\Entity\Ride;
 use PHPUnit\Framework\TestCase;
 
 class RideCalculatorTest extends TestCase
 {
-    public function testCalculatedRides(): void
+    public function testCalculatedRideIsNotNull(): void
     {
-        $rideList = $this->getRideCalculator()
-            ->setDateTime(new \DateTime('2018-09-01'))
-            ->addCycle($this->createHamburgCycle())
-            ->execute()
-            ->getRideList();
+        $ride = $this->getRideCalculator()
+            ->setYear(2018)
+            ->setMonth(9)
+            ->setCycle($this->createHamburgCycle())
+            ->execute();
 
-        $this->assertEquals(1, count($rideList));
+        $this->assertNotNull($ride);
     }
 
     public function testLocation(): void
     {
-        $rideList = $this->getRideCalculator()
-            ->setDateTime(new \DateTime('2018-09-01'))
-            ->addCycle($this->createHamburgCycle())
-            ->execute()
-            ->getRideList();
-
-        /** @var Ride $ride */
-        $ride = array_pop($rideList);
+        $ride = $this->getRideCalculator()
+            ->setYear(2018)
+            ->setMonth(9)
+            ->setCycle($this->createHamburgCycle())
+            ->execute();
 
         $this->assertEquals('Stadtpark Hamburg', $ride->getLocation());
         $this->assertEquals(53.596812, $ride->getLatitude());
@@ -42,28 +38,22 @@ class RideCalculatorTest extends TestCase
 
     public function testTimezone(): void
     {
-        $rideList = $this->getRideCalculator()
-            ->setDateTime(new \DateTime('2018-09-01'))
-            ->addCycle($this->createHamburgCycle())
-            ->execute()
-            ->getRideList();
-
-        /** @var Ride $ride */
-        $ride = array_pop($rideList);
+        $ride = $this->getRideCalculator()
+            ->setYear(2018)
+            ->setMonth(9)
+            ->setCycle($this->createHamburgCycle())
+            ->execute();
 
         $this->assertEquals(new \DateTimeZone('Europe/Berlin'), $ride->getDateTime()->getTimezone());
     }
 
     public function testLondon(): void
     {
-        $rideList = $this->getRideCalculator()
-            ->setDateTime(new \DateTime('2018-09-01'))
-            ->addCycle($this->createLondonCycle())
-            ->execute()
-            ->getRideList();
-
-        /** @var Ride $ride */
-        $ride = array_pop($rideList);
+        $ride = $this->getRideCalculator()
+            ->setYear(2018)
+            ->setMonth(9)
+            ->setCycle($this->createLondonCycle())
+            ->execute();
 
         $europeLondon = new \DateTimeZone('Europe/London');
         $europeBerlin = new \DateTimeZone('Europe/Berlin');
@@ -74,17 +64,14 @@ class RideCalculatorTest extends TestCase
 
     public function testTime(): void
     {
-        $rideList = $this->getRideCalculator()
-            ->setDateTime(new \DateTime('2018-09-01'))
-            ->addCycle($this->createHamburgCycle())
-            ->execute()
-            ->getRideList();
+        $ride = $this->getRideCalculator()
+            ->setYear(2018)
+            ->setMonth(9)
+            ->setCycle($this->createHamburgCycle())
+            ->execute();
 
         $utc = new \DateTimeZone('UTC');
         $europeBerlin = new \DateTimeZone('Europe/Berlin');
-
-        /** @var Ride $ride */
-        $ride = array_pop($rideList);
 
         $this->assertEquals(new \DateTime('2018-09-28 17:00:00', $utc), $ride->getDateTime());
         $this->assertEquals($europeBerlin, $ride->getDateTime()->getTimezone());
@@ -92,16 +79,13 @@ class RideCalculatorTest extends TestCase
 
     public function testDaylightSavingTime(): void
     {
-        $rideList = $this->getRideCalculator()
-            ->setDateTime(new \DateTime('2018-02-01'))
-            ->addCycle($this->createHamburgCycle())
-            ->execute()
-            ->getRideList();
+        $ride = $this->getRideCalculator()
+            ->setYear(2018)
+            ->setMonth(2)
+            ->setCycle($this->createHamburgCycle())
+            ->execute();
 
         $europeBerlin = new \DateTimeZone('Europe/Berlin');
-
-        /** @var Ride $ride */
-        $ride = array_pop($rideList);
 
         $this->assertEquals(new \DateTime('2018-02-23 19:00:00', $europeBerlin), $ride->getDateTime());
         $this->assertEquals($europeBerlin, $ride->getDateTime()->getTimezone());
@@ -109,101 +93,57 @@ class RideCalculatorTest extends TestCase
 
     public function testNoRideBeforeValidFromInHalle(): void
     {
-        $rideList = $this->getRideCalculator()
-            ->setDateTime(new \DateTime('2018-02'))
+        $ride = $this->getRideCalculator()
+            ->setYear(2018)
+            ->setMonth(2)
             ->setCycle($this->createHalleCycle())
-            ->execute()
-            ->getRideList();
+            ->execute();
 
-        $this->assertCount(0, $rideList);
+        $this->assertNull($ride);
     }
 
     public function testOneRideAfterValidFromInHalle(): void
     {
-        $rideList = $this->getRideCalculator()
-            ->setDateTime(new \DateTime('2018-03-30'))
+        $ride = $this->getRideCalculator()
+            ->setYear(2018)
+            ->setMonth(3)
             ->setCycle($this->createHalleCycle())
-            ->execute()
-            ->getRideList();
+            ->execute();
 
-        $this->assertCount(1, $rideList);
+        $this->assertNotNull($ride);
     }
 
     public function testNoRideAfterValidUntilInRendsburg(): void
     {
-        $rideList = $this->getRideCalculator()
-            ->setDateTime(new \DateTime('2019-12-30'))
+        $ride = $this->getRideCalculator()
+            ->setYear(2019)
+            ->setMonth(12)
             ->setCycle($this->createRendsburgCycle())
-            ->execute()
-            ->getRideList();
+            ->execute();
 
-        $this->assertCount(0, $rideList);
+        $this->assertNull($ride);
     }
 
     public function testOneRideBeforeValidUntilInRendsburg(): void
     {
-        $rideList = $this->getRideCalculator()
-            ->setDateTime(new \DateTime('2019-11-30'))
+        $ride = $this->getRideCalculator()
+            ->setYear(2019)
+            ->setMonth(11)
             ->setCycle($this->createRendsburgCycle())
-            ->execute()
-            ->getRideList();
+            ->execute();
 
-        $this->assertCount(1, $rideList);
+        $this->assertNotNull($ride);
     }
 
     public function testNoRideBeforeValidFromInHarburgInJanuary(): void
     {
-        $rideList = $this->getRideCalculator()
-            ->setDateTime(new \DateTime('2019-01'))
+        $ride = $this->getRideCalculator()
+            ->setYear(2019)
+            ->setMonth(01)
             ->setCycle($this->createHarburgCycle())
-            ->execute()
-            ->getRideList();
+            ->execute();
 
-        $this->assertCount(0, $rideList);
-    }
-
-    public function testNoRideBeforeValidFromInHarburgAt20190111(): void
-    {
-        $rideList = $this->getRideCalculator()
-            ->setDateTime(new \DateTime('2019-01-11'))
-            ->setCycle($this->createHarburgCycle())
-            ->execute()
-            ->getRideList();
-
-        $this->assertCount(0, $rideList);
-    }
-
-    public function testNoRideBeforeValidFromInHarburgAt20190121(): void
-    {
-        $rideList = $this->getRideCalculator()
-            ->setDateTime(new \DateTime('2019-01-21'))
-            ->setCycle($this->createHarburgCycle())
-            ->execute()
-            ->getRideList();
-
-        $this->assertCount(0, $rideList);
-    }
-
-    public function testOneRideAfterValidFromInHarburgInFebruary(): void
-    {
-        $rideList = $this->getRideCalculator()
-            ->setDateTime(new \DateTime('2019-02'))
-            ->setCycle($this->createHarburgCycle())
-            ->execute()
-            ->getRideList();
-
-        $this->assertCount(1, $rideList);
-    }
-
-    public function testNoRideBeforeValidUntilInHarburgInDecember(): void
-    {
-        $rideList = $this->getRideCalculator()
-            ->setDateTime(new \DateTime('2019-12'))
-            ->setCycle($this->createHarburgCycle())
-            ->execute()
-            ->getRideList();
-
-        $this->assertCount(0, $rideList);
+        $this->assertNull($ride);
     }
 
     protected function getRideCalculator(): RideCalculatorInterface
