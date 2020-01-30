@@ -3,7 +3,7 @@
 namespace Tests\RideGenerator;
 
 use App\Criticalmass\RideGenerator\RideCalculator\FrankfurtRideCalculator;
-use App\Criticalmass\RideGenerator\RideGenerator\RideGenerator;
+use App\Criticalmass\RideGenerator\RideGenerator\CityRideGenerator;
 use App\Criticalmass\RideGenerator\RideGenerator\RideGeneratorInterface;
 use App\Criticalmass\RideNamer\GermanCityDateRideNamer;
 use App\Criticalmass\RideNamer\RideNamerList;
@@ -15,7 +15,7 @@ use App\Repository\RideRepository;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
-class RideGeneratorTest extends TestCase
+class CityRideGeneratorTest extends TestCase
 {
     public function testRideGeneratorForHamburgInJune2011(): void
     {
@@ -202,7 +202,7 @@ class RideGeneratorTest extends TestCase
                 return $repositoryList[$entityFqcn];
             }));
 
-        return new RideGenerator($registry, $rideNamerList);
+        return new CityRideGenerator($registry, $rideNamerList);
     }
 
     protected function createCityCycleForHamburg(City $city): array

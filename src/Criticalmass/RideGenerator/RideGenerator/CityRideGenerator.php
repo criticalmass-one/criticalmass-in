@@ -3,15 +3,29 @@
 namespace App\Criticalmass\RideGenerator\RideGenerator;
 
 use App\Criticalmass\Cycles\DateTimeValidator\DateTimeValidator;
-use App\Criticalmass\RideGenerator\RideCalculator\RideCalculator;
-use App\Criticalmass\RideGenerator\RideCalculator\RideCalculatorInterface;
 use App\Criticalmass\Util\DateTimeUtil;
 use App\Entity\City;
 use App\Entity\CityCycle;
-use App\Entity\Ride;
 
-class RideGenerator extends AbstractRideGenerator
+class CityRideGenerator extends AbstractRideGenerator implements CityRideGeneratorInterface
 {
+    /** @var array $cityList */
+    protected $cityList;
+
+    public function addCity(City $city): RideGeneratorInterface
+    {
+        $this->cityList[] = $city;
+
+        return $this;
+    }
+
+    public function setCityList(array $cityList): RideGeneratorInterface
+    {
+        $this->cityList = $cityList;
+
+        return $this;
+    }
+
     public function execute(): RideGeneratorInterface
     {
         foreach ($this->cityList as $city) {
@@ -70,23 +84,5 @@ class RideGenerator extends AbstractRideGenerator
         }
 
         return $cycles;
-    }
-
-    protected function hasRideAlreadyBeenCreated(CityCycle $cityCycle, \DateTime $startDateTime): bool
-    {
-        $endDateTime = DateTimeUtil::getMonthEndDateTime($startDateTime);
-
-        $existingRides = $this->doctrine->getRepository(Ride::class)->findRidesByCycleInInterval($cityCycle, $startDateTime, $endDateTime);
-
-        return count($existingRides) > 0;
-    }
-
-    protected function getRideCalculatorForCycle(CityCycle $cityCycle): RideCalculatorInterface
-    {
-        if (($rideCalculatorFqcn = $cityCycle->getRideCalculatorFqcn()) && class_exists($rideCalculatorFqcn)) {
-            return new $rideCalculatorFqcn($this->rideNamerList);
-        }
-
-        return new RideCalculator($this->rideNamerList);
     }
 }
