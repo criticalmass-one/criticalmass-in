@@ -2,14 +2,33 @@
 
 namespace App\Criticalmass\Cycles\Analyzer;
 
-use App\Entity\City;
 use App\Entity\CityCycle;
-use App\Entity\Ride;
-use App\Criticalmass\RideGenerator\RideCalculator\RideCalculatorInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class CycleAnalyzer extends AbstractCycleAnalyzer
 {
+    public function analyzeCycle(CityCycle $cityCycle): array
+    {
+        $month = new \DateInterval('P1M');
+
+        $current = $this->startDateTime;
+
+        do {
+            $rideList = $this->rideGenerator
+                ->setDateTime($current)
+                ->($this->cycleList)
+                ->execute()
+                ->getRideList();
+
+            $this->simulatedRideList = array_merge($this->simulatedRideList, $rideList);
+
+            $current->add($month);
+        } while ($current->format('Y-m') <= $this->endDateTime->format('Y-m'));
+
+        return $this;
+
+        return $this->analyzerModelFactory->getResultList();
+    }
+
     protected function simulateRides(): CycleAnalyzer
     {
         $month = new \DateInterval('P1M');
@@ -18,7 +37,6 @@ class CycleAnalyzer extends AbstractCycleAnalyzer
 
         do {
             $rideList = $this->rideCalculator
-                ->reset()
                 ->setMonth((int)$current->format('m'))
                 ->setYear((int)$current->format('Y'))
                 ->setCycleList($this->cycleList)

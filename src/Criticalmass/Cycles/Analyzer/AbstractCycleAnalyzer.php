@@ -2,10 +2,11 @@
 
 namespace App\Criticalmass\Cycles\Analyzer;
 
+use App\Criticalmass\RideGenerator\RideGenerator\CityRideGenerator;
+use App\Criticalmass\RideGenerator\RideGenerator\RideGeneratorInterface;
 use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Entity\Ride;
-use App\Criticalmass\RideGenerator\RideCalculator\RideCalculatorInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 abstract class AbstractCycleAnalyzer implements CycleAnalyzerInterface
@@ -25,8 +26,8 @@ abstract class AbstractCycleAnalyzer implements CycleAnalyzerInterface
     /** @var RegistryInterface $registry */
     protected $registry;
 
-    /** @var RideCalculatorInterface $rideCalculator */
-    protected $rideCalculator;
+    /** @var RideGeneratorInterface $rideGenerator */
+    protected $rideGenerator;
 
     /** @var \DateTime $startDateTime */
     protected $startDateTime = null;
@@ -39,12 +40,12 @@ abstract class AbstractCycleAnalyzer implements CycleAnalyzerInterface
 
     public function __construct(
         RegistryInterface $registry,
-        RideCalculatorInterface $rideCalculator,
+        CityRideGenerator $rideGenerator,
         CycleAnalyzerModelFactoryInterface $analyzerModelFactory
     ) {
         $this->registry = $registry;
 
-        $this->rideCalculator = $rideCalculator;
+        $this->rideGenerator = $rideGenerator;
 
         $this->analyzerModelFactory = $analyzerModelFactory;
     }
@@ -75,7 +76,7 @@ abstract class AbstractCycleAnalyzer implements CycleAnalyzerInterface
     {
         $this->cycleList = $this->registry->getRepository(CityCycle::class)->findByCity($this->city);
 
-        $this->rideCalculator->setCycleList($this->cycleList);
+        //$this->rideCalculator->setCycleList($this->cycleList);
 
         return $this;
     }
