@@ -15,7 +15,7 @@ class CycleAnalyzer extends AbstractCycleAnalyzer
         do {
             $rideList = $this->rideGenerator
                 ->setDateTime($current)
-                ->($this->cycleList)
+                ->setCycleList($this->cycleList)
                 ->execute()
                 ->getRideList();
 
@@ -23,8 +23,6 @@ class CycleAnalyzer extends AbstractCycleAnalyzer
 
             $current->add($month);
         } while ($current->format('Y-m') <= $this->endDateTime->format('Y-m'));
-
-        return $this;
 
         return $this->analyzerModelFactory->getResultList();
     }
