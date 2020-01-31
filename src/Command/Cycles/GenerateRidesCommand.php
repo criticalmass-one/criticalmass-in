@@ -2,6 +2,7 @@
 
 namespace App\Command\Cycles;
 
+use App\Criticalmass\RideGenerator\RideGenerator\CityRideGeneratorInterface;
 use App\Criticalmass\RideGenerator\RideGenerator\RideGeneratorInterface;
 use App\Entity\City;
 use App\Entity\Ride;
@@ -22,7 +23,7 @@ class GenerateRidesCommand extends Command
     /** @var RegistryInterface $registry */
     protected $registry;
 
-    public function __construct($name = null, RideGeneratorInterface $rideGenerator, RegistryInterface $registry)
+    public function __construct($name = null, CityRideGeneratorInterface $rideGenerator, RegistryInterface $registry)
     {
         $this->rideGenerator = $rideGenerator;
         $this->registry = $registry;
