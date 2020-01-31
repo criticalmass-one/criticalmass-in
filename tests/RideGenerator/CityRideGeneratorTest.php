@@ -3,8 +3,8 @@
 namespace Tests\RideGenerator;
 
 use App\Criticalmass\RideGenerator\RideCalculator\FrankfurtRideCalculator;
-use App\Criticalmass\RideGenerator\RideGenerator\RideGenerator;
-use App\Criticalmass\RideGenerator\RideGenerator\RideGeneratorInterface;
+use App\Criticalmass\RideGenerator\RideGenerator\CityRideGenerator;
+use App\Criticalmass\RideGenerator\RideGenerator\CityRideGeneratorInterface;
 use App\Criticalmass\RideNamer\GermanCityDateRideNamer;
 use App\Criticalmass\RideNamer\RideNamerList;
 use App\Entity\City;
@@ -15,7 +15,7 @@ use App\Repository\RideRepository;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
-class RideGeneratorTest extends TestCase
+class CityRideGeneratorTest extends TestCase
 {
     public function testRideGeneratorForHamburgInJune2011(): void
     {
@@ -172,7 +172,7 @@ class RideGeneratorTest extends TestCase
         $this->assertEquals('Critical Mass Frankfurt 07.06.2019', $ride->getTitle());
     }
 
-    protected function createPreparedRideGeneratorFor(City $city, array $cityCycleList): RideGeneratorInterface
+    protected function createPreparedRideGeneratorFor(City $city, array $cityCycleList): CityRideGeneratorInterface
     {
         $rideNamerList = new RideNamerList();
         $rideNamerList->addRideNamer(new GermanCityDateRideNamer());
@@ -202,7 +202,7 @@ class RideGeneratorTest extends TestCase
                 return $repositoryList[$entityFqcn];
             }));
 
-        return new RideGenerator($registry, $rideNamerList);
+        return new CityRideGenerator($registry, $rideNamerList);
     }
 
     protected function createCityCycleForHamburg(City $city): array
