@@ -3,19 +3,18 @@
 namespace Tests\RideGenerator;
 
 use App\Criticalmass\RideGenerator\RideCalculator\FrankfurtRideCalculator;
-use App\Criticalmass\RideGenerator\RideGenerator\CityRideGenerator;
-use App\Criticalmass\RideGenerator\RideGenerator\CityRideGeneratorInterface;
+use App\Criticalmass\RideGenerator\RideGenerator\CycleRideGenerator;
+use App\Criticalmass\RideGenerator\RideGenerator\CycleRideGeneratorInterface;
 use App\Criticalmass\RideNamer\GermanCityDateRideNamer;
 use App\Criticalmass\RideNamer\RideNamerList;
 use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Entity\Ride;
-use App\Repository\CityCycleRepository;
 use App\Repository\RideRepository;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
-class CityRideGeneratorTest extends TestCase
+class CycleRideGeneratorTest extends TestCase
 {
     public function testRideGeneratorForHamburgInJune2011(): void
     {
@@ -24,11 +23,11 @@ class CityRideGeneratorTest extends TestCase
         $hamburg = new City();
         $hamburg->setTitle('Critical Mass Hamburg');
 
-        $rideGenerator = $this->createPreparedRideGeneratorFor($hamburg, $this->createCityCycleForHamburg($hamburg));
+        $rideGenerator = $this->createPreparedRideGeneratorFor($hamburg);
 
         $rideList = $rideGenerator
             ->setDateTime($dateTime)
-            ->addCity($hamburg)
+            ->setCycleList($this->createCityCycleForHamburg($hamburg))
             ->execute()
             ->getRideList();
 
@@ -55,11 +54,11 @@ class CityRideGeneratorTest extends TestCase
         $hamburg = new City();
         $hamburg->setTitle('Critical Mass Hamburg');
 
-        $rideGenerator = $this->createPreparedRideGeneratorFor($hamburg, $this->createCityCycleForHamburg($hamburg));
+        $rideGenerator = $this->createPreparedRideGeneratorFor($hamburg);
 
         $rideList = $rideGenerator
             ->setDateTimeList($dateTimeList)
-            ->addCity($hamburg)
+            ->setCycleList($this->createCityCycleForHamburg($hamburg))
             ->execute()
             ->getRideList();
 
@@ -111,11 +110,11 @@ class CityRideGeneratorTest extends TestCase
         $hamburg = new City();
         $hamburg->setTitle('Critical Mass Hamburg');
 
-        $rideGenerator = $this->createPreparedRideGeneratorFor($hamburg, $this->createCityCycleForHamburg($hamburg));
+        $rideGenerator = $this->createPreparedRideGeneratorFor($hamburg);
 
         $rideList = $rideGenerator
             ->setDateTimeList($dateTimeList)
-            ->addCity($hamburg)
+            ->setCycleList($this->createCityCycleForHamburg($hamburg))
             ->execute()
             ->getRideList();
 
@@ -127,8 +126,8 @@ class CityRideGeneratorTest extends TestCase
         $hamburg = new City();
         $hamburg->setTitle('Critical Mass Hamburg');
 
-        $rideList = $this->createPreparedRideGeneratorFor($hamburg, $this->createCityCycleForHamburg($hamburg))
-            ->addCity($hamburg)
+        $rideList = $this->createPreparedRideGeneratorFor($hamburg)
+            ->setCycleList($this->createCityCycleForHamburg($hamburg))
             ->setDateTime(new \DateTime('2011-02-01'))
             ->execute()
             ->getRideList();
@@ -143,11 +142,11 @@ class CityRideGeneratorTest extends TestCase
         $frankfurt = new City();
         $frankfurt->setTitle('Critical Mass Frankfurt');
 
-        $rideGenerator = $this->createPreparedRideGeneratorFor($frankfurt, $this->createCityCycleForFrankfurt($frankfurt));
+        $rideGenerator = $this->createPreparedRideGeneratorFor($frankfurt);
 
         $rideList = $rideGenerator
             ->setDateTime($dateTime)
-            ->addCity($frankfurt)
+            ->setCycleList($this->createCityCycleForFrankfurt($frankfurt))
             ->execute()
             ->getRideList();
 
@@ -172,20 +171,12 @@ class CityRideGeneratorTest extends TestCase
         $this->assertEquals('Critical Mass Frankfurt 07.06.2019', $ride->getTitle());
     }
 
-    protected function createPreparedRideGeneratorFor(City $city, array $cityCycleList): CityRideGeneratorInterface
+    protected function createPreparedRideGeneratorFor(City $city): CycleRideGeneratorInterface
     {
         $rideNamerList = new RideNamerList();
         $rideNamerList->addRideNamer(new GermanCityDateRideNamer());
 
         $repositoryList = [];
-
-        $cityCycleRepository = $this->createMock(CityCycleRepository::class);
-        $cityCycleRepository
-            ->method('findByCity')
-            ->with($this->equalTo($city), $this->anything(), $this->anything())
-            ->will($this->returnValue($cityCycleList));
-
-        $repositoryList[CityCycle::class] = $cityCycleRepository;
 
         $rideRepository = $this->createMock(RideRepository::class);
         $rideRepository
@@ -202,7 +193,7 @@ class CityRideGeneratorTest extends TestCase
                 return $repositoryList[$entityFqcn];
             }));
 
-        return new CityRideGenerator($registry, $rideNamerList);
+        return new CycleRideGenerator($registry, $rideNamerList);
     }
 
     protected function createCityCycleForHamburg(City $city): array

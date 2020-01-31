@@ -13,14 +13,12 @@ class CycleRideGenerator extends AbstractRideGenerator implements CycleRideGener
 
     public function execute(): RideGeneratorInterface
     {
-        foreach ($this->cycleList as $city) {
-            foreach ($this->dateTimeList as $dateTime) {
-                $startDateTime = DateTimeUtil::getMonthStartDateTime($dateTime);
+        foreach ($this->dateTimeList as $dateTime) {
+            $startDateTime = DateTimeUtil::getMonthStartDateTime($dateTime);
 
-                $createdRides = $this->processCycles($startDateTime);
+            $createdRides = $this->processCycles($startDateTime);
 
-                $this->rideList = array_merge($this->rideList, $createdRides);
-            }
+            $this->rideList = array_merge($this->rideList, $createdRides);
         }
 
         return $this;
@@ -47,7 +45,7 @@ class CycleRideGenerator extends AbstractRideGenerator implements CycleRideGener
         return $rideList;
     }
 
-    protected function removeCreatedCycles(array $cycles, \DateTime $startDateTime): array
+    protected function removeCreatedCycles(\DateTime $startDateTime): array
     {
         foreach ($this->cycleList as $key => $cycle) {
             if ($this->hasRideAlreadyBeenCreated($cycle, $startDateTime)) {
