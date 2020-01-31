@@ -2,7 +2,8 @@
 
 namespace App\Criticalmass\Cycles\Analyzer;
 
-use App\Criticalmass\RideGenerator\RideGenerator\CityRideGenerator;
+use App\Criticalmass\RideGenerator\RideCalculator\RideCalculatorInterface;
+use App\Criticalmass\RideGenerator\RideGenerator\CityRideGeneratorInterface;
 use App\Criticalmass\RideGenerator\RideGenerator\RideGeneratorInterface;
 use App\Entity\City;
 use App\Entity\CityCycle;
@@ -29,6 +30,9 @@ abstract class AbstractCycleAnalyzer implements CycleAnalyzerInterface
     /** @var RideGeneratorInterface $rideGenerator */
     protected $rideGenerator;
 
+    /** @var RideCalculatorInterface $rideCalculator */
+    protected $rideCalculator;
+
     /** @var \DateTime $startDateTime */
     protected $startDateTime = null;
 
@@ -40,12 +44,16 @@ abstract class AbstractCycleAnalyzer implements CycleAnalyzerInterface
 
     public function __construct(
         RegistryInterface $registry,
-        CityRideGenerator $rideGenerator,
+        CityRideGeneratorInterface $rideGenerator,
+        RideCalculatorInterface $rideCalculator,
         CycleAnalyzerModelFactoryInterface $analyzerModelFactory
-    ) {
+    )
+    {
         $this->registry = $registry;
 
         $this->rideGenerator = $rideGenerator;
+
+        $this->rideCalculator = $rideCalculator;
 
         $this->analyzerModelFactory = $analyzerModelFactory;
     }
@@ -84,6 +92,10 @@ abstract class AbstractCycleAnalyzer implements CycleAnalyzerInterface
     protected function fetchRides(): CycleAnalyzer
     {
         $this->rideList = $this->registry->getRepository(Ride::class)->findRides($this->startDateTime, $this->endDateTime, $this->city);
+
+        if (count($this->rideList) === 0) {
+            return $this;
+        }
 
         if (!$this->endDateTime) {
             $this->endDateTime = $this->rideList[0]->getDateTime();

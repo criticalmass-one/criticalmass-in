@@ -34,15 +34,17 @@ class CycleAnalyzer extends AbstractCycleAnalyzer
         $current = $this->startDateTime;
 
         do {
-            $rideList = $this->rideCalculator
-                ->setMonth((int)$current->format('m'))
-                ->setYear((int)$current->format('Y'))
-                ->setCycleList($this->cycleList)
-                ->execute()
-                ->getRideList();
+            /** @var CityCycle $cycle */
+            foreach ($this->cycleList as $cycle) {
+                $ride = $this->rideCalculator
+                    ->setMonth((int)$current->format('m'))
+                    ->setYear((int)$current->format('Y'))
+                    ->setCycle($cycle)
+                    ->execute();
 
-            $this->simulatedRideList = array_merge($this->simulatedRideList, $rideList);
-
+                $this->simulatedRideList[] = $ride;
+            }
+            
             $current->add($month);
         } while ($current->format('Y-m') <= $this->endDateTime->format('Y-m'));
 

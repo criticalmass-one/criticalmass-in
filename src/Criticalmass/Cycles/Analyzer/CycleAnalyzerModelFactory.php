@@ -6,10 +6,13 @@ use App\Entity\Ride;
 
 class CycleAnalyzerModelFactory implements CycleAnalyzerModelFactoryInterface
 {
+    /** @var array $rides */
     protected $rides = [];
 
+    /** @var array $simulatedRides */
     protected $simulatedRides = [];
 
+    /** @var array $resultList */
     protected $resultList = [];
 
     public function setRides(array $rides): CycleAnalyzerModelFactoryInterface
