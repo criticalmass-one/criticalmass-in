@@ -31,7 +31,7 @@ services:
         - "8002:3306"
 
     elasticsearch:
-      image: elasticsearch:7.4.2
+      image: elasticsearch:6.8.6
       container_name: criticalmass-elasticsearch
       environment:
         - discovery.type=single-node
