@@ -21,7 +21,7 @@ services:
       container_name: criticalmass-mysql
       working_dir: /application
       volumes:
-        - .:/application
+        - ./docker/mysql:/var/lib/mysql
       environment:
         - MYSQL_ROOT_PASSWORD=root
         - MYSQL_DATABASE=criticalmass
