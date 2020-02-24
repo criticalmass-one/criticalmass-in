@@ -33,6 +33,8 @@ services:
     elasticsearch:
       image: elasticsearch:7.4.2
       container_name: criticalmass-elasticsearch
+      volumes:
+        - ./docker/elasticsearch:/usr/share/elasticsearch/data
 
     webserver:
       image: nginx:alpine
