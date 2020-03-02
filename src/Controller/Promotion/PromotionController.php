@@ -5,15 +5,17 @@ namespace App\Controller\Promotion;
 use App\Entity\Promotion;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class PromotionController extends AbstractController
 {
     /**
      * @ParamConverter("promotion", class="App:Promotion")
      */
-    public function showAction(Promotion $promotion): Request
+    public function showAction(Promotion $promotion): Response
     {
-        return $this->render('Promotion/index.html.twig');
+        return $this->render('Promotion/index.html.twig', [
+            'promotion' => $promotion,
+        ]);
     }
 }

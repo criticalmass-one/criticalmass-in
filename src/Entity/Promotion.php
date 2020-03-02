@@ -1,14 +1,15 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\EntityInterface\AutoParamConverterAble;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="promotion")
  * @ORM\Entity(repositoryClass="App\Repository\PromotionRepository")
  */
-class Promotion
+class Promotion implements AutoParamConverterAble
 {
     /**
      * @ORM\Id()
