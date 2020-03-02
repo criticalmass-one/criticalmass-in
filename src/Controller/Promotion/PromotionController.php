@@ -2,7 +2,10 @@
 
 namespace App\Controller\Promotion;
 
+use App\Criticalmass\DataQuery\DataQueryManager\DataQueryManagerInterface;
+use App\Criticalmass\DataQuery\RequestParameterList\QueryStringToListConverter;
 use App\Entity\Promotion;
+use App\Entity\Ride;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,10 +15,15 @@ class PromotionController extends AbstractController
     /**
      * @ParamConverter("promotion", class="App:Promotion")
      */
-    public function showAction(Promotion $promotion): Response
+    public function showAction(Promotion $promotion, DataQueryManagerInterface $dataQueryManager): Response
     {
+        $requestParameterList = QueryStringToListConverter::convert($promotion->getQuery());
+
+        $rideList = $dataQueryManager->query($requestParameterList, Ride::class);
+
         return $this->render('Promotion/index.html.twig', [
             'promotion' => $promotion,
+            'rideList' => $rideList,
         ]);
     }
 }
