@@ -12,9 +12,52 @@
             </div>
         </div>
 
+        {% if promotion.description %}
+            <div class="row">
+                <div class="col-md-12">
+                    {{ promotion.description|markdown }}
+                </div>
+            </div>
+        {% endif %}
+
         <div class="row">
             <div class="col-md-12">
-                {{ dump(rideList) }}
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Datum</th>
+                        <th>Uhrzeit</th>
+                        <th>Stadt</th>
+                        <th>Titel</th>
+                        <th>Treffpunkt</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for ride in rideList %}
+                        <tr>
+                            <td>
+                                {{ ride.dateTime|date('d.m.Y') }}
+                            </td>
+
+                            <td>
+                                {{ ride.dateTime|date('H:i') }}&nbsp;Uhr
+                            </td>
+
+                            <td>
+                                {{ ride.city.city }}
+                            </td>
+
+                            <td>
+                                {{ ride.title }}
+                            </td>
+
+                            <td>
+                                {{ ride.location }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
