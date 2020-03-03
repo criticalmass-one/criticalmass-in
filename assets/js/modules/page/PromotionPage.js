@@ -25,7 +25,8 @@ define(['CriticalService', 'Map', 'Container', 'RideEntity', 'CityEntity', 'jque
 
     PromotionPage.prototype._initTable = function () {
         const table = $('#ride-table').DataTable({
-            'paging': false
+            'paging': false,
+            'searching': false
         });
     };
 
