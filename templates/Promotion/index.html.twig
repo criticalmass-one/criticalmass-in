@@ -4,6 +4,14 @@
 
 {% block content %}
     <div class="container">
+        {% if rideList|length > 0 and promotion.hasMap %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="map" style="height: 350px;"></div>
+                </div>
+            </div>
+        {% endif %}
+
         <div class="row">
             <div class="col-md-12">
                 <h2>
@@ -61,4 +69,17 @@
             </div>
         </div>
     </div>
+
+    {% if rideList|length > 0 %}
+        <script>
+            CriticalMass.loadModule('PromotionPage', null, null, function (promotionPage) {
+                {% for ride in rideList %}
+                promotionPage.addRide('{{ ride|serialize|raw|e('js') }}');
+                {% endfor %}
+
+                promotionPage.setFocus();
+            });
+        </script>
+    {% endif %}
 {% endblock %}
+
