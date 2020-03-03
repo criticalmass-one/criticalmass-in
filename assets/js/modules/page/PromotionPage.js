@@ -30,12 +30,14 @@ define(['CriticalService', 'Map', 'Container', 'RideEntity', 'CityEntity', 'jque
         });
     };
 
-    PromotionPage.prototype.addRide = function (rideJson) {
-        var rideEntity = this._CriticalService.factory.createRide(rideJson);
+    PromotionPage.prototype.queryApi = function (apiQuery) {
+        $.get('/api/ride?' + apiQuery, function (data) {
+            for (rideJson in data) {
+                var rideEntity = this._CriticalService.factory.createRide(rideJson);
 
-        this._rideContainer.addEntity(rideEntity);
-
-        return rideEntity;
+                this._rideContainer.addEntity(rideEntity);
+            }
+        });
     };
 
     PromotionPage.prototype.setFocus = function () {

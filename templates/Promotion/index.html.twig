@@ -73,10 +73,7 @@
     {% if rideList|length > 0 %}
         <script>
             CriticalMass.loadModule('PromotionPage', null, null, function (promotionPage) {
-                {% for ride in rideList %}
-                promotionPage.addRide('{{ ride|serialize|raw|e('js') }}');
-                {% endfor %}
-
+                promotionPage.queryApi('{{ promotion.query|raw }}');
                 promotionPage.setFocus();
             });
         </script>
