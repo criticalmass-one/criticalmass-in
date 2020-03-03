@@ -1,9 +1,10 @@
-define(['CriticalService', 'Map', 'Container', 'RideEntity', 'CityEntity'], function (CriticalService) {
+define(['CriticalService', 'Map', 'Container', 'RideEntity', 'CityEntity', 'jquery.dataTables'], function (CriticalService) {
     PromotionPage = function () {
         this._CriticalService = CriticalService;
 
         this._initContainer();
         this._initMap();
+        this._initTable();
     };
 
     PromotionPage.prototype._CriticalService = null;
@@ -20,6 +21,12 @@ define(['CriticalService', 'Map', 'Container', 'RideEntity', 'CityEntity'], func
         this._rideContainer.addToMap(this._map);
 
         this._CriticalService.setMap(this._map);
+    };
+
+    PromotionPage.prototype._initTable = function () {
+        const table = $('#ride-table').DataTable({
+            'paging': false
+        });
     };
 
     PromotionPage.prototype.addRide = function (rideJson) {
