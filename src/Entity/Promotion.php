@@ -48,6 +48,11 @@ class Promotion implements AutoParamConverterAble
      */
     private $query;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $showMap;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -121,6 +126,23 @@ class Promotion implements AutoParamConverterAble
     public function setQuery(string $query): self
     {
         $this->query = $query;
+
+        return $this;
+    }
+
+    public function hasMap(): ?bool
+    {
+        return $this->showMap;
+    }
+
+    public function getShowMap(): ?bool
+    {
+        return $this->showMap;
+    }
+
+    public function setShowMap(bool $showMap): self
+    {
+        $this->showMap = $showMap;
 
         return $this;
     }
