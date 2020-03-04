@@ -73,8 +73,8 @@
     {% if rideList|length > 0 %}
         <script>
             CriticalMass.loadModule('PromotionPage', null, null, function (promotionPage) {
-                promotionPage.queryApi('{{ promotion.query|raw }}');
-                promotionPage.setFocus();
+                promotionPage.loadRides('{{ promotion.query|raw }}&extended=true');
+                promotionPage.initMapView(53, 10, 5);
             });
         </script>
     {% endif %}
