@@ -53,6 +53,21 @@ class Promotion implements AutoParamConverterAble
      */
     private $showMap;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $mapCenterLatitude;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $mapCenterLongitude;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $mapZoomLevel;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -143,6 +158,42 @@ class Promotion implements AutoParamConverterAble
     public function setShowMap(bool $showMap): self
     {
         $this->showMap = $showMap;
+
+        return $this;
+    }
+
+    public function getMapCenterLatitude(): ?float
+    {
+        return $this->mapCenterLatitude;
+    }
+
+    public function setMapCenterLatitude(?float $mapCenterLatitude): self
+    {
+        $this->mapCenterLatitude = $mapCenterLatitude;
+
+        return $this;
+    }
+
+    public function getMapCenterLongitude(): ?float
+    {
+        return $this->mapCenterLongitude;
+    }
+
+    public function setMapCenterLongitude(?float $mapCenterLongitude): self
+    {
+        $this->mapCenterLongitude = $mapCenterLongitude;
+
+        return $this;
+    }
+
+    public function getMapZoomLevel(): ?int
+    {
+        return $this->mapZoomLevel;
+    }
+
+    public function setMapZoomLevel(?int $mapZoomLevel): self
+    {
+        $this->mapZoomLevel = $mapZoomLevel;
 
         return $this;
     }

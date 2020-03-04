@@ -74,7 +74,7 @@
         <script>
             CriticalMass.loadModule('PromotionPage', null, null, function (promotionPage) {
                 promotionPage.loadRides('{{ promotion.query|raw }}&extended=true');
-                promotionPage.initMapView(53, 10, 5);
+                promotionPage.initMapView({{ promotion.mapCenterLatitude }}, {{ promotion.mapCenterLongitude }}, {{ promotion.mapZoomLevel }});
             });
         </script>
     {% endif %}
