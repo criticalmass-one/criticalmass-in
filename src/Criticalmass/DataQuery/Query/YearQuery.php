@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Constraints;
 /**
  * @DataQuery\RequiredEntityProperty(propertyName="dateTime", propertyType="DateTime")
  */
-class YearQuery extends AbstractQuery implements ElasticQueryInterface, DoctrineQueryInterface
+class YearQuery extends AbstractDateTimeQuery implements ElasticQueryInterface, DoctrineQueryInterface
 {
     /**
      * @Constraints\NotNull()
@@ -18,48 +18,6 @@ class YearQuery extends AbstractQuery implements ElasticQueryInterface, Doctrine
      * @var int $year
      */
     protected $year;
-
-    /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("string")
-     * @var string $dateTimePattern
-     */
-    protected $dateTimePattern;
-
-    /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("string")
-     * @var string $dateTimeFormat
-     */
-    protected $dateTimeFormat;
-
-    /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("string")
-     * @var string $propertyName
-     */
-    protected $propertyName;
-
-    public function setDateTimePattern(string $dateTimePattern): YearQuery
-    {
-        $this->dateTimePattern = $dateTimePattern;
-
-        return $this;
-    }
-
-    public function setDateTimeFormat(string $dateTimeFormat): YearQuery
-    {
-        $this->dateTimeFormat = $dateTimeFormat;
-
-        return $this;
-    }
-
-    public function setPropertyName(string $propertyName): YearQuery
-    {
-        $this->propertyName = $propertyName;
-
-        return $this;
-    }
 
     /**
      * @DataQuery\RequiredQueryParameter(parameterName="year")
