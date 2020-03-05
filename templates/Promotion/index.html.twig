@@ -52,11 +52,15 @@
                             </td>
 
                             <td>
-                                {{ ride.city.city }}
+                                <a href="{{ objectPath(ride.city) }}" title="zur Seite der Stadt {{ ride.city.city }}">
+                                    {{ ride.city.city }}
+                                </a>
                             </td>
 
                             <td>
-                                {{ ride.title }}
+                                <a href="{{ objectPath(ride) }}" title="zur Seite der Tour">
+                                    {{ ride.title }}
+                                </a>
                             </td>
 
                             <td>
