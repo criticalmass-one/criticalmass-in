@@ -30,17 +30,22 @@ define(['CriticalService', 'Map', 'Container', 'RideEntity', 'CityEntity', 'jque
         });
     };
 
-    PromotionPage.prototype.addRide = function (rideJson) {
-        var rideEntity = this._CriticalService.factory.createRide(rideJson);
+    PromotionPage.prototype.loadRides = function (apiQuery) {
+        const that = this;
 
-        this._rideContainer.addEntity(rideEntity);
+        $.get('/api/ride?' + apiQuery, function (data) {
+            for (var index in data) {
+                const rideEntity = that._CriticalService.factory.createRide(data[index]);
 
-        return rideEntity;
+                that._rideContainer.addEntity(rideEntity);
+            }
+        });
     };
 
-    PromotionPage.prototype.setFocus = function () {
-        var bounds = this._rideContainer.getBounds();
-        this._map.fitBounds(bounds);
+    PromotionPage.prototype.initMapView = function (centerLatitude, centerLongitude, zoomLevel) {
+        //var bounds = this._rideContainer.getBounds();
+        //this._map.fitBounds(bounds);
+        this._map.setView(L.latLng(centerLatitude, centerLongitude), zoomLevel);
     };
 
     return PromotionPage;
