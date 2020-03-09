@@ -25,17 +25,26 @@
                         </a>
                     </li>
 
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li>
+                            <a href="{{ path('admin_app_ride_edit', { id: ride.id }) }}">
+                                <i class="far fa-magic"></i>
+                                Administrationsbereich
+                            </a>
+                        </li>
+                    {% endif %}
+
                     {% if ride.enabled %}
 
-                    <li class="divider">
+                        <li class="divider">
 
-                    </li>
+                        </li>
 
-                    <li>
-                        <a href="#" data-toggle="modal" data-target="#disable-modal">
-                            diese Tour deaktivieren
-                        </a>
-                    </li>
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#disable-modal">
+                                diese Tour deaktivieren
+                            </a>
+                        </li>
                     {% endif %}
                 </ul>
             {% else %}
