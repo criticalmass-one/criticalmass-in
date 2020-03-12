@@ -13,12 +13,8 @@ class FooterController extends AbstractController
     {
         $promotionList = $registry->getRepository(Promotion::class)->findAll();
 
-        $html = '';
-
-        foreach ($promotionList as $promotion) {
-            echo 'lalala';
-        }
-
-        return new Response('ef');
+        return $this->render('Template/Includes/_footer_promotion_list.html.twig', [
+            'promotionList' => $promotionList,
+        ]);
     }
 }
