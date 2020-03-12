@@ -4,6 +4,7 @@ namespace App\Controller\Promotion;
 
 use App\Criticalmass\DataQuery\DataQueryManager\DataQueryManagerInterface;
 use App\Criticalmass\DataQuery\RequestParameterList\QueryStringToListConverter;
+use App\Criticalmass\ViewStorage\Cache\ViewStorageCacheInterface;
 use App\Entity\Promotion;
 use App\Entity\Ride;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -15,8 +16,10 @@ class PromotionController extends AbstractController
     /**
      * @ParamConverter("promotion", class="App:Promotion")
      */
-    public function showAction(Promotion $promotion, DataQueryManagerInterface $dataQueryManager): Response
+    public function showAction(Promotion $promotion, DataQueryManagerInterface $dataQueryManager, ViewStorageCacheInterface $viewStorageCache): Response
     {
+        $viewStorageCache->countView($promotion);
+        
         $requestParameterList = QueryStringToListConverter::convert($promotion->getQuery());
 
         $rideList = $dataQueryManager->query($requestParameterList, Ride::class);

@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\DataQuery\Annotation\EntityAnnotation as DataQuery;
 use App\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AutoParamConverterAble;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="App\Repository\PromotionRepository")
  * @Routing\DefaultRoute(name="caldera_criticalmass_promotion_show")
  */
-class Promotion implements AutoParamConverterAble, RouteableInterface
+class Promotion implements AutoParamConverterAble, ViewableEntity, RouteableInterface
 {
     /**
      * @ORM\Id()
@@ -71,6 +73,13 @@ class Promotion implements AutoParamConverterAble, RouteableInterface
      * @ORM\Column(type="integer", nullable=true)
      */
     private $mapZoomLevel;
+
+    /**
+     * @ORM\Column(type="integer", options={"default"=0})
+     * @DataQuery\Sortable
+     * @DataQuery\Queryable
+     */
+    protected $views = 0;
 
     public function getId(): ?int
     {
@@ -198,6 +207,25 @@ class Promotion implements AutoParamConverterAble, RouteableInterface
     public function setMapZoomLevel(?int $mapZoomLevel): self
     {
         $this->mapZoomLevel = $mapZoomLevel;
+
+        return $this;
+    }
+
+    public function getViews(): int
+    {
+        return $this->views;
+    }
+
+    public function incViews(): ViewableEntity
+    {
+        ++$this->views;
+
+        return $this;
+    }
+
+    public function setViews(int $views): ViewableEntity
+    {
+        $this->views = $views;
 
         return $this;
     }
