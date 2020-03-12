@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\DataQuery\Annotation\EntityAnnotation as DataQuery;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AutoParamConverterAble;
 use Doctrine\ORM\Mapping as ORM;
@@ -70,7 +71,7 @@ class Promotion implements AutoParamConverterAble, ViewableEntity
     private $mapZoomLevel;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", options={"default"=0})
      * @DataQuery\Sortable
      * @DataQuery\Queryable
      */
@@ -214,7 +215,7 @@ class Promotion implements AutoParamConverterAble, ViewableEntity
     public function incViews(): ViewableEntity
     {
         ++$this->views;
-        
+
         return $this;
     }
 
