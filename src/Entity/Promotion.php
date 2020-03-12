@@ -23,6 +23,7 @@ class Promotion implements AutoParamConverterAble, RouteableInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Routing\RouteParameter(name="promotionSlug")
      */
     private $slug;
 
