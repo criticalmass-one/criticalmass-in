@@ -2,14 +2,17 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\Router\Annotation as Routing;
 use App\EntityInterface\AutoParamConverterAble;
+use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="promotion")
  * @ORM\Entity(repositoryClass="App\Repository\PromotionRepository")
+ * @Routing\DefaultRoute(name="caldera_criticalmass_promotion_show")
  */
-class Promotion implements AutoParamConverterAble
+class Promotion implements AutoParamConverterAble, RouteableInterface
 {
     /**
      * @ORM\Id()
@@ -20,6 +23,7 @@ class Promotion implements AutoParamConverterAble
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Routing\RouteParameter(name="promotionSlug")
      */
     private $slug;
 
