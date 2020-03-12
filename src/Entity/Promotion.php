@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AutoParamConverterAble;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -9,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="promotion")
  * @ORM\Entity(repositoryClass="App\Repository\PromotionRepository")
  */
-class Promotion implements AutoParamConverterAble
+class Promotion implements AutoParamConverterAble, ViewableEntity
 {
     /**
      * @ORM\Id()
@@ -67,6 +68,13 @@ class Promotion implements AutoParamConverterAble
      * @ORM\Column(type="integer", nullable=true)
      */
     private $mapZoomLevel;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @DataQuery\Sortable
+     * @DataQuery\Queryable
+     */
+    protected $views = 0;
 
     public function getId(): ?int
     {
@@ -194,6 +202,25 @@ class Promotion implements AutoParamConverterAble
     public function setMapZoomLevel(?int $mapZoomLevel): self
     {
         $this->mapZoomLevel = $mapZoomLevel;
+
+        return $this;
+    }
+
+    public function getViews(): int
+    {
+        return $this->views;
+    }
+
+    public function incViews(): ViewableEntity
+    {
+        ++$this->views;
+        
+        return $this;
+    }
+
+    public function setViews(int $views): ViewableEntity
+    {
+        $this->views = $views;
 
         return $this;
     }
