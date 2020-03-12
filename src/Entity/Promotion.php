@@ -3,15 +3,18 @@
 namespace App\Entity;
 
 use App\Criticalmass\DataQuery\Annotation\EntityAnnotation as DataQuery;
+use App\Criticalmass\Router\Annotation as Routing;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AutoParamConverterAble;
+use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="promotion")
  * @ORM\Entity(repositoryClass="App\Repository\PromotionRepository")
+ * @Routing\DefaultRoute(name="caldera_criticalmass_promotion_show")
  */
-class Promotion implements AutoParamConverterAble, ViewableEntity
+class Promotion implements AutoParamConverterAble, ViewableEntity, RouteableInterface
 {
     /**
      * @ORM\Id()
@@ -22,6 +25,7 @@ class Promotion implements AutoParamConverterAble, ViewableEntity
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Routing\RouteParameter(name="promotionSlug")
      */
     private $slug;
 
