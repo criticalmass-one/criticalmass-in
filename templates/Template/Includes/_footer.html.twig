@@ -8,22 +8,19 @@
                     </li>
 
                     <li>
-                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'impress' }) }}"
-                           id="footer-impress-link">
+                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'impress' }) }}" id="footer-impress-link">
                             Impressum
                         </a>
                     </li>
 
                     <li>
-                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'privacy' }) }}"
-                           id="footer-privacy-link">
+                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'privacy' }) }}" id="footer-privacy-link">
                             Datenschutz
                         </a>
                     </li>
 
                     <li>
-                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'gdpr' }) }}"
-                           id="footer-gdpr-link">
+                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'gdpr' }) }}" id="footer-gdpr-link">
                             Deine privaten Daten
                         </a>
                     </li>
@@ -77,6 +74,12 @@
             <div class="col-md-3">
                 <ul class="list-unstyled">
                     {{ render(controller('App\\Controller\\Template\\FooterController:promotionList')) }}
+                </ul>
+            </div>
+
+            <div class="col-md-3">
+                <ul class="list-unstyled">
+                    {{ render(controller('App\\Controller\\Template\\FooterController::cityListAction' )) }}
                 </ul>
             </div>
         </div>
