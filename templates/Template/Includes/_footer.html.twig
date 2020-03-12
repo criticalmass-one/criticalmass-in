@@ -20,8 +20,7 @@
                     </li>
 
                     <li>
-                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'gdpr' }) }}"
-                           id="footer-gdpr-link">
+                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'gdpr' }) }}" id="footer-gdpr-link">
                             Deine privaten Daten
                         </a>
                     </li>
@@ -69,6 +68,12 @@
                             GitHub-Repository
                         </a>
                     </li>
+                </ul>
+            </div>
+
+            <div class="col-md-3">
+                <ul class="list-unstyled">
+                    {{ render(controller('App\\Controller\\Template\\FooterController:promotionList')) }}
                 </ul>
             </div>
 
