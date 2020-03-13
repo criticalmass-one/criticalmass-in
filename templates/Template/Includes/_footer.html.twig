@@ -2,11 +2,11 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3">
-                <ul class="list-unstyled">
-                    <li>
-                        Seit {{ daysSince('2011-06-24 19:00:00') }} Tagen im Sattel
-                    </li>
+                <h5>
+                    Seit {{ daysSince('2011-06-24 19:00:00') }} Tagen im Sattel
+                </h5>
 
+                <ul class="list-unstyled">
                     <li>
                         <a href="{{ path('caldera_criticalmass_static_display', { slug: 'impress' }) }}"
                            id="footer-impress-link">
@@ -61,18 +61,30 @@
             </div>
 
             <div class="col-md-3">
+                <h5>
+                    Aus dem Blog
+                </h5>
+
                 <ul class="list-unstyled">
                     {{ render(controller('App\\Controller\\Template\\FooterController:blogPostListAction')) }}
                 </ul>
             </div>
 
             <div class="col-md-3">
+                <h5>
+                    Critical-Mass-Aktionen
+                </h5>
+
                 <ul class="list-unstyled">
                     {{ render(controller('App\\Controller\\Template\\FooterController:promotionListAction')) }}
                 </ul>
             </div>
 
             <div class="col-md-3">
+                <h5>
+                    Hier geht’s rund
+                </h5>
+
                 <ul class="list-unstyled">
                     {{ render(controller('App\\Controller\\Template\\FooterController::cityListAction' )) }}
 
