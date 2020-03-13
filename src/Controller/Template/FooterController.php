@@ -3,6 +3,7 @@
 namespace App\Controller\Template;
 
 use App\Controller\AbstractController;
+use App\Entity\BlogPost;
 use App\Entity\City;
 use App\Entity\Promotion;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -10,7 +11,16 @@ use Symfony\Component\HttpFoundation\Response;
 
 class FooterController extends AbstractController
 {
-    public function promotionList(RegistryInterface $registry): Response
+    public function blogPostListAction(RegistryInterface $registry): Response
+    {
+        $blogPostList = $registry->getRepository(BlogPost::class)->findAll();
+
+        return $this->render('Template/Includes/_footer_blog_post_list.html.twig', [
+            'blogPostList' => $blogPostList,
+        ]);
+    }
+
+    public function promotionListAction(RegistryInterface $registry): Response
     {
         $promotionList = $registry->getRepository(Promotion::class)->findAll();
 
