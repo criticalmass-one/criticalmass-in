@@ -1,7 +1,7 @@
 <footer id="footer" style="margin-top: 50px;">
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <ul class="list-unstyled">
                     <li>
                         Seit {{ daysSince('2011-06-24 19:00:00') }} Tagen im Sattel
@@ -60,13 +60,17 @@
                 </ul>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <ul class="list-unstyled">
                     {{ render(controller('App\\Controller\\Template\\FooterController:promotionList')) }}
+                    {{ render(controller('App\\Controller\\Template\\FooterController:blogArticleListAction')) }}
+            <div class="col-md-3">
+                <ul class="list-unstyled">
+                    {{ render(controller('App\\Controller\\Template\\FooterController:promotionListAction')) }}
                 </ul>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <ul class="list-unstyled">
                     {{ render(controller('App\\Controller\\Template\\FooterController::cityListAction' )) }}
 
