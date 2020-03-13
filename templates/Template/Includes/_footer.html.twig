@@ -3,7 +3,9 @@
         <div class="row">
             <div class="col-md-3">
                 <h5>
-                    Seit {{ daysSince('2011-06-24 19:00:00') }} Tagen im Sattel
+                    <a href="{{ path('caldera_criticalmass_frontpage') }}" title="zur Startseite von criticalmass.in">
+                        Seit {{ daysSince('2011-06-24 19:00:00') }} Tagen im Sattel
+                    </a>
                 </h5>
 
                 <ul class="list-unstyled">
@@ -62,7 +64,9 @@
 
             <div class="col-md-3">
                 <h5>
-                    Aus dem Blog
+                    <a href="{{ path('caldera_criticalmass_blog_overview') }}" title="zum Critical-Mass-Weblog">
+                        Aus dem Blog
+                    </a>
                 </h5>
 
                 <ul class="list-unstyled">
@@ -82,7 +86,10 @@
 
             <div class="col-md-3">
                 <h5>
-                    Hier geht’s rund
+                    <a href="{{ path('caldera_criticalmass_city_list') }}"
+                       title="zur Liste der Städte mit einer Critical-Mass-Radtour">
+                        Critical-Mass-Städte
+                    </a>
                 </h5>
 
                 <ul class="list-unstyled">
