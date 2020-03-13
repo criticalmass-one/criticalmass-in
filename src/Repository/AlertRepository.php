@@ -10,10 +10,10 @@ class AlertRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('a');
 
-        /*        $qb->where($qb->expr()->gte('a.fromDateTime', ':dateTime'))
-                    ->andWhere($qb->expr()->lte('a.untilDateTime', ':dateTime'))
-                    ->setParameter('dateTime', new \DateTime());
-        */
+        $qb->where($qb->expr()->lte('a.fromDateTime', ':dateTime'))
+            ->andWhere($qb->expr()->gte('a.untilDateTime', ':dateTime'))
+            ->setParameter('dateTime', new \DateTime());
+
         $query = $qb->getQuery();
 
         return $query->getArrayResult();
