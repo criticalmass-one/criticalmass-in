@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class FooterController extends AbstractController
 {
-    public function promotionList(RegistryInterface $registry): Response
+    public function promotionListAction(RegistryInterface $registry): Response
     {
         $promotionList = $registry->getRepository(Promotion::class)->findAll();
 
