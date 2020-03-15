@@ -63,9 +63,11 @@ class RideAdmin extends AbstractAdmin
     {
         $datagridMapper
             ->add('dateTime')
+            ->add('city')
             ->add('title')
             ->add('description')
             ->add('enabled')
+            ->add('disabledReason')
             ->add('location');
     }
 
