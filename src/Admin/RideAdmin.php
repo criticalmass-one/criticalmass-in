@@ -3,10 +3,12 @@
 namespace App\Admin;
 
 use App\DBAL\Type\RideDisabledReasonType;
+use App\Entity\City;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -24,7 +26,7 @@ class RideAdmin extends AbstractAdmin
 
         $formMapper
             ->with('Details', ['class' => 'col-md-6'])
-            ->add('city')
+            ->add('city', EntityType::class, ['class' => City::class, 'required' => true])
             ->add('slug', TextType::class, ['required' => false])
             ->add('title', TextType::class, ['required' => true])
             ->add('description', TextareaType::class, ['required' => false, 'attr' => ['rows' => 3]])
