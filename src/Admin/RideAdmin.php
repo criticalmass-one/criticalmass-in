@@ -43,16 +43,15 @@ class RideAdmin extends AbstractAdmin
             ->with('Uhrzeit', ['class' => 'col-md-6'])
             ->add('dateTime', DateTimeType::class, ['widget' => 'single_text', 'required' => true])
             ->end()
-
             ->with('Treffpunkt', ['class' => 'col-md-6'])
             ->add('location')
             ->add('latitude')
             ->add('longitude')
             ->end()
-
             ->with('Statistik', ['class' => 'col-md-6'])
             ->add('estimatedParticipants')
             ->add('estimatedDuration')
+            ->add('estimatedDistance')
             ->end();
     }
 
