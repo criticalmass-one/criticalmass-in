@@ -9,6 +9,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
@@ -44,9 +45,9 @@ class RideAdmin extends AbstractAdmin
             ->add('dateTime', DateTimeType::class, ['widget' => 'single_text', 'required' => true])
             ->end()
             ->with('Treffpunkt', ['class' => 'col-md-6'])
-            ->add('location')
-            ->add('latitude')
-            ->add('longitude')
+            ->add('location', TextType::class, ['required' => false])
+            ->add('latitude', NumberType::class, ['required' => false])
+            ->add('longitude', NumberType::class, ['required' => false])
             ->end()
             ->with('Statistik', ['class' => 'col-md-6'])
             ->add('estimatedParticipants')
