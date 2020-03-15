@@ -347,6 +347,11 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      */
     private $trackImportCandidates;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $disabledReasonMessage;
+
     public function __construct()
     {
         $this->dateTime = new \DateTime();
@@ -1161,5 +1166,17 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     public function toCoord(): CoordInterface
     {
         return new Coord($this->latitude, $this->longitude);
+    }
+
+    public function getDisabledReasonMessage(): ?string
+    {
+        return $this->disabledReasonMessage;
+    }
+
+    public function setDisabledReasonMessage(?string $disabledReasonMessage): self
+    {
+        $this->disabledReasonMessage = $disabledReasonMessage;
+
+        return $this;
     }
 }
