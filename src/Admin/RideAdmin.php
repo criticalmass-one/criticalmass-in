@@ -50,9 +50,9 @@ class RideAdmin extends AbstractAdmin
             ->add('longitude', NumberType::class, ['required' => false])
             ->end()
             ->with('Statistik', ['class' => 'col-md-6'])
-            ->add('estimatedParticipants')
-            ->add('estimatedDuration')
-            ->add('estimatedDistance')
+            ->add('estimatedParticipants', NumberType::class, ['required' => false])
+            ->add('estimatedDuration', NumberType::class, ['required' => false])
+            ->add('estimatedDistance', NumberType::class, ['required' => false])
             ->end();
     }
 
