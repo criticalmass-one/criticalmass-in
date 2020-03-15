@@ -17,7 +17,7 @@ class RideAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper): void
     {
         $disabledReasonList = array_flip(RideDisabledReasonType::$choices);
-        $disabledReasonList[null] = 'foo';
+        $disabledReasonList[null] = null;
 
         $formMapper
             ->with('Details', ['class' => 'col-md-6'])
@@ -31,6 +31,7 @@ class RideAdmin extends AbstractAdmin
             ->add('enabled')
             ->add('disabledReason', ChoiceType::class, [
                 'choices' => $disabledReasonList,
+                'required' => 'false',
             ])
             ->add('disabledReasonMessage', TextType::class, ['required' => false])
             ->end()
