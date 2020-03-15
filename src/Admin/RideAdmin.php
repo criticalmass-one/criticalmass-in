@@ -9,6 +9,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class RideAdmin extends AbstractAdmin
@@ -25,13 +26,13 @@ class RideAdmin extends AbstractAdmin
             ->add('title')
             ->add('description')
             ->end()
-
             ->with('Einstellungen', ['class' => 'col-md-6'])
             ->add('restrictedPhotoAccess')
             ->add('enabled')
             ->add('disabledReason', ChoiceType::class, [
                 'choices' => $disabledReasonList,
             ])
+            ->add('disabledReasonMessage', TextType::class, ['required' => false])
             ->end()
 
             ->with('Social Media', ['class' => 'col-md-6'])
