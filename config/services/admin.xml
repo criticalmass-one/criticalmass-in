@@ -50,6 +50,7 @@
             <argument type="string">App\Entity\City</argument>
             <argument/>
             <argument type="service" id="App\Criticalmass\RideNamer\RideNamerListInterface"/>
+            <argument type="service" id="App\Criticalmass\Router\ObjectRouterInterface"/>
             <tag name="sonata.admin" manager-type="orm" group="Critical Mass" label="City"/>
         </service>
 

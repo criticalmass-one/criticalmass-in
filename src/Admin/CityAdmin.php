@@ -3,6 +3,7 @@
 namespace App\Admin;
 
 use App\Criticalmass\RideNamer\RideNamerListInterface;
+use App\Criticalmass\Router\ObjectRouterInterface;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -16,11 +17,15 @@ class CityAdmin extends AbstractAdmin
     /** @var RideNamerListInterface $rideNamerList */
     protected $rideNamerList;
 
-    public function __construct(string $code, string $class, string $baseControllerName, RideNamerListInterface $rideNamerList)
-    {
-        parent::__construct($code, $class, $baseControllerName);
+    /** @var ObjectRouterInterface $objectRouter */
+    protected $objectRouter;
 
+    public function __construct(string $code, string $class, string $baseControllerName, RideNamerListInterface $rideNamerList, ObjectRouterInterface $objectRouter)
+    {
         $this->rideNamerList = $rideNamerList;
+        $this->objectRouter = $objectRouter;
+
+        parent::__construct($code, $class, $baseControllerName);
     }
 
     protected function configureFormFields(FormMapper $formMapper): void
@@ -74,7 +79,13 @@ class CityAdmin extends AbstractAdmin
     {
         $listMapper
             ->addIdentifier('title')
-            ->add('wikidataEntityId');
+            ->add('wikidataEntityId')
+            ->add('_action', 'actions', [
+                'actions' => [
+                    'show' => [],
+                    'edit' => [],
+                ]
+            ]);
     }
 
     protected function getRideNamerList(): array
@@ -89,5 +100,14 @@ class CityAdmin extends AbstractAdmin
         }
 
         return $list;
+    }
+
+    public function generateObjectUrl($name, $object, array $parameters = [], $absolute = false): string
+    {
+        if ('show' === $name) {
+            return $this->objectRouter->generate($object);
+        }
+        $parameters['id'] = $this->getUrlsafeIdentifier($object);
+        return $this->generateUrl($name, $parameters, $absolute);
     }
 }
