@@ -38,7 +38,7 @@ class RideAdmin extends AbstractAdmin
                 'choices' => $disabledReasonList,
                 'required' => 'false',
             ])
-            ->add('disabledReasonMessage', TextType::class, ['required' => false])
+            ->add('disabledReasonMessage', TextareaType::class, ['required' => false, 'attr' => ['rows' => 3]])
             ->end()
             ->with('Social Media', ['class' => 'col-md-6'])
             ->add('imageFile', VichImageType::class, ['required' => false])
