@@ -106,4 +106,17 @@ class RideAdmin extends AbstractAdmin
         $parameters['id'] = $this->getUrlsafeIdentifier($object);
         return $this->generateUrl($name, $parameters, $absolute);
     }
+
+    public function getActionButtons($action, $object = null): array
+    {
+        $list = parent::getActionButtons($action, $object);
+
+        if ('edit' === $action) {
+            $list['view'] = [
+                'template' => 'Admin/view_button.html.twig',
+            ];
+        }
+
+        return $list;
+    }
 }
