@@ -1,7 +1,5 @@
 flagception:
     features:
-        bikeright:
-            default: true
         photos:
             default: true
         art11:
