@@ -2,6 +2,7 @@
 
 namespace App\Admin;
 
+use App\Criticalmass\Router\ObjectRouterInterface;
 use App\DBAL\Type\RideDisabledReasonType;
 use App\Entity\City;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -19,6 +20,16 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class RideAdmin extends AbstractAdmin
 {
+    /** @var ObjectRouterInterface $objectRouter */
+    protected $objectRouter;
+
+    public function __construct($code, $class, $baseControllerName, ObjectRouterInterface $objectRouter)
+    {
+        $this->objectRouter = $objectRouter;
+
+        parent::__construct($code, $class, $baseControllerName);
+    }
+
     protected function configureFormFields(FormMapper $formMapper): void
     {
         $disabledReasonList = array_flip(RideDisabledReasonType::$choices);
@@ -78,6 +89,21 @@ class RideAdmin extends AbstractAdmin
             ->add('title')
             ->add('city')
             ->add('location')
-            ->add('enabled');
+            ->add('enabled')
+            ->add('_action', 'actions', [
+                'actions' => [
+                    'show' => [],
+                    'edit' => [],
+                ]
+            ]);
+    }
+
+    public function generateObjectUrl($name, $object, array $parameters = [], $absolute = false): string
+    {
+        if ('show' === $name) {
+            return $this->objectRouter->generate($object);
+        }
+        $parameters['id'] = $this->getUrlsafeIdentifier($object);
+        return $this->generateUrl($name, $parameters, $absolute);
     }
 }
