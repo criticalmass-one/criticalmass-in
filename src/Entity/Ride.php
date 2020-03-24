@@ -334,6 +334,8 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     /**
      * @ORM\Column(type="RideDisabledReasonType", nullable=true)
      * @DoctrineAssert\Enum(entity="App\DBAL\Type\RideDisabledReasonType")
+     * @JMS\Groups({"ride-list"})
+     * @JMS\Expose
      */
     protected $disabledReason;
 
@@ -349,6 +351,8 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @JMS\Groups({"ride-list"})
+     * @JMS\Expose
      */
     private $disabledReasonMessage;
 
