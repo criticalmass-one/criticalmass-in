@@ -233,4 +233,19 @@ class RideManagementController extends AbstractController
 
         return $this->redirect($objectRouter->generate($ride));
     }
+
+    /**
+     * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("ride", class="App:Ride")
+     */
+    public function enableAction(Request $request, RegistryInterface $registry, UserInterface $user = null, Ride $ride, ObjectRouterInterface $objectRouter): RedirectResponse
+    {
+        $ride->setEnabled(true)
+            ->setDisabledReason(null)
+            ->setDisabledReasonMessage(null);
+
+        $registry->getManager()->flush();
+
+        return $this->redirect($objectRouter->generate($ride));
+    }
 }
