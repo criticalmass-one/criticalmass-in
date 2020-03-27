@@ -1,0 +1,8 @@
+<li>
+    <a href="{{ objectPath(ride) }}">
+        {{ ride.city.city }}
+    </a>
+    <small>
+        ({{ ride.dateTime|date('H:i', ride.city.timezone) }})
+    </small>
+</li>
