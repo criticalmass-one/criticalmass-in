@@ -3,10 +3,19 @@
         <div class="col-md-12">
             <div class="btn-group pull-right" style="margin-top: 16px;">
             {% if app.user %}
-                <a class="btn btn-success" href="{{ objectPath(ride, 'caldera_criticalmass_ride_edit') }}" title="Tour bearbeiten">
-                    <i class="far fa-cogs"></i>
-                    Tour editieren
-                </a>
+                {% if not ride.enabled %}
+                    <a class="btn btn-success" href="{{ objectPath(ride, 'caldera_criticalmass_ride_enable') }}"
+                       title="Tour freischalten">
+                        <i class="far fa-unlock-alt"></i>
+                        Tour wieder aktivieren
+                    </a>
+                {% else %}
+                    <a class="btn btn-success" href="{{ objectPath(ride, 'caldera_criticalmass_ride_edit') }}"
+                       title="Tour bearbeiten">
+                        <i class="far fa-cogs"></i>
+                        Tour editieren
+                    </a>
+                {% endif %}
                 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                     <span class="caret"></span>
