@@ -46,64 +46,62 @@
                 <table id="ride-list-table" class="table">
                     <thead>
                     <tr>
-                        <th data-sortAttribute="rideDate">
+                        <th>
                             Datum
                         </th>
                         <th>
                             Uhrzeit
                         </th>
-                        <th data-sortAttribute="rideTitle">
+                        <th>
                             Titel
                         </th>
-                        <th data-sortAttribute="rideLocation">
+                        <th>
                             Treffpunkt
                         </th>
-                        <th data-sortAttribute="rideParticipants">
+                        <th>
                             Teilnehmer
                         </th>
-                        <th data-sortAttribute="rideDistance">
+                        <th>
                             Distanz
                         </th>
-                        <th data-sortAttribute="rideDuration">
+                        <th>
                             Dauer
                         </th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for ride in rides %}
-                        <tr class="city ride{% if not ride.enabled %} disabled{% endif %}"
-                            data-rideDate="{{ ride.dateTime|date('Y-m-d H-i', 'Europe/Berlin') }}"
-                            data-rideTitle="{{ ride.title }}"
-                            data-rideLocation="{{ ride.location }}"
-                            data-rideParticipants="{{ ride.estimatedParticipants }}"
-                            data-rideDistance="{{ ride.estimatedDistance }}"
-                            data-rideDuration="{{ ride.estimatedDuration }}"
-
-                        >
+                        <tr class="ride{% if not ride.enabled %}--disabled{% endif %}">
                             <td>
                                 {{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}
                             </td>
+
                             <td>
                                 {{ ride.dateTime|date('H:i', ride.city.timezone) }}&nbsp;Uhr
                             </td>
+
                             <td>
                                 <a href="{{ objectPath(ride) }}">
                                     {{ ride.title }}
                                 </a>
                             </td>
+
                             <td>
                                 {{ ride.location }}
                             </td>
+
                             <td>
                                 {% if ride.estimatedParticipants %}
                                     {{ ride.estimatedParticipants }}
                                 {% endif %}
                             </td>
+
                             <td>
                                 {% if ride.estimatedDistance %}
                                     {{ ride.estimatedDistance|round(2) }}&nbsp;Kilometer
                                 {% endif %}
                             </td>
+
                             <td>
                                 {% if ride.estimatedDuration %}
                                     {{ human_duration(ride.getEstimatedDurationInSeconds()) }}
