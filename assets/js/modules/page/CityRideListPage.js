@@ -7,7 +7,8 @@ define(['jquery', 'dateformat', 'jquery.dataTables'], function ($, dateFormat) {
 
     CityRideListPage.prototype._init = function () {
         const table = $(this.rideListTableSelector).DataTable({
-            'paging': false
+            'paging': false,
+            'order': [[1, 'desc']], // default sorting by date
         });
     };
 
