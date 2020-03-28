@@ -12,10 +12,12 @@ body.ride.ride-disabled {
   }
 }
 
-#cityRideList tr.ride.disabled,
-#cityRideList tr.ride.disabled a {
-  text-decoration: line-through;
-  color: #aaa;
+#ride-list-table tr.ride--disabled {
+  &,
+  a {
+    text-decoration: line-through;
+    color: $gray;
+  }
 }
 
 .timeline-item-ride {
