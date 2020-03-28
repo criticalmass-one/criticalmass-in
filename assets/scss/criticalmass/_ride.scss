@@ -20,7 +20,8 @@ body.ride.ride-disabled {
 
 .timeline-item-ride {
   &--disabled {
-    h4 {
+    h4,
+    .ride-title a {
       color: $gray;
       text-decoration: line-through;
     }
