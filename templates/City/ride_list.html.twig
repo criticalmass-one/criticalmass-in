@@ -47,7 +47,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <table id="cityRideList" class="table">
+                <table id="ride-list-table" class="table">
                     <thead>
                     <tr>
                         <th data-sortAttribute="rideDate">
@@ -120,4 +120,10 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block additionalFooterElements %}
+    <script>
+        CriticalMass.loadModule('CityRideListPage', '#ride-list-table');
+    </script>
 {% endblock %}
