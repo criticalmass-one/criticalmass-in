@@ -1,0 +1,37 @@
+<tr class="ride{% if not ride.enabled %}--disabled{% endif %}">
+    <td data-sort="{{ ride.dateTime|date('U') }}">
+        {{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}
+    </td>
+
+    <td>
+        {{ ride.dateTime|date('H:i', ride.city.timezone) }}&nbsp;Uhr
+    </td>
+
+    <td>
+        <a href="{{ objectPath(ride) }}">
+            {{ ride.title }}
+        </a>
+    </td>
+
+    <td>
+        {{ ride.location }}
+    </td>
+
+    <td>
+        {% if ride.estimatedParticipants %}
+            {{ ride.estimatedParticipants }}
+        {% endif %}
+    </td>
+
+    <td>
+        {% if ride.estimatedDistance %}
+            {{ ride.estimatedDistance|round(2) }}&nbsp;Kilometer
+        {% endif %}
+    </td>
+
+    <td>
+        {% if ride.estimatedDuration %}
+            {{ human_duration(ride.getEstimatedDurationInSeconds()) }}
+        {% endif %}
+    </td>
+</tr>
