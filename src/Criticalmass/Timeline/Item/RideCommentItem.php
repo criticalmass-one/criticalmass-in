@@ -19,6 +19,10 @@ class RideCommentItem extends AbstractItem
     /** @var Post $post */
     protected $post;
 
+    /** @var bool $rideEnabled */
+    protected $rideEnabled;
+
+
     public function getRide(): Ride
     {
         return $this->ride;
@@ -65,5 +69,17 @@ class RideCommentItem extends AbstractItem
         $this->text = $text;
 
         return $this;
+    }
+
+    public function setRideEnabled(bool $rideEnabled): RideCommentItem
+    {
+        $this->rideEnabled = $rideEnabled;
+
+        return $this;
+    }
+
+    public function isRideEnabled(): bool
+    {
+        return $this->rideEnabled;
     }
 }
