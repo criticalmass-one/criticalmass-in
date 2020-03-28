@@ -28,6 +28,9 @@ class RideTrackItem extends AbstractItem
     /** @var string $polylineColor */
     protected $polylineColor;
 
+    /** @var bool $rideEnabled */
+    protected $rideEnabled;
+
     public function getRide(): Ride
     {
         return $this->ride;
@@ -110,5 +113,17 @@ class RideTrackItem extends AbstractItem
         $this->polylineColor = $polylineColor;
 
         return $this;
+    }
+
+    public function setRideEnabled(bool $rideEnabled): RideTrackItem
+    {
+        $this->rideEnabled = $rideEnabled;
+
+        return $this;
+    }
+
+    public function isRideEnabled(): bool
+    {
+        return $this->rideEnabled;
     }
 }
