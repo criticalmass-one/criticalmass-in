@@ -26,7 +26,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <table class="table">
+                <table class="table ride-list">
                     <thead>
                     <tr>
                         <th>
@@ -51,38 +51,7 @@
                     </thead>
                     <tbody>
                     {% for ride in rides %}
-                        <tr>
-                            <td>
-                                <a href="{{ objectPath(ride.city) }}">
-                                    {{ ride.city.city }}
-                                </a>
-                            </td>
-                            <td>
-                                <a href="{{ objectPath(ride) }}">
-                                    {{ ride.dateTime|date('d.m.Y') }}
-                                </a>
-                            </td>
-                            <td>
-                                {% if ride.estimatedParticipants %}
-                                {{ ride.estimatedParticipants }}
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if ride.estimatedDistance %}
-                                {{ ride.estimatedDistance }} Kilometer
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if ride.durationInterval.format('%h:%i') > 0 %}
-                                {{ human_duration(ride.getEstimatedDurationInSeconds()) }}
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if ride.durationInterval and ride.estimatedDistance %}
-                                {{ ride.averageVelocity|round(2) }} Kilometer&nbsp;pro&nbsp;Stunde
-                                {% endif %}
-                            </td>
-                        </tr>
+                        {% include 'Common/Ride/statistic_ride_table_row.html.twig' with { ride: ride } %}
                     {% endfor %}
                     </tbody>
                 </table>
