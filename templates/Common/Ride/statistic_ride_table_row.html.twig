@@ -16,7 +16,7 @@
     </td>
     <td>
         {% if ride.estimatedDistance %}
-            {{ ride.estimatedDistance }} Kilometer
+            {{ ride.estimatedDistance|number_format(2) }} Kilometer
         {% endif %}
     </td>
     <td>
@@ -26,7 +26,7 @@
     </td>
     <td>
         {% if ride.durationInterval and ride.estimatedDistance %}
-            {{ ride.averageVelocity|round(2) }} Kilometer&nbsp;pro&nbsp;Stunde
+            {{ ride.averageVelocity|number_format(2) }} Kilometer&nbsp;pro&nbsp;Stunde
         {% endif %}
     </td>
 </tr>
