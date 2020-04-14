@@ -18,7 +18,7 @@
         "psr-4": { "Tests\\": "tests/" }
     },
     "require": {
-        "php": ">=7.2",
+        "php": ">=7.4",
         "ext-intl": "*",
         "ext-simplexml": "*",
         "doctrine/orm": "^2.5",
