@@ -18,6 +18,8 @@
         {% endif %}
     {% endblock %}
 
+    {{ render(controller('App\\Controller\\Template\\AlertController:showCurrentAlertsAction')) }}
+
     {% block content %}{% endblock %}
 
     {% include('Template/Includes/_adserver.html.twig') %}

@@ -10,8 +10,8 @@ use App\Criticalmass\DataQuery\FieldList\QueryFieldList\QueryField;
 use App\Criticalmass\DataQuery\FieldList\QueryFieldList\QueryFieldListFactoryInterface;
 use App\Criticalmass\DataQuery\Manager\QueryManagerInterface;
 use App\Criticalmass\DataQuery\Query\BooleanQuery;
+use App\Criticalmass\DataQuery\Query\DateTimeQueryInterface;
 use App\Criticalmass\DataQuery\Query\QueryInterface;
-use App\Criticalmass\DataQuery\Query\YearQuery;
 use App\Criticalmass\DataQuery\RequestParameterList\RequestParameterList;
 use App\Criticalmass\Util\ClassUtil;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -96,7 +96,7 @@ class QueryFactory implements QueryFactoryInterface
             }
         }
 
-        if ($query instanceof YearQuery) {
+        if ($query instanceof DateTimeQueryInterface) {
             /** @var EntityField $entityField */
             foreach ($entityFieldList->getList() as $entityFields) {
                 foreach ($entityFields as $entityField) {

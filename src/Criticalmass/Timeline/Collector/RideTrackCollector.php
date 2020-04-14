@@ -2,8 +2,8 @@
 
 namespace App\Criticalmass\Timeline\Collector;
 
-use App\Entity\Track;
 use App\Criticalmass\Timeline\Item\RideTrackItem;
+use App\Entity\Track;
 
 class RideTrackCollector extends AbstractTimelineCollector
 {
@@ -24,7 +24,8 @@ class RideTrackCollector extends AbstractTimelineCollector
                 ->setDuration($trackEntity->getDurationInSeconds())
                 ->setPolyline($trackEntity->getPolyline())
                 ->setPolylineColor('rgb(' . $trackEntity->getUser()->getColorRed() . ', ' . $trackEntity->getUser()->getColorGreen() . ', ' . $trackEntity->getUser()->getColorBlue() . ')')
-                ->setDateTime($trackEntity->getCreationDateTime());
+                ->setDateTime($trackEntity->getCreationDateTime())
+                ->setRideEnabled($trackEntity->getRide()->isEnabled());
 
             $this->addItem($item);
         }

@@ -328,12 +328,16 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @var bool $enabled
      * @ORM\Column(type="boolean", options={"default"=true})
      * @OE\Boolean(true)
+     * @JMS\Groups({"ride-list"})
+     * @JMS\Expose
      */
     protected $enabled = true;
 
     /**
      * @ORM\Column(type="RideDisabledReasonType", nullable=true)
      * @DoctrineAssert\Enum(entity="App\DBAL\Type\RideDisabledReasonType")
+     * @JMS\Groups({"ride-list"})
+     * @JMS\Expose
      */
     protected $disabledReason;
 
@@ -346,6 +350,13 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @ORM\OneToMany(targetEntity="App\Entity\TrackImportCandidate", mappedBy="ride")
      */
     private $trackImportCandidates;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     * @JMS\Groups({"ride-list"})
+     * @JMS\Expose
+     */
+    private $disabledReasonMessage;
 
     public function __construct()
     {
@@ -1161,5 +1172,17 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     public function toCoord(): CoordInterface
     {
         return new Coord($this->latitude, $this->longitude);
+    }
+
+    public function getDisabledReasonMessage(): ?string
+    {
+        return $this->disabledReasonMessage;
+    }
+
+    public function setDisabledReasonMessage(?string $disabledReasonMessage): self
+    {
+        $this->disabledReasonMessage = $disabledReasonMessage;
+
+        return $this;
     }
 }

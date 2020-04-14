@@ -1,34 +1,35 @@
 <footer id="footer" style="margin-top: 50px;">
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
+                <h5>
+                    <a href="{{ path('caldera_criticalmass_frontpage') }}" title="zur Startseite von criticalmass.in">
+                        Seit {{ daysSince('2011-06-24 19:00:00') }} Tagen im Sattel
+                    </a>
+                </h5>
+
                 <ul class="list-unstyled">
                     <li>
-                        Seit {{ daysSince('2011-06-24 19:00:00') }} Tagen im Sattel
-                    </li>
-
-                    <li>
-                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'impress' }) }}" id="footer-impress-link">
+                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'impress' }) }}"
+                           id="footer-impress-link">
                             Impressum
                         </a>
                     </li>
 
                     <li>
-                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'privacy' }) }}" id="footer-privacy-link">
+                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'privacy' }) }}"
+                           id="footer-privacy-link">
                             Datenschutz
                         </a>
                     </li>
 
                     <li>
-                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'gdpr' }) }}" id="footer-gdpr-link">
+                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'gdpr' }) }}"
+                           id="footer-gdpr-link">
                             Deine privaten Daten
                         </a>
                     </li>
-                </ul>
-            </div>
 
-            <div class="col-md-4">
-                <ul class="list-unstyled">
                     <li>
                         <a href="{{ path('caldera_criticalmass_help_about') }}" id="footer-about-link">
                             {% trans %}criticalmass.navigation.criticalmass.about{% endtrans %}
@@ -46,16 +47,6 @@
                             {% trans %}criticalmass.navigation.criticalmass.apidoc{% endtrans %}
                         </a>
                     </li>
-                </ul>
-            </div>
-
-            <div class="col-md-4">
-                <ul class="list-unstyled">
-                    <li>
-                        <a href="{{ path('caldera_criticalmass_city_list') }}" id="footer-citylist-link">
-                            Städteliste
-                        </a>
-                    </li>
 
                     <li>
                         <a href="https://sqi.be/status" id="footer-status-link">
@@ -66,6 +57,47 @@
                     <li>
                         <a href="http://sqi.be/y1aw6">
                             GitHub-Repository
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-md-3">
+                <h5>
+                    <a href="{{ path('caldera_criticalmass_blog_overview') }}" title="zum Critical-Mass-Weblog">
+                        Aus dem Blog
+                    </a>
+                </h5>
+
+                <ul class="list-unstyled">
+                    {{ render(controller('App\\Controller\\Template\\FooterController:blogPostListAction')) }}
+                </ul>
+            </div>
+
+            <div class="col-md-3">
+                <h5>
+                    Critical-Mass-Aktionen
+                </h5>
+
+                <ul class="list-unstyled">
+                    {{ render(controller('App\\Controller\\Template\\FooterController:promotionListAction')) }}
+                </ul>
+            </div>
+
+            <div class="col-md-3">
+                <h5>
+                    <a href="{{ path('caldera_criticalmass_city_list') }}"
+                       title="zur Liste der Städte mit einer Critical-Mass-Radtour">
+                        Critical-Mass-Städte
+                    </a>
+                </h5>
+
+                <ul class="list-unstyled">
+                    {{ render(controller('App\\Controller\\Template\\FooterController::cityListAction' )) }}
+
+                    <li>
+                        <a href="{{ path('caldera_criticalmass_city_list') }}" id="footer-citylist-link">
+                            Städteliste
                         </a>
                     </li>
                 </ul>

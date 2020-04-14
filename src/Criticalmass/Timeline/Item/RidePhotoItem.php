@@ -16,6 +16,9 @@ class RidePhotoItem extends AbstractItem
     /** @var array $previewPhotoList */
     protected $previewPhotoList = [];
 
+    /** @var bool $rideEnabled */
+    protected $rideEnabled;
+
     public function getRide(): Ride
     {
         return $this->ride;
@@ -50,5 +53,17 @@ class RidePhotoItem extends AbstractItem
     public function getPreviewPhotoList(): array
     {
         return $this->previewPhotoList;
+    }
+
+    public function setRideEnabled(bool $rideEnabled): RidePhotoItem
+    {
+        $this->rideEnabled = $rideEnabled;
+
+        return $this;
+    }
+
+    public function isRideEnabled(): bool
+    {
+        return $this->rideEnabled;
     }
 }
