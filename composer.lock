@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1c623e2576baf0c22211a3950524fab9",
+    "content-hash": "ea5b72b7a1cc4a9ae49c7570ccd4c259",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -2830,6 +2830,59 @@
             "time": "2018-12-17T07:48:16+00:00"
         },
         {
+            "name": "gregwar/captcha",
+            "version": "v1.1.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Gregwar/Captcha.git",
+                "reference": "6088ad3db59bc226423ad1476a9f0424b19b1866"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Gregwar/Captcha/zipball/6088ad3db59bc226423ad1476a9f0424b19b1866",
+                "reference": "6088ad3db59bc226423ad1476a9f0424b19b1866",
+                "shasum": ""
+            },
+            "require": {
+                "ext-gd": "*",
+                "ext-mbstring": "*",
+                "php": ">=5.3.0",
+                "symfony/finder": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.4"
+            },
+            "type": "captcha",
+            "autoload": {
+                "psr-4": {
+                    "Gregwar\\": "src/Gregwar"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Grégoire Passault",
+                    "email": "g.passault@gmail.com",
+                    "homepage": "http://www.gregwar.com/"
+                },
+                {
+                    "name": "Jeremy Livingston",
+                    "email": "jeremy.j.livingston@gmail.com"
+                }
+            ],
+            "description": "Captcha generator",
+            "homepage": "https://github.com/Gregwar/Captcha",
+            "keywords": [
+                "bot",
+                "captcha",
+                "spam"
+            ],
+            "time": "2020-01-22T14:54:02+00:00"
+        },
+        {
             "name": "guzzlehttp/guzzle",
             "version": "6.4.1",
             "source": {
@@ -3066,6 +3119,7 @@
                 }
             ],
             "description": "Provides a simple API and specification that abstracts away the details of HTTP into a single PHP function.",
+            "abandoned": true,
             "time": "2018-07-31T13:22:33+00:00"
         },
         {
@@ -3116,6 +3170,7 @@
                 "Guzzle",
                 "stream"
             ],
+            "abandoned": true,
             "time": "2014-10-12T19:18:40+00:00"
         },
         {
@@ -12122,6 +12177,7 @@
                 "code",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-code",
             "time": "2018-08-13T20:36:59+00:00"
         },
         {
@@ -12167,6 +12223,7 @@
                 "escaper",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-escaper",
             "time": "2018-04-25T15:48:53+00:00"
         },
         {
@@ -12221,6 +12278,7 @@
                 "events",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-eventmanager",
             "time": "2018-04-25T15:33:34+00:00"
         },
         {
@@ -12284,6 +12342,7 @@
                 "feed",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-feed",
             "time": "2019-03-05T20:08:49+00:00"
         },
         {
@@ -12339,6 +12398,7 @@
                 "zend",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-http",
             "time": "2019-02-19T18:58:14+00:00"
         },
         {
@@ -12384,6 +12444,7 @@
                 "loader",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-loader",
             "time": "2018-04-30T15:20:54+00:00"
         },
         {
@@ -12430,6 +12491,7 @@
                 "stdlib",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-stdlib",
             "time": "2018-08-28T21:34:05+00:00"
         },
         {
@@ -12477,6 +12539,7 @@
                 "uri",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-uri",
             "time": "2019-02-27T21:39:04+00:00"
         },
         {
@@ -12550,6 +12613,7 @@
                 "validator",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-validator",
             "time": "2019-01-30T14:26:10+00:00"
         }
     ],
@@ -14903,7 +14967,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.2",
+        "php": ">=7.4",
         "ext-intl": "*",
         "ext-simplexml": "*",
         "ext-fileinfo": "*",

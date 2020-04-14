@@ -200,6 +200,9 @@
     "graylog2/gelf-php": {
         "version": "1.5.5"
     },
+    "gregwar/captcha": {
+        "version": "v1.1.8"
+    },
     "guzzlehttp/guzzle": {
         "version": "6.3.3"
     },
@@ -361,6 +364,9 @@
     },
     "phar-io/version": {
         "version": "1.0.1"
+    },
+    "php": {
+        "version": "7.4"
     },
     "php-amqplib/php-amqplib": {
         "version": "v2.9.2"
