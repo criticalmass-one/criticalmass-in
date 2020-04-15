@@ -80,6 +80,17 @@
             </div>
 
             <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="form-group control-group">
+                        <label for="captcha" class="col-sm-4 control-label">Sicherheitsocde:</label>
+                        <div class="col-sm-8">
+                            {{ form_widget(form.captcha, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="col-md-8 col-md-offset-2 text-center">
                     <button type="submit" class="btn btn-primary">
                         Jetzt registrieren
