@@ -203,6 +203,9 @@
     "gregwar/captcha": {
         "version": "v1.1.8"
     },
+    "gregwar/captcha-bundle": {
+        "version": "v2.1.2"
+    },
     "guzzlehttp/guzzle": {
         "version": "6.3.3"
     },
