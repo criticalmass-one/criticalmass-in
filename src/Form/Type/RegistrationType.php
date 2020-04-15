@@ -12,6 +12,9 @@ class RegistrationType extends RegistrationFormType
     {
         parent::buildForm($builder, $options);
 
-        $builder->add('captcha', CaptchaType::class);
+        $builder->add('captcha', CaptchaType::class, [
+            'as_url' => true,
+            'reload' => true,
+        ]);
     }
 }
