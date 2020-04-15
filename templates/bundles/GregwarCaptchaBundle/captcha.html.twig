@@ -23,6 +23,14 @@
                 </button>
             </span>
         </div>
+    {% else %}
+        <div class="input-group captcha-input-group">
+            <span class="input-group-addon">
+                <img class="captcha_image" id="{{ image_id }}" src="{{ captcha_code }}" alt="" title="captcha"
+                     width="{{ captcha_width }}" height="{{ captcha_height }}"/>
+            </span>
+            {{ form_widget(form, { attr: { class: 'form-control input-lg' } }) }}
+        </div>
     {% endif %}
 {% endapply %}
 {% endif %}
