@@ -13,6 +13,8 @@ fos_user:
             from_email:
                 address:        malte@caldera.cc
                 sender_name:    Malte Hübner, criticalmass.in
+        form:
+            type: App\Form\Type\RegistrationType
     resetting:
         email:
             from_email:
