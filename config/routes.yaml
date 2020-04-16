@@ -26,4 +26,10 @@ runkeeper_login:
   path: /login/check-runkeeper
 
 twitter_login:
-    path: /login/check-twitter
+  path: /login/check-twitter
+
+fos_oauth_server_token:
+  resource: '@FOSOAuthServerBundle/Resources/config/routing/token.xml'
+
+fos_oauth_server_authorize:
+  resource: '@FOSOAuthServerBundle/Resources/config/routing/authorize.xml'
