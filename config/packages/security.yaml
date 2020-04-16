@@ -41,6 +41,7 @@ security:
 
         oauth_authorize:
             pattern:    ^/oauth/v2/auth
+            security: false
             # Add your favorite authentication process here
 
         api:
