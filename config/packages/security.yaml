@@ -24,6 +24,7 @@ security:
             logout:
                 invalidate_session: false
             anonymous:          true
+            fos_oauth:  true
             oauth:
                 resource_owners:
                     facebook:  "/login/check-facebook"
