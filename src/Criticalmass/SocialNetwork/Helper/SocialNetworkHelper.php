@@ -10,13 +10,13 @@ use App\Entity\Ride;
 use App\Entity\SocialNetworkProfile;
 use App\Entity\Subride;
 use App\Entity\User;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 
 class SocialNetworkHelper implements SocialNetworkHelperInterface
 {
     /**
-     * @var RegistryInterface $registry
+     * @var ManagerRegistry $registry
      */
     protected $registry;
 
@@ -25,7 +25,7 @@ class SocialNetworkHelper implements SocialNetworkHelperInterface
      */
     protected $router;
 
-    public function __construct(RegistryInterface $registry, ObjectRouterInterface $router)
+    public function __construct(ManagerRegistry $registry, ObjectRouterInterface $router)
     {
         $this->registry = $registry;
         $this->router = $router;

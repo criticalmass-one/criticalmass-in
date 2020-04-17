@@ -7,7 +7,7 @@ use App\Repository\CityCycleRepository;
 use App\Request\ParamConverter\CityCycleParamConverter;
 use PHPUnit\Framework\TestCase;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter as ParamConverterConfig;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -15,7 +15,7 @@ class CityCycleParamConverterTest extends TestCase
 {
     public function testCityCycleParamConverterSupportsCityCycle(): void
     {
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
 
         $paramConverter = new CityCycleParamConverter($registry);
 
@@ -34,7 +34,7 @@ class CityCycleParamConverterTest extends TestCase
 
     public function testCityCycleParamConverterWithEmptyRequest(): void
     {
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
 
         $paramConverter = new CityCycleParamConverter($registry);
 
@@ -60,7 +60,7 @@ class CityCycleParamConverterTest extends TestCase
             ->with($this->equalTo(3))
             ->will($this->returnValue($cityCycle));
 
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
         $registry
             ->expects($this->once())
             ->method('getRepository')

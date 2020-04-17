@@ -7,11 +7,11 @@ use App\Entity\Ride;
 use App\Entity\RideEstimate;
 use App\Repository\RideEstimateRepository;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 abstract class AbstractRideEstimateHandler implements RideEstimateHandlerInterface
 {
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var RideEstimateCalculatorInterface $calculator */
@@ -20,7 +20,7 @@ abstract class AbstractRideEstimateHandler implements RideEstimateHandlerInterfa
     /** @var Ride $ride */
     protected $ride;
 
-    public function __construct(RegistryInterface $registry, RideEstimateCalculatorInterface $calculator)
+    public function __construct(ManagerRegistry $registry, RideEstimateCalculatorInterface $calculator)
     {
         $this->registry = $registry;
         $this->calculator = $calculator;

@@ -4,7 +4,7 @@ namespace App\Command\Statistic;
 
 use App\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandlerInterface;
 use App\Entity\Ride;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Table;
@@ -13,13 +13,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CalculateRideEstimatesCommand extends Command
 {
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var RideEstimateHandlerInterface $rideEstimateHandler */
     protected $rideEstimateHandler;
 
-    public function __construct(?string $name = null, RideEstimateHandlerInterface $rideEstimateHandler, RegistryInterface $registry)
+    public function __construct(?string $name = null, RideEstimateHandlerInterface $rideEstimateHandler, ManagerRegistry $registry)
     {
         $this->registry = $registry;
         $this->rideEstimateHandler = $rideEstimateHandler;

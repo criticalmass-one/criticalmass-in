@@ -5,7 +5,7 @@ namespace App\Command\Heatmap;
 use App\Criticalmass\Heatmap\HeatmapFactory\HeatmapFactoryInterface;
 use App\Entity\CitySlug;
 use App\Entity\Ride;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -15,7 +15,7 @@ class CreateCommand extends Command
 {
     protected static $defaultName = 'criticalmass:heatmap:create';
 
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var HeatmapFactoryInterface $heatmapFactory */
@@ -29,7 +29,7 @@ class CreateCommand extends Command
             ->addArgument('ride-identifier', InputArgument::OPTIONAL, 'Ride identifier');
     }
 
-    public function __construct(string $name = null, RegistryInterface $registry, HeatmapFactoryInterface $heatmapFactory)
+    public function __construct(string $name = null, ManagerRegistry $registry, HeatmapFactoryInterface $heatmapFactory)
     {
         $this->registry = $registry;
         $this->heatmapFactory = $heatmapFactory;
