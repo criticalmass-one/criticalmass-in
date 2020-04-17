@@ -161,6 +161,9 @@
             "src/DBAL/Types/.gitignore"
         ]
     },
+    "friendsofsymfony/ckeditor-bundle": {
+        "version": "1.2.0"
+    },
     "friendsofsymfony/elastica-bundle": {
         "version": "5.0",
         "recipe": {
@@ -266,8 +269,14 @@
     "khill/php-duration": {
         "version": "1.0.5"
     },
+    "knplabs/gaufrette": {
+        "version": "v0.9.0"
+    },
     "knplabs/knp-components": {
         "version": "1.3.8"
+    },
+    "knplabs/knp-markdown-bundle": {
+        "version": "1.8.1"
     },
     "knplabs/knp-menu": {
         "version": "2.3.0"
@@ -277,6 +286,9 @@
     },
     "knplabs/knp-paginator-bundle": {
         "version": "v2.8.0"
+    },
+    "kriswallsmith/buzz": {
+        "version": "v0.16.1"
     },
     "laminas/laminas-zendframework-bridge": {
         "version": "1.0.3"
@@ -569,6 +581,22 @@
     "sonata-project/cache-bundle": {
         "version": "2.4.2"
     },
+    "sonata-project/classification-bundle": {
+        "version": "3.7",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.7",
+            "ref": "e79fbb2e8658677e5d5d9199db7d2735332c4b7d"
+        },
+        "files": [
+            "config/packages/sonata_classification.yaml",
+            "src/Entity/SonataClassificationCategory.php",
+            "src/Entity/SonataClassificationCollection.php",
+            "src/Entity/SonataClassificationContext.php",
+            "src/Entity/SonataClassificationTag.php"
+        ]
+    },
     "sonata-project/core-bundle": {
         "version": "3.9",
         "recipe": {
@@ -593,8 +621,28 @@
     "sonata-project/exporter": {
         "version": "1.9.1"
     },
+    "sonata-project/formatter-bundle": {
+        "version": "4.1.3"
+    },
     "sonata-project/intl-bundle": {
         "version": "2.5.0"
+    },
+    "sonata-project/media-bundle": {
+        "version": "3.13",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.13",
+            "ref": "e25412e53b20827db07abb6f2aa0b8e4d26c284c"
+        },
+        "files": [
+            "config/packages/sonata_media.yaml",
+            "config/routes/sonata_media.yaml",
+            "public/upload/media/.gitignore"
+        ]
+    },
+    "sonata-project/news-bundle": {
+        "version": "3.11.0"
     },
     "sonata-project/notification-bundle": {
         "version": "3.4",

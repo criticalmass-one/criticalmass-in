@@ -44,4 +44,10 @@ return [
     Sonata\NotificationBundle\SonataNotificationBundle::class => ['all' => true],
     Sonata\EasyExtendsBundle\SonataEasyExtendsBundle::class => ['all' => true],
     Sonata\PageBundle\SonataPageBundle::class => ['all' => true],
+    Sonata\MediaBundle\SonataMediaBundle::class => ['all' => true],
+    Knp\Bundle\MarkdownBundle\KnpMarkdownBundle::class => ['all' => true],
+    FOS\CKEditorBundle\FOSCKEditorBundle::class => ['all' => true],
+    Sonata\FormatterBundle\SonataFormatterBundle::class => ['all' => true],
+    Sonata\ClassificationBundle\SonataClassificationBundle::class => ['all' => true],
+    Sonata\NewsBundle\SonataNewsBundle::class => ['all' => true],
 ];
