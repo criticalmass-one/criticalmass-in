@@ -6,7 +6,7 @@ use App\Controller\AbstractController;
 use App\Entity\Track;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
 
 class TrackController extends AbstractController
@@ -26,7 +26,7 @@ class TrackController extends AbstractController
      * @Security("is_granted('approve', track)")
      * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
      */
-    public function approveAction(Track $track, RegistryInterface $registry): Response
+    public function approveAction(Track $track, ManagerRegistry $registry): Response
     {
         $track->setReviewed(true);
 

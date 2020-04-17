@@ -13,7 +13,7 @@ use App\Entity\Ride;
 use App\Repository\CityCycleRepository;
 use App\Repository\RideRepository;
 use PHPUnit\Framework\TestCase;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 class CityRideGeneratorTest extends TestCase
 {
@@ -194,7 +194,7 @@ class CityRideGeneratorTest extends TestCase
 
         $repositoryList[Ride::class] = $rideRepository;
 
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
 
         $registry
             ->method('getRepository')

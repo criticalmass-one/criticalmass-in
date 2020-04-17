@@ -9,7 +9,7 @@ use App\Repository\CitySlugRepository;
 use App\Request\ParamConverter\CityParamConverter;
 use PHPUnit\Framework\TestCase;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter as ParamConverterConfig;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -17,7 +17,7 @@ class CityParamConverterTest extends TestCase
 {
     public function testCityParamConverterSupportsCity(): void
     {
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
 
         $paramConverter = new CityParamConverter($registry);
 
@@ -36,7 +36,7 @@ class CityParamConverterTest extends TestCase
 
     public function testCityParamConverterWithEmptyRequest(): void
     {
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
 
         $paramConverter = new CityParamConverter($registry);
 
@@ -62,7 +62,7 @@ class CityParamConverterTest extends TestCase
             ->with($this->equalTo(167))
             ->will($this->returnValue($city));
 
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
         $registry
             ->expects($this->once())
             ->method('getRepository')
@@ -106,7 +106,7 @@ class CityParamConverterTest extends TestCase
             ->withConsecutive($this->equalTo('findOneBySlug'), $this->equalTo('test-slug-city'))
             ->will($this->returnValue($citySlug));
 
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
 
         $registry
             ->method('getRepository')

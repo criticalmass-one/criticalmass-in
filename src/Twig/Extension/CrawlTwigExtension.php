@@ -8,12 +8,12 @@ use App\Criticalmass\Website\Obfuscator\ObfuscatorInterface;
 use App\Entity\BlacklistedWebsite;
 use App\Entity\CrawledWebsite;
 use Flagception\Manager\FeatureManagerInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
 class CrawlTwigExtension extends \Twig_Extension
 {
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var CrawlerInterface $crawler */
@@ -31,7 +31,7 @@ class CrawlTwigExtension extends \Twig_Extension
     /** @var array $blacklistPatternList */
     protected $blacklistPatternList = [];
 
-    public function __construct(RegistryInterface $registry, CrawlerInterface $crawler, EngineInterface $twigEngine, ObfuscatorInterface $obfuscator, FeatureManagerInterface $featureManager)
+    public function __construct(ManagerRegistry $registry, CrawlerInterface $crawler, EngineInterface $twigEngine, ObfuscatorInterface $obfuscator, FeatureManagerInterface $featureManager)
     {
         $this->registry = $registry;
         $this->crawler = $crawler;

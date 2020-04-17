@@ -4,7 +4,7 @@ namespace App\Command\Track;
 
 use App\Criticalmass\Geo\TrackPolylineHandler\TrackPolylineHandlerInterface;
 use App\Entity\Track;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Table;
@@ -15,13 +15,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class TrackReducePolylineCommand extends Command
 {
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var TrackPolylineHandlerInterface $trackPolylineHandler */
     protected $trackPolylineHandler;
 
-    public function __construct(?string $name = null, RegistryInterface $registry, TrackPolylineHandlerInterface $trackPolylineHandler)
+    public function __construct(?string $name = null, ManagerRegistry $registry, TrackPolylineHandlerInterface $trackPolylineHandler)
     {
         $this->trackPolylineHandler = $trackPolylineHandler;
         $this->registry = $registry;

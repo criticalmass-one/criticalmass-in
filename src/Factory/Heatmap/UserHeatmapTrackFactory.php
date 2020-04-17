@@ -5,14 +5,14 @@ namespace App\Factory\Heatmap;
 use App\Entity\Heatmap;
 use App\Entity\HeatmapTrack;
 use App\Model\Heatmap\UserHeatmapTrackModel;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 class UserHeatmapTrackFactory implements UserHeatmapTrackFactoryInterface
 {
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         $this->registry = $registry;
     }

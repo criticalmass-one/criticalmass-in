@@ -7,7 +7,7 @@ use App\Repository\LocationRepository;
 use App\Request\ParamConverter\LocationParamConverter;
 use PHPUnit\Framework\TestCase;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter as ParamConverterConfig;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -15,7 +15,7 @@ class LocationParamConverterTest extends TestCase
 {
     public function testLocationParamConverterSupportsLocaction(): void
     {
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
 
         $paramConverter = new LocationParamConverter($registry);
 
@@ -34,7 +34,7 @@ class LocationParamConverterTest extends TestCase
 
     public function testLocationParamConverterWithEmptyRequest(): void
     {
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
 
         $paramConverter = new LocationParamConverter($registry);
 
@@ -60,7 +60,7 @@ class LocationParamConverterTest extends TestCase
             ->with($this->equalTo('findOneById'), $this->equalTo([23]))
             ->will($this->returnValue($location));
 
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
         $registry
             ->expects($this->once())
             ->method('getRepository')
@@ -93,7 +93,7 @@ class LocationParamConverterTest extends TestCase
             ->with($this->equalTo('findOneBySlug'), $this->equalTo(['test-location-slug']))
             ->will($this->returnValue($location));
 
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
 
         $registry
             ->method('getRepository')

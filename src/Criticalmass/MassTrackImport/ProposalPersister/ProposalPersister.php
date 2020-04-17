@@ -6,17 +6,17 @@ use App\Criticalmass\MassTrackImport\TrackDecider\RideResult;
 use App\Entity\Track;
 use App\Entity\TrackImportCandidate;
 use App\Entity\User;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 class ProposalPersister implements ProposalPersisterInterface
 {
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var array $existentStravaActivityIds */
     protected $existentStravaActivityIds = [];
 
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         $this->registry = $registry;
     }

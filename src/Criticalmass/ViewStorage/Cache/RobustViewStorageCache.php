@@ -8,7 +8,7 @@ use App\Criticalmass\ViewStorage\ViewModel\ViewFactory;
 use JMS\Serializer\SerializerInterface;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use PhpAmqpLib\Exception\AMQPIOException;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class RobustViewStorageCache extends ViewStorageCache
@@ -16,10 +16,10 @@ class RobustViewStorageCache extends ViewStorageCache
     /** @var ViewStoragePersisterInterface $viewStoragePersister */
     protected $viewStoragePersister;
 
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
-    public function __construct(RegistryInterface $registry, ViewStoragePersisterInterface $viewStoragePersister, TokenStorageInterface $tokenStorage, ProducerInterface $producer, SerializerInterface $serializer)
+    public function __construct(ManagerRegistry $registry, ViewStoragePersisterInterface $viewStoragePersister, TokenStorageInterface $tokenStorage, ProducerInterface $producer, SerializerInterface $serializer)
     {
         $this->viewStoragePersister = $viewStoragePersister;
         $this->registry = $registry;

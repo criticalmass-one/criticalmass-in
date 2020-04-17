@@ -6,7 +6,7 @@ use App\Criticalmass\Wikidata\CityPopulationFetcher\CityPopulationFetcherInterfa
 use App\Criticalmass\Wikidata\WikidataCityEntityFinder\WikidataCityEntityFinder;
 use App\Entity\City;
 use App\Entity\CitySlug;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Table;
@@ -23,10 +23,10 @@ class UpdatePopulationCommand extends Command
     /** @var CityPopulationFetcherInterface $cityPopulationFetcher */
     protected $cityPopulationFetcher;
 
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
-    public function __construct($name = null, CityPopulationFetcherInterface $cityPopulationFetcher, RegistryInterface $registry)
+    public function __construct($name = null, CityPopulationFetcherInterface $cityPopulationFetcher, ManagerRegistry $registry)
     {
         $this->cityPopulationFetcher = $cityPopulationFetcher;
         $this->registry = $registry;

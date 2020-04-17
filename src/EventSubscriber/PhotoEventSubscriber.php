@@ -11,12 +11,12 @@ use App\Entity\Track;
 use App\Event\Photo\PhotoDeletedEvent;
 use App\Event\Photo\PhotoUpdatedEvent;
 use App\Event\Photo\PhotoUploadedEvent;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class PhotoEventSubscriber implements EventSubscriberInterface
 {
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var ReverseGeocoderInterface $reverseGeocoder */
@@ -31,7 +31,7 @@ class PhotoEventSubscriber implements EventSubscriberInterface
     /** @var ExportDataHandlerInterface $exportDataHandler */
     protected $exportDataHandler;
 
-    public function __construct(RegistryInterface $registry, ReverseGeocoderInterface $reverseGeocoder, PhotoGpsInterface $photoGps, ExifHandlerInterface $exifHandler, ExportDataHandlerInterface $exportDataHandler)
+    public function __construct(ManagerRegistry $registry, ReverseGeocoderInterface $reverseGeocoder, PhotoGpsInterface $photoGps, ExifHandlerInterface $exifHandler, ExportDataHandlerInterface $exportDataHandler)
     {
         $this->registry = $registry;
         $this->reverseGeocoder = $reverseGeocoder;

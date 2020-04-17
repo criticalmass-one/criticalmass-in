@@ -7,7 +7,7 @@ use App\Repository\ThreadRepository;
 use App\Request\ParamConverter\ThreadParamConverter;
 use PHPUnit\Framework\TestCase;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter as ParamConverterConfig;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -15,7 +15,7 @@ class ThreadParamConverterTest extends TestCase
 {
     public function testThreadParamConverterSupportsThread(): void
     {
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
 
         $paramConverter = new ThreadParamConverter($registry);
 
@@ -34,7 +34,7 @@ class ThreadParamConverterTest extends TestCase
 
     public function testThreadParamConverterWithEmptyRequest(): void
     {
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
 
         $paramConverter = new ThreadParamConverter($registry);
 
@@ -60,7 +60,7 @@ class ThreadParamConverterTest extends TestCase
             ->with($this->equalTo('findOneById'), $this->equalTo([51]))
             ->will($this->returnValue($thread));
 
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
         $registry
             ->expects($this->once())
             ->method('getRepository')

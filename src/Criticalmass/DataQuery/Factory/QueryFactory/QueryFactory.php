@@ -14,13 +14,13 @@ use App\Criticalmass\DataQuery\Query\DateTimeQueryInterface;
 use App\Criticalmass\DataQuery\Query\QueryInterface;
 use App\Criticalmass\DataQuery\RequestParameterList\RequestParameterList;
 use App\Criticalmass\Util\ClassUtil;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class QueryFactory implements QueryFactoryInterface
 {
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var string $entityFqcn */
@@ -41,7 +41,7 @@ class QueryFactory implements QueryFactoryInterface
     /** @var QueryFieldListFactoryInterface $queryFieldListFactory */
     protected $queryFieldListFactory;
 
-    public function __construct(RegistryInterface $registry, QueryManagerInterface $queryManager, ValueAssignerInterface $valueAssigner, ValidatorInterface $validator, EntityFieldListFactoryInterface $entityFieldListFactory, QueryFieldListFactoryInterface $queryFieldListFactory)
+    public function __construct(ManagerRegistry $registry, QueryManagerInterface $queryManager, ValueAssignerInterface $valueAssigner, ValidatorInterface $validator, EntityFieldListFactoryInterface $entityFieldListFactory, QueryFieldListFactoryInterface $queryFieldListFactory)
     {
         $this->registry = $registry;
         $this->queryManager = $queryManager;
