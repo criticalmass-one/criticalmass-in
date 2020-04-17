@@ -365,6 +365,9 @@
     "phar-io/version": {
         "version": "1.0.1"
     },
+    "php": {
+        "version": "7.4"
+    },
     "php-amqplib/php-amqplib": {
         "version": "v2.9.2"
     },
@@ -563,6 +566,9 @@
     "sonata-project/cache": {
         "version": "2.0.1"
     },
+    "sonata-project/cache-bundle": {
+        "version": "2.4.2"
+    },
     "sonata-project/core-bundle": {
         "version": "3.9",
         "recipe": {
@@ -581,11 +587,43 @@
     "sonata-project/doctrine-orm-admin-bundle": {
         "version": "3.6.1"
     },
+    "sonata-project/easy-extends-bundle": {
+        "version": "2.5.0"
+    },
     "sonata-project/exporter": {
         "version": "1.9.1"
     },
     "sonata-project/intl-bundle": {
         "version": "2.5.0"
+    },
+    "sonata-project/notification-bundle": {
+        "version": "3.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.4",
+            "ref": "222a1549f627f9faef39c0dd3cba1194a5175c00"
+        },
+        "files": [
+            "config/packages/sonata_notification.yaml"
+        ]
+    },
+    "sonata-project/page-bundle": {
+        "version": "3.9",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.9",
+            "ref": "f355eb1ec6c3e67fce6333d5140e8b3941bb0b54"
+        },
+        "files": [
+            "config/packages/sonata_page.yaml",
+            "config/routes/sonata_page.yaml",
+            "src/Entity/SonataPageBlock.php",
+            "src/Entity/SonataPagePage.php",
+            "src/Entity/SonataPageSite.php",
+            "src/Entity/SonataPageSnapshot.php"
+        ]
     },
     "sonata-project/seo-bundle": {
         "version": "2.5.1"
@@ -595,6 +633,12 @@
     },
     "swiftmailer/swiftmailer": {
         "version": "v6.1.1"
+    },
+    "symfony-cmf/routing": {
+        "version": "2.2.0"
+    },
+    "symfony-cmf/routing-bundle": {
+        "version": "2.3.0"
     },
     "symfony/apache-pack": {
         "version": "1.0",
@@ -964,5 +1008,8 @@
     },
     "zendframework/zend-validator": {
         "version": "2.10.2"
+    },
+    "zendframework/zenddiagnostics": {
+        "version": "v1.6.0"
     }
 }

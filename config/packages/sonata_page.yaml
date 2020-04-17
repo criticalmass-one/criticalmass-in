@@ -1,0 +1,161 @@
+sonata_block:
+    context_manager: sonata.page.block.context_manager
+    default_contexts: [sonata_page_bundle]
+
+sonata_admin:
+    assets:
+        extra_javascripts:
+            - bundles/sonatapage/sonata-page.back.min.js
+        extra_stylesheets:
+            - bundles/sonatapage/sonata-page.back.min.css
+
+sonata_page:
+    slugify_service: sonata.core.slugify.cocur
+    multisite: host
+    use_streamed_response: false
+
+    router_auto_register:
+        enabled: true
+        priority: 150
+    ignore_route_patterns:
+        - ^(.*)admin(.*)   # ignore admin route, ie route containing 'admin'
+        - ^_(.*)          # ignore symfony routes
+    ignore_routes:
+        - sonata_page_cache_esi
+        - sonata_page_cache_ssi
+        - sonata_page_js_sync_cache
+        - sonata_page_js_async_cache
+        - sonata_cache_esi
+        - sonata_cache_ssi
+        - sonata_cache_js_async
+        - sonata_cache_js_sync
+        - sonata_cache_apc
+    ignore_uri_patterns:
+        - ^/admin\/   # ignore admin route, ie route containing 'admin'
+
+    default_template: default
+    templates:
+        blank:
+            path: '@SonataPage/blank.html.twig'
+            name: 'blank'
+        default:
+            path: '@ApplicationSonataPage/demo_layout.html.twig'
+            name: 'default'
+            containers:
+                header:
+                    name: Header
+                content_top:
+                    name: Top content
+                content:
+                    name: Main content
+                content_bottom:
+                    name: Bottom content
+                footer:
+                    name: Footer
+            matrix:
+                layout: |
+
+                    HHHHHHHH
+                    TTTTTTTT
+                    TTTTTTTT
+                    CCCCCCCC
+                    CCCCCCCC
+                    BBBBBBBB
+                    BBBBBBBB
+                    FFFFFFFF
+
+                mapping:
+                    H: header
+                    T: content_top
+                    C: content
+                    B: content_bottom
+                    F: footer
+
+        2columns:
+            path: '@ApplicationSonataPage/demo_2columns_layout.html.twig'
+            name: '2 columns layout'
+            inherits_containers: default
+            containers:
+                left_col:
+                    name: Left column
+                    blocks:
+                        - sonata.media.block.media
+                        - sonata.media.block.gallery
+                        - sonata.media.block.feature_media
+                content:
+                    name: Main content
+                    blocks:
+                        - sonata.media.block.media
+                right_col:
+                    name: Right column
+                    blocks:
+                        - sonata.news.block.recent_posts
+                        - sonata.order.block.recent_orders
+                        - sonata.product.block.recent_products
+            matrix:
+                layout: |
+
+                    HHHHHHHHHH
+                    TTTTTTTTTT
+                    TTTTTTTTTT
+                    LLLCCCCRRR
+                    LLLCCCCRRR
+                    BBBBBBBBBB
+                    BBBBBBBBBB
+                    FFFFFFFFFF
+
+                mapping:
+                    H: header
+                    T: content_top
+                    L: left_col
+                    R: right_col
+                    C: content
+                    B: content_bottom
+                    F: footer
+
+        3columns:
+            path: '@ApplicationSonataPage/demo_3columns_layout.html.twig'
+            name: '3 columns layout'
+            containers:
+                left_col:
+                    name: Left column
+                    blocks:
+                        - sonata.media.block.media
+                        - sonata.media.block.gallery
+                        - sonata.media.block.feature_media
+                mid_col:
+                    name: Left column
+                    blocks:
+                        - sonata.media.block.media
+                        - sonata.media.block.gallery
+                        - sonata.media.block.feature_media
+                right_col:
+                    name: Right column
+                    blocks:
+                        - sonata.news.block.recent_posts
+                        - sonata.order.block.recent_orders
+                        - sonata.product.block.recent_products
+            matrix:
+                layout: |
+                    LLLMMMMRRR
+                    LLLMMMMRRR
+                    LLLMMMMRRR
+                    LLLMMMMRRR
+                    LLLMMMMRRR
+
+                mapping:
+                    L: left_col
+                    R: right_col
+                    M: mid_col
+
+    direct_publication: '%kernel.debug%'
+
+    catch_exceptions:
+        not_found: [404]    # render 404 page with "not_found" key (name generated: _page_internal_error_{key})
+        fatal:     [500]    # so you can use the same page for different http errors or specify specific page for each error
+
+    class:
+        page: 'App\Entity\SonataPagePage'
+        snapshot: 'App\Entity\SonataPageSnapshot'
+        block: 'App\Entity\SonataPageBlock'
+        site: 'App\Entity\SonataPageSite'

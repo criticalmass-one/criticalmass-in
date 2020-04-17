@@ -3,12 +3,12 @@ sonata_admin:
     dashboard:
         blocks:
             - { type: sonata.admin.block.admin_list, position: left }
+    assets:
+        extra_javascripts:
+            - bundles/sonatapage/sonata-page.back.min.js
+        extra_stylesheets:
+            - bundles/sonatapage/sonata-page.back.min.css
 
 sonata_doctrine_orm_admin:
     audit:
         force: false
-
-sonata_block:
-    blocks:
-        sonata.admin.block.admin_list:
-            contexts: [admin]

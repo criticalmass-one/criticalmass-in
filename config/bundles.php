@@ -39,4 +39,9 @@ return [
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
     Nmure\CrawlerDetectBundle\CrawlerDetectBundle::class => ['all' => true],
     Twig\Extra\TwigExtraBundle\TwigExtraBundle::class => ['all' => true],
+    Sonata\CacheBundle\SonataCacheBundle::class => ['all' => true],
+    Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle::class => ['all' => true],
+    Sonata\NotificationBundle\SonataNotificationBundle::class => ['all' => true],
+    Sonata\EasyExtendsBundle\SonataEasyExtendsBundle::class => ['all' => true],
+    Sonata\PageBundle\SonataPageBundle::class => ['all' => true],
 ];
