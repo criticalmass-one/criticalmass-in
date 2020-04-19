@@ -1,5 +1,6 @@
 sonata_media:
     default_context: default
+    db_driver: doctrine_orm
     contexts:
         default:
             providers:
