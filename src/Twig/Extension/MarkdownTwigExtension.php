@@ -17,6 +17,8 @@ class MarkdownTwigExtension extends AbstractExtension
 
     public function markdown(string $text): string
     {
+        
+
         $converter = new CommonMarkConverter([
             'html_input' => 'strip',
             'allow_unsafe_links' => false,
