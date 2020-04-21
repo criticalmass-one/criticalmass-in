@@ -380,6 +380,9 @@
     "phar-io/version": {
         "version": "1.0.1"
     },
+    "php": {
+        "version": "7.4"
+    },
     "php-amqplib/php-amqplib": {
         "version": "v2.9.2"
     },
