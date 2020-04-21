@@ -22,15 +22,15 @@
         </service>
 
         <service id="App\Menu\Builder">
-            <argument type="service" id="knp_menu.factory" />
-            <argument type="service" id="security.token_storage" />
-            <argument type="service" id="Flagception\Manager\FeatureManagerInterface" />
-            <tag name="knp_menu.menu_builder" method="mainMenu" alias="main_menu" />
+            <argument type="service" id="knp_menu.factory"/>
+            <argument type="service" id="security.token_storage"/>
+            <argument type="service" id="Flagception\Manager\FeatureManagerInterface"/>
+            <tag name="knp_menu.menu_builder" method="mainMenu" alias="main_menu"/>
         </service>
 
         <service id="salavert.twig.time_ago" class="Salavert\Twig\Extension\TimeAgoExtension">
-            <tag name="twig.extension" />
-            <argument type="service" id="translator" />
+            <tag name="twig.extension"/>
+            <argument type="service" id="translator"/>
         </service>
     </services>
 </container>
