@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Sonata\MediaBundle;
+namespace App\Application\Sonata\MediaBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

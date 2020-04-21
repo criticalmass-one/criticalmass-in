@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Sonata\ClassificationBundle;
+namespace App\Application\Sonata\ClassificationBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

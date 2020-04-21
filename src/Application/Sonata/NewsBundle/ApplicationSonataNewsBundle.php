@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Sonata\NewsBundle;
+namespace App\Application\Sonata\NewsBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

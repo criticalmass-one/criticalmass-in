@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Sonata\ClassificationBundle\Entity;
+namespace App\Application\Sonata\ClassificationBundle\Entity;
 
 use Sonata\ClassificationBundle\Entity\BaseCollection as BaseCollection;
 

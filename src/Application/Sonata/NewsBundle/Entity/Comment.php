@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Sonata\NewsBundle\Entity;
+namespace App\Application\Sonata\NewsBundle\Entity;
 
 use Sonata\NewsBundle\Entity\BaseComment as BaseComment;
 

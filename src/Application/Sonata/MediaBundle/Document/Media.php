@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Sonata\MediaBundle\Document;
+namespace App\Application\Sonata\MediaBundle\Document;
 
 use Sonata\MediaBundle\Document\BaseMedia as BaseMedia;
 

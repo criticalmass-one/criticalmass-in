@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Sonata\ClassificationBundle\Document;
+namespace App\Application\Sonata\ClassificationBundle\Document;
 
 use Sonata\ClassificationBundle\Document\BaseCategory as BaseCategory;
 

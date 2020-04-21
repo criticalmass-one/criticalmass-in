@@ -9,9 +9,9 @@
             association mapping  : http://www.doctrine-project.org/projects/orm/2.0/docs/reference/association-mapping/en
     -->
     <entity
-        name="Application\Sonata\NewsBundle\Entity\Post"
-        table="news__post"
-        repository-class="Application\Sonata\NewsBundle\Entity\PostRepository">
+            name="App\Application\Sonata\NewsBundle\Entity\Post"
+            table="news__post"
+            repository-class="App\Application\Sonata\NewsBundle\Entity\PostRepository">
 
         <id name="id" type="integer" column="id">
             <generator strategy="AUTO"/>
