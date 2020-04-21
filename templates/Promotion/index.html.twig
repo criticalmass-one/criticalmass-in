@@ -1,0 +1,86 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}{{ promotion.title }}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% if rideList|length > 0 and promotion.hasMap %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="map" style="height: 350px;"></div>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2>
+                    {{ promotion.title }}
+                </h2>
+            </div>
+        </div>
+
+        {% if promotion.description %}
+            <div class="row">
+                <div class="col-md-12">
+                    {{ promotion.description|markdown }}
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table" id="ride-table">
+                    <thead>
+                    <tr>
+                        <th>Datum</th>
+                        <th>Uhrzeit</th>
+                        <th>Stadt</th>
+                        <th>Titel</th>
+                        <th>Treffpunkt</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for ride in rideList %}
+                        <tr>
+                            <td>
+                                {{ ride.dateTime|date('d.m.Y') }}
+                            </td>
+
+                            <td>
+                                {{ ride.dateTime|date('H:i') }}&nbsp;Uhr
+                            </td>
+
+                            <td>
+                                <a href="{{ objectPath(ride.city) }}" title="zur Seite der Stadt {{ ride.city.city }}">
+                                    {{ ride.city.city }}
+                                </a>
+                            </td>
+
+                            <td>
+                                <a href="{{ objectPath(ride) }}" title="zur Seite der Tour">
+                                    {{ ride.title }}
+                                </a>
+                            </td>
+
+                            <td>
+                                {{ ride.location }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {% if rideList|length > 0 %}
+        <script>
+            CriticalMass.loadModule('PromotionPage', null, null, function (promotionPage) {
+                promotionPage.loadRides('{{ promotion.query|raw }}&extended=true');
+                promotionPage.initMapView({{ promotion.mapCenterLatitude }}, {{ promotion.mapCenterLongitude }}, {{ promotion.mapZoomLevel }});
+            });
+        </script>
+    {% endif %}
+{% endblock %}
+

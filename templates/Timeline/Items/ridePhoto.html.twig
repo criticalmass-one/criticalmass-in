@@ -1,4 +1,4 @@
-<div class="row margin-bottom-medium">
+<div class="row margin-bottom-medium timeline-item-ride{% if not item.rideEnabled %}--disabled{% endif %}">
     {{ include('Timeline/_includes/user_column.html.twig') }}
 
     <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
@@ -11,7 +11,7 @@
                 <a href="{{ objectPath(item.ride, 'caldera_criticalmass_photo_ride_list') }}">
                     {{ item.counter }} Fotos
                 </a> zur Tour
-                <strong>
+                <strong class="ride-title">
                     <a href="{{ objectPath(item.ride) }}">
                         {{ item.ride.title }}
                     </a>

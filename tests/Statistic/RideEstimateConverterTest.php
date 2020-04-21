@@ -7,7 +7,7 @@ use App\Entity\RideEstimate;
 use App\Entity\Track;
 use Doctrine\Common\Persistence\ObjectManager;
 use PHPUnit\Framework\TestCase;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 class RideEstimateConverterTest extends TestCase
 {
@@ -31,7 +31,7 @@ class RideEstimateConverterTest extends TestCase
             ->expects($this->once())
             ->method('flush');
 
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
         $registry
             ->expects($this->exactly(2))
             ->method('getManager')
@@ -54,7 +54,7 @@ class RideEstimateConverterTest extends TestCase
 
         $track->setRideEstimate($rideEstimate);
 
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
         $registry
             ->expects($this->never())
             ->method('getManager');

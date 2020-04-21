@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\Router\Annotation as Routing;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\RouteableInterface;
@@ -13,7 +14,6 @@ use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use App\Criticalmass\Router\Annotation as Routing;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -77,11 +77,6 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
      * @ORM\OneToMany(targetEntity="Participation", mappedBy="user")
      */
     protected $participations;
-
-    /**
-     * @ORM\OneToMany(targetEntity="BikerightVoucher", mappedBy="user")
-     */
-    protected $bikerightVouchers;
 
     /**
      * @ORM\Column(type="datetime")
@@ -179,6 +174,16 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
      */
     private $blogPosts;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Heatmap", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $heatmap;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\TrackImportCandidate", mappedBy="user", orphanRemoval=true)
+     */
+    private $trackImportCandidates;
+
     public function __construct()
     {
         parent::__construct();
@@ -189,9 +194,9 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
 
         $this->tracks = new ArrayCollection();
         $this->participations = new ArrayCollection();
-        $this->bikerightVouchers = new ArrayCollection();
         $this->blogPosts = new ArrayCollection();
         $this->socialNetworkProfiles = new ArrayCollection();
+        $this->trackImportCandidates = new ArrayCollection();
     }
 
     public function setId(int $id): User
@@ -466,25 +471,6 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         return $this->twitterId !== null;
     }
 
-    public function addBikerightVoucher(BikerightVoucher $bikerightVoucher): User
-    {
-        $this->bikerightVouchers->add($bikerightVoucher);
-
-        return $this;
-    }
-
-    public function getBikerightVouchers(): Collection
-    {
-        return $this->bikerightVouchers;
-    }
-
-    public function removeBikerightVoucher(BikerightVoucher $bikerightVoucher): User
-    {
-        $this->bikerightVouchers->removeElement($bikerightVoucher);
-
-        return $this;
-    }
-
     public function addCycle(CityCycle $cityCycle): User
     {
         $this->cycles->add($cityCycle);
@@ -631,6 +617,55 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
             // set the owning side to null (unless already changed)
             if ($socialNetworkProfile->getCreatedBy() === $this) {
                 $socialNetworkProfile->setCreatedBy(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getHeatmap(): ?Heatmap
+    {
+        return $this->heatmap;
+    }
+
+    public function setHeatmap(?Heatmap $heatmap): self
+    {
+        $this->heatmap = $heatmap;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newUser = $heatmap === null ? null : $this;
+        if ($newUser !== $heatmap->getUser()) {
+            $heatmap->setUser($newUser);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TrackImportCandidate[]
+     */
+    public function getTrackImportCandidates(): Collection
+    {
+        return $this->trackImportCandidates;
+    }
+
+    public function addTrackImportCandidate(TrackImportCandidate $trackImportCandidate): self
+    {
+        if (!$this->trackImportCandidates->contains($trackImportCandidate)) {
+            $this->trackImportCandidates[] = $trackImportCandidate;
+            $trackImportCandidate->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrackImportCandidate(TrackImportCandidate $trackImportCandidate): self
+    {
+        if ($this->trackImportCandidates->contains($trackImportCandidate)) {
+            $this->trackImportCandidates->removeElement($trackImportCandidate);
+            // set the owning side to null (unless already changed)
+            if ($trackImportCandidate->getUser() === $this) {
+                $trackImportCandidate->setUser(null);
             }
         }
 

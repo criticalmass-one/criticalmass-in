@@ -56,7 +56,7 @@
 
                             {% if blog_post.intro %}
                                 <div class="blog-post-intro">
-                                    {{ blog_post.intro|raw|nl2br }}
+                                    {{ blog_post.intro|markdown }}
                                 </div>
                             {% endif %}
                         </div>
@@ -64,7 +64,7 @@
 
                     <div class="row">
                         <div class="col-md-12 blog-post-content">
-                            {{ blog_post.text|raw|nl2br }}
+                            {{ blog_post.text|markdown }}
                         </div>
                     </div>
 

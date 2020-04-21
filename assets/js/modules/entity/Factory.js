@@ -78,7 +78,7 @@ define([], function () {
 
     Factory.prototype._transferProperties = function (entity, data) {
         var object = null;
-
+        
         if (data !== null && typeof data === 'object') {
             object = data;
         } else {

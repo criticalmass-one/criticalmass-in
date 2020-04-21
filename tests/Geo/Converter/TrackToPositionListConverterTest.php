@@ -15,8 +15,7 @@ class TrackToPositionListConverterTest extends TestCase
 {
     public function testLatLngTrackConverter(): void
     {
-        $track = new Track();
-        $track->setTrackFilename('test.gpx');
+        $track = $this->createTestTrack();
 
         $trackReader = new TrackReader($this->createFilesystemMockForLatLngPosition());
         $trackReader->loadTrack($track);
@@ -38,8 +37,7 @@ class TrackToPositionListConverterTest extends TestCase
 
     public function testLatLngDateTimeTrackConverter(): void
     {
-        $track = new Track();
-        $track->setTrackFilename('test.gpx');
+        $track = $this->createTestTrack();
 
         $trackReader = new TrackReader($this->createFilesystemMockForLatLngDateTimePosition());
         $trackReader->loadTrack($track);
@@ -61,8 +59,7 @@ class TrackToPositionListConverterTest extends TestCase
 
     public function testLatLngAltitudeTrackConverter(): void
     {
-        $track = new Track();
-        $track->setTrackFilename('test.gpx');
+        $track = $this->createTestTrack();
 
         $trackReader = new TrackReader($this->createFilesystemMockForLatLngAltitudePosition());
         $trackReader->loadTrack($track);
@@ -84,8 +81,7 @@ class TrackToPositionListConverterTest extends TestCase
 
     public function testLatLngDateTimeAltitudeTrackConverter(): void
     {
-        $track = new Track();
-        $track->setTrackFilename('test.gpx');
+        $track = $this->createTestTrack();
 
         $trackReader = new TrackReader($this->createFilesystemMockForLatLngDateTimeAltitudePosition());
         $trackReader->loadTrack($track);
@@ -101,6 +97,25 @@ class TrackToPositionListConverterTest extends TestCase
             ->add((new Position(53.5493660, 9.9790330))->setAltitude(25.0)->setDateTime(new \DateTime('2016-11-25 15:40:24', new \DateTimeZone('UTC'))))
             ->add((new Position(53.5493650, 9.9790790))->setAltitude(24.8)->setDateTime(new \DateTime('2016-11-25 15:40:26', new \DateTimeZone('UTC'))))
             ->add((new Position(53.5493610, 9.9791320))->setAltitude(24.6)->setDateTime(new \DateTime('2016-11-25 15:40:29', new \DateTimeZone('UTC'))));
+
+        $this->assertEquals($expectedPositionList, $actualPositionList);
+    }
+
+    public function testConverterWithStartEndPoints(): void
+    {
+        $track = $this->createTestTrack(7, 2, 4);
+
+        $trackReader = new TrackReader($this->createFilesystemMockForLatLngPosition());
+        $trackReader->loadTrack($track);
+
+        $converter = new TrackToPositionListConverter($trackReader);
+        $actualPositionList = $converter->convert($track);
+
+        $expectedPositionList = new PositionList();
+        $expectedPositionList
+            ->add(new Position(53.5493620, 9.9789640))
+            ->add(new Position(53.5493660, 9.9790330))
+            ->add(new Position(53.5493650, 9.9790790));
 
         $this->assertEquals($expectedPositionList, $actualPositionList);
     }
@@ -253,5 +268,17 @@ class TrackToPositionListConverterTest extends TestCase
 ');
 
         return $filesystem;
+    }
+
+    protected function createTestTrack(int $points = 6, int $startPoint = 0, int $endPoint = 5): Track
+    {
+        $track = new Track();
+        $track
+            ->setTrackFilename('test.gpx')
+            ->setStartPoint($startPoint)
+            ->setPoints($points)
+            ->setEndPoint($endPoint);
+
+        return $track;
     }
 }

@@ -17,6 +17,7 @@ use App\Criticalmass\Router\Annotation as Routing;
  * @Vich\Uploadable
  * @ORM\Entity(repositoryClass="App\Repository\BlogPostRepository")
  * @Routing\DefaultRoute(name="caldera_criticalmass_blog_post")
+ * @Routing\DefaultParameter(routeParameterName="host", parameterName="domain.blog")
  */
 class BlogPost implements RouteableInterface, PostableInterface, ViewableEntity
 {

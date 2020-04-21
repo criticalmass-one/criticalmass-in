@@ -2,8 +2,8 @@
 
 namespace App\Criticalmass\Timeline\Collector;
 
-use App\Entity\Post;
 use App\Criticalmass\Timeline\Item\RideCommentItem;
+use App\Entity\Post;
 
 class RideCommentCollector extends AbstractTimelineCollector
 {
@@ -21,7 +21,8 @@ class RideCommentCollector extends AbstractTimelineCollector
                 ->setRide($postEntity->getRide())
                 ->setPost($postEntity)
                 ->setText($postEntity->getMessage())
-                ->setDateTime($postEntity->getDateTime());
+                ->setDateTime($postEntity->getDateTime())
+                ->setRideEnabled($postEntity->getRide()->isEnabled());
 
             $this->addItem($item);
         }

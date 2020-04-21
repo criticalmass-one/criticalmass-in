@@ -13,6 +13,7 @@ define(['Map', 'LocationMarker', 'typeahead.jquery', 'bloodhound', 'bootstrap-da
         rideDateSelector: '#ride_dateTime_date',
         messageDoubleMonthRideSelector: '#doubleMonthRide',
         messageDoubleDayRideSelector: '#doubleDayRide',
+        missingLocationMessage: 'Du hast bislang leider keinen Treffpunkt auf der Karte markiert. Bitte ziehe den gelben Marker auf den Treffpunkt.',
         submitButtonSelector: '#rideSubmitButton',
         cityMarkerPopupText: 'Ich bin der Mittelpunkt der Stadt',
         cityStandardLocationPopupText: 'Zieh mich auf den Treffpunkt!',
@@ -56,6 +57,23 @@ define(['Map', 'LocationMarker', 'typeahead.jquery', 'bloodhound', 'bootstrap-da
         }
 
         $(this.settings.rideDateSelector).on('change', checkFunction);
+
+        function checkLocation(form) {
+            form.preventDefault();
+
+            var rideLocationLatitude = $(that.settings.rideLatitudeInputSelector).val();
+            var rideLocationLongitude = $(that.settings.rideLongitudeInputSelector).val();
+
+            if (!rideLocationLatitude || !rideLocationLongitude) {
+                alert(that.settings.missingLocationMessage);
+            } else {
+                $form = $('form');
+                $form.off('submit');
+                $form.submit();
+            }
+        }
+
+        $('form').on('submit', checkLocation);
     };
 
     EditRidePage.prototype._initLatLngs = function () {
@@ -232,7 +250,7 @@ define(['Map', 'LocationMarker', 'typeahead.jquery', 'bloodhound', 'bootstrap-da
                         var html = '';
                         html += '<div class="row padding-top-small padding-bottom-small">';
                         html += '<div class="col-md-12">';
-                        html += '<i class="fa fa-map-marker"></i>&nbsp;' + data.location;
+                        html += '<i class="far fa-map-marker"></i>&nbsp;' + data.location;
                         html += '</div>';
                         html += '</div>';
 
@@ -259,7 +277,8 @@ define(['Map', 'LocationMarker', 'typeahead.jquery', 'bloodhound', 'bootstrap-da
             format: 'dd.mm.yyyy',
             autoclose: true,
             todayHighlight: true,
-            weekStart: 1
+            weekStart: 1,
+            zIndexOffset: 1000
         });
     };
 

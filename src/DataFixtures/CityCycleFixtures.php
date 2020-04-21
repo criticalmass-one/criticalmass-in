@@ -38,16 +38,6 @@ class CityCycleFixtures extends Fixture implements DependentFixtureInterface
 
         $manager->persist($berlin2);
 
-        $halle = new CityCycle();
-        $halle
-            ->setCity($this->getReference('city-halle'))
-            ->setDayOfWeek(CityCycle::DAY_FRIDAY)
-            ->setWeekOfMonth(CityCycle::WEEK_LAST)
-            ->setTime(new \DateTime('18:00'))
-            ->setValidFrom(new \DateTime('2018-01-01'));
-
-        $manager->persist($halle);
-
         $mainz1 = new CityCycle();
         $mainz1
             ->setCity($this->getReference('city-mainz'))
@@ -80,7 +70,7 @@ class CityCycleFixtures extends Fixture implements DependentFixtureInterface
 
         $esslingen = new CityCycle();
         $esslingen
-            ->setCity($this->getReference('city-esslingen'))
+            ->setCity($this->getReference('city-schwerin'))
             ->setDayOfWeek(CityCycle::DAY_FRIDAY)
             ->setWeekOfMonth(CityCycle::WEEK_SECOND)
             ->setTime(new \DateTime('18:00'))

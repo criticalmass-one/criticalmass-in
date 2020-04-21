@@ -3,17 +3,17 @@
 namespace App\Criticalmass\OrderedEntities;
 
 use App\Criticalmass\OrderedEntities\CriteriaBuilder\CriteriaBuilderInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 class OrderedEntitiesManager implements OrderedEntitiesManagerInterface
 {
-    /** @var RegistryInterface $registry  */
+    /** @var ManagerRegistry $registry  */
     protected $registry;
 
     /** @var CriteriaBuilderInterface $criteriaBuilder */
     protected $criteriaBuilder;
 
-    public function __construct(RegistryInterface $registry, CriteriaBuilderInterface $criteriaBuilder)
+    public function __construct(ManagerRegistry $registry, CriteriaBuilderInterface $criteriaBuilder)
     {
         $this->registry = $registry;
         $this->criteriaBuilder = $criteriaBuilder;
@@ -21,12 +21,12 @@ class OrderedEntitiesManager implements OrderedEntitiesManagerInterface
 
     public function getPrevious(OrderedEntityInterface $orderedEntity): ?OrderedEntityInterface
     {
-        return $this->findEntity($orderedEntity, SortOrder::DESC);
+        return $this->findEntity($orderedEntity, SortOrder::ASC);
     }
 
     public function getNextEntity(OrderedEntityInterface $orderedEntity): ?OrderedEntityInterface
     {
-        return $this->findEntity($orderedEntity, SortOrder::ASC);
+        return $this->findEntity($orderedEntity, SortOrder::DESC);
     }
 
     protected function findEntity(OrderedEntityInterface $orderedEntity, string $direction): ?OrderedEntityInterface

@@ -4,17 +4,17 @@ namespace App\Factory;
 
 use App\Entity\Ride;
 use App\Model\Frontpage\RideList\Month;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 class FrontpageRideListFactory
 {
-    /** @var RegistryInterface $doctrine */
+    /** @var ManagerRegistry $doctrine */
     protected $doctrine;
 
     /** @var Month $monthModel */
     protected $monthModel = null;
 
-    public function __construct(RegistryInterface $doctrine)
+    public function __construct(ManagerRegistry $doctrine)
     {
         $this->doctrine = $doctrine;
     }

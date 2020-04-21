@@ -2,20 +2,18 @@
 
 namespace App\Controller\City;
 
-use App\Criticalmass\CityPopulationFetcher\CityPopulationFetcherInterface;
-use App\Criticalmass\CityPopulationFetcher\WikidataCityPopulationFetcher;
+use App\Controller\AbstractController;
 use App\Criticalmass\CitySlug\Handler\CitySlugHandler;
 use App\Criticalmass\OpenStreetMap\NominatimCityBridge\NominatimCityBridge;
 use App\Criticalmass\Router\ObjectRouterInterface;
+use App\Entity\City;
+use App\Entity\Region;
 use App\Event\City\CityCreatedEvent;
 use App\Event\City\CityUpdatedEvent;
 use App\Factory\City\CityFactoryInterface;
+use App\Form\Type\CityType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use App\Controller\AbstractController;
-use App\Entity\City;
-use App\Entity\Region;
-use App\Form\Type\CityType;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -113,13 +111,7 @@ class CityManagementController extends AbstractController
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
 
-            return $this->render('CityManagement/edit.html.twig', [
-                'city' => $city,
-                'form' => $form->createView(),
-                'country' => $region->getParent()->getName(),
-                'state' => $region->getName(),
-                'region' => $region,
-            ]);
+            return $this->redirect($objectRouter->generate($city));
         }
 
         return $this->render('CityManagement/edit.html.twig', [
@@ -147,10 +139,10 @@ class CityManagementController extends AbstractController
         ]);
 
         if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->editPostAction($request, $user, $eventDispatcher, $city, $form);
+            return $this->editPostAction($request, $user, $eventDispatcher, $city, $form, $objectRouter);
         }
 
-        return $this->editGetAction($request, $user, $eventDispatcher, $city, $form);
+        return $this->editGetAction($request, $user, $eventDispatcher, $city, $form, $objectRouter);
     }
 
     protected function editGetAction(
@@ -158,7 +150,8 @@ class CityManagementController extends AbstractController
         UserInterface $user = null,
         EventDispatcherInterface $eventDispatcher,
         City $city,
-        FormInterface $form
+        FormInterface $form,
+        ObjectRouterInterface $objectRouter
     ): Response {
         return $this->render('CityManagement/edit.html.twig', [
             'city' => $city,
@@ -174,7 +167,8 @@ class CityManagementController extends AbstractController
         UserInterface $user = null,
         EventDispatcherInterface $eventDispatcher,
         City $city,
-        FormInterface $form
+        FormInterface $form,
+        ObjectRouterInterface $objectRouter
     ): Response {
         $form->handleRequest($request);
 
@@ -188,6 +182,8 @@ class CityManagementController extends AbstractController
             $eventDispatcher->dispatch(CityUpdatedEvent::NAME, new CityUpdatedEvent($city));
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
+
+            return $this->redirect($objectRouter->generate($city));
         }
 
         return $this->render('CityManagement/edit.html.twig', [
