@@ -1,5 +1,32 @@
 {% extends 'Template/MasterTemplate.html.twig' %}
 
 {% block masterContent %}
-{% include "FOSOAuthServerBundle:Authorize:authorize_content.html.twig" %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {{ form_start(form, {'method': 'POST', 'action': path('fos_oauth_server_authorize'), 'label_attr': {'class': 'fos_oauth_server_authorize'} }) }}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">OAuth</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="btn-group-lg">
+                            <input class="btn btn-success" type="submit" name="accepted"
+                                   value="{{ 'authorize.accept'|trans({}, 'FOSOAuthServerBundle') }}"/>
+                            <input class="btn btn-danger" type="submit" name="rejected"
+                                   value="{{ 'authorize.reject'|trans({}, 'FOSOAuthServerBundle') }}"/>
+                        </div>
+                    </div>
+                </div>
+
+                {{ form_row(form.client_id) }}
+                {{ form_row(form.response_type) }}
+                {{ form_row(form.redirect_uri) }}
+                {{ form_row(form.state) }}
+                {{ form_row(form.scope) }}
+                {{ form_rest(form) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
 {% endblock masterContent %}
