@@ -5,19 +5,19 @@ namespace App\Criticalmass\SocialNetwork\FeedFetcher;
 use App\Entity\SocialNetworkFeedItem;
 use App\Entity\SocialNetworkProfile;
 use App\Criticalmass\SocialNetwork\NetworkFeedFetcher\NetworkFeedFetcherInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 class FeedFetcher
 {
     /** @var array $networkFetcherList */
     protected $networkFetcherList = [];
 
-    /** @var RegistryInterface $doctrine */
+    /** @var ManagerRegistry $doctrine */
     protected $doctrine;
 
     protected $feedItemList = [];
 
-    public function __construct(RegistryInterface $doctrine)
+    public function __construct(ManagerRegistry $doctrine)
     {
         $this->doctrine = $doctrine;
     }

@@ -2,8 +2,8 @@
 
 namespace App\Criticalmass\Timeline\Collector;
 
-use App\Entity\Photo;
 use App\Criticalmass\Timeline\Item\RidePhotoItem;
+use App\Entity\Photo;
 
 class RidePhotoCollector extends AbstractTimelineCollector
 {
@@ -46,7 +46,8 @@ class RidePhotoCollector extends AbstractTimelineCollector
                     ->setUser($lastPhoto->getUser())
                     ->setRide($lastPhoto->getRide())
                     ->setDateTime($lastPhoto->getCreationDateTime())
-                    ->setCounter($photoCounter);
+                    ->setCounter($photoCounter)
+                    ->setRideEnabled($lastPhoto->getRide()->isEnabled());
 
                 $this->addItem($item);
             }

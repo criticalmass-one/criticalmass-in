@@ -13,7 +13,7 @@ class RideRepository extends EntityRepository
 {
     public function findCurrentRideForCity(City $city, bool $cycleMandatory = false, bool $slugsAllowed = true): ?Ride
     {
-        $dateTime = new \DateTime();
+        $dateTime = \DateTime::createFromFormat('U', (string)time()); // this will allow to mock the clock in functional tests
 
         $builder = $this->createQueryBuilder('r');
 
@@ -636,6 +636,22 @@ class RideRepository extends EntityRepository
             ->setMaxResults($limit);
 
         $query = $qb->getQuery();
+
+        return $query->getResult();
+    }
+
+    public function findByCycle(CityCycle $cityCycle, string $orderDireciton = 'DESC'): array
+    {
+        $builder = $this->createQueryBuilder('r');
+
+        $builder
+            ->select('r')
+            ->where($builder->expr()->eq('r.cycle', ':cycle'))
+            ->addOrderBy('r.dateTime', $orderDireciton)
+            ->setParameter('cycle', $cityCycle);
+
+
+        $query = $builder->getQuery();
 
         return $query->getResult();
     }

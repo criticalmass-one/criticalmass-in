@@ -10,7 +10,7 @@ use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,9 +57,12 @@ class RideController extends BaseController
      * )
      * @ParamConverter("city", class="App:City")
      */
-    public function showCurrentAction(Request $request, City $city, RegistryInterface $registry): Response
+    public function showCurrentAction(Request $request, City $city, ManagerRegistry $registry): Response
     {
-        $ride = $registry->getRepository(Ride::class)->findCurrentRideForCity($city, (bool)$request->get('cycleMandatory', false), (bool)$request->get('slugsAllowed', true));
+        $cycleMandatory = $request->query->getBoolean('cycleMandatory', false);
+        $slugsAllowed = $request->query->getBoolean('slugsAllowed', true);
+        
+        $ride = $registry->getRepository(Ride::class)->findCurrentRideForCity($city, $cycleMandatory, $slugsAllowed);
 
         if (!$ride) {
             return new JsonResponse([], 200, []); // @todo this should return 404, but i have no clue how to handle multiple jquery requests then
@@ -78,6 +81,10 @@ class RideController extends BaseController
      * Get a list of critical mass rides.
      *
      * You may specify your query with the following parameters.
+     *
+     * <strong>List length</strong>
+     *
+     * The length of your results defaults to 10. Use <code>size</code> to request more or less results.
      *
      * <strong>Regional query parameters</strong>
      *
@@ -124,6 +131,8 @@ class RideController extends BaseController
      *
      * You may use the <code>distanceOrderDirection</code> parameter in combination with the radius query to sort the result list by the ride’s distance to the center coord.
      *
+     * Apply <code>startValue</code> to deliver a value to start your ordered list with.
+     *
      * @ApiDoc(
      *  resource=true,
      *  description="Lists rides",
@@ -143,7 +152,9 @@ class RideController extends BaseController
      *     {"name"="orderBy", "dataType"="string", "required"=false, "description"="Choose a property to sort the list by."},
      *     {"name"="orderDirection", "dataType"="string", "required"=false, "description"="Sort ascending or descending."},
      *     {"name"="distanceOrderDirection", "dataType"="string", "required"=false, "description"="Enable distance sorting in combination with radius query."},
-     *     {"name"="extended", "dataType"="boolean", "required"=false, "description"="Set true to retrieve a more detailed list."}
+     *     {"name"="startValue", "dataType"="string", "required"=false, "description"="Start ordered list with provided value."},
+     *     {"name"="extended", "dataType"="boolean", "required"=false, "description"="Set true to retrieve a more detailed list."},
+     *     {"name"="size", "dataType"="integer", "required"=false, "description"="Length of resulting list. Defaults to 10."}
      *  },
      *  section="Ride"
      * )

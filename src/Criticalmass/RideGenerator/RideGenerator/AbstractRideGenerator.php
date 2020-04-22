@@ -2,60 +2,51 @@
 
 namespace App\Criticalmass\RideGenerator\RideGenerator;
 
-use App\Entity\City;
+use App\Criticalmass\RideGenerator\RideCalculator\RideCalculator;
 use App\Criticalmass\RideGenerator\RideCalculator\RideCalculatorInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use App\Criticalmass\RideNamer\RideNamerListInterface;
+use App\Criticalmass\Util\DateTimeUtil;
+use App\Entity\CityCycle;
+use App\Entity\Ride;
+use Doctrine\Persistence\ManagerRegistry;
 
 abstract class AbstractRideGenerator implements RideGeneratorInterface
 {
-    /** @var int year */
-    protected $year;
-
-    /** @var int $month */
-    protected $month;
-
-    /** @var array $cityList */
-    protected $cityList;
+    /** @var array $dateTimeList */
+    protected $dateTimeList = [];
 
     /** @var array $rideList */
     protected $rideList = [];
 
-    /** @var RegistryInterface $doctrine */
+    /** @var ManagerRegistry $doctrine */
     protected $doctrine;
 
-    /** @var RideCalculatorInterface $rideCalculator */
-    protected $rideCalculator;
+    /** @var RideNamerListInterface $rideNamerList */
+    protected $rideNamerList;
 
-    public function __construct(RegistryInterface $doctrine, RideCalculatorInterface $rideCalculator)
+    public function __construct(ManagerRegistry $doctrine, RideNamerListInterface $rideNamerList)
     {
         $this->doctrine = $doctrine;
-        $this->rideCalculator = $rideCalculator;
+        $this->rideNamerList = $rideNamerList;
     }
 
-    public function addCity(City $city): RideGeneratorInterface
+    public function setDateTime(\DateTime $dateTime): RideGeneratorInterface
     {
-        $this->cityList[] = $city;
+        $this->dateTimeList = [$dateTime];
 
         return $this;
     }
 
-    public function setCityList(array $cityList): RideGeneratorInterface
+    public function addDateTime(\DateTime $dateTime): RideGeneratorInterface
     {
-        $this->cityList = $cityList;
+        $this->dateTimeList[] = $dateTime;
 
         return $this;
     }
 
-    public function setYear(int $year): RideGeneratorInterface
+    public function setDateTimeList(array $dateTimeList): RideGeneratorInterface
     {
-        $this->year = $year;
-
-        return $this;
-    }
-
-    public function setMonth(int $month): RideGeneratorInterface
-    {
-        $this->month = $month;
+        $this->dateTimeList = $dateTimeList;
 
         return $this;
     }
@@ -63,6 +54,24 @@ abstract class AbstractRideGenerator implements RideGeneratorInterface
     public function getRideList(): array
     {
         return $this->rideList;
+    }
+
+    protected function hasRideAlreadyBeenCreated(CityCycle $cityCycle, \DateTime $startDateTime): bool
+    {
+        $endDateTime = DateTimeUtil::getMonthEndDateTime($startDateTime);
+
+        $existingRides = $this->doctrine->getRepository(Ride::class)->findRidesByCycleInInterval($cityCycle, $startDateTime, $endDateTime);
+
+        return count($existingRides) > 0;
+    }
+
+    protected function getRideCalculatorForCycle(CityCycle $cityCycle): RideCalculatorInterface
+    {
+        if (($rideCalculatorFqcn = $cityCycle->getRideCalculatorFqcn()) && class_exists($rideCalculatorFqcn)) {
+            return new $rideCalculatorFqcn($this->rideNamerList);
+        }
+
+        return new RideCalculator($this->rideNamerList);
     }
 
     public abstract function execute(): RideGeneratorInterface;

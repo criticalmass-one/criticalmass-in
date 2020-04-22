@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\DataQuery\Annotation as DataQuery;
+use App\Criticalmass\DataQuery\Annotation\EntityAnnotation as DataQuery;
 use App\Criticalmass\Geocoding\ReverseGeocodeable;
 use App\Criticalmass\OrderedEntities\Annotation as OE;
 use App\Criticalmass\OrderedEntities\OrderedEntityInterface;
@@ -14,6 +14,7 @@ use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\Criticalmass\Weather\EntityInterface\WeatherableInterface;
 use App\Criticalmass\Weather\EntityInterface\WeatherInterface;
 use App\EntityInterface\AuditableInterface;
+use App\EntityInterface\CoordinateInterface;
 use App\EntityInterface\ElasticSearchPinInterface;
 use App\EntityInterface\ParticipateableInterface;
 use App\EntityInterface\PhotoInterface;
@@ -22,6 +23,7 @@ use App\EntityInterface\RouteableInterface;
 use App\EntityInterface\StaticMapableInterface;
 use App\Validator\Constraint as CriticalAssert;
 use Caldera\GeoBasic\Coord\Coord;
+use Caldera\GeoBasic\Coord\CoordInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -39,7 +41,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Vich\Uploadable
  * @Routing\DefaultRoute(name="caldera_criticalmass_ride_show")
  */
-class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, Shareable, ReverseGeocodeable, WeatherableInterface, OrderedEntityInterface
+class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, Shareable, ReverseGeocodeable, WeatherableInterface, OrderedEntityInterface, CoordinateInterface
 {
     /**
      * @ORM\Id
@@ -130,6 +132,8 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Expose
      * @JMS\Type("DateTime<'U'>")
      * @OE\Order(direction="asc")
+     * @DataQuery\Sortable
+     * @DataQuery\DateTimeQueryable(format="strict_date", pattern="Y-m-d")
      */
     protected $dateTime;
 
@@ -148,8 +152,9 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Expose
      * @DataQuery\Sortable
      * @DataQuery\Queryable
+     * @var float $latitude
      */
-    protected $latitude;
+    protected $latitude = 0.0;
 
     /**
      * @ORM\Column(type="float", nullable=true)
@@ -157,8 +162,9 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Expose
      * @DataQuery\Sortable
      * @DataQuery\Queryable
+     * @var float $longitude
      */
-    protected $longitude;
+    protected $longitude = 0.0;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
@@ -322,12 +328,16 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @var bool $enabled
      * @ORM\Column(type="boolean", options={"default"=true})
      * @OE\Boolean(true)
+     * @JMS\Groups({"ride-list"})
+     * @JMS\Expose
      */
     protected $enabled = true;
 
     /**
      * @ORM\Column(type="RideDisabledReasonType", nullable=true)
      * @DoctrineAssert\Enum(entity="App\DBAL\Type\RideDisabledReasonType")
+     * @JMS\Groups({"ride-list"})
+     * @JMS\Expose
      */
     protected $disabledReason;
 
@@ -340,6 +350,13 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @ORM\OneToMany(targetEntity="App\Entity\TrackImportCandidate", mappedBy="ride")
      */
     private $trackImportCandidates;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     * @JMS\Groups({"ride-list"})
+     * @JMS\Expose
+     */
+    private $disabledReasonMessage;
 
     public function __construct()
     {
@@ -394,8 +411,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     }
 
     /**
-     * @DataQuery\Sortable
-     * @DataQuery\Queryable
      * @return \DateTime|null
      */
     public function getDateTime(): ?\DateTime
@@ -427,7 +442,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         return $this->city;
     }
 
-    public function setLatitude(float $latitude = null): Ride
+    public function setLatitude(float $latitude = null): CoordinateInterface
     {
         $this->latitude = $latitude;
 
@@ -439,7 +454,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         return $this->latitude;
     }
 
-    public function setLongitude(float $longitude = null): Ride
+    public function setLongitude(float $longitude = null): CoordinateInterface
     {
         $this->longitude = $longitude;
 
@@ -1150,6 +1165,23 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
                 $trackImportCandidate->setRide(null);
             }
         }
+
+        return $this;
+    }
+
+    public function toCoord(): CoordInterface
+    {
+        return new Coord($this->latitude, $this->longitude);
+    }
+
+    public function getDisabledReasonMessage(): ?string
+    {
+        return $this->disabledReasonMessage;
+    }
+
+    public function setDisabledReasonMessage(?string $disabledReasonMessage): self
+    {
+        $this->disabledReasonMessage = $disabledReasonMessage;
 
         return $this;
     }

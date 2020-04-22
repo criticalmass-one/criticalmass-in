@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
-use App\Criticalmass\DataQuery\Annotation as DataQuery;
+use App\Criticalmass\DataQuery\Annotation\QueryAnnotation as DataQuery;
 use App\Entity\City;
 use Symfony\Component\Validator\Constraints as Constraints;
 
@@ -36,5 +36,12 @@ class CityQuery extends AbstractQuery implements DoctrineQueryInterface, Elastic
     public function createElasticQuery(): \Elastica\Query\AbstractQuery
     {
         return new \Elastica\Query\Term(['city' => $this->city->getCity()]);
+    }
+
+    public function isOverridenBy(): array
+    {
+        return [
+            RideQuery::class,
+        ];
     }
 }

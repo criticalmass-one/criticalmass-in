@@ -5,6 +5,7 @@ namespace App\Form\Type;
 use App\DBAL\Type\RideDisabledReasonType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class RideDisableType extends AbstractType
@@ -16,7 +17,10 @@ class RideDisableType extends AbstractType
             'choices' => array_flip(RideDisabledReasonType::$choices),
             'expanded' => true,
             'multiple' => false,
-        ]);
+        ])
+            ->add('disabledReasonMessage', TextareaType::class, [
+                'required' => false,
+            ]);
     }
 
     public function getName(): string

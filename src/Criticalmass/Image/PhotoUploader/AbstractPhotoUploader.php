@@ -7,12 +7,12 @@ use App\Entity\Ride;
 use App\Entity\Track;
 use App\Entity\User;
 use League\Flysystem\FilesystemInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 abstract class AbstractPhotoUploader implements PhotoUploaderInterface
 {
-    /** @var RegistryInterface $doctrine */
+    /** @var ManagerRegistry $doctrine */
     protected $doctrine;
 
     /** @var FilesystemInterface $filesystem */
@@ -33,7 +33,7 @@ abstract class AbstractPhotoUploader implements PhotoUploaderInterface
     /** @var UploadFakerInterface $uploadFaker */
     protected $uploadFaker;
 
-    public function __construct(RegistryInterface $doctrine, EventDispatcherInterface $eventDispatcher, FilesystemInterface $filesystem, UploadFakerInterface $uploadFaker)
+    public function __construct(ManagerRegistry $doctrine, EventDispatcherInterface $eventDispatcher, FilesystemInterface $filesystem, UploadFakerInterface $uploadFaker)
     {
         $this->doctrine = $doctrine;
         $this->filesystem = $filesystem;

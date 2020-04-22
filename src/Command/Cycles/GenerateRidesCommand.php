@@ -2,10 +2,11 @@
 
 namespace App\Command\Cycles;
 
+use App\Criticalmass\RideGenerator\RideGenerator\CityRideGeneratorInterface;
+use App\Criticalmass\RideGenerator\RideGenerator\RideGeneratorInterface;
 use App\Entity\City;
 use App\Entity\Ride;
-use App\Criticalmass\RideGenerator\RideGenerator\RideGeneratorInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
@@ -19,10 +20,10 @@ class GenerateRidesCommand extends Command
     /** @var RideGeneratorInterface $rideGenerator */
     protected $rideGenerator;
 
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
-    public function __construct($name = null, RideGeneratorInterface $rideGenerator, RegistryInterface $registry)
+    public function __construct($name = null, CityRideGeneratorInterface $rideGenerator, ManagerRegistry $registry)
     {
         $this->rideGenerator = $rideGenerator;
         $this->registry = $registry;
@@ -74,21 +75,15 @@ class GenerateRidesCommand extends Command
             $monthInterval = new \DateInterval('P1M');
 
             do {
-                $this->rideGenerator
-                    ->setMonth((int) $fromDateTime->format('m'))
-                    ->setYear((int) $fromDateTime->format('Y'))
-                    ->setCityList($cityList)
-                    ->execute();
+                $this->rideGenerator->addDateTime($fromDateTime);
 
                 $fromDateTime->add($monthInterval);
             } while ($fromDateTime <= $untilDateTime);
         } elseif ($dateTime) {
-            $this->rideGenerator
-                ->setMonth((int) $dateTime->format('m'))
-                ->setYear((int) $dateTime->format('Y'))
-                ->setCityList($cityList)
-                ->execute();
+            $this->rideGenerator->setDateTime($dateTime);
         }
+
+        $this->rideGenerator->setCityList($cityList)->execute();
 
         $table = new Table($output);
         $table->setHeaders(['City', 'DateTime Location', 'DateTime UTC', 'Location', 'Title', 'Cycle Id']);

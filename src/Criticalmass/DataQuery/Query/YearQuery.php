@@ -2,14 +2,14 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
-use App\Criticalmass\DataQuery\Annotation as DataQuery;
+use App\Criticalmass\DataQuery\Annotation\QueryAnnotation as DataQuery;
 use App\Criticalmass\Util\DateTimeUtil;
 use Symfony\Component\Validator\Constraints as Constraints;
 
 /**
  * @DataQuery\RequiredEntityProperty(propertyName="dateTime", propertyType="DateTime")
  */
-class YearQuery extends AbstractQuery implements ElasticQueryInterface, DoctrineQueryInterface
+class YearQuery extends AbstractDateTimeQuery implements ElasticQueryInterface, DoctrineQueryInterface
 {
     /**
      * @Constraints\NotNull()
@@ -34,10 +34,10 @@ class YearQuery extends AbstractQuery implements ElasticQueryInterface, Doctrine
         $fromDateTime = DateTimeUtil::getYearStartDateTime($this->toDateTime());
         $untilDateTime = DateTimeUtil::getYearEndDateTime($this->toDateTime());
 
-        $dateTimeQuery = new \Elastica\Query\Range('dateTime', [
-            'gte' => $fromDateTime->format('Y-m-d'),
-            'lte' => $untilDateTime->format('Y-m-d'),
-            'format' => 'strict_date_optional_time',
+        $dateTimeQuery = new \Elastica\Query\Range($this->propertyName, [
+            'gte' => $fromDateTime->format($this->dateTimePattern),
+            'lte' => $untilDateTime->format($this->dateTimePattern),
+            'format' => $this->dateTimeFormat,
         ]);
 
         return $dateTimeQuery;

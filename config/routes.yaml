@@ -1,14 +1,29 @@
 criticalmass:
-     resource: routes/criticalmass/routing.yml
+  resource: routes/criticalmass/routing.yml
+  prefix:   /
+  host:       '{host}'
+  defaults:
+    host: '%domain.one%'
+  requirements:
+    host: '%domain.one%'
+
+criticalmass_blog:
+  resource: routes/criticalmass/blog.yml
+  prefix:   /
+  host:       '{host}'
+  defaults:
+    host: '%domain.blog%'
+  requirements:
+    host: '%domain.blog%'
 
 facebook_login:
-    path: /login/check-facebook
+  path: /login/check-facebook
 
 strava_login:
-    path: /login/check-strava
+  path: /login/check-strava
 
 runkeeper_login:
-    path: /login/check-runkeeper
+  path: /login/check-runkeeper
 
 twitter_login:
     path: /login/check-twitter

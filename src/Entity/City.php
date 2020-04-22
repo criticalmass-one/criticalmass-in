@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\DataQuery\Annotation as DataQuery;
+use App\Criticalmass\DataQuery\Annotation\EntityAnnotation as DataQuery;
 use App\Criticalmass\Router\Annotation as Routing;
 use App\Criticalmass\Sharing\Annotation as Sharing;
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
@@ -11,12 +11,14 @@ use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AuditableInterface;
 use App\EntityInterface\AutoParamConverterAble;
 use App\EntityInterface\BoardInterface;
+use App\EntityInterface\CoordinateInterface;
 use App\EntityInterface\ElasticSearchPinInterface;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
 use App\EntityInterface\StaticMapableInterface;
 use Caldera\GeoBasic\Coord\Coord;
+use Caldera\GeoBasic\Coord\CoordInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -32,7 +34,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @JMS\ExclusionPolicy("all")
  * @Routing\DefaultRoute(name="caldera_criticalmass_city_show")
  */
-class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, AutoParamConverterAble, SocialNetworkProfileAble, PostableInterface, Shareable, StaticMapableInterface
+class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, AutoParamConverterAble, SocialNetworkProfileAble, PostableInterface, Shareable, StaticMapableInterface, CoordinateInterface
 {
     /**
      * @ORM\Id
@@ -117,20 +119,22 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      * @DataQuery\Queryable
+     * @var float $latitude
      */
-    protected $latitude = 0;
+    protected $latitude = 0.0;
 
     /**
      * @ORM\Column(type="float")
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      * @DataQuery\Queryable
+     * @var float $longitude
      */
-    protected $longitude = 0;
+    protected $longitude = 0.0;
 
     /**
      * @ORM\Column(type="boolean")
-     * @DataQuery\DefaultBooleanValue(value=true, alias="isEnabled")
+     * @DataQuery\DefaultBooleanValue(value=true)
      */
     protected $enabled = true;
 
@@ -461,7 +465,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
         return $this->twitter;
     }
 
-    public function setLatitude(float $latitude): City
+    public function setLatitude(float $latitude = null): CoordinateInterface
     {
         $this->latitude = $latitude;
 
@@ -473,7 +477,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
         return $this->latitude;
     }
 
-    public function setLongitude(float $longitude): City
+    public function setLongitude(float $longitude = null): CoordinateInterface
     {
         $this->longitude = $longitude;
 
@@ -738,7 +742,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
         return $this->timezone;
     }
 
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
@@ -1013,5 +1017,10 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
             'green' => $this->colorGreen,
             'blue' => $this->colorBlue,
         ];
+    }
+
+    public function toCoord(): CoordInterface
+    {
+        return new Coord($this->latitude, $this->longitude);
     }
 }

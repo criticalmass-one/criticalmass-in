@@ -2,11 +2,11 @@
 
 namespace App\Criticalmass\DataQuery\Parameter;
 
-use App\Criticalmass\DataQuery\Annotation as DataQuery;
+use App\Criticalmass\DataQuery\Annotation\ParameterAnnotation as DataQuery;
 use Elastica\Query;
 use Symfony\Component\Validator\Constraints as Constraints;
 
-class FromParameter implements ParameterInterface
+class FromParameter extends AbstractParameter
 {
     /**
      * @Constraints\NotNull()

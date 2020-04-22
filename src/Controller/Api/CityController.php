@@ -23,6 +23,10 @@ class CityController extends BaseController
      *
      * Provide a <code>regionSlug</code> like <code>schleswig-holstein</code> to retrieve only cities of this region.
      *
+     * <strong>List length</strong>
+     *
+     * The length of your results defaults to 10. Use <code>size</code> to request more or less results.
+     *
      * <strong>Geo query parameters</strong>
      *
      * <ul>
@@ -48,7 +52,9 @@ class CityController extends BaseController
      *
      * Specify the order direction with <code>orderDirection=asc</code> or <code>orderDirection=desc</code>.
      *
-     * You may use the <code>distanceOrderDirection</code> parameter in combination with the radius query to sort the result list by the ride’s distance to the center coord.
+     * You may use the <code>distanceOrderDirection</code> parameter in combination with the radius query to sort the result list by the city’s distance to the center coord.
+     *
+     * Apply <code>startValue</code> to deliver a value to start your ordered list with.
      *
      * @ApiDoc(
      *  resource=true,
@@ -56,16 +62,18 @@ class CityController extends BaseController
      *  section="City",
      *  parameters={
      *     {"name"="regionSlug", "dataType"="string", "required"=false, "description"="Provide a region slug"},
-     *     {"name"="centerLatitude", "dataType"="float", "required"=false, "description"="Latitude of a coordinate to search rides around in a given radius."},
-     *     {"name"="centerLongitude", "dataType"="float", "required"=false, "description"="Longitude of a coordinate to search rides around in a given radius."},
-     *     {"name"="radius", "dataType"="float", "required"=false, "description"="Radius to look around for rides."},
-     *     {"name"="bbEastLongitude", "dataType"="float", "required"=false, "description"="East longitude of a bounding box to look for rides."},
-     *     {"name"="bbWestLongitude", "dataType"="float", "required"=false, "description"="West longitude of a bounding box to look for rides."},
-     *     {"name"="bbNorthLatitude", "dataType"="float", "required"=false, "description"="North latitude of a bounding box to look for rides."},
-     *     {"name"="bbSouthLatitude", "dataType"="float", "required"=false, "description"="South latitude of a bounding box to look for rides."},
+     *     {"name"="centerLatitude", "dataType"="float", "required"=false, "description"="Latitude of a coordinate to search cities around in a given radius."},
+     *     {"name"="centerLongitude", "dataType"="float", "required"=false, "description"="Longitude of a coordinate to search cities around in a given radius."},
+     *     {"name"="radius", "dataType"="float", "required"=false, "description"="Radius to look around for cities."},
+     *     {"name"="bbEastLongitude", "dataType"="float", "required"=false, "description"="East longitude of a bounding box to look for cities."},
+     *     {"name"="bbWestLongitude", "dataType"="float", "required"=false, "description"="West longitude of a bounding box to look for cities."},
+     *     {"name"="bbNorthLatitude", "dataType"="float", "required"=false, "description"="North latitude of a bounding box to look for cities."},
+     *     {"name"="bbSouthLatitude", "dataType"="float", "required"=false, "description"="South latitude of a bounding box to look for cities."},
      *     {"name"="orderBy", "dataType"="string", "required"=false, "description"="Choose a property to sort the list by."},
      *     {"name"="orderDirection", "dataType"="string", "required"=false, "description"="Sort ascending or descending."},
      *     {"name"="distanceOrderDirection", "dataType"="string", "required"=false, "description"="Enable distance sorting in combination with radius query."},
+     *     {"name"="startValue", "dataType"="string", "required"=false, "description"="Start ordered list with provided value."},
+     *     {"name"="size", "dataType"="integer", "required"=false, "description"="Length of resulting list. Defaults to 10."},
      *     {"name"="extended", "dataType"="boolean", "required"=false, "description"="Set true to retrieve a more detailed list."}
      *  },
      * )
