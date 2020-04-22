@@ -5,14 +5,14 @@ namespace App\Criticalmass\TextParser;
 use App\Criticalmass\TextParser\EmbedExtension\EmbedExtension;
 use Flagception\Manager\FeatureManagerInterface;
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\ConverterInterface;
 use League\CommonMark\Environment;
 use League\CommonMark\Extension\Autolink\AutolinkExtension;
+use League\CommonMark\MarkdownConverterInterface;
 
 class CriticalParser implements TextParserInterface
 {
     protected FeatureManagerInterface $featureManager;
-    protected ConverterInterface $converter;
+    protected MarkdownConverterInterface $converter;
 
     public function __construct(FeatureManagerInterface $featureManager)
     {
