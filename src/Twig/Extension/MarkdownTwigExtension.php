@@ -30,7 +30,7 @@ class MarkdownTwigExtension extends AbstractExtension
     {
         $converter = new CommonMarkConverter([
             'html_input' => 'strip',
-            'allow_unsafe_links' => false,
+            'allow_unsafe_links' => true,
         ]);
 
         $text = $converter->convertToHtml($text);

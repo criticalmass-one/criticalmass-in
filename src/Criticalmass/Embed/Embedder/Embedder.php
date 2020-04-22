@@ -25,19 +25,22 @@ class Embedder implements EmbedderInterface
         $links = $this->linkFinder->findInText($text);
 
         foreach ($links as $link) {
+            $embedCode = null;
+
             if ($this->linkCache->has($link)) {
-                return $this->linkCache->get($link);
+                $embedCode = $this->linkCache->get($link);
+            } else {
+                $info = $this->embed->get(trim($link));
+
+                $code = $info->code;
+
+                if ($code instanceof EmbedCode) {
+                    $embedCode = $info->code->html;
+                    $this->linkCache->set($link, $embedCode);
+                }
             }
 
-            $info = $this->embed->get(trim($link));
-
-            $code = $info->code;
-
-            if ($code instanceof EmbedCode) {
-                $embedCode = $info->code->html;
-
-                $this->linkCache->set($link, $embedCode);
-
+            if ($embedCode) {
                 $text = str_replace($link, $embedCode, $text);
             }
         }

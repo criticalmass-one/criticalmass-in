@@ -4,7 +4,7 @@ namespace App\Criticalmass\Embed\LinkFinder;
 
 class LinkFinder implements LinkFinderInterface
 {
-    const REGEX_PATTERN = '/(?:^|\s)(?:(?:https?:\/\/)?[\w-]+(?:\.[a-z-]+)+\.?(?::\d+)?(?:\/\S*)?)/im';
+    const REGEX_PATTERN = '/(?:(?:https?:\/\/)?[\w-]+(?:\.[a-z-]+)+\.?(?::\d+)?(?:\/[a-z0-9_\-\/,.?=#]*)?)/im';
 
     public function findInText(string $text): array
     {
