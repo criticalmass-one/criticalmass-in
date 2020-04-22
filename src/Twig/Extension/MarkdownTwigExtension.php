@@ -2,12 +2,23 @@
 
 namespace App\Twig\Extension;
 
+use App\Criticalmass\Embed\Embedder\EmbedderInterface;
+use Flagception\Manager\FeatureManagerInterface;
 use League\CommonMark\CommonMarkConverter;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
 class MarkdownTwigExtension extends AbstractExtension
 {
+    protected EmbedderInterface $embedder;
+    protected FeatureManagerInterface $featureManager;
+
+    public function __construct(EmbedderInterface $embedder, FeatureManagerInterface $featureManager)
+    {
+        $this->embedder = $embedder;
+        $this->featureManager = $featureManager;
+    }
+
     public function getFilters(): array
     {
         return [
@@ -19,10 +30,16 @@ class MarkdownTwigExtension extends AbstractExtension
     {
         $converter = new CommonMarkConverter([
             'html_input' => 'strip',
-            'allow_unsafe_links' => false,
+            'allow_unsafe_links' => true,
         ]);
 
-        return $converter->convertToHtml($text);
+        $text = $converter->convertToHtml($text);
+
+        if ($this->featureManager->isActive('oembed')) {
+            $text = $this->embedder->processEmbedsInText($text);
+        }
+
+        return $text;
     }
 
     public function getName(): string

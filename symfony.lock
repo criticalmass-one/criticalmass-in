@@ -29,6 +29,9 @@
     "codedungeon/phpunit-result-printer": {
         "version": "0.6.1"
     },
+    "composer/ca-bundle": {
+        "version": "1.2.7"
+    },
     "composer/semver": {
         "version": "1.5.1"
     },
@@ -118,6 +121,9 @@
     },
     "elasticsearch/elasticsearch": {
         "version": "v6.0.1"
+    },
+    "embed/embed": {
+        "version": "v4.1.0"
     },
     "emcconville/google-map-polyline-encoding-tool": {
         "version": "v1.3"
@@ -317,6 +323,12 @@
     "miljar/php-exif": {
         "version": "v0.6.4"
     },
+    "ml/iri": {
+        "version": "1.1.4"
+    },
+    "ml/json-ld": {
+        "version": "1.1.0"
+    },
     "monolog/monolog": {
         "version": "1.23.0"
     },
@@ -359,6 +371,9 @@
     "openlss/lib-array2xml": {
         "version": "0.5.1"
     },
+    "oscarotero/html-parser": {
+        "version": "v0.1.4"
+    },
     "pagerfanta/pagerfanta": {
         "version": "v1.1.0"
     },
@@ -373,6 +388,9 @@
     },
     "phar-io/version": {
         "version": "1.0.1"
+    },
+    "php": {
+        "version": "7.4"
     },
     "php-amqplib/php-amqplib": {
         "version": "v2.9.2"
@@ -484,6 +502,9 @@
     },
     "psr/http-client": {
         "version": "1.0.0"
+    },
+    "psr/http-factory": {
+        "version": "1.0.1"
     },
     "psr/http-message": {
         "version": "1.0.1"
