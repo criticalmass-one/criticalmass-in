@@ -4,6 +4,8 @@ namespace App\Criticalmass\TextParser\Embedder;
 
 use App\Criticalmass\TextParser\LinkCache\LinkCacheInterface;
 use Embed\Embed;
+use Embed\EmbedCode;
+use League\CommonMark\Inline\Element\HtmlInline;
 use League\CommonMark\Inline\Element\Link;
 
 class Embedder implements EmbedderInterface
@@ -17,31 +19,28 @@ class Embedder implements EmbedderInterface
         $this->linkCache = $linkCache;
     }
 
-    public function processEmbedsInLink(Link $link): Link
+    public function processEmbedInLink(Link $link): ?HtmlInline
     {
-        return $link;
-        /*
-                foreach ($links as $link) {
-                    $embedCode = null;
+        $embedCode = null;
+        $url = $link->getUrl();
 
-                    if ($this->linkCache->has($link)) {
-                        $embedCode = $this->linkCache->get($link);
-                    } else {
-                        $info = $this->embed->get(trim($link));
+        if ($this->linkCache->has($url)) {
+            $embedCode = $this->linkCache->get($url);
+        } else {
+            $info = $this->embed->get($url);
 
-                        $code = $info->code;
+            $code = $info->code;
 
-                        if ($code instanceof EmbedCode) {
-                            $embedCode = $info->code->html;
-                            $this->linkCache->set($link, $embedCode);
-                        }
-                    }
+            if ($code instanceof EmbedCode) {
+                $embedCode = $info->code->html;
+                $this->linkCache->set($url, $embedCode);
+            }
+        }
 
-                    if ($embedCode) {
-                        $text = str_replace($link, $embedCode, $text);
-                    }
-                }
+        if ($embedCode) {
+            return new HtmlInline($embedCode);
+        }
 
-                return $text;*/
+        return null;
     }
 }
