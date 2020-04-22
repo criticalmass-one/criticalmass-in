@@ -18,7 +18,7 @@
         "psr-4": { "Tests\\": "tests/" }
     },
     "require": {
-        "php": ">=7.2",
+        "php": ">=7.4",
         "ext-intl": "*",
         "ext-simplexml": "*",
         "doctrine/orm": "^2.5",
@@ -96,7 +96,9 @@
         "league/commonmark": "^1.0",
         "nesbot/carbon": "^2.24",
         "iamstuartwilson/strava": "^1.4",
-        "nmure/crawler-detect-bundle": "^2.0.0"
+        "nmure/crawler-detect-bundle": "^2.0.0",
+        "embed/embed": "^4.1",
+        "guzzlehttp/psr7": "^1.6"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "*",

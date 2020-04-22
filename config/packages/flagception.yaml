@@ -10,3 +10,5 @@ flagception:
             default: false
         strava_track_upload:
             default: true
+        oembed:
+            default: true
