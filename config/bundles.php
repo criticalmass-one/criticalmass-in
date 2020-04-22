@@ -37,6 +37,7 @@ return [
     OldSound\RabbitMqBundle\OldSoundRabbitMqBundle::class => ['all' => true],
     Fresh\DoctrineEnumBundle\FreshDoctrineEnumBundle::class => ['all' => true],
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
+    FOS\CKEditorBundle\FOSCKEditorBundle::class => ['all' => true],
     Nmure\CrawlerDetectBundle\CrawlerDetectBundle::class => ['all' => true],
     Twig\Extra\TwigExtraBundle\TwigExtraBundle::class => ['all' => true],
 ];
