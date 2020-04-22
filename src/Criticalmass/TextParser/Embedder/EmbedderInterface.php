@@ -2,7 +2,9 @@
 
 namespace App\Criticalmass\TextParser\Embedder;
 
+use League\CommonMark\Inline\Element\Link;
+
 interface EmbedderInterface
 {
-    public function processEmbedsInText(string $text): string;
+    public function processEmbedsInLink(Link $link): Link;
 }

@@ -6,11 +6,10 @@ use League\CommonMark\ConfigurableEnvironmentInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\ExtensionInterface;
 
-final class AutolinkExtension implements ExtensionInterface
+final class EmbedExtension implements ExtensionInterface
 {
     public function register(ConfigurableEnvironmentInterface $environment)
     {
-        $environment->addEventListener(DocumentParsedEvent::class, new EmailAutolinkProcessor());
-        $environment->addEventListener(DocumentParsedEvent::class, new UrlAutolinkProcessor());
+        $environment->addEventListener(DocumentParsedEvent::class, new EmbedProcessor(), -1000);
     }
 }

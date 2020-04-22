@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\TextParser;
 
-use App\Criticalmass\Embed\Embedder\EmbedderInterface;
+use App\Criticalmass\TextParser\EmbedExtension\EmbedExtension;
 use Flagception\Manager\FeatureManagerInterface;
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\ConverterInterface;
@@ -11,13 +11,11 @@ use League\CommonMark\Extension\Autolink\AutolinkExtension;
 
 class CriticalParser implements TextParserInterface
 {
-    protected EmbedderInterface $embedder;
     protected FeatureManagerInterface $featureManager;
     protected ConverterInterface $converter;
 
-    public function __construct(EmbedderInterface $embedder, FeatureManagerInterface $featureManager)
+    public function __construct(FeatureManagerInterface $featureManager)
     {
-        $this->embedder = $embedder;
         $this->featureManager = $featureManager;
 
         $this->configure();
@@ -26,6 +24,10 @@ class CriticalParser implements TextParserInterface
     protected function configure(): void
     {
         $environment = Environment::createCommonMarkEnvironment();
+
+        if ($this->featureManager->isActive('oembed')) {
+            $environment->addExtension(new EmbedExtension());
+        }
 
         $environment->addExtension(new AutolinkExtension());
 
@@ -39,12 +41,6 @@ class CriticalParser implements TextParserInterface
 
     public function parse(string $text): string
     {
-        $text = $this->converter->convertToHtml($text);
-
-        if ($this->featureManager->isActive('oembed')) {
-            $text = $this->embedder->processEmbedsInText($text);
-        }
-
-        return $text;
+        return $this->converter->convertToHtml($text);
     }
 }

@@ -2,49 +2,46 @@
 
 namespace App\Criticalmass\TextParser\Embedder;
 
-use App\Criticalmass\Embed\LinkCache\LinkCacheInterface;
-use App\Criticalmass\Embed\LinkFinder\LinkFinderInterface;
+use App\Criticalmass\TextParser\LinkCache\LinkCacheInterface;
 use Embed\Embed;
-use Embed\EmbedCode;
+use League\CommonMark\Inline\Element\Link;
 
 class Embedder implements EmbedderInterface
 {
     protected Embed $embed;
-    protected LinkFinderInterface $linkFinder;
     protected LinkCacheInterface $linkCache;
 
-    public function __construct(LinkFinderInterface $linkFinder, LinkCacheInterface $linkCache)
+    public function __construct(LinkCacheInterface $linkCache)
     {
         $this->embed = new Embed();
-        $this->linkFinder = $linkFinder;
         $this->linkCache = $linkCache;
     }
 
-    public function processEmbedsInText(string $text): string
+    public function processEmbedsInLink(Link $link): Link
     {
-        $links = $this->linkFinder->findInText($text);
+        return $link;
+        /*
+                foreach ($links as $link) {
+                    $embedCode = null;
 
-        foreach ($links as $link) {
-            $embedCode = null;
+                    if ($this->linkCache->has($link)) {
+                        $embedCode = $this->linkCache->get($link);
+                    } else {
+                        $info = $this->embed->get(trim($link));
 
-            if ($this->linkCache->has($link)) {
-                $embedCode = $this->linkCache->get($link);
-            } else {
-                $info = $this->embed->get(trim($link));
+                        $code = $info->code;
 
-                $code = $info->code;
+                        if ($code instanceof EmbedCode) {
+                            $embedCode = $info->code->html;
+                            $this->linkCache->set($link, $embedCode);
+                        }
+                    }
 
-                if ($code instanceof EmbedCode) {
-                    $embedCode = $info->code->html;
-                    $this->linkCache->set($link, $embedCode);
+                    if ($embedCode) {
+                        $text = str_replace($link, $embedCode, $text);
+                    }
                 }
-            }
 
-            if ($embedCode) {
-                $text = str_replace($link, $embedCode, $text);
-            }
-        }
-
-        return $text;
+                return $text;*/
     }
 }
