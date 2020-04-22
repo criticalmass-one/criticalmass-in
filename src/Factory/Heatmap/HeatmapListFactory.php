@@ -6,14 +6,14 @@ use App\Entity\Heatmap;
 use App\Entity\HeatmapTrack;
 use App\Entity\Track;
 use App\Model\Heatmap\HeatmapListModel;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 class HeatmapListFactory implements HeatmapListFactoryInterface
 {
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         $this->registry = $registry;
     }

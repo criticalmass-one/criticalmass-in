@@ -7,7 +7,7 @@ use App\Criticalmass\Timeline\Collector\TimelineCollectorInterface;
 use App\Criticalmass\Timeline\Item\ItemInterface;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Flagception\Manager\FeatureManagerInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Twig\TwigEngine;
 use Symfony\Component\Templating\EngineInterface;
 
@@ -37,7 +37,7 @@ class Timeline implements TimelineInterface
     /** @var FeatureManagerInterface $featureManager */
     protected $featureManager;
 
-    public function __construct(RegistryInterface $doctrine, EngineInterface $templating, FeatureManagerInterface $featureManager)
+    public function __construct(ManagerRegistry $doctrine, EngineInterface $templating, FeatureManagerInterface $featureManager)
     {
         $this->doctrine = $doctrine;
         $this->templating = $templating;

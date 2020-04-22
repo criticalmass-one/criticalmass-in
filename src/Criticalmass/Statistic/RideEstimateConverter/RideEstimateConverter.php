@@ -4,14 +4,14 @@ namespace App\Criticalmass\Statistic\RideEstimateConverter;
 
 use App\Entity\RideEstimate;
 use App\Entity\Track;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 class RideEstimateConverter implements RideEstimateConverterInterface
 {
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         $this->registry = $registry;
     }

@@ -10,7 +10,7 @@ use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,7 +57,7 @@ class RideController extends BaseController
      * )
      * @ParamConverter("city", class="App:City")
      */
-    public function showCurrentAction(Request $request, City $city, RegistryInterface $registry): Response
+    public function showCurrentAction(Request $request, City $city, ManagerRegistry $registry): Response
     {
         $cycleMandatory = $request->query->getBoolean('cycleMandatory', false);
         $slugsAllowed = $request->query->getBoolean('slugsAllowed', true);

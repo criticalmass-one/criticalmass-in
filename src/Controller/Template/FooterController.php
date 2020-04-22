@@ -6,12 +6,12 @@ use App\Controller\AbstractController;
 use App\Entity\BlogPost;
 use App\Entity\City;
 use App\Entity\Promotion;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
 
 class FooterController extends AbstractController
 {
-    public function blogPostListAction(RegistryInterface $registry): Response
+    public function blogPostListAction(ManagerRegistry $registry): Response
     {
         $blogPostList = $registry->getRepository(BlogPost::class)->findAll();
 
@@ -20,7 +20,7 @@ class FooterController extends AbstractController
         ]);
     }
 
-    public function promotionListAction(RegistryInterface $registry): Response
+    public function promotionListAction(ManagerRegistry $registry): Response
     {
         $promotionList = $registry->getRepository(Promotion::class)->findAll();
 
@@ -29,7 +29,7 @@ class FooterController extends AbstractController
         ]);
     }
 
-    public function cityListAction(RegistryInterface $registry): Response
+    public function cityListAction(ManagerRegistry $registry): Response
     {
         $cityList = $registry->getRepository(City::class)->findPopularCities();
 

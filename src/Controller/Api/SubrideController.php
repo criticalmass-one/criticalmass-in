@@ -8,7 +8,7 @@ use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -26,7 +26,7 @@ class SubrideController extends BaseController
      * )
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function listSubrideAction(RegistryInterface $registry, Ride $ride): Response
+    public function listSubrideAction(ManagerRegistry $registry, Ride $ride): Response
     {
         $subrideList = $registry->getRepository(Subride::class)->findByRide($ride);
 

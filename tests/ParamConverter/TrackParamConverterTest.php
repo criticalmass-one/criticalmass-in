@@ -7,7 +7,7 @@ use App\Repository\TrackRepository;
 use App\Request\ParamConverter\TrackParamConverter;
 use PHPUnit\Framework\TestCase;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter as ParamConverterConfig;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -15,7 +15,7 @@ class TrackParamConverterTest extends TestCase
 {
     public function testTrackParamConverterSupportsLocaction(): void
     {
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
 
         $paramConverter = new TrackParamConverter($registry);
 
@@ -34,7 +34,7 @@ class TrackParamConverterTest extends TestCase
 
     public function testTrackParamConverterWithEmptyRequest(): void
     {
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
 
         $paramConverter = new TrackParamConverter($registry);
 
@@ -60,7 +60,7 @@ class TrackParamConverterTest extends TestCase
             ->with($this->equalTo(51))
             ->will($this->returnValue($track));
 
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
         $registry
             ->expects($this->once())
             ->method('getRepository')

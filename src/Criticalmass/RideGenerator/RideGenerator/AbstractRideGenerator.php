@@ -8,7 +8,7 @@ use App\Criticalmass\RideNamer\RideNamerListInterface;
 use App\Criticalmass\Util\DateTimeUtil;
 use App\Entity\CityCycle;
 use App\Entity\Ride;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 abstract class AbstractRideGenerator implements RideGeneratorInterface
 {
@@ -18,13 +18,13 @@ abstract class AbstractRideGenerator implements RideGeneratorInterface
     /** @var array $rideList */
     protected $rideList = [];
 
-    /** @var RegistryInterface $doctrine */
+    /** @var ManagerRegistry $doctrine */
     protected $doctrine;
 
     /** @var RideNamerListInterface $rideNamerList */
     protected $rideNamerList;
 
-    public function __construct(RegistryInterface $doctrine, RideNamerListInterface $rideNamerList)
+    public function __construct(ManagerRegistry $doctrine, RideNamerListInterface $rideNamerList)
     {
         $this->doctrine = $doctrine;
         $this->rideNamerList = $rideNamerList;

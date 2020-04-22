@@ -2,11 +2,11 @@
 
 namespace App\Request\ParamConverter;
 
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 class PromotionParamConverter extends AbstractCriticalmassParamConverter
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry);
     }

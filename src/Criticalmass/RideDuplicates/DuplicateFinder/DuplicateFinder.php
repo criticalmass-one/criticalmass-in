@@ -4,17 +4,17 @@ namespace App\Criticalmass\RideDuplicates\DuplicateFinder;
 
 use App\Entity\City;
 use App\Entity\Ride;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 class DuplicateFinder implements DuplicateFinderInterface
 {
     /** @var City $city */
     protected $city;
 
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         $this->registry = $registry;
     }

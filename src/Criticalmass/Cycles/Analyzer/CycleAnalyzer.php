@@ -6,7 +6,7 @@ use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Entity\Ride;
 use App\Criticalmass\RideGenerator\RideCalculator\RideCalculatorInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 class CycleAnalyzer extends AbstractCycleAnalyzer
 {

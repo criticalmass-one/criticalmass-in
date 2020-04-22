@@ -7,11 +7,11 @@ use App\Entity\Ride;
 use App\Entity\Weather;
 use Cmfcmf\OpenWeatherMap;
 use Psr\Log\LoggerInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 abstract class AbstractWeatherForecastRetriever implements WeatherForecastRetrieverInterface
 {
-    /** @var RegistryInterface $doctrine */
+    /** @var ManagerRegistry $doctrine */
     protected $doctrine;
 
     /** @var OpenWeatherMap openWeatherMap */
@@ -26,7 +26,7 @@ abstract class AbstractWeatherForecastRetriever implements WeatherForecastRetrie
     /** @var WeatherFactoryInterface $weatherFactory */
     protected $weatherFactory;
 
-    public function __construct(RegistryInterface $doctrine, OpenWeatherMap $openWeatherMap, WeatherFactoryInterface $weatherFactory, LoggerInterface $logger, string $openWeatherMapApiKey)
+    public function __construct(ManagerRegistry $doctrine, OpenWeatherMap $openWeatherMap, WeatherFactoryInterface $weatherFactory, LoggerInterface $logger, string $openWeatherMapApiKey)
     {
         $this->doctrine = $doctrine;
         $this->logger = $logger;
