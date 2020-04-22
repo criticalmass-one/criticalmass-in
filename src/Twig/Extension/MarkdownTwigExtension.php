@@ -3,6 +3,7 @@
 namespace App\Twig\Extension;
 
 use App\Criticalmass\Embed\Embedder\EmbedderInterface;
+use Flagception\Manager\FeatureManagerInterface;
 use League\CommonMark\CommonMarkConverter;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -10,10 +11,12 @@ use Twig\TwigFilter;
 class MarkdownTwigExtension extends AbstractExtension
 {
     protected EmbedderInterface $embedder;
+    protected FeatureManagerInterface $featureManager;
 
-    public function __construct(EmbedderInterface $embedder)
+    public function __construct(EmbedderInterface $embedder, FeatureManagerInterface $featureManager)
     {
         $this->embedder = $embedder;
+        $this->featureManager = $featureManager;
     }
 
     public function getFilters(): array
@@ -30,9 +33,11 @@ class MarkdownTwigExtension extends AbstractExtension
             'allow_unsafe_links' => false,
         ]);
 
-        //$text = $converter->convertToHtml($text);
+        $text = $converter->convertToHtml($text);
 
-        $text = $this->embedder->processEmbedsInText($text);
+        if ($this->featureManager->isActive('oembed')) {
+            $text = $this->embedder->processEmbedsInText($text);
+        }
 
         return $text;
     }
