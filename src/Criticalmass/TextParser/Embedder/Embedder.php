@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\Embed\Embedder;
+namespace App\Criticalmass\TextParser\Embedder;
 
 use App\Criticalmass\Embed\LinkCache\LinkCacheInterface;
 use App\Criticalmass\Embed\LinkFinder\LinkFinderInterface;

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\Embed\LinkCache;
+namespace App\Criticalmass\TextParser\Embedder;
 
 interface LinkCacheInterface
 {
