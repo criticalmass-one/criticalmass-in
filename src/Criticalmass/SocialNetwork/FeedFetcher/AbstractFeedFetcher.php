@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\SocialNetwork\FeedFetcher;
 
+use App\Criticalmass\SocialNetwork\FeedItemPersister\FeedItemPersisterInterface;
 use App\Criticalmass\SocialNetwork\NetworkFeedFetcher\NetworkFeedFetcherInterface;
 use App\Entity\SocialNetworkProfile;
 use Doctrine\Persistence\ManagerRegistry;
@@ -16,9 +17,12 @@ abstract class AbstractFeedFetcher implements FeedFetcherInterface
 
     protected array $feedItemList = [];
 
-    public function __construct(ManagerRegistry $doctrine)
+    protected FeedItemPersisterInterface $feedItemPersister;
+
+    public function __construct(ManagerRegistry $doctrine, FeedItemPersisterInterface $feedItemPersister)
     {
         $this->doctrine = $doctrine;
+        $this->feedItemPersister = $feedItemPersister;
     }
 
     public function addNetworkFeedFetcher(NetworkFeedFetcherInterface $networkFeedFetcher): FeedFetcherInterface

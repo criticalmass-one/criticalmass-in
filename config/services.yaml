@@ -263,3 +263,6 @@ services:
     App\Form\Type\RegistrationType:
         arguments:
             $class: '%fos_user.model.user.class%'
+
+    App\Criticalmass\SocialNetwork\FeedItemPersister\FeedItemPersisterInterface:
+        alias: App\Criticalmass\SocialNetwork\FeedItemPersister\NonDuplicatesFeedItemPersister

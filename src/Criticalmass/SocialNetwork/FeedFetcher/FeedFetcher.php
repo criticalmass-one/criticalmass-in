@@ -3,7 +3,6 @@
 namespace App\Criticalmass\SocialNetwork\FeedFetcher;
 
 use App\Criticalmass\SocialNetwork\NetworkFeedFetcher\NetworkFeedFetcherInterface;
-use App\Entity\SocialNetworkFeedItem;
 use App\Entity\SocialNetworkProfile;
 
 class FeedFetcher extends AbstractFeedFetcher
@@ -29,7 +28,6 @@ class FeedFetcher extends AbstractFeedFetcher
     {
         /** @var NetworkFeedFetcherInterface $fetcher */
         foreach ($this->networkFetcherList as $fetcher) {
-            dump($fetcher);
             if ($fetcher->supports($socialNetworkProfile)) {
                 return $fetcher;
             }
@@ -50,40 +48,12 @@ class FeedFetcher extends AbstractFeedFetcher
             if ($fetcher) {
                 $feedItemList = $fetcher->fetch($profile)->getFeedItemList();
 
+                dump($feedItemList);
                 $this->feedItemList = array_merge($this->feedItemList, $feedItemList);
             }
         }
 
         return $this;
-    }
-
-    public function persist(): FeedFetcherInterface
-    {
-        $em = $this->doctrine->getManager();
-
-        foreach ($this->feedItemList as $feedItem) {
-            if (!$this->feedItemExists($feedItem)) {
-                $em->persist($feedItem);
-            }
-        }
-
-        try {
-            $em->flush();
-        } catch (\Exception $exception) {
-
-        }
-
-        return $this;
-    }
-
-    protected function feedItemExists(SocialNetworkFeedItem $feedItem): bool
-    {
-        $existingItem = $this->doctrine->getRepository(SocialNetworkFeedItem::class)->findOneBy([
-            'socialNetworkProfile' => $feedItem->getSocialNetworkProfile(),
-            'uniqueIdentifier' => $feedItem->getUniqueIdentifier(),
-        ]);
-
-        return $existingItem !== null;
     }
 
     protected function stripNetworkList(): FeedFetcher
@@ -98,6 +68,13 @@ class FeedFetcher extends AbstractFeedFetcher
                 unset($this->networkFetcherList[$key]);
             }
         }
+
+        return $this;
+    }
+
+    public function persist(): FeedFetcherInterface
+    {
+        $this->feedItemPersister->persistFeedItemList($this->feedItemList);
 
         return $this;
     }
