@@ -2,8 +2,8 @@
 
 namespace App\Form\Type;
 
-use Caldera\SocialNetworkBundle\Network\NetworkInterface;
-use Caldera\SocialNetworkBundle\NetworkManager\NetworkManagerInterface;
+use App\Criticalmass\SocialNetwork\Network\NetworkInterface;
+use App\Criticalmass\SocialNetwork\NetworkManager\NetworkManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;

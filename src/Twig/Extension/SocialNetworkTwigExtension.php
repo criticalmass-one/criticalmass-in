@@ -2,13 +2,13 @@
 
 namespace App\Twig\Extension;
 
-use Caldera\SocialNetworkBundle\Network\NetworkInterface;
-use Caldera\SocialNetworkBundle\NetworkManager\NetworkManagerInterface;
+
+use App\Criticalmass\SocialNetwork\Network\NetworkInterface;
+use App\Criticalmass\SocialNetwork\NetworkManager\NetworkManagerInterface;
 
 class SocialNetworkTwigExtension extends \Twig_Extension
 {
-    /** @var NetworkManagerInterface */
-    protected $networkManager;
+    protected NetworkManagerInterface $networkManager;
 
     public function __construct(NetworkManagerInterface $networkManager)
     {

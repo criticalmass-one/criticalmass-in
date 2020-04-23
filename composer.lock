@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "15f3d960fde2925e6f6108e9ca352356",
+    "content-hash": "37066fa6e3ce01073bddd574730e9f47",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -89,45 +89,6 @@
                 }
             ],
             "time": "2017-05-05T10:40:27+00:00"
-        },
-        {
-            "name": "calderacc/socialnetwork-bundle",
-            "version": "0.1.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/calderacc/socialnetwork-bundle.git",
-                "reference": "a0cb9a2d6bb398a86a1f309f12ca494388951cd4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/calderacc/socialnetwork-bundle/zipball/a0cb9a2d6bb398a86a1f309f12ca494388951cd4",
-                "reference": "a0cb9a2d6bb398a86a1f309f12ca494388951cd4",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^7.5"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Caldera\\SocialNetworkBundle\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Malte Huebner",
-                    "email": "malte@caldera.cc"
-                }
-            ],
-            "description": "Handle links to social network profiles.",
-            "time": "2019-10-30T07:26:45+00:00"
         },
         {
             "name": "calderacc/yourls-api-manager",

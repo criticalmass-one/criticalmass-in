@@ -1,13 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\SocialNetwork\EntityNetworkDetector;
+namespace App\Criticalmass\SocialNetwork\NetworkDetector;
 
 use App\Criticalmass\SocialNetwork\Network\NetworkInterface;
+use App\Criticalmass\SocialNetwork\NetworkManager\NetworkManager;
 use App\Criticalmass\SocialNetwork\NetworkManager\NetworkManagerInterface;
 
-abstract class AbstractEntityNetworkDetector implements EntityNetworkDetectorInterface
+abstract class AbstractNetworkDetector implements NetworkDetectorInterface
 {
-    /** @var NetworkManagerInterface $networkManager */
+    /** @var NetworkManager $networkManager */
     protected $networkManager;
 
     /** @var array $networkList */
@@ -21,9 +22,9 @@ abstract class AbstractEntityNetworkDetector implements EntityNetworkDetectorInt
         $this->sortNetworkList();
     }
 
-    protected function sortNetworkList(): self
+    protected function sortNetworkList(): NetworkDetector
     {
-        usort($this->networkList, function(NetworkInterface $a, NetworkInterface $b)
+        usort($this->networkList, function(NetworkInterface $a, NetworkInterface$b)
         {
             return $b->getDetectorPriority() <=> $a->getDetectorPriority();
         });

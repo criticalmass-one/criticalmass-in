@@ -29,6 +29,7 @@ class FeedFetcher extends AbstractFeedFetcher
     {
         /** @var NetworkFeedFetcherInterface $fetcher */
         foreach ($this->networkFetcherList as $fetcher) {
+            dump($fetcher);
             if ($fetcher->supports($socialNetworkProfile)) {
                 return $fetcher;
             }
