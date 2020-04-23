@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
-class SocialNetworkPass implements CompilerPassInterface
+class SocialNetworkFetcherPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
@@ -22,10 +22,10 @@ class SocialNetworkPass implements CompilerPassInterface
 
         $feedFetcher = $container->findDefinition(FeedFetcherInterface::class);
 
-        $taggedServices = $container->findTaggedServiceIds('social_network.network');
+        $taggedServices = $container->findTaggedServiceIds('social_network.network_feed_fetcher');
 
         foreach ($taggedServices as $id => $tags) {
-            $feedFetcher->addMethodCall('addFetchableNetwork', [new Reference($id)]);
+            $feedFetcher->addMethodCall('addNetworkFeedFetcher', [new Reference($id)]);
         }
     }
 }
