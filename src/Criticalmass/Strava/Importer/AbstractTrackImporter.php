@@ -3,14 +3,14 @@
 namespace App\Criticalmass\Strava\Importer;
 
 use App\Criticalmass\Geo\GpxWriter\GpxWriter;
+use App\Criticalmass\Strava\Token\StravaTokenStorage;
 use App\Criticalmass\UploadFaker\UploadFakerInterface;
 use App\Entity\Ride;
 use App\Entity\User;
+use Iamstuartwilson\StravaApi;
 use JMS\Serializer\SerializerInterface;
-use Strava\API\Service\REST;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Strava\API\Client;
 
 abstract class AbstractTrackImporter implements TrackImporterInterface
 {
@@ -29,13 +29,13 @@ abstract class AbstractTrackImporter implements TrackImporterInterface
     /** @var SessionInterface $session */
     protected $session;
 
-    /** @var Client $client */
-    protected $client;
+    /** @var StravaApi $api */
+    protected $api;
 
     /** @var UploadFakerInterface $uploadFaker */
     protected $uploadFaker;
 
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var SerializerInterface $serializer */
@@ -50,7 +50,7 @@ abstract class AbstractTrackImporter implements TrackImporterInterface
         'altitude',
     ];
 
-    public function __construct(GpxWriter $gpxWriter, SessionInterface $session, RegistryInterface $registry, UploadFakerInterface $uploadFaker, SerializerInterface $serializer)
+    public function __construct(GpxWriter $gpxWriter, SessionInterface $session, ManagerRegistry $registry, UploadFakerInterface $uploadFaker, SerializerInterface $serializer, string $stravaClientId, string $stravaSecret)
     {
         $this->gpxWriter = $gpxWriter;
         $this->session = $session;
@@ -58,17 +58,18 @@ abstract class AbstractTrackImporter implements TrackImporterInterface
         $this->registry = $registry;
         $this->serializer = $serializer;
 
-        $this->client = $this->createClient();
+        $this->api = $this->createApi((int)$stravaClientId, $stravaSecret);
     }
 
-    protected function createClient(): Client
+    protected function createApi(int $stravaClientId, string $stravaSecret): StravaApi
     {
+        $api = new StravaApi($stravaClientId, $stravaSecret);
+
+        /** @var StravaTokenStorage $token */
         $token = $this->session->get('strava_token');
+        $api = StravaTokenStorage::setAccessToken($api, $token);
 
-        $adapter = new \GuzzleHttp\Client(['base_uri' => self::API_URI]);
-        $service = new REST($token, $adapter);
-
-        return new Client($service);
+        return $api;
     }
 
     public function setUser(User $user): TrackImporterInterface

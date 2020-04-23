@@ -37,9 +37,9 @@ class CitySlug implements RouteableInterface
      */
     protected $city;
 
-    public function __construct()
+    public function __construct(string $slug = null)
     {
-
+        $this->slug = $slug;
     }
 
     public function getId(): ?int

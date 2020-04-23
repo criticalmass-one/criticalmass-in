@@ -17,7 +17,7 @@ define(['CriticalService', 'dateformat', 'leaflet', 'MarkerEntity', 'leaflet.ext
             icon: 'fa-bicycle',
             markerColor: 'red',
             shape: 'round',
-            prefix: 'fa'
+            prefix: 'far'
         });
     };
 
@@ -34,7 +34,7 @@ define(['CriticalService', 'dateformat', 'leaflet', 'MarkerEntity', 'leaflet.ext
             content += '<dt>Uhrzeit:</dt><dd>die Uhrzeit ist noch nicht bekannt</dd>';
         }
 
-        if (this._hasLocation && this._location) {
+        if (this._location && this._latitude && this._longitude) {
             content += '<dt>Treffpunkt:</dt><dd>' + this._location + '</dd>';
         } else {
             content += '<dt>Treffpunkt:</dt><dd>der Treffpunkt ist noch nicht bekannt</dd>';
@@ -95,6 +95,10 @@ define(['CriticalService', 'dateformat', 'leaflet', 'MarkerEntity', 'leaflet.ext
 
     RideEntity.prototype.getDate = function () {
         return this._date;
+    };
+
+    RideEntity.prototype.getLocation = function () {
+        return this._location;
     };
 
     return RideEntity;

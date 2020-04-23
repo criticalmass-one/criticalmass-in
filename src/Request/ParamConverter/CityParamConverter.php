@@ -4,12 +4,12 @@ namespace App\Request\ParamConverter;
 
 use App\Entity\City;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 
 class CityParamConverter extends AbstractCriticalmassParamConverter
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry);
     }
@@ -34,9 +34,7 @@ class CityParamConverter extends AbstractCriticalmassParamConverter
         $cityId = $request->get('cityId');
 
         if ($cityId) {
-            $city = $this->registry->getRepository(City::class)->find($cityId);
-
-            return $city;
+            return $this->registry->getRepository(City::class)->find($cityId);
         }
 
         return null;

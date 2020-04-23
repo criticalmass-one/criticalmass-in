@@ -2,18 +2,18 @@
 
 namespace App\Repository;
 
+use App\Criticalmass\Util\DateTimeUtil;
 use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Entity\Region;
 use App\Entity\Ride;
-use App\Criticalmass\Util\DateTimeUtil;
 use Doctrine\ORM\EntityRepository;
 
 class RideRepository extends EntityRepository
 {
     public function findCurrentRideForCity(City $city, bool $cycleMandatory = false, bool $slugsAllowed = true): ?Ride
     {
-        $dateTime = new \DateTime();
+        $dateTime = \DateTime::createFromFormat('U', (string)time()); // this will allow to mock the clock in functional tests
 
         $builder = $this->createQueryBuilder('r');
 
@@ -48,13 +48,11 @@ class RideRepository extends EntityRepository
         $builder
             ->select('ride')
             ->where($builder->expr()->eq('ride.city', $city->getId()))
-            ->addOrderBy('ride.dateTime', $order)
-        ;
+            ->addOrderBy('ride.dateTime', $order);
 
         if ($maxResults) {
             $builder
-                ->setMaxResults($maxResults)
-            ;
+                ->setMaxResults($maxResults);
         }
 
         $query = $builder->getQuery();
@@ -141,6 +139,25 @@ class RideRepository extends EntityRepository
             ->setParameter('startDateTime', $startDateTime)
             ->setParameter('endDateTime', $endDateTime)
             ->setParameter('city', $city);
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
+
+    public function findByDate(\DateTime $date): array
+    {
+        $startDateTime = DateTimeUtil::getDayStartDateTime($date);
+        $endDateTime = DateTimeUtil::getDayEndDateTime($date);
+
+        $builder = $this->createQueryBuilder('r');
+
+        $builder->select('r')
+            ->where($builder->expr()->gte('r.dateTime', ':startDateTime'))
+            ->andWhere($builder->expr()->lte('r.dateTime', ':endDateTime'))
+            ->addOrderBy('r.dateTime', 'ASC')
+            ->setParameter('startDateTime', $startDateTime)
+            ->setParameter('endDateTime', $endDateTime);
 
         $query = $builder->getQuery();
 
@@ -331,54 +348,15 @@ class RideRepository extends EntityRepository
         return $result;
     }
 
-    public function getPreviousRide(Ride $ride): ?Ride
-    {
-        $builder = $this->createQueryBuilder('r');
-
-        $builder->select('r')
-            ->where($builder->expr()->lt('r.dateTime', ':dateTime'))
-            ->andWhere($builder->expr()->eq('r.city', ':city'))
-            ->addOrderBy('r.dateTime', 'DESC')
-            ->setMaxResults(1)
-            ->setParameter('city', $ride->getCity())
-            ->setParameter('dateTime', $ride->getDateTime());
-
-        $query = $builder->getQuery();
-
-        $result = $query->getOneOrNullResult();
-
-        return $result;
-    }
-
-    public function getNextRide(Ride $ride): ?Ride
-    {
-        $builder = $this->createQueryBuilder('r');
-
-        $builder
-            ->select('r')
-            ->where($builder->expr()->gt('r.dateTime', ':dateTime'))
-            ->andWhere($builder->expr()->eq('r.city', ':city'))
-            ->addOrderBy('r.dateTime', 'ASC')
-            ->setMaxResults(1)
-            ->setParameter('city', $ride->getCity())
-            ->setParameter('dateTime', $ride->getDateTime());
-
-        $query = $builder->getQuery();
-
-        $result = $query->getOneOrNullResult();
-
-        return $result;
-    }
-
     public function getLocationsForCity(City $city): array
     {
         $builder = $this->createQueryBuilder('r');
 
         $builder
             ->select([
-            'r.location',
-            'r.latitude',
-            'r.longitude'
+                'r.location',
+                'r.latitude',
+                'r.longitude'
             ])
             ->where($builder->expr()->eq('r.city', ':city'))
             ->andWhere($builder->expr()->isNotNull('r.location'))
@@ -658,6 +636,22 @@ class RideRepository extends EntityRepository
             ->setMaxResults($limit);
 
         $query = $qb->getQuery();
+
+        return $query->getResult();
+    }
+
+    public function findByCycle(CityCycle $cityCycle, string $orderDireciton = 'DESC'): array
+    {
+        $builder = $this->createQueryBuilder('r');
+
+        $builder
+            ->select('r')
+            ->where($builder->expr()->eq('r.cycle', ':cycle'))
+            ->addOrderBy('r.dateTime', $orderDireciton)
+            ->setParameter('cycle', $cityCycle);
+
+
+        $query = $builder->getQuery();
 
         return $query->getResult();
     }

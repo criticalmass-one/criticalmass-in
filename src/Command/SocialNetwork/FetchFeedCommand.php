@@ -3,7 +3,7 @@
 namespace App\Command\SocialNetwork;
 
 use App\Criticalmass\SocialNetwork\FeedFetcher\FeedFetcher;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -14,10 +14,10 @@ class FetchFeedCommand extends Command
     /** @var FeedFetcher $feedFetcher */
     protected $feedFetcher;
 
-    /** @var RegistryInterface $doctrine */
+    /** @var ManagerRegistry $doctrine */
     protected $doctrine;
 
-    public function __construct(RegistryInterface $doctrine, FeedFetcher $feedFetcher)
+    public function __construct(ManagerRegistry $doctrine, FeedFetcher $feedFetcher)
     {
         $this->doctrine = $doctrine;
         $this->feedFetcher = $feedFetcher;

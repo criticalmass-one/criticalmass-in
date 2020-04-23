@@ -32,6 +32,34 @@
             </div>
         </div>
 
+        {% if not track.reviewed %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-danger">
+                        <div class="btn-group pull-right">
+                            <a class="btn btn-success"
+                               href="{{ objectPath(track, 'caldera_criticalmass_track_range') }}">
+                                <i class="far fa-cut"></i>&nbsp;Track beschneiden
+                            </a>
+                            <a class="btn btn-default"
+                               href="{{ objectPath(track, 'caldera_criticalmass_track_approve') }}">
+                                <i class="far fa-check"></i>&nbsp;Track bestätigen
+                            </a>
+                        </div>
+
+                        <strong>
+                            Dein Track wurde noch nicht bestätigt!
+                        </strong>
+                        <br/>
+                        Bitte bestägtige, dass dein Track nur den tatsächlichen Routenverlauf der Critical Mass abbildet
+                        und etwaige An- und Abfahrten nicht enthalten sind. Du kannst deinen Track <a
+                                href="{{ objectPath(track, 'caldera_criticalmass_track_range') }}">ganz einfach online
+                            beschneiden</a>.
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
         <div class="row">
             <div class="col-md-12">
                 <div id="map" style="height: 350px;"></div>
@@ -69,7 +97,7 @@
                         Treffpunkt:
                     </dt>
                     <dd>
-                        {% if track.ride.getHasLocation and track.ride.location %}
+                        {% if track.ride.location and track.ride.latitude and track.ride.longitude %}
                             {{ track.ride.location }}
                         {% else %}
                             nicht bekannt
@@ -84,7 +112,7 @@
                         Distanz:
                     </dt>
                     <dd>
-                        {{ track.distance|round(2) }}&nbsp;Kilometer
+                        {{ track.distance|number_format(2) }}&nbsp;Kilometer
                     </dd>
                 </dl>
             </div>
@@ -101,12 +129,14 @@
             </div>
         </div>
 
+        {% set previous_track = previous_entity(track) %}
+        {% set next_track = next_entity(track) %}
         <div class="row">
             <div class="col-md-12">
                 <ul class="pager">
-                    {% if previousTrack %}
+                    {% if previous_track %}
                         <li class="previous">
-                            <a href="{{ objectPath(previousTrack) }}">
+                            <a href="{{ objectPath(previous_track) }}">
                                 &larr; Voriger Track
                             </a>
                         </li>
@@ -116,9 +146,9 @@
                         </li>
                     {% endif %}
 
-                    {% if nextTrack %}
+                    {% if next_track %}
                         <li class="next">
-                            <a href="{{ objectPath(nextTrack) }}">
+                            <a href="{{ objectPath(next_track) }}">
                                 Nächster Track &rarr;
                             </a>
                         </li>

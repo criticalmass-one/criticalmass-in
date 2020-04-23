@@ -2,18 +2,22 @@
 
 namespace App\Controller\SocialNetwork;
 
+use App\Controller\AbstractController;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Criticalmass\SocialNetwork\EntityNetworkDetector\EntityNetworkDetectorInterface;
+use App\Criticalmass\SocialNetwork\Helper\SocialNetworkHelperInterface;
 use App\Criticalmass\Util\ClassUtil;
 use App\Entity\SocialNetworkProfile;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use App\Factory\SocialNetworkProfile\SocialNetworkProfileFactoryInterface;
 use App\Form\Type\SocialNetworkProfileAddType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\User\UserInterface;
 
-class SocialNetworkController extends AbstractSocialNetworkController
+class SocialNetworkController extends AbstractController
 {
     /**
      * @ParamConverter("city", class="App:City", isOptional=true)
@@ -24,11 +28,16 @@ class SocialNetworkController extends AbstractSocialNetworkController
     public function addAction(
         Request $request,
         EntityNetworkDetectorInterface $networkDetector,
-        ObjectRouterInterface $objectRouter
+        ObjectRouterInterface $objectRouter,
+        SocialNetworkProfileFactoryInterface $networkProfileFactory,
+        SocialNetworkHelperInterface $socialNetworkHelper,
+        UserInterface $user = null
     ): Response {
-        $socialNetworkProfile = new SocialNetworkProfile();
+        $socialNetworkProfile = $networkProfileFactory
+            ->withCreatedBy($user)
+            ->build();
 
-        $socialNetworkProfile = $this->assignProfileAble($socialNetworkProfile, $request);
+        $socialNetworkProfile = $socialNetworkHelper->assignProfileAble($socialNetworkProfile, $request);
 
         $form = $this->createForm(
             SocialNetworkProfileAddType::class,
@@ -36,9 +45,9 @@ class SocialNetworkController extends AbstractSocialNetworkController
         );
 
         if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->addPostAction($request, $form, $networkDetector, $objectRouter);
+            return $this->addPostAction($request, $form, $networkDetector, $objectRouter, $socialNetworkHelper);
         } else {
-            return $this->addGetAction($request, $form, $networkDetector, $objectRouter);
+            return $this->addGetAction($request, $form, $networkDetector, $objectRouter, $socialNetworkHelper);
         }
     }
 
@@ -46,7 +55,8 @@ class SocialNetworkController extends AbstractSocialNetworkController
         Request $request,
         FormInterface $form,
         EntityNetworkDetectorInterface $networkDetector,
-        ObjectRouterInterface $objectRouter
+        ObjectRouterInterface $objectRouter,
+        SocialNetworkHelperInterface $socialNetworkHelper
     ): Response {
         $form->handleRequest($request);
 
@@ -54,7 +64,7 @@ class SocialNetworkController extends AbstractSocialNetworkController
             /** @var SocialNetworkProfile $socialNetworkProfile */
             $socialNetworkProfile = $form->getData();
 
-            $socialNetworkProfile = $this->assignProfileAble($socialNetworkProfile, $request);
+            $socialNetworkProfile = $socialNetworkHelper->assignProfileAble($socialNetworkProfile, $request);
 
             $network = $networkDetector->detect($socialNetworkProfile);
 
@@ -68,41 +78,42 @@ class SocialNetworkController extends AbstractSocialNetworkController
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
 
-            $routeName = sprintf('criticalmass_socialnetwork_%s_list', ClassUtil::getLowercaseShortname($this->getProfileAble($socialNetworkProfile)));
+            $routeName = sprintf('criticalmass_socialnetwork_%s_list', ClassUtil::getLowercaseShortname($socialNetworkHelper->getProfileAble($socialNetworkProfile)));
 
-            return $this->redirect($objectRouter->generate($this->getProfileAble($socialNetworkProfile), $routeName));
+            return $this->redirect($objectRouter->generate($socialNetworkHelper->getProfileAble($socialNetworkProfile), $routeName));
         }
 
-        return $this->addGetAction($request, $form, $networkDetector, $objectRouter);
+        return $this->addGetAction($request, $form, $networkDetector, $objectRouter, $socialNetworkHelper);
     }
 
     protected function addGetAction(
         Request $request,
         FormInterface $form,
         EntityNetworkDetectorInterface $networkDetector,
-        ObjectRouterInterface $objectRouter
+        ObjectRouterInterface $objectRouter,
+        SocialNetworkHelperInterface $socialNetworkHelper
     ): Response {
         $socialNetworkProfile = $form->getData();
 
         return $this->render('SocialNetwork/add.html.twig', [
                 'form' => $form->createView(),
-                'profileAbleType' => ClassUtil::getLowercaseShortname($this->getProfileAble($socialNetworkProfile)),
-                'profileAble' => $this->getProfileAble($socialNetworkProfile),
+                'profileAbleType' => ClassUtil::getLowercaseShortname($socialNetworkHelper->getProfileAble($socialNetworkProfile)),
+                'profileAble' => $socialNetworkHelper->getProfileAble($socialNetworkProfile),
             ]
         );
     }
 
-    protected function getAddProfileForm(ObjectRouterInterface $router, SocialNetworkProfileAble $profileAble): FormInterface
+    protected function getAddProfileForm(ObjectRouterInterface $router, SocialNetworkProfileAble $profileAble, SocialNetworkHelperInterface $socialNetworkHelper): FormInterface
     {
         $socialNetworkProfile = new SocialNetworkProfile();
 
-        $setMethodName = sprintf('set%s', $this->getProfileAbleShortname($profileAble));
+        $setMethodName = sprintf('set%s', $socialNetworkHelper->getProfileAbleShortname($profileAble));
         $socialNetworkProfile->$setMethodName($profileAble);
 
         $form = $this->createForm(
             SocialNetworkProfileAddType::class,
             $socialNetworkProfile, [
-                'action' => $this->getRouteName($router, $this->getProfileAble($socialNetworkProfile), 'add'),
+                'action' => $socialNetworkHelper->getRouteName($socialNetworkHelper->getProfileAble($socialNetworkProfile), 'add'),
             ]
         );
 

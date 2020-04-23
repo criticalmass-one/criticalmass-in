@@ -2,9 +2,9 @@
 
 namespace App\Command\Track;
 
-use App\Criticalmass\Gps\PolylineGenerator\ReducedPolylineGenerator;
+use App\Criticalmass\Geo\TrackPolylineHandler\TrackPolylineHandlerInterface;
 use App\Entity\Track;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Table;
@@ -15,15 +15,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class TrackReducePolylineCommand extends Command
 {
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
-    /** @var ReducedPolylineGenerator $reducedPolylineGenerator */
-    protected $reducedPolylineGenerator;
+    /** @var TrackPolylineHandlerInterface $trackPolylineHandler */
+    protected $trackPolylineHandler;
 
-    public function __construct(?string $name = null, RegistryInterface $registry, ReducedPolylineGenerator $reducedPolylineGenerator)
+    public function __construct(?string $name = null, ManagerRegistry $registry, TrackPolylineHandlerInterface $trackPolylineHandler)
     {
-        $this->reducedPolylineGenerator = $reducedPolylineGenerator;
+        $this->trackPolylineHandler = $trackPolylineHandler;
         $this->registry = $registry;
 
         parent::__construct($name);
@@ -63,12 +63,7 @@ class TrackReducePolylineCommand extends Command
 
         /** @var Track $track */
         foreach ($tracks as $track) {
-            $polyline = $this->reducedPolylineGenerator
-                ->loadTrack($track)
-                ->execute()
-                ->getPolyline();
-
-            $track->setReducedPolyline($polyline);
+            $track = $this->trackPolylineHandler->handleTrack($track);
 
             $progressBar->advance();
             $table->addRow([

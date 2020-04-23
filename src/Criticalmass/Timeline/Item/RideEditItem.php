@@ -12,6 +12,9 @@ class RideEditItem extends AbstractItem
     /** @var string $rideTitle */
     protected $rideTitle;
 
+    /** @var bool $enabled */
+    protected $enabled;
+
     public function getRide(): Ride
     {
         return $this->ride;
@@ -34,5 +37,17 @@ class RideEditItem extends AbstractItem
         $this->rideTitle = $rideTitle;
 
         return $this;
+    }
+
+    public function setEnabled(bool $enabled): RideEditItem
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
     }
 }

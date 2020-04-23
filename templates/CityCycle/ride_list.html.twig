@@ -1,0 +1,167 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Automatisch generierte Touren von {{ city.city }} anzeigen{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ objectPath(city) }}">
+            {{ city.city }}
+        </a>
+    </li>
+
+    <li>
+        <a href="{{ objectPath(cityCycle.city, 'caldera_criticalmass_citycycle_list') }}">
+            Turnusliste
+        </a>
+    </li>
+
+    <li class="active">
+        Generierte Touren anzeigen
+    </li>
+{% endblock %}
+    
+{% block content %}
+    <div class="container">
+        {{ include('Flash/_flash.html.twig') }}
+
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Turnus
+                            </div>
+                            <div class="panel-body">
+                                <dl>
+                                    <dt>
+                                        Turnus
+                                    </dt>
+                                    <dd>
+                                        {{ ('cycle.event_date.month_week.' ~ cityCycle.weekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ cityCycle.dayOfWeek)|trans }}
+                                        im Monat
+                                    </dd>
+
+                                    <dt>
+                                        Uhrzeit
+                                    </dt>
+                                    <dd>
+                                        {{ cityCycle.time|date('H:i', 'UTC') }} Uhr
+                                    </dd>
+
+                                    <dt>
+                                        Treffpunkt
+                                    </dt>
+                                    <dd>
+                                        {% if cityCycle.location %}
+                                            {{ cityCycle.location }}
+                                        {% else %}
+                                            <em>nicht definiert</em>
+                                        {% endif %}
+                                    </dd>
+
+                                    <dt>
+                                        Gültigkeitsbeginn
+                                    </dt>
+                                    <dd>
+                                        {% if cityCycle.validFrom %}
+                                            {{ cityCycle.validFrom|date('d.m.Y') }}
+                                        {% else %}
+                                            <em>nicht definiert</em>
+                                        {% endif %}
+                                    </dd>
+
+                                    <dt>
+                                        Gültigkeitsende
+                                    </dt>
+                                    <dd>
+                                        {% if cityCycle.validUntil %}
+                                            {{ cityCycle.validUntil|date('d.m.Y') }}
+                                        {% else %}
+                                            <em>nicht definiert</em>
+                                        {% endif %}
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2>
+                                    Tourenübersicht
+                                </h2>
+
+                                <p>
+                                    Die folgenden Touren wurden von diesem Turnus erzeugt:
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>
+                                            Titel
+                                        </th>
+
+                                        <th>
+                                            Datum
+                                        </th>
+
+                                        <th>
+                                            Uhrzeit
+                                        </th>
+
+                                        <th>
+                                            Treffpunkt
+                                        </th>
+
+                                        <th>
+
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for ride in rideList %}
+                                        <tr>
+                                            <td>
+                                                <a href="{{ objectPath(ride) }}" title="zur Tourseite">
+                                                    {{ ride.title }}
+                                                </a>
+                                            </td>
+
+                                            <td>
+                                                {{ ride.dateTime|date('d.m.Y') }}
+                                            </td>
+
+                                            <td>
+                                                {{ ride.dateTime|date('H:i') }}&nbsp;Uhr
+                                            </td>
+
+                                            <td>
+                                                {{ ride.location }}
+                                            </td>
+
+                                            <td>
+                                                <a class="btn btn-xs btn-default"
+                                                   href="{{ objectPath(ride, 'caldera_criticalmass_ride_edit') }}"
+                                                   title="Tour editieren">
+                                                    <i class="fa fa-wrench"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

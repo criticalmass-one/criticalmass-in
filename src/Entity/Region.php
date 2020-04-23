@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\EntityInterface\AuditableInterface;
 use App\EntityInterface\RouteableInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -49,6 +51,16 @@ class Region implements RouteableInterface, AuditableInterface
      * @ORM\OneToMany(targetEntity="City", mappedBy="region")
      */
     protected $cities;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $wikidataEntityId;
+
+    public function __construct()
+    {
+        $this->children = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -128,4 +140,27 @@ class Region implements RouteableInterface, AuditableInterface
         return $this->name;
     }
 
+    public function getWikidataEntityId(): ?string
+    {
+        return $this->wikidataEntityId;
+    }
+
+    public function setWikidataEntityId(?string $wikidataEntityId): Region
+    {
+        $this->wikidataEntityId = $wikidataEntityId;
+
+        return $this;
+    }
+
+    public function getChildren(): Collection
+    {
+        return $this->children;
+    }
+
+    public function setChildren(Collection $children): Region
+    {
+        $this->children = $children;
+
+        return $this;
+    }
 }

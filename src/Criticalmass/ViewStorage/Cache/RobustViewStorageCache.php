@@ -3,12 +3,12 @@
 namespace App\Criticalmass\ViewStorage\Cache;
 
 use App\Criticalmass\ViewStorage\Persister\ViewStoragePersisterInterface;
-use App\Criticalmass\ViewStorage\View\ViewFactory;
-use App\EntityInterface\ViewableInterface;
+use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
+use App\Criticalmass\ViewStorage\ViewModel\ViewFactory;
 use JMS\Serializer\SerializerInterface;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use PhpAmqpLib\Exception\AMQPIOException;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class RobustViewStorageCache extends ViewStorageCache
@@ -16,10 +16,10 @@ class RobustViewStorageCache extends ViewStorageCache
     /** @var ViewStoragePersisterInterface $viewStoragePersister */
     protected $viewStoragePersister;
 
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
-    public function __construct(RegistryInterface $registry, ViewStoragePersisterInterface $viewStoragePersister, TokenStorageInterface $tokenStorage, ProducerInterface $producer, SerializerInterface $serializer)
+    public function __construct(ManagerRegistry $registry, ViewStoragePersisterInterface $viewStoragePersister, TokenStorageInterface $tokenStorage, ProducerInterface $producer, SerializerInterface $serializer)
     {
         $this->viewStoragePersister = $viewStoragePersister;
         $this->registry = $registry;
@@ -27,7 +27,7 @@ class RobustViewStorageCache extends ViewStorageCache
         parent::__construct($tokenStorage, $producer, $serializer);
     }
 
-    public function countView(ViewableInterface $viewable): void
+    public function countView(ViewableEntity $viewable): void
     {
         try {
             parent::countView($viewable);

@@ -4,7 +4,7 @@ namespace App\Command\Photo;
 
 use App\Criticalmass\Image\ExifHandler\ExifHandlerInterface;
 use App\Entity\Photo;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
@@ -13,13 +13,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class AssignExifCommand extends Command
 {
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var ExifHandlerInterface $exifHandler */
     protected $exifHandler;
 
-    public function __construct(RegistryInterface $registry, ExifHandlerInterface $exifHandler)
+    public function __construct(ManagerRegistry $registry, ExifHandlerInterface $exifHandler)
     {
         $this->registry = $registry;
         $this->exifHandler = $exifHandler;

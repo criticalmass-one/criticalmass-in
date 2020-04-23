@@ -4,6 +4,10 @@
 version: "3.1"
 services:
 
+    rabbitmq:
+      image: rabbitmq
+      container_name: criticalmass-rabbitmq
+
     memcached:
       image: memcached:alpine
       container_name: criticalmass-memcached
@@ -27,7 +31,7 @@ services:
         - "8002:3306"
 
     elasticsearch:
-      image: elasticsearch:6.5.4
+      image: elasticsearch:7.4.2
       container_name: criticalmass-elasticsearch
 
     webserver:
@@ -38,7 +42,7 @@ services:
           - .:/application
           - ./phpdocker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
       ports:
-       - "8000:80"
+       - "1234:80"
 
     php-fpm:
       build: phpdocker/php-fpm
@@ -47,4 +51,3 @@ services:
       volumes:
         - .:/application
         - ./phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.3/fpm/conf.d/99-overrides.ini
-

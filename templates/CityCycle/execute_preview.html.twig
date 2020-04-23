@@ -1,0 +1,151 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Turnus auslösen{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ objectPath(cityCycle.city) }}">
+            {{ cityCycle.city.city }}
+        </a>
+    </li>
+
+    <li>
+        <a href="{{ objectPath(cityCycle.city, 'caldera_criticalmass_citycycle_list') }}">
+            Turnusliste
+        </a>
+    </li>
+
+    <li class="active">
+        Turnus auslösen
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h2>
+                    Vorschau
+                </h2>
+
+                <p class="lead">
+                    Für den Zeitraum vom
+                    <time>{{ executeable.fromDate|date('d.m.Y') }}</time>
+                    bis
+                    <time>{{ executeable.untilDate|date('d.m.Y') }}</time>
+                    können die folgenden Touren generiert werden:
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>
+                            Titel
+                        </th>
+
+                        <th>
+                            Datum
+                        </th>
+
+                        <th>
+                            Uhrzeit
+                        </th>
+
+                        <th>
+                            Treffpunkt
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for ride in rideList %}
+                        <tr>
+                            <td>
+                                {{ ride.title }}
+                            </td>
+
+                            <td>
+                                {{ ride.dateTime|date('l, d. F Y') }}
+                            </td>
+
+                            <td>
+                                {{ ride.dateTime|date('H:i') }} Uhr
+                            </td>
+
+                            <td>
+                                {% if ride.location %}
+                                    {{ ride.location }}
+                                {% else %}
+                                    <em>nicht definiert</em>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    {% if rideList|length == 0 %}
+                        <tr>
+                            <td colspan="5">
+                                <div class="alert alert-danger">
+                                    Für deinen gewählten Zeitraum können keine Touren angelegt werden, weil entweder
+                                    dieser Turnus für den gewählten Zeitraum noch nicht begonnen hat oder abgelaufen ist
+                                    oder die anzulegenden Touren bereits existieren.
+                                </div>
+                            </td>
+                        </tr>
+                    {% elseif rideList|length < dateTimeList|length %}
+                        <tr>
+                            <td colspan="5">
+                                <div class="alert alert-info">
+                                    <p>
+                                        Du hast gerade Touren für einen Zeitraum von <strong>{{ dateTimeList|length }}
+                                            Monaten</strong> generieren lassen, es wurden allerdings nur
+                                        <strong>{{ rideList|length }} Touren</strong> erstellt. Das liegt daran, dass
+                                        <strong>{{ dateTimeList|length - rideList|length }} Touren</strong> entweder
+                                        bereits in unserer Datenbank vorhanden sind oder aber außerhalb des
+                                        Gültigkeitszeitraumes des Turnus’ liegen.</p>
+
+                                    <p>
+                                        Wir können dir leider momentan aus technischen Gründen nicht anzeigen, um welche
+                                        Touren es sich handelt — wir arbeiten allerdings an einer entsprechenden
+                                        Funktion.</p>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <p>
+                    Du kannst nun entweder die in der obigen Tabelle dargestellten Touren abspeichern oder zurück gehen
+                    und einen anderen Zeitraum auswählen:
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <form method="post"
+                      action="{{ objectPath(cityCycle, 'caldera_criticalmass_citycycle_execute_persist') }}"
+                ">
+                <input type="hidden" name="fromDate" value="{{ executeable.fromDate|date('U') }}"/>
+                <input type="hidden" name="untilDate" value="{{ executeable.untilDate|date('U') }}"/>
+
+                <div class="btn-group pull-right">
+                    <a href="" class="btn btn-default">
+                        Abbrechen
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        Touren speichern
+                    </button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

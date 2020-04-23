@@ -27,13 +27,13 @@
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active">
                     <a href="#details" aria-controls="home" role="tab" data-toggle="tab">
-                        <i class="fa fa-flag"></i>
+                        <i class="far fa-flag"></i>
                         Details
                     </a>
                 </li>
                 <li role="presentation">
                     <a href="#minimass" aria-controls="settings" role="tab" data-toggle="tab">
-                        <i class="fa fa-map-marker"></i>
+                        <i class="far fa-map-marker"></i>
                         Mini-Masses
                         <span class="badge">
                             {{ ride.getSubrides|length }}
@@ -42,18 +42,18 @@
                 </li>
                 <li role="presentation">
                     <a href="#comments" aria-controls="messages" role="tab" data-toggle="tab">
-                        <i class="fa fa-pencil"></i>
+                        <i class="far fa-pencil"></i>
                         Kommentare
                         <span class="badge">
                             {{ ride.getPosts|length }}
                         </span>
                     </a>
                 </li>
-                {% if pastRide %}
+                {% if pastRide and ride.enabled %}
                     {% if feature('photos') %}
                         <li role="presentation">
                             <a href="{{ objectPath(ride, 'caldera_criticalmass_photo_ride_list') }}">
-                                <i class="fa fa-camera"></i>
+                                <i class="far fa-camera"></i>
                                 Galerie
                                 <span class="badge">
                             {{ photos|length }}
@@ -63,7 +63,7 @@
                     {% endif %}
                     <li role="presentation">
                         <a href="#tracks" aria-controls="profile" role="tab" data-toggle="tab">
-                            <i class="fa fa-bicycle"></i>
+                            <i class="far fa-bicycle"></i>
                             Tracks
                             <span class="badge">
                             {{ tracks|length }}
@@ -78,7 +78,7 @@
                 {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderSubridesTabAction', { 'ride': ride } )) }}
                 {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderPostsTabAction', { 'ride': ride } )) }}
 
-                {% if pastRide %}
+                {% if pastRide and ride.enabled %}
                     {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderTracksTabAction', { 'ride': ride } )) }}
                 {% endif %}
             </div>
@@ -95,7 +95,7 @@
     };
 
     CriticalMass.loadModule('RidePage', null, pageOptions, function (ridePage) {
-        {% if ride.getHasLocation() and ride.latitude != 0 and ride.getLongitude != 0 %}
+        {% if ride.location and ride.latitude and ride.longitude and ride.latitude != 0 and ride.getLongitude != 0 %}
         ridePage.addRide('{{ ride|serialize|raw|e('js') }}');
         {% else %}
         ridePage.addCity('{{ city|serialize|raw|e('js') }}');

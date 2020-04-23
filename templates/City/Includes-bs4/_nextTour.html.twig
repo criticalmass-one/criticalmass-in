@@ -36,7 +36,7 @@
                 <div class="col-md-12">
                     <dl>
                         <dt>Treffpunkt</dt>
-                        {% if currentRide.hasLocation() %}
+                        {% if currentRide.location and currentRide.latitude and currentRide.longitude %}
                             <dd>{{ currentRide.location }}</dd>
                         {% else %}
                             <dd>noch nicht bekannt</dd>
@@ -58,7 +58,7 @@
             <div class="col-md-12">
                 <div class="text-center">
                     <a href="{{ objectPath(city, 'caldera_criticalmass_city_listrides') }}" class="btn btn-success">
-                        <i class="fa fa-list"></i>
+                        <i class="far fa-list"></i>
                         weitere Touren anzeigen
                     </a>
                 </div>

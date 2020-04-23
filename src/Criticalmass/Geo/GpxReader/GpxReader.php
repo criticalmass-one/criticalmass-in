@@ -2,11 +2,7 @@
 
 namespace App\Criticalmass\Geo\GpxReader;
 
-use App\Criticalmass\Geo\Entity\Position;
-use App\Criticalmass\Geo\EntityInterface\PositionInterface;
 use App\Criticalmass\Geo\Exception\GpxFileNotFoundException;
-use App\Criticalmass\Geo\PositionList\PositionList;
-use App\Criticalmass\Geo\PositionList\PositionListInterface;
 use League\Flysystem\FilesystemInterface;
 
 class GpxReader implements GpxReaderInterface
@@ -37,7 +33,7 @@ class GpxReader implements GpxReaderInterface
         try {
             $gpxString = $this->filesystem->read($filename);
         } catch (\Exception $exception) {
-            throw new GpxFileNotFoundException($exception);
+            throw new GpxFileNotFoundException(sprintf('File %s was not found.', $filename));
         }
 
         $this->prepareGpx($gpxString);
@@ -120,34 +116,5 @@ class GpxReader implements GpxReaderInterface
     public function getPoint(int $n): \SimpleXMLElement
     {
         return $this->trackPointList[$n];
-    }
-
-    public function createPosition(int $n): PositionInterface
-    {
-        /** @var PositionInterface $position */
-        $position = new Position(
-            $this->getLatitudeOfPoint($n),
-            $this->getLongitudeOfPoint($n)
-        );
-
-        $position
-            ->setAltitude($this->getElevationOfPoint($n))
-            ->setDateTime($this->getDateTimeOfPoint($n))
-        ;
-
-        return $position;
-    }
-
-    public function createPositionList(): PositionListInterface
-    {
-        $positionList = new PositionList();
-
-        for ($n = 0; $n < $this->countPoints(); ++$n) {
-            $position = $this->createPosition($n);
-
-            $positionList->add($position);
-        }
-
-        return $positionList;
     }
 }

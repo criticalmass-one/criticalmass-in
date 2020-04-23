@@ -11,24 +11,24 @@
 {% block optionsButton %}
     <div class="dropdown float-right">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="city-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-cogs"></i>
+            <i class="far fa-cogs"></i>
             Optionen
             <span class="caret"></span>
         </button>
 
         <div class="dropdown-menu" aria-labelledby="city-dropdown">
             <a class="dropdown-item" href="{{ objectPath(city, 'caldera_criticalmass_city_edit') }}">
-                <i class="fa fa-cogs"></i>
+                <i class="far fa-cogs"></i>
                 Stadt editieren
             </a>
 
             <a class="dropdown-item" href="{{ objectPath(city, 'caldera_criticalmass_ride_add') }}">
-                <i class="fa fa-plus"></i>
+                <i class="far fa-plus"></i>
                 Tour hinzufügen
             </a>
 
             <a class="dropdown-item" href="{{ objectPath(city, 'caldera_criticalmass_citycycle_list') }}">
-                <i class="fa fa-calendar-o"></i>
+                <i class="far fa-calendar"></i>
                 Turnus
             </a>
         </div>
@@ -147,7 +147,7 @@
                                                 </div>
                                             {% endif %}
 
-                                            {% if ride.hasLocation() and ride.latitude and ride.longitude %}
+                                            {% if ride.location and ride.latitude and ride.longitude %}
                                                 <div style="display: inline-block; margin-bottom: 10px; margin-right: 0px; vertical-align: bottom;">
                                                     <img src="{{ staticmaps(ride, 800, 200, 13) }}" class="img-fluid" />
                                                 </div>
@@ -169,7 +169,7 @@
                 <div class="row mb-3">
                     <div class="col-12 text-center">
                         <a href="{{ objectPath(city, 'caldera_criticalmass_city_listrides') }}" class="btn btn-primary">
-                            <i class="fa fa-list"></i>
+                            <i class="far fa-list"></i>
                             weitere Touren anzeigen
                         </a>
                     </div>

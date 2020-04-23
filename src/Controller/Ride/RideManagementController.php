@@ -2,17 +2,20 @@
 
 namespace App\Controller\Ride;
 
+use App\Controller\AbstractController;
 use App\Criticalmass\Router\ObjectRouterInterface;
+use App\Entity\City;
+use App\Entity\Ride;
+use App\Form\Type\RideDisableType;
 use App\Form\Type\RideSocialPreviewType;
+use App\Form\Type\RideType;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use App\Controller\AbstractController;
-use App\Entity\City;
-use App\Entity\Ride;
-use App\Form\Type\RideType;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -75,6 +78,8 @@ class RideManagementController extends AbstractController
             ]);
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
+
+            return $this->redirect($objectRouter->generate($ride));
         }
 
         return $this->render('RideManagement/edit.html.twig', [
@@ -96,9 +101,9 @@ class RideManagementController extends AbstractController
         ]);
 
         if (Request::METHOD_POST == $request->getMethod()) {
-            return $this->editPostAction($request, $user, $ride, $ride->getCity(), $form);
+            return $this->editPostAction($request, $user, $ride, $ride->getCity(), $form, $objectRouter);
         } else {
-            return $this->editGetAction($request, $user, $ride, $ride->getCity(), $form);
+            return $this->editGetAction($request, $user, $ride, $ride->getCity(), $form, $objectRouter);
         }
     }
 
@@ -107,7 +112,8 @@ class RideManagementController extends AbstractController
         UserInterface $user = null,
         Ride $ride,
         City $city,
-        FormInterface $form
+        FormInterface $form,
+        ObjectRouterInterface $objectRouter
     ): Response {
         return $this->render('RideManagement/edit.html.twig', [
             'ride' => $ride,
@@ -122,7 +128,8 @@ class RideManagementController extends AbstractController
         UserInterface $user = null,
         Ride $ride,
         City $city,
-        FormInterface $form
+        FormInterface $form,
+        ObjectRouterInterface $objectRouter
     ): Response {
         $form->handleRequest($request);
 
@@ -131,9 +138,15 @@ class RideManagementController extends AbstractController
                 ->setUpdatedAt(new \DateTime())
                 ->setUser($user);
 
+            if ($ride->isEnabled()) {
+                $ride->setDisabledReason(null);
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
+
+            return $this->redirect($objectRouter->generate($ride));
         }
 
         return $this->render('RideManagement/edit.html.twig', [
@@ -199,5 +212,40 @@ class RideManagementController extends AbstractController
         }
 
         return $this->socialPreviewGetAction($entityManager, $request, $user, $ride, $form);
+    }
+
+    /**
+     * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("ride", class="App:Ride")
+     */
+    public function disableAction(Request $request, ManagerRegistry $registry, UserInterface $user = null, Ride $ride, ObjectRouterInterface $objectRouter): RedirectResponse
+    {
+        if (Request::METHOD_POST === $request->getMethod()) {
+            $disableForm = $this->createForm(RideDisableType::class, $ride);
+            $disableForm->handleRequest($request);
+
+            if ($disableForm->isSubmitted() && $disableForm->isValid()) {
+                $ride->setEnabled(false);
+
+                $registry->getManager()->flush();
+            }
+        }
+
+        return $this->redirect($objectRouter->generate($ride));
+    }
+
+    /**
+     * @Security("has_role('ROLE_USER')")
+     * @ParamConverter("ride", class="App:Ride")
+     */
+    public function enableAction(Request $request, ManagerRegistry $registry, UserInterface $user = null, Ride $ride, ObjectRouterInterface $objectRouter): RedirectResponse
+    {
+        $ride->setEnabled(true)
+            ->setDisabledReason(null)
+            ->setDisabledReasonMessage(null);
+
+        $registry->getManager()->flush();
+
+        return $this->redirect($objectRouter->generate($ride));
     }
 }
