@@ -158,10 +158,5 @@ class Timeline implements TimelineInterface
 
         return true;
     }
-
-    public function getTimelineContent(): string
-    {
-        return join("\n", $this->getTimelineContentList());
-    }
 }
 
