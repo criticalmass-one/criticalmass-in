@@ -2,27 +2,13 @@
 
 namespace App\Criticalmass\SocialNetwork\FeedFetcher;
 
+use App\Criticalmass\SocialNetwork\NetworkFeedFetcher\NetworkFeedFetcherInterface;
 use App\Entity\SocialNetworkFeedItem;
 use App\Entity\SocialNetworkProfile;
-use App\Criticalmass\SocialNetwork\NetworkFeedFetcher\NetworkFeedFetcherInterface;
-use Doctrine\Persistence\ManagerRegistry;
 
 class FeedFetcher extends AbstractFeedFetcher
 {
-    /** @var array $networkFetcherList */
-    protected $networkFetcherList = [];
-
-    /** @var ManagerRegistry $doctrine */
-    protected $doctrine;
-
-    protected $feedItemList = [];
-
-    public function __construct(ManagerRegistry $doctrine)
-    {
-        $this->doctrine = $doctrine;
-    }
-
-    public function addNetworkFeedFetcher(NetworkFeedFetcherInterface $networkFeedFetcher): FeedFetcher
+    public function addNetworkFeedFetcher(NetworkFeedFetcherInterface $networkFeedFetcher): FeedFetcherInterface
     {
         $this->networkFetcherList[] = $networkFeedFetcher;
 
@@ -51,7 +37,7 @@ class FeedFetcher extends AbstractFeedFetcher
         return null;
     }
 
-    public function fetch(): FeedFetcher
+    public function fetch(): FeedFetcherInterface
     {
         $this->stripNetworkList();
 
@@ -70,7 +56,7 @@ class FeedFetcher extends AbstractFeedFetcher
         return $this;
     }
 
-    public function persist(): FeedFetcher
+    public function persist(): FeedFetcherInterface
     {
         $em = $this->doctrine->getManager();
 

@@ -2,36 +2,33 @@
 
 namespace App\Criticalmass\SocialNetwork\FeedFetcher;
 
-use App\Entity\SocialNetworkProfile;
 use App\Criticalmass\SocialNetwork\NetworkFeedFetcher\NetworkFeedFetcherInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use App\Entity\SocialNetworkProfile;
+use Doctrine\Persistence\ManagerRegistry;
 
-abstract class AbstractFeedFetcher
+abstract class AbstractFeedFetcher implements FeedFetcherInterface
 {
-    /** @var array $networkFetcherList */
-    protected $networkFetcherList = [];
+    protected array $networkFetcherList = [];
 
-    /** @var array $feedFetcher */
-    protected $fetchableNetworkList = [];
+    protected array $fetchableNetworkList = [];
 
-    /** @var RegistryInterface $doctrine */
-    protected $doctrine;
+    protected ManagerRegistry $doctrine;
 
-    protected $feedItemList = [];
+    protected array $feedItemList = [];
 
-    public function __construct(RegistryInterface $doctrine)
+    public function __construct(ManagerRegistry $doctrine)
     {
         $this->doctrine = $doctrine;
     }
 
-    public function addNetworkFeedFetcher(NetworkFeedFetcherInterface $networkFeedFetcher): AbstractFeedFetcher
+    public function addNetworkFeedFetcher(NetworkFeedFetcherInterface $networkFeedFetcher): FeedFetcherInterface
     {
         $this->networkFetcherList[] = $networkFeedFetcher;
 
         return $this;
     }
 
-    public function addFetchableNetwork(string $network): AbstractFeedFetcher
+    public function addFetchableNetwork(string $network): FeedFetcherInterface
     {
         $this->fetchableNetworkList[] = $network;
 
