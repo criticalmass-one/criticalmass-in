@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\SocialNetwork\FeedItemPersister;
 
+use App\Entity\SocialNetworkFeedItem;
 use JMS\Serializer\SerializerInterface;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 
@@ -19,8 +20,15 @@ class RabbitPusher implements FeedItemPersisterInterface
     public function persistFeedItemList(array $feedItemList): FeedItemPersisterInterface
     {
         foreach ($feedItemList as $feedItem) {
-            $this->producer->publish($this->serializer->serialize($feedItem, 'json'));
+            $this->persistFeedItem($feedItem);
         }
+
+        return $this;
+    }
+
+    public function persistFeedItem(SocialNetworkFeedItem $socialNetworkFeedItem): FeedItemPersisterInterface
+    {
+        $this->producer->publish($this->serializer->serialize($socialNetworkFeedItem, 'json'));
 
         return $this;
     }

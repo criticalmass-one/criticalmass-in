@@ -3,16 +3,9 @@
 namespace App\Criticalmass\SocialNetwork\FeedItemPersister;
 
 use App\Entity\SocialNetworkFeedItem;
-use Doctrine\Persistence\ManagerRegistry;
 
-class NonDuplicatesFeedItemPersister implements FeedItemPersisterInterface
+class NonDuplicatesFeedItemPersister extends FeedItemPersister
 {
-    protected ManagerRegistry $doctrine;
-
-    public function __construct(ManagerRegistry $doctrine)
-    {
-    }
-
     public function persistFeedItemList(array $feedItemList): FeedItemPersisterInterface
     {
         $em = $this->doctrine->getManager();
@@ -22,6 +15,25 @@ class NonDuplicatesFeedItemPersister implements FeedItemPersisterInterface
                 $em->persist($feedItem);
             }
         }
+
+        try {
+            $em->flush();
+        } catch (\Exception $exception) {
+
+        }
+
+        return $this;
+    }
+
+    public function persistFeedItem(SocialNetworkFeedItem $socialNetworkFeedItem): FeedItemPersisterInterface
+    {
+        if ($this->feedItemExists($socialNetworkFeedItem)) {
+            return $this;
+        }
+        
+        $em = $this->doctrine->getManager();
+
+        $em->persist($socialNetworkFeedItem);
 
         try {
             $em->flush();

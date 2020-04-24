@@ -5,7 +5,7 @@ namespace App\Consumer;
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
 
-class ViewConsumer extends AbstractViewConsumer  implements ConsumerInterface
+class ViewConsumer extends AbstractViewConsumer implements ConsumerInterface
 {
     public function execute(AMQPMessage $message): int
     {

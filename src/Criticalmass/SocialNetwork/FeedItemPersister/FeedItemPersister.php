@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\SocialNetwork\FeedItemPersister;
 
+use App\Entity\SocialNetworkFeedItem;
 use Doctrine\Persistence\ManagerRegistry;
 
 class FeedItemPersister implements FeedItemPersisterInterface
@@ -20,6 +21,21 @@ class FeedItemPersister implements FeedItemPersisterInterface
         foreach ($feedItemList as $feedItem) {
             $em->persist($feedItem);
         }
+
+        try {
+            $em->flush();
+        } catch (\Exception $exception) {
+
+        }
+
+        return $this;
+    }
+
+    public function persistFeedItem(SocialNetworkFeedItem $socialNetworkFeedItem): FeedItemPersisterInterface
+    {
+        $em = $this->doctrine->getManager();
+
+        $em->persist($socialNetworkFeedItem);
 
         try {
             $em->flush();
