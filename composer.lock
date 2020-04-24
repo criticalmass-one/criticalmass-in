@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "15f3d960fde2925e6f6108e9ca352356",
+    "content-hash": "37066fa6e3ce01073bddd574730e9f47",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -89,45 +89,6 @@
                 }
             ],
             "time": "2017-05-05T10:40:27+00:00"
-        },
-        {
-            "name": "calderacc/socialnetwork-bundle",
-            "version": "0.1.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/calderacc/socialnetwork-bundle.git",
-                "reference": "a0cb9a2d6bb398a86a1f309f12ca494388951cd4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/calderacc/socialnetwork-bundle/zipball/a0cb9a2d6bb398a86a1f309f12ca494388951cd4",
-                "reference": "a0cb9a2d6bb398a86a1f309f12ca494388951cd4",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^7.5"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Caldera\\SocialNetworkBundle\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Malte Huebner",
-                    "email": "malte@caldera.cc"
-                }
-            ],
-            "description": "Handle links to social network profiles.",
-            "time": "2019-10-30T07:26:45+00:00"
         },
         {
             "name": "calderacc/yourls-api-manager",
@@ -1016,16 +977,16 @@
         },
         {
             "name": "doctrine/doctrine-bundle",
-            "version": "2.0.7",
+            "version": "2.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineBundle.git",
-                "reference": "6926771140ee87a823c3b2c72602de9dda4490d3"
+                "reference": "b0e0deb6e700438401ede433a15a6372d2285202"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/6926771140ee87a823c3b2c72602de9dda4490d3",
-                "reference": "6926771140ee87a823c3b2c72602de9dda4490d3",
+                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/b0e0deb6e700438401ede433a15a6372d2285202",
+                "reference": "b0e0deb6e700438401ede433a15a6372d2285202",
                 "shasum": ""
             },
             "require": {
@@ -1104,7 +1065,7 @@
                 "orm",
                 "persistence"
             ],
-            "time": "2020-01-18T11:56:15+00:00"
+            "time": "2020-04-23T10:52:09+00:00"
         },
         {
             "name": "doctrine/doctrine-fixtures-bundle",
@@ -2664,16 +2625,16 @@
         },
         {
             "name": "friendsofsymfony/rest-bundle",
-            "version": "2.7.3",
+            "version": "2.7.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSRestBundle.git",
-                "reference": "21a27cebe54f02f6499d78db8978162ce7183112"
+                "reference": "3d8501dbdfa48811ef942f5f93c358c80d5ad8eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/21a27cebe54f02f6499d78db8978162ce7183112",
-                "reference": "21a27cebe54f02f6499d78db8978162ce7183112",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/3d8501dbdfa48811ef942f5f93c358c80d5ad8eb",
+                "reference": "3d8501dbdfa48811ef942f5f93c358c80d5ad8eb",
                 "shasum": ""
             },
             "require": {
@@ -2764,7 +2725,7 @@
             "keywords": [
                 "rest"
             ],
-            "time": "2020-03-28T08:23:35+00:00"
+            "time": "2020-04-23T17:34:09+00:00"
         },
         {
             "name": "friendsofsymfony/user-bundle",

@@ -2,27 +2,12 @@
 
 namespace App\Criticalmass\SocialNetwork\FeedFetcher;
 
-use App\Entity\SocialNetworkFeedItem;
-use App\Entity\SocialNetworkProfile;
 use App\Criticalmass\SocialNetwork\NetworkFeedFetcher\NetworkFeedFetcherInterface;
-use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\SocialNetworkProfile;
 
 class FeedFetcher extends AbstractFeedFetcher
 {
-    /** @var array $networkFetcherList */
-    protected $networkFetcherList = [];
-
-    /** @var ManagerRegistry $doctrine */
-    protected $doctrine;
-
-    protected $feedItemList = [];
-
-    public function __construct(ManagerRegistry $doctrine)
-    {
-        $this->doctrine = $doctrine;
-    }
-
-    public function addNetworkFeedFetcher(NetworkFeedFetcherInterface $networkFeedFetcher): FeedFetcher
+    public function addNetworkFeedFetcher(NetworkFeedFetcherInterface $networkFeedFetcher): FeedFetcherInterface
     {
         $this->networkFetcherList[] = $networkFeedFetcher;
 
@@ -51,7 +36,7 @@ class FeedFetcher extends AbstractFeedFetcher
         return null;
     }
 
-    public function fetch(): FeedFetcher
+    public function fetch(): FeedFetcherInterface
     {
         $this->stripNetworkList();
 
@@ -70,35 +55,6 @@ class FeedFetcher extends AbstractFeedFetcher
         return $this;
     }
 
-    public function persist(): FeedFetcher
-    {
-        $em = $this->doctrine->getManager();
-
-        foreach ($this->feedItemList as $feedItem) {
-            if (!$this->feedItemExists($feedItem)) {
-                $em->persist($feedItem);
-            }
-        }
-
-        try {
-            $em->flush();
-        } catch (\Exception $exception) {
-
-        }
-
-        return $this;
-    }
-
-    protected function feedItemExists(SocialNetworkFeedItem $feedItem): bool
-    {
-        $existingItem = $this->doctrine->getRepository(SocialNetworkFeedItem::class)->findOneBy([
-            'socialNetworkProfile' => $feedItem->getSocialNetworkProfile(),
-            'uniqueIdentifier' => $feedItem->getUniqueIdentifier(),
-        ]);
-
-        return $existingItem !== null;
-    }
-
     protected function stripNetworkList(): FeedFetcher
     {
         if (count($this->fetchableNetworkList) === 0) {
@@ -111,6 +67,13 @@ class FeedFetcher extends AbstractFeedFetcher
                 unset($this->networkFetcherList[$key]);
             }
         }
+
+        return $this;
+    }
+
+    public function persist(): FeedFetcherInterface
+    {
+        $this->feedItemPersister->persistFeedItemList($this->feedItemList);
 
         return $this;
     }

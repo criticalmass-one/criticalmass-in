@@ -83,7 +83,6 @@
         "symfony/dependency-injection": "^4.2@dev",
         "symfony/dom-crawler": "^4.2",
         "symfony/css-selector": "^4.2",
-        "calderacc/socialnetwork-bundle": "^0.1",
         "oneup/flysystem-bundle": "^3.1",
         "flagception/flagception-bundle": "^3.1",
         "php-amqplib/rabbitmq-bundle": "^1.14",

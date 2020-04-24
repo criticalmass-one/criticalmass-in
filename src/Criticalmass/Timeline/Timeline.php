@@ -6,8 +6,8 @@ use App\Criticalmass\Timeline\Collector\AbstractTimelineCollector;
 use App\Criticalmass\Timeline\Collector\TimelineCollectorInterface;
 use App\Criticalmass\Timeline\Item\ItemInterface;
 use Doctrine\Bundle\DoctrineBundle\Registry;
-use Flagception\Manager\FeatureManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Flagception\Manager\FeatureManagerInterface;
 use Symfony\Bridge\Twig\TwigEngine;
 use Symfony\Component\Templating\EngineInterface;
 

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Command\SocialNetwork;
 
@@ -11,11 +11,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class FetchFeedCommand extends Command
 {
-    /** @var FeedFetcher $feedFetcher */
-    protected $feedFetcher;
-
-    /** @var ManagerRegistry $doctrine */
-    protected $doctrine;
+    protected FeedFetcher $feedFetcher;
+    protected ManagerRegistry $doctrine;
 
     public function __construct(ManagerRegistry $doctrine, FeedFetcher $feedFetcher)
     {
