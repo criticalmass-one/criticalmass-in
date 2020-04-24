@@ -6,8 +6,7 @@ use App\Criticalmass\Socialnetwork\Network\NetworkInterface;
 
 class NetworkManager implements NetworkManagerInterface
 {
-    /** @var array $networkList */
-    protected $networkList = [];
+    protected array $networkList = [];
 
     public function addNetwork(NetworkInterface $network): NetworkManager
     {
