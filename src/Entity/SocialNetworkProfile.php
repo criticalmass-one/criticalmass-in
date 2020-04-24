@@ -14,86 +14,75 @@ use Symfony\Component\Validator\Constraints as Assert;
 class SocialNetworkProfile
 {
     /**
-     * @var int $id
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected int $id;
 
     /**
-     * @var User $user
      * @ORM\ManyToOne(targetEntity="User", inversedBy="socialNetworkProfiles")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    protected $user;
+    protected ?User $user = null;
 
     /**
-     * @var City $city
      * @ORM\ManyToOne(targetEntity="City", inversedBy="socialNetworkProfiles")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
-    protected $city;
+    protected ?City $city = null;
 
     /**
-     * @var Ride $ride
      * @ORM\ManyToOne(targetEntity="Ride", inversedBy="socialNetworkProfiles")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
-    protected $ride;
+    protected ?Ride $ride = null;
 
     /**
-     * @var Subride $subride
      * @ORM\ManyToOne(targetEntity="Subride", inversedBy="socialNetworkProfiles")
      * @ORM\JoinColumn(name="subride_id", referencedColumnName="id")
      */
-    protected $subride;
+    protected ?Subride $subride = null;
 
     /**
-     * @var string $identifier
      * @ORM\Column(type="string")
      * @Assert\NotBlank
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      */
-    protected $identifier;
+    protected ?string $identifier = null;
 
     /**
-     * @var string $network
      * @ORM\Column(type="string")
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      */
-    protected $network;
+    protected string $network;
 
     /**
-     * @var bool $mainNetwork
      * @ORM\Column(type="boolean")
      */
-    protected $mainNetwork;
+    protected bool $mainNetwork;
 
     /**
-     * @var bool $enabled
      * @ORM\Column(type="boolean")
      */
-    protected $enabled;
+    protected bool $enabled;
 
     /**
-     * @var \DateTime $createdAt
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $createdAt;
+    private \DateTime $createdAt;
 
     /**
-     * @var User $createdBy
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="socialNetworkProfiles")
      */
-    private $createdBy;
+    private User $createdBy;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $autoPublish = true;
+    protected bool $autoPublish = true;
 
     public function getId(): ?int
     {
