@@ -10,7 +10,7 @@ use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use JMS\Serializer\SerializerBuilder;
 use PHPUnit\Framework\TestCase;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Tests\ViewStorage\TestClass;
 use Tests\ViewStorage\TestView;
 
@@ -26,7 +26,7 @@ class ViewStoragePersisterTest extends TestCase
             ->setTest($testClass)
             ->setDateTime(new \DateTime());
 
-        $viewEntityFactoryRegistry = $this->createMock(RegistryInterface::class);
+        $viewEntityFactoryRegistry = $this->createMock(ManagerRegistry::class);
         $viewEntityFactoryRegistry
             ->expects($this->never())
             ->method('getRepository')
@@ -45,7 +45,7 @@ class ViewStoragePersisterTest extends TestCase
             ->method('persist')
             ->with($this->equalTo($expectedPersistedClass, 0.5));
 
-        $viewStoragePersisterRegistry = $this->createMock(RegistryInterface::class);
+        $viewStoragePersisterRegistry = $this->createMock(ManagerRegistry::class);
         $viewStoragePersisterRegistry
             ->expects($this->once())
             ->method('getRepository')
@@ -94,7 +94,7 @@ class ViewStoragePersisterTest extends TestCase
             ->with($this->equalTo(1))
             ->will($this->returnValue($user));
 
-        $viewEntityFactoryRegistry = $this->createMock(RegistryInterface::class);
+        $viewEntityFactoryRegistry = $this->createMock(ManagerRegistry::class);
         $viewEntityFactoryRegistry
             ->expects($this->once())
             ->method('getRepository')
@@ -114,7 +114,7 @@ class ViewStoragePersisterTest extends TestCase
             ->method('persist')
             ->with($this->equalTo($expectedPersistedClass, 0.5));
 
-        $viewStoragePersisterRegistry = $this->createMock(RegistryInterface::class);
+        $viewStoragePersisterRegistry = $this->createMock(ManagerRegistry::class);
         $viewStoragePersisterRegistry
             ->expects($this->once())
             ->method('getRepository')
@@ -165,7 +165,7 @@ class ViewStoragePersisterTest extends TestCase
             ->with($this->equalTo(1))
             ->will($this->returnValue($user));
 
-        $viewEntityFactoryRegistry = $this->createMock(RegistryInterface::class);
+        $viewEntityFactoryRegistry = $this->createMock(ManagerRegistry::class);
         $viewEntityFactoryRegistry
             ->expects($this->once())
             ->method('getRepository')
@@ -185,7 +185,7 @@ class ViewStoragePersisterTest extends TestCase
             ->method('persist')
             ->with($this->equalTo($expectedPersistedClass, 0.5));
 
-        $viewStoragePersisterRegistry = $this->createMock(RegistryInterface::class);
+        $viewStoragePersisterRegistry = $this->createMock(ManagerRegistry::class);
         $viewStoragePersisterRegistry
             ->expects($this->once())
             ->method('getRepository')

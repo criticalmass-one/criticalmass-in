@@ -15,6 +15,9 @@ abstract class AbstractItem implements ItemInterface
     /** @var User $user */
     protected $user;
 
+    /** @var string $tabName */
+    protected $tabName = 'standard';
+
     public function __construct()
     {
         $this->uniqId = uniqid();
@@ -47,5 +50,10 @@ abstract class AbstractItem implements ItemInterface
     public function getUser(): ?User
     {
         return $this->user;
+    }
+
+    public function getTabName(): string
+    {
+        return $this->tabName;
     }
 }

@@ -61,8 +61,11 @@ services:
             $facebookAppId: '%facebook.app_id%'
             $facebookAppSecret: '%facebook.app_secret%'
             $facebookDefaultToken: '%facebook.default_token%'
-            #$twitterClientId: '%twitter.client_id%'
-            #$twitterSecret: '%twitter.secret%'
+            $twitterClientId: '%twitter.client_id%'
+            $twitterSecret: '%twitter.secret%'
+            $uploadDestinationPhoto: '%upload_destination.photo%'
+            $uploadDestinationTrack: '%upload_destination.track%'
+            $uploadDestinationUserPhoto: '%upload_destination.user_photo%'
             $stravaClientId: '%strava.client_id%'
             $stravaSecret: '%strava.secret%'
             $cachedTimelineTtl: '%timeline.ttl%'
@@ -150,11 +153,12 @@ services:
         alias: App\Criticalmass\Website\Obfuscator\CaseAwareObfuscator
 
     App\Criticalmass\Timeline\TimelineInterface:
-        alias: App\Criticalmass\Timeline\CachedTimeline
+        #alias: App\Criticalmass\Timeline\CachedTimeline
+        alias: App\Criticalmass\Timeline\Timeline
 
     App\Criticalmass\Geo\Loop\LoopInterface:
         alias: App\Criticalmass\Geo\Loop\TrackLoop
-        
+
     App\Request\ParamConverter\RideParamConverter:
         tags:
             - { name: request.param_converter, priority: 0, converter: ride_converter }
@@ -255,6 +259,18 @@ services:
     App\Criticalmass\ViewStorage\BlackList\BlackList:
         arguments:
             $crawlerDetect: '@crawler_detect'
+
+    App\Form\Type\RegistrationType:
+        arguments:
+            $class: '%fos_user.model.user.class%'
+
+    App\Criticalmass\SocialNetwork\FeedItemPersister\FeedItemPersisterInterface:
+        #alias: App\Criticalmass\SocialNetwork\FeedItemPersister\NonDuplicatesFeedItemPersister
+        alias: App\Criticalmass\SocialNetwork\FeedItemPersister\RabbitPusher
+
+    App\Criticalmass\SocialNetwork\FeedItemPersister\RabbitPusher:
+        arguments:
+            $producer: '@old_sound_rabbit_mq.criticalmass_socialnetworkfeeditem_producer'
 
     App\Controller\OAuthServer\AuthorizeController:
         arguments:

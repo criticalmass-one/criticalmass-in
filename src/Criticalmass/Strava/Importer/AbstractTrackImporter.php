@@ -9,7 +9,7 @@ use App\Entity\Ride;
 use App\Entity\User;
 use Iamstuartwilson\StravaApi;
 use JMS\Serializer\SerializerInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 abstract class AbstractTrackImporter implements TrackImporterInterface
@@ -35,7 +35,7 @@ abstract class AbstractTrackImporter implements TrackImporterInterface
     /** @var UploadFakerInterface $uploadFaker */
     protected $uploadFaker;
 
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var SerializerInterface $serializer */
@@ -50,7 +50,7 @@ abstract class AbstractTrackImporter implements TrackImporterInterface
         'altitude',
     ];
 
-    public function __construct(GpxWriter $gpxWriter, SessionInterface $session, RegistryInterface $registry, UploadFakerInterface $uploadFaker, SerializerInterface $serializer, string $stravaClientId, string $stravaSecret)
+    public function __construct(GpxWriter $gpxWriter, SessionInterface $session, ManagerRegistry $registry, UploadFakerInterface $uploadFaker, SerializerInterface $serializer, string $stravaClientId, string $stravaSecret)
     {
         $this->gpxWriter = $gpxWriter;
         $this->session = $session;

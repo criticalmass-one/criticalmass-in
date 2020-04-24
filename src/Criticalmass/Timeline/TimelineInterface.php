@@ -12,5 +12,5 @@ interface TimelineInterface
 
     public function execute(): TimelineInterface;
 
-    public function getTimelineContent(): string;
+    public function getTimelineContentList(): array;
 }

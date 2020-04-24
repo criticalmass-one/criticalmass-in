@@ -2,14 +2,15 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\Website\Crawler\Crawlable;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Table(name="social_network_feed_item", uniqueConstraints={
  *   @ORM\UniqueConstraint(name="unique_feed_item", columns={"social_network_profile_id", "uniqueIdentifier"})
  *    })
  * @ORM\Entity(repositoryClass="App\Repository\SocialNetworkFeedItemRepository")
+ * @JMS\ExclusionPolicy("all")
  */
 class SocialNetworkFeedItem //implements Crawlable
 {
@@ -17,52 +18,66 @@ class SocialNetworkFeedItem //implements Crawlable
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Expose
      */
     protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="SocialNetworkProfile", inversedBy="feedItems")
      * @ORM\JoinColumn(name="social_network_profile_id", referencedColumnName="id")
+     * @JMS\Expose
      */
     protected $socialNetworkProfile;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=false)
+     * @JMS\Expose
      */
     protected $uniqueIdentifier;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @JMS\Expose
      */
     protected $permalink;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @JMS\Expose
      */
     protected $title;
 
     /**
      * @ORM\Column(type="text", nullable=false)
+     * @JMS\Expose
      */
     protected $text;
 
     /**
      * @ORM\Column(type="datetime", nullable=false)
+     * @JMS\Expose
+     * @JMS\Type("DateTime<'U'>")
      */
     protected $dateTime;
 
     /**
      * @ORM\Column(type="boolean", nullable=false)
+     * @JMS\Expose
+     * @JMS\Type("bool")
      */
     protected $hidden = false;
 
     /**
      * @ORM\Column(type="boolean", nullable=false)
+     * @JMS\Expose
+     * @JMS\Type("bool")
      */
     protected $deleted = false;
 
     /**
      * @ORM\Column(type="datetime", nullable=false)
+     * @JMS\Expose
+     * @JMS\Type("DateTime<'U'>")
      */
     protected $createdAt;
 

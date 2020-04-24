@@ -4,7 +4,7 @@ namespace App\Command\Track;
 
 use App\Entity\Track;
 use App\Event\Track\TrackTrimmedEvent;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
@@ -15,13 +15,13 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class OptimizeTracksCommand extends Command
 {
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var EventDispatcherInterface $eventDispatcher */
     protected $eventDispatcher;
 
-    public function __construct(?string $name = null, RegistryInterface $registry, EventDispatcherInterface $eventDispatcher)
+    public function __construct(?string $name = null, ManagerRegistry $registry, EventDispatcherInterface $eventDispatcher)
     {
         $this->registry = $registry;
         $this->eventDispatcher = $eventDispatcher;

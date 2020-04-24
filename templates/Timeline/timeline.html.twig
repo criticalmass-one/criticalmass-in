@@ -1,0 +1,78 @@
+{% for content in timelineContentList.standard %}
+    {{ content|raw }}
+{% endfor %}
+
+
+{#
+<div>
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active">
+            <a href="#standard" aria-controls="home" role="tab" data-toggle="tab">
+                <i class="fa fa-clock-o"></i>
+            </a>
+        </li>
+
+        {% if timelineContentList.facebook is defined %}
+        <li role="presentation">
+            <a href="#facebook" aria-controls="profile" role="tab" data-toggle="tab">
+                <i class="fa fa-facebook"></i>
+            </a>
+        </li>
+        {% endif %}
+
+        {% if timelineContentList.twitter is defined %}
+        <li role="presentation">
+            <a href="#twitter" aria-controls="messages" role="tab" data-toggle="tab">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        {% endif %}
+
+        {% if timelineContentList.www is defined %}
+        <li role="presentation">
+            <a href="#www" aria-controls="settings" role="tab" data-toggle="tab">
+                <i class="fa fa-globe"></i>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="standard">
+            {% for content in timelineContentList.standard %}
+            {{ content|raw }}
+            {% endfor %}
+        </div>
+
+        {% if timelineContentList.facebook is defined %}
+        <div role="tabpanel" class="tab-pane" id="facebook">
+            {% for content in timelineContentList.facebook %}
+            {{ content|raw }}
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if timelineContentList.twitter is defined %}
+        <div role="tabpanel" class="tab-pane" id="twitter">
+            {% for content in timelineContentList.twitter %}
+            {{ content|raw }}
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if timelineContentList.www is defined %}
+        <div role="tabpanel" class="tab-pane" id="www">
+            {% for content in timelineContentList.www %}
+            {{ content|raw }}
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+</div>
+
+
+#}
