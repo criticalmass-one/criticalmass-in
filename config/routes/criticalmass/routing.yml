@@ -134,6 +134,10 @@ caldera_criticalmass_subdride:
     resource: 'subride.yml'
     prefix: /
 
+caldera_criticalmass_oauth:
+    resource: 'oauth.yml'
+    prefix: /
+
 
 #caldera_criticalmass_redirecting:
 #    resource: 'redirecting.yml'

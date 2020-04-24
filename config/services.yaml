@@ -271,3 +271,11 @@ services:
     App\Criticalmass\SocialNetwork\FeedItemPersister\RabbitPusher:
         arguments:
             $producer: '@old_sound_rabbit_mq.criticalmass_socialnetworkfeeditem_producer'
+
+    App\Controller\OAuthServer\AuthorizeController:
+        arguments:
+            $authorizeForm: '@fos_oauth_server.authorize.form'
+            $authorizeFormHandler: '@fos_oauth_server.authorize.form.handler.default'
+            $oAuth2Server: '@fos_oauth_server.server'
+        tags:
+            - controller.service_arguments
