@@ -7,11 +7,9 @@ use Psr\Log\LoggerInterface;
 
 abstract class AbstractNetworkFeedFetcher implements NetworkFeedFetcherInterface
 {
-    /** @var array $feedItemList */
-    protected $feedItemList = [];
+    protected array $feedItemList = [];
 
-    /** @var LoggerInterface $logger */
-    protected $logger;
+    protected LoggerInterface $logger;
 
     public function __construct(LoggerInterface $logger)
     {

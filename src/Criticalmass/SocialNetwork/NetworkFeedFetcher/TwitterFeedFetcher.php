@@ -9,8 +9,7 @@ use Psr\Log\LoggerInterface;
 
 class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
 {
-    /** @var Codebird $codebird */
-    protected $codebird;
+    protected Codebird $codebird;
 
     public function __construct(LoggerInterface $logger, string $twitterClientId, string $twitterSecret)
     {
@@ -37,9 +36,6 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
 
     protected function fetchFeed(SocialNetworkProfile $socialNetworkProfile): NetworkFeedFetcherInterface
     {
-        //$reply = $cb->oauth2_token();
-        //$bearer_token = $reply->access_token;
-
         $screenname = $this->getScreenname($socialNetworkProfile);
 
         if (!$this->isValidScreenname($screenname)) {
