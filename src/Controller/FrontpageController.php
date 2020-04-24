@@ -20,13 +20,13 @@ class FrontpageController extends AbstractController
         $monthInterval = new \DateInterval('P1M');
         $startDateTime->sub($monthInterval);
 
-        $timelineContent = $cachedTimeline
+        $timelineContentList = $cachedTimeline
             ->setDateRange($startDateTime, $endDateTime)
             ->execute()
-            ->getTimelineContent();
+            ->getTimelineContentList();
 
         return $this->render('Frontpage/index.html.twig', [
-            'timelineContent' => $timelineContent,
+            'timelineContentList' => $timelineContentList,
             'frontpageTeaserList' => $frontpageTeaserList,
         ]);
     }

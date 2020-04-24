@@ -11,20 +11,14 @@ class SocialNetworkFeedItemCollector extends AbstractTimelineCollector
 
     protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {
-        return $this;
+        //return $this;
         
-        /** @var SocialNetworkFeedItemItem $itemEntity */
+        /** @var SocialNetworkFeedItem $itemEntity */
         foreach ($groupedEntities as $itemEntity) {
             $item = new SocialNetworkFeedItemItem();
 
             $item
-                ->setUser($itemEntity->getSocialNetworkProfile()->getUser())
-                ->setCity($itemEntity->getSocialNetworkProfile()->getCity())
-                ->setRide($itemEntity->getSocialNetworkProfile()->getRide())
-                ->setSubride($itemEntity->getSocialNetworkProfile()->getSubride())
-                ->setPermalink($itemEntity->getPermalink())
-                ->setTitle($itemEntity->getTitle())
-                ->setText($itemEntity->getText())
+                ->setSocialNetworkFeedItem($itemEntity)
                 ->setDateTime($itemEntity->getDateTime());
 
             $this->addItem($item);

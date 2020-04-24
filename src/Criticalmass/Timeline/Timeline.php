@@ -25,8 +25,8 @@ class Timeline implements TimelineInterface
     /** @var array $items */
     protected $items = [];
 
-    /** @var string $content */
-    protected $content = '';
+    /** @var array $contentList */
+    protected $contentList = [];
 
     /** @var \DateTime $startDateTime */
     protected $startDateTime = null;
@@ -70,9 +70,7 @@ class Timeline implements TimelineInterface
 
     protected function process(): Timeline
     {
-        /**
-         * @var AbstractTimelineCollector $collector
-         */
+        /** @var AbstractTimelineCollector $collector */
         foreach ($this->collectorList as $collector) {
             $collector->setDateRange($this->startDateTime, $this->endDateTime);
 
@@ -112,15 +110,17 @@ class Timeline implements TimelineInterface
 
     protected function createContent(): Timeline
     {
+        /** @var ItemInterface $item */
         foreach ($this->items as $item) {
             $templateName = $this->templateNameForItem($item);
 
-            $this->content .= $this->templating->render(
-                'Timeline/Items/' . $templateName . '.html.twig',
-                [
-                    'item' => $item
-                ]
-            );
+            if (!array_key_exists($item->getTabName(), $this->contentList)) {
+                $this->contentList[$item->getTabName()] = [];
+            }
+
+            $this->contentList[$item->getTabName()][]= $this->templating->render('Timeline/Items/' . $templateName . '.html.twig', [
+                'item' => $item
+            ]);
         }
 
         return $this;
@@ -139,9 +139,9 @@ class Timeline implements TimelineInterface
         return $templateName;
     }
 
-    public function getTimelineContent(): string
+    public function getTimelineContentList(): array
     {
-        return $this->content;
+        return $this->contentList;
     }
 
     protected function checkFeatureStatusForCollector(TimelineCollectorInterface $timelineCollector): bool

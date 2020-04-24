@@ -7,7 +7,7 @@ use App\Entity\SocialNetworkProfile;
 use App\Criticalmass\SocialNetwork\NetworkFeedFetcher\NetworkFeedFetcherInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
-class FeedFetcher
+class FeedFetcher extends AbstractFeedFetcher
 {
     /** @var array $networkFetcherList */
     protected $networkFetcherList = [];
@@ -41,14 +41,11 @@ class FeedFetcher
 
     protected function getFeedFetcherForNetworkProfile(SocialNetworkProfile $socialNetworkProfile): ?NetworkFeedFetcherInterface
     {
-        $namespace = 'App\\Criticalmass\\SocialNetwork\\NetworkFeedFetcher\\';
-
-        $network = ucfirst($socialNetworkProfile->getNetwork());
-
-        $classname = sprintf('%s%sFeedFetcher', $namespace, $network);
-
-        if (class_exists($classname)) {
-            return new $classname;
+        /** @var NetworkFeedFetcherInterface $fetcher */
+        foreach ($this->networkFetcherList as $fetcher) {
+            if ($fetcher->supports($socialNetworkProfile)) {
+                return $fetcher;
+            }
         }
 
         return null;
@@ -56,6 +53,8 @@ class FeedFetcher
 
     public function fetch(): FeedFetcher
     {
+        $this->stripNetworkList();
+
         $profileList = $this->getSocialNetworkProfiles();
 
         foreach ($profileList as $profile) {
@@ -66,7 +65,6 @@ class FeedFetcher
 
                 $this->feedItemList = array_merge($this->feedItemList, $feedItemList);
             }
-
         }
 
         return $this;
@@ -95,14 +93,25 @@ class FeedFetcher
     {
         $existingItem = $this->doctrine->getRepository(SocialNetworkFeedItem::class)->findOneBy([
             'socialNetworkProfile' => $feedItem->getSocialNetworkProfile(),
-            'uniqueIdentifier' => $feedItem->getUniqueIdentifier()
+            'uniqueIdentifier' => $feedItem->getUniqueIdentifier(),
         ]);
 
         return $existingItem !== null;
     }
 
-    public function getFeedItemList(): array
+    protected function stripNetworkList(): FeedFetcher
     {
-        return $this->feedItemList;
+        if (count($this->fetchableNetworkList) === 0) {
+            return $this;
+        }
+
+        /** @var NetworkFeedFetcherInterface $fetcher */
+        foreach ($this->networkFetcherList as $key => $fetcher) {
+            if (!in_array($fetcher->getNetworkIdentifier(), $this->fetchableNetworkList)) {
+                unset($this->networkFetcherList[$key]);
+            }
+        }
+
+        return $this;
     }
 }

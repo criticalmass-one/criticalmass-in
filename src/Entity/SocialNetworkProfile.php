@@ -90,6 +90,11 @@ class SocialNetworkProfile
      */
     private $createdBy;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $autoPublish = true;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -226,6 +231,18 @@ class SocialNetworkProfile
     public function setCreatedBy(?User $createdBy): self
     {
         $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    public function isAutoPublish(): bool
+    {
+        return $this->autoPublish;
+    }
+
+    public function setAutoPublish(bool $autoPublish): SocialNetworkProfile
+    {
+        $this->autoPublish = $autoPublish;
 
         return $this;
     }
