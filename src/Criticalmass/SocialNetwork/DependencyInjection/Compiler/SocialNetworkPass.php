@@ -5,7 +5,6 @@ namespace App\Criticalmass\SocialNetwork\DependencyInjection\Compiler;
 use App\Criticalmass\SocialNetwork\FeedFetcher\FeedFetcherInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Reference;
 
 class SocialNetworkPass implements CompilerPassInterface
 {
@@ -25,7 +24,7 @@ class SocialNetworkPass implements CompilerPassInterface
         $taggedServices = $container->findTaggedServiceIds('social_network.network');
 
         foreach ($taggedServices as $id => $tags) {
-            $feedFetcher->addMethodCall('addFetchableNetwork', [new Reference($id)]);
+            //$feedFetcher->addMethodCall('addFetchableNetwork', [new Reference($id)]);
         }
     }
 }
