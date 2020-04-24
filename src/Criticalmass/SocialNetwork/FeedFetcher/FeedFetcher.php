@@ -48,7 +48,6 @@ class FeedFetcher extends AbstractFeedFetcher
             if ($fetcher) {
                 $feedItemList = $fetcher->fetch($profile)->getFeedItemList();
 
-                dump($feedItemList);
                 $this->feedItemList = array_merge($this->feedItemList, $feedItemList);
             }
         }

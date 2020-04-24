@@ -55,7 +55,6 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
 
         foreach ($data as $tweet) {
             if (!is_object($tweet)) {
-                var_dump($tweet);
                 $this->logger->info('Tweet did not contain usable data. Skipping.');
 
                 continue;
