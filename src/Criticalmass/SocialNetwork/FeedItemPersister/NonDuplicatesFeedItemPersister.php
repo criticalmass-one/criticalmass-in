@@ -19,7 +19,7 @@ class NonDuplicatesFeedItemPersister extends FeedItemPersister
         try {
             $em->flush();
         } catch (\Exception $exception) {
-
+            //$this->doctrine->resetManager();
         }
 
         return $this;
@@ -38,6 +38,7 @@ class NonDuplicatesFeedItemPersister extends FeedItemPersister
         try {
             $em->flush();
         } catch (\Exception $exception) {
+            //$this->doctrine->resetManager();
         }
 
         return $this;
