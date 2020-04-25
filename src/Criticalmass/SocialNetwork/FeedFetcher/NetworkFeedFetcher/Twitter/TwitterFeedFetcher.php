@@ -61,8 +61,6 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
             $feedItem = TweetConverter::convert($socialNetworkProfile, $tweet);
 
             if ($feedItem) {
-                $feedItem->setSocialNetworkProfile($socialNetworkProfile);
-
                 $this->logger->info(sprintf('Parsed and added tweet #%s', $feedItem->getUniqueIdentifier()));
 
                 $this->feedItemList[] = $feedItem;
