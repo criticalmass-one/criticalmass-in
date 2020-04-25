@@ -57,6 +57,11 @@ class FetchInfo
         return $this;
     }
 
+    public function hasFromDateTime(): bool
+    {
+        return $this->fromDateTime !== null;
+    }
+
     public function getFromDateTime(): ?\DateTime
     {
         return $this->fromDateTime;
@@ -69,6 +74,11 @@ class FetchInfo
         return $this;
     }
 
+    public function hasUntilDatetime(): bool
+    {
+        return $this->untilDateTime !== null;
+    }
+    
     public function getUntilDateTime(): ?\DateTime
     {
         return $this->untilDateTime;

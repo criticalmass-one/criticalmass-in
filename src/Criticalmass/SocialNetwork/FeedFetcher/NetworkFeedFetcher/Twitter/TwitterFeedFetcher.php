@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\Twitter;
 
+use App\Criticalmass\SocialNetwork\FeedFetcher\FetchInfo;
 use App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\AbstractNetworkFeedFetcher;
 use App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\NetworkFeedFetcherInterface;
 use App\Entity\SocialNetworkFeedItem;
@@ -21,14 +22,14 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
         parent::__construct($logger);
     }
 
-    public function fetch(SocialNetworkProfile $socialNetworkProfile): NetworkFeedFetcherInterface
+    public function fetch(SocialNetworkProfile $socialNetworkProfile, FetchInfo $fetchInfo): NetworkFeedFetcherInterface
     {
         if (!$socialNetworkProfile->getCity()) {
             return $this;
         }
 
         try {
-            $this->fetchFeed($socialNetworkProfile);
+            $this->fetchFeed($socialNetworkProfile, $fetchInfo);
         } catch (\Exception $exception) {
             $this->markAsFailed($socialNetworkProfile, sprintf('Failed to fetch social network profile %d: %s', $socialNetworkProfile->getId(), $exception->getMessage()));
         }
@@ -36,7 +37,7 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
         return $this;
     }
 
-    protected function fetchFeed(SocialNetworkProfile $socialNetworkProfile): NetworkFeedFetcherInterface
+    protected function fetchFeed(SocialNetworkProfile $socialNetworkProfile, FetchInfo $fetchInfo): NetworkFeedFetcherInterface
     {
         $screenname = Screenname::extractScreenname($socialNetworkProfile);
 
@@ -48,8 +49,8 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
 
         $this->logger->info(sprintf('Now quering @%s', $screenname));
 
-        $reply = $this->codebird->statuses_userTimeline(sprintf('screen_name=%s&tweet_mode=extended', $screenname), true);
-        $data = (array) $reply;
+        $reply = $this->codebird->statuses_userTimeline(QueryBuilder::build($socialNetworkProfile, $fetchInfo), true);
+        $data = (array)$reply;
 
         foreach ($data as $tweet) {
             if (!is_object($tweet)) {

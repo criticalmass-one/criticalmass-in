@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\Homepage;
 
+use App\Criticalmass\SocialNetwork\FeedFetcher\FetchInfo;
 use App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\AbstractNetworkFeedFetcher;
 use App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\NetworkFeedFetcherInterface;
 use App\Entity\SocialNetworkFeedItem;
@@ -11,7 +12,7 @@ use Zend\Feed\Reader\Reader;
 
 class HomepageFeedFetcher extends AbstractNetworkFeedFetcher
 {
-    public function fetch(SocialNetworkProfile $socialNetworkProfile): NetworkFeedFetcherInterface
+    public function fetch(SocialNetworkProfile $socialNetworkProfile, FetchInfo $fetchInfo): NetworkFeedFetcherInterface
     {
         if (!$socialNetworkProfile->getCity()) {
             return $this;

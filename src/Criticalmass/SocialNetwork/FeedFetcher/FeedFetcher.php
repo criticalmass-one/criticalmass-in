@@ -28,7 +28,9 @@ class FeedFetcher extends AbstractFeedFetcher
             $fetcher = $this->getFeedFetcherForNetworkProfile($profile);
 
             if ($fetcher) {
-                $feedItemList = $fetcher->fetch($profile)->getFeedItemList();
+                $feedItemList = $fetcher
+                    ->fetch($profile, $fetchInfo)
+                    ->getFeedItemList();
 
                 $this->feedItemList = array_merge($this->feedItemList, $feedItemList);
             }
