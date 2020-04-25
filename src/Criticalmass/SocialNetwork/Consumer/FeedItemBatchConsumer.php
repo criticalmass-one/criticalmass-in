@@ -15,7 +15,6 @@ class FeedItemBatchConsumer extends AbstractFeedItemConsumer implements BatchCon
 
         /** @var AMQPMessage $message */
         foreach ($messages as $message) {
-            dump($message->getBody());
             $socialNetworkFeedItemList[] = $this->serializer->deserialize($message->getBody(), SocialNetworkFeedItem::class, 'json');
 
             $resultList[(int)$message->delivery_info['delivery_tag']] = true;

@@ -3,6 +3,11 @@ old_sound_rabbit_mq:
         default:
             url: '%env(RABBITMQ_URL)%'
             lazy: true
+            connection_timeout: 30
+            read_write_timeout: 30
+            keepalive: false
+            heartbeat: 15
+            use_socket: true
     producers:
         criticalmass_view:
             connection:       default
@@ -29,6 +34,7 @@ old_sound_rabbit_mq:
             exchange_options: { name: 'criticalmass_socialnetworkfeeditem', type: direct }
             queue_options:    { name: 'criticalmass_socialnetworkfeeditem'}
             callback:         App\Criticalmass\SocialNetwork\Consumer\FeedItemConsumer
+            qos_options:      { prefetch_size: 0, prefetch_count: 1, global: false }
     batch_consumers:
         criticalmass_view:
             connection:       default

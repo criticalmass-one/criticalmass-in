@@ -30,7 +30,7 @@ class NonDuplicatesFeedItemPersister extends FeedItemPersister
         if ($this->feedItemExists($socialNetworkFeedItem)) {
             return $this;
         }
-        
+
         $em = $this->doctrine->getManager();
 
         $em->persist($socialNetworkFeedItem);
@@ -38,7 +38,6 @@ class NonDuplicatesFeedItemPersister extends FeedItemPersister
         try {
             $em->flush();
         } catch (\Exception $exception) {
-
         }
 
         return $this;
