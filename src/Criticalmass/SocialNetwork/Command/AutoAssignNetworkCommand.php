@@ -30,7 +30,8 @@ class AutoAssignNetworkCommand extends Command
         $this
             ->setName('criticalmass:social-network:auto-assign')
             ->setDescription('Auto-assign networks')
-            ->addOption('only-diffs', null, InputOption::VALUE_NONE);
+            ->addOption('only-diffs', null, InputOption::VALUE_NONE)
+            ->addOption('auto-assign', null, InputOption::VALUE_NONE);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): void
@@ -41,7 +42,7 @@ class AutoAssignNetworkCommand extends Command
         $table->setHeaders([
             'Id',
             'Identifier',
-            'Network',
+            'Saved Network',
             'Detected Network',
         ]);
 
@@ -53,12 +54,20 @@ class AutoAssignNetworkCommand extends Command
                 continue;
             }
 
+            if ($detectedNetwork && $detectedNetwork->getIdentifier() !== $profile->getNetwork() && $input->getOption('auto-assign')) {
+                $profile->setNetwork($detectedNetwork->getIdentifier());
+            }
+
             $table->addRow([
                 $profile->getId(),
                 $profile->getIdentifier(),
                 $profile->getNetwork(),
                 $detectedNetwork ? $detectedNetwork->getIdentifier() : 'unkown',
             ]);
+        }
+
+        if ($input->getOption('auto-assign')) {
+            $this->doctrine->getManager()->flush();
         }
 
         $table->render();
