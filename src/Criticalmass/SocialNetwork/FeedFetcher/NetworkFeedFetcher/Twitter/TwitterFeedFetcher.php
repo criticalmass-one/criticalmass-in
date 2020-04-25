@@ -58,7 +58,7 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
                 continue;
             }
 
-            $feedItem = TweetConverter::convert($tweet);
+            $feedItem = TweetConverter::convert($socialNetworkProfile, $tweet);
 
             if ($feedItem) {
                 $feedItem->setSocialNetworkProfile($socialNetworkProfile);

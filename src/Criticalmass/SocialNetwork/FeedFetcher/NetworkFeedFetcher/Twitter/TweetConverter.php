@@ -3,6 +3,7 @@
 namespace App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\Twitter;
 
 use App\Entity\SocialNetworkFeedItem;
+use App\Entity\SocialNetworkProfile;
 
 class TweetConverter
 {
@@ -11,12 +12,14 @@ class TweetConverter
 
     }
 
-    public static function convert(\stdClass $tweet): ?SocialNetworkFeedItem
+    public static function convert(SocialNetworkProfile $socialNetworkProfile, \stdClass $tweet): ?SocialNetworkFeedItem
     {
         $feedItem = new SocialNetworkFeedItem();
+        $feedItem->setSocialNetworkProfile($socialNetworkProfile);
 
         try {
-            $permalink = sprintf('https://twitter.com/i/web/status/%s', $tweet->id);
+            $permalink = PermalinkGenerator::generatePermalink($socialNetworkProfile, $tweet);
+
             $text = $tweet->full_text;
             $dateTime = new \DateTime($tweet->created_at);
 
