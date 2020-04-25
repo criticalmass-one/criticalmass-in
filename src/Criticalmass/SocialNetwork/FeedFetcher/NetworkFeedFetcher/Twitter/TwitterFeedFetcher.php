@@ -5,7 +5,6 @@ namespace App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\Twitter;
 use App\Criticalmass\SocialNetwork\FeedFetcher\FetchInfo;
 use App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\AbstractNetworkFeedFetcher;
 use App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\NetworkFeedFetcherInterface;
-use App\Entity\SocialNetworkFeedItem;
 use App\Entity\SocialNetworkProfile;
 use Codebird\Codebird;
 use Psr\Log\LoggerInterface;
@@ -59,7 +58,7 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
                 continue;
             }
 
-            $feedItem = $this->convertEntryToFeedItem($tweet);
+            $feedItem = TweetConverter::convert($tweet);
 
             if ($feedItem) {
                 $feedItem->setSocialNetworkProfile($socialNetworkProfile);
@@ -73,31 +72,6 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
         $socialNetworkProfile->setLastFetchSuccessDateTime(new \DateTime());
 
         return $this;
-    }
-
-    protected function convertEntryToFeedItem(\stdClass $tweet): ?SocialNetworkFeedItem
-    {
-        $feedItem = new SocialNetworkFeedItem();
-
-        try {
-            $permalink = sprintf('https://twitter.com/i/web/status/%s', $tweet->id);
-            $text = $tweet->full_text;
-            $dateTime = new \DateTime($tweet->created_at);
-
-            if ($permalink && $text && $dateTime) {
-                $feedItem
-                    ->setUniqueIdentifier($permalink)
-                    ->setPermalink($permalink)
-                    ->setText($text)
-                    ->setDateTime($dateTime);
-
-                return $feedItem;
-            }
-
-            return $feedItem;
-        } catch (\Exception $e) {
-            return null;
-        }
     }
 
     protected function markAsFailed(SocialNetworkProfile $socialNetworkProfile, string $errorMessage): SocialNetworkProfile
