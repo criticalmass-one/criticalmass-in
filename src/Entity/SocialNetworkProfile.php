@@ -84,6 +84,21 @@ class SocialNetworkProfile
      */
     protected bool $autoPublish = true;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected ?\DateTime $lastFetchSuccessDateTime = null;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected ?\DateTime $lastFetchFailureDateTime = null;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected ?string $lastFetchFailureError = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -232,6 +247,42 @@ class SocialNetworkProfile
     public function setAutoPublish(bool $autoPublish): SocialNetworkProfile
     {
         $this->autoPublish = $autoPublish;
+
+        return $this;
+    }
+
+    public function getLastFetchSuccessDateTime(): ?\DateTimeInterface
+    {
+        return $this->lastFetchSuccessDateTime;
+    }
+
+    public function setLastFetchSuccessDateTime(?\DateTimeInterface $lastFetchSuccessDateTime): self
+    {
+        $this->lastFetchSuccessDateTime = $lastFetchSuccessDateTime;
+
+        return $this;
+    }
+
+    public function getLastFetchFailureDateTime(): ?\DateTimeInterface
+    {
+        return $this->lastFetchFailureDateTime;
+    }
+
+    public function setLastFetchFailureDateTime(?\DateTimeInterface $lastFetchFailureDateTime): self
+    {
+        $this->lastFetchFailureDateTime = $lastFetchFailureDateTime;
+
+        return $this;
+    }
+
+    public function getLastFetchFailureError(): ?string
+    {
+        return $this->lastFetchFailureError;
+    }
+
+    public function setLastFetchFailureError(?string $lastFetchFailureError): self
+    {
+        $this->lastFetchFailureError = $lastFetchFailureError;
 
         return $this;
     }
