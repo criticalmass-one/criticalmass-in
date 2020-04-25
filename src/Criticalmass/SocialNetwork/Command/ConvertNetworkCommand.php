@@ -15,8 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ConvertNetworkCommand extends Command
 {
-    /** @var ManagerRegistry $doctrine */
-    protected $doctrine;
+    protected ManagerRegistry $doctrine;
 
     public function __construct(ManagerRegistry $doctrine)
     {
