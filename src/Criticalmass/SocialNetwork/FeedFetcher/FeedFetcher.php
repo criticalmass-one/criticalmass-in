@@ -7,23 +7,6 @@ use App\Entity\SocialNetworkProfile;
 
 class FeedFetcher extends AbstractFeedFetcher
 {
-    public function addNetworkFeedFetcher(NetworkFeedFetcherInterface $networkFeedFetcher): FeedFetcherInterface
-    {
-        $this->networkFetcherList[] = $networkFeedFetcher;
-
-        return $this;
-    }
-
-    public function getNetworkFetcherList(): array
-    {
-        return $this->networkFetcherList;
-    }
-
-    protected function getSocialNetworkProfiles(): array
-    {
-        return $this->doctrine->getRepository(SocialNetworkProfile::class)->findAll();
-    }
-
     protected function getFeedFetcherForNetworkProfile(SocialNetworkProfile $socialNetworkProfile): ?NetworkFeedFetcherInterface
     {
         /** @var NetworkFeedFetcherInterface $fetcher */
@@ -36,12 +19,11 @@ class FeedFetcher extends AbstractFeedFetcher
         return null;
     }
 
-    public function fetch(): FeedFetcherInterface
+    public function fetch(FetchInfo $fetchInfo): FeedFetcherInterface
     {
-        $this->stripNetworkList();
+        $profileList = $this->getSocialNetworkProfiles($fetchInfo);
 
-        $profileList = $this->getSocialNetworkProfiles();
-
+        /** @var SocialNetworkProfile $profile */
         foreach ($profileList as $profile) {
             $fetcher = $this->getFeedFetcherForNetworkProfile($profile);
 
@@ -57,7 +39,7 @@ class FeedFetcher extends AbstractFeedFetcher
         return $this;
     }
 
-    protected function stripNetworkList(): FeedFetcher
+    protected function stripNetworkList(FetchInfo $fetchInfo): FeedFetcher
     {
         if (count($this->fetchableNetworkList) === 0) {
             return $this;

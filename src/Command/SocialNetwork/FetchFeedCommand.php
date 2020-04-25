@@ -3,6 +3,7 @@
 namespace App\Command\SocialNetwork;
 
 use App\Criticalmass\SocialNetwork\FeedFetcher\FeedFetcher;
+use App\Criticalmass\SocialNetwork\FeedFetcher\FetchInfo;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -34,12 +35,16 @@ class FetchFeedCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
+        $fetchInfo = new FetchInfo();
+
         if ($input->hasArgument('networks')) {
-            foreach ($input->getArgument('networks') as $network) {
-                $this->feedFetcher->addFetchableNetwork($network);
+            foreach ($input->getArgument('networks') as $networkIdentifier) {
+                $fetchInfo->addNetwork($networkIdentifier);
             }
         }
 
-        $this->feedFetcher->fetch()->persist();
+        $this->feedFetcher
+            ->fetch($fetchInfo)
+            ->persist();
     }
 }

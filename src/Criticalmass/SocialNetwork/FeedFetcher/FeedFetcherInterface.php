@@ -10,7 +10,7 @@ interface FeedFetcherInterface
 
     public function getNetworkFetcherList(): array;
 
-    public function fetch(): FeedFetcherInterface;
+    public function fetch(FetchInfo $fetchInfo): FeedFetcherInterface;
 
     public function persist(): FeedFetcherInterface;
 }
