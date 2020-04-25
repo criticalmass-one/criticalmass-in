@@ -38,9 +38,9 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
 
     protected function fetchFeed(SocialNetworkProfile $socialNetworkProfile): NetworkFeedFetcherInterface
     {
-        $screenname = $this->getScreenname($socialNetworkProfile);
+        $screenname = Screenname::extractScreenname($socialNetworkProfile);
 
-        if (!$this->isValidScreenname($screenname)) {
+        if (!$screenname || !Screenname::isValidScreenname($screenname)) {
             $this->markAsFailed($socialNetworkProfile, sprintf('Skipping %s cause it is not a valid twitter handle.', $screenname));
 
             return $this;
@@ -95,18 +95,6 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
         } catch (\Exception $e) {
             return null;
         }
-    }
-
-    protected function getScreenname(SocialNetworkProfile $socialNetworkProfile): ?string
-    {
-        $identifierParts = explode('/', $socialNetworkProfile->getIdentifier());
-
-        return array_pop($identifierParts);
-    }
-
-    protected function isValidScreenname(string $screenname): bool
-    {
-        return (bool)preg_match('/^@?(\w){1,15}$/', $screenname);
     }
 
     protected function markAsFailed(SocialNetworkProfile $socialNetworkProfile, string $errorMessage): SocialNetworkProfile
