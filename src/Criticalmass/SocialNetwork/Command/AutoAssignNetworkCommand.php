@@ -2,7 +2,9 @@
 
 namespace App\Criticalmass\SocialNetwork\Command;
 
+use App\Criticalmass\SocialNetwork\Network\NetworkInterface;
 use App\Criticalmass\SocialNetwork\NetworkDetector\NetworkDetectorInterface;
+use App\Criticalmass\SocialNetwork\NetworkManager\NetworkManagerInterface;
 use App\Entity\SocialNetworkProfile;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
@@ -10,16 +12,19 @@ use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ChoiceQuestion;
 
 class AutoAssignNetworkCommand extends Command
 {
     protected ManagerRegistry $doctrine;
     protected NetworkDetectorInterface $networkDetector;
+    protected NetworkManagerInterface $networkManager;
 
-    public function __construct(ManagerRegistry $doctrine, NetworkDetectorInterface $networkDetector)
+    public function __construct(ManagerRegistry $doctrine, NetworkManagerInterface $networkManager, NetworkDetectorInterface $networkDetector)
     {
         $this->doctrine = $doctrine;
         $this->networkDetector = $networkDetector;
+        $this->networkManager = $networkManager;
 
         parent::__construct(null);
 
@@ -31,11 +36,14 @@ class AutoAssignNetworkCommand extends Command
             ->setName('criticalmass:social-network:auto-assign')
             ->setDescription('Auto-assign networks')
             ->addOption('only-diffs', null, InputOption::VALUE_NONE)
-            ->addOption('auto-assign', null, InputOption::VALUE_NONE);
+            ->addOption('auto-assign', null, InputOption::VALUE_NONE)
+            ->addOption('interactive-assign', null, InputOption::VALUE_NONE);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
+        $networkList = $this->createNetworkList();
+
         $profiles = $this->doctrine->getRepository(SocialNetworkProfile::class)->findAll();
 
         $table = new Table($output);
@@ -58,6 +66,10 @@ class AutoAssignNetworkCommand extends Command
                 $profile->setNetwork($detectedNetwork->getIdentifier());
             }
 
+            if ($input->getOption('interactive-assign')) {
+                $this->queryForNewNetwork($input, $output, $profile, $networkList, $detectedNetwork);
+            }
+
             $table->addRow([
                 $profile->getId(),
                 $profile->getIdentifier(),
@@ -66,10 +78,43 @@ class AutoAssignNetworkCommand extends Command
             ]);
         }
 
-        if ($input->getOption('auto-assign')) {
+        if ($input->getOption('auto-assign') || $input->getOption('interactive-assign')) {
             $this->doctrine->getManager()->flush();
         }
 
         $table->render();
+    }
+
+    protected function queryForNewNetwork(InputInterface $input, OutputInterface $output, SocialNetworkProfile $socialNetworkProfile, array $networkList, NetworkInterface $detectedNetwork): void
+    {
+        $helper = $this->getHelper('question');
+
+        $question = new ChoiceQuestion(
+            sprintf('Current assigned network is <info>%s</info>, identifier is <comment>%s</comment>, it looks like <info>%s</info>',
+                $socialNetworkProfile->getNetwork(),
+                $socialNetworkProfile->getIdentifier(),
+                $detectedNetwork->getIdentifier()
+            ),
+            $networkList,
+            $detectedNetwork->getIdentifier(),
+        );
+
+        $question->setErrorMessage('Network <info>%s</info> is invalid.');
+
+        $networkIdentifier = $helper->ask($input, $output, $question);
+
+        $output->writeln(sprintf('Assigned network is <code>%s</code>', $networkIdentifier));
+
+        $socialNetworkProfile->setNetwork($networkIdentifier);
+    }
+
+    protected function createNetworkList(): array
+    {
+        /** @var NetworkInterface $network */
+        foreach ($this->networkManager->getNetworkList() as $network) {
+            $networkList[$network->getIdentifier()] = $network->getName();
+        }
+
+        return $networkList;
     }
 }
