@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\SocialNetwork\NetworkFeedFetcher;
+namespace App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher;
 
 use App\Entity\SocialNetworkProfile;
 use Psr\Log\LoggerInterface;

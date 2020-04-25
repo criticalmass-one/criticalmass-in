@@ -1,7 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\SocialNetwork\NetworkFeedFetcher;
+namespace App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\Homepage;
 
+use App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\AbstractNetworkFeedFetcher;
+use App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\NetworkFeedFetcherInterface;
 use App\Entity\SocialNetworkFeedItem;
 use App\Entity\SocialNetworkProfile;
 use Zend\Feed\Reader\Entry\EntryInterface;
@@ -18,7 +20,7 @@ class HomepageFeedFetcher extends AbstractNetworkFeedFetcher
         try {
             $this->fetchFeed($socialNetworkProfile);
         } catch (\Exception $exception) {
-            $this->logger->error(sprintf('Failed to fetch social network profile %d: %s', $socialNetworkProfile->getId(), $exception->getMessage()));
+            $this->markAsFailed($socialNetworkProfile, sprintf('Failed to fetch social network profile %d: %s', $socialNetworkProfile->getId(), $exception->getMessage()));
         }
 
         return $this;
@@ -99,5 +101,18 @@ class HomepageFeedFetcher extends AbstractNetworkFeedFetcher
         }
 
         return null;
+    }
+
+    protected function markAsFailed(SocialNetworkProfile $socialNetworkProfile, string $errorMessage): SocialNetworkProfile
+    {
+        $socialNetworkProfile
+            ->setLastFetchFailureDateTime(new \DateTime())
+            ->setLastFetchFailureError($errorMessage);
+
+        $this
+            ->logger
+            ->notice($errorMessage);
+
+        return $socialNetworkProfile;
     }
 }

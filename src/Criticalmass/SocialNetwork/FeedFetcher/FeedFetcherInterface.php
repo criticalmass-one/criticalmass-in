@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\SocialNetwork\FeedFetcher;
 
-use App\Criticalmass\SocialNetwork\NetworkFeedFetcher\NetworkFeedFetcherInterface;
+use App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\NetworkFeedFetcherInterface;
 
 interface FeedFetcherInterface
 {

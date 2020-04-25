@@ -1,7 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\SocialNetwork\NetworkFeedFetcher;
+namespace App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\Twitter;
 
+use App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\AbstractNetworkFeedFetcher;
+use App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\NetworkFeedFetcherInterface;
 use App\Entity\SocialNetworkFeedItem;
 use App\Entity\SocialNetworkProfile;
 use Codebird\Codebird;
@@ -28,7 +30,7 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
         try {
             $this->fetchFeed($socialNetworkProfile);
         } catch (\Exception $exception) {
-            $this->logger->error(sprintf('Failed to fetch social network profile %d: %s', $socialNetworkProfile->getId(), $exception->getMessage()));
+            $this->markAsFailed($socialNetworkProfile, sprintf('Failed to fetch social network profile %d: %s', $socialNetworkProfile->getId(), $exception->getMessage()));
         }
 
         return $this;
@@ -39,7 +41,7 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
         $screenname = $this->getScreenname($socialNetworkProfile);
 
         if (!$this->isValidScreenname($screenname)) {
-            $this->logger->error(sprintf('Skipping %s cause it is not a valid twitter handle.', $screenname));
+            $this->markAsFailed($socialNetworkProfile, sprintf('Skipping %s cause it is not a valid twitter handle.', $screenname));
 
             return $this;
         }
@@ -104,6 +106,19 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
 
     protected function isValidScreenname(string $screenname): bool
     {
-        return (bool) preg_match('/^@?(\w){1,15}$/', $screenname);
+        return (bool)preg_match('/^@?(\w){1,15}$/', $screenname);
+    }
+
+    protected function markAsFailed(SocialNetworkProfile $socialNetworkProfile, string $errorMessage): SocialNetworkProfile
+    {
+        $socialNetworkProfile
+            ->setLastFetchFailureDateTime(new \DateTime())
+            ->setLastFetchFailureError($errorMessage);
+
+        $this
+            ->logger
+            ->notice($errorMessage);
+
+        return $socialNetworkProfile;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\SocialNetwork\FeedFetcher;
 
-use App\Criticalmass\SocialNetwork\NetworkFeedFetcher\NetworkFeedFetcherInterface;
+use App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\NetworkFeedFetcherInterface;
 use App\Entity\SocialNetworkProfile;
 
 class FeedFetcher extends AbstractFeedFetcher
@@ -51,6 +51,8 @@ class FeedFetcher extends AbstractFeedFetcher
                 $this->feedItemList = array_merge($this->feedItemList, $feedItemList);
             }
         }
+
+        $this->doctrine->getManager()->flush();
 
         return $this;
     }
