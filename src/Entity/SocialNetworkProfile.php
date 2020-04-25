@@ -99,6 +99,11 @@ class SocialNetworkProfile
      */
     protected ?string $lastFetchFailureError = null;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $autoFetch = true;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -283,6 +288,18 @@ class SocialNetworkProfile
     public function setLastFetchFailureError(?string $lastFetchFailureError): self
     {
         $this->lastFetchFailureError = $lastFetchFailureError;
+
+        return $this;
+    }
+
+    public function getAutoFetch(): ?bool
+    {
+        return $this->autoFetch;
+    }
+
+    public function setAutoFetch(bool $autoFetch): self
+    {
+        $this->autoFetch = $autoFetch;
 
         return $this;
     }

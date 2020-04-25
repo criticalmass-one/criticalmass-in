@@ -25,6 +25,8 @@ class SocialNetworkProfileAdmin extends AbstractAdmin
             ->add('createdAt', DateTimeType::class, ['required' => true])
             ->add('hidden', CheckboxType::class)
             ->add('deleted', CheckboxType::class)
+            ->add('autoPublish', CheckboxType::class)
+            ->add('autoFetch', CheckboxType::class)
             ->end();
     }
 

@@ -42,8 +42,12 @@ class SocialNetworkProfileRepository extends EntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('snp');
 
+        $queryBuilder
+            ->where($queryBuilder->expr()->eq('snp.autoFetch', ':autoFetch'))
+            ->setParameter('autoFetch', true);
+
         if ($fetchInfo->hasNetworkList()) {
-            $queryBuilder->where($queryBuilder->expr()->in('snp.network', $fetchInfo->getNetworkList()));
+            $queryBuilder->andWhere($queryBuilder->expr()->in('snp.network', $fetchInfo->getNetworkList()));
         }
 
         return $queryBuilder->getQuery()->getResult();
