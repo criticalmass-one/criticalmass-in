@@ -8,6 +8,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class AutoAssignNetworkCommand extends Command
@@ -28,7 +29,8 @@ class AutoAssignNetworkCommand extends Command
     {
         $this
             ->setName('criticalmass:social-network:auto-assign')
-            ->setDescription('Auto-assign networks');
+            ->setDescription('Auto-assign networks')
+            ->addOption('only-diffs', null, InputOption::VALUE_NONE);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): void
@@ -46,6 +48,10 @@ class AutoAssignNetworkCommand extends Command
         /** @var SocialNetworkProfile $profile */
         foreach ($profiles as $profile) {
             $detectedNetwork = $this->networkDetector->detect($profile->getIdentifier());
+
+            if ($detectedNetwork && $detectedNetwork->getIdentifier() === $profile->getNetwork() && $input->getOption('only-diffs')) {
+                continue;
+            }
 
             $table->addRow([
                 $profile->getId(),
