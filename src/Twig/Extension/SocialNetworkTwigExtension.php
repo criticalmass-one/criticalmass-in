@@ -2,11 +2,12 @@
 
 namespace App\Twig\Extension;
 
-
 use App\Criticalmass\SocialNetwork\Network\NetworkInterface;
 use App\Criticalmass\SocialNetwork\NetworkManager\NetworkManagerInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class SocialNetworkTwigExtension extends \Twig_Extension
+class SocialNetworkTwigExtension extends AbstractExtension
 {
     protected NetworkManagerInterface $networkManager;
 
@@ -18,7 +19,7 @@ class SocialNetworkTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('getNetwork', [$this, 'getNetwork'], ['is_safe' => ['html']]),
+            new TwigFunction('getNetwork', [$this, 'getNetwork'], ['is_safe' => ['html']]),
         ];
     }
 

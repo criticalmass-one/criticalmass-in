@@ -25,7 +25,7 @@ class FeedItemPersister implements FeedItemPersisterInterface
         try {
             $em->flush();
         } catch (\Exception $exception) {
-
+            //$this->doctrine->resetManager();
         }
 
         return $this;
@@ -40,7 +40,7 @@ class FeedItemPersister implements FeedItemPersisterInterface
         try {
             $em->flush();
         } catch (\Exception $exception) {
-
+            //$this->doctrine->resetManager();
         }
 
         return $this;

@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\SocialNetwork\FeedFetcher;
 
-use App\Criticalmass\SocialNetwork\NetworkFeedFetcher\NetworkFeedFetcherInterface;
+use App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\NetworkFeedFetcherInterface;
 
 interface FeedFetcherInterface
 {
@@ -10,7 +10,7 @@ interface FeedFetcherInterface
 
     public function getNetworkFetcherList(): array;
 
-    public function fetch(): FeedFetcherInterface;
+    public function fetch(FetchInfo $fetchInfo): FeedFetcherInterface;
 
     public function persist(): FeedFetcherInterface;
 }
