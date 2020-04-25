@@ -8,6 +8,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class FetchFeedCommand extends Command
@@ -21,7 +22,6 @@ class FetchFeedCommand extends Command
         $this->feedFetcher = $feedFetcher;
 
         parent::__construct(null);
-
     }
 
     protected function configure(): void
@@ -29,8 +29,10 @@ class FetchFeedCommand extends Command
         $this
             ->setName('criticalmass:social-network:fetch-feed')
             ->setDescription('Fetch feeds')
-            ->addArgument('networks', InputArgument::IS_ARRAY);
-        ;
+            ->addArgument('networks', InputArgument::IS_ARRAY)
+            ->addOption('fromDateTime', 'f', InputOption::VALUE_REQUIRED)
+            ->addOption('untilDateTime', 'u', InputOption::VALUE_REQUIRED)
+            ->addOption('skipOldItems', 's', InputOption::VALUE_NONE);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): void
@@ -43,6 +45,14 @@ class FetchFeedCommand extends Command
             }
         }
 
+        if ($input->getOption('fromDateTime')) {
+            $fetchInfo->setFromDateTime(new \DateTime($input->getOption('fromDateTime')));
+        }
+
+        if ($input->getOption('untilDateTime')) {
+            $fetchInfo->setUntilDateTime(new \DateTime($input->getOption('untilDateTime')));
+        }
+        
         $this->feedFetcher
             ->fetch($fetchInfo)
             ->persist();

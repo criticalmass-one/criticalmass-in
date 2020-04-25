@@ -70,6 +70,8 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
             }
         }
 
+        $socialNetworkProfile->setLastFetchSuccessDateTime(new \DateTime());
+
         return $this;
     }
 

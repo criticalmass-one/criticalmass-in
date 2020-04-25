@@ -20,7 +20,13 @@ class QueryBuilder
         ];
 
         if ($fetchInfo->hasFromDateTime()) {
-            $queryStringParts['since'] = $fetchInfo->getFromDateTime()->format('Y-m-d');
+            $queryStringParts['since'] = $fetchInfo
+                ->getFromDateTime()
+                ->format('Y-m-d');
+        } elseif ($fetchInfo->skipOldItems() && $socialNetworkProfile->getLastFetchSuccessDateTime()) {
+            $queryStringParts['since'] = $socialNetworkProfile
+                ->getLastFetchSuccessDateTime()
+                ->format('Y-m-d');
         }
 
         if ($fetchInfo->hasUntilDatetime()) {

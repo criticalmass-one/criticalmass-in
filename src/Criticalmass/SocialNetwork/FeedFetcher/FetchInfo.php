@@ -16,6 +16,8 @@ class FetchInfo
 
     protected bool $includeSuceededProfiles = true;
 
+    protected bool $skipOldItems = true;
+
     public function hasNetworkList(): bool
     {
         return 0 !== count($this->networkList);
@@ -78,7 +80,7 @@ class FetchInfo
     {
         return $this->untilDateTime !== null;
     }
-    
+
     public function getUntilDateTime(): ?\DateTime
     {
         return $this->untilDateTime;
@@ -112,6 +114,18 @@ class FetchInfo
     {
         $this->includeSuceededProfiles = $includeSuceededProfiles;
 
+        return $this;
+    }
+
+    public function skipOldItems(): bool
+    {
+        return $this->skipOldItems;
+    }
+
+    public function setSkipOldItems(bool $skipOldItems): FetchInfo
+    {
+        $this->skipOldItems = $skipOldItems;
+        
         return $this;
     }
 }
