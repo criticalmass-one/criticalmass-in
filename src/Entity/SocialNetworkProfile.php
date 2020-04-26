@@ -62,12 +62,12 @@ class SocialNetworkProfile
     /**
      * @ORM\Column(type="boolean")
      */
-    protected bool $mainNetwork;
+    protected bool $mainNetwork = false;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    protected bool $enabled;
+    protected bool $enabled = true;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
