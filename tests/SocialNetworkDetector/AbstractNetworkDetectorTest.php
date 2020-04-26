@@ -16,7 +16,7 @@ abstract class AbstractNetworkDetectorTest extends TestCase
         //$networkManager->addNetwork(new Network\FacebookEvent());
         //$networkManager->addNetwork(new Network\FacebookGroup());
         //$networkManager->addNetwork(new Network\FacebookPage());
-        //$networkManager->addNetwork(new Network\FacebookProfile());
+        $networkManager->addNetwork(new Network\FacebookProfile());
         $networkManager->addNetwork(new Network\DiscordChat());
         $networkManager->addNetwork(new Network\Flickr());
         $networkManager->addNetwork(new Network\Google());

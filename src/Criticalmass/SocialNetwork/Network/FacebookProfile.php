@@ -13,8 +13,6 @@ class FacebookProfile extends AbstractFacebookNetwork
             return false;
         }
 
-        //$profileName = $this->getProfileFromUrl($url);
-
-        return false;
+        return strpos($url, 'facebook.com/profile.php?id=') !== false;
     }
 }
