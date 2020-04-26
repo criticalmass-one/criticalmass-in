@@ -113,7 +113,7 @@ class AutoAssignNetworkCommand extends Command
 
         $networkIdentifier = $helper->ask($input, $output, $question);
 
-        $output->writeln(sprintf('Assigned network is <code>%s</code>', $networkIdentifier));
+        $output->writeln(sprintf('Assigned network is <comment>%s</comment>', $networkIdentifier));
 
         $socialNetworkProfile->setNetwork($networkIdentifier);
     }
