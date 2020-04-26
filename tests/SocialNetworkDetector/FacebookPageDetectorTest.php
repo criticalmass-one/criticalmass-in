@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\SocialNetwork\Tests\SocialNetworkDetector;
+use App\Criticalmass\SocialNetwork\Tests\SocialNetworkDetector\AbstractNetworkDetectorTest;
 
 class FacebookPageDetectorTest extends AbstractNetworkDetectorTest
 {
