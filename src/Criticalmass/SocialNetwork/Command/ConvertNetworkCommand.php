@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace App\Command\SocialNetwork;
+namespace App\Criticalmass\SocialNetwork\Command;
 
+use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use App\Criticalmass\Util\ClassUtil;
 use App\Entity\City;
 use App\Entity\Ride;
 use App\Entity\SocialNetworkProfile;
 use App\Entity\Subride;
-use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
-use App\Criticalmass\Util\ClassUtil;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -15,8 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ConvertNetworkCommand extends Command
 {
-    /** @var ManagerRegistry $doctrine */
-    protected $doctrine;
+    protected ManagerRegistry $doctrine;
 
     public function __construct(ManagerRegistry $doctrine)
     {
