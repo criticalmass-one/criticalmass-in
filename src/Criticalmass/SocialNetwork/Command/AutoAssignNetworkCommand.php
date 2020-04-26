@@ -76,7 +76,7 @@ class AutoAssignNetworkCommand extends Command
                 $profile->setNetwork($detectedNetwork->getIdentifier());
             }
 
-            if ($input->getOption('interactive-assign')) {
+            if ($detectedNetwork && $input->getOption('interactive-assign')) {
                 $this->queryForNewNetwork($input, $output, $profile, $networkList, $detectedNetwork);
             }
 
