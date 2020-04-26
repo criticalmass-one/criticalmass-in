@@ -4,7 +4,7 @@ namespace App\Criticalmass\SocialNetwork\Network;
 
 class FacebookGroup extends AbstractFacebookNetwork
 {
-    protected string $name = 'facebook-Gruppe';
+    protected string $name = 'Facebook-Gruppe';
 
     public function accepts(string $url): bool
     {

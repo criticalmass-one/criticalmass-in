@@ -4,7 +4,7 @@ namespace App\Criticalmass\SocialNetwork\Network;
 
 class FacebookPage extends AbstractFacebookNetwork
 {
-    protected string $name = 'facebook-Seite';
+    protected string $name = 'Facebook-Seite';
 
     public function accepts(string $url): bool
     {

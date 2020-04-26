@@ -4,7 +4,7 @@ namespace App\Criticalmass\SocialNetwork\Network;
 
 class FacebookEvent extends AbstractFacebookNetwork
 {
-    protected string $name = 'facebook-Event';
+    protected string $name = 'Facebook-Event';
 
     public function accepts(string $url): bool
     {

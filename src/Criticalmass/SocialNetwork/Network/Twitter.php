@@ -4,7 +4,7 @@ namespace App\Criticalmass\SocialNetwork\Network;
 
 class Twitter extends AbstractNetwork
 {
-    protected string $name = 'twitter';
+    protected string $name = 'Twitter';
 
     protected string $icon = 'fab fa-twitter';
 
