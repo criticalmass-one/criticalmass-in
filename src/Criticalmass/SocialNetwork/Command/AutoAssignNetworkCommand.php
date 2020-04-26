@@ -37,7 +37,9 @@ class AutoAssignNetworkCommand extends Command
             ->setDescription('Auto-assign networks')
             ->addOption('only-diffs', null, InputOption::VALUE_NONE)
             ->addOption('auto-assign', null, InputOption::VALUE_NONE)
-            ->addOption('interactive-assign', null, InputOption::VALUE_NONE);
+            ->addOption('interactive-assign', null, InputOption::VALUE_NONE)
+            ->addOption('filter-old', null, InputOption::VALUE_REQUIRED)
+            ->addOption('filter-detected', null, InputOption::VALUE_REQUIRED);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): void
@@ -57,6 +59,14 @@ class AutoAssignNetworkCommand extends Command
         /** @var SocialNetworkProfile $profile */
         foreach ($profiles as $profile) {
             $detectedNetwork = $this->networkDetector->detect($profile->getIdentifier());
+
+            if ($input->getOption('filter-old') && $input->getOption('filter-old') !== $profile->getNetwork()) {
+                continue;
+            }
+
+            if ($detectedNetwork && $input->getOption('filter-detected') && $input->getOption('filter-detected') !== $detectedNetwork->getIdentifier()) {
+                continue;
+            }
 
             if ($detectedNetwork && $detectedNetwork->getIdentifier() === $profile->getNetwork() && $input->getOption('only-diffs')) {
                 continue;
