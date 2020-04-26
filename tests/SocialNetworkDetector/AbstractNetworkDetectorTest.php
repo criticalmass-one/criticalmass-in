@@ -21,6 +21,7 @@ abstract class AbstractNetworkDetectorTest extends TestCase
         $networkManager->addNetwork(new Network\Flickr());
         $networkManager->addNetwork(new Network\Google());
         $networkManager->addNetwork(new Network\Homepage());
+        $networkManager->addNetwork(new Network\StravaClub());
         $networkManager->addNetwork(new Network\Tumblr());
         $networkManager->addNetwork(new Network\TelegramChat());
         $networkManager->addNetwork(new Network\Twitter());
