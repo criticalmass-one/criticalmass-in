@@ -12,7 +12,7 @@ class FacebookGroup extends AbstractFacebookNetwork
         if (!parent::accepts($url)) {
             return false;
         }
-
+        
         return strpos($url, 'facebook.com/groups/') !== false;
     }
 }
