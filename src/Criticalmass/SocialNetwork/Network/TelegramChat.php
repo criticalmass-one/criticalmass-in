@@ -4,17 +4,13 @@ namespace App\Criticalmass\SocialNetwork\Network;
 
 class TelegramChat extends AbstractNetwork
 {
-    /** @var string $name */
-    protected $name = 'Telegram-Chat';
+    protected string $name = 'Telegram-Chat';
 
-    /** @var string $icon */
-    protected $icon = 'fab fa-telegram-plane';
+    protected string $icon = 'fab fa-telegram-plane';
 
-    /** @var string $backgroundColor */
-    protected $backgroundColor = 'rgb(40, 159, 217)';
+    protected string $backgroundColor = 'rgb(40, 159, 217)';
 
-    /** @var string $textColor */
-    protected $textColor = 'white';
+    protected string $textColor = 'white';
 
     public function accepts(string $url): bool
     {

@@ -4,11 +4,9 @@ namespace App\Criticalmass\SocialNetwork\Network;
 
 class YoutubeVideo extends AbstractYoutubeNetwork
 {
-    /** @var string $name */
-    protected $name = 'YouTube-Video';
+    protected string $name = 'YouTube-Video';
 
-    /** @var int $detectorPriority */
-    protected $detectorPriority = -10;
+    protected int $detectorPriority = -10;
 
     public function accepts(string $url): bool
     {
