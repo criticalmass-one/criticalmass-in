@@ -4,17 +4,13 @@ namespace App\Criticalmass\SocialNetwork\Network;
 
 class WhatsappChat extends AbstractNetwork
 {
-    /** @var string $name */
-    protected $name = 'WhatsApp-Chat';
+    protected string $name = 'WhatsApp-Chat';
 
-    /** @var string $icon */
-    protected $icon = 'fab fa-whatsapp';
+    protected string $icon = 'fab fa-whatsapp';
 
-    /** @var string $backgroundColor */
-    protected $backgroundColor = 'rgb(65, 193, 83)';
+    protected string $backgroundColor = 'rgb(65, 193, 83)';
 
-    /** @var string $textColor */
-    protected $textColor = 'white';
+    protected string $textColor = 'white';
 
     public function accepts(string $url): bool
     {

@@ -4,9 +4,8 @@ namespace App\Criticalmass\SocialNetwork\Network;
 
 class StravaRoute extends AbstractStravaNetwork
 {
-    /** @var string $name */
-    protected $name = 'Strava-Route';
-    
+    protected string $name = 'Strava-Route';
+
     public function accepts(string $url): bool
     {
         return strpos($url, 'strava.com/routes/') !== false;

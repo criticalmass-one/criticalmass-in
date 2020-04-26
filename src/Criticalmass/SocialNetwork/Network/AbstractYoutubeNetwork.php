@@ -4,12 +4,9 @@ namespace App\Criticalmass\SocialNetwork\Network;
 
 abstract class AbstractYoutubeNetwork extends AbstractNetwork
 {
-    /** @var string $icon */
-    protected $icon = 'fab fa-youtube';
+    protected string $icon = 'fab fa-youtube';
 
-    /** @var string $backgroundColor */
-    protected $backgroundColor = 'rgb(255, 0, 0)';
+    protected string $backgroundColor = 'rgb(255, 0, 0)';
 
-    /** @var string $textColor */
-    protected $textColor = 'white';
+    protected string $textColor = 'white';
 }

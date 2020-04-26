@@ -4,17 +4,13 @@ namespace App\Criticalmass\SocialNetwork\Network;
 
 class Twitter extends AbstractNetwork
 {
-    /** @var string $name */
-    protected $name = 'twitter';
+    protected string $name = 'twitter';
 
-    /** @var string $icon */
-    protected $icon = 'fab fa-twitter';
+    protected string $icon = 'fab fa-twitter';
 
-    /** @var string $backgroundColor */
-    protected $backgroundColor = 'rgb(29, 161, 242)';
+    protected string $backgroundColor = 'rgb(29, 161, 242)';
 
-    /** @var string $textColor */
-    protected $textColor = 'white';
+    protected string $textColor = 'white';
 
     public function accepts(string $url): bool
     {

@@ -4,8 +4,7 @@ namespace App\Criticalmass\SocialNetwork\Network;
 
 class StravaClub extends AbstractStravaNetwork
 {
-    /** @var string $name */
-    protected $name = 'Strava-Club';
+    protected string $name = 'Strava-Club';
 
     public function accepts(string $url): bool
     {

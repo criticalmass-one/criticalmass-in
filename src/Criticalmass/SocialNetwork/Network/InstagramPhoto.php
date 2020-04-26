@@ -4,8 +4,7 @@ namespace App\Criticalmass\SocialNetwork\Network;
 
 class InstagramPhoto extends AbstractInstagramNetwork
 {
-    /** @var string $name */
-    protected $name = 'Instagram-Foto';
+    protected string $name = 'Instagram-Foto';
 
     public function accepts(string $url): bool
     {

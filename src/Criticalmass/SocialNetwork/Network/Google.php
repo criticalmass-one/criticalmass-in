@@ -4,17 +4,13 @@ namespace App\Criticalmass\SocialNetwork\Network;
 
 class Google extends AbstractNetwork
 {
-    /** @var string $name */
-    protected $name = 'Google+';
+    protected string $name = 'Google+';
 
-    /** @var string $icon */
-    protected $icon = 'fab fa-google-plus-g';
+    protected string $icon = 'fab fa-google-plus-g';
 
-    /** @var string $backgroundColor */
-    protected $backgroundColor = 'rgb(234, 66, 53)';
+    protected string $backgroundColor = 'rgb(234, 66, 53)';
 
-    /** @var string $textColor */
-    protected $textColor = 'white';
+    protected string $textColor = 'white';
 
     public function accepts(string $url): bool
     {

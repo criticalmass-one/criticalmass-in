@@ -4,17 +4,13 @@ namespace App\Criticalmass\SocialNetwork\Network;
 
 class Tumblr extends AbstractNetwork
 {
-    /** @var string $name */
-    protected $name = 'Tumblr';
+    protected string $name = 'Tumblr';
 
-    /** @var string $icon */
-    protected $icon = 'fab fa-tumblr';
+    protected string $icon = 'fab fa-tumblr';
 
-    /** @var string $backgroundColor */
-    protected $backgroundColor = 'rgb(0, 0, 0)';
+    protected string $backgroundColor = 'rgb(0, 0, 0)';
 
-    /** @var string $textColor */
-    protected $textColor = 'white';
+    protected string $textColor = 'white';
 
     public function accepts(string $url): bool
     {
