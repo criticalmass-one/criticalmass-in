@@ -4,8 +4,7 @@ namespace App\Criticalmass\SocialNetwork\Network;
 
 class YoutubePlaylist extends AbstractYoutubeNetwork
 {
-    /** @var string $name */
-    protected $name = 'YouTube-Playlist';
+    protected string $name = 'YouTube-Playlist';
 
     public function accepts(string $url): bool
     {

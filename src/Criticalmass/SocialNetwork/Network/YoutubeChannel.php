@@ -4,8 +4,7 @@ namespace App\Criticalmass\SocialNetwork\Network;
 
 class YoutubeChannel extends AbstractYoutubeNetwork
 {
-    /** @var string $name */
-    protected $name = 'YouTube';
+    protected string $name = 'YouTube';
 
     public function accepts(string $url): bool
     {

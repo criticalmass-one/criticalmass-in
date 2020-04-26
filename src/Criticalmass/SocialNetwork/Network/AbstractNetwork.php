@@ -4,20 +4,15 @@ namespace App\Criticalmass\SocialNetwork\Network;
 
 abstract class AbstractNetwork implements NetworkInterface
 {
-    /** @var string $name */
-    protected $name;
+    protected string $name;
 
-    /** @var string $icon */
-    protected $icon;
+    protected string $icon;
 
-    /** @var string $backgroundColor */
-    protected $backgroundColor;
+    protected string $backgroundColor;
 
-    /** @var string $textColor */
-    protected $textColor;
+    protected string $textColor;
 
-    /** @var int $detectorPriority */
-    protected $detectorPriority = 0;
+    protected int $detectorPriority = 0;
 
     public function __construct()
     {

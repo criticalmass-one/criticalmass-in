@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\SocialNetwork\Tests\SocialNetworkDetector;
+namespace Tests\SocialNetworkDetector;
 
 use App\Criticalmass\SocialNetwork\Network;
 use App\Criticalmass\SocialNetwork\NetworkDetector\NetworkDetector;
@@ -13,14 +13,17 @@ abstract class AbstractNetworkDetectorTest extends TestCase
     protected function getNetworkDetector(): NetworkDetectorInterface
     {
         $networkManager = new NetworkManager();
-        //$networkManager->addNetwork(new Network\FacebookEvent());
-        //$networkManager->addNetwork(new Network\FacebookGroup());
+        $networkManager->addNetwork(new Network\FacebookEvent());
+        $networkManager->addNetwork(new Network\FacebookGroup());
         //$networkManager->addNetwork(new Network\FacebookPage());
-        //$networkManager->addNetwork(new Network\FacebookProfile());
+        $networkManager->addNetwork(new Network\FacebookProfile());
         $networkManager->addNetwork(new Network\DiscordChat());
         $networkManager->addNetwork(new Network\Flickr());
         $networkManager->addNetwork(new Network\Google());
         $networkManager->addNetwork(new Network\Homepage());
+        $networkManager->addNetwork(new Network\StravaActivity());
+        $networkManager->addNetwork(new Network\StravaClub());
+        $networkManager->addNetwork(new Network\StravaRoute());
         $networkManager->addNetwork(new Network\Tumblr());
         $networkManager->addNetwork(new Network\TelegramChat());
         $networkManager->addNetwork(new Network\Twitter());

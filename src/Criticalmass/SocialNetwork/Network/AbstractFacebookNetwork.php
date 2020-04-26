@@ -6,14 +6,11 @@ abstract class AbstractFacebookNetwork extends AbstractNetwork
 {
     const REGEX_PATTERN = '/(?:(?:http|https):\/\/)?(?:www.)?facebook.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[?\w\-]*\/)?(?:profile.php\?id=(?=\d.*))?([\w\-]*)?/';
 
-    /** @var string $icon */
-    protected $icon = 'fab fa-facebook-f';
+    protected string $icon = 'fab fa-facebook-f';
 
-    /** @var string $backgroundColor */
-    protected $backgroundColor = 'rgb(60, 88, 152)';
+    protected string $backgroundColor = 'rgb(60, 88, 152)';
 
-    /** @var string $textColor */
-    protected $textColor = 'white';
+    protected string $textColor = 'white';
 
     public function accepts(string $url): bool
     {

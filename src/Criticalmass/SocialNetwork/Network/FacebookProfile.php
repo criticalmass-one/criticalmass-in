@@ -4,8 +4,7 @@ namespace App\Criticalmass\SocialNetwork\Network;
 
 class FacebookProfile extends AbstractFacebookNetwork
 {
-    /** @var string $name */
-    protected $name = 'facebook-Profil';
+    protected string $name = 'Facebook-Profil';
 
     public function accepts(string $url): bool
     {
@@ -13,8 +12,6 @@ class FacebookProfile extends AbstractFacebookNetwork
             return false;
         }
 
-        //$profileName = $this->getProfileFromUrl($url);
-
-        return false;
+        return strpos($url, 'facebook.com/profile.php?id=') !== false;
     }
 }

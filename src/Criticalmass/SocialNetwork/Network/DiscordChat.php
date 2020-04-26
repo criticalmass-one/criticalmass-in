@@ -4,17 +4,13 @@ namespace App\Criticalmass\SocialNetwork\Network;
 
 class DiscordChat extends AbstractNetwork
 {
-    /** @var string $name */
-    protected $name = 'Discord-Chat';
+    protected string $name = 'Discord-Chat';
 
-    /** @var string $icon */
-    protected $icon = 'fab fa-discord';
+    protected string $icon = 'fab fa-discord';
 
-    /** @var string $backgroundColor */
-    protected $backgroundColor = 'rgb(114, 137, 218)';
+    protected string $backgroundColor = 'rgb(114, 137, 218)';
 
-    /** @var string $textColor */
-    protected $textColor = 'white';
+    protected string $textColor = 'white';
 
     public function accepts(string $url): bool
     {

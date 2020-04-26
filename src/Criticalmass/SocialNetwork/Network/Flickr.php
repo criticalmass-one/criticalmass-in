@@ -4,17 +4,13 @@ namespace App\Criticalmass\SocialNetwork\Network;
 
 class Flickr extends AbstractNetwork
 {
-    /** @var string $name */
-    protected $name = 'flickr';
+    protected string $name = 'flickr';
 
-    /** @var string $icon */
-    protected $icon = 'fab fa-flickr';
+    protected string $icon = 'fab fa-flickr';
 
-    /** @var string $backgroundColor */
-    protected $backgroundColor = 'rgb(12, 101, 211)';
+    protected string $backgroundColor = 'rgb(12, 101, 211)';
 
-    /** @var string $textColor */
-    protected $textColor = 'white';
+    protected string $textColor = 'white';
 
     public function accepts(string $url): bool
     {
