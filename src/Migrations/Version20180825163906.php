@@ -16,7 +16,6 @@ final class Version20180825163906 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE social_network_profile ADD autoPublish TINYINT(1) NOT NULL');
-        $this->addSql('ALTER TABLE social_network_profile_audit ADD autoPublish TINYINT(1) DEFAULT NULL');
     }
 
     public function down(Schema $schema) : void
@@ -25,6 +24,5 @@ final class Version20180825163906 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE social_network_profile DROP autoPublish');
-        $this->addSql('ALTER TABLE social_network_profile_audit DROP autoPublish');
     }
 }
