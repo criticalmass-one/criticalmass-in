@@ -5,6 +5,7 @@ namespace App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\Twitter;
 use App\Criticalmass\SocialNetwork\FeedFetcher\FetchInfo;
 use App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\AbstractNetworkFeedFetcher;
 use App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\NetworkFeedFetcherInterface;
+use App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\Twitter\QueryBuilder\SearchQueryBuilder;
 use App\Entity\SocialNetworkProfile;
 use Codebird\Codebird;
 use Psr\Log\LoggerInterface;
@@ -48,7 +49,7 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
 
         $this->logger->info(sprintf('Now quering @%s', $screenname));
 
-        $reply = $this->codebird->statuses_userTimeline(QueryBuilder::build($socialNetworkProfile, $fetchInfo), true);
+        $reply = $this->codebird->search_tweets(SearchQueryBuilder::build($socialNetworkProfile, $fetchInfo), true);
         $data = (array)$reply;
 
         foreach ($data as $tweet) {

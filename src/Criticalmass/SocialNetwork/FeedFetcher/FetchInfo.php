@@ -16,7 +16,7 @@ class FetchInfo
 
     protected bool $includeSuceededProfiles = true;
 
-    protected bool $skipOldItems = true;
+    protected bool $skipOldItems = false;
 
     public function hasNetworkList(): bool
     {

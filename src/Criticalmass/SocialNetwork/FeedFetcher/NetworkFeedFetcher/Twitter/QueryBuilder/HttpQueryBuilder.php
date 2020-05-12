@@ -1,11 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\Twitter;
+namespace App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\Twitter\QueryBuilder;
 
 use App\Criticalmass\SocialNetwork\FeedFetcher\FetchInfo;
+use App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\Twitter\Screenname;
 use App\Entity\SocialNetworkProfile;
 
-class QueryBuilder
+class HttpQueryBuilder implements QueryBuilderInterface
 {
     private function __construct()
     {
@@ -25,7 +26,7 @@ class QueryBuilder
                 ->format('Y-m-d');
         } elseif ($fetchInfo->skipOldItems() && $socialNetworkProfile->getLastFetchSuccessDateTime()) {
             $queryStringParts['since'] = $socialNetworkProfile
-                ->getLastFetchSuccessDateTime()
+                ->getLastFetchSuccessDateTime()->sub(new \DateInterval('P1D'))
                 ->format('Y-m-d');
         }
 

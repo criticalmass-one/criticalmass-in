@@ -52,6 +52,10 @@ class FetchFeedCommand extends Command
         if ($input->getOption('untilDateTime')) {
             $fetchInfo->setUntilDateTime(new \DateTime($input->getOption('untilDateTime')));
         }
+
+        if ($input->getOption('skipOldItems')) {
+            $fetchInfo->setSkipOldItems(true);
+        }
         
         $this->feedFetcher
             ->fetch($fetchInfo)
