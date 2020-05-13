@@ -4,12 +4,14 @@ namespace App\Criticalmass\SocialNetwork\Command;
 
 use App\Criticalmass\SocialNetwork\FeedFetcher\FeedFetcher;
 use App\Criticalmass\SocialNetwork\FeedFetcher\FetchInfo;
+use App\Criticalmass\SocialNetwork\FeedFetcher\FetchResult;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class FetchFeedCommand extends Command
 {
@@ -37,6 +39,8 @@ class FetchFeedCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
+        $io = new SymfonyStyle($input, $output);
+
         $fetchInfo = new FetchInfo();
 
         if ($input->hasArgument('networks')) {
@@ -56,9 +60,13 @@ class FetchFeedCommand extends Command
         if ($input->getOption('skipOldItems')) {
             $fetchInfo->setSkipOldItems(true);
         }
-        
+
+        $callback = function (FetchResult $fetchResult) use ($io): void {
+            $io->success(sprintf('Fetched %d items from profile %s', $fetchResult->getCounter(), $fetchResult->getSocialNetworkProfile()->getIdentifier()));
+        };
+
         $this->feedFetcher
-            ->fetch($fetchInfo)
+            ->fetch($fetchInfo, $callback)
             ->persist();
     }
 }

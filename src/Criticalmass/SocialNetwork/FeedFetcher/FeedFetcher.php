@@ -19,7 +19,7 @@ class FeedFetcher extends AbstractFeedFetcher
         return null;
     }
 
-    public function fetch(FetchInfo $fetchInfo): FeedFetcherInterface
+    public function fetch(FetchInfo $fetchInfo, callable $callback): FeedFetcherInterface
     {
         $profileList = $this->getSocialNetworkProfiles($fetchInfo);
 
@@ -28,9 +28,14 @@ class FeedFetcher extends AbstractFeedFetcher
             $fetcher = $this->getFeedFetcherForNetworkProfile($profile);
 
             if ($fetcher) {
-                $feedItemList = $fetcher
-                    ->fetch($profile, $fetchInfo)
-                    ->getFeedItemList();
+                $feedItemList = $fetcher->fetch($profile, $fetchInfo);
+
+                $fetchResult = new FetchResult();
+                $fetchResult
+                    ->setSocialNetworkProfile($profile)
+                    ->setCounter(count($feedItemList));
+
+                $callback($fetchResult);
 
                 //$this->feedItemList = array_merge($this->feedItemList, $feedItemList);
 
