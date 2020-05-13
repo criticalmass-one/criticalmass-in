@@ -32,11 +32,13 @@ class FeedFetcher extends AbstractFeedFetcher
                     ->fetch($profile, $fetchInfo)
                     ->getFeedItemList();
 
-                $this->feedItemList = array_merge($this->feedItemList, $feedItemList);
+                //$this->feedItemList = array_merge($this->feedItemList, $feedItemList);
+
+                $this->feedItemPersister->persistFeedItemList($feedItemList)->flush();
             }
         }
 
-        $this->doctrine->getManager()->flush();
+        $this->doctrine->getManager()->flush(); // call flush here to persist new success or failure datetime of profiles
 
         return $this;
     }
@@ -59,7 +61,7 @@ class FeedFetcher extends AbstractFeedFetcher
 
     public function persist(): FeedFetcherInterface
     {
-        $this->feedItemPersister->persistFeedItemList($this->feedItemList);
+        $this->feedItemPersister->persistFeedItemList($this->feedItemList)->flush();
 
         return $this;
     }

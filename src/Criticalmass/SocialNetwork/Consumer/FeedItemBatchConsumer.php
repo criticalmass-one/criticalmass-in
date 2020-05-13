@@ -20,7 +20,7 @@ class FeedItemBatchConsumer extends AbstractFeedItemConsumer implements BatchCon
             $resultList[(int)$message->delivery_info['delivery_tag']] = true;
         }
 
-        $this->feedItemPersister->persistFeedItemList($socialNetworkFeedItemList);
+        $this->feedItemPersister->persistFeedItemList($socialNetworkFeedItemList)->flush();
 
         return $resultList;
     }
