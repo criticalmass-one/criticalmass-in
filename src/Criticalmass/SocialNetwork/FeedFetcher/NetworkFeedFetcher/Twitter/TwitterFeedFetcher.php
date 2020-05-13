@@ -4,7 +4,6 @@ namespace App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\Twitter;
 
 use App\Criticalmass\SocialNetwork\FeedFetcher\FetchInfo;
 use App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\AbstractNetworkFeedFetcher;
-use App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\NetworkFeedFetcherInterface;
 use App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\Twitter\QueryBuilder\SearchQueryBuilder;
 use App\Entity\SocialNetworkProfile;
 use Codebird\Codebird;
@@ -22,10 +21,10 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
         parent::__construct($logger);
     }
 
-    public function fetch(SocialNetworkProfile $socialNetworkProfile, FetchInfo $fetchInfo): NetworkFeedFetcherInterface
+    public function fetch(SocialNetworkProfile $socialNetworkProfile, FetchInfo $fetchInfo): array
     {
         if (!$socialNetworkProfile->getCity()) {
-            return $this;
+            return [];
         }
 
         try {
@@ -34,17 +33,19 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
             $this->markAsFailed($socialNetworkProfile, sprintf('Failed to fetch social network profile %d: %s', $socialNetworkProfile->getId(), $exception->getMessage()));
         }
 
-        return $this;
+        return [];
     }
 
-    protected function fetchFeed(SocialNetworkProfile $socialNetworkProfile, FetchInfo $fetchInfo): NetworkFeedFetcherInterface
+    protected function fetchFeed(SocialNetworkProfile $socialNetworkProfile, FetchInfo $fetchInfo): array
     {
+        $feedItemList = [];
+
         $screenname = Screenname::extractScreenname($socialNetworkProfile);
 
         if (!$screenname || !Screenname::isValidScreenname($screenname)) {
             $this->markAsFailed($socialNetworkProfile, sprintf('Skipping %s cause it is not a valid twitter handle.', $screenname));
 
-            return $this;
+            return [];
         }
 
         $this->logger->info(sprintf('Now quering @%s', $screenname));
@@ -53,7 +54,7 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
         $data = (array)$reply;
 
         if (array_key_exists('error', $data)) {
-            return $this;
+            return [];
         }
         
         foreach ($data['statuses'] as $tweet) {
@@ -68,13 +69,13 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
             if ($feedItem) {
                 $this->logger->info(sprintf('Parsed and added tweet #%s', $feedItem->getUniqueIdentifier()));
 
-                $this->feedItemList[] = $feedItem;
+                $feedItemList[] = $feedItem;
             }
         }
 
         $socialNetworkProfile->setLastFetchSuccessDateTime(new \DateTime());
 
-        return $this;
+        return $feedItemList;
     }
 
     protected function markAsFailed(SocialNetworkProfile $socialNetworkProfile, string $errorMessage): SocialNetworkProfile

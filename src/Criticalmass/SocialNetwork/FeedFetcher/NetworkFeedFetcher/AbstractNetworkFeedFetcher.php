@@ -7,18 +7,11 @@ use Psr\Log\LoggerInterface;
 
 abstract class AbstractNetworkFeedFetcher implements NetworkFeedFetcherInterface
 {
-    protected array $feedItemList = [];
-
     protected LoggerInterface $logger;
 
     public function __construct(LoggerInterface $logger)
     {
         $this->logger = $logger;
-    }
-
-    public function getFeedItemList(): array
-    {
-        return $this->feedItemList;
     }
 
     public function supports(SocialNetworkProfile $socialNetworkProfile): bool

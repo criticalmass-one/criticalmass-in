@@ -7,7 +7,7 @@ use App\Entity\SocialNetworkProfile;
 
 interface NetworkFeedFetcherInterface
 {
-    public function fetch(SocialNetworkProfile $socialNetworkProfile, FetchInfo $fetchInfo): NetworkFeedFetcherInterface;
+    public function fetch(SocialNetworkProfile $socialNetworkProfile, FetchInfo $fetchInfo): array;
 
     public function supports(SocialNetworkProfile $socialNetworkProfile): bool;
 
