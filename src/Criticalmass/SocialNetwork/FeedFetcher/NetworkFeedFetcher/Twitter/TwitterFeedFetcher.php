@@ -50,14 +50,14 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
 
         $this->logger->info(sprintf('Now quering @%s', $screenname));
 
-        $reply = $this->codebird->search_tweets(SearchQueryBuilder::build($socialNetworkProfile, $fetchInfo), true);
+        $reply = $this->codebird->statuses_userTimeline(sprintf('screen_name=%s&tweet_mode=extended&trim_user=1&exclude_replies=1&count=50', $screenname), true);
         $data = (array)$reply;
 
         if (array_key_exists('error', $data)) {
             return [];
         }
-        
-        foreach ($data['statuses'] as $tweet) {
+
+        foreach ($data as $tweet) {
             if (!is_object($tweet)) {
                 $this->logger->info('Tweet did not contain usable data. Skipping.');
 
