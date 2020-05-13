@@ -34,7 +34,7 @@ class FetchFeedCommand extends Command
             ->addArgument('networks', InputArgument::IS_ARRAY)
             ->addOption('fromDateTime', 'f', InputOption::VALUE_REQUIRED)
             ->addOption('untilDateTime', 'u', InputOption::VALUE_REQUIRED)
-            ->addOption('skipOldItems', 's', InputOption::VALUE_NONE);
+            ->addOption('includeOldItems', 'i', InputOption::VALUE_NONE);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): void
@@ -57,8 +57,8 @@ class FetchFeedCommand extends Command
             $fetchInfo->setUntilDateTime(new \DateTime($input->getOption('untilDateTime')));
         }
 
-        if ($input->getOption('skipOldItems')) {
-            $fetchInfo->setSkipOldItems(true);
+        if ($input->getOption('includeOldItems')) {
+            $fetchInfo->setIncludeOldItems(true);
         }
 
         $callback = function (FetchResult $fetchResult) use ($io): void {

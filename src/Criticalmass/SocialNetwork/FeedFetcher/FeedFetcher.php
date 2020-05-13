@@ -29,7 +29,7 @@ class FeedFetcher extends AbstractFeedFetcher
 
             if ($fetcher) {
                 $feedItemList = $fetcher->fetch($profile, $fetchInfo);
-
+                
                 $fetchResult = new FetchResult();
                 $fetchResult
                     ->setSocialNetworkProfile($profile)

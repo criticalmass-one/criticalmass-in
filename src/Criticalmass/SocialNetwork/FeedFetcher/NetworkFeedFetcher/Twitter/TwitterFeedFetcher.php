@@ -4,7 +4,6 @@ namespace App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\Twitter;
 
 use App\Criticalmass\SocialNetwork\FeedFetcher\FetchInfo;
 use App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\AbstractNetworkFeedFetcher;
-use App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\Twitter\QueryBuilder\SearchQueryBuilder;
 use App\Entity\SocialNetworkProfile;
 use Codebird\Codebird;
 use Psr\Log\LoggerInterface;
@@ -28,7 +27,7 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
         }
 
         try {
-            $this->fetchFeed($socialNetworkProfile, $fetchInfo);
+            return $this->fetchFeed($socialNetworkProfile, $fetchInfo);
         } catch (\Exception $exception) {
             $this->markAsFailed($socialNetworkProfile, sprintf('Failed to fetch social network profile %d: %s', $socialNetworkProfile->getId(), $exception->getMessage()));
         }
@@ -73,7 +72,9 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
             }
         }
 
+
         $socialNetworkProfile->setLastFetchSuccessDateTime(new \DateTime());
+
 
         return $feedItemList;
     }
