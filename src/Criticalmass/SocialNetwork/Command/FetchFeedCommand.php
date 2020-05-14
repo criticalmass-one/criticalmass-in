@@ -34,7 +34,8 @@ class FetchFeedCommand extends Command
             ->addArgument('networks', InputArgument::IS_ARRAY)
             ->addOption('fromDateTime', 'f', InputOption::VALUE_REQUIRED)
             ->addOption('untilDateTime', 'u', InputOption::VALUE_REQUIRED)
-            ->addOption('includeOldItems', 'i', InputOption::VALUE_NONE);
+            ->addOption('includeOldItems', 'i', InputOption::VALUE_NONE)
+            ->addOption('count', 'c', InputOption::VALUE_REQUIRED);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): void
@@ -47,6 +48,10 @@ class FetchFeedCommand extends Command
             foreach ($input->getArgument('networks') as $networkIdentifier) {
                 $fetchInfo->addNetwork($networkIdentifier);
             }
+        }
+
+        if ($input->getOption('count')) {
+            $fetchInfo->setCount((int)$input->getOption('count'));
         }
 
         if ($input->getOption('fromDateTime')) {

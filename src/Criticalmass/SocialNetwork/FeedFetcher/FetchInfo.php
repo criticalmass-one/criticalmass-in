@@ -18,6 +18,8 @@ class FetchInfo
 
     protected bool $includeOldItems = false;
 
+    protected int $count = 20;
+
     public function hasNetworkList(): bool
     {
         return 0 !== count($this->networkList);
@@ -125,6 +127,18 @@ class FetchInfo
     public function setIncludeOldItems(bool $includeOldItems): FetchInfo
     {
         $this->includeOldItems = $includeOldItems;
+
+        return $this;
+    }
+
+    public function getCount(): int
+    {
+        return $this->count;
+    }
+
+    public function setCount(int $count): FetchInfo
+    {
+        $this->count = $count;
 
         return $this;
     }

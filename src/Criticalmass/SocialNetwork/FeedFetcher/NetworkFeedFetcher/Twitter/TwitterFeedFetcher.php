@@ -49,7 +49,7 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
 
         $this->logger->info(sprintf('Now quering @%s', $screenname));
 
-        $reply = $this->codebird->statuses_userTimeline(sprintf('screen_name=%s&tweet_mode=extended&trim_user=1&exclude_replies=1&count=50', $screenname), true);
+        $reply = $this->codebird->statuses_userTimeline(sprintf('screen_name=%s&tweet_mode=extended&trim_user=1&exclude_replies=1&count=%d', $screenname, $fetchInfo->getCount()), true);
         $data = (array)$reply;
 
         if (array_key_exists('error', $data)) {
