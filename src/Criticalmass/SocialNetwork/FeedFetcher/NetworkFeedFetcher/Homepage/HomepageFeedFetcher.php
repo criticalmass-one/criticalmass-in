@@ -33,7 +33,7 @@ class HomepageFeedFetcher extends AbstractNetworkFeedFetcher
         $feedLink = FeedUriDetector::findFeedLink($socialNetworkProfile);
 
         if (!$feedLink) {
-            return $this;
+            return [];
         }
 
         $this->logger->info(sprintf('Now quering %s', $feedLink));
