@@ -1,7 +1,41 @@
 liip_imagine:
     resolvers:
-       default:
-          web_path: ~
+        photo_flysystem_resolver:
+            flysystem:
+                filesystem_service: oneup_flysystem.flysystem_photo_photo_filesystem
+                root_url:           "http://images.example.com"
+                cache_prefix:       media/cache
+                visibility:         public
+        user_photo_flysystem_resolver:
+            flysystem:
+                filesystem_service: oneup_flysystem.flysystem_user_photo_filesystem
+                root_url:           "http://images.example.com"
+                cache_prefix:       media/cache
+                visibility:         public
+        city_image_flysystem_resolver:
+            flysystem:
+                filesystem_service: oneup_flysystem.flysystem_city_image_filesystem
+                root_url:           "http://images.example.com"
+                cache_prefix:       media/cache
+                visibility:         public
+        ride_image_flysystem_resolver:
+            flysystem:
+                filesystem_service: oneup_flysystem.flysystem_ride_image_filesystem
+                root_url:           "http://images.example.com"
+                cache_prefix:       media/cache
+                visibility:         public
+        frontpage_teaser_flysystem_resolver:
+            flysystem:
+                filesystem_service: oneup_flysystem.flysystem_frontpage_teaser_filesystem
+                root_url:           "http://images.example.com"
+                cache_prefix:       media/cache
+                visibility:         public
+        blog_post_flysystem_resolver:
+            flysystem:
+                filesystem_service: oneup_flysystem.flysystem_blogpost_teaser_filesystem
+                root_url:           "http://images.example.com"
+                cache_prefix:       media/cache
+                visibility:         public
     driver: imagick
 
     loaders:
