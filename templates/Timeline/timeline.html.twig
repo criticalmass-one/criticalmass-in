@@ -1,7 +1,8 @@
+{% if timelineContentList.standard is defined %}
 {% for content in timelineContentList.standard %}
     {{ content|raw }}
 {% endfor %}
-
+{% endif %}
 
 {#
 <div>
