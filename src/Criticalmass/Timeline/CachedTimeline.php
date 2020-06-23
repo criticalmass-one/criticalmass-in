@@ -51,7 +51,7 @@ class CachedTimeline extends Timeline
             $this->process();
 
             $timeline
-                ->set($this->getTimelineContent())
+                ->set($this->getTimelineContentList())
                 ->expiresAfter($this->ttl);
 
             $cache->save($timeline);
