@@ -18,6 +18,8 @@ class SocialNetworkFeedItemItem extends AbstractItem
     {
         $this->socialNetworkFeedItem = $socialNetworkFeedItem;
 
+        $this->tabName = $socialNetworkFeedItem->getSocialNetworkProfile()->getNetwork();
+        
         return $this;
     }
 }
