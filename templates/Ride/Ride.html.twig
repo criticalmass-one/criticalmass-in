@@ -4,8 +4,6 @@
     {% set pastRide = false %}
 {% endif %}
 
-{% set hasSocialMedia = ride.socialnetworkProfiles|length > 0 %}
-
 <div class="row">
     <div class="col-md-12">
         {% include('Ride/Includes/_participation.html.twig') with { 'pastRide': pastRide, 'participation': participation } %}
