@@ -1,0 +1,27 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ path('caldera_criticalmass_city_list') }}">
+            Städteliste
+        </a>
+    </li>
+
+    <li>
+        <a href="{{ objectPath(city) }}">
+            {{ city.city }}
+        </a>
+    </li>
+
+    <li class="active">
+        Soziale Netzwerke
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+
+        {{ dump(itemList) }}
+
+    </div>
+{% endblock %}
