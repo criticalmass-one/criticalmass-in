@@ -179,7 +179,7 @@ function copyJsExternal() {
             'node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
             'node_modules/bootstrap-slider/dist/bootstrap-slider.js',
             'node_modules/dateformat/lib/dateformat.js',
-            'node_modules/jquery/dist/jquery.js',
+            'node_modules/jquery/dist/jquery.min.js',
             'node_modules/typeahead.js/dist/bloodhound.js',
             'node_modules/typeahead.js/dist/typeahead.jquery.js',
             'node_modules/leaflet/dist/leaflet.js',
