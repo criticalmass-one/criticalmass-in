@@ -153,8 +153,8 @@ services:
         alias: App\Criticalmass\Website\Obfuscator\CaseAwareObfuscator
 
     App\Criticalmass\Timeline\TimelineInterface:
-        #alias: App\Criticalmass\Timeline\CachedTimeline
-        alias: App\Criticalmass\Timeline\Timeline
+        alias: App\Criticalmass\Timeline\CachedTimeline
+        #alias: App\Criticalmass\Timeline\Timeline
 
     App\Criticalmass\Geo\Loop\LoopInterface:
         alias: App\Criticalmass\Geo\Loop\TrackLoop

@@ -1,79 +1,83 @@
-{% if timelineContentList.standard is defined %}
-{% for content in timelineContentList.standard %}
-    {{ content|raw }}
-{% endfor %}
-{% endif %}
-
-{#
 <div>
-
-    <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active">
-            <a href="#standard" aria-controls="home" role="tab" data-toggle="tab">
-                <i class="fa fa-clock-o"></i>
-            </a>
-        </li>
+        {% if timelineContentList.standard is defined %}
+            <li role="presentation" class="active">
+                <a href="#standard" aria-controls="standard" role="tab" data-toggle="tab">
+                    <i class="far fa-clock"></i>
+                    Neuigkeiten
+                </a>
+            </li>
+        {% endif %}
 
         {% if timelineContentList.facebook is defined %}
-        <li role="presentation">
-            <a href="#facebook" aria-controls="profile" role="tab" data-toggle="tab">
-                <i class="fa fa-facebook"></i>
-            </a>
-        </li>
+            <li role="presentation">
+                <a href="#facebook" aria-controls="facebook" role="tab" data-toggle="tab">
+                    <i class="fab fa-facebook"></i>
+                    Facebook-Beiträge
+                </a>
+            </li>
         {% endif %}
 
         {% if timelineContentList.twitter is defined %}
-        <li role="presentation">
-            <a href="#twitter" aria-controls="messages" role="tab" data-toggle="tab">
-                <i class="fa fa-twitter"></i>
-            </a>
-        </li>
+            <li role="presentation">
+                <a href="#twitter" aria-controls="twitter" role="tab" data-toggle="tab">
+                    <i class="fab fa-twitter"></i>
+                    Tweets
+                </a>
+            </li>
         {% endif %}
 
         {% if timelineContentList.www is defined %}
-        <li role="presentation">
-            <a href="#www" aria-controls="settings" role="tab" data-toggle="tab">
-                <i class="fa fa-globe"></i>
-            </a>
-        </li>
+            <li role="presentation">
+                <a href="#www" aria-controls="www" role="tab" data-toggle="tab">
+                    <i class="far fa-globe"></i>
+                    Blog-Beiträge
+                </a>
+            </li>
         {% endif %}
     </ul>
 
-    <!-- Tab panes -->
-    <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="standard">
-            {% for content in timelineContentList.standard %}
-            {{ content|raw }}
-            {% endfor %}
-        </div>
+    <div class="tab-content margin-top-medium">
+        {% set hasActive = false %}
+
+        {% if timelineContentList.standard is defined %}
+            <div role="tabpanel" class="tab-pane{% if hasActive == false %} active{% endif %}" id="standard">
+                {% for content in timelineContentList.standard %}
+                    {{ content|raw }}
+                {% endfor %}
+            </div>
+
+            {% set hasActive = true %}
+        {% endif %}
 
         {% if timelineContentList.facebook is defined %}
-        <div role="tabpanel" class="tab-pane" id="facebook">
-            {% for content in timelineContentList.facebook %}
-            {{ content|raw }}
-            {% endfor %}
-        </div>
+            <div role="tabpanel" class="tab-pane{% if hasActive == false %} active{% endif %}" id="facebook">
+                {% for content in timelineContentList.facebook %}
+                    {{ content|raw }}
+                {% endfor %}
+            </div>
+
+            {% set hasActive = true %}
         {% endif %}
 
         {% if timelineContentList.twitter is defined %}
-        <div role="tabpanel" class="tab-pane" id="twitter">
-            {% for content in timelineContentList.twitter %}
-            {{ content|raw }}
-            {% endfor %}
-        </div>
+            <div role="tabpanel" class="tab-pane{% if hasActive == false %} active{% endif %}" id="twitter">
+                {% for content in timelineContentList.twitter %}
+                    {{ content|raw }}
+                {% endfor %}
+            </div>
+
+            {% set hasActive = true %}
         {% endif %}
 
         {% if timelineContentList.www is defined %}
-        <div role="tabpanel" class="tab-pane" id="www">
-            {% for content in timelineContentList.www %}
-            {{ content|raw }}
-            {% endfor %}
-        </div>
+            <div role="tabpanel" class="tab-pane{% if hasActive == false %} active{% endif %}" id="www">
+                {% for content in timelineContentList.www %}
+                    {{ content|raw }}
+                {% endfor %}
+            </div>
+
+            {% set hasActive = true %}
         {% endif %}
     </div>
-
 </div>
-
-
-#}
