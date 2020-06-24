@@ -1,0 +1,22 @@
+<ul class="nav nav-tabs margin-bottom-medium" role="tablist">
+    <li {% if tab == 'city' %}role="presentation" class="active" {% else %}role="tab"{% endif %}>
+        <a href="{{ objectPath(city) }}">
+            <i class="far fa-university"></i>
+            {{ city.city }}
+        </a>
+    </li>
+
+    <li {% if tab == 'ride_list' %}role="presentation" class="active" {% else %}role="tab"{% endif %}>
+        <a href="{{ objectPath(city, 'caldera_criticalmass_city_listrides') }}">
+            <i class="far fa-bicycle"></i>
+            Touren
+        </a>
+    </li>
+
+    <li {% if tab == 'statistic' %}role="presentation" class="active" {% else %}role="tab"{% endif %}>
+        <a href="{{ objectPath(city, 'caldera_criticalmass_statistic_city') }}">
+            <i class="far fa-chart-bar"></i>
+            Statistik
+        </a>
+    </li>
+</ul>

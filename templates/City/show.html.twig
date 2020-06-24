@@ -67,6 +67,8 @@
     <div class="container" itemscope itemtype="http://schema.org/Organization">
         {{ include('Flash/_flash.html.twig') }}
 
+        {{ include('City/Includes/_tabs.html.twig', { tab: 'city' }) }}
+
         <div class="row">
             <div class="col-md-12">
                 {% if city.imageName %}
