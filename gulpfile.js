@@ -172,7 +172,6 @@ function copyJsModules() {
 function copyJsExternal() {
     return gulp
         .src([
-            'node_modules/bootstrap/dist/js/bootstrap.js',
             'node_modules/bootstrap/dist/js/bootstrap.min.js',
             'node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js',
             'node_modules/dropzone/dist/dropzone-amd-module.js',
