@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\City;
 use Doctrine\ORM\EntityRepository;
 
 class SocialNetworkFeedItemRepository extends EntityRepository
@@ -39,5 +40,24 @@ class SocialNetworkFeedItemRepository extends EntityRepository
         $result = $query->getResult();
 
         return $result;
+    }
+
+    public function findByCity(City $city, $orderDirection = 'DESC'): array
+    {
+        $qb = $this->createQueryBuilder('snfi');
+
+        $qb
+            ->join('snfi.socialNetworkProfile', 'snp')
+            ->where($qb->expr()->eq('snp.city', ':city'))
+            ->andWhere($qb->expr()->eq('snfi.deleted', ':deleted'))
+            ->andWhere($qb->expr()->eq('snfi.hidden', ':hidden'))
+            ->andWhere($qb->expr()->eq('snp.enabled', ':enabled'))
+            ->setParameter('city', $city)
+            ->setParameter('deleted', false)
+            ->setParameter('hidden', false)
+            ->setParameter('enabled', true)
+            ->orderBy('snfi.dateTime', $orderDirection);
+
+        return $qb->getQuery()->getResult();
     }
 }

@@ -19,4 +19,12 @@
             Statistik
         </a>
     </li>
+
+    <li {% if tab == 'socialnetwork_city_list_items' %}role="presentation" class="active"
+        {% else %}role="tab"{% endif %}>
+        <a href="{{ objectPath(city, 'criticalmass_socialnetwork_city_list_items') }}">
+            <i class="far fa-newspaper"></i>
+            Neuigkeiten
+        </a>
+    </li>
 </ul>
