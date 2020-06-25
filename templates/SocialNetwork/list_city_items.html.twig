@@ -24,6 +24,21 @@
 
         <div class="row">
             <div class="col-md-12">
+                {% if itemList|length == 0 %}
+                    <div class="alert alert-info">
+                        <p>
+                            <strong>Schade!</strong> Entweder veröffentlicht niemand von der {{ city.title }} neue
+                            Beiträge in sozialen Netzerken oder wir waren nicht in der Lage, die Beiträge abzurufen.
+                        </p>
+
+                        <p>
+                            Wenn du für {{ city.city }} <a
+                                    href="{{ objectPath(city, 'criticalmass_socialnetwork_city_list') }}">gesellschaftliche
+                                Netzwerke</a> konfigurierst, werden Beiträge aus diesen Netzwerken hier angezeigt.
+                        </p>
+                    </div>
+                {% endif %}
+
                 {% for item in itemList %}
                     <div class="row margin-bottom-medium">
                         <div class="col-md-3 text-center">
