@@ -28,7 +28,8 @@ class TweetConverter
                     ->setUniqueIdentifier($permalink)
                     ->setPermalink($permalink)
                     ->setText($text)
-                    ->setDateTime($dateTime);
+                    ->setDateTime($dateTime)
+                    ->setRaw(json_encode((array)$tweet));
 
                 return $feedItem;
             }
