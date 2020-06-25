@@ -42,7 +42,7 @@ class SocialNetworkFeedItemRepository extends EntityRepository
         return $result;
     }
 
-    public function findByCity(City $city): array
+    public function findByCity(City $city, $orderDirection = 'DESC'): array
     {
         $qb = $this->createQueryBuilder('snfi');
 
@@ -56,8 +56,8 @@ class SocialNetworkFeedItemRepository extends EntityRepository
             ->setParameter('deleted', false)
             ->setParameter('hidden', false)
             ->setParameter('enabled', true)
-            ->orderBy('snfi.dateTime');
+            ->orderBy('snfi.dateTime', $orderDirection);
 
-        return $qb->getQuery()->getArrayResult();
+        return $qb->getQuery()->getResult();
     }
 }

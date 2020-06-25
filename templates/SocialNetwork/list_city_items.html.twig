@@ -20,8 +20,35 @@
 
 {% block content %}
     <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {% for item in itemList %}
+                    <div class="row margin-bottom-medium">
+                        <div class="col-md-3 text-center">
+                            <p>
+                                <i class="fab fa-3x {{ network_icon(item.socialNetworkProfile.network) }}"></i>
+                            </p>
 
-        {{ dump(itemList) }}
+                            <a href="{{ item.permalink }}">
+                                <time title="{{ item.dateTime|date('d.m.Y H:i') }} Uhr">
+                                    {{ item.dateTime|time_ago_in_words }}
+                                </time>
+                            </a>
+                        </div>
+                        <div class="col-md-9">
+                            <h3 class="no-margin-top">
+                                <a href="{{ item.permalink }}">
+                                    {{ item.title }}
+                                </a>
+                            </h3>
 
+                            <p>
+                                {{ item.text }}
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 {% endblock %}
