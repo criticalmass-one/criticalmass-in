@@ -47,6 +47,13 @@
                             <p>
                                 {{ item.text|trim_intro|raw }}
                             </p>
+
+                            <p class="text-right">
+                                <a href="{{ item.permalink }}" title="zum Beitrag" class="btn btn-primary">
+                                    <i class="far fa-hand-point-right"></i>
+                                    Weiterlesen
+                                </a>
+                            </p>
                         </div>
                     </div>
                 {% endfor %}
