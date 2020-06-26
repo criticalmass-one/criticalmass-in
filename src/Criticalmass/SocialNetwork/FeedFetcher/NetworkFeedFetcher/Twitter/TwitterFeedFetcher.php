@@ -58,14 +58,18 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
                 continue;
             }
 
-            if (!property_exists($tweet, 'limit')) {
-                $feedItem = TweetConverter::convert($socialNetworkProfile, $tweet);
+            if (property_exists($tweet, 'limit')) {
+                $this->logger->info('Got cursor, skipping.');
 
-                if ($feedItem) {
-                    $this->logger->info(sprintf('Parsed and added tweet #%s', $feedItem->getUniqueIdentifier()));
+                continue;
+            }
 
-                    $this->feedItemList[] = $feedItem;
-                }
+            $feedItem = TweetConverter::convert($socialNetworkProfile, $tweet);
+
+            if ($feedItem) {
+                $this->logger->info(sprintf('Parsed and added tweet #%s', $feedItem->getUniqueIdentifier()));
+
+                $this->feedItemList[] = $feedItem;
             }
         }
 
