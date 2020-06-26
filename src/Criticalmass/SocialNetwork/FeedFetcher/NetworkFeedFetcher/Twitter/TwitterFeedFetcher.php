@@ -58,6 +58,12 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
                 continue;
             }
 
+            if (property_exists($tweet, 'limit')) {
+                $this->logger->info('Got cursor, skipping.');
+
+                continue;
+            }
+
             $feedItem = TweetConverter::convert($socialNetworkProfile, $tweet);
 
             if ($feedItem) {
