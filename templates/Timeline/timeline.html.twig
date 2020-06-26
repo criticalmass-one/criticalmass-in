@@ -27,7 +27,7 @@
             </li>
         {% endif %}
 
-        {% if timelineContentList.www is defined %}
+        {% if timelineContentList.homepage is defined %}
             <li role="presentation">
                 <a href="#www" aria-controls="www" role="tab" data-toggle="tab">
                     <i class="far fa-globe"></i>
@@ -70,9 +70,9 @@
             {% set hasActive = true %}
         {% endif %}
 
-        {% if timelineContentList.www is defined %}
+        {% if timelineContentList.homepage is defined %}
             <div role="tabpanel" class="tab-pane{% if hasActive == false %} active{% endif %}" id="www">
-                {% for content in timelineContentList.www %}
+                {% for content in timelineContentList.homepage %}
                     {{ content|raw }}
                 {% endfor %}
             </div>
