@@ -86,7 +86,7 @@ class SocialNetworkFeedItem //implements Crawlable
      * @ORM\Column(type="text", nullable=true)
      * @JMS\Expose
      */
-    protected string $raw;
+    protected ?string $raw = null;
 
     public function __construct()
     {
