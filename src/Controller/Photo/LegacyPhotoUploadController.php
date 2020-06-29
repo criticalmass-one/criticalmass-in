@@ -4,7 +4,9 @@ namespace App\Controller\Photo;
 
 use App\Controller\AbstractController;
 use App\Criticalmass\Image\PhotoUploader\PhotoUploaderInterface;
+use App\Entity\Photo;
 use App\Entity\Ride;
+use App\Form\Type\LegacyPhotoUploadType;
 use Flagception\Bundle\FlagceptionBundle\Annotations\Feature;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -33,25 +35,32 @@ class LegacyPhotoUploadController extends AbstractController
 
     protected function uploadGetAction(Request $request, UserInterface $user = null, Ride $ride, PhotoUploaderInterface $photoUploader): Response
     {
+        $form = $this->createForm(LegacyPhotoUploadType::class, new Photo());
+
         return $this->render('PhotoUpload/legacy.html.twig', [
             'ride' => $ride,
+            'form' => $form->createView(),
         ]);
     }
 
     protected function uploadPostAction(Request $request, UserInterface $user = null, Ride $ride, PhotoUploaderInterface $photoUploader): Response
     {
         /** @var UploadedFile $uploadedFile */
-        $uploadedFile = $request->files->get('file');
+        $fileArray = $request->files->get('legacy_photo_upload');
 
-        if ($uploadedFile instanceof UploadedFile) {
+        if (!is_array($fileArray)) {
+
+        } else {
+            $uploadedFile = $fileArray['imageFile']['file'];
+        }
+
+        if ($uploadedFile && $uploadedFile instanceof UploadedFile) {
             $photoUploader
                 ->setRide($ride)
                 ->setUser($user)
                 ->addUploadedFile($uploadedFile);
-
-            return new Response('Success', 200);
         }
 
-        return new Response('', 403);
+        return $this->uploadGetAction($request, $user, $ride, $photoUploader);
     }
 }
