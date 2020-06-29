@@ -1,0 +1,72 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% set city = ride.city %}
+
+{% block title %}Fotos hochladen{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ path('caldera_criticalmass_city_list') }}">
+            Städteliste
+        </a>
+    </li>
+
+    <li>
+        <a href="{{ objectPath(city) }}">
+            {{ city.title }}
+        </a>
+    </li>
+
+    <li>
+        <a href="{{ objectPath(ride) }}">
+            {{ ride.title }}
+        </a>
+    </li>
+
+    <li class="active">
+        Fotos hochladen
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    Fotos hochladen
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <p>
+                    Ziehe einfach Fotos von deinem Rechner auf die graue Fläche, um sie zu der Tour hinzuzufügen.
+                </p>
+                <p>
+                    Noch ein Tipp: Wenn du vorher einen GPX-Track deiner Tour hochlädst oder deine Fotos GPS-Koordinaten
+                    enthalten, werden deine Fotos automatisch auf der Karte verortet.
+                </p>
+                <p>
+                    <strong>
+                        Mit dem Hochladen von Foto-Dateien bestätigst du, dass du der Urheber dieser Fotos bist. Bitte
+                        lade keine Fotos hoch, an denen du keine Urheberrechte besitzt!
+                    </strong>
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <form action="{{ objectPath(ride, 'caldera_criticalmass_gallery_photos_upload_ride') }}" class="dropzone" id="photo-dropzone">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        CriticalMass.loadModule('UploadPhotoPage', '#photo-dropzone');
+    </script>
+{% endblock %}
