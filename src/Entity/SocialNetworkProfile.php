@@ -104,6 +104,11 @@ class SocialNetworkProfile
      */
     protected $autoFetch = true;
 
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $additionalData = [];
+
     public function getId(): ?int
     {
         return $this->id;
@@ -300,6 +305,18 @@ class SocialNetworkProfile
     public function setAutoFetch(bool $autoFetch): self
     {
         $this->autoFetch = $autoFetch;
+
+        return $this;
+    }
+
+    public function getAdditionalData(): ?array
+    {
+        return $this->additionalData;
+    }
+
+    public function setAdditionalData(?array $additionalData): self
+    {
+        $this->additionalData = $additionalData;
 
         return $this;
     }
