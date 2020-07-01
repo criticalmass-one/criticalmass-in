@@ -31,15 +31,32 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6 col-md-offset-3">
                 <h1>
                     Fotos hochladen
                 </h1>
+                <p>
+                    Hier kannst du einzelne Fotos zu einer Tour hochladen. Wenn du vorher einen GPX-Track deiner Tour
+                    hochlädst oder deine Fotos GPS-Koordinaten
+                    enthalten, werden deine Fotos automatisch auf der Karte verortet.
+                </p>
+                <p>
+                    <strong>
+                        Mit dem Hochladen von Foto-Dateien bestätigst du, dass du der Urheber dieser Fotos bist. Bitte
+                        lade keine Fotos hoch, an denen du keine Urheberrechte besitzt!
+                    </strong>
+                </p>
+
+                <p>
+                    Um mehrere Fotos auf einmal hochzuladen, probiere bitte <a
+                            href="{{ objectPath(ride, 'caldera_criticalmass_gallery_photos_upload_ride') }}">Multi-Uploader</a>
+                    aus.
+                </p>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6 col-md-offset-3">
                 <div class="form-group">
                     <form action="{{ objectPath(ride, 'caldera_criticalmass_gallery_legacy_photos_upload_ride') }}"
                           method="post" enctype="multipart/form-data">
