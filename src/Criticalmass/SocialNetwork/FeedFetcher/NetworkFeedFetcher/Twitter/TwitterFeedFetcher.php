@@ -51,6 +51,8 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
         $reply = $this->codebird->statuses_userTimeline(QueryBuilder::build($socialNetworkProfile, $fetchInfo), true);
         $data = (array)$reply;
 
+        $lastTweetId = null;
+
         foreach ($data as $tweet) {
             if (!is_object($tweet)) {
                 $this->logger->info('Tweet did not contain usable data. Skipping.');
@@ -70,10 +72,18 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
                 $this->logger->info(sprintf('Parsed and added tweet #%s', $feedItem->getUniqueIdentifier()));
 
                 $this->feedItemList[] = $feedItem;
+
+                if (!$lastTweetId || $lastTweetId < $tweet->id) {
+                    $lastTweetId = $tweet->id;
+                }
+
+                dump($feedItem);
             }
         }
 
-        $socialNetworkProfile->setLastFetchSuccessDateTime(new \DateTime());
+        $socialNetworkProfile
+            ->setAdditionalData(['lastTweetId' => $lastTweetId])
+            ->setLastFetchSuccessDateTime(new \DateTime());
 
         return $this;
     }
