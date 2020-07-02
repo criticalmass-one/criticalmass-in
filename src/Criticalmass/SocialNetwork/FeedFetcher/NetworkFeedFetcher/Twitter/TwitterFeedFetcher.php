@@ -79,9 +79,11 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
             }
         }
 
-        $socialNetworkProfile
-            ->setAdditionalData(['lastTweetId' => $lastTweetId])
-            ->setLastFetchSuccessDateTime(new \DateTime());
+        if ($lastTweetId) {
+            $socialNetworkProfile->setAdditionalData(['lastTweetId' => $lastTweetId]);
+        }
+
+        $socialNetworkProfile->setLastFetchSuccessDateTime(new \DateTime());
 
         return $this;
     }
