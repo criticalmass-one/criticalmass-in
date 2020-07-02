@@ -311,7 +311,7 @@ class SocialNetworkProfile
 
     public function getAdditionalData(): ?array
     {
-        return (array)json_decode($this->additionalData || '{}');
+        return (array)json_decode($this->additionalData ?? '{}');
     }
 
     public function setAdditionalData(?array $additionalData): self
