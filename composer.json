@@ -100,7 +100,8 @@
         "friendsofsymfony/oauth-server-bundle": "^1.6",
         "gregwar/captcha-bundle": "^2.1",
         "embed/embed": "^4.1",
-        "guzzlehttp/psr7": "^1.6"
+        "guzzlehttp/psr7": "^1.6",
+        "raiym/instagram-php-scraper": "^0.9.11"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "*",
