@@ -76,8 +76,6 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
                 if (!$lastTweetId || $lastTweetId < $tweet->id) {
                     $lastTweetId = $tweet->id;
                 }
-
-                dump($feedItem);
             }
         }
 
