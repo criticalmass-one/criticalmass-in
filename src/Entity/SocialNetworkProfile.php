@@ -105,9 +105,9 @@ class SocialNetworkProfile
     protected $autoFetch = true;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
-    private $additionalData = [];
+    protected $additionalData;
 
     public function getId(): ?int
     {
@@ -311,12 +311,12 @@ class SocialNetworkProfile
 
     public function getAdditionalData(): ?array
     {
-        return $this->additionalData;
+        return (array)json_decode($this->additionalData);
     }
 
     public function setAdditionalData(?array $additionalData): self
     {
-        $this->additionalData = $additionalData;
+        $this->additionalData = json_encode($additionalData);
 
         return $this;
     }
