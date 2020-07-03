@@ -27,6 +27,15 @@
             </li>
         {% endif %}
 
+        {% if timelineContentList.instagram_profile is defined %}
+            <li role="presentation">
+                <a href="#instagram_profile" aria-controls="twitter" role="tab" data-toggle="tab">
+                    <i class="fab fa-instagram"></i>
+                    Instagram-Fotos
+                </a>
+            </li>
+        {% endif %}
+
         {% if timelineContentList.homepage is defined %}
             <li role="presentation">
                 <a href="#www" aria-controls="www" role="tab" data-toggle="tab">
@@ -63,6 +72,16 @@
         {% if timelineContentList.twitter is defined %}
             <div role="tabpanel" class="tab-pane{% if hasActive == false %} active{% endif %}" id="twitter">
                 {% for content in timelineContentList.twitter %}
+                    {{ content|raw }}
+                {% endfor %}
+            </div>
+
+            {% set hasActive = true %}
+        {% endif %}
+
+        {% if timelineContentList.instagram_profile is defined %}
+            <div role="tabpanel" class="tab-pane{% if hasActive == false %} active{% endif %}" id="instagram_profile">
+                {% for content in timelineContentList.instagram_profile %}
                     {{ content|raw }}
                 {% endfor %}
             </div>
