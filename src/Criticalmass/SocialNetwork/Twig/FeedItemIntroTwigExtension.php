@@ -24,7 +24,7 @@ class FeedItemIntroTwigExtension extends AbstractExtension
         if ($textLength > self::INTRO_LENGTH) {
             $additionalLength = self::INTRO_LENGTH;
 
-            while ($additionalLength < $textLength) {
+            while ($additionalLength < $textLength - 1) {
                 ++$additionalLength;
 
                 if (in_array($text[$additionalLength], ['.', ';', '!', '?', '…'])) {
