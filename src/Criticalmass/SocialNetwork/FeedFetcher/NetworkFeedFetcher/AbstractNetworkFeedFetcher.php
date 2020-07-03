@@ -40,4 +40,17 @@ abstract class AbstractNetworkFeedFetcher implements NetworkFeedFetcherInterface
 
         return strtolower($feedFetcherNetwork);
     }
+
+    protected function markAsFailed(SocialNetworkProfile $socialNetworkProfile, string $errorMessage): SocialNetworkProfile
+    {
+        $socialNetworkProfile
+            ->setLastFetchFailureDateTime(new \DateTime())
+            ->setLastFetchFailureError($errorMessage);
+
+        $this
+            ->logger
+            ->notice($errorMessage);
+
+        return $socialNetworkProfile;
+    }
 }

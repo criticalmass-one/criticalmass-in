@@ -6,6 +6,7 @@ use App\Criticalmass\SocialNetwork\FeedFetcher\FetchInfo;
 use App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\AbstractNetworkFeedFetcher;
 use App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\NetworkFeedFetcherInterface;
 use App\Entity\SocialNetworkProfile;
+use InstagramScraper\Exception\InstagramNotFoundException;
 use InstagramScraper\Instagram;
 use InstagramScraper\Model\Media;
 use Psr\Log\LoggerInterface;
@@ -31,7 +32,15 @@ class InstagramFeedFetcher extends AbstractNetworkFeedFetcher
 
         $this->logger->info(sprintf('Now quering @%s', $username));
 
-        $mediaList = $this->instagram->getMedias($username, 100);
+        try {
+            $mediaList = $this->instagram->getMedias($username, 100);
+        } catch (InstagramNotFoundException $exception) {
+            $this->markAsFailed($socialNetworkProfile, $exception->getMessage());
+        }
+
+        if (!isset($mediaList) || 0 === count($mediaList)) {
+            return $this;
+        }
 
         $lastMediaId = null;
 
