@@ -32,8 +32,19 @@ class InstagramFeedFetcher extends AbstractNetworkFeedFetcher
 
         $this->logger->info(sprintf('Now quering @%s', $username));
 
+        $additionalData = $socialNetworkProfile->getAdditionalData();
+
+        /*        if (array_key_exists('lastMediaId', $additionalData)) {
+                    $lastFetchedMediaId = $additionalData['lastMediaId'];
+                } else {
+                    $lastFetchedMediaId = '';
+                }*/
+
+        // @todo fix last media id somehow
+        $lastFetchedMediaId = '';
+        
         try {
-            $mediaList = $this->instagram->getMedias($username, 100);
+            $mediaList = $this->instagram->getMedias($username, 100, $lastFetchedMediaId);
         } catch (InstagramNotFoundException $exception) {
             $this->markAsFailed($socialNetworkProfile, $exception->getMessage());
         }
