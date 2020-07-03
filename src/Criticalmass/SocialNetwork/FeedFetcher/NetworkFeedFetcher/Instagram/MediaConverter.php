@@ -5,6 +5,7 @@ namespace App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\Instagra
 use App\Entity\SocialNetworkFeedItem;
 use App\Entity\SocialNetworkProfile;
 use InstagramScraper\Model\Media;
+use JMS\Serializer\SerializerBuilder;
 
 class MediaConverter
 {
@@ -18,12 +19,19 @@ class MediaConverter
         $item = new SocialNetworkFeedItem();
         $item
             ->setSocialNetworkProfile($socialNetworkProfile)
-            ->setRaw(json_encode($media))
+            ->setRaw(self::serializeRawMedia($media))
             ->setDateTime(new \DateTime(sprintf('@%d', $media->getCreatedTime())))
             ->setText($media->getCaption())
             ->setPermalink($media->getLink())
             ->setUniqueIdentifier($media->getLink());
 
         return $item;
+    }
+
+    protected static function serializeRawMedia(Media $media): string
+    {
+        $serializer = SerializerBuilder::create()->build();
+
+        return $serializer->serialize($media, 'json');
     }
 }
