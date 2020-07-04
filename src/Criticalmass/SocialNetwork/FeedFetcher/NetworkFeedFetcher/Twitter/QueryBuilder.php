@@ -19,6 +19,10 @@ class QueryBuilder
             'screen_name' => Screenname::extractScreenname($socialNetworkProfile),
         ];
 
+        if ($socialNetworkProfile->getAdditionalData() && $socialNetworkProfile->getAdditionalData()['lastTweetId']) {
+            $queryStringParts['since_id'] = $socialNetworkProfile->getAdditionalData()['lastTweetId'];
+        }
+
         if ($fetchInfo->hasFromDateTime()) {
             $queryStringParts['since'] = $fetchInfo
                 ->getFromDateTime()
