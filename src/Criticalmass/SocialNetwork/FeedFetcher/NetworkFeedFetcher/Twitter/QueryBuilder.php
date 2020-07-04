@@ -1,3 +1,14 @@
+<?php declare(strict_types=1);
+
+namespace App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\Twitter;
+
+use App\Criticalmass\SocialNetwork\FeedFetcher\FetchInfo;
+use App\Entity\SocialNetworkProfile;
+
+class QueryBuilder
+{
+    private function __construct()
+    {
 
     }
 
@@ -7,10 +18,6 @@
             'tweet_mode' => 'extended',
             'screen_name' => Screenname::extractScreenname($socialNetworkProfile),
         ];
-
-        if ($socialNetworkProfile->getAdditionalData() && $socialNetworkProfile->getAdditionalData()['lastTweetId']) {
-            $queryStringParts['since_id'] = $socialNetworkProfile->getAdditionalData()['lastTweetId'];
-        }
 
         if ($fetchInfo->hasFromDateTime()) {
             $queryStringParts['since'] = $fetchInfo

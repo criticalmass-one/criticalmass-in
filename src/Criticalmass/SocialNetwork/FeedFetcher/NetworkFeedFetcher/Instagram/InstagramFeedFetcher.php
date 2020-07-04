@@ -4,7 +4,6 @@ namespace App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\Instagra
 
 use App\Criticalmass\SocialNetwork\FeedFetcher\FetchInfo;
 use App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\AbstractNetworkFeedFetcher;
-use App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\NetworkFeedFetcherInterface;
 use App\Entity\SocialNetworkProfile;
 use InstagramScraper\Exception\InstagramNotFoundException;
 use InstagramScraper\Instagram;
@@ -22,7 +21,7 @@ class InstagramFeedFetcher extends AbstractNetworkFeedFetcher
         parent::__construct($logger);
     }
 
-    public function fetch(SocialNetworkProfile $socialNetworkProfile, FetchInfo $fetchInfo): NetworkFeedFetcherInterface
+    public function fetch(SocialNetworkProfile $socialNetworkProfile, FetchInfo $fetchInfo): array
     {
         $username = Screenname::extractScreenname($socialNetworkProfile);
 
@@ -50,7 +49,7 @@ class InstagramFeedFetcher extends AbstractNetworkFeedFetcher
         }
 
         if (!isset($mediaList) || 0 === count($mediaList)) {
-            return $this;
+            return [];
         }
 
         $lastMediaId = null;
@@ -66,7 +65,7 @@ class InstagramFeedFetcher extends AbstractNetworkFeedFetcher
             if ($feedItem) {
                 $this->logger->info(sprintf('Parsed and added instagram photo #%s', $feedItem->getUniqueIdentifier()));
 
-                $this->feedItemList[] = $feedItem;
+                $feedItemList[] = $feedItem;
 
                 if ($lastMediaId) {
                     $socialNetworkProfile->setAdditionalData(['lastMediaId' => $lastMediaId]);
@@ -74,7 +73,7 @@ class InstagramFeedFetcher extends AbstractNetworkFeedFetcher
             }
         }
 
-        return $this;
+        return $feedItemList;
     }
 
     public function getNetworkIdentifier(): string
