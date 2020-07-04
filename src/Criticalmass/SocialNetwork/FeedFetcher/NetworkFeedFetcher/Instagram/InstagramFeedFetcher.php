@@ -43,7 +43,7 @@ class InstagramFeedFetcher extends AbstractNetworkFeedFetcher
         $lastFetchedMediaId = '';
         
         try {
-            $mediaList = $this->instagram->getMedias($username, 100, $lastFetchedMediaId);
+            $mediaList = $this->instagram->getMedias($username, $fetchInfo->getCount() ?? 100, $lastFetchedMediaId);
         } catch (InstagramNotFoundException $exception) {
             $this->markAsFailed($socialNetworkProfile, $exception->getMessage());
         }
