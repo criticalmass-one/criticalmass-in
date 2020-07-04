@@ -2,107 +2,65 @@
 
 namespace App\Criticalmass\SocialNetwork\FeedFetcher;
 
-use App\Entity\SocialNetworkFeedItem;
+use App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\NetworkFeedFetcherInterface;
 use App\Entity\SocialNetworkProfile;
-use App\Criticalmass\SocialNetwork\NetworkFeedFetcher\NetworkFeedFetcherInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
-class FeedFetcher
+class FeedFetcher extends AbstractFeedFetcher
 {
-    /** @var array $networkFetcherList */
-    protected $networkFetcherList = [];
-
-    /** @var RegistryInterface $doctrine */
-    protected $doctrine;
-
-    protected $feedItemList = [];
-
-    public function __construct(RegistryInterface $doctrine)
-    {
-        $this->doctrine = $doctrine;
-    }
-
-    public function addNetworkFeedFetcher(NetworkFeedFetcherInterface $networkFeedFetcher): FeedFetcher
-    {
-        $this->networkFetcherList[] = $networkFeedFetcher;
-
-        return $this;
-    }
-
-    public function getNetworkFetcherList(): array
-    {
-        return $this->networkFetcherList;
-    }
-
-    protected function getSocialNetworkProfiles(): array
-    {
-        return $this->doctrine->getRepository(SocialNetworkProfile::class)->findAll();
-    }
-
     protected function getFeedFetcherForNetworkProfile(SocialNetworkProfile $socialNetworkProfile): ?NetworkFeedFetcherInterface
     {
-        $namespace = 'App\\Criticalmass\\SocialNetwork\\NetworkFeedFetcher\\';
-
-        $network = ucfirst($socialNetworkProfile->getNetwork());
-
-        $classname = sprintf('%s%sFeedFetcher', $namespace, $network);
-
-        if (class_exists($classname)) {
-            return new $classname;
+        /** @var NetworkFeedFetcherInterface $fetcher */
+        foreach ($this->networkFetcherList as $fetcher) {
+            if ($fetcher->supports($socialNetworkProfile)) {
+                return $fetcher;
+            }
         }
 
         return null;
     }
 
-    public function fetch(): FeedFetcher
+    public function fetch(FetchInfo $fetchInfo): FeedFetcherInterface
     {
-        $profileList = $this->getSocialNetworkProfiles();
+        $profileList = $this->getSocialNetworkProfiles($fetchInfo);
 
+        /** @var SocialNetworkProfile $profile */
         foreach ($profileList as $profile) {
             $fetcher = $this->getFeedFetcherForNetworkProfile($profile);
 
             if ($fetcher) {
-                $feedItemList = $fetcher->fetch($profile)->getFeedItemList();
+                $feedItemList = $fetcher
+                    ->fetch($profile, $fetchInfo)
+                    ->getFeedItemList();
 
                 $this->feedItemList = array_merge($this->feedItemList, $feedItemList);
             }
-
         }
+
+        $this->doctrine->getManager()->flush();
 
         return $this;
     }
 
-    public function persist(): FeedFetcher
+    protected function stripNetworkList(FetchInfo $fetchInfo): FeedFetcher
     {
-        $em = $this->doctrine->getManager();
+        if (count($this->fetchableNetworkList) === 0) {
+            return $this;
+        }
 
-        foreach ($this->feedItemList as $feedItem) {
-            if (!$this->feedItemExists($feedItem)) {
-                $em->persist($feedItem);
+        /** @var NetworkFeedFetcherInterface $fetcher */
+        foreach ($this->networkFetcherList as $key => $fetcher) {
+            if (!in_array($fetcher->getNetworkIdentifier(), $this->fetchableNetworkList)) {
+                unset($this->networkFetcherList[$key]);
             }
         }
 
-        try {
-            $em->flush();
-        } catch (\Exception $exception) {
-
-        }
-
         return $this;
     }
 
-    protected function feedItemExists(SocialNetworkFeedItem $feedItem): bool
+    public function persist(): FeedFetcherInterface
     {
-        $existingItem = $this->doctrine->getRepository(SocialNetworkFeedItem::class)->findOneBy([
-            'socialNetworkProfile' => $feedItem->getSocialNetworkProfile(),
-            'uniqueIdentifier' => $feedItem->getUniqueIdentifier()
-        ]);
+        $this->feedItemPersister->persistFeedItemList($this->feedItemList);
 
-        return $existingItem !== null;
-    }
-
-    public function getFeedItemList(): array
-    {
-        return $this->feedItemList;
+        return $this;
     }
 }

@@ -250,4 +250,20 @@ class CityRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function findPopularCities(int $limit = 10): array
+    {
+        $builder = $this->createQueryBuilder('c');
+
+        $builder
+            ->select('c')
+            ->where($builder->expr()->eq('c.enabled', ':enabled'))
+            ->orderBy('c.views', 'DESC')
+            ->setParameter('enabled', true)
+            ->setMaxResults($limit);
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
 }

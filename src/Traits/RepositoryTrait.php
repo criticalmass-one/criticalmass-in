@@ -2,7 +2,6 @@
 
 namespace App\Traits;
 
-use App\Entity\BikerightVoucher;
 use App\Entity\BlockedCity;
 use App\Entity\Board;
 use App\Entity\City;
@@ -23,7 +22,6 @@ use App\Entity\Subride;
 use App\Entity\Thread;
 use App\Entity\Track;
 use App\Entity\Weather;
-use App\Repository\BikerightVoucherRepository;
 use App\Repository\BlockedCityRepository;
 use App\Repository\BoardRepository;
 use App\Repository\CityCycleRepository;
@@ -46,12 +44,6 @@ use Doctrine\Common\Persistence\ObjectRepository;
 /** @deprecated */
 trait RepositoryTrait
 {
-    /** @deprecated */
-    protected function getBikeRightVoucherRepository(): BikerightVoucherRepository
-    {
-        return $this->getDoctrine()->getRepository(BikerightVoucher::class);
-    }
-
     /** @deprecated */
     protected function getBlockedCityRepository(): BlockedCityRepository
     {

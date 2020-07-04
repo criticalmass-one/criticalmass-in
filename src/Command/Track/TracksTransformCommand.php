@@ -3,17 +3,17 @@
 namespace App\Command\Track;
 
 use App\Entity\Track;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class TracksTransformCommand extends Command
 {
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
-    public function __construct(?string $name = null, RegistryInterface $registry)
+    public function __construct(?string $name = null, ManagerRegistry $registry)
     {
         parent::__construct($name);
     }

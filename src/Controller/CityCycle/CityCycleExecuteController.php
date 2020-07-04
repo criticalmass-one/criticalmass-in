@@ -5,14 +5,14 @@ namespace App\Controller\CityCycle;
 use App\Controller\AbstractController;
 use App\Criticalmass\RideGenerator\ExecuteGenerator\CycleExecutable;
 use App\Criticalmass\RideGenerator\ExecuteGenerator\DateTimeListGenerator;
-use App\Criticalmass\RideGenerator\RideGenerator\RideGeneratorInterface;
+use App\Criticalmass\RideGenerator\RideGenerator\CityRideGeneratorInterface;
 use App\Criticalmass\Util\DateTimeUtil;
 use App\Entity\CityCycle;
 use App\Entity\Ride;
 use App\Form\Type\ExecuteCityCycleType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +24,7 @@ class CityCycleExecuteController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("cityCycle", class="App:CityCycle", options={"id" = "cycleId"})
      */
-    public function executeAction(Request $request, CityCycle $cityCycle, RideGeneratorInterface $generator): Response
+    public function executeAction(Request $request, CityCycle $cityCycle, CityRideGeneratorInterface $generator): Response
     {
         $dateTime = new \DateTime();
         $threeMonthInterval = new \DateInterval('P6M');
@@ -67,7 +67,7 @@ class CityCycleExecuteController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("cityCycle", class="App:CityCycle", options={"id" = "cycleId"})
      */
-    public function executePersistAction(Request $request, CityCycle $cityCycle, RideGeneratorInterface $generator, SessionInterface $session, RegistryInterface $registry): Response
+    public function executePersistAction(Request $request, CityCycle $cityCycle, CityRideGeneratorInterface $generator, SessionInterface $session, ManagerRegistry $registry): Response
     {
         if (Request::METHOD_POST === $request->getMethod() && $request->request->getInt('fromDate') && $request->request->get('untilDate')) {
             $executeable = new CycleExecutable();

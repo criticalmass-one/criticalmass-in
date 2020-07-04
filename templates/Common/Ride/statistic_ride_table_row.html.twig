@@ -1,0 +1,32 @@
+<tr>
+    <td>
+        <a href="{{ objectPath(ride.city) }}">
+            {{ ride.city.city }}
+        </a>
+    </td>
+    <td>
+        <a href="{{ objectPath(ride) }}">
+            {{ ride.dateTime|date('d.m.Y') }}
+        </a>
+    </td>
+    <td>
+        {% if ride.estimatedParticipants %}
+            {{ ride.estimatedParticipants }}
+        {% endif %}
+    </td>
+    <td>
+        {% if ride.estimatedDistance %}
+            {{ ride.estimatedDistance|number_format(2) }} Kilometer
+        {% endif %}
+    </td>
+    <td>
+        {% if ride.durationInterval.format('%h:%i') > 0 %}
+            {{ human_duration(ride.getEstimatedDurationInSeconds()) }}
+        {% endif %}
+    </td>
+    <td>
+        {% if ride.durationInterval and ride.estimatedDistance %}
+            {{ ride.averageVelocity|number_format(2) }} Kilometer&nbsp;pro&nbsp;Stunde
+        {% endif %}
+    </td>
+</tr>

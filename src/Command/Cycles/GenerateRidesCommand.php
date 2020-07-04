@@ -2,10 +2,11 @@
 
 namespace App\Command\Cycles;
 
+use App\Criticalmass\RideGenerator\RideGenerator\CityRideGeneratorInterface;
 use App\Criticalmass\RideGenerator\RideGenerator\RideGeneratorInterface;
 use App\Entity\City;
 use App\Entity\Ride;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
@@ -19,10 +20,10 @@ class GenerateRidesCommand extends Command
     /** @var RideGeneratorInterface $rideGenerator */
     protected $rideGenerator;
 
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
-    public function __construct($name = null, RideGeneratorInterface $rideGenerator, RegistryInterface $registry)
+    public function __construct($name = null, CityRideGeneratorInterface $rideGenerator, ManagerRegistry $registry)
     {
         $this->rideGenerator = $rideGenerator;
         $this->registry = $registry;

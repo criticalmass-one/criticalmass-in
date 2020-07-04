@@ -3,6 +3,11 @@ old_sound_rabbit_mq:
         default:
             url: '%env(RABBITMQ_URL)%'
             lazy: true
+            connection_timeout: 30
+            read_write_timeout: 30
+            keepalive: false
+            heartbeat: 15
+            use_socket: true
     producers:
         criticalmass_view:
             connection:       default
@@ -10,6 +15,9 @@ old_sound_rabbit_mq:
         criticalmass_trackimportcandidate:
             connection:       default
             exchange_options: { name: 'criticalmass_trackimportcandidate', type: direct }
+        criticalmass_socialnetworkfeeditem:
+            connection:       default
+            exchange_options: { name: 'criticalmass_socialnetworkfeeditem', type: direct }
     consumers:
         criticalmass_view:
             connection:       default
@@ -21,12 +29,30 @@ old_sound_rabbit_mq:
             exchange_options: { name: 'criticalmass_trackimportcandidate', type: direct }
             queue_options:    { name: 'criticalmass_trackimportcandidate'}
             callback:         App\Consumer\TrackImportCandidateConsumer
+        criticalmass_socialnetworkfeeditem:
+            connection:       default
+            exchange_options: { name: 'criticalmass_socialnetworkfeeditem', type: direct }
+            queue_options:    { name: 'criticalmass_socialnetworkfeeditem'}
+            callback:         App\Criticalmass\SocialNetwork\Consumer\FeedItemConsumer
+            qos_options:      { prefetch_size: 0, prefetch_count: 1, global: false }
     batch_consumers:
         criticalmass_view:
             connection:       default
             exchange_options: { name: 'criticalmass_view', type: direct }
             queue_options:    { name: 'criticalmass_view' }
             callback:         App\Consumer\ViewBatchConsumer
+            qos_options:      { prefetch_size: 0, prefetch_count: 50000, global: false }
+            timeout_wait:     5
+            auto_setup_fabric: false
+            idle_timeout_exit_code: -2
+            keep_alive: true
+            graceful_max_execution:
+                timeout: 600
+        criticalmass_socialnetworkfeeditem:
+            connection:       default
+            exchange_options: { name: 'criticalmass_socialnetworkfeeditem', type: direct }
+            queue_options:    { name: 'criticalmass_socialnetworkfeeditem' }
+            callback:         App\Criticalmass\SocialNetwork\Consumer\FeedItemBatchConsumer
             qos_options:      { prefetch_size: 0, prefetch_count: 50000, global: false }
             timeout_wait:     5
             auto_setup_fabric: false

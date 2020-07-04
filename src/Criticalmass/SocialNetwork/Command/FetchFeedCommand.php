@@ -1,0 +1,60 @@
+<?php declare(strict_types=1);
+
+namespace App\Criticalmass\SocialNetwork\Command;
+
+use App\Criticalmass\SocialNetwork\FeedFetcher\FeedFetcher;
+use App\Criticalmass\SocialNetwork\FeedFetcher\FetchInfo;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+
+class FetchFeedCommand extends Command
+{
+    protected FeedFetcher $feedFetcher;
+    protected ManagerRegistry $doctrine;
+
+    public function __construct(ManagerRegistry $doctrine, FeedFetcher $feedFetcher)
+    {
+        $this->doctrine = $doctrine;
+        $this->feedFetcher = $feedFetcher;
+
+        parent::__construct(null);
+    }
+
+    protected function configure(): void
+    {
+        $this
+            ->setName('criticalmass:social-network:fetch-feed')
+            ->setDescription('Fetch feeds')
+            ->addArgument('networks', InputArgument::IS_ARRAY)
+            ->addOption('fromDateTime', 'f', InputOption::VALUE_REQUIRED)
+            ->addOption('untilDateTime', 'u', InputOption::VALUE_REQUIRED)
+            ->addOption('skipOldItems', 's', InputOption::VALUE_NONE);
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output): void
+    {
+        $fetchInfo = new FetchInfo();
+
+        if ($input->hasArgument('networks')) {
+            foreach ($input->getArgument('networks') as $networkIdentifier) {
+                $fetchInfo->addNetwork($networkIdentifier);
+            }
+        }
+
+        if ($input->getOption('fromDateTime')) {
+            $fetchInfo->setFromDateTime(new \DateTime($input->getOption('fromDateTime')));
+        }
+
+        if ($input->getOption('untilDateTime')) {
+            $fetchInfo->setUntilDateTime(new \DateTime($input->getOption('untilDateTime')));
+        }
+        
+        $this->feedFetcher
+            ->fetch($fetchInfo)
+            ->persist();
+    }
+}

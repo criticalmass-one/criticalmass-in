@@ -79,11 +79,6 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     protected $participations;
 
     /**
-     * @ORM\OneToMany(targetEntity="BikerightVoucher", mappedBy="user")
-     */
-    protected $bikerightVouchers;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     protected $updatedAt;
@@ -199,7 +194,6 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
 
         $this->tracks = new ArrayCollection();
         $this->participations = new ArrayCollection();
-        $this->bikerightVouchers = new ArrayCollection();
         $this->blogPosts = new ArrayCollection();
         $this->socialNetworkProfiles = new ArrayCollection();
         $this->trackImportCandidates = new ArrayCollection();
@@ -475,25 +469,6 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     public function isTwitterAccount(): bool
     {
         return $this->twitterId !== null;
-    }
-
-    public function addBikerightVoucher(BikerightVoucher $bikerightVoucher): User
-    {
-        $this->bikerightVouchers->add($bikerightVoucher);
-
-        return $this;
-    }
-
-    public function getBikerightVouchers(): Collection
-    {
-        return $this->bikerightVouchers;
-    }
-
-    public function removeBikerightVoucher(BikerightVoucher $bikerightVoucher): User
-    {
-        $this->bikerightVouchers->removeElement($bikerightVoucher);
-
-        return $this;
     }
 
     public function addCycle(CityCycle $cityCycle): User

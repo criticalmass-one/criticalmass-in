@@ -16,14 +16,7 @@
 
                             <ul>
                                 {% for ride in day %}
-                                <li>
-                                    <a href="{{ objectPath(ride) }}">
-                                        {{ ride.city.city }}
-                                    </a>
-                                    <small>
-                                        ({{ ride.dateTime|date('H:i', ride.city.timezone) }})
-                                    </small>
-                                </li>
+                                {% include 'Common/Ride/simple_city_time_list_item.html.twig' with { ride: ride } %}
                                 {% endfor %}
                             </ul>
                         </li>

@@ -1,6 +1,5 @@
 @import "../../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 @import "criticalmass/criticalmass";
-@import "criticalmass/bikeright3";
 @import "criticalmass/frontpage3";
 
 .form-control.datepicker {
@@ -18,4 +17,16 @@
 
 input[type="file"] {
   display: inline !important;
+}
+
+#github-ribbon {
+  position: absolute;
+  top: 42px;
+  right: 0;
+  border: 0;
+  z-index: 1000;
+}
+
+.captcha-input-group .input-group-addon {
+  padding: 0;
 }

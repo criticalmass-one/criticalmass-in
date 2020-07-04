@@ -1,0 +1,7 @@
+{% for city in cityList %}
+    <li>
+        <a href="{{ objectPath(city) }}" title="{{ city.title }}">
+            {{ city.title }}
+        </a>
+    </li>
+{% endfor %}

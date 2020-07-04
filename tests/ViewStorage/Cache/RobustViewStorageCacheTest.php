@@ -12,7 +12,7 @@ use JMS\Serializer\SerializerBuilder;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use PhpAmqpLib\Exception\AMQPIOException;
 use PHPUnit\Framework\TestCase;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Tests\ViewStorage\TestClass;
@@ -43,7 +43,7 @@ class RobustViewStorageCacheTest extends TestCase
             ->method('persist')
             ->with($this->equalTo($expectedPersistedClass, 0.5));
 
-        $viewStoragePersisterRegistry = $this->createMock(RegistryInterface::class);
+        $viewStoragePersisterRegistry = $this->createMock(ManagerRegistry::class);
         $viewStoragePersisterRegistry
             ->expects($this->once())
             ->method('getRepository')
@@ -60,13 +60,13 @@ class RobustViewStorageCacheTest extends TestCase
             ->expects($this->once())
             ->method('flush');
 
-        $viewStorageCacheRegistry = $this->createMock(RegistryInterface::class);
+        $viewStorageCacheRegistry = $this->createMock(ManagerRegistry::class);
         $viewStorageCacheRegistry
             ->expects($this->once())
             ->method('getManager')
             ->will($this->returnValue($viewStorageCacheManager));
 
-        $viewEntityFactoryRegistry = $this->createMock(RegistryInterface::class);
+        $viewEntityFactoryRegistry = $this->createMock(ManagerRegistry::class);
 
         $serializer = SerializerBuilder::create()->build();
 
@@ -122,7 +122,7 @@ class RobustViewStorageCacheTest extends TestCase
             ->method('persist')
             ->with($this->equalTo($expectedPersistedClass, 0.5));
 
-        $viewStoragePersisterRegistry = $this->createMock(RegistryInterface::class);
+        $viewStoragePersisterRegistry = $this->createMock(ManagerRegistry::class);
         $viewStoragePersisterRegistry
             ->expects($this->once())
             ->method('getRepository')
@@ -139,7 +139,7 @@ class RobustViewStorageCacheTest extends TestCase
             ->expects($this->once())
             ->method('flush');
 
-        $viewStorageCacheRegistry = $this->createMock(RegistryInterface::class);
+        $viewStorageCacheRegistry = $this->createMock(ManagerRegistry::class);
         $viewStorageCacheRegistry
             ->expects($this->once())
             ->method('getManager')
@@ -152,7 +152,7 @@ class RobustViewStorageCacheTest extends TestCase
             ->with($this->equalTo(42))
             ->will($this->returnValue($user));
 
-        $viewEntityFactoryRegistry = $this->createMock(RegistryInterface::class);
+        $viewEntityFactoryRegistry = $this->createMock(ManagerRegistry::class);
         $viewEntityFactoryRegistry
             ->expects($this->once())
             ->method('getRepository')
