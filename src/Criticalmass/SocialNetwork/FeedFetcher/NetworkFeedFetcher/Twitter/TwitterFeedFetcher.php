@@ -4,7 +4,6 @@ namespace App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\Twitter;
 
 use App\Criticalmass\SocialNetwork\FeedFetcher\FetchInfo;
 use App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\AbstractNetworkFeedFetcher;
-use App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\NetworkFeedFetcherInterface;
 use App\Entity\SocialNetworkProfile;
 use Codebird\Codebird;
 use Psr\Log\LoggerInterface;
@@ -21,34 +20,36 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
         parent::__construct($logger);
     }
 
-    public function fetch(SocialNetworkProfile $socialNetworkProfile, FetchInfo $fetchInfo): NetworkFeedFetcherInterface
+    public function fetch(SocialNetworkProfile $socialNetworkProfile, FetchInfo $fetchInfo): array
     {
         if (!$socialNetworkProfile->getCity()) {
-            return $this;
+            return [];
         }
 
         try {
-            $this->fetchFeed($socialNetworkProfile, $fetchInfo);
+            return $this->fetchFeed($socialNetworkProfile, $fetchInfo);
         } catch (\Exception $exception) {
             $this->markAsFailed($socialNetworkProfile, sprintf('Failed to fetch social network profile %d: %s', $socialNetworkProfile->getId(), $exception->getMessage()));
         }
 
-        return $this;
+        return [];
     }
 
-    protected function fetchFeed(SocialNetworkProfile $socialNetworkProfile, FetchInfo $fetchInfo): NetworkFeedFetcherInterface
+    protected function fetchFeed(SocialNetworkProfile $socialNetworkProfile, FetchInfo $fetchInfo): array
     {
+        $feedItemList = [];
+
         $screenname = Screenname::extractScreenname($socialNetworkProfile);
 
         if (!$screenname || !Screenname::isValidScreenname($screenname)) {
             $this->markAsFailed($socialNetworkProfile, sprintf('Skipping %s cause it is not a valid twitter handle.', $screenname));
 
-            return $this;
+            return [];
         }
 
         $this->logger->info(sprintf('Now quering @%s', $screenname));
 
-        $reply = $this->codebird->statuses_userTimeline(QueryBuilder::build($socialNetworkProfile, $fetchInfo), true);
+        $reply = $this->codebird->statuses_userTimeline(sprintf('screen_name=%s&tweet_mode=extended&trim_user=1&exclude_replies=1&count=%d', $screenname, $fetchInfo->getCount()), true);
         $data = (array)$reply;
 
         $lastTweetId = null;
@@ -71,7 +72,7 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
             if ($feedItem) {
                 $this->logger->info(sprintf('Parsed and added tweet #%s', $feedItem->getUniqueIdentifier()));
 
-                $this->feedItemList[] = $feedItem;
+                $feedItemList[] = $feedItem;
 
                 if (!$lastTweetId || $lastTweetId < $tweet->id) {
                     $lastTweetId = $tweet->id;
@@ -85,6 +86,7 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
 
         $socialNetworkProfile->setLastFetchSuccessDateTime(new \DateTime());
 
-        return $this;
+
+        return $feedItemList;
     }
 }

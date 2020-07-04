@@ -6,41 +6,14 @@ use App\Entity\SocialNetworkFeedItem;
 
 class NonDuplicatesFeedItemPersister extends FeedItemPersister
 {
-    public function persistFeedItemList(array $feedItemList): FeedItemPersisterInterface
-    {
-        $em = $this->doctrine->getManager();
-
-        foreach ($feedItemList as $feedItem) {
-            if (!$this->feedItemExists($feedItem)) {
-                $em->persist($feedItem);
-            }
-        }
-
-        try {
-            $em->flush();
-        } catch (\Exception $exception) {
-            //$this->doctrine->resetManager();
-        }
-
-        return $this;
-    }
-
     public function persistFeedItem(SocialNetworkFeedItem $socialNetworkFeedItem): FeedItemPersisterInterface
     {
         if ($this->feedItemExists($socialNetworkFeedItem)) {
             return $this;
         }
 
-        $em = $this->doctrine->getManager();
-
-        $em->persist($socialNetworkFeedItem);
-
-        try {
-            $em->flush();
-        } catch (\Exception $exception) {
-            //$this->doctrine->resetManager();
-        }
-
+        $this->doctrine->getManager()->persist($socialNetworkFeedItem);
+        
         return $this;
     }
 

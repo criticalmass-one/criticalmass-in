@@ -16,16 +16,8 @@ class FeedItemPersister implements FeedItemPersisterInterface
 
     public function persistFeedItemList(array $feedItemList): FeedItemPersisterInterface
     {
-        $em = $this->doctrine->getManager();
-
         foreach ($feedItemList as $feedItem) {
-            $em->persist($feedItem);
-        }
-
-        try {
-            $em->flush();
-        } catch (\Exception $exception) {
-            //$this->doctrine->resetManager();
+            $this->persistFeedItem($feedItem);
         }
 
         return $this;
@@ -33,12 +25,15 @@ class FeedItemPersister implements FeedItemPersisterInterface
 
     public function persistFeedItem(SocialNetworkFeedItem $socialNetworkFeedItem): FeedItemPersisterInterface
     {
-        $em = $this->doctrine->getManager();
+        $this->doctrine->getManager()->persist($socialNetworkFeedItem);
 
-        $em->persist($socialNetworkFeedItem);
+        return $this;
+    }
 
+    public function flush(): FeedItemPersisterInterface
+    {
         try {
-            $em->flush();
+            $this->doctrine->getManager()->flush();
         } catch (\Exception $exception) {
             //$this->doctrine->resetManager();
         }

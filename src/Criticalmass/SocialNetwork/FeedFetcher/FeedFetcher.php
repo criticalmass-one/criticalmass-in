@@ -19,7 +19,7 @@ class FeedFetcher extends AbstractFeedFetcher
         return null;
     }
 
-    public function fetch(FetchInfo $fetchInfo): FeedFetcherInterface
+    public function fetch(FetchInfo $fetchInfo, callable $callback): FeedFetcherInterface
     {
         $profileList = $this->getSocialNetworkProfiles($fetchInfo);
 
@@ -28,15 +28,22 @@ class FeedFetcher extends AbstractFeedFetcher
             $fetcher = $this->getFeedFetcherForNetworkProfile($profile);
 
             if ($fetcher) {
-                $feedItemList = $fetcher
-                    ->fetch($profile, $fetchInfo)
-                    ->getFeedItemList();
+                $feedItemList = $fetcher->fetch($profile, $fetchInfo);
+                
+                $fetchResult = new FetchResult();
+                $fetchResult
+                    ->setSocialNetworkProfile($profile)
+                    ->setCounter(count($feedItemList));
 
-                $this->feedItemList = array_merge($this->feedItemList, $feedItemList);
+                $callback($fetchResult);
+
+                //$this->feedItemList = array_merge($this->feedItemList, $feedItemList);
+
+                $this->feedItemPersister->persistFeedItemList($feedItemList)->flush();
             }
         }
 
-        $this->doctrine->getManager()->flush();
+        $this->doctrine->getManager()->flush(); // call flush here to persist new success or failure datetime of profiles
 
         return $this;
     }
@@ -59,7 +66,7 @@ class FeedFetcher extends AbstractFeedFetcher
 
     public function persist(): FeedFetcherInterface
     {
-        $this->feedItemPersister->persistFeedItemList($this->feedItemList);
+        $this->feedItemPersister->persistFeedItemList($this->feedItemList)->flush();
 
         return $this;
     }

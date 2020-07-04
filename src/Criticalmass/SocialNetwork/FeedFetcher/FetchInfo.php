@@ -16,7 +16,9 @@ class FetchInfo
 
     protected bool $includeSuceededProfiles = true;
 
-    protected bool $skipOldItems = true;
+    protected bool $includeOldItems = false;
+
+    protected int $count = 20;
 
     public function hasNetworkList(): bool
     {
@@ -117,15 +119,27 @@ class FetchInfo
         return $this;
     }
 
-    public function skipOldItems(): bool
+    public function includeOldItems(): bool
     {
-        return $this->skipOldItems;
+        return $this->includeOldItems;
     }
 
-    public function setSkipOldItems(bool $skipOldItems): FetchInfo
+    public function setIncludeOldItems(bool $includeOldItems): FetchInfo
     {
-        $this->skipOldItems = $skipOldItems;
-        
+        $this->includeOldItems = $includeOldItems;
+
+        return $this;
+    }
+
+    public function getCount(): int
+    {
+        return $this->count;
+    }
+
+    public function setCount(int $count): FetchInfo
+    {
+        $this->count = $count;
+
         return $this;
     }
 }

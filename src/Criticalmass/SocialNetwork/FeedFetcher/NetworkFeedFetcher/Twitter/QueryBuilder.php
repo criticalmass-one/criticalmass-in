@@ -19,15 +19,19 @@ class QueryBuilder
             'screen_name' => Screenname::extractScreenname($socialNetworkProfile),
         ];
 
-        if ($socialNetworkProfile->getAdditionalData() && $socialNetworkProfile->getAdditionalData()['lastTweetId']) {
+        if (!$fetchInfo->includeOldItems() && $socialNetworkProfile->getAdditionalData() && $socialNetworkProfile->getAdditionalData()['lastTweetId']) {
             $queryStringParts['since_id'] = $socialNetworkProfile->getAdditionalData()['lastTweetId'];
         }
-        
+
+        if (!$fetchInfo->includeOldItems() && $fetchInfo->getCount()) {
+            $queryStringParts['count'] = $fetchInfo->getCount();
+        }
+
         if ($fetchInfo->hasFromDateTime()) {
             $queryStringParts['since'] = $fetchInfo
                 ->getFromDateTime()
                 ->format('Y-m-d');
-        } elseif ($fetchInfo->skipOldItems() && $socialNetworkProfile->getLastFetchSuccessDateTime()) {
+        } elseif (!$fetchInfo->includeOldItems() && $socialNetworkProfile->getLastFetchSuccessDateTime()) {
             $queryStringParts['since'] = $socialNetworkProfile
                 ->getLastFetchSuccessDateTime()
                 ->format('Y-m-d');
