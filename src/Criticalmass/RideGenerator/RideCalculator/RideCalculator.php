@@ -2,47 +2,46 @@
 
 namespace App\Criticalmass\RideGenerator\RideCalculator;
 
+use App\Criticalmass\Cycles\DateTimeValidator\DateTimeValidator;
 use App\Criticalmass\RideNamer\GermanCityDateRideNamer;
+use App\Criticalmass\Util\DateTimeUtil;
 use App\Entity\CityCycle;
 use App\Entity\Ride;
-use App\Criticalmass\RideGenerator\Exception\InvalidMonthException;
-use App\Criticalmass\RideGenerator\Exception\InvalidYearException;
 
 class RideCalculator extends AbstractRideCalculator
 {
-    public function execute(): RideCalculatorInterface
+    public function execute(): ?Ride
     {
-        if (!$this->year) {
-            throw new InvalidYearException();
+        if ($this->cycle->getDayOfWeek() === null || $this->cycle->getWeekOfMonth() === null) {
+            return null;
         }
 
-        if (!$this->month) {
-            throw new InvalidMonthException();
+        $dateTimeSpec = sprintf('%s-%s-01 00:00:00', $this->year, $this->month);
+        $dateTime = new \DateTime($dateTimeSpec);
+
+        $monthStartDateTime = DateTimeUtil::getMonthStartDateTime($dateTime);
+
+        $cityTimeZone = new \DateTimeZone($this->cycle->getCity()->getTimezone());
+        $rideDateTime = DateTimeUtil::recreateAsTimeZone($monthStartDateTime, $cityTimeZone);
+
+        $ride = $this->createRide($this->cycle, $rideDateTime);
+
+        // yeah, first create ride and then check if it is matching the cycle range
+        if (!DateTimeValidator::isValidRide($this->cycle, $ride)) {
+            return null;
         }
 
-        /** @var CityCycle $cycle */
-        foreach ($this->cycleList as $cycle) {
-            $ride = $this->createRide($cycle);
-
-            // yeah, first create ride and then check if it is matching the cycle range
-            if (!$cycle->isValid($ride->getDateTime())) {
-                continue;
-            }
-
-            $this->rideList[] = $ride;
-        }
-
-        return $this;
+        return $ride;
     }
 
-    protected function createRide(CityCycle $cycle): Ride
+    protected function createRide(CityCycle $cycle, \DateTime $dateTime): Ride
     {
         $ride = new Ride();
         $ride
             ->setCity($cycle->getCity())
             ->setCycle($cycle);
 
-        $ride = $this->calculateDate($cycle, $ride);
+        $ride = $this->calculateDate($cycle, $ride, $dateTime);
         $ride = $this->calculateTime($cycle, $ride);
         $ride = $this->setupLocation($cycle, $ride);
         $ride = $this->generateTitle($cycle, $ride);
@@ -50,29 +49,25 @@ class RideCalculator extends AbstractRideCalculator
         return $ride;
     }
 
-    protected function calculateDate(CityCycle $cityCycle, Ride $ride): Ride
+    protected function calculateDate(CityCycle $cityCycle, Ride $ride, \DateTime $startDateTime): Ride
     {
-        $dateTimeSpec = sprintf('%d-%d-01 00:00:00', $this->year, $this->month);
-        $dateTime = new \DateTime($dateTimeSpec);
-
         $dayInterval = new \DateInterval('P1D');
+        $weekInterval = new \DateInterval('P7D');
+
+        $dateTime = clone $startDateTime;
 
         while ($dateTime->format('w') != $cityCycle->getDayOfWeek()) {
             $dateTime->add($dayInterval);
         }
 
         if ($cityCycle->getWeekOfMonth() > 0) {
-            $weekInterval = new \DateInterval('P7D');
-
             $weekOfMonth = $cityCycle->getWeekOfMonth();
 
             for ($i = 1; $i < $weekOfMonth; ++$i) {
                 $dateTime->add($weekInterval);
             }
         } else {
-            $weekInterval = new \DateInterval('P7D');
-
-            while ($dateTime->format('m') == $this->month) {
+            while ($dateTime->format('m') == $startDateTime->format('m')) {
                 $dateTime->add($weekInterval);
             }
 
@@ -88,17 +83,12 @@ class RideCalculator extends AbstractRideCalculator
     {
         $time = $cityCycle->getTime();
 
-        $cityTimezone = $this->timezone ?? $this->getCityTimeZone($cityCycle);
-        $utc = new \DateTimeZone('UTC');
-
         $intervalSpec = sprintf('PT%dH%dM', $time->format('H'), $time->format('i'));
         $timeInterval = new \DateInterval($intervalSpec);
 
-        $dateTimeSpec = sprintf('%d-%d-%d 00:00:00', $ride->getDateTime()->format('Y'), $ride->getDateTime()->format('m'), $ride->getDateTime()->format('d'));
-        $rideDateTime = new \DateTime($dateTimeSpec, $cityTimezone);
-        $rideDateTime->add($timeInterval);
-        
-        $ride->setDateTime($rideDateTime);
+        $dateTime = $ride->getDateTime();
+        $dateTime->add($timeInterval);
+        $ride->setDateTime($dateTime);
 
         return $ride;
     }

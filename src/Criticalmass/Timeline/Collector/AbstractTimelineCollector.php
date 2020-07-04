@@ -3,14 +3,14 @@
 namespace App\Criticalmass\Timeline\Collector;
 
 use App\Criticalmass\Timeline\Item\ItemInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 abstract class AbstractTimelineCollector implements TimelineCollectorInterface
 {
     /** @var string $entityClass */
     protected $entityClass;
 
-    /** @var RegistryInterface $doctrine */
+    /** @var ManagerRegistry $doctrine */
     protected $doctrine;
 
     /** @var array $items */
@@ -22,7 +22,7 @@ abstract class AbstractTimelineCollector implements TimelineCollectorInterface
     /** @var \DateTime $endDateTime */
     protected $endDateTime = null;
 
-    public function __construct(RegistryInterface $doctrine)
+    public function __construct(ManagerRegistry $doctrine)
     {
         $this->doctrine = $doctrine;
     }

@@ -10,7 +10,7 @@ use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -31,7 +31,7 @@ class TrackController extends BaseController
      * )
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function listRideTrackAction(RegistryInterface $registry, Ride $ride): Response
+    public function listRideTrackAction(ManagerRegistry $registry, Ride $ride): Response
     {
         $trackList = $registry->getRepository(Track::class)->findByRide($ride);
 

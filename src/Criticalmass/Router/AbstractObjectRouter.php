@@ -68,6 +68,8 @@ abstract class AbstractObjectRouter
             $parameterList[$variableName] = $this->getRouteParameter($routeable, $variableName);
         }
 
+        $parameterList = $this->setupDefaultParameterValues($routeName, $parameterList);
+
         return $parameterList;
     }
 
@@ -77,5 +79,18 @@ abstract class AbstractObjectRouter
         $className = array_pop($classNameParts);
 
         return $className;
+    }
+
+    protected function setupDefaultParameterValues(string $routeName, array $parameters = []): array
+    {
+        $defaultsList = $this->router->getRouteCollection()->get($routeName)->getDefaults();
+
+        foreach ($defaultsList as $parameterName => $parameterDefaultValue) {
+            if (!array_key_exists($parameterName, $parameters) || empty($parameters[$parameterName])) {
+                $parameters[$parameterName] = $parameterDefaultValue;
+            }
+        }
+
+        return $parameters;
     }
 }

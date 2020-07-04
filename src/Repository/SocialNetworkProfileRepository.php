@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use App\Criticalmass\SocialNetwork\FeedFetcher\FetchInfo;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 
@@ -33,6 +34,21 @@ class SocialNetworkProfileRepository extends EntityRepository
         $queryBuilder
             ->andWhere($queryBuilder->expr()->eq($joinColumnName, ':profileAble'))
             ->setParameter('profileAble', $profileAble);
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function findByFetchInfo(FetchInfo $fetchInfo): array
+    {
+        $queryBuilder = $this->createQueryBuilder('snp');
+
+        $queryBuilder
+            ->where($queryBuilder->expr()->eq('snp.autoFetch', ':autoFetch'))
+            ->setParameter('autoFetch', true);
+
+        if ($fetchInfo->hasNetworkList()) {
+            $queryBuilder->andWhere($queryBuilder->expr()->in('snp.network', $fetchInfo->getNetworkList()));
+        }
 
         return $queryBuilder->getQuery()->getResult();
     }

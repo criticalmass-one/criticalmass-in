@@ -4,17 +4,17 @@ namespace App\Criticalmass\DataQuery\Factory\ParamConverterFactory;
 
 use App\Criticalmass\Util\ClassUtil;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 class ParamConverterFactory implements ParamConverterFactoryInterface
 {
     const PARAMCONVERTER_NAMESPACE = 'App\\Request\\ParamConverter\\';
     const PARAMCONVERTER_SUFFIX = 'ParamConverter';
 
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         $this->registry = $registry;
     }

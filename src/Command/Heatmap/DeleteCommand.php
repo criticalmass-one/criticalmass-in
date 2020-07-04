@@ -4,7 +4,7 @@ namespace App\Command\Heatmap;
 
 use App\Criticalmass\Heatmap\Remover\HeatmapRemoverInterface;
 use App\Entity\Heatmap;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,7 +18,7 @@ class DeleteCommand extends Command
     /** @var HeatmapRemoverInterface $heatmapRemover */
     protected $heatmapRemover;
 
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     protected function configure(): void
@@ -29,7 +29,7 @@ class DeleteCommand extends Command
             ->addOption('delete-tiles', 'dt', InputOption::VALUE_NONE, 'Only remove tiles and keep heatmap');
     }
 
-    public function __construct(string $name = null, HeatmapRemoverInterface $heatmapRemover, RegistryInterface $registry)
+    public function __construct(string $name = null, HeatmapRemoverInterface $heatmapRemover, ManagerRegistry $registry)
     {
         $this->heatmapRemover = $heatmapRemover;
         $this->registry = $registry;

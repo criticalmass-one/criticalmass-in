@@ -8,7 +8,7 @@ use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
 
 class LocationController extends BaseController
@@ -24,7 +24,7 @@ class LocationController extends BaseController
      * )
      * @ParamConverter("city", class="App:City")
      */
-    public function listLocationAction(RegistryInterface $registry, City $city): Response
+    public function listLocationAction(ManagerRegistry $registry, City $city): Response
     {
         $locationList = $registry->getRepository(Location::class)->findLocationsByCity($city);
 

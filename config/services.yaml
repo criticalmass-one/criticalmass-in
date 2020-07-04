@@ -29,6 +29,7 @@ parameters:
     photo_tsv.access_key: '%env(PHOTO_TSV_ACCESS_KEY)%'
     timeline.ttl: 60
     domain.blog: '%env(DOMAIN_BLOG)%'
+    domain.one: '%env(DOMAIN_ONE)%'
     notification.mail.sender_address: malte@criticalmass.in
     jms_serializer.camel_case_naming_strategy.class: App\Serializer\JMSSerializer\Naming\CamelCaseNamingStrategy
     request_listener.http_port: 80
@@ -60,8 +61,11 @@ services:
             $facebookAppId: '%facebook.app_id%'
             $facebookAppSecret: '%facebook.app_secret%'
             $facebookDefaultToken: '%facebook.default_token%'
-            #$twitterClientId: '%twitter.client_id%'
-            #$twitterSecret: '%twitter.secret%'
+            $twitterClientId: '%twitter.client_id%'
+            $twitterSecret: '%twitter.secret%'
+            $uploadDestinationPhoto: '%upload_destination.photo%'
+            $uploadDestinationTrack: '%upload_destination.track%'
+            $uploadDestinationUserPhoto: '%upload_destination.user_photo%'
             $stravaClientId: '%strava.client_id%'
             $stravaSecret: '%strava.secret%'
             $cachedTimelineTtl: '%timeline.ttl%'
@@ -150,10 +154,11 @@ services:
 
     App\Criticalmass\Timeline\TimelineInterface:
         alias: App\Criticalmass\Timeline\CachedTimeline
+        #alias: App\Criticalmass\Timeline\Timeline
 
     App\Criticalmass\Geo\Loop\LoopInterface:
         alias: App\Criticalmass\Geo\Loop\TrackLoop
-        
+
     App\Request\ParamConverter\RideParamConverter:
         tags:
             - { name: request.param_converter, priority: 0, converter: ride_converter }
@@ -194,6 +199,10 @@ services:
         tags:
             - { name: request.param_converter, priority: 0, converter: photo_converter }
 
+    App\Request\ParamConverter\PromotionParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: promotion_converter }
+
     App\Request\ParamConverter\UserParamConverter:
         tags:
             - { name: request.param_converter, priority: 10, converter: user_converter }
@@ -233,6 +242,9 @@ services:
     App\Criticalmass\ViewStorage\Cache\ViewStorageCacheInterface:
         alias: App\Criticalmass\ViewStorage\Cache\RobustViewStorageCache
 
+    App\Criticalmass\RideGenerator\RideCalculator\RideCalculatorInterface:
+        alias: App\Criticalmass\RideGenerator\RideCalculator\RideCalculator
+
     App\Criticalmass\ElasticCityFinder\ElasticCityFinder:
         arguments:
             $finder: '@fos_elastica.finder.criticalmass_city.city'
@@ -247,3 +259,23 @@ services:
     App\Criticalmass\ViewStorage\BlackList\BlackList:
         arguments:
             $crawlerDetect: '@crawler_detect'
+
+    App\Form\Type\RegistrationType:
+        arguments:
+            $class: '%fos_user.model.user.class%'
+
+    App\Criticalmass\SocialNetwork\FeedItemPersister\FeedItemPersisterInterface:
+        #alias: App\Criticalmass\SocialNetwork\FeedItemPersister\NonDuplicatesFeedItemPersister
+        alias: App\Criticalmass\SocialNetwork\FeedItemPersister\RabbitPusher
+
+    App\Criticalmass\SocialNetwork\FeedItemPersister\RabbitPusher:
+        arguments:
+            $producer: '@old_sound_rabbit_mq.criticalmass_socialnetworkfeeditem_producer'
+
+    App\Controller\OAuthServer\AuthorizeController:
+        arguments:
+            $authorizeForm: '@fos_oauth_server.authorize.form'
+            $authorizeFormHandler: '@fos_oauth_server.authorize.form.handler.default'
+            $oAuth2Server: '@fos_oauth_server.server'
+        tags:
+            - controller.service_arguments

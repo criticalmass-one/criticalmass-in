@@ -6,7 +6,7 @@ use App\Criticalmass\RideDuplicates\DuplicateFinder\DuplicateFinderInterface;
 use App\Entity\City;
 use App\Entity\CitySlug;
 use App\Entity\Ride;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
@@ -15,13 +15,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ListDuplicateRidesCommand extends Command
 {
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var DuplicateFinderInterface $duplicateFinder */
     protected $duplicateFinder;
 
-    public function __construct($name = null, RegistryInterface $registry, DuplicateFinderInterface $duplicateFinder)
+    public function __construct($name = null, ManagerRegistry $registry, DuplicateFinderInterface $duplicateFinder)
     {
         $this->registry = $registry;
         $this->duplicateFinder = $duplicateFinder;

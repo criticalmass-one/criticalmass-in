@@ -5,17 +5,17 @@ namespace App\Criticalmass\Heatmap\TrackManager;
 use App\Criticalmass\Heatmap\HeatmapTrackFactory\HeatmapTrackFactoryInterface;
 use App\Entity\Heatmap;
 use App\Entity\Track;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 class TrackManager implements TrackManagerInterface
 {
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var HeatmapTrackFactoryInterface $heatmapTrackFactory */
     protected $heatmapTrackFactory;
 
-    public function __construct(RegistryInterface $registry, HeatmapTrackFactoryInterface $heatmapTrackFactory)
+    public function __construct(ManagerRegistry $registry, HeatmapTrackFactoryInterface $heatmapTrackFactory)
     {
         $this->registry = $registry;
         $this->heatmapTrackFactory = $heatmapTrackFactory;

@@ -5,7 +5,7 @@ namespace App\Criticalmass\MassTrackImport\TrackDecider;
 use App\Criticalmass\MassTrackImport\Voter\VoterInterface;
 use App\Entity\Ride;
 use App\Entity\TrackImportCandidate;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 class TrackDecider implements TrackDeciderInterface
 {
@@ -14,13 +14,13 @@ class TrackDecider implements TrackDeciderInterface
     /** @var array $voterList */
     protected $voterList = [];
 
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var bool $debug */
     protected $debug = false;
 
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         $this->registry = $registry;
     }
