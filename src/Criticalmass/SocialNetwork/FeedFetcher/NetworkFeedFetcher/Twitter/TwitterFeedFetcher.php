@@ -52,13 +52,17 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
         $reply = $this->codebird->statuses_userTimeline(sprintf('screen_name=%s&tweet_mode=extended&trim_user=1&exclude_replies=1&count=%d', $screenname, $fetchInfo->getCount()), true);
         $data = (array)$reply;
 
-        if (array_key_exists('error', $data)) {
-            return [];
-        }
+        $lastTweetId = null;
 
         foreach ($data as $tweet) {
             if (!is_object($tweet)) {
                 $this->logger->info('Tweet did not contain usable data. Skipping.');
+
+                continue;
+            }
+
+            if (property_exists($tweet, 'limit')) {
+                $this->logger->info('Got cursor, skipping.');
 
                 continue;
             }
@@ -69,26 +73,20 @@ class TwitterFeedFetcher extends AbstractNetworkFeedFetcher
                 $this->logger->info(sprintf('Parsed and added tweet #%s', $feedItem->getUniqueIdentifier()));
 
                 $feedItemList[] = $feedItem;
+
+                if (!$lastTweetId || $lastTweetId < $tweet->id) {
+                    $lastTweetId = $tweet->id;
+                }
             }
         }
 
+        if ($lastTweetId) {
+            $socialNetworkProfile->setAdditionalData(['lastTweetId' => $lastTweetId]);
+        }
 
         $socialNetworkProfile->setLastFetchSuccessDateTime(new \DateTime());
 
 
         return $feedItemList;
-    }
-
-    protected function markAsFailed(SocialNetworkProfile $socialNetworkProfile, string $errorMessage): SocialNetworkProfile
-    {
-        $socialNetworkProfile
-            ->setLastFetchFailureDateTime(new \DateTime())
-            ->setLastFetchFailureError($errorMessage);
-
-        $this
-            ->logger
-            ->notice($errorMessage);
-
-        return $socialNetworkProfile;
     }
 }
