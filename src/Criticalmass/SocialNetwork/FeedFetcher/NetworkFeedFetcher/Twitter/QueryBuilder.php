@@ -27,7 +27,7 @@ class QueryBuilder
             $queryStringParts['since'] = $fetchInfo
                 ->getFromDateTime()
                 ->format('Y-m-d');
-        } elseif ($fetchInfo->skipOldItems() && $socialNetworkProfile->getLastFetchSuccessDateTime()) {
+        } elseif (!$fetchInfo->includeOldItems() && $socialNetworkProfile->getLastFetchSuccessDateTime()) {
             $queryStringParts['since'] = $socialNetworkProfile
                 ->getLastFetchSuccessDateTime()
                 ->format('Y-m-d');
