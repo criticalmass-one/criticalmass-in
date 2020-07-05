@@ -88,7 +88,7 @@
         "php-amqplib/rabbitmq-bundle": "^1.14",
         "ext-fileinfo": "*",
         "ext-xmlwriter": "*",
-        "symfony/webpack-encore-bundle": "^1.6",
+        "symfony/webpack-encore-bundle": "^1.7",
         "ext-json": "*",
         "fresh/doctrine-enum-bundle": "^6.3",
         "freearhey/wikidata": "^3.1",
