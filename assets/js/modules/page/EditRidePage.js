@@ -277,7 +277,8 @@ define(['Map', 'LocationMarker', 'typeahead.jquery', 'bloodhound', 'bootstrap-da
             format: 'dd.mm.yyyy',
             autoclose: true,
             todayHighlight: true,
-            weekStart: 1
+            weekStart: 1,
+            zIndexOffset: 1000
         });
     };
 

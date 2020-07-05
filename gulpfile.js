@@ -94,8 +94,8 @@ const buildExtramarkers = gulp.series(extramarkersImages, extramarkersCss, extra
 
 function copyFontawesomeFonts() {
     return gulp
-        .src('node_modules/font-awesome/fonts/*')
-        .pipe(gulp.dest('public/fonts'));
+        .src('node_modules/@fortawesome/fontawesome-pro/webfonts/*')
+        .pipe(gulp.dest('public/fonts/'));
 }
 
 const buildFontawesome = gulp.series(copyFontawesomeFonts);
@@ -172,14 +172,13 @@ function copyJsModules() {
 function copyJsExternal() {
     return gulp
         .src([
-            'node_modules/bootstrap/dist/js/bootstrap.js',
             'node_modules/bootstrap/dist/js/bootstrap.min.js',
             'node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js',
             'node_modules/dropzone/dist/dropzone-amd-module.js',
             'node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
             'node_modules/bootstrap-slider/dist/bootstrap-slider.js',
             'node_modules/dateformat/lib/dateformat.js',
-            'node_modules/jquery/dist/jquery.js',
+            'node_modules/jquery/dist/jquery.min.js',
             'node_modules/typeahead.js/dist/bloodhound.js',
             'node_modules/typeahead.js/dist/typeahead.jquery.js',
             'node_modules/leaflet/dist/leaflet.js',

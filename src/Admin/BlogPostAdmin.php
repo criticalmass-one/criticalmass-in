@@ -4,6 +4,7 @@ namespace App\Admin;
 
 use App\Entity\BlogPost;
 use App\Factory\BlogPost\BlogPostFactory;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -59,7 +60,6 @@ final class BlogPostAdmin extends AbstractAdmin
             ->add('slug', TextType::class, ['required' => true])
             ->add('blog')
             ->end()
-
             ->with('Settings', ['class' => 'col-md-6'])
             ->add('createdAt', DateTimeType::class, [
                 'date_widget' => 'single_text',
@@ -70,14 +70,12 @@ final class BlogPostAdmin extends AbstractAdmin
             ->add('enabled', CheckboxType::class, ['required' => false])
             ->add('user')
             ->end()
-
-            ->with('Text', ['class' => 'col-md-6'])
-            ->add('intro', TextareaType::class, ['required' => false])
-            ->add('text', TextareaType::class, ['required' => true])
-            ->end()
-
             ->with('Header', ['class' => 'col-md-6'])
             ->add('imageFile', VichImageType::class, ['required' => false])
+            ->end()
+            ->with('Text', ['class' => 'col-md-12'])
+            ->add('intro', TextareaType::class, ['required' => false])
+            ->add('text', CKEditorType::class, ['required' => true])
             ->end();
     }
 

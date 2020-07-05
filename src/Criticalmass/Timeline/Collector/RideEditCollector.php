@@ -2,8 +2,8 @@
 
 namespace App\Criticalmass\Timeline\Collector;
 
-use App\Entity\Ride;
 use App\Criticalmass\Timeline\Item\RideEditItem;
+use App\Entity\Ride;
 
 class RideEditCollector extends AbstractTimelineCollector
 {
@@ -19,7 +19,8 @@ class RideEditCollector extends AbstractTimelineCollector
                 ->setUser($ride->getUser())
                 ->setRideTitle($ride->getTitle())
                 ->setRide($ride)
-                ->setDateTime($ride->getUpdatedAt());
+                ->setDateTime($ride->getUpdatedAt())
+                ->setEnabled($ride->isEnabled());
 
             $this->addItem($item);
         }

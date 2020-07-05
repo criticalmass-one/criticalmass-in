@@ -1,0 +1,4 @@
+caldera_criticalmass_oauth_info:
+  path:  /oauth/v2/info
+  controller: App\Controller\Oauth\InfoController::infoAction
+  

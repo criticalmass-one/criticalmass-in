@@ -3,17 +3,17 @@
 namespace App\Criticalmass\OrderedEntities;
 
 use App\Criticalmass\OrderedEntities\CriteriaBuilder\CriteriaBuilderInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 class OrderedEntitiesManager implements OrderedEntitiesManagerInterface
 {
-    /** @var RegistryInterface $registry  */
+    /** @var ManagerRegistry $registry  */
     protected $registry;
 
     /** @var CriteriaBuilderInterface $criteriaBuilder */
     protected $criteriaBuilder;
 
-    public function __construct(RegistryInterface $registry, CriteriaBuilderInterface $criteriaBuilder)
+    public function __construct(ManagerRegistry $registry, CriteriaBuilderInterface $criteriaBuilder)
     {
         $this->registry = $registry;
         $this->criteriaBuilder = $criteriaBuilder;

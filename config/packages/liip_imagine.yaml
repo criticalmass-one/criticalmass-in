@@ -1,7 +1,7 @@
 liip_imagine:
     resolvers:
-       default:
-          web_path: ~
+        default:
+            web_path: ~
     driver: imagick
 
     loaders:
@@ -25,8 +25,6 @@ liip_imagine:
                 filesystem_service:  oneup_flysystem.flysystem_blogpost_teaser_filesystem
 
     filter_sets:
-        cache: ~
-
         gallery_photo_thumb:
             data_loader: photo_flysystem_loader
             quality: 40

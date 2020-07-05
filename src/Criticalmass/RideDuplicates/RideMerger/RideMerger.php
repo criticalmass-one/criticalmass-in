@@ -3,7 +3,7 @@
 namespace App\Criticalmass\RideDuplicates\RideMerger;
 
 use App\Entity\Ride;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 class RideMerger implements RideMergerInterface
 {
@@ -13,10 +13,10 @@ class RideMerger implements RideMergerInterface
     /** @var array $sourceRides */
     protected $sourceRides = [];
 
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         $this->registry = $registry;
     }

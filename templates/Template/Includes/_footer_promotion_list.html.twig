@@ -1,0 +1,7 @@
+{% for promotion in promotionList %}
+    <li>
+        <a href="{{ objectPath(promotion) }}" title="{{ promotion.title }}">
+            {{ promotion.title }}
+        </a>
+    </li>
+{% endfor %}

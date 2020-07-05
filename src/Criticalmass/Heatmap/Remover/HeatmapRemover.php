@@ -4,17 +4,17 @@ namespace App\Criticalmass\Heatmap\Remover;
 
 use App\Entity\Heatmap;
 use League\Flysystem\FilesystemInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 class HeatmapRemover implements HeatmapRemoverInterface
 {
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var FilesystemInterface $filesystem */
     protected $filesystem;
 
-    public function __construct(RegistryInterface $registry, FilesystemInterface $filesystem)
+    public function __construct(ManagerRegistry $registry, FilesystemInterface $filesystem)
     {
         $this->registry = $registry;
         $this->filesystem = $filesystem;

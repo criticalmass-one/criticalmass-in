@@ -6,7 +6,7 @@ use App\Criticalmass\Heatmap\Generator\HeatmapGenerator;
 use App\Criticalmass\Heatmap\Status\Status;
 use App\Criticalmass\Heatmap\Status\StatusCallback;
 use App\Entity\Heatmap;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -22,7 +22,7 @@ class GenerateCommand extends Command
     /** @var HeatmapGenerator $heatmapGenerator */
     protected $heatmapGenerator;
 
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     protected function configure(): void
@@ -33,7 +33,7 @@ class GenerateCommand extends Command
             ->addOption('max-tracks', 'mt', InputOption::VALUE_REQUIRED, 'Number of tracks to paint per call', self::DEFAULT_TRACKS);
     }
 
-    public function __construct(string $name = null, HeatmapGenerator $heatmapGenerator, RegistryInterface $registry)
+    public function __construct(string $name = null, HeatmapGenerator $heatmapGenerator, ManagerRegistry $registry)
     {
         $this->heatmapGenerator = $heatmapGenerator;
         $this->registry = $registry;

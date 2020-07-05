@@ -30,7 +30,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -194,24 +193,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     protected $estimatedDuration;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Url()
-     */
-    protected $facebook;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Url()
-     */
-    protected $twitter;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Url()
-     */
-    protected $url;
-
-    /**
      * @ORM\OneToMany(targetEntity="Post", mappedBy="ride", fetch="LAZY")
      * @JMS\Groups({"extended-ride-list"})
      */
@@ -328,12 +309,16 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @var bool $enabled
      * @ORM\Column(type="boolean", options={"default"=true})
      * @OE\Boolean(true)
+     * @JMS\Groups({"ride-list"})
+     * @JMS\Expose
      */
     protected $enabled = true;
 
     /**
      * @ORM\Column(type="RideDisabledReasonType", nullable=true)
      * @DoctrineAssert\Enum(entity="App\DBAL\Type\RideDisabledReasonType")
+     * @JMS\Groups({"ride-list"})
+     * @JMS\Expose
      */
     protected $disabledReason;
 
@@ -346,6 +331,13 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @ORM\OneToMany(targetEntity="App\Entity\TrackImportCandidate", mappedBy="ride")
      */
     private $trackImportCandidates;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     * @JMS\Groups({"ride-list"})
+     * @JMS\Expose
+     */
+    private $disabledReasonMessage;
 
     public function __construct()
     {
@@ -558,60 +550,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     public function getEstimatedParticipants(): ?int
     {
         return $this->estimatedParticipants;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function setFacebook(string $facebook = null): Ride
-    {
-        $this->facebook = $facebook;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function getFacebook(): ?string
-    {
-        return $this->facebook;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function setTwitter(string $twitter = null): Ride
-    {
-        $this->twitter = $twitter;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function getTwitter(): ?string
-    {
-        return $this->twitter;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function setUrl(string $url = null): Ride
-    {
-        $this->url = $url;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function getUrl(): ?string
-    {
-        return $this->url;
     }
 
     /** @deprecated */
@@ -1161,5 +1099,17 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     public function toCoord(): CoordInterface
     {
         return new Coord($this->latitude, $this->longitude);
+    }
+
+    public function getDisabledReasonMessage(): ?string
+    {
+        return $this->disabledReasonMessage;
+    }
+
+    public function setDisabledReasonMessage(?string $disabledReasonMessage): self
+    {
+        $this->disabledReasonMessage = $disabledReasonMessage;
+
+        return $this;
     }
 }

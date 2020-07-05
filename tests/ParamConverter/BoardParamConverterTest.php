@@ -7,7 +7,7 @@ use App\Repository\BoardRepository;
 use App\Request\ParamConverter\BoardParamConverter;
 use PHPUnit\Framework\TestCase;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter as ParamConverterConfig;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -15,7 +15,7 @@ class BoardParamConverterTest extends TestCase
 {
     public function testBoardParamConverterSupportsBoard(): void
     {
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
 
         $paramConverter = new BoardParamConverter($registry);
 
@@ -34,7 +34,7 @@ class BoardParamConverterTest extends TestCase
 
     public function testBoardParamConverterWithEmptyRequest(): void
     {
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
 
         $paramConverter = new BoardParamConverter($registry);
 
@@ -60,7 +60,7 @@ class BoardParamConverterTest extends TestCase
             ->withConsecutive($this->equalTo('findOneById'), $this->equalTo(1))
             ->will($this->returnValue($board));
 
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
         $registry
             ->expects($this->once())
             ->method('getRepository')
@@ -93,7 +93,7 @@ class BoardParamConverterTest extends TestCase
             ->withConsecutive($this->equalTo('findOneBySlug'), $this->equalTo('test-slug-board'))
             ->will($this->returnValue($board));
 
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
         $registry
             ->expects($this->once())
             ->method('getRepository')

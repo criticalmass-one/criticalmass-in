@@ -80,12 +80,8 @@
 
                                         <ul class="ride-list list-unstyled">
                                             {% for event in calendr_events(day).all %}
-                                                <li>
-                                                    {% set ride = event.ride %}
-                                                    <a href="{{ objectPath(ride) }}">
-                                                        {{ ride.city.city }}
-                                                    </a>
-                                                </li>
+                                                {% set ride = event.ride %}
+                                                {% include 'Common/Ride/simple_city_time_list_item.html.twig' with { ride: ride } %}
                                             {% endfor %}
                                         </ul>
                                     </td>

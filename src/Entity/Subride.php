@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\EntityInterface\AuditableInterface;
+use App\Criticalmass\Router\Annotation as Routing;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use App\EntityInterface\AuditableInterface;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Criticalmass\Router\Annotation as Routing;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SubrideRepository")
@@ -31,7 +31,7 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
     /**
      * @ORM\ManyToOne(targetEntity="Ride", inversedBy="subrides")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
-     * @JMS\Expose
+     * @JMS\Groups({"extended-subride-list"})
      * @Routing\RouteParameter(name="rideIdentifier")
      * @Routing\RouteParameter(name="citySlug")
      */
@@ -91,27 +91,6 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
      * @JMS\Expose
      */
     protected $longitude;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Url()
-     * @JMS\Expose
-     */
-    protected $facebook;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Url()
-     * @JMS\Expose
-     */
-    protected $twitter;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Url()
-     * @JMS\Expose
-     */
-    protected $url;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="subrides")
@@ -216,60 +195,6 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
     public function getLongitude(): ?float
     {
         return $this->longitude;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function setFacebook(string $facebook = null): Subride
-    {
-        $this->facebook = $facebook;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function getFacebook(): ?string
-    {
-        return $this->facebook;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function setTwitter(string $twitter = null): Subride
-    {
-        $this->twitter = $twitter;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function getTwitter(): ?string
-    {
-        return $this->twitter;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function setUrl(string $url = null): Subride
-    {
-        $this->url = $url;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function getUrl(): ?string
-    {
-        return $this->url;
     }
 
     public function setRide(Ride $ride = null): Subride

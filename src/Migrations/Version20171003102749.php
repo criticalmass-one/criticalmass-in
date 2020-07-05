@@ -2,8 +2,8 @@
 
 namespace DoctrineMigrations;
 
-use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
+use Doctrine\Migrations\AbstractMigration;
 
 /**
  * Auto-generated Migration: Please modify to your needs!
@@ -13,11 +13,11 @@ class Version20171003102749 extends AbstractMigration
     /**
      * @param Schema $schema
      */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-        
+
         $this->addSql('UPDATE ride SET archive_parent_id = NULL');
         $this->addSql('UPDATE photo AS p JOIN ride AS r ON r.id = p.ride_id SET p.ride_id = NULL WHERE r.isArchived = 1');
         $this->addSql('DELETE rv.* FROM ride AS r JOIN ride_view AS rv ON r.id = rv.ride_id WHERE r.isArchived = 1');
@@ -52,7 +52,7 @@ class Version20171003102749 extends AbstractMigration
     /**
      * @param Schema $schema
      */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
