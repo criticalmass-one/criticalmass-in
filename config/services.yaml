@@ -70,6 +70,8 @@ services:
             $cachedTimelineTtl: '%timeline.ttl%'
             $projectDirectory: '%kernel.project_dir%'
             $redisUrl: '%env(REDIS_URL)%'
+            $instagramScraperProxyServerAddress: '%env(INSTAGRAM_SCRAPER_PROXY_ADDRESS)%'
+            $instagramScraperProxyServerPort: '%env(INSTAGRAM_SCRAPER_PROXY_PORT)%'
 
     App\:
         resource: '../src/*'

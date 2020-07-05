@@ -14,9 +14,18 @@ class InstagramFeedFetcher extends AbstractNetworkFeedFetcher
 {
     protected Instagram $instagram;
 
-    public function __construct(LoggerInterface $logger)
+    public function __construct(LoggerInterface $logger, string $instagramScraperProxyServerAddress, string $instagramScraperProxyServerPort)
     {
         $this->instagram = new \InstagramScraper\Instagram();
+
+        if ($instagramScraperProxyServerAddress) {
+            Instagram::setProxy([
+                'address' => $instagramScraperProxyServerAddress,
+                'port' => $instagramScraperProxyServerPort,
+                'tunnel' => true,
+                'timeout' => 30,
+            ]);
+        }
 
         parent::__construct($logger);
     }
