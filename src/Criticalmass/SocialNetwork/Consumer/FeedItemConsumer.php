@@ -13,7 +13,7 @@ class FeedItemConsumer extends AbstractFeedItemConsumer implements ConsumerInter
         /** @var SocialNetworkFeedItem $socialNetworkFeedItem */
         $socialNetworkFeedItem = $this->serializer->deserialize($message->getBody(), SocialNetworkFeedItem::class, 'json');
 
-        $this->feedItemPersister->persistFeedItem($socialNetworkFeedItem);
+        $this->feedItemPersister->persistFeedItem($socialNetworkFeedItem)->flush();
 
         return self::MSG_ACK;
     }

@@ -7,18 +7,11 @@ use Psr\Log\LoggerInterface;
 
 abstract class AbstractNetworkFeedFetcher implements NetworkFeedFetcherInterface
 {
-    protected array $feedItemList = [];
-
     protected LoggerInterface $logger;
 
     public function __construct(LoggerInterface $logger)
     {
         $this->logger = $logger;
-    }
-
-    public function getFeedItemList(): array
-    {
-        return $this->feedItemList;
     }
 
     public function supports(SocialNetworkProfile $socialNetworkProfile): bool
@@ -39,5 +32,18 @@ abstract class AbstractNetworkFeedFetcher implements NetworkFeedFetcherInterface
         $feedFetcherNetwork = str_replace('FeedFetcher', '', $classname);
 
         return strtolower($feedFetcherNetwork);
+    }
+
+    protected function markAsFailed(SocialNetworkProfile $socialNetworkProfile, string $errorMessage): SocialNetworkProfile
+    {
+        $socialNetworkProfile
+            ->setLastFetchFailureDateTime(new \DateTime())
+            ->setLastFetchFailureError($errorMessage);
+
+        $this
+            ->logger
+            ->notice($errorMessage);
+
+        return $socialNetworkProfile;
     }
 }

@@ -9,4 +9,6 @@ interface FeedItemPersisterInterface
     public function persistFeedItemList(array $feedItemList): FeedItemPersisterInterface;
 
     public function persistFeedItem(SocialNetworkFeedItem $feedItem): FeedItemPersisterInterface;
+
+    public function flush(): FeedItemPersisterInterface;
 }

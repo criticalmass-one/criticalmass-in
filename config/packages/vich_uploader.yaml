@@ -4,39 +4,39 @@ vich_uploader:
 
   mappings:
     photo_photo:
-      uri_prefix:         /
+      uri_prefix:         ''
       upload_destination: flysystem_photo_photo
       namer:              vich_uploader.namer_uniqid
 
     user_photo:
-      uri_prefix:         /
+      uri_prefix:         ''
       upload_destination: flysystem_user_photo
       namer:              vich_uploader.namer_uniqid
       delete_on_remove:   true
       delete_on_update:   true
 
     city_photo:
-      uri_prefix:         /
+      uri_prefix:         ''
       upload_destination: flysystem_city_image
       namer:              vich_uploader.namer_uniqid
 
     ride_photo:
-      uri_prefix:         /
+      uri_prefix:         ''
       upload_destination: flysystem_ride_image
       namer:              vich_uploader.namer_uniqid
 
     frontpage_teaser:
-      uri_prefix:         /
+      uri_prefix:         ''
       upload_destination: flysystem_frontpage_teaser
       namer:              vich_uploader.namer_uniqid
 
     track_file:
-      uri_prefix:         /
+      uri_prefix:         ''
       upload_destination: flysystem_track_track
       namer:              vich_uploader.namer_uniqid
 
     blog_post_teaser:
-      uri_prefix:         /
+      uri_prefix:         ''
       upload_destination: flysystem_blogpost_teaser
       namer:              vich_uploader.namer_uniqid
 

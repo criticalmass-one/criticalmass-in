@@ -5,6 +5,7 @@ namespace App\Criticalmass\TextParser\EmbedExtension;
 use App\Criticalmass\TextParser\Embedder\EmbedderInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Inline\Element\Link;
+use League\CommonMark\Inline\Element\Text;
 
 final class EmbedProcessor
 {
@@ -22,11 +23,12 @@ final class EmbedProcessor
         while ($event = $walker->next()) {
             $node = $event->getNode();
 
-            if ($node instanceof Link) {
-                $htmlNode = $this->embedder->processEmbedInLink($node);
+            // only use embedding for "raw" links, do not embed links if they are already placed in a link with caption
+            if ($node instanceof Text && $node->parent() instanceof Link && $node->parent()->getUrl() === $node->getContent()) {
+                $htmlNode = $this->embedder->processEmbedInLink($node->parent());
 
                 if ($htmlNode) {
-                    $node->replaceWith($htmlNode);
+                    $node->parent()->replaceWith($htmlNode);
                 }
             }
         }

@@ -34,7 +34,7 @@
     "datatables.net": "^1.10.20",
     "dateformat": "^3.0.3",
     "dropzone": "^5.5.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "jquery-select-areas": "^0.1.0",
     "leaflet": "^1.6.0",
     "leaflet-extra-markers": "^1.1.0",

@@ -83,9 +83,10 @@ class SocialNetworkFeedItem //implements Crawlable
     protected $createdAt;
 
     /**
-     * ORM\Column(type="boolean")
+     * @ORM\Column(type="text", nullable=true)
+     * @JMS\Expose
      */
-    //protected $crawled = false;
+    protected ?string $raw = null;
 
     public function __construct()
     {
@@ -212,15 +213,16 @@ class SocialNetworkFeedItem //implements Crawlable
         return $this;
     }
 
-    /*public function isCrawled(): bool
+    public function getRaw(): ?string
     {
-        return $this->crawled;
+        return $this->raw;
     }
 
-    public function setCrawled(bool $crawled): Crawlable
+    public function setRaw(string $raw): SocialNetworkFeedItem
     {
-        $this->crawled = $crawled;
-
+        $this->raw = $raw;
+        
         return $this;
-    }*/
+    }
+
 }

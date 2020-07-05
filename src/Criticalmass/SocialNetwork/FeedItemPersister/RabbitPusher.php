@@ -32,4 +32,9 @@ class RabbitPusher implements FeedItemPersisterInterface
 
         return $this;
     }
+
+    public function flush(): FeedItemPersisterInterface
+    {
+        return $this;
+    }
 }

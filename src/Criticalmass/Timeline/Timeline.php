@@ -94,13 +94,20 @@ class Timeline implements TimelineInterface
         $threeMonthDateInterval = new \DateInterval('P3M');
         $lastDateTime->sub($threeMonthDateInterval);
 
-        $maxItems = 50;
-        $counter = 0;
+        $counter = [];
 
+        /**
+         * @var string $key
+         * @var ItemInterface $item
+         */
         foreach ($this->items as $key => $item) {
-            ++$counter;
+            if (!array_key_exists($item->getTabName(), $counter)) {
+                $counter[$item->getTabName()] = 1;
+            } else {
+                ++$counter[$item->getTabName()];
+            }
 
-            if ($item->getDateTime() < $lastDateTime || $counter > $maxItems) {
+            if ($item->getDateTime() < $lastDateTime || $counter[$item->getTabName()] > self::MAX_ITEMS) {
                 unset($this->items[$key]);
             }
         }

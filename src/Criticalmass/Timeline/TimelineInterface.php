@@ -6,6 +6,8 @@ use App\Criticalmass\Timeline\Collector\AbstractTimelineCollector;
 
 interface TimelineInterface
 {
+    const MAX_ITEMS = 100;
+    
     public function addCollector(AbstractTimelineCollector $collector): TimelineInterface;
 
     public function setDateRange(\DateTime $startDateTime, \DateTime $endDateTime): TimelineInterface;
