@@ -1,34 +1,30 @@
-define(['Map'], function () {
-    TrackViewPage = function (context, options) {
-        this._initMap();
+define(['Map', 'Polyline.encoded'], function () {
+    TrackViewPage = function () {
     };
 
     TrackViewPage.prototype._map = null;
-    TrackViewPage.prototype._track = null;
 
     TrackViewPage.prototype.loadTrack = function (trackId) {
         const trackApiUrl = Routing.generate('caldera_criticalmass_rest_track_view', {
             trackId: trackId
         });
 
-        $.getJSON(trackApiUrl).ajaxSuccess(function (data) {
-            alert(data);
-        });
-        this._track = this._CriticalService.factory.createTrack(trackJson);
+        const that = this;
+        var request = new XMLHttpRequest();
+        request.open('GET', trackApiUrl, true);
 
-        this._track.addToMap(this._map);
-    };
+        request.onload = function () {
+            if (request.status >= 200 && request.status < 400) {
+                that._map = new Map('map');
 
-    TrackViewPage.prototype.setColor = function (colorRed, colorGreen, colorBlue) {
-        this._track.setColor(colorRed, colorGreen, colorBlue);
-    };
+                const data = JSON.parse(request.responseText);
 
-    TrackViewPage.prototype._initMap = function () {
-        this._map = new Map('map');
-    };
+                const polyline = L.Polyline.fromEncoded(data.polylineString);
+                polyline.addTo(that._map.map);
+            }
+        };
 
-    TrackViewPage.prototype.focus = function () {
-        this._map.fitBounds(this._track.getBounds());
+        request.send();
     };
 
     return TrackViewPage;
