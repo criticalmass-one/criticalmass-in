@@ -21,6 +21,7 @@ define(['Map', 'Polyline.encoded'], function () {
 
                 const polyline = L.Polyline.fromEncoded(data.polylineString);
                 polyline.addTo(that._map.map);
+                that._map.fitBounds(polyline.getBounds());
             }
         };
 
