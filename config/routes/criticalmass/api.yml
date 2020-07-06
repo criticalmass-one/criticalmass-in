@@ -1,18 +1,3 @@
-caldera_criticalmass_rest_track_ridelist:
-    path:     /{citySlug}/{rideIdentifier}/listTracks
-    controller: App\Controller\Api\TrackController::listRideTrackAction
-    methods:  [GET]
-
-caldera_criticalmass_rest_track_view:
-    path:  /track/{trackId}
-    controller: App\Controller\Api\TrackController::viewAction
-    methods: [GET]
-
-caldera_criticalmass_rest_track_list:
-    path:  /track
-    controller: App\Controller\Api\TrackController::listAction
-    methods: [GET]
-
 caldera_criticalmass_rest_ride_list:
     path:     /ride
     controller: App\Controller\Api\RideController::listAction
