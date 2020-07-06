@@ -11,6 +11,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class CityController extends BaseController
 {
@@ -77,6 +78,7 @@ class CityController extends BaseController
      *     {"name"="extended", "dataType"="boolean", "required"=false, "description"="Set true to retrieve a more detailed list."}
      *  },
      * )
+     * @Route("/{citySlug}/{rideIdentifier}", name="caldera_criticalmass_rest_city_list", methods={"GET"})
      */
     public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager): Response
     {
@@ -113,6 +115,7 @@ class CityController extends BaseController
      *  }
      * )
      * @ParamConverter("city", class="App:City")
+     * @Route("/{citySlug}", name="caldera_criticalmass_rest_city_show", methods={"GET"}, options={"expose"=true})
      */
     public function showAction(City $city): Response
     {
