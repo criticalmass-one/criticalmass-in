@@ -57,15 +57,3 @@ caldera_criticalmass_rest_estimate_create:
     path:     /estimate
     controller: App\Controller\Api\EstimateController::createAction
     methods:  [POST]
-
-caldera_criticalmass_rest_subride_list:
-    path:     /{citySlug}/{rideIdentifier}/subride
-    controller: App\Controller\Api\SubrideController::listSubrideAction
-    methods:  [GET]
-    options:
-        expose: true
-
-caldera_criticalmass_rest_subride_show:
-    path:     /{citySlug}/{rideIdentifier}/{subrideId}
-    controller: App\Controller\Api\SubrideController::showSubrideAction
-    methods:  [GET]

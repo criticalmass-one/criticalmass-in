@@ -4,12 +4,13 @@ namespace App\Controller\Api;
 
 use App\Entity\Ride;
 use App\Entity\Subride;
+use Doctrine\Persistence\ManagerRegistry;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class SubrideController extends BaseController
@@ -25,6 +26,7 @@ class SubrideController extends BaseController
      *  }
      * )
      * @ParamConverter("ride", class="App:Ride")
+     * @Route("/{citySlug}/{rideIdentifier}/subride", name="caldera_criticalmass_rest_subride_list", methods={"GET"}, options={"expose"=true})
      */
     public function listSubrideAction(ManagerRegistry $registry, Ride $ride): Response
     {
@@ -53,6 +55,7 @@ class SubrideController extends BaseController
      *  }
      * )
      * @ParamConverter("subride", class="App:Subride")
+     * @Route("/{citySlug}/{rideIdentifier}/{subrideId}", name="caldera_criticalmass_rest_subride_show", methods={"GET"})
      */
     public function showSubrideAction(Subride $subride, UserInterface $user = null): Response
     {
