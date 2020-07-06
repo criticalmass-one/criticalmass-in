@@ -6,7 +6,6 @@ import CalendarPage from '../js/modules/page/CalendarPage.js';
 //window.bootstrap = bootstrap;
 require('bootstrap');
 
-new CookieNotice();
 window.CookieNotice = CookieNotice;
 
 window.AutoMap = AutoMap;
