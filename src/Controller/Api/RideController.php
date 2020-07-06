@@ -6,14 +6,15 @@ use App\Criticalmass\DataQuery\DataQueryManager\DataQueryManagerInterface;
 use App\Criticalmass\DataQuery\RequestParameterList\RequestToListConverter;
 use App\Entity\City;
 use App\Entity\Ride;
+use Doctrine\Persistence\ManagerRegistry;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class RideController extends BaseController
 {
@@ -32,6 +33,7 @@ class RideController extends BaseController
      *  }
      * )
      * @ParamConverter("ride", class="App:Ride")
+     * @Route("/{citySlug}/{rideIdentifier}", name="caldera_criticalmass_rest_ride_show", methods={"GET"}, options={"expose"=true})
      */
     public function showAction(Ride $ride): Response
     {
@@ -56,6 +58,7 @@ class RideController extends BaseController
      *  }
      * )
      * @ParamConverter("city", class="App:City")
+     * @Route("/{citySlug}/current", name="caldera_criticalmass_rest_ride_show_current", methods={"GET"}, options={"expose"=true})
      */
     public function showCurrentAction(Request $request, City $city, ManagerRegistry $registry): Response
     {
@@ -158,6 +161,7 @@ class RideController extends BaseController
      *  },
      *  section="Ride"
      * )
+     * @Route("/ride", name="caldera_criticalmass_rest_ride_list", methods={"GET"})
      */
     public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager): Response
     {

@@ -1,8 +1,3 @@
-caldera_criticalmass_rest_ride_list:
-    path:     /ride
-    controller: App\Controller\Api\RideController::listAction
-    methods:  [GET]
-
 caldera_criticalmass_rest_city_list:
     path:     /city
     controller: App\Controller\Api\CityController::listAction
@@ -35,20 +30,6 @@ caldera_criticalmass_rest_location_show:
 caldera_criticalmass_rest_city_show:
     path:     /{citySlug}
     controller: App\Controller\Api\CityController::showAction
-    methods:  [GET]
-    options:
-        expose: true
-
-caldera_criticalmass_rest_ride_show_current:
-    path:     /{citySlug}/current
-    controller: App\Controller\Api\RideController::showCurrentAction
-    methods:  [GET]
-    options:
-        expose: true
-
-caldera_criticalmass_rest_ride_show:
-    path:     /{citySlug}/{rideIdentifier}
-    controller: App\Controller\Api\RideController::showAction
     methods:  [GET]
     options:
         expose: true
