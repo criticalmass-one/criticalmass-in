@@ -1,7 +1,6 @@
 jms_serializer:
     visitors:
-        json:
-            options:
-                - JSON_PRETTY_PRINT
-                - JSON_UNESCAPED_SLASHES
-                - JSON_PRESERVE_ZERO_FRACTION
+        json_serialization:
+            options: 1216 # json_encode options bitmask, suggested JSON_PRETTY_PRINT in development
+        json_deserialization:
+            options: 1216 # json_decode options bitmask

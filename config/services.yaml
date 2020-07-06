@@ -31,7 +31,6 @@ parameters:
     domain.blog: '%env(DOMAIN_BLOG)%'
     domain.one: '%env(DOMAIN_ONE)%'
     notification.mail.sender_address: malte@criticalmass.in
-    jms_serializer.camel_case_naming_strategy.class: App\Serializer\JMSSerializer\Naming\CamelCaseNamingStrategy
     request_listener.http_port: 80
     request_listener.https_port: 443
     upload_destination.track: '%kernel.project_dir%/public/tracks'
@@ -71,6 +70,8 @@ services:
             $cachedTimelineTtl: '%timeline.ttl%'
             $projectDirectory: '%kernel.project_dir%'
             $redisUrl: '%env(REDIS_URL)%'
+            $instagramScraperProxyServerAddress: '%env(INSTAGRAM_SCRAPER_PROXY_ADDRESS)%'
+            $instagramScraperProxyServerPort: '%env(INSTAGRAM_SCRAPER_PROXY_PORT)%'
 
     App\:
         resource: '../src/*'
