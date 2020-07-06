@@ -6,12 +6,13 @@ use App\Criticalmass\DataQuery\DataQueryManager\DataQueryManagerInterface;
 use App\Criticalmass\DataQuery\RequestParameterList\RequestToListConverter;
 use App\Entity\Photo;
 use App\Entity\Ride;
+use Doctrine\Persistence\ManagerRegistry;
 use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class PhotoController extends BaseController
 {
@@ -28,6 +29,7 @@ class PhotoController extends BaseController
      *  }
      * )
      * @ParamConverter("ride", class="App:Ride")
+     * @Route("/{citySlug}/{rideIdentifier}/listPhotos", name="caldera_criticalmass_rest_photo_ridelist", methods={"GET"})
      */
     public function listRidePhotosAction(ManagerRegistry $registry, Ride $ride): Response
     {
@@ -127,6 +129,7 @@ class PhotoController extends BaseController
      *  },
      *  section="Photo"
      * )
+     * @Route("/photo", name="caldera_criticalmass_rest_photo_list", methods={"GET"})
      */
     public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager): Response
     {
