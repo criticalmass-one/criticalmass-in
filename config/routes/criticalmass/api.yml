@@ -3,20 +3,6 @@ caldera_criticalmass_rest_city_list:
     controller: App\Controller\Api\CityController::listAction
     methods:  [GET]
 
-caldera_criticalmass_rest_location_list:
-    path:     /{citySlug}/location
-    controller: App\Controller\Api\LocationController::listLocationAction
-    methods:  [GET]
-    options:
-        expose: true
-
-caldera_criticalmass_rest_location_show:
-    path:     /{citySlug}/location/{locationSlug}
-    controller: App\Controller\Api\LocationController::showLocationAction
-    methods:  [GET]
-    options:
-        expose: true
-
 caldera_criticalmass_rest_city_show:
     path:     /{citySlug}
     controller: App\Controller\Api\CityController::showAction
