@@ -8,13 +8,14 @@ use App\Entity\Ride;
 use App\Entity\RideEstimate;
 use App\Event\RideEstimate\RideEstimateCreatedEvent;
 use App\Model\CreateEstimateModel;
+use Doctrine\Persistence\ManagerRegistry;
 use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class EstimateController extends BaseController
 {
@@ -63,6 +64,7 @@ class EstimateController extends BaseController
      *  description="Adds an estimation to statistic",
      *  section="Estimate"
      * )
+     * @Route("/estimate", name="caldera_criticalmass_rest_estimate_create", methods={"POST"})
      */
     public function createAction(Request $request): Response
     {

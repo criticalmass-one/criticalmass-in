@@ -9,8 +9,3 @@ caldera_criticalmass_rest_city_show:
     methods:  [GET]
     options:
         expose: true
-
-caldera_criticalmass_rest_estimate_create:
-    path:     /estimate
-    controller: App\Controller\Api\EstimateController::createAction
-    methods:  [POST]
