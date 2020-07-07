@@ -27,7 +27,7 @@ class SocialNetworkController extends BaseController
      */
     public function listProfilesAction(ManagerRegistry $registry, City $city): Response
     {
-        $profileList = $registry->getRepository(SocialNetworkProfile::class)->findAll();
+        $profileList = $registry->getRepository(SocialNetworkProfile::class)->findByCity($city);
 
         $view = View::create();
         $view
