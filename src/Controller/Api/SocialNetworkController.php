@@ -19,6 +19,35 @@ class SocialNetworkController extends BaseController
     /**
      * @ApiDoc(
      *  resource=true,
+     *  description="Search for social network profiles",
+     *  section="Social Network",
+     *  requirements={
+     *    {"name"="citySlug", "dataType"="string", "required"=false, "description"="Retrieve a list of social network profiles assigned to a city"},
+     *    {"name"="autoFetch", "dataType"="boolean", "required"=false, "description"="Retrieve a list of social network profiles assigned to a city"},
+     *    {"name"="networkIdentifier", "dataType"="string", "required"=false, "description"="Retrieve a list of social network profiles assigned to a city"}
+     *  }
+     * )
+     * @ParamConverter("city", class="App:City", isOptional="true")
+     */
+    public function listSocialNetworkProfilesAction(Request $request, ManagerRegistry $registry, City $city = null): Response
+    {
+        $networkIdentifier = $request->get('networkIdentifier');
+        $autoFetch = (bool)$request->get('autoFetch');
+        
+        $profileList = $registry->getRepository(SocialNetworkProfile::class)->findByProperties($networkIdentifier, $autoFetch, $city);
+
+        $view = View::create();
+        $view
+            ->setData($profileList)
+            ->setFormat('json')
+            ->setStatusCode(200);
+
+        return $this->handleView($view);
+    }
+
+    /**
+     * @ApiDoc(
+     *  resource=true,
      *  description="Retrieve a list of social network profiles assigned to a city",
      *  section="Social Network",
      *  requirements={
@@ -27,7 +56,7 @@ class SocialNetworkController extends BaseController
      * )
      * @ParamConverter("city", class="App:City")
      */
-    public function listSocialNetworkProfilesAction(ManagerRegistry $registry, City $city): Response
+    public function listSocialNetworkProfilesCityAction(ManagerRegistry $registry, City $city): Response
     {
         $profileList = $registry->getRepository(SocialNetworkProfile::class)->findByCity($city);
 
