@@ -71,8 +71,10 @@ class SocialNetworkProfile
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
-    private \DateTime $createdAt;
+    private ?\DateTime $createdAt = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="socialNetworkProfiles")
@@ -81,31 +83,43 @@ class SocialNetworkProfile
 
     /**
      * @ORM\Column(type="boolean")
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected bool $autoPublish = true;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected ?\DateTime $lastFetchSuccessDateTime = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected ?\DateTime $lastFetchFailureDateTime = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected ?string $lastFetchFailureError = null;
 
     /**
      * @ORM\Column(type="boolean")
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $autoFetch = true;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $additionalData;
 
