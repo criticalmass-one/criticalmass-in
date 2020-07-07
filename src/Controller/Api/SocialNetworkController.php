@@ -72,4 +72,41 @@ class SocialNetworkController extends BaseController
 
         return $this->handleView($view);
     }
+
+    /**
+     * Create a new social network profile and assign it to the provided city.
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Create a new social network profile",
+     *  section="Social Network",
+     *  requirements={
+     *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Slug of the corresponding city"},
+     *  }
+     * )
+     * @ParamConverter("city", class="App:City")
+     */
+    public function createSocialNetworkProfileAction(Request $request, City $city, SerializerInterface $serializer, ManagerRegistry $managerRegistry): Response
+    {
+        $newSocialNetworkProfile = $serializer->deserialize($request->getContent(), SocialNetworkProfile::class, 'json');
+
+        $newSocialNetworkProfile
+            ->setCity($city)
+            ->setCreatedAt(new \DateTime());
+
+        $manager = $managerRegistry->getManager();
+        $manager->persist($newSocialNetworkProfile);
+        $manager->flush();
+
+        $context = new Context();
+
+        $view = View::create();
+        $view
+            ->setData($newSocialNetworkProfile)
+            ->setFormat('json')
+            ->setStatusCode(200)
+            ->setContext($context);
+
+        return $this->handleView($view);
+    }
 }

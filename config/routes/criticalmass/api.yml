@@ -69,6 +69,11 @@ caldera_criticalmass_rest_socialnetwork_profiles_list:
 caldera_criticalmass_rest_socialnetwork_profiles_update:
     path:     /{citySlug}/socialnetwork-profiles/{profileId}
     controller: App\Controller\Api\SocialNetworkController::updateSocialNetworkProfileAction
+    methods:  [POST]
+
+caldera_criticalmass_rest_socialnetwork_profiles_create:
+    path:     /{citySlug}/socialnetwork-profiles
+    controller: App\Controller\Api\SocialNetworkController::createSocialNetworkProfileAction
     methods:  [PUT]
 
 caldera_criticalmass_rest_ride_show:
