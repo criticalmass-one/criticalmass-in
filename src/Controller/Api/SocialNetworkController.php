@@ -2,14 +2,16 @@
 
 namespace App\Controller\Api;
 
+use App\Criticalmass\EntityMerger\EntityMergerInterface;
 use App\Entity\City;
-use App\Entity\Location;
 use App\Entity\SocialNetworkProfile;
 use Doctrine\Persistence\ManagerRegistry;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
+use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class SocialNetworkController extends BaseController
@@ -25,7 +27,7 @@ class SocialNetworkController extends BaseController
      * )
      * @ParamConverter("city", class="App:City")
      */
-    public function listProfilesAction(ManagerRegistry $registry, City $city): Response
+    public function listSocialNetworkProfilesAction(ManagerRegistry $registry, City $city): Response
     {
         $profileList = $registry->getRepository(SocialNetworkProfile::class)->findByCity($city);
 
@@ -39,26 +41,31 @@ class SocialNetworkController extends BaseController
     }
 
     /**
-     * Show details of a specified location.
+     * Update properties of a social network profile.
      *
      * @ApiDoc(
      *  resource=true,
-     *  description="Show details of a location",
-     *  section="Location",
+     *  description="Update properties of a social network profile",
+     *  section="Social Network",
      *  requirements={
-     *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Provide the slug of a city."},
-     *    {"name"="locationSlug", "dataType"="string", "required"=true, "description"="Slug of the location."},
+     *    {"name"="profileId", "dataType"="integer", "required"=true, "description"="Id of the required social network profile."},
      *  }
      * )
-     * @ParamConverter("location", class="App:Location")
+     * @ParamConverter("socialNetworkProfile", class="App:SocialNetworkProfile")
      */
-    public function showLocationAction(Location $location): Response
+    public function updateSocialNetworkProfileAction(Request $request, SocialNetworkProfile $socialNetworkProfile, SerializerInterface $serializer, ManagerRegistry $managerRegistry, EntityMergerInterface $entityMerger): Response
     {
+        $updatedSocialNetworkProfile = $serializer->deserialize($request->getContent(), SocialNetworkProfile::class, 'json');
+
+        $entityMerger->merge($updatedSocialNetworkProfile, $socialNetworkProfile);
+
+        $managerRegistry->getManager()->flush();
+
         $context = new Context();
 
         $view = View::create();
         $view
-            ->setData($location)
+            ->setData($socialNetworkProfile)
             ->setFormat('json')
             ->setStatusCode(200)
             ->setContext($context);
