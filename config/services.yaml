@@ -257,6 +257,9 @@ services:
             - { name: jms_serializer.handler, type: Relation<?>, direction: serialization, format: json, method: serializeRelation}
             - { name: jms_serializer.handler, type: Relation<?>, direction: deserialization, format: json, method: deserializeRelation}
 
+    jms_serializer.naming_strategy:
+        alias: jms_serializer.camel_case_naming_strategy
+
     App\Criticalmass\ViewStorage\BlackList\BlackList:
         arguments:
             $crawlerDetect: '@crawler_detect'
