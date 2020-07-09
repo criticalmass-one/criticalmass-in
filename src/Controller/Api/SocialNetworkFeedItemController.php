@@ -5,7 +5,6 @@ namespace App\Controller\Api;
 use App\Criticalmass\EntityMerger\EntityMergerInterface;
 use App\Entity\City;
 use App\Entity\SocialNetworkFeedItem;
-use App\Entity\SocialNetworkProfile;
 use Doctrine\Persistence\ManagerRegistry;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
@@ -76,35 +75,33 @@ class SocialNetworkFeedItemController extends BaseController
     }
 
     /**
-     * Create a new social network profile and assign it to the provided city.
+     * Create a new social network feed item and assign it to the provided profile.
      *
      * @ApiDoc(
      *  resource=true,
-     *  description="Create a new social network profile",
-     *  section="Social Network",
+     *  description="Create a new social network feed item",
+     *  section="Social Network Feed Item",
      *  requirements={
      *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Slug of the corresponding city"},
      *  }
      * )
-     * @ParamConverter("city", class="App:City")
      */
-    public function createSocialNetworkProfileAction(Request $request, City $city, SerializerInterface $serializer, ManagerRegistry $managerRegistry): Response
+    public function createSocialNetworkFeedItemAction(Request $request, SerializerInterface $serializer, ManagerRegistry $managerRegistry): Response
     {
-        $newSocialNetworkProfile = $serializer->deserialize($request->getContent(), SocialNetworkProfile::class, 'json');
+        $newSocialNetworkFeedItem = $serializer->deserialize($request->getContent(), SocialNetworkFeedItem::class, 'json');
 
-        $newSocialNetworkProfile
-            ->setCity($city)
+        $newSocialNetworkFeedItem
             ->setCreatedAt(new \DateTime());
 
         $manager = $managerRegistry->getManager();
-        $manager->persist($newSocialNetworkProfile);
+        $manager->persist($newSocialNetworkFeedItem);
         $manager->flush();
 
         $context = new Context();
 
         $view = View::create();
         $view
-            ->setData($newSocialNetworkProfile)
+            ->setData($newSocialNetworkFeedItem)
             ->setFormat('json')
             ->setStatusCode(200)
             ->setContext($context);
