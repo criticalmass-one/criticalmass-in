@@ -22,14 +22,19 @@ class SocialNetworkFeedItemController extends BaseController
      *  description="Retrieve a list of social network feed items assigned to profiles of a city",
      *  section="Social Network Feed Item",
      *  requirements={
-     *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Slug of the requested city"}
+     *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Slug of the requested city"},
+     *    {"name"="uniqueIdentifier", "dataType"="string", "required"=true, "description"="Unique identifier, normally the ressource identifier of the source item"},
+     *    {"name"="networkIdentifier", "dataType"="string", "required"=true, "description"="Network identifier of the social network profile"}
      *  }
      * )
      * @ParamConverter("city", class="App:City")
      */
-    public function listSocialNetworkFeedItemsCityAction(ManagerRegistry $registry, City $city): Response
+    public function listSocialNetworkFeedItemsCityAction(Request $request, ManagerRegistry $registry, City $city): Response
     {
-        $profileList = $registry->getRepository(SocialNetworkFeedItem::class)->findByCity($city);
+        $uniqueIdentifier = $request->get('uniqueIdentifier');
+        $networkIdentifier = $request->get('networkIdentifier');
+
+        $profileList = $registry->getRepository(SocialNetworkFeedItem::class)->findByCityAndProperties($city, $uniqueIdentifier, $networkIdentifier);
 
         $view = View::create();
         $view
