@@ -17,6 +17,8 @@ class SocialNetworkProfile
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected int $id;
 
@@ -157,6 +159,20 @@ class SocialNetworkProfile
         $this->city = $city;
 
         return $this;
+    }
+
+    /**
+     * @JMS\Expose
+     * @JMS\VirtualProperty(name="cityId")
+     * @JMS\Groups({"ride-list"})
+     */
+    public function getCityId(): ?int
+    {
+        if ($this->city) {
+            return $this->city->getId();
+        }
+
+        return null;
     }
 
     public function getRide(): ?Ride
