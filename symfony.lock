@@ -311,9 +311,6 @@
             "ref": "fe60ce509ef04a3f40da96e3979bc8d9b13b2372"
         }
     },
-    "jublonet/codebird-php": {
-        "version": "3.1.0"
-    },
     "khill/php-duration": {
         "version": "1.0.5"
     },

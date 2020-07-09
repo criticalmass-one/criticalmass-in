@@ -53,7 +53,6 @@
         "calderacc/geobasic": "^0.2.0",
         "yohang/calendr": "^2.0",
         "maxh/php-nominatim": "^1.2",
-        "jublonet/codebird-php": "^3.1",
         "php-http/guzzle6-adapter": "^1.1",
         "php-http/httplug-bundle": "^1.10",
         "knplabs/knp-menu-bundle": "^2.0",
