@@ -53,7 +53,7 @@ class SocialNetworkFeedItemController extends BaseController
      *    {"name"="feedItemId", "dataType"="integer", "required"=true, "description"="Id of the required social network profile"}
      *  }
      * )
-     * @ParamConverter("socialNetworkProfile", class="App:SocialNetworkFeedItem")
+     * @ParamConverter("socialNetworkFeedItem", class="App:SocialNetworkFeedItem")
      */
     public function updateSocialNetworkFeedItemAction(Request $request, SocialNetworkFeedItem $socialNetworkFeedItem, SerializerInterface $serializer, ManagerRegistry $managerRegistry, EntityMergerInterface $entityMerger): Response
     {

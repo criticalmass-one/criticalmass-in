@@ -212,6 +212,10 @@ services:
         tags:
             - { name: request.param_converter, priority: 0, converter: socialnetworkprofile_converter }
 
+    App\Request\ParamConverter\SocialNetworkFeedItemParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: socialnetworkfeeditem_converter }
+
     App\Request\ParamConverter\TrackParamConverter:
         tags:
             - { name: request.param_converter, priority: 0, converter: track_converter }
