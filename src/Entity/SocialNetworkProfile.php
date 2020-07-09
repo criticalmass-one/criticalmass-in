@@ -31,6 +31,9 @@ class SocialNetworkProfile
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="socialNetworkProfiles")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     * @JMS\Expose
+     * @JMS\Type("Relation<App\Entity\City>")
+     * @JMS\SerializedName("city_id")
      */
     protected ?City $city = null;
 
@@ -159,20 +162,6 @@ class SocialNetworkProfile
         $this->city = $city;
 
         return $this;
-    }
-
-    /**
-     * @JMS\Expose
-     * @JMS\VirtualProperty(name="cityId")
-     * @JMS\Groups({"ride-list"})
-     */
-    public function getCityId(): ?int
-    {
-        if ($this->city) {
-            return $this->city->getId();
-        }
-
-        return null;
     }
 
     public function getRide(): ?Ride
