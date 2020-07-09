@@ -14,13 +14,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class SocialNetworkController extends BaseController
+class SocialNetworkProfileController extends BaseController
 {
     /**
      * @ApiDoc(
      *  resource=true,
      *  description="Search for social network profiles",
-     *  section="Social Network",
+     *  section="Social Network Profile",
      *  requirements={
      *    {"name"="citySlug", "dataType"="string", "required"=false, "description"="Retrieve a list of social network profiles assigned to a city"},
      *    {"name"="autoFetch", "dataType"="boolean", "required"=false, "description"="Retrieve a list of social network profiles assigned to a city"},
@@ -29,11 +29,11 @@ class SocialNetworkController extends BaseController
      * )
      * @ParamConverter("city", class="App:City", isOptional="true")
      */
-    public function listSocialNetworkProfilesAction(Request $request, ManagerRegistry $registry, City $city = null): Response
+    public function listSocialNetworkProfilesAction(Request $request, ManagerRegistry $registry, City $city = null, SerializerInterface $serializer): Response
     {
         $networkIdentifier = $request->get('networkIdentifier');
         $autoFetch = (bool)$request->get('autoFetch');
-        
+
         $profileList = $registry->getRepository(SocialNetworkProfile::class)->findByProperties($networkIdentifier, $autoFetch, $city);
 
         $view = View::create();
@@ -49,7 +49,7 @@ class SocialNetworkController extends BaseController
      * @ApiDoc(
      *  resource=true,
      *  description="Retrieve a list of social network profiles assigned to a city",
-     *  section="Social Network",
+     *  section="Social Network Profile",
      *  requirements={
      *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Retrieve a list of social network profiles assigned to a city"}
      *  }
@@ -75,7 +75,7 @@ class SocialNetworkController extends BaseController
      * @ApiDoc(
      *  resource=true,
      *  description="Update properties of a social network profile",
-     *  section="Social Network",
+     *  section="Social Network Profile",
      *  requirements={
      *    {"name"="profileId", "dataType"="integer", "required"=true, "description"="Id of the required social network profile."},
      *  }
@@ -108,7 +108,7 @@ class SocialNetworkController extends BaseController
      * @ApiDoc(
      *  resource=true,
      *  description="Create a new social network profile",
-     *  section="Social Network",
+     *  section="Social Network Profile",
      *  requirements={
      *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Slug of the corresponding city"},
      *  }

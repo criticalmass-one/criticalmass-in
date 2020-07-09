@@ -1,21 +1,21 @@
 caldera_criticalmass_rest_socialnetwork_profiles_list:
     path:     /socialnetwork-profiles
-    controller: App\Controller\Api\SocialNetworkController::listSocialNetworkProfilesAction
+    controller: App\Controller\Api\SocialNetworkProfileController::listSocialNetworkProfilesAction
     methods:  [GET]
 
 caldera_criticalmass_rest_socialnetwork_profiles_citylist:
     path:     /{citySlug}/socialnetwork-profiles
-    controller: App\Controller\Api\SocialNetworkController::listSocialNetworkProfilesCityAction
+    controller: App\Controller\Api\SocialNetworkProfileController::listSocialNetworkProfilesCityAction
     methods:  [GET]
 
 caldera_criticalmass_rest_socialnetwork_profiles_update:
     path:     /{citySlug}/socialnetwork-profiles/{profileId}
-    controller: App\Controller\Api\SocialNetworkController::updateSocialNetworkProfileAction
+    controller: App\Controller\Api\SocialNetworkProfileController::updateSocialNetworkProfileAction
     methods:  [POST]
 
 caldera_criticalmass_rest_socialnetwork_profiles_create:
     path:     /{citySlug}/socialnetwork-profiles
-    controller: App\Controller\Api\SocialNetworkController::createSocialNetworkProfileAction
+    controller: App\Controller\Api\SocialNetworkProfileController::createSocialNetworkProfileAction
     methods:  [PUT]
 
 caldera_criticalmass_rest_track_ridelist:
