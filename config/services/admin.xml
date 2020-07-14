@@ -3,18 +3,32 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="App\Admin\BikerightVoucherAdmin">
-            <argument/>
-            <argument type="string">App\Entity\BikerightVoucher</argument>
-            <argument/>
-            <tag name="sonata.admin" manager-type="orm" group="Campaign" label="Bikeright Voucher"/>
-        </service>
-
         <service id="App\Admin\BlacklistedWebsiteAdmin">
             <argument/>
             <argument type="string">App\Entity\BlacklistedWebsite</argument>
             <argument/>
             <tag name="sonata.admin" manager-type="orm" group="Crawler" label="Blacklist"/>
+        </service>
+
+        <service id="App\Admin\AlertAdmin">
+            <argument/>
+            <argument type="string">App\Entity\Alert</argument>
+            <argument/>
+            <tag name="sonata.admin" manager-type="orm" group="Community" label="Alert"/>
+        </service>
+
+        <service id="App\Admin\BlogAdmin">
+            <argument/>
+            <argument type="string">App\Entity\Blog</argument>
+            <argument/>
+            <tag name="sonata.admin" manager-type="orm" group="Blog" label="Blog"/>
+        </service>
+
+        <service id="App\Admin\BlogPostAdmin">
+            <argument/>
+            <argument type="string">App\Entity\BlogPost</argument>
+            <argument/>
+            <tag name="sonata.admin" manager-type="orm" group="Blog" label="Blog Post"/>
         </service>
 
         <service id="App\Admin\BoardAdmin">
@@ -29,6 +43,7 @@
             <argument type="string">App\Entity\City</argument>
             <argument/>
             <argument type="service" id="App\Criticalmass\RideNamer\RideNamerListInterface"/>
+            <argument type="service" id="App\Criticalmass\Router\ObjectRouterInterface"/>
             <tag name="sonata.admin" manager-type="orm" group="Critical Mass" label="City"/>
         </service>
 
@@ -99,6 +114,7 @@
             <argument/>
             <argument type="string">App\Entity\Ride</argument>
             <argument/>
+            <argument type="service" id="App\Criticalmass\Router\ObjectRouterInterface"/>
             <tag name="sonata.admin" manager-type="orm" group="Critical Mass" label="Ride"/>
         </service>
 

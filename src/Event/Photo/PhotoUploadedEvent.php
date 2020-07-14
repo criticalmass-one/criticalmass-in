@@ -11,9 +11,13 @@ class PhotoUploadedEvent extends AbstractPhotoEvent
     /** @var bool $flush */
     protected $flush;
 
-    public function __construct(Photo $photo, bool $flush = true)
+    /** @var string $tmpFilename */
+    protected $tmpFilename;
+
+    public function __construct(Photo $photo, bool $flush = true, string $tmpFilename = null)
     {
         $this->flush = $flush;
+        $this->tmpFilename = $tmpFilename;
 
         parent::__construct($photo);
     }
@@ -21,5 +25,10 @@ class PhotoUploadedEvent extends AbstractPhotoEvent
     public function isFlush(): bool
     {
         return $this->flush;
+    }
+
+    public function getTmpFilename(): ?string
+    {
+        return $this->tmpFilename;
     }
 }

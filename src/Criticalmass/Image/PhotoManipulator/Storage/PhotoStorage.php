@@ -12,15 +12,15 @@ class PhotoStorage extends AbstractPhotoStorage
     {
         $imagine = new Imagine();
 
-        $image = $imagine->open($this->getImageFilename($photo));
+        $photoContent = $this->filesystem->read($this->getImageFilename($photo));
 
-        return $image;
+        return $imagine->load($photoContent);
     }
 
     public function save(ManipulateablePhotoInterface $photo, ImageInterface $image): string
     {
         if (!$photo->getBackupName()) {
-            $newFilename = uniqid().'.JPG';
+            $newFilename = sprintf('%s.jpg', uniqid('', true));
 
             $photo->setBackupName($photo->getImageName());
 
@@ -30,7 +30,8 @@ class PhotoStorage extends AbstractPhotoStorage
         }
 
         $filename = $this->getImageFilename($photo);
-        $image->save($filename);
+
+        $this->filesystem->put($filename, $image->get('jpeg'));
 
         $this->photoCache->recachePhoto($photo);
 
@@ -39,10 +40,11 @@ class PhotoStorage extends AbstractPhotoStorage
 
     protected function getImageFilename(ManipulateablePhotoInterface $photo): string
     {
-        $path = $this->uploaderHelper->asset($photo, 'imageFile');
+        $filename = $this->uploaderHelper->asset($photo, 'imageFile');
 
-        $filename = sprintf('%s/..%s', $this->uploadDestinationPhoto, $path);
-
+        // todo: This is a quick fix until filesystem configuration is fixed
+        $filename = str_replace('/photos/', '/', $filename);
+        
         return $filename;
     }
 }

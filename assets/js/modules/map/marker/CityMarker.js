@@ -13,7 +13,7 @@ define(['Marker', 'leaflet.extra-markers'], function () {
             markerColor: 'red',
             iconColor: 'white',
             shape: 'circle',
-            prefix: 'fa'
+            prefix: 'far'
         });
     };
 

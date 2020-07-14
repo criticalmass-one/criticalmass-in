@@ -7,6 +7,7 @@ use Imagine\Image\ImagineInterface;
 
 class RemoteStreamLoader implements LoaderInterface
 {
+    /** @var ImagineInterface $imagine */
     protected $imagine;
 
     public function __construct(ImagineInterface $imagine)

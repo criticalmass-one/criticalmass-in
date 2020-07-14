@@ -3,7 +3,6 @@
 namespace App\Criticalmass\Geo\Entity;
 
 use Caldera\GeoBasic\Track\Track as BaseTrack;
-use Caldera\GeoBundle\EntityInterface\TrackInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -12,7 +11,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\MappedSuperclass
  * @Vich\Uploadable
  */
-class Track extends BaseTrack implements TrackInterface
+class Track extends BaseTrack
 {
     /**
      * @ORM\Id
@@ -67,7 +66,7 @@ class Track extends BaseTrack implements TrackInterface
     protected $previewPolyline;
 
     /**
-     * @Vich\UploadableField(mapping="track_file", fileNameProperty="trackFilename")
+     * @Vich\UploadableField(mapping="track_file", fileNameProperty="trackFilename", size="trackSize", mimeType="trackMimeType")
      */
     protected $trackFile;
 
@@ -75,6 +74,16 @@ class Track extends BaseTrack implements TrackInterface
      * @ORM\Column(type="string", length=255)
      */
     protected $trackFilename;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $trackSize;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $trackMimeType;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -189,11 +198,7 @@ class Track extends BaseTrack implements TrackInterface
 
     public function setStartPoint(int $startPoint): Track
     {
-        if ($startPoint >= 1) {
-            $this->startPoint = $startPoint;
-        } else {
-            $this->startPoint = 1;
-        }
+        $this->startPoint = $startPoint;
 
         return $this;
     }
@@ -205,11 +210,7 @@ class Track extends BaseTrack implements TrackInterface
 
     public function setEndPoint(int $endPoint): Track
     {
-        if ($endPoint <= $this->points) {
-            $this->endPoint = $endPoint;
-        } else {
-            $this->endPoint = $this->points - 1;
-        }
+        $this->endPoint = $endPoint;
 
         return $this;
     }
@@ -231,7 +232,7 @@ class Track extends BaseTrack implements TrackInterface
         return $this->updatedAt;
     }
 
-    public function setPreviewPolyline(string $previewPolyline = null): TrackInterface
+    public function setPreviewPolyline(string $previewPolyline = null): Track
     {
         $this->previewPolyline = $previewPolyline;
 

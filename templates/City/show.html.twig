@@ -18,44 +18,57 @@
     <div class="btn-group pull-right">
         <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
-            <i class="fa fa-cogs"></i>
+            <i class="far fa-cogs"></i>
             Optionen
             <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
             <li>
                 <a href="{{ objectPath(city, 'caldera_criticalmass_city_edit') }}">
-                    <i class="fa fa-cogs"></i>
+                    <i class="far fa-cogs"></i>
                     Stadt editieren
                 </a>
             </li>
 
             <li>
                 <a href="{{ objectPath(city, 'caldera_criticalmass_ride_add') }}">
-                    <i class="fa fa-plus"></i>
+                    <i class="far fa-plus"></i>
                     Tour hinzufügen
                 </a>
             </li>
 
             <li>
                 <a href="{{ objectPath(city, 'caldera_criticalmass_citycycle_list') }}">
-                    <i class="fa fa-calendar-o"></i>
+                    <i class="far fa-calendar"></i>
                     Turnus verwalten
                 </a>
             </li>
 
             <li>
                 <a href="{{ objectPath(city, 'criticalmass_socialnetwork_city_list') }}">
-                    <i class="fa fa-at"></i>
+                    <i class="far fa-at"></i>
                     soziale Netzwerke verwalten
                 </a>
             </li>
+
+            {% if is_granted('ROLE_ADMIN') %}
+                <li>
+                    <a href="{{ path('admin_app_city_edit', { id: city.id }) }}">
+                        <i class="far fa-magic"></i>
+                        Administrationsbereich
+                    </a>
+                </li>
+            {% endif %}
         </ul>
     </div>
 {% endblock %}
 
 {% block content %}
     <div class="container" itemscope itemtype="http://schema.org/Organization">
+        {{ include('Flash/_flash.html.twig') }}
+
+        {{ include('City/Includes/_tabs.html.twig', { tab: 'city' }) }}
+
         <div class="row">
             <div class="col-md-12">
                 {% if city.imageName %}
@@ -138,7 +151,7 @@
                     </div>
                 </div>
 
-                {% if feature_enabled('photos') and photos|length > 0 %}
+                {% if feature('photos') and photos|length > 0 %}
                     <div class="row">
                         <div class="col-md-12">
                             <h2>
@@ -178,12 +191,6 @@
                 <div class="row">
                     <div class="col-md-12">
                         {% include 'City/Includes/_nextTour.html.twig' with { 'city': city, 'currentRide': currentRide } %}
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        {% include 'City/Includes/_statistic.html.twig' with { 'city': city } %}
                     </div>
                 </div>
 

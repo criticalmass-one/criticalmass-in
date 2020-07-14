@@ -3,9 +3,9 @@
 namespace App\Controller\Ride;
 
 use App\Controller\AbstractController;
+use App\Criticalmass\Geo\LatLngListGenerator\TimeLatLngListGenerator;
 use App\Entity\Ride;
 use App\Entity\Track;
-use App\Criticalmass\Gps\LatLngListGenerator\TimeLatLngListGenerator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 

@@ -7,7 +7,7 @@ use App\Entity\Ride;
 use App\Entity\Track;
 use App\Entity\User;
 use App\Event\Photo\PhotoUpdatedEvent;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Table;
@@ -18,13 +18,13 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class PhotoTimeshiftCommand extends Command
 {
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var EventDispatcherInterface */
     protected $eventDispatcher;
 
-    public function __construct(RegistryInterface $registry, EventDispatcherInterface $eventDispatcher)
+    public function __construct(ManagerRegistry $registry, EventDispatcherInterface $eventDispatcher)
     {
         $this->registry = $registry;
         $this->eventDispatcher = $eventDispatcher;
@@ -94,15 +94,15 @@ class PhotoTimeshiftCommand extends Command
 
         /** @var Photo $photo */
         foreach ($photos as $photo) {
-            $dateTimeImmutable = \DateTimeImmutable::createFromMutable($photo->getDateTime());
+            $dateTimeImmutable = \DateTimeImmutable::createFromMutable($photo->getExifCreationDate());
             $dateTimeImmutable = $dateTimeImmutable->$modificationMethodName($interval);
-            $photo->setDateTime(new \DateTime(sprintf('@%d', $dateTimeImmutable->getTimestamp())));
+            $photo->setExifCreationDate(new \DateTime(sprintf('@%d', $dateTimeImmutable->getTimestamp())));
 
             $this->eventDispatcher->dispatch(PhotoUpdatedEvent::NAME, new PhotoUpdatedEvent($photo, false));
 
             $table->addRow([
                 $photo->getId(),
-                $photo->getDateTime()->format('Y-m-d H:i:s'),
+                $photo->getExifCreationDate()->format('Y-m-d H:i:s'),
                 $photo->getLatitude(),
                 $photo->getLongitude(),
                 $photo->getLocation(),

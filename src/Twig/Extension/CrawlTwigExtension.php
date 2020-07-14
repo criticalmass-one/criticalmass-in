@@ -2,18 +2,18 @@
 
 namespace App\Twig\Extension;
 
-use App\Criticalmass\Feature\FeatureManager\FeatureManagerInterface;
 use App\Criticalmass\Website\Crawler\Crawlable;
 use App\Criticalmass\Website\Crawler\CrawlerInterface;
 use App\Criticalmass\Website\Obfuscator\ObfuscatorInterface;
 use App\Entity\BlacklistedWebsite;
 use App\Entity\CrawledWebsite;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Flagception\Manager\FeatureManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
 class CrawlTwigExtension extends \Twig_Extension
 {
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var CrawlerInterface $crawler */
@@ -31,7 +31,7 @@ class CrawlTwigExtension extends \Twig_Extension
     /** @var array $blacklistPatternList */
     protected $blacklistPatternList = [];
 
-    public function __construct(RegistryInterface $registry, CrawlerInterface $crawler, EngineInterface $twigEngine, ObfuscatorInterface $obfuscator, FeatureManagerInterface $featureManager)
+    public function __construct(ManagerRegistry $registry, CrawlerInterface $crawler, EngineInterface $twigEngine, ObfuscatorInterface $obfuscator, FeatureManagerInterface $featureManager)
     {
         $this->registry = $registry;
         $this->crawler = $crawler;
@@ -60,7 +60,7 @@ class CrawlTwigExtension extends \Twig_Extension
                 $crawledWebsite = $this->registry->getRepository(CrawledWebsite::class)->findOneByUrl($url);
 
                 if ($crawledWebsite) {
-                    if ($this->featureManager->isFeatureEnabled('art11')) {
+                    if ($this->featureManager->isActive('art11')) {
                         $crawledWebsite = $this->obfuscateWebsite($crawledWebsite);
                     }
 

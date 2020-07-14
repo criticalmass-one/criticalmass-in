@@ -16,7 +16,7 @@
 
                 <p class="lead">
                     Willkommen in deinem Benutzerkonto!
-                    Hier kannst du deine {% if feature_enabled('photos') %}Fotos, {% endif %}Tracks und Teilnahmen verwalten und deine Kontoeinstellungen ändern.
+                    Hier kannst du deine {% if feature('photos') %}Fotos, {% endif %}Tracks und Teilnahmen verwalten und deine Kontoeinstellungen ändern.
                 </p>
             </div>
         </div>
@@ -137,7 +137,7 @@
                         </div>
                     </div>
 
-                    {% if feature_enabled('photos') %}
+                    {% if feature('photos') %}
                     <div class="col-md-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -172,7 +172,7 @@
                                 Kennwort ändern
                             </div>
                             <div class="panel-body">
-                                {% if app.user.oauthAccount %}
+                                {% if app.user.oauthAccount and not is_granted('ROLE_ADMIN') %}
                                     <div class="alert alert-info" role="alert">
                                         Du kannst dein Kennwort nicht ändern, weil du dich über ein soziales Netzwerk
                                         bei criticalmass.in anmeldest.
@@ -218,7 +218,7 @@
                                 E-Mail-Adresse ändern
                             </div>
                             <div class="panel-body">
-                                {% if app.user.oauthAccount %}
+                                {% if app.user.oauthAccount and not is_granted('ROLE_ADMIN') %}
                                     <div class="alert alert-info" role="alert">
                                         Du kannst deine E-Mail-Adresse nicht ändern, weil du dich über ein soziales
                                         Netzwerk bei criticalmass.in anmeldest.
@@ -239,32 +239,6 @@
                             </div>
                         </div>
                     </div>
-
-                    {% if feature_enabled('bikeright') %}
-                        <div class="col-md-6">
-                            <div class="panel panel-bikeright">
-                                <div class="panel-heading">
-                                    <small class="pull-right">
-                                        Anzeige
-                                    </small>
-
-                                    Bikeright-Rabattcode
-                                </div>
-                                <div class="panel-body">
-                                    <p>
-                                        Ab sofort! Kostenfreie Rechtsberatung für Community-Mitglieder!
-                                    </p>
-
-                                    <p class="text-center">
-                                        <a class="btn btn-bikeright"
-                                           href="{{ path('criticalmass_user_bikeright_view') }}">
-                                            Mehr erfahren
-                                        </a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    {% endif %}
                 </div>
             </div>
         </div>

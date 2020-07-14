@@ -12,7 +12,7 @@ define(['Map', 'Polyline.encoded'], function () {
             var polyline = L.Polyline.fromEncoded(polylineString);
             polyline.addTo(map.map);
 
-            map.map.fitBounds(polyline);
+            map.map.fitBounds(polyline.getBounds());
         });
     };
 

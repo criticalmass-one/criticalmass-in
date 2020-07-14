@@ -2,6 +2,8 @@
 
 namespace App\Criticalmass\Geo\DistanceCalculator;
 
+use Caldera\GeoBasic\Coord\CoordInterface;
+
 class DistanceCalculator extends AbstractDistanceCalculator
 {
     public function calculate(): float
@@ -9,22 +11,27 @@ class DistanceCalculator extends AbstractDistanceCalculator
         $distance = 0.0;
 
         if (1 >= count($this->positionList)) {
-            return 0.0;
+            return $distance;
         }
 
         $position1 = $this->positionList->get(0);
 
-        for ($i = 1; $i < count($this->positionList); ++$i) {
+        for ($i = 1, $iMax = count($this->positionList); $i < $iMax; ++$i) {
             $position2 = $this->positionList->get($i);
 
-            $dx = 71.5 * ($position1->getLongitude() - $position2->getLongitude());
-            $dy = 111.3 * ($position1->getLatitude() - $position2->getLatitude());
-
-            $distance += sqrt($dx * $dx + $dy * $dy);
-
+            $distance += self::calculateDistance($position1, $position2);
+            
             $position1 = $position2;
         }
 
         return $distance;
+    }
+
+    public static function calculateDistance(CoordInterface $coordA, CoordInterface $coordB): float
+    {
+        $dx = 71.5 * ($coordA->getLongitude() - $coordB->getLongitude());
+        $dy = 111.3 * ($coordA->getLatitude() - $coordB->getLatitude());
+
+        return sqrt($dx * $dx + $dy * $dy);
     }
 }

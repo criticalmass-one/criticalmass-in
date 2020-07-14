@@ -1,6 +1,6 @@
 <div class="row margin-bottom-medium">
     <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-        {% if ride.location and ride.hasLocation %}
+        {% if ride.location and ride.latitude and ride.longitude %}
             <div id="map-{{ ride.id }}"
                  data-map-center-latitude="{{ ride.latitude }}"
                  data-map-center-longitude="{{ ride.longitude }}"
@@ -65,7 +65,7 @@
                 </dl>
             </div>
 
-            {% if ride.location and ride.hasLocation %}
+            {% if ride.location and ride.latitude and ride.longitude %}
                 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                     <dl>
                         <dt>

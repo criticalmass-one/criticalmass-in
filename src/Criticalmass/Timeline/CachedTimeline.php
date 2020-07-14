@@ -2,20 +2,25 @@
 
 namespace App\Criticalmass\Timeline;
 
-use App\Criticalmass\Feature\FeatureManager\FeatureManagerInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
+use Flagception\Manager\FeatureManagerInterface;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 use Symfony\Component\Templating\EngineInterface;
 
 class CachedTimeline extends Timeline
 {
+    /** @var int $ttl */
     protected $ttl;
 
-    public function __construct(RegistryInterface $doctrine, EngineInterface $templating, FeatureManagerInterface $featureManager, int $cachedTimelineTtl = 300)
+    /** @var string $redisUrl */
+    protected $redisUrl;
+
+    public function __construct(ManagerRegistry $doctrine, EngineInterface $templating, FeatureManagerInterface $featureManager, string $redisUrl, int $cachedTimelineTtl = 300)
     {
         $this->doctrine = $doctrine;
         $this->templating = $templating;
         $this->ttl = $cachedTimelineTtl;
+        $this->redisUrl = $redisUrl;
 
         parent::__construct($doctrine, $templating, $featureManager);
     }
@@ -32,7 +37,7 @@ class CachedTimeline extends Timeline
             $cacheKey .= '-end-' . $this->endDateTime->format('Y-m-d');
         }
 
-        $redisConnection = RedisAdapter::createConnection('redis://localhost');
+        $redisConnection = RedisAdapter::createConnection($this->redisUrl);
 
         $cache = new RedisAdapter(
             $redisConnection,
@@ -46,7 +51,7 @@ class CachedTimeline extends Timeline
             $this->process();
 
             $timeline
-                ->set($this->content)
+                ->set($this->getTimelineContentList())
                 ->expiresAfter($this->ttl);
 
             $cache->save($timeline);

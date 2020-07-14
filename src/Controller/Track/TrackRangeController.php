@@ -2,18 +2,17 @@
 
 namespace App\Controller\Track;
 
+use App\Controller\AbstractController;
+use App\Criticalmass\Geo\LatLngListGenerator\SimpleLatLngListGenerator;
+use App\Entity\Track;
 use App\Event\Track\TrackTrimmedEvent;
 use App\Form\Type\TrackRangeType;
-use App\Criticalmass\Gps\LatLngListGenerator\SimpleLatLngListGenerator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use App\Controller\AbstractController;
-use App\Entity\Track;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class TrackRangeController extends AbstractController
 {
@@ -27,9 +26,9 @@ class TrackRangeController extends AbstractController
 
         if (Request::METHOD_POST === $request->getMethod()) {
             return $this->rangePostAction($request, $track, $form, $latLngListGenerator, $eventDispatcher);
-        } else {
-            return $this->rangeGetAction($request, $track, $form, $latLngListGenerator, $eventDispatcher);
         }
+
+        return $this->rangeGetAction($request, $track, $form, $latLngListGenerator, $eventDispatcher);
     }
 
     protected function rangeGetAction(Request $request, Track $track, FormInterface $form, SimpleLatLngListGenerator $latLngListGenerator, EventDispatcherInterface $eventDispatcher): Response
@@ -53,6 +52,9 @@ class TrackRangeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var Track $track */
             $track = $form->getData();
+
+            // this may not be done in TrackEventSubscriber as the events are sometimes triggered automatically
+            $track->setReviewed(true);
 
             $eventDispatcher->dispatch(TrackTrimmedEvent::NAME, new TrackTrimmedEvent($track));
         }

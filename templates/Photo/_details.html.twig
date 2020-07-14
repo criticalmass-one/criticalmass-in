@@ -7,18 +7,20 @@
     <div class="panel-body">
         <dl>
             <dt>
-                Fotograf
+                Fotografïn
             </dt>
             <dd>
                 {{ photo.user.username }}
             </dd>
 
+            {% if photo.exifCreationDate %}
             <dt>
                 Aufnahmedatum
             </dt>
             <dd>
-                {{ photo.dateTime|date('d.m.y H:i:s', photo.ride.city.timezone) }} Uhr
+                {{ photo.exifCreationDate|date('d.m.y H:i:s', photo.ride.city.timezone) }} Uhr
             </dd>
+            {% endif %}
 
             {% if photo.location %}
                 <dt>
@@ -40,48 +42,48 @@
                 </dd>
             {% endif %}
 
-            {% if exifData and exifData.exposure %}
+            {% if photo.exifExposure %}
                 <dt>
                     Verschlusszeit
                 </dt>
                 <dd>
-                    {{ exifData.exposure }}"
+                    {{ photo.exifExposure }}"
                 </dd>
             {% endif %}
 
-            {% if exifData and exifData.aperture %}
+            {% if photo.exifAperture %}
                 <dt>
                     Blende
                 </dt>
                 <dd>
-                    {{ exifData.aperture }}
+                    {{ photo.exifAperture }}
                 </dd>
             {% endif %}
 
-            {% if exifData and exifData.iso %}
+            {% if photo.exifIso %}
                 <dt>
                     ISO
                 </dt>
                 <dd>
-                    {{ exifData.iso }}
+                    {{ photo.exifIso }}
                 </dd>
             {% endif %}
 
-            {% if exifData and exifData.focalLength %}
+            {% if photo.exifFocalLength %}
                 <dt>
                     Brennweite
                 </dt>
                 <dd>
-                    {{ exifData.focalLength }} mm
+                    {{ photo.exifFocalLength }} mm
                 </dd>
             {% endif %}
 
-            {% if exifData and exifData.camera %}
+            {% if photo.exifCamera %}
                 <dt>
                     Kamera
                 </dt>
                 <dd>
-                    {{ exifData.camera }}
+                    {{ photo.exifCamera }}
                 </dd>
             {% endif %}
         </dl>

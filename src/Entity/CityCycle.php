@@ -2,15 +2,18 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\Router\Annotation as Routing;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use App\Criticalmass\Router\Annotation as Routing;
+use JMS\Serializer\Annotation as JMS;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CityCycleRepository")
  * @ORM\Table(name="city_cycle")
+ * @JMS\ExclusionPolicy("all")
  */
 class CityCycle implements RouteableInterface
 {
@@ -32,7 +35,7 @@ class CityCycle implements RouteableInterface
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Routing\RouteParameter(name="cycleId")
+     * @Routing\RouteParameter(name="cityCycleId")
      */
     protected $id;
 
@@ -56,34 +59,49 @@ class CityCycle implements RouteableInterface
 
     /**
      * @ORM\Column(type="smallint", nullable=false)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
+     * @Assert\Range(min="0", max="6")
      */
     protected $dayOfWeek;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
+     * @Assert\Range(min="0", max="4")
      */
     protected $weekOfMonth;
 
     /**
      * @ORM\Column(type="time", nullable=true)
+     * @Assert\Type(type="\DateTime")
      */
     protected $time;
 
     /**
      * @var string
      * @ORM\Column(type="string", nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $location;
 
     /**
      * @var float
      * @ORM\Column(type="float", nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
+     * @Assert\NotEqualTo(value="0.0")
      */
     protected $latitude = 0.0;
 
     /**
      * @var float
      * @ORM\Column(type="float", nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
+     * @Assert\NotEqualTo(value="0.0")
      */
     protected $longitude = 0.0;
 
@@ -108,14 +126,38 @@ class CityCycle implements RouteableInterface
     /**
      * @var \DateTime
      * @ORM\Column(type="date", nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $validFrom;
 
     /**
      * @var \DateTime
      * @ORM\Column(type="date", nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $validUntil;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $rideCalculatorFqcn;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $description;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $specialDayOfWeek;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $specialWeekOfMonth;
 
     public function __construct()
     {
@@ -289,15 +331,21 @@ class CityCycle implements RouteableInterface
         return ($this->validFrom && $this->validUntil);
     }
 
+    /**
+     * @param \DateTime|null $dateTime
+     * @return bool
+     * @throws \Exception
+     * @deprecated
+     */
     public function isValid(\DateTime $dateTime = null): bool
     {
         if (!$dateTime) {
             $dateTime = new \DateTime();
         }
 
-        return $this->validFrom <= $dateTime && $this->validUntil >= $dateTime ||
-            $this->validFrom <= $dateTime && $this->validUntil === null ||
-            $this->validFrom === null && $this->validUntil >= $dateTime;
+        return ($this->validFrom <= $dateTime && $this->validUntil >= $dateTime) ||
+            ($this->validFrom <= $dateTime && $this->validUntil === null) ||
+            ($this->validFrom === null && $this->validUntil >= $dateTime);
     }
 
     public function addRide(Ride $ride): CityCycle
@@ -322,6 +370,59 @@ class CityCycle implements RouteableInterface
     public function removeRide(Ride $ride): CityCycle
     {
         $this->rides->removeElement($ride);
+
+        return $this;
+    }
+
+    public function getRideCalculatorFqcn(): ?string
+    {
+        return $this->rideCalculatorFqcn;
+    }
+
+    public function setRideCalculatorFqcn(?string $rideCalculatorFqcn): self
+    {
+        $this->rideCalculatorFqcn = $rideCalculatorFqcn;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function hasSpecialCalculator(): bool
+    {
+        return $this->rideCalculatorFqcn !== null;
+    }
+
+    public function getSpecialDayOfWeek(): ?string
+    {
+        return $this->specialDayOfWeek;
+    }
+
+    public function setSpecialDayOfWeek(?string $specialDayOfWeek): self
+    {
+        $this->specialDayOfWeek = $specialDayOfWeek;
+
+        return $this;
+    }
+
+    public function getSpecialWeekOfMonth(): ?string
+    {
+        return $this->specialWeekOfMonth;
+    }
+
+    public function setSpecialWeekOfMonth(?string $specialWeekOfMonth): self
+    {
+        $this->specialWeekOfMonth = $specialWeekOfMonth;
 
         return $this;
     }

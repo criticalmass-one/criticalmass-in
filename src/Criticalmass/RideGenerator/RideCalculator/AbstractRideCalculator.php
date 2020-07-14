@@ -4,23 +4,21 @@ namespace App\Criticalmass\RideGenerator\RideCalculator;
 
 use App\Criticalmass\RideNamer\RideNamerListInterface;
 use App\Entity\CityCycle;
+use App\Entity\Ride;
 
 abstract class AbstractRideCalculator implements RideCalculatorInterface
 {
-    /** @var int year */
-    protected $year;
-
     /** @var int $month */
     protected $month;
 
-    /** @var array $cycle */
-    protected $cycleList;
+    /** @var int $year */
+    protected $year;
 
-    /** @var array $rideList */
-    protected $rideList;
+    /** @var CityCycle $cycle */
+    protected $cycle;
 
     /** @var RideNamerListInterface $rideNamerList */
-    protected $rideNamerList;
+    protected $rideNamerList = [];
 
     /** @var \DateTimeZone $timezone */
     protected $timezone = null;
@@ -33,6 +31,13 @@ abstract class AbstractRideCalculator implements RideCalculatorInterface
     public function setTimezone(\DateTimeZone $timezone): RideCalculatorInterface
     {
         $this->timezone = $timezone;
+
+        return $this;
+    }
+
+    public function setCycle(CityCycle $cityCycle): RideCalculatorInterface
+    {
+        $this->cycle = $cityCycle;
 
         return $this;
     }
@@ -51,40 +56,5 @@ abstract class AbstractRideCalculator implements RideCalculatorInterface
         return $this;
     }
 
-    public function setDateTime(\DateTime $dateTime): RideCalculatorInterface
-    {
-        $this->year = $dateTime->format('Y');
-        $this->month = $dateTime->format('m');
-
-        return $this;
-    }
-
-    public function setCycleList(array $cycleList): RideCalculatorInterface
-    {
-        $this->cycleList = $cycleList;
-
-        return $this;
-    }
-
-    public function addCycle(CityCycle $cityCycle): RideCalculatorInterface
-    {
-        $this->cycleList[] = $cityCycle;
-
-        return $this;
-    }
-
-    public abstract function execute(): RideCalculatorInterface;
-
-    public function getRideList(): array
-    {
-        return $this->rideList;
-    }
-
-    public function reset(): RideCalculatorInterface
-    {
-        $this->cycleList = [];
-        $this->rideList = [];
-
-        return $this;
-    }
+    public abstract function execute(): ?Ride;
 }

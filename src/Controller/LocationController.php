@@ -88,7 +88,7 @@ class LocationController extends AbstractController
 
         $query->setSize(25);
         $query->setSort([
-            'simpleDate'
+            'dateTime'
         ]);
 
         $result = $finder->find($query);

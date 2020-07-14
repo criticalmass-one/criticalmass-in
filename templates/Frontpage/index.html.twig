@@ -31,7 +31,7 @@
 
                         <p class="text-center">
                             <a href="{{ path('caldera_criticalmass_intro') }}" class="btn btn-primary">
-                                <i class="fa fa-bicycle"></i>
+                                <i class="far fa-bicycle"></i>
                                 Erfahre mehr über criticalmass.in
                             </a>
                         </p>
@@ -40,20 +40,13 @@
 
                 <div class="row margin-top-medium">
                     <div class="col-md-12">
-                        {{ timelineContent|raw }}
+                        {{ include('Timeline/timeline.html.twig') }}
                     </div>
                 </div>
             </div>
 
             <div class="col-md-4">
-                {% if feature_enabled('bikeright') %}
-                <div class="row">
-                    <div class="col-md-12">
-                        {{ include('Frontpage/_bikeright.html.twig') }}
-                    </div>
-                </div>
-                {% endif %}
-
+                {% if feature('frontpage_advertisment') %}
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-default">
@@ -70,6 +63,7 @@
                         </div>
                     </div>
                 </div>
+                {% endif %}
 
                 {{ render(controller('App\\Controller\\FrontpageController::rideListAction')) }}
             </div>
@@ -79,6 +73,4 @@
     {% include('Template/Includes/_adserver.html.twig') %}
 
     {% include('Template/Includes/_footer.html.twig') %}
-
-    {% include('Template/Includes/_piwik.html.twig') %}
 {% endblock %}

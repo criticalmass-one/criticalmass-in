@@ -7,7 +7,7 @@ use App\Entity\Photo;
 use App\Entity\Ride;
 use App\Entity\Track;
 use App\Entity\User;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Table;
@@ -20,10 +20,10 @@ class RelocatePhotosCommand extends Command
     /** @var PhotoGpsInterface $photoGps */
     protected $photoGps;
 
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
-    public function __construct(PhotoGpsInterface $photoGps, RegistryInterface $registry)
+    public function __construct(PhotoGpsInterface $photoGps, ManagerRegistry $registry)
     {
         $this->photoGps = $photoGps;
         $this->registry = $registry;
@@ -98,7 +98,7 @@ class RelocatePhotosCommand extends Command
 
             $table->addRow([
                 $photo->getId(),
-                $photo->getDateTime()->format('Y-m-d H:i:s'),
+                $photo->getExifCreationDate()->format('Y-m-d H:i:s'),
                 $photo->getLatitude(),
                 $photo->getLongitude(),
                 $photo->getLocation(),

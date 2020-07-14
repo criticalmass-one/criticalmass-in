@@ -5,6 +5,7 @@ fos_elastica:
         criticalmass_help_category:
             client: default
             finder:
+            index_name: criticalmass_%env(APP_ENV)%_help_category
             settings:
                 index:
                     analysis:
@@ -30,35 +31,37 @@ fos_elastica:
                         finder: ~
 
         criticalmass_help_item:
-                    client: default
-                    finder:
-                    settings:
-                        index:
-                            analysis:
-                                analyzer:
-                                    umlauts_analyzer:
-                                        type: custom
-                                        tokenizer: lowercase
-                                        filter   : [umlauts_filter]
-                                filter:
-                                    umlauts_filter:
-                                        type: "asciifolding"
-                    types:
-                        help_item:
-                            properties:
-                                id: ~
-                                title: ~
-                                text: ~
-                            persistence:
-                                driver: orm
-                                model: App\Entity\HelpItem
-                                provider: ~
-                                listener: ~
-                                finder: ~
+            client: default
+            finder:
+            index_name: criticalmass_%env(APP_ENV)%_help_item
+            settings:
+                index:
+                    analysis:
+                        analyzer:
+                            umlauts_analyzer:
+                                type: custom
+                                tokenizer: lowercase
+                                filter: [umlauts_filter]
+                        filter:
+                            umlauts_filter:
+                                type: "asciifolding"
+            types:
+                help_item:
+                    properties:
+                        id: ~
+                        title: ~
+                        text: ~
+                    persistence:
+                        driver: orm
+                        model: App\Entity\HelpItem
+                        provider: ~
+                        listener: ~
+                        finder: ~
 
         criticalmass_ride:
             client: default
             finder:
+            index_name: criticalmass_%env(APP_ENV)%_ride
             settings:
                 index:
                     analysis:
@@ -74,14 +77,14 @@ fos_elastica:
                 ride:
                     properties:
                         id: ~
-                        title: ~
-                        description: ~
+                        title: { type: keyword }
+                        description: { type: text }
                         city: { type: keyword }
                         country: { type: keyword }
-                        location: ~
+                        region: { type: keyword }
+                        location: { type: keyword }
                         isEnabled: ~
-                        dateTime: ~
-                        simpleDate: { type: date, format: "yyyy-MM-dd" }
+                        dateTime: { type: date, format: "strict_date_optional_time" }
                         pin: { type: geo_point }
                     persistence:
                         driver: orm
@@ -93,6 +96,44 @@ fos_elastica:
         criticalmass_city:
             client: default
             finder:
+            index_name: criticalmass_%env(APP_ENV)%_city
+            settings:
+                index:
+                    analysis:
+                        analyzer:
+                            umlauts_analyzer:
+                                type: custom
+                                tokenizer: lowercase
+                                filter: [umlauts_filter]
+                        filter:
+                            umlauts_filter:
+                                type: "asciifolding"
+            types:
+                city:
+                    properties:
+                        id: ~
+                        city: { type: keyword }
+                        title: { type: keyword }
+                        description: { type: text }
+                        longDescription: { type: text }
+                        punchLine: { type: text }
+                        isEnabled: ~
+                        enabled: ~
+                        createdAt: { type: date, format: "strict_date_optional_time" }
+                        updatedAt: { type: date, format: "strict_date_optional_time" }
+                        country: { type: keyword }
+                        pin: { type: geo_point }
+                    persistence:
+                        driver: orm
+                        model: App\Entity\City
+                        provider: ~
+                        listener: ~
+                        finder: ~
+
+        criticalmass_blog_post:
+            client: default
+            finder:
+            index_name: criticalmass_%env(APP_ENV)%_blog_post
             settings:
                 index:
                     analysis:
@@ -105,19 +146,108 @@ fos_elastica:
                             umlauts_filter:
                                 type: "asciifolding"
             types:
-                city:
+                blog_post:
                     properties:
                         id: ~
                         title: ~
+                        intro: ~
+                        text: ~
+                        enabled: ~
+                        createdAt: ~
+                    persistence:
+                        driver: orm
+                        model: App\Entity\BlogPost
+                        provider: ~
+                        listener: ~
+                        finder: ~
+
+        criticalmass_photo:
+            client: default
+            finder:
+            index_name: criticalmass_%env(APP_ENV)%_photo
+            settings:
+                index:
+                    analysis:
+                        analyzer:
+                            umlauts_analyzer:
+                                type: custom
+                                tokenizer: lowercase
+                                filter: [umlauts_filter]
+                        filter:
+                            umlauts_filter:
+                                type: "asciifolding"
+            types:
+                photo:
+                    indexable_callback: 'elasticable'
+                    properties:
+                        id: ~
                         description: ~
-                        longDescription: ~
-                        punchLine: ~
-                        isEnabled: ~
-                        country: { type: keyword }
+                        city: { type: keyword }
+                        rideId:
+                            type: keyword
+                            property_path: ride.id
+                        #region: { type: keyword }
+                        location: ~
+                        latitude: ~
+                        longitude: ~
+                        enabled: ~
+                        deleted: ~
+                        exifExposure: ~
+                        exifFocalLength: ~
+                        exifAperture: ~
+                        exifIso: ~
+                        exifCamera: ~
+                        exifCreationDate: { type: date, format: "strict_date_optional_time" }
+                        creationDateTime: { type: date, format: "strict_date_optional_time" }
                         pin: { type: geo_point }
                     persistence:
                         driver: orm
-                        model: App\Entity\City
+                        model: App\Entity\Photo
+                        provider: ~
+                        listener: ~
+                        finder: ~
+
+        criticalmass_track:
+            client: default
+            finder:
+            index_name: criticalmass_%env(APP_ENV)%_track
+            settings:
+                index:
+                    analysis:
+                        analyzer:
+                            umlauts_analyzer:
+                                type: custom
+                                tokenizer: lowercase
+                                filter: [umlauts_filter]
+                        filter:
+                            umlauts_filter:
+                                type: "asciifolding"
+            types:
+                track:
+                    indexable_callback: 'elasticable'
+                    properties:
+                        id: ~
+                        cityId:
+                            type: keyword
+                            property_path: ride.city.id
+                        rideId:
+                            type: keyword
+                            property_path: ride.id
+                        regionId:
+                            type: keyword
+                            property_path: ride.city.region.id
+                        startDateTime:
+                            type: date
+                            format: "strict_date_optional_time"
+                        endDateTime:
+                            type: date
+                            format: "strict_date_optional_time"
+                        creationDateTime:
+                            type: date
+                            format: "strict_date_optional_time"
+                    persistence:
+                        driver: orm
+                        model: App\Entity\Track
                         provider: ~
                         listener: ~
                         finder: ~

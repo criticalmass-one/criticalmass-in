@@ -1,13 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Criticalmass\Image\PhotoGps;
 
+use App\Criticalmass\Geo\Converter\TrackToPositionListConverter;
+use App\Criticalmass\Geo\Loop\Loop;
 use PHPExif\Exif;
-use PHPExif\Reader\Reader;
 
-/**
- * @deprecated
- */
 class PhotoGps extends AbstractPhotoGps
 {
     public function execute(): PhotoGpsInterface
@@ -28,10 +26,19 @@ class PhotoGps extends AbstractPhotoGps
         $this->trackReader->loadTrack($this->track);
 
         if ($dateTime = $this->getExifDateTime()) {
-            $result = $this->trackReader->findCoordNearDateTime($dateTime);
+            $converter = new TrackToPositionListConverter($this->trackReader);
+            $positionList = $converter->convert($this->track);
 
-            $this->photo->setLatitude($result['latitude']);
-            $this->photo->setLongitude($result['longitude']);
+            $position = $this->loop
+                ->setDateTimeZone($this->dateTimeZone)
+                ->setPositionList($positionList)
+                ->searchPositionForDateTime($dateTime);
+
+            if ($position) {
+                $this->photo
+                    ->setLatitude($position->getLatitude())
+                    ->setLongitude($position->getLongitude());
+            }
         }
 
         return $this;
@@ -41,7 +48,11 @@ class PhotoGps extends AbstractPhotoGps
     {
         $exif = $this->readExifData();
 
-        if ($dateTime = $exif->getCreationDate()) {
+        if ($exif && $dateTime = $exif->getCreationDate()) {
+            $dateTime = new \DateTime(sprintf($dateTime->format('Y-m-d H:i:s')), new \DateTimeZone('Europe/Berlin'));
+
+            $dateTime->setTimezone(new \DateTimeZone('UTC'))->getTimezone();
+
             return $dateTime;
         }
 
@@ -52,13 +63,13 @@ class PhotoGps extends AbstractPhotoGps
     {
         $exif = $this->readExifData();
 
-        if ($gps = $exif->getGPS()) {
+        if ($exif && $gps = $exif->getGPS()) {
             if (is_string($gps)) {
                 list($lat, $lon) = explode(',', $gps);
 
                 $gps = [
-                    'lat' => $lat,
-                    'lon' => $lon,
+                    'lat' => (float) $lat,
+                    'lon' => (float) $lon,
                 ];
             }
 
@@ -68,13 +79,8 @@ class PhotoGps extends AbstractPhotoGps
         return null;
     }
 
-    protected function readExifData(): Exif
+    protected function readExifData(): ?Exif
     {
-        $filename = sprintf('%s/%s', $this->uploadDestinationPhoto, $this->photo->getImageName());
-
-        $reader = Reader::factory(Reader::TYPE_NATIVE);
-        $exif = $reader->read($filename);
-
-        return $exif;
+        return $this->exifWrapper->getExifData($this->photo);
     }
 }

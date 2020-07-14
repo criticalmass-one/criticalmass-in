@@ -93,6 +93,11 @@ class Post implements Crawlable
      */
     protected $crawled = false;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\BlogPost", inversedBy="comments")
+     */
+    private $blogPost;
+
     public function __construct()
     {
         $this->dateTime = new \DateTime();
@@ -270,6 +275,18 @@ class Post implements Crawlable
     public function setCrawled(bool $crawled): Crawlable
     {
         $this->crawled = $crawled;
+
+        return $this;
+    }
+
+    public function getBlogPost(): ?BlogPost
+    {
+        return $this->blogPost;
+    }
+
+    public function setBlogPost(?BlogPost $blogPost): self
+    {
+        $this->blogPost = $blogPost;
 
         return $this;
     }

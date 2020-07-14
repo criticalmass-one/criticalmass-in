@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\EntityInterface\PhotoInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,7 +14,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Entity(repositoryClass="App\Repository\FrontpageTeaserRepository")
  * @Vich\Uploadable
  */
-class FrontpageTeaser
+class FrontpageTeaser implements PhotoInterface
 {
     /**
      * @ORM\Id
@@ -45,14 +46,28 @@ class FrontpageTeaser
     protected $text;
 
     /**
-     * @Vich\UploadableField(mapping="frontpage_teaser", fileNameProperty="imageName")
+     * @var File $imageFile
+     * @Vich\UploadableField(mapping="frontpage_teaser", fileNameProperty="imageName",  size="imageSize", mimeType="imageMimeType")
      */
     protected $imageFile;
 
     /**
+     * @var string $imageName
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $imageName;
+
+    /**
+     * @var int $imageSize
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $imageSize;
+
+    /**
+     * @var string $imageMimeType
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $imageMimeType;
 
     /**
      * @ORM\Column(type="smallint")
@@ -144,7 +159,7 @@ class FrontpageTeaser
         return $this->text;
     }
 
-    public function setImageFile(File $image = null): FrontpageTeaser
+    public function setImageFile(File $image = null): PhotoInterface
     {
         $this->imageFile = $image;
 
@@ -160,7 +175,7 @@ class FrontpageTeaser
         return $this->imageFile;
     }
 
-    public function setImageName(string $imageName = null): FrontpageTeaser
+    public function setImageName(string $imageName = null): PhotoInterface
     {
         $this->imageName = $imageName;
 
@@ -170,6 +185,30 @@ class FrontpageTeaser
     public function getImageName(): ?string
     {
         return $this->imageName;
+    }
+
+    public function getImageSize(): ?int
+    {
+        return $this->imageSize;
+    }
+
+    public function setImageSize(int $imageSize = null): PhotoInterface
+    {
+        $this->imageSize = $imageSize;
+
+        return $this;
+    }
+
+    public function getImageMimeType(): ?string
+    {
+        return $this->imageMimeType;
+    }
+
+    public function setImageMimeType(string $imageMimeType = null): PhotoInterface
+    {
+        $this->imageMimeType = $imageMimeType;
+
+        return $this;
     }
 
     public function setPosition(int $position): FrontpageTeaser

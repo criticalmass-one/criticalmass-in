@@ -3,6 +3,7 @@
 namespace App\Menu;
 
 use App\Entity\User;
+use Flagception\Manager\FeatureManagerInterface;
 use Knp\Menu\FactoryInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -14,10 +15,14 @@ abstract class AbstractBuilder
     /** @var TokenStorageInterface $tokenStorage */
     protected $tokenStorage;
 
-    public function __construct(FactoryInterface $factory, TokenStorageInterface $tokenStorage)
+    /** @var FeatureManagerInterface $featureManager */
+    protected $featureManager;
+
+    public function __construct(FactoryInterface $factory, TokenStorageInterface $tokenStorage, FeatureManagerInterface $featureManager)
     {
         $this->factory = $factory;
         $this->tokenStorage = $tokenStorage;
+        $this->featureManager = $featureManager;
     }
 
     protected function isUserLoggedIn(): bool

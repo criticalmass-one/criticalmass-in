@@ -4,7 +4,6 @@ namespace App\Criticalmass\Geocoding;
 
 use App\Criticalmass\Geocoding\LocationBuilder\LocationBuilderInterface;
 use Geocoder\Location;
-use Geocoder\Query\ReverseQuery;
 use Symfony\Component\Cache\Adapter\AbstractAdapter;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 use Symfony\Component\Cache\CacheItem;
@@ -17,9 +16,9 @@ class CachedReverseGeocoder extends ReverseGeocoder
     /** @var int */
     protected const LIFETIME = 2678400; // 60 * 60 * 24 * 31 = 2678400
 
-    public function __construct(LocationBuilderInterface $locationBuilder)
+    public function __construct(LocationBuilderInterface $locationBuilder, string $redisUrl)
     {
-        $redisConnection = RedisAdapter::createConnection('redis://localhost');
+        $redisConnection = RedisAdapter::createConnection($redisUrl);
 
         $this->cache = new RedisAdapter(
             $redisConnection,

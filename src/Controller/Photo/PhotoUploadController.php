@@ -6,18 +6,15 @@ use App\Criticalmass\Image\PhotoUploader\PhotoUploaderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Controller\AbstractController;
-use App\Entity\Photo;
 use App\Entity\Ride;
-use App\Criticalmass\Image\PhotoGps\PhotoGps;
-use PHPExif\Reader\Reader;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
-use App\Criticalmass\Feature\Annotation\Feature as Feature;
+use Flagception\Bundle\FlagceptionBundle\Annotations\Feature;
 
 /**
- * @Feature(name="photos")
+ * @Feature("photos")
  */
 class PhotoUploadController extends AbstractController
 {
@@ -46,13 +43,15 @@ class PhotoUploadController extends AbstractController
         /** @var UploadedFile $uploadedFile */
         $uploadedFile = $request->files->get('file');
 
-        if ($uploadedFile) {
+        if ($uploadedFile instanceof UploadedFile) {
             $photoUploader
                 ->setRide($ride)
                 ->setUser($user)
-                ->addFile($uploadedFile->getPathname());
+                ->addUploadedFile($uploadedFile);
+
+            return new Response('Success', 200);
         }
 
-        return new Response('');
+        return new Response('', 403);
     }
 }

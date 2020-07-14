@@ -39,21 +39,6 @@ class BlockedCity
     protected $description;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $url;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $facebook;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $twitter;
-
-    /**
      * @ORM\Column(type="boolean")
      */
     protected $photosLink;
@@ -102,42 +87,6 @@ class BlockedCity
     public function getDescription(): string
     {
         return $this->description;
-    }
-
-    public function setUrl(string $url): BlockedCity
-    {
-        $this->url = $url;
-
-        return $this;
-    }
-
-    public function getUrl(): ?string
-    {
-        return $this->url;
-    }
-
-    public function setFacebook(string $facebook): BlockedCity
-    {
-        $this->facebook = $facebook;
-
-        return $this;
-    }
-
-    public function getFacebook(): ?string
-    {
-        return $this->facebook;
-    }
-
-    public function setTwitter(string $twitter): BlockedCity
-    {
-        $this->twitter = $twitter;
-
-        return $this;
-    }
-
-    public function getTwitter(): ?string
-    {
-        return $this->twitter;
     }
 
     public function setPhotosLink(bool $photosLink): BlockedCity

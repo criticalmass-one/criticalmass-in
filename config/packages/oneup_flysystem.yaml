@@ -1,0 +1,59 @@
+oneup_flysystem:
+    adapters:
+        photo_photo_adapter:
+            local:
+                directory: '%upload_destination.photo%'
+        user_photo_adapter:
+            local:
+                directory: '%upload_destination.user_photo%'
+        city_image_adapter:
+            local:
+                directory: '%upload_destination.city_photo%'
+        ride_image_adapter:
+            local:
+                directory: '%upload_destination.ride_photo%'
+        frontpage_teaser_adapter:
+            local:
+                directory: '%upload_destination.frontpage_teaser%'
+        track_track_adapter:
+            local:
+                directory: '%upload_destination.track%'
+        blogpost_teaser_adapter:
+            local:
+                directory: '%upload_destination.blogpost_teaser%'
+        heatmap_tile_adapter:
+            local:
+                directory: '%upload_destination.heatmap_tile%'
+
+    filesystems:
+        flysystem_photo_photo:
+            adapter: photo_photo_adapter
+            mount: flysystem_photo_photo
+
+        flysystem_user_photo:
+            adapter: user_photo_adapter
+            mount: flysystem_user_photo
+
+        flysystem_city_image:
+            adapter: city_image_adapter
+            mount: flysystem_city_image
+
+        flysystem_ride_image:
+            adapter: ride_image_adapter
+            mount: flysystem_ride_image
+
+        flysystem_frontpage_teaser:
+            adapter: frontpage_teaser_adapter
+            mount: flysystem_frontpage_teaser
+
+        flysystem_track_track:
+            adapter: track_track_adapter
+            mount: flysystem_track_track
+
+        flysystem_blogpost_teaser:
+            adapter: blogpost_teaser_adapter
+            mount: flysystem_blogpost_teaser
+
+        flysystem_heatmap_tile:
+            adapter: heatmap_tile_adapter
+            mount: flysystem_heatmap_tile

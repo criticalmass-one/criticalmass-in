@@ -1,0 +1,7 @@
+caldera_criticalmass_blog_overview:
+    path:  /
+    controller: App\Controller\Blog\BlogController::overviewAction
+
+caldera_criticalmass_blog_post:
+    path:  /{slug}
+    controller: App\Controller\Blog\BlogController::showAction

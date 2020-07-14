@@ -1,10 +1,55 @@
-caldera_criticalmass_rest_ride_list:
-    path:     /ride
-    controller: App\Controller\Api\RideController::listAction
+caldera_criticalmass_rest_socialnetwork_profiles_list:
+    path:     /socialnetwork-profiles
+    controller: App\Controller\Api\SocialNetworkProfileController::listSocialNetworkProfilesAction
     methods:  [GET]
 
-caldera_criticalmass_rest_ride_list_deprecated:
-    path:     /ride/list
+caldera_criticalmass_rest_socialnetwork_profiles_citylist:
+    path:     /{citySlug}/socialnetwork-profiles
+    controller: App\Controller\Api\SocialNetworkProfileController::listSocialNetworkProfilesCityAction
+    methods:  [GET]
+
+caldera_criticalmass_rest_socialnetwork_profiles_update:
+    path:     /{citySlug}/socialnetwork-profiles/{profileId}
+    controller: App\Controller\Api\SocialNetworkProfileController::updateSocialNetworkProfileAction
+    methods:  [POST]
+
+caldera_criticalmass_rest_socialnetwork_profiles_create:
+    path:     /{citySlug}/socialnetwork-profiles
+    controller: App\Controller\Api\SocialNetworkProfileController::createSocialNetworkProfileAction
+    methods:  [PUT]
+
+caldera_criticalmass_rest_socialnetwork_feeditems_citylist:
+    path:     /{citySlug}/socialnetwork-feeditems
+    controller: App\Controller\Api\SocialNetworkFeedItemController::listSocialNetworkFeedItemsCityAction
+    methods:  [GET]
+
+caldera_criticalmass_rest_socialnetwork_feeditems_update:
+    path:     /{citySlug}/socialnetwork-feeditems/{feedItemId}
+    controller: App\Controller\Api\SocialNetworkFeedItemController::updateSocialNetworkFeedItemAction
+    methods:  [POST]
+
+caldera_criticalmass_rest_socialnetwork_feeditems_create:
+    path:     /{citySlug}/socialnetwork-feeditems
+    controller: App\Controller\Api\SocialNetworkFeedItemController::createSocialNetworkFeedItemAction
+    methods:  [PUT]
+
+caldera_criticalmass_rest_track_ridelist:
+    path:     /{citySlug}/{rideIdentifier}/listTracks
+    controller: App\Controller\Api\TrackController::listRideTrackAction
+    methods:  [GET]
+
+caldera_criticalmass_rest_track_view:
+    path:  /track/{trackId}
+    controller: App\Controller\Api\TrackController::viewAction
+    methods: [GET]
+
+caldera_criticalmass_rest_track_list:
+    path:  /track
+    controller: App\Controller\Api\TrackController::listAction
+    methods: [GET]
+
+caldera_criticalmass_rest_ride_list:
+    path:     /ride
     controller: App\Controller\Api\RideController::listAction
     methods:  [GET]
 
@@ -13,15 +58,29 @@ caldera_criticalmass_rest_city_list:
     controller: App\Controller\Api\CityController::listAction
     methods:  [GET]
 
-caldera_criticalmass_rest_city_list_deprecated:
-    path:     /city/list
-    controller: App\Controller\Api\CityController::listAction
+caldera_criticalmass_rest_photo_ridelist:
+    path:     /{citySlug}/{rideIdentifier}/listPhotos
+    controller: App\Controller\Api\PhotoController::listRidePhotosAction
     methods:  [GET]
 
-caldera_criticalmass_rest_photo_gallery:
-    path:     /photo/gallery
-    controller: App\Controller\Api\PhotoController::galleryAction
+caldera_criticalmass_rest_photo_list:
+    path:     /photo
+    controller: App\Controller\Api\PhotoController::listAction
     methods:  [GET]
+
+caldera_criticalmass_rest_location_list:
+    path:     /{citySlug}/location
+    controller: App\Controller\Api\LocationController::listLocationAction
+    methods:  [GET]
+    options:
+        expose: true
+
+caldera_criticalmass_rest_location_show:
+    path:     /{citySlug}/location/{locationSlug}
+    controller: App\Controller\Api\LocationController::showLocationAction
+    methods:  [GET]
+    options:
+        expose: true
 
 caldera_criticalmass_rest_city_show:
     path:     /{citySlug}
@@ -48,3 +107,15 @@ caldera_criticalmass_rest_estimate_create:
     path:     /estimate
     controller: App\Controller\Api\EstimateController::createAction
     methods:  [POST]
+
+caldera_criticalmass_rest_subride_list:
+    path:     /{citySlug}/{rideIdentifier}/subride
+    controller: App\Controller\Api\SubrideController::listSubrideAction
+    methods:  [GET]
+    options:
+        expose: true
+
+caldera_criticalmass_rest_subride_show:
+    path:     /{citySlug}/{rideIdentifier}/{subrideId}
+    controller: App\Controller\Api\SubrideController::showSubrideAction
+    methods:  [GET]

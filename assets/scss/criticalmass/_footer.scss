@@ -1,0 +1,15 @@
+footer#footer {
+  font-size: 0.9em;
+}
+
+#warming-stripes {
+  background-image: url(/images/stripes/globe.png);
+  background-size: 100% 1px;
+
+  width: 100%;
+  margin-top: 25px;
+
+  text-shadow: 1px 1px grey;
+  padding: 12px;
+  color: white;
+}

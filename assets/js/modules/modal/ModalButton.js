@@ -36,7 +36,7 @@ define([], function () {
         var icon = '';
 
         if (this._icon) {
-            icon = '<i class="fa fa-' + this._icon + '" aria-hidden="true"></i> ';
+            icon = '<i class="far fa-' + this._icon + '" aria-hidden="true"></i> ';
         }
 
         if (this._href) {

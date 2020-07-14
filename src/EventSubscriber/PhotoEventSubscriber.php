@@ -3,18 +3,20 @@
 namespace App\EventSubscriber;
 
 use App\Criticalmass\Geocoding\ReverseGeocoderInterface;
+use App\Criticalmass\Image\ExifHandler\ExifHandlerInterface;
+use App\Criticalmass\Image\GoogleCloud\ExportDataHandler\ExportDataHandlerInterface;
 use App\Criticalmass\Image\PhotoGps\PhotoGpsInterface;
 use App\Entity\Photo;
 use App\Entity\Track;
 use App\Event\Photo\PhotoDeletedEvent;
 use App\Event\Photo\PhotoUpdatedEvent;
 use App\Event\Photo\PhotoUploadedEvent;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class PhotoEventSubscriber implements EventSubscriberInterface
 {
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var ReverseGeocoderInterface $reverseGeocoder */
@@ -23,11 +25,19 @@ class PhotoEventSubscriber implements EventSubscriberInterface
     /** @var PhotoGpsInterface $photoGps */
     protected $photoGps;
 
-    public function __construct(RegistryInterface $registry, ReverseGeocoderInterface $reverseGeocoder, PhotoGpsInterface $photoGps)
+    /** @var ExifHandlerInterface $exifHandler */
+    protected $exifHandler;
+
+    /** @var ExportDataHandlerInterface $exportDataHandler */
+    protected $exportDataHandler;
+
+    public function __construct(ManagerRegistry $registry, ReverseGeocoderInterface $reverseGeocoder, PhotoGpsInterface $photoGps, ExifHandlerInterface $exifHandler, ExportDataHandlerInterface $exportDataHandler)
     {
         $this->registry = $registry;
         $this->reverseGeocoder = $reverseGeocoder;
         $this->photoGps = $photoGps;
+        $this->exifHandler = $exifHandler;
+        $this->exportDataHandler = $exportDataHandler;
     }
 
     public static function getSubscribedEvents(): array
@@ -41,14 +51,26 @@ class PhotoEventSubscriber implements EventSubscriberInterface
 
     public function onPhotoUploaded(PhotoUploadedEvent $photoUploadedEvent): void
     {
-        $this->reverseGeocode($photoUploadedEvent->getPhoto());
+        // this is for persisting the uploaded file into the filesystem
+        $this->registry->getManager()->flush();
+
+        $this->handleExifData($photoUploadedEvent->getPhoto(), $photoUploadedEvent->getTmpFilename());
         $this->locate($photoUploadedEvent->getPhoto());
+        $this->reverseGeocode($photoUploadedEvent->getPhoto());
+
+        $this->exportDataHandler->calculateForEntity($photoUploadedEvent->getPhoto());
+
+        // and this is to flush our changes to the filesystem
+        $this->registry->getManager()->flush();
     }
 
     public function onPhotoUpdated(PhotoUpdatedEvent $photoUpdatedEvent): void
     {
+        $this->handleExifData($photoUpdatedEvent->getPhoto(), $photoUpdatedEvent->getTmpFilename());
         $this->reverseGeocode($photoUpdatedEvent->getPhoto());
         $this->locate($photoUpdatedEvent->getPhoto());
+
+        $this->registry->getManager()->flush();
     }
 
     public function onPhotoDeleted(PhotoDeletedEvent $photoDeletedEvent): void
@@ -60,7 +82,7 @@ class PhotoEventSubscriber implements EventSubscriberInterface
         $this->reverseGeocoder->reverseGeocode($photo);
     }
 
-    protected function locate(Photo $photo, bool $flush = true): void
+    protected function locate(Photo $photo): void
     {
         $track = $this->registry->getRepository(Track::class)->findByUserAndRide($photo->getRide(), $photo->getUser());
 
@@ -71,13 +93,22 @@ class PhotoEventSubscriber implements EventSubscriberInterface
                     ->setTrack($track)
                     ->execute()
                     ->getPhoto();
-
-                if ($flush) {
-                    $this->registry->getManager()->flush();
-                }
             } catch (\Exception $exception) {
 
             }
+        }
+    }
+
+    protected function handleExifData(Photo $photo, string $tmpFilename = null): void
+    {
+        if ($tmpFilename) {
+            $exif = $this->exifHandler->readExifDataFromFile($tmpFilename);
+        } else {
+            $exif = $this->exifHandler->readExifDataFromPhotoFile($photo);
+        }
+
+        if ($exif) {
+            $this->exifHandler->assignExifDataToPhoto($photo, $exif);
         }
     }
 }

@@ -15,6 +15,9 @@ class RideParticipationEstimateItem extends AbstractItem
     /** @var int $estimatedParticipants */
     protected $estimatedParticipants;
 
+    /** @var bool $rideEnabled */
+    protected $rideEnabled;
+
     public function getRide(): Ride
     {
         return $this->ride;
@@ -49,5 +52,17 @@ class RideParticipationEstimateItem extends AbstractItem
         $this->estimatedParticipants = $estimatedParticipants;
 
         return $this;
+    }
+
+    public function setRideEnabled(bool $rideEnabled): RideParticipationEstimateItem
+    {
+        $this->rideEnabled = $rideEnabled;
+
+        return $this;
+    }
+
+    public function isRideEnabled(): bool
+    {
+        return $this->rideEnabled;
     }
 }

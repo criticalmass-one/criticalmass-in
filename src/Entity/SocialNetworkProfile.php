@@ -3,11 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="social_network_profile")
+ * @ORM\Table(name="social_network_profile", options={"charset"="utf8mb4"})
  * @ORM\Entity(repositoryClass="App\Repository\SocialNetworkProfileRepository")
+ * @JMS\ExclusionPolicy("all")
  */
 class SocialNetworkProfile
 {
@@ -15,53 +17,116 @@ class SocialNetworkProfile
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
-    protected $id;
+    protected int $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="socialNetworkProfiles")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    protected $user;
+    protected ?User $user = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="socialNetworkProfiles")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     * @JMS\Expose
+     * @JMS\Type("Relation<App\Entity\City>")
+     * @JMS\SerializedName("city_id")
      */
-    protected $city;
+    protected ?City $city = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="Ride", inversedBy="socialNetworkProfiles")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
-    protected $ride;
+    protected ?Ride $ride = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="Subride", inversedBy="socialNetworkProfiles")
      * @ORM\JoinColumn(name="subride_id", referencedColumnName="id")
      */
-    protected $subride;
+    protected ?Subride $subride = null;
 
     /**
      * @ORM\Column(type="string")
      * @Assert\NotBlank
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
-    protected $identifier;
+    protected ?string $identifier = null;
 
     /**
      * @ORM\Column(type="string")
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
-    protected $network;
+    protected string $network;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $mainNetwork = false;
+    protected bool $mainNetwork = false;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $enabled = true;
+    protected bool $enabled = true;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
+     */
+    private ?\DateTime $createdAt = null;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="socialNetworkProfiles")
+     */
+    private User $createdBy;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
+     */
+    protected bool $autoPublish = true;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
+     */
+    protected ?\DateTime $lastFetchSuccessDateTime = null;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
+     */
+    protected ?\DateTime $lastFetchFailureDateTime = null;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
+     */
+    protected ?string $lastFetchFailureError = null;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
+     */
+    protected $autoFetch = true;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
+     */
+    protected $additionalData;
 
     public function getId(): ?int
     {
@@ -147,7 +212,15 @@ class SocialNetworkProfile
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function getMainNetwork(): bool
+    {
+        return $this->mainNetwork;
+    }
+
+    public function isMainNetwork(): bool
     {
         return $this->mainNetwork;
     }
@@ -167,6 +240,102 @@ class SocialNetworkProfile
     public function setEnabled(bool $enabled): SocialNetworkProfile
     {
         $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(?User $createdBy): self
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    public function isAutoPublish(): bool
+    {
+        return $this->autoPublish;
+    }
+
+    public function setAutoPublish(bool $autoPublish): SocialNetworkProfile
+    {
+        $this->autoPublish = $autoPublish;
+
+        return $this;
+    }
+
+    public function getLastFetchSuccessDateTime(): ?\DateTimeInterface
+    {
+        return $this->lastFetchSuccessDateTime;
+    }
+
+    public function setLastFetchSuccessDateTime(?\DateTimeInterface $lastFetchSuccessDateTime): self
+    {
+        $this->lastFetchSuccessDateTime = $lastFetchSuccessDateTime;
+
+        return $this;
+    }
+
+    public function getLastFetchFailureDateTime(): ?\DateTimeInterface
+    {
+        return $this->lastFetchFailureDateTime;
+    }
+
+    public function setLastFetchFailureDateTime(?\DateTimeInterface $lastFetchFailureDateTime): self
+    {
+        $this->lastFetchFailureDateTime = $lastFetchFailureDateTime;
+
+        return $this;
+    }
+
+    public function getLastFetchFailureError(): ?string
+    {
+        return $this->lastFetchFailureError;
+    }
+
+    public function setLastFetchFailureError(?string $lastFetchFailureError): self
+    {
+        $this->lastFetchFailureError = $lastFetchFailureError;
+
+        return $this;
+    }
+
+    public function getAutoFetch(): ?bool
+    {
+        return $this->autoFetch;
+    }
+
+    public function setAutoFetch(bool $autoFetch): self
+    {
+        $this->autoFetch = $autoFetch;
+
+        return $this;
+    }
+
+    public function getAdditionalData(): ?array
+    {
+        return (array)json_decode($this->additionalData ?? '{}');
+    }
+
+    public function setAdditionalData(?array $additionalData): self
+    {
+        $this->additionalData = json_encode($additionalData);
 
         return $this;
     }

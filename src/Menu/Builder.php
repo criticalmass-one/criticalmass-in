@@ -68,8 +68,15 @@ class Builder extends AbstractBuilder
         $menu['Community']
             ->addChild('Diskussion', ['route' => 'caldera_criticalmass_board_overview']);
 
-        $menu['Community']
-            ->addChild('Fotos', ['route' => 'caldera_criticalmass_photo_examplegallery']);
+        if ($this->featureManager->isActive('photos')) {
+            $menu['Community']
+                ->addChild('Fotos', ['route' => 'caldera_criticalmass_photo_examplegallery']);
+        }
+
+        if ($this->featureManager->isActive('blog')) {
+            $menu['Community']
+                ->addChild('Blog', ['route' => 'caldera_criticalmass_blog_overview']);
+        }
 
         if ($this->isUserLoggedIn()) {
             $menu->addChild('Benutzerkonto', ['uri' => '#'])

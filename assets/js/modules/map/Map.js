@@ -113,5 +113,13 @@ define(['leaflet', 'CityMarker', 'LocationMarker'], function () {
         }
     };
 
+    Map.prototype.setMaxZoom = function (maxZoom) {
+        this.map.setMaxZoom(maxZoom);
+    };
+
+    Map.prototype.setMinZoom = function (minZoom) {
+        this.map.setMinZoom(minZoom);
+    };
+
     return Map;
 });

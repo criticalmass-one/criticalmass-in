@@ -13,6 +13,7 @@ use Imagine\Image\Point\Center;
 use Imagine\Gd\Font;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Palette;
+use League\Flysystem\FilesystemInterface;
 
 class ProfilePhotoGenerator implements ProfilePhotoGeneratorInterface
 {
@@ -24,16 +25,16 @@ class ProfilePhotoGenerator implements ProfilePhotoGeneratorInterface
     /** @var string $projectDirectory */
     protected $projectDirectory;
 
-    /** @var string $uploadDestinationUserPhoto */
-    protected $uploadDestinationUserPhoto;
+    /** @var FilesystemInterface $filesystem */
+    protected $filesystem;
 
     /** @var PaletteInterface $palette */
     protected $palette;
 
-    public function __construct(string $projectDirectory, string $uploadDestinationUserPhoto)
+    public function __construct(FilesystemInterface $filesystem, string $projectDirectory)
     {
         $this->projectDirectory = $projectDirectory;
-        $this->uploadDestinationUserPhoto = $uploadDestinationUserPhoto;
+        $this->filesystem = $filesystem;
         $this->palette = new Palette\RGB();
     }
 
@@ -48,11 +49,11 @@ class ProfilePhotoGenerator implements ProfilePhotoGeneratorInterface
     {
         $image = $this->createImage();
 
-        $filename = $this->generateFilePath();
+        $filename = $this->generateFilename();
 
         $this->writeText($image);
 
-        $image->save($filename);
+        $this->filesystem->put($filename, $image->get('jpeg'));
 
         return $filename;
     }
@@ -101,9 +102,7 @@ class ProfilePhotoGenerator implements ProfilePhotoGeneratorInterface
         $fontSize = 256;
         $fontFilename = sprintf('%s%s', $this->projectDirectory, self::FONT_FILE);
 
-        $font = new Font($fontFilename, $fontSize, $fontColor);
-
-        return $font;
+        return new Font($fontFilename, $fontSize, $fontColor);
     }
 
     protected function getUserBackgroundColor(): ColorInterface
@@ -115,12 +114,12 @@ class ProfilePhotoGenerator implements ProfilePhotoGeneratorInterface
         ]);
     }
 
-    protected function generateFilePath(): string
+    protected function generateFilename(): string
     {
-        $filename = sprintf('%s.png', uniqid());
+        $filename = sprintf('%s.jpg', uniqid('', true));
 
         $this->user->setImageName($filename);
 
-        return sprintf('%s/%s', $this->uploadDestinationUserPhoto, $filename);
+        return $filename;
     }
 }

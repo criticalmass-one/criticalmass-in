@@ -12,54 +12,6 @@ use Doctrine\ORM\QueryBuilder;
 
 class PhotoRepository extends EntityRepository
 {
-    public function getPreviousPhoto(Photo $photo): ?Photo
-    {
-        $builder = $this->createQueryBuilder('p');
-
-        $builder
-            ->select('p')
-            ->where($builder->expr()->eq('p.ride', ':ride'))
-            ->setParameter('ride', $photo->getRide())
-            ->andWhere($builder->expr()->lt('p.dateTime', ':dateTime'))
-            ->setParameter('dateTime', $photo->getDateTime())
-            ->andWhere($builder->expr()->eq('p.enabled', ':enabled'))
-            ->setParameter('enabled', true)
-            ->andWhere($builder->expr()->eq('p.deleted', ':deleted'))
-            ->setParameter('deleted', false)
-            ->addOrderBy('p.dateTime', 'DESC')
-            ->setMaxResults(1);
-
-        $query = $builder->getQuery();
-
-        $result = $query->getOneOrNullResult();
-
-        return $result;
-    }
-
-    public function getNextPhoto(Photo $photo): ?Photo
-    {
-        $builder = $this->createQueryBuilder('p');
-
-        $builder
-            ->select('p')
-            ->where($builder->expr()->eq('p.ride', ':ride'))
-            ->setParameter('ride', $photo->getRide())
-            ->andWhere($builder->expr()->gt('p.dateTime', ':dateTime'))
-            ->setParameter('dateTime', $photo->getDateTime())
-            ->andWhere($builder->expr()->eq('p.enabled', ':enabled'))
-            ->setParameter('enabled', true)
-            ->andWhere($builder->expr()->eq('p.deleted', ':deleted'))
-            ->setParameter('deleted', false)
-            ->addOrderBy('p.dateTime', 'ASC')
-            ->setMaxResults(1);
-
-        $query = $builder->getQuery();
-
-        $result = $query->getOneOrNullResult();
-
-        return $result;
-    }
-
     public function findRidesWithPhotoCounterByUser(User $user): array
     {
         $builder = $this->createQueryBuilder('photo');
@@ -79,9 +31,63 @@ class PhotoRepository extends EntityRepository
             ->orderBy('ride.dateTime', 'desc');
 
         $query = $builder->getQuery();
-        $result = $query->getResult();
 
-        return $result;
+        return $query->getResult();
+    }
+
+    public function findPhotosWithoutExifData(int $limit = null, int $offset = null, bool $fetchExistingData = false): array
+    {
+        $builder = $this->createQueryBuilder('p');
+
+        $builder
+            ->select('p')
+            ->orderBy('p.exifCreationDate', 'desc');
+
+        if (!$fetchExistingData) {
+            $builder
+                ->where($builder->expr()->isNull('p.exifExposure'))
+                ->andWhere($builder->expr()->isNull('p.exifAperture'))
+                ->andWhere($builder->expr()->isNull('p.exifIso'))
+                ->andWhere($builder->expr()->isNull('p.exifFocalLength'))
+                ->andWhere($builder->expr()->isNull('p.exifCamera'));
+        }
+
+        if ($limit) {
+            $builder->setMaxResults($limit);
+        }
+
+        if ($offset) {
+            $builder->setFirstResult($offset);
+        }
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
+
+    public function findPhotosWithoutExportData(int $limit = null, int $offset = null, bool $fetchExistingData = false): array
+    {
+        $builder = $this->createQueryBuilder('p');
+
+        $builder
+            ->select('p')
+            ->orderBy('p.exifCreationDate', 'desc');
+
+        if (!$fetchExistingData) {
+            $builder->where($builder->expr()->isNull('p.imageGoogleCloudHash'));
+        }
+
+        if ($limit) {
+            $builder->setMaxResults($limit);
+        }
+
+        if ($offset) {
+            $builder->setFirstResult($offset);
+        }
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
     }
 
     public function findGeocodeablePhotos(int $limit = 50, ?bool $emptyLocationOnly = false): array
@@ -92,7 +98,7 @@ class PhotoRepository extends EntityRepository
             ->select('p')
             ->where($builder->expr()->isNotNull('p.latitude'))
             ->andWhere($builder->expr()->isNotNull('p.longitude'))
-            ->orderBy('p.dateTime', 'asc')
+            ->orderBy('p.exifCreationDate', 'asc')
             ->setMaxResults($limit);
 
         if ($emptyLocationOnly) {
@@ -100,9 +106,8 @@ class PhotoRepository extends EntityRepository
         }
 
         $query = $builder->getQuery();
-        $result = $query->getResult();
 
-        return $result;
+        return $query->getResult();
     }
 
     /**
@@ -210,7 +215,7 @@ class PhotoRepository extends EntityRepository
             ->setParameter('ride', $ride)
             ->andWhere($builder->expr()->eq('p.deleted', ':deleted'))
             ->setParameter('deleted', false)
-            ->addOrderBy('p.dateTime', 'ASC');
+            ->addOrderBy('p.exifCreationDate', 'ASC');
 
         return $builder;
     }
@@ -251,7 +256,7 @@ class PhotoRepository extends EntityRepository
         ->setParameter('user', $user)
         ->andWhere($builder->expr()->eq('p.deleted', ':deleted'))
         ->setParameter('deleted', false)
-        ->addOrderBy('p.dateTime', 'ASC');
+        ->addOrderBy('p.exifCreationDate', 'ASC');
 
         return $builder->getQuery();
     }
@@ -283,7 +288,8 @@ class PhotoRepository extends EntityRepository
 
         if ($city) {
             $builder
-                ->andWhere($builder->expr()->eq('p.city', ':city'))
+                ->join('p.ride', 'r')
+                ->andWhere($builder->expr()->eq('r.city', ':city'))
                 ->setParameter('city', $city);
         }
 
@@ -312,13 +318,13 @@ class PhotoRepository extends EntityRepository
 
         if ($startDateTime) {
             $builder
-                ->andWhere($builder->expr()->gte('p.creationDateTime', ':startDateTime'))
+                ->andWhere($builder->expr()->gte('p.exifCreationDate', ':startDateTime'))
                 ->setParameter('startDateTime', $startDateTime);
         }
 
         if ($endDateTime) {
             $builder
-                ->andWhere($builder->expr()->lte('p.creationDateTime', ':endDateTime'))
+                ->andWhere($builder->expr()->lte('p.exifCreationDate', ':endDateTime'))
                 ->setParameter('endDateTime', $endDateTime);
         }
 
@@ -326,7 +332,7 @@ class PhotoRepository extends EntityRepository
             $builder->setMaxResults($limit);
         }
 
-        $builder->addOrderBy('p.creationDateTime', 'DESC');
+        $builder->addOrderBy('p.exifCreationDate', 'DESC');
 
         $query = $builder->getQuery();
 
@@ -349,6 +355,28 @@ class PhotoRepository extends EntityRepository
         $query = $builder->getQuery();
 
         return (int) $query->getSingleScalarResult();
+    }
+
+    public function findPhotosForExport(int $limit = null, int $offset = null): array
+    {
+        $builder = $this->createQueryBuilder('p');
+
+        $builder
+            ->select('p')
+            ->orderBy('p.exifCreationDate', 'desc')
+            ->where($builder->expr()->isNotNull('p.imageGoogleCloudHash'));
+
+        if ($limit) {
+            $builder->setMaxResults($limit);
+        }
+
+        if ($offset) {
+            $builder->setFirstResult($offset);
+        }
+
+        $query = $builder->getQuery();
+
+        return $query->getResult();
     }
 }
 

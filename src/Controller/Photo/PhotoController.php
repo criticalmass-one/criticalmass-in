@@ -3,20 +3,19 @@
 namespace App\Controller\Photo;
 
 use App\Controller\AbstractController;
+use App\Criticalmass\Image\ExifWrapper\ExifWrapperInterface;
 use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Entity\Photo;
 use App\Entity\Track;
 use App\Event\View\ViewEvent;
-use PHPExif\Exif;
-use PHPExif\Reader\Reader;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use App\Criticalmass\Feature\Annotation\Feature as Feature;
+use Flagception\Bundle\FlagceptionBundle\Annotations\Feature;
 
 /**
- * @Feature(name="photos")
+ * @Feature("photos")
  */
 class PhotoController extends AbstractController
 {
@@ -26,6 +25,7 @@ class PhotoController extends AbstractController
     public function showAction(
         SeoPageInterface $seoPage,
         EventDispatcherInterface $eventDispatcher,
+        ExifWrapperInterface $exifWrapper,
         Photo $photo
     ): Response {
         $city = $photo->getCity();
@@ -48,16 +48,11 @@ class PhotoController extends AbstractController
 
         $this->setSeoMetaDetails($seoPage, $photo);
 
-        $exifData = $this->readExifData($photo);
-
         return $this->render('Photo/show.html.twig', [
             'photo' => $photo,
-            'nextPhoto' => $this->getPhotoRepository()->getNextPhoto($photo),
-            'previousPhoto' => $this->getPhotoRepository()->getPreviousPhoto($photo),
             'city' => $city,
             'ride' => $ride,
             'track' => $track,
-            'exifData' => $exifData ? $exifData->getData() : null,
         ]);
     }
 
@@ -73,19 +68,6 @@ class PhotoController extends AbstractController
         }
 
         return new Response(null);
-    }
-
-    protected function readExifData(Photo $photo): ?Exif
-    {
-        $filename = sprintf('%s/%s', $this->getParameter('upload_destination.photo'), $photo->getImageName());
-
-        $reader = Reader::factory(Reader::TYPE_NATIVE);
-
-        if ($exif = $reader->read($filename)) {
-            return $exif;
-        }
-
-        return null;
     }
 
     protected function setSeoMetaDetails(SeoPageInterface $seoPage, Photo $photo): void

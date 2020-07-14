@@ -46,7 +46,7 @@ define(['CriticalService', 'Map', 'CityEntity', 'SubrideMarker', 'RideEntity'], 
     EditSubridePage.prototype._initView = function () {
         var latLng = null;
 
-        if (this._ride.hasLocation()) {
+        if (this._ride.getLocation() && this._ride.getLatitude() && this._ride.getLongitude()) {
             latLng = this._ride.getLatLng();
         } else {
             latLng = this._city.getLatLng();
@@ -86,7 +86,7 @@ define(['CriticalService', 'Map', 'CityEntity', 'SubrideMarker', 'RideEntity'], 
 
         if (this._subrideHasLocation()) {
             latLng = this._getInputLatLng();
-        } else if (this._ride.hasLocation()) {
+        } else if (this._ride.location() && this._ride.getLatitude() && this._ride.getLongitude()) {
             latLng = this._ride.getLatLng();
         } else {
             latLng = this._city.getLatLng();

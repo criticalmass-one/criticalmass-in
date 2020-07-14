@@ -7,7 +7,7 @@ use App\Entity\Ride;
 use App\Entity\Track;
 use App\Entity\User;
 use App\Criticalmass\Image\PhotoUploader\PhotoUploader;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
@@ -16,13 +16,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ImportImagesCommand extends Command
 {
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var PhotoUploader $photoUploader */
     protected $photoUploader;
 
-    public function __construct(RegistryInterface $registry, PhotoUploader $photoUploader)
+    public function __construct(ManagerRegistry $registry, PhotoUploader $photoUploader)
     {
         $this->registry = $registry;
         $this->photoUploader = $photoUploader;
@@ -76,7 +76,7 @@ class ImportImagesCommand extends Command
         foreach ($this->photoUploader->getAddedPhotoList() as $photo) {
             $table->addRow([
                 $photo->getImageName(),
-                $photo->getDateTime() ? $photo->getDateTime()->format('Y-m-d H:i:s') : '',
+                $photo->getExifCreationDate() ? $photo->getExifCreationDate()->format('Y-m-d H:i:s') : '',
                 $photo->hasCoordinates() ? sprintf('%f,%f', $photo->getLatitude(), $photo->getLongitude()) : ''
             ]);
         }
