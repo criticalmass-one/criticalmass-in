@@ -23,7 +23,7 @@ class SocialNetworkProfileRepository extends EntityRepository
         return $builder;
     }
 
-    public function findByProperties(string $networkIdentifier = null, bool $autoFetch = null, City $city = null): array
+    public function findByProperties(string $networkIdentifier = null, bool $autoFetch = null, City $city = null, array $entityClassNames = []): array
     {
         $builder = $this->createQueryBuilder('snp');
 
@@ -47,6 +47,11 @@ class SocialNetworkProfileRepository extends EntityRepository
             $builder
                 ->andWhere($builder->expr()->eq('snp.city', ':city'))
                 ->setParameter('city', $city);
+        }
+
+        /** @var string $entityClassName */
+        foreach ($entityClassNames as $entityClassName) {
+            $builder->andWhere($builder->expr()->isNotNull(sprintf('snp.%s', $entityClassName)));
         }
 
         $builder->orderBy('snp.createdAt');

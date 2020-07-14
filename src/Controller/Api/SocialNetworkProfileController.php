@@ -24,7 +24,8 @@ class SocialNetworkProfileController extends BaseController
      *  requirements={
      *    {"name"="citySlug", "dataType"="string", "required"=false, "description"="Reduce the list to profiles of the provided city"},
      *    {"name"="autoFetch", "dataType"="boolean", "required"=false, "description"="Set true to get only auto fetchable profiles"},
-     *    {"name"="networkIdentifier", "dataType"="string", "required"=false, "description"="Identifier of the social network type"}
+     *    {"name"="networkIdentifier", "dataType"="string", "required"=false, "description"="Identifier of the social network type"},
+     *    {"name"="entities", "dataType"="string", "required"=false, "description"="Limit the result to those specified entity type"}
      *  }
      * )
      * @ParamConverter("city", class="App:City", isOptional="true")
@@ -34,7 +35,13 @@ class SocialNetworkProfileController extends BaseController
         $networkIdentifier = $request->get('networkIdentifier');
         $autoFetch = (bool)$request->get('autoFetch');
 
-        $profileList = $registry->getRepository(SocialNetworkProfile::class)->findByProperties($networkIdentifier, $autoFetch, $city);
+        if ($entities = $request->get('entities')) {
+            $entityClassNames = explode(',', $entities);
+        } else {
+            $entityClassNames = [];
+        }
+
+        $profileList = $registry->getRepository(SocialNetworkProfile::class)->findByProperties($networkIdentifier, $autoFetch, $city, $entityClassNames);
 
         $view = View::create();
         $view
