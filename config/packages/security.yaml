@@ -63,7 +63,7 @@ security:
         - { path: ^/admin/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
         - { path: ^/admin, role: ROLE_ADMIN }
-        - { path: ^/api, roles: [ IS_AUTHENTICATED_FULLY ] }
+        #- { path: ^/api, roles: [ IS_AUTHENTICATED_FULLY ] }
 
     role_hierarchy:
         ROLE_USER:        []
