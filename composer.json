@@ -53,9 +53,6 @@
         "calderacc/geobasic": "^0.2.0",
         "yohang/calendr": "^2.0",
         "maxh/php-nominatim": "^1.2",
-        "jublonet/codebird-php": "^3.1",
-        "zendframework/zend-http": "^2.7",
-        "zendframework/zend-feed": "^2.9",
         "php-http/guzzle6-adapter": "^1.1",
         "php-http/httplug-bundle": "^1.10",
         "knplabs/knp-menu-bundle": "^2.0",
@@ -100,8 +97,7 @@
         "friendsofsymfony/oauth-server-bundle": "^1.6",
         "gregwar/captcha-bundle": "^2.1",
         "embed/embed": "^4.1",
-        "guzzlehttp/psr7": "^1.6",
-        "raiym/instagram-php-scraper": "^0.9.11"
+        "guzzlehttp/psr7": "^1.6"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "*",

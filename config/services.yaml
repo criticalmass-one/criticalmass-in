@@ -212,6 +212,10 @@ services:
         tags:
             - { name: request.param_converter, priority: 0, converter: socialnetworkprofile_converter }
 
+    App\Request\ParamConverter\SocialNetworkFeedItemParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: socialnetworkfeeditem_converter }
+
     App\Request\ParamConverter\TrackParamConverter:
         tags:
             - { name: request.param_converter, priority: 0, converter: track_converter }
@@ -257,6 +261,9 @@ services:
             - { name: jms_serializer.handler, type: Relation<?>, direction: serialization, format: json, method: serializeRelation}
             - { name: jms_serializer.handler, type: Relation<?>, direction: deserialization, format: json, method: deserializeRelation}
 
+    jms_serializer.naming_strategy:
+        alias: jms_serializer.camel_case_naming_strategy
+
     App\Criticalmass\ViewStorage\BlackList\BlackList:
         arguments:
             $crawlerDetect: '@crawler_detect'
@@ -264,14 +271,6 @@ services:
     App\Form\Type\RegistrationType:
         arguments:
             $class: '%fos_user.model.user.class%'
-
-    App\Criticalmass\SocialNetwork\FeedItemPersister\FeedItemPersisterInterface:
-        #alias: App\Criticalmass\SocialNetwork\FeedItemPersister\NonDuplicatesFeedItemPersister
-        alias: App\Criticalmass\SocialNetwork\FeedItemPersister\RabbitPusher
-
-    App\Criticalmass\SocialNetwork\FeedItemPersister\RabbitPusher:
-        arguments:
-            $producer: '@old_sound_rabbit_mq.criticalmass_socialnetworkfeeditem_producer'
 
     App\Controller\OAuthServer\AuthorizeController:
         arguments:

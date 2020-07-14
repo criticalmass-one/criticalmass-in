@@ -1,6 +1,6 @@
 jms_serializer:
   property_naming:
-    lower_case: false
+    lower_case: true
   visitors:
     json_serialization:
       options: 0 # json_encode options bitmask, suggested JSON_PRETTY_PRINT in development
