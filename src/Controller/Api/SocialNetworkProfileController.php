@@ -22,9 +22,9 @@ class SocialNetworkProfileController extends BaseController
      *  description="Search for social network profiles",
      *  section="Social Network Profile",
      *  requirements={
-     *    {"name"="citySlug", "dataType"="string", "required"=false, "description"="Retrieve a list of social network profiles assigned to a city"},
-     *    {"name"="autoFetch", "dataType"="boolean", "required"=false, "description"="Retrieve a list of social network profiles assigned to a city"},
-     *    {"name"="networkIdentifier", "dataType"="string", "required"=false, "description"="Retrieve a list of social network profiles assigned to a city"}
+     *    {"name"="citySlug", "dataType"="string", "required"=false, "description"="Reduce the list to profiles of the provided city"},
+     *    {"name"="autoFetch", "dataType"="boolean", "required"=false, "description"="Set true to get only auto fetchable profiles"},
+     *    {"name"="networkIdentifier", "dataType"="string", "required"=false, "description"="Identifier of the social network type"}
      *  }
      * )
      * @ParamConverter("city", class="App:City", isOptional="true")
