@@ -84,7 +84,8 @@ class SocialNetworkProfileController extends BaseController
      *  description="Update properties of a social network profile",
      *  section="Social Network Profile",
      *  requirements={
-     *    {"name"="profileId", "dataType"="integer", "required"=true, "description"="Id of the required social network profile."},
+     *    {"name"="profileId", "dataType"="integer", "required"=true, "description"="Id of the required social network profile"},
+     *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Slug of the corresponding city"},
      *  }
      * )
      * @ParamConverter("socialNetworkProfile", class="App:SocialNetworkProfile")
