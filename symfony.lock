@@ -932,6 +932,9 @@
             "ref": "4851df0afc426b8f07204379d21fca25b6df5d68"
         }
     },
+    "twig/extra-bundle": {
+        "version": "v3.0.4"
+    },
     "twig/twig": {
         "version": "v2.4.8"
     },
