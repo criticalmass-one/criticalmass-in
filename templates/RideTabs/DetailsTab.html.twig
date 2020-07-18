@@ -34,15 +34,6 @@
                         </a>
                     </li>
 
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <li>
-                            <a href="{{ path('admin_app_ride_edit', { id: ride.id }) }}">
-                                <i class="far fa-magic"></i>
-                                Administrationsbereich
-                            </a>
-                        </li>
-                    {% endif %}
-
                     {% if ride.enabled %}
 
                         <li class="divider">
