@@ -15,6 +15,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\ConstraintViolation;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class RideController extends BaseController
 {
@@ -196,7 +198,7 @@ class RideController extends BaseController
      *
      * @ParamConverter("city", class="App:City")
      */
-    public function createRideAction(Request $request, SerializerInterface $serializer, City $city, ManagerRegistry $managerRegistry): Response
+    public function createRideAction(Request $request, SerializerInterface $serializer, City $city, ManagerRegistry $managerRegistry, ValidatorInterface $validator): Response
     {
         /** @var Ride $ride */
         $ride = $this->deserializeRequest($request, $serializer, Ride::class);
@@ -213,6 +215,19 @@ class RideController extends BaseController
                     $ride->setSlug($rideIdentifier);
                 }
             }
+        }
+
+        $constraintViolationList = $validator->validate($ride);
+
+        $errorList = [];
+
+        /** @var ConstraintViolation $constraintViolation */
+        foreach ($constraintViolationList as $constraintViolation) {
+            $errorList[$constraintViolation->getPropertyPath()] = $constraintViolation->getMessage();
+        }
+
+        if (0 < count($errorList)) {
+            return $this->createErrors(Response::HTTP_BAD_REQUEST, $errorList);
         }
 
         $manager = $managerRegistry->getManager();
