@@ -103,6 +103,11 @@ caldera_criticalmass_rest_ride_show:
     options:
         expose: true
 
+caldera_criticalmass_rest_ride_create:
+    path:     /{citySlug}/{rideIdentifier}
+    controller: App\Controller\Api\RideController::createRideAction
+    methods:  [PUT]
+
 caldera_criticalmass_rest_estimate_create:
     path:     /estimate
     controller: App\Controller\Api\EstimateController::createAction

@@ -6,11 +6,12 @@ use App\Criticalmass\DataQuery\DataQueryManager\DataQueryManagerInterface;
 use App\Criticalmass\DataQuery\RequestParameterList\RequestToListConverter;
 use App\Entity\City;
 use App\Entity\Ride;
+use Doctrine\Persistence\ManagerRegistry;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
+use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -175,6 +176,56 @@ class RideController extends BaseController
         $view = View::create();
         $view
             ->setData($rideList)
+            ->setFormat('json')
+            ->setStatusCode(200)
+            ->setContext($context);
+
+        return $this->handleView($view);
+    }
+
+    /**
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Creates a new ride",
+     *  section="Ride",
+     *  requirements={
+     *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Slug of the city to assign the new created ride to"},
+     *    {"name"="rideIdentifier", "dataType"="string", "required"=true, "description"="Identifier of the ride to be created"},
+     *  }
+     * )
+     *
+     * @ParamConverter("city", class="App:City")
+     */
+    public function createRideAction(Request $request, SerializerInterface $serializer, City $city, ManagerRegistry $managerRegistry): Response
+    {
+        /** @var Ride $ride */
+        $ride = $this->deserializeRequest($request, $serializer, Ride::class);
+
+        $ride->setCity($city);
+
+        if (!$ride->getDateTime()) {
+            $rideIdentifier = $request->get('rideIdentifier');
+
+            try {
+                $ride->setDateTime(new \DateTime($rideIdentifier));
+            } catch (\Exception $exception) {
+                if (!$ride->hasSlug()) {
+                    $ride->setSlug($rideIdentifier);
+                }
+            }
+        }
+
+        $manager = $managerRegistry->getManager();
+        $manager->persist($ride);
+        $manager->flush();
+
+        $context = new Context();
+
+        $context->addGroup('ride-list');
+
+        $view = View::create();
+        $view
+            ->setData($ride)
             ->setFormat('json')
             ->setStatusCode(200)
             ->setContext($context);
