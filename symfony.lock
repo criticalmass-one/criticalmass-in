@@ -389,6 +389,9 @@
     "nmure/crawler-detect-bundle": {
         "version": "v2.0.0"
     },
+    "ocramius/package-versions": {
+        "version": "1.9.0"
+    },
     "ocramius/proxy-manager": {
         "version": "2.2.0"
     },
@@ -602,41 +605,14 @@
             "ref": "fb7e19da7f013d0d422fa9bce16f5c510e27609b"
         }
     },
-    "sonata-project/admin-bundle": {
-        "version": "3.31",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "master",
-            "version": "3.31",
-            "ref": "0e5931df1732e3dccfba42a20853049e5e9db6ae"
-        }
-    },
-    "sonata-project/block-bundle": {
-        "version": "3.12.1"
-    },
-    "sonata-project/cache": {
-        "version": "2.0.1"
-    },
-    "sonata-project/doctrine-extensions": {
-        "version": "1.1.5"
-    },
-    "sonata-project/doctrine-orm-admin-bundle": {
-        "version": "3.6.1"
-    },
     "sonata-project/exporter": {
         "version": "1.9.1"
-    },
-    "sonata-project/form-extensions": {
-        "version": "1.5.0"
     },
     "sonata-project/intl-bundle": {
         "version": "2.5.0"
     },
     "sonata-project/seo-bundle": {
         "version": "2.5.1"
-    },
-    "sonata-project/twig-extensions": {
-        "version": "1.3.1"
     },
     "sunra/php-simple-html-dom-parser": {
         "version": "v1.5.2"
@@ -812,6 +788,9 @@
     "symfony/polyfill-mbstring": {
         "version": "v1.8.0"
     },
+    "symfony/polyfill-php70": {
+        "version": "v1.18.0"
+    },
     "symfony/polyfill-php72": {
         "version": "v1.8.0"
     },
@@ -838,9 +817,6 @@
             "version": "4.0",
             "ref": "cda8b550123383d25827705d05a42acf6819fe4e"
         }
-    },
-    "symfony/security-acl": {
-        "version": "v3.0.1"
     },
     "symfony/security-bundle": {
         "version": "3.3",
@@ -947,8 +923,8 @@
             "ref": "4851df0afc426b8f07204379d21fca25b6df5d68"
         }
     },
-    "twig/string-extra": {
-        "version": "v3.0.3"
+    "twig/extra-bundle": {
+        "version": "v3.0.4"
     },
     "twig/twig": {
         "version": "v2.4.8"

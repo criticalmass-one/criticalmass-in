@@ -50,15 +50,6 @@
                     soziale Netzwerke verwalten
                 </a>
             </li>
-
-            {% if is_granted('ROLE_ADMIN') %}
-                <li>
-                    <a href="{{ path('admin_app_city_edit', { id: city.id }) }}">
-                        <i class="far fa-magic"></i>
-                        Administrationsbereich
-                    </a>
-                </li>
-            {% endif %}
         </ul>
     </div>
 {% endblock %}
