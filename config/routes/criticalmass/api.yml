@@ -108,6 +108,11 @@ caldera_criticalmass_rest_ride_create:
     controller: App\Controller\Api\RideController::createRideAction
     methods:  [PUT]
 
+caldera_criticalmass_rest_ride_update:
+    path:     /{citySlug}/{rideIdentifier}
+    controller: App\Controller\Api\RideController::updateRideAction
+    methods:  [POST]
+
 caldera_criticalmass_rest_estimate_create:
     path:     /estimate
     controller: App\Controller\Api\EstimateController::createAction

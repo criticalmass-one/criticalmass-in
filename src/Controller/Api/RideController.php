@@ -4,6 +4,7 @@ namespace App\Controller\Api;
 
 use App\Criticalmass\DataQuery\DataQueryManager\DataQueryManagerInterface;
 use App\Criticalmass\DataQuery\RequestParameterList\RequestToListConverter;
+use App\Criticalmass\EntityMerger\EntityMergerInterface;
 use App\Entity\City;
 use App\Entity\Ride;
 use Doctrine\Persistence\ManagerRegistry;
@@ -232,6 +233,68 @@ class RideController extends BaseController
 
         $manager = $managerRegistry->getManager();
         $manager->persist($ride);
+        $manager->flush();
+
+        $context = new Context();
+
+        $context->addGroup('ride-list');
+
+        $view = View::create();
+        $view
+            ->setData($ride)
+            ->setFormat('json')
+            ->setStatusCode(200)
+            ->setContext($context);
+
+        return $this->handleView($view);
+    }
+
+    /**
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Updates a ride",
+     *  section="Ride",
+     *  requirements={
+     *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Slug of the city belonging to the ride"},
+     *    {"name"="rideIdentifier", "dataType"="string", "required"=true, "description"="Identifier of the ride"},
+     *  }
+     * )
+     *
+     * @ParamConverter("ride", class="App:Ride")
+     */
+    public function updateRideAction(Request $request, Ride $ride, SerializerInterface $serializer, ManagerRegistry $managerRegistry, ValidatorInterface $validator, EntityMergerInterface $entityMerger): Response
+    {
+        /** @var Ride $ride */
+        $updatedRide = $this->deserializeRequest($request, $serializer, Ride::class);
+
+        $ride = $entityMerger->merge($updatedRide, $ride);
+
+        if (!$ride->getDateTime()) {
+            $rideIdentifier = $request->get('rideIdentifier');
+
+            try {
+                $ride->setDateTime(new \DateTime($rideIdentifier));
+            } catch (\Exception $exception) {
+                if (!$ride->hasSlug()) {
+                    $ride->setSlug($rideIdentifier);
+                }
+            }
+        }
+
+        $constraintViolationList = $validator->validate($ride);
+
+        $errorList = [];
+
+        /** @var ConstraintViolation $constraintViolation */
+        foreach ($constraintViolationList as $constraintViolation) {
+            $errorList[$constraintViolation->getPropertyPath()] = $constraintViolation->getMessage();
+        }
+
+        if (0 < count($errorList)) {
+            return $this->createErrors(Response::HTTP_BAD_REQUEST, $errorList);
+        }
+
+        $manager = $managerRegistry->getManager();
         $manager->flush();
 
         $context = new Context();
