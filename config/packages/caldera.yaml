@@ -1,3 +1,0 @@
-caldera_weather:
-    weather_class: App\Entity\Weather
-    owm_app_id: '%env(OPENWEATHERMAP_APP_ID)%'

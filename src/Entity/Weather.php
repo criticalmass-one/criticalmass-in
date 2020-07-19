@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="weather")
  * @ORM\Entity(repositoryClass="App\Repository\WeatherRepository")
  */
-class Weather implements WeatherInterface
+class Weather
 {
     /**
      * @ORM\Id
