@@ -18,127 +18,127 @@ class Weather
      * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Expose()
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="Ride", inversedBy="weather")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
-    protected $ride;
+    protected ?Ride $ride = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * @JMS\Expose()
      */
-    protected $json;
+    protected ?string $json = null;
 
     /**
      * @ORM\Column(type="datetime")
      * @JMS\Expose()
      */
-    protected $weatherDateTime;
+    protected ?\DateTime $weatherDateTime = null;
 
     /**
      * @ORM\Column(type="datetime")
      * @JMS\Expose()
      */
-    protected $creationDateTime;
+    protected ?\DateTime $creationDateTime = null;
 
     /**
      * @ORM\Column(type="float")
      * @JMS\Expose()
      */
-    protected $temperatureMin;
+    protected ?float $temperatureMin = null;
 
     /**
      * @ORM\Column(type="float")
      * @JMS\Expose()
      */
-    protected $temperatureMax;
+    protected ?float $temperatureMax = null;
 
     /**
      * @ORM\Column(type="float")
      * @JMS\Expose()
      */
-    protected $temperatureMorning;
+    protected ?float $temperatureMorning = null;
 
     /**
      * @ORM\Column(type="float")
      * @JMS\Expose()
      */
-    protected $temperatureDay;
+    protected ?float $temperatureDay = null;
 
     /**
      * @ORM\Column(type="float")
      * @JMS\Expose()
      */
-    protected $temperatureEvening;
+    protected ?float $temperatureEvening = null;
 
     /**
      * @ORM\Column(type="float")
      * @JMS\Expose()
      */
-    protected $temperatureNight;
+    protected ?float $temperatureNight = null;
 
     /**
      * @ORM\Column(type="float")
      * @JMS\Expose()
      */
-    protected $pressure;
+    protected ?float $pressure = null;
 
     /**
      * @ORM\Column(type="float")
      * @JMS\Expose()
      */
-    protected $humidity;
+    protected ?float $humidity = null;
 
     /**
      * @ORM\Column(type="integer")
      * @JMS\Expose()
      */
-    protected $weatherCode;
+    protected ?int $weatherCode = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @JMS\Expose()
      */
-    protected $weather;
+    protected ?string $weather = null;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @JMS\Expose()
      */
-    protected $weatherDescription;
+    protected ?string $weatherDescription = null;
 
     /**
      * @ORM\Column(type="string", length=5)
      * @JMS\Expose()
      */
-    protected $weatherIcon;
+    protected ?string $weatherIcon = null;
 
     /**
      * @ORM\Column(type="float")
      * @JMS\Expose()
      */
-    protected $windSpeed;
+    protected ?float $windSpeed = null;
 
     /**
      * @ORM\Column(type="float")
      * @JMS\Expose()
      */
-    protected $windDirection;
+    protected ?float $windDirection = null;
 
     /**
      * @ORM\Column(type="float")
      * @JMS\Expose()
      */
-    protected $clouds;
+    protected ?float $clouds = null;
 
     /**
      * @ORM\Column(type="float")
      * @JMS\Expose()
      */
-    protected $precipitation;
+    protected ?float $precipitation = null;
 
     public function __construct()
     {
