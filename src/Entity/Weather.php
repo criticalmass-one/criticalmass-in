@@ -3,10 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Table(name="weather")
  * @ORM\Entity(repositoryClass="App\Repository\WeatherRepository")
+ * @JMS\ExclusionPolicy("all")
  */
 class Weather
 {
@@ -14,6 +16,7 @@ class Weather
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Expose()
      */
     protected $id;
 
@@ -25,96 +28,115 @@ class Weather
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @JMS\Expose()
      */
     protected $json;
 
     /**
      * @ORM\Column(type="datetime")
+     * @JMS\Expose()
      */
     protected $weatherDateTime;
 
     /**
      * @ORM\Column(type="datetime")
+     * @JMS\Expose()
      */
     protected $creationDateTime;
 
     /**
      * @ORM\Column(type="float")
+     * @JMS\Expose()
      */
     protected $temperatureMin;
 
     /**
      * @ORM\Column(type="float")
+     * @JMS\Expose()
      */
     protected $temperatureMax;
 
     /**
      * @ORM\Column(type="float")
+     * @JMS\Expose()
      */
     protected $temperatureMorning;
 
     /**
      * @ORM\Column(type="float")
+     * @JMS\Expose()
      */
     protected $temperatureDay;
 
     /**
      * @ORM\Column(type="float")
+     * @JMS\Expose()
      */
     protected $temperatureEvening;
 
     /**
      * @ORM\Column(type="float")
+     * @JMS\Expose()
      */
     protected $temperatureNight;
 
     /**
      * @ORM\Column(type="float")
+     * @JMS\Expose()
      */
     protected $pressure;
 
     /**
      * @ORM\Column(type="float")
+     * @JMS\Expose()
      */
     protected $humidity;
 
     /**
      * @ORM\Column(type="integer")
+     * @JMS\Expose()
      */
     protected $weatherCode;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Expose()
      */
     protected $weather;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @JMS\Expose()
      */
     protected $weatherDescription;
 
     /**
      * @ORM\Column(type="string", length=5)
+     * @JMS\Expose()
      */
     protected $weatherIcon;
 
     /**
      * @ORM\Column(type="float")
+     * @JMS\Expose()
      */
     protected $windSpeed;
 
     /**
      * @ORM\Column(type="float")
+     * @JMS\Expose()
      */
     protected $windDirection;
 
     /**
      * @ORM\Column(type="float")
+     * @JMS\Expose()
      */
     protected $clouds;
 
     /**
      * @ORM\Column(type="float")
+     * @JMS\Expose()
      */
     protected $precipitation;
 
