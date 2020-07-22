@@ -41,7 +41,7 @@ class SocialNetworkFeedItemController extends BaseController
         $view
             ->setData($profileList)
             ->setFormat('json')
-            ->setStatusCode(200);
+            ->setStatusCode(Response::HTTP_OK);
 
         return $this->handleView($view);
     }
@@ -74,7 +74,7 @@ class SocialNetworkFeedItemController extends BaseController
         $view
             ->setData($socialNetworkFeedItem)
             ->setFormat('json')
-            ->setStatusCode(200)
+            ->setStatusCode(Response::HTTP_OK)
             ->setContext($context);
 
         return $this->handleView($view);
@@ -120,7 +120,7 @@ class SocialNetworkFeedItemController extends BaseController
             ->setFormat('json')
             ->setContext($context)
             ->setData($newSocialNetworkFeedItem)
-            ->setStatusCode(200);
+            ->setStatusCode(Response::HTTP_OK);
 
         return $this->handleView($view);
     }
