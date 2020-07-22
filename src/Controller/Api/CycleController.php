@@ -2,11 +2,14 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\City;
 use App\Entity\CityCycle;
+use App\Entity\Region;
 use Doctrine\Persistence\ManagerRegistry;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -27,10 +30,19 @@ class CycleController extends BaseController
      *     {"name"="weekOfMonth", "dataType"="int", "required"=false, "description"="Limit the results to this week of month"},
      *  },
      * )
+     *
+     * @ParamConverter("city", class="App:City", isOptional=true)
+     * @ParamConverter("region", class="App:Region", isOptional=true)
+     * @ParamConverter("validFrom", class="DateTime", isOptional=true)
+     * @ParamConverter("validUntil", class="DateTime", isOptional=true)
      */
-    public function listAction(Request $request, ManagerRegistry $managerRegistry): Response
+    public function listAction(Request $request, ManagerRegistry $managerRegistry, City $city = null, Region $region = null, \DateTime $validFrom = null, \DateTime $validUntil = null): Response
     {
-        $cycleList = $managerRegistry->getRepository(CityCycle::class)->findAll();
+        $validNow = $request->query->getBoolean('validNow', null);
+        $dayOfWeek = $request->query->getInt('dayOfWeek', null);
+        $weekOfMonth = $request->query->getInt('weekOfMonth', null);
+
+        $cycleList = $managerRegistry->getRepository(CityCycle::class)->findForApi($city, $region, $validFrom, $validUntil, $validNow, $dayOfWeek, $weekOfMonth);
 
         $context = new Context();
 
