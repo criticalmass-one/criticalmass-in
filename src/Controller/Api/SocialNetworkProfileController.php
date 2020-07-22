@@ -141,7 +141,7 @@ class SocialNetworkProfileController extends BaseController
         $view
             ->setData($newSocialNetworkProfile)
             ->setFormat('json')
-            ->setStatusCode(Response::HTTP_OK)
+            ->setStatusCode(Response::HTTP_CREATED)
             ->setContext($context);
 
         return $this->handleView($view);

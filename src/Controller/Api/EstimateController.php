@@ -84,7 +84,7 @@ class EstimateController extends BaseController
         $view
             ->setData($rideEstimation)
             ->setFormat('json')
-            ->setStatusCode(Response::HTTP_OK);
+            ->setStatusCode(Response::HTTP_CREATED);
 
         return $this->handleView($view);
     }

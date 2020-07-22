@@ -117,7 +117,7 @@ class SocialNetworkFeedItemController extends BaseController
 
         $view
             ->setData($newSocialNetworkFeedItem)
-            ->setStatusCode(Response::HTTP_OK);
+            ->setStatusCode(Response::HTTP_CREATED);
 
         return $this->handleView($view);
     }
