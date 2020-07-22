@@ -17,6 +17,15 @@ class CycleController extends BaseController
      *  resource=true,
      *  description="Returns a list of city cycles",
      *  section="Cycles",
+     *  parameters={
+     *     {"name"="citySlug", "dataType"="string", "required"=false, "description"="Provide a city slug"},
+     *     {"name"="regionSlug", "dataType"="string", "required"=false, "description"="Provide a region slug"},
+     *     {"name"="validFrom", "dataType"="date", "required"=false, "description"="Only retrieve cycles valid after the provied date"},
+     *     {"name"="validUntil", "dataType"="date", "required"=false, "description"="Only retrieve cycles valid before the provied date"},
+     *     {"name"="validNow", "dataType"="bool", "required"=false, "description"="Only retrieve cycles valid for the current month"},
+     *     {"name"="dayOfWeek", "dataType"="int", "required"=false, "description"="Limit the results to this day of week"},
+     *     {"name"="weekOfMonth", "dataType"="int", "required"=false, "description"="Limit the results to this week of month"},
+     *  },
      * )
      */
     public function listAction(Request $request, ManagerRegistry $managerRegistry): Response
