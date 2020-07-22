@@ -68,6 +68,11 @@ caldera_criticalmass_rest_photo_list:
     controller: App\Controller\Api\PhotoController::listAction
     methods:  [GET]
 
+caldera_criticalmass_rest_cycle_list:
+    path:     /cycles
+    controller: App\Controller\Api\CycleController::listAction
+    methods:  [GET]
+
 caldera_criticalmass_rest_location_list:
     path:     /{citySlug}/location
     controller: App\Controller\Api\LocationController::listLocationAction
