@@ -43,6 +43,7 @@ class CityCycle implements RouteableInterface
      * @ORM\ManyToOne(targetEntity="City", inversedBy="cityCycles")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      * @Routing\RouteParameter(name="citySlug")
+     * @JMS\Expose()
      */
     protected $city;
 
@@ -76,6 +77,7 @@ class CityCycle implements RouteableInterface
     /**
      * @ORM\Column(type="time", nullable=true)
      * @Assert\Type(type="\DateTime")
+     * @JMS\Expose
      */
     protected $time;
 
