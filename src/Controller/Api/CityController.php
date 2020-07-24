@@ -96,7 +96,7 @@ class CityController extends BaseController
             ->setContext($context)
             ->setData($cityList)
             ->setFormat('json')
-            ->setStatusCode(200);
+            ->setStatusCode(Response::HTTP_OK);
 
         return $this->handleView($view);
     }
@@ -120,7 +120,7 @@ class CityController extends BaseController
         $view
             ->setData($city)
             ->setFormat('json')
-            ->setStatusCode(200);
+            ->setStatusCode(Response::HTTP_OK);
 
         return $this->handleView($view);
     }
