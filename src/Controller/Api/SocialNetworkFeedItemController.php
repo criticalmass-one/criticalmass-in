@@ -41,7 +41,7 @@ class SocialNetworkFeedItemController extends BaseController
         $view
             ->setData($profileList)
             ->setFormat('json')
-            ->setStatusCode(200);
+            ->setStatusCode(Response::HTTP_OK);
 
         return $this->handleView($view);
     }
@@ -74,7 +74,7 @@ class SocialNetworkFeedItemController extends BaseController
         $view
             ->setData($socialNetworkFeedItem)
             ->setFormat('json')
-            ->setStatusCode(200)
+            ->setStatusCode(Response::HTTP_OK)
             ->setContext($context);
 
         return $this->handleView($view);
@@ -115,12 +115,9 @@ class SocialNetworkFeedItemController extends BaseController
             return $this->createError(Response::HTTP_INTERNAL_SERVER_ERROR, 'An unknown error occured. Please try again later or report this issue to criticalmass@caldera.cc.');
         }
 
-        $view = View::create();
         $view
-            ->setFormat('json')
-            ->setContext($context)
             ->setData($newSocialNetworkFeedItem)
-            ->setStatusCode(200);
+            ->setStatusCode(Response::HTTP_CREATED);
 
         return $this->handleView($view);
     }

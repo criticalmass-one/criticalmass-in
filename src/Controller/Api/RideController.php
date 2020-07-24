@@ -43,7 +43,7 @@ class RideController extends BaseController
         $view
             ->setData($ride)
             ->setFormat('json')
-            ->setStatusCode(200);
+            ->setStatusCode(Response::HTTP_OK);
 
         return $this->handleView($view);
     }
@@ -76,7 +76,7 @@ class RideController extends BaseController
         $view
             ->setData($ride)
             ->setFormat('json')
-            ->setStatusCode(200);
+            ->setStatusCode(Response::HTTP_OK);
 
         return $this->handleView($view);
     }
@@ -180,7 +180,7 @@ class RideController extends BaseController
         $view
             ->setData($rideList)
             ->setFormat('json')
-            ->setStatusCode(200)
+            ->setStatusCode(Response::HTTP_OK)
             ->setContext($context);
 
         return $this->handleView($view);
