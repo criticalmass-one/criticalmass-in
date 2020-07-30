@@ -6,7 +6,7 @@ use App\Criticalmass\RideDuplicates\DuplicateFinder\DuplicateFinderInterface;
 use App\Criticalmass\RideDuplicates\RideMerger\RideMergerInterface;
 use App\Entity\City;
 use App\Entity\Ride;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
@@ -20,7 +20,7 @@ class MergeDuplicateRidesCommand extends ListDuplicateRidesCommand
     /** @var RideMergerInterface $rideMerger */
     protected $rideMerger;
 
-    public function __construct($name = null, RegistryInterface $registry, DuplicateFinderInterface $duplicateFinder, RideMergerInterface $rideMerger)
+    public function __construct($name = null, ManagerRegistry $registry, DuplicateFinderInterface $duplicateFinder, RideMergerInterface $rideMerger)
     {
         $this->rideMerger = $rideMerger;
 

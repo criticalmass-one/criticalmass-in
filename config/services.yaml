@@ -29,8 +29,8 @@ parameters:
     photo_tsv.access_key: '%env(PHOTO_TSV_ACCESS_KEY)%'
     timeline.ttl: 60
     domain.blog: '%env(DOMAIN_BLOG)%'
+    domain.one: '%env(DOMAIN_ONE)%'
     notification.mail.sender_address: malte@criticalmass.in
-    jms_serializer.camel_case_naming_strategy.class: App\Serializer\JMSSerializer\Naming\CamelCaseNamingStrategy
     request_listener.http_port: 80
     request_listener.https_port: 443
     upload_destination.track: '%kernel.project_dir%/public/tracks'
@@ -60,17 +60,22 @@ services:
             $facebookAppId: '%facebook.app_id%'
             $facebookAppSecret: '%facebook.app_secret%'
             $facebookDefaultToken: '%facebook.default_token%'
-            #$twitterClientId: '%twitter.client_id%'
-            #$twitterSecret: '%twitter.secret%'
+            $twitterClientId: '%twitter.client_id%'
+            $twitterSecret: '%twitter.secret%'
+            $uploadDestinationPhoto: '%upload_destination.photo%'
+            $uploadDestinationTrack: '%upload_destination.track%'
+            $uploadDestinationUserPhoto: '%upload_destination.user_photo%'
             $stravaClientId: '%strava.client_id%'
             $stravaSecret: '%strava.secret%'
             $cachedTimelineTtl: '%timeline.ttl%'
             $projectDirectory: '%kernel.project_dir%'
             $redisUrl: '%env(REDIS_URL)%'
+            $instagramScraperProxyServerAddress: '%env(INSTAGRAM_SCRAPER_PROXY_ADDRESS)%'
+            $instagramScraperProxyServerPort: '%env(INSTAGRAM_SCRAPER_PROXY_PORT)%'
 
     App\:
         resource: '../src/*'
-        exclude: '../src/{Admin,DQL,Entity,Manager,Menu,Migrations,Model,Repository,Tests,UserProvider,Criticalmass/UploadValidator/UploadValidatorException}'
+        exclude: '../src/{DQL,Entity,Manager,Menu,Migrations,Model,Repository,Tests,UserProvider,Criticalmass/UploadValidator/UploadValidatorException}'
 
     App\Controller\:
         resource: '../src/Controller'
@@ -150,10 +155,11 @@ services:
 
     App\Criticalmass\Timeline\TimelineInterface:
         alias: App\Criticalmass\Timeline\CachedTimeline
+        #alias: App\Criticalmass\Timeline\Timeline
 
     App\Criticalmass\Geo\Loop\LoopInterface:
         alias: App\Criticalmass\Geo\Loop\TrackLoop
-        
+
     App\Request\ParamConverter\RideParamConverter:
         tags:
             - { name: request.param_converter, priority: 0, converter: ride_converter }
@@ -194,6 +200,10 @@ services:
         tags:
             - { name: request.param_converter, priority: 0, converter: photo_converter }
 
+    App\Request\ParamConverter\PromotionParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: promotion_converter }
+
     App\Request\ParamConverter\UserParamConverter:
         tags:
             - { name: request.param_converter, priority: 10, converter: user_converter }
@@ -201,6 +211,10 @@ services:
     App\Request\ParamConverter\SocialNetworkProfileParamConverter:
         tags:
             - { name: request.param_converter, priority: 0, converter: socialnetworkprofile_converter }
+
+    App\Request\ParamConverter\SocialNetworkFeedItemParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: socialnetworkfeeditem_converter }
 
     App\Request\ParamConverter\TrackParamConverter:
         tags:
@@ -247,6 +261,21 @@ services:
             - { name: jms_serializer.handler, type: Relation<?>, direction: serialization, format: json, method: serializeRelation}
             - { name: jms_serializer.handler, type: Relation<?>, direction: deserialization, format: json, method: deserializeRelation}
 
+    jms_serializer.naming_strategy:
+        alias: jms_serializer.camel_case_naming_strategy
+
     App\Criticalmass\ViewStorage\BlackList\BlackList:
         arguments:
             $crawlerDetect: '@crawler_detect'
+
+    App\Form\Type\RegistrationType:
+        arguments:
+            $class: '%fos_user.model.user.class%'
+
+    App\Controller\OAuthServer\AuthorizeController:
+        arguments:
+            $authorizeForm: '@fos_oauth_server.authorize.form'
+            $authorizeFormHandler: '@fos_oauth_server.authorize.form.handler.default'
+            $oAuth2Server: '@fos_oauth_server.server'
+        tags:
+            - controller.service_arguments

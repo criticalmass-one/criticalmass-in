@@ -1,0 +1,14 @@
+{% if alertList|length > 0 %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {% for alert in alertList %}
+                    <div class="alert alert-{{ alert.type }}">
+                        <strong>{{ alert.title }}</strong>
+                        {{ alert.message|raw|nl2br }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endif %}

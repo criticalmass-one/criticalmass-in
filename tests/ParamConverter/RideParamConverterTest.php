@@ -11,7 +11,7 @@ use App\Repository\RideSlugRepository;
 use App\Request\ParamConverter\RideParamConverter;
 use PHPUnit\Framework\TestCase;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter as ParamConverterConfig;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -19,7 +19,7 @@ class RideParamConverterTest extends TestCase
 {
     public function testRideParamConverterSupportsRide(): void
     {
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
 
         $paramConverter = new RideParamConverter($registry);
 
@@ -38,7 +38,7 @@ class RideParamConverterTest extends TestCase
 
     public function testRideParamConverterWithEmptyRequest(): void
     {
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
 
         $paramConverter = new RideParamConverter($registry);
 
@@ -64,7 +64,7 @@ class RideParamConverterTest extends TestCase
             ->with($this->equalTo(123))
             ->will($this->returnValue($ride));
 
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
         $registry
             ->expects($this->once())
             ->method('getRepository')
@@ -109,7 +109,7 @@ class RideParamConverterTest extends TestCase
             ->with($this->equalTo($city), $this->equalTo('test-ride-identifier'))
             ->will($this->returnValue($ride));
 
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
 
         $registry
             ->expects($this->any())
@@ -158,7 +158,7 @@ class RideParamConverterTest extends TestCase
             ->with($this->equalTo($city), $this->equalTo(new \DateTime('2011-06-24 00:00:00')))
             ->will($this->returnValue($ride));
 
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
 
         $registry
             ->expects($this->any())
@@ -207,7 +207,7 @@ class RideParamConverterTest extends TestCase
             ->with($this->equalTo($city), $this->equalTo(new \DateTime('2011-06-01 00:00:00')))
             ->will($this->returnValue([$ride]));
 
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
 
         $registry
             ->expects($this->any())

@@ -6,10 +6,10 @@ use App\Criticalmass\DataQuery\DataQueryManager\DataQueryManagerInterface;
 use App\Criticalmass\DataQuery\RequestParameterList\RequestToListConverter;
 use App\Entity\Photo;
 use App\Entity\Ride;
+use Doctrine\Persistence\ManagerRegistry;
 use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -29,7 +29,7 @@ class PhotoController extends BaseController
      * )
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function listRidePhotosAction(RegistryInterface $registry, Ride $ride): Response
+    public function listRidePhotosAction(ManagerRegistry $registry, Ride $ride): Response
     {
         $photoList = $registry->getRepository(Photo::class)->findPhotosByRide($ride);
 
@@ -37,7 +37,7 @@ class PhotoController extends BaseController
         $view
             ->setData($photoList)
             ->setFormat('json')
-            ->setStatusCode(200);
+            ->setStatusCode(Response::HTTP_OK);
 
         return $this->handleView($view);
     }
@@ -138,7 +138,7 @@ class PhotoController extends BaseController
         $view
             ->setData($rideList)
             ->setFormat('json')
-            ->setStatusCode(200);
+            ->setStatusCode(Response::HTTP_OK);
 
         return $this->handleView($view);
     }

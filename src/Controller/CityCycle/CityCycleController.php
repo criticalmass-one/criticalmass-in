@@ -8,7 +8,7 @@ use App\Entity\CityCycle;
 use App\Entity\Ride;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
 
 class CityCycleController extends AbstractController
@@ -17,7 +17,7 @@ class CityCycleController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("city", class="App:City")
      */
-    public function listAction(City $city, RegistryInterface $registry): Response
+    public function listAction(City $city, ManagerRegistry $registry): Response
     {
         $cityCycleRepository = $registry->getRepository(CityCycle::class);
 
@@ -31,7 +31,7 @@ class CityCycleController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("cityCycle", class="App:CityCycle")
      */
-    public function listRidesAction(CityCycle $cityCycle, RegistryInterface $registry): Response
+    public function listRidesAction(CityCycle $cityCycle, ManagerRegistry $registry): Response
     {
         $rideRepository = $registry->getRepository(Ride::class);
 

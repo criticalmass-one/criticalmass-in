@@ -4,17 +4,17 @@ namespace App\Criticalmass\Participation\CityList;
 
 use App\Entity\Participation;
 use App\Entity\User;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 class ParticipationCityListFactory implements ParticipationCityListFactoryInterface
 {
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var ParticipationCityList $participationCityList */
     protected $participationCityList;
 
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         $this->registry = $registry;
     }

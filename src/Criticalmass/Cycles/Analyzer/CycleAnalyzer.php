@@ -3,6 +3,9 @@
 namespace App\Criticalmass\Cycles\Analyzer;
 
 use App\Entity\CityCycle;
+use App\Entity\Ride;
+use App\Criticalmass\RideGenerator\RideCalculator\RideCalculatorInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 class CycleAnalyzer extends AbstractCycleAnalyzer
 {

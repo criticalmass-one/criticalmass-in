@@ -4,11 +4,11 @@ namespace App\Controller\Api;
 
 use App\Entity\City;
 use App\Entity\Location;
+use Doctrine\Persistence\ManagerRegistry;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class LocationController extends BaseController
@@ -24,7 +24,7 @@ class LocationController extends BaseController
      * )
      * @ParamConverter("city", class="App:City")
      */
-    public function listLocationAction(RegistryInterface $registry, City $city): Response
+    public function listLocationAction(ManagerRegistry $registry, City $city): Response
     {
         $locationList = $registry->getRepository(Location::class)->findLocationsByCity($city);
 
@@ -32,7 +32,7 @@ class LocationController extends BaseController
         $view
             ->setData($locationList)
             ->setFormat('json')
-            ->setStatusCode(200);
+            ->setStatusCode(Response::HTTP_OK);
 
         return $this->handleView($view);
     }
@@ -59,7 +59,7 @@ class LocationController extends BaseController
         $view
             ->setData($location)
             ->setFormat('json')
-            ->setStatusCode(200)
+            ->setStatusCode(Response::HTTP_OK)
             ->setContext($context);
 
         return $this->handleView($view);

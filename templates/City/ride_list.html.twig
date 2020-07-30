@@ -22,13 +22,12 @@
 {% endblock %}
     
 {% block content %}
-    <div class="container main-container">
+    <div class="container">
+
+        {{ include('City/Includes/_tabs.html.twig', { tab: 'ride_list' }) }}
+
         <div class="row">
             <div class="col-md-12">
-                <div class="pull-right">
-                    {% include 'City/Includes/_rideListSort.html.twig' %}
-                </div>
-
                 <h2>
                     Touren in dieser Stadt
                 </h2>
@@ -47,77 +46,45 @@
 
         <div class="row">
             <div class="col-md-12">
-                <table id="cityRideList" class="table">
+                <table id="ride-list-table" class="table">
                     <thead>
                     <tr>
-                        <th data-sortAttribute="rideDate">
+                        <th>
                             Datum
                         </th>
                         <th>
                             Uhrzeit
                         </th>
-                        <th data-sortAttribute="rideTitle">
+                        <th>
                             Titel
                         </th>
-                        <th data-sortAttribute="rideLocation">
+                        <th>
                             Treffpunkt
                         </th>
-                        <th data-sortAttribute="rideParticipants">
+                        <th>
                             Teilnehmer
                         </th>
-                        <th data-sortAttribute="rideDistance">
+                        <th>
                             Distanz
                         </th>
-                        <th data-sortAttribute="rideDuration">
+                        <th>
                             Dauer
                         </th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for ride in rides %}
-                        <tr class="city ride{% if not ride.enabled %} disabled{% endif %}"
-                            data-rideDate="{{ ride.dateTime|date('Y-m-d H-i', 'Europe/Berlin') }}"
-                            data-rideTitle="{{ ride.title }}"
-                            data-rideLocation="{{ ride.location }}"
-                            data-rideParticipants="{{ ride.estimatedParticipants }}"
-                            data-rideDistance="{{ ride.estimatedDistance }}"
-                            data-rideDuration="{{ ride.estimatedDuration }}"
-
-                        >
-                            <td>
-                                {{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}
-                            </td>
-                            <td>
-                                {{ ride.dateTime|date('H:i', ride.city.timezone) }}&nbsp;Uhr
-                            </td>
-                            <td>
-                                <a href="{{ objectPath(ride) }}">
-                                    {{ ride.title }}
-                                </a>
-                            </td>
-                            <td>
-                                {{ ride.location }}
-                            </td>
-                            <td>
-                                {% if ride.estimatedParticipants %}
-                                    {{ ride.estimatedParticipants }}
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if ride.estimatedDistance %}
-                                    {{ ride.estimatedDistance|round(2) }}&nbsp;Kilometer
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if ride.estimatedDuration %}
-                                    {{ human_duration(ride.getEstimatedDurationInSeconds()) }}
-                                {% endif %}
-                            </td>
-                        </tr>
+                    {% include 'Common/Ride/standard_city_ride_table_row.html.twig' with { ride: ride } %}
                     {% endfor %}
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block additionalFooterElements %}
+    <script>
+        CriticalMass.loadModule('CityRideListPage', '#ride-list-table');
+    </script>
 {% endblock %}

@@ -19,7 +19,7 @@ use App\Event\Track\TrackTimeEvent;
 use App\Event\Track\TrackTrimmedEvent;
 use App\Event\Track\TrackUpdatedEvent;
 use App\Event\Track\TrackUploadedEvent;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class TrackEventSubscriber implements EventSubscriberInterface
@@ -42,14 +42,14 @@ class TrackEventSubscriber implements EventSubscriberInterface
     /** @var RideEstimateConverterInterface $rideEstimateConverter */
     protected $rideEstimateConverter;
 
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var ParticipationManagerInterface $participationManager */
     protected $participationManager;
 
     public function __construct(
-        RegistryInterface $registry,
+        ManagerRegistry $registry,
         RideEstimateHandler $rideEstimateHandler,
         RideEstimateConverterInterface $rideEstimateConverter,
         TrackReader $trackReader,

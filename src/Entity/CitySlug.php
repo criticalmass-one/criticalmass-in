@@ -2,10 +2,10 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\Router\Annotation as Routing;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
-use App\Criticalmass\Router\Annotation as Routing;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CitySlugRepository")
@@ -32,7 +32,7 @@ class CitySlug implements RouteableInterface
     protected $slug;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="slugs")
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="slugs", fetch="EAGER")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected $city;

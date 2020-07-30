@@ -97,24 +97,6 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     protected $description;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Url()
-     */
-    protected $url;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Url()
-     */
-    protected $facebook;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Url()
-     */
-    protected $twitter;
-
-    /**
      * @ORM\Column(type="float")
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
@@ -409,60 +391,6 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     public function getTitle(): ?string
     {
         return $this->title;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function setUrl(string $url): City
-    {
-        $this->url = $url;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function getUrl(): ?string
-    {
-        return $this->url;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function setFacebook(string $facebook): City
-    {
-        $this->facebook = $facebook;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function getFacebook(): ?string
-    {
-        return $this->facebook;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function setTwitter(string $twitter): City
-    {
-        $this->twitter = $twitter;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function getTwitter(): ?string
-    {
-        return $this->twitter;
     }
 
     public function setLatitude(float $latitude = null): CoordinateInterface

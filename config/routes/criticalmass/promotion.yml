@@ -1,0 +1,4 @@
+caldera_criticalmass_promotion_show:
+  path:  /{promotionSlug}
+  controller: App\Controller\Promotion\PromotionController::showAction
+  

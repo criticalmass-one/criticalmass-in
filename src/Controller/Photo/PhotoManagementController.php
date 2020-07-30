@@ -11,7 +11,7 @@ use App\Form\Type\PhotoCoordType;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -52,7 +52,7 @@ class PhotoManagementController extends AbstractController
      * @Security("is_granted('edit', photo)")
      * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
-    public function deleteAction(Request $request, Photo $photo, RegistryInterface $registry): Response
+    public function deleteAction(Request $request, Photo $photo, ManagerRegistry $registry): Response
     {
         $this->saveReferer($request);
 
@@ -87,7 +87,7 @@ class PhotoManagementController extends AbstractController
      * @Security("is_granted('edit', photo)")
      * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
-    public function toggleAction(Request $request, Photo $photo, RegistryInterface $registry): Response
+    public function toggleAction(Request $request, Photo $photo, ManagerRegistry $registry): Response
     {
         $this->saveReferer($request);
 
@@ -102,7 +102,7 @@ class PhotoManagementController extends AbstractController
      * @Security("is_granted('edit', photo)")
      * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
-    public function featuredPhotoAction(Request $request, Photo $photo, RegistryInterface $registry): Response
+    public function featuredPhotoAction(Request $request, Photo $photo, ManagerRegistry $registry): Response
     {
         $this->saveReferer($request);
 
@@ -117,7 +117,7 @@ class PhotoManagementController extends AbstractController
      * @Security("is_granted('edit', photo)")
      * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
-    public function placeSingleAction(Request $request, Photo $photo, ObjectRouterInterface $objectRouter, RegistryInterface $registry): Response
+    public function placeSingleAction(Request $request, Photo $photo, ObjectRouterInterface $objectRouter, ManagerRegistry $registry): Response
     {
         $form = $this->createForm(PhotoCoordType::class, $photo, [
             'action' => $objectRouter->generate($photo, 'caldera_criticalmass_photo_place_single')
@@ -130,7 +130,7 @@ class PhotoManagementController extends AbstractController
         }
     }
 
-    protected function placeSingleGetAction(Request $request, Photo $photo, FormInterface $form, RegistryInterface $registry): Response
+    protected function placeSingleGetAction(Request $request, Photo $photo, FormInterface $form, ManagerRegistry $registry): Response
     {
         $this->saveReferer($request);
 
@@ -148,7 +148,7 @@ class PhotoManagementController extends AbstractController
         ]);
     }
 
-    protected function placeSinglePostAction(Request $request, Photo $photo, FormInterface $form, RegistryInterface $registry): Response
+    protected function placeSinglePostAction(Request $request, Photo $photo, FormInterface $form, ManagerRegistry $registry): Response
     {
         $form->handleRequest($request);
 
