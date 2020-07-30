@@ -3,20 +3,12 @@
 namespace App\Criticalmass\RideDuplicates\RideMerger;
 
 use App\Entity\Ride;
-use Doctrine\Persistence\ManagerRegistry;
 
 abstract class AbstractRideMerger implements RideMergerInterface
 {
     protected Ride $targetRide;
 
     protected array $sourceRides = [];
-
-    protected ManagerRegistry $registry;
-
-    public function __construct(ManagerRegistry $registry)
-    {
-        $this->registry = $registry;
-    }
 
     public function setTargetRide(Ride $targetRide): RideMergerInterface
     {
