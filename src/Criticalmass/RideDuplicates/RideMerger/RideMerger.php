@@ -3,47 +3,9 @@
 namespace App\Criticalmass\RideDuplicates\RideMerger;
 
 use App\Entity\Ride;
-use Doctrine\Persistence\ManagerRegistry;
 
-class RideMerger implements RideMergerInterface
+class RideMerger extends AbstractRideMerger
 {
-    /** @var Ride $targetRide */
-    protected $targetRide;
-
-    /** @var array $sourceRides */
-    protected $sourceRides = [];
-
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    public function __construct(ManagerRegistry $registry)
-    {
-        $this->registry = $registry;
-    }
-
-    public function setTargetRide(Ride $targetRide): RideMergerInterface
-    {
-        $this->targetRide = $targetRide;
-
-        return $this;
-    }
-
-    public function addSourceRide(Ride $sourceRide): RideMergerInterface
-    {
-        $this->sourceRides[$sourceRide->getId()] = $sourceRide;
-
-        return $this;
-    }
-
-    public function addSourceRides(array $sourceRides): RideMergerInterface
-    {
-        foreach ($sourceRides as $sourceRide) {
-            $this->addSourceRide($sourceRide);
-        }
-
-        return $this;
-    }
-
     public function merge(): Ride
     {
         /** @var Ride $sourceRide */
