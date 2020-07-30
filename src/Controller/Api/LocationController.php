@@ -4,11 +4,11 @@ namespace App\Controller\Api;
 
 use App\Entity\City;
 use App\Entity\Location;
+use Doctrine\Persistence\ManagerRegistry;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
 
 class LocationController extends BaseController
@@ -32,7 +32,7 @@ class LocationController extends BaseController
         $view
             ->setData($locationList)
             ->setFormat('json')
-            ->setStatusCode(200);
+            ->setStatusCode(Response::HTTP_OK);
 
         return $this->handleView($view);
     }
@@ -59,7 +59,7 @@ class LocationController extends BaseController
         $view
             ->setData($location)
             ->setFormat('json')
-            ->setStatusCode(200)
+            ->setStatusCode(Response::HTTP_OK)
             ->setContext($context);
 
         return $this->handleView($view);

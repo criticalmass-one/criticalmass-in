@@ -47,7 +47,7 @@ class SocialNetworkProfileController extends BaseController
         $view
             ->setData($profileList)
             ->setFormat('json')
-            ->setStatusCode(200);
+            ->setStatusCode(Response::HTTP_OK);
 
         return $this->handleView($view);
     }
@@ -71,7 +71,7 @@ class SocialNetworkProfileController extends BaseController
         $view
             ->setData($profileList)
             ->setFormat('json')
-            ->setStatusCode(200);
+            ->setStatusCode(Response::HTTP_OK);
 
         return $this->handleView($view);
     }
@@ -104,7 +104,7 @@ class SocialNetworkProfileController extends BaseController
         $view
             ->setData($socialNetworkProfile)
             ->setFormat('json')
-            ->setStatusCode(200)
+            ->setStatusCode(Response::HTTP_OK)
             ->setContext($context);
 
         return $this->handleView($view);
@@ -141,7 +141,7 @@ class SocialNetworkProfileController extends BaseController
         $view
             ->setData($newSocialNetworkProfile)
             ->setFormat('json')
-            ->setStatusCode(200)
+            ->setStatusCode(Response::HTTP_CREATED)
             ->setContext($context);
 
         return $this->handleView($view);
