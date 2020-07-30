@@ -340,9 +340,9 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     private $disabledReasonMessage;
 
     /**
-     * @ORM\OneToMany(targetEntity=RideView::class, mappedBy="ride")
+     * @ORM\OneToMany(targetEntity=RideView::class, mappedBy="ride", fetch="LAZY")
      */
-    private $viewRelation;
+    protected $viewRelation;
 
     public function __construct()
     {
