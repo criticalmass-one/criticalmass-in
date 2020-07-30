@@ -62,7 +62,9 @@ class CityCycleRepository extends EntityRepository
     {
         $builder = $this->createQueryBuilder('cc');
 
-        $builder->where($builder->expr()->isNull('cc.disabledAt'));
+        $builder
+            ->where($builder->expr()->isNull('cc.disabledAt'))
+            ->join('cc.city', 'c');
 
         if ($city) {
             $builder
@@ -72,7 +74,6 @@ class CityCycleRepository extends EntityRepository
 
         if ($region) {
             $builder
-                ->join('cc.city', 'c')
                 ->andWhere($builder->expr()->eq('c.region', ':region'))
                 ->setParameter('region', $region);
         }
@@ -110,10 +111,10 @@ class CityCycleRepository extends EntityRepository
                 ->andWhere($builder->expr()->eq('cc.weekOfMonth', ':weekOfMonth'))
                 ->setParameter('weekOfMonth', $weekOfMonth);
         }
-        
+
         $builder
-            ->addOrderBy('cc.validFrom', 'DESC')
-            ->addOrderBy('cc.location');
+            ->addOrderBy('c.city', 'ASC')
+            ->addOrderBy('cc.location', 'ASC');
 
         $query = $builder->getQuery();
 
