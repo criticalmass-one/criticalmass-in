@@ -50,7 +50,7 @@ class RideMerger implements RideMergerInterface
         foreach ($this->sourceRides as $sourceRide) {
             $this->targetRide->setViews($this->targetRide->getViews() + $sourceRide->getViews());
 
-            $relationProperties = ['weather', 'estimate', 'track', 'subride', 'post', 'photo', 'socialNetworkProfile'];
+            $relationProperties = ['weather', 'estimate', 'track', 'subride', 'post', 'photo', 'socialNetworkProfile', 'viewRelation'];
 
             foreach ($relationProperties as $relationProperty) {
                 $getMethodName = sprintf('get%ss', ucfirst($relationProperty));
