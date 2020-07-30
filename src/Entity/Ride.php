@@ -339,6 +339,11 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      */
     private $disabledReasonMessage;
 
+    /**
+     * @ORM\OneToMany(targetEntity=RideView::class, mappedBy="ride", fetch="LAZY")
+     */
+    protected $viewRelation;
+
     public function __construct()
     {
         $this->dateTime = new \DateTime();
@@ -353,6 +358,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         $this->participations = new ArrayCollection();
         $this->socialNetworkProfiles = new ArrayCollection();
         $this->trackImportCandidates = new ArrayCollection();
+        $this->viewRelation = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -1109,6 +1115,37 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     public function setDisabledReasonMessage(?string $disabledReasonMessage): self
     {
         $this->disabledReasonMessage = $disabledReasonMessage;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RideView[]
+     */
+    public function getViewRelations(): Collection
+    {
+        return $this->viewRelation;
+    }
+
+    public function addViewRelation(RideView $viewRelation): self
+    {
+        if (!$this->viewRelation->contains($viewRelation)) {
+            $this->viewRelation[] = $viewRelation;
+            $viewRelation->setRide($this);
+        }
+
+        return $this;
+    }
+
+    public function removeViewRelation(RideView $viewRelation): self
+    {
+        if ($this->viewRelation->contains($viewRelation)) {
+            $this->viewRelation->removeElement($viewRelation);
+            // set the owning side to null (unless already changed)
+            if ($viewRelation->getRide() === $this) {
+                $viewRelation->setRide(null);
+            }
+        }
 
         return $this;
     }

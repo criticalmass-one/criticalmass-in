@@ -25,15 +25,14 @@ class RideView implements ViewEntity
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="ride_views")
-     * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
-     */
-    protected $ride;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     protected $dateTime;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Ride::class, inversedBy="viewRelation")
+     */
+    protected $ride;
 
     public function __construct()
     {
@@ -81,7 +80,7 @@ class RideView implements ViewEntity
         return $this->ride;
     }
 
-    public function setRide(Ride $ride): RideView
+    public function setRide(?Ride $ride): RideView
     {
         $this->ride = $ride;
 
