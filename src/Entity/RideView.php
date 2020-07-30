@@ -80,7 +80,7 @@ class RideView implements ViewEntity
         return $this->ride;
     }
 
-    public function setRide(Ride $ride): RideView
+    public function setRide(?Ride $ride): RideView
     {
         $this->ride = $ride;
 

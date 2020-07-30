@@ -16,8 +16,13 @@ class RideMerger extends AbstractRideMerger
 
             foreach ($relationProperties as $relationProperty) {
                 $getMethodName = sprintf('get%ss', ucfirst($relationProperty));
+                $addMethodName = sprintf('add%s', ucfirst($relationProperty));
+                $removeMethodName = sprintf('remove%s', ucfirst($relationProperty));
 
                 foreach ($sourceRide->$getMethodName() as $relationObject) {
+                    $sourceRide->$removeMethodName($relationObject);
+                    $this->targetRide->$addMethodName($relationObject);
+
                     $relationObject->setRide($this->targetRide);
                 }
             }
