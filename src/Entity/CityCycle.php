@@ -36,6 +36,7 @@ class CityCycle implements RouteableInterface
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      * @Routing\RouteParameter(name="cityCycleId")
+     * @JMS\Expose()
      */
     protected $id;
 
@@ -60,7 +61,7 @@ class CityCycle implements RouteableInterface
 
     /**
      * @ORM\Column(type="smallint", nullable=false)
-     * @JMS\Expose
+     * @JMS\Expose()
      * @JMS\Groups({"ride-list"})
      * @Assert\Range(min="0", max="6")
      */
@@ -68,7 +69,7 @@ class CityCycle implements RouteableInterface
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
-     * @JMS\Expose
+     * @JMS\Expose()
      * @JMS\Groups({"ride-list"})
      * @Assert\Range(min="0", max="4")
      */
@@ -77,14 +78,14 @@ class CityCycle implements RouteableInterface
     /**
      * @ORM\Column(type="time", nullable=true)
      * @Assert\Type(type="\DateTime")
-     * @JMS\Expose
+     * @JMS\Expose()
      */
     protected $time;
 
     /**
      * @var string
      * @ORM\Column(type="string", nullable=true)
-     * @JMS\Expose
+     * @JMS\Expose()
      * @JMS\Groups({"ride-list"})
      */
     protected $location;
@@ -92,7 +93,7 @@ class CityCycle implements RouteableInterface
     /**
      * @var float
      * @ORM\Column(type="float", nullable=true)
-     * @JMS\Expose
+     * @JMS\Expose()
      * @JMS\Groups({"ride-list"})
      * @Assert\NotEqualTo(value="0.0")
      */
@@ -101,7 +102,7 @@ class CityCycle implements RouteableInterface
     /**
      * @var float
      * @ORM\Column(type="float", nullable=true)
-     * @JMS\Expose
+     * @JMS\Expose()
      * @JMS\Groups({"ride-list"})
      * @Assert\NotEqualTo(value="0.0")
      */
@@ -110,17 +111,20 @@ class CityCycle implements RouteableInterface
     /**
      * @var \DateTime
      * @ORM\Column(type="datetime", nullable=false)
+     * @JMS\Expose()
      */
     protected $createdAt;
 
     /**
      * @var \DateTime
+     * @JMS\Expose()
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $updatedAt;
 
     /**
      * @var \DateTime
+     * @JMS\Expose()
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $disabledAt;
@@ -128,7 +132,7 @@ class CityCycle implements RouteableInterface
     /**
      * @var \DateTime
      * @ORM\Column(type="date", nullable=true)
-     * @JMS\Expose
+     * @JMS\Expose()
      * @JMS\Groups({"ride-list"})
      */
     protected $validFrom;
@@ -136,28 +140,32 @@ class CityCycle implements RouteableInterface
     /**
      * @var \DateTime
      * @ORM\Column(type="date", nullable=true)
-     * @JMS\Expose
+     * @JMS\Expose()
      * @JMS\Groups({"ride-list"})
      */
     protected $validUntil;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Expose()
      */
     private $rideCalculatorFqcn;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Expose()
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Expose()
      */
     private $specialDayOfWeek;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Expose()
      */
     private $specialWeekOfMonth;
 
