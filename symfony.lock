@@ -14,8 +14,8 @@
     "clue/stream-filter": {
         "version": "v1.4.0"
     },
-    "cmfcmf/openweathermap-php-api": {
-        "version": "v2.3.0"
+    "cocur/slugify": {
+        "version": "v3.1"
     },
     "codedungeon/phpunit-result-printer": {
         "version": "0.6.1"
@@ -347,9 +347,6 @@
     "malenki/slug": {
         "version": "1.0.0"
     },
-    "mashape/unirest-php": {
-        "version": "v3.0.4"
-    },
     "maxh/php-nominatim": {
         "version": "1.2.3"
     },
@@ -544,12 +541,6 @@
     },
     "psr/log": {
         "version": "1.0.2"
-    },
-    "psr/simple-cache": {
-        "version": "1.0.1"
-    },
-    "raiym/instagram-php-scraper": {
-        "version": "v0.9.11"
     },
     "ralouphie/getallheaders": {
         "version": "2.0.5"
