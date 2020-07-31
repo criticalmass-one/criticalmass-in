@@ -14,7 +14,6 @@ parameters:
     database_user: '%env(DATABASE_USER)%'
     database_password: '%env(DATABASE_PASSWORD)%'
     track.gap_width: 10
-    openweather.appid: '%env(OPENWEATHERMAP_APP_ID)%'
     strava.client_id: '%env(STRAVA_CLIENT_ID)%'
     strava.token: '%env(STRAVA_TOKEN)%'
     strava.secret: '%env(STRAVA_SECRET)%'
@@ -53,7 +52,7 @@ services:
         autoconfigure: true
         public: false
         bind:
-            $openWeatherMapApiKey: '%openweather.appid%'
+            $rootDirectory: '%kernel.root_dir%'
             $webRootDir: '%kernel.root_dir%/../public'
             $staticmapsHost: '%staticmaps.host%'
             $gapWidth: '%track.gap_width%'
@@ -81,8 +80,6 @@ services:
         resource: '../src/Controller'
         public: true
         tags: ['controller.service_arguments']
-
-    Cmfcmf\OpenWeatherMap: ~
 
     Symfony\Component\Routing\RouteCollection: ~
 

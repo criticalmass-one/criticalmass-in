@@ -70,6 +70,9 @@ class Kernel extends BaseKernel
         $container->registerForAutoconfiguration(TimelineCollectorInterface::class)->addTag('timeline.collector');
         $container->addCompilerPass(new TimelineCollectorPass());
 
+        $container->registerForAutoconfiguration(NetworkInterface::class)->addTag('social_network.network');
+        $container->addCompilerPass(new SocialNetworkPass());
+
         $container->registerForAutoconfiguration(DelegatedRouterInterface::class)->addTag('object_router.delegated_router');
         $container->addCompilerPass(new ObjectRouterPass());
 
