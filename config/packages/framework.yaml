@@ -27,6 +27,7 @@ framework:
     fragments:       ~
     http_method_override: true
     assets:
-        #version: '%assets_version%'
+        version: '%assets_version%'
+        json_manifest_path: ~
     router:
         strict_requirements: ~

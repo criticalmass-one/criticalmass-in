@@ -2,12 +2,12 @@
 
 namespace App\Request\ParamConverter;
 
-use App\Entity\SocialNetworkProfile;
+use App\Entity\SocialNetworkFeedItem;
 use Doctrine\Persistence\ManagerRegistry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 
-class SocialNetworkProfileParamConverter extends AbstractCriticalmassParamConverter
+class SocialNetworkFeedItemParamConverter extends AbstractCriticalmassParamConverter
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -16,16 +16,16 @@ class SocialNetworkProfileParamConverter extends AbstractCriticalmassParamConver
 
     public function apply(Request $request, ParamConverter $configuration): void
     {
-        $profileId = $request->get('profileId');
+        $feedItemId = $request->get('feedItemId');
 
-        $profile = null;
+        $feedItem = null;
 
-        if ($profileId) {
-            $profile = $this->registry->getRepository(SocialNetworkProfile::class)->find($profileId);
+        if ($feedItemId) {
+            $feedItem = $this->registry->getRepository(SocialNetworkFeedItem::class)->find($feedItemId);
         }
 
-        if ($profile) {
-            $request->attributes->set($configuration->getName(), $profile);
+        if ($feedItem) {
+            $request->attributes->set($configuration->getName(), $feedItem);
         } else {
             $this->notFound($configuration);
         }
