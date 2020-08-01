@@ -9,10 +9,10 @@ use App\Criticalmass\OrderedEntities\OrderedEntityInterface;
 use App\Criticalmass\Router\Annotation as Routing;
 use App\Criticalmass\Sharing\Annotation as Sharing;
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
+use App\EntityInterface\StaticMapableInterface;
+use Caldera\GeoBasic\Coord\Coord;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
-use App\Criticalmass\Weather\EntityInterface\WeatherableInterface;
-use App\Criticalmass\Weather\EntityInterface\WeatherInterface;
 use App\EntityInterface\AuditableInterface;
 use App\EntityInterface\CoordinateInterface;
 use App\EntityInterface\ElasticSearchPinInterface;
@@ -20,9 +20,7 @@ use App\EntityInterface\ParticipateableInterface;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
-use App\EntityInterface\StaticMapableInterface;
 use App\Validator\Constraint as CriticalAssert;
-use Caldera\GeoBasic\Coord\Coord;
 use Caldera\GeoBasic\Coord\CoordInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -40,7 +38,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Vich\Uploadable
  * @Routing\DefaultRoute(name="caldera_criticalmass_ride_show")
  */
-class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, Shareable, ReverseGeocodeable, WeatherableInterface, OrderedEntityInterface, CoordinateInterface
+class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, Shareable, ReverseGeocodeable, OrderedEntityInterface, CoordinateInterface
 {
     /**
      * @ORM\Id
@@ -339,6 +337,11 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      */
     private $disabledReasonMessage;
 
+    /**
+     * @ORM\OneToMany(targetEntity=RideView::class, mappedBy="ride", fetch="LAZY")
+     */
+    protected $viewRelation;
+
     public function __construct()
     {
         $this->dateTime = new \DateTime();
@@ -353,6 +356,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         $this->participations = new ArrayCollection();
         $this->socialNetworkProfiles = new ArrayCollection();
         $this->trackImportCandidates = new ArrayCollection();
+        $this->viewRelation = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -398,7 +402,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     {
         return $this->dateTime;
     }
-    
+
     public function setLocation(string $location = null): ReverseGeocodeable
     {
         $this->location = $location;
@@ -909,9 +913,9 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         return $this;
     }
 
-    public function removeWeather(WeatherInterface $weathers): WeatherableInterface
+    public function removeWeather(WeatherInterface $weather): WeatherableInterface
     {
-        $this->weathers->removeElement($weathers);
+        $this->weathers->removeElement($weather);
 
         return $this;
     }
@@ -1109,6 +1113,37 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     public function setDisabledReasonMessage(?string $disabledReasonMessage): self
     {
         $this->disabledReasonMessage = $disabledReasonMessage;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RideView[]
+     */
+    public function getViewRelations(): Collection
+    {
+        return $this->viewRelation;
+    }
+
+    public function addViewRelation(RideView $viewRelation): self
+    {
+        if (!$this->viewRelation->contains($viewRelation)) {
+            $this->viewRelation[] = $viewRelation;
+            $viewRelation->setRide($this);
+        }
+
+        return $this;
+    }
+
+    public function removeViewRelation(RideView $viewRelation): self
+    {
+        if ($this->viewRelation->contains($viewRelation)) {
+            $this->viewRelation->removeElement($viewRelation);
+            // set the owning side to null (unless already changed)
+            if ($viewRelation->getRide() === $this) {
+                $viewRelation->setRide(null);
+            }
+        }
 
         return $this;
     }

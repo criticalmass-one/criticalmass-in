@@ -2,12 +2,15 @@
 
 namespace App\Controller\Api;
 
+use App\Criticalmass\Api\Error;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
+use FOS\RestBundle\View\View;
 use JMS\Serializer\Context;
 use JMS\Serializer\DeserializationContext;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 abstract class BaseController extends AbstractFOSRestController
 {
@@ -43,5 +46,18 @@ abstract class BaseController extends AbstractFOSRestController
         }
 
         return $serializer->deserialize($content, $modelClass, 'json');
+    }
+
+    protected function createError(int $statusCode, string $errorMessage): Response
+    {
+        $error = new Error($statusCode, $errorMessage);
+
+        $view = View::create();
+        $view
+            ->setFormat('json')
+            ->setData($error)
+            ->setStatusCode($statusCode);
+
+        return $this->handleView($view);
     }
 }

@@ -12,7 +12,6 @@ use App\Criticalmass\Router\DelegatedRouter\DelegatedRouterInterface;
 use App\Criticalmass\Sharing\Network\ShareNetworkInterface;
 use App\Criticalmass\SocialNetwork\DependencyInjection\Compiler\SocialNetworkFetcherPass;
 use App\Criticalmass\SocialNetwork\DependencyInjection\Compiler\SocialNetworkPass;
-use App\Criticalmass\SocialNetwork\FeedFetcher\NetworkFeedFetcher\NetworkFeedFetcherInterface;
 use App\Criticalmass\SocialNetwork\Network\NetworkInterface;
 use App\Criticalmass\Timeline\Collector\TimelineCollectorInterface;
 use App\DependencyInjection\Compiler\ObjectRouterPass;
@@ -71,6 +70,9 @@ class Kernel extends BaseKernel
         $container->registerForAutoconfiguration(TimelineCollectorInterface::class)->addTag('timeline.collector');
         $container->addCompilerPass(new TimelineCollectorPass());
 
+        $container->registerForAutoconfiguration(NetworkInterface::class)->addTag('social_network.network');
+        $container->addCompilerPass(new SocialNetworkPass());
+
         $container->registerForAutoconfiguration(DelegatedRouterInterface::class)->addTag('object_router.delegated_router');
         $container->addCompilerPass(new ObjectRouterPass());
 
@@ -93,9 +95,6 @@ class Kernel extends BaseKernel
 
         $container->addCompilerPass(new SocialNetworkPass());
         $container->registerForAutoconfiguration(NetworkInterface::class)->addTag('social_network.network');
-
-        $container->addCompilerPass(new SocialNetworkFetcherPass());
-        $container->registerForAutoconfiguration(NetworkFeedFetcherInterface::class)->addTag('social_network.network_feed_fetcher');
     }
 
     protected function configureRoutes(RouteCollectionBuilder $routes): void

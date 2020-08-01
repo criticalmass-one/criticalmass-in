@@ -4,11 +4,11 @@ namespace App\Controller\Api;
 
 use App\Entity\Ride;
 use App\Entity\Subride;
+use Doctrine\Persistence\ManagerRegistry;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -34,7 +34,7 @@ class SubrideController extends BaseController
         $view
             ->setData($subrideList)
             ->setFormat('json')
-            ->setStatusCode(200);
+            ->setStatusCode(Response::HTTP_OK);
 
         return $this->handleView($view);
     }
@@ -62,7 +62,7 @@ class SubrideController extends BaseController
         $view
             ->setData($subride)
             ->setFormat('json')
-            ->setStatusCode(200)
+            ->setStatusCode(Response::HTTP_OK)
             ->setContext($context);
 
         return $this->handleView($view);

@@ -27,6 +27,7 @@ class SocialNetworkFeedItem //implements Crawlable
      * @ORM\JoinColumn(name="social_network_profile_id", referencedColumnName="id")
      * @JMS\Expose
      * @JMS\Type("Relation<App\Entity\SocialNetworkProfile>")
+     * @JMS\SerializedName("social_network_profile_id")
      */
     protected $socialNetworkProfile;
 
