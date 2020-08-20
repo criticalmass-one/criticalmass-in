@@ -3,18 +3,23 @@
 ###############################################################################
 version: "3.1"
 services:
-
     rabbitmq:
       image: rabbitmq
       container_name: criticalmass-rabbitmq
+      labels:
+        com.symfony.server.service-prefix: 'DATABASE'
 
     memcached:
       image: memcached:alpine
       container_name: criticalmass-memcached
+      labels:
+        com.symfony.server.service-prefix: 'MEMCACHED'
 
     redis:
       image: redis:alpine
       container_name: criticalmass-redis
+      labels:
+        com.symfony.server.service-prefix: 'REDIS'
 
     mysql:
       image: mysql:5.6
@@ -29,7 +34,11 @@ services:
         - MYSQL_PASSWORD=criticalmass
       ports:
         - "8002:3306"
+      labels:
+        com.symfony.server.service-prefix: 'DATABASE'
 
     elasticsearch:
       image: elasticsearch:7.4.2
       container_name: criticalmass-elasticsearch
+      labels:
+        com.symfony.server.service-prefix: 'ELASTICSEARCH'
