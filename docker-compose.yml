@@ -33,21 +33,3 @@ services:
     elasticsearch:
       image: elasticsearch:7.4.2
       container_name: criticalmass-elasticsearch
-
-    webserver:
-      image: nginx:alpine
-      container_name: criticalmass-webserver
-      working_dir: /application
-      volumes:
-          - .:/application
-          - ./phpdocker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
-      ports:
-       - "1234:80"
-
-    php-fpm:
-      build: phpdocker/php-fpm
-      container_name: criticalmass-php-fpm
-      working_dir: /application
-      volumes:
-        - .:/application
-        - ./phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.3/fpm/conf.d/99-overrides.ini
