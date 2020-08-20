@@ -9,8 +9,6 @@ use App\Criticalmass\OrderedEntities\OrderedEntityInterface;
 use App\Criticalmass\Router\Annotation as Routing;
 use App\Criticalmass\Sharing\Annotation as Sharing;
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
-use App\EntityInterface\StaticMapableInterface;
-use Caldera\GeoBasic\Coord\Coord;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AuditableInterface;
@@ -20,7 +18,9 @@ use App\EntityInterface\ParticipateableInterface;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
+use App\EntityInterface\StaticMapableInterface;
 use App\Validator\Constraint as CriticalAssert;
+use Caldera\GeoBasic\Coord\Coord;
 use Caldera\GeoBasic\Coord\CoordInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -906,14 +906,14 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         return $this;
     }
 
-    public function addWeather(WeatherInterface $weather): WeatherableInterface
+    public function addWeather(Weather $weather): self
     {
         $this->weathers->add($weather);
 
         return $this;
     }
 
-    public function removeWeather(WeatherInterface $weather): WeatherableInterface
+    public function removeWeather(Weather $weather): self
     {
         $this->weathers->removeElement($weather);
 
@@ -925,7 +925,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         return $this->weathers;
     }
 
-    public function setWeathers(Collection $weathers): WeatherableInterface
+    public function setWeathers(Collection $weathers): self
     {
         $this->weathers = $weathers;
 
