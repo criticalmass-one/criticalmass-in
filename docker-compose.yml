@@ -8,6 +8,8 @@ services:
       container_name: criticalmass-rabbitmq
       labels:
         com.symfony.server.service-prefix: 'DATABASE'
+      volumes:
+        - ./docker/rabbitmq:/var/lib/rabbitmq/mnesia/
 
     memcached:
       image: memcached:alpine
@@ -26,7 +28,7 @@ services:
       container_name: criticalmass-mysql
       working_dir: /application
       volumes:
-        - .:/application
+        - ./docker/mysql:/var/lib/mysql
       environment:
         - MYSQL_ROOT_PASSWORD=root
         - MYSQL_DATABASE=criticalmass
@@ -38,7 +40,14 @@ services:
         com.symfony.server.service-prefix: 'DATABASE'
 
     elasticsearch:
-      image: elasticsearch:7.4.2
+      image: elasticsearch:6.8.6
       container_name: criticalmass-elasticsearch
+      environment:
+        - discovery.type=single-node
+      volumes:
+        - ./docker/elasticsearch:/usr/share/elasticsearch/data
+      ports:
+        - "9200:9200"
+        - "9300:9300"
       labels:
         com.symfony.server.service-prefix: 'ELASTICSEARCH'
