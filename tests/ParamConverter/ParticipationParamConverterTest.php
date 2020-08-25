@@ -7,7 +7,7 @@ use App\Repository\ParticipationRepository;
 use App\Request\ParamConverter\ParticipationParamConverter;
 use PHPUnit\Framework\TestCase;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter as ParamConverterConfig;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -15,7 +15,7 @@ class ParticipationParamConverterTest extends TestCase
 {
     public function testParticipationParamConverterSupportsParticipation(): void
     {
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
 
         $paramConverter = new ParticipationParamConverter($registry);
 
@@ -34,7 +34,7 @@ class ParticipationParamConverterTest extends TestCase
 
     public function testParticipationParamConverterWithEmptyRequest(): void
     {
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
 
         $paramConverter = new ParticipationParamConverter($registry);
 
@@ -60,7 +60,7 @@ class ParticipationParamConverterTest extends TestCase
             ->with($this->equalTo('findOneById'), $this->equalTo([33]))
             ->will($this->returnValue($participation));
 
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
         $registry
             ->expects($this->once())
             ->method('getRepository')

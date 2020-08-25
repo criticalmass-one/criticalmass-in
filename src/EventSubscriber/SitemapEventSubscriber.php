@@ -6,7 +6,7 @@ use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\BlogPost;
 use App\Entity\City;
 use App\Entity\Ride;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Presta\SitemapBundle\Event\SitemapPopulateEvent;
 use Presta\SitemapBundle\Service\UrlContainerInterface;
@@ -17,10 +17,10 @@ class SitemapEventSubscriber implements EventSubscriberInterface
     /** @var ObjectRouterInterface $router */
     protected $router;
 
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
-    public function __construct(ObjectRouterInterface $router, RegistryInterface $registry)
+    public function __construct(ObjectRouterInterface $router, ManagerRegistry $registry)
     {
         $this->router = $router;
         $this->registry = $registry;

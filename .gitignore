@@ -24,8 +24,7 @@
 /public/fonts
 /public/css
 /node_modules
-
-/node_modules
+/assets/css
 
 # Backup entities generated with doctrine:generate:entities command
 **/Entity/*~

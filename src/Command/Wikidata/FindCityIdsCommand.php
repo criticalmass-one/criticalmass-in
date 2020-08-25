@@ -5,7 +5,7 @@ namespace App\Command\Wikidata;
 use App\Criticalmass\Wikidata\WikidataCityEntityFinder\WikidataCityEntityFinder;
 use App\Entity\City;
 use App\Entity\CitySlug;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
@@ -21,10 +21,10 @@ class FindCityIdsCommand extends Command
     /** @var WikidataCityEntityFinder $wikidataCityFinder */
     protected $wikidataCityFinder;
 
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
-    public function __construct($name = null, WikidataCityEntityFinder $wikidataCityEntityFinder, RegistryInterface $registry)
+    public function __construct($name = null, WikidataCityEntityFinder $wikidataCityEntityFinder, ManagerRegistry $registry)
     {
         $this->wikidataCityFinder = $wikidataCityEntityFinder;
         $this->registry = $registry;

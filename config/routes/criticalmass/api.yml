@@ -1,3 +1,38 @@
+caldera_criticalmass_rest_socialnetwork_profiles_list:
+    path:     /socialnetwork-profiles
+    controller: App\Controller\Api\SocialNetworkProfileController::listSocialNetworkProfilesAction
+    methods:  [GET]
+
+caldera_criticalmass_rest_socialnetwork_profiles_citylist:
+    path:     /{citySlug}/socialnetwork-profiles
+    controller: App\Controller\Api\SocialNetworkProfileController::listSocialNetworkProfilesCityAction
+    methods:  [GET]
+
+caldera_criticalmass_rest_socialnetwork_profiles_update:
+    path:     /{citySlug}/socialnetwork-profiles/{profileId}
+    controller: App\Controller\Api\SocialNetworkProfileController::updateSocialNetworkProfileAction
+    methods:  [POST]
+
+caldera_criticalmass_rest_socialnetwork_profiles_create:
+    path:     /{citySlug}/socialnetwork-profiles
+    controller: App\Controller\Api\SocialNetworkProfileController::createSocialNetworkProfileAction
+    methods:  [PUT]
+
+caldera_criticalmass_rest_socialnetwork_feeditems_citylist:
+    path:     /{citySlug}/socialnetwork-feeditems
+    controller: App\Controller\Api\SocialNetworkFeedItemController::listSocialNetworkFeedItemsCityAction
+    methods:  [GET]
+
+caldera_criticalmass_rest_socialnetwork_feeditems_update:
+    path:     /{citySlug}/socialnetwork-feeditems/{feedItemId}
+    controller: App\Controller\Api\SocialNetworkFeedItemController::updateSocialNetworkFeedItemAction
+    methods:  [POST]
+
+caldera_criticalmass_rest_socialnetwork_feeditems_create:
+    path:     /{citySlug}/socialnetwork-feeditems
+    controller: App\Controller\Api\SocialNetworkFeedItemController::createSocialNetworkFeedItemAction
+    methods:  [PUT]
+
 caldera_criticalmass_rest_track_ridelist:
     path:     /{citySlug}/{rideIdentifier}/listTracks
     controller: App\Controller\Api\TrackController::listRideTrackAction
@@ -67,6 +102,11 @@ caldera_criticalmass_rest_ride_show:
     methods:  [GET]
     options:
         expose: true
+
+caldera_criticalmass_rest_weather_add:
+    path:     /{citySlug}/{rideIdentifier}/weather
+    controller: App\Controller\Api\WeatherController::addWeatherAction
+    methods:  [PUT]
 
 caldera_criticalmass_rest_estimate_create:
     path:     /estimate
