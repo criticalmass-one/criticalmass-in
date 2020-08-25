@@ -321,6 +321,14 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     protected $disabledReason;
 
     /**
+     * @ORM\Column(type="RideType", nullable=true)
+     * @DoctrineAssert\Enum(entity="App\DBAL\Type\RideType")
+     * @JMS\Groups({"ride-list"})
+     * @JMS\Expose
+     */
+    protected $rideType;
+
+    /**
      * @ORM\OneToOne(targetEntity="App\Entity\Heatmap", mappedBy="ride", cascade={"persist", "remove"})
      */
     private $heatmap;
@@ -1047,6 +1055,18 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     public function setDisabledReason(string $disabledReason = null): Ride
     {
         $this->disabledReason = $disabledReason;
+
+        return $this;
+    }
+
+    public function getRideType(): ?string
+    {
+        return $this->rideType;
+    }
+
+    public function setRideType(string $rideType = null): Ride
+    {
+        $this->rideType = $rideType;
 
         return $this;
     }
