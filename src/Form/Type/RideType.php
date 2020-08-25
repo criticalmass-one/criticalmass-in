@@ -5,6 +5,7 @@ namespace App\Form\Type;
 use App\Entity\Ride;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -43,7 +44,13 @@ class RideType extends AbstractType
             ])
             ->add('location', TextType::class, ['required' => false])
             ->add('latitude', HiddenType::class, ['required' => false])
-            ->add('longitude', HiddenType::class, ['required' => false]);
+            ->add('longitude', HiddenType::class, ['required' => false])
+            ->add('rideType', ChoiceType::class, [
+                'required' => true,
+                'choices' => array_flip(\App\DBAL\Type\RideType::$choices),
+                'expanded' => false,
+                'multiple' => false,
+            ]);
 
         if (!$ride->isEnabled()) {
             $builder->add('enabled', CheckboxType::class, ['required' => false]);
