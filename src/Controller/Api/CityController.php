@@ -19,6 +19,10 @@ class CityController extends BaseController
      *
      * You may specify your query with the following parameters.
      *
+     * <strong>Name</strong>
+     *
+     * Find a city by it's name with the <code>name</code> parameter.
+     *
      * <strong>Regional query parameters</strong>
      *
      * Provide a <code>regionSlug</code> like <code>schleswig-holstein</code> to retrieve only cities of this region.
@@ -41,7 +45,7 @@ class CityController extends BaseController
      * <ul>
      * <li><code>id</code></li>
      * <li><code>region</code></li>
-     * <li><code>city</code></li>
+     * <li><code>name</code></li>
      * <li><code>title</code></li>
      * <li><code>cityPopulation</code></li>
      * <li><code>latitude</code></li>
@@ -61,6 +65,7 @@ class CityController extends BaseController
      *  description="Returns a list of critical mass cities",
      *  section="City",
      *  parameters={
+     *     {"name"="name", "dataType"="string", "required"=false, "description"="Name of the city"},
      *     {"name"="regionSlug", "dataType"="string", "required"=false, "description"="Provide a region slug"},
      *     {"name"="centerLatitude", "dataType"="float", "required"=false, "description"="Latitude of a coordinate to search cities around in a given radius."},
      *     {"name"="centerLongitude", "dataType"="float", "required"=false, "description"="Longitude of a coordinate to search cities around in a given radius."},
