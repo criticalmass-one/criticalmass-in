@@ -3,13 +3,12 @@
 namespace App\Criticalmass\DataQuery\Query;
 
 use App\Criticalmass\DataQuery\Annotation\QueryAnnotation as DataQuery;
-use App\Entity\Region;
 use Symfony\Component\Validator\Constraints as Constraints;
 
 /**
  * @DataQuery\RequiredEntityProperty(propertyName="name")
  */
-class NameQuery extends AbstractQuery implements DoctrineQueryInterface, ElasticQueryInterface
+class CityNameQuery extends AbstractQuery implements DoctrineQueryInterface, ElasticQueryInterface
 {
     /**
      * @Constraints\NotNull()
@@ -19,7 +18,7 @@ class NameQuery extends AbstractQuery implements DoctrineQueryInterface, Elastic
     /**
      * @DataQuery\RequiredQueryParameter(parameterName="name")
      */
-    public function setName(string $name): NameQuery
+    public function setName(string $name): CityNameQuery
     {
         $this->name = $name;
 
