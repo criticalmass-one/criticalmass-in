@@ -182,6 +182,20 @@
                     </div>
                 </div>
 
+                {% if form.slug is defined %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label" for="slug">
+                                    Slug:
+                                </label>
+
+                                {{ form_widget(form.slug, { 'attr' : { 'class': 'form-control' } }) }}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
                 {% if form.enabled is defined %}
                 <div class="row">
                     <div class="col-md-12">
