@@ -1,7 +1,7 @@
 <?php
 
 // src/AppBundle/Command/SwaggerDocblockConvertCommand.php
-namespace AppBundle\Command;
+namespace App\Command;
 
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
