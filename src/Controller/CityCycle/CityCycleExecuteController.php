@@ -3,13 +3,17 @@
 namespace App\Controller\CityCycle;
 
 use App\Controller\AbstractController;
-use App\Criticalmass\RideGenerator\ExecuteGenerator\CycleExecutable;
 use App\Criticalmass\RideGenerator\ExecuteGenerator\DateTimeListGenerator;
 use App\Criticalmass\RideGenerator\RideGenerator\CityRideGeneratorInterface;
 use App\Criticalmass\Util\DateTimeUtil;
 use App\Entity\CityCycle;
 use App\Entity\Ride;
 use App\Form\Type\ExecuteCityCycleType;
+use App\Model\RideGenerator\CycleExecutable;
+use Carbon\Carbon;
+use Carbon\CarbonInterval;
+use GuzzleHttp\Client;
+use JMS\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\Persistence\ManagerRegistry;
@@ -24,15 +28,16 @@ class CityCycleExecuteController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("cityCycle", class="App:CityCycle", options={"id" = "cycleId"})
      */
-    public function executeAction(Request $request, CityCycle $cityCycle, CityRideGeneratorInterface $generator): Response
+    public function executeAction(Request $request, CityCycle $cityCycle, SerializerInterface $serializer): Response
     {
-        $dateTime = new \DateTime();
-        $threeMonthInterval = new \DateInterval('P6M');
+        $dateTime = new Carbon();
+        $sixMonthInterval = new CarbonInterval('P6M');
 
         $executeable = new CycleExecutable();
         $executeable
-            ->setFromDate(DateTimeUtil::getMonthStartDateTime($dateTime))
-            ->setUntilDate(DateTimeUtil::getMonthEndDateTime($dateTime->add($threeMonthInterval)));
+            ->setCityCycle($cityCycle)
+            ->setFromDate($dateTime->startOfMonth())
+            ->setUntilDate((clone $dateTime)->add($sixMonthInterval)->endOfMonth());
 
         $form = $this->createForm(ExecuteCityCycleType::class, $executeable);
         $form->add('submit', SubmitType::class);
@@ -40,18 +45,16 @@ class CityCycleExecuteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $dateTimeList = DateTimeListGenerator::generateDateTimeList($executeable);
+            $client = new Client(['verify' => false]);
 
-            $generator->addCity($cityCycle->getCity())
-                ->setDateTimeList($dateTimeList)
-                ->execute();
+            $result = $client->post('https://127.0.0.1:8001/api/preview', ['content-type' => 'text/json', 'body' => $serializer->serialize($executeable, 'json'),]);
 
-            $rideList = $generator->getRideList();
+            $rideList = $serializer->deserialize($result->getBody()->getContents(), 'array<App\Entity\Ride>', 'json');
 
             return $this->render('CityCycle/execute_preview.html.twig', [
                 'cityCycle' => $cityCycle,
                 'executeable' => $executeable,
-                'dateTimeList' => $dateTimeList,
+                'dateTimeList' => [],
                 'form' => $form->createView(),
                 'rideList' => $rideList,
             ]);
