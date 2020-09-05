@@ -2,7 +2,7 @@
 
 namespace App\Validator;
 
-use App\Criticalmass\RideGenerator\ExecuteGenerator\CycleExecutable;
+use App\Model\RideGenerator\CycleExecutable;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 

@@ -2,7 +2,7 @@
 
 namespace App\Validator\Constraint;
 
-use App\Criticalmass\RideGenerator\Validator\ExecutorDateTimeValidator;
+use App\Validator\ExecutorDateTimeValidator;
 use Symfony\Component\Validator\Constraint;
 
 /**

@@ -3,9 +3,6 @@
 namespace App\Controller\CityCycle;
 
 use App\Controller\AbstractController;
-use App\Criticalmass\RideGenerator\ExecuteGenerator\DateTimeListGenerator;
-use App\Criticalmass\RideGenerator\RideGenerator\CityRideGeneratorInterface;
-use App\Criticalmass\Util\DateTimeUtil;
 use App\Entity\CityCycle;
 use App\Entity\Ride;
 use App\Form\Type\ExecuteCityCycleType;
