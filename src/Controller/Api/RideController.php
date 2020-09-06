@@ -4,16 +4,20 @@ namespace App\Controller\Api;
 
 use App\Criticalmass\DataQuery\DataQueryManager\DataQueryManagerInterface;
 use App\Criticalmass\DataQuery\RequestParameterList\RequestToListConverter;
+use App\Criticalmass\EntityMerger\EntityMergerInterface;
 use App\Entity\City;
 use App\Entity\Ride;
 use Doctrine\Persistence\ManagerRegistry;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
+use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\ConstraintViolation;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class RideController extends BaseController
 {
@@ -177,6 +181,131 @@ class RideController extends BaseController
             ->setData($rideList)
             ->setFormat('json')
             ->setStatusCode(Response::HTTP_OK)
+            ->setContext($context);
+
+        return $this->handleView($view);
+    }
+
+    /**
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Creates a new ride",
+     *  section="Ride",
+     *  requirements={
+     *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Slug of the city to assign the new created ride to"},
+     *    {"name"="rideIdentifier", "dataType"="string", "required"=true, "description"="Identifier of the ride to be created"},
+     *  }
+     * )
+     *
+     * @ParamConverter("city", class="App:City")
+     */
+    public function createRideAction(Request $request, SerializerInterface $serializer, City $city, ManagerRegistry $managerRegistry, ValidatorInterface $validator): Response
+    {
+        /** @var Ride $ride */
+        $ride = $this->deserializeRequest($request, $serializer, Ride::class);
+
+        $ride->setCity($city);
+
+        if (!$ride->getDateTime()) {
+            $rideIdentifier = $request->get('rideIdentifier');
+
+            try {
+                $ride->setDateTime(new \DateTime($rideIdentifier));
+            } catch (\Exception $exception) {
+                if (!$ride->hasSlug()) {
+                    $ride->setSlug($rideIdentifier);
+                }
+            }
+        }
+
+        $constraintViolationList = $validator->validate($ride);
+
+        $errorList = [];
+
+        /** @var ConstraintViolation $constraintViolation */
+        foreach ($constraintViolationList as $constraintViolation) {
+            $errorList[$constraintViolation->getPropertyPath()] = $constraintViolation->getMessage();
+        }
+
+        if (0 < count($errorList)) {
+            return $this->createErrors(Response::HTTP_BAD_REQUEST, $errorList);
+        }
+
+        $manager = $managerRegistry->getManager();
+        $manager->persist($ride);
+        $manager->flush();
+
+        $context = new Context();
+
+        $context->addGroup('ride-list');
+
+        $view = View::create();
+        $view
+            ->setData($ride)
+            ->setFormat('json')
+            ->setStatusCode(200)
+            ->setContext($context);
+
+        return $this->handleView($view);
+    }
+
+    /**
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Updates a ride",
+     *  section="Ride",
+     *  requirements={
+     *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Slug of the city belonging to the ride"},
+     *    {"name"="rideIdentifier", "dataType"="string", "required"=true, "description"="Identifier of the ride"},
+     *  }
+     * )
+     *
+     * @ParamConverter("ride", class="App:Ride")
+     */
+    public function updateRideAction(Request $request, Ride $ride, SerializerInterface $serializer, ManagerRegistry $managerRegistry, ValidatorInterface $validator, EntityMergerInterface $entityMerger): Response
+    {
+        /** @var Ride $ride */
+        $updatedRide = $this->deserializeRequest($request, $serializer, Ride::class);
+
+        $ride = $entityMerger->merge($updatedRide, $ride);
+
+        if (!$ride->getDateTime()) {
+            $rideIdentifier = $request->get('rideIdentifier');
+
+            try {
+                $ride->setDateTime(new \DateTime($rideIdentifier));
+            } catch (\Exception $exception) {
+                if (!$ride->hasSlug()) {
+                    $ride->setSlug($rideIdentifier);
+                }
+            }
+        }
+
+        $constraintViolationList = $validator->validate($ride);
+
+        $errorList = [];
+
+        /** @var ConstraintViolation $constraintViolation */
+        foreach ($constraintViolationList as $constraintViolation) {
+            $errorList[$constraintViolation->getPropertyPath()] = $constraintViolation->getMessage();
+        }
+
+        if (0 < count($errorList)) {
+            return $this->createErrors(Response::HTTP_BAD_REQUEST, $errorList);
+        }
+
+        $manager = $managerRegistry->getManager();
+        $manager->flush();
+
+        $context = new Context();
+
+        $context->addGroup('ride-list');
+
+        $view = View::create();
+        $view
+            ->setData($ride)
+            ->setFormat('json')
+            ->setStatusCode(200)
             ->setContext($context);
 
         return $this->handleView($view);

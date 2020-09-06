@@ -244,9 +244,6 @@ services:
     App\Criticalmass\ViewStorage\Cache\ViewStorageCacheInterface:
         alias: App\Criticalmass\ViewStorage\Cache\RobustViewStorageCache
 
-    App\Criticalmass\RideGenerator\RideCalculator\RideCalculatorInterface:
-        alias: App\Criticalmass\RideGenerator\RideCalculator\RideCalculator
-
     App\Criticalmass\ElasticCityFinder\ElasticCityFinder:
         arguments:
             $finder: '@fos_elastica.finder.criticalmass_city.city'
