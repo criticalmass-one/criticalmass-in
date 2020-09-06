@@ -21,6 +21,16 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CityCycleExecuteController extends AbstractController
 {
+    protected Client $rideGeneratorClient;
+
+    public function __construct(string $criticalmassRideGeneratorUrl)
+    {
+        $this->rideGeneratorClient = new Client([
+            'verify' => false,
+            'base_uri' => $criticalmassRideGeneratorUrl,
+        ]);
+    }
+
     /**
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("cityCycle", class="App:CityCycle", options={"id" = "cycleId"})
@@ -42,9 +52,7 @@ class CityCycleExecuteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $client = new Client(['verify' => false]);
-
-            $result = $client->post('https://127.0.0.1:8001/api/preview', ['content-type' => 'text/json', 'body' => $serializer->serialize($executeable, 'json'),]);
+            $result = $this->rideGeneratorClient->post('/api/preview', ['content-type' => 'text/json', 'body' => $serializer->serialize($executeable, 'json'),]);
 
             $rideList = $serializer->deserialize($result->getBody()->getContents(), 'array<App\Entity\Ride>', 'json');
 
@@ -76,9 +84,7 @@ class CityCycleExecuteController extends AbstractController
                 ->setUntilDate(new \DateTime(sprintf('@%d', $request->request->getInt('untilDate'))))
                 ->setCityCycle($cityCycle);
 
-            $client = new Client(['verify' => false]);
-
-            $result = $client->post('https://127.0.0.1:8001/api/preview', ['content-type' => 'text/json', 'body' => $serializer->serialize($executeable, 'json'),]);
+            $result = $this->rideGeneratorClient->post('/api/preview', ['content-type' => 'text/json', 'body' => $serializer->serialize($executeable, 'json'),]);
 
             $rideList = $serializer->deserialize($result->getBody()->getContents(), 'array<App\Entity\Ride>', 'json');
 
