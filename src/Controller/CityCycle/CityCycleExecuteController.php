@@ -67,21 +67,20 @@ class CityCycleExecuteController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("cityCycle", class="App:CityCycle", options={"id" = "cycleId"})
      */
-    public function executePersistAction(Request $request, CityCycle $cityCycle, CityRideGeneratorInterface $generator, SessionInterface $session, ManagerRegistry $registry): Response
+    public function executePersistAction(Request $request, CityCycle $cityCycle, SessionInterface $session, ManagerRegistry $registry, SerializerInterface $serializer): Response
     {
         if (Request::METHOD_POST === $request->getMethod() && $request->request->getInt('fromDate') && $request->request->get('untilDate')) {
             $executeable = new CycleExecutable();
             $executeable
                 ->setFromDate(new \DateTime(sprintf('@%d', $request->request->getInt('fromDate'))))
-                ->setUntilDate(new \DateTime(sprintf('@%d', $request->request->getInt('untilDate'))));
+                ->setUntilDate(new \DateTime(sprintf('@%d', $request->request->getInt('untilDate'))))
+                ->setCityCycle($cityCycle);
 
-            $dateTimeList = DateTimeListGenerator::generateDateTimeList($executeable);
+            $client = new Client(['verify' => false]);
 
-            $generator->addCity($cityCycle->getCity())
-                ->setDateTimeList($dateTimeList)
-                ->execute();
+            $result = $client->post('https://127.0.0.1:8001/api/preview', ['content-type' => 'text/json', 'body' => $serializer->serialize($executeable, 'json'),]);
 
-            $rideList = $generator->getRideList();
+            $rideList = $serializer->deserialize($result->getBody()->getContents(), 'array<App\Entity\Ride>', 'json');
 
             $em = $registry->getManager();
 
