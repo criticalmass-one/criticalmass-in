@@ -8,27 +8,71 @@ use App\Entity\Region;
 use Doctrine\Persistence\ManagerRegistry;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Nelmio\ApiDocBundle\Annotation\Operation;
+use Swagger\Annotations as SWG;
 
 class CycleController extends BaseController
 {
     /**
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Returns a list of city cycles",
-     *  section="Cycles",
-     *  parameters={
-     *     {"name"="citySlug", "dataType"="string", "required"=false, "description"="Provide a city slug"},
-     *     {"name"="regionSlug", "dataType"="string", "required"=false, "description"="Provide a region slug"},
-     *     {"name"="validFrom", "dataType"="date", "required"=false, "description"="Only retrieve cycles valid after the provied date"},
-     *     {"name"="validUntil", "dataType"="date", "required"=false, "description"="Only retrieve cycles valid before the provied date"},
-     *     {"name"="validNow", "dataType"="bool", "required"=false, "description"="Only retrieve cycles valid for the current month"},
-     *     {"name"="dayOfWeek", "dataType"="int", "required"=false, "description"="Limit the results to this day of week"},
-     *     {"name"="weekOfMonth", "dataType"="int", "required"=false, "description"="Limit the results to this week of month"},
-     *  },
+     * @Operation(
+     *     tags={"Cycles"},
+     *     summary="Returns a list of city cycles",
+     *     @SWG\Parameter(
+     *         name="citySlug",
+     *         in="body",
+     *         description="Provide a city slug",
+     *         required=false,
+     *         @SWG\Schema(type="string")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="regionSlug",
+     *         in="body",
+     *         description="Provide a region slug",
+     *         required=false,
+     *         @SWG\Schema(type="string")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="validFrom",
+     *         in="body",
+     *         description="Only retrieve cycles valid after the provied date",
+     *         required=false,
+     *         @SWG\Schema(type="date")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="validUntil",
+     *         in="body",
+     *         description="Only retrieve cycles valid before the provied date",
+     *         required=false,
+     *         @SWG\Schema(type="date")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="validNow",
+     *         in="body",
+     *         description="Only retrieve cycles valid for the current month",
+     *         required=false,
+     *         @SWG\Schema(type="bool")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="dayOfWeek",
+     *         in="body",
+     *         description="Limit the results to this day of week",
+     *         required=false,
+     *         @SWG\Schema(type="int")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="weekOfMonth",
+     *         in="body",
+     *         description="Limit the results to this week of month",
+     *         required=false,
+     *         @SWG\Schema(type="int")
+     *     ),
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     )
      * )
      *
      * @ParamConverter("city", class="App:City", isOptional=true)
