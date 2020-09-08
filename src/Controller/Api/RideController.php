@@ -300,14 +300,27 @@ class RideController extends BaseController
     }
 
     /**
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Creates a new ride",
-     *  section="Ride",
-     *  requirements={
-     *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Slug of the city to assign the new created ride to"},
-     *    {"name"="rideIdentifier", "dataType"="string", "required"=true, "description"="Identifier of the ride to be created"},
-     *  }
+     * @Operation(
+     *     tags={"Ride"},
+     *     summary="Creates a new ride",
+     *     @SWG\Parameter(
+     *         name="citySlug",
+     *         in="body",
+     *         description="Slug of the city to assign the new created ride to",
+     *         required=true,
+     *         @SWG\Schema(type="string")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="rideIdentifier",
+     *         in="body",
+     *         description="Identifier of the ride to be created",
+     *         required=true,
+     *         @SWG\Schema(type="string")
+     *     ),
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     )
      * )
      *
      * @ParamConverter("city", class="App:City")
@@ -363,14 +376,27 @@ class RideController extends BaseController
     }
 
     /**
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Updates a ride",
-     *  section="Ride",
-     *  requirements={
-     *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Slug of the city belonging to the ride"},
-     *    {"name"="rideIdentifier", "dataType"="string", "required"=true, "description"="Identifier of the ride"},
-     *  }
+     * @Operation(
+     *     tags={"Ride"},
+     *     summary="Updates a ride",
+     *     @SWG\Parameter(
+     *         name="citySlug",
+     *         in="body",
+     *         description="Slug of the city to assign the updated ride to",
+     *         required=true,
+     *         @SWG\Schema(type="string")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="rideIdentifier",
+     *         in="body",
+     *         description="Identifier of the ride to be updated",
+     *         required=true,
+     *         @SWG\Schema(type="string")
+     *     ),
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     )
      * )
      *
      * @ParamConverter("ride", class="App:Ride")
