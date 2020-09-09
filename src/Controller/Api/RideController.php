@@ -31,6 +31,22 @@ class RideController extends BaseController
      * @Operation(
      *     tags={"Ride"},
      *     summary="Returns ride details",
+     *     @SWG\Parameter(
+     *         name="citySlug",
+     *         in="path",
+     *         description="Provide a city slug",
+     *         required=true,
+     *         type="string",
+     *         @SWG\Schema(type="string")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="rideIdentifier",
+     *         in="path",
+     *         description="Identify the requested ride",
+     *         required=true,
+     *         type="string",
+     *         @SWG\Schema(type="string")
+     *     ),
      *     @SWG\Response(
      *         response="200",
      *         description="Returned when successful"
@@ -56,6 +72,14 @@ class RideController extends BaseController
      * @Operation(
      *     tags={"Ride"},
      *     summary="Returns details of the next ride in the city",
+     *     @SWG\Parameter(
+     *         name="citySlug",
+     *         in="path",
+     *         description="Provide a city slug",
+     *         required=true,
+     *         type="string",
+     *         @SWG\Schema(type="string")
+     *     ),
      *     @SWG\Response(
      *         response="200",
      *         description="Returned when successful"
@@ -305,16 +329,18 @@ class RideController extends BaseController
      *     summary="Creates a new ride",
      *     @SWG\Parameter(
      *         name="citySlug",
-     *         in="body",
+     *         in="path",
      *         description="Slug of the city to assign the new created ride to",
      *         required=true,
+     *         type="string",
      *         @SWG\Schema(type="string")
      *     ),
      *     @SWG\Parameter(
      *         name="rideIdentifier",
-     *         in="body",
+     *         in="path",
      *         description="Identifier of the ride to be created",
      *         required=true,
+     *         type="string",
      *         @SWG\Schema(type="string")
      *     ),
      *     @SWG\Response(
@@ -381,16 +407,18 @@ class RideController extends BaseController
      *     summary="Updates a ride",
      *     @SWG\Parameter(
      *         name="citySlug",
-     *         in="body",
+     *         in="path",
      *         description="Slug of the city to assign the updated ride to",
      *         required=true,
+     *         type="string",
      *         @SWG\Schema(type="string")
      *     ),
      *     @SWG\Parameter(
      *         name="rideIdentifier",
-     *         in="body",
+     *         in="path",
      *         description="Identifier of the ride to be updated",
      *         required=true,
+     *         type="string",
      *         @SWG\Schema(type="string")
      *     ),
      *     @SWG\Response(
