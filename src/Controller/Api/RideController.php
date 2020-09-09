@@ -343,6 +343,13 @@ class RideController extends BaseController
      *         type="string",
      *         @SWG\Schema(type="string")
      *     ),
+     *     @SWG\Parameter(
+     *         name="body",
+     *         in="body",
+     *         description="JSON represantation of ride",
+     *         required=true,
+     *         @SWG\Schema(type="string")
+     *     ),
      *     @SWG\Response(
      *         response="200",
      *         description="Returned when successful"
@@ -419,6 +426,13 @@ class RideController extends BaseController
      *         description="Identifier of the ride to be updated",
      *         required=true,
      *         type="string",
+     *         @SWG\Schema(type="string")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="body",
+     *         in="body",
+     *         description="JSON represantation of ride",
+     *         required=true,
      *         @SWG\Schema(type="string")
      *     ),
      *     @SWG\Response(
