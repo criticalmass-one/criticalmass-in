@@ -195,5 +195,28 @@ define([], function () {
         this._reverseQuery(query, successCallback);
     };
 
+    Geocoding.prototype.searchPhraseInViewbox = function (phrase, north, south, west, east, returnCallback) {
+        var query = {
+            q: phrase,
+            viewbox: west + ',' + north + ',' + east + ',' + south,
+        };
+
+        var successCallback = function (data) {
+            var importanceScore = 0.0;
+            var bestData = null;
+
+            for (var index in data) {
+                if (importanceScore < data[index].importance || !bestData) {
+                    importanceScore = data[index].importance;
+                    bestData = data[index];
+                }
+            }
+
+            returnCallback(bestData);
+        };
+
+        this._query(query, successCallback);
+    };
+
     return Geocoding;
 });
