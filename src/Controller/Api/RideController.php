@@ -139,6 +139,23 @@ class RideController extends BaseController
      * <li>Bounding Box query: Fetch all rides in the box described by <code>bbNorthLatitude</code>, <code>bbEastLongitude</code> and <code>bbSouthLatitude</code>, <code>bbWestLongitude</code>.
      * </ul>
      *
+     * <strong>Ride Type parameters</strong>
+     *
+     * For <code>rideType</code>, specify any of the following:
+     *
+     * <ul>
+     * <li><code>critical_mass</code></li>
+     * <li><code>kidical_mass</code></li>
+     * <li><code>night_ride</code></li>
+     * <li><code>lunch_ride</code></li>
+     * <li><code>dawn_ride</code></li>
+     * <li><code>dusk_ride</code></li>
+     * <li><code>demonstration</code></li>
+     * <li><code>alleycat</code></li>
+     * <li><code>tour</code></li>
+     * <li><code>event</code></li>
+     * </ul>
+     *
      * <strong>Order parameters</strong>
      *
      * Sort the resulting list with the parameter <code>orderBy</code> and choose from one of the following properties:
