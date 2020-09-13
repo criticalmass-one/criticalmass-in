@@ -32,6 +32,6 @@ class RideTypeQuery extends AbstractQuery implements DoctrineQueryInterface, Ela
 
     public function createElasticQuery(): \Elastica\Query\AbstractQuery
     {
-        return new \Elastica\Query\Term(['rideType' => $this->rideType]);
+        return new \Elastica\Query\Term(['rideType' => strtoupper($this->rideType)]);
     }
 }
