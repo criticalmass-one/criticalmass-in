@@ -24,10 +24,18 @@ class EntityMerger implements EntityMergerInterface
                 $setMethodName = $this->generateSetMethodName($reflectionProperty);
                 $getMethodName = $this->generateGetMethodName($reflectionProperty, $reflectionClass);
 
-                $newValue = $source->$getMethodName();
+                try {
+                    $newValue = $source->$getMethodName();
 
-                if ($newValue) {
-                    $destination->$setMethodName($newValue);
+                    if ($newValue) {
+                        $destination->$setMethodName($newValue);
+                    }
+                } catch (\TypeError $typeError) {
+                    // deserialized entities passed to this entity merger may not be fully stuffed with properties as
+                    // the serializer does not call the entity's constructor as described here:
+                    // https://stackoverflow.com/questions/31948118/jms-serializer-why-are-new-objects-not-being-instantiated-through-constructor
+                    //
+                    // to avoid these problems, we just skipped empty or null properties and act like we just don't care.
                 }
             }
         }
