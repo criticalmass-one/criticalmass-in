@@ -182,6 +182,17 @@ class RideController extends BaseController
      *         @SWG\Schema(type="string")
      *     ),
      *     @SWG\Parameter(
+     *         name="rideType",
+     *         in="query",
+     *         description="Limit to a type of events",
+     *         required=false,
+     *         @SWG\Schema(
+     *             type="array",
+     *             @SWG\Items(ref="App\DBAL\Type\RideType")
+     *         ),
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
      *         name="year",
      *         in="body",
      *         description="Limit the result set to this year. If not set, we will search in the current month.",
