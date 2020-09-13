@@ -122,6 +122,9 @@
     "emcconville/point-reduction-algorithms": {
         "version": "v1.2.0"
     },
+    "exsyst/swagger": {
+        "version": "v0.4.1"
+    },
     "facebook/graph-sdk": {
         "version": "5.6.3"
     },
@@ -827,6 +830,9 @@
     "symfony/property-access": {
         "version": "v4.1.1"
     },
+    "symfony/property-info": {
+        "version": "v5.1.4"
+    },
     "symfony/routing": {
         "version": "4.0",
         "recipe": {
@@ -988,5 +994,8 @@
     },
     "zendframework/zend-eventmanager": {
         "version": "3.2.1"
+    },
+    "zircote/swagger-php": {
+        "version": "2.0.16"
     }
 }
