@@ -139,6 +139,23 @@ class RideController extends BaseController
      * <li>Bounding Box query: Fetch all rides in the box described by <code>bbNorthLatitude</code>, <code>bbEastLongitude</code> and <code>bbSouthLatitude</code>, <code>bbWestLongitude</code>.
      * </ul>
      *
+     * <strong>Ride Type parameters</strong>
+     *
+     * For <code>rideType</code>, specify any of the following:
+     *
+     * <ul>
+     * <li><code>critical_mass</code></li>
+     * <li><code>kidical_mass</code></li>
+     * <li><code>night_ride</code></li>
+     * <li><code>lunch_ride</code></li>
+     * <li><code>dawn_ride</code></li>
+     * <li><code>dusk_ride</code></li>
+     * <li><code>demonstration</code></li>
+     * <li><code>alleycat</code></li>
+     * <li><code>tour</code></li>
+     * <li><code>event</code></li>
+     * </ul>
+     *
      * <strong>Order parameters</strong>
      *
      * Sort the resulting list with the parameter <code>orderBy</code> and choose from one of the following properties:
@@ -169,129 +186,158 @@ class RideController extends BaseController
      *     summary="Lists rides",
      *     @SWG\Parameter(
      *         name="regionSlug",
-     *         in="body",
+     *         in="query",
      *         description="Provide a region slug",
      *         required=false,
-     *         @SWG\Schema(type="string")
+     *         @SWG\Schema(type="string"),
+     *         type="string"
      *     ),
      *     @SWG\Parameter(
      *         name="citySlug",
-     *         in="body",
+     *         in="query",
      *         description="Provide a city slug",
      *         required=false,
-     *         @SWG\Schema(type="string")
+     *         @SWG\Schema(type="string"),
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="rideType",
+     *         in="query",
+     *         description="Limit to a type of events",
+     *         required=false,
+     *         @SWG\Schema(
+     *             type="array",
+     *             @SWG\Items(ref="App\DBAL\Type\RideType")
+     *         ),
+     *         type="string"
      *     ),
      *     @SWG\Parameter(
      *         name="year",
-     *         in="body",
+     *         in="query",
      *         description="Limit the result set to this year. If not set, we will search in the current month.",
      *         required=false,
-     *         @SWG\Schema(type="string")
+     *         @SWG\Schema(type="integer"),
+     *         type="integer"
      *     ),
      *     @SWG\Parameter(
      *         name="month",
-     *         in="body",
+     *         in="query",
      *         description="Limit the result set to this year. Must be combined with 'year'. If not set, we will search in the current month.",
      *         required=false,
-     *         @SWG\Schema(type="string")
+     *         @SWG\Schema(type="integer"),
+     *         type="integer"
      *     ),
      *     @SWG\Parameter(
      *         name="day",
-     *         in="body",
+     *         in="query",
      *         description="Limit the result set to this day.",
      *         required=false,
-     *         @SWG\Schema(type="string")
+     *         @SWG\Schema(type="integer"),
+     *         type="integer"
      *     ),
      *     @SWG\Parameter(
      *         name="centerLatitude",
-     *         in="body",
+     *         in="query",
      *         description="Latitude of a coordinate to search rides around in a given radius.",
      *         required=false,
-     *         @SWG\Schema(type="number")
+     *         @SWG\Schema(type="float"),
+     *         type="number"
      *     ),
      *     @SWG\Parameter(
      *         name="centerLongitude",
-     *         in="body",
+     *         in="query",
      *         description="Longitude of a coordinate to search rides around in a given radius.",
      *         required=false,
-     *         @SWG\Schema(type="number")
+     *         @SWG\Schema(type="float"),
+     *         type="number"
      *     ),
      *     @SWG\Parameter(
      *         name="radius",
-     *         in="body",
+     *         in="query",
      *         description="Radius to look around for rides.",
      *         required=false,
-     *         @SWG\Schema(type="number")
+     *         @SWG\Schema(type="float"),
+     *         type="number"
      *     ),
      *     @SWG\Parameter(
      *         name="bbEastLongitude",
-     *         in="body",
+     *         in="query",
      *         description="East longitude of a bounding box to look for rides.",
      *         required=false,
-     *         @SWG\Schema(type="number")
+     *         @SWG\Schema(type="float"),
+     *         type="number"
      *     ),
      *     @SWG\Parameter(
      *         name="bbWestLongitude",
-     *         in="body",
+     *         in="query",
      *         description="West longitude of a bounding box to look for rides.",
      *         required=false,
-     *         @SWG\Schema(type="number")
+     *         @SWG\Schema(type="float"),
+     *         type="number"
      *     ),
      *     @SWG\Parameter(
      *         name="bbNorthLatitude",
-     *         in="body",
+     *         in="query",
      *         description="North latitude of a bounding box to look for rides.",
      *         required=false,
-     *         @SWG\Schema(type="number")
+     *         @SWG\Schema(type="float"),
+     *         type="number"
      *     ),
      *     @SWG\Parameter(
      *         name="bbSouthLatitude",
-     *         in="body",
+     *         in="query",
      *         description="South latitude of a bounding box to look for rides.",
      *         required=false,
-     *         @SWG\Schema(type="number")
+     *         @SWG\Schema(type="float"),
+     *         type="number"
      *     ),
      *     @SWG\Parameter(
      *         name="orderBy",
-     *         in="body",
+     *         in="query",
      *         description="Choose a property to sort the list by.",
      *         required=false,
-     *         @SWG\Schema(type="string")
+     *         @SWG\Schema(type="string"),
+     *         type="string"
      *     ),
      *     @SWG\Parameter(
      *         name="orderDirection",
-     *         in="body",
+     *         in="query",
      *         description="Sort ascending or descending.",
      *         required=false,
-     *         @SWG\Schema(type="string")
+     *         @SWG\Schema(type="string"),
+     *         type="string"
      *     ),
      *     @SWG\Parameter(
      *         name="distanceOrderDirection",
-     *         in="body",
+     *         in="query",
      *         description="Enable distance sorting in combination with radius query.",
      *         required=false,
-     *         @SWG\Schema(type="string")
+     *         @SWG\Schema(type="string"),
+     *         type="string"
      *     ),
      *     @SWG\Parameter(
      *         name="startValue",
-     *         in="body",
+     *         in="query",
      *         description="Start ordered list with provided value.",
      *         required=false,
-     *         @SWG\Schema(type="string")
+     *         @SWG\Schema(type="string"),
+     *         type="string"
      *     ),
      *     @SWG\Parameter(
      *         name="extended",
-     *         in="body",
+     *         in="query",
      *         description="Set true to retrieve a more detailed list.",
      *         required=false,
-     *         @SWG\Schema(type="boolean")
+     *         @SWG\Schema(type="boolean"),
+     *         type="boolean"
      *     ),
      *     @SWG\Parameter(
      *         name="size",
-     *         in="body",
+     *         in="query",
      *         description="Length of resulting list. Defaults to 10.",
      *         required=false,
-     *         @SWG\Schema(type="integer")
+     *         @SWG\Schema(type="integer"),
+     *         type="integer"
      *     ),
      *     @SWG\Response(
      *         response="200",

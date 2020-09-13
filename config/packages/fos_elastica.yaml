@@ -83,6 +83,7 @@ fos_elastica:
                         country: { type: keyword }
                         region: { type: keyword }
                         location: { type: keyword }
+                        rideType: { type: keyword }
                         isEnabled: ~
                         dateTime: { type: date, format: "strict_date_optional_time" }
                         pin: { type: geo_point }

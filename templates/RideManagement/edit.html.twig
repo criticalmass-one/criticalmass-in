@@ -182,6 +182,21 @@
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label" for="rideType">
+                                Art der Tour:
+                            </label>
+
+                            {{ form_widget(form.rideType, { 'attr' : { 'class': 'form-control' } }) }}
+                        </div>
+                        <p class="help-block">
+                            Falls es sich bei dieser Tour nicht um eine „normale“ Critical Mass handeln sollte, kannst du hier die Art dieser Tour genauer spezifizieren.
+                        </p>
+                    </div>
+                </div>
+
                 {% if form.slug is defined %}
                     <div class="row">
                         <div class="col-md-12">
