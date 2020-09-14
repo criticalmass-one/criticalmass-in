@@ -22,7 +22,7 @@ class FooterController extends AbstractController
 
     public function promotionListAction(ManagerRegistry $registry): Response
     {
-        $promotionList = $registry->getRepository(Promotion::class)->findAll();
+        $promotionList = $registry->getRepository(Promotion::class)->findBy([], ['createdAt' => 'DESC']);
 
         return $this->render('Template/Includes/_footer_promotion_list.html.twig', [
             'promotionList' => $promotionList,
