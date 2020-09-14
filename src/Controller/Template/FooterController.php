@@ -13,7 +13,7 @@ class FooterController extends AbstractController
 {
     public function blogPostListAction(ManagerRegistry $registry): Response
     {
-        $blogPostList = $registry->getRepository(BlogPost::class)->findAll();
+        $blogPostList = $registry->getRepository(BlogPost::class)->findBy([], ['createdAt' => 'DESC']);
 
         return $this->render('Template/Includes/_footer_blog_post_list.html.twig', [
             'blogPostList' => $blogPostList,
