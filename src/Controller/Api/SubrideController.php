@@ -4,26 +4,28 @@ namespace App\Controller\Api;
 
 use App\Entity\Ride;
 use App\Entity\Subride;
+use Doctrine\Persistence\ManagerRegistry;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Nelmio\ApiDocBundle\Annotation\Operation;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Swagger\Annotations as SWG;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class SubrideController extends BaseController
 {
     /**
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Retrieve a list of subrides of a ride",
-     *  section="Subride",
-     *  requirements={
-     *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Provide the slug of a city."},
-     *    {"name"="rideIdentifier", "dataType"="string", "required"=true, "description"="Provide the ride identifier of a ride."},
-     *  }
+     * @Operation(
+     *     tags={"Subride"},
+     *     summary="Retrieve a list of subrides of a ride",
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     )
      * )
+     *
      * @ParamConverter("ride", class="App:Ride")
      */
     public function listSubrideAction(ManagerRegistry $registry, Ride $ride): Response
@@ -34,7 +36,7 @@ class SubrideController extends BaseController
         $view
             ->setData($subrideList)
             ->setFormat('json')
-            ->setStatusCode(200);
+            ->setStatusCode(Response::HTTP_OK);
 
         return $this->handleView($view);
     }
@@ -42,16 +44,15 @@ class SubrideController extends BaseController
     /**
      * Show details of a specified subride.
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Show details of a subride",
-     *  section="Subride",
-     *  requirements={
-     *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Provide the slug of a city."},
-     *    {"name"="rideIdentifier", "dataType"="string", "required"=true, "description"="Provide the ride identifier of a ride."},
-     *    {"name"="subrideId", "dataType"="integer", "required"=true, "description"="Unique id of the subride."},
-     *  }
+     * @Operation(
+     *     tags={"Subride"},
+     *     summary="Show details of a subride",
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     )
      * )
+     *
      * @ParamConverter("subride", class="App:Subride")
      */
     public function showSubrideAction(Subride $subride, UserInterface $user = null): Response
@@ -62,7 +63,7 @@ class SubrideController extends BaseController
         $view
             ->setData($subride)
             ->setFormat('json')
-            ->setStatusCode(200)
+            ->setStatusCode(Response::HTTP_OK)
             ->setContext($context);
 
         return $this->handleView($view);

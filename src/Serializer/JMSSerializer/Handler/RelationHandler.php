@@ -2,19 +2,18 @@
 
 namespace App\Serializer\JMSSerializer\Handler;
 
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use JMS\Serializer\Context;
 use JMS\Serializer\JsonDeserializationVisitor;
 use JMS\Serializer\JsonSerializationVisitor;
 
 class RelationHandler
 {
-    /** @var EntityManagerInterface $manager */
-    private $manager;
+    protected ManagerRegistry $doctrine;
 
-    public function __construct(EntityManagerInterface $manager)
+    public function __construct(ManagerRegistry $doctrine)
     {
-        $this->manager = $manager;
+        $this->doctrine = $doctrine;
     }
 
     public function serializeRelation(JsonSerializationVisitor $visitor, $relation, array $type, Context $context): int
@@ -32,7 +31,7 @@ class RelationHandler
 
     protected function getSingleEntityRelation($relation): int
     {
-        $metadata = $this->manager->getClassMetadata(get_class($relation));
+        $metadata = $this->doctrine->getManager()->getClassMetadata(get_class($relation));
 
         $ids = $metadata->getIdentifierValues($relation);
         if (!$metadata->isIdentifierComposite) {
@@ -50,10 +49,10 @@ class RelationHandler
             throw new \InvalidArgumentException('Class name should be explicitly set for deserialization');
         }
 
-        $metadata = $this->manager->getClassMetadata($className);
+        $metadata = $this->doctrine->getManager()->getClassMetadata($className);
 
         if (!is_array($relation)) {
-            return $this->manager->getReference($className, $relation);
+            return $this->doctrine->getManager()->getReference($className, $relation);
         }
 
         $single = false;
@@ -65,12 +64,12 @@ class RelationHandler
         }
 
         if ($single) {
-            return $this->manager->getReference($className, $relation);
+            return $this->doctrine->getManager()->getReference($className, $relation);
         }
 
         $objects = [];
         foreach ($relation as $idSet) {
-            $objects[] = $this->manager->getReference($className, $idSet);
+            $objects[] = $this->doctrine->getManager()->getReference($className, $idSet);
         }
 
         return $objects;

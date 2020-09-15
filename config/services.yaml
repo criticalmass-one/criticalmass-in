@@ -14,7 +14,6 @@ parameters:
     database_user: '%env(DATABASE_USER)%'
     database_password: '%env(DATABASE_PASSWORD)%'
     track.gap_width: 10
-    openweather.appid: '%env(OPENWEATHERMAP_APP_ID)%'
     strava.client_id: '%env(STRAVA_CLIENT_ID)%'
     strava.token: '%env(STRAVA_TOKEN)%'
     strava.secret: '%env(STRAVA_SECRET)%'
@@ -31,7 +30,6 @@ parameters:
     domain.blog: '%env(DOMAIN_BLOG)%'
     domain.one: '%env(DOMAIN_ONE)%'
     notification.mail.sender_address: malte@criticalmass.in
-    jms_serializer.camel_case_naming_strategy.class: App\Serializer\JMSSerializer\Naming\CamelCaseNamingStrategy
     request_listener.http_port: 80
     request_listener.https_port: 443
     upload_destination.track: '%kernel.project_dir%/public/tracks'
@@ -54,31 +52,35 @@ services:
         autoconfigure: true
         public: false
         bind:
-            $openWeatherMapApiKey: '%openweather.appid%'
+            $rootDirectory: '%kernel.root_dir%'
             $webRootDir: '%kernel.root_dir%/../public'
             $staticmapsHost: '%staticmaps.host%'
             $gapWidth: '%track.gap_width%'
             $facebookAppId: '%facebook.app_id%'
             $facebookAppSecret: '%facebook.app_secret%'
             $facebookDefaultToken: '%facebook.default_token%'
-            #$twitterClientId: '%twitter.client_id%'
-            #$twitterSecret: '%twitter.secret%'
+            $twitterClientId: '%twitter.client_id%'
+            $twitterSecret: '%twitter.secret%'
+            $uploadDestinationPhoto: '%upload_destination.photo%'
+            $uploadDestinationTrack: '%upload_destination.track%'
+            $uploadDestinationUserPhoto: '%upload_destination.user_photo%'
             $stravaClientId: '%strava.client_id%'
             $stravaSecret: '%strava.secret%'
             $cachedTimelineTtl: '%timeline.ttl%'
             $projectDirectory: '%kernel.project_dir%'
             $redisUrl: '%env(REDIS_URL)%'
+            $criticalmassRideGeneratorUrl: '%env(CRITICALMASS_RIDE_GENERATOR_URL)%'
+            $instagramScraperProxyServerAddress: '%env(INSTAGRAM_SCRAPER_PROXY_ADDRESS)%'
+            $instagramScraperProxyServerPort: '%env(INSTAGRAM_SCRAPER_PROXY_PORT)%'
 
     App\:
         resource: '../src/*'
-        exclude: '../src/{Admin,DQL,Entity,Manager,Menu,Migrations,Model,Repository,Tests,UserProvider,Criticalmass/UploadValidator/UploadValidatorException}'
+        exclude: '../src/{DQL,Entity,Manager,Menu,Migrations,Model,Repository,Tests,UserProvider,Criticalmass/UploadValidator/UploadValidatorException}'
 
     App\Controller\:
         resource: '../src/Controller'
         public: true
         tags: ['controller.service_arguments']
-
-    Cmfcmf\OpenWeatherMap: ~
 
     Symfony\Component\Routing\RouteCollection: ~
 
@@ -151,10 +153,11 @@ services:
 
     App\Criticalmass\Timeline\TimelineInterface:
         alias: App\Criticalmass\Timeline\CachedTimeline
+        #alias: App\Criticalmass\Timeline\Timeline
 
     App\Criticalmass\Geo\Loop\LoopInterface:
         alias: App\Criticalmass\Geo\Loop\TrackLoop
-        
+
     App\Request\ParamConverter\RideParamConverter:
         tags:
             - { name: request.param_converter, priority: 0, converter: ride_converter }
@@ -207,6 +210,10 @@ services:
         tags:
             - { name: request.param_converter, priority: 0, converter: socialnetworkprofile_converter }
 
+    App\Request\ParamConverter\SocialNetworkFeedItemParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: socialnetworkfeeditem_converter }
+
     App\Request\ParamConverter\TrackParamConverter:
         tags:
             - { name: request.param_converter, priority: 0, converter: track_converter }
@@ -238,9 +245,6 @@ services:
     App\Criticalmass\ViewStorage\Cache\ViewStorageCacheInterface:
         alias: App\Criticalmass\ViewStorage\Cache\RobustViewStorageCache
 
-    App\Criticalmass\RideGenerator\RideCalculator\RideCalculatorInterface:
-        alias: App\Criticalmass\RideGenerator\RideCalculator\RideCalculator
-
     App\Criticalmass\ElasticCityFinder\ElasticCityFinder:
         arguments:
             $finder: '@fos_elastica.finder.criticalmass_city.city'
@@ -252,6 +256,21 @@ services:
             - { name: jms_serializer.handler, type: Relation<?>, direction: serialization, format: json, method: serializeRelation}
             - { name: jms_serializer.handler, type: Relation<?>, direction: deserialization, format: json, method: deserializeRelation}
 
+    jms_serializer.naming_strategy:
+        alias: jms_serializer.camel_case_naming_strategy
+
     App\Criticalmass\ViewStorage\BlackList\BlackList:
         arguments:
             $crawlerDetect: '@crawler_detect'
+
+    App\Form\Type\RegistrationType:
+        arguments:
+            $class: '%fos_user.model.user.class%'
+
+    App\Controller\OAuthServer\AuthorizeController:
+        arguments:
+            $authorizeForm: '@fos_oauth_server.authorize.form'
+            $authorizeFormHandler: '@fos_oauth_server.authorize.form.handler.default'
+            $oAuth2Server: '@fos_oauth_server.server'
+        tags:
+            - controller.service_arguments

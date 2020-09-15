@@ -21,7 +21,7 @@ class RadiusQuery extends AbstractQuery implements ElasticQueryInterface
     /**
      * @Constraints\NotNull()
      * @Constraints\Type("float")
-     * @Constraints\Range(min="-90", max="90")
+     * @Constraints\Range(min="-180", max="180")
      * @var float $centerLongitude
      */
     protected $centerLongitude;

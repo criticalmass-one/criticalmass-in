@@ -8,10 +8,12 @@ use App\Entity\Ride;
 use App\Entity\RideEstimate;
 use App\Event\RideEstimate\RideEstimateCreatedEvent;
 use App\Model\CreateEstimateModel;
+use Doctrine\Persistence\ManagerRegistry;
 use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializerInterface;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Doctrine\Persistence\ManagerRegistry;
+use Nelmio\ApiDocBundle\Annotation\Operation;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Swagger\Annotations as SWG;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -58,11 +60,15 @@ class EstimateController extends BaseController
      *
      * If you do not provide <code>dateTime</code> it will use the current time.
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Adds an estimation to statistic",
-     *  section="Estimate"
+     * @Operation(
+     *     tags={"Estimate"},
+     *     summary="Adds an estimation to statistic",
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     )
      * )
+     *
      */
     public function createAction(Request $request): Response
     {
@@ -84,7 +90,7 @@ class EstimateController extends BaseController
         $view
             ->setData($rideEstimation)
             ->setFormat('json')
-            ->setStatusCode(200);
+            ->setStatusCode(Response::HTTP_CREATED);
 
         return $this->handleView($view);
     }

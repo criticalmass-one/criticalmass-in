@@ -3,8 +3,8 @@
 namespace App\Request\ParamConverter;
 
 use App\Entity\SocialNetworkProfile;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Doctrine\Persistence\ManagerRegistry;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 
 class SocialNetworkProfileParamConverter extends AbstractCriticalmassParamConverter
@@ -17,6 +17,8 @@ class SocialNetworkProfileParamConverter extends AbstractCriticalmassParamConver
     public function apply(Request $request, ParamConverter $configuration): void
     {
         $profileId = $request->get('profileId');
+
+        $profile = null;
 
         if ($profileId) {
             $profile = $this->registry->getRepository(SocialNetworkProfile::class)->find($profileId);

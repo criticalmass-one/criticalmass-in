@@ -2,8 +2,8 @@
 
 namespace App\Criticalmass\Timeline;
 
-use Flagception\Manager\FeatureManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Flagception\Manager\FeatureManagerInterface;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 use Symfony\Component\Templating\EngineInterface;
 
@@ -51,7 +51,7 @@ class CachedTimeline extends Timeline
             $this->process();
 
             $timeline
-                ->set($this->content)
+                ->set($this->getTimelineContentList())
                 ->expiresAfter($this->ttl);
 
             $cache->save($timeline);
