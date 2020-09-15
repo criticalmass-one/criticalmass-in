@@ -332,6 +332,9 @@
     "laminas/laminas-code": {
         "version": "3.4.1"
     },
+    "laminas/laminas-diagnostics": {
+        "version": "1.6.0"
+    },
     "laminas/laminas-eventmanager": {
         "version": "3.2.1"
     },
@@ -626,20 +629,102 @@
             "ref": "fb7e19da7f013d0d422fa9bce16f5c510e27609b"
         }
     },
+    "sonata-project/admin-bundle": {
+        "version": "3.64",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.64",
+            "ref": "e300c83e77d35a352b863a82c8d039f29f10fd62"
+        },
+        "files": [
+            "config/packages/sonata_admin.yaml",
+            "config/routes/sonata_admin.yaml",
+            "src/Admin/.gitignore"
+        ]
+    },
+    "sonata-project/block-bundle": {
+        "version": "3.20.0"
+    },
+    "sonata-project/cache": {
+        "version": "1.1.1"
+    },
+    "sonata-project/cache-bundle": {
+        "version": "2.4.2"
+    },
+    "sonata-project/datagrid-bundle": {
+        "version": "2.5.0"
+    },
+    "sonata-project/doctrine-extensions": {
+        "version": "1.9.1"
+    },
+    "sonata-project/doctrine-orm-admin-bundle": {
+        "version": "3.23.0"
+    },
     "sonata-project/exporter": {
         "version": "1.9.1"
+    },
+    "sonata-project/form-extensions": {
+        "version": "1.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.4",
+            "ref": "bfc222606aea5418345af70104d974a25dc7c441"
+        },
+        "files": [
+            "config/packages/sonata_form.yaml"
+        ]
     },
     "sonata-project/intl-bundle": {
         "version": "2.5.0"
     },
+    "sonata-project/notification-bundle": {
+        "version": "3.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.4",
+            "ref": "222a1549f627f9faef39c0dd3cba1194a5175c00"
+        },
+        "files": [
+            "config/packages/sonata_notification.yaml"
+        ]
+    },
+    "sonata-project/page-bundle": {
+        "version": "3.9",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.9",
+            "ref": "f355eb1ec6c3e67fce6333d5140e8b3941bb0b54"
+        },
+        "files": [
+            "config/packages/sonata_page.yaml",
+            "config/routes/sonata_page.yaml",
+            "src/Entity/SonataPageBlock.php",
+            "src/Entity/SonataPagePage.php",
+            "src/Entity/SonataPageSite.php",
+            "src/Entity/SonataPageSnapshot.php"
+        ]
+    },
     "sonata-project/seo-bundle": {
         "version": "2.5.1"
+    },
+    "sonata-project/twig-extensions": {
+        "version": "1.4.1"
     },
     "sunra/php-simple-html-dom-parser": {
         "version": "v1.5.2"
     },
     "swiftmailer/swiftmailer": {
         "version": "v6.1.1"
+    },
+    "symfony-cmf/routing": {
+        "version": "2.3.2"
+    },
+    "symfony-cmf/routing-bundle": {
+        "version": "2.4.0"
     },
     "symfony/apache-pack": {
         "version": "1.0",
@@ -842,6 +927,9 @@
             "ref": "cda8b550123383d25827705d05a42acf6819fe4e"
         }
     },
+    "symfony/security-acl": {
+        "version": "v3.1.0"
+    },
     "symfony/security-bundle": {
         "version": "3.3",
         "recipe": {
@@ -949,6 +1037,9 @@
     },
     "twig/extra-bundle": {
         "version": "v3.0.4"
+    },
+    "twig/string-extra": {
+        "version": "v3.0.5"
     },
     "twig/twig": {
         "version": "v2.4.8"
