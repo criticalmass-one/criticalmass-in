@@ -2,20 +2,22 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\Geo\Entity\Track as GeoTrack;
 use App\Criticalmass\Geo\EntityInterface\TrackInterface;
 use App\Criticalmass\OrderedEntities\Annotation as OE;
 use App\Criticalmass\OrderedEntities\OrderedEntityInterface;
+use App\Criticalmass\Router\Annotation as Routing;
 use App\Criticalmass\UploadableDataHandler\UploadableEntity;
 use App\Criticalmass\UploadFaker\FakeUploadable;
 use App\EntityInterface\RouteableInterface;
 use App\EntityInterface\StaticMapableInterface;
+use Caldera\GeoBasic\Track\TrackInterface as BaseTrackInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use App\Criticalmass\Router\Annotation as Routing;
-use Caldera\GeoBasic\Track\TrackInterface as BaseTrackInterface;
-use App\Criticalmass\Geo\Entity\Track as GeoTrack;
 
 /**
  * @ORM\Table(name="track")
@@ -40,7 +42,7 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      * @Routing\RouteParameter(name="trackId")
      */
@@ -48,7 +50,7 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-private"})
      * @JMS\Expose
      */
     protected $username;
@@ -62,7 +64,7 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="tracks")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-private"})
      * @JMS\Expose
      * @OE\Identical()
      */
@@ -76,14 +78,14 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
 
     /**
      * @ORM\Column(type="datetime")
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      */
     protected $creationDateTime;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      * @OE\Order(direction="asc")
      */
@@ -91,35 +93,35 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      */
     protected $endDateTime;
 
     /**
      * @ORM\Column(type="float", nullable=true)
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      */
     protected $distance;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      */
     protected $points;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      */
     protected $startPoint;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      */
     protected $endPoint;
@@ -148,13 +150,12 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @JMS\Expose
      */
     protected $geoJson;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      * @JMS\SerializedName("polylineString")
      */
@@ -162,7 +163,7 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      * @JMS\SerializedName("reducedPolylineString")
      */
@@ -210,6 +211,23 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
      * @var integer
      */
     protected $stravaActitityId;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\HeatmapTrack", mappedBy="track")
+     */
+    private $heatmapTracks;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $reviewed = false;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->heatmaps = new ArrayCollection();
+        $this->heatmapTracks = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -513,7 +531,7 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
 
     public function getStravaActivityId(): ?int
     {
-        return $this->stravaActitityId;
+        return (int)$this->stravaActitityId;
     }
 
     public function setGeoJson(string $geoJson): Track
@@ -526,5 +544,53 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
     public function getWaypointList(): string
     {
         return $this->geoJson;
+    }
+
+    /**
+     * @return Collection|HeatmapTrack[]
+     */
+    public function getHeatmapTracks(): Collection
+    {
+        return $this->heatmapTracks;
+    }
+
+    public function addHeatmapTrack(HeatmapTrack $heatmapTrack): self
+    {
+        if (!$this->heatmapTracks->contains($heatmapTrack)) {
+            $this->heatmapTracks[] = $heatmapTrack;
+            $heatmapTrack->setTrack($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHeatmapTrack(HeatmapTrack $heatmapTrack): self
+    {
+        if ($this->heatmapTracks->contains($heatmapTrack)) {
+            $this->heatmapTracks->removeElement($heatmapTrack);
+            // set the owning side to null (unless already changed)
+            if ($heatmapTrack->getTrack() === $this) {
+                $heatmapTrack->setTrack(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function isReviewed(): bool
+    {
+        return $this->reviewed;
+    }
+
+    public function setReviewed(bool $reviewed): self
+    {
+        $this->reviewed = $reviewed;
+
+        return $this;
+    }
+
+    public function elasticable(): bool
+    {
+        return $this->enabled && !$this->deleted && $this->reviewed;
     }
 }

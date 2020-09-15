@@ -9,7 +9,7 @@ use App\Entity\RideEstimate;
 use App\Repository\RideEstimateRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use PHPUnit\Framework\TestCase;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 class RideEstimateHandlerTest extends TestCase
 {
@@ -29,7 +29,7 @@ class RideEstimateHandlerTest extends TestCase
             ->expects($this->once())
             ->method('flush');
 
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
 
         $registry
             ->expects($this->once())
@@ -61,7 +61,7 @@ class RideEstimateHandlerTest extends TestCase
             ->expects($this->once())
             ->method('flush');
 
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
         $registry
             ->expects($this->once())
             ->method('getManager')
@@ -85,7 +85,7 @@ class RideEstimateHandlerTest extends TestCase
             ->setEstimatedDuration(2.3)
             ->setEstimatedParticipants(234);
 
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
         $registry
             ->expects($this->never())
             ->method('getManager');

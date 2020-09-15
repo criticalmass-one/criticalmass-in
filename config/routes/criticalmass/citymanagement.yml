@@ -9,9 +9,3 @@ caldera_criticalmass_city_add_slug:
 caldera_criticalmass_city_edit:
     path:  /{citySlug}/edit
     controller: App\Controller\City\CityManagementController::editAction
-
-caldera_criticalmass_city_population:
-    path:  /fetch-population/{cityName}
-    controller: App\Controller\City\CityManagementController::populationAction
-    options:
-        expose: true

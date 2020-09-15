@@ -198,11 +198,7 @@ class Track extends BaseTrack
 
     public function setStartPoint(int $startPoint): Track
     {
-        if ($startPoint >= 1) {
-            $this->startPoint = $startPoint;
-        } else {
-            $this->startPoint = 1;
-        }
+        $this->startPoint = $startPoint;
 
         return $this;
     }
@@ -214,11 +210,7 @@ class Track extends BaseTrack
 
     public function setEndPoint(int $endPoint): Track
     {
-        if ($endPoint <= $this->points) {
-            $this->endPoint = $endPoint;
-        } else {
-            $this->endPoint = $this->points - 1;
-        }
+        $this->endPoint = $endPoint;
 
         return $this;
     }

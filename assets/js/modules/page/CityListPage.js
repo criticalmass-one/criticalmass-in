@@ -81,7 +81,7 @@ define(['jquery', 'dateformat', 'jquery.dataTables', 'Map', 'CityMarker', 'Locat
                 const rideDate = dateFormat(rideData.dateTime * 1000, 'yyyy-mm-dd');
                 const rideUrl = Routing.generate('caldera_criticalmass_ride_show', { citySlug: citySlug, rideDate: rideDate});
 
-                html += '<p><a href="' + rideUrl + '" class="btn btn-primary"><i class="fa fa-bicycle"></i> Mehr erfahren</a></p>';
+                html += '<p><a href="' + rideUrl + '" class="btn btn-primary"><i class="far fa-bicycle"></i> Mehr erfahren</a></p>';
             } else {
                 if (cityData.description) {
                     html += '<p>' + cityData.description + '</p>';
@@ -89,7 +89,7 @@ define(['jquery', 'dateformat', 'jquery.dataTables', 'Map', 'CityMarker', 'Locat
 
                 const cityUrl = Routing.generate('caldera_criticalmass_city_show', { citySlug: citySlug});
 
-                html += '<p><a href="' + cityUrl + '" class="btn btn-primary"><i class="fa fa-university"></i> Mehr erfahren</a></p>';
+                html += '<p><a href="' + cityUrl + '" class="btn btn-primary"><i class="far fa-university"></i> Mehr erfahren</a></p>';
             }
 
             html += '</div>';

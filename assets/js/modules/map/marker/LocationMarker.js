@@ -12,7 +12,7 @@ define(['Marker'], function () {
             icon: 'fa-bicycle',
             markerColor: 'yellow',
             shape: 'circle',
-            prefix: 'fa'
+            prefix: 'far'
         });
     };
 

@@ -10,7 +10,7 @@ define(['dateformat', 'typeahead.jquery', 'bloodhound'], function (dateFormat) {
     Search.prototype._bloodhound = null;
 
     Search.prototype._initBloodhound = function () {
-        var url = Routing.generate('caldera_criticalmass_search_prefetch', true);
+        var url = Routing.generate('caldera_criticalmass_search_prefetch');
 
         this._bloodhound = new Bloodhound({
             datumTokenizer: function (data) {
@@ -49,7 +49,7 @@ define(['dateformat', 'typeahead.jquery', 'bloodhound'], function (dateFormat) {
     };
 
     Search.prototype._renderCitySuggestion = function (data) {
-        return '<a href="' + data.url + '"><i class="fa fa-university"></i> ' + data.value + '</a>';
+        return '<a href="' + data.url + '"><i class="far fa-university"></i> ' + data.value + '</a>';
     };
 
     Search.prototype._renderRideSuggestion = function (data) {
@@ -58,7 +58,7 @@ define(['dateformat', 'typeahead.jquery', 'bloodhound'], function (dateFormat) {
         html += '<a href="' + data.url + '">';
         html += '<div class="row">';
         html += '<div class="col-md-12">';
-        html += '<i class="fa fa-bicycle"></i> ';
+        html += '<i class="far fa-bicycle"></i> ';
         html += data.value;
         html += '</div>';
         html += '</div>';
@@ -84,7 +84,7 @@ define(['dateformat', 'typeahead.jquery', 'bloodhound'], function (dateFormat) {
     };
 
     Search.prototype._renderContentSuggestion = function (data) {
-        return '<a href="' + data.url + '"><i class="fa fa-file-text-o"></i> ' + data.value + '</a>';
+        return '<a href="' + data.url + '"><i class="far fa-file-text"></i> ' + data.value + '</a>';
     };
 
     Search.prototype._templateSuggestionFunction = function (data) {

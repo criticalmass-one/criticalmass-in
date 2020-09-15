@@ -57,26 +57,26 @@
                         <a class="btn btn-default" style="background-color: rgb(60, 90, 150); color: white;"
                            href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook' }) }}"
                            title="Sign in with Facebook">
-                            <i class="fa fa-facebook" aria-hidden="true"></i>
+                            <i class="fab fa-facebook-f" aria-hidden="true"></i>
                             Facebook
                         </a>
                         <a class="btn btn-default" style="background-color: rgb(249, 77, 31); color: white;"
                            href="{{ path('hwi_oauth_service_redirect', {'service': 'strava' }) }}"
                            title="Sign in with Strava">
-                            <i class="fa fa-strava" aria-hidden="true"></i>
+                            <i class="fab fa-strava" aria-hidden="true"></i>
                             Strava
                         </a>
                         <a class="btn btn-default" style="background-color: rgb(57, 201, 214); color: white;"
                            href="{{ path('hwi_oauth_service_redirect', {'service': 'runkeeper' }) }}"
                            title="Sign in with Runkeeper">
-                            <i class="fa fa-runkeeper" aria-hidden="true"></i>
+                            <i class="fab fa-runkeeper" aria-hidden="true"></i>
                             Runkeeper
                         </a>
                         <a class="btn btn-default"
                            style="background-color: rgb(29, 161, 242); color: white;"
                            href="{{ path('hwi_oauth_service_redirect', {'service': 'twitter' }) }}"
                            title="Sign in with Twitter">
-                            <i class="fa fa-twitter" aria-hidden="true"></i>
+                            <i class="fab fa-twitter" aria-hidden="true"></i>
                             Twitter
                         </a>
                     </div>
@@ -95,6 +95,13 @@
                 <a href="{{ path('fos_user_resetting_request') }}">
                     Kennwort vergessen?
                 </a>
+            </div>
+
+            <div class="col-md-4">
+                <button type="submit" id="_submit" name="_submit" class="btn btn-primary pull-right">
+                    <i class="far fa-bicycle"></i>
+                    Anmelden
+                </button>
             </div>
         </div>
     </div>

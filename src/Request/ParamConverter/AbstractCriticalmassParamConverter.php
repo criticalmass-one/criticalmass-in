@@ -77,9 +77,7 @@ class AbstractCriticalmassParamConverter extends AbstractParamConverter
         }
 
         if ($citySlug) {
-            $city = $citySlug->getCity();
-
-            return $city;
+            return $citySlug->getCity();
         }
 
         return null;

@@ -14,7 +14,8 @@ class UserFixtures extends Fixture
         $user
             ->setUsername('maltehuebner')
             ->setEmail('maltehuebner@gmx.org')
-            ->setPlainPassword('123456');
+            ->setPlainPassword('123456')
+            ->setEnabled(true);
 
         $this->addReference('user-maltehuebner', $user);
 

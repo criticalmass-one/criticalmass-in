@@ -21,7 +21,7 @@ define(['leaflet', 'leaflet-locate'], function (L) {
                 weight: 1,
                 clickable: false
             },
-            icon: "fa fa-location-arrow",
+            icon: "far fa-location-arrow",
             metric: false,
             strings: {
                 title: "My location",

@@ -288,7 +288,8 @@ class PhotoRepository extends EntityRepository
 
         if ($city) {
             $builder
-                ->andWhere($builder->expr()->eq('p.city', ':city'))
+                ->join('p.ride', 'r')
+                ->andWhere($builder->expr()->eq('r.city', ':city'))
                 ->setParameter('city', $city);
         }
 

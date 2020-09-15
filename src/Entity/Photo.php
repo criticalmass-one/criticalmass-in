@@ -2,25 +2,30 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\DataQuery\Annotation\EntityAnnotation as DataQuery;
 use App\Criticalmass\Geocoding\ReverseGeocodeable;
 use App\Criticalmass\Image\PhotoManipulator\PhotoInterface\ManipulateablePhotoInterface;
 use App\Criticalmass\OrderedEntities\Annotation as OE;
 use App\Criticalmass\OrderedEntities\OrderedEntityInterface;
+use App\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Sharing\Annotation as Sharing;
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
 use App\Criticalmass\UploadFaker\FakeUploadable;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AutoParamConverterAble;
+use App\EntityInterface\CoordinateInterface;
+use App\EntityInterface\ElasticSearchPinInterface;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
 use App\EntityInterface\StaticMapableInterface;
+use Caldera\GeoBasic\Coord\Coord;
+use Caldera\GeoBasic\Coord\CoordInterface;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use App\Criticalmass\Router\Annotation as Routing;
-use App\Criticalmass\Sharing\Annotation as Sharing;
 
 /**
  * @ORM\Table(name="photo")
@@ -30,7 +35,7 @@ use App\Criticalmass\Sharing\Annotation as Sharing;
  * @Routing\DefaultRoute(name="caldera_criticalmass_photo_show_ride")
  * @OE\OrderedEntity()
  */
-class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, Shareable, StaticMapableInterface, ReverseGeocodeable, OrderedEntityInterface
+class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, Shareable, StaticMapableInterface, ReverseGeocodeable, OrderedEntityInterface, ElasticSearchPinInterface, CoordinateInterface
 {
     /**
      * @ORM\Id
@@ -38,6 +43,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
      * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Expose
      * @Routing\RouteParameter(name="photoId")
+     * @DataQuery\Sortable
      */
     protected $id;
 
@@ -52,6 +58,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      * @Routing\RouteParameter(name="rideIdentifier")
      * @OE\Identical()
+     * @DataQuery\Queryable
      */
     protected $ride;
 
@@ -59,49 +66,60 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
      * @ORM\ManyToOne(targetEntity="City", inversedBy="photos")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      * @Routing\RouteParameter(name="citySlug")
+     * @DataQuery\Queryable
      */
     protected $city;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose
+     * @DataQuery\Sortable
+     * @DataQuery\Queryable
+     * @var float $latitude
      */
-    protected $latitude;
+    protected $latitude = null;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose
+     * @DataQuery\Sortable
+     * @DataQuery\Queryable
+     * @var float $longitude
      */
-    protected $longitude;
+    protected $longitude = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * @JMS\Expose
      * @Sharing\Intro()
+     * @DataQuery\Sortable
      */
     protected $description;
 
     /**
      * @ORM\Column(type="integer")
+     * @DataQuery\Sortable
      */
     protected $views = 0;
 
     /**
      * @ORM\Column(type="boolean")
      * @OE\Boolean(value=true)
+     * @DataQuery\DefaultBooleanValue(value=true, alias="isEnabled")
      */
     protected $enabled = true;
 
     /**
      * @ORM\Column(type="boolean")
      * @OE\Boolean(value=false)
+     * @DataQuery\DefaultBooleanValue(value=false, alias="isDeleted")
      */
     protected $deleted = false;
 
     /**
      * @ORM\Column(type="datetime")
      * @JMS\Expose
-     * @OE\Order(direction="asc")
+     * @DataQuery\Sortable
      */
     protected $creationDateTime;
 
@@ -121,6 +139,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     /**
      * @var int $imageSize
      * @ORM\Column(type="integer", nullable=true)
+     * @DataQuery\Sortable
      */
     protected $imageSize;
 
@@ -168,7 +187,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
 
     /**
      * @ORM\Column(type="datetime")
-     *
+     * @DataQuery\Sortable
      * @var \DateTime
      */
     protected $updatedAt;
@@ -188,6 +207,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
      * @ORM\Column(type="string", length=255, nullable=true)
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
+     * @DataQuery\Sortable
      */
     protected $location;
 
@@ -200,6 +220,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
      * @var string $exifExposure
      * @ORM\Column(type="string", nullable=true)
      * @JMS\Expose
+     * @DataQuery\Sortable
      */
     protected $exifExposure;
 
@@ -207,6 +228,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
      * @var string $exifAperture
      * @ORM\Column(type="string", nullable=true)
      * @JMS\Expose
+     * @DataQuery\Sortable
      */
     protected $exifAperture;
 
@@ -214,6 +236,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
      * @var int $exifIso
      * @ORM\Column(type="smallint", nullable=true)
      * @JMS\Expose
+     * @DataQuery\Sortable
      */
     protected $exifIso;
 
@@ -221,6 +244,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
      * @var float $exifFocalLength
      * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose
+     * @DataQuery\Sortable
      */
     protected $exifFocalLength;
 
@@ -228,13 +252,17 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
      * @var string $exifCamera
      * @ORM\Column(type="string", length=255, nullable=true)
      * @JMS\Expose
+     * @DataQuery\Sortable
      */
     protected $exifCamera;
 
     /**
      * @var \DateTime $exifCreationDate
      * @ORM\Column(type="datetime")
+     * @OE\Order(direction="asc")
      * @JMS\Expose
+     * @DataQuery\DateTimeQueryable(format="strict_date_hour_minute_second", pattern="Y-m-d\TH:i:s")
+     * @DataQuery\Sortable
      */
     protected $exifCreationDate;
 
@@ -263,7 +291,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return $this;
     }
 
-    public function getEnabled(): bool
+    public function isEnabled(): bool
     {
         return $this->enabled;
     }
@@ -275,7 +303,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return $this;
     }
 
-    public function getDeleted(): bool
+    public function isDeleted(): bool
     {
         return $this->deleted;
     }
@@ -292,7 +320,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return $this->latitude;
     }
 
-    public function setLatitude(float $latitude = null): Photo
+    public function setLatitude(float $latitude = null): CoordinateInterface
     {
         $this->latitude = $latitude;
 
@@ -304,14 +332,14 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return $this->longitude;
     }
 
-    public function setLongitude(float $longitude = null): Photo
+    public function setLongitude(float $longitude = null): CoordinateInterface
     {
         $this->longitude = $longitude;
 
         return $this;
     }
 
-    public function getRide(): Ride
+    public function getRide(): ?Ride
     {
         return $this->ride;
     }
@@ -635,5 +663,23 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     public function __toString(): string
     {
         return (string) $this->id;
+    }
+
+    /**
+     * @DataQuery\Queryable
+     */
+    public function getPin(): string
+    {
+        return sprintf('%f,%f', $this->latitude, $this->longitude);
+    }
+
+    public function elasticable(): bool
+    {
+        return $this->ride && $this->enabled && !$this->deleted;
+    }
+
+    public function toCoord(): CoordInterface
+    {
+        return new Coord($this->latitude, $this->longitude);
     }
 }

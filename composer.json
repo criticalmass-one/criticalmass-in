@@ -1,6 +1,7 @@
 {
     "name": "calderacc/criticalmass",
     "type": "project",
+    "version": "0.1",
     "description": "Much critical mass stuff",
     "authors": [
         {
@@ -17,46 +18,38 @@
         "psr-4": { "Tests\\": "tests/" }
     },
     "require": {
-        "php": ">=7.3",
+        "php": ">=7.4",
         "ext-intl": "*",
         "ext-simplexml": "*",
         "doctrine/orm": "^2.5",
-        "doctrine/doctrine-bundle": "^1.7",
-        "doctrine/doctrine-migrations-bundle": "^1.0",
+        "doctrine/doctrine-bundle": "^2.0",
+        "doctrine/doctrine-migrations-bundle": "^2.0",
         "twig/extensions": "^1.4",
-        "vich/uploader-bundle": "^1.6",
+        "vich/uploader-bundle": "^1.13",
         "liip/imagine-bundle": "^2.0",
         "knplabs/knp-paginator-bundle": "^2.5",
         "friendsofsymfony/elastica-bundle": "^5.0",
-        "emcconville/google-map-polyline-encoding-tool" : ">=1.2.1",
+        "emcconville/google-map-polyline-encoding-tool": ">=1.2.1",
         "friendsofsymfony/jsrouting-bundle": "^2.0",
-        "jms/serializer-bundle": "^2.0",
+        "jms/serializer-bundle": "^3.0",
         "symfony/monolog-bundle": "^3.3",
-        "sensio/framework-extra-bundle": "^5.2",
+        "sensio/framework-extra-bundle": "^5.5",
         "incenteev/composer-parameter-handler": "^2.0",
         "friendsofsymfony/user-bundle": "^2.0",
         "friendsofsymfony/rest-bundle": "^2.0",
         "hwi/oauth-bundle": "^0.6.2",
         "php-curl-class/php-curl-class": "^8.0",
         "malenki/slug": "1.0.0",
-        "cmfcmf/openweathermap-php-api": "^2.1",
         "sonata-project/intl-bundle": "^2.3",
-        "nelmio/api-doc-bundle": "^2.13",
+        "nelmio/api-doc-bundle": "^3.0",
         "predis/predis": "^1.1",
-        "miljar/php-exif": "^0.6.3",
-        "sonata-project/admin-bundle": "^3.18",
-        "sonata-project/doctrine-orm-admin-bundle": "^3.1",
-        "simplethings/entity-audit-bundle": "^1.0",
-        "cebe/markdown": "^1.1",
+        "miljar/php-exif": "^0.6.5",
         "sonata-project/seo-bundle": "^2.2",
         "graylog2/gelf-php": "^1.5",
         "facebook/graph-sdk": "^5.6",
         "calderacc/geobasic": "^0.2.0",
         "yohang/calendr": "^2.0",
         "maxh/php-nominatim": "^1.2",
-        "jublonet/codebird-php": "^3.1",
-        "zendframework/zend-http": "^2.7",
-        "zendframework/zend-feed": "^2.9",
         "php-http/guzzle6-adapter": "^1.1",
         "php-http/httplug-bundle": "^1.10",
         "knplabs/knp-menu-bundle": "^2.0",
@@ -78,19 +71,32 @@
         "sunra/php-simple-html-dom-parser": "^1.5",
         "symfony/flex": "^1.0",
         "khill/php-duration": "^1.0",
-        "basvandorst/stravaphp": "^1.2",
         "sabre/vobject": "^4.0",
         "presta/sitemap-bundle": "^1.5",
         "doctrine/doctrine-fixtures-bundle": "^3.1",
         "symfony/dependency-injection": "^4.2@dev",
         "symfony/dom-crawler": "^4.2",
         "symfony/css-selector": "^4.2",
-        "calderacc/socialnetwork-bundle": "^0.1.0",
         "oneup/flysystem-bundle": "^3.1",
         "flagception/flagception-bundle": "^3.1",
         "php-amqplib/rabbitmq-bundle": "^1.14",
         "ext-fileinfo": "*",
-        "ext-xmlwriter": "*"
+        "ext-xmlwriter": "*",
+        "ext-json": "*",
+        "fresh/doctrine-enum-bundle": "^6.3",
+        "freearhey/wikidata": "^3.1",
+        "friendsofsymfony/ckeditor-bundle": "^2.0",
+        "doctrine/annotations": "^1.7",
+        "league/commonmark": "^1.0",
+        "nesbot/carbon": "^2.24",
+        "iamstuartwilson/strava": "^1.4",
+        "nmure/crawler-detect-bundle": "^2.0.0",
+        "friendsofsymfony/oauth-server-bundle": "^1.6",
+        "gregwar/captcha-bundle": "^2.1",
+        "embed/embed": "^4.1",
+        "guzzlehttp/psr7": "^1.6",
+        "twig/extra-bundle": "^3.0",
+        "nyholm/psr7": "^1.3"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "*",
@@ -98,7 +104,8 @@
         "codedungeon/phpunit-result-printer": "^0.6.0",
         "symfony/profiler-pack": "^1.0",
         "symfony/browser-kit": "^4.1",
-        "vimeo/psalm": "^3.3"
+        "vimeo/psalm": "^3.3",
+        "symfony/maker-bundle": "^1.11"
     },
     "conflict": {
         "symfony/symfony": "*"
@@ -113,7 +120,20 @@
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
-        }
+        },
+        "reset-test-db": [
+            "bin/console --env=test doctrine:database:drop --force",
+            "bin/console --env=test doctrine:database:create",
+            "bin/console --env=test doctrine:schema:create"
+        ],
+        "reset-fixtures": [
+            "@reset-test-db",
+            "bin/console --env=test doctrine:fixtures:load -n"
+        ],
+        "functional-tests": [
+            "@reset-fixtures",
+            "vendor/bin/phpunit tests/Controller"
+        ]
     },
     "config": {
 

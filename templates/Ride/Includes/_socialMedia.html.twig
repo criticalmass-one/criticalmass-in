@@ -2,7 +2,7 @@
     <div class="card-header">
         Soziale Netze
     </div>
-    
+
     {% if socialNetworkProfiles|length > 0 %}
         <div class="card-body text-center">
             <div class="btn-group-vertical">
@@ -10,7 +10,7 @@
                     {% set network = getNetwork(profile.network) %}
 
                     <a href="{{ profile.identifier }}" class="btn" style="background-color: {{ network.backgroundColor }}; color: {{ network.textColor }};">
-                        <i class="fa {{ network.icon }}"></i>
+                        <i class="{{ network.icon }}"></i>
                         {{ network.name }}
                     </a>
                 {% endfor %}
@@ -20,7 +20,7 @@
 
     <div class="card-body text-center">
         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-share-square-o"></i>
+            <i class="far fa-share-square"></i>
             in sozialen Netzen teilen
             <span class="caret"></span>
         </button>

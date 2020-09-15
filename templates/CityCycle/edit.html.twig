@@ -12,6 +12,7 @@
 
 {% block breadcrumb %}
     {{ bootstrap.breadcrumb_item(city.city, objectPath(city)) }}
+    {{ bootstrap.breadcrumb_item('Turnusliste', objectPath(city, 'caldera_criticalmass_citycycle_list')) }}
     {{ bootstrap.breadcrumb_item(title, '', true) }}
 {% endblock %}
 
@@ -53,9 +54,16 @@
                         <div class="form-group{% if form_errors(form.dayOfWeek) %} has-error has-feedback{% endif %}">
                             <label class="control-label" for="">Wochentag der Touren:</label>
                             {{ form_widget(form.dayOfWeek, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">
-                                Stelle hier den Wochentag ein, an dem die Touren stattfinden.
-                            </p>
+                            {% if not cityCycle.hasSpecialCalculator() %}
+                                <p class="help-block">
+                                    Stelle hier den Wochentag ein, an dem die Touren stattfinden.
+                                </p>
+                            {% else %}
+                                <p class="text-info">
+                                    Du kannst diesen Wert nicht ändern, weil dieser Turnus von einem speziellen
+                                    Generator erzeugt wird.
+                                </p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -65,9 +73,16 @@
                         <div class="form-group{% if form_errors(form.weekOfMonth) %} has-error has-feedback{% endif %}">
                             <label class="control-label" for="">Woche der Touren:</label>
                             {{ form_widget(form.weekOfMonth, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">
-                                Wähle hier die Woche, in der die Touren stattfinden.
-                            </p>
+                            {% if not cityCycle.hasSpecialCalculator() %}
+                                <p class="help-block">
+                                    Wähle hier die Woche, in der die Touren stattfinden.
+                                </p>
+                            {% else %}
+                                <p class="text-info">
+                                    Du kannst diesen Wert nicht ändern, weil dieser Turnus von einem speziellen
+                                    Generator erzeugt wird.
+                                </p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

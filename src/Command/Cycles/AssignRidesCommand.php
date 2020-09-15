@@ -9,7 +9,7 @@ use App\Criticalmass\Cycles\Analyzer\ComparisonResultInterface;
 use App\Criticalmass\Cycles\Analyzer\CycleAnalyzerInterface;
 use App\Criticalmass\Cycles\Analyzer\CycleAnalyzerModel;
 use App\Entity\Ride;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
@@ -23,13 +23,13 @@ class AssignRidesCommand extends Command
     /** @var CycleAnalyzerInterface $cycleAnalyzer */
     protected $cycleAnalyzer;
 
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var array $cycleCache */
     protected $cycleCache = [];
 
-    public function __construct($name = null, CycleAnalyzerInterface $cycleAnalyzer, RegistryInterface $registry)
+    public function __construct($name = null, CycleAnalyzerInterface $cycleAnalyzer, ManagerRegistry $registry)
     {
         $this->cycleAnalyzer = $cycleAnalyzer;
         $this->registry = $registry;

@@ -1,0 +1,55 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Heatmap der Critical Mass {{ city.city }}{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ objectPath(city) }}">
+            {{ city.city }}
+        </a>
+    </li>
+
+    <li class="active">
+        Heatmap
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>
+                    Heatmap der Critical Mass {{ city.city }}
+                </h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div id="heatmap" style="height: 75vh;">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row margin-top-medium">
+            <div class="col-md-12">
+                <p class="text-muted">Diese Heatmap enthält Tracks von:
+                    {% for userHeatmapTrack in userHeatmapTrackList %}
+                        {% set trackCounter = userHeatmapTrack.trackList|length %}
+                        
+                        {{ userHeatmapTrack.user.username }}{% if trackCounter > 1 %}&nbsp;({{ trackCounter }}&times;){% endif %}{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        CriticalMass.loadModule('HeatmapPage', null, null, function (heatmapPage) {
+            heatmapPage.setHeatmapIdentifier('{{ city.heatmap.identifier }}');
+            heatmapPage.setMapCenter({{ city.latitude }}, {{ city.longitude }});
+            heatmapPage.init();
+        });
+    </script>
+{% endblock %}

@@ -1,5 +1,4 @@
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
-@import "../../node_modules/font-awesome/scss/font-awesome.scss";
 @import "criticalmass/criticalmass";
 @import "criticalmass/bikeright4";
 @import "criticalmass/frontpage4";
@@ -14,4 +13,16 @@
 
 input[type="file"] {
   display: inline !important;
+}
+
+#github-ribbon {
+  position: absolute;
+  top: 42px;
+  right: 0;
+  border: 0;
+  z-index: 1000;
+}
+
+.captcha-input-group .input-group-addon {
+  padding: 0;
 }

@@ -4,7 +4,7 @@ namespace App\Command;
 
 use App\Entity\User;
 use App\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGeneratorInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Table;
@@ -14,13 +14,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class GenerateProfilePhotosCommand extends Command
 {
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var ProfilePhotoGeneratorInterface $profilePhotoGenerator */
     protected $profilePhotoGenerator;
 
-    public function __construct(RegistryInterface $registry, ProfilePhotoGeneratorInterface $profilePhotoGenerator)
+    public function __construct(ManagerRegistry $registry, ProfilePhotoGeneratorInterface $profilePhotoGenerator)
     {
         $this->registry = $registry;
         $this->profilePhotoGenerator = $profilePhotoGenerator;

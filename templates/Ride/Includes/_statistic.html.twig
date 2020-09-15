@@ -21,12 +21,12 @@
                         <dl>
                             {% if ride.estimatedParticipants and ride.estimatedParticipants > 0 %}
                                 <dt>Teilnehmer</dt>
-                                <dd>{{ ride.estimatedParticipants }}</dd>
+                                <dd>{{ ride.estimatedParticipants|number_format(0) }}</dd>
                             {% endif %}
 
                             {% if ride.estimatedDistance and ride.estimatedDistance > 0 %}
                                 <dt>Distanz</dt>
-                                <dd>{{ ride.estimatedDistance|round(2) }}&nbsp;Kilometer</dd>
+                                <dd>{{ ride.estimatedDistance|number_format(2) }}&nbsp;Kilometer</dd>
                             {% endif %}
 
                             {% if ride.getDurationInterval() and ride.getDurationInterval().format('%h:%i') != '0:0' %}
@@ -36,7 +36,7 @@
 
                             {% if ride.getAverageVelocity and ride.getAverageVelocity > 0 %}
                                 <dt>Durchschnittsgeschwindigkeit</dt>
-                                <dd>{{ ride.getAverageVelocity()|round(2) }} Kilometer&nbsp;pro&nbsp;Stunde</dd>
+                                <dd>{{ ride.getAverageVelocity()|number_format(2) }} Kilometer&nbsp;pro&nbsp;Stunde</dd>
                             {% endif %}
                         </dl>
                     </div>
@@ -47,12 +47,12 @@
                 <div class="col-12 text-center">
                 {% if app.user %}
                     <button class="btn btn-primary" data-toggle="modal" data-target="#estimate-modal">
-                        <i class="fa fa-users"></i>
+                        <i class="far fa-users"></i>
                         Teilnehmerzahl schätzen
                     </button>
                 {% else %}
                     <span class="btn btn-primary modal-hint" data-modal-hint-title="{{ 'hint_modal.ride.estimate_add_button.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.ride.estimate_add_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
-                        <i class="fa fa-users"></i>
+                        <i class="far fa-users"></i>
                         Teilnehmerzahl schätzen
                     </span>
                 {% endif %}

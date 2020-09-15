@@ -22,28 +22,43 @@
         <div class="row">
             <div class="col-12 col-md-8 offset-md-2">
                 <p>
-                    Wenn du deine Fahrt bei der <strong>{{ ride.city.title }}</strong> am <strong>{{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}</strong> aufgezeichnet hast, kannst du hier deinen Track als GPX-Datei hochladen.
+                    Wenn du deine Fahrt bei der <strong>{{ ride.city.title }}</strong> am <strong>{{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}</strong> aufgezeichnet hast, kannst du
+                    hier deinen Track als GPX-Datei hochladen.
                 </p>
             </div>
         </div>
 
-        {% if errorMessage %}
-            <div class="row">
-                <div class="col-12 col-md-8 offset-md-2">
-                    <div class="alert alert-danger" role="alert">
-                        <strong>Hochladen fehlgeschlagen :(</strong>
-                        {{ errorMessage }}
-                    </div>
-                </div>
-            </div>
-        {% endif %}
-
         {{ form_start(form, {'attr': {'role': 'form', 'id': 'track-upload-form'}}) }}
+
         <div class="row">
-            <div class="col-12 col-md-8 offset-md-2">
-                <div class="form-group">
-                    <label for="">Datei:</label>
-                    {{ form_widget(form.trackFile, {'attr': {'class': 'form-control' }}) }}
+            <div class="col-md-6 col-offset-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Gpx-Datei hochladen
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        {% if errorMessage %}
+                            <div class="row">
+                                <div class="col-12 col-md-8 offset-md-2">
+                                    <div class="alert alert-danger" role="alert">
+                                        <strong>Hochladen fehlgeschlagen :(</strong>
+                                        {{ errorMessage }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        <div class="row">
+                            <div class="col-12 col-md-8 offset-md-2">
+                                <div class="form-group">
+                                    <label for="">Datei:</label>
+                                    {{ form_widget(form.trackFile, {'attr': {'class': 'form-control' }}) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -60,8 +75,11 @@
                 </div>
             </div>
         </div>
+
         {{ form_end(form) }}
+
     </div>
+
 
     <script type="text/javascript">
         CriticalMass.loadModule('TrackUploadPage');

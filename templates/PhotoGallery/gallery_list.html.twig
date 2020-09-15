@@ -22,12 +22,12 @@
                     {% set uploadPath = objectPath(ride, 'caldera_criticalmass_gallery_photos_upload_ride') %}
 
                     <a class="btn btn-primary" href="{{ uploadPath }}" title="Fotos hochladen">
-                        <i class="fa fa-camera"></i>
+                        <i class="far fa-camera"></i>
                         Fotos hochladen
                     </a>
                 {% else %}
                     <span class="btn btn-primary modal-hint" data-modal-hint-title="{{ 'hint_modal.gallery.photo_upload_button.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.gallery.photo_upload_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
-                        <i class="fa fa-camera"></i>
+                        <i class="far fa-camera"></i>
                         Fotos hochladen
                     </span>
                 {% endif %}

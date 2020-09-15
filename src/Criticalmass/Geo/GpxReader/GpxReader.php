@@ -2,11 +2,7 @@
 
 namespace App\Criticalmass\Geo\GpxReader;
 
-use App\Criticalmass\Geo\Entity\Position;
-use App\Criticalmass\Geo\EntityInterface\PositionInterface;
 use App\Criticalmass\Geo\Exception\GpxFileNotFoundException;
-use App\Criticalmass\Geo\PositionList\PositionList;
-use App\Criticalmass\Geo\PositionList\PositionListInterface;
 use League\Flysystem\FilesystemInterface;
 
 class GpxReader implements GpxReaderInterface
@@ -37,7 +33,7 @@ class GpxReader implements GpxReaderInterface
         try {
             $gpxString = $this->filesystem->read($filename);
         } catch (\Exception $exception) {
-            throw new GpxFileNotFoundException($exception);
+            throw new GpxFileNotFoundException(sprintf('File %s was not found.', $filename));
         }
 
         $this->prepareGpx($gpxString);

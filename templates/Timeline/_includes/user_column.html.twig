@@ -4,13 +4,15 @@
              src="{{ vich_uploader_asset(item.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}"/>
     {% endif %}
 
-    <p>
+    <p class="hidden-xs">
         <strong>
             {{ item.user.username }}
         </strong>
-        <br />
+    </p>
+
+    <p>
         <small>
-            <time>
+            <time title="{{ item.dateTime|date('d.m.Y H:i') }} Uhr">
                 {{ item.dateTime|time_ago_in_words }}
             </time>
         </small>

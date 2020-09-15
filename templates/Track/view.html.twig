@@ -18,6 +18,34 @@
             </div>
         </div>
 
+        {% if not track.reviewed %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-danger">
+                        <div class="btn-group pull-right">
+                            <a class="btn btn-success"
+                               href="{{ objectPath(track, 'caldera_criticalmass_track_range') }}">
+                                <i class="far fa-cut"></i>&nbsp;Track beschneiden
+                            </a>
+                            <a class="btn btn-default"
+                               href="{{ objectPath(track, 'caldera_criticalmass_track_approve') }}">
+                                <i class="far fa-check"></i>&nbsp;Track bestätigen
+                            </a>
+                        </div>
+
+                        <strong>
+                            Dein Track wurde noch nicht bestätigt!
+                        </strong>
+                        <br/>
+                        Bitte bestägtige, dass dein Track nur den tatsächlichen Routenverlauf der Critical Mass abbildet
+                        und etwaige An- und Abfahrten nicht enthalten sind. Du kannst deinen Track <a
+                                href="{{ objectPath(track, 'caldera_criticalmass_track_range') }}">ganz einfach online
+                            beschneiden</a>.
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
         <div class="row mt-2">
             <div class="col-12">
                 <div id="map" style="height: 350px;"></div>
@@ -70,7 +98,7 @@
                         Distanz:
                     </dt>
                     <dd>
-                        {{ track.distance|round(2) }}&nbsp;km
+                        {{ track.distance|number_format(2) }}&nbsp;km
                     </dd>
                 </dl>
             </div>

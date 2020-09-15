@@ -2,26 +2,43 @@
 
 namespace App\Controller\Api;
 
-use App\Entity\CitySlug;
+use App\Criticalmass\DataQuery\DataQueryManager\DataQueryManagerInterface;
+use App\Criticalmass\DataQuery\RequestParameterList\RequestParameterList;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
 use App\Event\RideEstimate\RideEstimateCreatedEvent;
 use App\Model\CreateEstimateModel;
-use App\Traits\RepositoryTrait;
-use App\Traits\UtilTrait;
-use FOS\ElasticaBundle\Finder\FinderInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use FOS\RestBundle\View\View;
-use JMS\Serializer\Serializer;
+use JMS\Serializer\SerializerInterface;
+use Nelmio\ApiDocBundle\Annotation\Operation;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Swagger\Annotations as SWG;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class EstimateController extends BaseController
 {
-    use RepositoryTrait;
-    use UtilTrait;
+    /** @var SerializerInterface $serializer */
+    protected $serializer;
+
+    /** @var EventDispatcherInterface $eventDispatcher */
+    protected $eventDispatcher;
+
+    /** @var DataQueryManagerInterface $dataQueryManager */
+    protected $dataQueryManager;
+
+    /** @var ManagerRegistry $registry */
+    protected $registry;
+
+    public function __construct(SerializerInterface $serializer, EventDispatcherInterface $eventDispatcher, DataQueryManagerInterface $dataQueryManager, ManagerRegistry $registry)
+    {
+        $this->serializer = $serializer;
+        $this->eventDispatcher = $eventDispatcher;
+        $this->dataQueryManager = $dataQueryManager;
+        $this->registry = $registry;
+    }
 
     /**
      * You can add an estimation of ride participants like this:
@@ -43,38 +60,52 @@ class EstimateController extends BaseController
      *
      * If you do not provide <code>dateTime</code> it will use the current time.
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Adds an estimation to statistic"
+     * @Operation(
+     *     tags={"Estimate"},
+     *     summary="Adds an estimation to statistic",
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     )
      * )
+     *
      */
-    public function createAction(Request $request, UserInterface $user, Serializer $serializer, EventDispatcherInterface $eventDispatcher): Response
+    public function createAction(Request $request): Response
     {
-        $estimateModel = $this->deserializeRequest($request, $serializer,CreateEstimateModel::class);
+        /** @var CreateEstimateModel $estimateModel */
+        $estimateModel = $this->deserializeRequest($request, $this->serializer, CreateEstimateModel::class);
 
         $rideEstimation = $this->createRideEstimate($estimateModel);
 
-        $this->getManager()->persist($rideEstimation);
-        $this->getManager()->flush();
+        if (!$rideEstimation) {
+            throw $this->createNotFoundException();
+        }
 
-        $eventDispatcher->dispatch(RideEstimateCreatedEvent::NAME, new RideEstimateCreatedEvent($rideEstimation));
+        $this->registry->getManager()->persist($rideEstimation);
+        $this->registry->getManager()->flush();
+
+        $this->eventDispatcher->dispatch(RideEstimateCreatedEvent::NAME, new RideEstimateCreatedEvent($rideEstimation));
 
         $view = View::create();
         $view
             ->setData($rideEstimation)
             ->setFormat('json')
-            ->setStatusCode(200);
+            ->setStatusCode(Response::HTTP_CREATED);
 
         return $this->handleView($view);
     }
 
-    protected function createRideEstimate(CreateEstimateModel $model): RideEstimate
+    protected function createRideEstimate(CreateEstimateModel $model): ?RideEstimate
     {
+        $ride = $this->findNearestRide($model);
+
+        if (!$ride) {
+            return null;
+        }
+
         if (!$model->getDateTime()) {
             $model->setDateTime(new \DateTime());
         }
-
-        $ride = $this->guessRide($model);
 
         $estimate = new RideEstimate();
 
@@ -88,69 +119,22 @@ class EstimateController extends BaseController
         return $estimate;
     }
 
-    protected function guessRide(CreateEstimateModel $model): ?Ride
-    {
-        $ride = null;
-
-        if ($model->getCitySlug()) {
-            /** @var CitySlug $citySlug */
-            $citySlug = $this->getCitySlugRepository()->findOneBySlug($model->getCitySlug());
-
-            if ($citySlug) {
-                $city = $citySlug->getCity();
-
-                if ($city) {
-                    $ride = $this->getRideRepository()->findCityRideByDate($city, $model->getDateTime());
-                }
-            }
-
-            return null;
-        } elseif ($model->getLatitude() && $model->getLongitude()) {
-            $ride = $this->findNearestRide($model);
-        }
-
-        return $ride;
-    }
-
     protected function findNearestRide(CreateEstimateModel $model): ?Ride
     {
-        /** @var FinderInterface $finder */
-        $finder = $this->container->get('fos_elastica.finder.criticalmass_ride.ride');
+        $requestParameterList = new RequestParameterList();
+        $requestParameterList
+            ->add('centerLatitude', (string)$model->getLatitude())
+            ->add('centerLongitude', (string)$model->getLongitude())
+            ->add('distanceOrderDirection', 'ASC')
+            ->add('year', $model->getDateTime()->format('Y'))
+            ->add('month', $model->getDateTime()->format('m'))
+            ->add('day', $model->getDateTime()->format('d'))
+            ->add('size', (string)1);
 
-        $geoQuery = new \Elastica\Query\GeoDistance('pin', [
-            'lat' => $model->getLatitude(),
-            'lon' => $model->getLongitude(),
-        ],
-            '25km'
-        );
+        $rideResultList = $this->dataQueryManager->query($requestParameterList, Ride::class);
 
-        $dateTimeQuery = new \Elastica\Query\Term([
-            'simpleDate' => $model->getDateTime()->format('Y-m-d')
-        ]);
-
-        $boolQuery = new \Elastica\Query\BoolQuery();
-        $boolQuery
-            ->addMust($geoQuery)
-            ->addMust($dateTimeQuery);
-
-        $query = new \Elastica\Query($boolQuery);
-
-        $query->setSize(1);
-        $query->setSort([
-            '_geo_distance' => [
-                'pin' => [
-                    $model->getLatitude(),
-                    $model->getLongitude(),
-                ],
-                'order' => 'asc',
-                'unit' => 'km',
-            ]
-        ]);
-
-        $results = $finder->find($query, 1);
-
-        if (is_array($results)) {
-            return array_pop($results);
+        if (1 === count($rideResultList)) {
+            return array_pop($rideResultList);
         }
 
         return null;

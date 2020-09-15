@@ -2,7 +2,7 @@
 
 namespace App\DependencyInjection\Compiler;
 
-use App\Criticalmass\Router\ObjectRouter;
+use App\Criticalmass\Router\DelegatedRouterManager\DelegatedRouterManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Reference;
@@ -11,11 +11,11 @@ class ObjectRouterPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-        if (!$container->has(ObjectRouter::class)) {
+        if (!$container->has(DelegatedRouterManagerInterface::class)) {
             return;
         }
 
-        $objectRouter = $container->findDefinition(ObjectRouter::class);
+        $objectRouter = $container->findDefinition(DelegatedRouterManagerInterface::class);
 
         $taggedServices = $container->findTaggedServiceIds('object_router.delegated_router');
 

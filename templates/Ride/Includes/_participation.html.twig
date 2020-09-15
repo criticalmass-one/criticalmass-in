@@ -4,17 +4,16 @@
     {% if app.user %}
         {% if participation == null or (participation.goingMaybe and pastRide) %}
             {% if pastRide %}
-                {% set caption = '<i class="fa fa-bicycle"></i> Hast du teilgenommen?' %}
+                {% set caption = '<i class="far fa-bicycle"></i> Hast du teilgenommen?' %}
             {% else %}
                 {% set caption = '<i class="fa fa-bicycle"></i> Bist du dabei?' %}
             {% endif %}
 
             {{ bootstrap.dropdown(caption, [
-                { href: objectPath(ride, 'caldera_criticalmass_participation_ride', { status: 'yes' }), attr: { class: 'bg-success' }, caption: '<i class="fa fa-check"></i> Ja' },
-                { href: objectPath(ride, 'caldera_criticalmass_participation_ride', { status: 'no' }), attr: { class: 'bg-danger' }, caption: '<i class="fa fa-times"></i> Nein' },
-                { href: objectPath(ride, 'caldera_criticalmass_participation_ride', { status: 'maybe' }), attr: { class: 'bg-warning' }, caption: '<i class="fa fa-circle-o"></i> Vielleicht' },
+                { href: objectPath(ride, 'caldera_criticalmass_participation_ride', { status: 'yes' }), attr: { class: 'bg-success' }, caption: '<i class="far fa-check"></i> Ja' },
+                { href: objectPath(ride, 'caldera_criticalmass_participation_ride', { status: 'no' }), attr: { class: 'bg-danger' }, caption: '<i class="far fa-times"></i> Nein' },
+                { href: objectPath(ride, 'caldera_criticalmass_participation_ride', { status: 'maybe' }), attr: { class: 'bg-warning' }, caption: '<i class="far fa-circle-o"></i> Vielleicht' },
             ], 'btn-primary', false) }}
-
         {% else %}
             {% if participation.goingYes %}
                 {% if pastRide %}
@@ -34,8 +33,8 @@
             {% endif %}
 
             {% if participation.goingMaybe %}
-                {% set caption = '<i class="fa fa-circle-o"></i> Du nimmst vielleicht teil' %}
-                {% set yes_caption = '<i class="fa fa-check"></i> Zusagen' %}
+                {% set caption = '<i class="far fa-circle-o"></i> Du nimmst vielleicht teil' %}
+                {% set yes_caption = '<i class="far fa-check"></i> Zusagen' %}
                 {% set no_caption = '<i class="fa fa-times"></i> Absagen' %}
 
                 {{ bootstrap.dropdown(caption, [
@@ -63,7 +62,7 @@
         {% endif %}
     {% else %}
         <span class="btn btn-outline-secondary modal-hint" data-modal-hint-title="{{ 'hint_modal.ride.participation_button.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.ride.participation_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
-            <i class="fa fa-bicycle"></i>
+            <i class="far fa-bicycle"></i>
             {% if pastRide %}
                 Hast du teilgenommen?
             {% else %}

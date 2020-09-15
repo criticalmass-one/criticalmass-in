@@ -19,7 +19,7 @@ define(['CriticalService', 'dateformat', 'leaflet', 'MarkerEntity', 'leaflet.ext
             icon: 'fa-circle',
             markerColor: 'green',
             shape: 'circle',
-            prefix: 'fa'
+            prefix: 'far'
         });
     };
 

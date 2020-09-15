@@ -39,8 +39,8 @@ class NominatimCityBridge extends AbstractNominatimCityBridge
         }
 
         $this->cityFactory
-            ->withLatitude($result['lat'])
-            ->withLongitude($result['lon'])
+            ->withLatitude((float) $result['lat'])
+            ->withLongitude((float) $result['lon'])
             ->withName($cityName)
             ->withRegion($region);
 

@@ -6,8 +6,6 @@
     {% set pastRide = false %}
 {% endif %}
 
-{% set hasSocialMedia = ride.getUrl() or ride.getFacebook() or ride.getTwitter() %}
-
 <div class="row">
     <div class="col-12">
         {% include('Ride/Includes/_participation.html.twig') with { 'pastRide': pastRide, 'participation': participation } %}
@@ -26,9 +24,9 @@
 <div class="row mt-3">
     <div class="col-12">
         {% set tab_list = [
-            { tab: 'details', caption: '<i class="fa fa-flag"></i> Details', active: true },
-            { tab: 'minimass', caption: '<i class="fa fa-map-marker"></i> Mini-Masses <span class="badge badge-secondary">' ~ ride.getSubrides|length ~ '</span>' },
-            { tab: 'comments', caption: '<i class="fa fa-pencil"></i> Kommentare <span class="badge badge-secondary">' ~ ride.getPosts|length ~ '</span>' },
+            { tab: 'details', caption: '<i class="far fa-flag"></i> Details', active: true },
+            { tab: 'minimass', caption: '<i class="far fa-map-marker"></i> Mini-Masses <span class="badge badge-secondary">' ~ ride.getSubrides|length ~ '</span>' },
+            { tab: 'comments', caption: '<i class="far fa-pencil"></i> Kommentare <span class="badge badge-secondary">' ~ ride.getPosts|length ~ '</span>' },
         ] %}
 
         {% set tab_content_list = [
@@ -37,15 +35,15 @@
             { id: 'comments', content: render(controller('App\\Controller\\Ride\\RideTabsController::renderPostsTabAction', { 'ride': ride } )) },
         ] %}
 
-        {% if pastRide %}
+        {% if pastRide and ride.enabled %}
             {% if feature('photos') %}
                 {% set past_ride_tabs = [
-                    { href: objectPath(ride, 'caldera_criticalmass_photo_ride_list'), caption: '<i class="fa fa-camera"></i> Galerie <span class="badge badge-secondary">' ~ photos|length ~ '</span>' },
+                    { href: objectPath(ride, 'caldera_criticalmass_photo_ride_list'), caption: '<i class="far fa-camera"></i> Galerie <span class="badge badge-secondary">' ~ photos|length ~ '</span>' },
                     { tab: 'tracks', caption: '<i class="fa fa-bicycle"></i> Tracks <span class="badge badge-secondary">' ~ tracks|length ~ '</span>' },
                 ] %}
             {% else %}
                 {% set past_ride_tabs = [
-                    { tab: 'tracks', caption: '<i class="fa fa-bicycle"></i> Tracks <span class="badge badge-secondary">' ~ tracks|length ~ '</span>' },
+                    { tab: 'tracks', caption: '<i class="far fa-bicycle"></i> Tracks <span class="badge badge-secondary">' ~ tracks|length ~ '</span>' },
                 ] %}
             {% endif %}
 

@@ -14,7 +14,7 @@
             <div class="col-12">
                 {% if app.getUser() %}
                     <button type="button" class="btn btn-primary pull-right mt-2" data-toggle="modal" data-target="#modal-add-post">
-                        <i class="fa fa-comment"></i>
+                        <i class="far fa-comment"></i>
                         Antwort hinzufügen
                     </button>
                     {{ render(controller('App\\Controller\\PostController::writeThreadAction', { 'threadId': thread.id, 'noButton': true })) }}

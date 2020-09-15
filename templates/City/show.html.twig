@@ -9,17 +9,21 @@
 
 {% block optionsButton %}
     <div class="btn-group pull-right">
-        {{ bootstrap.dropdown('<i class="fa fa-cogs"></i> Optionen <span class="caret"></span>', [
-            { href: objectPath(city, 'caldera_criticalmass_city_edit'), caption: '<i class="fa fa-cogs"></i> Stadt editieren' },
-            { href: objectPath(city, 'caldera_criticalmass_ride_add'), caption: '<i class="fa fa-plus"></i> Tour hinzufügen' },
-            { href: objectPath(city, 'caldera_criticalmass_citycycle_list'), caption: '<i class="fa fa-calendar-o"></i> Turnus verwalten' },
-            { href: objectPath(city, 'criticalmass_socialnetwork_city_list'), caption: '<i class="fa fa-at"></i> soziale Netzwerke verwalten' },
+        {{ bootstrap.dropdown('<i class="far fa-cogs"></i> Optionen <span class="caret"></span>', [
+            { href: objectPath(city, 'caldera_criticalmass_city_edit'), caption: '<i class="far fa-cogs"></i> Stadt editieren' },
+            { href: objectPath(city, 'caldera_criticalmass_ride_add'), caption: '<i class="far fa-plus"></i> Tour hinzufügen' },
+            { href: objectPath(city, 'caldera_criticalmass_citycycle_list'), caption: '<i class="far fa-calendar"></i> Turnus verwalten' },
+            { href: objectPath(city, 'criticalmass_socialnetwork_city_list'), caption: '<i class="far fa-at"></i> soziale Netzwerke verwalten' },
         ], 'btn-primary', false) }}
     </div>
 {% endblock %}
 
 {% block content %}
     <div class="container" itemscope itemtype="http://schema.org/Organization">
+        {{ include('Flash/_flash.html.twig') }}
+
+        {{ include('City/Includes/_tabs.html.twig', { tab: 'city' }) }}
+
         <div class="row">
             <div class="col-12">
                 {% if city.imageName %}

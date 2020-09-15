@@ -4,7 +4,7 @@ namespace App\Command\Photo;
 
 use App\Criticalmass\Image\GoogleCloud\ExportDataHandler\ExportDataHandlerInterface;
 use App\Entity\Photo;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
@@ -13,13 +13,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CalculateExportDataCommand extends Command
 {
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var ExportDataHandlerInterface $exportDataHandler */
     protected $exportDataHandler;
 
-    public function __construct(RegistryInterface $registry, ExportDataHandlerInterface $exportDataHandler)
+    public function __construct(ManagerRegistry $registry, ExportDataHandlerInterface $exportDataHandler)
     {
         $this->registry = $registry;
         $this->exportDataHandler = $exportDataHandler;

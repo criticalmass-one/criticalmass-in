@@ -1,0 +1,70 @@
+<?php declare(strict_types=1);
+
+namespace App\Controller\Api;
+
+use App\Entity\City;
+use App\Entity\Location;
+use Doctrine\Persistence\ManagerRegistry;
+use FOS\RestBundle\Context\Context;
+use FOS\RestBundle\View\View;
+use Nelmio\ApiDocBundle\Annotation\Operation;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Swagger\Annotations as SWG;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\Response;
+
+class LocationController extends BaseController
+{
+    /**
+     * @Operation(
+     *     tags={"Location"},
+     *     summary="Retrieve a list of locations of a city",
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     )
+     * )
+     *
+     * @ParamConverter("city", class="App:City")
+     */
+    public function listLocationAction(ManagerRegistry $registry, City $city): Response
+    {
+        $locationList = $registry->getRepository(Location::class)->findLocationsByCity($city);
+
+        $view = View::create();
+        $view
+            ->setData($locationList)
+            ->setFormat('json')
+            ->setStatusCode(Response::HTTP_OK);
+
+        return $this->handleView($view);
+    }
+
+    /**
+     * Show details of a specified location.
+     *
+     * @Operation(
+     *     tags={"Location"},
+     *     summary="Show details of a location",
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     )
+     * )
+     *
+     * @ParamConverter("location", class="App:Location")
+     */
+    public function showLocationAction(Location $location): Response
+    {
+        $context = new Context();
+
+        $view = View::create();
+        $view
+            ->setData($location)
+            ->setFormat('json')
+            ->setStatusCode(Response::HTTP_OK)
+            ->setContext($context);
+
+        return $this->handleView($view);
+    }
+}

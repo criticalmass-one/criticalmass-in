@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\ViewStorage\EventSubscriber;
 
+use App\Criticalmass\ViewStorage\BlackList\BlackListInterface;
 use App\Criticalmass\ViewStorage\Cache\ViewStorageCacheInterface;
 use App\Event\View\ViewEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -11,9 +12,13 @@ class ViewEventSubscriber implements EventSubscriberInterface
     /** @var ViewStorageCacheInterface $viewStorageCache */
     protected $viewStorageCache;
 
-    public function __construct(ViewStorageCacheInterface $viewStorageCache)
+    /** @var BlackListInterface $blackList */
+    protected $blackList;
+
+    public function __construct(ViewStorageCacheInterface $viewStorageCache, BlackListInterface $blackList)
     {
         $this->viewStorageCache = $viewStorageCache;
+        $this->blackList = $blackList;
     }
 
     public static function getSubscribedEvents(): array
@@ -25,6 +30,8 @@ class ViewEventSubscriber implements EventSubscriberInterface
 
     public function onView(ViewEvent $viewEvent): void
     {
-        $this->viewStorageCache->countView($viewEvent->getViewable());
+        if (!$this->blackList->isBlackListed()) {
+            $this->viewStorageCache->countView($viewEvent->getViewable());
+        }
     }
 }

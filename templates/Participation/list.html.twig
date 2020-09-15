@@ -42,6 +42,15 @@
                             </span>
                         </a>
                     </li>
+
+                    <li role="presentation">
+                        <a href="#city-list" aria-controls="city-list" role="tab" data-toggle="tab">
+                            Städte
+                            <span class="badge">
+                                {{ participationCityList|length }}
+                            </span>
+                        </a>
+                    </li>
                 </ul>
 
                 <div class="tab-content">
@@ -83,6 +92,10 @@
                         </div>
 
                         {% include 'Participation/_list.html.twig' with { 'participationList': participationNoList } only %}
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="city-list">
+                        {% include 'Participation/_city_list.html.twig' with { 'participationCityList': participationCityList } only %}
                     </div>
                 </div>
             </div>

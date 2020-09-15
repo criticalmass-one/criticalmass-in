@@ -23,11 +23,11 @@
         {% endif %}
     {% endblock %}
 
+    {{ render(controller('App\\Controller\\Template\\AlertController:showCurrentAlertsAction')) }}
+
     {% block content %}{% endblock %}
 
     {% include('Template/Includes/_adserver.html.twig') %}
 
     {% include('Template/Includes/_footer.html.twig') %}
-
-    {% include('Template/Includes/_piwik.html.twig') %}
 {% endblock %}

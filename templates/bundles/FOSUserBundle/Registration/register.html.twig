@@ -86,6 +86,22 @@
             </div>
 
             <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    {{ form_errors(form.captcha) }}
+                    <div class="form-group control-group">
+                        <label for="captcha" class="col-sm-4 control-label">Sicherheitsocde:</label>
+                        <div class="col-sm-8">
+                            {{ form_widget(form.captcha, {'attr': {'class': 'form-control'}}) }}
+                            <p class="help-block">
+                                Bitte gib die fünf Zeichen aus dem Bild ein, damit wir sichergehen können, dass du kein
+                                Roboter bist.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="col-12 col-md-8 offset-md-2">
                     <button type="submit" class="btn btn-primary">
                         Jetzt registrieren
