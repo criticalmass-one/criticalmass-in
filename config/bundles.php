@@ -40,10 +40,8 @@ return [
     Sonata\NotificationBundle\SonataNotificationBundle::class => ['all' => true],
     Gregwar\CaptchaBundle\GregwarCaptchaBundle::class => ['all' => true],
     Sonata\DatagridBundle\SonataDatagridBundle::class => ['all' => true],
-    Sonata\CoreBundle\SonataCoreBundle::class => ['all' => true],
     Sonata\BlockBundle\SonataBlockBundle::class => ['all' => true],
     Sonata\AdminBundle\SonataAdminBundle::class => ['all' => true],
     Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle::class => ['all' => true],
-    Sonata\EasyExtendsBundle\SonataEasyExtendsBundle::class => ['all' => true],
     Sonata\PageBundle\SonataPageBundle::class => ['all' => true],
 ];
