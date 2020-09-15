@@ -44,4 +44,5 @@ return [
     Sonata\AdminBundle\SonataAdminBundle::class => ['all' => true],
     Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle::class => ['all' => true],
     Sonata\PageBundle\SonataPageBundle::class => ['all' => true],
+    \Sonata\Doctrine\Bridge\Symfony\SonataDoctrineBundle::class => ['all' => true],
 ];
