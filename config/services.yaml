@@ -75,7 +75,7 @@ services:
 
     App\:
         resource: '../src/*'
-        exclude: '../src/{DQL,Entity,Manager,Menu,Migrations,Model,Repository,Tests,UserProvider,Criticalmass/UploadValidator/UploadValidatorException}'
+        exclude: '../src/{Admin,DQL,Entity,Manager,Menu,Migrations,Model,Repository,Tests,UserProvider,Criticalmass/UploadValidator/UploadValidatorException}'
 
     App\Controller\:
         resource: '../src/Controller'

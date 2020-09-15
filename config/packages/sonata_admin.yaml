@@ -6,6 +6,16 @@ sonata_admin:
     options:
         legacy_twig_text_extension: false
 
+    assets:
+        extra_javascripts:
+            - bundles/sonatapage/sonata-page.back.min.js
+        extra_stylesheets:
+            - bundles/sonatapage/sonata-page.back.min.css
+
+sonata_doctrine_orm_admin:
+    audit:
+        force: false
+
 sonata_block:
     blocks:
         sonata.admin.block.admin_list:
