@@ -3,6 +3,9 @@ sonata_admin:
     dashboard:
         blocks:
             - { type: sonata.admin.block.admin_list, position: left }
+    options:
+        legacy_twig_text_extension: false
+
     assets:
         extra_javascripts:
             - bundles/sonatapage/sonata-page.back.min.js
