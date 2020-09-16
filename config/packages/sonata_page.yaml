@@ -21,6 +21,7 @@ sonata_page:
         - sonata_cache_apc
     ignore_uri_patterns:
         - ^/admin\/   # ignore admin route, ie route containing 'admin'
+        - ^/login
         - ^/$
 
     default_template: default
