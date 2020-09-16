@@ -1,14 +1,3 @@
-sonata_block:
-    context_manager: sonata.page.block.context_manager
-    default_contexts: [sonata_page_bundle]
-
-sonata_admin:
-    assets:
-        extra_javascripts:
-            - bundles/sonatapage/sonata-page.back.min.js
-        extra_stylesheets:
-            - bundles/sonatapage/sonata-page.back.min.css
-
 sonata_page:
     slugify_service: sonata.page.slugify.cocur
     multisite: host
@@ -105,82 +94,109 @@ sonata_page:
 #                    B: content_bottom
 #                    F: footer
 #
-#        2columns:
-#            path: '@ApplicationSonataPage/demo_2columns_layout.html.twig'
-#            name: '2 columns layout'
-#            inherits_containers: default
-#            containers:
-#                left_col:
-#                    name: Left column
-#                    blocks:
-#                        - sonata.media.block.media
-#                        - sonata.media.block.gallery
-#                        - sonata.media.block.feature_media
-#                content:
-#                    name: Main content
-#                    blocks:
-#                        - sonata.media.block.media
-#                right_col:
-#                    name: Right column
-#                    blocks:
-#                        - sonata.news.block.recent_posts
-#                        - sonata.order.block.recent_orders
-#                        - sonata.product.block.recent_products
-#            matrix:
-#                layout: |
-#
-#                    HHHHHHHHHH
-#                    TTTTTTTTTT
-#                    TTTTTTTTTT
-#                    LLLCCCCRRR
-#                    LLLCCCCRRR
-#                    BBBBBBBBBB
-#                    BBBBBBBBBB
-#                    FFFFFFFFFF
-#
-#                mapping:
-#                    H: header
-#                    T: content_top
-#                    L: left_col
-#                    R: right_col
-#                    C: content
-#                    B: content_bottom
-#                    F: footer
-#
-#        3columns:
-#            path: '@ApplicationSonataPage/demo_3columns_layout.html.twig'
-#            name: '3 columns layout'
-#            containers:
-#                left_col:
-#                    name: Left column
-#                    blocks:
-#                        - sonata.media.block.media
-#                        - sonata.media.block.gallery
-#                        - sonata.media.block.feature_media
-#                mid_col:
-#                    name: Left column
-#                    blocks:
-#                        - sonata.media.block.media
-#                        - sonata.media.block.gallery
-#                        - sonata.media.block.feature_media
-#                right_col:
-#                    name: Right column
-#                    blocks:
-#                        - sonata.news.block.recent_posts
-#                        - sonata.order.block.recent_orders
-#                        - sonata.product.block.recent_products
-#            matrix:
-#                layout: |
-#                    LLLMMMMRRR
-#                    LLLMMMMRRR
-#                    LLLMMMMRRR
-#                    LLLMMMMRRR
-#                    LLLMMMMRRR
-#
-#                mapping:
-#                    L: left_col
-#                    R: right_col
-#                    M: mid_col
+        help_page:
+            path: '@ApplicationSonataPage/demo_2columns_layout.html.twig'
+            name: 'Hilfeseite'
+            containers:
+                content_top:
+                    name: Top content
+                content_bottom:
+                    name: Bottom content
+                left_col:
+                    name: Linke Spalte
+                right_col:
+                    name: Rechte Spalte
+            matrix:
+                layout: |
+                    TTTTTTTTTT
+                    LLLLLRRRRR
+                    LLLLLRRRRR
+                    BBBBBBBBBB
+
+                mapping:
+                    H: header
+                    T: content_top
+                    L: left_col
+                    R: right_col
+                    B: content_bottom
+                    F: footer
+
+        2columns:
+            path: '@ApplicationSonataPage/demo_2columns_layout.html.twig'
+            name: '2 columns layout'
+            inherits_containers: default
+            containers:
+                left_col:
+                    name: Left column
+                    blocks:
+                        - sonata.media.block.media
+                        - sonata.media.block.gallery
+                        - sonata.media.block.feature_media
+                content:
+                    name: Main content
+                    blocks:
+                        - sonata.media.block.media
+                right_col:
+                    name: Right column
+                    blocks:
+                        - sonata.news.block.recent_posts
+                        - sonata.order.block.recent_orders
+                        - sonata.product.block.recent_products
+            matrix:
+                layout: |
+
+                    HHHHHHHHHH
+                    TTTTTTTTTT
+                    TTTTTTTTTT
+                    LLLCCCCRRR
+                    LLLCCCCRRR
+                    BBBBBBBBBB
+                    BBBBBBBBBB
+                    FFFFFFFFFF
+
+                mapping:
+                    H: header
+                    T: content_top
+                    L: left_col
+                    R: right_col
+                    C: content
+                    B: content_bottom
+                    F: footer
+
+        3columns:
+            path: '@ApplicationSonataPage/demo_3columns_layout.html.twig'
+            name: '3 columns layout'
+            containers:
+                left_col:
+                    name: Left column
+                    blocks:
+                        - sonata.media.block.media
+                        - sonata.media.block.gallery
+                        - sonata.media.block.feature_media
+                mid_col:
+                    name: Left column
+                    blocks:
+                        - sonata.media.block.media
+                        - sonata.media.block.gallery
+                        - sonata.media.block.feature_media
+                right_col:
+                    name: Right column
+                    blocks:
+                        - sonata.news.block.recent_posts
+                        - sonata.order.block.recent_orders
+                        - sonata.product.block.recent_products
+            matrix:
+                layout: |
+                    LLLMMMMRRR
+                    LLLMMMMRRR
+                    LLLMMMMRRR
+                    LLLMMMMRRR
+                    LLLMMMMRRR
+
+                mapping:
+                    L: left_col
+                    R: right_col
+                    M: mid_col
 
     direct_publication: '%kernel.debug%'
 

@@ -1,5 +1,8 @@
 sonata_block:
-  blocks:
-    sonata.admin.block.admin_list:
-      contexts: [admin]
   context_manager: sonata.page.block.context_manager
+  default_contexts: [ sonata_page_bundle ]
+  blocks:
+    criticalmass.block.help_text_block:
+      contexts: [ sonata_page_bundle ]
+    sonata.admin.block.admin_list:
+      contexts: [ admin ]

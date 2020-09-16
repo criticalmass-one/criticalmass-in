@@ -274,3 +274,12 @@ services:
             $oAuth2Server: '@fos_oauth_server.server'
         tags:
             - controller.service_arguments
+
+    criticalmass.block.help_text_block:
+        class: App\Criticalmass\Block\Block\HelpTextBlock
+        arguments:
+            - 'criticalmass.block.help_text_block'
+            - '@sonata.templating'
+        tags:
+            - { name: sonata.block }
+
