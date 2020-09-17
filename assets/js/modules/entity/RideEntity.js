@@ -26,10 +26,10 @@ define(['CriticalService', 'dateformat', 'leaflet', 'MarkerEntity', 'leaflet.ext
 
         var content = '<dl class="dl-horizontal">';
 
-        content += '<dt>Datum:</dt><dd>' + dateFormat(this._dateTime, 'dd.mm.yyyy') + '</dd>';
+        content += '<dt>Datum:</dt><dd>' + dateFormat(this._date_time, 'dd.mm.yyyy') + '</dd>';
 
         if (this._hasTime) {
-            content += '<dt>Uhrzeit:</dt><dd>' + dateFormat(this._dateTime, 'HH:MM') + ' Uhr</dd>';
+            content += '<dt>Uhrzeit:</dt><dd>' + dateFormat(this._date_time, 'HH:MM') + ' Uhr</dd>';
         } else {
             content += '<dt>Uhrzeit:</dt><dd>die Uhrzeit ist noch nicht bekannt</dd>';
         }
