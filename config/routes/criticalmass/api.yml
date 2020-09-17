@@ -68,6 +68,11 @@ caldera_criticalmass_rest_photo_list:
     controller: App\Controller\Api\PhotoController::listAction
     methods:  [GET]
 
+caldera_criticalmass_rest_cycle_list:
+    path:     /cycles
+    controller: App\Controller\Api\CycleController::listAction
+    methods:  [GET]
+
 caldera_criticalmass_rest_location_list:
     path:     /{citySlug}/location
     controller: App\Controller\Api\LocationController::listLocationAction
@@ -107,6 +112,16 @@ caldera_criticalmass_rest_weather_add:
     path:     /{citySlug}/{rideIdentifier}/weather
     controller: App\Controller\Api\WeatherController::addWeatherAction
     methods:  [PUT]
+
+caldera_criticalmass_rest_ride_create:
+    path:     /{citySlug}/{rideIdentifier}
+    controller: App\Controller\Api\RideController::createRideAction
+    methods:  [PUT]
+
+caldera_criticalmass_rest_ride_update:
+    path:     /{citySlug}/{rideIdentifier}
+    controller: App\Controller\Api\RideController::updateRideAction
+    methods:  [POST]
 
 caldera_criticalmass_rest_estimate_create:
     path:     /estimate

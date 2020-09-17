@@ -9,8 +9,6 @@ use App\Criticalmass\OrderedEntities\OrderedEntityInterface;
 use App\Criticalmass\Router\Annotation as Routing;
 use App\Criticalmass\Sharing\Annotation as Sharing;
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
-use App\EntityInterface\StaticMapableInterface;
-use Caldera\GeoBasic\Coord\Coord;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AuditableInterface;
@@ -20,7 +18,9 @@ use App\EntityInterface\ParticipateableInterface;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
+use App\EntityInterface\StaticMapableInterface;
 use App\Validator\Constraint as CriticalAssert;
+use Caldera\GeoBasic\Coord\Coord;
 use Caldera\GeoBasic\Coord\CoordInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -28,6 +28,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -103,6 +104,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @Sharing\Title()
      * @DataQuery\Sortable
      * @DataQuery\Queryable
+     * @Assert\NotBlank()
      */
     protected $title;
 
@@ -319,6 +321,14 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Expose
      */
     protected $disabledReason;
+
+    /**
+     * @ORM\Column(type="RideType", nullable=true)
+     * @DoctrineAssert\Enum(entity="App\DBAL\Type\RideType")
+     * @JMS\Groups({"ride-list"})
+     * @JMS\Expose
+     */
+    protected $rideType;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Heatmap", mappedBy="ride", cascade={"persist", "remove"})
@@ -906,14 +916,14 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         return $this;
     }
 
-    public function addWeather(WeatherInterface $weather): WeatherableInterface
+    public function addWeather(Weather $weather): self
     {
         $this->weathers->add($weather);
 
         return $this;
     }
 
-    public function removeWeather(WeatherInterface $weather): WeatherableInterface
+    public function removeWeather(Weather $weather): self
     {
         $this->weathers->removeElement($weather);
 
@@ -925,7 +935,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         return $this->weathers;
     }
 
-    public function setWeathers(Collection $weathers): WeatherableInterface
+    public function setWeathers(Collection $weathers): self
     {
         $this->weathers = $weathers;
 
@@ -1047,6 +1057,18 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     public function setDisabledReason(string $disabledReason = null): Ride
     {
         $this->disabledReason = $disabledReason;
+
+        return $this;
+    }
+
+    public function getRideType(): ?string
+    {
+        return $this->rideType;
+    }
+
+    public function setRideType(string $rideType = null): Ride
+    {
+        $this->rideType = $rideType;
 
         return $this;
     }

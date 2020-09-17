@@ -4,6 +4,7 @@ namespace App\Criticalmass\Api;
 
 use JMS\Serializer\Annotation as JMS;
 
+/** @deprecated */
 class Error
 {
     /**

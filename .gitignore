@@ -49,3 +49,5 @@ criticalmass.iml
 .phpunit
 #/phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+docker

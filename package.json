@@ -19,7 +19,7 @@
     "gulp-flatten": "^0.4.0",
     "gulp-minify": "^3.1.0",
     "gulp-sass": "^4.0.2",
-    "node-sass": "^4.13.0",
+    "node-sass": "^4.13.1",
     "sass-loader": "^7.3.1"
   },
   "author": "",

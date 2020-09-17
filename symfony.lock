@@ -14,9 +14,6 @@
     "clue/stream-filter": {
         "version": "v1.4.0"
     },
-    "cocur/slugify": {
-        "version": "v3.1"
-    },
     "codedungeon/phpunit-result-printer": {
         "version": "0.6.1"
     },
@@ -121,6 +118,9 @@
     },
     "emcconville/point-reduction-algorithms": {
         "version": "v1.2.0"
+    },
+    "exsyst/swagger": {
+        "version": "v0.4.1"
     },
     "facebook/graph-sdk": {
         "version": "5.6.3"
@@ -326,6 +326,12 @@
     "knplabs/knp-paginator-bundle": {
         "version": "v2.8.0"
     },
+    "laminas/laminas-code": {
+        "version": "3.4.1"
+    },
+    "laminas/laminas-eventmanager": {
+        "version": "3.2.1"
+    },
     "laminas/laminas-zendframework-bridge": {
         "version": "1.0.3"
     },
@@ -388,6 +394,18 @@
     },
     "nmure/crawler-detect-bundle": {
         "version": "v2.0.0"
+    },
+    "nyholm/psr7": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "7c0a9352a57376f04f5444e74565102c3a23d0c7"
+        },
+        "files": [
+            "config/packages/nyholm_psr7.yaml"
+        ]
     },
     "ocramius/package-versions": {
         "version": "1.9.0"
@@ -487,9 +505,6 @@
     },
     "phpdocumentor/type-resolver": {
         "version": "0.4.0"
-    },
-    "phpseclib/phpseclib": {
-        "version": "2.0.27"
     },
     "phpseclib/phpseclib": {
         "version": "2.0.23"
@@ -812,6 +827,9 @@
     "symfony/property-access": {
         "version": "v4.1.1"
     },
+    "symfony/property-info": {
+        "version": "v5.1.4"
+    },
     "symfony/routing": {
         "version": "4.0",
         "recipe": {
@@ -991,5 +1009,8 @@
     },
     "zendframework/zend-eventmanager": {
         "version": "3.2.1"
+    },
+    "zircote/swagger-php": {
+        "version": "2.0.16"
     }
 }
