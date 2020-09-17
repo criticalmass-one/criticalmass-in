@@ -28,11 +28,7 @@ define(['CriticalService', 'dateformat', 'leaflet', 'MarkerEntity', 'leaflet.ext
 
         content += '<dt>Datum:</dt><dd>' + dateFormat(this._date_time, 'dd.mm.yyyy') + '</dd>';
 
-        if (this._hasTime) {
-            content += '<dt>Uhrzeit:</dt><dd>' + dateFormat(this._date_time, 'HH:MM') + ' Uhr</dd>';
-        } else {
-            content += '<dt>Uhrzeit:</dt><dd>die Uhrzeit ist noch nicht bekannt</dd>';
-        }
+        content += '<dt>Uhrzeit:</dt><dd>' + dateFormat(this._date_time, 'HH:MM') + ' Uhr</dd>';
 
         if (this._location && this._latitude && this._longitude) {
             content += '<dt>Treffpunkt:</dt><dd>' + this._location + '</dd>';
