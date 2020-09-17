@@ -24,7 +24,7 @@
         {% if item.city.latitude and item.city.longitude %}
         <div class="row">
             <div class="col-md-12">
-                <div id="map-{{ item.uniqId }}" style="height: 150px;"
+                <div id="map-{{ item.uniqId }}" style="height: 150px;" class="map"
                      data-map-center-latitude="{{ item.city.latitude }}"
                      data-map-center-longitude="{{ item.city.longitude }}"
                      data-map-zoomlevel="13"
@@ -37,10 +37,6 @@
                 ></div>
             </div>
         </div>
-
-        <script type="text/javascript">
-            CriticalMass.loadModule('AutoMap', 'map-{{ item.uniqId }}');
-        </script>
         {% endif %}
     </div>
 </div>
