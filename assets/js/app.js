@@ -21,9 +21,7 @@ document.addEventListener("DOMContentLoaded", function(){
             const mapCenter = L.latLng(mapCenterLatitude, mapCenterLongitude);
 
             const marker = L.marker(mapCenter);
-
             map.setView(mapCenter, mapZoomLevel);
-
             marker.addTo(map);
         }
 
@@ -37,6 +35,49 @@ document.addEventListener("DOMContentLoaded", function(){
 
             map.fitBounds(polyline.getBounds());
         }
+
+        var citySlug = mapContainer.dataset.citySlug;
+        var rideIdentifier = mapContainer.dataset.rideIdentifier;
+        
+        if (citySlug && rideIdentifier) {
+            const rideRequest = new XMLHttpRequest();
+
+            rideRequest.onreadystatechange = function() {
+                if (rideRequest.readyState === 4) {
+                    if (rideRequest.status === 200) {
+                        const ride =  JSON.parse(rideRequest.responseText);
+
+                        const rideLatLng = L.latLng(ride.latitude, ride.longitude);
+                        map.setView(rideLatLng, 10);
+
+                        const marker = L.marker(mapCenter);
+                        map.setView(mapCenter, mapZoomLevel);
+                        marker.addTo(map);
+                    }
+                }
+            }
+
+            const rideUrl = Routing.generate('caldera_criticalmass_rest_ride_show', { citySlug: citySlug, rideIdentifier: rideIdentifier });
+
+            rideRequest.open('Get', rideUrl);
+            rideRequest.send();
+
+            const photoRequest = new XMLHttpRequest();
+
+            photoRequest.onreadystatechange = function() {
+                if (photoRequest.readyState === 4) {
+                    if (photoRequest.status === 200) {
+                        const ride =  JSON.parse(photoRequest.responseText);
+
+                        const rideLatLng = L.latLng(ride.latitude, ride.longitude);
+                        map.setView(rideLatLng, 10);
+
+                        const marker = L.marker(mapCenter);
+                        map.setView(mapCenter, mapZoomLevel);
+                        marker.addTo(map);
+                    }
+                }
+            }
     });
 });
 
