@@ -174,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             }
 
-            const trackUrl = Routing.generate('caldera_criticalmass_rest_track_list', { citySlug: citySlug, rideIdentifier: rideIdentifier });
+            const trackUrl = Routing.generate('caldera_criticalmass_rest_track_ridelist', { citySlug: citySlug, rideIdentifier: rideIdentifier });
 
             trackRequest.open('Get', trackUrl);
             trackRequest.send();

@@ -37,6 +37,8 @@ caldera_criticalmass_rest_track_ridelist:
     path:     /{citySlug}/{rideIdentifier}/listTracks
     controller: App\Controller\Api\TrackController::listRideTrackAction
     methods:  [GET]
+    options:
+        expose: true
 
 caldera_criticalmass_rest_track_view:
     path:  /track/{trackId}
