@@ -72,12 +72,42 @@ document.addEventListener("DOMContentLoaded", function(){
                         const rideLatLng = L.latLng(ride.latitude, ride.longitude);
                         map.setView(rideLatLng, 10);
 
-                        const marker = L.marker(mapCenter);
-                        map.setView(mapCenter, mapZoomLevel);
+                        const marker = L.marker(rideLatLng);
+                        map.setView(rideLatLng, mapZoomLevel);
                         marker.addTo(map);
                     }
                 }
             }
+
+            const photoUrl = Routing.generate('caldera_criticalmass_rest_ride_show', { citySlug: citySlug, rideIdentifier: rideIdentifier });
+
+            photoRequest.open('Get', photoUrl);
+            photoRequest.send();
+
+            const trackRequest = new XMLHttpRequest();
+
+            trackRequest.onreadystatechange = function() {
+                if (trackRequest.readyState === 4) {
+                    if (trackRequest.status === 200) {
+                        const trackList =  JSON.parse(trackRequest.responseText);
+
+                        for (const i in trackList) {
+                            const track = trackList[i];
+                            const polylineString = track.polylineString;
+                            const polylineColor = 'red';
+                            const polyline = L.Polyline.fromEncoded(polylineString, { color: polylineColor });
+
+                            polyline.addTo(map);
+                        }
+                    }
+                }
+            }
+
+            const trackUrl = Routing.generate('caldera_criticalmass_rest_track_list', { citySlug: citySlug, rideIdentifier: rideIdentifier });
+
+            trackRequest.open('Get', trackUrl);
+            trackRequest.send();
+        }
     });
 });
 
