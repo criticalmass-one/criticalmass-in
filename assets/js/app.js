@@ -1,6 +1,8 @@
 import '../scss/criticalmass.scss';
 import L from 'leaflet';
 import polylineEncoded from 'polyline-encoded';
+import markerCluster from 'leaflet.markercluster';
+import extraMarkers from 'leaflet-extra-markers';
 
 //window.bootstrap = bootstrap;
 require('bootstrap');
@@ -50,8 +52,8 @@ document.addEventListener("DOMContentLoaded", function(){
                         const rideLatLng = L.latLng(ride.latitude, ride.longitude);
                         map.setView(rideLatLng, 10);
 
-                        const marker = L.marker(mapCenter);
-                        map.setView(mapCenter, mapZoomLevel);
+                        const marker = L.marker(rideLatLng);
+                        map.setView(rideLatLng, mapZoomLevel);
                         marker.addTo(map);
                     }
                 }
@@ -67,19 +69,37 @@ document.addEventListener("DOMContentLoaded", function(){
             photoRequest.onreadystatechange = function() {
                 if (photoRequest.readyState === 4) {
                     if (photoRequest.status === 200) {
-                        const ride =  JSON.parse(photoRequest.responseText);
+                        const photoList =  JSON.parse(photoRequest.responseText);
+                        const photoLayer = L.markerClusterGroup({
+                            showCoverageOnHover: false,
+                            iconCreateFunction: function (cluster) {
+                                return L.ExtraMarkers.icon({
+                                    icon: 'fa-camera',
+                                    markerColor: 'yellow',
+                                    shape: 'square',
+                                    prefix: 'far'
+                                });
+                            }
+                        });
 
-                        const rideLatLng = L.latLng(ride.latitude, ride.longitude);
-                        map.setView(rideLatLng, 10);
+                        for (const i in photoList) {
+                            const photo = photoList[i];
 
-                        const marker = L.marker(rideLatLng);
-                        map.setView(rideLatLng, mapZoomLevel);
-                        marker.addTo(map);
+                            if (photo.latitude && photo.longitude) {
+                                const photoLatLng = L.latLng(photo.latitude, photo.longitude);
+
+                                const marker = L.marker(photoLatLng);
+                                map.setView(photoLatLng, mapZoomLevel);
+                                marker.addTo(photoLayer);
+                            }
+                        }
+
+                        photoLayer.addTo(map);
                     }
                 }
             }
 
-            const photoUrl = Routing.generate('caldera_criticalmass_rest_ride_show', { citySlug: citySlug, rideIdentifier: rideIdentifier });
+            const photoUrl = Routing.generate('caldera_criticalmass_rest_photo_ridelist', { citySlug: citySlug, rideIdentifier: rideIdentifier });
 
             photoRequest.open('Get', photoUrl);
             photoRequest.send();

@@ -64,11 +64,15 @@ caldera_criticalmass_rest_photo_ridelist:
     path:     /{citySlug}/{rideIdentifier}/listPhotos
     controller: App\Controller\Api\PhotoController::listRidePhotosAction
     methods:  [GET]
+    options:
+        expose: true
 
 caldera_criticalmass_rest_photo_list:
     path:     /photo
     controller: App\Controller\Api\PhotoController::listAction
     methods:  [GET]
+    options:
+        expose: true
 
 caldera_criticalmass_rest_cycle_list:
     path:     /cycles
