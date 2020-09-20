@@ -383,18 +383,6 @@
             "ref": "d13bb99357ebcd2ffb6fe808a64961f5bc1c7546"
         }
     },
-    "nelmio/cors-bundle": {
-        "version": "1.5",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "1.5",
-            "ref": "6388de23860284db9acce0a7a5d9d13153bcb571"
-        },
-        "files": [
-            "config/packages/nelmio_cors.yaml"
-        ]
-    },
     "nesbot/carbon": {
         "version": "2.24.0"
     },
