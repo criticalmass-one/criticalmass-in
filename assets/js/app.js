@@ -24,7 +24,6 @@ document.addEventListener("DOMContentLoaded", function() {
         const outerHeight = getOuterHeight(rideList);
         const scrollHeight = rideList.scrollHeight;
 
-        console.log(outerHeight, scrollHeight);
         if (scrollHeight > outerHeight) {
             rideList.classList.add('shadow');
         }
@@ -43,10 +42,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (mapCenterLatitude && mapCenterLongitude && mapZoomLevel) {
             const mapCenter = L.latLng(mapCenterLatitude, mapCenterLongitude);
-
-            const marker = L.marker(mapCenter);
-            map.setView(mapCenter, mapZoomLevel);
-            marker.addTo(map);
         }
 
         var polylineString = mapContainer.dataset.polyline;
@@ -58,6 +53,24 @@ document.addEventListener("DOMContentLoaded", function() {
             polyline.addTo(map);
 
             map.fitBounds(polyline.getBounds());
+        }
+
+        const markerLayer = L.featureGroup();
+
+        addMarkerByNumber('', mapContainer, markerLayer);
+
+        let markerNumber = 1;
+        let result = true;
+
+        do {
+            result = addMarkerByNumber(markerNumber, mapContainer, markerLayer);
+
+            ++markerNumber;
+        }
+        while (result);
+
+        if (markerLayer.getLayers().length > 0) {
+            map.fitBounds(markerLayer.getBounds());
         }
 
         const rideApiQuery = mapContainer.dataset.rideApiQuery;
@@ -209,4 +222,23 @@ function getOuterHeight(el, includeMargin) {
         }
     }
     return el.offsetHeight;
+}
+
+function addMarkerByNumber(markerNumber, mapContainer, markerLayer) {
+    const markerLatitudePropertyName = 'mapMarker' + markerNumber + 'Latitude';
+    const markerLongitudePropertyName = 'mapMarker' + markerNumber + 'Longitude';
+
+    if (markerLatitudePropertyName in mapContainer.dataset && markerLongitudePropertyName in mapContainer.dataset) {
+        const latitude = mapContainer.dataset[markerLatitudePropertyName];
+        const longitude = mapContainer.dataset[markerLongitudePropertyName];
+
+        const markerLatLng = L.latLng(latitude, longitude);
+        const marker = L.marker(markerLatLng);
+
+        marker.addTo(markerLayer);
+
+        return true;
+    }
+
+    return false;
 }
