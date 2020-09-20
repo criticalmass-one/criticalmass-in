@@ -4,7 +4,6 @@ define(['CriticalService', 'Map', 'Container', 'RideEntity', 'CityEntity', 'jque
 
         this._initContainer();
         this._initMap();
-        this._initTable();
     };
 
     PromotionPage.prototype._CriticalService = null;
@@ -21,13 +20,6 @@ define(['CriticalService', 'Map', 'Container', 'RideEntity', 'CityEntity', 'jque
         this._rideContainer.addToMap(this._map);
 
         this._CriticalService.setMap(this._map);
-    };
-
-    PromotionPage.prototype._initTable = function () {
-        const table = $('#ride-table').DataTable({
-            'paging': false,
-            'searching': false
-        });
     };
 
     PromotionPage.prototype.loadRides = function (apiQuery) {

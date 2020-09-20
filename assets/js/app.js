@@ -3,11 +3,21 @@ import L from 'leaflet';
 import polylineEncoded from 'polyline-encoded';
 import markerCluster from 'leaflet.markercluster';
 import extraMarkers from 'leaflet-extra-markers';
+import dataTables from 'dataTables'; // @todo: replace jQuery here
 
 //window.bootstrap = bootstrap;
 require('bootstrap');
 
 document.addEventListener("DOMContentLoaded", function() {
+    const dataTable = document.getElementsByClassName('data-table');
+
+    if (dataTable) {
+        $('.data-table').DataTable({ // @todo: replace jQuery here
+            'paging': false,
+            'searching': false,
+        });
+    }
+
     const calendarDayList = document.querySelectorAll('#calendar .day ul.ride-list');
 
     calendarDayList.forEach(function(rideList) {
