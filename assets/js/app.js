@@ -60,6 +60,35 @@ document.addEventListener("DOMContentLoaded", function() {
             map.fitBounds(polyline.getBounds());
         }
 
+        const rideApiQuery = mapContainer.dataset.rideApiQuery;
+
+        if (rideApiQuery) {
+            const apiRequest = new XMLHttpRequest();
+
+            apiRequest.onreadystatechange = function() {
+                if (apiRequest.readyState === 4) {
+                    if (apiRequest.status === 200) {
+                        const rideList =  JSON.parse(apiRequest.responseText);
+                        const layer = L.featureGroup();
+
+                        for (var i in rideList) {
+                            const ride = rideList[i];
+                            const rideLatLng = L.latLng(ride.latitude, ride.longitude);
+
+                            const marker = L.marker(rideLatLng);
+                            marker.addTo(layer);
+                        }
+
+                        layer.addTo(map);
+                        map.fitBounds(layer.getBounds());
+                    }
+                }
+            }
+
+            apiRequest.open('Get', rideApiQuery);
+            apiRequest.send();
+        }
+
         var citySlug = mapContainer.dataset.citySlug;
         var rideIdentifier = mapContainer.dataset.rideIdentifier;
         
