@@ -21,17 +21,13 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class EstimateController extends BaseController
 {
-    /** @var SerializerInterface $serializer */
-    protected $serializer;
+    protected SerializerInterface $serializer;
 
-    /** @var EventDispatcherInterface $eventDispatcher */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
-    /** @var DataQueryManagerInterface $dataQueryManager */
-    protected $dataQueryManager;
+    protected DataQueryManagerInterface $dataQueryManager;
 
-    /** @var ManagerRegistry $registry */
-    protected $registry;
+    protected ManagerRegistry $registry;
 
     public function __construct(SerializerInterface $serializer, EventDispatcherInterface $eventDispatcher, DataQueryManagerInterface $dataQueryManager, ManagerRegistry $registry)
     {
@@ -124,7 +120,7 @@ class EstimateController extends BaseController
      *
      * If you like you can provide details about your app or homepage in the <code>source</code> property or just
      * default to null.
-     * 
+     *
      * @Operation(
      *     tags={"Estimate"},
      *     summary="Adds an estimation to statistic",
