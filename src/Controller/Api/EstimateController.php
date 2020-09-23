@@ -13,6 +13,7 @@ use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Operation;
 use Nelmio\ApiDocBundle\Annotation\Model;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Swagger\Annotations as SWG;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,6 +42,59 @@ class EstimateController extends BaseController
     }
 
     /**
+     * Use this endpoint to add an participant estimate like this:
+     *
+     * <pre>{
+     *   "latitude": 53.549280,
+     *   "longitude": 9.979589,
+     *   "estimation": 6554,
+     *   "dateTime": 1506710306
+     * }</pre>
+     *
+     * The ride will be automatically detected by the combination of provided coordinates and dateTime.
+     *
+     * If you do not provide <code>dateTime</code> it will use the current time.
+     *
+     * This endpoint is primarly provided for apps with access to the user's current location. If you know which in
+     * which ride the user participates, please use the other endpoint and specify <code>citySlug</code> and
+     * <code>rideIdentifier</code>.
+     *
+     * @Operation(
+     *     tags={"Estimate"},
+     *     summary="Adds an estimation to statistic",
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     )
+     * )
+     */
+    public function createEstimateAction(Request $request): Response
+    {
+        /** @var CreateEstimateModel $estimateModel */
+        $estimateModel = $this->deserializeRequest($request, $this->serializer, CreateEstimateModel::class);
+
+        $rideEstimation = $this->createRideEstimate($estimateModel);
+
+        if (!$rideEstimation) {
+            throw $this->createNotFoundException();
+        }
+
+        $this->registry->getManager()->persist($rideEstimation);
+        $this->registry->getManager()->flush();
+
+        $this->eventDispatcher->dispatch(RideEstimateCreatedEvent::NAME, new RideEstimateCreatedEvent($rideEstimation));
+
+        $view = View::create();
+        $view
+            ->setData($rideEstimation)
+            ->setFormat('json')
+            ->setStatusCode(Response::HTTP_CREATED);
+
+        return $this->handleView($view);
+    }
+
+
+    /**
      * You can add an estimation of ride participants like this:
      *
      * <pre>{
@@ -50,15 +104,13 @@ class EstimateController extends BaseController
      *   "dateTime": 1506710306
      * }</pre>
      *
-     * You can also provide a city instead of coordinates:
+     * If you do not provide <code>dateTime</code> it will use the current time. As the target ride is specified by
+     * <code>citySlug</code> and <code>rideIdentifier</code>, you don’t even have to provide the coordinates. The
+     * followig json shows a valid request to this endpoint:
      *
      * <pre>{
-     *   "citySlug": "hamburg",
-     *   "estimation": 6554,
-     *   "dateTime": 1506710306
+     *   "estimation": 6554
      * }</pre>
-     *
-     * If you do not provide <code>dateTime</code> it will use the current time.
      *
      * @Operation(
      *     tags={"Estimate"},
@@ -69,8 +121,9 @@ class EstimateController extends BaseController
      *     )
      * )
      *
+     * @ParamConverter("ride", class="App:Ride")
      */
-    public function createAction(Request $request): Response
+    public function createRideEstimateAction(Request $request): Response
     {
         /** @var CreateEstimateModel $estimateModel */
         $estimateModel = $this->deserializeRequest($request, $this->serializer, CreateEstimateModel::class);
