@@ -126,12 +126,12 @@ caldera_criticalmass_rest_ride_update:
 caldera_criticalmass_rest_estimate_create:
     path:     /estimates
     controller: App\Controller\Api\EstimateController::createEstimateAction
-    methods:  [POST]
+    methods:  [PUT]
 
 caldera_criticalmass_rest_estimate_ride_create:
     path:     /{citySlug}/{rideIdentifier}/estimates
     controller: App\Controller\Api\EstimateController::createRideEstimateAction
-    methods:  [POST]
+    methods:  [PUT]
 
 caldera_criticalmass_rest_subride_list:
     path:     /{citySlug}/{rideIdentifier}/subride

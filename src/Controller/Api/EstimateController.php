@@ -93,7 +93,6 @@ class EstimateController extends BaseController
         return $this->handleView($view);
     }
 
-
     /**
      * You can add an estimation of ride participants like this:
      *
