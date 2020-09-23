@@ -21,17 +21,13 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class EstimateController extends BaseController
 {
-    /** @var SerializerInterface $serializer */
-    protected $serializer;
+    protected SerializerInterface $serializer;
 
-    /** @var EventDispatcherInterface $eventDispatcher */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
-    /** @var DataQueryManagerInterface $dataQueryManager */
-    protected $dataQueryManager;
+    protected DataQueryManagerInterface $dataQueryManager;
 
-    /** @var ManagerRegistry $registry */
-    protected $registry;
+    protected ManagerRegistry $registry;
 
     public function __construct(SerializerInterface $serializer, EventDispatcherInterface $eventDispatcher, DataQueryManagerInterface $dataQueryManager, ManagerRegistry $registry)
     {
@@ -48,16 +44,19 @@ class EstimateController extends BaseController
      *   "latitude": 53.549280,
      *   "longitude": 9.979589,
      *   "estimation": 6554,
-     *   "date_time": 1506710306
+     *   "date_time": 1506710306,
+     *   "source": "your website or app homepage here?"
      * }</pre>
      *
      * The ride will be automatically detected by the combination of provided coordinates and dateTime.
      *
      * If you do not provide <code>date_time</code> it will use the current time.
      *
-     * This endpoint is primarly provided for apps with access to the user's current location. If you know which in
-     * which ride the user participates, please use the other endpoint and specify <code>citySlug</code> and
-     * <code>rideIdentifier</code>.
+     * This endpoint is primarly provided for apps with access to the user's current location. If you like you can
+     * provide details about your app or homepage in the <code>source</code> property or just default to null.
+
+     * If you know which in which ride the user participates, please use the other endpoint and specify
+     * <code>citySlug</code> and <code>rideIdentifier</code>.
      *
      * @Operation(
      *     tags={"Estimate"},
@@ -107,7 +106,8 @@ class EstimateController extends BaseController
      *   "latitude": 53.549280,
      *   "longitude": 9.979589,
      *   "estimation": 6554,
-     *   "date_time": 1506710306
+     *   "date_time": 1506710306,
+     *   "source": "your website or app homepage here?"
      * }</pre>
      *
      * If you do not provide <code>date_time</code> it will use the current time. As the target ride is specified by
@@ -117,6 +117,9 @@ class EstimateController extends BaseController
      * <pre>{
      *   "estimation": 6554
      * }</pre>
+     *
+     * If you like you can provide details about your app or homepage in the <code>source</code> property or just
+     * default to null.
      *
      * @Operation(
      *     tags={"Estimate"},
@@ -198,6 +201,7 @@ class EstimateController extends BaseController
             ->setLatitude($model->getLatitude())
             ->setLongitude($model->getLongitude())
             ->setDateTime($model->getDateTime())
+            ->setSource($model->getSource())
             ->setRide($ride);
 
         return $estimate;
