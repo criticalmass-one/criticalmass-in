@@ -122,12 +122,12 @@ class EstimateController extends BaseController
      *
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function createRideEstimateAction(Request $request): Response
+    public function createRideEstimateAction(Request $request, Ride $ride): Response
     {
         /** @var CreateEstimateModel $estimateModel */
         $estimateModel = $this->deserializeRequest($request, $this->serializer, CreateEstimateModel::class);
 
-        $rideEstimation = $this->createRideEstimate($estimateModel);
+        $rideEstimation = $this->createRideEstimate($estimateModel, $ride);
 
         if (!$rideEstimation) {
             throw new BadRequestHttpException();
@@ -147,16 +147,19 @@ class EstimateController extends BaseController
         return $this->handleView($view);
     }
 
-    protected function createRideEstimate(CreateEstimateModel $model): ?RideEstimate
+    protected function createRideEstimate(CreateEstimateModel $model, Ride $ride = null): ?RideEstimate
     {
-        $ride = $this->findNearestRide($model);
 
         if (!$ride) {
             return null;
         }
+            $ride = $this->findNearestRide($model);
 
         if (!$model->getDateTime()) {
             $model->setDateTime(new \DateTime());
+            if (!$ride) {
+                return null;
+            }
         }
 
         $estimate = new RideEstimate();
