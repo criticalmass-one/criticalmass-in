@@ -12,12 +12,12 @@ use Doctrine\Persistence\ManagerRegistry;
 use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Operation;
-use Nelmio\ApiDocBundle\Annotation\Model;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Swagger\Annotations as SWG;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class EstimateController extends BaseController
 {
@@ -76,7 +76,7 @@ class EstimateController extends BaseController
         $rideEstimation = $this->createRideEstimate($estimateModel);
 
         if (!$rideEstimation) {
-            throw $this->createNotFoundException();
+            throw new BadRequestHttpException();
         }
 
         $this->registry->getManager()->persist($rideEstimation);
@@ -130,7 +130,7 @@ class EstimateController extends BaseController
         $rideEstimation = $this->createRideEstimate($estimateModel);
 
         if (!$rideEstimation) {
-            throw $this->createNotFoundException();
+            throw new BadRequestHttpException();
         }
 
         $this->registry->getManager()->persist($rideEstimation);
