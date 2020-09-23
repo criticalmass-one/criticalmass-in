@@ -62,6 +62,13 @@ class EstimateController extends BaseController
      * @Operation(
      *     tags={"Estimate"},
      *     summary="Adds an estimation to statistic",
+     *     @SWG\Parameter(
+     *         name="body",
+     *         in="body",
+     *         description="JSON representation of the estimate data",
+     *         required=true,
+     *         @SWG\Schema(type="string")
+     *     ),
      *     @SWG\Response(
      *         response="200",
      *         description="Returned when successful"
@@ -114,6 +121,29 @@ class EstimateController extends BaseController
      * @Operation(
      *     tags={"Estimate"},
      *     summary="Adds an estimation to statistic",
+     *     @SWG\Parameter(
+     *         name="citySlug",
+     *         in="path",
+     *         description="Slug of the ride’s city",
+     *         required=true,
+     *         @SWG\Schema(type="string"),
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="rideIdentifier",
+     *         in="path",
+     *         description="Identifier of the ride",
+     *         required=true,
+     *         @SWG\Schema(type="string"),
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="body",
+     *         in="body",
+     *         description="JSON representation of the estimate data",
+     *         required=true,
+     *         @SWG\Schema(type="string")
+     *     ),
      *     @SWG\Response(
      *         response="200",
      *         description="Returned when successful"
