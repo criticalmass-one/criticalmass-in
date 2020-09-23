@@ -48,12 +48,12 @@ class EstimateController extends BaseController
      *   "latitude": 53.549280,
      *   "longitude": 9.979589,
      *   "estimation": 6554,
-     *   "dateTime": 1506710306
+     *   "date_time": 1506710306
      * }</pre>
      *
      * The ride will be automatically detected by the combination of provided coordinates and dateTime.
      *
-     * If you do not provide <code>dateTime</code> it will use the current time.
+     * If you do not provide <code>date_time</code> it will use the current time.
      *
      * This endpoint is primarly provided for apps with access to the user's current location. If you know which in
      * which ride the user participates, please use the other endpoint and specify <code>citySlug</code> and
@@ -107,10 +107,10 @@ class EstimateController extends BaseController
      *   "latitude": 53.549280,
      *   "longitude": 9.979589,
      *   "estimation": 6554,
-     *   "dateTime": 1506710306
+     *   "date_time": 1506710306
      * }</pre>
      *
-     * If you do not provide <code>dateTime</code> it will use the current time. As the target ride is specified by
+     * If you do not provide <code>date_time</code> it will use the current time. As the target ride is specified by
      * <code>citySlug</code> and <code>rideIdentifier</code>, you don’t even have to provide the coordinates. The
      * followig json shows a valid request to this endpoint:
      *
