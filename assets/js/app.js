@@ -8,7 +8,61 @@ import dataTables from 'dataTables'; // @todo: replace jQuery here
 //window.bootstrap = bootstrap;
 require('bootstrap');
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener('DOMContentLoaded', function() {
+    const geocodingButton = document.querySelector('.geocoding');
+
+    if (geocodingButton) {
+        geocodingButton.addEventListener('click', function() {
+            const apiRequest = new XMLHttpRequest();
+
+            apiRequest.onreadystatechange = function() {
+                if (apiRequest.readyState === 4) {
+                    if (apiRequest.status === 200) {
+                        const mapContainer = document.getElementById('map');
+                        const markerNumber = parseInt(geocodingButton.dataset.targetMarkerNumber);
+
+                        const nominatimResponse =  JSON.parse(apiRequest.responseText);
+
+                        if (nominatimResponse.length === 1) {
+                            const osmPlace = nominatimResponse.pop();
+
+                            const markerLatLng = L.latLng(osmPlace.lat, osmPlace.lon);
+                            console.log(markerLatLng);
+
+                            mapContainer.map.eachLayer(function(layer) {
+                                if (layer.markerNumber !== undefined && layer.markerNumber === markerNumber) {
+                                    layer.setLatLng(markerLatLng);
+
+                                    const northWest = L.latLng(osmPlace.boundingbox[0], osmPlace.boundingbox[2]);
+                                    const southEast = L.latLng(osmPlace.boundingbox[1], osmPlace.boundingbox[3]);
+
+                                    const boundingBox = L.latLngBounds(northWest, southEast);
+
+                                    //mapContainer.map.setView(markerLatLng, 10);
+                                    mapContainer.map.fitBounds(boundingBox);
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+
+            const country = geocodingButton.dataset.geocodingCountry;
+            const state = geocodingButton.dataset.geocodingState;
+            const city = geocodingButton.dataset.geocodingCity;
+
+            const inputSelector = geocodingButton.dataset.geocodingInputSelector;
+
+            const street = document.querySelector(inputSelector).value;
+
+            const nominatimUrl = 'https://nominatim.openstreetmap.org/search?limit=1&polygon_geojson=1&format=jsonv2&q=' + street + ',' + city + ',' + state + ',' + country;
+            console.log(nominatimUrl);
+            
+            apiRequest.open('Get', nominatimUrl);
+            apiRequest.send();
+        });
+    }
+
     const dataTable = document.getElementsByClassName('data-table');
 
     if (dataTable) {
@@ -31,6 +85,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     document.querySelectorAll('.map').forEach(function (mapContainer) {
         const map = new L.map(mapContainer.id);
+        mapContainer.map = map;
+
         const basemap = L.tileLayer('https://tiles.caldera.cc/wikimedia-intl/{z}/{x}/{y}.png', {
             attribution: 'Wikimedia maps beta | Map data &copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
         });
@@ -71,6 +127,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (markerLayer.getLayers().length > 0) {
             map.fitBounds(markerLayer.getBounds());
+            markerLayer.addTo(map);
         }
 
         const rideApiQuery = mapContainer.dataset.rideApiQuery;
@@ -232,8 +289,13 @@ function addMarkerByNumber(markerNumber, mapContainer, markerLayer) {
         const latitude = mapContainer.dataset[markerLatitudePropertyName];
         const longitude = mapContainer.dataset[markerLongitudePropertyName];
 
+        if (markerNumber === '') {
+            markerNumber = 0;
+        }
+
         const markerLatLng = L.latLng(latitude, longitude);
         const marker = L.marker(markerLatLng);
+        marker.markerNumber = markerNumber;
 
         marker.addTo(markerLayer);
 
