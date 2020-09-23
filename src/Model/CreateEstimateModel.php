@@ -43,6 +43,13 @@ class CreateEstimateModel
      */
     protected $estimation;
 
+    /**
+     * @var string $estimation
+     * @JMS\Expose()
+     * @JMS\Type("string")
+     */
+    protected $source;
+
     public function __construct(
         \DateTime $dateTime = null,
         string $citySlug = null,
@@ -115,5 +122,17 @@ class CreateEstimateModel
     public function getEstimation(): int
     {
         return $this->estimation;
+    }
+
+    public function setSource(string $source): CreateEstimateModel
+    {
+        $this->source = $source;
+
+        return $this;
+    }
+
+    public function getSource(): ?string
+    {
+        return $this->source;
     }
 }
