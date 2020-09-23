@@ -149,14 +149,13 @@ class EstimateController extends BaseController
 
     protected function createRideEstimate(CreateEstimateModel $model, Ride $ride = null): ?RideEstimate
     {
-
-        if (!$ride) {
-            return null;
-        }
-            $ride = $this->findNearestRide($model);
-
         if (!$model->getDateTime()) {
             $model->setDateTime(new \DateTime());
+        }
+
+        if (!$ride) {
+            $ride = $this->findNearestRide($model);
+
             if (!$ride) {
                 return null;
             }

@@ -64,7 +64,7 @@ class CreateEstimateModel
         return $this;
     }
 
-    public function getDateTime(): \DateTime
+    public function getDateTime(): ?\DateTime
     {
         return $this->dateTime;
     }
