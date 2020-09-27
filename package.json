@@ -31,7 +31,7 @@
     "bootstrap-sass": "^3.4.1",
     "bootstrap-slider": "^10.6.2",
     "chart.js": "^2.9.3",
-    "cookie-notice": "^1.3.3",
+    "cookieconsent": "3",
     "datatables": "^1.10.18",
     "datatables.net": "^1.10.21",
     "dateformat": "^3.0.3",

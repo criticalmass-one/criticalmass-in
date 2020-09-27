@@ -4,11 +4,25 @@ import polylineEncoded from 'polyline-encoded';
 import markerCluster from 'leaflet.markercluster';
 import extraMarkers from 'leaflet-extra-markers';
 import dataTables from 'dataTables'; // @todo: replace jQuery here
+import CC from 'CookieConsent'
 
 //window.bootstrap = bootstrap;
 require('bootstrap');
 
 document.addEventListener('DOMContentLoaded', function() {
+    window.cookieconsent.initialise({
+        "palette": {
+            "popup": {
+                "background": "#64386b",
+                "text": "#ffcdfd"
+            },
+            "button": {
+                "background": "#f8a8ff",
+                "text": "#3f0045"
+            }
+        }
+    });
+    
     const geocodingButton = document.querySelector('.geocoding');
 
     if (geocodingButton) {
