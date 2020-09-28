@@ -167,7 +167,15 @@ document.addEventListener('DOMContentLoaded', function() {
                             const ride = rideList[i];
                             const rideLatLng = L.latLng(ride.latitude, ride.longitude);
 
-                            const marker = L.marker(rideLatLng);
+                            const rideIcon = L.ExtraMarkers.icon({
+                                icon: 'fa-bicycle',
+                                markerColor: 'red',
+                                shape: 'circle',
+                                prefix: 'far'
+                            });
+
+                            const marker = L.marker(rideLatLng, { icon: rideIcon });
+
                             marker.addTo(layer);
                         }
 
@@ -195,7 +203,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         const rideLatLng = L.latLng(ride.latitude, ride.longitude);
                         map.setView(rideLatLng, 10);
 
-                        const marker = L.marker(rideLatLng);
+                        const rideIcon = L.ExtraMarkers.icon({
+                            icon: 'fa-bicycle',
+                            markerColor: 'red',
+                            shape: 'circle',
+                            prefix: 'far'
+                        });
+
+                        const marker = L.marker(rideLatLng, { icon: rideIcon });
+
                         map.setView(rideLatLng, mapZoomLevel);
                         marker.addTo(map);
                     }
@@ -321,7 +337,16 @@ function addMarkerByNumber(markerNumber, mapContainer, markerLayer) {
         }
 
         const markerLatLng = L.latLng(latitude, longitude);
-        const marker = L.marker(markerLatLng);
+
+        const rideIcon = L.ExtraMarkers.icon({
+            icon: 'fa-bicycle',
+            markerColor: 'red',
+            shape: 'circle',
+            prefix: 'far'
+        });
+
+        const marker = L.marker(rideLatLng, { icon: rideIcon });
+
         marker.markerNumber = markerNumber;
 
         marker.addTo(markerLayer);
