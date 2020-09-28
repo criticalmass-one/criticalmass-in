@@ -5,11 +5,19 @@ import markerCluster from 'leaflet.markercluster';
 import extraMarkers from 'leaflet-extra-markers';
 import dataTables from 'dataTables'; // @todo: replace jQuery here
 import CC from 'CookieConsent'
+import flatpickr from "flatpickr";
 
 //window.bootstrap = bootstrap;
 require('bootstrap');
 
 document.addEventListener('DOMContentLoaded', function() {
+    flatpickr.l10ns.default.firstDayOfWeek = 1; // Monday
+
+    flatpickr('.datepicker', {
+        dateFormat: 'd.m.Y',
+        allowInput: true,
+    });
+
     window.cookieconsent.initialise({
         "palette": {
             "popup": {
