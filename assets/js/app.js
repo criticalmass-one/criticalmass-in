@@ -246,14 +246,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (trackRequest.status === 200) {
                         const trackList =  JSON.parse(trackRequest.responseText);
 
+                        const trackLayer = L.featureGroup();
+
                         for (const i in trackList) {
                             const track = trackList[i];
                             const polylineString = track.polylineString;
                             const polylineColor = 'red';
                             const polyline = L.Polyline.fromEncoded(polylineString, { color: polylineColor });
 
-                            polyline.addTo(map);
+                            polyline.addTo(trackLayer);
                         }
+
+                        map.fitBounds(trackLayer.getBounds());
+                        trackLayer.addTo(map);
                     }
                 }
             }
