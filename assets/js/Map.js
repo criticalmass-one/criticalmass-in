@@ -13,6 +13,8 @@ export default class Map {
     }
 
     init() {
+        const that = this;
+
         document.querySelectorAll('.map').forEach(function (mapContainer) {
             const map = new L.map(mapContainer.id);
             mapContainer.map = map;
@@ -43,13 +45,13 @@ export default class Map {
 
             const markerLayer = L.featureGroup();
 
-            this.addMarkerByNumber('', mapContainer, markerLayer);
+            that.addMarkerByNumber('', mapContainer, markerLayer);
 
             let markerNumber = 1;
             let result = true;
 
             do {
-                result = this.addMarkerByNumber(markerNumber, mapContainer, markerLayer);
+                result = that.addMarkerByNumber(markerNumber, mapContainer, markerLayer);
 
                 ++markerNumber;
             }
@@ -212,7 +214,6 @@ export default class Map {
         });
     }
 
-
     addMarkerByNumber(markerNumber, mapContainer, markerLayer) {
         const markerLatitudePropertyName = 'mapMarker' + markerNumber + 'Latitude';
         const markerLongitudePropertyName = 'mapMarker' + markerNumber + 'Longitude';
@@ -234,7 +235,7 @@ export default class Map {
                 prefix: 'far'
             });
 
-            const marker = L.marker(rideLatLng, { icon: rideIcon });
+            const marker = L.marker(markerLatLng, { icon: rideIcon });
 
             marker.markerNumber = markerNumber;
 
