@@ -1,6 +1,6 @@
 import '../scss/criticalmass.scss';
 
-import dataTables from 'dataTables'; // @todo: replace jQuery here
+
 import CC from 'CookieConsent'
 
 //window.bootstrap = bootstrap;
@@ -9,6 +9,7 @@ require('bootstrap');
 import DateTimePicker from './DateTimePicker';
 import GeocodingButton from './GeocodingButton';
 import Map from './Map';
+import DataTable from './DataTable';
 
 document.addEventListener('DOMContentLoaded', function() {
     window.cookieconsent.initialise({
@@ -23,17 +24,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
-    
-
-
-    const dataTable = document.getElementsByClassName('data-table');
-
-    if (dataTable) {
-        $('.data-table').DataTable({ // @todo: replace jQuery here
-            'paging': false,
-            'searching': false,
-        });
-    }
 
     const calendarDayList = document.querySelectorAll('#calendar .day ul.ride-list');
 
