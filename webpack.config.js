@@ -38,6 +38,9 @@ Encore
 
 // uncomment if you're having problems with a jQuery plugin
     .autoProvidejQuery()
+    .configureBabel(function(babelConfig) {
+        babelConfig.plugins.push('transform-class-properties');
+    })
 ;
 
 module.exports = Encore.getWebpackConfig();

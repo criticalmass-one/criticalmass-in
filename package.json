@@ -25,6 +25,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "bootstrap": "^3.4.1",
     "bootstrap-colorpicker": "^2.5.3",
     "bootstrap-sass": "^3.4.1",
