@@ -1,8 +1,5 @@
 import '../scss/criticalmass.scss';
 
-
-import CC from 'CookieConsent'
-
 //window.bootstrap = bootstrap;
 require('bootstrap');
 
@@ -12,18 +9,6 @@ import Map from './Map';
 import DataTable from './DataTable';
 
 document.addEventListener('DOMContentLoaded', function() {
-    window.cookieconsent.initialise({
-        "palette": {
-            "popup": {
-                "background": "#64386b",
-                "text": "#ffcdfd"
-            },
-            "button": {
-                "background": "#f8a8ff",
-                "text": "#3f0045"
-            }
-        }
-    });
 
     const calendarDayList = document.querySelectorAll('#calendar .day ul.ride-list');
 
