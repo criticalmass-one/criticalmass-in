@@ -24,5 +24,5 @@ export default class DataTable {
 document.addEventListener('DOMContentLoaded', () => {
     const element = document.querySelector('.data-table');
 
-    new DateTimePicker(element);
+    new DataTable(element);
 });
