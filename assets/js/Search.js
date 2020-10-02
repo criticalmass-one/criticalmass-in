@@ -1,18 +1,22 @@
-define(['dateformat', 'typeahead.jquery', 'bloodhound'], function (dateFormat) {
+import Typeahead from '../../node_modules/typeahead.js/dist/typeahead.jquery';
+import Bloodhound from '../../node_modules/typeahead.js/dist/bloodhound';
+import dateFormat from '../../node_modules/dateformat/lib/dateformat';
 
-    Search = function (context, options) {
+export default class Search {
+    bloodhound;
+    typeahead;
+    
+    constructor(context, options) {
         this._$input = $(context);
 
-        this._initBloodhound();
-        this._initTypeahead();
-    };
+        this.initBloodhound();
+        this.initTypeahead();
+    }
 
-    Search.prototype._bloodhound = null;
+    initBloodhound() {
+        const url = Routing.generate('caldera_criticalmass_search_prefetch');
 
-    Search.prototype._initBloodhound = function () {
-        var url = Routing.generate('caldera_criticalmass_search_prefetch');
-
-        this._bloodhound = new Bloodhound({
+        this.bloodhound = new Bloodhound({
             datumTokenizer: function (data) {
                 return Bloodhound.tokenizers.whitespace(data.value);
             },
@@ -24,10 +28,10 @@ define(['dateformat', 'typeahead.jquery', 'bloodhound'], function (dateFormat) {
             }
         });
 
-        this._bloodhound.initialize();
-    };
+        this.bloodhound.initialize();
+    }
 
-    Search.prototype._initTypeahead = function () {
+    initTypeahead() {
         $(this._$input).typeahead(
             {
                 hint: false,
@@ -39,20 +43,20 @@ define(['dateformat', 'typeahead.jquery', 'bloodhound'], function (dateFormat) {
             },
             {
                 name: 'results',
-                source: this._bloodhound.ttAdapter(),
+                source: this.bloodhound.ttAdapter(),
                 displayKey: 'value',
                 templates: {
-                    suggestion: this._templateSuggestionFunction.bind(this)
+                    suggestion: this.templateSuggestionFunction.bind(this)
                 }
             }
         );
-    };
+    }
 
-    Search.prototype._renderCitySuggestion = function (data) {
+    renderCitySuggestion(data) {
         return '<a href="' + data.url + '"><i class="far fa-university"></i> ' + data.value + '</a>';
-    };
+    }
 
-    Search.prototype._renderRideSuggestion = function (data) {
+    renderRideSuggestion(data) {
         var html = '';
 
         html += '<a href="' + data.url + '">';
@@ -81,34 +85,40 @@ define(['dateformat', 'typeahead.jquery', 'bloodhound'], function (dateFormat) {
         html += '</a>';
 
         return html;
-    };
+    }
 
-    Search.prototype._renderContentSuggestion = function (data) {
+    renderContentSuggestion(data) {
         return '<a href="' + data.url + '"><i class="far fa-file-text"></i> ' + data.value + '</a>';
-    };
+    }
 
-    Search.prototype._templateSuggestionFunction = function (data) {
+    templateSuggestionFunction(data) {
         var html = '';
         html += '<div class="row padding-top-small padding-bottom-small">';
         html += '<div class="col-md-12">';
 
         if (data.type == 'city') {
-            html += this._renderCitySuggestion(data);
+            html += this.renderCitySuggestion(data);
         }
 
         if (data.type == 'ride') {
-            html += this._renderRideSuggestion(data);
+            html += this.renderRideSuggestion(data);
         }
 
         if (data.type == 'content') {
-            html += this._renderContentSuggestion(data);
+            html += this.renderContentSuggestion(data);
         }
 
         html += '</div>';
         html += '</div>';
 
         return html;
-    };
+    }
+}
 
-    return Search;
+document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('search-input');
+
+    if (searchInput) {
+        new Search(searchInput);
+    }
 });
