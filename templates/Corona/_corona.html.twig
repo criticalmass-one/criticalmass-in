@@ -5,6 +5,10 @@
 {% if ride is defined %}
     {% set coord = ride %}
     {% set city = ride.city %}
+
+    {% if not ride.latitude or ride.longitude %}
+        {% set coord = city %}
+    {% endif %}
 {% endif %}
 
 {% set corona_result = corona(coord) %}
