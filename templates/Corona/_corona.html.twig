@@ -16,13 +16,13 @@
 {% if corona_result %}
     {% if corona_result.cases7Per100K <= 20 %}
         {% set color_class = 'success' %}
-        {% set text = '<p>Bitte trage bei der Critical Mass eine <strong>Mund-Nase-Bedeckung</strong> und halte ausreichenden <strong>Abstand</strong> zu anderen Teilnehmerïnnen und Passantïnnen.</p><p>Vermeide eine Teilnahme, falls du dich nicht gesund oder wohl fühlen solltest.</p><p>Damit hilfst du, die Ausbreitung des Coronavirus zu bekämpfen.</p>' %}
+        {% set text = '<p>Bitte trage bei der Critical Mass eine <strong>Mund-Nase-Bedeckung</strong> und halte ausreichenden <strong>Abstand</strong> zu anderen Teilnehmerïnnen und Passantïnnen.</p><p>Vermeide eine Teilnahme, falls du dich nicht gesund oder wohl fühlen solltest.</p>' %}
     {% elseif corona_result.cases7Per100K <= 30 %}
         {% set color_class = 'warning' %}
-        {% set text = '<p>Bitte trage bei der Critical Mass eine <strong>Mund-Nase-Bedeckung</strong> und halte ausreichenden <strong>Abstand</strong> zu anderen Teilnehmerïnnen und Passantïnnen.</p><p>Vermeide eine Teilnahme, falls du dich nicht gesund oder wohl fühlen solltest.</p><p>Damit hilfst du, die Ausbreitung des Coronavirus zu bekämpfen.</p>' %}
+        {% set text = '<p>Bitte trage bei der Critical Mass eine <strong>Mund-Nase-Bedeckung</strong> und halte ausreichenden <strong>Abstand</strong> zu anderen Teilnehmerïnnen und Passantïnnen.</p><p>Vermeide eine Teilnahme, falls du dich nicht gesund oder wohl fühlen solltest.</p>' %}
     {% else %}
         {% set color_class = 'danger' %}
-        {% set text = '<p class="text-danger"><strong>Bitte überlege, ob du angesichts des Infektionsgeschehens tatsächlich an einer Critical Mass teilnehmen möchtest.</strong></p><p>Trage bitte eine <strong>Mund-Nase-Bedeckung</strong> und halte ausreichenden <strong>Abstand</strong> zu anderen Teilnehmerïnnen und Passantïnnen.</p><p>Vermeide eine Teilnahme, falls du dich nicht gesund oder wohl fühlen solltest.</p><p>Damit hilfst du, die Ausbreitung des Coronavirus zu bekämpfen.</p>' %}
+        {% set text = '<p class="text-danger"><strong>Bitte überlege, ob du angesichts des Infektionsgeschehens tatsächlich an einer Critical Mass teilnehmen möchtest.</strong></p><p>Trage bitte eine <strong>Mund-Nase-Bedeckung</strong> und halte ausreichenden <strong>Abstand</strong> zu anderen Teilnehmerïnnen und Passantïnnen.</p><p>Vermeide eine Teilnahme, falls du dich nicht gesund oder wohl fühlen solltest.</p>' %}
 
     {% endif %}
 
@@ -43,7 +43,21 @@
 
             {{ text|raw }}
 
+            <hr />
 
+            <p>
+                <a href="https://www.coronawarn.app/" title="zur Homepage der Corona-Warn-App">
+                    <img class="pull-left" src="{{ asset('/images/corona/cwa-small.png') }}" alt="Logo der deutschen Corona-Warn-App" />
+                </a>
+
+                Mit der <a href="https://www.coronawarn.app/" title="zur Homepage der Corona-Warn-App">Corona-Warn-App</a> kannst du helfen, die Verbreitung des Coronavirus zu bekämpfen.
+            </p>
+
+            <p>
+                <a class="btn btn-{{ color_class }}" href="https://www.coronawarn.app/" title="zur Homepage der Corona-Warn-App">
+                    App herunterladen
+                </a>
+            </p>
         </div>
     </div>
 {% endif %}
