@@ -20,11 +20,13 @@ class ResultFetcher implements ResultFetcherInterface
         try {
             $resultString = file_get_contents(sprintf('https://corona.criticalmass.in?latitude=%f&longitude=%f', $coordinate->getLatitude(), $coordinate->getLongitude()));
 
-            $result = $this->serializer->deserialize($resultString, Result::class, 'json');
+            if ($resultString) {
+                return $this->serializer->deserialize($resultString, Result::class, 'json');
+            }
         } catch (\Exception $exception) {
             return null;
         }
 
-        return $result;
+        return null;
     }
 }
