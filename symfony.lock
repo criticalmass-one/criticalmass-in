@@ -356,6 +356,9 @@
     "malenki/slug": {
         "version": "1.0.0"
     },
+    "maltehuebner/ordered-entities-bundle": {
+        "version": "dev-master"
+    },
     "maxh/php-nominatim": {
         "version": "1.2.3"
     },

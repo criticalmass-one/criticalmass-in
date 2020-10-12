@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "730bdbe0e6fbf9033c5ac7af8c11b266",
+    "content-hash": "38cf8e55069b07e95ed5cdaf114f66d2",
     "packages": [
         {
             "name": "calderacc/geobasic",
@@ -4699,6 +4699,39 @@
                 "url"
             ],
             "time": "2014-04-26T15:40:10+00:00"
+        },
+        {
+            "name": "maltehuebner/ordered-entities-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/maltehuebner/ordered-entities-bundle.git",
+                "reference": "e73e01a47b7c3101895daccc03e0be718f9cc94b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/maltehuebner/ordered-entities-bundle/zipball/e73e01a47b7c3101895daccc03e0be718f9cc94b",
+                "reference": "e73e01a47b7c3101895daccc03e0be718f9cc94b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4 || ^8.0",
+                "symfony/framework-bundle": "^3.0 | ^4.0 | ^5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MalteHuebner\\OrderedEntitiesBundle\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Malte Huebner",
+                    "email": "maltehuebner@gmx.org"
+                }
+            ],
+            "time": "2020-10-12T23:45:41+00:00"
         },
         {
             "name": "maxh/php-nominatim",
@@ -15281,9 +15314,10 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": {
-        "symfony/dependency-injection": 20
+        "symfony/dependency-injection": 20,
+        "maltehuebner/ordered-entities-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
