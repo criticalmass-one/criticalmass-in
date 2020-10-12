@@ -274,3 +274,6 @@ services:
             $oAuth2Server: '@fos_oauth_server.server'
         tags:
             - controller.service_arguments
+
+    App\Criticalmass\Corona\ResultFetcher\ResultFetcherInterface:
+        alias: App\Criticalmass\Corona\ResultFetcher\CachedResultFetcher
