@@ -20,10 +20,12 @@
     {% elseif corona_result.cases7Per100K <= 30 %}
         {% set color_class = 'warning' %}
         {% set text = '<p>Bitte trage bei der Critical Mass eine <strong>Mund-Nase-Bedeckung</strong> und halte ausreichenden <strong>Abstand</strong> zu anderen Teilnehmerïnnen und Passantïnnen.</p><p>Vermeide eine Teilnahme, falls du dich nicht gesund oder wohl fühlen solltest.</p>' %}
+    {% elseif corona_result.cases7Per100K <= 50 %}
+        {% set color_class = 'danger' %}
+        {% set text = '<p>Bitte trage bei der Critical Mass eine <strong>Mund-Nase-Bedeckung</strong> und halte ausreichenden <strong>Abstand</strong> zu anderen Teilnehmerïnnen und Passantïnnen.</p><p>Vermeide eine Teilnahme, falls du dich nicht gesund oder wohl fühlen solltest.</p>' %}
     {% else %}
         {% set color_class = 'danger' %}
         {% set text = '<p class="text-danger"><strong>Bitte überlege, ob du angesichts des Infektionsgeschehens tatsächlich an einer Critical Mass teilnehmen möchtest.</strong></p><p>Trage bitte eine <strong>Mund-Nase-Bedeckung</strong> und halte ausreichenden <strong>Abstand</strong> zu anderen Teilnehmerïnnen und Passantïnnen.</p><p>Vermeide eine Teilnahme, falls du dich nicht gesund oder wohl fühlen solltest.</p>' %}
-
     {% endif %}
 
     <div class="panel panel-{{ color_class }}">
