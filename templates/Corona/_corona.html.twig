@@ -45,6 +45,12 @@
 
             {{ text|raw }}
 
+            <p>
+                <small class="text-muted">
+                    Zuletzt aktualisiert: {{ corona_result.lastUpdate|date('d.m.Y') }}
+                </small>
+            </p>
+
             <hr />
 
             <p>
