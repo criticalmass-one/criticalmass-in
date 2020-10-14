@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html {{ sonata_seo_html_attributes() }}>
+<head {{ sonata_seo_head_attributes() }}>
+
+    {% if block('title') %}
+        <title>{% block title %}{% endblock %} — criticalmass.in</title>
+    {% else %}
+        {{ sonata_seo_title() }}
+    {% endif %}
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width"/>
+    <meta name="mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+
+    {{ sonata_seo_metadatas() }}
+    {{ sonata_seo_link_canonical() }}
+    {{ sonata_seo_lang_alternates() }}
+
+    <link rel="stylesheet" href="{{ asset('/css/criticalmass.min.css') }}"/>
+
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
+    <script src="{{ asset('/js/require.min.js') }}"></script>
+    <script src="{{ asset('/js/CriticalMass.js') }}"></script>
+
+    {% block additionalHeaderElements %}{% endblock %}
+</head>
+
+<body class="{% if app.user %}logged-in{% else %}not-logged-in{% endif %} {% block bodyClass %}{% endblock %} with-top-navbar">
+
+{% if not app.user %}
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                {{ render(controller('App\\Controller\\SecurityController::loginFormModalAction' )) }}
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% block masterContent %}{% endblock %}
+
+<script src="{{ asset('/js/jquery.min.js') }}"></script>
+<script src="{{ asset('/js/bootstrap.min.js') }}"></script>
+
+{% block additionalFooterElements %}{% endblock %}
+<script>
+    CriticalMass.loadModule('CookieNotice');
+    CriticalMass.loadModule('HintModal', '.modal-hint');
+    CriticalMass.loadModule('Sharing');
+</script>
+</body>
+</html>

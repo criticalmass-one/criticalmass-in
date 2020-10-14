@@ -1,0 +1,75 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Dein Benutzerprofil{% endblock %}
+
+{% block breadcrumb %}
+    <li class="active">Dein Benutzerkonto</li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Diese Daten werden gelöscht
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <li>
+                                dein Profilfoto
+                            </li>
+
+                            <li>
+                                dein Benutzerprofil und von dir eingegebene Daten
+                            </li>
+
+                            <li>
+                                von dir hochgeladene Tracks
+                            </li>
+
+                            <li>
+                                von dir hochgeladene Fotos
+                            </li>
+
+                            <li>
+                                deine Kommentare und Forenbeiträge
+                            </li>
+
+                            <li>
+                                deine Teilnahmen an Critical-Mass-Touren
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Diese Daten bleiben bestehen
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <li>
+                                von dir angelegte oder editierte Touren
+                            </li>
+
+                            <li>
+                                von dir angelegte oder editierte Städte
+                            </li>
+
+                            <li>
+                                von dir angelegte oder editierte Zubringertouren
+                            </li>
+
+                            <li>
+                                deine abgegebenen Teilnehmerschätzungen
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

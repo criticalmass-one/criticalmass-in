@@ -1,0 +1,32 @@
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+@import "criticalmass/criticalmass";
+@import "criticalmass/frontpage3";
+
+.form-control.datepicker {
+  padding: 0.5rem 0.75rem !important;
+}
+
+.input-daterange input {
+  text-align: left !important;
+}
+
+.breadcrumb > li + li:before {
+  content: "/\00a0";
+  color: $breadcrumb-color;
+}
+
+input[type="file"] {
+  display: inline !important;
+}
+
+#github-ribbon {
+  position: absolute;
+  top: 42px;
+  right: 0;
+  border: 0;
+  z-index: 1000;
+}
+
+.captcha-input-group .input-group-addon {
+  padding: 0;
+}

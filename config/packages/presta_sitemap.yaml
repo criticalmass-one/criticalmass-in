@@ -1,0 +1,6 @@
+presta_sitemap:
+    defaults:
+        priority: 1
+        changefreq: daily
+        lastmod: now
+    timetolive: 3600

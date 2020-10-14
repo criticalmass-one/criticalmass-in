@@ -1,0 +1,95 @@
+criticalmass:
+    logoname: criticalmass.in
+    brandname: criticalmass.in
+
+    navigation:
+        cities:
+            cities: Städte
+            list: Städteliste
+            directory: Verzeichnis
+            calendar: Kalender
+            photos: Fotos
+            galleries: Fotogalerien
+        criticalmass:
+            criticalmass: Critical Mass
+            about: Über die Critical Mass
+            faq: Häufig gestellte Fragen
+            tips: Tipps und Tricks
+            about-us: Über Caldera Critical Mass
+            caldera-faq: Häufig gestellte Fragen zu Caldera
+            help: Hilfe
+            apidoc: Api-Dokumentation
+        account:
+            account: Benutzerkonto
+            profile: Dein Profil
+            logout: Abmelden
+            login: Anmelden
+        search:
+            search: Suche
+
+cycle:
+    event_date:
+        day:
+            0: Sonntag
+            1: Montag
+            2: Dienstag
+            3: Mittwoch
+            4: Donnerstag
+            5: Freitag
+            6: Sonnabend
+        month_week:
+            0: letzten
+            1: ersten
+            2: zweiten
+            3: dritten
+            4: vierten
+
+# Time ago in words - Twig Extension
+'less than %seconds seconds ago': 'vor weniger als %seconds Sekunden'
+'half a minute ago': 'vor einer halben Minute'
+'less than a minute ago': 'vor weniger als einer Minute'
+'1 minute ago': 'vor einer Minute'
+'%minutes minutes ago': 'vor %minutes Minuten'
+'about 1 hour ago': 'vor einer Stunde'
+'about %hours hours ago': 'vor %hours Stunden'
+'1 day ago': 'gestern'
+'%days days ago': 'vor %days Tagen'
+'{1} 1 month ago |]1,Inf[ %months months ago': 'vor einem Monat|]1,Inf[v or %months Monaten'
+'{1} 1 year ago |]1,Inf[ %years years ago':  'vor einem Jahr|]1,Inf[ vor %years Jahren'
+
+# Modal hints
+hint_modal:
+    ride:
+        participation_button:
+            title: Bist du dabei?
+            text: <p>Hier kannst du als registrierter Nutzer deine Teilnahme bei der Critical Mass in %city% am %dateTime% bestätigen.</p><p>Als registrierter Nutzer kannst du in deinem Profilbereich eine Statistik mit deinen Teilnahmen und den Städten, die du besucht hast, aufrufen.</p>
+
+        location_edit_link:
+            title: Wo geht’s denn los?
+            text: <p>Bislang hat leider noch niemand den Treffpunkt für die Critical Mass in %city% am %dateTime% eingetragen. Das ist schade — als registrierter Nutzer kannst du den Treffpunkt ergänzen und anderen Interessenten helfen, an der Critical Mass teilzunehmen.</p>
+
+        edit_button:
+            title: Bitte mehr Details?
+            text: '<p>Diese Webseite funktioniert wie Wikipedia: Jeder kann die Daten der Critical Mass in %city% ändern, korrigieren, ergänzen oder auch löschen. Du brauchst lediglich ein registriertes Benutzerkonto, um Änderungen vornehmen zu können.</p><p>Anschließend kannst du beispielsweise die Beschreibung dieser Tour editieren, den Treffpunkt ändern oder Links zu sozialen Netzwerken wie Facebook oder Twitter ergänzen.</p>'
+
+        post_write_button:
+            title: Kommentar verfassen
+            text: '<p>Hat dir die Tour gefallen? Oder lief’s richtig schlecht? Als angemeldeter Nutzer könntest du hier einen Kommentar schreiben.</p>'
+
+        track_upload_button:
+            title: Tracks hochladen oder importieren
+            text: '<p>Wo ging’s denn eigentlich lang? Wenn du deine Teilnahme an der Critical Mass in %city% mit einem GPS-Tracker oder einer App wie Strava aufgezeichnet hast, kannst du deinen Track hier hochladen oder direkt importieren.</p><p>Auf einer Karte ist dann sichtbar, durch welche Straßen sich die Critical Mass bewegt hat. Sobald mehrere Tracks hochgeladen wurden, kannst du die Tour noch einmal mit unserer Timelapse ablaufen lassen.</p><p>Selbstverständlich bleibt deine Privatsphäre gewahrt: Du kannst deinen Track jederzeit löschen oder beschneiden, so dass beispielsweise dein Heimweg nicht mehr angezeigt wird.</p>'
+
+        estimate_add_button:
+            title: Teilnehmerzahl schätzen
+            text: '<p>Als angemeldeter Nutzer kannst du an dieser Stelle eine Schätzung abgeben, wie viele Radfahrer bei der Critical Mass in %city% teilgenommen haben.</p><p>Deine Schätzung wird unter anderem auf dieser Seite angezeigt und für unterschiedliche Statistiken mit einberechnet.</p>'
+
+    gallery:
+        photo_upload_button:
+            title: Fotos hochladen
+            text: '<p>Als angemeldeter Nutzer kannst du auf dieser Seite deine Eindrücke von der Critical Mass in %city% teilen. Melde dich an und lade Fotos direkt von deinem Smartphone oder deinem Computer hoch.</p><p>Andere Gäste können dann dein Fotoalbum durchstöbern und Kommentare schreiben.</p>'
+
+    photo:
+        post_add_button:
+            title: Kommentar verfassen
+            text: '<p>Gefällt dir dieses Foto? Hast du etwas lustiges während der Tour erlebt? Mit einem criticalmass.in-Benutzerkonto kannst du an dieser Stelle einen Kommentar verfassen.</p>'

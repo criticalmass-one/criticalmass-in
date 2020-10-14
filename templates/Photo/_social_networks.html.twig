@@ -1,0 +1,52 @@
+<div class="panel panel-default margin-top-medium">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            Soziale Netze
+        </h3>
+    </div>
+
+    <div class="panel-body text-center">
+        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="far fa-share-square"></i>
+            in sozialen Netzen teilen
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li>
+                {{ shareDropdownLink(photo, 'mail') }}
+            </li>
+
+            <li>
+                {{ shareDropdownLink(photo, 'twitter') }}
+            </li>
+
+            <li>
+                {{ shareDropdownLink(photo, 'facebook') }}
+            </li>
+
+            <li>
+                {{ shareDropdownLink(photo, 'google') }}
+            </li>
+
+            <li>
+                {{ shareDropdownLink(photo, 'xing') }}
+            </li>
+
+            <li>
+                {{ shareDropdownLink(photo, 'linkedin') }}
+            </li>
+
+            <li>
+                {{ shareDropdownLink(photo, 'whatsapp') }}
+            </li>
+
+            <li>
+                {{ shareDropdownLink(photo, 'pinterest') }}
+            </li>
+
+            <li>
+                {{ shareDropdownLink(photo, 'reddit') }}
+            </li>
+        </ul>
+    </div>
+</div>

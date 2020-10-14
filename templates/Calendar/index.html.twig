@@ -1,0 +1,106 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Kalender{% endblock %}
+
+{% block breadcrumb %}
+    <li class="active">
+        Critical-Mass-Kalender
+    </li>
+{% endblock %}
+
+{% block content %}
+    {% set month = calendr_month(dateTime|date('Y'), dateTime|date('m')) %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    Dein weltweiter Critical-Mass-Kalender
+                </h1>
+
+                <p class="lead">
+                    Hier siehst du eine Übersicht über alle in unserer Datenbank vorhandenen Critical-Mass-Touren.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h3>
+                    {{ dateTime|format_date('MMMM YYYY') }}
+                </h3>
+            </div>
+        </div>
+
+        {% include('Calendar/_pagination.html.twig') with { 'previousMonth': previousMonth, 'nextMonth': nextMonth } %}
+
+        <div class="row">
+            <div class="col-md-12">
+                <table id="calendar" class="calendar">
+                    <thead>
+                    <tr>
+                        <th width="14%">
+                            Montag
+                        </th>
+
+                        <th width="14%">
+                            Dienstag
+                        </th>
+
+                        <th width="14%">
+                            Mittwoch
+                        </th>
+
+                        <th width="14%">
+                            Donnerstag
+                        </th>
+
+                        <th width="14%">
+                            Freitag
+                        </th>
+
+                        <th width="14%">
+                            Sonnabend
+                        </th>
+
+                        <th width="14%">
+                            Sonntag
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for week in month %}
+                        <tr>
+                            {% for day in week %}
+                                {% if month.includes(day) %}
+                                    <td class="day">
+                                        <div class="day-number">
+                                            {{ day.format('d') }}
+                                        </div>
+
+                                        <ul class="ride-list list-unstyled">
+                                            {% for event in calendr_events(day).all %}
+                                                {% set ride = event.ride %}
+                                                {% include 'Common/Ride/simple_city_time_list_item.html.twig' with { ride: ride } %}
+                                            {% endfor %}
+                                        </ul>
+                                    </td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        {% include('Calendar/_pagination.html.twig') with { 'previousMonth': previousMonth, 'nextMonth': nextMonth } %}
+    </div>
+
+    <script type="text/javascript">
+        CriticalMass.loadModule('CalendarPage', '#calendar');
+    </script>
+
+{% endblock %}

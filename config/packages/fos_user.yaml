@@ -1,0 +1,25 @@
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: App\Entity\User #Application\Sonata\UserBundle\Entity\User
+#    group:
+#        group_class:   Application\Sonata\UserBundle\Entity\Group
+#        group_manager: sonata.user.orm.group_manager                    # If you're using doctrine orm (use sonata.user.mongodb.user_manager for mongodb)
+#    service:
+#        user_manager: sonata.user.orm.user_manager                      # If you're using doctrine orm (use sonata.user.mongodb.group_manager for mongodb)
+    registration:
+        confirmation:
+            enabled:    true
+            from_email:
+                address:        malte@caldera.cc
+                sender_name:    Malte Hübner, criticalmass.in
+        form:
+            type: App\Form\Type\RegistrationType
+    resetting:
+        email:
+            from_email:
+                address:        malte@caldera.cc
+                sender_name:    Malte Hübner, criticalmass.in
+    from_email:
+        address:        malte@caldera.cc
+        sender_name:    Malte Hübner, criticalmass.in

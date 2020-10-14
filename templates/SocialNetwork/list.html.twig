@@ -1,0 +1,196 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block breadcrumb %}
+    {% if profileAbleType == 'city' %}
+        <li>
+            <a href="{{ path('caldera_criticalmass_city_list') }}">
+                Städteliste
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ objectPath(profileAble) }}">
+                {{ profileAble.city }}
+            </a>
+        </li>
+
+        <li class="active">
+            Soziale Netzwerke
+        </li>
+    {% endif %}
+
+    {% if profileAbleType == 'ride' %}
+        <li>
+            <a href="{{ path('caldera_criticalmass_city_list') }}">
+                Städteliste
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ objectPath(profileAble.city) }}">
+                {{ profileAble.city.city }}
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ objectPath(profileAble) }}">
+                {{ profileAble.title }}
+            </a>
+        </li>
+
+        <li class="active">
+            Soziale Netzwerke
+        </li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+
+        {{ include('Flash/_flash.html.twig') }}
+
+        <div class="row">
+            <div class="col-md-12">
+                <button class="btn btn-success pull-right" data-toggle="modal" data-target="#profile-add-modal">
+                    <i class="far fa-plus"></i>
+                    Profil ergänzen
+                </button>
+
+                <h2>
+                    Soziale Netzwerke
+                </h2>
+
+                {% if profileAbleType == 'city' %}
+                    <p class="lead">
+                        Die folgende Liste enthält Konten in sozialen Netzwerken und Links zu Webseiten, die mit der Critical Mass in <strong>{{ profileAble.city }}</strong> in Verbindung stehen.
+                    </p>
+                {% endif %}
+
+                {% if profileAbleType == 'ride' %}
+                    <p class="lead">
+                        Die folgende Liste enthält Konten in sozialen Netzwerken und Links zu Webseiten, die zu der Tour am <strong>{{ profileAble.dateTime|date('d.m.Y') }}</strong> in Verbindung stehen.
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th colspan="2">
+                                Netzwerk
+                            </th>
+                            <th>
+                                Benutzername
+                            </th>
+                            <th>
+                                Verwaltung
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for profile in list %}
+                        {% set network = getNetwork(profile.network) %}
+
+                        <tr>
+                            <td class="text-center" style="background-color: {{ network.backgroundColor }}; color: {{ network.textColor }};">
+                                <i class="{{ network.icon }}"></i>
+                            </td>
+                            <td>
+                                {{ network.name }}
+                            </td>
+                            <td>
+                                <a href="{{ profile.identifier }}">
+                                    {{ profile.identifier }}
+                                </a>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="{{ path('criticalmass_socialnetwork_edit', { profileId: profile.id }) }}" class="btn btn-default btn-xs">
+                                        <i class="far fa-pencil"></i>
+                                    </a>
+                                    <a href="{{ path('criticalmass_socialnetwork_disable', { profileId: profile.id }) }}" class="btn btn-default btn-xs">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                        {% if list|length == 0 %}
+                            <tr>
+                                <td colspan="4">
+                                    <div class="alert alert-info">
+                                        {% if profileAbleType == 'ride' %}
+                                        Schade, zu dieser Tour wurden noch keine sozialen Netzwerke gespeichert.
+                                        {% else %}
+                                        Schade, zu dieser Stadt wurden noch keine sozialen Netzwerke gespeichert.
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        {% if profileAbleType == 'ride' %}
+        <div class="row">
+            <div class="col-md-12">
+                <p class="text-center">
+                    Die Profile der übergeordneten Stadt {{ profileAble.city.city }} werden getrennt von dieser Liste verwaltet:<br />
+                    <a class="btn btn-default margin-top-small" href="{{ objectPath(profileAble.city, 'criticalmass_socialnetwork_city_list') }}">Profile der Stadt verwalten</a>
+                </p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="modal fade" id="profile-add-modal" tabindex="-1" role="dialog" aria-labelledby="profile-add-modal-label">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                {{ form_start(addProfileForm) }}
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="profile-add-modal-label">
+                        Profil ergänzen
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Kopiere einfach den Link zu einem Profil aus einem sozialen Netzwerk hier hinein!
+                    </p>
+                    <div class="form-group">
+                        <label class="control-label" for="identifier">
+                            Link zum Profil:
+                        </label>
+                        {{ form_widget(addProfileForm.identifier, { 'attr' : { 'class': 'form-control' } }) }}
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="mainNetwork">
+                            Hauptprofil:
+                        </label>
+                        {{ form_widget(addProfileForm.mainNetwork, { 'attr' : { 'class': 'form-control' } }) }}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Abbrechen
+                        </button>
+                        <button type="submit" class="btn btn-success">
+                            Speichern
+                        </button>
+                    </div>
+                </div>
+                {{ form_end(addProfileForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

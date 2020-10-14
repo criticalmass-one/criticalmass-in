@@ -1,0 +1,27 @@
+caldera_criticalmass_board_overview:
+    path:  /boards/overview
+    controller: App\Controller\BoardController::overviewAction
+
+caldera_criticalmass_board_listthreads:
+    path:  /boards/{boardSlug}
+    controller: App\Controller\BoardController::listThreadsAction
+
+caldera_criticalmass_board_addthread:
+    path:  /boards/{boardSlug}/addthread
+    controller: App\Controller\BoardController::addThreadAction
+
+caldera_criticalmass_board_viewthread:
+    path:  /boards/{boardSlug}/thread/{threadSlug}
+    controller: App\Controller\BoardController::viewThreadAction
+
+caldera_criticalmass_board_listcitythreads:
+    path:  /{citySlug}/listthreads
+    controller: App\Controller\BoardController::listThreadsAction
+
+caldera_criticalmass_board_addcitythread:
+    path:  /{citySlug}/addthread
+    controller: App\Controller\BoardController::addThreadAction
+
+caldera_criticalmass_board_viewcitythread:
+    path:  /{citySlug}/thread/{threadSlug}
+    controller: App\Controller\BoardController::viewThreadAction

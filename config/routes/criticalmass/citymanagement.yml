@@ -1,0 +1,11 @@
+caldera_criticalmass_city_add:
+    path:  /world/{slug1}/{slug2}/{slug3}/addcity
+    controller: App\Controller\City\CityManagementController::addAction
+
+caldera_criticalmass_city_add_slug:
+    path:  /{citySlug}/add
+    controller: App\Controller\City\CityManagementController::addAction
+
+caldera_criticalmass_city_edit:
+    path:  /{citySlug}/edit
+    controller: App\Controller\City\CityManagementController::editAction

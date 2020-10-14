@@ -1,0 +1,180 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% if city != null %}
+    {% set title = 'Turnus editieren' %}
+{% else %}
+    {% set title = 'Neuen Turnus hinzufügen' %}
+{% endif %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ objectPath(city) }}">
+            {{ city.city }}
+        </a>
+    </li>
+
+    <li>
+        <a href="{{ objectPath(city, 'caldera_criticalmass_citycycle_list') }}">
+            Turnusliste
+        </a>
+    </li>
+
+    <li class="active">
+        {{ title }}
+    </li>
+{% endblock %}
+
+{% block content %}
+    {{ form_errors(form) }}
+    <div class="container">
+        {{ include('Flash/_flash.html.twig') }}
+
+        {{ form_start(form) }}
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2>
+                    {{ title }}
+                </h2>
+
+                <p class="lead">criticalmass.in kann jeden Monat automatisch eine neue Tour für diese Stadt erstellen,
+                    sofern die Touren jeweils an einem einheitlichen Tag zu einer bestimmten Uhrzeit an einem vorher
+                    festgelegten Treffpunkt starten.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-info">
+                    Wenn du lediglich eine einzelne Tour für {{ city.city }} erstellen möchtest, nutze bitte <strong><a href="{{ objectPath(city, 'caldera_criticalmass_ride_add') }}">dieses Formular</a></strong>.
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div id="map" style="height: 250px;"></div>
+            </div>
+        </div>
+
+        <div class="row margin-top-medium">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.dayOfWeek) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Wochentag der Touren:</label>
+                            {{ form_widget(form.dayOfWeek, { 'attr' : { 'class': 'form-control'} }) }}
+                            {% if not cityCycle.hasSpecialCalculator() %}
+                                <p class="help-block">
+                                    Stelle hier den Wochentag ein, an dem die Touren stattfinden.
+                                </p>
+                            {% else %}
+                                <p class="text-info">
+                                    Du kannst diesen Wert nicht ändern, weil dieser Turnus von einem speziellen
+                                    Generator erzeugt wird.
+                                </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.weekOfMonth) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Woche der Touren:</label>
+                            {{ form_widget(form.weekOfMonth, { 'attr' : { 'class': 'form-control'} }) }}
+                            {% if not cityCycle.hasSpecialCalculator() %}
+                                <p class="help-block">
+                                    Wähle hier die Woche, in der die Touren stattfinden.
+                                </p>
+                            {% else %}
+                                <p class="text-info">
+                                    Du kannst diesen Wert nicht ändern, weil dieser Turnus von einem speziellen
+                                    Generator erzeugt wird.
+                                </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.time) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Uhrzeit der Touren:</label>
+                            {{ form_widget(form.time, { 'attr' : { 'class': 'form-control' } }) }}
+                            <p class="help-block">
+                                Startzeit der Touren.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.location) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Treffpunkt der Touren:</label>
+                            {{ form_widget(form.location, { 'attr' : { 'class': 'form-control' } }) }}
+                            <p class="help-block">
+                                Gib hier eine aussagekräftige Beschreibung des Treffpunktes ein, von dem diese Tour
+                                startet. Ziehe anschließend oben den gelben Marker auf der Karte auf diesen Treffpunkt.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                Hier kannst du einen optionalen Gültigkeitszeitraum angeben, in dem neue Touren nach dem obigen
+                Einstellungen erzeugt werden sollen. Das kann nützlich sein, falls die Critical Mass in {{ city.city }}
+                nur im Sommer stattfindet oder sich irgendwann einmal der Treffpunkt ändert.
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label" for="">Gültig ab:</label>
+                    {{ form_widget(form.validFrom, { 'attr' : { 'class': 'form-control datepicker'} }) }}
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label" for="">Gültig bis:</label>
+                    {{ form_widget(form.validUntil, { 'attr' : { 'class': 'form-control datepicker'} }) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="btn-group pull-right">
+                    <a href="{{ objectPath(city) }}" class="btn btn-default">
+                        Abbrechen
+                    </a>
+                    <button type="submit" class="btn btn-success">
+                        Speichern
+                    </button>
+                </div>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+
+    <script type="text/javascript">
+        var options = {
+            cityCoords: {
+                latitude: {{ city.latitude }},
+                longitude: {{ city.longitude }}
+            }
+        };
+
+        CriticalMass.loadModule('EditCityCyclePage', null, options);
+    </script>
+{% endblock %}

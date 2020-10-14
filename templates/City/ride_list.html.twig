@@ -1,0 +1,90 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Städte-Übersicht{% endblock %}
+
+{% block breadcrumb %}
+
+    <li>
+        <a href="{{ path('caldera_criticalmass_city_list') }}">
+            Städteliste
+        </a>
+    </li>
+
+    <li>
+        <a href="{{ objectPath(city) }}">
+            {{ city.city }}
+        </a>
+    </li>
+
+    <li class="active">
+        Tour-Übersicht
+    </li>
+{% endblock %}
+    
+{% block content %}
+    <div class="container">
+
+        {{ include('City/Includes/_tabs.html.twig', { tab: 'ride_list' }) }}
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2>
+                    Touren in dieser Stadt
+                </h2>
+            </div>
+        </div>
+
+        {% for message in app.flashes('success') %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-success">
+                        {{ message|raw }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="row">
+            <div class="col-md-12">
+                <table id="ride-list-table" class="table">
+                    <thead>
+                    <tr>
+                        <th>
+                            Datum
+                        </th>
+                        <th>
+                            Uhrzeit
+                        </th>
+                        <th>
+                            Titel
+                        </th>
+                        <th>
+                            Treffpunkt
+                        </th>
+                        <th>
+                            Teilnehmer
+                        </th>
+                        <th>
+                            Distanz
+                        </th>
+                        <th>
+                            Dauer
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for ride in rides %}
+                    {% include 'Common/Ride/standard_city_ride_table_row.html.twig' with { ride: ride } %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block additionalFooterElements %}
+    <script>
+        CriticalMass.loadModule('CityRideListPage', '#ride-list-table');
+    </script>
+{% endblock %}

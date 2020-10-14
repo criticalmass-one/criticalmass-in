@@ -1,0 +1,32 @@
+<div class="row margin-bottom-medium">
+    {{ include('Timeline/_includes/user_column.html.twig') }}
+
+    <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
+        <div class="row">
+            <div class="col-md-12">
+                <strong>
+                    {{ item.user.username }}
+                </strong>
+                hat einen Blog-Artikel verfasst:
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{ objectPath(item.blogPost) }}">
+                    <h4>
+                        {{ item.title }}
+                    </h4>
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <p>
+                    {{ item.intro|raw|nl2br }}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

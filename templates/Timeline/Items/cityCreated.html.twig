@@ -1,0 +1,44 @@
+<div class="row margin-bottom-medium">
+    {{ include('Timeline/_includes/user_column.html.twig') }}
+
+    <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
+        <div class="row">
+            <div class="col-md-12">
+                <strong>
+                    {{ item.user.username }}
+                </strong>
+                hat eine neue Stadt hinzugefügt:
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{ objectPath(item.city) }}">
+                    <h4>
+                        {{ item.cityName }}
+                    </h4>
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div id="map-{{ item.uniqId }}" style="height: 150px;"
+                     data-map-center-latitude="{{ item.city.latitude }}"
+                     data-map-center-longitude="{{ item.city.longitude }}"
+                     data-map-zoomlevel="13"
+                     data-lock-map="true"
+                     data-map-marker-latitude="{{ item.city.latitude }}"
+                     data-map-marker-longitude="{{ item.city.longitude }}"
+                     data-map-marker-color="red"
+                     data-map-marker-icon="fa-university"
+                     data-map-marker-shape="circle"
+                ></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    CriticalMass.loadModule('AutoMap', 'map-{{ item.uniqId }}');
+</script>

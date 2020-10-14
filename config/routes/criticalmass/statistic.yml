@@ -1,0 +1,15 @@
+caldera_criticalmass_statistic_city:
+    path: /{citySlug}/statistic
+    controller: App\Controller\Statistic\StatisticController::citystatisticAction
+
+caldera_criticalmass_statistic_overview:
+    path: /statistic
+    controller: App\Controller\Statistic\StatisticController::overviewAction
+
+caldera_criticalmass_statistic_ride_month:
+    path: /statistic/{year}/{month}
+    controller: App\Controller\Statistic\MonthlyStatsController::listRidesAction
+
+caldera_criticalmass_statistic_topten:
+    path: /statistic/top
+    controller: App\Controller\Statistic\TopStatsController::topStatsAction

@@ -1,0 +1,27 @@
+criticalmass_socialnetwork_ride_list:
+    path:  /{citySlug}/{rideIdentifier}/socialnetwork/list
+    controller: App\Controller\SocialNetwork\SocialNetworkListController::listRideAction
+
+criticalmass_socialnetwork_ride_add:
+    path:  /{citySlug}/{rideIdentifier}/socialnetwork/add
+    controller: App\Controller\SocialNetwork\SocialNetworkController::addAction
+
+criticalmass_socialnetwork_city_add:
+    path:  /{citySlug}/socialnetwork/add
+    controller: App\Controller\SocialNetwork\SocialNetworkController::addAction
+
+criticalmass_socialnetwork_city_list:
+    path:  /{citySlug}/socialnetwork/list
+    controller: App\Controller\SocialNetwork\SocialNetworkListController::listCityAction
+
+criticalmass_socialnetwork_city_list_items:
+    path:  /{citySlug}/socialnetwork/list-items
+    controller: App\Controller\SocialNetwork\SocialNetworkItemListController::listCityItemsAction
+
+criticalmass_socialnetwork_disable:
+    path:  /socialnetwork/{profileId}/disable
+    controller: App\Controller\SocialNetwork\SocialNetworkManagementController::disableAction
+
+criticalmass_socialnetwork_edit:
+    path:  /socialnetwork/{profileId}/edit
+    controller: App\Controller\SocialNetwork\SocialNetworkManagementController::editAction

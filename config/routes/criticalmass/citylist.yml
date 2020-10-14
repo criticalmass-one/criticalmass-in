@@ -1,0 +1,3 @@
+caldera_criticalmass_city_list:
+    path:  /citylist
+    controller: App\Controller\City\CityListController::listAction

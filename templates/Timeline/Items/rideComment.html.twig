@@ -1,0 +1,32 @@
+<div class="row margin-bottom-medium timeline-item-ride{% if not item.rideEnabled %}--disabled{% endif %}">
+    {{ include('Timeline/_includes/user_column.html.twig') }}
+
+    <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
+        <div class="row">
+            <div class="col-md-12">
+                <strong>
+                    {{ item.user.username }}
+                </strong>
+                hat eine Tour kommentiert:
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{ objectPath(item.ride) }}#post-{{ item.post.id }}">
+                    <h4>
+                        {{ item.rideTitle }}
+                    </h4>
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <p>
+                    {{ parse_urls(item.post)|raw }}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}{{ city.title }}{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ path('caldera_criticalmass_city_list') }}">
+            Städteliste
+        </a>
+    </li>
+
+    <li class="active">
+        {{ city.city }}
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    {{ city.title }}
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-danger">
+                    {{ blocked.description }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

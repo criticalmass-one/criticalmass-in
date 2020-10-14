@@ -1,12 +1,3 @@
-# Cache and logs (Symfony2)
-/app/cache/*
-/app/logs/*
-!app/cache/.gitkeep
-!app/logs/.gitkeep
-
-# Email spool folder
-/app/spool/*
-
 # Cache, session files and logs (Symfony3)
 /var/cache/*
 /var/logs/*
@@ -15,43 +6,46 @@
 !var/logs/.gitkeep
 !var/sessions/.gitkeep
 
-# Parameters
-/app/config/parameters.yml
-/app/config/parameters.ini
-
 # Managed by Composer
-/app/bootstrap.php.cache
 /var/bootstrap.php.cache
 /bin/*
 !bin/console
 !bin/symfony_requirements
-/vendor/
 
 # Assets and user uploads
-/web/bundles/
-/web/uploads/
-
-# PHPUnit
-/app/phpunit.xml
-/phpunit.xml
-
-# Build data
-/build/
-
-# Composer PHAR
-/composer.phar
+/public/bundles/
+/public/uploads/
+/public/tracks
+/public/photos
+/public/cities
+/public/images
+/public/img
+/public/js
+/public/fonts
+/public/css
+/node_modules
+/assets/css
 
 # Backup entities generated with doctrine:generate:entities command
 **/Entity/*~
 criticalmass.iml
 .idea
 
-src/Criticalmass/Bundle/AppBundle/Resources/public/css/external/bootstrap-app-4/toolkit.css
-src/Criticalmass/Bundle/AppBundle/Resources/public/css/external/bootstrap-app-4/toolkit.css.map
-src/Criticalmass/Bundle/AppBundle/Resources/public/css/external/bootstrap-app-4/toolkit.min.css
-src/Criticalmass/Bundle/AppBundle/Resources/public/css/external/bootstrap-app-4/toolkit.min.css.map
-src/Criticalmass/Bundle/AppBundle/Resources/public/js/external/bootstrap-app-4/toolkit.js
-src/Criticalmass/Bundle/AppBundle/Resources/public/js/external/bootstrap-app-4/toolkit.min.js
+###> symfony/framework-bundle ###
+/.env
+/.env.test
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
 
+###> phpunit/phpunit ###
+#/phpunit.xml
+###< phpunit/phpunit ###
 
-toolkit.min.css.map
+###> symfony/phpunit-bridge ###
+.phpunit
+#/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+docker

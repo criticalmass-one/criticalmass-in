@@ -1,0 +1,6 @@
+jms_serializer:
+    visitors:
+        json_serialization:
+            options: 1216 # json_encode options bitmask, suggested JSON_PRETTY_PRINT in development
+        json_deserialization:
+            options: 1216 # json_decode options bitmask

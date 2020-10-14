@@ -1,0 +1,3 @@
+caldera_criticalmass_participation_ride:
+    path:  /{citySlug}/{rideIdentifier}/participation/{status}
+    controller: App\Controller\Ride\ParticipationController::rideparticipationAction

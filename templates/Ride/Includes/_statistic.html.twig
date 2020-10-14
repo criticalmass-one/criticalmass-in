@@ -1,0 +1,93 @@
+{% set hasEstimations = ride.estimatedParticipants or ride.estimatedDistance or ride.estimatedDuration %}
+
+{% if dateTime > ride.dateTime %}
+    {% set pastRide = true %}
+{% else %}
+    {% set pastRide = false %}
+{% endif %}
+
+{% if pastRide %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Statistik</h3>
+        </div>
+        <div class="panel-body">
+            {% if hasEstimations %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <dl>
+                            {% if ride.estimatedParticipants and ride.estimatedParticipants > 0 %}
+                                <dt>Teilnehmer</dt>
+                                <dd>{{ ride.estimatedParticipants|number_format(0) }}</dd>
+                            {% endif %}
+
+                            {% if ride.estimatedDistance and ride.estimatedDistance > 0 %}
+                                <dt>Distanz</dt>
+                                <dd>{{ ride.estimatedDistance|number_format(2) }}&nbsp;Kilometer</dd>
+                            {% endif %}
+
+                            {% if ride.getDurationInterval() and ride.getDurationInterval().format('%h:%i') != '0:0' %}
+                                <dt>Dauer</dt>
+                                <dd>{{ human_duration(ride.getEstimatedDurationInSeconds()) }}</dd>
+                            {% endif %}
+
+                            {% if ride.getAverageVelocity and ride.getAverageVelocity > 0 %}
+                                <dt>Durchschnittsgeschwindigkeit</dt>
+                                <dd>{{ ride.getAverageVelocity()|number_format(2) }} Kilometer&nbsp;pro&nbsp;Stunde</dd>
+                            {% endif %}
+                        </dl>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="row">
+                <div class="col-md-12 text-center">
+                {% if app.user %}
+                    <button class="btn btn-success" data-toggle="modal" data-target="#estimate-modal">
+                        <i class="far fa-users"></i>
+                        Teilnehmerzahl schätzen
+                    </button>
+                {% else %}
+                    <span class="btn btn-success modal-hint" data-modal-hint-title="{{ 'hint_modal.ride.estimate_add_button.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.ride.estimate_add_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
+                        <i class="far fa-users"></i>
+                        Teilnehmerzahl schätzen
+                    </span>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if app.user %}
+        <div class="modal fade" id="estimate-modal" tabindex="-1" role="dialog" aria-labelledby="estimate-modal-label">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    {{ form_start(estimateForm) }}
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="estimate-modal-label">Teilnehmerzahl schätzen</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="control-label" for="estimatedParticipants">Geschätzte Teilnehmerzahl:</label>
+                            {{ form_widget(estimateForm.estimatedParticipants, { 'attr' : { 'class': 'form-control' } }) }}
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Abbrechen
+                            </button>
+                            <button type="submit" class="btn btn-success">
+                                Speichern
+                            </button>
+                        </div>
+                    </div>
+                    {{ form_end(estimateForm) }}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endif %}

@@ -1,0 +1,279 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% if ride %}
+    {% set title = 'Tour editieren' %}
+    {% set mode = 'edit' %}
+{% else %}
+    {% set title = 'Tour hinzufügen' %}
+    {% set mode = 'create' %}
+{% endif %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ path('caldera_criticalmass_city_list') }}">
+            Städteliste
+        </a>
+    </li>
+
+    <li>
+        <a href="{{ objectPath(city) }}">
+            {{ city.city }}
+        </a>
+    </li>
+
+    {% if ride %}
+        <li>
+            <a href="{{ objectPath(ride) }}">
+                {{ ride.title }}
+            </a>
+        </li>
+
+        <li class="active">
+            Tour editieren
+        </li>
+    {% else %}
+        <li class="active">
+            Tour hinzufügen
+        </li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% if city.cycles|length > 0 and mode == 'create' %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Vorsicht!</strong>
+                        Die Touren für diese Stadt werden jeden Monat anhand vorgegebener Standard-Werte automatisch
+                        generiert. Bitte schau erst einmal nach, ob die Tour, die du gerade anlegen möchtest, womöglich
+                        bereits existiert.
+                    </div>
+                </div>
+            </div>
+
+        {% endif %}
+
+        <div class="row">
+            <div class="col-md-12">
+                <h1>{{ title }}</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <p>Hier kannst du die Details einer Tour editieren.</p>
+            </div>
+        </div>
+
+        {{ include('Flash/_flash.html.twig') }}
+
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-md-12">
+                <div id="map" style="height: 250px;">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row margin-top-medium">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>
+                            Tourdaten
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label" for="title">
+                                Titel:
+                            </label>
+                            {{ form_widget(form.title, { 'attr' : { 'class': 'form-control' } }) }}
+                            <p class="help-block">
+                                Hier kann optional der Titel der Tour angegeben werden.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label" for="description">
+                                Beschreibung:
+                            </label>
+                            {{ form_widget(form.description, { 'attr' : { 'class': 'form-control' } }) }}
+                            <p class="help-block">
+                                Hier kann optional eine Beschreibung der Tour angegeben werden. Schreibe hier nur Dinge,
+                                die wirklich direkt diese Tour betreffen — für alles andere ist in der Beschreibung der
+                                Stadt genügend Platz.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>
+                            Datum und Treffpunkt
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-warning" role="alert" id="doubleMonthRide" style="display: none;">
+                            <strong>
+                                Vorsicht!
+                            </strong>
+                            Für den ausgewählten Monat wurde bereits eine Tour angelegt. Bist du sicher, dass zwei
+                            Touren stattfinden?
+                        </div>
+
+                        <div class="alert alert-danger" role="alert" id="doubleDayRide" style="display: none;">
+                            <strong>
+                                Achtung!
+                            </strong>
+                            An diesem Tag findet bereits eine Tour statt. Aus technischen Gründen können momentan leider
+                            keine zwei Touren an einem Tag verwaltet werden.
+                        </div>
+
+                        <div class="form-group{% if form_errors(form.dateTime) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="dateTime">
+                                Datum und Uhrzeit:
+                            </label>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{ form_widget(form.dateTime.date, { attr: { class: 'form-control datepicker' } }) }}
+                                </div>
+
+                                <div class="col-md-6">
+                                    {{ form_widget(form.dateTime.time, { attr: { class: 'form-control' } }) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label" for="location">
+                                Treffpunkt:
+                            </label>
+                            <button id="search-location-button" class="btn btn-default btn-xs pull-right" type="button">
+                                <i class="far fa-map-marker"></i>
+                            </button>
+                            {{ form_widget(form.location, { 'attr' : { 'class': 'form-control' } }) }}
+                        </div>
+                        <p class="help-block">
+                            Gib hier den Treffpunkt der Tour ein. Beschränke dich bitte auf eine aussagekräftige
+                            Bezeichnung, die auch für ortsunkundige Radfahrer verständlich ist, aber ohne
+                            Wegbeschreibungen auskommt. Mit der Checkbox kann die Anzeige des Treffpunktes deaktiviert
+                            werden, falls der noch nicht bekannt sein sollte.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label" for="rideType">
+                                Art der Tour:
+                            </label>
+
+                            {{ form_widget(form.rideType, { 'attr' : { 'class': 'form-control' } }) }}
+                        </div>
+                        <p class="help-block">
+                            Falls es sich bei dieser Tour nicht um eine „normale“ Critical Mass handeln sollte, kannst du hier die Art dieser Tour genauer spezifizieren.
+                        </p>
+                    </div>
+                </div>
+
+                {% if form.slug is defined %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label" for="slug">
+                                    Slug:
+                                </label>
+
+                                {{ form_widget(form.slug, { 'attr' : { 'class': 'form-control' } }) }}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if form.enabled is defined %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label" for="location">
+                                Tour aktivieren:
+                            </label>
+
+                            {{ form_widget(form.enabled, { 'attr' : { 'class': 'form-control' } }) }}
+                        </div>
+                        <p class="help-block">
+                            Momentan ist diese Tour deaktiviert. Wähle die Checkbox an, um sie wieder zu aktivieren.
+                        </p>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="btn-group pull-right" role="group" aria-label="...">
+                                {% if ride %}
+                                    <a href="{{ objectPath(ride) }}" class="btn btn-default">
+                                        Abbrechen
+                                    </a>
+                                {% else %}
+                                    <a href="{{ objectPath(city) }}" class="btn btn-default">
+                                        Abbrechen
+                                    </a>
+                                {% endif %}
+                                <button type="submit" class="btn btn-success" id="rideSubmitButton">
+                                    Speichern
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_widget(form.latitude) }}
+        {{ form_widget(form.longitude) }}
+        {{ form_widget(form._token) }}
+
+        </form>
+    </div>
+
+    <script>
+        var options = {
+            citySlug: '{{ city.mainSlug.slug() }}'
+        };
+
+        CriticalMass.loadModule('EditRidePage', null, options, function (editRidePage) {
+            var cityLatLng = L.latLng({{ city.latitude }}, {{ city.longitude }});
+
+            editRidePage.setCityLatLng(cityLatLng);
+
+            {% if ride and ride.id %}
+            editRidePage.setRideDateTime(new Date({{ ride.dateTime|date('U') * 1000 }}));
+            {% endif %}
+
+            editRidePage.init();
+        });
+    </script>
+{% endblock %}

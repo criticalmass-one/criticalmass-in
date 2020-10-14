@@ -1,0 +1,70 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Nächste Tour</h3>
+    </div>
+    <div class="panel-body">
+        {% if currentRide %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center">
+                        <a href="{{ objectPath(currentRide) }}">
+                            <h3 class="no-margin-top">
+                                {{ currentRide.title }}
+                            </h3>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <dl>
+                        <dt>Datum</dt>
+                        <dd>{{ currentRide.dateTime|date('d.m.Y', currentRide.city.timezone) }}</dd>
+                    </dl>
+                </div>
+
+                <div class="col-md-6">
+                    <dl>
+                        <dt>Uhrzeit</dt>
+                        <dd>{{ currentRide.dateTime|date('H:i', currentRide.city.timezone) }} Uhr</dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <dl>
+                        <dt>Treffpunkt</dt>
+                        {% if currentRide.location and currentRide.latitude and currentRide.longitude %}
+                            <dd>{{ currentRide.location }}</dd>
+                        {% else %}
+                            <a href="{{ objectPath(currentRide, 'caldera_criticalmass_ride_edit') }}">
+                                noch nicht bekannt
+                            </a>
+                        {% endif %}
+                    </dl>
+                </div>
+            </div>
+        {% else %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center">
+                        Über eine Radtour ist momentan nichts bekannt.
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="row margin-top-medium">
+            <div class="col-md-12">
+                <div class="text-center">
+                    <a href="{{ objectPath(city, 'caldera_criticalmass_city_listrides') }}" class="btn btn-success">
+                        <i class="far fa-list"></i>
+                        weitere Touren anzeigen
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

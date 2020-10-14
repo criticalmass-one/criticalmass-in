@@ -1,0 +1,114 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block breadcrumb %}
+    {% if profileAbleType == 'city' %}
+        <li>
+            <a href="{{ path('caldera_criticalmass_city_list') }}">
+                Städteliste
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ objectPath(profileAble) }}">
+                {{ profileAble.city }}
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ objectPath(profileAble, 'criticalmass_socialnetwork_city_list') }}">
+                Soziale Netzwerke
+            </a>
+        </li>
+
+        <li class="active">
+            Soziales Netzwerk editieren
+        </li>
+    {% endif %}
+
+    {% if profileAbleType == 'ride' %}
+        <li>
+            <a href="{{ path('caldera_criticalmass_city_list') }}">
+                Städteliste
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ objectPath(profileAble.city) }}">
+                {{ profileAble.city.city }}
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ objectPath(profileAble) }}">
+                {{ profileAble.title }}
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ objectPath(profileAble, 'criticalmass_socialnetwork_ride_list') }}">
+                Soziale Netzwerke
+            </a>
+        </li>
+
+        <li class="active">
+            Soziales Netzwerk editieren
+        </li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <h2>
+                    Soziales Netzwerk editieren
+                </h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                {{ form_start(form) }}
+
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <label class="control-label" for="">Adresse:</label>
+                        {{ form_widget(form.identifier, { 'attr' : { 'class': 'form-control'} }) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <label class="control-label" for="">Soziales Netzwerk:</label>
+                        {{ form_widget(form.network, { 'attr' : { 'class': 'form-control'} }) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <label class="control-label" for="">Hauptkonto:</label>
+                        {{ form_widget(form.mainNetwork, { 'attr' : { 'class': 'form-control'} }) }}
+                        <p class="help-block">
+                            Handelt es sich bei diesem Konto um das Hauptkonto in diesem Netzwerk?
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row">
+                     <div class="col-md-12 form-group">
+                         <div class="btn-group pull-right">
+                             <a href="" class="btn btn-default">
+                                 Abbrechen
+                             </a>
+
+                             <button type="submit" class="btn btn-primary">
+                                 Speichern
+                             </button>
+                         </div>
+                     </div>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

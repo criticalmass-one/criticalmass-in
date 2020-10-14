@@ -1,0 +1,92 @@
+<div class="row margin-bottom-medium">
+    {{ include('Timeline/_includes/social_feed_item_column.html.twig') }}
+
+    {% set city = item.socialNetworkFeedItem.socialNetworkProfile.city %}
+
+    {% if city == null %}
+        {% set city = item.socialNetworkFeedItem.socialNetworkProfile.ride.city %}
+    {% endif %}
+
+    {% if item.socialNetworkFeedItem.socialNetworkProfile.network == 'twitter' %}
+        <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="{{ objectPath(city) }}">
+                        <strong>
+                            {{ city.title }}
+                        </strong>
+                    </a>
+                    hat getwittert:
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <p>
+                        <a href="{{ item.socialNetworkFeedItem.permalink }}">
+                            {{ item.socialNetworkFeedItem.text }}
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if item.socialNetworkFeedItem.socialNetworkProfile.network == 'homepage' %}
+        <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="{{ objectPath(city) }}">
+                        <strong>
+                            {{ city.title }}
+                        </strong>
+                    </a>
+                    hat gebloggt:
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="{{ item.socialNetworkFeedItem.permalink }}">
+                        <h4>
+                            {{ item.socialNetworkFeedItem.title }}
+                        </h4>
+                    </a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <p>
+                        {{ item.socialNetworkFeedItem.text|trim_intro|raw }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if item.socialNetworkFeedItem.socialNetworkProfile.network == 'instagram_profile' %}
+        <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="{{ objectPath(city) }}">
+                        <strong>
+                            {{ city.title }}
+                        </strong>
+                    </a>
+                    hat etwas auf Instagram veröffentlicht:
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <p>
+                        <a href="{{ item.socialNetworkFeedItem.permalink }}">
+                            {{ item.socialNetworkFeedItem.text }}
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>

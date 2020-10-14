@@ -1,0 +1,120 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Übersicht zum Treffpunkt {{ location.title }} der {{ location.city.title }}{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ path('caldera_criticalmass_city_list') }}">
+            Städteliste
+        </a>
+    </li>
+
+    <li>
+        <a href="{{ objectPath(location.city) }}">
+            {{ location.city.city }}
+        </a>
+    </li>
+    {% if ride %}
+        <li>
+            <a href="{{ objectPath(ride) }}">
+                {{ ride.title }}
+            </a>
+        </li>
+
+        <li class="active">
+            Informationen zum Treffpunkt
+        </li>
+    {% else %}
+        <li>
+            Treffpunkte
+        </li>
+
+        <li class="active">
+            {{ location.title }}
+        </li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h1>
+                    {{ location.title }}
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                {% if location.hasCoordinates() %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="map" style="height: 250px;"
+                                 data-map-center-latitude="{{ location.latitude }}"
+                                 data-map-center-longitude="{{ location.longitude }}"
+                                 data-map-zoomlevel="15"
+                                 data-map-marker-latitude="{{ location.latitude }}"
+                                 data-map-marker-longitude="{{ location.longitude }}"
+                                 data-map-marker-color="red"
+                                 data-map-marker-icon="fa-dot-circle-o"
+                                 data-map-marker-shape="circle"
+                            ></div>
+                        </div>
+                    </div>
+
+                    <script>
+                        CriticalMass.loadModule('AutoMap', 'map');
+                    </script>
+                {% endif %}
+
+                <div class="row">
+                    <div class="col-md-12">
+                        {{ location.description|markdown }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                {% if rides|length > 0 %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                Touren von diesem Treffpunkt
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                {% for ride in rides %}
+                                    <li>
+                                        <a href="{{ objectPath(ride) }}">
+                                            {{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Andere Treffpunkte dieser Stadt
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            {% for location in locations %}
+                                <li>
+                                    <a href="{{ objectPath(location) }}">
+                                        {{ location.title }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,70 @@
+<div class="row">
+    <div class="col-md-12">
+        {% if participationList|length > 0 %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    Tour
+                </th>
+
+                <th>
+                    Stadt
+                </th>
+
+                <th>
+                    Datum
+                </th>
+
+                <th>
+
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for participation in participationList %}
+                <tr>
+                    <td>
+                        <a href="{{ objectPath(participation.ride) }}">
+                            {{ participation.ride.title }}
+                        </a>
+                    </td>
+
+                    <td>
+                        <a href="{{ objectPath(participation.ride.city) }}">
+                            {{ participation.ride.city.city }}
+                        </a>
+                    </td>
+
+                    <td>
+                        {{ participation.ride.dateTime|date('d.m.Y H:i') }}&nbsp;Uhr
+                    </td>
+
+                    <td class="btn-group btn-group-xs">
+                        <a href="{{ path('criticalmass_user_participation_delete', { participationId: participation.id }) }}" class="btn btn-default" title="Diesen Eintrag komplett löschen">
+                            <i class="far fa-trash-alt"></i>
+                        </a>
+
+                        {% if not participation.goingYes %}
+                        <a href="{{ path('criticalmass_user_participation_update', { participationId: participation.id, status: 'yes' }) }}" class="btn btn-success" title="Deine Teilnahme speichern">
+                            <i class="far fa-check"></i>
+                        </a>
+                        {% endif %}
+
+                        {% if not participation.goingNo %}
+                        <a href="{{ path('criticalmass_user_participation_update', { participationId: participation.id, status: 'no' }) }}" class="btn btn-danger" title="Deine Teilnahme zurückziehen">
+                            <i class="far fa-times"></i>
+                        </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <div class="alert alert-info">
+                Für diese Liste wurden keine Datensätze gefunden.
+            </div>
+        {% endif %}
+    </div>
+</div>

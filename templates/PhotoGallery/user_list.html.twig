@@ -1,0 +1,65 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Deine Fotos{% endblock %}
+
+{% block breadcrumb %}
+    <li class="active">asdasd</li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Fotos sortieren</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <tr>
+                        <th>Datum</th>
+                        <th>Stadt</th>
+                        <th>Tour</th>
+                        <th>Anzahl</th>
+                        <th>Optionen</th>
+                    </tr>
+                    {% for key, ride in result['rides'] %}
+                        <tr>
+                            <td>
+                                {{ ride.dateTime.format('d. m. Y') }}
+                            </td>
+                            <td>
+                                <a href="{{ objectPath(ride.city) }}">
+                                    {{ ride.city.getCity() }}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ objectPath(ride) }}">
+                                    {{ ride.title }}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ objectPath(ride, 'caldera_criticalmass_photo_manage') }}">
+                                    {{ result['counter'][key] }}
+                                </a>
+                            </td>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="...">
+                                    <a class="btn btn-default btn-xs" title="Herunterladen"
+                                       href="{{ objectPath(ride, 'caldera_criticalmass_photo_manage') }}">
+                                        <i class="far fa-images"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    {% if result['rides']|length == 0 %}
+                        <td colspan="7" style="text-align: center;">Du hast bislang keine Tracks hochgeladen :(</td>
+                    {% endif %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

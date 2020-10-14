@@ -1,0 +1,172 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Deine Tracks{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ path('criticalmass_user_usermanagement') }}">
+            Dein Benutzerkonto
+        </a>
+    </li>
+
+    <li>
+        <a href="{{ path('caldera_criticalmass_track_list') }}">
+            Deine Tracks
+        </a>
+    </li>
+
+    <li class="active">
+        Track anzeigen
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container main-container">
+        <div class="row">
+            <div class="col-md-12">
+                {% if track.getRide().getTitle() %}
+                    <h1>{{ track.getRide().getTitle() }}</h1>
+                {% else %}
+                    <h1>{{ track.getRide().getCity().getTitle() }}</h1>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if not track.reviewed %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-danger">
+                        <div class="btn-group pull-right">
+                            <a class="btn btn-success"
+                               href="{{ objectPath(track, 'caldera_criticalmass_track_range') }}">
+                                <i class="far fa-cut"></i>&nbsp;Track beschneiden
+                            </a>
+                            <a class="btn btn-default"
+                               href="{{ objectPath(track, 'caldera_criticalmass_track_approve') }}">
+                                <i class="far fa-check"></i>&nbsp;Track bestätigen
+                            </a>
+                        </div>
+
+                        <strong>
+                            Dein Track wurde noch nicht bestätigt!
+                        </strong>
+                        <br/>
+                        Bitte bestägtige, dass dein Track nur den tatsächlichen Routenverlauf der Critical Mass abbildet
+                        und etwaige An- und Abfahrten nicht enthalten sind. Du kannst deinen Track <a
+                                href="{{ objectPath(track, 'caldera_criticalmass_track_range') }}">ganz einfach online
+                            beschneiden</a>.
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="row">
+            <div class="col-md-12">
+                <div id="map" style="height: 350px;"></div>
+            </div>
+        </div>
+
+        <div class="row margin-top-medium">
+            <div class="col-md-3">
+                <dl>
+                    <dt>
+                        Tour:
+                    </dt>
+                    <dd>
+                        <a href="{{ objectPath(track.ride) }}">
+                            {{ track.ride.title }}
+                        </a>
+                    </dd>
+                </dl>
+            </div>
+
+            <div class="col-md-2">
+                <dl>
+                    <dt>
+                        Datum:
+                    </dt>
+                    <dd>
+                        {{ track.ride.dateTime|date('d.m.Y H:i', track.ride.city.timezone) }}&nbsp;Uhr
+                    </dd>
+                </dl>
+            </div>
+
+            <div class="col-md-3">
+                <dl>
+                    <dt>
+                        Treffpunkt:
+                    </dt>
+                    <dd>
+                        {% if track.ride.location and track.ride.latitude and track.ride.longitude %}
+                            {{ track.ride.location }}
+                        {% else %}
+                            nicht bekannt
+                        {% endif %}
+                    </dd>
+                </dl>
+            </div>
+
+            <div class="col-md-2">
+                <dl>
+                    <dt>
+                        Distanz:
+                    </dt>
+                    <dd>
+                        {{ track.distance|number_format(2) }}&nbsp;Kilometer
+                    </dd>
+                </dl>
+            </div>
+
+            <div class="col-md-2">
+                <dl>
+                    <dt>
+                        Dauer:
+                    </dt>
+                    <dd>
+                        {{ human_duration(track.getDurationInSeconds()) }}
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+        {% set previous_track = previous_entity(track) %}
+        {% set next_track = next_entity(track) %}
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="pager">
+                    {% if previous_track %}
+                        <li class="previous">
+                            <a href="{{ objectPath(previous_track) }}">
+                                &larr; Voriger Track
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="previous disabled">
+                            <a href="#">&larr; Voriger Track</a>
+                        </li>
+                    {% endif %}
+
+                    {% if next_track %}
+                        <li class="next">
+                            <a href="{{ objectPath(next_track) }}">
+                                Nächster Track &rarr;
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="next disabled">
+                            <a href="#">Nächster Track &rarr;</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        CriticalMass.loadModule('TrackViewPage', null, null, function (viewPage) {
+            viewPage.addTrack('{{ track|serialize|raw|e('js') }}');
+
+            viewPage.focus();
+        });
+    </script>
+{% endblock %}

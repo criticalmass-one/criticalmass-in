@@ -1,0 +1,279 @@
+parameters:
+    mailer_transport: sendmail
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    mailer_port: null
+    locale: de
+    secret: '%env(APP_SECRET)%'
+    kernel.secret: '%env(APP_SECRET)%'
+    database_driver: pdo_mysql
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: '%env(DATABASE_NAME)%'
+    database_user: '%env(DATABASE_USER)%'
+    database_password: '%env(DATABASE_PASSWORD)%'
+    track.gap_width: 10
+    strava.client_id: '%env(STRAVA_CLIENT_ID)%'
+    strava.token: '%env(STRAVA_TOKEN)%'
+    strava.secret: '%env(STRAVA_SECRET)%'
+    facebook.app_id: '%env(FACEBOOK_APP_ID)%'
+    facebook.app_secret: '%env(FACEBOOK_APP_SECRET)%'
+    facebook.default_token: '%env(FACEBOOK_DEFAULT_TOKEN)%'
+    runkeeper.client_id: '%env(RUNKEEPER_CLIENT_ID)%'
+    runkeeper.secret: '%env(RUNKEEPER_SECRET)%'
+    twitter.client_id: '%env(TWITTER_CLIENT_ID)%'
+    twitter.token: '%env(TWITTER_TOKEN)%'
+    twitter.secret: '%env(TWITTER_SECRET)%'
+    photo_tsv.access_key: '%env(PHOTO_TSV_ACCESS_KEY)%'
+    timeline.ttl: 60
+    domain.blog: '%env(DOMAIN_BLOG)%'
+    domain.one: '%env(DOMAIN_ONE)%'
+    notification.mail.sender_address: malte@criticalmass.in
+    request_listener.http_port: 80
+    request_listener.https_port: 443
+    upload_destination.track: '%kernel.project_dir%/public/tracks'
+    upload_destination.photo: '%kernel.project_dir%/public/photos'
+    upload_destination.city_photo: '%kernel.project_dir%/public/cities'
+    upload_destination.ride_photo: '%kernel.project_dir%/public/rides'
+    upload_destination.frontpage_teaser: '%kernel.project_dir%/public/teaser'
+    upload_destination.user_photo: '%kernel.project_dir%/public/users'
+    upload_destination.blogpost_teaser: '%kernel.project_dir%/public/blogposts'
+    upload_destination.heatmap_tile: '%kernel.project_dir%/public/heatmaps'
+    staticmaps.host: '%env(STATICMAPS_HOST)%'
+    yourls.api_hostname: '%env(YOURLS_API_HOSTNAME)%'
+    yourls.api_username: '%env(YOURLS_API_USERNAME)%'
+    yourls.api_password: '%env(YOURLS_API_PASSWORD)%'
+    assets_version: '%env(ASSETS_VERSION)%'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+        bind:
+            $rootDirectory: '%kernel.root_dir%'
+            $webRootDir: '%kernel.root_dir%/../public'
+            $staticmapsHost: '%staticmaps.host%'
+            $gapWidth: '%track.gap_width%'
+            $facebookAppId: '%facebook.app_id%'
+            $facebookAppSecret: '%facebook.app_secret%'
+            $facebookDefaultToken: '%facebook.default_token%'
+            $twitterClientId: '%twitter.client_id%'
+            $twitterSecret: '%twitter.secret%'
+            $uploadDestinationPhoto: '%upload_destination.photo%'
+            $uploadDestinationTrack: '%upload_destination.track%'
+            $uploadDestinationUserPhoto: '%upload_destination.user_photo%'
+            $stravaClientId: '%strava.client_id%'
+            $stravaSecret: '%strava.secret%'
+            $cachedTimelineTtl: '%timeline.ttl%'
+            $projectDirectory: '%kernel.project_dir%'
+            $redisUrl: '%env(REDIS_URL)%'
+            $criticalmassRideGeneratorUrl: '%env(CRITICALMASS_RIDE_GENERATOR_URL)%'
+            $instagramScraperProxyServerAddress: '%env(INSTAGRAM_SCRAPER_PROXY_ADDRESS)%'
+            $instagramScraperProxyServerPort: '%env(INSTAGRAM_SCRAPER_PROXY_PORT)%'
+
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DQL,Entity,Manager,Menu,Migrations,Model,Repository,Tests,UserProvider,Criticalmass/UploadValidator/UploadValidatorException}'
+
+    App\Controller\:
+        resource: '../src/Controller'
+        public: true
+        tags: ['controller.service_arguments']
+
+    Symfony\Component\Routing\RouteCollection: ~
+
+    Caldera\YourlsApiManager\YourlsApiManager:
+        arguments:
+            - '%yourls.api_hostname%'
+            - '%yourls.api_username%'
+            - '%yourls.api_password%'
+
+    Sonata\SeoBundle\Seo\SeoPageInterface:
+        alias: sonata.seo.page.default
+
+    App\Criticalmass\Image\ExifWrapper\ExifWrapper:
+        arguments:
+            $flysystemFilesystem: '@oneup_flysystem.flysystem_photo_photo_filesystem'
+
+    App\Criticalmass\Image\PhotoManipulator\Storage\PhotoStorage:
+        arguments:
+            $filesystem: '@oneup_flysystem.flysystem_photo_photo_filesystem'
+
+    App\Criticalmass\Image\PhotoUploader\PhotoUploader:
+        arguments:
+            $filesystem: '@oneup_flysystem.flysystem_photo_photo_filesystem'
+
+    App\Criticalmass\Geo\GpxReader\GpxReader:
+        arguments:
+            $filesystem: '@oneup_flysystem.flysystem_track_track_filesystem'
+
+    App\Criticalmass\Geo\GpxReader\TrackReader:
+        arguments:
+            $filesystem: '@oneup_flysystem.flysystem_track_track_filesystem'
+
+    App\Criticalmass\Geo\GpxWriter\GpxWriter:
+        arguments:
+            $filesystem: '@oneup_flysystem.flysystem_track_track_filesystem'
+
+    App\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGenerator:
+        arguments:
+            $filesystem: '@oneup_flysystem.flysystem_user_photo_filesystem'
+
+    App\Criticalmass\UploadableDataHandler\UploadableDataHandler:
+        arguments:
+            $filesystem: '@oneup_flysystem.flysystem_photo_photo_filesystem'
+
+    App\Criticalmass\Image\GoogleCloud\ExportDataHandler\ExportDataHandler:
+        arguments:
+            $filesystem: '@oneup_flysystem.flysystem_photo_photo_filesystem'
+
+    App\Criticalmass\UploadValidator\TrackValidator:
+        arguments:
+            $filesystem: '@oneup_flysystem.flysystem_track_track_filesystem'
+
+    App\Criticalmass\Heatmap\Tile\TilePersister:
+        arguments:
+            $filesystem: '@oneup_flysystem.flysystem_heatmap_tile_filesystem'
+
+    App\Criticalmass\Heatmap\Tile\TileLoader:
+        arguments:
+            $filesystem: '@oneup_flysystem.flysystem_heatmap_tile_filesystem'
+
+    App\Criticalmass\Heatmap\Remover\HeatmapRemover:
+        arguments:
+            $filesystem: '@oneup_flysystem.flysystem_heatmap_tile_filesystem'
+
+    App\Criticalmass\Geocoding\ReverseGeocoderInterface:
+        alias: App\Criticalmass\Geocoding\CachedReverseGeocoder
+
+    App\Criticalmass\Website\Obfuscator\ObfuscatorInterface:
+        alias: App\Criticalmass\Website\Obfuscator\CaseAwareObfuscator
+
+    App\Criticalmass\Timeline\TimelineInterface:
+        alias: App\Criticalmass\Timeline\CachedTimeline
+        #alias: App\Criticalmass\Timeline\Timeline
+
+    App\Criticalmass\Geo\Loop\LoopInterface:
+        alias: App\Criticalmass\Geo\Loop\TrackLoop
+
+    App\Request\ParamConverter\RideParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: ride_converter }
+
+    App\Request\ParamConverter\RegionParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: region_converter }
+
+    App\Request\ParamConverter\BlogPostParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: blogpost_converter }
+
+    App\Request\ParamConverter\CityParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: city_converter }
+
+    App\Request\ParamConverter\CityCycleParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: citycycle_converter }
+
+    App\Request\ParamConverter\LocationParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: location_converter }
+
+    App\Request\ParamConverter\BoardParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: board_converter }
+
+    App\Request\ParamConverter\ThreadParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: thread_converter }
+
+    App\Request\ParamConverter\ParticipationParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: participation_converter }
+
+    App\Request\ParamConverter\PhotoParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: photo_converter }
+
+    App\Request\ParamConverter\PromotionParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: promotion_converter }
+
+    App\Request\ParamConverter\UserParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 10, converter: user_converter }
+
+    App\Request\ParamConverter\SocialNetworkProfileParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: socialnetworkprofile_converter }
+
+    App\Request\ParamConverter\SocialNetworkFeedItemParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: socialnetworkfeeditem_converter }
+
+    App\Request\ParamConverter\TrackParamConverter:
+        tags:
+            - { name: request.param_converter, priority: 0, converter: track_converter }
+
+    App\Criticalmass\Imagine\DataLoader\RemoteStreamLoader:
+        arguments: ['@liip_imagine']
+        tags:
+            - { name: liip_imagine.binary.loader, loader: App\Criticalmass\Imagine\DataLoader\RemoteStreamLoader }
+
+    App\Criticalmass\Imagine\CacheResolver\RemoteCacheResolver:
+        tags:
+            - { name: liip_imagine.cache.resolver, resolver: App\Criticalmass\Imagine\CacheResolver\RemoteCacheResolver }
+
+    App\Criticalmass\ViewStorage\Cache\RobustViewStorageCache:
+        arguments:
+            $producer: '@old_sound_rabbit_mq.criticalmass_view_producer'
+
+    App\Criticalmass\ViewStorage\Cache\ViewStorageCache:
+        arguments:
+            $producer: '@old_sound_rabbit_mq.criticalmass_view_producer'
+
+    App\Criticalmass\MassTrackImport\MassTrackImporter:
+        arguments:
+            $producer: '@old_sound_rabbit_mq.criticalmass_trackimportcandidate_producer'
+
+    App\Criticalmass\UploadableDataHandler\UploadableDataHandlerInterface:
+        alias: App\Criticalmass\UploadableDataHandler\UploadableDataHandler
+
+    App\Criticalmass\ViewStorage\Cache\ViewStorageCacheInterface:
+        alias: App\Criticalmass\ViewStorage\Cache\RobustViewStorageCache
+
+    App\Criticalmass\ElasticCityFinder\ElasticCityFinder:
+        arguments:
+            $finder: '@fos_elastica.finder.criticalmass_city.city'
+
+    App\Serializer\JMSSerializer\Handler\RelationHandler:
+        tags:
+            - { name: jms_serializer.handler, type: Relation, direction: serialization, format: json, method: serializeRelation}
+            - { name: jms_serializer.handler, type: Relation, direction: deserialization, format: json, method: deserializeRelation}
+            - { name: jms_serializer.handler, type: Relation<?>, direction: serialization, format: json, method: serializeRelation}
+            - { name: jms_serializer.handler, type: Relation<?>, direction: deserialization, format: json, method: deserializeRelation}
+
+    jms_serializer.naming_strategy:
+        alias: jms_serializer.camel_case_naming_strategy
+
+    App\Criticalmass\ViewStorage\BlackList\BlackList:
+        arguments:
+            $crawlerDetect: '@crawler_detect'
+
+    App\Form\Type\RegistrationType:
+        arguments:
+            $class: '%fos_user.model.user.class%'
+
+    App\Controller\OAuthServer\AuthorizeController:
+        arguments:
+            $authorizeForm: '@fos_oauth_server.authorize.form'
+            $authorizeFormHandler: '@fos_oauth_server.authorize.form.handler.default'
+            $oAuth2Server: '@fos_oauth_server.server'
+        tags:
+            - controller.service_arguments
+
+    App\Criticalmass\Corona\ResultFetcher\ResultFetcherInterface:
+        alias: App\Criticalmass\Corona\ResultFetcher\CachedResultFetcher

@@ -1,0 +1,153 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Critical Mass in {{ region.name }}{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ path('caldera_criticalmass_region_world') }}">
+            Verzeichnis
+        </a>
+    </li>
+
+    {% if (region.parent and region.parent.parent and region.parent.parent.parent and not region.parent.parent.parent.isWorld()) %}
+        <li>
+            <a href="{{ objectPath(region.parent.parent.parent) }}">
+                {{ region.parent.parent.parent.name }}
+            </a>
+        </li>
+    {% endif %}
+
+    {% if (region.parent and region.parent.parent and not region.parent.parent.isWorld()) %}
+        <li>
+            <a href="{{ objectPath(region.parent.parent) }}">
+                {{ region.parent.parent.name }}
+            </a>
+        </li>
+    {% endif %}
+
+
+    {% if (region.parent and not region.parent.isWorld()) %}
+        <li>
+            <a href="{{ objectPath(region.parent) }}">
+                {{ region.parent.name }}
+            </a>
+        </li>
+    {% endif %}
+
+    <li>
+        <a href="{{ objectPath(region) }}">
+            {{ region.name }}
+        </a>
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {% if app.getUser() and region.isLevel(3) %}
+                    <a href="{{ path('caldera_criticalmass_city_add', { slug1: region.parent.parent.slug, slug2: region.parent.slug, slug3: region.slug }) }}"
+                       class="btn btn-success margin-top-medium pull-right">
+                        <i class="far fa-plus"></i>
+                        Stadt hinzufügen
+                    </a>
+                {% endif %}
+                <h1>
+                    {% if region.isWorld() %}
+                        Critical Mass weltweit
+                    {% else %}
+                        Critical Mass in {{ region.name }}
+                    {% endif %}
+                </h1>
+            </div>
+        </div>
+
+        {% if allCities|length > 0 %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="map" style="height: 350px;"></div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if regions|length > 0 %}
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>
+                        {% if region.isWorld() %}
+                            Kontinente
+                        {% else %}
+                            Unterregionen in {{ region.name }}
+                        {% endif %}
+                    </h2>
+                </div>
+            </div>
+
+            <div class="row">
+                {% for region2 in regions %}
+                    <div class="col-xs-6 col-sm-4 col-md-3">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="text-center">
+                                    <h4>
+                                        <a href="{{ objectPath(region2) }}">
+                                            {{ region2.name }}
+                                        </a>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="text-center">
+                                    <small>{{ cityCounter[region2.id] }} Städte in dieser Region</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if cities|length > 0 %}
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>
+                        Städte in {{ region.name }}
+                    </h2>
+                </div>
+            </div>
+
+            <div class="row">
+                {% for city in cities %}
+                    <div class="col-xs-6 col-sm-4 col-md-3">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="text-center">
+                                    <h4>
+                                        <a href="{{ objectPath(city) }}">
+                                            {{ city.title }}
+                                        </a>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    {% if allCities|length > 0 %}
+        <script>
+            CriticalMass.loadModule('RegionPage', null, null, function (regionPage) {
+                {% for city in allCities %}
+                regionPage.addCity('{{ city|serialize|raw|e('js') }}');
+                {% endfor %}
+
+                regionPage.setFocus();
+            });
+        </script>
+    {% endif %}
+{% endblock %}

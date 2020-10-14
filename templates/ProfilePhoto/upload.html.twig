@@ -1,0 +1,62 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Profilfoto hochladen{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ path('criticalmass_user_usermanagement') }}">
+            Dein Benutzerkonto
+        </a>
+    </li>
+
+    <li class="active">
+        Profilfoto hochladen
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 text-center">
+                <h2>
+                    Dein Profilfoto
+                </h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 text-center">
+                <img class="img-responsive img-thumbnail" src="{{ vich_uploader_asset(app.user, 'imageFile')|imagine_filter('user_profile_photo_medium') }}"/>
+            </div>
+        </div>
+
+        <div class="row margin-top-medium">
+            <div class="col-md-6 col-md-offset-3 text-center">
+                <p>
+                    Hier kannst du ein neues Profilfoto von deinem Rechner hochladen:
+                </p>
+            </div>
+        </div>
+
+        {{ form_start(profilePhotoForm) }}
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 text-center">
+                {{ form_widget(profilePhotoForm.imageFile) }}
+            </div>
+        </div>
+
+        <div class="row margin-top-medium">
+            <div class="col-md-6 col-md-offset-3 text-center">
+                <div class="btn-group">
+                    {{ form_widget(profilePhotoForm.submit, { label: 'Speichern', attr: { class: 'btn btn-primary'}}) }}
+
+                    <a href="{{ path('criticalmass_user_usermanagement') }}" class="btn btn-default">
+                        Abbrechen
+                    </a>
+                </div>
+            </div>
+        </div>
+        {{ form_end(profilePhotoForm) }}
+    </div>
+{% endblock %}

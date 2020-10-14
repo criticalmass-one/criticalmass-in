@@ -1,0 +1,164 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Fotos bearbeiten{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ objectPath(ride.city) }}">
+            {{ ride.city.title }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ objectPath(ride) }}">
+            {{ ride.title }}
+        </a>
+    </li>
+    <li class="active">
+        Fotos bearbeiten
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="btn-group pull-right" role="group" aria-label="...">
+                    <a href="{{ objectPath(ride, 'caldera_criticalmass_gallery_photos_upload_ride') }}"
+                       class="btn btn-success">
+                        <i class="far fa-camera"></i>
+                        Weitere Fotos hochladen
+                    </a>
+
+                    <a href="{{ objectPath(ride, 'caldera_criticalmass_photo_relocate') }}"
+                       class="btn btn-success">
+                        <i class="far fa-map-marker"></i>
+                        Fotos verschieben
+                    </a>
+                </div>
+
+
+                <h2>
+                    Fotos bearbeiten
+                </h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    {% for photo in pagination %}
+                        <div class="col-md-3">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <img class="img-responsive img-thumbnail{% if not photo.enabled %} bg-danger{% endif %}"
+                                         src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
+                                </div>
+                            </div>
+
+                            <div class="row margin-top-10">
+                                <div class="col-md-12">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default btn-xs dropdown-toggle"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Bearbeiten <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li class="disabled">
+                                                <a href="#">
+                                                    Aufnahmedatum: <br/>
+                                                    {{ photo.exifCreationDate.format('d.m.Y H:i:s') }}
+                                                </a>
+                                            </li>
+
+                                            <li role="separator" class="divider"></li>
+
+                                            <li>
+                                                <a href="{{ objectPath(photo, 'caldera_criticalmass_photo_delete') }}">
+                                                    <i class="far fa-trash-alt"></i>
+                                                    Löschen
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="{{ objectPath(photo, 'caldera_criticalmass_photo_censor') }}">
+                                                    <i class="far fa-eraser"></i>
+                                                    Zensieren
+                                                </a>
+                                            </li>
+
+                                            {% if photo.enabled %}
+                                                <li>
+                                                    <a href="{{ objectPath(photo, 'caldera_criticalmass_photo_toggle') }}">
+                                                        <i class="far fa-eye-slash"></i>
+                                                        Deaktivieren
+                                                    </a>
+                                                </li>
+                                            {% else %}
+                                                <li>
+                                                    <a href="{{ objectPath(photo, 'caldera_criticalmass_photo_toggle') }}">
+                                                        <i class="far fa-eye"></i>
+                                                        Aktivieren
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+
+                                            <li role="separator" class="divider"></li>
+
+                                            <li>
+                                                <a href="{{ objectPath(photo, 'caldera_criticalmass_photo_place_single') }}">
+                                                    <i class="far fa-location-arrow"></i>
+                                                    verorten
+                                                </a>
+                                            </li>
+
+                                            <li role="separator" class="divider"></li>
+
+                                            <li>
+                                                <a href="{{ objectPath(photo, 'caldera_criticalmass_photo_rotate') }}?direction=left">
+                                                    <i class="far fa-undo"></i>
+                                                    links rotieren
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ objectPath(photo, 'caldera_criticalmass_photo_rotate') }}?direction=right">
+                                                    <i class="far fa-redo"></i>
+                                                    rechts rotieren
+                                                </a>
+                                            </li>
+
+                                            <li role="separator" class="divider"></li>
+
+                                            {% if photo.ride.featuredPhoto == photo %}
+                                                <li>
+                                                    <a href="{{ objectPath(photo, 'caldera_criticalmass_photo_featured') }}">
+                                                        <i class="far fa-flag"></i>
+                                                        Hauptbild lösen
+                                                    </a>
+                                                </li>
+                                            {% else %}
+                                                <li>
+                                                    <a href="{{ objectPath(photo, 'caldera_criticalmass_photo_featured') }}">
+                                                        <i class="far fa-flag"></i>
+                                                        Hauptbild festlegen
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="text-center">
+                            {{ knp_pagination_render(pagination) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

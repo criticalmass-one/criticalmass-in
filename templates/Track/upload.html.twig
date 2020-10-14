@@ -1,0 +1,103 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Gpx-Datei hochladen{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ path('caldera_criticalmass_city_list') }}">
+            Städteliste
+        </a>
+    </li>
+    <li>
+        <a href="{{ objectPath(ride.city) }}">
+            {{ ride.city.city }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ objectPath(ride) }}">
+            {{ ride.title }}
+        </a>
+    </li>
+    <li class="active">
+        Track hochladen
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-offset-md-3">
+                <h2>
+                    Gpx-Datei hochladen
+                </h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-offset-md-3">
+                <p>
+                    Wenn du deine Fahrt bei der <strong>{{ ride.city.title }}</strong> am
+                    <strong>{{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}</strong> aufgezeichnet hast, kannst du
+                    hier
+                    deinen Track als GPX-Datei hochladen.
+                </p>
+            </div>
+        </div>
+
+        {{ form_start(form, {'attr': {'role': 'form', 'id': 'track-upload-form'}}) }}
+
+        <div class="row">
+            <div class="col-md-6 col-offset-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Gpx-Datei hochladen
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        {% if errorMessage %}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="alert alert-danger" role="alert">
+                                        <strong>Hochladen fehlgeschlagen :(</strong>
+                                        {{ errorMessage }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="">Datei:</label>
+                                    {{ form_widget(form.trackFile, {'attr': {'class': 'form-control' }}) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-offset-md-3">
+                <div class="btn-group pull-right" role="group" aria-label="...">
+                    <button id="track-upload-button" type="submit" class="btn btn-success">
+                        Track hochladen
+                    </button>
+                    <a href="{{ objectPath(ride) }}" class="btn btn-default">
+                        Abbrechen
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+
+    </div>
+
+
+    <script type="text/javascript">
+        CriticalMass.loadModule('TrackUploadPage');
+    </script>
+{% endblock %}

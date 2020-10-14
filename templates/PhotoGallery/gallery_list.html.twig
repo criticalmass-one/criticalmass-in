@@ -1,0 +1,108 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% set city = ride.city %}
+
+{% block title %}Fotos{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ path('caldera_criticalmass_city_list') }}">
+            Städteliste
+        </a>
+    </li>
+    <li>
+        <a href="{{ objectPath(ride.city) }}">
+            {{ ride.city.city }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ objectPath(ride) }}">
+            {{ ride.title }}
+        </a>
+    </li>
+    <li class="active">
+        Fotos
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
+                {% if app.user %}
+                    {% set uploadPath = objectPath(ride, 'caldera_criticalmass_gallery_photos_upload_ride') %}
+
+                    <a class="btn btn-success" href="{{ uploadPath }}" title="Fotos hochladen">
+                        <i class="far fa-camera"></i>
+                        Fotos hochladen
+                    </a>
+                {% else %}
+                    <span class="btn btn-success modal-hint" data-modal-hint-title="{{ 'hint_modal.gallery.photo_upload_button.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.gallery.photo_upload_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
+                        <i class="far fa-camera"></i>
+                        Fotos hochladen
+                    </span>
+                {% endif %}
+                </div>
+
+                <h1>
+                    Fotos von {{ ride.title }}
+                </h1>
+            </div>
+        </div>
+
+        {% if pagination|length == 0 %}
+            {% if not app.getUser() %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-info" role="alert">
+                            <strong>
+                                Schade!
+                            </strong>
+                            Bislang hat noch niemand Fotos von dieser Tour hochgeladen. Mit einem <a
+                                    href="{{ path('fos_user_security_login') }}">criticalmass.in-Benutzerkonto</a>
+                            könntest du deine Fotos hochladen.
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-info" role="alert">
+                            <strong>
+                                Hej!
+                            </strong>
+                            Du kannst der Erste sein, der hier seine Fotos hochlädt!
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="row">
+                <div class="photo-list">
+                    {% for photo in pagination %}
+                        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                            <div class="margin-bottom-medium text-center">
+                                <a href="{{ objectPath(photo) }}">
+                                    {% if photo.posts|length > 0 %}
+                                        <span class="badge" style="position: absolute; top: -10px; right: 10px; background-color: red; font-size: 1em;">{{ photo.posts|length }}</span>
+                                    {% endif %}
+                                    <img class="img-thumbnail"
+                                         src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center">
+                        {{ knp_pagination_render(pagination) }}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

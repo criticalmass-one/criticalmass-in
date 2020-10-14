@@ -1,0 +1,34 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <a href="{{ website.url }}">
+            {{ website.title|raw }}
+        </a>
+    </div>
+
+    {% if website.description or website.imageUrl %}
+    <div class="panel-body">
+        {% if website.imageUrl %}
+        <p>
+            <a href="{{ website.url }}">
+                <img class="media-object img-thumbnail" src="{{ website.imageUrl|imagine_filter('crawled_preview_image') }}" alt="{{ website.title }}" />
+            </a>
+        </p>
+        {% endif %}
+
+        {% if website.description %}
+        <p>
+            {{ website.description|raw }}
+        </p>
+        {% endif %}
+    </div>
+    {% endif %}
+
+
+    {% if feature('art11') %}
+        <div class="panel-body no-padding-top">
+            <small class="text-danger">
+                Das europäische Leistungsschutzrecht erlaubt uns leider nur die Darstellung <a href="https://sqi.be/cuvso">„einzelner Worte oder sehr kurzer Textausschnitte“ der verlinkten Webseite</a>. Um auf der rechtlich sicheren Seite zu sein, verzichten wir auf diese Texte und zeigen dir stattdessen gehaltvollen Blödsinn an.<br /><a href="https://sqi.be/5hy0u"><i class="far fa-info-circle"></i> Erfahre mehr über die EU-Urheberrechtsreform</a>.
+            </small>
+        </div>
+    {% endif %}
+</div>

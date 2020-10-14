@@ -1,0 +1,39 @@
+<div class="row post margin-bottom-medium">
+    <a name="post-{{ post.id }}"></a>
+    <div class="col-md-12">
+        <div class="media post">
+            <span class="pull-left">
+                {% if post.user.imageName %}
+                <img class="media-object round-media-object"
+                     src="{{ vich_uploader_asset(post.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}"/>
+                {% endif %}
+            </span>
+
+            <div class="media-body">
+                <h4 class="media-heading username">
+                    {% if post.getRide() %}
+                    {{ post.getUser().getUsername() }} schreibt zu
+                        <a href="{{ objectPath(post.ride) }}">
+                            {{ post.ride.title }}
+                        </a>:
+                    {% elseif post.getCity() %}
+                    {{ post.getUser().getUsername() }} schreibt über
+                    <a href="{{ objectPath(post.city) }}">
+                        {{ post.city.title }}
+                    </a>:
+                    {% else %}
+                        {{ post.getUser().getUsername() }} schreibt:
+                    {% endif %}
+                </h4>
+
+                <a href="#post-{{ post.id }}">
+                    <time>
+                        {{ post.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }}&nbsp;Uhr
+                    </time>
+                </a>
+
+                {{ post.message|markdown }}
+            </div>
+        </div>
+    </div>
+</div>

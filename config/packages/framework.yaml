@@ -1,0 +1,33 @@
+framework:
+    secret: '%env(APP_SECRET)%'
+    #default_locale: en
+    #csrf_protection: true
+    #http_method_override: true
+
+    #esi: true
+    #fragments: true
+    php_errors:
+        log: true
+
+    cache: ~
+
+    translator: { fallbacks: [de] }
+    form: ~
+    csrf_protection:
+        enabled: true
+    validation:
+        enable_annotations: true
+        #cache: validator.mapping.cache.doctrine.apc
+    templating:
+        engines: ['twig']
+    default_locale:  '%locale%'
+    session:
+        handler_id:  session.handler.native_file
+        save_path:   '%kernel.root_dir%/../var/sessions/%kernel.environment%'
+    fragments:       ~
+    http_method_override: true
+    assets:
+        version: '%assets_version%'
+        json_manifest_path: ~
+    router:
+        strict_requirements: ~

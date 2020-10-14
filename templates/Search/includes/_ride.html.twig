@@ -1,0 +1,87 @@
+<div class="row margin-bottom-medium">
+    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+        {% if ride.location and ride.latitude and ride.longitude %}
+            <div id="map-{{ ride.id }}"
+                 data-map-center-latitude="{{ ride.latitude }}"
+                 data-map-center-longitude="{{ ride.longitude }}"
+                 data-map-zoomlevel="13"
+                 data-lock-map="true"
+                 data-map-marker-latitude="{{ ride.latitude }}"
+                 data-map-marker-longitude="{{ ride.longitude }}"
+                 data-map-marker-color="red"
+                 data-map-marker-icon="fa-bicycle"
+                 data-map-marker-shape="circle"
+                 style="height: 150px;">
+            </div>
+        {% else %}
+            <div id="map-{{ ride.id }}"
+                 data-map-center-latitude="{{ ride.city.latitude }}"
+                 data-map-center-longitude="{{ ride.city.longitude }}"
+                 data-map-zoomlevel="13"
+                 data-lock-map="true"
+                 data-map-marker-latitude="{{ ride.city.latitude }}"
+                 data-map-marker-longitude="{{ ride.city.longitude }}"
+                 data-map-marker-color="red"
+                 data-map-marker-icon="fa-university"
+                 data-map-marker-shape="circle"
+                 style="height: 150px;">
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{ objectPath(ride) }}">
+                    <h4>
+                        {{ ride.title }}
+                    </h4>
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <dl>
+                    <dt>
+                        Datum:
+                    </dt>
+
+                    <dd>
+                        {{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}
+                    </dd>
+                </dl>
+            </div>
+
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <dl>
+                    <dt>
+                        Uhrzeit:
+                    </dt>
+
+                    <dd>
+                        {{ ride.dateTime|date('H:i', ride.city.timezone) }} Uhr
+                    </dd>
+                </dl>
+            </div>
+
+            {% if ride.location and ride.latitude and ride.longitude %}
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <dl>
+                        <dt>
+                            Treffpunkt:
+                        </dt>
+
+                        <dd>
+                            {{ ride.location }}
+                        </dd>
+                    </dl>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    CriticalMass.loadModule('AutoMap', 'map-{{ ride.id }}');
+</script>

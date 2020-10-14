@@ -1,0 +1,28 @@
+<div class="row hidden-xs hidden-sm">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Bald unterwegs
+                </h3>
+            </div>
+            <div class="panel-body">
+                <ul class="list-unstyled">
+                    {% for day in rideList %}
+                        <li>
+                            <h4>
+                                {{ day.dateTime|format_date('eeee, dd. MMMM YYYY') }}
+                            </h4>
+
+                            <ul>
+                                {% for ride in day %}
+                                {% include 'Common/Ride/simple_city_time_list_item.html.twig' with { ride: ride } %}
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

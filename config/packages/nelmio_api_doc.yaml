@@ -1,0 +1,10 @@
+nelmio_api_doc:
+  documentation:
+    host: criticalmass.wip
+    schemes: [ https ]
+    info:
+      title: criticalmass.one
+      description: ApiDoc of criticalmass.one
+      version: 1.0.0
+  areas:
+    path_patterns: [ ^/api ]

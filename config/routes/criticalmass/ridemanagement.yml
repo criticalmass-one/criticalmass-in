@@ -1,0 +1,19 @@
+caldera_criticalmass_ride_add:
+    path:  /{citySlug}/add-ride
+    controller: App\Controller\Ride\RideManagementController::addAction
+
+caldera_criticalmass_ride_edit:
+    path:  /{citySlug}/{rideIdentifier}/edit
+    controller: App\Controller\Ride\RideManagementController::editAction
+
+caldera_criticalmass_ride_disable:
+    path:  /{citySlug}/{rideIdentifier}/disable
+    controller: App\Controller\Ride\RideManagementController::disableAction
+
+caldera_criticalmass_ride_enable:
+    path:  /{citySlug}/{rideIdentifier}/enable
+    controller: App\Controller\Ride\RideManagementController::enableAction
+
+caldera_criticalmass_ride_socialpreview:
+    path:  /{citySlug}/{rideIdentifier}/socialpreview
+    controller: App\Controller\Ride\RideManagementController::socialPreviewAction

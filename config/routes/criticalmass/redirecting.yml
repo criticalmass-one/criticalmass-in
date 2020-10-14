@@ -1,0 +1,6 @@
+remove_trailing_slash:
+    path: /{url}
+    controller: App\Controller\RedirectingController::removeTrailingSlashAction
+    requirements:
+        url: .*/$
+    methods: [GET]

@@ -1,0 +1,15 @@
+caldera_criticalmass_strava_auth:
+    path:  /{citySlug}/{rideIdentifier}/stravaauth
+    controller: App\Controller\Track\StravaController::authAction
+
+caldera_criticalmass_strava_token:
+    path:  /{citySlug}/{rideIdentifier}/stravatoken
+    controller: App\Controller\Track\StravaController::tokenAction
+
+caldera_criticalmass_strava_list:
+    path:  /{citySlug}/{rideIdentifier}/stravalist
+    controller: App\Controller\Track\StravaController::listridesAction
+
+caldera_criticalmass_strava_import:
+    path:  /{citySlug}/{rideIdentifier}/stravaimport
+    controller: App\Controller\Track\StravaController::importAction

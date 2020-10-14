@@ -1,0 +1,16 @@
+twig:
+    paths:
+        - '%kernel.project_dir%/templates'
+        - '%kernel.project_dir%/templates/bundles'
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    number_format:
+        decimals: 2
+        decimal_point: ','
+        thousands_separator: '.'
+    date:
+        timezone: Europe/Paris
+        format: d.m.Y, H:i:s
+        interval_format: '%%d days'
+    form_themes:
+        - '@FOSCKEditor/Form/ckeditor_widget.html.twig'

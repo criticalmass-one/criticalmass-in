@@ -1,0 +1,16 @@
+flagception:
+    features:
+        photos:
+            default: true
+        art11:
+            default: false
+        blog:
+            default: true
+        frontpage_advertisment:
+            default: false
+        strava_track_upload:
+            default: true
+        oembed:
+            default: true
+        corona:
+            default: true

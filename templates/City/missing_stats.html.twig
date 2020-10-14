@@ -1,0 +1,97 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Touren mit fehlenden Statistiken aus {{ city.city }}{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ path('caldera_criticalmass_city_list') }}">
+            Städteliste
+        </a>
+    </li>
+
+    <li>
+        <a href="{{ objectPath(city) }}">
+            {{ city.city }}
+        </a>
+    </li>
+
+    <li class="active">
+        Touren mit fehlenden Statistiken
+    </li>
+{% endblock %}
+    
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    Touren aus {{ city.city }} mit fehlenden Statistiken
+                </h1>
+
+                <p class="lead">
+                    Bei den folgenden Touren wurden keine Statistiken abgespeichert. Du kannst auf den Seiten der
+                    jeweiligen Tour eine Teilnehmerzahl schätzen oder einen GPX-Track importieren.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>
+                            Datum
+                        </th>
+
+                        <th>
+                            Titel
+                        </th>
+
+                        <th>
+                            Teilnehmer
+                        </th>
+
+                        <th>
+                            Dauer
+                        </th>
+
+                        <th>
+                            Distanz
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for ride in rides %}
+                        <tr>
+                            <td>
+                                <a href="{{ objectPath(ride) }}">
+                                    {{ ride.dateTime|date('d.m.Y') }}
+                                </a>
+                            </td>
+
+                            <td>
+                                <a href="{{ objectPath(ride) }}">
+                                    {{ ride.title }}
+                                </a>
+                            </td>
+
+                            <td>
+                                {{ ride.estimatedParticipants|default('fehlt') }}
+                            </td>
+
+                            <td>
+                                {{ human_duration(ride.getEstimatedDurationInSeconds())|default('fehlt') }}
+                            </td>
+
+                            <td>
+                                {{ ride.estimatedDistance|default('fehlt') }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
