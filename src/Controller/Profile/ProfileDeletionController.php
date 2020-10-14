@@ -8,20 +8,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class ProfileCancelationController extends Controller
+class ProfileDeletionController extends Controller
 {
     /**
      * @Security("is_granted('cancel', user)")
      */
-    public function cancelAction(Request $request, UserInterface $user): Response
+    public function deleteAction(Request $request, UserInterface $user): Response
     {
         if ($request->isMethod(Request::METHOD_GET)) {
-            return $this->cancelGetAction($request, $user);
+            return $this->deleteGetAction($request, $user);
         }
     }
 
-    protected function cancelGetAction(Request $request, UserInterface $user): Response
+    protected function deleteGetAction(Request $request, UserInterface $user): Response
     {
-        return $this->render('ProfileCancelation/cancel.html.twig');
+        return $this->render('ProfileDeletion/cancel.html.twig');
     }
 }

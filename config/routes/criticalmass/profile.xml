@@ -40,7 +40,7 @@
         <default key="_controller">App\Controller\Profile\ColorController::colorAction</default>
     </route>
 
-    <route id="criticalmass_user_profile_cancel" path="/profile/cancel">
-        <default key="_controller">App\Controller\Profile\ProfileCancelationController::cancelAction</default>
+    <route id="criticalmass_user_profile_delete" path="/profile/delete">
+        <default key="_controller">App\Controller\Profile\ProfileDeletionController::deleteAction</default>
     </route>
 </routes>
