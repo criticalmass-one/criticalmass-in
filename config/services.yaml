@@ -277,3 +277,7 @@ services:
 
     App\Criticalmass\Corona\ResultFetcher\ResultFetcherInterface:
         alias: App\Criticalmass\Corona\ResultFetcher\CachedResultFetcher
+
+    App\Criticalmass\Profile\Deletion\UserPartDeleter\UserProfilePhotoDeleter:
+        arguments:
+            $filesystem: '@oneup_flysystem.flysystem_user_photo_filesystem'
