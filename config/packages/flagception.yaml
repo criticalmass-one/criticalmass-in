@@ -12,3 +12,5 @@ flagception:
             default: true
         oembed:
             default: true
+        corona:
+            default: true

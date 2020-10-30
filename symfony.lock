@@ -26,6 +26,9 @@
     "composer/xdebug-handler": {
         "version": "1.3.3"
     },
+    "dnoegel/php-xdg-base-dir": {
+        "version": "v0.1.1"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -318,10 +321,10 @@
         "version": "1.3.8"
     },
     "knplabs/knp-menu": {
-        "version": "2.3.0"
+        "version": "v3.1.2"
     },
     "knplabs/knp-menu-bundle": {
-        "version": "v2.2.1"
+        "version": "v3.0.0"
     },
     "knplabs/knp-paginator-bundle": {
         "version": "v2.8.0"
@@ -340,6 +343,9 @@
     },
     "league/flysystem": {
         "version": "1.0.51"
+    },
+    "league/mime-type-detection": {
+        "version": "1.5.1"
     },
     "liip/imagine-bundle": {
         "version": "1.8",
@@ -733,6 +739,9 @@
             "version": "3.3",
             "ref": "87c585d24de9f43bca80ebcfd5cf5cb39445d95f"
         }
+    },
+    "symfony/http-client-contracts": {
+        "version": "v2.2.0"
     },
     "symfony/http-foundation": {
         "version": "v4.1.1"
