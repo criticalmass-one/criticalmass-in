@@ -6,3 +6,6 @@ jms_serializer:
       options: 0 # json_encode options bitmask, suggested JSON_PRETTY_PRINT in development
     json_deserialization:
       options: 0 # json_decode options bitmask
+  handlers:
+    datetime:
+      default_timezone: 'UTC'
