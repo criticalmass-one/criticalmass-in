@@ -14,10 +14,6 @@ caldera_criticalmass_profile:
     resource: 'profile.xml'
     prefix: /
 
-caldera_criticalmass_api:
-    resource: 'api.yml'
-    prefix: /api
-
 caldera_criticalmass_calendar:
     resource: 'calendar.yml'
     prefix: /
