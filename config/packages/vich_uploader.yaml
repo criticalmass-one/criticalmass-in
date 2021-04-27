@@ -44,10 +44,3 @@ vich_uploader:
       namer:              vich_uploader.namer_uniqid
       delete_on_remove: true
       delete_on_update: true
-
-    blog_post_teaser:
-      uri_prefix:         ''
-      upload_destination: flysystem_blogpost_teaser
-      namer:              vich_uploader.namer_uniqid
-      delete_on_remove:   true
-      delete_on_update:   true
