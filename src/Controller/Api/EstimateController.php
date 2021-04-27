@@ -11,12 +11,14 @@ use App\Model\CreateEstimateModel;
 use Doctrine\Persistence\ManagerRegistry;
 use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializerInterface;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Nelmio\ApiDocBundle\Annotation\Operation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Swagger\Annotations as SWG;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class EstimateController extends BaseController
@@ -152,7 +154,7 @@ class EstimateController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     *
+     * @Route("/estimate", name="caldera_criticalmass_rest_estimate_create", methods={"POST"})
      * @ParamConverter("ride", class="App:Ride")
      */
     public function createRideEstimateAction(Request $request, Ride $ride): Response

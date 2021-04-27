@@ -4,20 +4,6 @@ gregwar_captcha_routing:
 criticalmass:
   resource: routes/criticalmass/routing.yml
   prefix:   /
-  host:       '{host}'
-  defaults:
-    host: '%domain.one%'
-  requirements:
-    host: '%domain.one%'
-
-criticalmass_blog:
-  resource: routes/criticalmass/blog.yml
-  prefix:   /
-  host:       '{host}'
-  defaults:
-    host: '%domain.blog%'
-  requirements:
-    host: '%domain.blog%'
 
 facebook_login:
   path: /login/check-facebook
