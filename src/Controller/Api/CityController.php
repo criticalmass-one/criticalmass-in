@@ -176,7 +176,7 @@ class CityController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     * @Route("/{citySlug}/{rideIdentifier}", name="caldera_criticalmass_rest_city_list", methods={"GET"})
+     * @Route("/city", name="caldera_criticalmass_rest_city_list", methods={"GET"})
      */
     public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager): Response
     {
