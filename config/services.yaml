@@ -27,8 +27,6 @@ parameters:
     twitter.secret: '%env(TWITTER_SECRET)%'
     photo_tsv.access_key: '%env(PHOTO_TSV_ACCESS_KEY)%'
     timeline.ttl: 60
-    domain.blog: '%env(DOMAIN_BLOG)%'
-    domain.one: '%env(DOMAIN_ONE)%'
     notification.mail.sender_address: malte@criticalmass.in
     request_listener.http_port: 80
     request_listener.https_port: 443
