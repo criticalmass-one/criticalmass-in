@@ -20,9 +20,6 @@ liip_imagine:
         frontpage_teaser_flysystem_loader:
             flysystem:
                 filesystem_service:  oneup_flysystem.flysystem_frontpage_teaser_filesystem
-        blogpost_teaser_flysystem_loader:
-            flysystem:
-                filesystem_service:  oneup_flysystem.flysystem_blogpost_teaser_filesystem
 
     filter_sets:
         gallery_photo_thumb:
@@ -101,12 +98,6 @@ liip_imagine:
 
         frontpage_teaser_large:
             data_loader: frontpage_teaser_flysystem_loader
-            quality: 75
-            filters:
-                thumbnail: { size: [2000, 2000], mode: inset }
-
-        blogpost_teaser:
-            data_loader: blogpost_teaser_flysystem_loader
             quality: 75
             filters:
                 thumbnail: { size: [2000, 2000], mode: inset }

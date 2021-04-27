@@ -12,6 +12,7 @@ use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class LocationController extends BaseController
 {
@@ -34,6 +35,7 @@ class LocationController extends BaseController
      * )
      *
      * @ParamConverter("city", class="App:City")
+     * @Route("/{citySlug}/location", name="caldera_criticalmass_rest_location_list", methods={"GET"}, options={"expose"=true})
      */
     public function listLocationAction(ManagerRegistry $registry, City $city): Response
     {
@@ -77,6 +79,7 @@ class LocationController extends BaseController
      * )
      *
      * @ParamConverter("location", class="App:Location")
+     * @Route("/{citySlug}/location/{locationSlug}", name="caldera_criticalmass_rest_location_show", methods={"GET"}, options={"expose"=true})
      */
     public function showLocationAction(Location $location): Response
     {

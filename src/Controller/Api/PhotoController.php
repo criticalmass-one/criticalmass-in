@@ -14,6 +14,7 @@ use Swagger\Annotations as SWG;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class PhotoController extends BaseController
 {
@@ -46,6 +47,7 @@ class PhotoController extends BaseController
      * )
      *
      * @ParamConverter("ride", class="App:Ride")
+     * @Route("/{citySlug}/{rideIdentifier}/listPhotos", name="caldera_criticalmass_rest_photo_ridelist", methods={"GET"})
      */
     public function listRidePhotosAction(ManagerRegistry $registry, Ride $ride): Response
     {
@@ -272,7 +274,7 @@ class PhotoController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     *
+     * @Route("/photo", name="caldera_criticalmass_rest_photo_list", methods={"GET"})
      */
     public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager): Response
     {
