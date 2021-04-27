@@ -18,6 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -54,6 +55,7 @@ class RideController extends BaseController
      * )
      *
      * @ParamConverter("ride", class="App:Ride")
+     * @Route("/{citySlug}/{rideIdentifier}", name="caldera_criticalmass_rest_ride_show", methods={"GET"}, options={"expose"=true})
      */
     public function showAction(Ride $ride): Response
     {
@@ -87,6 +89,7 @@ class RideController extends BaseController
      * )
      *
      * @ParamConverter("city", class="App:City")
+     * @Route("/{citySlug}/current", name="caldera_criticalmass_rest_ride_show_current", methods={"GET"}, options={"expose"=true})
      */
     public function showCurrentAction(Request $request, City $city, ManagerRegistry $registry): Response
     {
@@ -344,7 +347,7 @@ class RideController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     *
+     * @Route("/ride", name="caldera_criticalmass_rest_ride_list", methods={"GET"})
      */
     public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager): Response
     {
