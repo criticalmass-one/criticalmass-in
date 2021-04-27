@@ -15,6 +15,7 @@ use Swagger\Annotations as SWG;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class TrackController extends BaseController
@@ -32,6 +33,7 @@ class TrackController extends BaseController
      * )
      *
      * @ParamConverter("ride", class="App:Ride")
+     * @Route("/{citySlug}/{rideIdentifier}/listTracks", name="caldera_criticalmass_rest_track_ridelist", methods={"GET"})
      */
     public function listRideTrackAction(ManagerRegistry $registry, Ride $ride): Response
     {
@@ -59,6 +61,7 @@ class TrackController extends BaseController
      * )
      *
      * @ParamConverter("track", class="App:Track")
+     * @Route("/track/{trackId}", name="caldera_criticalmass_rest_track_view", methods={"GET"})
      */
     public function viewAction(Track $track, UserInterface $user = null): Response
     {
@@ -198,7 +201,7 @@ class TrackController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     *
+     * @Route("/track", name="caldera_criticalmass_rest_track_list", methods={"GET"})
      */
     public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager, UserInterface $user = null): Response
     {
