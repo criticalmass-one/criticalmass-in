@@ -38,7 +38,6 @@ parameters:
     upload_destination.ride_photo: '%kernel.project_dir%/public/rides'
     upload_destination.frontpage_teaser: '%kernel.project_dir%/public/teaser'
     upload_destination.user_photo: '%kernel.project_dir%/public/users'
-    upload_destination.blogpost_teaser: '%kernel.project_dir%/public/blogposts'
     upload_destination.heatmap_tile: '%kernel.project_dir%/public/heatmaps'
     staticmaps.host: '%env(STATICMAPS_HOST)%'
     yourls.api_hostname: '%env(YOURLS_API_HOSTNAME)%'
