@@ -33,7 +33,7 @@
     "chart.js": "^2.9.3",
     "cookieconsent": "3",
     "datatables": "^1.10.18",
-    "datatables.net": "^1.10.21",
+    "datatables.net": "^1.10.22",
     "dateformat": "^3.0.3",
     "dropzone": "^5.7.2",
     "flatpickr": "^4.6.6",
