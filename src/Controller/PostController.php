@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Criticalmass\Router\ObjectRouterInterface;
-use App\Entity\BlogPost;
 use App\Entity\Photo;
 use App\EntityInterface\PostableInterface;
 use App\Criticalmass\Util\ClassUtil;
@@ -55,15 +54,6 @@ class PostController extends AbstractController
     public function writeThreadAction(Request $request, Thread $thread = null, ObjectRouterInterface $objectRouter): Response
     {
         return $this->writeAction($request, $thread, $objectRouter);
-    }
-
-    /**
-     * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("blogPost", class="App:BlogPost", converter="blogpost_converter")
-     */
-    public function writeBlogPostAction(Request $request, BlogPost $blogPost, ObjectRouterInterface $objectRouter): Response
-    {
-        return $this->writeAction($request, $blogPost, $objectRouter);
     }
 
     public function writeAction(Request $request, PostableInterface $postable, ObjectRouterInterface $objectRouter): Response
@@ -138,8 +128,7 @@ class PostController extends AbstractController
     public function listAction(
         int $cityId = null,
         int $rideId = null,
-        int $photoId = null,
-        int $blogPostId = null
+        int $photoId = null
     ): Response {
         /* We do not want disabled posts. */
         $criteria = ['enabled' => true];
@@ -156,10 +145,6 @@ class PostController extends AbstractController
 
         if ($photoId) {
             $criteria['photo'] = $photoId;
-        }
-
-        if ($blogPostId) {
-            $criteria['blogPost'] = $blogPostId;
         }
 
         /* Now fetch all posts with matching criteria. */
