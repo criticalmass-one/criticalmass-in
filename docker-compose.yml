@@ -3,25 +3,32 @@
 ###############################################################################
 version: "3.1"
 services:
-
     rabbitmq:
       image: rabbitmq
       container_name: criticalmass-rabbitmq
+      labels:
+        com.symfony.server.service-prefix: 'DATABASE'
+      volumes:
+        - ./docker/rabbitmq:/var/lib/rabbitmq/mnesia/
 
     memcached:
       image: memcached:alpine
       container_name: criticalmass-memcached
+      labels:
+        com.symfony.server.service-prefix: 'MEMCACHED'
 
     redis:
       image: redis:alpine
       container_name: criticalmass-redis
+      labels:
+        com.symfony.server.service-prefix: 'REDIS'
 
     mysql:
-      image: mysql:5.6
+      image: mariadb
       container_name: criticalmass-mysql
       working_dir: /application
       volumes:
-        - .:/application
+        - ./docker/mysql:/var/lib/mysql
       environment:
         - MYSQL_ROOT_PASSWORD=root
         - MYSQL_DATABASE=criticalmass
@@ -29,25 +36,22 @@ services:
         - MYSQL_PASSWORD=criticalmass
       ports:
         - "8002:3306"
+      labels:
+        com.symfony.server.service-prefix: 'DATABASE'
 
     elasticsearch:
-      image: elasticsearch:7.4.2
+      image: elasticsearch:6.8.6
       container_name: criticalmass-elasticsearch
-
-    webserver:
-      image: nginx:alpine
-      container_name: criticalmass-webserver
-      working_dir: /application
+      environment:
+        - discovery.type=single-node
+        - cluster.routing.allocation.disk.threshold_enabled=true
+        - cluster.routing.allocation.disk.watermark.flood_stage=100mb
+        - cluster.routing.allocation.disk.watermark.low=500mb
+        - cluster.routing.allocation.disk.watermark.high=250mb
       volumes:
-          - .:/application
-          - ./phpdocker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+        - ./docker/elasticsearch:/usr/share/elasticsearch/data
       ports:
-       - "1234:80"
-
-    php-fpm:
-      build: phpdocker/php-fpm
-      container_name: criticalmass-php-fpm
-      working_dir: /application
-      volumes:
-        - .:/application
-        - ./phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.3/fpm/conf.d/99-overrides.ini
+        - "9200:9200"
+        - "9300:9300"
+      labels:
+        com.symfony.server.service-prefix: 'ELASTICSEARCH'

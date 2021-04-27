@@ -8,7 +8,9 @@ use App\Entity\Photo;
 use App\Entity\Ride;
 use Doctrine\Persistence\ManagerRegistry;
 use FOS\RestBundle\View\View;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Nelmio\ApiDocBundle\Annotation\Operation;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Swagger\Annotations as SWG;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,15 +21,15 @@ class PhotoController extends BaseController
     /**
      * Get a list of photos which were uploaded to a specified ride.
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Retrieve a list of photos of a ride",
-     *  section="Photo",
-     *  requirements={
-     *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Provide the slug of a city."},
-     *    {"name"="rideIdentifier", "dataType"="string", "required"=true, "description"="Provide the ride identifier of a ride."},
-     *  }
+     * @Operation(
+     *     tags={"Photo"},
+     *     summary="Retrieve a list of photos of a ride",
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     )
      * )
+     *
      * @ParamConverter("ride", class="App:Ride")
      * @Route("/{citySlug}/{rideIdentifier}/listPhotos", name="caldera_criticalmass_rest_photo_ridelist", methods={"GET"})
      */
@@ -39,7 +41,7 @@ class PhotoController extends BaseController
         $view
             ->setData($photoList)
             ->setFormat('json')
-            ->setStatusCode(200);
+            ->setStatusCode(Response::HTTP_OK);
 
         return $this->handleView($view);
     }
@@ -104,30 +106,139 @@ class PhotoController extends BaseController
      *
      * Apply <code>startValue</code> to deliver a value to start your ordered list with.
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Lists photos",
-     *  parameters={
-     *     {"name"="regionSlug", "dataType"="string", "required"=false, "description"="Provide a region slug"},
-     *     {"name"="citySlug", "dataType"="string", "required"=false, "description"="Provide a city slug"},
-     *     {"name"="rideIdentifier", "dataType"="string", "required"=false, "description"="Provide a ride identifier"},
-     *     {"name"="year", "dataType"="string", "required"=false, "description"="Limit the result set to this year. If not set, we will search in the current month."},
-     *     {"name"="month", "dataType"="string", "required"=false, "description"="Limit the result set to this year. Must be combined with 'year'. If not set, we will search in the current month."},
-     *     {"name"="day", "dataType"="string", "required"=false, "description"="Limit the result set to this day."},
-     *     {"name"="centerLatitude", "dataType"="float", "required"=false, "description"="Latitude of a coordinate to search photos around in a given radius."},
-     *     {"name"="centerLongitude", "dataType"="float", "required"=false, "description"="Longitude of a coordinate to search photos around in a given radius."},
-     *     {"name"="radius", "dataType"="float", "required"=false, "description"="Radius to look around for photos."},
-     *     {"name"="bbEastLongitude", "dataType"="float", "required"=false, "description"="East longitude of a bounding box to look for photos."},
-     *     {"name"="bbWestLongitude", "dataType"="float", "required"=false, "description"="West longitude of a bounding box to look for photos."},
-     *     {"name"="bbNorthLatitude", "dataType"="float", "required"=false, "description"="North latitude of a bounding box to look for photos."},
-     *     {"name"="bbSouthLatitude", "dataType"="float", "required"=false, "description"="South latitude of a bounding box to look for photos."},
-     *     {"name"="orderBy", "dataType"="string", "required"=false, "description"="Choose a property to sort the list by."},
-     *     {"name"="orderDirection", "dataType"="string", "required"=false, "description"="Sort ascending or descending."},
-     *     {"name"="distanceOrderDirection", "dataType"="string", "required"=false, "description"="Enable distance sorting in combination with radius query."},
-     *     {"name"="startValue", "dataType"="string", "required"=false, "description"="Start ordered list with provided value."},
-     *     {"name"="size", "dataType"="integer", "required"=false, "description"="Length of resulting list. Defaults to 10."}
-     *  },
-     *  section="Photo"
+     * @Operation(
+     *     tags={"Photo"},
+     *     summary="Lists photos",
+     *     @SWG\Parameter(
+     *         name="regionSlug",
+     *         in="body",
+     *         description="Provide a region slug",
+     *         required=false,
+     *         @SWG\Schema(type="string")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="citySlug",
+     *         in="body",
+     *         description="Provide a city slug",
+     *         required=false,
+     *         @SWG\Schema(type="string")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="rideIdentifier",
+     *         in="body",
+     *         description="Provide a ride identifier",
+     *         required=false,
+     *         @SWG\Schema(type="string")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="year",
+     *         in="body",
+     *         description="Limit the result set to this year. If not set, we will search in the current month.",
+     *         required=false,
+     *         @SWG\Schema(type="string")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="month",
+     *         in="body",
+     *         description="Limit the result set to this year. Must be combined with 'year'. If not set, we will search in the current month.",
+     *         required=false,
+     *         @SWG\Schema(type="string")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="day",
+     *         in="body",
+     *         description="Limit the result set to this day.",
+     *         required=false,
+     *         @SWG\Schema(type="string")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="centerLatitude",
+     *         in="body",
+     *         description="Latitude of a coordinate to search photos around in a given radius.",
+     *         required=false,
+     *         @SWG\Schema(type="number")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="centerLongitude",
+     *         in="body",
+     *         description="Longitude of a coordinate to search photos around in a given radius.",
+     *         required=false,
+     *         @SWG\Schema(type="number")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="radius",
+     *         in="body",
+     *         description="Radius to look around for photos.",
+     *         required=false,
+     *         @SWG\Schema(type="number")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="bbEastLongitude",
+     *         in="body",
+     *         description="East longitude of a bounding box to look for photos.",
+     *         required=false,
+     *         @SWG\Schema(type="number")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="bbWestLongitude",
+     *         in="body",
+     *         description="West longitude of a bounding box to look for photos.",
+     *         required=false,
+     *         @SWG\Schema(type="number")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="bbNorthLatitude",
+     *         in="body",
+     *         description="North latitude of a bounding box to look for photos.",
+     *         required=false,
+     *         @SWG\Schema(type="number")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="bbSouthLatitude",
+     *         in="body",
+     *         description="South latitude of a bounding box to look for photos.",
+     *         required=false,
+     *         @SWG\Schema(type="number")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="orderBy",
+     *         in="body",
+     *         description="Choose a property to sort the list by.",
+     *         required=false,
+     *         @SWG\Schema(type="string")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="orderDirection",
+     *         in="body",
+     *         description="Sort ascending or descending.",
+     *         required=false,
+     *         @SWG\Schema(type="string")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="distanceOrderDirection",
+     *         in="body",
+     *         description="Enable distance sorting in combination with radius query.",
+     *         required=false,
+     *         @SWG\Schema(type="string")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="startValue",
+     *         in="body",
+     *         description="Start ordered list with provided value.",
+     *         required=false,
+     *         @SWG\Schema(type="string")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="size",
+     *         in="body",
+     *         description="Length of resulting list. Defaults to 10.",
+     *         required=false,
+     *         @SWG\Schema(type="integer")
+     *     ),
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     )
      * )
      * @Route("/photo", name="caldera_criticalmass_rest_photo_list", methods={"GET"})
      */
@@ -141,7 +252,7 @@ class PhotoController extends BaseController
         $view
             ->setData($rideList)
             ->setFormat('json')
-            ->setStatusCode(200);
+            ->setStatusCode(Response::HTTP_OK);
 
         return $this->handleView($view);
     }

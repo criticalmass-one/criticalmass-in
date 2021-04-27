@@ -38,6 +38,11 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      * @Assert\NotBlank()
+     * @Assert\Regex(
+     *     pattern="/https?\:\/\//",
+     *     match=false,
+     *     message="Der Benutzername darf keine Url enthalten"
+     * )
      * @Routing\RouteParameter(name="username")
      */
     protected $username;

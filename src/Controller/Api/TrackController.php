@@ -9,7 +9,9 @@ use App\Entity\Track;
 use Doctrine\Persistence\ManagerRegistry;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Nelmio\ApiDocBundle\Annotation\Operation;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Swagger\Annotations as SWG;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,15 +23,15 @@ class TrackController extends BaseController
     /**
      * Get a list of tracks which were uploaded to a specified ride.
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Retrieve a list of tracks of a ride",
-     *  section="Track",
-     *  requirements={
-     *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Provide the slug of a city."},
-     *    {"name"="rideIdentifier", "dataType"="string", "required"=true, "description"="Provide the ride identifier of a ride."},
-     *  }
+     * @Operation(
+     *     tags={"Track"},
+     *     summary="Retrieve a list of tracks of a ride",
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     )
      * )
+     *
      * @ParamConverter("ride", class="App:Ride")
      * @Route("/{citySlug}/{rideIdentifier}/listTracks", name="caldera_criticalmass_rest_track_ridelist", methods={"GET"})
      */
@@ -41,7 +43,7 @@ class TrackController extends BaseController
         $view
             ->setData($trackList)
             ->setFormat('json')
-            ->setStatusCode(200);
+            ->setStatusCode(Response::HTTP_OK);
 
         return $this->handleView($view);
     }
@@ -49,14 +51,15 @@ class TrackController extends BaseController
     /**
      * Show details of a specified track.
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Show details of a track",
-     *  section="Track",
-     *  requirements={
-     *    {"name"="trackId", "dataType"="int", "required"=true, "description"="Unique id of the track."}
-     *  }
+     * @Operation(
+     *     tags={"Track"},
+     *     summary="Show details of a track",
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     )
      * )
+     *
      * @ParamConverter("track", class="App:Track")
      * @Route("/track/{trackId}", name="caldera_criticalmass_rest_track_view", methods={"GET"})
      */
@@ -74,7 +77,7 @@ class TrackController extends BaseController
         $view
             ->setData($track)
             ->setFormat('json')
-            ->setStatusCode(200)
+            ->setStatusCode(Response::HTTP_OK)
             ->setContext($context);
 
         return $this->handleView($view);
@@ -127,21 +130,76 @@ class TrackController extends BaseController
      *
      * Apply <code>startValue</code> to deliver a value to start your ordered list with.
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Lists tracks",
-     *  parameters={
-     *     {"name"="regionSlug", "dataType"="string", "required"=false, "description"="Provide a region slug"},
-     *     {"name"="citySlug", "dataType"="string", "required"=false, "description"="Provide a city slug"},
-     *     {"name"="year", "dataType"="string", "required"=false, "description"="Limit the result set to this year. If not set, we will search in the current month."},
-     *     {"name"="month", "dataType"="string", "required"=false, "description"="Limit the result set to this year. Must be combined with 'year'. If not set, we will search in the current month."},
-     *     {"name"="day", "dataType"="string", "required"=false, "description"="Limit the result set to this day."},
-     *     {"name"="orderBy", "dataType"="string", "required"=false, "description"="Choose a property to sort the list by."},
-     *     {"name"="orderDirection", "dataType"="string", "required"=false, "description"="Sort ascending or descending."},
-     *     {"name"="startValue", "dataType"="string", "required"=false, "description"="Start ordered list with provided value."},
-     *     {"name"="size", "dataType"="integer", "required"=false, "description"="Length of resulting list. Defaults to 10."}
-     *  },
-     *  section="Track"
+     * @Operation(
+     *     tags={"Track"},
+     *     summary="Lists tracks",
+     *     @SWG\Parameter(
+     *         name="regionSlug",
+     *         in="body",
+     *         description="Provide a region slug",
+     *         required=false,
+     *         @SWG\Schema(type="string")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="citySlug",
+     *         in="body",
+     *         description="Provide a city slug",
+     *         required=false,
+     *         @SWG\Schema(type="string")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="year",
+     *         in="body",
+     *         description="Limit the result set to this year. If not set, we will search in the current month.",
+     *         required=false,
+     *         @SWG\Schema(type="string")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="month",
+     *         in="body",
+     *         description="Limit the result set to this year. Must be combined with 'year'. If not set, we will search in the current month.",
+     *         required=false,
+     *         @SWG\Schema(type="string")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="day",
+     *         in="body",
+     *         description="Limit the result set to this day.",
+     *         required=false,
+     *         @SWG\Schema(type="string")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="orderBy",
+     *         in="body",
+     *         description="Choose a property to sort the list by.",
+     *         required=false,
+     *         @SWG\Schema(type="string")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="orderDirection",
+     *         in="body",
+     *         description="Sort ascending or descending.",
+     *         required=false,
+     *         @SWG\Schema(type="string")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="startValue",
+     *         in="body",
+     *         description="Start ordered list with provided value.",
+     *         required=false,
+     *         @SWG\Schema(type="string")
+     *     ),
+     *     @SWG\Parameter(
+     *         name="size",
+     *         in="body",
+     *         description="Length of resulting list. Defaults to 10.",
+     *         required=false,
+     *         @SWG\Schema(type="integer")
+     *     ),
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     )
      * )
      * @Route("/track", name="caldera_criticalmass_rest_track_list", methods={"GET"})
      */
@@ -162,7 +220,7 @@ class TrackController extends BaseController
         $view
             ->setData($trackList)
             ->setFormat('json')
-            ->setStatusCode(200)
+            ->setStatusCode(Response::HTTP_OK)
             ->setContext($context);
 
         return $this->handleView($view);

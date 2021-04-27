@@ -7,7 +7,7 @@ use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="social_network_profile", options={"charset"="utf8mb4"})
+ * @ORM\Table(name="social_network_profile", options={"charset"="utf8mb4", "collate"="utf8mb4_unicode_ci"})
  * @ORM\Entity(repositoryClass="App\Repository\SocialNetworkProfileRepository")
  * @JMS\ExclusionPolicy("all")
  */
@@ -17,6 +17,8 @@ class SocialNetworkProfile
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected int $id;
 
@@ -29,6 +31,9 @@ class SocialNetworkProfile
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="socialNetworkProfiles")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     * @JMS\Expose
+     * @JMS\Type("Relation<App\Entity\City>")
+     * @JMS\SerializedName("city_id")
      */
     protected ?City $city = null;
 
@@ -71,8 +76,10 @@ class SocialNetworkProfile
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
-    private \DateTime $createdAt;
+    private ?\DateTime $createdAt = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="socialNetworkProfiles")
@@ -81,31 +88,43 @@ class SocialNetworkProfile
 
     /**
      * @ORM\Column(type="boolean")
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected bool $autoPublish = true;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected ?\DateTime $lastFetchSuccessDateTime = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected ?\DateTime $lastFetchFailureDateTime = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected ?string $lastFetchFailureError = null;
 
     /**
      * @ORM\Column(type="boolean")
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $autoFetch = true;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @JMS\Expose
+     * @JMS\Groups({"ride-list"})
      */
     protected $additionalData;
 

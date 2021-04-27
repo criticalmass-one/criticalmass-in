@@ -7,7 +7,9 @@ use App\Entity\Location;
 use Doctrine\Persistence\ManagerRegistry;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Nelmio\ApiDocBundle\Annotation\Operation;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Swagger\Annotations as SWG;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,14 +17,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class LocationController extends BaseController
 {
     /**
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Retrieve a list of locations of a city",
-     *  section="Location",
-     *  requirements={
-     *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Provide the slug of a city."}
-     *  }
+     * @Operation(
+     *     tags={"Location"},
+     *     summary="Retrieve a list of locations of a city",
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     )
      * )
+     *
      * @ParamConverter("city", class="App:City")
      * @Route("/{citySlug}/location", name="caldera_criticalmass_rest_location_list", methods={"GET"}, options={"expose"=true})
      */
@@ -34,7 +37,7 @@ class LocationController extends BaseController
         $view
             ->setData($locationList)
             ->setFormat('json')
-            ->setStatusCode(200);
+            ->setStatusCode(Response::HTTP_OK);
 
         return $this->handleView($view);
     }
@@ -42,15 +45,15 @@ class LocationController extends BaseController
     /**
      * Show details of a specified location.
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Show details of a location",
-     *  section="Location",
-     *  requirements={
-     *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Provide the slug of a city."},
-     *    {"name"="locationSlug", "dataType"="string", "required"=true, "description"="Slug of the location."},
-     *  }
+     * @Operation(
+     *     tags={"Location"},
+     *     summary="Show details of a location",
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     )
      * )
+     *
      * @ParamConverter("location", class="App:Location")
      * @Route("/{citySlug}/location/{locationSlug}", name="caldera_criticalmass_rest_location_show", methods={"GET"}, options={"expose"=true})
      */
@@ -62,7 +65,7 @@ class LocationController extends BaseController
         $view
             ->setData($location)
             ->setFormat('json')
-            ->setStatusCode(200)
+            ->setStatusCode(Response::HTTP_OK)
             ->setContext($context);
 
         return $this->handleView($view);

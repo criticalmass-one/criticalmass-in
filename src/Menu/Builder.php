@@ -82,8 +82,17 @@ class Builder extends AbstractBuilder
             $menu->addChild('Benutzerkonto', ['uri' => '#'])
                 ->setExtra('dropdown', true);
 
-            $menu['Benutzerkonto'
-                ]->addChild('Dein Profil', ['route' => 'criticalmass_user_usermanagement']);
+            $menu['Benutzerkonto']->addChild('Dein Profil', ['route' => 'criticalmass_user_usermanagement']);
+
+            $menu['Benutzerkonto']->addChild('divider1', ['attributes' => ['role' => 'separator', 'class' => 'divider']]);
+
+            $menu['Benutzerkonto']->addChild('Profilfoto ändern', ['route' => 'criticalmass_user_profile_photo']);
+            $menu['Benutzerkonto']->addChild('Profilfarbe wählen', ['route' => 'criticalmass_user_profile_color']);
+            $menu['Benutzerkonto']->addChild('Tourübersicht', ['route' => 'criticalmass_user_participation_list']);
+            $menu['Benutzerkonto']->addChild('Deine Tracks', ['route' => 'caldera_criticalmass_track_list']);
+            $menu['Benutzerkonto']->addChild('Deine Fotos', ['route' => 'caldera_criticalmass_photo_user_list']);
+
+            $menu['Benutzerkonto']->addChild('divider2', ['attributes' => ['role' => 'separator', 'class' => 'divider']]);
 
             $menu['Benutzerkonto']
                 ->addChild('Abmelden', ['route' => 'fos_user_security_logout']);
