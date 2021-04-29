@@ -13,22 +13,15 @@
     "build": "encore production --progress"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-pro": "^5.14.0",
     "@symfony/stimulus-bridge": "^2.0.0",
     "@symfony/webpack-encore": "^1.0.0",
     "core-js": "^3.0.0",
-    "regenerator-runtime": "^0.13.2",
-    "stimulus": "^2.0.0",
-    "webpack-notifier": "^1.6.0",
-    "@fortawesome/fontawesome-pro": "^5.14.0",
-    "gulp": "^4.0.2",
-    "gulp-clean-css": "^2.0.4",
-    "gulp-concat": "^2.6.1",
-    "gulp-css-replace-url": "^0.2.4",
-    "gulp-flatten": "^0.4.0",
-    "gulp-minify": "^3.1.0",
-    "gulp-sass": "^4.1.0",
     "node-sass": "^5.0.0",
-    "sass-loader": "^9.0.1 || ^10.0.0 || ^11.0.0"
+    "regenerator-runtime": "^0.13.2",
+    "sass-loader": "^9.0.1 || ^10.0.0 || ^11.0.0",
+    "stimulus": "^2.0.0",
+    "webpack-notifier": "^1.6.0"
   },
   "author": "",
   "license": "ISC",
@@ -59,4 +52,3 @@
     "typeahead.js": "^0.11.1"
   }
 }
-
