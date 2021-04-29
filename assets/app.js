@@ -1,13 +1,13 @@
-/*
- * Welcome to your app's main JavaScript file!
- *
- * We recommend including the built version of this JavaScript file
- * (and its CSS file) in your base layout (base.html.twig).
- */
-
-// any CSS you import will output into a single css file (app.css in this case)
 //import './styles/app.css';
 import './scss/criticalmass.scss';
 
-// start the Stimulus application
-import './bootstrap';
+//window.bootstrap = bootstrap;
+require('bootstrap');
+
+import DateTimePicker from './js/DateTimePicker';
+import GeocodingButton from './js/GeocodingButton';
+import Map from './js/Map';
+import DataTable from './js/DataTable';
+import Search from './js/Search';
+
+export {DateTimePicker, GeocodingButton, Map, DataTable, Search};
