@@ -56,7 +56,7 @@ class SubrideController extends BaseController
      * )
      *
      * @ParamConverter("subride", class="App:Subride")
-     * @Route("/{citySlug}/{rideIdentifier}/{subrideId}", name="caldera_criticalmass_rest_subride_show", methods={"GET"})
+     * @Route("/api/{citySlug}/{rideIdentifier}/{subrideId}", name="caldera_criticalmass_rest_subride_show", methods={"GET"})
      */
     public function showSubrideAction(Subride $subride, UserInterface $user = null): Response
     {
