@@ -33,7 +33,7 @@ class TrackController extends BaseController
      * )
      *
      * @ParamConverter("ride", class="App:Ride")
-     * @Route("/{citySlug}/{rideIdentifier}/listTracks", name="caldera_criticalmass_rest_track_ridelist", methods={"GET"})
+     * @Route("/{citySlug}/{rideIdentifier}/listTracks", name="caldera_criticalmass_rest_track_ridelist", options={"expose"=true}, methods={"GET"})
      */
     public function listRideTrackAction(ManagerRegistry $registry, Ride $ride): Response
     {

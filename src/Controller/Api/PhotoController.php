@@ -31,7 +31,7 @@ class PhotoController extends BaseController
      * )
      *
      * @ParamConverter("ride", class="App:Ride")
-     * @Route("/{citySlug}/{rideIdentifier}/listPhotos", name="caldera_criticalmass_rest_photo_ridelist", methods={"GET"})
+     * @Route("/{citySlug}/{rideIdentifier}/listPhotos", name="caldera_criticalmass_rest_photo_ridelist", options={"expose"=true}, methods={"GET"})
      */
     public function listRidePhotosAction(ManagerRegistry $registry, Ride $ride): Response
     {
