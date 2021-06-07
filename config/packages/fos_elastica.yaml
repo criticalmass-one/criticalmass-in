@@ -123,6 +123,8 @@ fos_elastica:
                         createdAt: { type: date, format: "strict_date_optional_time" }
                         updatedAt: { type: date, format: "strict_date_optional_time" }
                         country: { type: keyword }
+                        region: { type: keyword }
+                        continent: { type: keyword }
                         pin: { type: geo_point }
                     persistence:
                         driver: orm

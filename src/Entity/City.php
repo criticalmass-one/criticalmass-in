@@ -822,6 +822,15 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
         return null;
     }
 
+    public function getContinent(): ?Region
+    {
+        if ($this->getCountry()) {
+            return $this->getCountry()->getParent();
+        }
+
+        return null;
+    }
+
     public function getDateTime(): ?\DateTime
     {
         return null;
