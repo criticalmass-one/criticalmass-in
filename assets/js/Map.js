@@ -12,6 +12,12 @@ export default class Map {
         shape: 'circle',
         prefix: 'far'
     });
+    cityIcon = L.ExtraMarkers.icon({
+        icon: 'fa-university',
+        markerColor: 'blue',
+        shape: 'circle',
+        prefix: 'far'
+    });
     photoIcon = L.ExtraMarkers.icon({
         icon: 'fa-camera',
         markerColor: 'yellow',
@@ -71,21 +77,21 @@ export default class Map {
     }
 
     queryApi() {
-        const rideApiQuery = this.mapContainer.dataset.rideApiQuery;
-
+        const apiQueryUrl = this.mapContainer.dataset.apiQuery;
+        const dataType = this.mapContainer.dataset.apiType;
+        const dataIcon = this.getIconForType(dataType);
         const that = this;
 
-        if (rideApiQuery) {
-            fetch(rideApiQuery).then((response) => {
+        if (apiQueryUrl) {
+            fetch(apiQueryUrl).then((response) => {
                 return response.json();
-            }).then((rideList) => {
+            }).then((resultList) => {
                 const layer = L.featureGroup();
 
-                for (var i in rideList) {
-                    const ride = rideList[i];
-                    const rideLatLng = L.latLng(ride.latitude, ride.longitude);
-
-                    const marker = L.marker(rideLatLng, {icon: that.rideIcon});
+                for (var i in resultList) {
+                    const data = resultList[i];
+                    const dataLatLng = L.latLng(data.latitude, data.longitude);
+                    const marker = L.marker(dataLatLng, {icon: dataIcon});
 
                     marker.addTo(layer);
                 }
@@ -220,6 +226,20 @@ export default class Map {
         }
 
         return false;
+    }
+
+    getIconForType(type) {
+        if ('ride' === type) {
+            return this.rideIcon;
+        }
+
+        if ('city' === type) {
+            return this.cityIcon;
+        }
+
+        if ('photo' === type) {
+            return this.photoIcon;
+        }
     }
 }
 
