@@ -72,9 +72,22 @@ export default class Map {
         if (markerLatitudeTarget && markerLongitudeTarget && markerType) {
             const markerLatLng = L.latLng(markerLatitudeTarget.value, markerLongitudeTarget.value);
 
-            const marker = L.marker(markerLatLng, {icon: this.getIconForType(markerType)});
+            const options = {
+                draggable: true,
+                autoPan: true,
+                icon: this.getIconForType(markerType)
+            };
+
+            const marker = L.marker(markerLatLng, options);
 
             marker.addTo(this.map);
+
+            marker.on('moveend', (event) => {
+                const latLng = event.target.getLatLng();
+
+                markerLatitudeTarget.value = latLng.lat;
+                markerLongitudeTarget.value = latLng.lng;
+            });
         }
     }
 
