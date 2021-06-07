@@ -3,11 +3,11 @@
     "app": {
       "js": [
         "/build/runtime.js",
-        "/build/vendors-node_modules_bootstrap_dist_js_npm_js-node_modules_core-js_modules_es_array_filter_js-5a2ca6.js",
+        "/build/vendors-node_modules_fortawesome_fontawesome-pro_js_fontawesome_js-node_modules_fortawesome_f-bec1ac.js",
         "/build/app.js"
       ],
       "css": [
-        "/build/vendors-node_modules_bootstrap_dist_js_npm_js-node_modules_core-js_modules_es_array_filter_js-5a2ca6.css",
+        "/build/vendors-node_modules_fortawesome_fontawesome-pro_js_fontawesome_js-node_modules_fortawesome_f-bec1ac.css",
         "/build/app.css"
       ]
     }

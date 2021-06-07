@@ -13,7 +13,7 @@
     "build": "encore production --progress"
   },
   "devDependencies": {
-    "@fortawesome/fontawesome-pro": "^5.14.0",
+    "@fortawesome/fontawesome-pro": "^5.15.3",
     "@symfony/stimulus-bridge": "^2.0.0",
     "@symfony/webpack-encore": "^1.0.0",
     "core-js": "^3.0.0",

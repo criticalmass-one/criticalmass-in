@@ -10,4 +10,8 @@ import Map from './js/Map';
 import DataTable from './js/DataTable';
 import Search from './js/Search';
 
+import '@fortawesome/fontawesome-pro/js/fontawesome';
+import '@fortawesome/fontawesome-pro/js/solid';
+import '@fortawesome/fontawesome-pro/js/regular';
+
 export {DateTimePicker, GeocodingButton, Map, DataTable, Search};
