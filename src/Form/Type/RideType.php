@@ -38,9 +38,8 @@ class RideType extends AbstractType
                 'model_timezone' => 'UTC',
                 'view_timezone' => $timezone,
                 'date_widget' => 'single_text',
-                'date_format' => 'dd.MM.yyyy', //here
                 'time_widget' => 'single_text',
-                'compound' => true
+                'html5' => true,
             ])
             ->add('location', TextType::class, ['required' => false])
             ->add('latitude', HiddenType::class, ['required' => false])
