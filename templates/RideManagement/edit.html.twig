@@ -73,7 +73,7 @@
         {{ form_start(form) }}
         <div class="row">
             <div class="col-md-12">
-                <div id="map" class="map" style="height: 250px;" data-map-center-latitude="{{ ride.latitude|default(ride.city.latitude) }}" data-map-center-longitude="{{ ride.longitude|default(ride.city.longitude) }}" data-map-zoomlevel="10" data-marker-type="city" data-marker-latitude-target="ride_latitude" data-marker-longitude-target="ride_longitude">
+                <div id="map" class="map" style="height: 250px;" data-map-center-latitude="{{ ride.latitude|default(ride.city.latitude) }}" data-map-center-longitude="{{ ride.longitude|default(ride.city.longitude) }}" data-map-zoomlevel="10" data-marker-type="ride" data-marker-latitude-target="ride_latitude" data-marker-longitude-target="ride_longitude">
 
                 </div>
             </div>
