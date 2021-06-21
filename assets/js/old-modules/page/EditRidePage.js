@@ -46,8 +46,6 @@ define(['Map', 'LocationMarker', 'typeahead.jquery', 'bloodhound', 'Geocoding'],
         this._initCityMarker();
         this._initLocationMarker();
         this._initEventListeners();
-        //this._initLocationSearch();
-        this._initGeolocationEvents();
     };
 
     EditRidePage.prototype._initEventListeners = function () {
@@ -214,98 +212,6 @@ define(['Map', 'LocationMarker', 'typeahead.jquery', 'bloodhound', 'Geocoding'],
         }
 
         this._searchForMonth(date[2], date[1], monthSuccessCallback, monthFailCallback);
-    };
-
-    EditRidePage.prototype._initLocationSearch = function () {
-        var that = this;
-
-        this._bloodhound = new Bloodhound({
-            datumTokenizer: function (data) {
-                return Bloodhound.tokenizers.whitespace(data.location);
-            },
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            prefetch: {
-                url: '/' + this.settings.citySlug + '/locations',
-                cache: true,
-                ttl: 3600
-            }
-        });
-
-        this._bloodhound.initialize();
-
-        $($('#ride_location')).typeahead(
-            {
-                hint: false,
-                highlight: true,
-                minLength: 1,
-                classNames: {
-                    dataset: 'tt-dataset tt-dataset-results container'
-                }
-            },
-            {
-                name: 'results',
-                source: this._bloodhound.ttAdapter(),
-                displayKey: 'location',
-                templates: {
-                    suggestion: function (data) {
-                        var html = '';
-                        html += '<div class="row padding-top-small padding-bottom-small">';
-                        html += '<div class="col-md-12">';
-                        html += '<i class="far fa-map-marker"></i>&nbsp;' + data.location;
-                        html += '</div>';
-                        html += '</div>';
-
-                        return html;
-                    }
-                }
-            }
-        );
-
-        $($('#ride_location')).bind('typeahead:select', function (ev, suggestion) {
-            var latLng = {
-                lat: suggestion.latitude,
-                lng: suggestion.longitude
-            };
-
-            that._moveLocationMarker(latLng);
-            that._updateLocationPosition(latLng);
-            that.map.setView(latLng, 15);
-        });
-    };
-
-    EditRidePage.prototype._initGeolocationEvents = function () {
-        var that = this;
-
-        this._$searchRideButton = $('#search-location-button');
-
-        this._$searchRideButton.on('click', function () {
-            var location = $('#ride_location').val();
-
-            const north = that.map.getBounds().getNorth();
-            const west = that.map.getBounds().getWest();
-            const south = that.map.getBounds().getSouth();
-            const east = that.map.getBounds().getEast();
-
-            that._geocoding.searchPhraseInViewbox(location, north, south, west, east,function (data) {
-                that._handleGeocodingLocation(data);
-            });
-        });
-    };
-
-    EditRidePage.prototype._handleGeocodingLocation = function (data) {
-        console.log(data);
-        if (data && data.lat && data.lon) {
-            var latLng = {
-                lat: data.lat,
-                lng: data.lon
-            };
-
-            this._moveLocationMarker(latLng);
-
-            this.map.setView(latLng, 15);
-        } else {
-            alert('Der Ort wurde nicht gefunden. Bitte schiebe den Marker manuell auf den Startpunkt der Tour.');
-        }
     };
 
     return EditRidePage;
