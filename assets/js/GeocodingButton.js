@@ -1,73 +1,45 @@
 import L from "leaflet";
 
 export default class GeocodingButton {
-    constructor(element, options) {
+    constructor(geocodingButton, options) {
         const defaults = {};
 
         this.settings = {...defaults, ...options};
 
-        this.init();
-    }
+        geocodingButton.addEventListener('click', (event) => {
+            const country = 'Deutschland';//geocodingButton.dataset.geocodingCountry;
+            const state = 'Hamburg';//geocodingButton.dataset.geocodingState;
+            const city = 'Hamburg';//geocodingButton.dataset.geocodingCity;
 
-    init() {
-        const geocodingButton = document.querySelector('.geocoding');
+            const inputSelector = geocodingButton.dataset.geocodingInputSelector;
 
-        if (geocodingButton) {
-            geocodingButton.addEventListener('click', function () {
-                const apiRequest = new XMLHttpRequest();
+            const street = document.querySelector(inputSelector).value;
 
-                apiRequest.onreadystatechange = function () {
-                    if (apiRequest.readyState === 4) {
-                        if (apiRequest.status === 200) {
-                            const mapContainer = document.getElementById('map');
-                            const markerNumber = parseInt(geocodingButton.dataset.targetMarkerNumber);
+            const nominatimUrl = 'https://nominatim.openstreetmap.org/search?limit=1&polygon_geojson=1&format=jsonv2&q=' + street + ',' + city + ',' + state + ',' + country;
+            console.log(nominatimUrl);
 
-                            const nominatimResponse = JSON.parse(apiRequest.responseText);
+            fetch(nominatimUrl).then((response) => {
+                return response.json();
+            }).then((resultList) => {
+                if (resultList.length > 0) {
+                    const bestResult = resultList.pop();
 
-                            if (nominatimResponse.length === 1) {
-                                const osmPlace = nominatimResponse.pop();
+                    const event = new CustomEvent('geocoding-result');
+                    event.result = bestResult;
 
-                                const markerLatLng = L.latLng(osmPlace.lat, osmPlace.lon);
-                                console.log(markerLatLng);
-
-                                mapContainer.map.eachLayer(function (layer) {
-                                    if (layer.markerNumber !== undefined && layer.markerNumber === markerNumber) {
-                                        layer.setLatLng(markerLatLng);
-
-                                        const northWest = L.latLng(osmPlace.boundingbox[0], osmPlace.boundingbox[2]);
-                                        const southEast = L.latLng(osmPlace.boundingbox[1], osmPlace.boundingbox[3]);
-
-                                        const boundingBox = L.latLngBounds(northWest, southEast);
-
-                                        //mapContainer.map.setView(markerLatLng, 10);
-                                        mapContainer.map.fitBounds(boundingBox);
-                                    }
-                                });
-                            }
-                        }
-                    }
+                    document.dispatchEvent(event);
                 }
-
-                const country = geocodingButton.dataset.geocodingCountry;
-                const state = geocodingButton.dataset.geocodingState;
-                const city = geocodingButton.dataset.geocodingCity;
-
-                const inputSelector = geocodingButton.dataset.geocodingInputSelector;
-
-                const street = document.querySelector(inputSelector).value;
-
-                const nominatimUrl = 'https://nominatim.openstreetmap.org/search?limit=1&polygon_geojson=1&format=jsonv2&q=' + street + ',' + city + ',' + state + ',' + country;
-                console.log(nominatimUrl);
-
-                apiRequest.open('Get', nominatimUrl);
-                apiRequest.send();
+            }).catch(function (err) {
+                console.warn(err);
             });
-        }
+        });
     }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const element = document.querySelector('.geocoding');
+    const geocodingButtonList = document.querySelectorAll('.geocode');
 
-    new GeocodingButton(element);
+    geocodingButtonList.forEach((geocodingButton) => {
+        new GeocodingButton(geocodingButton);
+    });
 });

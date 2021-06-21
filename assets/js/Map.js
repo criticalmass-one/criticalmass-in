@@ -40,6 +40,7 @@ export default class Map {
         this.loadRide();
         this.loadPhotos();
         this.loadTracks();
+        this.initEventListeners();
     }
 
     createMap() {
@@ -268,6 +269,33 @@ export default class Map {
         if ('photo' === type) {
             return this.photoIcon;
         }
+    }
+
+    initEventListeners() {
+        document.addEventListener('geocoding-result', (event) => {
+            const result = event.result;
+            const latitude = parseFloat(result.lat);
+            const longitude = parseFloat(result.lon);
+            const mapCenter = L.latLng(latitude, longitude);
+
+            this.map.eachLayer((layer) => {
+                if (layer instanceof L.Marker) {
+                    layer.setLatLng(mapCenter);
+                }
+            });
+
+            if (result.boundingbox) {
+                const boundingbox = result.boundingbox;
+                const northWest = new L.latLng([boundingbox[1], boundingbox[2]]);
+                const southEast = new L.latLng([boundingbox[0], boundingbox[3]]);
+
+                const bounds = new L.latLngBounds(northWest, southEast);
+
+                this.map.flyToBounds(bounds);
+            } else {
+                this.map.setView(mapCenter);
+            }
+        });
     }
 }
 

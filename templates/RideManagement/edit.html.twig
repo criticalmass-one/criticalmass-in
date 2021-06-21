@@ -170,12 +170,11 @@
                             <label class="control-label" for="location">
                                 Treffpunkt:
                             </label>
-                            <button id="search-location-button" class="btn btn-default btn-xs pull-right geocoding"
+                            <button class="btn btn-default btn-xs pull-right geocode"
                                     data-geocoding-country="{{ ride.city.region.parent }}"
                                     data-geocoding-state="{{ ride.city.region }}"
                                     data-geocoding-city="{{ ride.city.city }}"
                                     data-geocoding-input-selector="#ride_location"
-                                    data-target-marker-number="0"
                                     type="button">
                                 <i class="far fa-map-marker"></i>
                             </button>
