@@ -12,6 +12,12 @@ export default class Map {
         shape: 'circle',
         prefix: 'far'
     });
+    subrideIcon = L.ExtraMarkers.icon({
+        icon: 'fa-bicycle',
+        markerColor: 'green',
+        shape: 'circle',
+        prefix: 'far'
+    });
     cityIcon = L.ExtraMarkers.icon({
         icon: 'fa-university',
         markerColor: 'blue',
@@ -67,11 +73,13 @@ export default class Map {
 
     setDraggableMarkerByProvidedData() {
         const markerType = this.mapContainer.dataset.markerType;
+        const mapCenterLatitude = this.mapContainer.dataset.mapCenterLatitude;
+        const mapCenterLongitude = this.mapContainer.dataset.mapCenterLongitude;
         const markerLatitudeTarget = document.getElementById(this.mapContainer.dataset.markerLatitudeTarget);
         const markerLongitudeTarget = document.getElementById(this.mapContainer.dataset.markerLongitudeTarget);
 
         if (markerLatitudeTarget && markerLongitudeTarget && markerType) {
-            const markerLatLng = L.latLng(markerLatitudeTarget.value, markerLongitudeTarget.value);
+            const markerLatLng = L.latLng(markerLatitudeTarget.value || mapCenterLatitude, markerLongitudeTarget.value || mapCenterLongitude);
 
             const options = {
                 draggable: true,
@@ -268,6 +276,10 @@ export default class Map {
 
         if ('photo' === type) {
             return this.photoIcon;
+        }
+
+        if ('subride' === type) {
+            return this.subrideIcon;
         }
     }
 
