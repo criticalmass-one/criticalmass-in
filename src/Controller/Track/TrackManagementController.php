@@ -2,7 +2,6 @@
 
 namespace App\Controller\Track;
 
-use App\Event\Track\TrackDeletedEvent;
 use App\Event\Track\TrackHiddenEvent;
 use App\Event\Track\TrackShownEvent;
 use Knp\Component\Pager\PaginatorInterface;
@@ -50,21 +49,6 @@ class TrackManagementController extends AbstractController
         } else {
             $eventDispatcher->dispatch(TrackHiddenEvent::NAME, new TrackHiddenEvent($track));
         }
-
-        return $this->redirectToRoute('caldera_criticalmass_track_list');
-    }
-
-    /**
-     * @Security("is_granted('edit', track)")
-     * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
-     */
-    public function deleteAction(Track $track, EventDispatcherInterface $eventDispatcher): Response
-    {
-        $track->setDeleted(true);
-
-        $this->getManager()->flush();
-
-        $eventDispatcher->dispatch(TrackDeletedEvent::NAME, new TrackDeletedEvent($track));
 
         return $this->redirectToRoute('caldera_criticalmass_track_list');
     }

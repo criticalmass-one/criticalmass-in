@@ -12,9 +12,10 @@ import Search from './js/Search';
 import HintModal from './js/HintModal';
 import RideDateChecker from './js/RideDateChecker';
 import PhotoUpload from './js/PhotoUpload';
+import DeleteModal from './js/util/DeleteModal';
 
 import '@fortawesome/fontawesome-pro/js/fontawesome';
 import '@fortawesome/fontawesome-pro/js/solid';
 import '@fortawesome/fontawesome-pro/js/regular';
 
-export {PhotoUpload, RideDateChecker, GeocodingButton, Map, DataTable, Search, HintModal};
+export {DeleteModal, PhotoUpload, RideDateChecker, GeocodingButton, Map, DataTable, Search, HintModal};
