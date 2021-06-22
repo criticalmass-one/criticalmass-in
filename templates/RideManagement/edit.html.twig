@@ -131,7 +131,7 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="alert alert-warning" role="alert" id="doubleMonthRide" style="display: none;">
+                        <div class="alert alert-warning d-none hidden" role="alert" id="doubleMonthRide">
                             <strong>
                                 Vorsicht!
                             </strong>
@@ -139,7 +139,7 @@
                             Touren stattfinden?
                         </div>
 
-                        <div class="alert alert-danger" role="alert" id="doubleDayRide" style="display: none;">
+                        <div class="alert alert-danger d-none hidden" role="alert" id="doubleDayRide">
                             <strong>
                                 Achtung!
                             </strong>
@@ -153,11 +153,11 @@
                             </label>
                             <div class="row">
                                 <div class="col-md-6">
-                                    {{ form_widget(form.dateTime.date, { attr: { class: 'form-control' } }) }}
+                                    {{ form_widget(form.dateTime.date, { attr: { class: 'form-control check-ride-date' } }) }}
                                 </div>
 
                                 <div class="col-md-6">
-                                    {{ form_widget(form.dateTime.time, { attr: { class: 'form-control timepicker' } }) }}
+                                    {{ form_widget(form.dateTime.time, { attr: { class: 'form-control check-ride-date' } }) }}
                                 </div>
                             </div>
                         </div>
