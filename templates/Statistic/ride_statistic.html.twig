@@ -43,14 +43,4 @@
             </div>
         </div>
     </div>
-
-    <script type="text/javascript">
-        CriticalMass.loadModule('RideStatisticPage', null, null, function (page) {
-            {% for property in frp %}
-            page.addProperty('{{ property.createdAt|date('Y-m-d H:i:s') }}', {{ property.numberAttending }}, {{ property.numberMaybe }}, {{ property.numberDeclined }}, {{ property.numberInterested }}, {{ property.numberNoreply }});
-            {% endfor %}
-
-            page.createParticipantsChart($('#facebook-ride-participants'));
-        });
-    </script>
 {% endblock %}

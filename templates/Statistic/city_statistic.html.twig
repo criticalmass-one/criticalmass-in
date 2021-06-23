@@ -127,13 +127,4 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-        CriticalMass.loadModule('CityStatisticPage', null, null, function (page) {
-            {% for ride in rides %}
-            page.addRideData('{{ ride.dateTime|date('Y-m-d') }}', {{ ride.estimatedParticipants|default(0) }}, {{ ride.estimatedDuration|default(0) }}, {{ ride.estimatedDistance|default(0) }});
-            {% endfor %}
-
-            page.createChart($('#chart'));
-        });
-    </script>
 {% endblock %}

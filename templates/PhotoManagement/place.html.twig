@@ -103,29 +103,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        var pageOptions = {
-            startCoord: {
-                latitude: {{ photo.ride.latitude }},
-                longitude: {{ photo.ride.longitude }}
-            },
-            inputFields: {
-                latitude: '#photo_coord_latitude',
-                longitude: '#photo_coord_longitude'
-            }
-        };
-
-        CriticalMass.loadModule('PlacePhotoPage', null, pageOptions, function (placePage) {
-            {% if track %}
-            placePage.addTrack('{{ track|serialize('json')|raw|e('js') }}');
-            {% endif %}
-
-            placePage.addRide('{{ photo.ride|serialize|raw|e('js') }}');
-
-            placePage.setPhoto('{{ photo|serialize|raw|e('js') }}', '{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}');
-
-            placePage.init();
-        });
-    </script>
 {% endblock %}

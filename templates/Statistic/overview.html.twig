@@ -103,24 +103,4 @@
             </div>
         </div>
     </div>
-
-    <script type="text/javascript">
-        CriticalMass.loadModule('StatisticPage', null, null, function (page) {
-            {% for rideMonth in rideMonths %}
-            page.addRideMonth('{{ rideMonth }}');
-            {% endfor %}
-
-            {% for city in cities %}
-            page.addCity('{{ city.city }}', '{{ city.slug }}', {{ city.colorRed }}, {{ city.colorGreen }}, {{ city.colorBlue }});
-            {% endfor %}
-
-            {% for ride in rides %}
-            page.addRideData('{{ ride.city.slug }}', '{{ ride.dateTime|date('Y-m') }}', {{ ride.estimatedParticipants|default(0) }}, {{ ride.estimatedDuration|default(0) }}, {{ ride.estimatedDistance|default(0) }});
-            {% endfor %}
-
-            page.createParticipantsChart($('#participants'));
-            page.createDurationChart($('#duration'));
-            page.createDistanceChart($('#distance'));
-        });
-    </script>
 {% endblock %}

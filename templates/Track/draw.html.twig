@@ -39,17 +39,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        CriticalMass.loadModule('TrackDrawPage', null, null, function (drawPage) {
-            drawPage.setRide('{{ ride|serialize|raw|e('js') }}');
-
-            {% if track %}
-            drawPage.setTrack('{{ track|serialize|raw|e('js') }}');
-            {% endif %}
-
-            drawPage.init();
-        });
-    </script>
-
 {% endblock %}

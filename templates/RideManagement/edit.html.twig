@@ -261,22 +261,4 @@
 
         </form>
     </div>
-
-    <script>
-        var options = {
-            citySlug: '{{ city.mainSlug.slug() }}'
-        };
-
-        CriticalMass.loadModule('EditRidePage', null, options, function (editRidePage) {
-            var cityLatLng = L.latLng({{ city.latitude }}, {{ city.longitude }});
-
-            editRidePage.setCityLatLng(cityLatLng);
-
-            {% if ride and ride.id %}
-            editRidePage.setRideDateTime(new Date({{ ride.dateTime|date('U') * 1000 }}));
-            {% endif %}
-
-            editRidePage.init();
-        });
-    </script>
 {% endblock %}

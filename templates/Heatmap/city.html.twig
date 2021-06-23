@@ -44,12 +44,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        CriticalMass.loadModule('HeatmapPage', null, null, function (heatmapPage) {
-            heatmapPage.setHeatmapIdentifier('{{ city.heatmap.identifier }}');
-            heatmapPage.setMapCenter({{ city.latitude }}, {{ city.longitude }});
-            heatmapPage.init();
-        });
-    </script>
 {% endblock %}

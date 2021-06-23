@@ -166,15 +166,4 @@
         </div>
         {{ form_end(form) }}
     </div>
-
-    <script type="text/javascript">
-        var options = {
-            cityCoords: {
-                latitude: {{ city.latitude }},
-                longitude: {{ city.longitude }}
-            }
-        };
-
-        CriticalMass.loadModule('EditCityCyclePage', null, options);
-    </script>
 {% endblock %}

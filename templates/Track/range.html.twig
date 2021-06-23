@@ -69,18 +69,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        CriticalMass.loadModule('TrackRangePage', null, null, function (rangePage) {
-            rangePage.setStartPoint({{ track.startPoint }});
-            rangePage.setEndPoint({{ track.endPoint }});
-            rangePage.setGapWidth({{ gapWidth }});
-
-            rangePage.setPolylineLatLngs({{ latLngList }});
-            rangePage.setColor({{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }});
-
-            rangePage.init();
-        });
-    </script>
-
 {% endblock %}

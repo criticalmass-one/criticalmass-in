@@ -163,12 +163,4 @@
 
         </form>
     </div>
-
-    <script type="text/javascript">
-        CriticalMass.loadModule('EditSubridePage', null, null, function (page) {
-            page.addRide('{{ ride|serialize|raw|e('js') }}');
-            page.addCity('{{ city|serialize|raw|e('js') }}');
-            page.init();
-        });
-    </script>
 {% endblock %}

@@ -30,12 +30,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        CriticalMass.loadModule('HeatmapPage', null, null, function (heatmapPage) {
-            heatmapPage.setHeatmapIdentifier('{{ ride.heatmap.identifier }}');
-            heatmapPage.setMapCenter({{ ride.latitude }}, {{ ride.longitude }});
-            heatmapPage.init();
-        });
-    </script>
 {% endblock %}
