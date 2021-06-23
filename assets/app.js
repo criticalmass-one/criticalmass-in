@@ -14,9 +14,10 @@ import RideDateChecker from './js/RideDateChecker';
 import PhotoUpload from './js/PhotoUpload';
 import DeleteModal from './js/util/DeleteModal';
 import SubmitButtonDisabler from './js/util/SubmitButtonDisabler';
+import ScrollToPost from './js/util/ScrollToPost';
 
 import '@fortawesome/fontawesome-pro/js/fontawesome';
 import '@fortawesome/fontawesome-pro/js/solid';
 import '@fortawesome/fontawesome-pro/js/regular';
 
-export {SubmitButtonDisabler, DeleteModal, PhotoUpload, RideDateChecker, GeocodingButton, Map, DataTable, Search, HintModal};
+export {ScrollToPost, SubmitButtonDisabler, DeleteModal, PhotoUpload, RideDateChecker, GeocodingButton, Map, DataTable, Search, HintModal};
