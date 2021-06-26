@@ -1,4 +1,56 @@
-controllers:
-  resource: '../../src/Controller/'
+# todo: Introduce routing priority later: https://symfony.com/blog/new-in-symfony-5-1-route-annotations-priority
+
+controller_api_ride:
+  resource: '../../src/Controller/Api/RideController.php'
+  type: annotation
+  prefix: '/api/'
+
+controllers_api_cycle:
+  resource: '../../src/Controller/Api/CycleController.php'
+  type: annotation
+  prefix: '/api/'
+
+controllers_api_estimate:
+  resource: '../../src/Controller/Api/EstimateController.php'
+  type: annotation
+  prefix: '/api/'
+
+controllers_api_location:
+  resource: '../../src/Controller/Api/LocationController.php'
+  type: annotation
+  prefix: '/api/'
+
+controllers_api_photo:
+  resource: '../../src/Controller/Api/PhotoController.php'
+  type: annotation
+  prefix: '/api/'
+
+controllers_api_socialnetworkfeeditem:
+  resource: '../../src/Controller/Api/SocialNetworkFeedItemController.php'
+  type: annotation
+  prefix: '/api/'
+
+controllers_api_socialnetworkprofile:
+  resource: '../../src/Controller/Api/SocialNetworkProfileController.php'
+  type: annotation
+  prefix: '/api/'
+
+controllers_api_subride:
+  resource: '../../src/Controller/Api/SubrideController.php'
+  type: annotation
+  prefix: '/api/'
+
+controllers_api_track:
+  resource: '../../src/Controller/Api/TrackController.php'
+  type: annotation
+  prefix: '/api/'
+
+controllers_api_weather:
+  resource: '../../src/Controller/Api/WeatherController.php'
+  type: annotation
+  prefix: '/api/'
+
+controller_api_city:
+  resource: '../../src/Controller/Api/CityController.php'
   type: annotation
   prefix: '/api/'
