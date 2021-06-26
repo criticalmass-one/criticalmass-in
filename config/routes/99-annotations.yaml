@@ -1,3 +1,5 @@
+# todo: Introduce routing priority later: https://symfony.com/blog/new-in-symfony-5-1-route-annotations-priority
+
 controller_api_ride:
   resource: '../../src/Controller/Api/RideController.php'
   type: annotation
