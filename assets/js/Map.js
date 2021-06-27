@@ -12,6 +12,12 @@ export default class Map {
         shape: 'circle',
         prefix: 'far'
     });
+    locationIcon = L.ExtraMarkers.icon({
+        icon: 'fa-bicycle',
+        markerColor: 'white',
+        shape: 'circle',
+        prefix: 'far'
+    });
     subrideIcon = L.ExtraMarkers.icon({
         icon: 'fa-bicycle',
         markerColor: 'green',
@@ -300,6 +306,10 @@ export default class Map {
 
         if ('subride' === type) {
             return this.subrideIcon;
+        }
+
+        if ('location' === type) {
+            return this.locationIcon;
         }
     }
 
