@@ -54,6 +54,7 @@ export default class Map {
         this.loadPhotos();
         this.loadTracks();
         this.initEventListeners();
+        this.disableInteraction();
     }
 
     createMap() {
@@ -339,6 +340,23 @@ export default class Map {
             }
         });
     }
+
+    disableInteraction() {
+        if (this.mapContainer.dataset.lockMap) {
+            this.mapContainer.querySelector('.leaflet-control-zoom').remove();
+            this.mapContainer.style.cursor = 'default';
+            this.map.dragging.disable();
+            this.map.touchZoom.disable();
+            this.map.doubleClickZoom.disable();
+            this.map.scrollWheelZoom.disable();
+            this.map.boxZoom.disable();
+            this.map.keyboard.disable();
+
+            if (this.map.tap) {
+                this.map.tap.disable();
+            }
+        }
+    };
 }
 
 document.addEventListener('DOMContentLoaded', () => {
