@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Nelmio\ApiDocBundle\Annotation\Operation;
 use Swagger\Annotations as SWG;
+use Symfony\Component\Routing\Annotation\Route;
 
 class CycleController extends BaseController
 {
@@ -86,6 +87,7 @@ class CycleController extends BaseController
      * @ParamConverter("region", class="App:Region", isOptional=true)
      * @ParamConverter("validFrom", class="DateTime", isOptional=true)
      * @ParamConverter("validUntil", class="DateTime", isOptional=true)
+     * @Route("/cycles", name="caldera_criticalmass_rest_cycles_list", methods={"GET"}, options={"expose"=true})
      */
     public function listAction(Request $request, ManagerRegistry $managerRegistry, City $city = null, Region $region = null, \DateTime $validFrom = null, \DateTime $validUntil = null): Response
     {
