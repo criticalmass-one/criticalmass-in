@@ -25,7 +25,7 @@ class PrefetchController extends AbstractController
                 'url' => $objectRouter->generate($ride),
                 'value' => $ride->getTitle(),
                 'meta' => [
-                    'dateTime' => $ride->getDateTime()->setTimezone($cityTimezone)->format('Y-m-d H:i:s'), // @todo fix timezone here
+                    'dateTime' => $ride->getDateTime()->setTimezone($cityTimezone)->format('Y-m-dTH:i:s'), // @todo fix timezone here
                     'location' => $ride->getLocation() ?? '',
                 ]
             ];
