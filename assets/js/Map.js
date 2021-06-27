@@ -40,6 +40,7 @@ export default class Map {
 
         this.createMap();
         this.setViewByProvidedData();
+        this.setMarkerByProvidedData();
         this.setDraggableMarkerByProvidedData();
         this.addProvidedPolyline();
         this.queryApi();
@@ -97,6 +98,25 @@ export default class Map {
                 markerLatitudeTarget.value = latLng.lat;
                 markerLongitudeTarget.value = latLng.lng;
             });
+        }
+    }
+
+    setMarkerByProvidedData() {
+        const markerType = this.mapContainer.dataset.markerType;
+        const markerLatitude = this.mapContainer.dataset.markerLatitude;
+        const markerLongitude = this.mapContainer.dataset.markerLongitude;
+
+        if (markerLatitude && markerLongitude && markerType) {
+            const markerLatLng = L.latLng(markerLatitude, markerLongitude);
+
+            const options = {
+                autoPan: true,
+                icon: this.getIconForType(markerType)
+            };
+
+            const marker = L.marker(markerLatLng, options);
+
+            marker.addTo(this.map);
         }
     }
 
