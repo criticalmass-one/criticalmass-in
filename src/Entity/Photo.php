@@ -21,6 +21,7 @@ use App\EntityInterface\RouteableInterface;
 use App\EntityInterface\StaticMapableInterface;
 use Caldera\GeoBasic\Coord\Coord;
 use Caldera\GeoBasic\Coord\CoordInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
@@ -41,17 +42,17 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @JMS\Expose
+     * @JMS\Expose()
      * @Routing\RouteParameter(name="photoId")
-     * @DataQuery\Sortable
+     * @DataQuery\Sortable()
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="photos")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    protected $user;
+    protected ?User $user = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="Ride", inversedBy="photos")
@@ -60,7 +61,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
      * @OE\Identical()
      * @DataQuery\Queryable
      */
-    protected $ride;
+    protected ?Ride $ride = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="photos")
@@ -68,206 +69,197 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
      * @Routing\RouteParameter(name="citySlug")
      * @DataQuery\Queryable
      */
-    protected $city;
+    protected ?City $city = null;
 
     /**
      * @ORM\Column(type="float", nullable=true)
-     * @JMS\Expose
-     * @DataQuery\Sortable
+     * @JMS\Expose()
+     * @DataQuery\Sortable()
      * @DataQuery\Queryable
-     * @var float $latitude
      */
-    protected $latitude = null;
+    protected ?float $latitude = null;
 
     /**
      * @ORM\Column(type="float", nullable=true)
-     * @JMS\Expose
-     * @DataQuery\Sortable
+     * @JMS\Expose()
+     * @DataQuery\Sortable()
      * @DataQuery\Queryable
-     * @var float $longitude
      */
-    protected $longitude = null;
+    protected ?float $longitude = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @JMS\Expose
+     * @JMS\Expose()
      * @Sharing\Intro()
-     * @DataQuery\Sortable
+     * @DataQuery\Sortable()
      */
-    protected $description;
+    protected ?string $description = null;
 
     /**
      * @ORM\Column(type="integer")
-     * @DataQuery\Sortable
+     * @DataQuery\Sortable()
+     * @JMS\Expose()
      */
-    protected $views = 0;
+    protected int $views = 0;
 
     /**
      * @ORM\Column(type="boolean")
      * @OE\Boolean(value=true)
      * @DataQuery\DefaultBooleanValue(value=true, alias="isEnabled")
      */
-    protected $enabled = true;
+    protected bool $enabled = true;
 
     /**
      * @ORM\Column(type="boolean")
      * @OE\Boolean(value=false)
      * @DataQuery\DefaultBooleanValue(value=false, alias="isDeleted")
      */
-    protected $deleted = false;
+    protected bool $deleted = false;
 
     /**
      * @ORM\Column(type="datetime")
-     * @JMS\Expose
-     * @DataQuery\Sortable
+     * @JMS\Expose()
+     * @DataQuery\Sortable()
      */
-    protected $creationDateTime;
+    protected ?\DateTime $creationDateTime = null;
 
     /**
-     * @var File $imageFile
      * @Vich\UploadableField(mapping="photo_photo", fileNameProperty="imageName", size="imageSize", mimeType="imageMimeType")
      */
-    protected $imageFile;
+    protected ?File $imageFile = null;
 
     /**
-     * @var string
-     * @var string $imageName
      * @ORM\Column(type="string", length=255)
+     * @JMS\Expose()
      */
-    protected $imageName;
+    protected ?string $imageName = null;
 
     /**
-     * @var int $imageSize
      * @ORM\Column(type="integer", nullable=true)
-     * @DataQuery\Sortable
+     * @DataQuery\Sortable()
+     * @JMS\Expose()
      */
-    protected $imageSize;
+    protected ?int $imageSize = null;
 
     /**
-     * @var string $imageMimeType
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Expose()
+     */
+    protected ?string $imageMimeType = null;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $imageMimeType;
+    protected ?string $imageGoogleCloudHash = null;
 
     /**
-     * @var string $imageGoogleCloudHash
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $imageGoogleCloudHash;
-
-    /**
-     * @var File
      * @Vich\UploadableField(mapping="photo_photo", fileNameProperty="backupName")
+     * @JMS\Expose()
      */
-    protected $backupFile;
+    protected ?File $backupFile = null;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Expose()
      */
-    protected $backupName;
+    protected ?string $backupName = null;
 
     /**
-     * @var int $backupSize
      * @ORM\Column(type="integer", nullable=true)
+     * @JMS\Expose()
      */
-    protected $backupSize;
+    protected ?int $backupSize = null;
 
     /**
-     * @var string $backupMimeType
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @JMS\Expose()
      */
-    protected $backupMimeType;
+    protected ?string $backupMimeType = null;
 
     /**
-     * @var string $backupGoogleCloudHash
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $backupGoogleCloudHash;
+    protected ?string $backupGoogleCloudHash = null;
 
     /**
      * @ORM\Column(type="datetime")
-     * @DataQuery\Sortable
-     * @var \DateTime
+     * @DataQuery\Sortable()
+     * @JMS\Expose()
      */
-    protected $updatedAt;
+    protected ?\DateTime $updatedAt = null;
 
     /**
      * @ORM\OneToMany(targetEntity="Photo", mappedBy="featuredPhoto", fetch="LAZY")
      */
-    protected $featuredRides;
+    protected ?\DateTime $featuredRides = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Sharing\Shorturl()
+     * @JMS\Expose()
      */
-    protected $shorturl;
+    protected ?string $shorturl = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @JMS\Expose
+     * @JMS\Expose()
      * @JMS\Groups({"ride-list"})
-     * @DataQuery\Sortable
+     * @DataQuery\Sortable()
      */
-    protected $location;
+    protected ?string $location = null;
 
     /**
      * @ORM\OneToMany(targetEntity="Post", mappedBy="photo")
      */
-    protected $posts;
+    protected Collection $posts;
 
     /**
-     * @var string $exifExposure
      * @ORM\Column(type="string", nullable=true)
-     * @JMS\Expose
-     * @DataQuery\Sortable
+     * @JMS\Expose()
+     * @DataQuery\Sortable()
      */
-    protected $exifExposure;
+    protected ?string $exifExposure = null;
 
     /**
-     * @var string $exifAperture
      * @ORM\Column(type="string", nullable=true)
-     * @JMS\Expose
-     * @DataQuery\Sortable
+     * @JMS\Expose()
+     * @DataQuery\Sortable()
      */
-    protected $exifAperture;
+    protected ?string $exifAperture = null;
 
     /**
-     * @var int $exifIso
      * @ORM\Column(type="smallint", nullable=true)
-     * @JMS\Expose
-     * @DataQuery\Sortable
+     * @JMS\Expose()
+     * @DataQuery\Sortable()
      */
-    protected $exifIso;
+    protected ?int $exifIso = null;
 
     /**
-     * @var float $exifFocalLength
      * @ORM\Column(type="float", nullable=true)
-     * @JMS\Expose
-     * @DataQuery\Sortable
+     * @JMS\Expose()
+     * @DataQuery\Sortable()
      */
-    protected $exifFocalLength;
+    protected ?float $exifFocalLength = null;
 
     /**
-     * @var string $exifCamera
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @JMS\Expose
-     * @DataQuery\Sortable
+     * @JMS\Expose()
+     * @DataQuery\Sortable()
      */
-    protected $exifCamera;
+    protected ?string $exifCamera = null;
 
     /**
-     * @var \DateTime $exifCreationDate
      * @ORM\Column(type="datetime")
      * @OE\Order(direction="asc")
-     * @JMS\Expose
+     * @JMS\Expose()
      * @DataQuery\DateTimeQueryable(format="strict_date_hour_minute_second", pattern="Y-m-d\TH:i:s")
-     * @DataQuery\Sortable
+     * @DataQuery\Sortable()
      */
-    protected $exifCreationDate;
+    protected ?\DateTime $exifCreationDate = null;
 
     public function __construct()
     {
+        $this->posts = new ArrayCollection();
         $this->exifCreationDate = new \DateTime();
         $this->creationDateTime = new \DateTime();
         $this->updatedAt = new \DateTime();
