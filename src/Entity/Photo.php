@@ -189,9 +189,9 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     protected ?\DateTime $updatedAt = null;
 
     /**
-     * @ORM\OneToMany(targetEntity="Photo", mappedBy="featuredPhoto", fetch="LAZY")
+     * @ORM\OneToMany(targetEntity="Ride", mappedBy="featuredPhoto", fetch="LAZY")
      */
-    protected ?\DateTime $featuredRides = null;
+    protected Collection $featuredRides;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -260,6 +260,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     public function __construct()
     {
         $this->posts = new ArrayCollection();
+        $this->featuredRides = new ArrayCollection();
         $this->exifCreationDate = new \DateTime();
         $this->creationDateTime = new \DateTime();
         $this->updatedAt = new \DateTime();
