@@ -16,6 +16,7 @@ use Swagger\Annotations as SWG;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class SocialNetworkFeedItemController extends BaseController
 {
@@ -30,6 +31,7 @@ class SocialNetworkFeedItemController extends BaseController
      * )
      *
      * @ParamConverter("city", class="App:City")
+     * @Route("/{citySlug}/socialnetwork-feeditems", name="caldera_criticalmass_rest_socialnetwork_feeditems_citylist", methods={"GET"})
      */
     public function listSocialNetworkFeedItemsCityAction(Request $request, ManagerRegistry $registry, City $city): Response
     {
@@ -60,6 +62,7 @@ class SocialNetworkFeedItemController extends BaseController
      * )
      *
      * @ParamConverter("socialNetworkFeedItem", class="App:SocialNetworkFeedItem")
+     * @Route("/{citySlug}/socialnetwork-feeditems/{feedItemId}", name="caldera_criticalmass_rest_socialnetwork_feeditems_update", methods={"POST"})
      */
     public function updateSocialNetworkFeedItemAction(Request $request, SocialNetworkFeedItem $socialNetworkFeedItem, SerializerInterface $serializer, ManagerRegistry $managerRegistry, EntityMergerInterface $entityMerger): Response
     {
@@ -92,7 +95,7 @@ class SocialNetworkFeedItemController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     *
+     * @Route("/{citySlug}/socialnetwork-feeditems", name="caldera_criticalmass_rest_socialnetwork_feeditems_create", methods={"PUT"})
      */
     public function createSocialNetworkFeedItemAction(Request $request, SerializerInterface $serializer, ManagerRegistry $managerRegistry): Response
     {
