@@ -18,36 +18,35 @@ class Heatmap implements HeatmapInterface
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $identifier;
+    private ?string $identifier = null;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="heatmap", cascade={"persist"})
      */
-    private $user;
+    private ?User $user = null;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Ride", inversedBy="heatmap", cascade={"persist"})
      */
-    private $ride;
+    private ?Ride $ride = null;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\City", inversedBy="heatmap", cascade={"persist"})
      */
-    private $city;
+    private ?City $city = null;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\HeatmapTrack", mappedBy="heatmap")
      */
-    private $heatmapTracks;
+    private Collection $heatmapTracks;
 
     public function __construct()
     {
-        $this->tracks = new ArrayCollection();
         $this->heatmapTracks = new ArrayCollection();
     }
 
