@@ -16,17 +16,17 @@ class OauthAccessToken extends BaseAccessToken
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\OauthClient")
      * @ORM\JoinColumn(nullable=false)
      */
-    protected $client;
+    protected ?OauthClient $client = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
      */
-    protected $user;
+    protected ?User $user = null;
 }
