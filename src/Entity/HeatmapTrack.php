@@ -15,24 +15,29 @@ class HeatmapTrack
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Heatmap", inversedBy="heatmapTracks")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $heatmap;
+    private ?Heatmap $heatmap = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Track", inversedBy="heatmapTracks")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $track;
+    private ?Track $track = null;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $createdAt;
+    private \DateTime $createdAt;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
 
     public function getId(): ?int
     {
