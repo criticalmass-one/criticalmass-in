@@ -22,60 +22,60 @@ class Thread implements ViewableEntity, RouteableInterface, AutoParamConverterAb
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="Board", inversedBy="threads")
      * @ORM\JoinColumn(name="board_id", referencedColumnName="id")
      * @Routing\RouteParameter(name="boardSlug")
      */
-    protected $board;
+    protected ?Board $board = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="threads")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      * @Routing\RouteParameter(name="citySlug")
      */
-    protected $city;
+    protected ?City $city = null;
 
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank()
      */
-    protected $title;
+    protected ?string $title = null;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Routing\RouteParameter(name="threadSlug")
      */
-    protected $slug;
+    protected ?string $slug = null;
 
     /**
      * @ORM\Column(type="integer")
      */
-    protected $views = 0;
+    protected int $views = 0;
 
     /**
      * @ORM\Column(type="integer")
      */
-    protected $postNumber = 0;
+    protected int $postNumber = 0;
 
     /**
      * @ORM\OneToOne(targetEntity="Post")
      * @ORM\JoinColumn(name="firstpost_id", referencedColumnName="id")
      */
-    protected $firstPost;
+    protected ?Post $firstPost = null;
 
     /**
      * @ORM\OneToOne(targetEntity="Post")
      * @ORM\JoinColumn(name="lastpost_id", referencedColumnName="id")
      */
-    protected $lastPost;
+    protected ?Post $lastPost = null;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $enabled = true;
+    protected bool $enabled = true;
 
     public function __construct()
     {
