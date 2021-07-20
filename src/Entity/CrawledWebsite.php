@@ -15,32 +15,32 @@ class CrawledWebsite
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $url;
+    protected ?string $url = null;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $imageUrl;
+    protected ?string $imageUrl = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    protected $title;
+    protected ?string $title = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    protected $description;
+    protected ?string $description = null;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    protected $createdAt;
+    protected \DateTime $createdAt;
 
     public function __construct()
     {

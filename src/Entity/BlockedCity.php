@@ -15,38 +15,38 @@ class BlockedCity
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="blocked_cities", fetch="LAZY")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
-    protected $city;
+    protected ?City $city = null;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    protected $blockStart;
+    protected ?\DateTime $blockStart = null;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    protected $blockEnd;
+    protected ?\DateTime $blockEnd = null;
 
     /**
      * @ORM\Column(type="text")
      */
-    protected $description;
+    protected ?string $description = null;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $photosLink;
+    protected bool $photosLink = false;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $rideListLink;
+    protected bool $rideListLink = false;
 
     public function getId(): ?int
     {

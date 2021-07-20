@@ -15,32 +15,32 @@ class Alert
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $title;
+    private ?string $title = null;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $message;
+    private ?string $message = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $fromDateTime;
+    private ?\DateTime $fromDateTime = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $untilDateTime;
+    private ?\DateTime $untilDateTime = null;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $type;
+    private ?string $type = null;
 
     public function getId(): ?int
     {

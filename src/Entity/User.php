@@ -31,10 +31,9 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
-     * @var string
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      * @Assert\NotBlank()
@@ -45,144 +44,140 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
      * )
      * @Routing\RouteParameter(name="username")
      */
-    protected $username;
+    protected ?string $username = null;
 
     /**
      * @ORM\OneToMany(targetEntity="Track", mappedBy="user", cascade={"persist", "remove"})
      */
-    protected $tracks;
+    protected Collection $tracks;
 
     /**
      * @ORM\Column(type="smallint")
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
-    protected $colorRed = 0;
+    protected int $colorRed = 0;
 
     /**
      * @ORM\Column(type="smallint")
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
-    protected $colorGreen = 0;
+    protected int $colorGreen = 0;
 
     /**
      * @ORM\Column(type="smallint")
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
-    protected $colorBlue = 0;
+    protected int $colorBlue = 0;
 
     /**
      * @ORM\Column(type="boolean", options={"default" = 0})
      */
-    protected $blurGalleries = false;
+    protected bool $blurGalleries = false;
 
     /**
      * @ORM\OneToMany(targetEntity="Participation", mappedBy="user")
      */
-    protected $participations;
+    protected Collection $participations;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    protected $updatedAt;
+    protected ?\DateTime $updatedAt = null;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    protected $createdAt;
+    protected ?\DateTime $createdAt = null;
 
     /**
      * @ORM\Column(name="facebook_id", type="string", length=255, nullable=true)
      */
-    protected $facebookId;
+    protected ?string $facebookId = null;
 
     /**
      * @ORM\Column(name="facebook_access_token", type="string", length=255, nullable=true)
      */
-    protected $facebookAccessToken;
+    protected ?string $facebookAccessToken = null;
 
     /**
      * @ORM\Column(name="strava_id", type="string", length=255, nullable=true)
      */
-    protected $stravaId;
+    protected ?string $stravaId = null;
 
     /**
      * @ORM\Column(name="strava_access_token", type="string", length=255, nullable=true)
      */
-    protected $stravaAccessToken;
+    protected ?string $stravaAccessToken = null;
 
     /**
      * @ORM\Column(name="runkeeper_id", type="string", length=255, nullable=true)
      */
-    protected $runkeeperId;
+    protected ?string $runkeeperId = null;
 
     /**
      * @ORM\Column(name="runkeeper_access_token", type="string", length=255, nullable=true)
      */
-    protected $runkeeperAccessToken;
+    protected ?string $runkeeperAccessToken = null;
 
     /**
      * @ORM\Column(name="twitter_id", type="string", length=255, nullable=true)
      */
-    protected $twitterId;
+    protected ?string $twitterId = null;
 
     /**
      * @ORM\Column(name="twitter_access_token", type="string", length=255, nullable=true)
      */
-    protected $twitterkAccessToken;
+    protected ?string $twitterkAccessToken = null;
 
     /**
      * @ORM\OneToMany(targetEntity="CityCycle", mappedBy="city", cascade={"persist", "remove"})
      */
-    protected $cycles;
+    protected Collection $cycles;
 
     /**
-     * @var File $imageFile
      * @Vich\UploadableField(mapping="user_photo", fileNameProperty="imageName", size="imageSize", mimeType="imageMimeType")
      */
-    protected $imageFile;
+    protected ?File $imageFile = null;
 
     /**
-     * @var string $imageName
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $imageName;
+    protected ?string $imageName = null;
 
     /**
-     * @var int $imageSize
      * @ORM\Column(type="integer", nullable=true)
      */
-    protected $imageSize;
+    protected ?int $imageSize = null;
 
     /**
-     * @var string $imageMimeType
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $imageMimeType;
+    protected ?string $imageMimeType = null;
 
     /**
      * @ORM\Column(type="boolean", options={"default" = 0})
      */
-    protected $ownProfilePhoto = false;
+    protected bool $ownProfilePhoto = false;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\SocialNetworkProfile", mappedBy="createdBy")
      */
-    private $socialNetworkProfiles;
+    private Collection $socialNetworkProfiles;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Heatmap", mappedBy="user", cascade={"persist", "remove"})
      */
-    private $heatmap;
+    private ?Heatmap $heatmap = null;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\TrackImportCandidate", mappedBy="user", orphanRemoval=true)
      */
-    private $trackImportCandidates;
+    private Collection $trackImportCandidates;
 
     public function __construct()
     {

@@ -20,7 +20,7 @@ class SocialNetworkFeedItem //implements Crawlable
      * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Expose
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="SocialNetworkProfile", inversedBy="feedItems")
@@ -29,59 +29,59 @@ class SocialNetworkFeedItem //implements Crawlable
      * @JMS\Type("Relation<App\Entity\SocialNetworkProfile>")
      * @JMS\SerializedName("social_network_profile_id")
      */
-    protected $socialNetworkProfile;
+    protected ?SocialNetworkProfile $socialNetworkProfile = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=false)
      * @JMS\Expose
      */
-    protected $uniqueIdentifier;
+    protected ?string $uniqueIdentifier = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * @JMS\Expose
      */
-    protected $permalink;
+    protected ?string $permalink = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * @JMS\Expose
      */
-    protected $title;
+    protected ?string $title = null;
 
     /**
      * @ORM\Column(type="text", nullable=false)
      * @JMS\Expose
      */
-    protected $text;
+    protected ?string $text = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=false)
      * @JMS\Expose
      * @JMS\Type("DateTime<'U'>")
      */
-    protected $dateTime;
+    protected ?\DateTime $dateTime = null;
 
     /**
      * @ORM\Column(type="boolean", nullable=false)
      * @JMS\Expose
      * @JMS\Type("bool")
      */
-    protected $hidden = false;
+    protected bool $hidden = false;
 
     /**
      * @ORM\Column(type="boolean", nullable=false)
      * @JMS\Expose
      * @JMS\Type("bool")
      */
-    protected $deleted = false;
+    protected bool $deleted = false;
 
     /**
      * @ORM\Column(type="datetime", nullable=false)
      * @JMS\Expose
      * @JMS\Type("DateTime<'U'>")
      */
-    protected $createdAt;
+    protected \DateTime $createdAt;
 
     /**
      * @ORM\Column(type="text", nullable=true)

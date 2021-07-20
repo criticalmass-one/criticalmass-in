@@ -16,39 +16,39 @@ class Participation implements AutoParamConverterAble
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="Ride", inversedBy="participations")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
-    protected $ride;
+    protected ?Ride $ride = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="participations")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    protected $user;
+    protected ?User $user = null;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    protected $dateTime;
+    protected \DateTime $dateTime;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $goingYes = true;
+    protected bool $goingYes = true;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $goingMaybe = true;
+    protected bool $goingMaybe = true;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $goingNo = true;
+    protected bool $goingNo = true;
 
     public function __construct()
     {

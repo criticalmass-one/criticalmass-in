@@ -15,34 +15,34 @@ class HelpItem
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="helpItems")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    protected $user;
+    protected ?User $user = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelpCategory", inversedBy="items")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      */
-    protected $category;
+    protected ?HelpCategory $category = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=false)
      */
-    protected $title;
+    protected ?string $title = null;
 
     /**
      * @ORM\Column(type="text", nullable=false)
      */
-    protected $text;
+    protected ?string $text = null;
 
     /**
      * @ORM\Column(type="smallint")
      */
-    protected $position = 0;
+    protected int $position = 0;
 
     public function getId(): ?int
     {
@@ -60,7 +60,6 @@ class HelpItem
 
         return $this;
     }
-
 
     public function getTitle(): ?string
     {

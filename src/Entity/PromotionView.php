@@ -16,24 +16,24 @@ class PromotionView implements ViewEntity
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="promotion_views")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    protected $user;
+    protected ?User $user = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="Promotion", inversedBy="promotion_views")
      * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
      */
-    protected $promotion;
+    protected ?Promotion $promotion = null;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    protected $dateTime;
+    protected \DateTime $dateTime;
 
     public function __construct()
     {
