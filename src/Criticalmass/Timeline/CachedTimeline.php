@@ -46,7 +46,6 @@ class CachedTimeline extends Timeline
         );
 
         $this->contentList = $cache->get($cacheKey, function (ItemInterface $item) {
-            echo 'MISS';
             $item->expiresAfter($this->ttl);
 
             $this->process();
