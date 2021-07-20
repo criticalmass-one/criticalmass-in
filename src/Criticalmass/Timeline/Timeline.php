@@ -5,37 +5,27 @@ namespace App\Criticalmass\Timeline;
 use App\Criticalmass\Timeline\Collector\AbstractTimelineCollector;
 use App\Criticalmass\Timeline\Collector\TimelineCollectorInterface;
 use App\Criticalmass\Timeline\Item\ItemInterface;
-use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\Persistence\ManagerRegistry;
 use Flagception\Manager\FeatureManagerInterface;
-use Symfony\Bridge\Twig\TwigEngine;
 use Symfony\Component\Templating\EngineInterface;
 
 class Timeline implements TimelineInterface
 {
-    /** @var Registry $doctrine */
-    protected $doctrine;
+    protected ManagerRegistry $doctrine;
 
-    /** @var TwigEngine $templating */
-    protected $templating;
+    protected EngineInterface $templating;
 
-    /** @var array $collectorList */
-    protected $collectorList = [];
+    protected array $collectorList = [];
 
-    /** @var array $items */
-    protected $items = [];
+    protected array $items = [];
 
-    /** @var array $contentList */
-    protected $contentList = [];
+    protected array $contentList = [];
 
-    /** @var \DateTime $startDateTime */
-    protected $startDateTime = null;
+    protected ?\DateTime $startDateTime = null;
 
-    /** @var \DateTime $endDateTime */
-    protected $endDateTime = null;
+    protected ?\DateTime $endDateTime = null;
 
-    /** @var FeatureManagerInterface $featureManager */
-    protected $featureManager;
+    protected FeatureManagerInterface $featureManager;
 
     public function __construct(ManagerRegistry $doctrine, EngineInterface $templating, FeatureManagerInterface $featureManager)
     {

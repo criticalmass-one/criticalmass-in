@@ -6,8 +6,7 @@ use App\Entity\SocialNetworkFeedItem;
 
 class SocialNetworkFeedItemItem extends AbstractItem
 {
-    /** @var SocialNetworkFeedItem $socialNetworkFeedItem */
-    protected $socialNetworkFeedItem;
+    protected ?SocialNetworkFeedItem $socialNetworkFeedItem = null;
 
     public function getSocialNetworkFeedItem(): SocialNetworkFeedItem
     {
