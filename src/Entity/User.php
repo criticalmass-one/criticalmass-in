@@ -30,8 +30,10 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
      * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
+     * @todo Add typed property
+     * @var int $id
      */
-    protected ?int $id = null;
+    protected $id;
 
     /**
      * @JMS\Groups({"timelapse"})
@@ -43,8 +45,9 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
      *     message="Der Benutzername darf keine Url enthalten"
      * )
      * @Routing\RouteParameter(name="username")
+     * @todo Add typed property
      */
-    protected ?string $username = null;
+    protected $username;
 
     /**
      * @ORM\OneToMany(targetEntity="Track", mappedBy="user", cascade={"persist", "remove"})
