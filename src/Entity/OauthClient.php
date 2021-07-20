@@ -15,8 +15,10 @@ class OauthClient extends BaseClient
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @todo Add typed property
+     * @var int id
      */
-    protected ?int $id = null;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=255)

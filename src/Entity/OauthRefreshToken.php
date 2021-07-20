@@ -15,18 +15,24 @@ class OauthRefreshToken extends BaseRefreshToken
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @todo Add typed property
+     * @var int id
      */
-    protected ?int $id = null;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\OauthClient")
      * @ORM\JoinColumn(nullable=false)
+     * @todo Add typed property
+     * @var OauthClient $client
      */
-    protected ?OauthClient $client = null;
+    protected $client;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
+     * @todo Add typed property
+     * @var User $user
      */
-    protected ?User $user = null;
+    protected $user;
 }
