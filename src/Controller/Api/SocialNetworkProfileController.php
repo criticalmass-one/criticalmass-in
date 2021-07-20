@@ -15,6 +15,7 @@ use Swagger\Annotations as SWG;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class SocialNetworkProfileController extends BaseController
 {
@@ -29,6 +30,7 @@ class SocialNetworkProfileController extends BaseController
      * )
      *
      * @ParamConverter("city", class="App:City", isOptional="true")
+     * @Route("/socialnetwork-profiles", name="caldera_criticalmass_rest_socialnetwork_profiles_list", methods={"GET"})
      */
     public function listSocialNetworkProfilesAction(Request $request, ManagerRegistry $registry, City $city = null, SerializerInterface $serializer): Response
     {
@@ -63,6 +65,7 @@ class SocialNetworkProfileController extends BaseController
      * )
      *
      * @ParamConverter("city", class="App:City")
+     * @Route("/{citySlug}/socialnetwork-profiles", name="caldera_criticalmass_rest_socialnetwork_profiles_citylist", methods={"GET"})
      */
     public function listSocialNetworkProfilesCityAction(ManagerRegistry $registry, City $city): Response
     {
@@ -90,6 +93,7 @@ class SocialNetworkProfileController extends BaseController
      * )
      *
      * @ParamConverter("socialNetworkProfile", class="App:SocialNetworkProfile")
+     * @Route("/{citySlug}/socialnetwork-profiles/{profileId}", name="caldera_criticalmass_rest_socialnetwork_profiles_update", methods={"POST"})
      */
     public function updateSocialNetworkProfileAction(Request $request, SocialNetworkProfile $socialNetworkProfile, SerializerInterface $serializer, ManagerRegistry $managerRegistry, EntityMergerInterface $entityMerger): Response
     {
@@ -124,6 +128,7 @@ class SocialNetworkProfileController extends BaseController
      * )
      *
      * @ParamConverter("city", class="App:City")
+     * @Route("/{citySlug}/socialnetwork-profiles", name="caldera_criticalmass_rest_socialnetwork_profiles_create", methods={"PUT"})
      */
     public function createSocialNetworkProfileAction(Request $request, City $city, SerializerInterface $serializer, ManagerRegistry $managerRegistry): Response
     {
