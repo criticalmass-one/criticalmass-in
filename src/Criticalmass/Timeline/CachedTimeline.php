@@ -4,8 +4,10 @@ namespace App\Criticalmass\Timeline;
 
 use Doctrine\Persistence\ManagerRegistry;
 use Flagception\Manager\FeatureManagerInterface;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 use Symfony\Component\Templating\EngineInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 
 class CachedTimeline extends Timeline
 {
@@ -35,27 +37,16 @@ class CachedTimeline extends Timeline
             $cacheKey .= '-end-' . $this->endDateTime->format('Y-m-d');
         }
 
-        $redisConnection = RedisAdapter::createConnection($this->redisUrl);
+        $cache = new FilesystemAdapter();
 
-        $cache = new RedisAdapter(
-            $redisConnection,
-            $namespace = '',
-            $defaultLifetime = 0
-        );
+        $this->contentList = $cache->get($cacheKey, function (ItemInterface $item) {
+            echo "MISS";
+            $item->expiresAfter($this->ttl);
 
-        $timeline = $cache->getItem($cacheKey);
-
-        if (!$timeline->isHit()) {
             $this->process();
 
-            $timeline
-                ->set($this->getTimelineContentList())
-                ->expiresAfter($this->ttl);
-
-            $cache->save($timeline);
-        } else {
-            $this->content = $timeline->get();
-        }
+            return $this->getTimelineContentList();
+        });
 
         return $this;
     }
