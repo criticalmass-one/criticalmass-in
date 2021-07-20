@@ -9,11 +9,9 @@ use Symfony\Component\Templating\EngineInterface;
 
 class CachedTimeline extends Timeline
 {
-    /** @var int $ttl */
-    protected $ttl;
+    protected int $ttl;
 
-    /** @var string $redisUrl */
-    protected $redisUrl;
+    protected string $redisUrl;
 
     public function __construct(ManagerRegistry $doctrine, EngineInterface $templating, FeatureManagerInterface $featureManager, string $redisUrl, int $cachedTimelineTtl = 300)
     {
