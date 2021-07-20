@@ -7,7 +7,7 @@ use App\Criticalmass\Timeline\Item\SocialNetworkFeedItemItem;
 
 class SocialNetworkFeedItemCollector extends AbstractTimelineCollector
 {
-    protected $entityClass = SocialNetworkFeedItem::class;
+    protected string $entityClass = SocialNetworkFeedItem::class;
 
     protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {
