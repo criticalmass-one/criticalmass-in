@@ -37,9 +37,16 @@ class CachedTimeline extends Timeline
             $cacheKey .= '-end-' . $this->endDateTime->format('Y-m-d');
         }
 
-        $cache = new FilesystemAdapter();
+        $redisConnection = RedisAdapter::createConnection($this->redisUrl);
+
+        $cache = new RedisAdapter(
+            $redisConnection,
+            'criticalmass',
+            $this->ttl
+        );
 
         $this->contentList = $cache->get($cacheKey, function (ItemInterface $item) {
+            echo 'MISS';
             $item->expiresAfter($this->ttl);
 
             $this->process();
