@@ -49,13 +49,13 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Groups({"ride-list"})
      * @DataQuery\Sortable
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="rides", fetch="LAZY")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    protected $user;
+    protected ?User $user = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="CityCycle", inversedBy="rides", fetch="LAZY")
@@ -63,7 +63,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Groups({"extended-ride-list"})
      * @JMS\Expose
      */
-    protected $cycle;
+    protected ?CityCycle $cycle = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="rides", fetch="LAZY")
@@ -74,19 +74,19 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @OE\Identical()
      * @DataQuery\Queryable
      */
-    protected $city;
+    protected ?City $city = null;
 
     /**
      * @ORM\OneToMany(targetEntity="Track", mappedBy="ride", fetch="LAZY")
      * @JMS\Groups({"extended-ride-list"})
      */
-    protected $tracks;
+    protected Collection $tracks;
 
     /**
      * @ORM\OneToMany(targetEntity="Subride", mappedBy="ride", fetch="LAZY")
      * @JMS\Groups({"extended-ride-list"})
      */
-    protected $subrides;
+    protected Collection $subrides;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -95,7 +95,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @DataQuery\Sortable
      * @DataQuery\Queryable
      */
-    protected $slug;
+    protected ?string $slug = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=false)
@@ -106,7 +106,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @DataQuery\Queryable
      * @Assert\NotBlank()
      */
-    protected $title;
+    protected ?string $title = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -116,14 +116,14 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @DataQuery\Sortable
      * @DataQuery\Queryable
      */
-    protected $description;
+    protected ?string $description = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * @DataQuery\Sortable
      * @DataQuery\Queryable
      */
-    protected $socialDescription;
+    protected ?string $socialDescription = null;
 
     /**
      * @ORM\Column(type="datetime")
@@ -134,7 +134,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @DataQuery\Sortable
      * @DataQuery\DateTimeQueryable(format="strict_date", pattern="Y-m-d")
      */
-    protected $dateTime;
+    protected \DateTime $dateTime;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -143,7 +143,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @DataQuery\Sortable
      * @DataQuery\Queryable
      */
-    protected $location;
+    protected ?string $location = null;
 
     /**
      * @ORM\Column(type="float", nullable=true)
@@ -151,9 +151,8 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Expose
      * @DataQuery\Sortable
      * @DataQuery\Queryable
-     * @var float $latitude
      */
-    protected $latitude = 0.0;
+    protected float $latitude = 0.0;
 
     /**
      * @ORM\Column(type="float", nullable=true)
@@ -161,9 +160,8 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Expose
      * @DataQuery\Sortable
      * @DataQuery\Queryable
-     * @var float $longitude
      */
-    protected $longitude = 0.0;
+    protected float $longitude = 0.0;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
@@ -172,7 +170,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @DataQuery\Sortable
      * @DataQuery\Queryable
      */
-    protected $estimatedParticipants;
+    protected ?int $estimatedParticipants = null;
 
     /**
      * @ORM\Column(type="float", nullable=true)
@@ -181,7 +179,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @DataQuery\Sortable
      * @DataQuery\Queryable
      */
-    protected $estimatedDistance;
+    protected ?float $estimatedDistance = null;
 
     /**
      * @ORM\Column(type="float", nullable=true)
@@ -190,129 +188,122 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @DataQuery\Sortable
      * @DataQuery\Queryable
      */
-    protected $estimatedDuration;
+    protected ?float $estimatedDuration = null;
 
     /**
      * @ORM\OneToMany(targetEntity="Post", mappedBy="ride", fetch="LAZY")
      * @JMS\Groups({"extended-ride-list"})
      */
-    protected $posts;
+    protected Collection $posts;
 
     /**
      * @ORM\OneToMany(targetEntity="Photo", mappedBy="ride", fetch="LAZY")
      * @JMS\Groups({"extended-ride-list"})
      */
-    protected $photos;
+    protected Collection $photos;
 
     /**
      * @ORM\OneToMany(targetEntity="SocialNetworkProfile", mappedBy="ride", cascade={"persist", "remove"})
      * @JMS\Groups({"extended-ride-list"})
      * @JMS\Expose
      */
-    protected $socialNetworkProfiles;
+    protected Collection $socialNetworkProfiles;
 
     /**
-     * @var \DateTime
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $createdAt;
+    protected \DateTime $createdAt;
 
     /**
-     * @var \DateTime
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $updatedAt;
+    protected ?\DateTime $updatedAt = null;
 
     /**
      * @ORM\Column(type="integer")
      * @JMS\Expose
      */
-    protected $participationsNumberYes = 0;
+    protected int $participationsNumberYes = 0;
 
     /**
      * @ORM\Column(type="integer")
      * @JMS\Expose
      */
-    protected $participationsNumberMaybe = 0;
+    protected int $participationsNumberMaybe = 0;
 
     /**
      * @ORM\Column(type="integer")
      * @JMS\Expose
      */
-    protected $participationsNumberNo = 0;
+    protected int $participationsNumberNo = 0;
 
     /**
      * @ORM\OneToMany(targetEntity="Participation", mappedBy="ride", fetch="LAZY")
      */
-    protected $participations;
+    protected Collection $participations;
 
     /**
      * @ORM\OneToMany(targetEntity="RideEstimate", mappedBy="ride", fetch="LAZY")
      */
-    protected $estimates;
+    protected Collection $estimates;
 
     /**
      * @ORM\Column(type="integer")
      * @DataQuery\Sortable
      * @DataQuery\Queryable
      */
-    protected $views = 0;
+    protected int $views = 0;
 
     /**
      * @ORM\ManyToOne(targetEntity="Photo", inversedBy="featuredRides", fetch="LAZY")
      * @ORM\JoinColumn(name="featured_photo", referencedColumnName="id")
      */
-    protected $featuredPhoto;
+    protected ?Photo $featuredPhoto = null;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $restrictedPhotoAccess = false;
+    protected bool $restrictedPhotoAccess = false;
 
     /**
      * @ORM\OneToMany(targetEntity="Weather", mappedBy="ride", fetch="LAZY")
      * @ORM\OrderBy({"creationDateTime" = "DESC"})
      */
-    protected $weathers;
+    protected Collection $weathers;
 
     /**
-     * @var File $imageFile
      * @Vich\UploadableField(mapping="ride_photo", fileNameProperty="imageName",  size="imageSize", mimeType="imageMimeType")
      */
-    protected $imageFile;
+    protected ?File $imageFile = null;
 
     /**
-     * @var string $imageName
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $imageName;
+    protected ?string $imageName = null;
 
     /**
-     * @var int $imageSize
      * @ORM\Column(type="integer", nullable=true)
      */
-    protected $imageSize;
+    protected ?int $imageSize = null;
 
     /**
-     * @var string $imageMimeType
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $imageMimeType;
+    protected ?string $imageMimeType = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Sharing\Shorturl()
      */
-    protected $shorturl;
+    protected ?string $shorturl = null;
 
     /**
-     * @var bool $enabled
      * @ORM\Column(type="boolean", options={"default"=true})
      * @OE\Boolean(true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      */
-    protected $enabled = true;
+    protected bool $enabled = true;
 
     /**
      * @ORM\Column(type="RideDisabledReasonType", nullable=true)
@@ -320,7 +311,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      */
-    protected $disabledReason;
+    protected ?string $disabledReason = null;
 
     /**
      * @ORM\Column(type="RideType", nullable=true)
@@ -328,29 +319,29 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      */
-    protected $rideType;
+    protected ?string $rideType = null;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Heatmap", mappedBy="ride", cascade={"persist", "remove"})
      */
-    private $heatmap;
+    private ?Heatmap $heatmap = null;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\TrackImportCandidate", mappedBy="ride")
      */
-    private $trackImportCandidates;
+    private Collection $trackImportCandidates;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      */
-    private $disabledReasonMessage;
+    private ?string $disabledReasonMessage = null;
 
     /**
      * @ORM\OneToMany(targetEntity=RideView::class, mappedBy="ride", fetch="LAZY")
      */
-    protected $viewRelation;
+    protected Collection $viewRelation;
 
     public function __construct()
     {
