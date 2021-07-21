@@ -158,7 +158,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
      * @DataQuery\Queryable
      * @DataQuery\Sortable
      */
-    protected int $cityPopulation = 0;
+    protected ?int $cityPopulation = null;
 
     /**
      * @ORM\Column(type="string", nullable=true)
