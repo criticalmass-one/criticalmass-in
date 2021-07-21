@@ -20,54 +20,54 @@ class HelpCategory
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="helpCategories")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    protected $user;
+    protected ?User $user = null;
 
     /**
      * @ORM\Column(type="string", length=16)
      */
-    protected $language;
+    protected ?string $language = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=false)
      */
-    protected $title;
+    protected ?string $title = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    protected $intro;
+    protected ?string $intro = null;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $side;
+    protected ?string $side = null;
 
     /**
      * @ORM\Column(type="smallint")
      */
-    protected $position = 0;
+    protected int $position = 0;
 
     /**
      * @ORM\OneToMany(targetEntity="HelpItem", mappedBy="category")
      */
-    protected $items;
+    protected Collection $items;
 
     /**
      * @ORM\OneToMany(targetEntity="HelpCategory", mappedBy="parent")
      */
-    protected $children;
+    protected Collection $children;
 
     /**
      * @ORM\ManyToOne(targetEntity="HelpCategory", inversedBy="children")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
-    protected $parent;
+    protected ?HelpCategory $parent = null;
 
     public function __construct()
     {
