@@ -18,77 +18,77 @@ class Track extends BaseTrack
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    protected $creationDateTime;
+    protected ?\DateTime $creationDateTime = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $startDateTime;
+    protected ?\DateTime $startDateTime = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $endDateTime;
+    protected ?\DateTime $endDateTime = null;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      */
-    protected $distance;
+    protected ?float $distance = null;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    protected $points;
+    protected ?int $points = null;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    protected $startPoint;
+    protected ?int $startPoint = null;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    protected $endPoint;
+    protected ?int $endPoint = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    protected $polyline;
+    protected ?string $polyline = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    protected $previewPolyline;
+    protected ?string $previewPolyline = null;
 
     /**
      * @Vich\UploadableField(mapping="track_file", fileNameProperty="trackFilename", size="trackSize", mimeType="trackMimeType")
      */
-    protected $trackFile;
+    protected ?File $trackFile = null;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    protected $trackFilename;
+    protected ?string $trackFilename = null;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    protected $trackSize;
+    protected ?int $trackSize = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $trackMimeType;
+    protected ?string $trackMimeType = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $updatedAt;
+    protected ?\DateTime $updatedAt = null;
 
     public function __construct()
     {

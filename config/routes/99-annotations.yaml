@@ -1,5 +1,15 @@
 # todo: Introduce routing priority later: https://symfony.com/blog/new-in-symfony-5-1-route-annotations-priority
 
+controllers_api_socialnetworkfeeditem:
+  resource: '../../src/Controller/Api/SocialNetworkFeedItemController.php'
+  type: annotation
+  prefix: '/api/'
+
+controllers_api_socialnetworkprofile:
+  resource: '../../src/Controller/Api/SocialNetworkProfileController.php'
+  type: annotation
+  prefix: '/api/'
+
 controller_api_ride:
   resource: '../../src/Controller/Api/RideController.php'
   type: annotation
@@ -22,16 +32,6 @@ controllers_api_location:
 
 controllers_api_photo:
   resource: '../../src/Controller/Api/PhotoController.php'
-  type: annotation
-  prefix: '/api/'
-
-controllers_api_socialnetworkfeeditem:
-  resource: '../../src/Controller/Api/SocialNetworkFeedItemController.php'
-  type: annotation
-  prefix: '/api/'
-
-controllers_api_socialnetworkprofile:
-  resource: '../../src/Controller/Api/SocialNetworkProfileController.php'
   type: annotation
   prefix: '/api/'
 

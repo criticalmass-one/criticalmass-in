@@ -15,26 +15,30 @@ class OauthClient extends BaseClient
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @todo Add typed property
+     * @var int id
      */
     protected $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    protected $name;
+    protected ?string $name = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $url;
+    protected ?string $url = null;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    protected $createdAt;
+    protected \DateTime $createdAt;
 
     public function __construct()
     {
+        $this->createdAt = new \DateTime();
+
         parent::__construct();
     }
 
@@ -62,12 +66,12 @@ class OauthClient extends BaseClient
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 
