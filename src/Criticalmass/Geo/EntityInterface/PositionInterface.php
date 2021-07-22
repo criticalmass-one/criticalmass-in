@@ -7,10 +7,10 @@ use Caldera\GeoBasic\Coord\CoordInterface;
 interface PositionInterface extends CoordInterface
 {
     public function setLatitude(float $latitude): PositionInterface;
-    public function getLatitude(): ?float;
+    public function getLatitude(): float;
 
     public function setLongitude(float $longitude): PositionInterface;
-    public function getLongitude(): ?float;
+    public function getLongitude(): float;
 
     public function setAccuracy(float $accuracy): PositionInterface;
     public function getAccuracy(): ?float;
