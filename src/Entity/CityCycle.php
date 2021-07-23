@@ -95,7 +95,7 @@ class CityCycle implements RouteableInterface
      * @JMS\Groups({"ride-list"})
      * @Assert\NotEqualTo(value="0.0")
      */
-    protected float $latitude = 0.0;
+    protected ?float $latitude = 0.0;
 
     /**
      * @ORM\Column(type="float", nullable=true)
@@ -103,7 +103,7 @@ class CityCycle implements RouteableInterface
      * @JMS\Groups({"ride-list"})
      * @Assert\NotEqualTo(value="0.0")
      */
-    protected float $longitude = 0.0;
+    protected ?float $longitude = 0.0;
 
     /**
      * @ORM\Column(type="datetime", nullable=false)
