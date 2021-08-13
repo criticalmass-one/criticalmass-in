@@ -22,8 +22,12 @@ class MarkdownTwigExtension extends AbstractExtension
         ];
     }
 
-    public function markdown(string $text): string
+    public function markdown(string $text = null): string
     {
+        if (!$text) {
+            return '';
+        }
+        
         return $this->textParser->parse($text);
     }
 
