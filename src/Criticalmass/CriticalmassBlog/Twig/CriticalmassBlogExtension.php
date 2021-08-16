@@ -1,7 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\CriticalmassBlog;
+namespace App\Criticalmass\CriticalmassBlog\Twig;
 
+use App\Criticalmass\CriticalmassBlog\CriticalmassBlogInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
