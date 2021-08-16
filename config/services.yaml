@@ -270,3 +270,6 @@ services:
 
     App\Criticalmass\Corona\ResultFetcher\ResultFetcherInterface:
         alias: App\Criticalmass\Corona\ResultFetcher\CachedResultFetcher
+
+    App\Criticalmass\CriticalmassBlog\CriticalmassBlogInterface:
+        alias: App\Criticalmass\CriticalmassBlog\CachedCriticalmassBlog

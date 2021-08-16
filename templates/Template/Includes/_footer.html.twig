@@ -68,6 +68,20 @@
                         Aus dem Blog
                     </a>
                 </h5>
+
+                {% set blog_article_list = blog_articles() %}
+
+                <ul class="list-unstyled">
+                    {% for blog_article in blog_article_list %}
+                        <li>
+                            <a href="{{ blog_article.permalink }}" title="zum Blog-Beitrag">
+                                {{ blog_article.title }}
+                            </a>
+
+                            <time class="text-muted">{{ blog_article.dateTime|date('d.m.Y') }}</time>
+                        </li>
+                    {% endfor %}
+                </ul>
             </div>
 
             <div class="col-md-3">

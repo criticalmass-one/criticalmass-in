@@ -152,7 +152,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @DataQuery\Sortable
      * @DataQuery\Queryable
      */
-    protected float $latitude = 0.0;
+    protected ?float $latitude = 0.0;
 
     /**
      * @ORM\Column(type="float", nullable=true)
@@ -161,7 +161,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @DataQuery\Sortable
      * @DataQuery\Queryable
      */
-    protected float $longitude = 0.0;
+    protected ?float $longitude = 0.0;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
