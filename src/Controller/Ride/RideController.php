@@ -36,6 +36,15 @@ class RideController extends AbstractController
      */
     public function showAction(Request $request, SeoPageInterface $seoPage, EventDispatcherInterface $eventDispatcher, Ride $ride): Response
     {
+        $blocked = $this->getBlockedCityRepository()->findCurrentCityBlock($ride->getCity());
+
+        if ($blocked) {
+            return $this->render('Ride/blocked.html.twig', [
+                'ride' => $ride,
+                'blocked' => $blocked
+            ]);
+        }
+
         $eventDispatcher->dispatch(ViewEvent::NAME, new ViewEvent($ride));
 
         $seoPage
