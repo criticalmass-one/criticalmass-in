@@ -343,6 +343,11 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      */
     protected Collection $viewRelation;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private bool $showCoronaIncidenceWarning = false;
+
     public function __construct()
     {
         $this->dateTime = new \DateTime();
@@ -1157,6 +1162,18 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
                 $viewRelation->setRide(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getShowCoronaIncidenceWarning(): ?bool
+    {
+        return $this->showCoronaIncidenceWarning;
+    }
+
+    public function setShowCoronaIncidenceWarning(?bool $showCoronaIncidenceWarning): self
+    {
+        $this->showCoronaIncidenceWarning = $showCoronaIncidenceWarning;
 
         return $this;
     }
