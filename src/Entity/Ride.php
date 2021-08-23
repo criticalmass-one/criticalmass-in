@@ -344,9 +344,9 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     protected Collection $viewRelation;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean", nullable=true, options={"default": 1})
      */
-    private bool $showCoronaIncidenceWarning = false;
+    private ?bool $showCoronaIncidenceWarning = true;
 
     public function __construct()
     {

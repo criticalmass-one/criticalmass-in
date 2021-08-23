@@ -277,9 +277,9 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     private ?Heatmap $heatmap = null;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean", nullable=true, options={"default": 1})
      */
-    private bool $showCoronaIncidenceWarning = false;
+    private ?bool $showCoronaIncidenceWarning = true;
 
     public function __construct()
     {
