@@ -30,6 +30,7 @@ class WeatherController extends BaseController
      * )
      *
      * @ParamConverter("ride", class="App:Ride")
+     * @Route("/{citySlug}/{rideIdentifier}/weather", name="caldera_criticalmass_rest_weather_add", methods={"PUT"})
      */
     public function addWeatherAction(Request $request, Ride $ride, ManagerRegistry $managerRegistry, SerializerInterface $serializer): Response
     {
