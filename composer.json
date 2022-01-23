@@ -100,7 +100,8 @@
         "maltehuebner/ordered-entities-bundle": "dev-master",
         "knplabs/knp-menu-bundle": "^3.0",
         "laminas/laminas-feed": "^2.14",
-        "laminas/laminas-http": "^2.14"
+        "laminas/laminas-http": "^2.14",
+        "maltehuebner/impress-bundle": "^0.1.0"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "*",
@@ -140,6 +141,10 @@
         ]
     },
     "config": {
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "symfony/flex": true
+        }
 
     },
     "extra": {

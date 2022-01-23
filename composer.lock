@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1f9d6cf0803817270d2d88257553b958",
+    "content-hash": "5720e9defc760c8ef54d458ee4a70bdf",
     "packages": [
         {
             "name": "calderacc/geobasic",
@@ -5215,23 +5215,73 @@
             "time": "2014-04-26T15:40:10+00:00"
         },
         {
+            "name": "maltehuebner/impress-bundle",
+            "version": "0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/maltehuebner/impress-bundle.git",
+                "reference": "f678ea6320364a21ce1251b8090831430fc52c67"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/maltehuebner/impress-bundle/zipball/f678ea6320364a21ce1251b8090831430fc52c67",
+                "reference": "f678ea6320364a21ce1251b8090831430fc52c67",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": ">5.0",
+                "jms/serializer": "^2.0|^3.0",
+                "php": "^7.4|^8.0",
+                "symfony/cache": "^3.0|^4.0|^5.0|^6.0",
+                "symfony/config": "^4.0|^5.0|^6.0",
+                "symfony/dependency-injection": "^4.0|^5.0|^6.0",
+                "twig/twig": "^2.0|^3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": ">=7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MalteHuebner\\ImpressBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Malte Huebner",
+                    "email": "malte@caldera.cc"
+                }
+            ],
+            "description": "Keep your impress up to date",
+            "support": {
+                "issues": "https://github.com/maltehuebner/impress-bundle/issues",
+                "source": "https://github.com/maltehuebner/impress-bundle/tree/0.1"
+            },
+            "time": "2022-01-22T21:47:57+00:00"
+        },
+        {
             "name": "maltehuebner/ordered-entities-bundle",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maltehuebner/ordered-entities-bundle.git",
-                "reference": "e73e01a47b7c3101895daccc03e0be718f9cc94b"
+                "reference": "69e967ee008887ea12cbacc69d2d7b8a18eb0faf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maltehuebner/ordered-entities-bundle/zipball/e73e01a47b7c3101895daccc03e0be718f9cc94b",
-                "reference": "e73e01a47b7c3101895daccc03e0be718f9cc94b",
+                "url": "https://api.github.com/repos/maltehuebner/ordered-entities-bundle/zipball/69e967ee008887ea12cbacc69d2d7b8a18eb0faf",
+                "reference": "69e967ee008887ea12cbacc69d2d7b8a18eb0faf",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.4 || ^8.0",
                 "symfony/framework-bundle": "^3.0 | ^4.0 | ^5.0"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -5245,7 +5295,11 @@
                     "email": "maltehuebner@gmx.org"
                 }
             ],
-            "time": "2020-10-12T23:45:41+00:00"
+            "support": {
+                "issues": "https://github.com/maltehuebner/ordered-entities-bundle/issues",
+                "source": "https://github.com/maltehuebner/ordered-entities-bundle/tree/master"
+            },
+            "time": "2020-10-13T00:29:49+00:00"
         },
         {
             "name": "maxh/php-nominatim",
@@ -15795,5 +15849,5 @@
         "ext-json": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.2.0"
 }

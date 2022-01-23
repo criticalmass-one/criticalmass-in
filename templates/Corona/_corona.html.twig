@@ -1,17 +1,23 @@
-{% if feature('corona')  %}
-    {% if city is defined %}
+{% set show_incidence_warning = false %}
+
+{% if feature('corona') and city is defined and city.showCoronaIncidenceWarning %}
+    {% set coord = city %}
+
+    {% set show_incidence_warning = true %}
+{% endif %}
+
+{% if feature('corona') and ride is defined and ride.showCoronaIncidenceWarning and ride.city.showCoronaIncidenceWarning %}
+    {% set coord = ride %}
+    {% set city = ride.city %}
+
+    {% if not ride.latitude or ride.longitude %}
         {% set coord = city %}
     {% endif %}
 
-    {% if ride is defined %}
-        {% set coord = ride %}
-        {% set city = ride.city %}
+    {% set show_incidence_warning = true %}
+{% endif %}
 
-        {% if not ride.latitude or ride.longitude %}
-            {% set coord = city %}
-        {% endif %}
-    {% endif %}
-
+{% if show_incidence_warning  %}
     {% set corona_result = corona(coord) %}
 {% endif %}
 
