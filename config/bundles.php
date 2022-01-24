@@ -36,4 +36,5 @@ return [
     FOS\OAuthServerBundle\FOSOAuthServerBundle::class => ['all' => true],
     Gregwar\CaptchaBundle\GregwarCaptchaBundle::class => ['all' => true],
     Knp\Bundle\MenuBundle\KnpMenuBundle::class => ['all' => true],
+    MalteHuebner\ImpressBundle\MalteHuebnerImpressBundle::class => ['all' => true],
 ];

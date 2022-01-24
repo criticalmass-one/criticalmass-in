@@ -78,7 +78,9 @@ class CityType extends AbstractType
                 VichFileType::class, [
                     'required' => false
                 ]
-            );
+            )
+            ->add('showCoronaIncidenceWarning', CheckboxType::class, ['required' => false])
+        ;
     }
 
     public function getName(): string

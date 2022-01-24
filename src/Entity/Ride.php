@@ -152,7 +152,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @DataQuery\Sortable
      * @DataQuery\Queryable
      */
-    protected float $latitude = 0.0;
+    protected ?float $latitude = 0.0;
 
     /**
      * @ORM\Column(type="float", nullable=true)
@@ -161,7 +161,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @DataQuery\Sortable
      * @DataQuery\Queryable
      */
-    protected float $longitude = 0.0;
+    protected ?float $longitude = 0.0;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
@@ -342,6 +342,11 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @ORM\OneToMany(targetEntity=RideView::class, mappedBy="ride", fetch="LAZY")
      */
     protected Collection $viewRelation;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true, options={"default": 1})
+     */
+    private ?bool $showCoronaIncidenceWarning = true;
 
     public function __construct()
     {
@@ -1157,6 +1162,18 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
                 $viewRelation->setRide(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getShowCoronaIncidenceWarning(): ?bool
+    {
+        return $this->showCoronaIncidenceWarning;
+    }
+
+    public function setShowCoronaIncidenceWarning(?bool $showCoronaIncidenceWarning): self
+    {
+        $this->showCoronaIncidenceWarning = $showCoronaIncidenceWarning;
 
         return $this;
     }
