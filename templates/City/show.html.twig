@@ -173,11 +173,13 @@
             </div>
 
             <div class="col-md-3">
+                {% if feature('corona') and city is defined and city.showCoronaIncidenceWarning %}
                 <div class="row">
                     <div class="col-md-12">
                         {% include 'Corona/_corona.html.twig' with { 'city': city } %}
                     </div>
                 </div>
+                {% endif %}
 
                 <div class="row">
                     <div class="col-md-12">
