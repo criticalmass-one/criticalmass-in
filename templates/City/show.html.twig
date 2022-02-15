@@ -203,11 +203,13 @@
                     </div>
                 </div>
 
+                {% if nearCities.length > 0 %}
                 <div class="row">
                     <div class="col-md-12">
                         {% include 'City/Includes/_nearCities.html.twig' with { 'nearCities': nearCities } %}
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>
