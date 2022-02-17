@@ -61,6 +61,13 @@ class RideTabsController extends AbstractController
         ]);
     }
 
+    public function renderCoronaTabAction(Ride $ride): Response
+    {
+        return $this->render('RideTabs/CoronaTab.html.twig', [
+            'ride' => $ride,
+        ]);
+    }
+
     public function renderDetailsTabAction(Ride $ride, ObjectRouterInterface $objectRouter): Response
     {
         /**
