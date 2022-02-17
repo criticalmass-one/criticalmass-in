@@ -97,8 +97,7 @@
         "twig/extra-bundle": "^3.0",
         "nyholm/psr7": "^1.3",
         "knplabs/knp-menu-bundle": "^3.0",
-        "maltehuebner/ordered-entities-bundle": "dev-master",
-        "knplabs/knp-menu-bundle": "^3.0",
+        "maltehuebner/ordered-entities-bundle": "^0.1",
         "laminas/laminas-feed": "^2.14",
         "laminas/laminas-http": "^2.14",
         "maltehuebner/impress-bundle": "^0.1.0"

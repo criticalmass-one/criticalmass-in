@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5720e9defc760c8ef54d458ee4a70bdf",
+    "content-hash": "0729c03ce500a9144e04352ce1e17f33",
     "packages": [
         {
             "name": "calderacc/geobasic",
@@ -5265,23 +5265,22 @@
         },
         {
             "name": "maltehuebner/ordered-entities-bundle",
-            "version": "dev-master",
+            "version": "0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maltehuebner/ordered-entities-bundle.git",
-                "reference": "69e967ee008887ea12cbacc69d2d7b8a18eb0faf"
+                "reference": "deb977396fe63823261a385394605c84351e4952"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maltehuebner/ordered-entities-bundle/zipball/69e967ee008887ea12cbacc69d2d7b8a18eb0faf",
-                "reference": "69e967ee008887ea12cbacc69d2d7b8a18eb0faf",
+                "url": "https://api.github.com/repos/maltehuebner/ordered-entities-bundle/zipball/deb977396fe63823261a385394605c84351e4952",
+                "reference": "deb977396fe63823261a385394605c84351e4952",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.4 || ^8.0",
-                "symfony/framework-bundle": "^3.0 | ^4.0 | ^5.0"
+                "php": "^7.4|^8.0",
+                "symfony/framework-bundle": "^3.0|^4.0|^5.0|^6.0"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -5297,9 +5296,9 @@
             ],
             "support": {
                 "issues": "https://github.com/maltehuebner/ordered-entities-bundle/issues",
-                "source": "https://github.com/maltehuebner/ordered-entities-bundle/tree/master"
+                "source": "https://github.com/maltehuebner/ordered-entities-bundle/tree/0.1"
             },
-            "time": "2020-10-13T00:29:49+00:00"
+            "time": "2022-01-23T17:53:15+00:00"
         },
         {
             "name": "maxh/php-nominatim",
@@ -15835,8 +15834,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "symfony/dependency-injection": 20,
-        "maltehuebner/ordered-entities-bundle": 20
+        "symfony/dependency-injection": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
