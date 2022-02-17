@@ -4,6 +4,7 @@ namespace App\Factory;
 
 use App\Entity\Ride;
 use App\Model\Frontpage\RideList\Month;
+use App\Model\Frontpage\RideList\MonthList;
 use Doctrine\Persistence\ManagerRegistry;
 
 class FrontpageRideListFactory
@@ -15,36 +16,37 @@ class FrontpageRideListFactory
     public function __construct(ManagerRegistry $doctrine)
     {
         $this->doctrine = $doctrine;
+        $this->monthList = new MonthList();
     }
 
-    public function getMonth(): Month
+    public function getMonth(int $monthNumber): Month
     {
-        if (!$this->monthModel) {
-            $this->createList();
-        }
-
-        return $this->monthModel;
+        return $this->monthList[$monthNumber];
     }
 
-    public function sort(): Month
-    {
-        if (!$this->monthModel) {
-            $this->createList();
-        }
-
-        return $this->monthModel->sort();
-    }
-
-    protected function createList(): FrontpageRideListFactory
+    public function createList(): FrontpageRideListFactory
     {
         $rides = $this->doctrine->getRepository(Ride::class)->findFrontpageRides();
 
-        $this->monthModel = new Month();
-
         foreach ($rides as $ride) {
-            $this->monthModel->add($ride);
+            $this->monthList->addRide($ride);
         }
 
         return $this;
+    }
+
+    public function sort(): self
+    {
+        /** @var Month $month */
+        foreach ($this->monthList as $month) {
+            $month->sort();
+        }
+
+        return $this;
+    }
+
+    public function getMonthList(): MonthList
+    {
+        return $this->monthList;
     }
 }

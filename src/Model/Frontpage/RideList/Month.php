@@ -15,7 +15,7 @@ class Month implements \Iterator
         $this->dateTime = new \DateTime();
     }
 
-    public function add(Ride $ride): Month
+    public function addRide(Ride $ride): Month
     {
         $day = $ride->getDateTime()->format('j');
 
@@ -23,7 +23,7 @@ class Month implements \Iterator
             $this->dayList[$day] = new Day($ride->getDateTime());
         }
 
-        $this->dayList[$day]->add($ride);
+        $this->dayList[$day]->addRide($ride);
 
         return $this;
     }
@@ -64,6 +64,7 @@ class Month implements \Iterator
         foreach ($this->dayList as $day) {
             $day->sort();
         }
+
         return $this;
     }
 }

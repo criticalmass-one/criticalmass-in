@@ -15,7 +15,7 @@ class Day implements \Iterator
         $this->dateTime = $dateTime;
     }
 
-    public function add(Ride $ride): Day
+    public function addRide(Ride $ride): Day
     {
         $this->list[] = $ride;
 
