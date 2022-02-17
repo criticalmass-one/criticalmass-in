@@ -491,6 +491,7 @@ class RideController extends BaseController
      *     )
      * )
      *
+     * @Route("/{citySlug}/{rideIdentifier}", name="caldera_criticalmass_rest_ride_update", methods={"POST"})
      * @ParamConverter("ride", class="App:Ride")
      */
     public function updateRideAction(Request $request, Ride $ride, SerializerInterface $serializer, ManagerRegistry $managerRegistry, ValidatorInterface $validator, EntityMergerInterface $entityMerger): Response
