@@ -4,8 +4,8 @@ namespace App\Entity;
 
 use App\Criticalmass\Geo\Entity\Track as GeoTrack;
 use App\Criticalmass\Geo\EntityInterface\TrackInterface;
-use App\Criticalmass\OrderedEntities\Annotation as OE;
-use App\Criticalmass\OrderedEntities\OrderedEntityInterface;
+use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
+use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
 use App\Criticalmass\Router\Annotation as Routing;
 use App\Criticalmass\UploadableDataHandler\UploadableEntity;
 use App\Criticalmass\UploadFaker\FakeUploadable;
@@ -196,8 +196,10 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
 
     /**
      * @ORM\Column(type="string", columnDefinition="ENUM('TRACK_SOURCE_GPX', 'TRACK_SOURCE_STRAVA', 'TRACK_SOURCE_RUNKEEPER', 'TRACK_SOURCE_RUNTASTIC', 'TRACK_SOURCE_DRAW', 'TRACK_SOURCE_GLYMPSE', 'TRACK_SOURCE_CRITICALMAPS', 'TRACK_SOURCE_UNKNOWN')")
+     *
+     * $source must be nullable du to legacy tracks without source attribution
      */
-    protected string $source = self::TRACK_SOURCE_UNKNOWN;
+    protected ?string $source = self::TRACK_SOURCE_UNKNOWN;
 
     /**
      * @ORM\Column(type="bigint", nullable=true)
