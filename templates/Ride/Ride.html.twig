@@ -69,6 +69,12 @@
                         </a>
                     </li>
                 {% endif %}
+                <li role="presentation">
+                    <a href="#corona" aria-controls="messages" role="tab" data-toggle="tab">
+                        <i class="far fa-virus"></i>
+                        Corona
+                    </a>
+                </li>
             </ul>
 
             <div class="tab-content">
@@ -79,6 +85,8 @@
                 {% if pastRide and ride.enabled %}
                     {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderTracksTabAction', { 'ride': ride } )) }}
                 {% endif %}
+
+                {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderCoronaTabAction', { 'ride': ride } )) }}
             </div>
         </div>
     </div>
