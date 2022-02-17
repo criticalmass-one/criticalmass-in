@@ -6,11 +6,9 @@ use App\Entity\Ride;
 
 class Day implements \Iterator
 {
-    /** @var \DateTime $dateTime */
-    protected $dateTime = null;
+    protected ?\DateTime $dateTime = null;
 
-    /** @var array $list */
-    protected $list = [];
+    protected array $list = [];
 
     public function __construct(\DateTime $dateTime)
     {

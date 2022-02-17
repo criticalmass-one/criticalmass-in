@@ -6,11 +6,9 @@ use App\Entity\Ride;
 
 class Month implements \Iterator
 {
-    /** @var array $dayList */
-    protected $dayList = [];
+    protected array $dayList = [];
 
-    /** @var \DateTime $dateTime */
-    protected $dateTime = null;
+    protected ?\DateTime $dateTime = null;
 
     public function __construct()
     {

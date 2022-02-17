@@ -8,11 +8,9 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class FrontpageRideListFactory
 {
-    /** @var ManagerRegistry $doctrine */
-    protected $doctrine;
+    protected ManagerRegistry $doctrine;
 
-    /** @var Month $monthModel */
-    protected $monthModel = null;
+    protected MonthList $monthList;
 
     public function __construct(ManagerRegistry $doctrine)
     {
