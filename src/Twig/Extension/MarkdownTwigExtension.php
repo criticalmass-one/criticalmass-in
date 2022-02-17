@@ -27,7 +27,7 @@ class MarkdownTwigExtension extends AbstractExtension
         if (!$text) {
             return '';
         }
-        
+
         return $this->textParser->parse($text);
     }
 
