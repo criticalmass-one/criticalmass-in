@@ -1,23 +1,23 @@
 {% set show_incidence_warning = false %}
 
- {% if feature('corona') and city is defined and city.showCoronaIncidenceWarning %}
-     {% set coord = city %}
+{% if feature('corona') and city is defined and city.showCoronaIncidenceWarning %}
+    {% set coord = city %}
 
-     {% set show_incidence_warning = true %}
- {% endif %}
+    {% set show_incidence_warning = true %}
+{% endif %}
 
- {% if feature('corona') and ride is defined and ride.showCoronaIncidenceWarning and ride.city.showCoronaIncidenceWarning %}
-     {% set coord = ride %}
-     {% set city = ride.city %}
+{% if feature('corona') and ride is defined and ride.showCoronaIncidenceWarning and ride.city.showCoronaIncidenceWarning %}
+    {% set coord = ride %}
+    {% set city = ride.city %}
 
-     {% if not ride.latitude or ride.longitude %}
-         {% set coord = city %}
-     {% endif %}
+    {% if not ride.latitude or ride.longitude %}
+        {% set coord = city %}
+    {% endif %}
 
-     {% set show_incidence_warning = true %}
- {% endif %}
+    {% set show_incidence_warning = true %}
+{% endif %}
 
-{% if show_incidence_warning  %}
+{% if show_incidence_warning %}
     {% set corona_result = corona(coord) %}
 {% endif %}
 
@@ -45,9 +45,10 @@
         <div class="panel-body text-center">
             <p>
                 In {{ city.city }} wurden in den letzten 7 Tagen
-                <br />
-                <strong style="font-size: 2em;" class="text-{{ color_class }}">{{ corona_result.cases7Per100K|number_format(2) }}</strong>
-                <br />
+                <br/>
+                <strong style="font-size: 2em;"
+                        class="text-{{ color_class }}">{{ corona_result.cases7Per100K|number_format(2) }}</strong>
+                <br/>
                 Menschen pro 100.000 Einwohner positiv auf SARS-CoV-2 getestet.
             </p>
 
@@ -59,18 +60,22 @@
                 </small>
             </p>
 
-            <hr />
+            <hr/>
 
             <p>
                 <a href="https://www.coronawarn.app/" title="zur Homepage der Corona-Warn-App">
-                    <img class="pull-left" src="{{ asset('/images/corona/cwa-small.png') }}" alt="Logo der deutschen Corona-Warn-App" />
+                    <img class="pull-left" src="{{ asset('/images/corona/cwa-small.png') }}"
+                         alt="Logo der deutschen Corona-Warn-App"/>
                 </a>
 
-                Mit der <a href="https://www.coronawarn.app/" title="zur Homepage der Corona-Warn-App">Corona-Warn-App</a> kannst du helfen, die Verbreitung des Coronavirus zu bekämpfen.
+                Mit der <a href="https://www.coronawarn.app/"
+                           title="zur Homepage der Corona-Warn-App">Corona-Warn-App</a> kannst du helfen, die
+                Verbreitung des Coronavirus zu bekämpfen.
             </p>
 
             <p>
-                <a class="btn btn-{{ color_class }}" href="https://www.coronawarn.app/" title="zur Homepage der Corona-Warn-App">
+                <a class="btn btn-{{ color_class }}" href="https://www.coronawarn.app/"
+                   title="zur Homepage der Corona-Warn-App">
                     App herunterladen
                 </a>
             </p>
