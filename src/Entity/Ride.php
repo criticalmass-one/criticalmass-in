@@ -207,7 +207,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Groups({"extended-ride-list"})
      * @JMS\Expose
      */
-    protected Collection $socialNetworkProfiles;
+    protected ?Collection $socialNetworkProfiles = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
