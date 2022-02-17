@@ -8,7 +8,8 @@
             </div>
             <div class="panel-body">
                 <ul class="list-unstyled">
-                    {% for day in rideList %}
+                    {% for month in rideList %}
+                        {% for day in month %}
                         <li>
                             <h4>
                                 {{ day.dateTime|format_date('eeee, dd. MMMM YYYY') }}
@@ -20,6 +21,7 @@
                                 {% endfor %}
                             </ul>
                         </li>
+                        {% endfor %}
                     {% endfor %}
                 </ul>
             </div>
