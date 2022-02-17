@@ -148,11 +148,6 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     protected ?string $imageMimeType = null;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected ?string $imageGoogleCloudHash = null;
-
-    /**
      * @Vich\UploadableField(mapping="photo_photo", fileNameProperty="backupName")
      * @JMS\Expose()
      */
@@ -175,11 +170,6 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
      * @JMS\Expose()
      */
     protected ?string $backupMimeType = null;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected ?string $backupGoogleCloudHash = null;
 
     /**
      * @ORM\Column(type="datetime")
@@ -625,30 +615,6 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     public function setExifCreationDate(\DateTime $exifCreationDate): Photo
     {
         $this->exifCreationDate = $exifCreationDate;
-
-        return $this;
-    }
-
-    public function getImageGoogleCloudHash(): ?string
-    {
-        return $this->imageGoogleCloudHash;
-    }
-
-    public function setImageGoogleCloudHash(string $imageGoogleCloudHash): Photo
-    {
-        $this->imageGoogleCloudHash = $imageGoogleCloudHash;
-
-        return $this;
-    }
-
-    public function getBackupGoogleCloudHash(): ?string
-    {
-        return $this->backupGoogleCloudHash;
-    }
-
-    public function setBackupGoogleCloudHash(string $backupGoogleCloudHash): Photo
-    {
-        $this->backupGoogleCloudHash = $backupGoogleCloudHash;
 
         return $this;
     }
