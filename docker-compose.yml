@@ -24,7 +24,7 @@ services:
         com.symfony.server.service-prefix: 'REDIS'
 
     mysql:
-      image: mariadb
+      image: mariadb:10.3.25
       container_name: criticalmass-mysql
       working_dir: /application
       volumes:
