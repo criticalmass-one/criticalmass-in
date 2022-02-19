@@ -25,6 +25,7 @@ services:
 
     mysql:
       image: mariadb:10.3.25
+      command: --default-authentication-plugin=mysql_native_password
       container_name: criticalmass-mysql
       working_dir: /application
       volumes:
