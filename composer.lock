@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "636100960d3610925e18c2523cc83b33",
+    "content-hash": "0729c03ce500a9144e04352ce1e17f33",
     "packages": [
         {
             "name": "calderacc/geobasic",
@@ -5895,6 +5895,43 @@
                 "source": "https://github.com/maltehuebner/impress-bundle/tree/0.1"
             },
             "time": "2022-01-22T21:47:57+00:00"
+        },
+        {
+            "name": "maltehuebner/ordered-entities-bundle",
+            "version": "0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/maltehuebner/ordered-entities-bundle.git",
+                "reference": "deb977396fe63823261a385394605c84351e4952"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/maltehuebner/ordered-entities-bundle/zipball/deb977396fe63823261a385394605c84351e4952",
+                "reference": "deb977396fe63823261a385394605c84351e4952",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4|^8.0",
+                "symfony/framework-bundle": "^3.0|^4.0|^5.0|^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MalteHuebner\\OrderedEntitiesBundle\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Malte Huebner",
+                    "email": "maltehuebner@gmx.org"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/maltehuebner/ordered-entities-bundle/issues",
+                "source": "https://github.com/maltehuebner/ordered-entities-bundle/tree/0.1"
+            },
+            "time": "2022-01-23T17:53:15+00:00"
         },
         {
             "name": "maxh/php-nominatim",
@@ -17974,7 +18011,7 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": {
         "symfony/dependency-injection": 20
     },

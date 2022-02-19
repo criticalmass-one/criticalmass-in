@@ -33,8 +33,14 @@ class FrontpageController extends AbstractController
 
     public function rideListAction(FrontpageRideListFactory $frontpageRideListFactory): Response
     {
+        $monthList = $frontpageRideListFactory
+            ->createList()
+            ->sort()
+            ->getMonthList()
+        ;
+
         return $this->render('Frontpage/_ride_list.html.twig', [
-            'rideList' => $frontpageRideListFactory->sort(),
+            'rideList' => $monthList,
         ]);
     }
 

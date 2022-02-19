@@ -4,7 +4,6 @@ namespace App\EventSubscriber;
 
 use App\Criticalmass\Geocoding\ReverseGeocoderInterface;
 use App\Criticalmass\Image\ExifHandler\ExifHandlerInterface;
-use App\Criticalmass\Image\GoogleCloud\ExportDataHandler\ExportDataHandlerInterface;
 use App\Criticalmass\Image\PhotoGps\PhotoGpsInterface;
 use App\Entity\Photo;
 use App\Entity\Track;
@@ -28,16 +27,12 @@ class PhotoEventSubscriber implements EventSubscriberInterface
     /** @var ExifHandlerInterface $exifHandler */
     protected $exifHandler;
 
-    /** @var ExportDataHandlerInterface $exportDataHandler */
-    protected $exportDataHandler;
-
-    public function __construct(ManagerRegistry $registry, ReverseGeocoderInterface $reverseGeocoder, PhotoGpsInterface $photoGps, ExifHandlerInterface $exifHandler, ExportDataHandlerInterface $exportDataHandler)
+    public function __construct(ManagerRegistry $registry, ReverseGeocoderInterface $reverseGeocoder, PhotoGpsInterface $photoGps, ExifHandlerInterface $exifHandler)
     {
         $this->registry = $registry;
         $this->reverseGeocoder = $reverseGeocoder;
         $this->photoGps = $photoGps;
         $this->exifHandler = $exifHandler;
-        $this->exportDataHandler = $exportDataHandler;
     }
 
     public static function getSubscribedEvents(): array
