@@ -9,13 +9,17 @@ doctrine:
     dbal:
         # configure these for your database server
         driver: 'pdo_mysql'
-        server_version: '5.7'
         charset: utf8mb4
         default_table_options:
             charset: utf8
             collate: utf8_unicode_ci
 
-        url: '%env(resolve:DATABASE_URL)%'
+        dbname: '%env(resolve:DATABASE_DBNAME)%'
+        port: '%env(resolve:DATABASE_PORT)%'
+        user: '%env(resolve:DATABASE_USER)%'
+        password: '%env(resolve:DATABASE_PASSWORD)%'
+        host: '%env(resolve:DATABASE_HOST)%'
+        server_version: '%env(resolve:DATABASE_VERSION)%'
 
         types:
             datetime: App\DBAL\Type\UTCDateTimeType
