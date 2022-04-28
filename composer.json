@@ -103,7 +103,7 @@
     },
     "require-dev": {
         "symfony/phpunit-bridge": "*",
-        "phpunit/phpunit": "^7",
+        "phpunit/phpunit": "^8",
         "codedungeon/phpunit-result-printer": "^0.6.0",
         "symfony/browser-kit": "^4.1",
         "vimeo/psalm": "^3.3",
