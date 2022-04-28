@@ -129,12 +129,7 @@
             "bin/console --env=test doctrine:database:create",
             "bin/console --env=test doctrine:schema:create"
         ],
-        "reset-fixtures": [
-            "@reset-test-db",
-            "bin/console --env=test doctrine:fixtures:load -n"
-        ],
         "functional-tests": [
-            "@reset-fixtures",
             "vendor/bin/phpunit tests/Controller"
         ]
     },
