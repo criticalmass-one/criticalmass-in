@@ -70,7 +70,6 @@
         "khill/php-duration": "^1.0",
         "sabre/vobject": "^4.0",
         "presta/sitemap-bundle": "^1.5",
-        "doctrine/doctrine-fixtures-bundle": "^3.1",
         "symfony/dependency-injection": "^4.2@dev",
         "symfony/dom-crawler": "^4.2",
         "symfony/css-selector": "^4.2",
@@ -130,12 +129,7 @@
             "bin/console --env=test doctrine:database:create",
             "bin/console --env=test doctrine:schema:create"
         ],
-        "reset-fixtures": [
-            "@reset-test-db",
-            "bin/console --env=test doctrine:fixtures:load -n"
-        ],
         "functional-tests": [
-            "@reset-fixtures",
             "vendor/bin/phpunit tests/Controller"
         ]
     },
