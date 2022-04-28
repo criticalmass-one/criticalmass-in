@@ -47,7 +47,7 @@
         "sonata-project/seo-bundle": "^2.2",
         "graylog2/gelf-php": "^1.5",
         "calderacc/geobasic": "^0.5",
-        "yohang/calendr": "^2.0",
+        "yohang/calendr": "dev-php8",
         "maxh/php-nominatim": "^1.2",
         "php-http/guzzle6-adapter": "^1.1",
         "php-http/httplug-bundle": "^1.10",
@@ -164,6 +164,10 @@
         {
             "type": "vcs",
             "url": "https://github.com/maltehuebner/StravaPHP.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/maltehuebner/CalendR.git"
         }
     ],
     "minimum-stability": "dev"
