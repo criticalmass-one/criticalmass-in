@@ -38,10 +38,6 @@ caldera_criticalmass_board:
     resource: 'board.yml'
     prefix:   /
 
-caldera_criticalmass_help:
-    resource: 'help.yml'
-    prefix:   /help
-
 caldera_criticalmass_photo:
     resource: 'photo.yml'
     prefix:   /

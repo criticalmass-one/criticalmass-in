@@ -3,13 +3,13 @@
 namespace App\Criticalmass\Geo\Entity;
 
 use App\Criticalmass\Geo\EntityInterface\PositionInterface;
-use Caldera\GeoBasic\Coord\Coord;
+use Caldera\GeoBasic\Coordinate\Coordinate;
 use JMS\Serializer\Annotation as JMS;
 
 /**
  * @JMS\ExclusionPolicy("all")
  */
-class Position extends Coord implements PositionInterface
+class Position extends Coordinate implements PositionInterface
 {
     /**
      * @JMS\Expose
