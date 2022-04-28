@@ -46,7 +46,6 @@
         "miljar/php-exif": "^0.6.5",
         "sonata-project/seo-bundle": "^2.2",
         "graylog2/gelf-php": "^1.5",
-        "facebook/graph-sdk": "^5.6",
         "calderacc/geobasic": "^0.5",
         "yohang/calendr": "^2.0",
         "maxh/php-nominatim": "^1.2",
