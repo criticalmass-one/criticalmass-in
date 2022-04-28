@@ -58,7 +58,6 @@
         "geocoder-php/nominatim-provider": "^5.0",
         "php-http/message": "^1.6",
         "symfony/asset": "^4.1",
-        "symfony/orm-pack": "^1.0",
         "symfony/twig-bundle": "^4.1",
         "symfony/swiftmailer-bundle": "^3.2",
         "symfony/form": "^4.1",
@@ -100,16 +99,18 @@
         "maltehuebner/ordered-entities-bundle": "^0.1",
         "laminas/laminas-feed": "^2.14",
         "laminas/laminas-http": "^2.14",
-        "maltehuebner/impress-bundle": "^0.1.0"
+        "maltehuebner/impress-bundle": "^0.1.0",
+        "composer/package-versions-deprecated": "^1.0@dev"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "*",
         "phpunit/phpunit": "^7",
         "codedungeon/phpunit-result-printer": "^0.6.0",
-        "symfony/profiler-pack": "^1.0",
         "symfony/browser-kit": "^4.1",
         "vimeo/psalm": "^3.3",
-        "symfony/maker-bundle": "^1.11"
+        "symfony/maker-bundle": "^1.11",
+        "symfony/stopwatch": "5.4.x-dev",
+        "symfony/web-profiler-bundle": "5.0.x-dev"
     },
     "conflict": {
         "symfony/symfony": "*"
