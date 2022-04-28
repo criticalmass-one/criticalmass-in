@@ -53,9 +53,6 @@
     "doctrine/common": {
         "version": "v2.8.1"
     },
-    "doctrine/data-fixtures": {
-        "version": "v1.3.1"
-    },
     "doctrine/dbal": {
         "version": "v2.7.1"
     },
@@ -69,15 +66,6 @@
             "branch": "master",
             "version": "1.6",
             "ref": "ae205d5114e719deb64d2110f56ef910787d1e04"
-        }
-    },
-    "doctrine/doctrine-fixtures-bundle": {
-        "version": "3.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "3.0",
-            "ref": "fc52d86631a6dfd9fdf3381d0b7e3df2069e51b3"
         }
     },
     "doctrine/doctrine-migrations-bundle": {
