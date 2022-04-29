@@ -97,7 +97,9 @@
         "laminas/laminas-feed": "^2.14",
         "laminas/laminas-http": "^2.14",
         "maltehuebner/impress-bundle": "^0.1.0",
-        "composer/package-versions-deprecated": "^1.0@dev"
+        "composer/package-versions-deprecated": "^1.0@dev",
+        "symfony/doctrine-bridge": "^4.0",
+        "symfony/proxy-manager-bridge": "4.4.x-dev"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "*",
