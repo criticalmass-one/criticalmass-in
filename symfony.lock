@@ -200,9 +200,6 @@
     "geocoder-php/nominatim-provider": {
         "version": "5.0.0"
     },
-    "graylog2/gelf-php": {
-        "version": "1.5.5"
-    },
     "gregwar/captcha": {
         "version": "v1.1.8"
     },
