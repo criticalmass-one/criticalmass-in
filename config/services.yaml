@@ -256,14 +256,6 @@ services:
         arguments:
             $class: '%fos_user.model.user.class%'
 
-    App\Controller\OAuthServer\AuthorizeController:
-        arguments:
-            $authorizeForm: '@fos_oauth_server.authorize.form'
-            $authorizeFormHandler: '@fos_oauth_server.authorize.form.handler.default'
-            $oAuth2Server: '@fos_oauth_server.server'
-        tags:
-            - controller.service_arguments
-
     App\Criticalmass\Corona\ResultFetcher\ResultFetcherInterface:
         alias: App\Criticalmass\Corona\ResultFetcher\CachedResultFetcher
 

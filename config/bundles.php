@@ -31,7 +31,6 @@ return [
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
     FOS\CKEditorBundle\FOSCKEditorBundle::class => ['all' => true],
     Nmure\CrawlerDetectBundle\CrawlerDetectBundle::class => ['all' => true],
-    FOS\OAuthServerBundle\FOSOAuthServerBundle::class => ['all' => true],
     Twig\Extra\TwigExtraBundle\TwigExtraBundle::class => ['all' => true],
     Gregwar\CaptchaBundle\GregwarCaptchaBundle::class => ['all' => true],
     Knp\Bundle\MenuBundle\KnpMenuBundle::class => ['all' => true],

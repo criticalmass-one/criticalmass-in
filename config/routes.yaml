@@ -16,10 +16,3 @@ runkeeper_login:
 
 twitter_login:
     path: /login/check-twitter
-
-fos_oauth_server_token:
-  resource: '@FOSOAuthServerBundle/Resources/config/routing/token.xml'
-
-fos_oauth_server_authorize:
-  path: /oauth/v2/auth
-  controller: App\Controller\OAuthServer\AuthorizeController::authorizeAction

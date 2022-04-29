@@ -87,7 +87,6 @@
         "nesbot/carbon": "^2.24",
         "iamstuartwilson/strava": "^1.4",
         "nmure/crawler-detect-bundle": "^2.0.0",
-        "friendsofsymfony/oauth-server-bundle": "^1.6",
         "gregwar/captcha-bundle": "^2.1",
         "embed/embed": "^4.1",
         "guzzlehttp/psr7": "^1.6",
@@ -98,7 +97,9 @@
         "laminas/laminas-feed": "^2.14",
         "laminas/laminas-http": "^2.14",
         "maltehuebner/impress-bundle": "^0.1.0",
-        "composer/package-versions-deprecated": "^1.0@dev"
+        "composer/package-versions-deprecated": "^1.0@dev",
+        "symfony/doctrine-bridge": "^4.0",
+        "symfony/proxy-manager-bridge": "4.4.x-dev"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "*",
