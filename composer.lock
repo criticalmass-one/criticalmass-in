@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c5bf37fa4caa8e0f88de5a46b0e9568f",
+    "content-hash": "10a86ee01bac37cb7f0442f2f7f9583f",
     "packages": [
         {
             "name": "calderacc/geobasic",
@@ -2210,59 +2210,6 @@
                 "source": "https://github.com/bestit/flagception-bundle/tree/3.x"
             },
             "time": "2020-10-26T14:47:54+00:00"
-        },
-        {
-            "name": "freearhey/wikidata",
-            "version": "3.5.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/freearhey/wikidata.git",
-                "reference": "4c1a7f8f1eaf238fd392f87b6fad2309128b5174"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/freearhey/wikidata/zipball/4c1a7f8f1eaf238fd392f87b6fad2309128b5174",
-                "reference": "4c1a7f8f1eaf238fd392f87b6fad2309128b5174",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "^6.3",
-                "tightenco/collect": "^7.11"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^6.5"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "src/helpers.php"
-                ],
-                "psr-4": {
-                    "Wikidata\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Arhey",
-                    "role": "developer"
-                }
-            ],
-            "description": "A PHP client for working with Wikidata API.",
-            "homepage": "https://github.com/freearhey/wikidata",
-            "keywords": [
-                "client",
-                "php",
-                "wikidata"
-            ],
-            "support": {
-                "issues": "https://github.com/freearhey/wikidata/issues",
-                "source": "https://github.com/freearhey/wikidata/tree/master"
-            },
-            "time": "2020-06-20T12:02:44+00:00"
         },
         {
             "name": "fresh/doctrine-enum-bundle",
@@ -16203,60 +16150,6 @@
                 }
             ],
             "time": "2021-07-28T10:34:58+00:00"
-        },
-        {
-            "name": "tightenco/collect",
-            "version": "v7.26.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/tighten/collect.git",
-                "reference": "5e460929279ad806e59fc731e649e9b25fc8774a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/tighten/collect/zipball/5e460929279ad806e59fc731e649e9b25fc8774a",
-                "reference": "5e460929279ad806e59fc731e649e9b25fc8774a",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1.3",
-                "symfony/var-dumper": "^3.4 || ^4.0 || ^5.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.0",
-                "nesbot/carbon": "^2.23.0",
-                "phpunit/phpunit": "^7.0"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "src/Collect/Support/helpers.php",
-                    "src/Collect/Support/alias.php"
-                ],
-                "psr-4": {
-                    "Tightenco\\Collect\\": "src/Collect"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Taylor Otwell",
-                    "email": "taylorotwell@gmail.com"
-                }
-            ],
-            "description": "Collect - Illuminate Collections as a separate package.",
-            "keywords": [
-                "collection",
-                "laravel"
-            ],
-            "support": {
-                "issues": "https://github.com/tighten/collect/issues",
-                "source": "https://github.com/tighten/collect/tree/v7.26.1"
-            },
-            "time": "2020-09-05T00:05:48+00:00"
         },
         {
             "name": "twig/extensions",
