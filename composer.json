@@ -81,7 +81,6 @@
         "ext-json": "*",
         "fresh/doctrine-enum-bundle": "^6.3",
         "freearhey/wikidata": "^3.1",
-        "friendsofsymfony/ckeditor-bundle": "^2.0",
         "doctrine/annotations": "^1.7",
         "league/commonmark": "^1.0",
         "nesbot/carbon": "^2.24",
