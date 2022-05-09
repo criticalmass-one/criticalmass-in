@@ -5,7 +5,7 @@ namespace App\Request\ParamConverter;
 use App\Entity\City;
 use App\Entity\CitySlug;
 use App\EntityInterface\AutoParamConverterAble;
-use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\ORM\EntityRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -43,7 +43,7 @@ class AbstractCriticalmassParamConverter extends AbstractParamConverter
         return null;
     }
 
-    protected function getRepository(): ObjectRepository
+    protected function getRepository(): EntityRepository
     {
         return $this->registry->getRepository($this->getEntityFqcn());
     }
