@@ -236,7 +236,7 @@ services:
 
     App\Criticalmass\ElasticCityFinder\ElasticCityFinder:
         arguments:
-            $finder: '@fos_elastica.finder.criticalmass_city.city'
+            $finder: '@fos_elastica.finder.criticalmass_city'
 
     App\Serializer\JMSSerializer\Handler\RelationHandler:
         tags:
