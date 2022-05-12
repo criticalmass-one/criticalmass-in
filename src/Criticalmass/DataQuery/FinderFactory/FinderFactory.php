@@ -4,24 +4,24 @@ namespace App\Criticalmass\DataQuery\FinderFactory;
 
 use App\Criticalmass\DataQuery\Finder\Finder;
 use App\Criticalmass\DataQuery\Finder\FinderInterface;
-use App\Criticalmass\Util\ClassUtil;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use FOS\ElasticaBundle\Finder\TransformedFinder;
 
 class FinderFactory implements FinderFactoryInterface
 {
-    /** @var ContainerInterface $container */
-    protected $container;
+    //protected ContainerInterface $container;
+    protected TransformedFinder $finder;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(/*ContainerInterface $container, */TransformedFinder $finder)
     {
-        $this->container = $container;
+        //$this->container = $container;
+        $this->finder = $finder;
     }
 
     public function createFinderForFqcn(string $fqcn): FinderInterface
     {
-        $className = ClassUtil::getLowercaseShortnameFromFqcn($fqcn);
+        /*$className = ClassUtil::getLowercaseShortnameFromFqcn($fqcn);
 
-        $schema = 'fos_elastica.finder.criticalmass_%s.%s';
+        $schema = 'fos_elastica.finder.criticalmass_%s';
 
         $finderServiceName = sprintf($schema, $className, $className);
 
@@ -32,5 +32,7 @@ class FinderFactory implements FinderFactoryInterface
         }
 
         throw new \Exception(sprintf('Could not find service %s for entity fqcn %s', $finderServiceName, $fqcn));
+        */
+        return new Finder($this->finder);
     }
 }

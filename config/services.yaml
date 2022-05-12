@@ -261,3 +261,7 @@ services:
 
     App\Criticalmass\CriticalmassBlog\CriticalmassBlogInterface:
         alias: App\Criticalmass\CriticalmassBlog\CachedCriticalmassBlog
+
+    App\Criticalmass\DataQuery\FinderFactory\FinderFactory:
+        arguments:
+            $finder: '@fos_elastica.finder.criticalmass_ride'
