@@ -2,62 +2,6 @@ fos_elastica:
     clients:
         default: { host: localhost, port: 9200 }
     indexes:
-        criticalmass_help_category:
-            client: default
-            finder:
-            index_name: criticalmass_%env(APP_ENV)%_help_category
-            settings:
-                index:
-                    analysis:
-                        analyzer:
-                            umlauts_analyzer:
-                                type: custom
-                                tokenizer: lowercase
-                                filter   : [umlauts_filter]
-                        filter:
-                            umlauts_filter:
-                                type: "asciifolding"
-            types:
-                help_category:
-                    properties:
-                        id: ~
-                        title: ~
-                        intro: ~
-                    persistence:
-                        driver: orm
-                        model: App\Entity\HelpCategory
-                        provider: ~
-                        listener: ~
-                        finder: ~
-
-        criticalmass_help_item:
-            client: default
-            finder:
-            index_name: criticalmass_%env(APP_ENV)%_help_item
-            settings:
-                index:
-                    analysis:
-                        analyzer:
-                            umlauts_analyzer:
-                                type: custom
-                                tokenizer: lowercase
-                                filter: [umlauts_filter]
-                        filter:
-                            umlauts_filter:
-                                type: "asciifolding"
-            types:
-                help_item:
-                    properties:
-                        id: ~
-                        title: ~
-                        text: ~
-                    persistence:
-                        driver: orm
-                        model: App\Entity\HelpItem
-                        provider: ~
-                        listener: ~
-                        finder: ~
-
         criticalmass_ride:
             client: default
             finder:
