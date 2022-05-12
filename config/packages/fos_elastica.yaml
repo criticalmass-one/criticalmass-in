@@ -4,7 +4,7 @@ fos_elastica:
     indexes:
         criticalmass_ride:
             client: default
-            finder:
+            finder: ~
             index_name: criticalmass_%env(APP_ENV)%_ride
             settings:
                 index:
@@ -38,7 +38,7 @@ fos_elastica:
 
         criticalmass_city:
             client: default
-            finder:
+            finder: ~
             index_name: criticalmass_%env(APP_ENV)%_city
             settings:
                 index:
@@ -75,7 +75,7 @@ fos_elastica:
 
         criticalmass_photo:
             client: default
-            finder:
+            finder: ~
             index_name: criticalmass_%env(APP_ENV)%_photo
             settings:
                 index:
@@ -119,7 +119,7 @@ fos_elastica:
 
         criticalmass_track:
             client: default
-            finder:
+            finder: ~
             index_name: criticalmass_%env(APP_ENV)%_track
             settings:
                 index:
