@@ -17,26 +17,24 @@ fos_elastica:
                         filter:
                             umlauts_filter:
                                 type: "asciifolding"
-            types:
-                ride:
-                    properties:
-                        id: ~
-                        title: { type: keyword }
-                        description: { type: text }
-                        city: { type: keyword }
-                        country: { type: keyword }
-                        region: { type: keyword }
-                        location: { type: keyword }
-                        rideType: { type: keyword }
-                        isEnabled: ~
-                        dateTime: { type: date, format: "strict_date_optional_time" }
-                        pin: { type: geo_point }
-                    persistence:
-                        driver: orm
-                        model: App\Entity\Ride
-                        provider: ~
-                        listener: ~
-                        finder: ~
+            properties:
+                id: ~
+                title: { type: keyword }
+                description: { type: text }
+                city: { type: keyword }
+                country: { type: keyword }
+                region: { type: keyword }
+                location: { type: keyword }
+                rideType: { type: keyword }
+                isEnabled: ~
+                dateTime: { type: date, format: "strict_date_optional_time" }
+                pin: { type: geo_point }
+            persistence:
+                driver: orm
+                model: App\Entity\Ride
+                provider: ~
+                listener: ~
+                finder: ~
 
         criticalmass_city:
             client: default
@@ -53,29 +51,27 @@ fos_elastica:
                         filter:
                             umlauts_filter:
                                 type: "asciifolding"
-            types:
-                city:
-                    properties:
-                        id: ~
-                        city: { type: keyword }
-                        title: { type: keyword }
-                        description: { type: text }
-                        longDescription: { type: text }
-                        punchLine: { type: text }
-                        isEnabled: ~
-                        enabled: ~
-                        createdAt: { type: date, format: "strict_date_optional_time" }
-                        updatedAt: { type: date, format: "strict_date_optional_time" }
-                        country: { type: keyword }
-                        region: { type: keyword }
-                        continent: { type: keyword }
-                        pin: { type: geo_point }
-                    persistence:
-                        driver: orm
-                        model: App\Entity\City
-                        provider: ~
-                        listener: ~
-                        finder: ~
+            properties:
+                id: ~
+                city: { type: keyword }
+                title: { type: keyword }
+                description: { type: text }
+                longDescription: { type: text }
+                punchLine: { type: text }
+                isEnabled: ~
+                enabled: ~
+                createdAt: { type: date, format: "strict_date_optional_time" }
+                updatedAt: { type: date, format: "strict_date_optional_time" }
+                country: { type: keyword }
+                region: { type: keyword }
+                continent: { type: keyword }
+                pin: { type: geo_point }
+            persistence:
+                driver: orm
+                model: App\Entity\City
+                provider: ~
+                listener: ~
+                finder: ~
 
         criticalmass_photo:
             client: default
@@ -92,36 +88,34 @@ fos_elastica:
                         filter:
                             umlauts_filter:
                                 type: "asciifolding"
-            types:
-                photo:
-                    indexable_callback: 'elasticable'
-                    properties:
-                        id: ~
-                        description: ~
-                        city: { type: keyword }
-                        rideId:
-                            type: keyword
-                            property_path: ride.id
-                        #region: { type: keyword }
-                        location: ~
-                        latitude: ~
-                        longitude: ~
-                        enabled: ~
-                        deleted: ~
-                        exifExposure: ~
-                        exifFocalLength: ~
-                        exifAperture: ~
-                        exifIso: ~
-                        exifCamera: ~
-                        exifCreationDate: { type: date, format: "strict_date_optional_time" }
-                        creationDateTime: { type: date, format: "strict_date_optional_time" }
-                        pin: { type: geo_point }
-                    persistence:
-                        driver: orm
-                        model: App\Entity\Photo
-                        provider: ~
-                        listener: ~
-                        finder: ~
+            indexable_callback: 'elasticable'
+            properties:
+                id: ~
+                description: ~
+                city: { type: keyword }
+                rideId:
+                    type: keyword
+                    property_path: ride.id
+                #region: { type: keyword }
+                location: ~
+                latitude: ~
+                longitude: ~
+                enabled: ~
+                deleted: ~
+                exifExposure: ~
+                exifFocalLength: ~
+                exifAperture: ~
+                exifIso: ~
+                exifCamera: ~
+                #exifCreationDate: { type: date, format: "strict_date_optional_time" }
+                #creationDateTime: { type: date, format: "strict_date_optional_time" }
+                pin: { type: geo_point }
+            persistence:
+                driver: orm
+                model: App\Entity\Photo
+                provider: ~
+                listener: ~
+                finder: ~
 
         criticalmass_track:
             client: default
@@ -138,32 +132,30 @@ fos_elastica:
                         filter:
                             umlauts_filter:
                                 type: "asciifolding"
-            types:
-                track:
-                    indexable_callback: 'elasticable'
-                    properties:
-                        id: ~
-                        cityId:
-                            type: keyword
-                            property_path: ride.city.id
-                        rideId:
-                            type: keyword
-                            property_path: ride.id
-                        regionId:
-                            type: keyword
-                            property_path: ride.city.region.id
-                        startDateTime:
-                            type: date
-                            format: "strict_date_optional_time"
-                        endDateTime:
-                            type: date
-                            format: "strict_date_optional_time"
-                        creationDateTime:
-                            type: date
-                            format: "strict_date_optional_time"
-                    persistence:
-                        driver: orm
-                        model: App\Entity\Track
-                        provider: ~
-                        listener: ~
-                        finder: ~
+            indexable_callback: 'elasticable'
+            properties:
+                id: ~
+                cityId:
+                    type: keyword
+                    property_path: ride.city.id
+                rideId:
+                    type: keyword
+                    property_path: ride.id
+                regionId:
+                    type: keyword
+                    property_path: ride.city.region.id
+                startDateTime:
+                    type: date
+                    format: "strict_date_optional_time"
+                endDateTime:
+                    type: date
+                    format: "strict_date_optional_time"
+                creationDateTime:
+                    type: date
+                    format: "strict_date_optional_time"
+            persistence:
+                driver: orm
+                model: App\Entity\Track
+                provider: ~
+                listener: ~
+                finder: ~
