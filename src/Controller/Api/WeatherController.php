@@ -4,7 +4,7 @@ namespace App\Controller\Api;
 
 use App\Entity\Ride;
 use App\Entity\Weather;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializerInterface;

@@ -153,6 +153,8 @@ class TrackEventSubscriber implements EventSubscriberInterface
 
         $this->updateTrackProperties($track);
 
+        $this->calculateTrackDistance($track);
+
         $this->updateEstimates($track);
 
         $this->registry->getManager()->flush();
@@ -200,13 +202,23 @@ class TrackEventSubscriber implements EventSubscriberInterface
         $track->setDistance($distance);
     }
 
+    protected function calculateTrackDistance(Track $track): void
+    {
+        $distance = $this->trackDistanceCalculator
+            ->setTrack($track)
+            ->calculate();
+
+        $track->setDistance($distance);
+    }
+
     protected function updateTrackProperties(Track $track): void
     {
         $this->trackReader->loadTrack($track);
 
         $track
             ->setStartDateTime($this->trackReader->getStartDateTime())
-            ->setEndDateTime($this->trackReader->getEndDateTime());
+            ->setEndDateTime($this->trackReader->getEndDateTime())
+        ;
     }
 
     public function updateEstimates(Track $track): void
