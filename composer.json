@@ -77,7 +77,7 @@
         "php-amqplib/rabbitmq-bundle": "^1.14",
         "ext-fileinfo": "*",
         "ext-xmlwriter": "*",
-        "symfony/webpack-encore-bundle": "^1.7",
+        "symfony/webpack-encore-bundle": "dev-main",
         "ext-json": "*",
         "fresh/doctrine-enum-bundle": "^6.3",
         "friendsofsymfony/ckeditor-bundle": "^2.0",
@@ -122,7 +122,8 @@
         ],
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+            "assets:install %PUBLIC_DIR%": "symfony-cmd",
+            "ckeditor:install": "symfony-cmd"
         },
         "reset-test-db": [
             "bin/console --env=test doctrine:database:drop --force",

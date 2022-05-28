@@ -3,14 +3,6 @@
 ###############################################################################
 version: "3.1"
 services:
-    rabbitmq:
-      image: rabbitmq
-      container_name: criticalmass-rabbitmq
-      labels:
-        com.symfony.server.service-prefix: 'DATABASE'
-      volumes:
-        - ./docker/rabbitmq:/var/lib/rabbitmq/mnesia/
-
     memcached:
       image: memcached:alpine
       container_name: criticalmass-memcached
