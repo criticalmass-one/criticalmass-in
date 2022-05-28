@@ -236,7 +236,7 @@ services:
 
     App\Criticalmass\ElasticCityFinder\ElasticCityFinder:
         arguments:
-            $finder: '@fos_elastica.finder.criticalmass_city.city'
+            $finder: '@fos_elastica.finder.criticalmass_city'
 
     App\Serializer\JMSSerializer\Handler\RelationHandler:
         tags:
@@ -256,16 +256,12 @@ services:
         arguments:
             $class: '%fos_user.model.user.class%'
 
-    App\Controller\OAuthServer\AuthorizeController:
-        arguments:
-            $authorizeForm: '@fos_oauth_server.authorize.form'
-            $authorizeFormHandler: '@fos_oauth_server.authorize.form.handler.default'
-            $oAuth2Server: '@fos_oauth_server.server'
-        tags:
-            - controller.service_arguments
-
     App\Criticalmass\Corona\ResultFetcher\ResultFetcherInterface:
         alias: App\Criticalmass\Corona\ResultFetcher\CachedResultFetcher
 
     App\Criticalmass\CriticalmassBlog\CriticalmassBlogInterface:
         alias: App\Criticalmass\CriticalmassBlog\CachedCriticalmassBlog
+
+    App\Criticalmass\DataQuery\FinderFactory\FinderFactory:
+        arguments:
+            $finder: '@fos_elastica.finder.criticalmass_ride'
