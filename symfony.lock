@@ -119,6 +119,12 @@
     "exsyst/swagger": {
         "version": "v0.4.1"
     },
+    "ezimuel/guzzlestreams": {
+        "version": "3.0.1"
+    },
+    "ezimuel/ringphp": {
+        "version": "1.2.0"
+    },
     "felixfbecker/advanced-json-rpc": {
         "version": "v3.0.3"
     },
@@ -214,12 +220,6 @@
     },
     "guzzlehttp/psr7": {
         "version": "1.4.2"
-    },
-    "guzzlehttp/ringphp": {
-        "version": "1.1.0"
-    },
-    "guzzlehttp/streams": {
-        "version": "3.0.0"
     },
     "hassankhan/config": {
         "version": "0.10.0"
@@ -364,6 +364,9 @@
     },
     "nmure/crawler-detect-bundle": {
         "version": "v2.0.0"
+    },
+    "nyholm/dsn": {
+        "version": "2.0.1"
     },
     "nyholm/psr7": {
         "version": "1.0",
