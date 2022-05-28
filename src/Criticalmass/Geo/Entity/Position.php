@@ -14,18 +14,14 @@ class Position extends Coordinate implements PositionInterface
     /**
      * @JMS\Expose
      * @JMS\Type("float")
-     * @todo fix typed property
-     * @var float $latitude
      */
-    protected $latitude;
+    protected ?float $latitude;
 
     /**
      * @JMS\Expose
      * @JMS\Type("float")
-     * @todo fix typed property
-     * @var float $longitude
      */
-    protected $longitude;
+    protected ?float $longitude;
 
     /**
      * @JMS\Expose

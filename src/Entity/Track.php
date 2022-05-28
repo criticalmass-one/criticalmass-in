@@ -158,10 +158,8 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
      * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      * @JMS\SerializedName("polylineString")
-     * @todo fix typed property
-     * @var string $polyline
      */
-    protected $polyline;
+    protected ?string $polyline;
 
     /**
      * @ORM\Column(type="text", nullable=true)
