@@ -13,11 +13,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class AssignExifCommand extends Command
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    /** @var ExifHandlerInterface $exifHandler */
-    protected $exifHandler;
+    protected ManagerRegistry $registry;
+    protected ExifHandlerInterface $exifHandler;
 
     public function __construct(ManagerRegistry $registry, ExifHandlerInterface $exifHandler)
     {

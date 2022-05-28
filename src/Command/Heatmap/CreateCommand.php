@@ -14,12 +14,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CreateCommand extends Command
 {
     protected static $defaultName = 'criticalmass:heatmap:create';
-
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    /** @var HeatmapFactoryInterface $heatmapFactory */
-    protected $heatmapFactory;
+    protected ManagerRegistry $registry;
+    protected HeatmapFactoryInterface $heatmapFactory;
 
     protected function configure(): void
     {
@@ -29,12 +25,12 @@ class CreateCommand extends Command
             ->addArgument('ride-identifier', InputArgument::OPTIONAL, 'Ride identifier');
     }
 
-    public function __construct(string $name = null, ManagerRegistry $registry, HeatmapFactoryInterface $heatmapFactory)
+    public function __construct(ManagerRegistry $registry, HeatmapFactoryInterface $heatmapFactory)
     {
         $this->registry = $registry;
         $this->heatmapFactory = $heatmapFactory;
 
-        parent::__construct($name);
+        parent::__construct();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): void

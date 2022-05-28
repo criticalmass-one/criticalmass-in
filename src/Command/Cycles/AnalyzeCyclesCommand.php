@@ -17,18 +17,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class AnalyzeCyclesCommand extends Command
 {
-    /** @var CycleAnalyzerInterface $cycleAnalyzer */
-    protected $cycleAnalyzer;
+    protected CycleAnalyzerInterface $cycleAnalyzer;
+    protected ManagerRegistry $registry;
 
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    public function __construct($name = null, CycleAnalyzerInterface $cycleAnalyzer, ManagerRegistry $registry)
+    public function __construct(CycleAnalyzerInterface $cycleAnalyzer, ManagerRegistry $registry)
     {
         $this->cycleAnalyzer = $cycleAnalyzer;
         $this->registry = $registry;
 
-        parent::__construct($name);
+        parent::__construct();
     }
 
     protected function configure(): void

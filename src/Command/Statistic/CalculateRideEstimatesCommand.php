@@ -13,18 +13,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CalculateRideEstimatesCommand extends Command
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
+    protected ManagerRegistry $registry;
+    protected RideEstimateHandlerInterface $rideEstimateHandler;
 
-    /** @var RideEstimateHandlerInterface $rideEstimateHandler */
-    protected $rideEstimateHandler;
-
-    public function __construct(?string $name = null, RideEstimateHandlerInterface $rideEstimateHandler, ManagerRegistry $registry)
+    public function __construct(RideEstimateHandlerInterface $rideEstimateHandler, ManagerRegistry $registry)
     {
         $this->registry = $registry;
         $this->rideEstimateHandler = $rideEstimateHandler;
 
-        parent::__construct($name);
+        parent::__construct();
     }
 
     protected function configure(): void

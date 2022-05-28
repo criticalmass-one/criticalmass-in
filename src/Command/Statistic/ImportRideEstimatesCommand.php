@@ -17,16 +17,14 @@ use Symfony\Component\Console\Question\Question;
 
 class ImportRideEstimatesCommand extends Command
 {
-    protected $citySlugs = [];
+    protected array $citySlugs = [];
+    protected ManagerRegistry $registry;
 
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    public function __construct(?string $name = null, ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         $this->registry = $registry;
 
-        parent::__construct($name);
+        parent::__construct();
     }
 
     protected function configure(): void

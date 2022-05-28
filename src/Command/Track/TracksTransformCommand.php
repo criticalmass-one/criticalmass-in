@@ -10,12 +10,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class TracksTransformCommand extends Command
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
+    protected ManagerRegistry $registry;
 
-    public function __construct(?string $name = null, ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($name);
+        parent::__construct();
     }
 
     protected function configure()

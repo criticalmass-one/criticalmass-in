@@ -17,11 +17,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class RelocatePhotosCommand extends Command
 {
-    /** @var PhotoGpsInterface $photoGps */
-    protected $photoGps;
-
-    /** @var ManagerRegistry $registry */
-    protected $registry;
+    protected PhotoGpsInterface $photoGps;
+    protected ManagerRegistry $registry;
 
     public function __construct(PhotoGpsInterface $photoGps, ManagerRegistry $registry)
     {

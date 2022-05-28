@@ -19,21 +19,16 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
 
 class UpdateRidesCommand extends Command
 {
-    /** @var CycleAnalyzerInterface $cycleAnalyzer */
-    protected $cycleAnalyzer;
+    protected CycleAnalyzerInterface $cycleAnalyzer;
+    protected ManagerRegistry $registry;
+    protected array $propertyList = ['skip', 'all', 'date', 'time', 'dateTime', 'location', 'latitude', 'longitude', 'coord'];
 
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    /** @var array $propertyList */
-    protected $propertyList = ['skip', 'all', 'date', 'time', 'dateTime', 'location', 'latitude', 'longitude', 'coord'];
-
-    public function __construct($name = null, CycleAnalyzerInterface $cycleAnalyzer, ManagerRegistry $registry)
+    public function __construct(CycleAnalyzerInterface $cycleAnalyzer, ManagerRegistry $registry)
     {
         $this->cycleAnalyzer = $cycleAnalyzer;
         $this->registry = $registry;
 
-        parent::__construct($name);
+        parent::__construct();
     }
 
     protected function configure(): void

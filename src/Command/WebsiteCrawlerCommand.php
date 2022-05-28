@@ -15,14 +15,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class WebsiteCrawlerCommand extends Command
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    /** @var CrawlerInterface $crawler */
-    protected $crawler;
-
-    /** @var ParserInterface $parser */
-    protected $parser;
+    protected ManagerRegistry $registry;
+    protected CrawlerInterface $crawler;
+    protected ParserInterface $parser;
 
     public function __construct(ManagerRegistry $registry, CrawlerInterface $crawler, ParserInterface $parser)
     {

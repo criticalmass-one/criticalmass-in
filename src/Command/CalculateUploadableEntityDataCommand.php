@@ -14,11 +14,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CalculateUploadableEntityDataCommand extends Command
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    /** @var UploadableDataHandlerInterface $uploadableDataHandler */
-    protected $uploadableDataHandler;
+    protected ManagerRegistry $registry;
+    protected UploadableDataHandlerInterface $uploadableDataHandler;
 
     public function __construct(ManagerRegistry $registry, UploadableDataHandlerInterface $uploadableDataHandler)
     {

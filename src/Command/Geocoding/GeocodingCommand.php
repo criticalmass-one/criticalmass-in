@@ -4,7 +4,6 @@ namespace App\Command\Geocoding;
 
 use App\Criticalmass\Geocoding\ReverseGeocoderInterface;
 use App\Entity\Photo;
-use Geocoder\Query\ReverseQuery;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -15,19 +14,16 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class GeocodingCommand extends Command
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
+    protected ManagerRegistry $registry;
+    protected ReverseGeocoderInterface $reverseGeocoder;
 
-    /** @var ReverseGeocoderInterface $reverseGeocoder */
-    protected $reverseGeocoder;
-
-    public function __construct(?string $name = null, ManagerRegistry $registry, ReverseGeocoderInterface $reverseGeocoder)
+    public function __construct(ManagerRegistry $registry, ReverseGeocoderInterface $reverseGeocoder)
     {
         $this->registry = $registry;
 
         $this->reverseGeocoder = $reverseGeocoder;
 
-        parent::__construct($name);
+        parent::__construct();
     }
 
     protected function configure(): void

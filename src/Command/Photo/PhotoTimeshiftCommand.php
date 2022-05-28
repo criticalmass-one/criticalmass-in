@@ -18,11 +18,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class PhotoTimeshiftCommand extends Command
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    /** @var EventDispatcherInterface */
-    protected $eventDispatcher;
+    protected ManagerRegistry $registry;
+    protected EventDispatcherInterface $eventDispatcher;
 
     public function __construct(ManagerRegistry $registry, EventDispatcherInterface $eventDispatcher)
     {

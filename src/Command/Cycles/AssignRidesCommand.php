@@ -20,21 +20,16 @@ use Symfony\Component\Console\Question\Question;
 
 class AssignRidesCommand extends Command
 {
-    /** @var CycleAnalyzerInterface $cycleAnalyzer */
-    protected $cycleAnalyzer;
+    protected CycleAnalyzerInterface $cycleAnalyzer;
+    protected ManagerRegistry $registry;
+    protected array $cycleCache = [];
 
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    /** @var array $cycleCache */
-    protected $cycleCache = [];
-
-    public function __construct($name = null, CycleAnalyzerInterface $cycleAnalyzer, ManagerRegistry $registry)
+    public function __construct(CycleAnalyzerInterface $cycleAnalyzer, ManagerRegistry $registry)
     {
         $this->cycleAnalyzer = $cycleAnalyzer;
         $this->registry = $registry;
 
-        parent::__construct($name);
+        parent::__construct();
     }
 
     protected function configure(): void
