@@ -7,14 +7,9 @@ use App\Entity\Ride;
 
 class RideEvent extends AbstractEvent
 {
-    /** @var \DateTime $begin */
-    protected $begin;
-
-    /** @var \DateTime $end */
-    protected $end;
-
-    /** @var Ride $ride */
-    protected $ride;
+    protected \DateTime $begin;
+    protected \DateTime $end;
+    protected Ride $ride;
 
     public function __construct(Ride $ride)
     {
@@ -28,7 +23,7 @@ class RideEvent extends AbstractEvent
         return $this->ride;
     }
 
-    public function getUid()
+    public function getUid(): string
     {
         $uid = sprintf('ride-%d', $this->ride->getId());
 
