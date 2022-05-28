@@ -4,10 +4,8 @@ namespace App\Criticalmass\Heatmap\Path;
 
 class PathList implements \Countable, \Iterator
 {
-    /** @var array $list */
-    protected $list = [];
-
-    protected $index = 0;
+    protected array $list = [];
+    protected int $index = 0;
 
     public function add(Path $path): PathList
     {
@@ -16,7 +14,7 @@ class PathList implements \Countable, \Iterator
         return $this;
     }
 
-    public function current()
+    public function current(): mixed
     {
         return current($this->list);
     }

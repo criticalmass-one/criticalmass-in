@@ -6,10 +6,7 @@ use App\Criticalmass\Geo\EntityInterface\PositionInterface;
 
 class PositionList implements PositionListInterface
 {
-    /**
-     * @var array $list
-     */
-    protected $list = [];
+    protected array $list = [];
 
     public function __construct(array $list = [])
     {
@@ -103,7 +100,7 @@ class PositionList implements PositionListInterface
         return $this;
     }
 
-    public function current()
+    public function current(): mixed
     {
         return current($this->list);
     }
@@ -113,7 +110,7 @@ class PositionList implements PositionListInterface
         next($this->list);
     }
 
-    public function key()
+    public function key(): string|int|null
     {
         return key($this->list);
     }
