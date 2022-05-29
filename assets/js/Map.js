@@ -82,13 +82,14 @@ export default class Map {
     }
 
     setDraggableMarkerByProvidedData() {
-        const markerType = this.mapContainer.dataset.markerType;
+        const draggable = this.mapContainer.dataset.mapMarkerDraggable;
+        const markerType = this.mapContainer.dataset.mapMarkerType;
         const mapCenterLatitude = this.mapContainer.dataset.mapCenterLatitude;
         const mapCenterLongitude = this.mapContainer.dataset.mapCenterLongitude;
-        const markerLatitudeTarget = document.getElementById(this.mapContainer.dataset.markerLatitudeTarget);
-        const markerLongitudeTarget = document.getElementById(this.mapContainer.dataset.markerLongitudeTarget);
+        const markerLatitudeTarget = document.getElementById(this.mapContainer.dataset.mapMarkerLatitudeTarget);
+        const markerLongitudeTarget = document.getElementById(this.mapContainer.dataset.mapMarkerLongitudeTarget);
 
-        if (markerLatitudeTarget && markerLongitudeTarget && markerType) {
+        if (draggable && markerLatitudeTarget && markerLongitudeTarget && markerType) {
             const markerLatLng = L.latLng(markerLatitudeTarget.value || mapCenterLatitude, markerLongitudeTarget.value || mapCenterLongitude);
 
             const options = {
@@ -111,11 +112,12 @@ export default class Map {
     }
 
     setMarkerByProvidedData() {
-        const markerType = this.mapContainer.dataset.markerType;
-        const markerLatitude = this.mapContainer.dataset.markerLatitude;
-        const markerLongitude = this.mapContainer.dataset.markerLongitude;
+        const draggable = this.mapContainer.dataset.mapMarkerDraggable;
+        const markerType = this.mapContainer.dataset.mapMarkerType;
+        const markerLatitude = this.mapContainer.dataset.mapMarkerLatitude;
+        const markerLongitude = this.mapContainer.dataset.mapMarkerLongitude;
 
-        if (markerLatitude && markerLongitude && markerType) {
+        if (!draggable && markerLatitude && markerLongitude && markerType) {
             const markerLatLng = L.latLng(markerLatitude, markerLongitude);
 
             const options = {
