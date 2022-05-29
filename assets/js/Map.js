@@ -6,6 +6,8 @@ import extraMarkers from 'leaflet-extra-markers';
 export default class Map {
     mapContainer;
     map;
+    polylineList = [];
+
     rideIcon = L.ExtraMarkers.icon({
         icon: 'fa-bicycle',
         markerColor: 'red',
@@ -135,6 +137,29 @@ export default class Map {
             const polyline = L.Polyline.fromEncoded(polylineString, {color: polylineColorString});
 
             polyline.addTo(this.map);
+
+            this.map.fitBounds(polyline.getBounds());
+        }
+    }
+
+    addPolyline(polylineString, polylineColorString, identifier) {
+        if (polylineString && polylineColorString) {
+            const polyline = L.Polyline.fromEncoded(polylineString, {color: polylineColorString});
+
+            polyline.addTo(this.map);
+
+            this.polylineList[identifier] = polyline;
+
+            this.map.fitBounds(polyline.getBounds());
+        }
+    }
+
+    updatePolyline(polylineString, polylineColorString, identifier) {
+        if (polylineString && polylineColorString) {
+            const polyline = L.Polyline.fromEncoded(polylineString, {color: polylineColorString});
+            const latLngList = polyline.getLatLngs();
+
+            this.polylineList[identifier].setLatLngs(latLngList);
 
             this.map.fitBounds(polyline.getBounds());
         }
@@ -338,6 +363,20 @@ export default class Map {
             } else {
                 this.map.setView(mapCenter);
             }
+        });
+
+        document.addEventListener('map-polyline-add', (polylineEvent) => {
+            this.addPolyline(polylineEvent.polylineString, polylineEvent.colorString, polylineEvent.identifier);
+        });
+
+        document.addEventListener('map-polyline-update', (polylineEvent) => {
+            this.updatePolyline(polylineEvent.polylineString, polylineEvent.colorString, polylineEvent.identifier);
+        });
+
+        document.addEventListener('map-clear', () => {
+            this.map.eachLayer((layer) => {
+                this.map.removeLayer(layer);
+            });
         });
     }
 

@@ -21,7 +21,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
+    <div class="container" id="track-range-page">
         <div class="row">
             <div class="col-md-12">
                 <h2>
@@ -44,7 +44,12 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div id="map" style="height: 350px;"></div>
+                <div id="map-range"
+                     class="map timeline-item-ride-map"
+                     data-lock-map="true"
+                     data-map-marker-clickable="false"
+                     style="height: 50vh;">
+                </div>
             </div>
         </div>
 
@@ -56,6 +61,7 @@
 
         <div class="row margin-top-medium">
             <div class="col-md-12">
+                <input type="hidden" id="track_range_latLngList" value="{{ latLngList }}" />
                 {{ form_start(form) }}
                 <div class="btn-group pull-right" role="group" aria-label="...">
                     <button class="btn btn-success" type="submit">
