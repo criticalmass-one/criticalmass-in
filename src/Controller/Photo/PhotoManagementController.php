@@ -134,15 +134,10 @@ class PhotoManagementController extends AbstractController
     {
         $this->saveReferer($request);
 
-        $previousPhoto = $this->getPhotoRepository()->getPreviousPhoto($photo);
-        $nextPhoto = $this->getPhotoRepository()->getNextPhoto($photo);
-
         $track = $this->getTrackRepository()->findByUserAndRide($photo->getRide(), $this->getUser());
 
         return $this->render('PhotoManagement/place.html.twig', [
             'photo' => $photo,
-            'previousPhoto' => $previousPhoto,
-            'nextPhoto' => $nextPhoto,
             'track' => $track,
             'form' => $form->createView(),
         ]);
