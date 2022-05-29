@@ -28,7 +28,7 @@ export default class TrackRangePage {
         const startPoint = parseInt(document.getElementById('track_range_startPoint').value);
         const endPoint = parseInt(document.getElementById('track_range_endPoint').value);
         const points = document.getElementById('track_range_points').value;
-        
+
         return {
             id: 'rangeSlider',
             min: 0,
