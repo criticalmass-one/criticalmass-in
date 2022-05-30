@@ -5,7 +5,7 @@ namespace App\Twig\Extension;
 use App\Entity\User;
 use App\HtmlMetadata\Metadata;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 

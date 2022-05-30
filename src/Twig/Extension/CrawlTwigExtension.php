@@ -9,7 +9,9 @@ use App\Entity\BlacklistedWebsite;
 use App\Entity\CrawledWebsite;
 use Flagception\Manager\FeatureManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Twig\TwigEngine;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -17,16 +19,16 @@ class CrawlTwigExtension extends AbstractExtension
 {
     protected ManagerRegistry $registry;
     protected CrawlerInterface $crawler;
-    protected EngineInterface $twigEngine;
+    protected Environment $twigEnvironment;
     protected ObfuscatorInterface $obfuscator;
     protected FeatureManagerInterface $featureManager;
     protected array $blacklistPatternList = [];
 
-    public function __construct(ManagerRegistry $registry, CrawlerInterface $crawler, EngineInterface $twigEngine, ObfuscatorInterface $obfuscator, FeatureManagerInterface $featureManager)
+    public function __construct(ManagerRegistry $registry, CrawlerInterface $crawler, Environment $twigEnvironment, ObfuscatorInterface $obfuscator, FeatureManagerInterface $featureManager)
     {
         $this->registry = $registry;
         $this->crawler = $crawler;
-        $this->twigEngine = $twigEngine;
+        $this->twigEnvironment = $twigEnvironment;
         $this->obfuscator = $obfuscator;
         $this->featureManager = $featureManager;
 
@@ -55,7 +57,7 @@ class CrawlTwigExtension extends AbstractExtension
                         $crawledWebsite = $this->obfuscateWebsite($crawledWebsite);
                     }
 
-                    $message = str_replace($url, $this->twigEngine->render('Crawler/_website.html.twig', ['website' => $crawledWebsite]), $message);
+                    $message = str_replace($url, $this->twigEnvironment->render('Crawler/_website.html.twig', ['website' => $crawledWebsite]), $message);
                 }
             }
         }
