@@ -10,8 +10,7 @@ use Twig\TwigFunction;
 
 class GeocodeTwigExtension extends AbstractExtension
 {
-    /** @var ReverseGeocoderInterface $geocoder */
-    protected $geocoder;
+    protected ReverseGeocoderInterface $geocoder;
 
     public function __construct(ReverseGeocoderInterface $geocoder)
     {

@@ -15,23 +15,12 @@ use Twig\TwigFunction;
 
 class CrawlTwigExtension extends AbstractExtension
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    /** @var CrawlerInterface $crawler */
-    protected $crawler;
-
-    /** @var EngineInterface $twigEngine */
-    protected $twigEngine;
-
-    /** @var ObfuscatorInterface $obfuscator */
-    protected $obfuscator;
-
-    /** @var FeatureManagerInterface $featureManager */
-    protected $featureManager;
-
-    /** @var array $blacklistPatternList */
-    protected $blacklistPatternList = [];
+    protected ManagerRegistry $registry;
+    protected CrawlerInterface $crawler;
+    protected EngineInterface $twigEngine;
+    protected ObfuscatorInterface $obfuscator;
+    protected FeatureManagerInterface $featureManager;
+    protected array $blacklistPatternList = [];
 
     public function __construct(ManagerRegistry $registry, CrawlerInterface $crawler, EngineInterface $twigEngine, ObfuscatorInterface $obfuscator, FeatureManagerInterface $featureManager)
     {

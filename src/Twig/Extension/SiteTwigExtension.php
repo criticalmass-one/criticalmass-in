@@ -11,14 +11,9 @@ use Twig\TwigFunction;
 
 class SiteTwigExtension extends AbstractExtension
 {
-    /** @var TranslatorInterface $translator */
-    protected $translator;
-
-    /** @var Metadata $metadata */
-    protected $metadata;
-
-    /** @var RouterInterface $router */
-    protected $router;
+    protected TranslatorInterface $translator;
+    protected Metadata $metadata;
+    protected RouterInterface $router;
 
     public function __construct(TranslatorInterface $translator, RouterInterface $router)
     {

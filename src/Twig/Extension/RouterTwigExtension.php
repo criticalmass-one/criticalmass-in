@@ -9,8 +9,7 @@ use Twig\TwigFunction;
 
 class RouterTwigExtension extends AbstractExtension
 {
-    /** @var ObjectRouterInterface $router */
-    protected $router;
+    protected ObjectRouterInterface $router;
 
     public function __construct(ObjectRouterInterface $router)
     {

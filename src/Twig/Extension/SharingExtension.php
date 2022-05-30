@@ -9,8 +9,7 @@ use Twig\TwigFunction;
 
 class SharingExtension extends AbstractExtension
 {
-    /** @var SocialSharerInterface $sharer */
-    protected $sharer;
+    protected SocialSharerInterface $sharer;
 
     public function __construct(SocialSharerInterface $sharer)
     {

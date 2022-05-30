@@ -9,8 +9,7 @@ use Twig\TwigFunction;
 
 class StaticmapsTwigExtension extends AbstractExtension
 {
-    /** @var UrlGeneratorInterface $urlGenerator */
-    protected $urlGenerator;
+    protected UrlGeneratorInterface $urlGenerator;
 
     public function __construct(UrlGeneratorInterface $urlGenerator)
     {
@@ -34,4 +33,3 @@ class StaticmapsTwigExtension extends AbstractExtension
         return 'staticmaps_extension';
     }
 }
-
