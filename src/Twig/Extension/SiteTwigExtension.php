@@ -5,6 +5,7 @@ namespace App\Twig\Extension;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 class SiteTwigExtension extends AbstractExtension
@@ -21,7 +22,7 @@ class SiteTwigExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new \Twig_SimpleFilter('hashtagToCity', [$this, 'hashtagToCity'], array(
+            new TwigFilter('hashtagToCity', [$this, 'hashtagToCity'], array(
                 'is_safe' => array('html')
             )),
         ];
