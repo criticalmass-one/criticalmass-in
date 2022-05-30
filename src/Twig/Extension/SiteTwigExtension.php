@@ -18,7 +18,7 @@ class SiteTwigExtension extends AbstractExtension
         $this->router = $router;
     }
 
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new \Twig_SimpleFilter('hashtagToCity', [$this, 'hashtagToCity'], array(
@@ -27,7 +27,7 @@ class SiteTwigExtension extends AbstractExtension
         ];
     }
 
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('daysSince', [$this, 'daysSince'], array(
@@ -41,7 +41,7 @@ class SiteTwigExtension extends AbstractExtension
         ];
     }
 
-    public function daysSince($dateTimeString)
+    public function daysSince($dateTimeString): int
     {
         $dateTime = new \DateTime($dateTimeString);
         $now = new \DateTime();
@@ -53,19 +53,19 @@ class SiteTwigExtension extends AbstractExtension
         return $diffDays;
     }
 
-    public function instanceof ($var, $instance)
+    public function instanceof ($var, $instance): bool
     {
         return $var instanceof $instance;
     }
 
-    public function today(\DateTime $dateTime)
+    public function today(\DateTime $dateTime): bool
     {
         $today = new \DateTime();
 
         return ($today->format('Y-m-d') == $dateTime->format('Y-m-d'));
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'site_extension';
     }
