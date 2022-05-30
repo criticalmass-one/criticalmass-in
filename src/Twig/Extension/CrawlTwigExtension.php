@@ -10,8 +10,10 @@ use App\Entity\CrawledWebsite;
 use Flagception\Manager\FeatureManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class CrawlTwigExtension extends \Twig_Extension
+class CrawlTwigExtension extends AbstractExtension
 {
     /** @var ManagerRegistry $registry */
     protected $registry;
@@ -45,7 +47,7 @@ class CrawlTwigExtension extends \Twig_Extension
     public function getFunctions(): array
     {
         return [
-            new \Twig_SimpleFunction('parse_urls', [$this, 'parseUrls'], ['is_safe' => ['html']]),
+            new TwigFunction('parse_urls', [$this, 'parseUrls'], ['is_safe' => ['html']]),
         ];
     }
 

@@ -4,8 +4,10 @@ namespace App\Twig\Extension;
 
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
 use App\Criticalmass\Sharing\SocialSharerInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class SharingExtension extends \Twig_Extension
+class SharingExtension extends AbstractExtension
 {
     /** @var SocialSharerInterface $sharer */
     protected $sharer;
@@ -18,9 +20,9 @@ class SharingExtension extends \Twig_Extension
     public function getFunctions(): array
     {
         return [
-            new \Twig_Function('shareUrl', [$this, 'shareUrl']),
-            new \Twig_Function('shareLink', [$this, 'shareLink'], ['is_safe' => ['html']]),
-            new \Twig_Function('shareDropdownLink', [$this, 'shareDropdownLink'], ['is_safe' => ['html']]),
+            new TwigFunction('shareUrl', [$this, 'shareUrl']),
+            new TwigFunction('shareLink', [$this, 'shareLink'], ['is_safe' => ['html']]),
+            new TwigFunction('shareDropdownLink', [$this, 'shareDropdownLink'], ['is_safe' => ['html']]),
         ];
     }
 

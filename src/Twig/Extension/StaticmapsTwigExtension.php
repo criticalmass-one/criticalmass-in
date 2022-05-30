@@ -4,8 +4,10 @@ namespace App\Twig\Extension;
 
 use App\Criticalmass\StaticMap\UrlGenerator\UrlGeneratorInterface;
 use App\EntityInterface\StaticMapableInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class StaticmapsTwigExtension extends \Twig_Extension
+class StaticmapsTwigExtension extends AbstractExtension
 {
     /** @var UrlGeneratorInterface $urlGenerator */
     protected $urlGenerator;
@@ -18,7 +20,7 @@ class StaticmapsTwigExtension extends \Twig_Extension
     public function getFunctions(): array
     {
         return [
-            new \Twig_SimpleFunction('static_map', [$this, 'staticmap',], ['is_safe' => ['raw']]),
+            new TwigFunction('static_map', [$this, 'staticmap',], ['is_safe' => ['raw']]),
         ];
     }
 

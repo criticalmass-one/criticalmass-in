@@ -6,8 +6,10 @@ use App\Entity\User;
 use App\HtmlMetadata\Metadata;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class SiteTwigExtension extends \Twig_Extension
+class SiteTwigExtension extends AbstractExtension
 {
     /** @var TranslatorInterface $translator */
     protected $translator;
@@ -36,17 +38,17 @@ class SiteTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('metadata', [$this, 'getMetadataService',], array(
+            new TwigFunction('metadata', [$this, 'getMetadataService',], array(
                 'is_safe' => array('raw')
             )),
-            new \Twig_SimpleFunction('daysSince', [$this, 'daysSince'], array(
+            new TwigFunction('daysSince', [$this, 'daysSince'], array(
                 'is_safe' => array('html')
             )),
-            new \Twig_SimpleFunction('today', [$this, 'today'], array(
+            new TwigFunction('today', [$this, 'today'], array(
                 'is_safe' => array('html')
             )),
-            'instanceof' => new \Twig_SimpleFunction('instanceof', [$this, 'instanceof']),
-            'today' => new \Twig_SimpleFunction('today', [$this, 'today'])
+            'instanceof' => new TwigFunction('instanceof', [$this, 'instanceof']),
+            'today' => new TwigFunction('today', [$this, 'today'])
         ];
     }
 

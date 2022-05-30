@@ -4,8 +4,10 @@ namespace App\Twig\Extension;
 
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\EntityInterface\RouteableInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class RouterTwigExtension extends \Twig_Extension
+class RouterTwigExtension extends AbstractExtension
 {
     /** @var ObjectRouterInterface $router */
     protected $router;
@@ -18,7 +20,7 @@ class RouterTwigExtension extends \Twig_Extension
     public function getFunctions(): array
     {
         return [
-            new \Twig_SimpleFunction('objectPath', [$this, 'objectPath'], [
+            new TwigFunction('objectPath', [$this, 'objectPath'], [
                 'is_safe' => ['raw'],
             ]),
         ];

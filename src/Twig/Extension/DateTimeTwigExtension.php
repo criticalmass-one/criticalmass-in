@@ -2,12 +2,15 @@
 
 namespace App\Twig\Extension;
 
-class DateTimeTwigExtension extends \Twig_Extension
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
+
+class DateTimeTwigExtension extends AbstractExtension
 {
     public function getFunctions(): array
     {
         return [
-            new \Twig_SimpleFunction('date_time_add', [$this, 'add'], [
+            new TwigFunction('date_time_add', [$this, 'add'], [
                 'is_safe' => ['html'],
             ]),
         ];

@@ -5,8 +5,10 @@ namespace App\Twig\Extension;
 use App\Criticalmass\Geocoding\ReverseGeocodeable;
 use App\Criticalmass\Geocoding\ReverseGeocoderInterface;
 use Geocoder\Location;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class GeocodeTwigExtension extends \Twig_Extension
+class GeocodeTwigExtension extends AbstractExtension
 {
     /** @var ReverseGeocoderInterface $geocoder */
     protected $geocoder;
@@ -19,7 +21,7 @@ class GeocodeTwigExtension extends \Twig_Extension
     public function getFunctions(): array
     {
         return [
-            new \Twig_SimpleFunction('nominatim_location', [$this, 'nominatimLocation'], [
+            new TwigFunction('nominatim_location', [$this, 'nominatimLocation'], [
                 'is_safe' => ['html'],
             ]),
         ];
