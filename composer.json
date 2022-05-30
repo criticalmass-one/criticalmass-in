@@ -159,5 +159,5 @@
             "url": "https://github.com/maltehuebner/StravaPHP.git"
         }
     ],
-    "minimum-stability": "dev"
+    "minimum-stability": "stable"
 }
