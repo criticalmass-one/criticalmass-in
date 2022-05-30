@@ -398,6 +398,9 @@
     "paragonie/random_compat": {
         "version": "v2.0.17"
     },
+    "peter279k/fork-calendr": {
+        "version": "3.1.0"
+    },
     "phar-io/manifest": {
         "version": "1.0.1"
     },
@@ -955,9 +958,6 @@
     },
     "willdurand/negotiation": {
         "version": "v2.3.1"
-    },
-    "yohang/calendr": {
-        "version": "2.1.1"
     },
     "zircote/swagger-php": {
         "version": "2.0.16"

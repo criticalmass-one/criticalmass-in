@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "942fe36d904c3b44e2f6eb8468ea1cf5",
+    "content-hash": "1163b6744874462bcb29d29f3eb3c840",
     "packages": [
         {
             "name": "calderacc/geobasic",
@@ -6537,6 +6537,70 @@
                 "source": "https://github.com/paragonie/random_compat"
             },
             "time": "2020-10-15T08:29:30+00:00"
+        },
+        {
+            "name": "peter279k/fork-calendr",
+            "version": "3.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/peter279k/fork-CalendR.git",
+                "reference": "b7f38f315b7d9c1e61dbb43d69e862b155636008"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/peter279k/fork-CalendR/zipball/b7f38f315b7d9c1e61dbb43d69e862b155636008",
+                "reference": "b7f38f315b7d9c1e61dbb43d69e862b155636008",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3|^8.0",
+                "symfony/options-resolver": "^4.4|^5.0"
+            },
+            "require-dev": {
+                "doctrine/cache": "^1.5",
+                "doctrine/common": "^2.5",
+                "doctrine/orm": "^2.5",
+                "phpunit/phpunit": "^9.0",
+                "silex/silex": "^1.3",
+                "symfony/config": "^4.4|^5.0",
+                "symfony/dependency-injection": "^4.4|^5.0",
+                "symfony/yaml": "^4.4|^5.0",
+                "twig/twig": "^1.23|^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "CalendR\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chung-Sheng, Li",
+                    "email": "peter279k@gmail.com",
+                    "homepage": "https://peterli.website"
+                }
+            ],
+            "description": "Object Oriented calendar management",
+            "homepage": "https://github.com/peter279k/fork-CalendR",
+            "keywords": [
+                "calendar",
+                "date",
+                "events"
+            ],
+            "support": {
+                "issues": "https://github.com/peter279k/fork-CalendR/issues",
+                "source": "https://github.com/peter279k/fork-CalendR/tree/3.1.0"
+            },
+            "time": "2021-05-07T09:16:08+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -16692,76 +16756,6 @@
             "time": "2022-01-30T20:08:53+00:00"
         },
         {
-            "name": "yohang/calendr",
-            "version": "dev-php8",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/maltehuebner/CalendR.git",
-                "reference": "f7e9de717b740eeb3ff2c007257cd73661c736b0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/maltehuebner/CalendR/zipball/f7e9de717b740eeb3ff2c007257cd73661c736b0",
-                "reference": "f7e9de717b740eeb3ff2c007257cd73661c736b0",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.4|^8.0",
-                "symfony/options-resolver": "^4.4|^5.3"
-            },
-            "require-dev": {
-                "doctrine/cache": "^2.1.1",
-                "doctrine/common": "^3.1.2",
-                "doctrine/orm": "^2.9.3",
-                "phpspec/prophecy-phpunit": "^2.0",
-                "phpunit/phpunit": "^8.0|^9.0",
-                "symfony/cache": "^5.3",
-                "symfony/config": "^4.4|^5.3",
-                "symfony/dependency-injection": "^4.4|^5.3",
-                "symfony/http-kernel": "^5.3",
-                "symfony/var-dumper": "^4.4|^5.3",
-                "symfony/yaml": "^4.4|^5.3",
-                "twig/twig": "^3.3.2"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "CalendR\\": "src/"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "CalendR\\Test\\": "tests/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Yohan GIARELLI",
-                    "email": "yohan@giarel.li",
-                    "homepage": "http://yohan.giarel.li"
-                }
-            ],
-            "description": "Object Oriented calendar management",
-            "homepage": "https://github.com/yohang/CalendR",
-            "keywords": [
-                "calendar",
-                "date",
-                "events"
-            ],
-            "support": {
-                "source": "https://github.com/maltehuebner/CalendR/tree/php8"
-            },
-            "time": "2022-04-28T19:03:44+00:00"
-        },
-        {
             "name": "zircote/swagger-php",
             "version": "2.1.1",
             "source": {
@@ -18197,7 +18191,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "yohang/calendr": 20,
         "symfony/dependency-injection": 20,
         "composer/package-versions-deprecated": 20,
         "symfony/proxy-manager-bridge": 20,
