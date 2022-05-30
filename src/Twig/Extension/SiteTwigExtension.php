@@ -9,14 +9,8 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 class SiteTwigExtension extends \Twig_Extension
 {
-    /** @var TranslatorInterface $translator */
-    protected $translator;
-
-    /** @var Metadata $metadata */
-    protected $metadata;
-
-    /** @var RouterInterface $router */
-    protected $router;
+    protected TranslatorInterface $translator;
+    protected RouterInterface $router;
 
     public function __construct(TranslatorInterface $translator, RouterInterface $router)
     {

@@ -11,8 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class FOSUBUserProvider extends BaseClass
 {
-    /** @var ProfilePhotoGeneratorInterface $profilePhotoGenerator */
-    protected $profilePhotoGenerator;
+    protected ProfilePhotoGeneratorInterface $profilePhotoGenerator;
 
     public function __construct(UserManagerInterface $userManager, array $properties, ProfilePhotoGeneratorInterface $profilePhotoGenerator)
     {
