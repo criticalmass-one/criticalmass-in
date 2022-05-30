@@ -2,8 +2,6 @@
 
 namespace App\Twig\Extension;
 
-use App\Entity\User;
-use App\HtmlMetadata\Metadata;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -30,9 +28,6 @@ class SiteTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('metadata', [$this, 'getMetadataService',], array(
-                'is_safe' => array('raw')
-            )),
             new \Twig_SimpleFunction('daysSince', [$this, 'daysSince'], array(
                 'is_safe' => array('html')
             )),
