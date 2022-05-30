@@ -2,7 +2,6 @@
 
 namespace App\Twig\Extension;
 
-use App\Entity\User;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;

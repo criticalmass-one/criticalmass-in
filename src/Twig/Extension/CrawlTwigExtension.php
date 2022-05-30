@@ -9,8 +9,6 @@ use App\Entity\BlacklistedWebsite;
 use App\Entity\CrawledWebsite;
 use Flagception\Manager\FeatureManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Bridge\Twig\TwigEngine;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
