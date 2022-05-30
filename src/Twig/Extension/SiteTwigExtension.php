@@ -3,7 +3,6 @@
 namespace App\Twig\Extension;
 
 use App\Entity\User;
-use App\HtmlMetadata\Metadata;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
@@ -12,7 +11,6 @@ use Twig\TwigFunction;
 class SiteTwigExtension extends AbstractExtension
 {
     protected TranslatorInterface $translator;
-    protected Metadata $metadata;
     protected RouterInterface $router;
 
     public function __construct(TranslatorInterface $translator, RouterInterface $router)
@@ -33,9 +31,6 @@ class SiteTwigExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('metadata', [$this, 'getMetadataService',], array(
-                'is_safe' => array('raw')
-            )),
             new TwigFunction('daysSince', [$this, 'daysSince'], array(
                 'is_safe' => array('html')
             )),
