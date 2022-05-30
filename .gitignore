@@ -15,16 +15,28 @@
 # Assets and user uploads
 /public/bundles/
 /public/uploads/
-/public/tracks
-/public/photos
-/public/cities
-/public/images
-/public/img
-/public/js
-/public/fonts
-/public/css
-/node_modules
-/assets/css
+/public/tracks/
+/public/photos/
+/public/cities/
+/public/images/
+/public/img/
+/public/js/
+/public/fonts/
+/public/css/
+/node_modules/
+/assets/css/
+node_modules2/
+node_modules_alt/
+public/*.html.swp
+public/.well-known/
+public/css2/
+public/*.html
+public/heatmaps/
+public/js2/
+public/media/
+public/rides/
+public/teaser/
+public/users/
 
 # Backup entities generated with doctrine:generate:entities command
 **/Entity/*~
