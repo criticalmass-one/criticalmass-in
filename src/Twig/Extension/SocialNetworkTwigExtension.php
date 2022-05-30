@@ -37,4 +37,3 @@ class SocialNetworkTwigExtension extends AbstractExtension
         return $this->networkManager->getNetwork($identifier);
     }
 }
-

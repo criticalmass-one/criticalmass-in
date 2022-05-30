@@ -36,4 +36,3 @@ class GeocodeTwigExtension extends AbstractExtension
         return 'geocode_extension';
     }
 }
-

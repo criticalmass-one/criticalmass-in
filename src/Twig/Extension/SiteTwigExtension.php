@@ -71,4 +71,3 @@ class SiteTwigExtension extends AbstractExtension
         return 'site_extension';
     }
 }
-

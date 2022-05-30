@@ -31,4 +31,3 @@ class DurationTwigExtension extends AbstractExtension
         return 'duration_extension';
     }
 }
-

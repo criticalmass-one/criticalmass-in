@@ -30,4 +30,3 @@ class DateTimeTwigExtension extends AbstractExtension
         return 'datetime_extension';
     }
 }
-

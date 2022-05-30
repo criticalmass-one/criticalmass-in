@@ -104,4 +104,3 @@ class CrawlTwigExtension extends AbstractExtension
         return 'crawl_extension';
     }
 }
-
