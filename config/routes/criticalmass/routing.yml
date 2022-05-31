@@ -102,6 +102,10 @@ caldera_criticalmass_citycycle:
     resource: 'citycycle.yml'
     prefix: /
 
+caldera_criticalmass_headerimage:
+    resource: 'city_headerimage.yml'
+    prefix: /
+
 caldera_criticalmass_social_network:
     resource: 'social_network.yml'
     prefix: /

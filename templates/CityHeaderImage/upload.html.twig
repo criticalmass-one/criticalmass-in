@@ -1,0 +1,74 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}{{ city.title }}{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ path('caldera_criticalmass_city_list') }}">
+            Städteliste
+        </a>
+    </li>
+
+    <li class="active">
+        {{ city.city }}
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <form id="uploadImage" action="upload.php" method="post" enctype="multipart/form-data">
+                    <input type="file" name="photo"/>
+                    <button>
+                        Bild hochladen
+                    </button>
+                </form>
+
+                <p id='msg'></p>
+
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block additionalFooterElements %}
+    <script type="text/javascript">
+        $('#uploadImage').on('submit', function (e) {
+
+            //Preventing the default behavior of the form
+            //Because of this line the form will do nothing i.e will not refresh or redirect the page
+            e.preventDefault();
+
+            var data = new FormData(this);
+            console.log(data);
+
+            //Creating an ajax method
+            $.ajax({
+
+                //Getting the url of the uploadphp from action attr of form
+                //this means currently selected element which is our form
+                url: $(this).attr('action'),
+
+                //For file upload we use post request
+                type: "POST",
+
+                //Creating data from form
+                data: new FormData(this),
+
+                //Setting these to false because we are sending a multipart request
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function (data) {
+                    //If the request is successfull we will get the scripts output in data variable
+                    //Showing the result in our html element
+                    $('#msg').html(data);
+                },
+                error: function () {
+                }
+            });
+        });
+    </script>
+{% endblock %}
