@@ -127,11 +127,18 @@
                                         hochgeladen.
                                     </p>
 
-                                    <p class="text-center">
-                                        <a class="btn btn-default" href="{{ path('caldera_criticalmass_track_list') }}">
-                                            Tracks verwalten
-                                        </a>
-                                    </p>
+                                    <div class="text-center">
+                                        <div class="btn-group">
+                                            <a class="btn btn-default" href="{{ path('caldera_criticalmass_track_list') }}">
+                                                Tracks verwalten
+                                            </a>
+                                            {% if feature('track_massupload') %}
+                                            <a class="btn btn-default" href="{{ path('caldera_criticalmass_trackmassimport_auth') }}">
+                                                Importieren
+                                            </a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
                                 {% endif %}
                             </div>
                         </div>
