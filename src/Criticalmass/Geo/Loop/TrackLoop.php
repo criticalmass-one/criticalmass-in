@@ -2,25 +2,26 @@
 
 namespace App\Criticalmass\Geo\Loop;
 
-use Caldera\GeoBundle\GpxReader\TrackReader;
+use App\Criticalmass\Geo\Converter\TrackToPositionListConverter;
+use App\Criticalmass\Geo\Entity\Track;
+use App\Criticalmass\Geo\GpxReader\TrackReader;
 
 class TrackLoop extends Loop
 {
-    /** @var TrackReader $gpxReader */
+    /** @var TrackReader $trackReader */
     protected $trackReader;
 
     public function __construct(TrackReader $trackReader)
     {
         $this->trackReader = $trackReader;
+
+        parent::__construct();
     }
 
-    public function loadTrackFile(string $filename): TrackLoop
+    public function loadTrack(Track $track): TrackLoop
     {
-        $this->positionList = $this
-            ->trackReader
-            ->loadFromFile($filename)
-            ->createPositionList()
-        ;
+        $converter = new TrackToPositionListConverter($this->trackReader);
+        $this->positionList = $converter->convert($track);
 
         return $this;
     }

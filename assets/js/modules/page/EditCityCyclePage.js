@@ -112,7 +112,8 @@ define(['Map', 'LocationMarker', 'CityMarker', 'bootstrap-datepicker'], function
             format: 'dd.mm.yyyy',
             autoclose: true,
             todayHighlight: true,
-            weekStart: 1
+            weekStart: 1,
+            zIndexOffset: 1000
         });
     };
 

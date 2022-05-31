@@ -56,7 +56,7 @@ define(['leaflet', 'leaflet.extra-markers'], function () {
             markerColor: markerColor,
             iconColor: markerIconColor,
             shape: 'square',
-            prefix: 'fa'
+            prefix: 'far'
         });
     };
 

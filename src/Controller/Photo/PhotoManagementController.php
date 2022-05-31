@@ -8,18 +8,14 @@ use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Photo;
 use App\Entity\Ride;
 use App\Form\Type\PhotoCoordType;
-use Imagine\Image\Box;
-use Imagine\Image\Point;
-use Imagine\Imagick\Imagine;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use App\Criticalmass\Feature\Annotation\Feature as Feature;
 
 class PhotoManagementController extends AbstractController
 {
@@ -56,7 +52,7 @@ class PhotoManagementController extends AbstractController
      * @Security("is_granted('edit', photo)")
      * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
-    public function deleteAction(Request $request, Photo $photo, RegistryInterface $registry): Response
+    public function deleteAction(Request $request, Photo $photo, ManagerRegistry $registry): Response
     {
         $this->saveReferer($request);
 
@@ -91,7 +87,7 @@ class PhotoManagementController extends AbstractController
      * @Security("is_granted('edit', photo)")
      * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
-    public function toggleAction(Request $request, Photo $photo, RegistryInterface $registry): Response
+    public function toggleAction(Request $request, Photo $photo, ManagerRegistry $registry): Response
     {
         $this->saveReferer($request);
 
@@ -106,7 +102,7 @@ class PhotoManagementController extends AbstractController
      * @Security("is_granted('edit', photo)")
      * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
-    public function featuredPhotoAction(Request $request, Photo $photo, RegistryInterface $registry): Response
+    public function featuredPhotoAction(Request $request, Photo $photo, ManagerRegistry $registry): Response
     {
         $this->saveReferer($request);
 
@@ -121,7 +117,7 @@ class PhotoManagementController extends AbstractController
      * @Security("is_granted('edit', photo)")
      * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
-    public function placeSingleAction(Request $request, Photo $photo, ObjectRouterInterface $objectRouter, RegistryInterface $registry): Response
+    public function placeSingleAction(Request $request, Photo $photo, ObjectRouterInterface $objectRouter, ManagerRegistry $registry): Response
     {
         $form = $this->createForm(PhotoCoordType::class, $photo, [
             'action' => $objectRouter->generate($photo, 'caldera_criticalmass_photo_place_single')
@@ -134,7 +130,7 @@ class PhotoManagementController extends AbstractController
         }
     }
 
-    protected function placeSingleGetAction(Request $request, Photo $photo, FormInterface $form, RegistryInterface $registry): Response
+    protected function placeSingleGetAction(Request $request, Photo $photo, FormInterface $form, ManagerRegistry $registry): Response
     {
         $this->saveReferer($request);
 
@@ -152,7 +148,7 @@ class PhotoManagementController extends AbstractController
         ]);
     }
 
-    protected function placeSinglePostAction(Request $request, Photo $photo, FormInterface $form, RegistryInterface $registry): Response
+    protected function placeSinglePostAction(Request $request, Photo $photo, FormInterface $form, ManagerRegistry $registry): Response
     {
         $form->handleRequest($request);
 
@@ -212,9 +208,9 @@ class PhotoManagementController extends AbstractController
     {
         if (Request::METHOD_POST === $request->getMethod()) {
             return $this->censorPostAction($request, $user, $photo, $photoManipulator);
-        } else {
-            return $this->censorGetAction($request, $user, $photo, $photoManipulator);
         }
+
+        return $this->censorGetAction($request, $user, $photo, $photoManipulator);
     }
 
     public function censorGetAction(Request $request, UserInterface $user = null, Photo $photo, PhotoManipulatorInterface $photoManipulator): Response

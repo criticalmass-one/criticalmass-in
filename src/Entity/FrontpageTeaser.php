@@ -21,84 +21,80 @@ class FrontpageTeaser implements PhotoInterface
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="frontpageTeasers")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    protected $user;
+    protected ?User $user = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="frontpageTeasers")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
-    protected $city;
+    protected ?City $city = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    protected $headline;
+    protected ?string $headline = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    protected $text;
+    protected ?string $text = null;
 
     /**
-     * @var File $imageFile
      * @Vich\UploadableField(mapping="frontpage_teaser", fileNameProperty="imageName",  size="imageSize", mimeType="imageMimeType")
      */
-    protected $imageFile;
+    protected ?File $imageFile = null;
 
     /**
-     * @var string $imageName
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $imageName;
+    protected ?string $imageName = null;
 
     /**
-     * @var int $imageSize
      * @ORM\Column(type="integer", nullable=true)
      */
-    protected $imageSize;
+    protected ?int $imageSize = null;
 
     /**
-     * @var string $imageMimeType
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $imageMimeType;
+    protected ?string $imageMimeType = null;
 
     /**
      * @ORM\Column(type="smallint")
      */
-    protected $position = 0;
+    protected int $position = 0;
 
     /**
      * @ORM\Column(type="datetime", nullable=false)
      */
-    protected $createdAt;
+    protected \DateTime $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $updatedAt;
+    protected ?\DateTime $updatedAt = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $validFrom;
+    protected ?\DateTime $validFrom = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $validUntil;
+    protected ?\DateTime $validUntil = null;
 
     /**
      * @ORM\OneToMany(targetEntity="FrontpageTeaserButton", mappedBy="frontpageTeaser")
      * @ORM\OrderBy({"position" = "ASC"})
      */
-    protected $buttons;
+    protected Collection $buttons;
 
     public function __construct()
     {
@@ -192,7 +188,7 @@ class FrontpageTeaser implements PhotoInterface
         return $this->imageSize;
     }
 
-    public function setImageSize(int $imageSize): PhotoInterface
+    public function setImageSize(int $imageSize = null): PhotoInterface
     {
         $this->imageSize = $imageSize;
 
@@ -204,7 +200,7 @@ class FrontpageTeaser implements PhotoInterface
         return $this->imageMimeType;
     }
 
-    public function setImageMimeType(string $imageMimeType): PhotoInterface
+    public function setImageMimeType(string $imageMimeType = null): PhotoInterface
     {
         $this->imageMimeType = $imageMimeType;
 

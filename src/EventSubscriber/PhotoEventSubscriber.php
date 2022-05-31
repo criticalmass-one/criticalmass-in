@@ -4,19 +4,18 @@ namespace App\EventSubscriber;
 
 use App\Criticalmass\Geocoding\ReverseGeocoderInterface;
 use App\Criticalmass\Image\ExifHandler\ExifHandlerInterface;
-use App\Criticalmass\Image\GoogleCloud\ExportDataHandler\ExportDataHandlerInterface;
 use App\Criticalmass\Image\PhotoGps\PhotoGpsInterface;
 use App\Entity\Photo;
 use App\Entity\Track;
 use App\Event\Photo\PhotoDeletedEvent;
 use App\Event\Photo\PhotoUpdatedEvent;
 use App\Event\Photo\PhotoUploadedEvent;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class PhotoEventSubscriber implements EventSubscriberInterface
 {
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var ReverseGeocoderInterface $reverseGeocoder */
@@ -28,16 +27,12 @@ class PhotoEventSubscriber implements EventSubscriberInterface
     /** @var ExifHandlerInterface $exifHandler */
     protected $exifHandler;
 
-    /** @var ExportDataHandlerInterface $exportDataHandler */
-    protected $exportDataHandler;
-
-    public function __construct(RegistryInterface $registry, ReverseGeocoderInterface $reverseGeocoder, PhotoGpsInterface $photoGps, ExifHandlerInterface $exifHandler, ExportDataHandlerInterface $exportDataHandler)
+    public function __construct(ManagerRegistry $registry, ReverseGeocoderInterface $reverseGeocoder, PhotoGpsInterface $photoGps, ExifHandlerInterface $exifHandler)
     {
         $this->registry = $registry;
         $this->reverseGeocoder = $reverseGeocoder;
         $this->photoGps = $photoGps;
         $this->exifHandler = $exifHandler;
-        $this->exportDataHandler = $exportDataHandler;
     }
 
     public static function getSubscribedEvents(): array
@@ -55,8 +50,8 @@ class PhotoEventSubscriber implements EventSubscriberInterface
         $this->registry->getManager()->flush();
 
         $this->handleExifData($photoUploadedEvent->getPhoto(), $photoUploadedEvent->getTmpFilename());
-        $this->reverseGeocode($photoUploadedEvent->getPhoto());
         $this->locate($photoUploadedEvent->getPhoto());
+        $this->reverseGeocode($photoUploadedEvent->getPhoto());
 
         $this->exportDataHandler->calculateForEntity($photoUploadedEvent->getPhoto());
 

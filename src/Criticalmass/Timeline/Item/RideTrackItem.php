@@ -7,26 +7,21 @@ use App\Entity\Track;
 
 class RideTrackItem extends AbstractItem
 {
-    /** @var Ride $ride */
-    protected $ride;
+    protected ?Ride $ride = null;
 
-    /** @var string $rideTitle */
-    protected $rideTitle;
+    protected ?string $rideTitle = null;
 
-    /** @var Track $track */
-    protected $track;
+    protected ?Track $track = null;
 
-    /** @var float $distance */
-    protected $distance;
+    protected ?float $distance = null;
 
-    /** @var float $duration */
-    protected $duration;
+    protected ?float $duration = null;
 
-    /** @var string $polyline */
-    protected $polyline;
+    protected ?string $polyline = null;
 
-    /** @var string $polylineColor */
-    protected $polylineColor;
+    protected ?string $polylineColor = null;
+
+    protected ?bool $rideEnabled = null;
 
     public function getRide(): Ride
     {
@@ -110,5 +105,17 @@ class RideTrackItem extends AbstractItem
         $this->polylineColor = $polylineColor;
 
         return $this;
+    }
+
+    public function setRideEnabled(bool $rideEnabled): RideTrackItem
+    {
+        $this->rideEnabled = $rideEnabled;
+
+        return $this;
+    }
+
+    public function isRideEnabled(): bool
+    {
+        return $this->rideEnabled;
     }
 }

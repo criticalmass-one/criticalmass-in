@@ -2,8 +2,8 @@
 
 namespace App\Criticalmass\SocialNetwork\EntityNetworkDetector;
 
+use App\Criticalmass\SocialNetwork\Network\NetworkInterface;
 use App\Entity\SocialNetworkProfile;
-use Caldera\SocialNetworkBundle\Network\NetworkInterface;
 
 interface EntityNetworkDetectorInterface
 {

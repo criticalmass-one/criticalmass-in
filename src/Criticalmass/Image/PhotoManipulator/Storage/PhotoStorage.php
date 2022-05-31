@@ -40,6 +40,11 @@ class PhotoStorage extends AbstractPhotoStorage
 
     protected function getImageFilename(ManipulateablePhotoInterface $photo): string
     {
-        return $this->uploaderHelper->asset($photo, 'imageFile');
+        $filename = $this->uploaderHelper->asset($photo, 'imageFile');
+
+        // todo: This is a quick fix until filesystem configuration is fixed
+        $filename = str_replace('/photos/', '/', $filename);
+        
+        return $filename;
     }
 }

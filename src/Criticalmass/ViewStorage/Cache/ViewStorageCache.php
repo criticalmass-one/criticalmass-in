@@ -2,14 +2,11 @@
 
 namespace App\Criticalmass\ViewStorage\Cache;
 
-use App\Criticalmass\Util\ClassUtil;
-use App\Criticalmass\ViewStorage\View\View;
-use App\Criticalmass\ViewStorage\View\ViewFactory;
-use App\EntityInterface\ViewableInterface;
+use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
+use App\Criticalmass\ViewStorage\ViewModel\ViewFactory;
 use JMS\Serializer\SerializerInterface;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class ViewStorageCache implements ViewStorageCacheInterface
 {
@@ -29,7 +26,7 @@ class ViewStorageCache implements ViewStorageCacheInterface
         $this->serializer = $serializer;
     }
 
-    public function countView(ViewableInterface $viewable): void
+    public function countView(ViewableEntity $viewable): void
     {
         $view = ViewFactory::createView($viewable, $this->tokenStorage->getToken()->getUser());
 

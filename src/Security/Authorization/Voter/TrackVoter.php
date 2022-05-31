@@ -17,6 +17,11 @@ class TrackVoter extends AbstractVoter
         return $this->canEdit($track, $user);
     }
 
+    protected function canApprove(Track $track, User $user): bool
+    {
+        return $this->canEdit($track, $user);
+    }
+
     protected function canEdit(Track $track, User $user): bool
     {
         if ($user->hasRole('ROLE_ADMIN')) {

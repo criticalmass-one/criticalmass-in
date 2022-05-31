@@ -2,8 +2,12 @@
 
 namespace App\EventSubscriber;
 
-use App\Criticalmass\Gps\PolylineGenerator\ReducedPolylineGenerator;
-use App\Criticalmass\Gps\DistanceCalculator\TrackDistanceCalculatorInterface;
+use App\Criticalmass\Geo\DistanceCalculator\TrackDistanceCalculatorInterface;
+use App\Criticalmass\Geo\GpxReader\TrackReader;
+use App\Criticalmass\Geo\LatLngListGenerator\RangeLatLngListGenerator;
+use App\Criticalmass\Geo\TrackPolylineHandler\TrackPolylineHandlerInterface;
+use App\Criticalmass\Participation\Manager\ParticipationManagerInterface;
+use App\Criticalmass\Statistic\RideEstimateConverter\RideEstimateConverterInterface;
 use App\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandler;
 use App\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandlerInterface;
 use App\Entity\Ride;
@@ -13,12 +17,9 @@ use App\Event\Track\TrackHiddenEvent;
 use App\Event\Track\TrackShownEvent;
 use App\Event\Track\TrackTimeEvent;
 use App\Event\Track\TrackTrimmedEvent;
-use App\Criticalmass\Gps\GpxReader\TrackReader;
-use App\Criticalmass\Gps\LatLngListGenerator\RangeLatLngListGenerator;
-use App\Criticalmass\Gps\PolylineGenerator\PolylineGenerator;
 use App\Event\Track\TrackUpdatedEvent;
 use App\Event\Track\TrackUploadedEvent;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class TrackEventSubscriber implements EventSubscriberInterface
@@ -26,11 +27,8 @@ class TrackEventSubscriber implements EventSubscriberInterface
     /** @var TrackReader $trackReader */
     protected $trackReader;
 
-    /** @var PolylineGenerator $polylineGenerator */
-    protected $polylineGenerator;
-
-    /** @var ReducedPolylineGenerator $reducedPolylineGenerator */
-    protected $reducedPolylineGenerator;
+    /** @var TrackPolylineHandlerInterface $trackPolylineHandler */
+    protected $trackPolylineHandler;
 
     /** @var RangeLatLngListGenerator $rangeLatLngListGenerator */
     protected $rangeLatLngListGenerator;
@@ -41,22 +39,25 @@ class TrackEventSubscriber implements EventSubscriberInterface
     /** @var TrackDistanceCalculatorInterface $trackDistanceCalculator */
     protected $trackDistanceCalculator;
 
-    /** @var RegistryInterface $registry */
+    /** @var RideEstimateConverterInterface $rideEstimateConverter */
+    protected $rideEstimateConverter;
+
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
+    /** @var ParticipationManagerInterface $participationManager */
+    protected $participationManager;
+
     public function __construct(
-        RegistryInterface $registry,
+        ManagerRegistry $registry,
         RideEstimateHandler $rideEstimateHandler,
+        RideEstimateConverterInterface $rideEstimateConverter,
         TrackReader $trackReader,
-        PolylineGenerator $polylineGenerator,
-        ReducedPolylineGenerator $reducedPolylineGenerator,
         RangeLatLngListGenerator $rangeLatLngListGenerator,
-        TrackDistanceCalculatorInterface $trackDistanceCalculator
+        TrackDistanceCalculatorInterface $trackDistanceCalculator,
+        TrackPolylineHandlerInterface $trackPolylineHandler,
+        ParticipationManagerInterface $participationManager
     ) {
-        $this->polylineGenerator = $polylineGenerator;
-
-        $this->reducedPolylineGenerator = $reducedPolylineGenerator;
-
         $this->rangeLatLngListGenerator = $rangeLatLngListGenerator;
 
         $this->trackReader = $trackReader;
@@ -65,7 +66,13 @@ class TrackEventSubscriber implements EventSubscriberInterface
 
         $this->trackDistanceCalculator = $trackDistanceCalculator;
 
+        $this->rideEstimateConverter = $rideEstimateConverter;
+
         $this->registry = $registry;
+
+        $this->trackPolylineHandler = $trackPolylineHandler;
+
+        $this->participationManager = $participationManager;
     }
 
     public static function getSubscribedEvents(): array
@@ -130,6 +137,8 @@ class TrackEventSubscriber implements EventSubscriberInterface
         $this->updatePolyline($track);
 
         $this->registry->getManager()->flush();
+
+        $this->participationManager->participate($track->getRide(), 'yes');
     }
 
     public function onTrackTrimmed(TrackTrimmedEvent $trackTrimmedEvent): void
@@ -144,6 +153,8 @@ class TrackEventSubscriber implements EventSubscriberInterface
 
         $this->updateTrackProperties($track);
 
+        $this->calculateTrackDistance($track);
+
         $this->updateEstimates($track);
 
         $this->registry->getManager()->flush();
@@ -151,28 +162,16 @@ class TrackEventSubscriber implements EventSubscriberInterface
 
     protected function addRideEstimate(Track $track, Ride $ride)
     {
+        $this->rideEstimateConverter->addEstimateFromTrack($track);
+
         $this->rideEstimateHandler
             ->setRide($ride)
-            ->addEstimateFromTrack($track);
-
-        $this->rideEstimateHandler->calculateEstimates();
+            ->calculateEstimates();
     }
 
     protected function updatePolyline(Track $track): void
     {
-        $polyline = $this->polylineGenerator
-            ->loadTrack($track)
-            ->execute()
-            ->getPolyline();
-
-        $track->setPolyline($polyline);
-
-        $reducedPolyline = $this->reducedPolylineGenerator
-            ->loadTrack($track)
-            ->execute()
-            ->getPolyline();
-
-        $track->setReducedPolyline($reducedPolyline);
+         $this->trackPolylineHandler->handleTrack($track);
     }
 
     protected function updateLatLngList(Track $track): void
@@ -197,12 +196,19 @@ class TrackEventSubscriber implements EventSubscriberInterface
 
 
         $distance = $this->trackDistanceCalculator
-            ->loadTrack($track)
+            ->setTrack($track)
             ->calculate();
 
         $track->setDistance($distance);
+    }
 
-        $track->setMd5Hash($this->trackReader->getMd5Hash());
+    protected function calculateTrackDistance(Track $track): void
+    {
+        $distance = $this->trackDistanceCalculator
+            ->setTrack($track)
+            ->calculate();
+
+        $track->setDistance($distance);
     }
 
     protected function updateTrackProperties(Track $track): void
@@ -212,17 +218,16 @@ class TrackEventSubscriber implements EventSubscriberInterface
         $track
             ->setStartDateTime($this->trackReader->getStartDateTime())
             ->setEndDateTime($this->trackReader->getEndDateTime())
-            ->setDistance($this->trackReader->calculateDistance());
+        ;
     }
 
     public function updateEstimates(Track $track): void
     {
+        $this->rideEstimateConverter->addEstimateFromTrack($track);
+
         $this->rideEstimateHandler
             ->setRide($track->getRide())
-            ->flushEstimates()
-            ->addEstimateFromTrack($track);
-
-        $this->rideEstimateHandler->calculateEstimates();
+            ->calculateEstimates();
     }
 
     protected function removeEstimateFromTrack(Track $track): void

@@ -12,7 +12,7 @@ interface PhotoInterface extends UploadableEntity
     public function getImageName(): ?string;
     public function setImageName(string $imageName = null): PhotoInterface;
     public function getImageSize(): ?int;
-    public function setImageSize(int $imageSize): PhotoInterface;
+    public function setImageSize(int $imageSize = null): PhotoInterface;
     public function getImageMimeType(): ?string;
-    public function setImageMimeType(string $imageMimeType): PhotoInterface;
+    public function setImageMimeType(string $imageMimeType = null): PhotoInterface;
 }

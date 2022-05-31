@@ -1,10 +1,18 @@
+caldera_criticalmass_promotion:
+    resource: 'promotion.yml'
+    prefix: /promotion
+
+caldera_criticalmass_heatmap:
+    resource: 'heatmap.yml'
+    prefix: /
+
+caldera_criticalmass_trackmassimport:
+    resource: 'track_mass_import.yml'
+    prefix: /
+
 caldera_criticalmass_profile:
     resource: 'profile.xml'
     prefix: /
-
-caldera_criticalmass_api:
-    resource: 'api.yml'
-    prefix: /api
 
 caldera_criticalmass_calendar:
     resource: 'calendar.yml'
@@ -18,21 +26,17 @@ caldera_criticalmass_track:
     resource: 'track.yml'
     prefix: /
 
-caldera_criticalmass_frontpage:
-    resource: 'frontpage.yml'
-    prefix: /
-
 caldera_criticalmass_search:
     resource: 'search.yml'
+    prefix: /
+
+caldera_criticalmass_frontpage:
+    resource: 'frontpage.yml'
     prefix: /
 
 caldera_criticalmass_board:
     resource: 'board.yml'
     prefix:   /
-
-caldera_criticalmass_help:
-    resource: 'help.yml'
-    prefix:   /help
 
 caldera_criticalmass_photo:
     resource: 'photo.yml'
@@ -121,6 +125,11 @@ caldera_criticalmass_rideestimate:
 caldera_criticalmass_subdride:
     resource: 'subride.yml'
     prefix: /
+
+caldera_criticalmass_oauth:
+    resource: 'oauth.yml'
+    prefix: /
+
 
 #caldera_criticalmass_redirecting:
 #    resource: 'redirecting.yml'

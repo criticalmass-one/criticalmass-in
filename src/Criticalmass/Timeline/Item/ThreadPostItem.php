@@ -6,17 +6,13 @@ use App\Entity\Thread;
 
 class ThreadPostItem extends AbstractItem
 {
-    /** @var int $postId */
-    protected $postId;
+    protected ?int $postId = null;
 
-    /** @var Thread $thread */
-    protected $thread;
+    protected ?Thread $thread = null;
 
-    /** @var string $threadTitle */
-    protected $threadTitle;
+    protected ?string $threadTitle = null;
 
-    /** @var string $text */
-    protected $text;
+    protected ?string $text = null;
 
     public function getPostId(): int
     {

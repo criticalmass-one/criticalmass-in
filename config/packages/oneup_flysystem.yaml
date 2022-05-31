@@ -18,6 +18,9 @@ oneup_flysystem:
         track_track_adapter:
             local:
                 directory: '%upload_destination.track%'
+        heatmap_tile_adapter:
+            local:
+                directory: '%upload_destination.heatmap_tile%'
 
     filesystems:
         flysystem_photo_photo:
@@ -43,3 +46,7 @@ oneup_flysystem:
         flysystem_track_track:
             adapter: track_track_adapter
             mount: flysystem_track_track
+
+        flysystem_heatmap_tile:
+            adapter: heatmap_tile_adapter
+            mount: flysystem_heatmap_tile

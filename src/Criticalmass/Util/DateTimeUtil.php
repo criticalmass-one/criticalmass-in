@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Criticalmass\Util;
 
@@ -44,5 +44,15 @@ class DateTimeUtil
         $dateTime = sprintf('%d-%d-%d 23:59:59', $day->format('Y'), $day->format('m'), $day->format('d'));
 
         return new \DateTime($dateTime);
+    }
+
+    public static function recreateAsUtc(\DateTime $dateTime): \DateTime
+    {
+        return new \DateTime($dateTime->format('Y-m-d H:i:s'), new \DateTimeZone('UTC'));
+    }
+
+    public static function recreateAsTimeZone(\DateTime $dateTime, \DateTimeZone $dateTimeZone): \DateTime
+    {
+        return new \DateTime($dateTime->format('Y-m-d H:i:s'), $dateTimeZone);
     }
 }

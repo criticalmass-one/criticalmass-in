@@ -2,12 +2,12 @@
 
 namespace App\Criticalmass\Timeline\Collector;
 
-use App\Entity\RideEstimate;
 use App\Criticalmass\Timeline\Item\RideParticipationEstimateItem;
+use App\Entity\RideEstimate;
 
 class RideParticipationEstimateCollector extends AbstractTimelineCollector
 {
-    protected $entityClass = RideEstimate::class;
+    protected string $entityClass = RideEstimate::class;
 
     protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {
@@ -20,7 +20,8 @@ class RideParticipationEstimateCollector extends AbstractTimelineCollector
                 ->setRide($estimateEntity->getRide())
                 ->setRideTitle($estimateEntity->getRide()->getTitle())
                 ->setEstimatedParticipants($estimateEntity->getEstimatedParticipants())
-                ->setDateTime($estimateEntity->getDateTime());
+                ->setDateTime($estimateEntity->getDateTime())
+                ->setRideEnabled($estimateEntity->getRide()->isEnabled());
 
             $this->addItem($item);
         }
