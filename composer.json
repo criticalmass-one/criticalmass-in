@@ -46,7 +46,6 @@
         "miljar/php-exif": "^0.6.5",
         "sonata-project/seo-bundle": "^2.2",
         "calderacc/geobasic": "^0.5",
-        "calderacc/maptype-bundle": "dev-dev",
         "yohang/calendr": "^2.0",
         "maxh/php-nominatim": "^1.2",
         "php-http/guzzle6-adapter": "^1.1",

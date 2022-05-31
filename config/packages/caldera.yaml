@@ -1,2 +1,0 @@
-map_type:
-    default_tile_layer: 'https://tiles.caldera.cc/wikimedia-intl/{z}/{x}/{y}.png'

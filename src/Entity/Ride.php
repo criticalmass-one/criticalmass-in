@@ -365,16 +365,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         $this->viewRelation = new ArrayCollection();
     }
 
-    public function getLatLng(): array
-    {
-        return [$this->latitude, $this->longitude];
-    }
-
-    public function setLatLng(array $foo): Ride
-    {
-        return $this;
-    }
-
     public function getId(): ?int
     {
         return $this->id;

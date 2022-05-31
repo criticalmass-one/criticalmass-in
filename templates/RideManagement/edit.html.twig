@@ -269,9 +269,11 @@
                 </div>
             </div>
         </div>
+        {{ form_widget(form.latitude) }}
+        {{ form_widget(form.longitude) }}
         {{ form_widget(form._token) }}
 
-        {{ form_end(form) }}
+        </form>
     </div>
 
     <script>

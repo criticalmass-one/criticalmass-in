@@ -2,7 +2,6 @@
 
 namespace App\Form\Type;
 
-use Caldera\MapTypeBundle\Form\Type\MapType;
 use App\Entity\Ride;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -43,9 +42,8 @@ class RideType extends AbstractType
                 'compound' => true
             ])
             ->add('location', TextType::class, ['required' => false])
-            //->add('latitude', HiddenType::class, ['required' => false])
-            //->add('longitude', HiddenType::class, ['required' => false])
-            ->add('latLng', MapType::class)
+            ->add('latitude', HiddenType::class, ['required' => false])
+            ->add('longitude', HiddenType::class, ['required' => false])
             ->add('rideType', ChoiceType::class, [
                 'required' => true,
                 'choices' => array_flip(\App\DBAL\Type\RideType::$choices),
