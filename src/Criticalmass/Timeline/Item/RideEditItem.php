@@ -6,11 +6,11 @@ use App\Entity\Ride;
 
 class RideEditItem extends AbstractItem
 {
-    /** @var Ride $ride */
-    protected $ride;
+    protected ?Ride $ride = null;
 
-    /** @var string $rideTitle */
-    protected $rideTitle;
+    protected ?string $rideTitle = null;
+
+    protected ?bool $enabled = null;
 
     public function getRide(): Ride
     {
@@ -34,5 +34,17 @@ class RideEditItem extends AbstractItem
         $this->rideTitle = $rideTitle;
 
         return $this;
+    }
+
+    public function setEnabled(bool $enabled): RideEditItem
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
     }
 }

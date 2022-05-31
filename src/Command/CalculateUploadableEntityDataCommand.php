@@ -4,7 +4,7 @@ namespace App\Command;
 
 use App\Criticalmass\UploadableDataHandler\UploadableDataHandlerInterface;
 use Doctrine\Common\Collections\Criteria;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
@@ -14,13 +14,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CalculateUploadableEntityDataCommand extends Command
 {
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var UploadableDataHandlerInterface $uploadableDataHandler */
     protected $uploadableDataHandler;
 
-    public function __construct(RegistryInterface $registry, UploadableDataHandlerInterface $uploadableDataHandler)
+    public function __construct(ManagerRegistry $registry, UploadableDataHandlerInterface $uploadableDataHandler)
     {
         $this->registry = $registry;
         $this->uploadableDataHandler = $uploadableDataHandler;

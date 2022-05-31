@@ -2,9 +2,9 @@
 
 namespace App\Criticalmass\ViewStorage\Cache;
 
-use App\EntityInterface\ViewableInterface;
+use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 
 interface ViewStorageCacheInterface
 {
-    public function countView(ViewableInterface $viewable): void;
+    public function countView(ViewableEntity $viewable): void;
 }

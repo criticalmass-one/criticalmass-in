@@ -4,7 +4,7 @@ namespace App\Command\Cycles;
 
 use App\Entity\CityCycle;
 use App\Entity\CitySlug;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
@@ -14,13 +14,13 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 class ListCyclesCommand extends Command
 {
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var TranslatorInterface $translator */
     protected $translator;
 
-    public function __construct($name = null, RegistryInterface $registry, TranslatorInterface $translator)
+    public function __construct($name = null, ManagerRegistry $registry, TranslatorInterface $translator)
     {
         $this->registry = $registry;
         $this->translator = $translator;

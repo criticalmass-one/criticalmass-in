@@ -2,8 +2,8 @@
 
 namespace App\Criticalmass\SocialNetwork\EntityNetworkDetector;
 
-use Caldera\SocialNetworkBundle\Network\NetworkInterface;
-use Caldera\SocialNetworkBundle\NetworkManager\NetworkManagerInterface;
+use App\Criticalmass\SocialNetwork\Network\NetworkInterface;
+use App\Criticalmass\SocialNetwork\NetworkManager\NetworkManagerInterface;
 
 abstract class AbstractEntityNetworkDetector implements EntityNetworkDetectorInterface
 {

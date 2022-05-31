@@ -2,10 +2,9 @@
 
 namespace App\Criticalmass\ViewStorage\Persister;
 
-use App\Criticalmass\ViewStorage\View\View;
-use App\Entity\User;
-use App\EntityInterface\ViewableInterface;
-use App\EntityInterface\ViewInterface;
+use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
+use App\Criticalmass\ViewStorage\ViewInterface\ViewEntity;
+use App\Criticalmass\ViewStorage\ViewModel\View;
 
 class ViewStoragePersister extends AbstractViewStoragePersister
 {
@@ -23,41 +22,32 @@ class ViewStoragePersister extends AbstractViewStoragePersister
         return $this;
     }
 
-    public function storeView(View $view): ViewStoragePersisterInterface
+    public function storeView(View $view, bool $flush = false): ViewStoragePersisterInterface
     {
-        $viewEntity = $this->getView($view->getEntityClassName());
         $entity = $this->getEntity($view->getEntityClassName(), $view->getEntityId());
-        $viewSetEntityMethod = sprintf('set%s', $view->getEntityClassName());
 
-        $viewEntity->$viewSetEntityMethod($entity);
-        $viewEntity->setUser($this->getUser($view->getUserId()));
-        $viewEntity->setDateTime($view->getDateTime());
+        $viewEntity = $this->viewEntityFactory->createViewEntity($view, $entity);
 
         $entity->incViews();
 
         $this->registry->getManager()->persist($viewEntity);
 
+        if ($flush) {
+            $this->registry->getManager()->flush();
+        }
+
         return $this;
     }
 
-    protected function getView(string $className): ViewInterface
+    protected function getView(string $className): ViewEntity
     {
-        $viewClassName = sprintf('App\Entity\\%sView', $className);
+        $viewClassName = sprintf('%s%sView', $this->entityNamespace, $className);
 
         return new $viewClassName;
     }
 
-    protected function getUser(int $userId = null): ?User
+    protected function getEntity(string $className, int $entityId): ViewableEntity
     {
-        if (!$userId) {
-            return null;
-        }
-        
-        return $this->registry->getManager()->getRepository(User::class)->find($userId);
-    }
-
-    protected function getEntity(string $className, int $entityId): ViewableInterface
-    {
-        return $this->registry->getManager()->getRepository(sprintf('App:%s', $className))->find($entityId);
+        return $this->registry->getRepository(sprintf('App:%s', $className))->find($entityId);
     }
 }

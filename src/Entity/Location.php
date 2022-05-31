@@ -2,16 +2,18 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\Router\Annotation as Routing;
 use App\EntityInterface\AuditableInterface;
 use App\EntityInterface\AutoParamConverterAble;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
-use App\Criticalmass\Router\Annotation as Routing;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Table(name="location")
  * @ORM\Entity(repositoryClass="App\Repository\LocationRepository")
  * @Routing\DefaultRoute(name="caldera_criticalmass_location_show")
+ * @JMS\ExclusionPolicy("all")
  */
 class Location implements RouteableInterface, AuditableInterface, AutoParamConverterAble
 {
@@ -19,41 +21,47 @@ class Location implements RouteableInterface, AuditableInterface, AutoParamConve
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Expose
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="photos")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      * @Routing\RouteParameter(name="citySlug")
      */
-    protected $city;
+    protected ?City $city = null;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Routing\RouteParameter(name="locationSlug")
+     * @JMS\Expose
      */
-    protected $slug;
+    protected ?string $slug = null;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @JMS\Expose
      */
-    protected $latitude;
+    protected ?float $latitude = null;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @JMS\Expose
      */
-    protected $longitude;
+    protected ?float $longitude = null;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @JMS\Expose
      */
-    protected $title;
+    protected ?string $title = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @JMS\Expose
      */
-    protected $description;
+    protected ?string $description = null;
 
     public function getId(): ?int
     {

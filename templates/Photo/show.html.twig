@@ -1,5 +1,8 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set previous_photo = previous_entity(photo) %}
+{% set next_photo = next_entity(photo) %}
+
 {% block breadcrumb %}
     <li>
         <a href="{{ path('caldera_criticalmass_city_list') }}">
@@ -34,9 +37,9 @@
     <div class="row">
         <div class="col-md-12">
             <ul class="pager">
-                {% if previousPhoto %}
+                {% if previous_photo %}
                     <li class="previous">
-                        <a href="{{ objectPath(previousPhoto) }}">
+                        <a href="{{ objectPath(previous_photo) }}">
                             &larr; Voriges Foto
                         </a>
                     </li>
@@ -48,9 +51,9 @@
                     </li>
                 {% endif %}
 
-                {% if nextPhoto %}
+                {% if next_photo %}
                     <li class="next">
-                        <a href="{{ objectPath(nextPhoto) }}">
+                        <a href="{{ objectPath(next_photo) }}">
                             Nächstes Foto &rarr;
                         </a>
                     </li>
@@ -136,12 +139,12 @@
 
     <script>
         CriticalMass.loadModule('ViewPhotoPage', null, null, function (page) {
-            {% if previousPhoto %}
-            page.setPreviousPhotoUrl('{{ objectPath(previousPhoto) }}');
+            {% if previous_photo %}
+            page.setPreviousPhotoUrl('{{ objectPath(previous_photo) }}');
             {% endif %}
 
-            {% if nextPhoto %}
-            page.setNextPhotoUrl('{{ objectPath(nextPhoto) }}');
+            {% if next_photo %}
+            page.setNextPhotoUrl('{{ objectPath(next_photo) }}');
             {% endif %}
 
             {% if photo.hasCoordinates() %}

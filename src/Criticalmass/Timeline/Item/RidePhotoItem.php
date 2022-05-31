@@ -2,19 +2,18 @@
 
 namespace App\Criticalmass\Timeline\Item;
 
-use App\Entity\Photo;
 use App\Entity\Ride;
+use App\Entity\Photo;
 
 class RidePhotoItem extends AbstractItem
 {
-    /** @var Ride $ride */
-    protected $ride;
+    protected ?Ride $ride = null;
 
-    /** @var integer $counter */
-    protected $counter;
+    protected ?int $counter = null;
 
-    /** @var array $previewPhotoList */
-    protected $previewPhotoList = [];
+    protected array $previewPhotoList = [];
+
+    protected ?bool $rideEnabled = null;
 
     public function getRide(): Ride
     {
@@ -50,5 +49,17 @@ class RidePhotoItem extends AbstractItem
     public function getPreviewPhotoList(): array
     {
         return $this->previewPhotoList;
+    }
+
+    public function setRideEnabled(bool $rideEnabled): RidePhotoItem
+    {
+        $this->rideEnabled = $rideEnabled;
+
+        return $this;
+    }
+
+    public function isRideEnabled(): bool
+    {
+        return $this->rideEnabled;
     }
 }

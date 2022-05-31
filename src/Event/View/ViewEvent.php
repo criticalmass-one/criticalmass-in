@@ -2,22 +2,22 @@
 
 namespace App\Event\View;
 
-use App\EntityInterface\ViewableInterface;
+use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use Symfony\Component\EventDispatcher\Event;
 
 class ViewEvent extends Event
 {
     const NAME = 'viewable.view';
 
-    /** @var ViewableInterface $viewable */
+    /** @var ViewableEntity $viewable */
     protected $viewable;
 
-    public function __construct(ViewableInterface $viewable)
+    public function __construct(ViewableEntity $viewable)
     {
         $this->viewable = $viewable;
     }
 
-    public function getViewable(): ViewableInterface
+    public function getViewable(): ViewableEntity
     {
         return $this->viewable;
     }

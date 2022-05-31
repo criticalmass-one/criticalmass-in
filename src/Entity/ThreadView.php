@@ -2,42 +2,49 @@
 
 namespace App\Entity;
 
-use App\EntityInterface\ViewInterface;
+use App\Criticalmass\ViewStorage\ViewInterface\ViewEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="thread_view")
  * @ORM\Entity()
  */
-class ThreadView implements ViewInterface
+class ThreadView implements ViewEntity
 {
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="photo_views")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    protected $user;
+    protected ?User $user = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="Thread", inversedBy="thread_views")
      * @ORM\JoinColumn(name="thread_id", referencedColumnName="id")
      */
-    protected $thread;
+    protected ?Thread $thread = null;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    protected $dateTime;
+    protected \DateTime $dateTime;
 
     public function __construct()
     {
         $this->dateTime = new \DateTime();
+    }
+
+    public function setId(int $id): ViewEntity
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getId(): ?int
@@ -50,7 +57,7 @@ class ThreadView implements ViewInterface
         return $this->user;
     }
 
-    public function setUser(User $user = null): ViewInterface
+    public function setUser(User $user = null): ViewEntity
     {
         $this->user = $user;
 
@@ -62,7 +69,7 @@ class ThreadView implements ViewInterface
         return $this->dateTime;
     }
 
-    public function setDateTime(\DateTime $dateTime): ViewInterface
+    public function setDateTime(\DateTime $dateTime): ViewEntity
     {
         $this->dateTime = $dateTime;
 

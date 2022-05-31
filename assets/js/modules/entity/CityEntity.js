@@ -16,7 +16,7 @@ define(['CriticalService', 'leaflet', 'MarkerEntity', 'ModalButton', 'CloseModal
             icon: 'fa-university',
             markerColor: 'blue',
             shape: 'round',
-            prefix: 'fa'
+            prefix: 'far'
         });
     };
 

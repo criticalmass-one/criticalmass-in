@@ -2,26 +2,104 @@
 
 namespace App\Controller\Api;
 
-use App\Entity\CitySlug;
+use App\Criticalmass\DataQuery\DataQueryManager\DataQueryManagerInterface;
+use App\Criticalmass\DataQuery\RequestParameterList\RequestParameterList;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
 use App\Event\RideEstimate\RideEstimateCreatedEvent;
 use App\Model\CreateEstimateModel;
-use App\Traits\RepositoryTrait;
-use App\Traits\UtilTrait;
-use FOS\ElasticaBundle\Finder\FinderInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use FOS\RestBundle\View\View;
-use JMS\Serializer\Serializer;
+use JMS\Serializer\SerializerInterface;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Nelmio\ApiDocBundle\Annotation\Operation;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Swagger\Annotations as SWG;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class EstimateController extends BaseController
 {
-    use RepositoryTrait;
-    use UtilTrait;
+    protected SerializerInterface $serializer;
+
+    protected EventDispatcherInterface $eventDispatcher;
+
+    protected DataQueryManagerInterface $dataQueryManager;
+
+    protected ManagerRegistry $registry;
+
+    public function __construct(SerializerInterface $serializer, EventDispatcherInterface $eventDispatcher, DataQueryManagerInterface $dataQueryManager, ManagerRegistry $registry)
+    {
+        $this->serializer = $serializer;
+        $this->eventDispatcher = $eventDispatcher;
+        $this->dataQueryManager = $dataQueryManager;
+        $this->registry = $registry;
+    }
+
+    /**
+     * Use this endpoint to add an participant estimate like this:
+     *
+     * <pre>{
+     *   "latitude": 53.549280,
+     *   "longitude": 9.979589,
+     *   "estimation": 6554,
+     *   "date_time": 1506710306,
+     *   "source": "your website or app homepage here?"
+     * }</pre>
+     *
+     * The ride will be automatically detected by the combination of provided coordinates and dateTime.
+     *
+     * If you do not provide <code>date_time</code> it will use the current time.
+     *
+     * This endpoint is primarly provided for apps with access to the user's current location. If you like you can
+     * provide details about your app or homepage in the <code>source</code> property or just default to null.
+
+     * If you know which in which ride the user participates, please use the other endpoint and specify
+     * <code>citySlug</code> and <code>rideIdentifier</code>.
+     *
+     * @Operation(
+     *     tags={"Estimate"},
+     *     summary="Adds an estimation to statistic",
+     *     @SWG\Parameter(
+     *         name="body",
+     *         in="body",
+     *         description="JSON representation of the estimate data",
+     *         required=true,
+     *         @SWG\Schema(type="string")
+     *     ),
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     )
+     * )
+     */
+    public function createEstimateAction(Request $request): Response
+    {
+        /** @var CreateEstimateModel $estimateModel */
+        $estimateModel = $this->deserializeRequest($request, $this->serializer, CreateEstimateModel::class);
+
+        $rideEstimation = $this->createRideEstimate($estimateModel);
+
+        if (!$rideEstimation) {
+            throw new BadRequestHttpException();
+        }
+
+        $this->registry->getManager()->persist($rideEstimation);
+        $this->registry->getManager()->flush();
+
+        $this->eventDispatcher->dispatch(RideEstimateCreatedEvent::NAME, new RideEstimateCreatedEvent($rideEstimation));
+
+        $view = View::create();
+        $view
+            ->setData($rideEstimation)
+            ->setFormat('json')
+            ->setStatusCode(Response::HTTP_CREATED);
+
+        return $this->handleView($view);
+    }
 
     /**
      * You can add an estimation of ride participants like this:
@@ -30,51 +108,93 @@ class EstimateController extends BaseController
      *   "latitude": 53.549280,
      *   "longitude": 9.979589,
      *   "estimation": 6554,
-     *   "dateTime": 1506710306
+     *   "date_time": 1506710306,
+     *   "source": "your website or app homepage here?"
      * }</pre>
      *
-     * You can also provide a city instead of coordinates:
+     * If you do not provide <code>date_time</code> it will use the current time. As the target ride is specified by
+     * <code>citySlug</code> and <code>rideIdentifier</code>, you don’t even have to provide the coordinates. The
+     * followig json shows a valid request to this endpoint:
      *
      * <pre>{
-     *   "citySlug": "hamburg",
-     *   "estimation": 6554,
-     *   "dateTime": 1506710306
+     *   "estimation": 6554
      * }</pre>
      *
-     * If you do not provide <code>dateTime</code> it will use the current time.
+     * If you like you can provide details about your app or homepage in the <code>source</code> property or just
+     * default to null.
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Adds an estimation to statistic"
+     * @Operation(
+     *     tags={"Estimate"},
+     *     summary="Adds an estimation to statistic",
+     *     @SWG\Parameter(
+     *         name="citySlug",
+     *         in="path",
+     *         description="Slug of the ride’s city",
+     *         required=true,
+     *         @SWG\Schema(type="string"),
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="rideIdentifier",
+     *         in="path",
+     *         description="Identifier of the ride",
+     *         required=true,
+     *         @SWG\Schema(type="string"),
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         name="body",
+     *         in="body",
+     *         description="JSON representation of the estimate data",
+     *         required=true,
+     *         @SWG\Schema(type="string")
+     *     ),
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     )
      * )
+     * @Route("/estimate", name="caldera_criticalmass_rest_estimate_create", methods={"POST"})
+     * @ParamConverter("ride", class="App:Ride")
      */
-    public function createAction(Request $request, UserInterface $user, Serializer $serializer, EventDispatcherInterface $eventDispatcher): Response
+    public function createRideEstimateAction(Request $request, Ride $ride): Response
     {
-        $estimateModel = $this->deserializeRequest($request, $serializer,CreateEstimateModel::class);
+        /** @var CreateEstimateModel $estimateModel */
+        $estimateModel = $this->deserializeRequest($request, $this->serializer, CreateEstimateModel::class);
 
-        $rideEstimation = $this->createRideEstimate($estimateModel);
+        $rideEstimation = $this->createRideEstimate($estimateModel, $ride);
 
-        $this->getManager()->persist($rideEstimation);
-        $this->getManager()->flush();
+        if (!$rideEstimation) {
+            throw new BadRequestHttpException();
+        }
 
-        $eventDispatcher->dispatch(RideEstimateCreatedEvent::NAME, new RideEstimateCreatedEvent($rideEstimation));
+        $this->registry->getManager()->persist($rideEstimation);
+        $this->registry->getManager()->flush();
+
+        $this->eventDispatcher->dispatch(RideEstimateCreatedEvent::NAME, new RideEstimateCreatedEvent($rideEstimation));
 
         $view = View::create();
         $view
             ->setData($rideEstimation)
             ->setFormat('json')
-            ->setStatusCode(200);
+            ->setStatusCode(Response::HTTP_CREATED);
 
         return $this->handleView($view);
     }
 
-    protected function createRideEstimate(CreateEstimateModel $model): RideEstimate
+    protected function createRideEstimate(CreateEstimateModel $model, Ride $ride = null): ?RideEstimate
     {
         if (!$model->getDateTime()) {
             $model->setDateTime(new \DateTime());
         }
 
-        $ride = $this->guessRide($model);
+        if (!$ride) {
+            $ride = $this->findNearestRide($model);
+
+            if (!$ride) {
+                return null;
+            }
+        }
 
         $estimate = new RideEstimate();
 
@@ -83,74 +203,28 @@ class EstimateController extends BaseController
             ->setLatitude($model->getLatitude())
             ->setLongitude($model->getLongitude())
             ->setDateTime($model->getDateTime())
+            ->setSource($model->getSource())
             ->setRide($ride);
 
         return $estimate;
     }
 
-    protected function guessRide(CreateEstimateModel $model): ?Ride
-    {
-        $ride = null;
-
-        if ($model->getCitySlug()) {
-            /** @var CitySlug $citySlug */
-            $citySlug = $this->getCitySlugRepository()->findOneBySlug($model->getCitySlug());
-
-            if ($citySlug) {
-                $city = $citySlug->getCity();
-
-                if ($city) {
-                    $ride = $this->getRideRepository()->findCityRideByDate($city, $model->getDateTime());
-                }
-            }
-
-            return null;
-        } elseif ($model->getLatitude() && $model->getLongitude()) {
-            $ride = $this->findNearestRide($model);
-        }
-
-        return $ride;
-    }
-
     protected function findNearestRide(CreateEstimateModel $model): ?Ride
     {
-        /** @var FinderInterface $finder */
-        $finder = $this->container->get('fos_elastica.finder.criticalmass_ride.ride');
+        $requestParameterList = new RequestParameterList();
+        $requestParameterList
+            ->add('centerLatitude', (string)$model->getLatitude())
+            ->add('centerLongitude', (string)$model->getLongitude())
+            ->add('distanceOrderDirection', 'ASC')
+            ->add('year', $model->getDateTime()->format('Y'))
+            ->add('month', $model->getDateTime()->format('m'))
+            ->add('day', $model->getDateTime()->format('d'))
+            ->add('size', (string)1);
 
-        $geoQuery = new \Elastica\Query\GeoDistance('pin', [
-            'lat' => $model->getLatitude(),
-            'lon' => $model->getLongitude(),
-        ],
-            '25km'
-        );
+        $rideResultList = $this->dataQueryManager->query($requestParameterList, Ride::class);
 
-        $dateTimeQuery = new \Elastica\Query\Term([
-            'simpleDate' => $model->getDateTime()->format('Y-m-d')
-        ]);
-
-        $boolQuery = new \Elastica\Query\BoolQuery();
-        $boolQuery
-            ->addMust($geoQuery)
-            ->addMust($dateTimeQuery);
-
-        $query = new \Elastica\Query($boolQuery);
-
-        $query->setSize(1);
-        $query->setSort([
-            '_geo_distance' => [
-                'pin' => [
-                    $model->getLatitude(),
-                    $model->getLongitude(),
-                ],
-                'order' => 'asc',
-                'unit' => 'km',
-            ]
-        ]);
-
-        $results = $finder->find($query, 1);
-
-        if (is_array($results)) {
-            return array_pop($results);
+        if (1 === count($rideResultList)) {
+            return array_pop($rideResultList);
         }
 
         return null;

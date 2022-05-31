@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\EntityInterface\AuditableInterface;
 use App\EntityInterface\RouteableInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -17,38 +19,49 @@ class Region implements RouteableInterface, AuditableInterface
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    protected $slug;
+    protected ?string $slug = null;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    protected $name;
+    protected ?string $name = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    protected $description;
+    protected ?string $description = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="Region", inversedBy="children", cascade={"persist"})
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
-    protected $parent;
+    protected ?Region $parent = null;
 
     /**
      * @ORM\OneToMany(targetEntity="Region", mappedBy="parent")
      */
-    protected $children;
+    protected Collection $children;
 
     /**
      * @ORM\OneToMany(targetEntity="City", mappedBy="region")
      */
-    protected $cities;
+    protected Collection $cities;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private ?string $wikidataEntityId = null;
+
+    public function __construct()
+    {
+        $this->children = new ArrayCollection();
+        $this->cities = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -128,4 +141,27 @@ class Region implements RouteableInterface, AuditableInterface
         return $this->name;
     }
 
+    public function getWikidataEntityId(): ?string
+    {
+        return $this->wikidataEntityId;
+    }
+
+    public function setWikidataEntityId(?string $wikidataEntityId): Region
+    {
+        $this->wikidataEntityId = $wikidataEntityId;
+
+        return $this;
+    }
+
+    public function getChildren(): Collection
+    {
+        return $this->children;
+    }
+
+    public function setChildren(Collection $children): Region
+    {
+        $this->children = $children;
+
+        return $this;
+    }
 }

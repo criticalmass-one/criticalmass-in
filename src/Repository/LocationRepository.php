@@ -26,7 +26,7 @@ class LocationRepository extends EntityRepository
 
     public function findLocationForRide(Ride $ride): ?Location
     {
-        if (!$ride->getHasLocation()) {
+        if (!$ride->getLatitude() || !$ride->getLongitude()) {
             return null;
         }
 

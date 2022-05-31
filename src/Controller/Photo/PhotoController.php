@@ -50,8 +50,6 @@ class PhotoController extends AbstractController
 
         return $this->render('Photo/show.html.twig', [
             'photo' => $photo,
-            'nextPhoto' => $this->getPhotoRepository()->getNextPhoto($photo),
-            'previousPhoto' => $this->getPhotoRepository()->getPreviousPhoto($photo),
             'city' => $city,
             'ride' => $ride,
             'track' => $track,

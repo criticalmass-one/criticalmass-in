@@ -2,23 +2,21 @@
 
 namespace App\Criticalmass\Geo\TimeShifter;
 
-use App\Criticalmass\Geo\GpxReader\GpxReader;
+use App\Criticalmass\Geo\Converter\GpxToPositionListConverter;
 
-class GpxTimeShifter extends TimeShifter
+class GpxTimeShifter extends TimeShifter implements GpxTimeShifterInterface
 {
-    /** @var GpxReader $gpxReader */
-    protected $gpxReader;
+    /** @var GpxToPositionListConverter $gpxToPositionListConverter */
+    protected $gpxToPositionListConverter;
 
-    public function __construct(GpxReader $gpxReader)
+    public function __construct(GpxToPositionListConverter $gpxToPositionListConverter)
     {
-        $this->gpxReader = $gpxReader;
+        $this->gpxToPositionListConverter = $gpxToPositionListConverter;
     }
 
-    public function loadGpxFile(string $filename): GpxTimeShifter
+    public function loadGpxFile(string $filename): GpxTimeShifterInterface
     {
-        $this->gpxReader->loadFromFile($filename);
-
-        $this->positionList = $this->gpxReader->createPositionList();
+        $this->positionList = $this->gpxToPositionListConverter->convert($filename);
 
         return $this;
     }

@@ -9,8 +9,8 @@ define(['leaflet', 'CityMarker', 'LocationMarker'], function () {
     };
 
     Map.prototype._defaults = {
-        tileLayerUrl: 'https://tiles.caldera.cc/wikimedia-intl/{z}/{x}/{y}.png',
-        mapAttribution: 'Wikimedia maps beta | Map data &copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap contributors</a>',
+        tileLayerUrl: 'https://tiles.caldera.cc/mapnik/{z}/{x}/{y}.png',
+        mapAttribution: '<a href="https://www.openstreetmap.org/">Karte hergestellt aus OpenStreetMap-Daten</a> | Lizenz: <a href="https://opendatacommons.org/licenses/odbl/">Open Database License (ODbL)</a>',
         detectRetina: true,
         defaultLatitude: 51.0851708,
         defaultLongitude: 5.9692092,
@@ -111,6 +111,14 @@ define(['leaflet', 'CityMarker', 'LocationMarker'], function () {
         if (this.map.tap) {
             this.map.tap.enable();
         }
+    };
+
+    Map.prototype.setMaxZoom = function (maxZoom) {
+        this.map.setMaxZoom(maxZoom);
+    };
+
+    Map.prototype.setMinZoom = function (minZoom) {
+        this.map.setMinZoom(minZoom);
     };
 
     return Map;

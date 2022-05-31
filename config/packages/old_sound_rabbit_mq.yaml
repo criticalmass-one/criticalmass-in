@@ -3,16 +3,32 @@ old_sound_rabbit_mq:
         default:
             url: '%env(RABBITMQ_URL)%'
             lazy: true
+            connection_timeout: 30
+            read_write_timeout: 30
+            keepalive: false
+            heartbeat: 15
+            use_socket: true
     producers:
         criticalmass_view:
             connection:       default
             exchange_options: { name: 'criticalmass_view', type: direct }
+        criticalmass_trackimportcandidate:
+            connection:       default
+            exchange_options: { name: 'criticalmass_trackimportcandidate', type: direct }
+        criticalmass_socialnetworkfeeditem:
+            connection:       default
+            exchange_options: { name: 'criticalmass_socialnetworkfeeditem', type: direct }
     consumers:
         criticalmass_view:
             connection:       default
             exchange_options: { name: 'criticalmass_view', type: direct }
             queue_options:    { name: 'criticalmass_view'}
             callback:         App\Consumer\ViewConsumer
+        criticalmass_trackimportcandidate:
+            connection:       default
+            exchange_options: { name: 'criticalmass_trackimportcandidate', type: direct }
+            queue_options:    { name: 'criticalmass_trackimportcandidate'}
+            callback:         App\Consumer\TrackImportCandidateConsumer
     batch_consumers:
         criticalmass_view:
             connection:       default
