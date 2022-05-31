@@ -4,12 +4,12 @@ namespace App\Request\ParamConverter;
 
 use App\Entity\Track;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 
 class TrackParamConverter extends AbstractCriticalmassParamConverter
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry);
     }
@@ -17,6 +17,7 @@ class TrackParamConverter extends AbstractCriticalmassParamConverter
     public function apply(Request $request, ParamConverter $configuration): void
     {
         $trackId = $request->get('trackId');
+        $track = null;
 
         if ($trackId) {
             $track = $this->registry->getRepository(Track::class)->find($trackId);

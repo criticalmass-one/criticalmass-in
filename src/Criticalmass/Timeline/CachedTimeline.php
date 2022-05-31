@@ -2,21 +2,25 @@
 
 namespace App\Criticalmass\Timeline;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Flagception\Manager\FeatureManagerInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 use Symfony\Component\Templating\EngineInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 
 class CachedTimeline extends Timeline
 {
-    /** @var int $ttl */
-    protected $ttl;
+    protected int $ttl;
 
-    public function __construct(RegistryInterface $doctrine, EngineInterface $templating, FeatureManagerInterface $featureManager, int $cachedTimelineTtl = 300)
+    protected string $redisUrl;
+
+    public function __construct(ManagerRegistry $doctrine, EngineInterface $templating, FeatureManagerInterface $featureManager, string $redisUrl, int $cachedTimelineTtl = 300)
     {
         $this->doctrine = $doctrine;
         $this->templating = $templating;
         $this->ttl = $cachedTimelineTtl;
+        $this->redisUrl = $redisUrl;
 
         parent::__construct($doctrine, $templating, $featureManager);
     }
@@ -33,27 +37,21 @@ class CachedTimeline extends Timeline
             $cacheKey .= '-end-' . $this->endDateTime->format('Y-m-d');
         }
 
-        $redisConnection = RedisAdapter::createConnection('redis://localhost');
+        $redisConnection = RedisAdapter::createConnection($this->redisUrl);
 
         $cache = new RedisAdapter(
             $redisConnection,
-            $namespace = '',
-            $defaultLifetime = 0
+            'criticalmass',
+            $this->ttl
         );
 
-        $timeline = $cache->getItem($cacheKey);
+        $this->contentList = $cache->get($cacheKey, function (ItemInterface $item) {
+            $item->expiresAfter($this->ttl);
 
-        if (!$timeline->isHit()) {
             $this->process();
 
-            $timeline
-                ->set($this->content)
-                ->expiresAfter($this->ttl);
-
-            $cache->save($timeline);
-        } else {
-            $this->content = $timeline->get();
-        }
+            return $this->getTimelineContentList();
+        });
 
         return $this;
     }

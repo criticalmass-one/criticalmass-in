@@ -19,79 +19,79 @@ class Post implements Crawlable
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Post", inversedBy="children")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
-    protected $parent;
+    protected ?Post $parent = null;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Post", mappedBy="parent")
      */
-    protected $children;
+    protected Collection $children;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    protected $user;
+    protected ?User $user = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Ride", inversedBy="posts")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
-    protected $ride;
+    protected ?Ride $ride = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\City", inversedBy="posts")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
-    protected $city;
+    protected ?City $city = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Thread")
      * @ORM\JoinColumn(name="thread_id", referencedColumnName="id")
      */
-    protected $thread;
+    protected ?Thread $thread = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Photo")
      * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
      */
-    protected $photo;
+    protected ?Photo $photo = null;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      */
-    protected $latitude;
+    protected ?float $latitude = null;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      */
-    protected $longitude;
+    protected ?float $longitude = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $dateTime;
+    protected ?\DateTime $dateTime = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * @Assert\NotBlank()
      */
-    protected $message;
+    protected ?string $message = null;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    protected $enabled = true;
+    protected bool $enabled = true;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $crawled = false;
+    protected bool $crawled = false;
 
     public function __construct()
     {

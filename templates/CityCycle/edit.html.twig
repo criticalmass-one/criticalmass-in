@@ -14,6 +14,13 @@
             {{ city.city }}
         </a>
     </li>
+
+    <li>
+        <a href="{{ objectPath(city, 'caldera_criticalmass_citycycle_list') }}">
+            Turnusliste
+        </a>
+    </li>
+
     <li class="active">
         {{ title }}
     </li>
@@ -28,7 +35,9 @@
 
         <div class="row">
             <div class="col-md-12">
-                <h1>{{ title }}</h1>
+                <h2>
+                    {{ title }}
+                </h2>
 
                 <p class="lead">criticalmass.in kann jeden Monat automatisch eine neue Tour für diese Stadt erstellen,
                     sofern die Touren jeweils an einem einheitlichen Tag zu einer bestimmten Uhrzeit an einem vorher
@@ -57,9 +66,16 @@
                         <div class="form-group{% if form_errors(form.dayOfWeek) %} has-error has-feedback{% endif %}">
                             <label class="control-label" for="">Wochentag der Touren:</label>
                             {{ form_widget(form.dayOfWeek, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">
-                                Stelle hier den Wochentag ein, an dem die Touren stattfinden.
-                            </p>
+                            {% if not cityCycle.hasSpecialCalculator() %}
+                                <p class="help-block">
+                                    Stelle hier den Wochentag ein, an dem die Touren stattfinden.
+                                </p>
+                            {% else %}
+                                <p class="text-info">
+                                    Du kannst diesen Wert nicht ändern, weil dieser Turnus von einem speziellen
+                                    Generator erzeugt wird.
+                                </p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -69,9 +85,16 @@
                         <div class="form-group{% if form_errors(form.weekOfMonth) %} has-error has-feedback{% endif %}">
                             <label class="control-label" for="">Woche der Touren:</label>
                             {{ form_widget(form.weekOfMonth, { 'attr' : { 'class': 'form-control'} }) }}
-                            <p class="help-block">
-                                Wähle hier die Woche, in der die Touren stattfinden.
-                            </p>
+                            {% if not cityCycle.hasSpecialCalculator() %}
+                                <p class="help-block">
+                                    Wähle hier die Woche, in der die Touren stattfinden.
+                                </p>
+                            {% else %}
+                                <p class="text-info">
+                                    Du kannst diesen Wert nicht ändern, weil dieser Turnus von einem speziellen
+                                    Generator erzeugt wird.
+                                </p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

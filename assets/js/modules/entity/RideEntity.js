@@ -17,7 +17,7 @@ define(['CriticalService', 'dateformat', 'leaflet', 'MarkerEntity', 'leaflet.ext
             icon: 'fa-bicycle',
             markerColor: 'red',
             shape: 'round',
-            prefix: 'fa'
+            prefix: 'far'
         });
     };
 
@@ -26,15 +26,11 @@ define(['CriticalService', 'dateformat', 'leaflet', 'MarkerEntity', 'leaflet.ext
 
         var content = '<dl class="dl-horizontal">';
 
-        content += '<dt>Datum:</dt><dd>' + dateFormat(this._dateTime, 'dd.mm.yyyy') + '</dd>';
+        content += '<dt>Datum:</dt><dd>' + dateFormat(this._date_time, 'dd.mm.yyyy') + '</dd>';
 
-        if (this._hasTime) {
-            content += '<dt>Uhrzeit:</dt><dd>' + dateFormat(this._dateTime, 'HH:MM') + ' Uhr</dd>';
-        } else {
-            content += '<dt>Uhrzeit:</dt><dd>die Uhrzeit ist noch nicht bekannt</dd>';
-        }
+        content += '<dt>Uhrzeit:</dt><dd>' + dateFormat(this._date_time, 'HH:MM') + ' Uhr</dd>';
 
-        if (this._hasLocation && this._location) {
+        if (this._location && this._latitude && this._longitude) {
             content += '<dt>Treffpunkt:</dt><dd>' + this._location + '</dd>';
         } else {
             content += '<dt>Treffpunkt:</dt><dd>der Treffpunkt ist noch nicht bekannt</dd>';
@@ -95,6 +91,10 @@ define(['CriticalService', 'dateformat', 'leaflet', 'MarkerEntity', 'leaflet.ext
 
     RideEntity.prototype.getDate = function () {
         return this._date;
+    };
+
+    RideEntity.prototype.getLocation = function () {
+        return this._location;
     };
 
     return RideEntity;

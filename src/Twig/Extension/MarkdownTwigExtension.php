@@ -1,28 +1,34 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Twig\Extension;
 
-use App\Criticalmass\Markdown\CriticalMarkdown;
+use App\Criticalmass\TextParser\TextParserInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 
-class MarkdownTwigExtension extends \Twig_Extension
+class MarkdownTwigExtension extends AbstractExtension
 {
-    protected $markdownParser;
+    protected TextParserInterface $textParser;
 
-    public function __construct(CriticalMarkdown $criticalMarkdown)
+    public function __construct(TextParserInterface $textParser)
     {
-        $this->markdownParser = $criticalMarkdown;
+        $this->textParser = $textParser;
     }
 
     public function getFilters(): array
     {
         return [
-            new \Twig_SimpleFilter('markdown', [$this, 'markdown'], ['is_safe' => ['html']]),
+            new TwigFilter('markdown', [$this, 'markdown'], ['is_safe' => ['html']]),
         ];
     }
 
-    public function markdown(string $text): string
+    public function markdown(string $text = null): string
     {
-        return $this->markdownParser->parse($text);
+        if (!$text) {
+            return '';
+        }
+
+        return $this->textParser->parse($text);
     }
 
     public function getName(): string
@@ -30,4 +36,3 @@ class MarkdownTwigExtension extends \Twig_Extension
         return 'markdown_extension';
     }
 }
-

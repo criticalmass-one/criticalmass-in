@@ -2,10 +2,10 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\Router\Annotation as Routing;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
-use App\Criticalmass\Router\Annotation as Routing;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CitySlugRepository")
@@ -21,7 +21,7 @@ class CitySlug implements RouteableInterface
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
@@ -29,17 +29,17 @@ class CitySlug implements RouteableInterface
      * @JMS\Groups({"ride-list"})
      * @Routing\RouteParameter(name="citySlug")
      */
-    protected $slug;
+    protected ?string $slug = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\City", inversedBy="slugs")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\City", inversedBy="slugs", fetch="EAGER")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
-    protected $city;
+    protected ?City $city = null;
 
-    public function __construct()
+    public function __construct(string $slug = null)
     {
-
+        $this->slug = $slug;
     }
 
     public function getId(): ?int

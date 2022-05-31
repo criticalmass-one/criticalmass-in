@@ -12,52 +12,6 @@ use Doctrine\ORM\QueryBuilder;
 
 class PhotoRepository extends EntityRepository
 {
-    public function getPreviousPhoto(Photo $photo): ?Photo
-    {
-        $builder = $this->createQueryBuilder('p');
-
-        $builder
-            ->select('p')
-            ->where($builder->expr()->eq('p.ride', ':ride'))
-            ->setParameter('ride', $photo->getRide())
-            ->andWhere($builder->expr()->lt('p.exifCreationDate', ':dateTime'))
-            ->setParameter('dateTime', $photo->getExifCreationDate())
-            ->andWhere($builder->expr()->eq('p.enabled', ':enabled'))
-            ->setParameter('enabled', true)
-            ->andWhere($builder->expr()->eq('p.deleted', ':deleted'))
-            ->setParameter('deleted', false)
-            ->addOrderBy('p.exifCreationDate', 'DESC')
-            ->setMaxResults(1);
-
-        $query = $builder->getQuery();
-
-        return $query->getOneOrNullResult();
-    }
-
-    public function getNextPhoto(Photo $photo): ?Photo
-    {
-        $builder = $this->createQueryBuilder('p');
-
-        $builder
-            ->select('p')
-            ->where($builder->expr()->eq('p.ride', ':ride'))
-            ->setParameter('ride', $photo->getRide())
-            ->andWhere($builder->expr()->gt('p.exifCreationDate', ':dateTime'))
-            ->setParameter('dateTime', $photo->getExifCreationDate())
-            ->andWhere($builder->expr()->eq('p.enabled', ':enabled'))
-            ->setParameter('enabled', true)
-            ->andWhere($builder->expr()->eq('p.deleted', ':deleted'))
-            ->setParameter('deleted', false)
-            ->addOrderBy('p.exifCreationDate', 'ASC')
-            ->setMaxResults(1);
-
-        $query = $builder->getQuery();
-
-        $result = $query->getOneOrNullResult();
-
-        return $result;
-    }
-
     public function findRidesWithPhotoCounterByUser(User $user): array
     {
         $builder = $this->createQueryBuilder('photo');
@@ -334,7 +288,8 @@ class PhotoRepository extends EntityRepository
 
         if ($city) {
             $builder
-                ->andWhere($builder->expr()->eq('p.city', ':city'))
+                ->join('p.ride', 'r')
+                ->andWhere($builder->expr()->eq('r.city', ':city'))
                 ->setParameter('city', $city);
         }
 

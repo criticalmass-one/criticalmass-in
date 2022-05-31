@@ -2,17 +2,22 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\Geo\Entity\Track as GeoTrack;
 use App\Criticalmass\Geo\EntityInterface\TrackInterface;
+use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
+use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
+use App\Criticalmass\Router\Annotation as Routing;
 use App\Criticalmass\UploadableDataHandler\UploadableEntity;
 use App\Criticalmass\UploadFaker\FakeUploadable;
 use App\EntityInterface\RouteableInterface;
 use App\EntityInterface\StaticMapableInterface;
+use Caldera\GeoBasic\Track\TrackInterface as BaseTrackInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use App\Criticalmass\Router\Annotation as Routing;
-use Caldera\GeoBasic\Track\TrackInterface as BaseTrackInterface;
 
 /**
  * @ORM\Table(name="track")
@@ -20,8 +25,9 @@ use Caldera\GeoBasic\Track\TrackInterface as BaseTrackInterface;
  * @Vich\Uploadable
  * @JMS\ExclusionPolicy("all")
  * @Routing\DefaultRoute(name="caldera_criticalmass_track_view")
+ * @OE\OrderedEntity()
  */
-class Track implements RouteableInterface, StaticMapableInterface, TrackInterface, UploadableEntity, FakeUploadable
+class Track extends GeoTrack implements RouteableInterface, StaticMapableInterface, TrackInterface, UploadableEntity, FakeUploadable, OrderedEntityInterface
 {
     const TRACK_SOURCE_GPX = 'TRACK_SOURCE_GPX';
     const TRACK_SOURCE_STRAVA = 'TRACK_SOURCE_STRAVA';
@@ -36,161 +42,157 @@ class Track implements RouteableInterface, StaticMapableInterface, TrackInterfac
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      * @Routing\RouteParameter(name="trackId")
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-private"})
      * @JMS\Expose
      */
-    protected $username;
+    protected ?string $username = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Ride", inversedBy="tracks")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
-    protected $ride;
+    protected ?Ride $ride = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="tracks")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-private"})
      * @JMS\Expose
+     * @OE\Identical()
      */
-    protected $user;
+    protected ?User $user = null;
 
     /**
      * @ORM\OneToOne(targetEntity="RideEstimate", mappedBy="track", cascade={"all"}, orphanRemoval=true)
      * @ORM\JoinColumn(name="estimate_id", referencedColumnName="id")
      */
-    protected $rideEstimate;
+    protected ?RideEstimate $rideEstimate = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      */
-    protected $creationDateTime;
+    protected ?\DateTime $creationDateTime = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
+     * @OE\Order(direction="asc")
      */
-    protected $startDateTime;
+    protected ?\DateTime $startDateTime = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      */
-    protected $endDateTime;
+    protected ?\DateTime $endDateTime = null;
 
     /**
      * @ORM\Column(type="float", nullable=true)
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      */
-    protected $distance;
+    protected ?float $distance = null;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      */
-    protected $points;
+    protected ?int $points = null;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      */
-    protected $startPoint;
+    protected ?int $startPoint = null;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      */
-    protected $endPoint;
+    protected ?int $endPoint = null;
 
     /**
      * @ORM\Column(type="string", length=32, nullable=true)
      */
-    protected $md5Hash;
+    protected ?string $md5Hash = null;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    protected $enabled = true;
+    protected bool $enabled = true;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @OE\Boolean(value=false)
      */
-    protected $deleted = false;
+    protected bool $deleted = false;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * @deprecated
      */
-    protected $latLngList;
+    protected ?string $latLngList = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @JMS\Expose
      */
-    protected $geoJson;
+    protected ?string $geoJson = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      * @JMS\SerializedName("polylineString")
      */
-    protected $polyline;
+    protected ?string $polyline = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @JMS\Groups({"timelapse"})
+     * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      * @JMS\SerializedName("reducedPolylineString")
      */
-    protected $reducedPolyline;
+    protected ?string $reducedPolyline = null;
 
     /**
-     * @var File $trackFile
      * @Vich\UploadableField(mapping="track_file", fileNameProperty="trackFilename",  size="trackSize", mimeType="trackMimeType")
      */
-    protected $trackFile;
+    protected ?File $trackFile = null;
 
     /**
-     * @var string $trackFilename
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $trackFilename;
+    protected ?string $trackFilename = null;
 
     /**
-     * @var int $trackSize
      * @ORM\Column(type="integer", nullable=true)
      */
-    protected $trackSize;
+    protected ?int $trackSize = null;
 
     /**
-     * @var string $trackMimeType
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $trackMimeType;
+    protected ?string $trackMimeType = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     *
-     * @var \DateTime
      */
-    protected $updatedAt;
+    protected ?\DateTime $updatedAt = null;
 
     /**
      * @ORM\Column(
@@ -198,19 +200,31 @@ class Track implements RouteableInterface, StaticMapableInterface, TrackInterfac
      *     nullable=true,
      *     columnDefinition="ENUM('TRACK_SOURCE_GPX', 'TRACK_SOURCE_STRAVA', 'TRACK_SOURCE_RUNKEEPER', 'TRACK_SOURCE_RUNTASTIC', 'TRACK_SOURCE_DRAW', 'TRACK_SOURCE_GLYMPSE', 'TRACK_SOURCE_CRITICALMAPS', 'TRACK_SOURCE_UNKNOWN')"
      * )
+     *
+     * $source must be nullable du to legacy tracks without source attribution
      */
-    protected $source = self::TRACK_SOURCE_UNKNOWN;
+    protected ?string $source = self::TRACK_SOURCE_UNKNOWN;
 
     /**
      * @ORM\Column(type="bigint", nullable=true)
-     *
-     * @var integer
      */
-    protected $stravaActitityId;
+    protected ?int $stravaActitityId = null;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\HeatmapTrack", mappedBy="track")
+     */
+    private Collection $heatmapTracks;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private bool $reviewed = false;
 
     public function __construct()
     {
-        $this->setCreationDateTime(new \DateTime());
+        parent::__construct();
+        $this->heatmaps = new ArrayCollection();
+        $this->heatmapTracks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -254,18 +268,6 @@ class Track implements RouteableInterface, StaticMapableInterface, TrackInterfac
         return $this->user;
     }
 
-    public function setCreationDateTime(\DateTime $creationDateTime): Track
-    {
-        $this->creationDateTime = $creationDateTime;
-
-        return $this;
-    }
-
-    public function getCreationDateTime(): \DateTime
-    {
-        return $this->creationDateTime;
-    }
-
     public function setMd5Hash(string $md5Hash): Track
     {
         $this->md5Hash = $md5Hash;
@@ -276,62 +278,6 @@ class Track implements RouteableInterface, StaticMapableInterface, TrackInterfac
     public function getMd5Hash(): ?string
     {
         return $this->md5Hash;
-    }
-
-    public function setStartDateTime(\DateTime $startDateTime): Track
-    {
-        $this->startDateTime = $startDateTime;
-
-        return $this;
-    }
-
-    public function getStartDateTime(): ?\DateTime
-    {
-        if ($this->startDateTime) {
-            return $this->startDateTime->setTimezone(new \DateTimeZone('UTC'));
-        }
-
-        return null;
-    }
-
-    public function setEndDateTime(\DateTime $endDateTime): Track
-    {
-        $this->endDateTime = $endDateTime;
-
-        return $this;
-    }
-
-    public function getEndDateTime(): ?\DateTime
-    {
-        if ($this->endDateTime) {
-            return $this->endDateTime->setTimezone(new \DateTimeZone('UTC'));
-        }
-
-        return null;
-    }
-
-    public function setDistance(float $distance): Track
-    {
-        $this->distance = $distance;
-
-        return $this;
-    }
-
-    public function getDistance(): float
-    {
-        return $this->distance;
-    }
-
-    public function setPoints(int $points): Track
-    {
-        $this->points = $points;
-
-        return $this;
-    }
-
-    public function getPoints(): int
-    {
-        return $this->points;
     }
 
     public function getEnabled(): bool
@@ -477,40 +423,12 @@ class Track implements RouteableInterface, StaticMapableInterface, TrackInterfac
         return $result;
     }
 
-    public function setTrackFile(File $track = null): Track
-    {
-        $this->trackFile = $track;
-
-        if ($track) {
-            $this->updatedAt = new \DateTime('now');
-        }
-
-        return $this;
-    }
-
-    public function getTrackFile(): ?File
-    {
-        return $this->trackFile;
-    }
-
-    public function setTrackFilename(string $trackFilename = null): Track
-    {
-        $this->trackFilename = $trackFilename;
-
-        return $this;
-    }
-
-    public function getTrackFilename(): ?string
-    {
-        return $this->trackFilename;
-    }
-
     public function getTrackSize(): ?int
     {
         return $this->trackSize;
     }
 
-    public function setTrackSize(int $trackSize): Track
+    public function setTrackSize(int $trackSize = null): Track
     {
         $this->trackSize = $trackSize;
 
@@ -522,55 +440,11 @@ class Track implements RouteableInterface, StaticMapableInterface, TrackInterfac
         return $this->trackMimeType;
     }
 
-    public function setTrackMimeType(string $trackMimeType): Track
+    public function setTrackMimeType(string $trackMimeType = null): Track
     {
         $this->trackMimeType = $trackMimeType;
 
         return $this;
-    }
-
-    public function setStartPoint(int $startPoint): Track
-    {
-        if ($startPoint >= 1) {
-            $this->startPoint = $startPoint;
-        } else {
-            $this->startPoint = 1;
-        }
-
-        return $this;
-    }
-
-    public function getStartPoint(): int
-    {
-        return $this->startPoint;
-    }
-
-    public function setEndPoint(int $endPoint): Track
-    {
-        if ($endPoint <= $this->points) {
-            $this->endPoint = $endPoint;
-        } else {
-            $this->endPoint = $this->points - 1;
-        }
-
-        return $this;
-    }
-
-    public function getEndPoint(): int
-    {
-        return $this->endPoint;
-    }
-
-    public function setUpdatedAt(\DateTime $updatedAt): Track
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTime
-    {
-        return $this->updatedAt;
     }
 
     /** @deprecated  */
@@ -655,7 +529,7 @@ class Track implements RouteableInterface, StaticMapableInterface, TrackInterfac
 
     public function getStravaActivityId(): ?int
     {
-        return $this->stravaActitityId;
+        return (int)$this->stravaActitityId;
     }
 
     public function setGeoJson(string $geoJson): Track
@@ -668,5 +542,53 @@ class Track implements RouteableInterface, StaticMapableInterface, TrackInterfac
     public function getWaypointList(): string
     {
         return $this->geoJson;
+    }
+
+    /**
+     * @return Collection|HeatmapTrack[]
+     */
+    public function getHeatmapTracks(): Collection
+    {
+        return $this->heatmapTracks;
+    }
+
+    public function addHeatmapTrack(HeatmapTrack $heatmapTrack): self
+    {
+        if (!$this->heatmapTracks->contains($heatmapTrack)) {
+            $this->heatmapTracks[] = $heatmapTrack;
+            $heatmapTrack->setTrack($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHeatmapTrack(HeatmapTrack $heatmapTrack): self
+    {
+        if ($this->heatmapTracks->contains($heatmapTrack)) {
+            $this->heatmapTracks->removeElement($heatmapTrack);
+            // set the owning side to null (unless already changed)
+            if ($heatmapTrack->getTrack() === $this) {
+                $heatmapTrack->setTrack(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function isReviewed(): bool
+    {
+        return $this->reviewed;
+    }
+
+    public function setReviewed(bool $reviewed): self
+    {
+        $this->reviewed = $reviewed;
+
+        return $this;
+    }
+
+    public function elasticable(): bool
+    {
+        return $this->enabled && !$this->deleted && $this->reviewed;
     }
 }

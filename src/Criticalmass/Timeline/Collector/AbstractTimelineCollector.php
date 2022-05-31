@@ -3,26 +3,21 @@
 namespace App\Criticalmass\Timeline\Collector;
 
 use App\Criticalmass\Timeline\Item\ItemInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 abstract class AbstractTimelineCollector implements TimelineCollectorInterface
 {
-    /** @var string $entityClass */
-    protected $entityClass;
+    protected string $entityClass;
 
-    /** @var RegistryInterface $doctrine */
-    protected $doctrine;
+    protected ManagerRegistry $doctrine;
 
-    /** @var array $items */
-    protected $items = [];
+    protected array $items = [];
 
-    /** @var \DateTime $startDateTime */
-    protected $startDateTime = null;
+    protected ?\DateTime $startDateTime = null;
 
-    /** @var \DateTime $endDateTime */
-    protected $endDateTime = null;
+    protected ?\DateTime $endDateTime = null;
 
-    public function __construct(RegistryInterface $doctrine)
+    public function __construct(ManagerRegistry $doctrine)
     {
         $this->doctrine = $doctrine;
     }

@@ -5,7 +5,7 @@ namespace App\Command;
 use App\Criticalmass\Website\Crawler\CrawlerInterface;
 use App\Criticalmass\Website\Parser\ParserInterface;
 use App\Entity\Post;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Table;
@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class WebsiteCrawlerCommand extends Command
 {
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var CrawlerInterface $crawler */
@@ -24,7 +24,7 @@ class WebsiteCrawlerCommand extends Command
     /** @var ParserInterface $parser */
     protected $parser;
 
-    public function __construct(RegistryInterface $registry, CrawlerInterface $crawler, ParserInterface $parser)
+    public function __construct(ManagerRegistry $registry, CrawlerInterface $crawler, ParserInterface $parser)
     {
         $this->registry = $registry;
         $this->crawler = $crawler;

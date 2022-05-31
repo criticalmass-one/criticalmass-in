@@ -5,6 +5,7 @@ namespace App\Controller\Ride;
 use App\Entity\Ride;
 use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Event\View\ViewEvent;
+use App\Form\Type\RideDisableType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Controller\AbstractController;
 use App\Entity\Weather;
@@ -35,8 +36,14 @@ class RideController extends AbstractController
      */
     public function showAction(Request $request, SeoPageInterface $seoPage, EventDispatcherInterface $eventDispatcher, Ride $ride): Response
     {
-        $nextRide = $this->getRideRepository()->getNextRide($ride);
-        $previousRide = $this->getRideRepository()->getPreviousRide($ride);
+        $blocked = $this->getBlockedCityRepository()->findCurrentCityBlock($ride->getCity());
+
+        if ($blocked) {
+            return $this->render('Ride/blocked.html.twig', [
+                'ride' => $ride,
+                'blocked' => $blocked
+            ]);
+        }
 
         $eventDispatcher->dispatch(ViewEvent::NAME, new ViewEvent($ride));
 
@@ -82,8 +89,6 @@ class RideController extends AbstractController
             'tracks' => $this->getTrackRepository()->findTracksByRide($ride),
             'photos' => $this->getPhotoRepository()->findPhotosByRide($ride),
             'subrides' => $this->getSubrideRepository()->getSubridesForRide($ride),
-            'nextRide' => $nextRide,
-            'previousRide' => $previousRide,
             'dateTime' => new \DateTime(),
             'weatherForecast' => $weatherForecast,
             'participation' => $participation,

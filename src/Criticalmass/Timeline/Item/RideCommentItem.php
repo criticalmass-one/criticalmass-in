@@ -7,17 +7,15 @@ use App\Entity\Ride;
 
 class RideCommentItem extends AbstractItem
 {
-    /* @var Ride $ride */
-    protected $ride;
+    protected ?Ride $ride = null;
 
-    /** @var string $rideTitle */
-    protected $rideTitle;
+    protected ?string $rideTitle = null;
 
-    /** @var string $text */
-    protected $text;
+    protected ?string $text = null;
 
-    /** @var Post $post */
-    protected $post;
+    protected ?Post $post = null;
+
+    protected ?bool $rideEnabled = null;
 
     public function getRide(): Ride
     {
@@ -65,5 +63,17 @@ class RideCommentItem extends AbstractItem
         $this->text = $text;
 
         return $this;
+    }
+
+    public function setRideEnabled(bool $rideEnabled): RideCommentItem
+    {
+        $this->rideEnabled = $rideEnabled;
+
+        return $this;
+    }
+
+    public function isRideEnabled(): bool
+    {
+        return $this->rideEnabled;
     }
 }

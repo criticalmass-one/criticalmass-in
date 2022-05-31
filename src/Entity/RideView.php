@@ -2,38 +2,37 @@
 
 namespace App\Entity;
 
-use App\EntityInterface\ViewInterface;
+use App\Criticalmass\ViewStorage\ViewInterface\ViewEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="ride_view")
  * @ORM\Entity
  */
-class RideView implements ViewInterface
+class RideView implements ViewEntity
 {
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    protected $user;
+    protected ?User $user = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Ride")
-     * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity=Ride::class, inversedBy="viewRelation")
      */
-    protected $ride;
+    protected ?Ride $ride = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $dateTime;
+    protected \DateTime $dateTime;
 
     public function __construct()
     {
@@ -45,12 +44,19 @@ class RideView implements ViewInterface
         return $this->id;
     }
 
+    public function setId(int $id): ViewEntity
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
     public function getUser(): User
     {
         return $this->user;
     }
 
-    public function setUser(User $user = null): ViewInterface
+    public function setUser(User $user = null): ViewEntity
     {
         $this->user = $user;
 
@@ -62,7 +68,7 @@ class RideView implements ViewInterface
         return $this->dateTime;
     }
 
-    public function setDateTime(\DateTime $dateTime): ViewInterface
+    public function setDateTime(\DateTime $dateTime): ViewEntity
     {
         $this->dateTime = $dateTime;
 
@@ -74,7 +80,7 @@ class RideView implements ViewInterface
         return $this->ride;
     }
 
-    public function setRide(Ride $ride): RideView
+    public function setRide(?Ride $ride): RideView
     {
         $this->ride = $ride;
 

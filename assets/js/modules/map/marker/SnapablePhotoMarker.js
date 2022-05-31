@@ -21,7 +21,7 @@ define(['PhotoMarker', 'TrackEntity', 'leaflet-geometry', 'leaflet-snap', 'leafl
             markerColor: 'yellow',
             iconColor: 'white',
             shape: 'square',
-            prefix: 'fa'
+            prefix: 'far'
         });
     };
 

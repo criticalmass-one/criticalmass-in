@@ -2,10 +2,10 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AutoParamConverterAble;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
-use App\EntityInterface\ViewableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Criticalmass\Router\Annotation as Routing;
@@ -15,67 +15,67 @@ use App\Criticalmass\Router\Annotation as Routing;
  * @ORM\Entity(repositoryClass="App\Repository\ThreadRepository")
 
  */
-class Thread implements ViewableInterface, RouteableInterface, AutoParamConverterAble, PostableInterface
+class Thread implements ViewableEntity, RouteableInterface, AutoParamConverterAble, PostableInterface
 {
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Board")
      * @ORM\JoinColumn(name="board_id", referencedColumnName="id")
      * @Routing\RouteParameter(name="boardSlug")
      */
-    protected $board;
+    protected ?Board $board = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\City")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      * @Routing\RouteParameter(name="citySlug")
      */
-    protected $city;
+    protected ?City $city = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * @Assert\NotBlank()
      */
-    protected $title;
+    protected ?string $title = null;
 
     /**
      * @ORM\Column(type="string", length=255,  nullable=true)
      * @Routing\RouteParameter(name="threadSlug")
      */
-    protected $slug;
+    protected ?string $slug = null;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    protected $views = 0;
+    protected int $views = 0;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    protected $postNumber = 0;
+    protected int $postNumber = 0;
 
     /**
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\Post")
      * @ORM\JoinColumn(name="firstpost_id", referencedColumnName="id", unique=true)
      */
-    protected $firstPost;
+    protected ?Post $firstPost = null;
 
     /**
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\Post")
      * @ORM\JoinColumn(name="lastpost_id", referencedColumnName="id", unique=true)
      */
-    protected $lastPost;
+    protected ?Post $lastPost = null;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    protected $enabled = true;
+    protected bool $enabled = true;
 
     public function __construct()
     {
@@ -158,7 +158,7 @@ class Thread implements ViewableInterface, RouteableInterface, AutoParamConverte
         return $this->lastPost;
     }
 
-    public function setViews(int $views): ViewableInterface
+    public function setViews(int $views): ViewableEntity
     {
         $this->views = $views;
 
@@ -170,7 +170,7 @@ class Thread implements ViewableInterface, RouteableInterface, AutoParamConverte
         return $this->views;
     }
 
-    public function incViews(): ViewableInterface
+    public function incViews(): ViewableEntity
     {
         ++$this->views;
 

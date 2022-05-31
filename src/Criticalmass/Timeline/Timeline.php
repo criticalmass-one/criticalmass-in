@@ -5,39 +5,29 @@ namespace App\Criticalmass\Timeline;
 use App\Criticalmass\Timeline\Collector\AbstractTimelineCollector;
 use App\Criticalmass\Timeline\Collector\TimelineCollectorInterface;
 use App\Criticalmass\Timeline\Item\ItemInterface;
-use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\Persistence\ManagerRegistry;
 use Flagception\Manager\FeatureManagerInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
-use Symfony\Bridge\Twig\TwigEngine;
 use Symfony\Component\Templating\EngineInterface;
 
 class Timeline implements TimelineInterface
 {
-    /** @var Registry $doctrine */
-    protected $doctrine;
+    protected ManagerRegistry $doctrine;
 
-    /** @var TwigEngine $templating */
-    protected $templating;
+    protected EngineInterface $templating;
 
-    /** @var array $collectorList */
-    protected $collectorList = [];
+    protected array $collectorList = [];
 
-    /** @var array $items */
-    protected $items = [];
+    protected array $items = [];
 
-    /** @var string $content */
-    protected $content = '';
+    protected array $contentList = [];
 
-    /** @var \DateTime $startDateTime */
-    protected $startDateTime = null;
+    protected ?\DateTime $startDateTime = null;
 
-    /** @var \DateTime $endDateTime */
-    protected $endDateTime = null;
+    protected ?\DateTime $endDateTime = null;
 
-    /** @var FeatureManagerInterface $featureManager */
-    protected $featureManager;
+    protected FeatureManagerInterface $featureManager;
 
-    public function __construct(RegistryInterface $doctrine, EngineInterface $templating, FeatureManagerInterface $featureManager)
+    public function __construct(ManagerRegistry $doctrine, EngineInterface $templating, FeatureManagerInterface $featureManager)
     {
         $this->doctrine = $doctrine;
         $this->templating = $templating;
@@ -70,9 +60,7 @@ class Timeline implements TimelineInterface
 
     protected function process(): Timeline
     {
-        /**
-         * @var AbstractTimelineCollector $collector
-         */
+        /** @var AbstractTimelineCollector $collector */
         foreach ($this->collectorList as $collector) {
             $collector->setDateRange($this->startDateTime, $this->endDateTime);
 
@@ -96,13 +84,20 @@ class Timeline implements TimelineInterface
         $threeMonthDateInterval = new \DateInterval('P3M');
         $lastDateTime->sub($threeMonthDateInterval);
 
-        $maxItems = 50;
-        $counter = 0;
+        $counter = [];
 
+        /**
+         * @var string $key
+         * @var ItemInterface $item
+         */
         foreach ($this->items as $key => $item) {
-            ++$counter;
+            if (!array_key_exists($item->getTabName(), $counter)) {
+                $counter[$item->getTabName()] = 1;
+            } else {
+                ++$counter[$item->getTabName()];
+            }
 
-            if ($item->getDateTime() < $lastDateTime || $counter > $maxItems) {
+            if ($item->getDateTime() < $lastDateTime || $counter[$item->getTabName()] > self::MAX_ITEMS) {
                 unset($this->items[$key]);
             }
         }
@@ -112,15 +107,17 @@ class Timeline implements TimelineInterface
 
     protected function createContent(): Timeline
     {
+        /** @var ItemInterface $item */
         foreach ($this->items as $item) {
             $templateName = $this->templateNameForItem($item);
 
-            $this->content .= $this->templating->render(
-                'Timeline/Items/' . $templateName . '.html.twig',
-                [
-                    'item' => $item
-                ]
-            );
+            if (!array_key_exists($item->getTabName(), $this->contentList)) {
+                $this->contentList[$item->getTabName()] = [];
+            }
+
+            $this->contentList[$item->getTabName()][]= $this->templating->render('Timeline/Items/' . $templateName . '.html.twig', [
+                'item' => $item
+            ]);
         }
 
         return $this;
@@ -139,9 +136,9 @@ class Timeline implements TimelineInterface
         return $templateName;
     }
 
-    public function getTimelineContent(): string
+    public function getTimelineContentList(): array
     {
-        return $this->content;
+        return $this->contentList;
     }
 
     protected function checkFeatureStatusForCollector(TimelineCollectorInterface $timelineCollector): bool

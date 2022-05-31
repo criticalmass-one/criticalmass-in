@@ -6,14 +6,11 @@ use App\Entity\Thread;
 
 class ThreadItem extends AbstractItem
 {
-    /** @var Thread $thread */
-    public $thread;
+    public ?Thread $thread = null;
 
-    /** @var string $title */
-    public $title;
+    public ?string $title = null;
 
-    /** @var string $text */
-    public $text;
+    public ?string $text = null;
 
     public function getThread(): Thread
     {

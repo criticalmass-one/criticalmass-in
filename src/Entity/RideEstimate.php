@@ -16,62 +16,73 @@ class RideEstimate
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", fetch="LAZY")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    protected $user;
+    protected ?User $user = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Ride", inversedBy="estimates", fetch="LAZY")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
-    protected $ride;
+    protected ?Ride $ride = null;
 
     /**
      * 
      * 
      */
-    protected $track;
+    protected ?Track $track = null;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      */
-    protected $latitude;
+    protected ?float $latitude = null;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      */
-    protected $longitude;
+    protected ?float $longitude = null;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
      * @Assert\Regex("/^([0-9]{1,6})$/")
      */
-    protected $estimatedParticipants;
+    protected ?int $estimatedParticipants = null;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      * @Assert\Regex("/^([0-9]{1,2})([\.,]*)([0-9]{0,5})$/")
      */
-    protected $estimatedDistance;
+    protected ?float $estimatedDistance = null;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      * @Assert\Regex("/^([0-9]{1,2})([\.,]*)([0-9]{0,4})$/")
      */
-    protected $estimatedDuration;
+    protected ?float $estimatedDuration = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $dateTime;
+    protected \DateTime $dateTime;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected \DateTime $createdAt;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected ?string $source = null;
 
     public function __construct()
     {
         $this->dateTime = new \DateTime();
+        $this->createdAt = new \DateTime();
     }
 
     public function getId(): ?int
@@ -185,5 +196,29 @@ class RideEstimate
     public function getLongitude(): ?float
     {
         return $this->longitude;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTime $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getSource(): ?string
+    {
+        return $this->source;
+    }
+
+    public function setSource(?string $source): self
+    {
+        $this->source = $source;
+
+        return $this;
     }
 }

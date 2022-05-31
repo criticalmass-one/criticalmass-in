@@ -5,14 +5,14 @@ namespace App\Controller\Track;
 use App\Controller\AbstractController;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Criticalmass\Strava\Importer\TrackImporterInterface;
+use App\Criticalmass\Strava\Token\StravaTokenStorage;
 use App\Criticalmass\Util\DateTimeUtil;
+use App\Entity\Ride;
 use App\Event\Track\TrackUploadedEvent;
+use Iamstuartwilson\StravaApi;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use App\Entity\Ride;
-use Strava\API\Client;
 use Strava\API\OAuth;
-use Strava\API\Service\REST;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,18 +27,19 @@ class StravaController extends AbstractController
      */
     public function authAction(Request $request, Ride $ride, ObjectRouterInterface $objectRouter): Response
     {
-        $oauth = $this->initOauthForRide($request, $ride, $objectRouter);
+        $redirect = $request->getUriForPath($objectRouter->generate($ride, 'caldera_criticalmass_strava_token'));
 
-        $authorizationOptions = [
-            'state' => '',
-            'approval_prompt' => 'force',
-            'scope' => 'public',
-        ];
+        $api = $this->createApi();
 
-        $authorizationUrl = $oauth->getAuthorizationUrl($authorizationOptions);
+        $authenticationUrl = $api->authenticationUrl(
+            $redirect,
+            'auto',
+            'activity:read_all',
+            null
+        );
 
         return $this->render('Strava/auth.html.twig', [
-            'authorizationUrl' => $authorizationUrl,
+            'authorizationUrl' => $authenticationUrl,
             'ride' => $ride,
         ]);
     }
@@ -47,24 +48,17 @@ class StravaController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function tokenAction(Request $request, Ride $ride, ObjectRouterInterface $objectRouter): Response
+    public function tokenAction(Request $request, Ride $ride, ObjectRouterInterface $objectRouter, SessionInterface $session): Response
     {
-        $error = $request->get('error');
+        $api = $this->createApi();
 
-        if ($error) {
-            return $this->redirect($objectRouter->generate($ride, 'caldera_criticalmass_strava_auth'));
-        }
-
-        $oauth = $this->initOauthForRide($request, $ride, $objectRouter);
+        $code = $request->query->get('code');
+        $result = $api->tokenExchange($code);
 
         try {
-            $token = $oauth->getAccessToken('authorization_code', [
-                'code' => $request->get('code')
-            ]);
+            $token = StravaTokenStorage::createFromStravaResponse($result);
 
-            $session = $this->getSession();
             $session->set('strava_token', $token);
-
             return $this->redirect($objectRouter->generate($ride, 'caldera_criticalmass_strava_list'));
         } catch (\Exception $e) {
             return $this->redirect($objectRouter->generate($ride, 'caldera_criticalmass_strava_auth'));
@@ -80,13 +74,18 @@ class StravaController extends AbstractController
         $afterDateTime = DateTimeUtil::getDayStartDateTime($ride->getDateTime());
         $beforeDateTime = DateTimeUtil::getDayEndDateTime($ride->getDateTime());
 
-        $token = $session->get('strava_token');
+        $api = $this->createApi();
 
-        $adapter = new \GuzzleHttp\Client(['base_uri' => 'https://www.strava.com/api/v3/']);
-        $service = new REST($token, $adapter);
-        $client = new Client($service);
+        StravaTokenStorage::setAccessToken($api, $session->get('strava_token'));
 
-        $activities = $client->getAthleteActivities($beforeDateTime->getTimestamp(), $afterDateTime->getTimestamp());
+        $activities = $api->get(
+            '/athlete/activities', [
+                'before' => $beforeDateTime->getTimestamp(),
+                'after' => $afterDateTime->getTimestamp(),
+                'page' => 1,
+                'per_page' => 50,
+            ]
+        );
 
         return $this->render('Strava/list.html.twig', [
             'activities' => $activities,
@@ -121,9 +120,16 @@ class StravaController extends AbstractController
             'clientId' => $this->getParameter('strava.client_id'),
             'clientSecret' => $this->getParameter('strava.secret'),
             'redirectUri' => $redirectUri,
-            'scopes' => ['view_private'],
+            'scope' => 'read',
         ];
 
         return new OAuth($oauthOptions);
+    }
+
+    protected function createApi(): StravaApi
+    {
+        $api = new StravaApi($this->getParameter('strava.client_id'), $this->getParameter('strava.secret'));
+
+        return $api;
     }
 }

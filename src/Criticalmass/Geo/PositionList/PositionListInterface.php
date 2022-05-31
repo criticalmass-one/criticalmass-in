@@ -35,4 +35,8 @@ interface PositionListInterface extends \Countable, \Iterator
     public function add(PositionInterface $position): PositionListInterface;
 
     public function remove(int $n): PositionListInterface;
+
+    public function getList(): array;
+
+    public function setList(array $list): PositionListInterface;
 }

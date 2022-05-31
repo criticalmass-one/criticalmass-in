@@ -3,10 +3,10 @@
 namespace App\Controller\City;
 
 use App\Controller\AbstractController;
+use App\Criticalmass\ElasticCityFinder\ElasticCityFinderInterface;
 use App\Entity\City;
 use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Event\View\ViewEvent;
-use FOS\ElasticaBundle\Finder\FinderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,49 +23,6 @@ class CityController extends AbstractController
             'city' => $city,
             'rides' => $this->getRideRepository()->findRidesWithoutStatisticsForCity($city),
         ]);
-    }
-
-    protected function findNearCities(City $city)
-    {
-        /** @var FinderInterface $finder */
-        $finder = $this->container->get('fos_elastica.finder.criticalmass_city.city');
-
-        $enabledQuery = new \Elastica\Query\Term(['isEnabled' => true]);
-
-        $selfTerm = new \Elastica\Query\Term(['id' => $city->getId()]);
-        $selfQuery = new \Elastica\Query\BoolQuery();
-        $selfQuery->addMustNot($selfTerm);
-
-        $geoQuery = new \Elastica\Query\GeoDistance('pin', [
-            'lat' => $city->getLatitude(),
-            'lon' => $city->getLongitude(),
-        ],
-            '50km'
-        );
-
-        $boolQuery = new \Elastica\Query\BoolQuery();
-        $boolQuery
-            ->addMust($geoQuery)
-            ->addMust($enabledQuery)
-            ->addMust($selfQuery);
-
-        $query = new \Elastica\Query($boolQuery);
-
-        $query->setSize(15);
-        $query->setSort([
-            '_geo_distance' => [
-                'pin' => [
-                    $city->getLatitude(),
-                    $city->getLongitude(),
-                ],
-                'order' => 'desc',
-                'unit' => 'km',
-            ]
-        ]);
-
-        $results = $finder->find($query);
-
-        return $results;
     }
 
     /**
@@ -97,7 +54,7 @@ class CityController extends AbstractController
     /**
      * @ParamConverter("city", class="App:City", isOptional=true)
      */
-    public function showAction(Request $request, SeoPageInterface $seoPage, EventDispatcherInterface $eventDispatcher, City $city = null): Response
+    public function showAction(Request $request, ElasticCityFinderInterface $elasticCityFinder, SeoPageInterface $seoPage, EventDispatcherInterface $eventDispatcher, City $city = null): Response
     {
         if (!$city) {
             $citySlug = $request->get('citySlug');
@@ -136,7 +93,7 @@ class CityController extends AbstractController
         return $this->render('City/show.html.twig', [
             'city' => $city,
             'currentRide' => $this->getRideRepository()->findCurrentRideForCity($city),
-            'nearCities' => $this->findNearCities($city),
+            'nearCities' => $elasticCityFinder->findNearCities($city),
             'locations' => $this->getLocationRepository()->findLocationsByCity($city),
             'photos' => $this->getPhotoRepository()->findSomePhotos(8, null, $city),
             'rides' => $this->getRideRepository()->findRidesForCity($city, 'DESC', 6),

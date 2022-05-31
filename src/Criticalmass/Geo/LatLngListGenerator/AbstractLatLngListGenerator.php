@@ -2,8 +2,8 @@
 
 namespace App\Criticalmass\Geo\LatLngListGenerator;
 
-use Caldera\GeoBundle\Entity\Track;
-use Caldera\GeoBundle\GpxReader\TrackReader;
+use App\Criticalmass\Geo\Entity\Track;
+use App\Criticalmass\Geo\GpxReader\TrackReader;
 
 abstract class AbstractLatLngListGenerator
 {

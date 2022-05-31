@@ -1,0 +1,23 @@
+caldera_criticalmass_trackmassimport_auth:
+  path:  /trackimport/stravaauth
+  controller: App\Controller\Track\StravaMassImportController::authAction
+
+caldera_criticalmass_trackmassimport_token:
+  path:  /trackimport/stravatoken
+  controller: App\Controller\Track\StravaMassImportController::tokenAction
+
+caldera_criticalmass_trackmassimport_list:
+  path:  /trackimport/stravalist
+  controller: App\Controller\Track\StravaMassImportController::listridesAction
+
+caldera_criticalmass_trackmassimport_import:
+  path:  /trackimport/stravaimport
+  controller: App\Controller\Track\StravaMassImportController::importAction
+
+caldera_criticalmass_trackmassimport_massimport:
+  path:  /trackimport/stravamassimport
+  controller: App\Controller\Track\StravaMassImportController::massImportAction
+
+caldera_criticalmass_trackmassimport_reject:
+  path:  /trackimport/reject
+  controller: App\Controller\Track\StravaMassImportController::rejectAction

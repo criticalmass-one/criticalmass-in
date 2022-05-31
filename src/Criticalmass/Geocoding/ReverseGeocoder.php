@@ -15,6 +15,7 @@ class ReverseGeocoder implements ReverseGeocoderInterface
     const USER_AGENT = 'Critical Mass Photo Geocoder';
     const REFERER = 'https://criticalmass.in/';
 
+    /** @var \Http\Adapter\Guzzle6\Client $httpClient */
     protected $httpClient;
 
     /** @var Provider $provider */

@@ -2,30 +2,34 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\DataQuery\Annotation\EntityAnnotation as DataQuery;
 use App\Criticalmass\Geocoding\ReverseGeocodeable;
+use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
+use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
+use App\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Sharing\Annotation as Sharing;
 use App\Criticalmass\Sharing\ShareableInterface\Shareable;
-use App\Criticalmass\Weather\EntityInterface\WeatherableInterface;
-use App\Criticalmass\Weather\EntityInterface\WeatherInterface;
-use App\EntityInterface\StaticMapableInterface;
-use Caldera\GeoBasic\Coord\Coord;
+use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AuditableInterface;
+use App\EntityInterface\CoordinateInterface;
 use App\EntityInterface\ElasticSearchPinInterface;
 use App\EntityInterface\ParticipateableInterface;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
-use App\EntityInterface\ViewableInterface;
-use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use App\EntityInterface\StaticMapableInterface;
+use App\Validator\Constraint as CriticalAssert;
+use Caldera\GeoBasic\Coord\Coord;
+use Caldera\GeoBasic\Coord\CoordInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Validator\Constraint as CriticalAssert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use App\Criticalmass\Router\Annotation as Routing;
-use App\Criticalmass\Sharing\Annotation as Sharing;
 
 /**
  * @ORM\Table(name="ride")
@@ -35,7 +39,7 @@ use App\Criticalmass\Sharing\Annotation as Sharing;
  * @Vich\Uploadable
  * @Routing\DefaultRoute(name="caldera_criticalmass_ride_show")
  */
-class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, Shareable, ReverseGeocodeable, WeatherableInterface
+class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, Shareable, ReverseGeocodeable, OrderedEntityInterface, CoordinateInterface
 {
     /**
      * @ORM\Id
@@ -43,274 +47,311 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
      * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
+     * @DataQuery\Sortable
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", fetch="LAZY")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    protected $user;
+    protected ?User $user = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CityCycle", inversedBy="rides", fetch="LAZY")
      * @ORM\JoinColumn(name="cycle_id", referencedColumnName="id")
+     * @JMS\Groups({"extended-ride-list"})
      * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
      */
-    protected $cycle;
+    protected ?CityCycle $cycle = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\City", inversedBy="rides", fetch="LAZY")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
-     * @JMS\Groups({"ride-list"})
+     * @JMS\Groups({"extended-ride-list"})
      * @JMS\Expose
      * @Routing\RouteParameter(name="citySlug")
+     * @OE\Identical()
+     * @DataQuery\Queryable
      */
-    protected $city;
+    protected ?City $city = null;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Track", mappedBy="ride", fetch="LAZY")
+     * @JMS\Groups({"extended-ride-list"})
      */
-    protected $tracks;
+    protected Collection $tracks;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Subride", mappedBy="ride", fetch="LAZY")
+     * @JMS\Groups({"extended-ride-list"})
      */
-    protected $subrides;
+    protected Collection $subrides;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
+     * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
-    protected $slug;
+    protected ?string $slug = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=false)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      * @Sharing\Title()
+     * @DataQuery\Sortable
+     * @DataQuery\Queryable
+     * @Assert\NotBlank()
      */
-    protected $title;
+    protected ?string $title = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      * @Sharing\Intro()
+     * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
-    protected $description;
+    protected ?string $description = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
-    protected $socialDescription;
+    protected ?string $socialDescription = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      * @JMS\Type("DateTime<'U'>")
+     * @OE\Order(direction="asc")
+     * @DataQuery\Sortable
+     * @DataQuery\DateTimeQueryable(format="strict_date", pattern="Y-m-d")
      */
-    protected $dateTime;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
-     * @JMS\Type("boolean")
-     */
-    protected $hasTime = false;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
-     * @JMS\Type("boolean")
-     */
-    protected $hasLocation = false;
+    protected \DateTime $dateTime;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
+     * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
-    protected $location;
+    protected ?string $location = null;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
+     * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
-    protected $latitude;
+    protected ?float $latitude = 0.0;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
+     * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
-    protected $longitude;
+    protected ?float $longitude = 0.0;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
+     * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
-    protected $estimatedParticipants;
+    protected ?int $estimatedParticipants = null;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
+     * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
-    protected $estimatedDistance;
+    protected ?float $estimatedDistance = null;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
+     * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
-    protected $estimatedDuration;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Url()
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
-     */
-    protected $facebook;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Url()
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
-     */
-    protected $twitter;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Url()
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
-     */
-    protected $url;
+    protected ?float $estimatedDuration = null;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Post", mappedBy="ride", fetch="LAZY")
+     * @JMS\Groups({"extended-ride-list"})
      */
-    protected $posts;
+    protected Collection $posts;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Photo", mappedBy="ride", fetch="LAZY")
+     * @JMS\Groups({"extended-ride-list"})
      */
-    protected $photos;
+    protected Collection $photos;
 
     /**
      * @ORM\OneToMany(targetEntity="SocialNetworkProfile", mappedBy="ride", cascade={"persist", "remove"})
+     * @JMS\Groups({"extended-ride-list"})
+     * @JMS\Expose
      */
-    protected $socialNetworkProfiles;
+    protected ?Collection $socialNetworkProfiles = null;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $createdAt;
-
-    /**
-     * @var \DateTime
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $updatedAt;
+    protected \DateTime $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected ?\DateTime $updatedAt = null;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @JMS\Expose
      */
-    protected $participationsNumberYes = 0;
+    protected int $participationsNumberYes = 0;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @JMS\Expose
      */
-    protected $participationsNumberMaybe = 0;
+    protected int $participationsNumberMaybe = 0;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @JMS\Expose
      */
-    protected $participationsNumberNo = 0;
+    protected int $participationsNumberNo = 0;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Participation", mappedBy="ride", fetch="LAZY")
      */
-    protected $participations;
+    protected Collection $participations;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\RideEstimate", mappedBy="ride", fetch="LAZY")
      */
-    protected $estimates;
+    protected Collection $estimates;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @DataQuery\Sortable
+     * @DataQuery\Queryable
      */
-    protected $views = 0;
+    protected int $views = 0;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Photo", fetch="LAZY")
      * @ORM\JoinColumn(name="featured_photo", referencedColumnName="id")
      */
-    protected $featuredPhoto;
+    protected ?Photo $featuredPhoto = null;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    protected $restrictedPhotoAccess = false;
+    protected bool $restrictedPhotoAccess = false;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Weather", mappedBy="ride", fetch="LAZY")
      * @ORM\OrderBy({"creationDateTime":"DESC"})
      */
-    protected $weathers;
+    protected Collection $weathers;
 
     /**
-     * @var File $imageFile
      * @Vich\UploadableField(mapping="ride_photo", fileNameProperty="imageName",  size="imageSize", mimeType="imageMimeType")
      */
-    protected $imageFile;
+    protected ?File $imageFile = null;
 
     /**
-     * @var string $imageName
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $imageName;
+    protected ?string $imageName = null;
 
     /**
-     * @var int $imageSize
      * @ORM\Column(type="integer", nullable=true)
      */
-    protected $imageSize;
+    protected ?int $imageSize = null;
 
     /**
-     * @var string $imageMimeType
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $imageMimeType;
+    protected ?string $imageMimeType = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Sharing\Shorturl()
      */
-    protected $shorturl;
+    protected ?string $shorturl = null;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default"=true})
+     * @OE\Boolean(true)
+     * @JMS\Groups({"ride-list"})
+     * @JMS\Expose
+     */
+    protected bool $enabled = true;
+
+    /**
+     * @ORM\Column(type="RideDisabledReasonType", nullable=true)
+     * @DoctrineAssert\Enum(entity="App\DBAL\Type\RideDisabledReasonType")
+     * @JMS\Groups({"ride-list"})
+     * @JMS\Expose
+     */
+    protected ?string $disabledReason = null;
+
+    /**
+     * @ORM\Column(type="RideType", nullable=true)
+     * @DoctrineAssert\Enum(entity="App\DBAL\Type\RideType")
+     * @JMS\Groups({"ride-list"})
+     * @JMS\Expose
+     */
+    protected ?string $rideType = null;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Heatmap", mappedBy="ride", cascade={"persist", "remove"})
+     */
+    private ?Heatmap $heatmap = null;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\TrackImportCandidate", mappedBy="ride")
+     */
+    private Collection $trackImportCandidates;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     * @JMS\Groups({"ride-list"})
+     * @JMS\Expose
+     */
+    private ?string $disabledReasonMessage = null;
+
+    /**
+     * @ORM\OneToMany(targetEntity=RideView::class, mappedBy="ride", fetch="LAZY")
+     */
+    protected Collection $viewRelation;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true, options={"default": 1})
+     */
+    private ?bool $showCoronaIncidenceWarning = true;
 
     public function __construct()
     {
         $this->dateTime = new \DateTime();
         $this->createdAt = new \DateTime();
-        $this->visibleSince = new \DateTime();
-        $this->visibleUntil = new \DateTime();
-        $this->expectedStartDateTime = new \DateTime();
 
         $this->weathers = new ArrayCollection();
         $this->estimates = new ArrayCollection();
@@ -320,6 +361,8 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         $this->subrides = new ArrayCollection();
         $this->participations = new ArrayCollection();
         $this->socialNetworkProfiles = new ArrayCollection();
+        $this->trackImportCandidates = new ArrayCollection();
+        $this->viewRelation = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -351,48 +394,19 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this;
     }
 
-    public function setDateTime(\DateTime $dateTime): Ride
+    public function setDateTime(\DateTime $dateTime = null): Ride
     {
         $this->dateTime = $dateTime;
 
         return $this;
     }
 
-    public function getDateTime(): \DateTime
+    /**
+     * @return \DateTime|null
+     */
+    public function getDateTime(): ?\DateTime
     {
         return $this->dateTime;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function getSimpleDate(): string
-    {
-        return $this->dateTime->format('Y-m-d');
-    }
-
-    public function setHasTime(bool $hasTime): Ride
-    {
-        $this->hasTime = $hasTime;
-
-        return $this;
-    }
-
-    public function getHasTime(): bool
-    {
-        return $this->hasTime;
-    }
-
-    public function setHasLocation(bool $hasLocation): Ride
-    {
-        $this->hasLocation = $hasLocation;
-
-        return $this;
-    }
-
-    public function getHasLocation(): bool
-    {
-        return $this->hasLocation;
     }
 
     public function setLocation(string $location = null): ReverseGeocodeable
@@ -419,7 +433,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->city;
     }
 
-    public function setLatitude(float $latitude = null): Ride
+    public function setLatitude(float $latitude = null): CoordinateInterface
     {
         $this->latitude = $latitude;
 
@@ -431,7 +445,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->latitude;
     }
 
-    public function setLongitude(float $longitude = null): Ride
+    public function setLongitude(float $longitude = null): CoordinateInterface
     {
         $this->longitude = $longitude;
 
@@ -546,60 +560,6 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     public function getEstimatedParticipants(): ?int
     {
         return $this->estimatedParticipants;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function setFacebook(string $facebook = null): Ride
-    {
-        $this->facebook = $facebook;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function getFacebook(): ?string
-    {
-        return $this->facebook;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function setTwitter(string $twitter = null): Ride
-    {
-        $this->twitter = $twitter;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function getTwitter(): ?string
-    {
-        return $this->twitter;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function setUrl(string $url = null): Ride
-    {
-        $this->url = $url;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function getUrl(): ?string
-    {
-        return $this->url;
     }
 
     /** @deprecated */
@@ -760,13 +720,16 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->getEstimatedDistance() / $this->getEstimatedDuration();
     }
 
+    /**
+     * @DataQuery\Queryable
+     */
     public function getPin(): string
     {
         if (!$this->latitude || !$this->longitude) {
             return '0,0';
         }
 
-        return $this->latitude . ',' . $this->longitude;
+        return sprintf('%f,%f', $this->latitude, $this->longitude);
     }
 
     public function getCreatedAt(): \DateTime
@@ -829,7 +792,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->participationsNumberNo;
     }
 
-    public function setViews(int $views): ViewableInterface
+    public function setViews(int $views): ViewableEntity
     {
         $this->views = $views;
 
@@ -841,11 +804,23 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->views;
     }
 
-    public function incViews(): ViewableInterface
+    public function incViews(): ViewableEntity
     {
         ++$this->views;
 
         return $this;
+    }
+
+    /**
+     * @DataQuery\Queryable
+     */
+    public function getRegion(): ?Region
+    {
+        if ($this->city) {
+            return $this->city->getRegion();
+        }
+
+        return null;
     }
 
     public function getCountry(): ?Region
@@ -937,16 +912,16 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this;
     }
 
-    public function addWeather(WeatherInterface $weather): WeatherableInterface
+    public function addWeather(Weather $weather): self
     {
         $this->weathers->add($weather);
 
         return $this;
     }
 
-    public function removeWeather(WeatherInterface $weathers): WeatherableInterface
+    public function removeWeather(Weather $weather): self
     {
-        $this->weathers->removeElement($weathers);
+        $this->weathers->removeElement($weather);
 
         return $this;
     }
@@ -956,7 +931,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->weathers;
     }
 
-    public function setWeathers(Collection $weathers): WeatherableInterface
+    public function setWeathers(Collection $weathers): self
     {
         $this->weathers = $weathers;
 
@@ -1001,7 +976,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->imageSize;
     }
 
-    public function setImageSize(int $imageSize): PhotoInterface
+    public function setImageSize(int $imageSize = null): PhotoInterface
     {
         $this->imageSize = $imageSize;
 
@@ -1013,7 +988,7 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
         return $this->imageMimeType;
     }
 
-    public function setImageMimeType(string $imageMimeType): PhotoInterface
+    public function setImageMimeType(string $imageMimeType = null): PhotoInterface
     {
         $this->imageMimeType = $imageMimeType;
 
@@ -1056,5 +1031,150 @@ class Ride implements ParticipateableInterface, ViewableInterface, ElasticSearch
     public function getShorturl(): ?string
     {
         return $this->shorturl;
+    }
+
+    public function setEnabled(bool $enabled): Ride
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    public function getDisabledReason(): ?string
+    {
+        return $this->disabledReason;
+    }
+
+    public function setDisabledReason(string $disabledReason = null): Ride
+    {
+        $this->disabledReason = $disabledReason;
+
+        return $this;
+    }
+
+    public function getRideType(): ?string
+    {
+        return $this->rideType;
+    }
+
+    public function setRideType(string $rideType = null): Ride
+    {
+        $this->rideType = $rideType;
+
+        return $this;
+    }
+
+    public function getHeatmap(): ?Heatmap
+    {
+        return $this->heatmap;
+    }
+
+    public function setHeatmap(?Heatmap $heatmap): self
+    {
+        $this->heatmap = $heatmap;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newRide = $heatmap === null ? null : $this;
+        if ($newRide !== $heatmap->getRide()) {
+            $heatmap->setRide($newRide);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TrackImportCandidate[]
+     */
+    public function getTrackImportCandidates(): Collection
+    {
+        return $this->trackImportCandidates;
+    }
+
+    public function addTrackImportCandidate(TrackImportCandidate $trackImportCandidate): self
+    {
+        if (!$this->trackImportCandidates->contains($trackImportCandidate)) {
+            $this->trackImportCandidates[] = $trackImportCandidate;
+            $trackImportCandidate->setRide($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrackImportCandidate(TrackImportCandidate $trackImportCandidate): self
+    {
+        if ($this->trackImportCandidates->contains($trackImportCandidate)) {
+            $this->trackImportCandidates->removeElement($trackImportCandidate);
+            // set the owning side to null (unless already changed)
+            if ($trackImportCandidate->getRide() === $this) {
+                $trackImportCandidate->setRide(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function toCoord(): CoordInterface
+    {
+        return new Coord($this->latitude, $this->longitude);
+    }
+
+    public function getDisabledReasonMessage(): ?string
+    {
+        return $this->disabledReasonMessage;
+    }
+
+    public function setDisabledReasonMessage(?string $disabledReasonMessage): self
+    {
+        $this->disabledReasonMessage = $disabledReasonMessage;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RideView[]
+     */
+    public function getViewRelations(): Collection
+    {
+        return $this->viewRelation;
+    }
+
+    public function addViewRelation(RideView $viewRelation): self
+    {
+        if (!$this->viewRelation->contains($viewRelation)) {
+            $this->viewRelation[] = $viewRelation;
+            $viewRelation->setRide($this);
+        }
+
+        return $this;
+    }
+
+    public function removeViewRelation(RideView $viewRelation): self
+    {
+        if ($this->viewRelation->contains($viewRelation)) {
+            $this->viewRelation->removeElement($viewRelation);
+            // set the owning side to null (unless already changed)
+            if ($viewRelation->getRide() === $this) {
+                $viewRelation->setRide(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getShowCoronaIncidenceWarning(): ?bool
+    {
+        return $this->showCoronaIncidenceWarning;
+    }
+
+    public function setShowCoronaIncidenceWarning(?bool $showCoronaIncidenceWarning): self
+    {
+        $this->showCoronaIncidenceWarning = $showCoronaIncidenceWarning;
+
+        return $this;
     }
 }
