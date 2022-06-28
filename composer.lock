@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f040057b13288ccfb9442a4e5616ae67",
+    "content-hash": "8fded37751fe860adf34ae2217e92413",
     "packages": [
         {
             "name": "calderacc/geobasic",
@@ -45,46 +45,6 @@
                 "source": "https://github.com/calderacc/geobasic/tree/0.5"
             },
             "time": "2021-07-20T23:40:15+00:00"
-        },
-        {
-            "name": "calderacc/yourls-api-manager",
-            "version": "0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/calderacc/yourls-api-manager.git",
-                "reference": "12775fb0316ee9ae2662acbefe1b356d990fd284"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/calderacc/yourls-api-manager/zipball/12775fb0316ee9ae2662acbefe1b356d990fd284",
-                "reference": "12775fb0316ee9ae2662acbefe1b356d990fd284",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1",
-                "php-curl-class/php-curl-class": "^8.0"
-            },
-            "type": "package",
-            "autoload": {
-                "psr-4": {
-                    "Caldera\\YourlsApiManager\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Malte Hübner",
-                    "email": "malte@caldera.cc"
-                }
-            ],
-            "support": {
-                "issues": "https://github.com/calderacc/yourls-api-manager/issues",
-                "source": "https://github.com/calderacc/yourls-api-manager/tree/master"
-            },
-            "time": "2017-12-29T01:19:11+00:00"
         },
         {
             "name": "clue/stream-filter",
