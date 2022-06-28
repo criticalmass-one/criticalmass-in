@@ -4,8 +4,6 @@ namespace App\Entity;
 
 use App\Criticalmass\DataQuery\Annotation\EntityAnnotation as DataQuery;
 use App\Criticalmass\Router\Annotation as Routing;
-use App\Criticalmass\Sharing\Annotation as Sharing;
-use App\Criticalmass\Sharing\ShareableInterface\Shareable;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AuditableInterface;
@@ -34,7 +32,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @JMS\ExclusionPolicy("all")
  * @Routing\DefaultRoute(name="caldera_criticalmass_city_show")
  */
-class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, AutoParamConverterAble, SocialNetworkProfileAble, PostableInterface, Shareable, StaticMapableInterface, CoordinateInterface
+class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, AutoParamConverterAble, SocialNetworkProfileAble, PostableInterface, StaticMapableInterface, CoordinateInterface
 {
     /**
      * @ORM\Id
@@ -84,7 +82,6 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
      * @Assert\NotBlank()
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
-     * @Sharing\Title()
      * @DataQuery\Sortable
      */
     protected ?string $title = null;
@@ -163,7 +160,6 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     /**
      * @ORM\Column(type="string", nullable=true)
      * @JMS\Expose
-     * @Sharing\Intro()
      */
     protected ?string $punchLine = null;
 
@@ -257,7 +253,6 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Sharing\Shorturl()
      */
     protected ?string $shorturl = null;
 
