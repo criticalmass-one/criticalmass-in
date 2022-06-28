@@ -288,11 +288,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     protected ?string $imageMimeType = null;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected ?string $shorturl = null;
-
-    /**
      * @ORM\Column(type="boolean", options={"default"=true})
      * @OE\Boolean(true)
      * @JMS\Groups({"ride-list"})
@@ -1014,18 +1009,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         $this->socialNetworkProfiles->removeElement($socialNetworkProfile);
 
         return $this;
-    }
-
-    public function setShorturl(string $shorturl): Ride
-    {
-        $this->shorturl = $shorturl;
-
-        return $this;
-    }
-
-    public function getShorturl(): ?string
-    {
-        return $this->shorturl;
     }
 
     public function setEnabled(bool $enabled): Ride

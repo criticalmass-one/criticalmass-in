@@ -183,12 +183,6 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @JMS\Expose()
-     */
-    protected ?string $shorturl = null;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @JMS\Expose()
      * @JMS\Groups({"ride-list"})
      * @DataQuery\Sortable()
      */
@@ -506,18 +500,6 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return $this->updatedAt;
     }
 
-
-    public function setShorturl(string $shorturl): Photo
-    {
-        $this->shorturl = $shorturl;
-
-        return $this;
-    }
-
-    public function getShorturl(): ?string
-    {
-        return $this->shorturl;
-    }
 
     public function setLocation(string $location = null): ReverseGeocodeable
     {

@@ -254,11 +254,6 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected ?string $shorturl = null;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
     protected ?string $rideNamer = null;
 
     /**
@@ -877,18 +872,6 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
         $this->socialNetworkProfiles->removeElement($socialNetworkProfile);
 
         return $this;
-    }
-
-    public function setShorturl(string $shorturl): City
-    {
-        $this->shorturl = $shorturl;
-
-        return $this;
-    }
-
-    public function getShorturl(): ?string
-    {
-        return $this->shorturl;
     }
 
     public function setRideNamer(string $rideNamer): City
