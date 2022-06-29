@@ -221,7 +221,10 @@ class TrackEventSubscriber implements EventSubscriberInterface
 
         $track->setRideEstimate(null);
 
-        $this->registry->getManager()->remove($estimate);
+        if ($estimate) {
+            $this->registry->getManager()->remove($estimate);
+        }
+
         $this->registry->getManager()->flush();
     }
 }
