@@ -8,9 +8,6 @@
     "calderacc/geobasic": {
         "version": "0.2"
     },
-    "calderacc/yourls-api-manager": {
-        "version": "0.2"
-    },
     "clue/stream-filter": {
         "version": "v1.4.0"
     },
