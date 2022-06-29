@@ -8,8 +8,6 @@ use App\Criticalmass\Image\PhotoManipulator\PhotoInterface\ManipulateablePhotoIn
 use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
 use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
 use App\Criticalmass\Router\Annotation as Routing;
-use App\Criticalmass\Sharing\Annotation as Sharing;
-use App\Criticalmass\Sharing\ShareableInterface\Shareable;
 use App\Criticalmass\UploadFaker\FakeUploadable;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AutoParamConverterAble;
@@ -36,7 +34,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Routing\DefaultRoute(name="caldera_criticalmass_photo_show_ride")
  * @OE\OrderedEntity()
  */
-class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, Shareable, StaticMapableInterface, ReverseGeocodeable, OrderedEntityInterface, ElasticSearchPinInterface, CoordinateInterface
+class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, StaticMapableInterface, ReverseGeocodeable, OrderedEntityInterface, ElasticSearchPinInterface, CoordinateInterface
 {
     /**
      * @ORM\Id
@@ -90,7 +88,6 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     /**
      * @ORM\Column(type="text", nullable=true)
      * @JMS\Expose()
-     * @Sharing\Intro()
      * @DataQuery\Sortable()
      */
     protected ?string $description = null;
@@ -182,13 +179,6 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
      * @ORM\OneToMany(targetEntity="Ride", mappedBy="featuredPhoto", fetch="LAZY")
      */
     protected Collection $featuredRides;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Sharing\Shorturl()
-     * @JMS\Expose()
-     */
-    protected ?string $shorturl = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -510,18 +500,6 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return $this->updatedAt;
     }
 
-
-    public function setShorturl(string $shorturl): Photo
-    {
-        $this->shorturl = $shorturl;
-
-        return $this;
-    }
-
-    public function getShorturl(): ?string
-    {
-        return $this->shorturl;
-    }
 
     public function setLocation(string $location = null): ReverseGeocodeable
     {
