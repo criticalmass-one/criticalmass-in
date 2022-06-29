@@ -16,7 +16,6 @@ use App\Criticalmass\SocialNetwork\Network\NetworkInterface;
 use App\Criticalmass\Timeline\Collector\TimelineCollectorInterface;
 use App\DependencyInjection\Compiler\ObjectRouterPass;
 use App\DependencyInjection\Compiler\RideNamerPass;
-use App\DependencyInjection\Compiler\ShareNetworkPass;
 use App\DependencyInjection\Compiler\TimelineCollectorPass;
 use App\DependencyInjection\Compiler\TrackVoterPass;
 use App\DependencyInjection\Compiler\TwigSeoExtensionPass;
@@ -75,9 +74,6 @@ class Kernel extends BaseKernel
 
         $container->registerForAutoconfiguration(DelegatedRouterInterface::class)->addTag('object_router.delegated_router');
         $container->addCompilerPass(new ObjectRouterPass());
-
-        $container->addCompilerPass(new ShareNetworkPass());
-        $container->registerForAutoconfiguration(ShareNetworkInterface::class)->addTag('share.network');
 
         $container->addCompilerPass(new RideNamerPass());
         $container->registerForAutoconfiguration(RideNamerInterface::class)->addTag('ride_namer');
