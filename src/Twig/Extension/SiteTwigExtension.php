@@ -42,7 +42,7 @@ class SiteTwigExtension extends AbstractExtension
         ];
     }
 
-    public function daysSince($dateTimeString): int
+    public function daysSince($dateTimeString): float
     {
         $dateTime = new \DateTime($dateTimeString);
         $now = new \DateTime();
