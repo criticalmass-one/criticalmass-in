@@ -24,29 +24,14 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class TrackEventSubscriber implements EventSubscriberInterface
 {
-    /** @var TrackReader $trackReader */
-    protected $trackReader;
-
-    /** @var TrackPolylineHandlerInterface $trackPolylineHandler */
-    protected $trackPolylineHandler;
-
-    /** @var RangeLatLngListGenerator $rangeLatLngListGenerator */
-    protected $rangeLatLngListGenerator;
-
-    /** @var RideEstimateHandlerInterface $rideEstimateHandler */
-    protected $rideEstimateHandler;
-
-    /** @var TrackDistanceCalculatorInterface $trackDistanceCalculator */
-    protected $trackDistanceCalculator;
-
-    /** @var RideEstimateConverterInterface $rideEstimateConverter */
-    protected $rideEstimateConverter;
-
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    /** @var ParticipationManagerInterface $participationManager */
-    protected $participationManager;
+    protected TrackReader $trackReader;
+    protected TrackPolylineHandlerInterface $trackPolylineHandler;
+    protected RangeLatLngListGenerator $rangeLatLngListGenerator;
+    protected RideEstimateHandlerInterface $rideEstimateHandler;
+    protected TrackDistanceCalculatorInterface $trackDistanceCalculator;
+    protected RideEstimateConverterInterface $rideEstimateConverter;
+    protected ManagerRegistry $registry;
+    protected ParticipationManagerInterface $participationManager;
 
     public function __construct(
         ManagerRegistry $registry,
