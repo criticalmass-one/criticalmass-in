@@ -13,11 +13,8 @@ use Presta\SitemapBundle\Sitemap\Url\UrlConcrete;
 
 class SitemapEventSubscriber implements EventSubscriberInterface
 {
-    /** @var ObjectRouterInterface $router */
-    protected $router;
-
-    /** @var ManagerRegistry $registry */
-    protected $registry;
+    protected ObjectRouterInterface $router;
+    protected ManagerRegistry $registry;
 
     public function __construct(ObjectRouterInterface $router, ManagerRegistry $registry)
     {

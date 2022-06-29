@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7cdd1a81ed3023f2822bf527274fa5f2",
+    "content-hash": "7e49ddb7abaa381429ff9697588fad86",
     "packages": [
         {
             "name": "calderacc/geobasic",
@@ -45,46 +45,6 @@
                 "source": "https://github.com/calderacc/geobasic/tree/0.5"
             },
             "time": "2021-07-20T23:40:15+00:00"
-        },
-        {
-            "name": "calderacc/yourls-api-manager",
-            "version": "0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/calderacc/yourls-api-manager.git",
-                "reference": "12775fb0316ee9ae2662acbefe1b356d990fd284"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/calderacc/yourls-api-manager/zipball/12775fb0316ee9ae2662acbefe1b356d990fd284",
-                "reference": "12775fb0316ee9ae2662acbefe1b356d990fd284",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1",
-                "php-curl-class/php-curl-class": "^8.0"
-            },
-            "type": "package",
-            "autoload": {
-                "psr-4": {
-                    "Caldera\\YourlsApiManager\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Malte Hübner",
-                    "email": "malte@caldera.cc"
-                }
-            ],
-            "support": {
-                "issues": "https://github.com/calderacc/yourls-api-manager/issues",
-                "source": "https://github.com/calderacc/yourls-api-manager/tree/master"
-            },
-            "time": "2017-12-29T01:19:11+00:00"
         },
         {
             "name": "clue/stream-filter",
@@ -5903,16 +5863,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.59.0",
+            "version": "2.59.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "9cea2f72585a46d0651ee6d4c8c8f752e78c16c6"
+                "reference": "a9000603ea337c8df16cc41f8b6be95a65f4d0f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/9cea2f72585a46d0651ee6d4c8c8f752e78c16c6",
-                "reference": "9cea2f72585a46d0651ee6d4c8c8f752e78c16c6",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/a9000603ea337c8df16cc41f8b6be95a65f4d0f5",
+                "reference": "a9000603ea337c8df16cc41f8b6be95a65f4d0f5",
                 "shasum": ""
             },
             "require": {
@@ -6001,7 +5961,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-06-26T20:26:59+00:00"
+            "time": "2022-06-29T21:43:55+00:00"
         },
         {
             "name": "nmure/crawler-detect-bundle",

@@ -52,7 +52,6 @@
         "php-http/httplug-bundle": "^1.10",
         "salavert/time-ago-in-words": "1.*",
         "emcconville/point-reduction-algorithms": "^1.2",
-        "calderacc/yourls-api-manager": "^0.2.0",
         "geocoder-php/nominatim-provider": "^5.0",
         "php-http/message": "^1.6",
         "symfony/swiftmailer-bundle": "^3.2",

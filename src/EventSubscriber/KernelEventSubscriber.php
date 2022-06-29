@@ -10,8 +10,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class KernelEventSubscriber implements EventSubscriberInterface
 {
-    /** @var SeoPageInterface $seoPage */
-    protected $seoPage;
+    protected SeoPageInterface $seoPage;
 
     public function __construct(SeoPageInterface $seoPage)
     {
