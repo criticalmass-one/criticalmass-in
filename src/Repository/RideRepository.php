@@ -517,20 +517,20 @@ class RideRepository extends EntityRepository
     ): array {
         $builder = $this->createQueryBuilder('ride');
 
-        $builder->select('ride');
+        $builder->select(['ride', 'city', 'region1']);
 
         $builder->join('ride.city', 'city');
         $builder->join('city.region', 'region1');
 
+        $builder->where($builder->expr()->eq('region1.parent', $region->getId()));
+
         if ($startDateTime) {
-            $builder->where($builder->expr()->gt('ride.dateTime', '\'' . $startDateTime->format('Y-m-d') . '\''));
+            $builder->andWhere($builder->expr()->gt('ride.dateTime', '\'' . $startDateTime->format('Y-m-d') . '\''));
         }
 
         if ($endDateTime) {
-            $builder->where($builder->expr()->lt('ride.dateTime', '\'' . $endDateTime->format('Y-m-d') . '\''));
+            $builder->andWhere($builder->expr()->lt('ride.dateTime', '\'' . $endDateTime->format('Y-m-d') . '\''));
         }
-
-        $builder->andWhere($builder->expr()->eq('region1.parent', $region->getId()));
 
         $builder->addOrderBy('city.city', 'ASC');
         $builder->addOrderBy('ride.dateTime', 'DESC');
