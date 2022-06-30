@@ -38,5 +38,4 @@ return [
     Sonata\BlockBundle\SonataBlockBundle::class => ['all' => true],
     MalteHuebner\OrderedEntitiesBundle\MalteHuebnerOrderedEntitiesBundle::class => ['all' => true],
     MalteHuebner\ImpressBundle\MalteHuebnerImpressBundle::class => ['all' => true],
-    FOS\CKEditorBundle\FOSCKEditorBundle::class => ['all' => true],
 ];
