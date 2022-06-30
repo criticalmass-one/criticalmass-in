@@ -84,7 +84,6 @@ export default class StatisticPage {
         return list;
     }
 
-
     addCity(cityName, citySlug, colorRed, colorGreen, colorBlue) {
         this.cities.push({
             citySlug: citySlug,

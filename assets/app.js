@@ -18,9 +18,10 @@ import ScrollToPost from './js/util/ScrollToPost';
 import Sharing from './js/Sharing';
 import TrackRangePage from './js/TrackRangePage';
 import StatisticPage from './js/StatisticPage';
+import StatisticCityPage from './js/StatisticCityPage';
 
 import '@fortawesome/fontawesome-pro/js/fontawesome';
 import '@fortawesome/fontawesome-pro/js/solid';
 import '@fortawesome/fontawesome-pro/js/regular';
 
-export {Sharing, TrackRangePage, ScrollToPost, SubmitButtonDisabler, DeleteModal, PhotoUpload, RideDateChecker, GeocodingButton, Map, DataTable, Search, HintModal, StatisticPage};
+export {Sharing, TrackRangePage, ScrollToPost, SubmitButtonDisabler, DeleteModal, PhotoUpload, RideDateChecker, GeocodingButton, Map, DataTable, Search, HintModal, StatisticPage, StatisticCityPage};
