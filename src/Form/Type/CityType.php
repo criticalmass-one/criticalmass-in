@@ -2,6 +2,7 @@
 
 namespace App\Form\Type;
 
+use App\Entity\Region;
 use App\Repository\RegionRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -42,7 +43,7 @@ class CityType extends AbstractType
             ->add('region',
                 EntityType::class,
                 [
-                    'class' => 'App:Region',
+                    'class' => Region::class,
                     'query_builder' => function (RegionRepository $er) {
                         $builder = $er->createQueryBuilder('region');
 

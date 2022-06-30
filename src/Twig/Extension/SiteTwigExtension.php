@@ -2,21 +2,16 @@
 
 namespace App\Twig\Extension;
 
-use App\Entity\User;
-use App\HtmlMetadata\Metadata;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+use Twig\TwigFunction;
 
-class SiteTwigExtension extends \Twig_Extension
+class SiteTwigExtension extends AbstractExtension
 {
-    /** @var TranslatorInterface $translator */
-    protected $translator;
-
-    /** @var Metadata $metadata */
-    protected $metadata;
-
-    /** @var RouterInterface $router */
-    protected $router;
+    protected TranslatorInterface $translator;
+    protected RouterInterface $router;
 
     public function __construct(TranslatorInterface $translator, RouterInterface $router)
     {
@@ -24,33 +19,30 @@ class SiteTwigExtension extends \Twig_Extension
         $this->router = $router;
     }
 
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
-            new \Twig_SimpleFilter('hashtagToCity', [$this, 'hashtagToCity'], array(
+            new TwigFilter('hashtagToCity', [$this, 'hashtagToCity'], array(
                 'is_safe' => array('html')
             )),
         ];
     }
 
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
-            new \Twig_SimpleFunction('metadata', [$this, 'getMetadataService',], array(
-                'is_safe' => array('raw')
-            )),
-            new \Twig_SimpleFunction('daysSince', [$this, 'daysSince'], array(
+            new TwigFunction('daysSince', [$this, 'daysSince'], array(
                 'is_safe' => array('html')
             )),
-            new \Twig_SimpleFunction('today', [$this, 'today'], array(
+            new TwigFunction('today', [$this, 'today'], array(
                 'is_safe' => array('html')
             )),
-            'instanceof' => new \Twig_SimpleFunction('instanceof', [$this, 'instanceof']),
-            'today' => new \Twig_SimpleFunction('today', [$this, 'today'])
+            'instanceof' => new TwigFunction('instanceof', [$this, 'instanceof']),
+            'today' => new TwigFunction('today', [$this, 'today'])
         ];
     }
 
-    public function daysSince($dateTimeString)
+    public function daysSince($dateTimeString): float
     {
         $dateTime = new \DateTime($dateTimeString);
         $now = new \DateTime();
@@ -62,21 +54,20 @@ class SiteTwigExtension extends \Twig_Extension
         return $diffDays;
     }
 
-    public function instanceof ($var, $instance)
+    public function instanceof ($var, $instance): bool
     {
         return $var instanceof $instance;
     }
 
-    public function today(\DateTime $dateTime)
+    public function today(\DateTime $dateTime): bool
     {
         $today = new \DateTime();
 
         return ($today->format('Y-m-d') == $dateTime->format('Y-m-d'));
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'site_extension';
     }
 }
-

@@ -38,9 +38,6 @@ parameters:
     upload_destination.user_photo: '%kernel.project_dir%/public/users'
     upload_destination.heatmap_tile: '%kernel.project_dir%/public/heatmaps'
     staticmaps.host: '%env(STATICMAPS_HOST)%'
-    yourls.api_hostname: '%env(YOURLS_API_HOSTNAME)%'
-    yourls.api_username: '%env(YOURLS_API_USERNAME)%'
-    yourls.api_password: '%env(YOURLS_API_PASSWORD)%'
     assets_version: '%env(ASSETS_VERSION)%'
 
 services:
@@ -80,12 +77,6 @@ services:
         tags: ['controller.service_arguments']
 
     Symfony\Component\Routing\RouteCollection: ~
-
-    Caldera\YourlsApiManager\YourlsApiManager:
-        arguments:
-            - '%yourls.api_hostname%'
-            - '%yourls.api_username%'
-            - '%yourls.api_password%'
 
     Sonata\SeoBundle\Seo\SeoPageInterface:
         alias: sonata.seo.page.default
@@ -265,3 +256,8 @@ services:
     App\Criticalmass\DataQuery\FinderFactory\FinderFactory:
         arguments:
             $finder: '@fos_elastica.finder.criticalmass_ride'
+
+    App\Controller\Search\SearchController:
+        arguments:
+            $cityFinder: '@fos_elastica.finder.criticalmass_city'
+            $rideFinder: '@fos_elastica.finder.criticalmass_ride'
