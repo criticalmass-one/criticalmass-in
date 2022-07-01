@@ -83,11 +83,10 @@ class RideController extends AbstractController
             $participation = null;
         }
 
-        $activityCalculator->calculate($ride->getCity());
-
         return $this->render('Ride/show.html.twig', [
             'city' => $ride->getCity(),
             'ride' => $ride,
+            'activity_index' => $activityCalculator->calculate($ride->getCity()),
             'tracks' => $this->getTrackRepository()->findTracksByRide($ride),
             'photos' => $this->getPhotoRepository()->findPhotosByRide($ride),
             'subrides' => $this->getSubrideRepository()->getSubridesForRide($ride),
