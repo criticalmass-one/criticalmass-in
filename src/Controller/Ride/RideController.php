@@ -2,6 +2,7 @@
 
 namespace App\Controller\Ride;
 
+use App\Criticalmass\Activity\ActivityCalculatorInterface;
 use App\Entity\Ride;
 use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Event\View\ViewEvent;
@@ -34,7 +35,7 @@ class RideController extends AbstractController
     /**
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function showAction(Request $request, SeoPageInterface $seoPage, EventDispatcherInterface $eventDispatcher, Ride $ride): Response
+    public function showAction(Request $request, SeoPageInterface $seoPage, EventDispatcherInterface $eventDispatcher, ActivityCalculatorInterface $activityCalculator, Ride $ride): Response
     {
         $blocked = $this->getBlockedCityRepository()->findCurrentCityBlock($ride->getCity());
 
@@ -45,7 +46,6 @@ class RideController extends AbstractController
             ]);
         }
 
-        $eventDispatcher->dispatch(ViewEvent::NAME, new ViewEvent($ride));
 
         $seoPage
             ->setDescription('Informationen, Strecken und Fotos von der Critical Mass in ' . $ride->getCity()->getCity() . ' am ' . $ride->getDateTime()->format('d.m.Y'))
@@ -82,6 +82,8 @@ class RideController extends AbstractController
         } else {
             $participation = null;
         }
+
+        $activityCalculator->calculate($ride->getCity());
 
         return $this->render('Ride/show.html.twig', [
             'city' => $ride->getCity(),
