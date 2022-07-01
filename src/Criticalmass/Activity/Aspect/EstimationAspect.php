@@ -8,6 +8,10 @@ class EstimationAspect extends AbstractAspect
 {
     public function calculate(RideData $rideData): float
     {
+        if ($rideData->getRide()->getEstimates()->count() > 0) {
+            return 1;
+        }
+
         return 0;
     }
 }

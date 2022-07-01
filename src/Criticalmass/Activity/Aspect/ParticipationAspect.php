@@ -8,6 +8,10 @@ class ParticipationAspect extends AbstractAspect
 {
     public function calculate(RideData $rideData): float
     {
+        if ($rideData->getRide()->getParticipations()->count() > 0) {
+            return 1;
+        }
+
         return 0;
     }
 }

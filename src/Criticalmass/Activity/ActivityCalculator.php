@@ -23,7 +23,6 @@ class ActivityCalculator implements ActivityCalculatorInterface
         $this->managerRegistry = $managerRegistry;
 
         $this->aspectList[] = new EstimationAspect();
-        $this->aspectList[] = new MonthlyRideAspect();
         $this->aspectList[] = new ParticipationAspect();
         $this->aspectList[] = new PhotoAspect();
         $this->aspectList[] = new TrackAspect();
@@ -43,12 +42,24 @@ class ActivityCalculator implements ActivityCalculatorInterface
 
             /** @var AspectInterface $aspect */
             foreach ($this->aspectList as $aspect) {
-                $aspect->calculate($rideData);
+                $result = $aspect->calculate($rideData);
+                $rideData->addResult($result);
             }
+
+            $rideData->setResult($rideData->getResult() / count($this->aspectList));
 
             $rideDataList[] = $rideData;
         }
 
-        return 0;
+        $result = 0;
+
+        /** @var RideData $rideData */
+        foreach ($rideDataList as $rideData) {
+            $result += $rideData->getResult();
+        }
+
+        $result = $result / count($rideDataList);
+        
+        return $result;
     }
 }
