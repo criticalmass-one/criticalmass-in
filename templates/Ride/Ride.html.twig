@@ -13,7 +13,7 @@
     </div>
 </div>
 
-{% if activity_index < 0.5 %}
+{% if activity_index < 0.5 and is_current_criticalmass %}
 <div class="alert alert-danger">
     <strong>Vorsicht:</strong> Der Aktivitätsindex von {{ ride.city.city }} beträgt <strong>{{ (activity_index * 100)|number_format(2, ',', '.') }} %</strong>. Es kann sein, dass in dieser Stadt keine Critical Mass mehr stattfindet. Die Daten der Touren werden automatisch generiert und geben keine Auskunft darüber, ob die örtliche Critical Mass mittlerweile noch aktiv ist.
 </div>
