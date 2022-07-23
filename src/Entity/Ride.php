@@ -312,11 +312,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     protected ?string $rideType = null;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Heatmap", mappedBy="ride", cascade={"persist", "remove"})
-     */
-    private ?Heatmap $heatmap = null;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\TrackImportCandidate", mappedBy="ride")
      */
     private Collection $trackImportCandidates;

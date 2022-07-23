@@ -36,6 +36,10 @@ class ActivityCalculator implements ActivityCalculatorInterface
         $rideList = $this->managerRegistry->getRepository(Ride::class)->findRides($startDateTime, $endDateTime, $city);
         $rideDataList = [];
 
+        if (0 === count($rideList)) {
+            return 0;
+        }
+
         /** @var Ride $ride */
         foreach ($rideList as $ride) {
             $rideData = new RideData($ride);

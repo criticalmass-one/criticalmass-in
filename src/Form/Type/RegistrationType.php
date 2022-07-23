@@ -15,9 +15,9 @@ class RegistrationType extends RegistrationFormType
         $builder->add('captcha', CaptchaType::class, [
             'as_url' => true,
             'reload' => true,
-            'length' => 5,
-            'max_front_lines' => 3,
-            'max_behind_lines' => 3,
+            'length' => 10,
+            'max_front_lines' => 5,
+            'max_behind_lines' => 5,
         ]);
     }
 }
