@@ -24,7 +24,7 @@ class MonthList implements \Iterator
 
     public function addRide(Ride $ride): self
     {
-        $rideMonth = $ride->getDateTime()->format('m');
+        $rideMonth = (int) $ride->getDateTime()->format('m');
 
         if (!array_key_exists($rideMonth, $this->monthList)) {
             $this->monthList[$rideMonth] = new Month();
@@ -45,7 +45,7 @@ class MonthList implements \Iterator
         next($this->monthList);
     }
 
-    public function key(): string
+    public function key(): int
     {
         return key($this->monthList);
     }
