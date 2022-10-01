@@ -15,17 +15,10 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class PhotoEventSubscriber implements EventSubscriberInterface
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    /** @var ReverseGeocoderInterface $reverseGeocoder */
-    protected $reverseGeocoder;
-
-    /** @var PhotoGpsInterface $photoGps */
-    protected $photoGps;
-
-    /** @var ExifHandlerInterface $exifHandler */
-    protected $exifHandler;
+    protected ManagerRegistry $registry;
+    protected ReverseGeocoderInterface $reverseGeocoder;
+    protected PhotoGpsInterface $photoGps;
+    protected ExifHandlerInterface $exifHandler;
 
     public function __construct(ManagerRegistry $registry, ReverseGeocoderInterface $reverseGeocoder, PhotoGpsInterface $photoGps, ExifHandlerInterface $exifHandler)
     {
@@ -52,8 +45,6 @@ class PhotoEventSubscriber implements EventSubscriberInterface
         $this->handleExifData($photoUploadedEvent->getPhoto(), $photoUploadedEvent->getTmpFilename());
         $this->locate($photoUploadedEvent->getPhoto());
         $this->reverseGeocode($photoUploadedEvent->getPhoto());
-
-        $this->exportDataHandler->calculateForEntity($photoUploadedEvent->getPhoto());
 
         // and this is to flush our changes to the filesystem
         $this->registry->getManager()->flush();

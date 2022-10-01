@@ -7,8 +7,6 @@ use App\Criticalmass\Geocoding\ReverseGeocodeable;
 use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
 use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
 use App\Criticalmass\Router\Annotation as Routing;
-use App\Criticalmass\Sharing\Annotation as Sharing;
-use App\Criticalmass\Sharing\ShareableInterface\Shareable;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AuditableInterface;
@@ -39,7 +37,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Vich\Uploadable
  * @Routing\DefaultRoute(name="caldera_criticalmass_ride_show")
  */
-class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, Shareable, ReverseGeocodeable, OrderedEntityInterface, CoordinateInterface
+class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, ReverseGeocodeable, OrderedEntityInterface, CoordinateInterface
 {
     /**
      * @ORM\Id
@@ -101,7 +99,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @ORM\Column(type="string", length=255, nullable=false)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
-     * @Sharing\Title()
      * @DataQuery\Sortable
      * @DataQuery\Queryable
      * @Assert\NotBlank()
@@ -112,7 +109,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @ORM\Column(type="text", nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
-     * @Sharing\Intro()
      * @DataQuery\Sortable
      * @DataQuery\Queryable
      */
@@ -290,12 +286,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected ?string $imageMimeType = null;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Sharing\Shorturl()
-     */
-    protected ?string $shorturl = null;
 
     /**
      * @ORM\Column(type="boolean", options={"default"=true})
@@ -1019,18 +1009,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         $this->socialNetworkProfiles->removeElement($socialNetworkProfile);
 
         return $this;
-    }
-
-    public function setShorturl(string $shorturl): Ride
-    {
-        $this->shorturl = $shorturl;
-
-        return $this;
-    }
-
-    public function getShorturl(): ?string
-    {
-        return $this->shorturl;
     }
 
     public function setEnabled(bool $enabled): Ride

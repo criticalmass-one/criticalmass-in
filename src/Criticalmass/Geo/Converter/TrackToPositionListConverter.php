@@ -23,7 +23,7 @@ class TrackToPositionListConverter
 
         $positionList = new PositionList();
 
-        for ($n = $track->getStartPoint(); $n <= $track->getEndPoint(); ++$n) {
+        for ($n = $track->getStartPoint(); $n < $track->getEndPoint(); ++$n) {
             $gpxPoint = $this->trackReader->getPoint($n);
 
             $position = GpxPointToPositionConverter::convert($gpxPoint);
