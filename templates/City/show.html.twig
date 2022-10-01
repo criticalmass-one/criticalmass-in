@@ -14,6 +14,10 @@
     </li>
 {% endblock %}
 
+{% block activity_badge %}
+    <div class="badge">Aktivität: {{ (activity_index * 100)|number_format(2, ',', '.') }} %</div>
+{% endblock %}
+
 {% block optionsButton %}
     <div class="btn-group pull-right">
         <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
@@ -67,9 +71,11 @@
                          style="height: 250px; background-image: url({{ vich_uploader_asset(city, 'imageFile')|imagine_filter('city_image_wide') }});">
                         <div class="row">
                             <div class="col-md-12">
-                                <h1 class="pull-right no-margin-top" itemprop="name">
-                                    {{ city.title }}
-                                </h1>
+                                <div class="pull-right no-margin-top">
+                                    <h1 itemprop="name">
+                                        {{ city.title }}
+                                    </h1> {{ block('activity_badge') }}
+                                </div>
                             </div>
                         </div>
 
@@ -96,7 +102,7 @@
                         {{ block('optionsButton') }}
                     {% endif %}
                     <h1 class="no-margin-top">
-                        {{ city.title }}
+                        {{ city.title }} {{ block('activity_badge') }}
                     </h1>
                 {% endif %}
             </div>
@@ -205,7 +211,7 @@
                     </div>
                 </div>
 
-                {% if nearCities.length > 0 %}
+                {% if nearCities and nearCities.length > 0 %}
                 <div class="row">
                     <div class="col-md-12">
                         {% include 'City/Includes/_nearCities.html.twig' with { 'nearCities': nearCities } %}

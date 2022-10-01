@@ -3,6 +3,7 @@
 namespace App\Controller\City;
 
 use App\Controller\AbstractController;
+use App\Criticalmass\Activity\ActivityCalculatorInterface;
 use App\Criticalmass\ElasticCityFinder\ElasticCityFinderInterface;
 use App\Entity\City;
 use App\Criticalmass\SeoPage\SeoPageInterface;
@@ -54,7 +55,7 @@ class CityController extends AbstractController
     /**
      * @ParamConverter("city", class="App:City", isOptional=true)
      */
-    public function showAction(Request $request, ElasticCityFinderInterface $elasticCityFinder, SeoPageInterface $seoPage, EventDispatcherInterface $eventDispatcher, City $city = null): Response
+    public function showAction(Request $request, ElasticCityFinderInterface $elasticCityFinder, SeoPageInterface $seoPage, EventDispatcherInterface $eventDispatcher, ActivityCalculatorInterface $activityCalculator, City $city = null): Response
     {
         if (!$city) {
             $citySlug = $request->get('citySlug');
@@ -92,6 +93,7 @@ class CityController extends AbstractController
 
         return $this->render('City/show.html.twig', [
             'city' => $city,
+            'activity_index' => $activityCalculator->calculate($city),
             'currentRide' => $this->getRideRepository()->findCurrentRideForCity($city),
             'nearCities' => $elasticCityFinder->findNearCities($city),
             'locations' => $this->getLocationRepository()->findLocationsByCity($city),

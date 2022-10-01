@@ -262,14 +262,15 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     protected ?string $wikidataEntityId = null;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Heatmap", mappedBy="city", cascade={"persist", "remove"})
-     */
-    private ?Heatmap $heatmap = null;
-
-    /**
      * @ORM\Column(type="boolean", nullable=true, options={"default": 1})
      */
     private ?bool $showCoronaIncidenceWarning = true;
+
+    /**
+     * @ORM\Column(type="float", nullable=false, options={"default": 0})
+     * @JMS\Expose()
+     */
+    protected float $activityIndex = 0;
 
     public function __construct()
     {
@@ -945,5 +946,17 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
         $this->showCoronaIncidenceWarning = $showCoronaIncidenceWarning;
 
         return $this;
+    }
+
+    public function setActivityIndex(float $activityIndex): self
+    {
+        $this->activityIndex = $activityIndex;
+
+        return $this;
+    }
+
+    public function getActivityIndex(): float
+    {
+        return $this->activityIndex;
     }
 }

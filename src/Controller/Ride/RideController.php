@@ -2,10 +2,13 @@
 
 namespace App\Controller\Ride;
 
+use App\Criticalmass\Activity\ActivityCalculatorInterface;
+use App\DBAL\Type\RideType;
 use App\Entity\Ride;
 use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Event\View\ViewEvent;
 use App\Form\Type\RideDisableType;
+use Carbon\Carbon;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Controller\AbstractController;
 use App\Entity\Weather;
@@ -34,7 +37,7 @@ class RideController extends AbstractController
     /**
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function showAction(Request $request, SeoPageInterface $seoPage, EventDispatcherInterface $eventDispatcher, Ride $ride): Response
+    public function showAction(Request $request, SeoPageInterface $seoPage, EventDispatcherInterface $eventDispatcher, ActivityCalculatorInterface $activityCalculator, Ride $ride): Response
     {
         $blocked = $this->getBlockedCityRepository()->findCurrentCityBlock($ride->getCity());
 
@@ -44,8 +47,6 @@ class RideController extends AbstractController
                 'blocked' => $blocked
             ]);
         }
-
-        $eventDispatcher->dispatch(ViewEvent::NAME, new ViewEvent($ride));
 
         $seoPage
             ->setDescription('Informationen, Strecken und Fotos von der Critical Mass in ' . $ride->getCity()->getCity() . ' am ' . $ride->getDateTime()->format('d.m.Y'))
@@ -86,12 +87,14 @@ class RideController extends AbstractController
         return $this->render('Ride/show.html.twig', [
             'city' => $ride->getCity(),
             'ride' => $ride,
+            'activity_index' => $activityCalculator->calculate($ride->getCity()),
             'tracks' => $this->getTrackRepository()->findTracksByRide($ride),
             'photos' => $this->getPhotoRepository()->findPhotosByRide($ride),
             'subrides' => $this->getSubrideRepository()->getSubridesForRide($ride),
             'dateTime' => new \DateTime(),
             'weatherForecast' => $weatherForecast,
             'participation' => $participation,
+            'is_current_criticalmass' => (!$ride->getRideType() || $ride->getRideType() === RideType::CRITICAL_MASS) && (new Carbon($ride->getDateTime()))->isCurrentMonth(),
         ]);
     }
 }
