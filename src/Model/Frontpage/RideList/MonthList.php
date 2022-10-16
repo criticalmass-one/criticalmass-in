@@ -45,7 +45,7 @@ class MonthList implements \Iterator
         next($this->monthList);
     }
 
-    public function key(): string
+    public function key(): int
     {
         return key($this->monthList);
     }
