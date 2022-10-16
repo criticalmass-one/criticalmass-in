@@ -4,35 +4,38 @@ namespace App\Criticalmass\DataQuery\FinderFactory;
 
 use App\Criticalmass\DataQuery\Finder\Finder;
 use App\Criticalmass\DataQuery\Finder\FinderInterface;
+use App\Criticalmass\Util\ClassUtil;
 use FOS\ElasticaBundle\Finder\TransformedFinder;
+use FOS\ElasticaBundle\Manager\RepositoryManagerInterface;
+use Psr\Container\ContainerInterface;
 
 class FinderFactory implements FinderFactoryInterface
 {
-    //protected ContainerInterface $container;
+    protected ContainerInterface $container;
     protected TransformedFinder $finder;
+    protected RepositoryManagerInterface $repositoryManager;
 
-    public function __construct(/*ContainerInterface $container, */TransformedFinder $finder)
+    public function __construct(ContainerInterface $container, RepositoryManagerInterface $repositoryManager, TransformedFinder $finder)
     {
-        //$this->container = $container;
+        $this->repositoryManager = $repositoryManager;
+        $this->container = $container;
         $this->finder = $finder;
     }
 
     public function createFinderForFqcn(string $fqcn): FinderInterface
     {
-        /*$className = ClassUtil::getLowercaseShortnameFromFqcn($fqcn);
+        $className = ClassUtil::getLowercaseShortnameFromFqcn($fqcn);
 
-        $schema = 'fos_elastica.finder.criticalmass_%s';
+        $schema = 'criticalmass_%s';
 
-        $finderServiceName = sprintf($schema, $className, $className);
+        $indexName = sprintf($schema, $className);
 
-        if ($this->container->has($finderServiceName)) {
-            $fosFinder = $this->container->get($finderServiceName);
+        if ($this->repositoryManager->hasRepository($indexName)) {
+            $repository = $this->repositoryManager->getRepository($indexName);
 
-            return new Finder($fosFinder);
+            return new Finder($repository);
         }
 
-        throw new \Exception(sprintf('Could not find service %s for entity fqcn %s', $finderServiceName, $fqcn));
-        */
-        return new Finder($this->finder);
+        throw new \Exception(sprintf('Could not find repository for entity "%s"', $fqcn));
     }
 }
