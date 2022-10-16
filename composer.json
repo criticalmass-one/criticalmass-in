@@ -38,7 +38,6 @@
         "friendsofsymfony/user-bundle": "^2.0",
         "friendsofsymfony/rest-bundle": "^2.0",
         "hwi/oauth-bundle": "^0.6.2",
-        "php-curl-class/php-curl-class": "^8.0",
         "malenki/slug": "1.0.0",
         "sonata-project/intl-bundle": "^2.3",
         "nelmio/api-doc-bundle": "^3.0",
