@@ -12,7 +12,7 @@
   "devDependencies": {
     "@fortawesome/fontawesome-pro": "^5.11.2",
     "gulp": "^4.0.2",
-    "gulp-clean-css": "^2.0.4",
+    "gulp-clean-css": "^2.4.0",
     "gulp-concat": "^2.6.1",
     "gulp-css-replace-url": "^0.2.4",
     "gulp-flatten": "^0.4.0",
