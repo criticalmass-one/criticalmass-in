@@ -47,8 +47,6 @@
         "calderacc/geobasic": "^0.5",
         "yohang/calendr": "^2.0",
         "maxh/php-nominatim": "^1.2",
-        "php-http/guzzle6-adapter": "^1.1",
-        "php-http/httplug-bundle": "^1.10",
         "salavert/time-ago-in-words": "1.*",
         "emcconville/point-reduction-algorithms": "^1.2",
         "geocoder-php/nominatim-provider": "^5.0",
@@ -88,7 +86,9 @@
         "symfony/doctrine-bridge": "^4.0",
         "symfony/proxy-manager-bridge": "4.4.x-dev",
         "symfony/framework-bundle": "^4.1",
-        "symfony/dotenv": "^4.1"
+        "symfony/dotenv": "^4.1",
+        "symfony/http-client": "^4.1",
+        "php-http/httplug-bundle": "^1.27"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "*",

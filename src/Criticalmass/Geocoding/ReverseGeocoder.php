@@ -7,6 +7,7 @@ use Geocoder\Geocoder;
 use Geocoder\Location;
 use Geocoder\Provider\Provider;
 use Geocoder\Query\ReverseQuery;
+use GuzzleHttp\Client;
 
 class ReverseGeocoder implements ReverseGeocoderInterface
 {
@@ -29,7 +30,7 @@ class ReverseGeocoder implements ReverseGeocoderInterface
 
     public function __construct(LocationBuilderInterface $locationBuilder)
     {
-        $this->httpClient = new \Http\Adapter\Guzzle6\Client();
+        $this->httpClient = new Client();
         $this->provider = new \Geocoder\Provider\Nominatim\Nominatim($this->httpClient, self::NOMINATIM_URL, self::USER_AGENT, self::REFERER);
         $this->geocoder = new \Geocoder\StatefulGeocoder($this->provider, self::LOCALE);
 
