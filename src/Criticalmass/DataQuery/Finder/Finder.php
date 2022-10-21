@@ -5,16 +5,15 @@ namespace App\Criticalmass\DataQuery\Finder;
 use App\Criticalmass\DataQuery\Parameter\ParameterInterface;
 use App\Criticalmass\DataQuery\Query\ElasticQueryInterface;
 use App\Criticalmass\DataQuery\Query\QueryInterface;
-use FOS\ElasticaBundle\Finder\FinderInterface as FOSFinderInterface;
+use FOS\ElasticaBundle\Repository;
 
 class Finder implements FinderInterface
 {
-    /** @var FOSFinderInterface $elasticFinder */
-    protected $elasticFinder;
+    protected Repository $repository;
 
-    public function __construct(FOSFinderInterface $elasticFinder)
+    public function __construct(Repository $repository)
     {
-        $this->elasticFinder = $elasticFinder;
+        $this->repository = $repository;
     }
 
     public function executeQuery(array $queryList, array $parameterList): array
@@ -44,7 +43,7 @@ class Finder implements FinderInterface
 
         //dump(json_encode($query->toArray()));
 
-        return $this->elasticFinder->find($query);
+        return $this->repository->find($query);
     }
 
     protected function executeOrmQuery(array $queryList): array
