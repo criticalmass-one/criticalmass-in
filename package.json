@@ -17,8 +17,8 @@
     "gulp-css-replace-url": "^0.2.4",
     "gulp-flatten": "^0.4.0",
     "gulp-minify": "^3.1.0",
-    "gulp-sass": "^4.0.2",
-    "node-sass": "^7.0.0"
+    "gulp-sass": "^5.1.0",
+    "node-sass": "^7.0.3"
   },
   "author": "",
   "license": "ISC",
@@ -42,7 +42,7 @@
     "leaflet-sleep": "^0.5.1",
     "leaflet.locatecontrol": "^0.68.0",
     "leaflet.markercluster": "^1.4.1",
-    "npm": "^6.14.6",
+    "npm": "^8.19.2",
     "polyline-encoded": "0.0.8",
     "requirejs": "^2.3.6",
     "typeahead.js": "^0.11.1"
