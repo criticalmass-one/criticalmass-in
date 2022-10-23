@@ -87,7 +87,8 @@
         "symfony/doctrine-bridge": "^4.0",
         "symfony/proxy-manager-bridge": "4.4.x-dev",
         "symfony/framework-bundle": "^4.1",
-        "symfony/dotenv": "^4.1"
+        "symfony/dotenv": "^4.1",
+        "maltehuebner/dataquery-bundle": "dev-main"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "*",

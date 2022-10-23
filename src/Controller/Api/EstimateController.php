@@ -2,8 +2,8 @@
 
 namespace App\Controller\Api;
 
-use App\Criticalmass\DataQuery\DataQueryManager\DataQueryManagerInterface;
-use App\Criticalmass\DataQuery\RequestParameterList\RequestParameterList;
+use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
+use MalteHuebner\DataQueryBundle\RequestParameterList\RequestParameterList;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
 use App\Event\RideEstimate\RideEstimateCreatedEvent;

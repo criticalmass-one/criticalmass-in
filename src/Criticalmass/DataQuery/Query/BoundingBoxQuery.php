@@ -2,8 +2,10 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
-use App\Criticalmass\DataQuery\Annotation\QueryAnnotation as DataQuery;
-use App\Criticalmass\DataQuery\Validator\Constraint\BoundingBoxValues;
+use MalteHuebner\DataQueryBundle\Annotation\QueryAnnotation as DataQuery;
+use MalteHuebner\DataQueryBundle\Query\AbstractQuery;
+use MalteHuebner\DataQueryBundle\Query\ElasticQueryInterface;
+use MalteHuebner\DataQueryBundle\Validator\Constraint\BoundingBoxValues;
 use Symfony\Component\Validator\Constraints as Constraints;
 
 /**
