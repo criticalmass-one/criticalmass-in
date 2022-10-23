@@ -15,136 +15,120 @@ use JMS\Serializer\Annotation as JMS;
 class TrackImportCandidate
 {
     /**
-     * @var int $id
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      * @JMS\Expose
      * @JMS\Type("int")
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
-     * @var User $user
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="trackImportCandidates")
      * @ORM\JoinColumn(nullable=false)
      * @JMS\Expose
      * @JMS\Type("Relation<App\Entity\User>")
      */
-    protected $user;
+    protected ?User $user = null;
 
     /**
-     * @var Ride $ride
      * @ORM\ManyToOne(targetEntity="App\Entity\Ride", inversedBy="trackImportCandidates")
      * @ORM\JoinColumn(nullable=false)
      * @JMS\Expose
      * @JMS\Type("Relation<App\Entity\Ride>")
      */
-    private $ride;
+    private ?Ride $ride = null;
 
     /**
-     * @var int $activityId
      * @ORM\Column(type="bigint")
      * @JMS\Expose
      * @JMS\Type("int")
      */
-    protected $activityId;
+    protected ?int $activityId = null;
 
     /**
-     * @var string $name
      * @ORM\Column(type="string")
      * @JMS\Expose
      * @JMS\Type("string")
      */
-    protected $name;
+    protected ?string $name = null;
 
     /**
-     * @var float $distance
      * @ORM\Column(type="float")
      * @JMS\Expose
      * @JMS\Type("float")
      */
-    protected $distance;
+    protected ?float $distance = null;
 
     /**
-     * @var int $elapsedTime
      * @ORM\Column(type="integer")
      * @JMS\Expose
      * @JMS\Type("int")
      */
-    protected $elapsedTime;
+    protected ?int $elapsedTime = null;
 
     /**
-     * @var string $type
      * @ORM\Column(type="string")
      * @JMS\Expose
      * @JMS\Type("string")
      */
-    protected $type;
+    protected ?string $type = null;
 
     /**
-     * @var \DateTime $startDateTime
      * @ORM\Column(type="datetime")
      * @JMS\Expose
      * @JMS\Type("DateTime")
      */
-    protected $startDateTime;
+    protected ?\DateTime $startDateTime = null;
 
     /**
-     * @var float $startLatitude
      * @ORM\Column(type="float")
      * @JMS\Expose
      * @JMS\Type("float")
      */
-    protected $startLatitude;
+    protected ?float $startLatitude = null;
 
     /**
-     * @var float $startLongitude
      * @ORM\Column(type="float")
      * @JMS\Expose
      * @JMS\Type("float")
      */
-    protected $startLongitude;
+    protected ?float $startLongitude = null;
 
     /**
-     * @var float $endLatitude
      * @ORM\Column(type="float")
      * @JMS\Expose
      * @JMS\Type("float")
      */
-    protected $endLatitude;
+    protected ?float $endLatitude = null;
 
     /**
-     * @var float $endLongitude
      * @ORM\Column(type="float")
      * @JMS\Expose
      * @JMS\Type("float")
      */
-    protected $endLongitude;
+    protected ?float $endLongitude = null;
 
     /**
-     * @var string $polyline
      * @ORM\Column(type="text")
      * @JMS\Expose
      * @JMS\Type("string")
      */
-    protected $polyline;
+    protected ?string $polyline = null;
 
     /**
-     * @var \DateTime $createdAt
      * @ORM\Column(type="datetime")
      * @JMS\Expose
      * @JMS\Type("DateTime")
      */
-    protected $createdAt;
+    protected ?\DateTime $createdAt;
 
     /**
-     * @var bool $rejected
      * @ORM\Column(type="boolean")
      * @JMS\Expose
      * @JMS\Type("bool")
      */
-    protected $rejected = false;
+    protected bool $rejected = false;
 
     public function __construct()
     {

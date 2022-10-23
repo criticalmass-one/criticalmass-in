@@ -36,11 +36,7 @@ parameters:
     upload_destination.ride_photo: '%kernel.project_dir%/public/rides'
     upload_destination.frontpage_teaser: '%kernel.project_dir%/public/teaser'
     upload_destination.user_photo: '%kernel.project_dir%/public/users'
-    upload_destination.heatmap_tile: '%kernel.project_dir%/public/heatmaps'
     staticmaps.host: '%env(STATICMAPS_HOST)%'
-    yourls.api_hostname: '%env(YOURLS_API_HOSTNAME)%'
-    yourls.api_username: '%env(YOURLS_API_USERNAME)%'
-    yourls.api_password: '%env(YOURLS_API_PASSWORD)%'
     assets_version: '%env(ASSETS_VERSION)%'
 
 services:
@@ -80,12 +76,6 @@ services:
         tags: ['controller.service_arguments']
 
     Symfony\Component\Routing\RouteCollection: ~
-
-    Caldera\YourlsApiManager\YourlsApiManager:
-        arguments:
-            - '%yourls.api_hostname%'
-            - '%yourls.api_username%'
-            - '%yourls.api_password%'
 
     Sonata\SeoBundle\Seo\SeoPageInterface:
         alias: sonata.seo.page.default
@@ -132,7 +122,7 @@ services:
 
     App\Criticalmass\ElasticCityFinder\ElasticCityFinder:
         arguments:
-            $finder: '@fos_elastica.finder.criticalmass_city.city'
+            $finder: '@fos_elastica.finder.criticalmass_city'
 
     App\Serializer\JMSSerializer\Handler\RelationHandler:
         tags:
@@ -152,13 +142,13 @@ services:
         arguments:
             $class: '%fos_user.model.user.class%'
 
-    App\Controller\OAuthServer\AuthorizeController:
-        arguments:
-            $authorizeForm: '@fos_oauth_server.authorize.form'
-            $authorizeFormHandler: '@fos_oauth_server.authorize.form.handler.default'
-            $oAuth2Server: '@fos_oauth_server.server'
-        tags:
-            - controller.service_arguments
-
     App\Criticalmass\Corona\ResultFetcher\ResultFetcherInterface:
         alias: App\Criticalmass\Corona\ResultFetcher\CachedResultFetcher
+
+    App\Criticalmass\CriticalmassBlog\CriticalmassBlogInterface:
+        alias: App\Criticalmass\CriticalmassBlog\CachedCriticalmassBlog
+
+    App\Controller\Search\SearchController:
+        arguments:
+            $cityFinder: '@fos_elastica.finder.criticalmass_city'
+            $rideFinder: '@fos_elastica.finder.criticalmass_ride'

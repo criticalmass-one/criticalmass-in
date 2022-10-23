@@ -64,11 +64,13 @@
 
     <div class="row">
         <div class="col-xs-12 col-sm-4 col-sm-push-8">
+            {% if feature('corona') and ride is defined and ride.showCoronaIncidenceWarning and ride.city.showCoronaIncidenceWarning %}
             <div class="row">
                 <div class="col-md-12">
                     {% include 'Corona/_corona.html.twig' with { 'ride': ride } %}
                 </div>
             </div>
+            {% endif %}
 
             <div class="row">
                 <div class="col-md-12">

@@ -2,8 +2,8 @@
 
 namespace App\Controller\Api;
 
-use App\Criticalmass\DataQuery\DataQueryManager\DataQueryManagerInterface;
-use App\Criticalmass\DataQuery\RequestParameterList\RequestToListConverter;
+use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
+use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Criticalmass\EntityMerger\EntityMergerInterface;
 use App\Entity\City;
 use App\Entity\Ride;
@@ -406,6 +406,7 @@ class RideController extends BaseController
      * )
      *
      * @ParamConverter("city", class="App:City")
+     * @Route("/{citySlug}/{rideIdentifier}", name="caldera_criticalmass_rest_ride_create", methods={"PUT"})
      */
     public function createRideAction(Request $request, SerializerInterface $serializer, City $city, ManagerRegistry $managerRegistry, ValidatorInterface $validator): Response
     {
@@ -491,6 +492,7 @@ class RideController extends BaseController
      * )
      *
      * @ParamConverter("ride", class="App:Ride")
+     * @Route("/{citySlug}/{rideIdentifier}", name="caldera_criticalmass_rest_ride_update", methods={"POST"})
      */
     public function updateRideAction(Request $request, Ride $ride, SerializerInterface $serializer, ManagerRegistry $managerRegistry, ValidatorInterface $validator, EntityMergerInterface $entityMerger): Response
     {
