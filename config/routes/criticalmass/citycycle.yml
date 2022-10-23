@@ -10,10 +10,6 @@ caldera_criticalmass_citycycle_add:
     path:  /{citySlug}/cycles/add
     controller: App\Controller\CityCycle\CityCycleManagementController::addAction
 
-caldera_criticalmass_citycycle_analyze:
-    path:  /{citySlug}/cycles/{cityCycleId}/analyze
-    controller: App\Controller\CityCycle\CityCycleAnalyzeController::analyzeAction
-
 caldera_criticalmass_citycycle_edit:
     path:  /{citySlug}/cycles/{cityCycleId}/edit
     controller: App\Controller\CityCycle\CityCycleManagementController::editAction
