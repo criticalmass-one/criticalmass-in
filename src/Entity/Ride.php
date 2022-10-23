@@ -2,8 +2,7 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\DataQuery\Annotation\EntityAnnotation as DataQuery;
-use App\Criticalmass\Geocoding\ReverseGeocodeable;
+use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation as DataQuery;
 use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
 use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
 use App\Criticalmass\Router\Annotation as Routing;
@@ -37,7 +36,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Vich\Uploadable
  * @Routing\DefaultRoute(name="caldera_criticalmass_ride_show")
  */
-class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, ReverseGeocodeable, OrderedEntityInterface, CoordinateInterface
+class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, OrderedEntityInterface, CoordinateInterface
 {
     /**
      * @ORM\Id
@@ -399,7 +398,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         return $this->dateTime;
     }
 
-    public function setLocation(string $location = null): ReverseGeocodeable
+    public function setLocation(string $location = null): self
     {
         $this->location = $location;
 

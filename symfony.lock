@@ -123,12 +123,6 @@
         "version": "v0.4.2"
     },
     "ezimuel/guzzlestreams": {
-        "version": "3.0.1"
-    },
-    "ezimuel/ringphp": {
-        "version": "1.2.0"
-    },
-    "ezimuel/guzzlestreams": {
         "version": "3.0-dev"
     },
     "ezimuel/ringphp": {
@@ -196,12 +190,6 @@
     },
     "friendsofsymfony/user-bundle": {
         "version": "v2.1.2"
-    },
-    "geocoder-php/common-http": {
-        "version": "4.1.0"
-    },
-    "geocoder-php/nominatim-provider": {
-        "version": "5.0.0"
     },
     "gregwar/captcha": {
         "version": "v1.1.9"
@@ -316,6 +304,9 @@
     },
     "malenki/slug": {
         "version": "1.0.0"
+    },
+    "maltehuebner/dataquery-bundle": {
+        "version": "dev-main"
     },
     "maltehuebner/impress-bundle": {
         "version": "0.1"
@@ -472,9 +463,6 @@
     },
     "phpseclib/phpseclib": {
         "version": "3.0.14"
-    },
-    "phpspec/prophecy": {
-        "version": "1.7.6"
     },
     "phpstan/phpdoc-parser": {
         "version": "1.5.1"
@@ -946,9 +934,6 @@
     },
     "webmozart/path-util": {
         "version": "2.3.0"
-    },
-    "willdurand/geocoder": {
-        "version": "4.2.0"
     },
     "willdurand/jsonp-callback-validator": {
         "version": "v1.1.0"

@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\DataQuery\Annotation\EntityAnnotation as DataQuery;
+use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation as DataQuery;
 use App\Criticalmass\Router\Annotation as Routing;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
