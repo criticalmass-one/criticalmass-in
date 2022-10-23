@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\DataQuery\Annotation\EntityAnnotation as DataQuery;
+use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation as DataQuery;
 use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
 use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
 use App\Criticalmass\Router\Annotation as Routing;

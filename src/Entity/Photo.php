@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\DataQuery\Annotation\EntityAnnotation as DataQuery;
+use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation as DataQuery;
 use App\Criticalmass\Image\PhotoManipulator\PhotoInterface\ManipulateablePhotoInterface;
 use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
 use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
@@ -183,6 +183,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
      * @ORM\Column(type="string", length=255, nullable=true)
      * @JMS\Expose()
      * @JMS\Groups({"ride-list"})
+     * @DataQuery\Queryable()
      * @DataQuery\Sortable()
      */
     protected ?string $location = null;

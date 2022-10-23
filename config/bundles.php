@@ -38,4 +38,5 @@ return [
     Sonata\BlockBundle\SonataBlockBundle::class => ['all' => true],
     MalteHuebner\OrderedEntitiesBundle\MalteHuebnerOrderedEntitiesBundle::class => ['all' => true],
     MalteHuebner\ImpressBundle\MalteHuebnerImpressBundle::class => ['all' => true],
+    MalteHuebner\DataQueryBundle\MalteHuebnerDataQueryBundle::class => ['all' => true],
 ];

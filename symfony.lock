@@ -299,6 +299,9 @@
     "malenki/slug": {
         "version": "1.0.0"
     },
+    "maltehuebner/dataquery-bundle": {
+        "version": "dev-main"
+    },
     "maltehuebner/impress-bundle": {
         "version": "0.1"
     },
