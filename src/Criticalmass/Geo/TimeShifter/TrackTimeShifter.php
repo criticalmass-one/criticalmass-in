@@ -8,19 +8,11 @@ use App\Criticalmass\Geo\GpxWriter\GpxWriterInterface;
 
 class TrackTimeShifter extends TimeShifter implements TrackTimeShifterInterface
 {
-    /** @var TrackToPositionListConverter $trackToPositionListConverter */
-    protected $trackToPositionListConverter;
-
     /** @var Track $track */
     protected $track;
 
-    /** @var GpxWriterInterface $gpxWriter */
-    protected $gpxWriter;
-
-    public function __construct(TrackToPositionListConverter $trackToPositionListConverter, GpxWriterInterface $gpxWriter)
+    public function __construct(protected TrackToPositionListConverter $trackToPositionListConverter, protected GpxWriterInterface $gpxWriter)
     {
-        $this->trackToPositionListConverter = $trackToPositionListConverter;
-        $this->gpxWriter = $gpxWriter;
     }
 
     public function loadTrack(Track $track): TrackTimeShifterInterface

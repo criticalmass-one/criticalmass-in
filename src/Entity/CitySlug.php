@@ -12,7 +12,7 @@ use JMS\Serializer\Annotation as JMS;
  * @ORM\Table(name="cityslug")
  * @JMS\ExclusionPolicy("all")
  */
-class CitySlug implements RouteableInterface
+class CitySlug implements RouteableInterface, \Stringable
 {
     /**
      * @ORM\Id
@@ -24,22 +24,21 @@ class CitySlug implements RouteableInterface
     protected ?int $id = null;
 
     /**
-     * @ORM\Column(type="string", length=50)
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
-     * @Routing\RouteParameter(name="citySlug")
-     */
-    protected ?string $slug = null;
-
-    /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="slugs", fetch="EAGER")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected ?City $city = null;
 
-    public function __construct(string $slug = null)
+    public function __construct(
+        /**
+         * @ORM\Column(type="string", length=50)
+         * @JMS\Expose
+         * @JMS\Groups({"ride-list"})
+         * @Routing\RouteParameter(name="citySlug")
+         */
+        protected ?string $slug = null
+    )
     {
-        $this->slug = $slug;
     }
 
     public function getId(): ?int

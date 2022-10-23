@@ -13,14 +13,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class AssignExifCommand extends Command
 {
-    protected ManagerRegistry $registry;
-    protected ExifHandlerInterface $exifHandler;
-
-    public function __construct(ManagerRegistry $registry, ExifHandlerInterface $exifHandler)
+    public function __construct(protected ManagerRegistry $registry, protected ExifHandlerInterface $exifHandler)
     {
-        $this->registry = $registry;
-        $this->exifHandler = $exifHandler;
-
         parent::__construct();
     }
 
@@ -42,7 +36,7 @@ class AssignExifCommand extends Command
 
         $photoList = $this->registry->getRepository(Photo::class)->findPhotosWithoutExifData($limit, $offset, $overwrite);
 
-        $progressBar = new ProgressBar($output, count($photoList));
+        $progressBar = new ProgressBar($output, is_countable($photoList) ? count($photoList) : 0);
 
         /** @var Photo $photo */
         foreach ($photoList as $photo) {

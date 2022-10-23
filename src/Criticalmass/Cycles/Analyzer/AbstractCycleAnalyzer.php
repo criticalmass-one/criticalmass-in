@@ -22,31 +22,14 @@ abstract class AbstractCycleAnalyzer implements CycleAnalyzerInterface
     /** @var array $simulatedRideList */
     protected $simulatedRideList = [];
 
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    /** @var RideCalculatorInterface $rideCalculator */
-    protected $rideCalculator;
-
     /** @var \DateTime $startDateTime */
     protected $startDateTime = null;
 
     /** @var \DateTime $endDateTime */
     protected $endDateTime = null;
 
-    /** @var CycleAnalyzerModelFactoryInterface $analyzerModelFactory */
-    protected $analyzerModelFactory;
-
-    public function __construct(
-        ManagerRegistry $registry,
-        RideCalculatorInterface $rideCalculator,
-        CycleAnalyzerModelFactoryInterface $analyzerModelFactory
-    ) {
-        $this->registry = $registry;
-
-        $this->rideCalculator = $rideCalculator;
-
-        $this->analyzerModelFactory = $analyzerModelFactory;
+    public function __construct(protected ManagerRegistry $registry, protected RideCalculatorInterface $rideCalculator, protected CycleAnalyzerModelFactoryInterface $analyzerModelFactory)
+    {
     }
 
     public function setCity(City $city): CycleAnalyzerInterface

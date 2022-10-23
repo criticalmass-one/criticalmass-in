@@ -16,16 +16,8 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
 
 class AutoAssignNetworkCommand extends Command
 {
-    protected ManagerRegistry $doctrine;
-    protected NetworkDetectorInterface $networkDetector;
-    protected NetworkManagerInterface $networkManager;
-
-    public function __construct(ManagerRegistry $doctrine, NetworkManagerInterface $networkManager, NetworkDetectorInterface $networkDetector)
+    public function __construct(protected ManagerRegistry $doctrine, protected NetworkManagerInterface $networkManager, protected NetworkDetectorInterface $networkDetector)
     {
-        $this->doctrine = $doctrine;
-        $this->networkDetector = $networkDetector;
-        $this->networkManager = $networkManager;
-
         parent::__construct(null);
 
     }
@@ -120,6 +112,7 @@ class AutoAssignNetworkCommand extends Command
 
     protected function createNetworkList(): array
     {
+        $networkList = [];
         /** @var NetworkInterface $network */
         foreach ($this->networkManager->getNetworkList() as $network) {
             $networkList[$network->getIdentifier()] = $network->getName();

@@ -9,12 +9,8 @@ use App\Criticalmass\Heatmap\Tile\TilePersister;
 
 class CanvasCutter
 {
-    /** @var TilePersister $tilePersister */
-    protected $tilePersister;
-
-    public function __construct(TilePersister $tilePersister)
+    public function __construct(protected TilePersister $tilePersister)
     {
-        $this->tilePersister = $tilePersister;
     }
 
     public function cutCanvas(HeatmapInterface $heatmap, Canvas $canvas, int $zoomLevel): CanvasCutter

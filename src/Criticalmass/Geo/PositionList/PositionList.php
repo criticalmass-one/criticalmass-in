@@ -6,11 +6,8 @@ use App\Criticalmass\Geo\EntityInterface\PositionInterface;
 
 class PositionList implements PositionListInterface
 {
-    protected array $list = [];
-
-    public function __construct(array $list = [])
+    public function __construct(protected array $list = [])
     {
-        $this->list = $list;
     }
 
     public function getStartDateTime(): \DateTime

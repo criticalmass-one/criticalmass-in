@@ -10,9 +10,6 @@ use Doctrine\Migrations\AbstractMigration;
  */
 class Version20170628120727 extends AbstractMigration
 {
-    /**
-     * @param Schema $schema
-     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -21,9 +18,6 @@ class Version20170628120727 extends AbstractMigration
         $this->addSql('ALTER TABLE fos_user_user CHANGE google_id strava_id VARCHAR(255), CHANGE google_access_token strava_access_token VARCHAR(255)');
     }
 
-    /**
-     * @param Schema $schema
-     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs

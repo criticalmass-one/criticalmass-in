@@ -4,25 +4,13 @@ namespace App\Criticalmass\Profile\ParticipationTable;
 
 use App\Entity\Participation;
 
-class ParticipationDay implements \Countable, \Iterator
+class ParticipationDay implements \Countable, \Iterator, \Stringable
 {
-    /** @var int $year */
-    protected $year;
-
-    /** @var int $month */
-    protected $month;
-
-    /** @var int $day */
-    protected $day;
-
     /** @var array $participationList */
     protected $participationList = [];
 
-    public function __construct(int $year, int $month, int $day)
+    public function __construct(protected int $year, protected int $month, protected int $day)
     {
-        $this->year = $year;
-        $this->month = $month;
-        $this->day = $day;
     }
 
     public function addParticipation(Participation $participation): ParticipationDay

@@ -7,20 +7,17 @@ use JMS\Serializer\Annotation as JMS;
 /** @deprecated */
 class Error
 {
-    /**
-     * @JMS\Expose
-     */
-    protected int $httpStatusCode;
-
-    /**
-     * @JMS\Expose
-     */
-    protected string $errorMessage;
-
-    public function __construct(int $httpStatusCode, string $errorMessage)
+    public function __construct(
+        /**
+         * @JMS\Expose
+         */
+        protected int $httpStatusCode,
+        /**
+         * @JMS\Expose
+         */
+        protected string $errorMessage
+    )
     {
-        $this->httpStatusCode = $httpStatusCode;
-        $this->errorMessage = $errorMessage;
     }
 
     public function getHttpStatusCode(): int

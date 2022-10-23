@@ -4,5 +4,5 @@ namespace App\Event\Track;
 
 class TrackUploadedEvent extends AbstractTrackEvent
 {
-    const NAME = 'track.uploaded';
+    final const NAME = 'track.uploaded';
 }

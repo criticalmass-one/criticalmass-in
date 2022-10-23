@@ -14,13 +14,8 @@ use HWI\Bundle\OAuthBundle\Event\FormEvent as HwiFormEvent;
 
 class ProfilePhotoEventSubscriber implements EventSubscriberInterface
 {
-    protected ProfilePhotoGenerator $profilePhotoGenerator;
-    protected ManagerRegistry $registry;
-
-    public function __construct(ProfilePhotoGenerator $profilePhotoGenerator, ManagerRegistry $registry)
+    public function __construct(protected ProfilePhotoGenerator $profilePhotoGenerator, protected ManagerRegistry $registry)
     {
-        $this->profilePhotoGenerator = $profilePhotoGenerator;
-        $this->registry = $registry;
     }
 
     public static function getSubscribedEvents(): array

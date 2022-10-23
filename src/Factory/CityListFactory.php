@@ -10,14 +10,10 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class CityListFactory
 {
-    /** @var ManagerRegistry $doctrine */
-    protected $doctrine;
-
     protected $list = [];
 
-    public function __construct(ManagerRegistry $doctrine)
+    public function __construct(protected ManagerRegistry $doctrine)
     {
-        $this->doctrine = $doctrine;
     }
 
     public function getList(): array

@@ -13,12 +13,8 @@ class GpxReader implements GpxReaderInterface
     /** @var \SimpleXMLElement[]  $trackPointList */
     protected $trackPointList = [];
 
-    /** @var FilesystemInterface $filesystem */
-    protected $filesystem;
-
-    public function __construct(FilesystemInterface $filesystem)
+    public function __construct(protected FilesystemInterface $filesystem)
     {
-        $this->filesystem = $filesystem;
     }
 
     public function loadFromString(string $gpxString): GpxReaderInterface
@@ -32,7 +28,7 @@ class GpxReader implements GpxReaderInterface
     {
         try {
             $gpxString = $this->filesystem->read($filename);
-        } catch (\Exception $exception) {
+        } catch (\Exception) {
             throw new GpxFileNotFoundException(sprintf('File %s was not found.', $filename));
         }
 

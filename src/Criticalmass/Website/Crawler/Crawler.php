@@ -6,12 +6,8 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class Crawler implements CrawlerInterface
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(protected ManagerRegistry $registry)
     {
-        $this->registry = $registry;
     }
 
     public function crawlUrls(Crawlable $crawlable): array

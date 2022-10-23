@@ -33,7 +33,7 @@ class RidePhotoCollector extends AbstractTimelineCollector
     {
         foreach ($groupedEntities as $userGroup) {
             foreach ($userGroup as $rideGroup) {
-                $photoCounter = count($rideGroup);
+                $photoCounter = is_countable($rideGroup) ? count($rideGroup) : 0;
 
                 $item = new RidePhotoItem();
 

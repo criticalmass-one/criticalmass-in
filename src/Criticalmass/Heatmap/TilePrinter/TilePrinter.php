@@ -14,12 +14,8 @@ use InvalidArgumentException;
 
 class TilePrinter
 {
-    /** @var ColorStyleInterface $colorStyle */
-    protected $colorStyle;
-
-    public function __construct(ColorStyleInterface $colorStyle)
+    public function __construct(protected ColorStyleInterface $colorStyle)
     {
-        $this->colorStyle = $colorStyle;
     }
 
     public function printTile(Tile $tile, CoordInterface $coord): Tile
@@ -33,7 +29,7 @@ class TilePrinter
             $point = new Point($x, $y);
 
             $tile = $this->draw($tile, $point);
-        } catch (InvalidArgumentException $exception) {
+        } catch (InvalidArgumentException) {
         }
 
         return $tile;

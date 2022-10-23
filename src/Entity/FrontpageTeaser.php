@@ -14,7 +14,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Entity(repositoryClass="App\Repository\FrontpageTeaserRepository")
  * @Vich\Uploadable
  */
-class FrontpageTeaser implements PhotoInterface
+class FrontpageTeaser implements PhotoInterface, \Stringable
 {
     /**
      * @ORM\Id

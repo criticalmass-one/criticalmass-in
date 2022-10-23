@@ -40,6 +40,8 @@ class UrlGenerator extends AbstractUrlGenerator
 
     public function staticmapsRide(Ride $ride, int $width = null, int $height = null, int $zoom = null): string
     {
+        $latitude = null;
+        $longitude = null;
         if ($ride->getLocation() && $ride->getLatitude() && $ride->getLongitude()) {
             $latitude = $ride->getLatitude();
             $longitude = $ride->getLongitude();

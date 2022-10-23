@@ -4,16 +4,8 @@ namespace App\Criticalmass\Profile\Streak;
 
 class Streak
 {
-    protected $startDateTime;
-    protected $endDateTime;
-    protected $rideList = [];
-
-    public function __construct(\DateTime $startDateTime, \DateTime $endDateTime, array $rideList)
+    public function __construct(protected \DateTime $startDateTime, protected \DateTime $endDateTime, protected array $rideList)
     {
-        $this->startDateTime = $startDateTime;
-        $this->endDateTime = $endDateTime;
-
-        $this->rideList = $rideList;
     }
 
     public function getStartDateTime(): \DateTime

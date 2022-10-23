@@ -7,16 +7,7 @@ use Imagine\Image\ImageInterface;
 class Tile
 {
     /** @const int SIZE */
-    const SIZE = 256;
-
-    /** @var int $tileX */
-    protected $tileX;
-
-    /** @var int $tileY */
-    protected $tileY;
-
-    /** @var int $zoomLevel */
-    protected $zoomLevel;
+    final const SIZE = 256;
 
     /** @var ImageInterface $oldImage */
     protected $oldImage;
@@ -24,11 +15,8 @@ class Tile
     /** @var ImageInterface $newImage */
     protected $newImage;
 
-    public function __construct(int $tileX, int $tileY, int $zoomLevel = null)
+    public function __construct(protected int $tileX, protected int $tileY, protected int $zoomLevel = null)
     {
-        $this->tileX = $tileX;
-        $this->tileY = $tileY;
-        $this->zoomLevel = $zoomLevel;
     }
 
     public function getTileX(): int

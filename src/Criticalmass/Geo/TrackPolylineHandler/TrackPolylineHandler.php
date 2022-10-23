@@ -12,16 +12,8 @@ use App\Criticalmass\Geo\PositionList\PositionListInterface;
 
 class TrackPolylineHandler implements TrackPolylineHandlerInterface
 {
-    /** @var PolylineGeneratorInterface $polylineGenerator */
-    protected $polylineGenerator;
-
-    /** @var TrackToPositionListConverter $trackToPositionListConverter */
-    protected $trackToPositionListConverter;
-
-    public function __construct(PolylineGenerator $polylineGenerator, TrackToPositionListConverter $trackToPositionListConverter)
+    public function __construct(protected PolylineGenerator $polylineGenerator, protected TrackToPositionListConverter $trackToPositionListConverter)
     {
-        $this->polylineGenerator = $polylineGenerator;
-        $this->trackToPositionListConverter = $trackToPositionListConverter;
     }
 
     public function handleTrack(Track $track): Track

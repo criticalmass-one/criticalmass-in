@@ -10,11 +10,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ParticipationEventSubscriber implements EventSubscriberInterface
 {
-    protected RideParticipationCalculatorInterface $rideParticipationCalculator;
-
-    public function __construct(RideParticipationCalculatorInterface $rideParticipationCalculator)
+    public function __construct(protected RideParticipationCalculatorInterface $rideParticipationCalculator)
     {
-        $this->rideParticipationCalculator = $rideParticipationCalculator;
     }
 
     public static function getSubscribedEvents(): array

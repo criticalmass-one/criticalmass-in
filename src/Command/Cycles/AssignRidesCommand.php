@@ -20,15 +20,10 @@ use Symfony\Component\Console\Question\Question;
 
 class AssignRidesCommand extends Command
 {
-    protected CycleAnalyzerInterface $cycleAnalyzer;
-    protected ManagerRegistry $registry;
     protected array $cycleCache = [];
 
-    public function __construct(CycleAnalyzerInterface $cycleAnalyzer, ManagerRegistry $registry)
+    public function __construct(protected CycleAnalyzerInterface $cycleAnalyzer, protected ManagerRegistry $registry)
     {
-        $this->cycleAnalyzer = $cycleAnalyzer;
-        $this->registry = $registry;
-
         parent::__construct();
     }
 
@@ -53,7 +48,7 @@ class AssignRidesCommand extends Command
 
         $rideList = $this->registry->getRepository(Ride::class)->findRides($fromDateTime, $untilDateTime, $city);
 
-        $output->writeln(sprintf('Found <info>%d</info> rides for city <comment>%s</comment>', count($rideList), $city->getCity()));
+        $output->writeln(sprintf('Found <info>%d</info> rides for city <comment>%s</comment>', is_countable($rideList) ? count($rideList) : 0, $city->getCity()));
 
         if ($input->getOption('no-interaction')) {
             $this->autoAssignRides($input, $output, $rideList);

@@ -4,5 +4,5 @@ namespace App\Event\City;
 
 class CityUpdatedEvent extends AbstractCityEvent
 {
-    const NAME = 'city.updated';
+    final const NAME = 'city.updated';
 }

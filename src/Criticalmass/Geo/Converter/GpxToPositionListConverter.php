@@ -9,12 +9,8 @@ use App\Criticalmass\Geo\PositionList\PositionList;
 
 class GpxToPositionListConverter
 {
-    /** @var GpxReaderInterface $gpxReader */
-    protected $gpxReader;
-
-    public function __construct(GpxReaderInterface $gpxReader)
+    public function __construct(protected GpxReaderInterface $gpxReader)
     {
-        $this->gpxReader = $gpxReader;
     }
 
     public function convert(string $filename): ?PositionList

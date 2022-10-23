@@ -6,19 +6,16 @@ use JMS\Serializer\Annotation as JMS;
 
 class Errors
 {
-    /**
-     * @JMS\Expose
-     */
-    protected int $httpStatusCode;
-
-    /**
-     * @JMS\Expose
-     */
-    protected array $errorMessageList;
-
-    public function __construct(int $httpStatusCode, array $errorMessageList)
+    public function __construct(
+        /**
+         * @JMS\Expose
+         */
+        protected int $httpStatusCode,
+        /**
+         * @JMS\Expose
+         */
+        protected array $errorMessageList
+    )
     {
-        $this->httpStatusCode = $httpStatusCode;
-        $this->errorMessageList = $errorMessageList;
     }
 }

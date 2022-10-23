@@ -8,20 +8,8 @@ use App\Entity\User;
 
 class UserHeatmapTrackModel
 {
-    /** @var User $user */
-    protected $user;
-
-    /** @var Heatmap $heatmap */
-    protected $heatmap;
-
-    /** @var array $trackList */
-    protected $trackList;
-
-    public function __construct(User $user, Heatmap $heatmap, array $trackList = [])
+    public function __construct(protected User $user, protected Heatmap $heatmap, protected array $trackList = [])
     {
-        $this->user = $user;
-        $this->heatmap = $heatmap;
-        $this->trackList = $trackList;
     }
 
     public function getUser(): User

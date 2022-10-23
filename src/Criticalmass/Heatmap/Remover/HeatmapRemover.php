@@ -8,16 +8,8 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class HeatmapRemover implements HeatmapRemoverInterface
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    /** @var FilesystemInterface $filesystem */
-    protected $filesystem;
-
-    public function __construct(ManagerRegistry $registry, FilesystemInterface $filesystem)
+    public function __construct(protected ManagerRegistry $registry, protected FilesystemInterface $filesystem)
     {
-        $this->registry = $registry;
-        $this->filesystem = $filesystem;
     }
 
     public function remove(Heatmap $heatmap): HeatmapRemoverInterface

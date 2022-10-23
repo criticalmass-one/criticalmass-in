@@ -9,12 +9,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 abstract class AbstractParamConverter implements ParamConverterInterface
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(protected ManagerRegistry $registry)
     {
-        $this->registry = $registry;
     }
 
     public function supports(ParamConverter $configuration): bool

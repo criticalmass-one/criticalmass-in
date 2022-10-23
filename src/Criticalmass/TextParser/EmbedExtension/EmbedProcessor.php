@@ -9,11 +9,8 @@ use League\CommonMark\Inline\Element\Text;
 
 final class EmbedProcessor
 {
-    protected EmbedderInterface $embedder;
-
-    public function __construct(EmbedderInterface $embedder)
+    public function __construct(protected EmbedderInterface $embedder)
     {
-        $this->embedder = $embedder;
     }
 
     public function __invoke(DocumentParsedEvent $e)

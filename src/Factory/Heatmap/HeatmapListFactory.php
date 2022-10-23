@@ -10,12 +10,8 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class HeatmapListFactory implements HeatmapListFactoryInterface
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(protected ManagerRegistry $registry)
     {
-        $this->registry = $registry;
     }
 
     /**

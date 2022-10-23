@@ -6,16 +6,8 @@ use Caldera\GeoBasic\Coord\CoordInterface;
 
 class Path
 {
-    /** @var CoordInterface $startCoord */
-    protected $startCoord;
-
-    /** @var CoordInterface $endCoord */
-    protected $endCoord;
-
-    public function __construct(CoordInterface $startCoord, CoordInterface $endCoord)
+    public function __construct(protected CoordInterface $startCoord, protected CoordInterface $endCoord)
     {
-        $this->startCoord = $startCoord;
-        $this->endCoord = $endCoord;
     }
 
     public function getStartCoord(): CoordInterface

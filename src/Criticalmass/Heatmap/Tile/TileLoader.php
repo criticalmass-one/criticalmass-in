@@ -9,16 +9,8 @@ use League\Flysystem\FilesystemInterface;
 
 class TileLoader
 {
-    /** @var FilesystemInterface $filesystem */
-    protected $filesystem;
-
-    /** @var TileFactory $tileFactory */
-    protected $tileFactory;
-
-    public function __construct(TileFactory $tileFactory, FilesystemInterface $filesystem)
+    public function __construct(protected TileFactory $tileFactory, protected FilesystemInterface $filesystem)
     {
-        $this->filesystem = $filesystem;
-        $this->tileFactory = $tileFactory;
     }
 
     public function load(HeatmapInterface $heatmap, int $tileX, int $tileY, int $zoomLevel): Tile

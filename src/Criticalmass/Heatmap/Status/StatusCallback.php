@@ -9,12 +9,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class StatusCallback
 {
-    /** @var OutputInterface */
-    protected $output;
-
-    public function __construct(OutputInterface $output)
+    public function __construct(protected OutputInterface $output)
     {
-        $this->output = $output;
     }
 
     public function onTrack(Status $status, Track $track): void

@@ -15,15 +15,6 @@ abstract class AbstractHeatmapGenerator implements HeatmapGeneratorInterface
     /** @var HeatmapInterface $heatmap */
     protected $heatmap;
 
-    /** @var TrackToPositionListConverter $trackToPositionListConverter */
-    protected $trackToPositionListConverter;
-
-    /** @var CanvasCutter $canvasCutter */
-    protected $canvasCutter;
-
-    /** @var CanvasFactory $canvasFactory */
-    protected $canvasFactory;
-
     /** @var int $paintedTracks */
     protected $paintedTracks = 0;
 
@@ -33,19 +24,8 @@ abstract class AbstractHeatmapGenerator implements HeatmapGeneratorInterface
     /** @var StatusCallback $statusCallback */
     protected $statusCallback;
 
-    /** @var TilePrinter $tilePrinter */
-    protected $tilePrinter;
-
-    /** @var TrackManagerInterface $trackManager */
-    protected $trackManager;
-
-    public function __construct(TrackToPositionListConverter $trackToPositionListConverter, CanvasCutter $canvasCutter, CanvasFactory $canvasFactory, TilePrinter $tilePrinter, TrackManagerInterface $trackManager)
+    public function __construct(protected TrackToPositionListConverter $trackToPositionListConverter, protected CanvasCutter $canvasCutter, protected CanvasFactory $canvasFactory, protected TilePrinter $tilePrinter, protected TrackManagerInterface $trackManager)
     {
-        $this->trackToPositionListConverter = $trackToPositionListConverter;
-        $this->canvasCutter = $canvasCutter;
-        $this->canvasFactory = $canvasFactory;
-        $this->tilePrinter = $tilePrinter;
-        $this->trackManager = $trackManager;
     }
 
     public function setHeatmap(HeatmapInterface $heatmap): HeatmapGeneratorInterface

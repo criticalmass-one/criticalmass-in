@@ -14,14 +14,8 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 class ListCyclesCommand extends Command
 {
-    protected ManagerRegistry $registry;
-    protected TranslatorInterface $translator;
-
-    public function __construct(ManagerRegistry $registry, TranslatorInterface $translator)
+    public function __construct(protected ManagerRegistry $registry, protected TranslatorInterface $translator)
     {
-        $this->registry = $registry;
-        $this->translator = $translator;
-
         parent::__construct();
     }
 

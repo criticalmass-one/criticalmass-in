@@ -4,9 +4,6 @@ namespace App\Criticalmass\Heatmap\DimensionCalculator;
 
 class HeatmapDimension
 {
-    /** @var int $zoomLevel */
-    protected $zoomLevel;
-
     /** @var int $topTile */
     protected $topTile;
 
@@ -31,9 +28,8 @@ class HeatmapDimension
     /** @var float $rightLongitude */
     protected $rightLongitude;
 
-    public function __construct(?int $zoomLevel)
+    public function __construct(protected ?int $zoomLevel)
     {
-        $this->zoomLevel = $zoomLevel;
     }
 
     public function getZoomLevel(): int

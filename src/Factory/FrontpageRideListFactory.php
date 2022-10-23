@@ -9,13 +9,10 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class FrontpageRideListFactory
 {
-    protected ManagerRegistry $doctrine;
-
     protected MonthList $monthList;
 
-    public function __construct(ManagerRegistry $doctrine)
+    public function __construct(protected ManagerRegistry $doctrine)
     {
-        $this->doctrine = $doctrine;
         $this->monthList = new MonthList();
     }
 

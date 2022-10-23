@@ -54,7 +54,7 @@ class ParticipationTable implements \Countable, \Iterator
         $counter = 0;
 
         foreach ($this->yearList as $year) {
-            $counter += count($year);
+            $counter += is_countable($year) ? count($year) : 0;
         }
 
         return $counter;

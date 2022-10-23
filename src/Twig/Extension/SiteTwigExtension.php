@@ -10,35 +10,24 @@ use Twig\TwigFunction;
 
 class SiteTwigExtension extends AbstractExtension
 {
-    protected TranslatorInterface $translator;
-    protected RouterInterface $router;
-
-    public function __construct(TranslatorInterface $translator, RouterInterface $router)
+    public function __construct(protected TranslatorInterface $translator, protected RouterInterface $router)
     {
-        $this->translator = $translator;
-        $this->router = $router;
     }
 
     public function getFilters(): array
     {
         return [
-            new TwigFilter('hashtagToCity', [$this, 'hashtagToCity'], array(
-                'is_safe' => array('html')
-            )),
+            new TwigFilter('hashtagToCity', [$this, 'hashtagToCity'], ['is_safe' => ['html']]),
         ];
     }
 
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('daysSince', [$this, 'daysSince'], array(
-                'is_safe' => array('html')
-            )),
-            new TwigFunction('today', [$this, 'today'], array(
-                'is_safe' => array('html')
-            )),
-            'instanceof' => new TwigFunction('instanceof', [$this, 'instanceof']),
-            'today' => new TwigFunction('today', [$this, 'today'])
+            new TwigFunction('daysSince', $this->daysSince(...), ['is_safe' => ['html']]),
+            new TwigFunction('today', $this->today(...), ['is_safe' => ['html']]),
+            'instanceof' => new TwigFunction('instanceof', $this->instanceof(...)),
+            'today' => new TwigFunction('today', $this->today(...))
         ];
     }
 

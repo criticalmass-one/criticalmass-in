@@ -19,16 +19,8 @@ abstract class AbstractPhotoManipulator implements PhotoManipulatorInterface
     /** @var ImagineInterface $imagine */
     protected $imagine;
 
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    /** @var PhotoStorageInterface $photoStorage */
-    protected $photoStorage;
-
-    public function __construct(ManagerRegistry $registry, PhotoStorageInterface $photoStorage)
+    public function __construct(protected ManagerRegistry $registry, protected PhotoStorageInterface $photoStorage)
     {
-        $this->registry = $registry;
-        $this->photoStorage = $photoStorage;
     }
 
     public function open(ManipulateablePhotoInterface $photo): PhotoManipulatorInterface

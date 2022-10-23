@@ -12,12 +12,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class SocialNetworkProfileEditType extends AbstractType
 {
-    /** @var NetworkManagerInterface $networkManager */
-    protected $networkManager;
-
-    public function __construct(NetworkManagerInterface $networkManager)
+    public function __construct(protected NetworkManagerInterface $networkManager)
     {
-        $this->networkManager = $networkManager;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

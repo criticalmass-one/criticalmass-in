@@ -10,9 +10,6 @@ use Doctrine\Migrations\AbstractMigration;
  */
 class Version20171005200315 extends AbstractMigration
 {
-    /**
-     * @param Schema $schema
-     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -22,9 +19,6 @@ class Version20171005200315 extends AbstractMigration
         $this->addSql('ALTER TABLE city_cycle_audit CHANGE validFrom validFrom DATE DEFAULT NULL COMMENT \'(DC2Type:date)\', CHANGE validUntil validUntil DATE DEFAULT NULL COMMENT \'(DC2Type:date)\'');
     }
 
-    /**
-     * @param Schema $schema
-     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs

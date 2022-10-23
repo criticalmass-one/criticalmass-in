@@ -22,7 +22,7 @@ class AveragePipette extends Pipette
                     if ($color->isOpaque()) {
                         $colorList[] = $color;
                     }
-                } catch (\Exception $exception) {
+                } catch (\Exception) {
 
                 }
             }

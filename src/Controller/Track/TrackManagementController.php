@@ -20,7 +20,7 @@ class TrackManagementController extends AbstractController
     /**
      * @Security("is_granted('ROLE_USER')")
      */
-    public function listAction(Request $request, UserInterface $user = null, PaginatorInterface $paginator)
+    public function listAction(Request $request, PaginatorInterface $paginator, UserInterface $user = null)
     {
         $query = $this->getTrackRepository()->findByUserQuery($user, null, false);
 

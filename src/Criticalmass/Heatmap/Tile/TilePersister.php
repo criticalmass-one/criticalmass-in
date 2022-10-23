@@ -8,12 +8,8 @@ use League\Flysystem\FilesystemInterface;
 
 class TilePersister
 {
-    /** @var FilesystemInterface $filesystem */
-    protected $filesystem;
-
-    public function __construct(FilesystemInterface $filesystem)
+    public function __construct(protected FilesystemInterface $filesystem)
     {
-        $this->filesystem = $filesystem;
     }
 
     public function save(HeatmapInterface $heatmap, Tile $tile): bool

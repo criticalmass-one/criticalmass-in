@@ -6,11 +6,7 @@ use Doctrine\Common\Annotations\Reader;
 
 abstract class AbstractParameterResolver implements ParameterResolverInterface
 {
-    /** @var Reader $annotationReader*/
-    protected $annotationReader;
-
-    public function __construct(Reader $annotationReader)
+    public function __construct(protected Reader $annotationReader)
     {
-        $this->annotationReader = $annotationReader;
     }
 }

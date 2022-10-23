@@ -11,10 +11,6 @@ use Symfony\Component\Templating\EngineInterface;
 
 class Timeline implements TimelineInterface
 {
-    protected ManagerRegistry $doctrine;
-
-    protected EngineInterface $templating;
-
     protected array $collectorList = [];
 
     protected array $items = [];
@@ -25,13 +21,8 @@ class Timeline implements TimelineInterface
 
     protected ?\DateTime $endDateTime = null;
 
-    protected FeatureManagerInterface $featureManager;
-
-    public function __construct(ManagerRegistry $doctrine, EngineInterface $templating, FeatureManagerInterface $featureManager)
+    public function __construct(protected ManagerRegistry $doctrine, protected EngineInterface $templating, protected FeatureManagerInterface $featureManager)
     {
-        $this->doctrine = $doctrine;
-        $this->templating = $templating;
-        $this->featureManager = $featureManager;
     }
 
     public function addCollector(AbstractTimelineCollector $collector): TimelineInterface
@@ -125,7 +116,7 @@ class Timeline implements TimelineInterface
 
     protected function templateNameForItem(ItemInterface $item): string
     {
-        $itemFullClassName = get_class($item);
+        $itemFullClassName = $item::class;
 
         $itemClassNamespaces = explode('\\', $itemFullClassName);
 

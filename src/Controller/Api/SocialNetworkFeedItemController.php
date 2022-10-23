@@ -114,9 +114,9 @@ class SocialNetworkFeedItemController extends BaseController
             $manager = $managerRegistry->getManager();
             $manager->persist($newSocialNetworkFeedItem);
             $manager->flush();
-        } catch (UniqueConstraintViolationException $exception) {
+        } catch (UniqueConstraintViolationException) {
             return $this->createError(Response::HTTP_CONFLICT, 'This feed item already exists.');
-        } catch (\Exception $exception) {
+        } catch (\Exception) {
             return $this->createError(Response::HTTP_INTERNAL_SERVER_ERROR, 'An unknown error occured. Please try again later or report this issue to criticalmass@caldera.cc.');
         }
 

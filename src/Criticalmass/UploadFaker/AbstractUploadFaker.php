@@ -6,7 +6,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 abstract class AbstractUploadFaker implements UploadFakerInterface
 {
-    const TMP = '/tmp';
+    final const TMP = '/tmp';
 
     /** @var Filesystem $filesystem */
     protected $filesystem;

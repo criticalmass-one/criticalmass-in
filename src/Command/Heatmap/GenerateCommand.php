@@ -19,9 +19,6 @@ class GenerateCommand extends Command
 
     protected static $defaultName = 'criticalmass:heatmap:generate';
 
-    protected HeatmapGenerator $heatmapGenerator;
-    protected ManagerRegistry $registry;
-
     protected function configure(): void
     {
         $this
@@ -30,11 +27,8 @@ class GenerateCommand extends Command
             ->addOption('max-tracks', 'mt', InputOption::VALUE_REQUIRED, 'Number of tracks to paint per call', self::DEFAULT_TRACKS);
     }
 
-    public function __construct(HeatmapGenerator $heatmapGenerator, ManagerRegistry $registry)
+    public function __construct(protected HeatmapGenerator $heatmapGenerator, protected ManagerRegistry $registry)
     {
-        $this->heatmapGenerator = $heatmapGenerator;
-        $this->registry = $registry;
-
         parent::__construct();
     }
 

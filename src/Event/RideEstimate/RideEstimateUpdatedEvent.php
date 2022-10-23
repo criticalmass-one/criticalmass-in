@@ -4,5 +4,5 @@ namespace App\Event\RideEstimate;
 
 class RideEstimateUpdatedEvent extends AbstractRideEstimateEvent
 {
-    const NAME = 'ride_estimate.updated';
+    final const NAME = 'ride_estimate.updated';
 }

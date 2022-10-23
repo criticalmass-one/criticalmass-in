@@ -17,12 +17,8 @@ use Symfony\Component\Console\Question\Question;
 
 class MergeDuplicateRidesCommand extends ListDuplicateRidesCommand
 {
-    protected RideMergerInterface $rideMerger;
-
-    public function __construct(ManagerRegistry $registry, DuplicateFinderInterface $duplicateFinder, RideMergerInterface $rideMerger)
+    public function __construct(ManagerRegistry $registry, DuplicateFinderInterface $duplicateFinder, protected RideMergerInterface $rideMerger)
     {
-        $this->rideMerger = $rideMerger;
-
         parent::__construct($registry, $duplicateFinder);
     }
 

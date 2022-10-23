@@ -10,13 +10,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SearchController extends AbstractController
 {
-    protected TransformedFinder $cityFinder;
-    protected TransformedFinder $rideFinder;
-
-    public function __construct(TransformedFinder $cityFinder, TransformedFinder $rideFinder)
+    public function __construct(protected TransformedFinder $cityFinder, protected TransformedFinder $rideFinder)
     {
-        $this->cityFinder = $cityFinder;
-        $this->rideFinder = $rideFinder;
     }
 
     protected function createCityQuery(string $queryPhrase): Query

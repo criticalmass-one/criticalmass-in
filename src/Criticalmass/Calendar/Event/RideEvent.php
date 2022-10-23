@@ -9,11 +9,9 @@ class RideEvent extends AbstractEvent
 {
     protected \DateTime $begin;
     protected \DateTime $end;
-    protected Ride $ride;
 
-    public function __construct(Ride $ride)
+    public function __construct(protected Ride $ride)
     {
-        $this->ride = $ride;
         $this->begin = $ride->getDateTime();
         $this->end = $ride->getDateTime();
     }

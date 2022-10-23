@@ -11,12 +11,8 @@ use Caldera\GeoBasic\Coord\Coord;
 
 class CanvasFactory
 {
-    /** @var TileLoader $loader */
-    protected $loader;
-
-    public function __construct(TileLoader $loader)
+    public function __construct(protected TileLoader $loader)
     {
-        $this->loader = $loader;
     }
 
     public function createFromHeatmapDimension(HeatmapDimension $heatmapDimension): Canvas

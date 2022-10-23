@@ -9,20 +9,16 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class TrackDecider implements TrackDeciderInterface
 {
-    const THRESHOLD = 0.75;
+    final const THRESHOLD = 0.75;
 
     /** @var array $voterList */
     protected $voterList = [];
 
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
     /** @var bool $debug */
     protected $debug = false;
 
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(protected ManagerRegistry $registry)
     {
-        $this->registry = $registry;
     }
 
     public function addVoter(VoterInterface $voter): TrackDeciderInterface
@@ -76,13 +72,7 @@ class TrackDecider implements TrackDeciderInterface
     protected function handleResultList(array $resultList): ?RideResult
     {
         if (count($resultList) > 0) {
-            usort($resultList, function (RideResult $rideResult1, RideResult $rideResult2): int {
-                if ($rideResult1->getResult() === $rideResult2->getResult()) {
-                    return 0;
-                }
-
-                return $rideResult1->getResult() > $rideResult2->getResult() ? -1 : 1;
-            });
+            usort($resultList, fn(RideResult $rideResult1, RideResult $rideResult2): int => $rideResult2->getResult() <=> $rideResult1->getResult());
 
             /** @var RideResult $bestResult */
             $bestResult = array_shift($resultList);

@@ -24,7 +24,7 @@ abstract class AbstractDelegatedRouter extends AbstractObjectRouter implements D
 
     protected function getFqcn(): string
     {
-        $routerClassname = get_class($this);
+        $routerClassname = $this::class;
 
         preg_match('/(.*)\\\([A-Za-z].*)Router/', $routerClassname, $matches);
 

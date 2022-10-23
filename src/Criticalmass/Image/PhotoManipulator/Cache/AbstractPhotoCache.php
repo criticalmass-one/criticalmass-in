@@ -8,19 +8,7 @@ use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 abstract class AbstractPhotoCache implements PhotoCacheInterface
 {
-    /** @var UploaderHelper $uploaderHelper */
-    protected $uploaderHelper;
-
-    /** @var CacheManager $cacheManager */
-    protected $cacheManager;
-
-    /** @var ImagineController $imagineController */
-    protected $imagineController;
-
-    public function __construct(UploaderHelper $uploaderHelper, CacheManager $cacheManager, ImagineController $imagineController)
+    public function __construct(protected UploaderHelper $uploaderHelper, protected CacheManager $cacheManager, protected ImagineController $imagineController)
     {
-        $this->uploaderHelper = $uploaderHelper;
-        $this->cacheManager = $cacheManager;
-        $this->imagineController = $imagineController;
     }
 }

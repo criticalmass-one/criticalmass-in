@@ -6,12 +6,8 @@ use Nmure\CrawlerDetectBundle\CrawlerDetect\CrawlerDetect;
 
 class BlackList implements BlackListInterface
 {
-    /** @var CrawlerDetect $crawlerDetect */
-    protected $crawlerDetect;
-
-    public function __construct(CrawlerDetect $crawlerDetect)
+    public function __construct(protected CrawlerDetect $crawlerDetect)
     {
-        $this->crawlerDetect = $crawlerDetect;
     }
 
     public function isBlackListed(string $userAgent = null): bool

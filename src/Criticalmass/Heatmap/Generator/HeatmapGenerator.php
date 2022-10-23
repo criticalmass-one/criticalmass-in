@@ -14,8 +14,8 @@ use App\Entity\Track;
 
 class HeatmapGenerator extends AbstractHeatmapGenerator
 {
-    const MIN_ZOOMLEVEL = 10;
-    const MAX_ZOOMLEVEL = 16;
+    final const MIN_ZOOMLEVEL = 10;
+    final const MAX_ZOOMLEVEL = 16;
 
     public function generate(): HeatmapGeneratorInterface
     {
@@ -32,7 +32,7 @@ class HeatmapGenerator extends AbstractHeatmapGenerator
             try {
                 $positionList = $this->trackToPositionListConverter->convert($track);
                 $pathList = PositionListToPathListConverter::convert($positionList);
-            } catch (\Exception $exception) {
+            } catch (\Exception) {
                 continue;
             }
 

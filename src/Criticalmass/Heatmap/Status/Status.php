@@ -4,9 +4,6 @@ namespace App\Criticalmass\Heatmap\Status;
 
 class Status
 {
-    /** @var int $maxTracks */
-    protected $maxTracks = 0;
-
     /** @var $paintedTracks */
     protected $paintedTracks = 0;
 
@@ -22,9 +19,8 @@ class Status
     /** @var int $memoryUsage */
     protected $memoryUsage = 0;
 
-    public function __construct(int $maxTracks)
+    public function __construct(protected int $maxTracks)
     {
-        $this->maxTracks = $maxTracks;
     }
 
     public function resetPaintedTiles(): Status

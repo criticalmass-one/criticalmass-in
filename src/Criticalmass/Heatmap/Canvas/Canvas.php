@@ -7,33 +7,11 @@ use Caldera\GeoBasic\Coord\CoordInterface;
 
 class Canvas
 {
-    /** @var int $width */
-    protected $width;
-
-    /** @var int $height */
-    protected $height;
-
-    /** @var CoordInterface $topLeftCoord */
-    protected $topLeftCoord;
-
-    /** @var int $topTileNumber */
-    protected $topTileNumber;
-
-    /** @var int $leftTileNumber */
-    protected $leftTileNumber;
-
     /** @var array $tiles */
     protected $tiles = [];
 
-    public function __construct(int $width, int $height, CoordInterface $topLeftCoord = null, int $topTileNumber = null, int $leftTileNumber = null)
+    public function __construct(protected int $width, protected int $height, protected CoordInterface $topLeftCoord = null, protected int $topTileNumber = null, protected int $leftTileNumber = null)
     {
-        $this->width = $width;
-        $this->height = $height;
-
-        $this->topTileNumber = $topTileNumber;
-        $this->leftTileNumber = $leftTileNumber;
-
-        $this->topLeftCoord = $topLeftCoord;
     }
 
     public function getWidth(): int

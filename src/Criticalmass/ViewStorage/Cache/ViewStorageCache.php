@@ -10,20 +10,8 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class ViewStorageCache implements ViewStorageCacheInterface
 {
-    /** @var ProducerInterface $producer */
-    protected $producer;
-
-    /** @var TokenStorageInterface $tokenStorage */
-    protected $tokenStorage;
-
-    /** @var SerializerInterface $serializer */
-    protected $serializer;
-
-    public function __construct(TokenStorageInterface $tokenStorage, ProducerInterface $producer, SerializerInterface $serializer)
+    public function __construct(protected TokenStorageInterface $tokenStorage, protected ProducerInterface $producer, protected SerializerInterface $serializer)
     {
-        $this->producer = $producer;
-        $this->tokenStorage = $tokenStorage;
-        $this->serializer = $serializer;
     }
 
     public function countView(ViewableEntity $viewable): void

@@ -8,6 +8,6 @@ class StravaActivity extends AbstractStravaNetwork
 
     public function accepts(string $url): bool
     {
-        return strpos($url, 'strava.com/activities/') !== false;
+        return str_contains($url, 'strava.com/activities/');
     }
 }

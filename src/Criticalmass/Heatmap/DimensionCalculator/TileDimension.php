@@ -4,24 +4,8 @@ namespace App\Criticalmass\Heatmap\DimensionCalculator;
 
 class TileDimension
 {
-    /** @var float $tileTopLatitude */
-    protected $tileTopLatitude;
-
-    /** @var float $tileLeftLongitude */
-    protected $tileLeftLongitude;
-
-    /** @var float $tileBottomLatitude */
-    protected $tileBottomLatitude;
-
-    /** @var float $tileRightLongitude */
-    protected $tileRightLongitude;
-
-    public function __construct(float $tileTopLatitude, float $tileLeftLongitude, float $tileBottomLatitude, float $tileRightLongitude)
+    public function __construct(protected float $tileTopLatitude, protected float $tileLeftLongitude, protected float $tileBottomLatitude, protected float $tileRightLongitude)
     {
-        $this->tileTopLatitude = $tileTopLatitude;
-        $this->tileLeftLongitude = $tileLeftLongitude;
-        $this->tileBottomLatitude = $tileBottomLatitude;
-        $this->tileRightLongitude = $tileRightLongitude;
     }
 
     public function getTileTopLatitude(): float

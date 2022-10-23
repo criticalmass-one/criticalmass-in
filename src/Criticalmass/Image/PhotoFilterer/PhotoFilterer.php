@@ -13,29 +13,14 @@ use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class PhotoFilterer
 {
-    /** @var ManagerRegistry $doctrine */
-    protected $doctrine = null;
-
-    /** @var UploaderHelper $uploaderHelper */
-    protected $uploaderHelper = null;
-
-    /** @var ImagineController $imagineController */
-    protected $imagineController = null;
-
     /** @var Ride $ride */
     protected $ride;
 
     /** @var OutputInterface $output */
     protected $output;
 
-    public function __construct(
-        ManagerRegistry $doctrine,
-        UploaderHelper $uploaderHelper,
-        ImagineController $imagineController
-    ) {
-        $this->doctrine = $doctrine;
-        $this->uploaderHelper = $uploaderHelper;
-        $this->imagineController = $imagineController;
+    public function __construct(protected ManagerRegistry $doctrine, protected UploaderHelper $uploaderHelper, protected ImagineController $imagineController)
+    {
     }
 
     public function setRide(Ride $ride): PhotoFilterer

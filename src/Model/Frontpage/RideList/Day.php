@@ -6,13 +6,10 @@ use App\Entity\Ride;
 
 class Day implements \Iterator
 {
-    protected ?\DateTime $dateTime = null;
-
     protected array $list = [];
 
-    public function __construct(\DateTime $dateTime)
+    public function __construct(protected ?\DateTime $dateTime)
     {
-        $this->dateTime = $dateTime;
     }
 
     public function addRide(Ride $ride): Day
@@ -54,14 +51,7 @@ class Day implements \Iterator
 
     public function sort(): Day
     {
-        usort($this->list, function(Ride $a, Ride $b): int
-        {
-            if ($a->getCity()->getCity() === $b->getCity()->getCity() ) {
-                return 0;
-            }
-
-            return $a->getCity()->getCity()  < $b->getCity()->getCity() ? -1 : 1;
-        });
+        usort($this->list, fn(Ride $a, Ride $b): int => $a->getCity()->getCity() <=> $b->getCity()->getCity());
 
         return $this;
     }

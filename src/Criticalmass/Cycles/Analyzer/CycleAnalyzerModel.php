@@ -7,20 +7,8 @@ use App\Entity\Ride;
 
 class CycleAnalyzerModel
 {
-    /** @var CityCycle $cycle */
-    protected $cycle;
-
-    /** @var Ride $ride */
-    protected $ride;
-
-    /** @var Ride $generatedRide */
-    protected $generatedRide;
-
-    public function __construct(CityCycle $cycle = null, Ride $ride, Ride $generatedRide = null)
+    public function __construct(protected Ride $ride, protected CityCycle $cycle = null, protected Ride $generatedRide = null)
     {
-        $this->cycle = $cycle;
-        $this->ride = $ride;
-        $this->generatedRide = $generatedRide;
     }
 
     public function getCycle(): ?CityCycle

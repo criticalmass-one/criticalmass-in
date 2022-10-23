@@ -9,12 +9,8 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class UserHeatmapTrackFactory implements UserHeatmapTrackFactoryInterface
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(protected ManagerRegistry $registry)
     {
-        $this->registry = $registry;
     }
 
     public function generateList(Heatmap $heatmap)

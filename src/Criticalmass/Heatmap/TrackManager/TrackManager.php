@@ -9,16 +9,8 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class TrackManager implements TrackManagerInterface
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    /** @var HeatmapTrackFactoryInterface $heatmapTrackFactory */
-    protected $heatmapTrackFactory;
-
-    public function __construct(ManagerRegistry $registry, HeatmapTrackFactoryInterface $heatmapTrackFactory)
+    public function __construct(protected ManagerRegistry $registry, protected HeatmapTrackFactoryInterface $heatmapTrackFactory)
     {
-        $this->registry = $registry;
-        $this->heatmapTrackFactory = $heatmapTrackFactory;
     }
 
     public function findUnpaintedTracksForHeatmap(Heatmap $heatmap): array

@@ -7,14 +7,10 @@ use Symfony\Component\EventDispatcher\Event;
 
 class ViewEvent extends Event
 {
-    const NAME = 'viewable.view';
+    final const NAME = 'viewable.view';
 
-    /** @var ViewableEntity $viewable */
-    protected $viewable;
-
-    public function __construct(ViewableEntity $viewable)
+    public function __construct(protected ViewableEntity $viewable)
     {
-        $this->viewable = $viewable;
     }
 
     public function getViewable(): ViewableEntity

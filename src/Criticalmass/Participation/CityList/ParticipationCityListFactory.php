@@ -8,15 +8,11 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class ParticipationCityListFactory implements ParticipationCityListFactoryInterface
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
     /** @var ParticipationCityList $participationCityList */
     protected $participationCityList;
 
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(protected ManagerRegistry $registry)
     {
-        $this->registry = $registry;
     }
 
     public function buildForUser(User $user): ParticipationCityListFactory

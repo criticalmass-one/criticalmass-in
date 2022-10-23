@@ -4,5 +4,5 @@ namespace App\Event\Track;
 
 class TrackUpdatedEvent extends AbstractTrackEvent
 {
-    const NAME = 'track.updated';
+    final const NAME = 'track.updated';
 }

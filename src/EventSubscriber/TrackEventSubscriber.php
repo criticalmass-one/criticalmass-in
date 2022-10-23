@@ -24,40 +24,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class TrackEventSubscriber implements EventSubscriberInterface
 {
-    protected TrackReader $trackReader;
-    protected TrackPolylineHandlerInterface $trackPolylineHandler;
-    protected RangeLatLngListGenerator $rangeLatLngListGenerator;
-    protected RideEstimateHandlerInterface $rideEstimateHandler;
-    protected TrackDistanceCalculatorInterface $trackDistanceCalculator;
-    protected RideEstimateConverterInterface $rideEstimateConverter;
-    protected ManagerRegistry $registry;
-    protected ParticipationManagerInterface $participationManager;
-
-    public function __construct(
-        ManagerRegistry $registry,
-        RideEstimateHandler $rideEstimateHandler,
-        RideEstimateConverterInterface $rideEstimateConverter,
-        TrackReader $trackReader,
-        RangeLatLngListGenerator $rangeLatLngListGenerator,
-        TrackDistanceCalculatorInterface $trackDistanceCalculator,
-        TrackPolylineHandlerInterface $trackPolylineHandler,
-        ParticipationManagerInterface $participationManager
-    ) {
-        $this->rangeLatLngListGenerator = $rangeLatLngListGenerator;
-
-        $this->trackReader = $trackReader;
-
-        $this->rideEstimateHandler = $rideEstimateHandler;
-
-        $this->trackDistanceCalculator = $trackDistanceCalculator;
-
-        $this->rideEstimateConverter = $rideEstimateConverter;
-
-        $this->registry = $registry;
-
-        $this->trackPolylineHandler = $trackPolylineHandler;
-
-        $this->participationManager = $participationManager;
+    public function __construct(protected ManagerRegistry $registry, protected RideEstimateHandler $rideEstimateHandler, protected RideEstimateConverterInterface $rideEstimateConverter, protected TrackReader $trackReader, protected RangeLatLngListGenerator $rangeLatLngListGenerator, protected TrackDistanceCalculatorInterface $trackDistanceCalculator, protected TrackPolylineHandlerInterface $trackPolylineHandler, protected ParticipationManagerInterface $participationManager)
+    {
     }
 
     public static function getSubscribedEvents(): array

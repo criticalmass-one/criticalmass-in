@@ -55,7 +55,7 @@ class CycleAnalyzerModelFactory implements CycleAnalyzerModelFactoryInterface
                 $cycle = null;
             }
 
-            $model = new CycleAnalyzerModel($cycle, $ride, $simulatedRide);
+            $model = new CycleAnalyzerModel($ride, $cycle, $simulatedRide);
 
             $this->resultList[$ride->getDateTime()->format('U')] = $model;
         }

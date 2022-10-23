@@ -14,8 +14,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 class DeleteCommand extends Command
 {
     protected static $defaultName = 'criticalmass:heatmap:delete';
-    protected HeatmapRemoverInterface $heatmapRemover;
-    protected ManagerRegistry $registry;
 
     protected function configure(): void
     {
@@ -25,11 +23,8 @@ class DeleteCommand extends Command
             ->addOption('delete-tiles', 'dt', InputOption::VALUE_NONE, 'Only remove tiles and keep heatmap');
     }
 
-    public function __construct(HeatmapRemoverInterface $heatmapRemover, ManagerRegistry $registry)
+    public function __construct(protected HeatmapRemoverInterface $heatmapRemover, protected ManagerRegistry $registry)
     {
-        $this->heatmapRemover = $heatmapRemover;
-        $this->registry = $registry;
-
         parent::__construct();
     }
 

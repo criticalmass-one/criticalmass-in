@@ -186,9 +186,9 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     {
         parent::__construct();
 
-        $this->colorRed = rand(0, 255);
-        $this->colorGreen = rand(0, 255);
-        $this->colorBlue = rand(0, 255);
+        $this->colorRed = random_int(0, 255);
+        $this->colorGreen = random_int(0, 255);
+        $this->colorBlue = random_int(0, 255);
 
         $this->tracks = new ArrayCollection();
         $this->participations = new ArrayCollection();

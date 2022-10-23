@@ -27,16 +27,16 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Routing\DefaultRoute(name="caldera_criticalmass_track_view")
  * @OE\OrderedEntity()
  */
-class Track extends GeoTrack implements RouteableInterface, StaticMapableInterface, TrackInterface, UploadableEntity, FakeUploadable, OrderedEntityInterface
+class Track extends GeoTrack implements RouteableInterface, StaticMapableInterface, TrackInterface, UploadableEntity, FakeUploadable, OrderedEntityInterface, \Stringable
 {
-    const TRACK_SOURCE_GPX = 'TRACK_SOURCE_GPX';
-    const TRACK_SOURCE_STRAVA = 'TRACK_SOURCE_STRAVA';
-    const TRACK_SOURCE_RUNKEEPER = 'TRACK_SOURCE_RUNKEEPER';
-    const TRACK_SOURCE_RUNTASTIC = 'TRACK_SOURCE_RUNTASTIC';
-    const TRACK_SOURCE_DRAW = 'TRACK_SOURCE_DRAW';
-    const TRACK_SOURCE_GLYMPSE = 'TRACK_SOURCE_GLYMPSE';
-    const TRACK_SOURCE_CRITICALMAPS = 'TRACK_SOURCE_CRITICALMAPS';
-    const TRACK_SOURCE_UNKNOWN = 'TRACK_SOURCE_UNKNOWN';
+    final const TRACK_SOURCE_GPX = 'TRACK_SOURCE_GPX';
+    final const TRACK_SOURCE_STRAVA = 'TRACK_SOURCE_STRAVA';
+    final const TRACK_SOURCE_RUNKEEPER = 'TRACK_SOURCE_RUNKEEPER';
+    final const TRACK_SOURCE_RUNTASTIC = 'TRACK_SOURCE_RUNTASTIC';
+    final const TRACK_SOURCE_DRAW = 'TRACK_SOURCE_DRAW';
+    final const TRACK_SOURCE_GLYMPSE = 'TRACK_SOURCE_GLYMPSE';
+    final const TRACK_SOURCE_CRITICALMAPS = 'TRACK_SOURCE_CRITICALMAPS';
+    final const TRACK_SOURCE_UNKNOWN = 'TRACK_SOURCE_UNKNOWN';
 
     /**
      * @ORM\Id

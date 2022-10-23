@@ -17,14 +17,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class AnalyzeCyclesCommand extends Command
 {
-    protected CycleAnalyzerInterface $cycleAnalyzer;
-    protected ManagerRegistry $registry;
-
-    public function __construct(CycleAnalyzerInterface $cycleAnalyzer, ManagerRegistry $registry)
+    public function __construct(protected CycleAnalyzerInterface $cycleAnalyzer, protected ManagerRegistry $registry)
     {
-        $this->cycleAnalyzer = $cycleAnalyzer;
-        $this->registry = $registry;
-
         parent::__construct();
     }
 
@@ -84,20 +78,12 @@ class AnalyzeCyclesCommand extends Command
 
     protected function compare(CycleAnalyzerModel $model): string
     {
-        switch ($model->compare()) {
-            case ComparisonResultInterface::EQUAL:
-                return '️✅️';
-
-            case ComparisonResultInterface::NO_RIDE:
-                return '️⚠️';
-
-            case ComparisonResultInterface::LOCATION_MISMATCH:
-                return '️❌️';
-
-            case ComparisonResultInterface::DATETIME_MISMATCH:
-                return '️❌️';
-
-            default: return '';
-        }
+        return match ($model->compare()) {
+            ComparisonResultInterface::EQUAL => '️✅️',
+            ComparisonResultInterface::NO_RIDE => '️⚠️',
+            ComparisonResultInterface::LOCATION_MISMATCH => '️❌️',
+            ComparisonResultInterface::DATETIME_MISMATCH => '️❌️',
+            default => '',
+        };
     }
 }

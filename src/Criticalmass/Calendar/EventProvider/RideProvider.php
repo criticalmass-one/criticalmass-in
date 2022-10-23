@@ -9,11 +9,8 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class RideProvider implements ProviderInterface
 {
-    protected ManagerRegistry $doctrine;
-
-    public function __construct(ManagerRegistry $doctrine)
+    public function __construct(protected ManagerRegistry $doctrine)
     {
-        $this->doctrine = $doctrine;
     }
 
     public function getEvents(\DateTimeInterface $begin, \DateTimeInterface $end, array $options = []): array

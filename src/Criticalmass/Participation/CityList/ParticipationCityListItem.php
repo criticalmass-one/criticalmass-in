@@ -6,16 +6,12 @@ use App\Entity\City;
 
 class ParticipationCityListItem
 {
-    /** @var $city */
-    protected $city;
-
-    /** @var int $counter */
-    protected $counter = 0;
-
-    public function __construct(City $city, int $counter = 1)
+    public function __construct(
+        /** @var $city */
+        protected City $city,
+        protected int $counter = 1
+    )
     {
-        $this->city = $city;
-        $this->counter = $counter;
     }
 
     public function getCity()

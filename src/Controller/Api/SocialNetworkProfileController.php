@@ -32,13 +32,13 @@ class SocialNetworkProfileController extends BaseController
      * @ParamConverter("city", class="App:City", isOptional="true")
      * @Route("/socialnetwork-profiles", name="caldera_criticalmass_rest_socialnetwork_profiles_list", methods={"GET"})
      */
-    public function listSocialNetworkProfilesAction(Request $request, ManagerRegistry $registry, City $city = null, SerializerInterface $serializer): Response
+    public function listSocialNetworkProfilesAction(Request $request, ManagerRegistry $registry, SerializerInterface $serializer, City $city = null): Response
     {
         $networkIdentifier = $request->get('networkIdentifier');
         $autoFetch = (bool)$request->get('autoFetch');
 
         if ($entities = $request->get('entities')) {
-            $entityClassNames = explode(',', $entities);
+            $entityClassNames = explode(',', (string) $entities);
         } else {
             $entityClassNames = [];
         }

@@ -9,11 +9,8 @@ use League\CommonMark\Extension\ExtensionInterface;
 
 final class EmbedExtension implements ExtensionInterface
 {
-    protected EmbedderInterface $embedder;
-
-    public function __construct(EmbedderInterface $embedder)
+    public function __construct(protected EmbedderInterface $embedder)
     {
-        $this->embedder = $embedder;
     }
 
     public function register(ConfigurableEnvironmentInterface $environment)

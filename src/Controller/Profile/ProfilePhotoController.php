@@ -23,20 +23,20 @@ class ProfilePhotoController extends AbstractController
         $form->add('submit', SubmitType::class);
 
         if ($request->isMethod(Request::METHOD_POST)) {
-            return $this->uploadPostAction($request, $user, $form);
+            return $this->uploadPostAction($request, $form, $user);
         } else {
-            return $this->uploadGetAction($request, $user, $form);
+            return $this->uploadGetAction($request, $form, $user);
         }
     }
 
-    protected function uploadGetAction(Request $request, UserInterface $user = null, FormInterface $form): Response
+    protected function uploadGetAction(Request $request, FormInterface $form, UserInterface $user = null): Response
     {
         return $this->render('ProfilePhoto/upload.html.twig', [
             'profilePhotoForm' => $form->createView(),
         ]);
     }
 
-    public function uploadPostAction(Request $request, UserInterface $user = null, FormInterface $form): Response
+    public function uploadPostAction(Request $request, FormInterface $form, UserInterface $user = null): Response
     {
         $form->handleRequest($request);
 
@@ -49,6 +49,6 @@ class ProfilePhotoController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
         }
 
-        return $this->uploadGetAction($request, $user, $form);
+        return $this->uploadGetAction($request, $form, $user);
     }
 }

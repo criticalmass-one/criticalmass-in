@@ -22,14 +22,10 @@ class GpxWriter implements GpxWriterInterface
     /** @var \XMLWriter $writer */
     protected $writer;
 
-    /** @var FilesystemInterface $filesystem */
-    protected $filesystem;
-
-    public function __construct(FilesystemInterface $filesystem)
+    public function __construct(protected FilesystemInterface $filesystem)
     {
         $this->writer = new \XMLWriter();
         $this->positionList = new PositionList();
-        $this->filesystem = $filesystem;
     }
 
     public function setPositionList(PositionListInterface $positionList): GpxWriterInterface

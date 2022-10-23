@@ -7,28 +7,8 @@ use App\Entity\Heatmap;
 
 class HeatmapListModel
 {
-    /** @var City $city */
-    protected $city;
-
-    /** @var Heatmap $heatmap */
-    protected $heatmap;
-
-    /** @var int $trackCounter */
-    protected $trackCounter;
-
-    /** @var int $cityTrackCounter */
-    protected $cityTrackCounter;
-
-    /** @var \DateTime $lastUpdate */
-    protected $lastUpdate;
-
-    public function __construct(City $city, Heatmap $heatmap, int $trackCounter, int $cityTrackCounter, \DateTime $lastUpdate)
+    public function __construct(protected City $city, protected Heatmap $heatmap, protected int $trackCounter, protected int $cityTrackCounter, protected \DateTime $lastUpdate)
     {
-        $this->city = $city;
-        $this->heatmap = $heatmap;
-        $this->trackCounter = $trackCounter;
-        $this->cityTrackCounter = $cityTrackCounter;
-        $this->lastUpdate = $lastUpdate;
     }
 
     public function getCity(): City

@@ -7,12 +7,8 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class CountingGermanRideNamer implements RideNamerInterface
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(protected ManagerRegistry $registry)
     {
-        $this->registry = $registry;
     }
 
     protected function countRides(Ride $ride): int

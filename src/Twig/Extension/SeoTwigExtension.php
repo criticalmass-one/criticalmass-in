@@ -17,7 +17,7 @@ class SeoTwigExtension extends SeoExtension
         $html = '';
         foreach ($this->page->getMetas() as $type => $metas) {
             foreach ((array) $metas as $name => $meta) {
-                list($content, $extras) = $meta;
+                [$content, $extras] = $meta;
 
                 if (!empty($content)) {
                     $html .= sprintf("<meta %s=\"%s\" content=\"%s\" />\n",
@@ -39,6 +39,6 @@ class SeoTwigExtension extends SeoExtension
 
     private function normalize($string): string
     {
-        return htmlentities(strip_tags($string), ENT_COMPAT, $this->encoding);
+        return htmlentities(strip_tags((string) $string), ENT_COMPAT, $this->encoding);
     }
 }

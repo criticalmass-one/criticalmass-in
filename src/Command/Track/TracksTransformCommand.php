@@ -34,7 +34,7 @@ class TracksTransformCommand extends Command
         foreach ($tracks as $track) {
             $output->writeln('Track #' . $track->getId());
 
-            $array = json_decode($track->getLatLngList());
+            $array = json_decode($track->getLatLngList(), null, 512, JSON_THROW_ON_ERROR);
 
             if (is_array($array) && count($array) > 0) {
                 $polyline = \Polyline::Encode($array);
