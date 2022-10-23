@@ -4,8 +4,6 @@
     <imports>
         <import resource="services/calendar.xml"/>
         <import resource="services/imagine.xml"/>
-        <import resource="services/param_converter.yaml"/>
-        <import resource="services/flysystem.yaml"/>
     </imports>
 
     <services>
