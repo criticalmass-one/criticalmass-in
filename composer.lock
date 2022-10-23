@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "886a3bbcb4a1870491d5c4fea7b9e726",
+    "content-hash": "58ea935a2746dfa28c9adfeea2e51134",
     "packages": [
         {
             "name": "calderacc/geobasic",
@@ -5294,6 +5294,49 @@
                 "source": "https://github.com/malenkiki/slug/tree/master"
             },
             "time": "2014-04-26T15:40:10+00:00"
+        },
+        {
+            "name": "maltehuebner/dataquery-bundle",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/maltehuebner/dataquery-bundle.git",
+                "reference": "5926bca39fd0ad82f70a587fa0ede33d9286d3b6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/maltehuebner/dataquery-bundle/zipball/5926bca39fd0ad82f70a587fa0ede33d9286d3b6",
+                "reference": "5926bca39fd0ad82f70a587fa0ede33d9286d3b6",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4",
+                "ruflin/elastica": "^7.0",
+                "symfony/framework-bundle": "^4.0|^5.0|^6.0",
+                "symfony/validator": "^4.0|^5.0|^6.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Maltehuebner\\DataQueryBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Malte Huebner",
+                    "email": "maltehuebner@gmx.org"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/maltehuebner/dataquery-bundle/issues",
+                "source": "https://github.com/maltehuebner/dataquery-bundle/tree/main"
+            },
+            "time": "2022-10-21T21:43:09+00:00"
         },
         {
             "name": "maltehuebner/impress-bundle",
@@ -17841,6 +17884,7 @@
     "stability-flags": {
         "composer/package-versions-deprecated": 20,
         "symfony/proxy-manager-bridge": 20,
+        "maltehuebner/dataquery-bundle": 20,
         "symfony/stopwatch": 20,
         "symfony/web-profiler-bundle": 20
     },
