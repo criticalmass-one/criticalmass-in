@@ -36,7 +36,6 @@ parameters:
     upload_destination.ride_photo: '%kernel.project_dir%/public/rides'
     upload_destination.frontpage_teaser: '%kernel.project_dir%/public/teaser'
     upload_destination.user_photo: '%kernel.project_dir%/public/users'
-    upload_destination.heatmap_tile: '%kernel.project_dir%/public/heatmaps'
     staticmaps.host: '%env(STATICMAPS_HOST)%'
     assets_version: '%env(ASSETS_VERSION)%'
 
@@ -116,18 +115,6 @@ services:
     App\Criticalmass\UploadValidator\TrackValidator:
         arguments:
             $filesystem: '@oneup_flysystem.flysystem_track_track_filesystem'
-
-    App\Criticalmass\Heatmap\Tile\TilePersister:
-        arguments:
-            $filesystem: '@oneup_flysystem.flysystem_heatmap_tile_filesystem'
-
-    App\Criticalmass\Heatmap\Tile\TileLoader:
-        arguments:
-            $filesystem: '@oneup_flysystem.flysystem_heatmap_tile_filesystem'
-
-    App\Criticalmass\Heatmap\Remover\HeatmapRemover:
-        arguments:
-            $filesystem: '@oneup_flysystem.flysystem_heatmap_tile_filesystem'
 
     App\Criticalmass\Geocoding\ReverseGeocoderInterface:
         alias: App\Criticalmass\Geocoding\CachedReverseGeocoder
