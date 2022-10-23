@@ -311,11 +311,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     protected ?string $rideType = null;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Heatmap", mappedBy="ride", cascade={"persist", "remove"})
-     */
-    private ?Heatmap $heatmap = null;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\TrackImportCandidate", mappedBy="ride")
      */
     private Collection $trackImportCandidates;
@@ -1042,24 +1037,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     public function setRideType(string $rideType = null): Ride
     {
         $this->rideType = $rideType;
-
-        return $this;
-    }
-
-    public function getHeatmap(): ?Heatmap
-    {
-        return $this->heatmap;
-    }
-
-    public function setHeatmap(?Heatmap $heatmap): self
-    {
-        $this->heatmap = $heatmap;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newRide = $heatmap === null ? null : $this;
-        if ($newRide !== $heatmap->getRide()) {
-            $heatmap->setRide($newRide);
-        }
 
         return $this;
     }

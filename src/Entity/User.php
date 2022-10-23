@@ -173,11 +173,6 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     private Collection $socialNetworkProfiles;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Heatmap", mappedBy="user", cascade={"persist", "remove"})
-     */
-    private ?Heatmap $heatmap = null;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\TrackImportCandidate", mappedBy="user", orphanRemoval=true)
      */
     private Collection $trackImportCandidates;
@@ -584,24 +579,6 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
             if ($socialNetworkProfile->getCreatedBy() === $this) {
                 $socialNetworkProfile->setCreatedBy(null);
             }
-        }
-
-        return $this;
-    }
-
-    public function getHeatmap(): ?Heatmap
-    {
-        return $this->heatmap;
-    }
-
-    public function setHeatmap(?Heatmap $heatmap): self
-    {
-        $this->heatmap = $heatmap;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newUser = $heatmap === null ? null : $this;
-        if ($newUser !== $heatmap->getUser()) {
-            $heatmap->setUser($newUser);
         }
 
         return $this;

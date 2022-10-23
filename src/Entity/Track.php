@@ -207,11 +207,6 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
     protected ?int $stravaActitityId = null;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\HeatmapTrack", mappedBy="track")
-     */
-    private Collection $heatmapTracks;
-
-    /**
      * @ORM\Column(type="boolean")
      */
     private bool $reviewed = false;
@@ -219,8 +214,6 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
     public function __construct()
     {
         parent::__construct();
-        $this->heatmaps = new ArrayCollection();
-        $this->heatmapTracks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -538,37 +531,6 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
     public function getWaypointList(): string
     {
         return $this->geoJson;
-    }
-
-    /**
-     * @return Collection|HeatmapTrack[]
-     */
-    public function getHeatmapTracks(): Collection
-    {
-        return $this->heatmapTracks;
-    }
-
-    public function addHeatmapTrack(HeatmapTrack $heatmapTrack): self
-    {
-        if (!$this->heatmapTracks->contains($heatmapTrack)) {
-            $this->heatmapTracks[] = $heatmapTrack;
-            $heatmapTrack->setTrack($this);
-        }
-
-        return $this;
-    }
-
-    public function removeHeatmapTrack(HeatmapTrack $heatmapTrack): self
-    {
-        if ($this->heatmapTracks->contains($heatmapTrack)) {
-            $this->heatmapTracks->removeElement($heatmapTrack);
-            // set the owning side to null (unless already changed)
-            if ($heatmapTrack->getTrack() === $this) {
-                $heatmapTrack->setTrack(null);
-            }
-        }
-
-        return $this;
     }
 
     public function isReviewed(): bool
