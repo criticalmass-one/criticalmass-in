@@ -8,7 +8,7 @@ class PhotoUploadedEvent extends AbstractPhotoEvent
 {
     final const NAME = 'photo.uploaded';
 
-    public function __construct(Photo $photo, protected bool $flush = true, protected string $tmpFilename = null)
+    public function __construct(Photo $photo, protected bool $flush = true, protected ?string $tmpFilename = null)
     {
         parent::__construct($photo);
     }
