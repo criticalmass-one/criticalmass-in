@@ -8,10 +8,11 @@ use App\Entity\Photo;
 use App\Entity\Ride;
 use Doctrine\Persistence\ManagerRegistry;
 use FOS\RestBundle\View\View;
+use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Operation;
-use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -289,5 +290,20 @@ class PhotoController extends BaseController
             ->setStatusCode(Response::HTTP_OK);
 
         return $this->handleView($view);
+    }
+
+    /**
+     * @ParamConverter("ride", class="App:Ride")
+     * @Route("/photo/{id}", name="caldera_criticalmass_rest_photo_post", methods={"POST"})
+     */
+    public function updatePhotoAction(Request $request, SerializerInterface $serializer): JsonResponse
+    {
+        $json = $request->getContent();
+
+        $photo = $serializer->deserialize($json, Photo::class, 'json');
+
+        $photoJson = $serializer->serialize($photo, 'json');
+
+        return new JsonResponse($photoJson, 200, [], true);
     }
 }

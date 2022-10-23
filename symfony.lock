@@ -185,12 +185,6 @@
     "friendsofsymfony/user-bundle": {
         "version": "v2.1.2"
     },
-    "geocoder-php/common-http": {
-        "version": "4.1.0"
-    },
-    "geocoder-php/nominatim-provider": {
-        "version": "5.0.0"
-    },
     "gregwar/captcha": {
         "version": "v1.1.9"
     },
@@ -931,9 +925,6 @@
     },
     "webmozart/path-util": {
         "version": "2.3.0"
-    },
-    "willdurand/geocoder": {
-        "version": "4.2.0"
     },
     "willdurand/jsonp-callback-validator": {
         "version": "v1.1.0"
