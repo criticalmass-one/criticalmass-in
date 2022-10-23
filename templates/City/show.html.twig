@@ -58,6 +58,8 @@
     <div class="container" itemscope itemtype="http://schema.org/Organization">
         {{ include('Flash/_flash.html.twig') }}
 
+        {{ include('City/Includes/_tabs.html.twig', { tab: 'city' }) }}
+
         <div class="row">
             <div class="col-md-12">
                 {% if city.imageName %}
@@ -171,6 +173,14 @@
             </div>
 
             <div class="col-md-3">
+                {% if feature('corona') and city is defined and city.showCoronaIncidenceWarning %}
+                <div class="row">
+                    <div class="col-md-12">
+                        {% include 'Corona/_corona.html.twig' with { 'city': city } %}
+                    </div>
+                </div>
+                {% endif %}
+
                 <div class="row">
                     <div class="col-md-12">
                         {% include 'City/Includes/_live.html.twig' with { 'city': city } %}
@@ -180,12 +190,6 @@
                 <div class="row">
                     <div class="col-md-12">
                         {% include 'City/Includes/_nextTour.html.twig' with { 'city': city, 'currentRide': currentRide } %}
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        {% include 'City/Includes/_statistic.html.twig' with { 'city': city } %}
                     </div>
                 </div>
 
@@ -201,11 +205,13 @@
                     </div>
                 </div>
 
+                {% if nearCities.length > 0 %}
                 <div class="row">
                     <div class="col-md-12">
                         {% include 'City/Includes/_nearCities.html.twig' with { 'nearCities': nearCities } %}
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>

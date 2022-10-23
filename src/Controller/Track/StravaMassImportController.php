@@ -13,7 +13,7 @@ use Carbon\Carbon;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Strava\API\OAuth;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -99,7 +99,7 @@ class StravaMassImportController extends AbstractController
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function listridesAction(RegistryInterface $registry, UserInterface $user = null): Response
+    public function listridesAction(ManagerRegistry $registry, UserInterface $user = null): Response
     {
         $list = $registry->getRepository(TrackImportCandidate::class)->findCandidatesForUser($user);
 
@@ -111,7 +111,7 @@ class StravaMassImportController extends AbstractController
     /**
      * @Security("has_role('ROLE_USER')")
      */
-    public function rejectAction(Request $request, UserInterface $user, ObjectRouterInterface $objectRouter, RegistryInterface $registry): Response
+    public function rejectAction(Request $request, UserInterface $user, ObjectRouterInterface $objectRouter, ManagerRegistry $registry): Response
     {
         $activityId = (int)$request->get('activityId');
 

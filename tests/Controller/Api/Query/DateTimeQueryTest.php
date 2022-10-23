@@ -11,7 +11,7 @@ class DateTimeQueryTest extends AbstractApiControllerTest
     /**
      * @dataProvider apiClassProvider
      */
-    public function testRideListWithYear2050Parameter(string $fqcn, string $propertyName, array $query, string $dateTimePattern, string $expectedDateTimeString): void
+    public function testRideListWithParameter(string $fqcn, string $propertyName, array $query, string $dateTimePattern, string $expectedDateTimeString): void
     {
         $client = static::createClient();
 

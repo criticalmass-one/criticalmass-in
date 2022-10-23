@@ -4,7 +4,7 @@ body.ride.ride-disabled {
   }
 
   div.container.ride {
-    color: #aaa;
+    color: $gray;
   }
 
   div#map {
@@ -12,9 +12,25 @@ body.ride.ride-disabled {
   }
 }
 
-#cityRideList tr.ride.disabled,
-#cityRideList tr.ride.disabled a
-{
-  text-decoration: line-through;
-  color: #aaa;
+.ride-list tr.ride--disabled,
+#ride-list-table tr.ride--disabled {
+  &,
+  a {
+    text-decoration: line-through;
+    color: $gray;
+  }
+}
+
+.timeline-item-ride {
+  &--disabled {
+    h4,
+    .ride-title a {
+      color: $gray;
+      text-decoration: line-through;
+    }
+
+    div.timeline-item-ride-map {
+      filter: grayscale(100%) brightness(75%) blur(1px);
+    }
+  }
 }

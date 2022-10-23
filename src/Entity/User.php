@@ -30,164 +30,152 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
      * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
+     * @todo Add typed property
+     * @var int $id
      */
     protected $id;
 
     /**
-     * @var string
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      * @Assert\NotBlank()
+     * @Assert\Regex(
+     *     pattern="/https?\:\/\//",
+     *     match=false,
+     *     message="Der Benutzername darf keine Url enthalten"
+     * )
      * @Routing\RouteParameter(name="username")
+     * @todo Add typed property
      */
     protected $username;
 
     /**
      * @ORM\OneToMany(targetEntity="Track", mappedBy="user", cascade={"persist", "remove"})
      */
-    protected $tracks;
+    protected Collection $tracks;
 
     /**
      * @ORM\Column(type="smallint")
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
-    protected $colorRed = 0;
+    protected int $colorRed = 0;
 
     /**
      * @ORM\Column(type="smallint")
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
-    protected $colorGreen = 0;
+    protected int $colorGreen = 0;
 
     /**
      * @ORM\Column(type="smallint")
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
-    protected $colorBlue = 0;
+    protected int $colorBlue = 0;
 
     /**
      * @ORM\Column(type="boolean", options={"default" = 0})
      */
-    protected $blurGalleries = false;
+    protected bool $blurGalleries = false;
 
     /**
      * @ORM\OneToMany(targetEntity="Participation", mappedBy="user")
      */
-    protected $participations;
-
-    /**
-     * @ORM\OneToMany(targetEntity="BikerightVoucher", mappedBy="user")
-     */
-    protected $bikerightVouchers;
+    protected Collection $participations;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    protected $updatedAt;
+    protected ?\DateTime $updatedAt = null;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    protected $createdAt;
+    protected ?\DateTime $createdAt = null;
 
     /**
      * @ORM\Column(name="facebook_id", type="string", length=255, nullable=true)
      */
-    protected $facebookId;
+    protected ?string $facebookId = null;
 
     /**
      * @ORM\Column(name="facebook_access_token", type="string", length=255, nullable=true)
      */
-    protected $facebookAccessToken;
+    protected ?string $facebookAccessToken = null;
 
     /**
      * @ORM\Column(name="strava_id", type="string", length=255, nullable=true)
      */
-    protected $stravaId;
+    protected ?string $stravaId = null;
 
     /**
      * @ORM\Column(name="strava_access_token", type="string", length=255, nullable=true)
      */
-    protected $stravaAccessToken;
+    protected ?string $stravaAccessToken = null;
 
     /**
      * @ORM\Column(name="runkeeper_id", type="string", length=255, nullable=true)
      */
-    protected $runkeeperId;
+    protected ?string $runkeeperId = null;
 
     /**
      * @ORM\Column(name="runkeeper_access_token", type="string", length=255, nullable=true)
      */
-    protected $runkeeperAccessToken;
+    protected ?string $runkeeperAccessToken = null;
 
     /**
      * @ORM\Column(name="twitter_id", type="string", length=255, nullable=true)
      */
-    protected $twitterId;
+    protected ?string $twitterId = null;
 
     /**
      * @ORM\Column(name="twitter_access_token", type="string", length=255, nullable=true)
      */
-    protected $twitterkAccessToken;
+    protected ?string $twitterkAccessToken = null;
 
     /**
      * @ORM\OneToMany(targetEntity="CityCycle", mappedBy="city", cascade={"persist", "remove"})
      */
-    protected $cycles;
+    protected Collection $cycles;
 
     /**
-     * @var File $imageFile
      * @Vich\UploadableField(mapping="user_photo", fileNameProperty="imageName", size="imageSize", mimeType="imageMimeType")
      */
-    protected $imageFile;
+    protected ?File $imageFile = null;
 
     /**
-     * @var string $imageName
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $imageName;
+    protected ?string $imageName = null;
 
     /**
-     * @var int $imageSize
      * @ORM\Column(type="integer", nullable=true)
      */
-    protected $imageSize;
+    protected ?int $imageSize = null;
 
     /**
-     * @var string $imageMimeType
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $imageMimeType;
+    protected ?string $imageMimeType = null;
 
     /**
      * @ORM\Column(type="boolean", options={"default" = 0})
      */
-    protected $ownProfilePhoto = false;
+    protected bool $ownProfilePhoto = false;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\SocialNetworkProfile", mappedBy="createdBy")
      */
-    private $socialNetworkProfiles;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\BlogPost", mappedBy="user")
-     */
-    private $blogPosts;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Heatmap", mappedBy="user", cascade={"persist", "remove"})
-     */
-    private $heatmap;
+    private Collection $socialNetworkProfiles;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\TrackImportCandidate", mappedBy="user", orphanRemoval=true)
      */
-    private $trackImportCandidates;
+    private Collection $trackImportCandidates;
 
     public function __construct()
     {
@@ -199,8 +187,6 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
 
         $this->tracks = new ArrayCollection();
         $this->participations = new ArrayCollection();
-        $this->bikerightVouchers = new ArrayCollection();
-        $this->blogPosts = new ArrayCollection();
         $this->socialNetworkProfiles = new ArrayCollection();
         $this->trackImportCandidates = new ArrayCollection();
     }
@@ -477,25 +463,6 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         return $this->twitterId !== null;
     }
 
-    public function addBikerightVoucher(BikerightVoucher $bikerightVoucher): User
-    {
-        $this->bikerightVouchers->add($bikerightVoucher);
-
-        return $this;
-    }
-
-    public function getBikerightVouchers(): Collection
-    {
-        return $this->bikerightVouchers;
-    }
-
-    public function removeBikerightVoucher(BikerightVoucher $bikerightVoucher): User
-    {
-        $this->bikerightVouchers->removeElement($bikerightVoucher);
-
-        return $this;
-    }
-
     public function addCycle(CityCycle $cityCycle): User
     {
         $this->cycles->add($cityCycle);
@@ -587,37 +554,6 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     }
 
     /**
-     * @return Collection|BlogPost[]
-     */
-    public function getBlogPosts(): Collection
-    {
-        return $this->blogPosts;
-    }
-
-    public function addBlogPost(BlogPost $blogPost): self
-    {
-        if (!$this->blogPosts->contains($blogPost)) {
-            $this->blogPosts[] = $blogPost;
-            $blogPost->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBlogPost(BlogPost $blogPost): self
-    {
-        if ($this->blogPosts->contains($blogPost)) {
-            $this->blogPosts->removeElement($blogPost);
-            // set the owning side to null (unless already changed)
-            if ($blogPost->getUser() === $this) {
-                $blogPost->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|SocialNetworkProfile[]
      */
     public function getSocialNetworkProfiles(): Collection
@@ -643,24 +579,6 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
             if ($socialNetworkProfile->getCreatedBy() === $this) {
                 $socialNetworkProfile->setCreatedBy(null);
             }
-        }
-
-        return $this;
-    }
-
-    public function getHeatmap(): ?Heatmap
-    {
-        return $this->heatmap;
-    }
-
-    public function setHeatmap(?Heatmap $heatmap): self
-    {
-        $this->heatmap = $heatmap;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newUser = $heatmap === null ? null : $this;
-        if ($newUser !== $heatmap->getUser()) {
-            $heatmap->setUser($newUser);
         }
 
         return $this;

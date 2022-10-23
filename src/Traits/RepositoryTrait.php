@@ -2,15 +2,12 @@
 
 namespace App\Traits;
 
-use App\Entity\BikerightVoucher;
 use App\Entity\BlockedCity;
 use App\Entity\Board;
 use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Entity\CitySlug;
 use App\Entity\FrontpageTeaser;
-use App\Entity\HelpCategory;
-use App\Entity\HelpItem;
 use App\Entity\Location;
 use App\Entity\Participation;
 use App\Entity\Photo;
@@ -23,7 +20,6 @@ use App\Entity\Subride;
 use App\Entity\Thread;
 use App\Entity\Track;
 use App\Entity\Weather;
-use App\Repository\BikerightVoucherRepository;
 use App\Repository\BlockedCityRepository;
 use App\Repository\BoardRepository;
 use App\Repository\CityCycleRepository;
@@ -46,12 +42,6 @@ use Doctrine\Common\Persistence\ObjectRepository;
 /** @deprecated */
 trait RepositoryTrait
 {
-    /** @deprecated */
-    protected function getBikeRightVoucherRepository(): BikerightVoucherRepository
-    {
-        return $this->getDoctrine()->getRepository(BikerightVoucher::class);
-    }
-
     /** @deprecated */
     protected function getBlockedCityRepository(): BlockedCityRepository
     {
@@ -92,18 +82,6 @@ trait RepositoryTrait
     protected function getCityRepository(): CityRepository
     {
         return $this->getDoctrine()->getRepository(City::class);
-    }
-
-    /** @deprecated */
-    protected function getHelpCategoryRepository(): ObjectRepository
-    {
-        return $this->getDoctrine()->getRepository(HelpCategory::class);
-    }
-
-    /** @deprecated */
-    protected function getHelpItemRepository(): ObjectRepository
-    {
-        return $this->getDoctrine()->getRepository(HelpItem::class);
     }
 
     /** @deprecated */

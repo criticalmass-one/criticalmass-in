@@ -1,18 +1,18 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Criticalmass\Calendar\EventProvider;
 
 use CalendR\Event\Provider\ProviderInterface;
 use App\Entity\Ride;
 use App\Criticalmass\Calendar\Event\RideEvent;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 class RideProvider implements ProviderInterface
 {
-    /** @var RegistryInterface $doctrine */
+    /** @var ManagerRegistry $doctrine */
     protected $doctrine;
 
-    public function __construct(RegistryInterface $doctrine)
+    public function __construct(ManagerRegistry $doctrine)
     {
         $this->doctrine = $doctrine;
     }

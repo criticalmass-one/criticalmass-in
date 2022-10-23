@@ -3,10 +3,9 @@
 namespace App\EventSubscriber;
 
 use App\Criticalmass\Router\ObjectRouterInterface;
-use App\Entity\BlogPost;
 use App\Entity\City;
 use App\Entity\Ride;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Presta\SitemapBundle\Event\SitemapPopulateEvent;
 use Presta\SitemapBundle\Service\UrlContainerInterface;
@@ -14,13 +13,10 @@ use Presta\SitemapBundle\Sitemap\Url\UrlConcrete;
 
 class SitemapEventSubscriber implements EventSubscriberInterface
 {
-    /** @var ObjectRouterInterface $router */
-    protected $router;
+    protected ObjectRouterInterface $router;
+    protected ManagerRegistry $registry;
 
-    /** @var RegistryInterface $registry */
-    protected $registry;
-
-    public function __construct(ObjectRouterInterface $router, RegistryInterface $registry)
+    public function __construct(ObjectRouterInterface $router, ManagerRegistry $registry)
     {
         $this->router = $router;
         $this->registry = $registry;
@@ -37,7 +33,6 @@ class SitemapEventSubscriber implements EventSubscriberInterface
     {
         $this->registerRideUrls($event->getUrlContainer());
         $this->registerCityUrls($event->getUrlContainer());
-        $this->registerBlogUrls($event->getUrlContainer());
     }
 
     public function registerCityUrls(UrlContainerInterface $urlContainer): void
@@ -61,18 +56,6 @@ class SitemapEventSubscriber implements EventSubscriberInterface
             $url = $this->router->generate($ride);
 
             $urlContainer->addUrl(new UrlConcrete($url), 'ride');
-        }
-    }
-
-    public function registerBlogUrls(UrlContainerInterface $urlContainer): void
-    {
-        $blogPostList = $this->registry->getRepository(BlogPost::class)->findAll();
-
-        /** @var BlogPost $blogPost */
-        foreach ($blogPostList as $blogPost) {
-            $url = $this->router->generate($blogPost);
-
-            $urlContainer->addUrl(new UrlConcrete($url), 'blogPost');
         }
     }
 }

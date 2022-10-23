@@ -8,34 +8,25 @@ use App\Criticalmass\Website\Obfuscator\ObfuscatorInterface;
 use App\Entity\BlacklistedWebsite;
 use App\Entity\CrawledWebsite;
 use Flagception\Manager\FeatureManagerInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Doctrine\Persistence\ManagerRegistry;
+use Twig\Environment;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class CrawlTwigExtension extends \Twig_Extension
+class CrawlTwigExtension extends AbstractExtension
 {
-    /** @var RegistryInterface $registry */
-    protected $registry;
+    protected ManagerRegistry $registry;
+    protected CrawlerInterface $crawler;
+    protected Environment $twigEnvironment;
+    protected ObfuscatorInterface $obfuscator;
+    protected FeatureManagerInterface $featureManager;
+    protected array $blacklistPatternList = [];
 
-    /** @var CrawlerInterface $crawler */
-    protected $crawler;
-
-    /** @var EngineInterface $twigEngine */
-    protected $twigEngine;
-
-    /** @var ObfuscatorInterface $obfuscator */
-    protected $obfuscator;
-
-    /** @var FeatureManagerInterface $featureManager */
-    protected $featureManager;
-
-    /** @var array $blacklistPatternList */
-    protected $blacklistPatternList = [];
-
-    public function __construct(RegistryInterface $registry, CrawlerInterface $crawler, EngineInterface $twigEngine, ObfuscatorInterface $obfuscator, FeatureManagerInterface $featureManager)
+    public function __construct(ManagerRegistry $registry, CrawlerInterface $crawler, Environment $twigEnvironment, ObfuscatorInterface $obfuscator, FeatureManagerInterface $featureManager)
     {
         $this->registry = $registry;
         $this->crawler = $crawler;
-        $this->twigEngine = $twigEngine;
+        $this->twigEnvironment = $twigEnvironment;
         $this->obfuscator = $obfuscator;
         $this->featureManager = $featureManager;
 
@@ -45,7 +36,7 @@ class CrawlTwigExtension extends \Twig_Extension
     public function getFunctions(): array
     {
         return [
-            new \Twig_SimpleFunction('parse_urls', [$this, 'parseUrls'], ['is_safe' => ['html']]),
+            new TwigFunction('parse_urls', [$this, 'parseUrls'], ['is_safe' => ['html']]),
         ];
     }
 
@@ -64,7 +55,7 @@ class CrawlTwigExtension extends \Twig_Extension
                         $crawledWebsite = $this->obfuscateWebsite($crawledWebsite);
                     }
 
-                    $message = str_replace($url, $this->twigEngine->render('Crawler/_website.html.twig', ['website' => $crawledWebsite]), $message);
+                    $message = str_replace($url, $this->twigEnvironment->render('Crawler/_website.html.twig', ['website' => $crawledWebsite]), $message);
                 }
             }
         }
@@ -111,4 +102,3 @@ class CrawlTwigExtension extends \Twig_Extension
         return 'crawl_extension';
     }
 }
-

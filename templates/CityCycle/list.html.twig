@@ -66,8 +66,12 @@
                     {% for cycle in cycles %}
                         <tr {% if cycle.disabledAt %}style="text-decoration: line-through;"{% endif %}>
                             <td>
-                                am {{ ('cycle.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ cycle.dayOfWeek)|trans }}
-                                im Monat
+                                {% if cycle.rideCalculatorFqcn %}
+                                    {{ cycle.description }}
+                                {% else %}
+                                    am {{ ('cycle.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ cycle.dayOfWeek)|trans }} im Monat
+                                {% endif %}
+
                             </td>
 
                             <td>
@@ -81,6 +85,7 @@
                             </td>
 
                             <td>
+                                {# keep timezone as utc as we want to deliver the "raw" time here #}
                                 {{ cycle.time|date('H:i', 'UTC') }} Uhr
                             </td>
 
@@ -103,17 +108,22 @@
                             <td>
                                 {% if not cycle.disabledAt %}
                                     <div class="btn-group">
-                                        <a class="btn btn-default btn-xs"
+                                        <a class="btn btn-default btn-xs" title="Turnus editieren"
                                            href="{{ objectPath(cycle, 'caldera_criticalmass_citycycle_edit') }}">
                                             <i class="far fa-wrench"></i>
                                         </a>
 
-                                        <a class="btn btn-default btn-xs"
-                                           href="{{ objectPath(cycle, 'caldera_criticalmass_citycycle_execute') }}">
+                                        <a class="btn btn-default btn-xs" title="zugehörige Touren anzeigen"
+                                           href="{{ objectPath(cycle, 'caldera_criticalmass_citycycle_ride_list') }}">
                                             <i class="far fa-bicycle"></i>
                                         </a>
 
-                                        <a class="btn btn-default btn-xs"
+                                        <a class="btn btn-default btn-xs" title="Turnus manuell auslösen"
+                                           href="{{ objectPath(cycle, 'caldera_criticalmass_citycycle_execute') }}">
+                                            <i class="far fa-play"></i>
+                                        </a>
+
+                                        <a class="btn btn-default btn-xs" title="Turnus deaktivieren"
                                            href="{{ objectPath(cycle, 'caldera_criticalmass_citycycle_disable') }}">
                                             <i class="far fa-trash-alt"></i>
                                         </a>

@@ -1,7 +1,8 @@
-define(['Map', 'LocationMarker', 'typeahead.jquery', 'bloodhound', 'bootstrap-datepicker'], function () {
+define(['Map', 'LocationMarker', 'typeahead.jquery', 'bloodhound', 'bootstrap-datepicker', 'Geocoding'], function () {
 
     var EditRidePage = function (context, options) {
         this.settings = $.extend(this._defaults, options);
+        this._geocoding = new Geocoding();
     };
 
     EditRidePage.prototype._defaults = {
@@ -47,6 +48,7 @@ define(['Map', 'LocationMarker', 'typeahead.jquery', 'bloodhound', 'bootstrap-da
         this._initEventListeners();
         this._initDatePicker();
         //this._initLocationSearch();
+        this._initGeolocationEvents();
     };
 
     EditRidePage.prototype._initEventListeners = function () {
@@ -277,8 +279,44 @@ define(['Map', 'LocationMarker', 'typeahead.jquery', 'bloodhound', 'bootstrap-da
             format: 'dd.mm.yyyy',
             autoclose: true,
             todayHighlight: true,
-            weekStart: 1
+            weekStart: 1,
+            zIndexOffset: 1000
         });
+    };
+
+    EditRidePage.prototype._initGeolocationEvents = function () {
+        var that = this;
+
+        this._$searchRideButton = $('#search-location-button');
+
+        this._$searchRideButton.on('click', function () {
+            var location = $('#ride_location').val();
+
+            const north = that.map.getBounds().getNorth();
+            const west = that.map.getBounds().getWest();
+            const south = that.map.getBounds().getSouth();
+            const east = that.map.getBounds().getEast();
+
+            that._geocoding.searchPhraseInViewbox(location, north, south, west, east,function (data) {
+                that._handleGeocodingLocation(data);
+            });
+        });
+    };
+
+    EditRidePage.prototype._handleGeocodingLocation = function (data) {
+        console.log(data);
+        if (data && data.lat && data.lon) {
+            var latLng = {
+                lat: data.lat,
+                lng: data.lon
+            };
+
+            this._moveLocationMarker(latLng);
+
+            this.map.setView(latLng, 15);
+        } else {
+            alert('Der Ort wurde nicht gefunden. Bitte schiebe den Marker manuell auf den Startpunkt der Tour.');
+        }
     };
 
     return EditRidePage;

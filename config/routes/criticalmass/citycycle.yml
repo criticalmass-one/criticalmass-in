@@ -1,23 +1,27 @@
 caldera_criticalmass_citycycle_list:
     path:  /{citySlug}/cycles/list
-    controller: App\Controller\City\CityCycleController::listAction
+    controller: App\Controller\CityCycle\CityCycleController::listAction
+
+caldera_criticalmass_citycycle_ride_list:
+    path:  /{citySlug}/cycles/{cityCycleId}/list
+    controller: App\Controller\CityCycle\CityCycleController::listRidesAction
 
 caldera_criticalmass_citycycle_add:
     path:  /{citySlug}/cycles/add
-    controller: App\Controller\City\CityCycleController::addAction
+    controller: App\Controller\CityCycle\CityCycleManagementController::addAction
 
 caldera_criticalmass_citycycle_edit:
     path:  /{citySlug}/cycles/{cityCycleId}/edit
-    controller: App\Controller\City\CityCycleController::editAction
+    controller: App\Controller\CityCycle\CityCycleManagementController::editAction
 
 caldera_criticalmass_citycycle_disable:
     path:  /{citySlug}/cycles/{cityCycleId}/disable
-    controller: App\Controller\City\CityCycleController::disableAction
+    controller: App\Controller\CityCycle\CityCycleManagementController::disableAction
 
 caldera_criticalmass_citycycle_execute:
     path:  /{citySlug}/cycles/{cityCycleId}/execute
-    controller: App\Controller\City\CityCycleController::executeAction
+    controller: App\Controller\CityCycle\CityCycleExecuteController::executeAction
 
 caldera_criticalmass_citycycle_execute_persist:
     path:  /{citySlug}/cycles/{cityCycleId}/execute-persist
-    controller: App\Controller\City\CityCycleController::executePersistAction
+    controller: App\Controller\CityCycle\CityCycleExecuteController::executePersistAction

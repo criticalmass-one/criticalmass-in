@@ -1,7 +1,11 @@
 jms_serializer:
-    visitors:
-        xml:
-            format_output: '%kernel.debug%'
-    property_naming:
-        separator:  ~
-        lower_case: false
+  property_naming:
+    lower_case: true
+  visitors:
+    json_serialization:
+      options: 0 # json_encode options bitmask, suggested JSON_PRETTY_PRINT in development
+    json_deserialization:
+      options: 0 # json_decode options bitmask
+  handlers:
+    datetime:
+      default_timezone: 'UTC'
