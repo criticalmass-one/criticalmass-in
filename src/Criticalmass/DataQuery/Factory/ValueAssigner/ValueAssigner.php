@@ -47,6 +47,10 @@ class ValueAssigner implements ValueAssignerInterface
                 $query->$methodName((string)$value);
                 break;
 
+            case 'bool':
+                $query->$methodName((bool) $value);
+                break;
+
             case 'mixed':
                 $query->$methodName($value);
                 break;

@@ -184,6 +184,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
      * @ORM\Column(type="string", length=255, nullable=true)
      * @JMS\Expose()
      * @JMS\Groups({"ride-list"})
+     * @DataQuery\Queryable()
      * @DataQuery\Sortable()
      */
     protected ?string $location = null;
