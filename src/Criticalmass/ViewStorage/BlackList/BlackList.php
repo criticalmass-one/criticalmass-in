@@ -2,16 +2,12 @@
 
 namespace App\Criticalmass\ViewStorage\BlackList;
 
-use Nmure\CrawlerDetectBundle\CrawlerDetect\CrawlerDetect;
+use Jaybizzle\CrawlerDetect\CrawlerDetect;
 
 class BlackList implements BlackListInterface
 {
-    public function __construct(protected CrawlerDetect $crawlerDetect)
-    {
-    }
-
     public function isBlackListed(string $userAgent = null): bool
     {
-        return $this->crawlerDetect->isCrawler($userAgent);
+        return (new CrawlerDetect())->isCrawler($userAgent);
     }
 }
