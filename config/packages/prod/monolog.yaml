@@ -17,6 +17,6 @@ monolog:
             channels: ["!event", "!doctrine"]
         loggly:
             type: loggly
-            token: '%env(LOGGLY_TOKEN)'
+            token: '%env(LOGGLY_TOKEN)%'
             level: error
             tag: criticalmass-one
