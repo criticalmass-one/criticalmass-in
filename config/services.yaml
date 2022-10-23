@@ -226,10 +226,6 @@ services:
     jms_serializer.naming_strategy:
         alias: jms_serializer.camel_case_naming_strategy
 
-    App\Criticalmass\ViewStorage\BlackList\BlackList:
-        arguments:
-            $crawlerDetect: '@crawler_detect'
-
     App\Form\Type\RegistrationType:
         arguments:
             $class: '%fos_user.model.user.class%'
