@@ -31,19 +31,19 @@
                     </li>
 
                     <li>
-                        <a href="{{ path('caldera_criticalmass_help_about') }}" id="footer-about-link">
+                        <a href="https://criticalmass.blog/criticalmass-one/ueber-criticalmass-in/" id="footer-about-link">
                             {% trans %}criticalmass.navigation.criticalmass.about{% endtrans %}
                         </a>
                     </li>
 
                     <li>
-                        <a href="{{ path('caldera_criticalmass_help_faq') }}" id="footer-faq-link">
+                        <a href="https://criticalmass.blog/critical-mass/haeufig-gestellte-fragen-zur-critical-mass/" id="footer-faq-link">
                             {% trans %}criticalmass.navigation.criticalmass.faq{% endtrans %}
                         </a>
                     </li>
 
                     <li>
-                        <a href="{{ path('nelmio_api_doc_index') }}" id="footer-apidoc-link">
+                        <a href="{{ path('app.swagger_ui') }}" id="footer-apidoc-link">
                             {% trans %}criticalmass.navigation.criticalmass.apidoc{% endtrans %}
                         </a>
                     </li>
@@ -55,7 +55,7 @@
                     </li>
 
                     <li>
-                        <a href="http://sqi.be/y1aw6">
+                        <a href="https://github.com/criticalmass-one/criticalmass-in">
                             GitHub-Repository
                         </a>
                     </li>
@@ -64,13 +64,23 @@
 
             <div class="col-md-3">
                 <h5>
-                    <a href="{{ path('caldera_criticalmass_blog_overview') }}" title="zum Critical-Mass-Weblog">
+                    <a href="https://criticalmass.blog/" title="zum Critical-Mass-Weblog">
                         Aus dem Blog
                     </a>
                 </h5>
 
+                {% set blog_article_list = blog_articles() %}
+
                 <ul class="list-unstyled">
-                    {{ render(controller('App\\Controller\\Template\\FooterController:blogPostListAction')) }}
+                    {% for blog_article in blog_article_list %}
+                        <li>
+                            <a href="{{ blog_article.permalink }}" title="zum Blog-Beitrag">
+                                {{ blog_article.title }}
+                            </a>
+
+                            <time class="text-muted">{{ blog_article.dateTime|date('d.m.Y') }}</time>
+                        </li>
+                    {% endfor %}
                 </ul>
             </div>
 
@@ -142,26 +152,6 @@
                     <li>
                         <a href="http://fahrverbote.info/">
                             Fahrverbote.info
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://fahrrad.tips/">
-                            Fahrrad.tips
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://stvo.tips/">
-                            StVO.tips
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://stvzo.tips/">
-                            StVZO.tips
-                        </a>
-                    </li>
-                    <li>
-                        <a href="http://vzkat.tips/">
-                            VzKat.tips
                         </a>
                     </li>
                 </ul>

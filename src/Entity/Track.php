@@ -4,8 +4,8 @@ namespace App\Entity;
 
 use App\Criticalmass\Geo\Entity\Track as GeoTrack;
 use App\Criticalmass\Geo\EntityInterface\TrackInterface;
-use App\Criticalmass\OrderedEntities\Annotation as OE;
-use App\Criticalmass\OrderedEntities\OrderedEntityInterface;
+use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
+use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
 use App\Criticalmass\Router\Annotation as Routing;
 use App\Criticalmass\UploadableDataHandler\UploadableEntity;
 use App\Criticalmass\UploadFaker\FakeUploadable;
@@ -46,20 +46,20 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
      * @JMS\Expose
      * @Routing\RouteParameter(name="trackId")
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @JMS\Groups({"timelapse", "api-private"})
      * @JMS\Expose
      */
-    protected $username;
+    protected ?string $username = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="Ride", inversedBy="tracks")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
-    protected $ride;
+    protected ?Ride $ride = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="tracks")
@@ -68,20 +68,20 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
      * @JMS\Expose
      * @OE\Identical()
      */
-    protected $user;
+    protected ?User $user = null;
 
     /**
      * @ORM\OneToOne(targetEntity="RideEstimate", mappedBy="track", cascade={"all"}, orphanRemoval=true)
      * @ORM\JoinColumn(name="estimate_id", referencedColumnName="id")
      */
-    protected $rideEstimate;
+    protected ?RideEstimate $rideEstimate = null;
 
     /**
      * @ORM\Column(type="datetime")
      * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      */
-    protected $creationDateTime;
+    protected ?\DateTime $creationDateTime = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -89,69 +89,69 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
      * @JMS\Expose
      * @OE\Order(direction="asc")
      */
-    protected $startDateTime;
+    protected ?\DateTime $startDateTime = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      */
-    protected $endDateTime;
+    protected ?\DateTime $endDateTime = null;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      */
-    protected $distance;
+    protected ?float $distance = null;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      */
-    protected $points;
+    protected ?int $points = null;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      */
-    protected $startPoint;
+    protected ?int $startPoint = null;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      */
-    protected $endPoint;
+    protected ?int $endPoint = null;
 
     /**
      * @ORM\Column(type="string", length=32, nullable=true)
      */
-    protected $md5Hash;
+    protected ?string $md5Hash = null;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    protected $enabled = true;
+    protected bool $enabled = true;
 
     /**
      * @ORM\Column(type="boolean")
      * @OE\Boolean(value=false)
      */
-    protected $deleted = false;
+    protected bool $deleted = false;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * @deprecated
      */
-    protected $latLngList;
+    protected ?string $latLngList = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    protected $geoJson;
+    protected ?string $geoJson = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -159,7 +159,7 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
      * @JMS\Expose
      * @JMS\SerializedName("polylineString")
      */
-    protected $polyline;
+    protected ?string $polyline = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -167,60 +167,54 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
      * @JMS\Expose
      * @JMS\SerializedName("reducedPolylineString")
      */
-    protected $reducedPolyline;
+    protected ?string $reducedPolyline = null;
 
     /**
-     * @var File $trackFile
      * @Vich\UploadableField(mapping="track_file", fileNameProperty="trackFilename",  size="trackSize", mimeType="trackMimeType")
      */
-    protected $trackFile;
+    protected ?File $trackFile = null;
 
     /**
-     * @var string $trackFilename
      * @ORM\Column(type="string", length=255)
      */
-    protected $trackFilename;
+    protected ?string $trackFilename = null;
 
     /**
-     * @var int $trackSize
      * @ORM\Column(type="integer", nullable=true)
      */
-    protected $trackSize;
+    protected ?int $trackSize = null;
 
     /**
-     * @var string $trackMimeType
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $trackMimeType;
+    protected ?string $trackMimeType = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     *
-     * @var \DateTime
      */
-    protected $updatedAt;
+    protected ?\DateTime $updatedAt = null;
 
     /**
      * @ORM\Column(type="string", columnDefinition="ENUM('TRACK_SOURCE_GPX', 'TRACK_SOURCE_STRAVA', 'TRACK_SOURCE_RUNKEEPER', 'TRACK_SOURCE_RUNTASTIC', 'TRACK_SOURCE_DRAW', 'TRACK_SOURCE_GLYMPSE', 'TRACK_SOURCE_CRITICALMAPS', 'TRACK_SOURCE_UNKNOWN')")
+     *
+     * $source must be nullable du to legacy tracks without source attribution
      */
-    protected $source = self::TRACK_SOURCE_UNKNOWN;
+    protected ?string $source = self::TRACK_SOURCE_UNKNOWN;
 
     /**
      * @ORM\Column(type="bigint", nullable=true)
-     *
-     * @var integer
      */
-    protected $stravaActitityId;
+    protected ?int $stravaActitityId = null;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\HeatmapTrack", mappedBy="track")
      */
-    private $heatmapTracks;
+    private Collection $heatmapTracks;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $reviewed = false;
+    private bool $reviewed = false;
 
     public function __construct()
     {

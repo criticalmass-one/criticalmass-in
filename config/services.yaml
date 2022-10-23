@@ -14,7 +14,6 @@ parameters:
     database_user: '%env(DATABASE_USER)%'
     database_password: '%env(DATABASE_PASSWORD)%'
     track.gap_width: 10
-    openweather.appid: '%env(OPENWEATHERMAP_APP_ID)%'
     strava.client_id: '%env(STRAVA_CLIENT_ID)%'
     strava.token: '%env(STRAVA_TOKEN)%'
     strava.secret: '%env(STRAVA_SECRET)%'
@@ -28,8 +27,6 @@ parameters:
     twitter.secret: '%env(TWITTER_SECRET)%'
     photo_tsv.access_key: '%env(PHOTO_TSV_ACCESS_KEY)%'
     timeline.ttl: 60
-    domain.blog: '%env(DOMAIN_BLOG)%'
-    domain.one: '%env(DOMAIN_ONE)%'
     notification.mail.sender_address: malte@criticalmass.in
     request_listener.http_port: 80
     request_listener.https_port: 443
@@ -39,12 +36,8 @@ parameters:
     upload_destination.ride_photo: '%kernel.project_dir%/public/rides'
     upload_destination.frontpage_teaser: '%kernel.project_dir%/public/teaser'
     upload_destination.user_photo: '%kernel.project_dir%/public/users'
-    upload_destination.blogpost_teaser: '%kernel.project_dir%/public/blogposts'
     upload_destination.heatmap_tile: '%kernel.project_dir%/public/heatmaps'
     staticmaps.host: '%env(STATICMAPS_HOST)%'
-    yourls.api_hostname: '%env(YOURLS_API_HOSTNAME)%'
-    yourls.api_username: '%env(YOURLS_API_USERNAME)%'
-    yourls.api_password: '%env(YOURLS_API_PASSWORD)%'
     assets_version: '%env(ASSETS_VERSION)%'
 
 services:
@@ -53,7 +46,7 @@ services:
         autoconfigure: true
         public: false
         bind:
-            $openWeatherMapApiKey: '%openweather.appid%'
+            $rootDirectory: '%kernel.root_dir%'
             $webRootDir: '%kernel.root_dir%/../public'
             $staticmapsHost: '%staticmaps.host%'
             $gapWidth: '%track.gap_width%'
@@ -70,6 +63,7 @@ services:
             $cachedTimelineTtl: '%timeline.ttl%'
             $projectDirectory: '%kernel.project_dir%'
             $redisUrl: '%env(REDIS_URL)%'
+            $criticalmassRideGeneratorUrl: '%env(CRITICALMASS_RIDE_GENERATOR_URL)%'
             $instagramScraperProxyServerAddress: '%env(INSTAGRAM_SCRAPER_PROXY_ADDRESS)%'
             $instagramScraperProxyServerPort: '%env(INSTAGRAM_SCRAPER_PROXY_PORT)%'
 
@@ -82,15 +76,7 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
-    Cmfcmf\OpenWeatherMap: ~
-
     Symfony\Component\Routing\RouteCollection: ~
-
-    Caldera\YourlsApiManager\YourlsApiManager:
-        arguments:
-            - '%yourls.api_hostname%'
-            - '%yourls.api_username%'
-            - '%yourls.api_password%'
 
     Sonata\SeoBundle\Seo\SeoPageInterface:
         alias: sonata.seo.page.default
@@ -124,10 +110,6 @@ services:
             $filesystem: '@oneup_flysystem.flysystem_user_photo_filesystem'
 
     App\Criticalmass\UploadableDataHandler\UploadableDataHandler:
-        arguments:
-            $filesystem: '@oneup_flysystem.flysystem_photo_photo_filesystem'
-
-    App\Criticalmass\Image\GoogleCloud\ExportDataHandler\ExportDataHandler:
         arguments:
             $filesystem: '@oneup_flysystem.flysystem_photo_photo_filesystem'
 
@@ -167,10 +149,6 @@ services:
     App\Request\ParamConverter\RegionParamConverter:
         tags:
             - { name: request.param_converter, priority: 0, converter: region_converter }
-
-    App\Request\ParamConverter\BlogPostParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 0, converter: blogpost_converter }
 
     App\Request\ParamConverter\CityParamConverter:
         tags:
@@ -247,12 +225,9 @@ services:
     App\Criticalmass\ViewStorage\Cache\ViewStorageCacheInterface:
         alias: App\Criticalmass\ViewStorage\Cache\RobustViewStorageCache
 
-    App\Criticalmass\RideGenerator\RideCalculator\RideCalculatorInterface:
-        alias: App\Criticalmass\RideGenerator\RideCalculator\RideCalculator
-
     App\Criticalmass\ElasticCityFinder\ElasticCityFinder:
         arguments:
-            $finder: '@fos_elastica.finder.criticalmass_city.city'
+            $finder: '@fos_elastica.finder.criticalmass_city'
 
     App\Serializer\JMSSerializer\Handler\RelationHandler:
         tags:
@@ -272,10 +247,13 @@ services:
         arguments:
             $class: '%fos_user.model.user.class%'
 
-    App\Controller\OAuthServer\AuthorizeController:
+    App\Criticalmass\Corona\ResultFetcher\ResultFetcherInterface:
+        alias: App\Criticalmass\Corona\ResultFetcher\CachedResultFetcher
+
+    App\Criticalmass\CriticalmassBlog\CriticalmassBlogInterface:
+        alias: App\Criticalmass\CriticalmassBlog\CachedCriticalmassBlog
+
+    App\Controller\Search\SearchController:
         arguments:
-            $authorizeForm: '@fos_oauth_server.authorize.form'
-            $authorizeFormHandler: '@fos_oauth_server.authorize.form.handler.default'
-            $oAuth2Server: '@fos_oauth_server.server'
-        tags:
-            - controller.service_arguments
+            $cityFinder: '@fos_elastica.finder.criticalmass_city'
+            $rideFinder: '@fos_elastica.finder.criticalmass_ride'

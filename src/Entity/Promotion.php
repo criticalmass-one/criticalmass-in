@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\DataQuery\Annotation\EntityAnnotation as DataQuery;
+use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation as DataQuery;
 use App\Criticalmass\Router\Annotation as Routing;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AutoParamConverterAble;
@@ -21,65 +21,65 @@ class Promotion implements AutoParamConverterAble, ViewableEntity, RouteableInte
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Routing\RouteParameter(name="promotionSlug")
      */
-    private $slug;
+    private ?string $slug = null;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $title;
+    private ?string $title = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $description;
+    private ?string $description = null;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $createdAt;
+    private \DateTime $createdAt;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $updatedAt;
+    private ?\DateTime $updatedAt = null;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $query;
+    private ?string $query = null;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $showMap;
+    private ?bool $showMap = false;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      */
-    private $mapCenterLatitude;
+    private ?float $mapCenterLatitude = null;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      */
-    private $mapCenterLongitude;
+    private ?float $mapCenterLongitude = null;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $mapZoomLevel;
+    private ?int $mapZoomLevel = null;
 
     /**
      * @ORM\Column(type="integer", options={"default"=0})
      * @DataQuery\Sortable
      * @DataQuery\Queryable
      */
-    protected $views = 0;
+    protected int $views = 0;
 
     public function getId(): ?int
     {

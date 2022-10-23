@@ -2,10 +2,6 @@
 
 namespace App;
 
-use App\Criticalmass\DataQuery\DependencyInjection\Compiler\ParameterPass;
-use App\Criticalmass\DataQuery\DependencyInjection\Compiler\QueryPass;
-use App\Criticalmass\DataQuery\Parameter\ParameterInterface;
-use App\Criticalmass\DataQuery\Query\QueryInterface;
 use App\Criticalmass\MassTrackImport\Voter\VoterInterface;
 use App\Criticalmass\RideNamer\RideNamerInterface;
 use App\Criticalmass\Router\DelegatedRouter\DelegatedRouterInterface;
@@ -16,7 +12,6 @@ use App\Criticalmass\SocialNetwork\Network\NetworkInterface;
 use App\Criticalmass\Timeline\Collector\TimelineCollectorInterface;
 use App\DependencyInjection\Compiler\ObjectRouterPass;
 use App\DependencyInjection\Compiler\RideNamerPass;
-use App\DependencyInjection\Compiler\ShareNetworkPass;
 use App\DependencyInjection\Compiler\TimelineCollectorPass;
 use App\DependencyInjection\Compiler\TrackVoterPass;
 use App\DependencyInjection\Compiler\TwigSeoExtensionPass;
@@ -70,11 +65,11 @@ class Kernel extends BaseKernel
         $container->registerForAutoconfiguration(TimelineCollectorInterface::class)->addTag('timeline.collector');
         $container->addCompilerPass(new TimelineCollectorPass());
 
+        $container->registerForAutoconfiguration(NetworkInterface::class)->addTag('social_network.network');
+        $container->addCompilerPass(new SocialNetworkPass());
+
         $container->registerForAutoconfiguration(DelegatedRouterInterface::class)->addTag('object_router.delegated_router');
         $container->addCompilerPass(new ObjectRouterPass());
-
-        $container->addCompilerPass(new ShareNetworkPass());
-        $container->registerForAutoconfiguration(ShareNetworkInterface::class)->addTag('share.network');
 
         $container->addCompilerPass(new RideNamerPass());
         $container->registerForAutoconfiguration(RideNamerInterface::class)->addTag('ride_namer');
@@ -83,12 +78,6 @@ class Kernel extends BaseKernel
 
         $container->addCompilerPass(new TrackVoterPass());
         $container->registerForAutoconfiguration(VoterInterface::class)->addTag('mass_track_import.voter');
-
-        $container->addCompilerPass(new QueryPass());
-        $container->registerForAutoconfiguration(QueryInterface::class)->addTag('data_query.query');
-
-        $container->addCompilerPass(new ParameterPass());
-        $container->registerForAutoconfiguration(ParameterInterface::class)->addTag('data_query.parameter');
 
         $container->addCompilerPass(new SocialNetworkPass());
         $container->registerForAutoconfiguration(NetworkInterface::class)->addTag('social_network.network');

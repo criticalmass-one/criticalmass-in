@@ -7,7 +7,7 @@ use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="social_network_profile", options={"charset"="utf8mb4"})
+ * @ORM\Table(name="social_network_profile", options={"charset"="utf8mb4", "collate"="utf8mb4_unicode_ci"})
  * @ORM\Entity(repositoryClass="App\Repository\SocialNetworkProfileRepository")
  * @JMS\ExclusionPolicy("all")
  */
@@ -20,7 +20,7 @@ class SocialNetworkProfile
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      */
-    protected int $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="socialNetworkProfiles")
@@ -62,7 +62,7 @@ class SocialNetworkProfile
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      */
-    protected string $network;
+    protected ?string $network = null;
 
     /**
      * @ORM\Column(type="boolean")
@@ -84,7 +84,7 @@ class SocialNetworkProfile
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="socialNetworkProfiles")
      */
-    private User $createdBy;
+    private ?User $createdBy = null;
 
     /**
      * @ORM\Column(type="boolean")

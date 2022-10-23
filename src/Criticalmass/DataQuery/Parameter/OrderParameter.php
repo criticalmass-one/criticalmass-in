@@ -2,8 +2,10 @@
 
 namespace App\Criticalmass\DataQuery\Parameter;
 
-use App\Criticalmass\DataQuery\Annotation\ParameterAnnotation as DataQuery;
-use App\Criticalmass\DataQuery\Validator\Constraint\Sortable;
+use MalteHuebner\DataQueryBundle\Annotation\ParameterAnnotation as DataQuery;
+use MalteHuebner\DataQueryBundle\Parameter\AbstractParameter;
+use MalteHuebner\DataQueryBundle\Parameter\PropertyTargetingParameterInterface;
+use MalteHuebner\DataQueryBundle\Validator\Constraint\Sortable;
 use Elastica\Query;
 use Symfony\Component\Validator\Constraints as Constraints;
 

@@ -7,20 +7,15 @@ use Doctrine\Persistence\ManagerRegistry;
 
 abstract class AbstractTimelineCollector implements TimelineCollectorInterface
 {
-    /** @var string $entityClass */
-    protected $entityClass;
+    protected string $entityClass;
 
-    /** @var ManagerRegistry $doctrine */
-    protected $doctrine;
+    protected ManagerRegistry $doctrine;
 
-    /** @var array $items */
-    protected $items = [];
+    protected array $items = [];
 
-    /** @var \DateTime $startDateTime */
-    protected $startDateTime = null;
+    protected ?\DateTime $startDateTime = null;
 
-    /** @var \DateTime $endDateTime */
-    protected $endDateTime = null;
+    protected ?\DateTime $endDateTime = null;
 
     public function __construct(ManagerRegistry $doctrine)
     {

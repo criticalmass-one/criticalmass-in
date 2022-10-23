@@ -10,25 +10,28 @@ use Doctrine\Persistence\ManagerRegistry;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializerInterface;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Nelmio\ApiDocBundle\Annotation\Operation;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Swagger\Annotations as SWG;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class SocialNetworkFeedItemController extends BaseController
 {
     /**
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Retrieve a list of social network feed items assigned to profiles of a city",
-     *  section="Social Network Feed Item",
-     *  requirements={
-     *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Slug of the requested city"},
-     *    {"name"="uniqueIdentifier", "dataType"="string", "required"=true, "description"="Unique identifier, normally the ressource identifier of the source item"},
-     *    {"name"="networkIdentifier", "dataType"="string", "required"=true, "description"="Network identifier of the social network profile"}
-     *  }
+     * @Operation(
+     *     tags={"Social Network Feed Item"},
+     *     summary="Retrieve a list of social network feed items assigned to profiles of a city",
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     )
      * )
+     *
      * @ParamConverter("city", class="App:City")
+     * @Route("/{citySlug}/socialnetwork-feeditems", name="caldera_criticalmass_rest_socialnetwork_feeditems_citylist", methods={"GET"})
      */
     public function listSocialNetworkFeedItemsCityAction(Request $request, ManagerRegistry $registry, City $city): Response
     {
@@ -49,16 +52,17 @@ class SocialNetworkFeedItemController extends BaseController
     /**
      * Update properties of a social network feed item.
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Update properties of a social network feed item",
-     *  section="Social Network Feed Item",
-     *  requirements={
-     *    {"name"="citySlug", "dataType"="integer", "required"=true, "description"="Slug of the corresponding city"},
-     *    {"name"="feedItemId", "dataType"="integer", "required"=true, "description"="Id of the required social network profile"}
-     *  }
+     * @Operation(
+     *     tags={"Social Network Feed Item"},
+     *     summary="Update properties of a social network feed item",
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     )
      * )
+     *
      * @ParamConverter("socialNetworkFeedItem", class="App:SocialNetworkFeedItem")
+     * @Route("/{citySlug}/socialnetwork-feeditems/{feedItemId}", name="caldera_criticalmass_rest_socialnetwork_feeditems_update", methods={"POST"})
      */
     public function updateSocialNetworkFeedItemAction(Request $request, SocialNetworkFeedItem $socialNetworkFeedItem, SerializerInterface $serializer, ManagerRegistry $managerRegistry, EntityMergerInterface $entityMerger): Response
     {
@@ -83,14 +87,15 @@ class SocialNetworkFeedItemController extends BaseController
     /**
      * Create a new social network feed item and assign it to the provided profile.
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Create a new social network feed item",
-     *  section="Social Network Feed Item",
-     *  requirements={
-     *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Slug of the corresponding city"},
-     *  }
+     * @Operation(
+     *     tags={"Social Network Feed Item"},
+     *     summary="Create a new social network feed item",
+     *     @SWG\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     )
      * )
+     * @Route("/{citySlug}/socialnetwork-feeditems", name="caldera_criticalmass_rest_socialnetwork_feeditems_create", methods={"PUT"})
      */
     public function createSocialNetworkFeedItemAction(Request $request, SerializerInterface $serializer, ManagerRegistry $managerRegistry): Response
     {
