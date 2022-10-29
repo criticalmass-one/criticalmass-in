@@ -36,7 +36,6 @@
         "sensio/framework-extra-bundle": "^5.5",
         "incenteev/composer-parameter-handler": "^2.0",
         "friendsofsymfony/user-bundle": "^2.0",
-        "friendsofsymfony/rest-bundle": "^2.0",
         "hwi/oauth-bundle": "^0.6.2",
         "malenki/slug": "1.0.0",
         "sonata-project/intl-bundle": "^2.3",
