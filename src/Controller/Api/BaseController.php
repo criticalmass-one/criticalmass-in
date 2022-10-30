@@ -2,10 +2,9 @@
 
 namespace App\Controller\Api;
 
+use App\Controller\AbstractController;
 use App\Criticalmass\Api\Error;
 use App\Criticalmass\Api\Errors;
-use FOS\RestBundle\Controller\AbstractFOSRestController;
-use FOS\RestBundle\View\View;
 use JMS\Serializer\Context;
 use JMS\Serializer\DeserializationContext;
 use JMS\Serializer\SerializationContext;
@@ -13,7 +12,7 @@ use JMS\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-abstract class BaseController extends AbstractFOSRestController
+abstract class BaseController extends AbstractController
 {
     protected function getDeserializationContext(): DeserializationContext
     {
