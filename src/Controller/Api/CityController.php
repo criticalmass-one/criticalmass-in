@@ -3,7 +3,6 @@
 namespace App\Controller\Api;
 
 use JMS\Serializer\SerializationContext;
-use JMS\Serializer\SerializerInterface;
 use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
 use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Entity\City;
@@ -192,7 +191,7 @@ class CityController extends BaseController
      * )
      * @Route("/city", name="caldera_criticalmass_rest_city_list", methods={"GET"})
      */
-    public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager, SerializerInterface $serializer): JsonResponse
+    public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager): JsonResponse
     {
         $queryParameterList = RequestToListConverter::convert($request);
         $cityList = $dataQueryManager->query($queryParameterList, City::class);
@@ -206,7 +205,7 @@ class CityController extends BaseController
         $context = new SerializationContext();
         $context->setGroups($groups);
 
-        return new JsonResponse($serializer->serialize($cityList, 'json', $context), JsonResponse::HTTP_OK, [], true);
+        return $this->createStandardResponse($cityList, $context);
     }
 
     /**
@@ -232,8 +231,8 @@ class CityController extends BaseController
      * @ParamConverter("city", class="App:City")
      * @Route("/{citySlug}", name="caldera_criticalmass_rest_city_show", methods={"GET"}, options={"expose"=true})
      */
-    public function showAction(SerializerInterface $serializer, City $city): JsonResponse
+    public function showAction(City $city): JsonResponse
     {
-        return new JsonResponse($serializer->serialize($city, 'json'), JsonResponse::HTTP_OK, [], true);
+        return $this->createStandardResponse($city);
     }
 }

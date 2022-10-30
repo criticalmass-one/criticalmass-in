@@ -5,8 +5,6 @@ namespace App\Controller\Api;
 use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Entity\Region;
-use Doctrine\Persistence\ManagerRegistry;
-use JMS\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -88,14 +86,14 @@ class CycleController extends BaseController
      * @ParamConverter("validUntil", class="DateTime", isOptional=true)
      * @Route("/cycles", name="caldera_criticalmass_rest_cycles_list", methods={"GET"}, options={"expose"=true})
      */
-    public function listAction(Request $request, SerializerInterface $serializer, ManagerRegistry $managerRegistry, City $city = null, Region $region = null, \DateTime $validFrom = null, \DateTime $validUntil = null): JsonResponse
+    public function listAction(Request $request, City $city = null, Region $region = null, \DateTime $validFrom = null, \DateTime $validUntil = null): JsonResponse
     {
         $validNow = $request->query->getBoolean('validNow', null);
         $dayOfWeek = $request->query->getInt('dayOfWeek', null);
         $weekOfMonth = $request->query->getInt('weekOfMonth', null);
 
-        $cycleList = $managerRegistry->getRepository(CityCycle::class)->findForApi($city, $region, $validFrom, $validUntil, $validNow, $dayOfWeek, $weekOfMonth);
+        $cycleList = $this->managerRegistry->getRepository(CityCycle::class)->findForApi($city, $region, $validFrom, $validUntil, $validNow, $dayOfWeek, $weekOfMonth);
 
-        return new JsonResponse($serializer->serialize($cycleList, 'json'), JsonResponse::HTTP_OK, [], true);
+        return $this->createStandardResponse($cycleList);
     }
 }

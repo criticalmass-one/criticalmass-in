@@ -4,8 +4,6 @@ namespace App\Controller\Api;
 
 use App\Entity\City;
 use App\Entity\Location;
-use Doctrine\Persistence\ManagerRegistry;
-use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Operation;
 use Swagger\Annotations as SWG;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -35,11 +33,11 @@ class LocationController extends BaseController
      * @ParamConverter("city", class="App:City")
      * @Route("/{citySlug}/location", name="caldera_criticalmass_rest_location_list", methods={"GET"}, options={"expose"=true})
      */
-    public function listLocationAction(ManagerRegistry $registry, City $city, SerializerInterface $serializer): JsonResponse
+    public function listLocationAction(City $city): JsonResponse
     {
-        $locationList = $registry->getRepository(Location::class)->findLocationsByCity($city);
+        $locationList = $this->managerRegistry->getRepository(Location::class)->findLocationsByCity($city);
 
-        return new JsonResponse($serializer->serialize($locationList, 'json'), JsonResponse::HTTP_OK, [], true);
+        return $this->createStandardResponse($locationList);
     }
 
     /**
@@ -73,8 +71,8 @@ class LocationController extends BaseController
      * @ParamConverter("location", class="App:Location")
      * @Route("/{citySlug}/location/{locationSlug}", name="caldera_criticalmass_rest_location_show", methods={"GET"}, options={"expose"=true})
      */
-    public function showLocationAction(Location $location, SerializerInterface $serializer): JsonResponse
+    public function showLocationAction(Location $location): JsonResponse
     {
-        return new JsonResponse($serializer->serialize($location, 'json'), JsonResponse::HTTP_OK, [], true);
+        return $this->createStandardResponse($location);
     }
 }

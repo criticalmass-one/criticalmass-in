@@ -5,15 +5,26 @@ namespace App\Controller\Api;
 use App\Controller\AbstractController;
 use App\Criticalmass\Api\Error;
 use App\Criticalmass\Api\Errors;
+use Doctrine\Persistence\ManagerRegistry;
 use JMS\Serializer\Context;
 use JMS\Serializer\DeserializationContext;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 abstract class BaseController extends AbstractController
 {
+    protected ManagerRegistry $managerRegistry;
+    protected SerializerInterface $serializer;
+
+    public function __construct(ManagerRegistry $managerRegistry, SerializerInterface $serializer)
+    {
+        $this->managerRegistry = $managerRegistry;
+        $this->serializer = $serializer;
+    }
+
     protected function getDeserializationContext(): DeserializationContext
     {
         $deserializationContext = $this->initSerializerContext(new DeserializationContext());
@@ -35,7 +46,7 @@ abstract class BaseController extends AbstractController
         return $context;
     }
 
-    protected function deserializeRequest(Request $request, SerializerInterface $serializer, string $modelClass)
+    protected function deserializeRequest(Request $request, string $modelClass)
     {
         $content = null;
 
@@ -45,7 +56,7 @@ abstract class BaseController extends AbstractController
             $content = $request->getContent();
         }
 
-        return $serializer->deserialize($content, $modelClass, 'json');
+        return $this->serializer->deserialize($content, $modelClass, 'json');
     }
 
     /** @deprecated */
@@ -73,5 +84,10 @@ abstract class BaseController extends AbstractController
             ->setStatusCode($statusCode);
 
         return $this->handleView($view);
+    }
+
+    protected function createStandardResponse($responseObject, ?SerializationContext $context = null, int $httpStatus = JsonResponse::HTTP_OK, array $headerList = []): JsonResponse
+    {
+        return new JsonResponse($this->serializer->serialize($responseObject, 'json', $context), $httpStatus, $headerList, true);
     }
 }

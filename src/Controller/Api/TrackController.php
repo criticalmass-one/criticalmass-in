@@ -3,12 +3,10 @@
 namespace App\Controller\Api;
 
 use JMS\Serializer\SerializationContext;
-use JMS\Serializer\SerializerInterface;
 use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
 use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Entity\Ride;
 use App\Entity\Track;
-use Doctrine\Persistence\ManagerRegistry;
 use Nelmio\ApiDocBundle\Annotation\Operation;
 use Swagger\Annotations as SWG;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -34,11 +32,11 @@ class TrackController extends BaseController
      * @ParamConverter("ride", class="App:Ride")
      * @Route("/{citySlug}/{rideIdentifier}/listTracks", name="caldera_criticalmass_rest_track_ridelist", methods={"GET"})
      */
-    public function listRideTrackAction(ManagerRegistry $registry, SerializerInterface $serializer, Ride $ride): JsonResponse
+    public function listRideTrackAction(Ride $ride): JsonResponse
     {
-        $trackList = $registry->getRepository(Track::class)->findByRide($ride);
+        $trackList = $this->managerRegistry->getRepository(Track::class)->findByRide($ride);
 
-        return new JsonResponse($serializer->serialize($trackList, 'json'), JsonResponse::HTTP_OK, [], true);
+        return $this->createStandardResponse($trackList);
     }
 
     /**
@@ -56,7 +54,7 @@ class TrackController extends BaseController
      * @ParamConverter("track", class="App:Track")
      * @Route("/track/{trackId}", name="caldera_criticalmass_rest_track_view", methods={"GET"})
      */
-    public function viewAction(Track $track, SerializerInterface $serializer, UserInterface $user = null): JsonResponse
+    public function viewAction(Track $track, UserInterface $user = null): JsonResponse
     {
         $groups = ['api-public'];
 
@@ -67,7 +65,7 @@ class TrackController extends BaseController
         $context = new SerializationContext();
         $context->setGroups($groups);
 
-        return new JsonResponse($serializer->serialize($track, 'json', $context), JsonResponse::HTTP_OK, [], true);
+        return $this->createStandardResponse($track, $context);
     }
 
     /**
@@ -190,7 +188,7 @@ class TrackController extends BaseController
      * )
      * @Route("/track", name="caldera_criticalmass_rest_track_list", methods={"GET"})
      */
-    public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager, SerializerInterface $serializer, UserInterface $user = null): JsonResponse
+    public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager,UserInterface $user = null): JsonResponse
     {
         $queryParameterList = RequestToListConverter::convert($request);
         $trackList = $dataQueryManager->query($queryParameterList, Track::class);
@@ -204,6 +202,6 @@ class TrackController extends BaseController
         $context = new SerializationContext();
         $context->setGroups($groups);
 
-        return new JsonResponse($serializer->serialize($trackList, 'json', $context), JsonResponse::HTTP_OK, [], true);
+        return $this->createStandardResponse($trackList, $context);
     }
 }

@@ -6,7 +6,6 @@ use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
 use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Entity\Photo;
 use App\Entity\Ride;
-use Doctrine\Persistence\ManagerRegistry;
 use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Operation;
 use Swagger\Annotations as SWG;
@@ -48,11 +47,11 @@ class PhotoController extends BaseController
      * @ParamConverter("ride", class="App:Ride")
      * @Route("/{citySlug}/{rideIdentifier}/listPhotos", name="caldera_criticalmass_rest_photo_ridelist", methods={"GET"})
      */
-    public function listRidePhotosAction(ManagerRegistry $registry, SerializerInterface $serializer, Ride $ride): JsonResponse
+    public function listRidePhotosAction(Ride $ride): JsonResponse
     {
-        $photoList = $registry->getRepository(Photo::class)->findPhotosByRide($ride);
+        $photoList = $this->managerRegistry->getRepository(Photo::class)->findPhotosByRide($ride);
 
-        return new JsonResponse($serializer->serialize($photoList, 'json'), JsonResponse::HTTP_OK, [], true);
+        return $this->createStandardResponse($photoList);
     }
 
     /**
@@ -269,13 +268,13 @@ class PhotoController extends BaseController
      * )
      * @Route("/photo", name="caldera_criticalmass_rest_photo_list", methods={"GET"})
      */
-    public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager, SerializerInterface $serializer): JsonResponse
+    public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager): JsonResponse
     {
         $queryParameterList = RequestToListConverter::convert($request);
 
-        $rideList = $dataQueryManager->query($queryParameterList, Photo::class);
+        $photoList = $dataQueryManager->query($queryParameterList, Photo::class);
 
-        return new JsonResponse($serializer->serialize($rideList, 'json'), JsonResponse::HTTP_OK, [], true);
+        return $this->createStandardResponse($photoList);
     }
 
     /**
@@ -290,6 +289,6 @@ class PhotoController extends BaseController
 
         $photoJson = $serializer->serialize($photo, 'json');
 
-        return new JsonResponse($photoJson, 200, [], true);
+        return $this->createStandardResponse($photoJson);
     }
 }
