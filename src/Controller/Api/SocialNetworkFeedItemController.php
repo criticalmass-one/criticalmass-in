@@ -88,9 +88,9 @@ class SocialNetworkFeedItemController extends BaseController
             $manager->persist($newSocialNetworkFeedItem);
             $manager->flush();
         } catch (UniqueConstraintViolationException $exception) {
-            return $this->createError(JsonResponse::HTTP_CONFLICT, 'This feed item already exists.');
+            return $this->createErrors(JsonResponse::HTTP_CONFLICT, ['This feed item already exists.']);
         } catch (\Exception $exception) {
-            return $this->createError(JsonResponse::HTTP_INTERNAL_SERVER_ERROR, 'An unknown error occured. Please try again later or report this issue to criticalmass@caldera.cc.');
+            return $this->createErrors(JsonResponse::HTTP_INTERNAL_SERVER_ERROR, ['An unknown error occured. Please try again later or report this issue to criticalmass@caldera.cc.']);
         }
 
         return $this->createStandardResponse($newSocialNetworkFeedItem, null, JsonResponse::HTTP_CREATED);
