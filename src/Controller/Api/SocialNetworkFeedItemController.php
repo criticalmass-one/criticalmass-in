@@ -7,15 +7,12 @@ use App\Entity\City;
 use App\Entity\SocialNetworkFeedItem;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\Persistence\ManagerRegistry;
-use FOS\RestBundle\Context\Context;
-use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Operation;
-use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class SocialNetworkFeedItemController extends BaseController
@@ -33,20 +30,14 @@ class SocialNetworkFeedItemController extends BaseController
      * @ParamConverter("city", class="App:City")
      * @Route("/{citySlug}/socialnetwork-feeditems", name="caldera_criticalmass_rest_socialnetwork_feeditems_citylist", methods={"GET"})
      */
-    public function listSocialNetworkFeedItemsCityAction(Request $request, ManagerRegistry $registry, City $city): Response
+    public function listSocialNetworkFeedItemsCityAction(Request $request, ManagerRegistry $registry, SerializerInterface $serializer, City $city): JsonResponse
     {
         $uniqueIdentifier = $request->get('uniqueIdentifier');
         $networkIdentifier = $request->get('networkIdentifier');
 
         $profileList = $registry->getRepository(SocialNetworkFeedItem::class)->findByCityAndProperties($city, $uniqueIdentifier, $networkIdentifier);
 
-        $view = View::create();
-        $view
-            ->setData($profileList)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_OK);
-
-        return $this->handleView($view);
+        return new JsonResponse($serializer->serialize($profileList, 'json'), JsonResponse::HTTP_OK, [], true);
     }
 
     /**
@@ -64,7 +55,7 @@ class SocialNetworkFeedItemController extends BaseController
      * @ParamConverter("socialNetworkFeedItem", class="App:SocialNetworkFeedItem")
      * @Route("/{citySlug}/socialnetwork-feeditems/{feedItemId}", name="caldera_criticalmass_rest_socialnetwork_feeditems_update", methods={"POST"})
      */
-    public function updateSocialNetworkFeedItemAction(Request $request, SocialNetworkFeedItem $socialNetworkFeedItem, SerializerInterface $serializer, ManagerRegistry $managerRegistry, EntityMergerInterface $entityMerger): Response
+    public function updateSocialNetworkFeedItemAction(Request $request, SocialNetworkFeedItem $socialNetworkFeedItem, SerializerInterface $serializer, ManagerRegistry $managerRegistry, EntityMergerInterface $entityMerger): JsonResponse
     {
         $updatedSocialNetworkFeedItem = $serializer->deserialize($request->getContent(), SocialNetworkFeedItem::class, 'json');
 
@@ -72,16 +63,7 @@ class SocialNetworkFeedItemController extends BaseController
 
         $managerRegistry->getManager()->flush();
 
-        $context = new Context();
-
-        $view = View::create();
-        $view
-            ->setData($socialNetworkFeedItem)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_OK)
-            ->setContext($context);
-
-        return $this->handleView($view);
+        return new JsonResponse($serializer->serialize($socialNetworkFeedItem, 'json'), JsonResponse::HTTP_OK, [], true);
     }
 
     /**
@@ -97,33 +79,22 @@ class SocialNetworkFeedItemController extends BaseController
      * )
      * @Route("/{citySlug}/socialnetwork-feeditems", name="caldera_criticalmass_rest_socialnetwork_feeditems_create", methods={"PUT"})
      */
-    public function createSocialNetworkFeedItemAction(Request $request, SerializerInterface $serializer, ManagerRegistry $managerRegistry): Response
+    public function createSocialNetworkFeedItemAction(Request $request, SerializerInterface $serializer, ManagerRegistry $managerRegistry): JsonResponse
     {
         $newSocialNetworkFeedItem = $serializer->deserialize($request->getContent(), SocialNetworkFeedItem::class, 'json');
 
         $newSocialNetworkFeedItem->setCreatedAt(new \DateTime());
-
-        $context = new Context();
-
-        $view = View::create();
-        $view
-            ->setFormat('json')
-            ->setContext($context);
 
         try {
             $manager = $managerRegistry->getManager();
             $manager->persist($newSocialNetworkFeedItem);
             $manager->flush();
         } catch (UniqueConstraintViolationException $exception) {
-            return $this->createError(Response::HTTP_CONFLICT, 'This feed item already exists.');
+            return $this->createError(JsonResponse::HTTP_CONFLICT, 'This feed item already exists.');
         } catch (\Exception $exception) {
-            return $this->createError(Response::HTTP_INTERNAL_SERVER_ERROR, 'An unknown error occured. Please try again later or report this issue to criticalmass@caldera.cc.');
+            return $this->createError(JsonResponse::HTTP_INTERNAL_SERVER_ERROR, 'An unknown error occured. Please try again later or report this issue to criticalmass@caldera.cc.');
         }
 
-        $view
-            ->setData($newSocialNetworkFeedItem)
-            ->setStatusCode(Response::HTTP_CREATED);
-
-        return $this->handleView($view);
+        return new JsonResponse($serializer->serialize($newSocialNetworkFeedItem, 'json'), JsonResponse::HTTP_CREATED, [], true);
     }
 }
