@@ -5,15 +5,11 @@ namespace App\Controller\Api;
 use App\Entity\Ride;
 use App\Entity\Weather;
 use Doctrine\Persistence\ManagerRegistry;
-use FOS\RestBundle\Context\Context;
-use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Operation;
-use Nelmio\ApiDocBundle\Annotation\Model;
-use Swagger\Annotations as SWG;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class WeatherController extends BaseController
@@ -33,7 +29,7 @@ class WeatherController extends BaseController
      * @ParamConverter("ride", class="App:Ride")
      * @Route("/{citySlug}/{rideIdentifier}/weather", name="caldera_criticalmass_rest_weather_add", methods={"PUT"})
      */
-    public function addWeatherAction(Request $request, Ride $ride, ManagerRegistry $managerRegistry, SerializerInterface $serializer): Response
+    public function addWeatherAction(Request $request, Ride $ride, ManagerRegistry $managerRegistry, SerializerInterface $serializer): JsonResponse
     {
         /** @var Weather $weather */
         $weather = $this->deserializeRequest($request, $serializer, Weather::class);
@@ -46,15 +42,6 @@ class WeatherController extends BaseController
         $manager->persist($weather);
         $manager->flush();
 
-        $context = new Context();
-
-        $view = View::create();
-        $view
-            ->setData($weather)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_CREATED)
-            ->setContext($context);
-
-        return $this->handleView($view);
+        return new JsonResponse($serializer->serialize($weather, 'json'), JsonResponse::HTTP_OK, [], true);
     }
 }
