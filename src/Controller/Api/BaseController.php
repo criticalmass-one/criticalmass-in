@@ -25,27 +25,6 @@ abstract class BaseController extends AbstractController
         $this->serializer = $serializer;
     }
 
-    protected function getDeserializationContext(): DeserializationContext
-    {
-        $deserializationContext = $this->initSerializerContext(new DeserializationContext());
-
-        return $deserializationContext;
-    }
-
-    protected function getSerializationContext(): SerializationContext
-    {
-        $serializationContext = $this->initSerializerContext(new SerializationContext());
-
-        return $serializationContext;
-    }
-
-    protected function initSerializerContext(Context $context): Context
-    {
-        $context->setSerializeNull(true);
-
-        return $context;
-    }
-
     protected function deserializeRequest(Request $request, string $modelClass)
     {
         $content = null;
