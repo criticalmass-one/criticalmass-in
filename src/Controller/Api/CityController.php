@@ -2,16 +2,16 @@
 
 namespace App\Controller\Api;
 
+use JMS\Serializer\SerializationContext;
+use JMS\Serializer\SerializerInterface;
 use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
 use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Entity\City;
-use FOS\RestBundle\Context\Context;
-use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\Operation;
 use Swagger\Annotations as SWG;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CityController extends BaseController
@@ -192,27 +192,21 @@ class CityController extends BaseController
      * )
      * @Route("/city", name="caldera_criticalmass_rest_city_list", methods={"GET"})
      */
-    public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager): Response
+    public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager, SerializerInterface $serializer): JsonResponse
     {
         $queryParameterList = RequestToListConverter::convert($request);
         $cityList = $dataQueryManager->query($queryParameterList, City::class);
 
-        $context = new Context();
+        $groups = ['ride-list'];
 
         if ($request->query->has('extended') && true === $request->query->getBoolean('extended')) {
-            $context->addGroup('extended-ride-list');
+            $groups[] = 'extended-ride-list';
         }
 
-        $context->addGroup('ride-list');
+        $context = new SerializationContext();
+        $context->setGroups($groups);
 
-        $view = View::create();
-        $view
-            ->setContext($context)
-            ->setData($cityList)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_OK);
-
-        return $this->handleView($view);
+        return new JsonResponse($serializer->serialize($cityList, 'json', $context), JsonResponse::HTTP_OK, [], true);
     }
 
     /**
@@ -238,14 +232,8 @@ class CityController extends BaseController
      * @ParamConverter("city", class="App:City")
      * @Route("/{citySlug}", name="caldera_criticalmass_rest_city_show", methods={"GET"}, options={"expose"=true})
      */
-    public function showAction(City $city): Response
+    public function showAction(SerializerInterface $serializer, City $city): JsonResponse
     {
-        $view = View::create();
-        $view
-            ->setData($city)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_OK);
-
-        return $this->handleView($view);
+        return new JsonResponse($serializer->serialize($city, 'json'), JsonResponse::HTTP_OK, [], true);
     }
 }
