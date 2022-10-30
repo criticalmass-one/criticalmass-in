@@ -7,14 +7,12 @@ use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Entity\Photo;
 use App\Entity\Ride;
 use Doctrine\Persistence\ManagerRegistry;
-use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Operation;
 use Swagger\Annotations as SWG;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PhotoController extends BaseController
@@ -50,17 +48,11 @@ class PhotoController extends BaseController
      * @ParamConverter("ride", class="App:Ride")
      * @Route("/{citySlug}/{rideIdentifier}/listPhotos", name="caldera_criticalmass_rest_photo_ridelist", methods={"GET"})
      */
-    public function listRidePhotosAction(ManagerRegistry $registry, Ride $ride): Response
+    public function listRidePhotosAction(ManagerRegistry $registry, SerializerInterface $serializer, Ride $ride): JsonResponse
     {
         $photoList = $registry->getRepository(Photo::class)->findPhotosByRide($ride);
 
-        $view = View::create();
-        $view
-            ->setData($photoList)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_OK);
-
-        return $this->handleView($view);
+        return new JsonResponse($serializer->serialize($photoList, 'json'), JsonResponse::HTTP_OK, [], true);
     }
 
     /**
@@ -277,19 +269,13 @@ class PhotoController extends BaseController
      * )
      * @Route("/photo", name="caldera_criticalmass_rest_photo_list", methods={"GET"})
      */
-    public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager): Response
+    public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager, SerializerInterface $serializer): JsonResponse
     {
         $queryParameterList = RequestToListConverter::convert($request);
 
         $rideList = $dataQueryManager->query($queryParameterList, Photo::class);
 
-        $view = View::create();
-        $view
-            ->setData($rideList)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_OK);
-
-        return $this->handleView($view);
+        return new JsonResponse($serializer->serialize($rideList, 'json'), JsonResponse::HTTP_OK, [], true);
     }
 
     /**
