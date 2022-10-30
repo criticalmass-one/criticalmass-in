@@ -9,13 +9,12 @@ use App\Entity\RideEstimate;
 use App\Event\RideEstimate\RideEstimateCreatedEvent;
 use App\Model\CreateEstimateModel;
 use Doctrine\Persistence\ManagerRegistry;
-use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializerInterface;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Nelmio\ApiDocBundle\Annotation\Operation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Swagger\Annotations as SWG;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -76,7 +75,7 @@ class EstimateController extends BaseController
      *     )
      * )
      */
-    public function createEstimateAction(Request $request): Response
+    public function createEstimateAction(Request $request, SerializerInterface $serializer): JsonResponse
     {
         /** @var CreateEstimateModel $estimateModel */
         $estimateModel = $this->deserializeRequest($request, $this->serializer, CreateEstimateModel::class);
@@ -92,13 +91,7 @@ class EstimateController extends BaseController
 
         $this->eventDispatcher->dispatch(RideEstimateCreatedEvent::NAME, new RideEstimateCreatedEvent($rideEstimation));
 
-        $view = View::create();
-        $view
-            ->setData($rideEstimation)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_CREATED);
-
-        return $this->handleView($view);
+        return new JsonResponse($serializer->serialize($rideEstimation, 'json'), JsonResponse::HTTP_OK, [], true);
     }
 
     /**
@@ -157,7 +150,7 @@ class EstimateController extends BaseController
      * @Route("/estimate", name="caldera_criticalmass_rest_estimate_create", methods={"POST"})
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function createRideEstimateAction(Request $request, Ride $ride): Response
+    public function createRideEstimateAction(Request $request, Ride $ride, SerializerInterface $serializer): Response
     {
         /** @var CreateEstimateModel $estimateModel */
         $estimateModel = $this->deserializeRequest($request, $this->serializer, CreateEstimateModel::class);
@@ -173,13 +166,7 @@ class EstimateController extends BaseController
 
         $this->eventDispatcher->dispatch(RideEstimateCreatedEvent::NAME, new RideEstimateCreatedEvent($rideEstimation));
 
-        $view = View::create();
-        $view
-            ->setData($rideEstimation)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_CREATED);
-
-        return $this->handleView($view);
+        return new JsonResponse($serializer->serialize($rideEstimation, 'json'), JsonResponse::HTTP_OK, [], true);
     }
 
     protected function createRideEstimate(CreateEstimateModel $model, Ride $ride = null): ?RideEstimate
