@@ -113,9 +113,6 @@
     "emcconville/point-reduction-algorithms": {
         "version": "v1.2.0"
     },
-    "exsyst/swagger": {
-        "version": "v0.4.2"
-    },
     "ezimuel/guzzlestreams": {
         "version": "3.0.1"
     },

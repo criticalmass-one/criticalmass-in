@@ -39,7 +39,7 @@
         "hwi/oauth-bundle": "^0.6.2",
         "malenki/slug": "1.0.0",
         "sonata-project/intl-bundle": "^2.3",
-        "nelmio/api-doc-bundle": "^3.0",
+        "nelmio/api-doc-bundle": "^3.10",
         "predis/predis": "^1.1",
         "miljar/php-exif": "^0.6.5",
         "sonata-project/seo-bundle": "^2.2",
