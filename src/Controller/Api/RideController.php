@@ -2,22 +2,19 @@
 
 namespace App\Controller\Api;
 
+use JMS\Serializer\SerializationContext;
 use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
 use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Criticalmass\EntityMerger\EntityMergerInterface;
 use App\Entity\City;
 use App\Entity\Ride;
 use Doctrine\Persistence\ManagerRegistry;
-use FOS\RestBundle\Context\Context;
-use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Operation;
-use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -57,15 +54,9 @@ class RideController extends BaseController
      * @ParamConverter("ride", class="App:Ride")
      * @Route("/{citySlug}/{rideIdentifier}", name="caldera_criticalmass_rest_ride_show", methods={"GET"}, options={"expose"=true})
      */
-    public function showAction(Ride $ride): Response
+    public function showAction(Ride $ride, SerializerInterface $serializer): JsonResponse
     {
-        $view = View::create();
-        $view
-            ->setData($ride)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_OK);
-
-        return $this->handleView($view);
+        return new JsonResponse($serializer->serialize($ride, 'json'), JsonResponse::HTTP_OK, [], true);
     }
 
     /**
@@ -91,7 +82,7 @@ class RideController extends BaseController
      * @ParamConverter("city", class="App:City")
      * @Route("/{citySlug}/current", name="caldera_criticalmass_rest_ride_show_current", methods={"GET"}, options={"expose"=true})
      */
-    public function showCurrentAction(Request $request, City $city, ManagerRegistry $registry): Response
+    public function showCurrentAction(Request $request, City $city, ManagerRegistry $registry, SerializerInterface $serializer): JsonResponse
     {
         $cycleMandatory = $request->query->getBoolean('cycleMandatory', false);
         $slugsAllowed = $request->query->getBoolean('slugsAllowed', true);
@@ -102,13 +93,7 @@ class RideController extends BaseController
             return new JsonResponse([], 200, []); // @todo this should return 404, but i have no clue how to handle multiple jquery requests then
         }
 
-        $view = View::create();
-        $view
-            ->setData($ride)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_OK);
-
-        return $this->handleView($view);
+        return new JsonResponse($serializer->serialize($ride, 'json'), JsonResponse::HTTP_OK, [], true);
     }
 
     /**
@@ -349,27 +334,21 @@ class RideController extends BaseController
      * )
      * @Route("/ride", name="caldera_criticalmass_rest_ride_list", methods={"GET"})
      */
-    public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager): Response
+    public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager, SerializerInterface $serializer): JsonResponse
     {
         $queryParameterList = RequestToListConverter::convert($request);
         $rideList = $dataQueryManager->query($queryParameterList, Ride::class);
 
-        $context = new Context();
+        $groups = ['ride-list'];
 
         if ($request->query->has('extended') && true === $request->query->getBoolean('extended')) {
-            $context->addGroup('extended-ride-list');
+            $groups[] = 'extended-ride-list';
         }
 
-        $context->addGroup('ride-list');
+        $context = new SerializationContext();
+        $context->setGroups($groups);
 
-        $view = View::create();
-        $view
-            ->setData($rideList)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_OK)
-            ->setContext($context);
-
-        return $this->handleView($view);
+        return new JsonResponse($serializer->serialize($rideList, 'json'), JsonResponse::HTTP_OK, [], true);
     }
 
     /**
@@ -408,7 +387,7 @@ class RideController extends BaseController
      * @ParamConverter("city", class="App:City")
      * @Route("/{citySlug}/{rideIdentifier}", name="caldera_criticalmass_rest_ride_create", methods={"PUT"})
      */
-    public function createRideAction(Request $request, SerializerInterface $serializer, City $city, ManagerRegistry $managerRegistry, ValidatorInterface $validator): Response
+    public function createRideAction(Request $request, SerializerInterface $serializer, City $city, ManagerRegistry $managerRegistry, ValidatorInterface $validator): JsonResponse
     {
         /** @var Ride $ride */
         $ride = $this->deserializeRequest($request, $serializer, Ride::class);
@@ -437,25 +416,17 @@ class RideController extends BaseController
         }
 
         if (0 < count($errorList)) {
-            return $this->createErrors(Response::HTTP_BAD_REQUEST, $errorList);
+            return $this->createErrors(JsonResponse::HTTP_BAD_REQUEST, $errorList);
         }
 
         $manager = $managerRegistry->getManager();
         $manager->persist($ride);
         $manager->flush();
 
-        $context = new Context();
+        $context = new SerializationContext();
+        $context->setGroups('ride-list');
 
-        $context->addGroup('ride-list');
-
-        $view = View::create();
-        $view
-            ->setData($ride)
-            ->setFormat('json')
-            ->setStatusCode(200)
-            ->setContext($context);
-
-        return $this->handleView($view);
+        return new JsonResponse($serializer->serialize($ride, 'json'), JsonResponse::HTTP_OK, [], true);
     }
 
     /**
@@ -494,7 +465,7 @@ class RideController extends BaseController
      * @ParamConverter("ride", class="App:Ride")
      * @Route("/{citySlug}/{rideIdentifier}", name="caldera_criticalmass_rest_ride_update", methods={"POST"})
      */
-    public function updateRideAction(Request $request, Ride $ride, SerializerInterface $serializer, ManagerRegistry $managerRegistry, ValidatorInterface $validator, EntityMergerInterface $entityMerger): Response
+    public function updateRideAction(Request $request, Ride $ride, SerializerInterface $serializer, ManagerRegistry $managerRegistry, ValidatorInterface $validator, EntityMergerInterface $entityMerger): JsonResponse
     {
         /** @var Ride $ride */
         $updatedRide = $this->deserializeRequest($request, $serializer, Ride::class);
@@ -529,17 +500,9 @@ class RideController extends BaseController
         $manager = $managerRegistry->getManager();
         $manager->flush();
 
-        $context = new Context();
+        $context = new SerializationContext();
+        $context->setGroups('ride-list');
 
-        $context->addGroup('ride-list');
-
-        $view = View::create();
-        $view
-            ->setData($ride)
-            ->setFormat('json')
-            ->setStatusCode(200)
-            ->setContext($context);
-
-        return $this->handleView($view);
+        return new JsonResponse($serializer->serialize($ride, 'json'), JsonResponse::HTTP_OK, [], true);
     }
 }
