@@ -6,11 +6,10 @@ use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Entity\Region;
 use Doctrine\Persistence\ManagerRegistry;
-use FOS\RestBundle\Context\Context;
-use FOS\RestBundle\View\View;
+use JMS\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Nelmio\ApiDocBundle\Annotation\Operation;
 use Swagger\Annotations as SWG;
 use Symfony\Component\Routing\Annotation\Route;
@@ -89,7 +88,7 @@ class CycleController extends BaseController
      * @ParamConverter("validUntil", class="DateTime", isOptional=true)
      * @Route("/cycles", name="caldera_criticalmass_rest_cycles_list", methods={"GET"}, options={"expose"=true})
      */
-    public function listAction(Request $request, ManagerRegistry $managerRegistry, City $city = null, Region $region = null, \DateTime $validFrom = null, \DateTime $validUntil = null): Response
+    public function listAction(Request $request, SerializerInterface $serializer, ManagerRegistry $managerRegistry, City $city = null, Region $region = null, \DateTime $validFrom = null, \DateTime $validUntil = null): JsonResponse
     {
         $validNow = $request->query->getBoolean('validNow', null);
         $dayOfWeek = $request->query->getInt('dayOfWeek', null);
@@ -97,15 +96,6 @@ class CycleController extends BaseController
 
         $cycleList = $managerRegistry->getRepository(CityCycle::class)->findForApi($city, $region, $validFrom, $validUntil, $validNow, $dayOfWeek, $weekOfMonth);
 
-        $context = new Context();
-
-        $view = View::create();
-        $view
-            ->setContext($context)
-            ->setData($cycleList)
-            ->setFormat('json')
-            ->setStatusCode(200);
-
-        return $this->handleView($view);
+        return new JsonResponse($serializer->serialize($cycleList, 'json'), JsonResponse::HTTP_OK, [], true);
     }
 }
