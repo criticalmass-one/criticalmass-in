@@ -6,13 +6,11 @@ use App\Criticalmass\EntityMerger\EntityMergerInterface;
 use App\Entity\City;
 use App\Entity\SocialNetworkProfile;
 use Doctrine\Persistence\ManagerRegistry;
-use FOS\RestBundle\Context\Context;
-use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Operation;
-use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -32,7 +30,7 @@ class SocialNetworkProfileController extends BaseController
      * @ParamConverter("city", class="App:City", isOptional="true")
      * @Route("/socialnetwork-profiles", name="caldera_criticalmass_rest_socialnetwork_profiles_list", methods={"GET"})
      */
-    public function listSocialNetworkProfilesAction(Request $request, ManagerRegistry $registry, City $city = null, SerializerInterface $serializer): Response
+    public function listSocialNetworkProfilesAction(Request $request, ManagerRegistry $registry, City $city = null, SerializerInterface $serializer): JsonResponse
     {
         $networkIdentifier = $request->get('networkIdentifier');
         $autoFetch = (bool)$request->get('autoFetch');
@@ -45,13 +43,7 @@ class SocialNetworkProfileController extends BaseController
 
         $profileList = $registry->getRepository(SocialNetworkProfile::class)->findByProperties($networkIdentifier, $autoFetch, $city, $entityClassNames);
 
-        $view = View::create();
-        $view
-            ->setData($profileList)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_OK);
-
-        return $this->handleView($view);
+        return new JsonResponse($serializer->serialize($profileList, 'json'), JsonResponse::HTTP_OK, [], true);
     }
 
     /**
@@ -67,17 +59,11 @@ class SocialNetworkProfileController extends BaseController
      * @ParamConverter("city", class="App:City")
      * @Route("/{citySlug}/socialnetwork-profiles", name="caldera_criticalmass_rest_socialnetwork_profiles_citylist", methods={"GET"})
      */
-    public function listSocialNetworkProfilesCityAction(ManagerRegistry $registry, City $city): Response
+    public function listSocialNetworkProfilesCityAction(ManagerRegistry $registry, SerializerInterface $serializer, City $city): JsonResponse
     {
         $profileList = $registry->getRepository(SocialNetworkProfile::class)->findByCity($city);
 
-        $view = View::create();
-        $view
-            ->setData($profileList)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_OK);
-
-        return $this->handleView($view);
+        return new JsonResponse($serializer->serialize($profileList, 'json'), JsonResponse::HTTP_OK, [], true);
     }
 
     /**
@@ -103,16 +89,7 @@ class SocialNetworkProfileController extends BaseController
 
         $managerRegistry->getManager()->flush();
 
-        $context = new Context();
-
-        $view = View::create();
-        $view
-            ->setData($socialNetworkProfile)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_OK)
-            ->setContext($context);
-
-        return $this->handleView($view);
+        return new JsonResponse($serializer->serialize($socialNetworkProfile, 'json',), JsonResponse::HTTP_OK, [], true);
     }
 
     /**
@@ -130,7 +107,7 @@ class SocialNetworkProfileController extends BaseController
      * @ParamConverter("city", class="App:City")
      * @Route("/{citySlug}/socialnetwork-profiles", name="caldera_criticalmass_rest_socialnetwork_profiles_create", methods={"PUT"})
      */
-    public function createSocialNetworkProfileAction(Request $request, City $city, SerializerInterface $serializer, ManagerRegistry $managerRegistry): Response
+    public function createSocialNetworkProfileAction(Request $request, City $city, SerializerInterface $serializer, ManagerRegistry $managerRegistry): JsonResponse
     {
         $newSocialNetworkProfile = $serializer->deserialize($request->getContent(), SocialNetworkProfile::class, 'json');
 
@@ -142,15 +119,6 @@ class SocialNetworkProfileController extends BaseController
         $manager->persist($newSocialNetworkProfile);
         $manager->flush();
 
-        $context = new Context();
-
-        $view = View::create();
-        $view
-            ->setData($newSocialNetworkProfile)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_CREATED)
-            ->setContext($context);
-
-        return $this->handleView($view);
+        return new JsonResponse($serializer->serialize($newSocialNetworkProfile, 'json'), JsonResponse::HTTP_CREATED, [], true);
     }
 }
