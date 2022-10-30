@@ -2,19 +2,18 @@
 
 namespace App\Controller\Api;
 
+use JMS\Serializer\SerializationContext;
+use JMS\Serializer\SerializerInterface;
 use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
 use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Entity\Ride;
 use App\Entity\Track;
 use Doctrine\Persistence\ManagerRegistry;
-use FOS\RestBundle\Context\Context;
-use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\Operation;
-use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -35,17 +34,11 @@ class TrackController extends BaseController
      * @ParamConverter("ride", class="App:Ride")
      * @Route("/{citySlug}/{rideIdentifier}/listTracks", name="caldera_criticalmass_rest_track_ridelist", methods={"GET"})
      */
-    public function listRideTrackAction(ManagerRegistry $registry, Ride $ride): Response
+    public function listRideTrackAction(ManagerRegistry $registry, SerializerInterface $serializer, Ride $ride): JsonResponse
     {
         $trackList = $registry->getRepository(Track::class)->findByRide($ride);
 
-        $view = View::create();
-        $view
-            ->setData($trackList)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_OK);
-
-        return $this->handleView($view);
+        return new JsonResponse($serializer->serialize($trackList, 'json'), JsonResponse::HTTP_OK, [], true);
     }
 
     /**
@@ -63,24 +56,18 @@ class TrackController extends BaseController
      * @ParamConverter("track", class="App:Track")
      * @Route("/track/{trackId}", name="caldera_criticalmass_rest_track_view", methods={"GET"})
      */
-    public function viewAction(Track $track, UserInterface $user = null): Response
+    public function viewAction(Track $track, SerializerInterface $serializer, UserInterface $user = null): JsonResponse
     {
-        $context = new Context();
-
-        $context->addGroup('api-public');
+        $groups = ['api-public'];
 
         if ($user) {
-            $context->addGroup('api-private');
+            $groups[] = 'api-private';
         }
 
-        $view = View::create();
-        $view
-            ->setData($track)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_OK)
-            ->setContext($context);
+        $context = new SerializationContext();
+        $context->setGroups($groups);
 
-        return $this->handleView($view);
+        return new JsonResponse($serializer->serialize($track, 'json', $context), JsonResponse::HTTP_OK, [], true);
     }
 
     /**
@@ -203,26 +190,20 @@ class TrackController extends BaseController
      * )
      * @Route("/track", name="caldera_criticalmass_rest_track_list", methods={"GET"})
      */
-    public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager, UserInterface $user = null): Response
+    public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager, SerializerInterface $serializer, UserInterface $user = null): JsonResponse
     {
         $queryParameterList = RequestToListConverter::convert($request);
         $trackList = $dataQueryManager->query($queryParameterList, Track::class);
 
-        $context = new Context();
-
-        $context->addGroup('api-public');
+        $groups = ['api-public'];
 
         if ($user) {
-            $context->addGroup('api-private');
+            $groups[] = 'api-private';
         }
 
-        $view = View::create();
-        $view
-            ->setData($trackList)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_OK)
-            ->setContext($context);
+        $context = new SerializationContext();
+        $context->setGroups($groups);
 
-        return $this->handleView($view);
+        return new JsonResponse($serializer->serialize($trackList, 'json', $context), JsonResponse::HTTP_OK, [], true);
     }
 }
