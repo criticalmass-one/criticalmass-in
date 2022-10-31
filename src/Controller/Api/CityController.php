@@ -7,7 +7,7 @@ use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
 use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Entity\City;
 use Nelmio\ApiDocBundle\Annotation\Operation;
-use Swagger\Annotations as SWG;
+use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -64,127 +64,112 @@ class CityController extends BaseController
      * @Operation(
      *     tags={"City"},
      *     summary="Returns a list of critical mass cities",
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="name",
      *         in="query",
      *         description="Name of the city",
      *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="regionSlug",
      *         in="query",
      *         description="Provide a region slug",
      *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="centerLatitude",
      *         in="query",
      *         description="Latitude of a coordinate to search cities around in a given radius.",
      *         required=false,
-     *         @SWG\Schema(type="number"),
-     *         type="number"
+     *         @OA\Schema(type="number"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="centerLongitude",
      *         in="query",
      *         description="Longitude of a coordinate to search cities around in a given radius.",
      *         required=false,
-     *         @SWG\Schema(type="number"),
-     *         type="number"
+     *         @OA\Schema(type="number"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="radius",
      *         in="query",
      *         description="Radius to look around for cities.",
      *         required=false,
-     *         @SWG\Schema(type="number"),
-     *         type="number"
+     *         @OA\Schema(type="number"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="bbEastLongitude",
      *         in="query",
      *         description="East longitude of a bounding box to look for cities.",
      *         required=false,
-     *         @SWG\Schema(type="number"),
-     *         type="number"
+     *         @OA\Schema(type="number"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="bbWestLongitude",
      *         in="query",
      *         description="West longitude of a bounding box to look for cities.",
      *         required=false,
-     *         @SWG\Schema(type="number"),
-     *         type="number"
+     *         @OA\Schema(type="number"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="bbNorthLatitude",
      *         in="query",
      *         description="North latitude of a bounding box to look for cities.",
      *         required=false,
-     *         @SWG\Schema(type="number"),
-     *         type="number"
+     *         @OA\Schema(type="number"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="bbSouthLatitude",
      *         in="query",
      *         description="South latitude of a bounding box to look for cities.",
      *         required=false,
-     *         @SWG\Schema(type="number"),
-     *         type="number"
+     *         @OA\Schema(type="number"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="orderBy",
      *         in="query",
      *         description="Choose a property to sort the list by.",
      *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="orderDirection",
      *         in="query",
      *         description="Sort ascending or descending.",
      *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="distanceOrderDirection",
      *         in="query",
      *         description="Enable distance sorting in combination with radius query.",
      *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="startValue",
      *         in="query",
      *         description="Start ordered list with provided value.",
      *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="size",
      *         in="query",
      *         description="Length of resulting list. Defaults to 10.",
      *         required=false,
-     *         @SWG\Schema(type="integer"),
-     *         type="integer"
+     *         @OA\Schema(type="integer"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="extended",
      *         in="query",
      *         description="Set true to retrieve a more detailed list.",
      *         required=false,
-     *         @SWG\Schema(type="boolean"),
-     *         type="boolean"
+     *         @OA\Schema(type="boolean"),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )
@@ -214,15 +199,14 @@ class CityController extends BaseController
      * @Operation(
      *     tags={"City"},
      *     summary="Shows a critical mass city",
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="citySlug",
      *         in="path",
      *         description="Slug of the city",
      *         required=true,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )

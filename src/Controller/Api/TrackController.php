@@ -8,7 +8,7 @@ use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Entity\Ride;
 use App\Entity\Track;
 use Nelmio\ApiDocBundle\Annotation\Operation;
-use Swagger\Annotations as SWG;
+use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,7 +23,7 @@ class TrackController extends BaseController
      * @Operation(
      *     tags={"Track"},
      *     summary="Retrieve a list of tracks of a ride",
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )
@@ -45,7 +45,7 @@ class TrackController extends BaseController
      * @Operation(
      *     tags={"Track"},
      *     summary="Show details of a track",
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )
@@ -118,70 +118,70 @@ class TrackController extends BaseController
      * @Operation(
      *     tags={"Track"},
      *     summary="Lists tracks",
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="regionSlug",
      *         in="body",
      *         description="Provide a region slug",
      *         required=false,
-     *         @SWG\Schema(type="string")
+     *         @OA\Schema(type="string")
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="citySlug",
      *         in="body",
      *         description="Provide a city slug",
      *         required=false,
-     *         @SWG\Schema(type="string")
+     *         @OA\Schema(type="string")
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="year",
      *         in="body",
      *         description="Limit the result set to this year. If not set, we will search in the current month.",
      *         required=false,
-     *         @SWG\Schema(type="string")
+     *         @OA\Schema(type="string")
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="month",
      *         in="body",
      *         description="Limit the result set to this year. Must be combined with 'year'. If not set, we will search in the current month.",
      *         required=false,
-     *         @SWG\Schema(type="string")
+     *         @OA\Schema(type="string")
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="day",
      *         in="body",
      *         description="Limit the result set to this day.",
      *         required=false,
-     *         @SWG\Schema(type="string")
+     *         @OA\Schema(type="string")
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="orderBy",
      *         in="body",
      *         description="Choose a property to sort the list by.",
      *         required=false,
-     *         @SWG\Schema(type="string")
+     *         @OA\Schema(type="string")
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="orderDirection",
      *         in="body",
      *         description="Sort ascending or descending.",
      *         required=false,
-     *         @SWG\Schema(type="string")
+     *         @OA\Schema(type="string")
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="startValue",
      *         in="body",
      *         description="Start ordered list with provided value.",
      *         required=false,
-     *         @SWG\Schema(type="string")
+     *         @OA\Schema(type="string")
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="size",
      *         in="body",
      *         description="Length of resulting list. Defaults to 10.",
      *         required=false,
-     *         @SWG\Schema(type="integer")
+     *         @OA\Schema(type="integer")
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )

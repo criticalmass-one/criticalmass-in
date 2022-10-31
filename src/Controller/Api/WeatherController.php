@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Swagger\Annotations as SWG;
+use OpenApi\Annotations as OA;
 
 class WeatherController extends BaseController
 {
@@ -19,7 +19,7 @@ class WeatherController extends BaseController
      * @Operation(
      *     tags={"Weather"},
      *     summary="Add weather data for a ride",
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )

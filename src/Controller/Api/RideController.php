@@ -9,7 +9,7 @@ use App\Criticalmass\EntityMerger\EntityMergerInterface;
 use App\Entity\City;
 use App\Entity\Ride;
 use Nelmio\ApiDocBundle\Annotation\Operation;
-use Swagger\Annotations as SWG;
+use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,23 +27,21 @@ class RideController extends BaseController
      * @Operation(
      *     tags={"Ride"},
      *     summary="Returns ride details",
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="citySlug",
      *         in="path",
      *         description="Provide a city slug",
      *         required=true,
-     *         type="string",
-     *         @SWG\Schema(type="string")
+     *         @OA\Schema(type="string")
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="rideIdentifier",
      *         in="path",
      *         description="Identify the requested ride",
      *         required=true,
-     *         type="string",
-     *         @SWG\Schema(type="string")
+     *         @OA\Schema(type="string")
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )
@@ -63,15 +61,14 @@ class RideController extends BaseController
      * @Operation(
      *     tags={"Ride"},
      *     summary="Returns details of the next ride in the city",
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="citySlug",
      *         in="path",
      *         description="Provide a city slug",
      *         required=true,
-     *         type="string",
-     *         @SWG\Schema(type="string")
+     *         @OA\Schema(type="string")
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )
@@ -170,162 +167,143 @@ class RideController extends BaseController
      * @Operation(
      *     tags={"Ride"},
      *     summary="Lists rides",
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="regionSlug",
      *         in="query",
      *         description="Provide a region slug",
      *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="citySlug",
      *         in="query",
      *         description="Provide a city slug",
      *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="rideType",
      *         in="query",
      *         description="Limit to a type of events",
      *         required=false,
-     *         @SWG\Schema(
+     *         @OA\Schema(
      *             type="array",
-     *             @SWG\Items(ref="App\DBAL\Type\RideType")
+     *             @OA\Items(ref="App\DBAL\Type\RideType")
      *         ),
-     *         type="string"
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="year",
      *         in="query",
      *         description="Limit the result set to this year. If not set, we will search in the current month.",
      *         required=false,
-     *         @SWG\Schema(type="integer"),
-     *         type="integer"
+     *         @OA\Schema(type="integer"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="month",
      *         in="query",
      *         description="Limit the result set to this year. Must be combined with 'year'. If not set, we will search in the current month.",
      *         required=false,
-     *         @SWG\Schema(type="integer"),
-     *         type="integer"
+     *         @OA\Schema(type="integer"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="day",
      *         in="query",
      *         description="Limit the result set to this day.",
      *         required=false,
-     *         @SWG\Schema(type="integer"),
-     *         type="integer"
+     *         @OA\Schema(type="integer"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="centerLatitude",
      *         in="query",
      *         description="Latitude of a coordinate to search rides around in a given radius.",
      *         required=false,
-     *         @SWG\Schema(type="float"),
-     *         type="number"
+     *         @OA\Schema(type="float"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="centerLongitude",
      *         in="query",
      *         description="Longitude of a coordinate to search rides around in a given radius.",
      *         required=false,
-     *         @SWG\Schema(type="float"),
-     *         type="number"
+     *         @OA\Schema(type="float"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="radius",
      *         in="query",
      *         description="Radius to look around for rides.",
      *         required=false,
-     *         @SWG\Schema(type="float"),
-     *         type="number"
+     *         @OA\Schema(type="float"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="bbEastLongitude",
      *         in="query",
      *         description="East longitude of a bounding box to look for rides.",
      *         required=false,
-     *         @SWG\Schema(type="float"),
-     *         type="number"
+     *         @OA\Schema(type="float"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="bbWestLongitude",
      *         in="query",
      *         description="West longitude of a bounding box to look for rides.",
      *         required=false,
-     *         @SWG\Schema(type="float"),
-     *         type="number"
+     *         @OA\Schema(type="float"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="bbNorthLatitude",
      *         in="query",
      *         description="North latitude of a bounding box to look for rides.",
      *         required=false,
-     *         @SWG\Schema(type="float"),
-     *         type="number"
+     *         @OA\Schema(type="float"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="bbSouthLatitude",
      *         in="query",
      *         description="South latitude of a bounding box to look for rides.",
      *         required=false,
-     *         @SWG\Schema(type="float"),
-     *         type="number"
+     *         @OA\Schema(type="float"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="orderBy",
      *         in="query",
      *         description="Choose a property to sort the list by.",
      *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="orderDirection",
      *         in="query",
      *         description="Sort ascending or descending.",
      *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="distanceOrderDirection",
      *         in="query",
      *         description="Enable distance sorting in combination with radius query.",
      *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="startValue",
      *         in="query",
      *         description="Start ordered list with provided value.",
      *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="extended",
      *         in="query",
      *         description="Set true to retrieve a more detailed list.",
      *         required=false,
-     *         @SWG\Schema(type="boolean"),
-     *         type="boolean"
+     *         @OA\Schema(type="boolean"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="size",
      *         in="query",
      *         description="Length of resulting list. Defaults to 10.",
      *         required=false,
-     *         @SWG\Schema(type="integer"),
-     *         type="integer"
+     *         @OA\Schema(type="integer"),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )
@@ -353,30 +331,28 @@ class RideController extends BaseController
      * @Operation(
      *     tags={"Ride"},
      *     summary="Creates a new ride",
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="citySlug",
      *         in="path",
      *         description="Slug of the city to assign the new created ride to",
      *         required=true,
-     *         type="string",
-     *         @SWG\Schema(type="string")
+     *         @OA\Schema(type="string")
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="rideIdentifier",
      *         in="path",
      *         description="Identifier of the ride to be created",
      *         required=true,
-     *         type="string",
-     *         @SWG\Schema(type="string")
+     *         @OA\Schema(type="string")
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="body",
      *         in="body",
      *         description="JSON represantation of ride",
      *         required=true,
-     *         @SWG\Schema(type="string")
+     *         @OA\Schema(type="string")
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )
@@ -431,30 +407,28 @@ class RideController extends BaseController
      * @Operation(
      *     tags={"Ride"},
      *     summary="Updates a ride",
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="citySlug",
      *         in="path",
      *         description="Slug of the city to assign the updated ride to",
      *         required=true,
-     *         type="string",
-     *         @SWG\Schema(type="string")
+     *         @OA\Schema(type="string")
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="rideIdentifier",
      *         in="path",
      *         description="Identifier of the ride to be updated",
      *         required=true,
-     *         type="string",
-     *         @SWG\Schema(type="string")
+     *         @OA\Schema(type="string")
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="body",
      *         in="body",
      *         description="JSON represantation of ride",
      *         required=true,
-     *         @SWG\Schema(type="string")
+     *         @OA\Schema(type="string")
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )

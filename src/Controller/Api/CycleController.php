@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\Operation;
-use Swagger\Annotations as SWG;
+use OpenApi\Annotations as OA;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CycleController extends BaseController
@@ -18,63 +18,56 @@ class CycleController extends BaseController
      * @Operation(
      *     tags={"Cycles"},
      *     summary="Returns a list of city cycles",
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="citySlug",
      *         in="query",
      *         description="Provide a city slug",
      *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="regionSlug",
      *         in="query",
      *         description="Provide a region slug",
      *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="validFrom",
      *         in="query",
      *         description="Only retrieve cycles valid after the provied date",
      *         required=false,
-     *         @SWG\Schema(type="date"),
-     *         type="string"
+     *         @OA\Schema(type="date"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="validUntil",
      *         in="query",
      *         description="Only retrieve cycles valid before the provied date",
      *         required=false,
-     *         @SWG\Schema(type="date"),
-     *         type="string"
+     *         @OA\Schema(type="date"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="validNow",
      *         in="query",
      *         description="Only retrieve cycles valid for the current month",
      *         required=false,
-     *         @SWG\Schema(type="bool"),
-     *         type="boolean"
+     *         @OA\Schema(type="bool"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="dayOfWeek",
      *         in="query",
      *         description="Limit the results to this day of week",
      *         required=false,
-     *         @SWG\Schema(type="int"),
-     *         type="integer"
+     *         @OA\Schema(type="int"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="weekOfMonth",
      *         in="query",
      *         description="Limit the results to this week of month",
      *         required=false,
-     *         @SWG\Schema(type="int"),
-     *         type="integer"
+     *         @OA\Schema(type="int"),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )

@@ -6,7 +6,7 @@ use App\Criticalmass\EntityMerger\EntityMergerInterface;
 use App\Entity\City;
 use App\Entity\SocialNetworkProfile;
 use Nelmio\ApiDocBundle\Annotation\Operation;
-use Swagger\Annotations as SWG;
+use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +19,7 @@ class SocialNetworkProfileController extends BaseController
      * @Operation(
      *     tags={"Social Network Profile"},
      *     summary="Search for social network profiles",
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )
@@ -48,7 +48,7 @@ class SocialNetworkProfileController extends BaseController
      * @Operation(
      *     tags={"Social Network Profile"},
      *     summary="Retrieve a list of social network profiles assigned to a city",
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )
@@ -70,7 +70,7 @@ class SocialNetworkProfileController extends BaseController
      * @Operation(
      *     tags={"Social Network Profile"},
      *     summary="Update properties of a social network profile",
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )
@@ -96,7 +96,7 @@ class SocialNetworkProfileController extends BaseController
      * @Operation(
      *     tags={"Social Network Profile"},
      *     summary="Create a new social network profile",
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )

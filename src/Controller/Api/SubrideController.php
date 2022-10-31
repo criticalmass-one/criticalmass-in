@@ -5,7 +5,7 @@ namespace App\Controller\Api;
 use App\Entity\Ride;
 use App\Entity\Subride;
 use Nelmio\ApiDocBundle\Annotation\Operation;
-use Swagger\Annotations as SWG;
+use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,7 +16,7 @@ class SubrideController extends BaseController
      * @Operation(
      *     tags={"Subride"},
      *     summary="Retrieve a list of subrides of a ride",
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )
@@ -38,7 +38,7 @@ class SubrideController extends BaseController
      * @Operation(
      *     tags={"Subride"},
      *     summary="Show details of a subride",
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )

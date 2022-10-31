@@ -12,7 +12,7 @@ use App\Model\CreateEstimateModel;
 use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Operation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Swagger\Annotations as SWG;
+use OpenApi\Annotations as OA;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -56,14 +56,14 @@ class EstimateController extends BaseController
      * @Operation(
      *     tags={"Estimate"},
      *     summary="Adds an estimation to statistic",
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="body",
      *         in="body",
      *         description="JSON representation of the estimate data",
      *         required=true,
-     *         @SWG\Schema(type="string")
+     *         @OA\Schema(type="string")
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )
@@ -113,30 +113,28 @@ class EstimateController extends BaseController
      * @Operation(
      *     tags={"Estimate"},
      *     summary="Adds an estimation to statistic",
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="citySlug",
      *         in="path",
      *         description="Slug of the ride’s city",
      *         required=true,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="rideIdentifier",
      *         in="path",
      *         description="Identifier of the ride",
      *         required=true,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="body",
      *         in="body",
      *         description="JSON representation of the estimate data",
      *         required=true,
-     *         @SWG\Schema(type="string")
+     *         @OA\Schema(type="string")
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )

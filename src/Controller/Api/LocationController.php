@@ -5,7 +5,7 @@ namespace App\Controller\Api;
 use App\Entity\City;
 use App\Entity\Location;
 use Nelmio\ApiDocBundle\Annotation\Operation;
-use Swagger\Annotations as SWG;
+use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,15 +16,14 @@ class LocationController extends BaseController
      * @Operation(
      *     tags={"Location"},
      *     summary="Retrieve a list of locations of a city",
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="citySlug",
      *         in="path",
      *         description="Slug of the city",
      *         required=true,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )
@@ -46,23 +45,21 @@ class LocationController extends BaseController
      * @Operation(
      *     tags={"Location"},
      *     summary="Show details of a location",
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="citySlug",
      *         in="path",
      *         description="Slug of the city",
      *         required=true,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="locationSlug",
      *         in="path",
      *         description="Slug of the location",
      *         required=true,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )

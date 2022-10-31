@@ -7,7 +7,7 @@ use App\Entity\City;
 use App\Entity\SocialNetworkFeedItem;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Nelmio\ApiDocBundle\Annotation\Operation;
-use Swagger\Annotations as SWG;
+use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +19,7 @@ class SocialNetworkFeedItemController extends BaseController
      * @Operation(
      *     tags={"Social Network Feed Item"},
      *     summary="Retrieve a list of social network feed items assigned to profiles of a city",
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )
@@ -44,7 +44,7 @@ class SocialNetworkFeedItemController extends BaseController
      * @Operation(
      *     tags={"Social Network Feed Item"},
      *     summary="Update properties of a social network feed item",
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )
@@ -70,7 +70,7 @@ class SocialNetworkFeedItemController extends BaseController
      * @Operation(
      *     tags={"Social Network Feed Item"},
      *     summary="Create a new social network feed item",
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )
