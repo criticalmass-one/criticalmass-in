@@ -17,9 +17,6 @@ framework:
         enabled: true
     validation:
         enable_annotations: true
-        #cache: validator.mapping.cache.doctrine.apc
-    templating:
-        engines: ['twig']
     default_locale:  '%locale%'
     session:
         handler_id:  session.handler.native_file
