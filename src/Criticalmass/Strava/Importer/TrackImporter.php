@@ -29,8 +29,10 @@ class TrackImporter extends AbstractTrackImporter
     {
         $activity = $this->getActivity();
 
+        list($offset, $timezoneIdentifier) = explode(' ', $activity->timezone);
+        
         $startDateTime = new \DateTime($activity->start_date);
-        $startDateTime->setTimezone(new \DateTimeZone($activity->timezone));
+        $startDateTime->setTimezone(new \DateTimeZone($timezoneIdentifier));
 
         return $startDateTime;
     }

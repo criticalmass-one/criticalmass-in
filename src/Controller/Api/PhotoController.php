@@ -6,15 +6,12 @@ use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
 use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Entity\Photo;
 use App\Entity\Ride;
-use Doctrine\Persistence\ManagerRegistry;
-use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Operation;
-use Swagger\Annotations as SWG;
+use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PhotoController extends BaseController
@@ -25,23 +22,21 @@ class PhotoController extends BaseController
      * @Operation(
      *     tags={"Photo"},
      *     summary="Retrieve a list of photos of a ride",
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="citySlug",
      *         in="path",
      *         description="Provide a city slug",
      *         required=true,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="rideIdentifier",
      *         in="path",
      *         description="Provide a ride identifier",
      *         required=true,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )
@@ -50,17 +45,11 @@ class PhotoController extends BaseController
      * @ParamConverter("ride", class="App:Ride")
      * @Route("/{citySlug}/{rideIdentifier}/listPhotos", name="caldera_criticalmass_rest_photo_ridelist", methods={"GET"})
      */
-    public function listRidePhotosAction(ManagerRegistry $registry, Ride $ride): Response
+    public function listRidePhotosAction(Ride $ride): JsonResponse
     {
-        $photoList = $registry->getRepository(Photo::class)->findPhotosByRide($ride);
+        $photoList = $this->managerRegistry->getRepository(Photo::class)->findPhotosByRide($ride);
 
-        $view = View::create();
-        $view
-            ->setData($photoList)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_OK);
-
-        return $this->handleView($view);
+        return $this->createStandardResponse($photoList);
     }
 
     /**
@@ -126,170 +115,146 @@ class PhotoController extends BaseController
      * @Operation(
      *     tags={"Photo"},
      *     summary="Lists photos",
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="regionSlug",
      *         in="query",
      *         description="Provide a region slug",
      *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="citySlug",
      *         in="query",
      *         description="Provide a city slug",
      *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="rideIdentifier",
      *         in="query",
      *         description="Provide a ride identifier",
      *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="year",
      *         in="query",
      *         description="Limit the result set to this year. If not set, we will search in the current month.",
      *         required=false,
-     *         @SWG\Schema(type="integer"),
-     *         type="integer"
+     *         @OA\Schema(type="integer"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="month",
      *         in="query",
      *         description="Limit the result set to this year. Must be combined with 'year'. If not set, we will search in the current month.",
      *         required=false,
-     *         @SWG\Schema(type="integer"),
-     *         type="integer"
+     *         @OA\Schema(type="integer"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="day",
      *         in="query",
      *         description="Limit the result set to this day.",
      *         required=false,
-     *         @SWG\Schema(type="integer"),
-     *         type="integer"
+     *         @OA\Schema(type="integer"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="centerLatitude",
      *         in="query",
      *         description="Latitude of a coordinate to search photos around in a given radius.",
      *         required=false,
-     *         @SWG\Schema(type="number"),
-     *         type="number"
+     *         @OA\Schema(type="number"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="centerLongitude",
      *         in="query",
      *         description="Longitude of a coordinate to search photos around in a given radius.",
      *         required=false,
-     *         @SWG\Schema(type="number"),
-     *         type="number"
+     *         @OA\Schema(type="number"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="radius",
      *         in="query",
      *         description="Radius to look around for photos.",
      *         required=false,
-     *         @SWG\Schema(type="number"),
-     *         type="number"
+     *         @OA\Schema(type="number"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="bbEastLongitude",
      *         in="query",
      *         description="East longitude of a bounding box to look for photos.",
      *         required=false,
-     *         @SWG\Schema(type="number"),
-     *         type="number"
+     *         @OA\Schema(type="number"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="bbWestLongitude",
      *         in="query",
      *         description="West longitude of a bounding box to look for photos.",
      *         required=false,
-     *         @SWG\Schema(type="number"),
-     *         type="number"
+     *         @OA\Schema(type="number"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="bbNorthLatitude",
      *         in="query",
      *         description="North latitude of a bounding box to look for photos.",
      *         required=false,
-     *         @SWG\Schema(type="number"),
-     *         type="number"
+     *         @OA\Schema(type="number"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="bbSouthLatitude",
      *         in="query",
      *         description="South latitude of a bounding box to look for photos.",
      *         required=false,
-     *         @SWG\Schema(type="number"),
-     *         type="number"
+     *         @OA\Schema(type="number"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="orderBy",
      *         in="query",
      *         description="Choose a property to sort the list by.",
      *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="orderDirection",
      *         in="query",
      *         description="Sort ascending or descending.",
      *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="distanceOrderDirection",
      *         in="query",
      *         description="Enable distance sorting in combination with radius query.",
      *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="startValue",
      *         in="query",
      *         description="Start ordered list with provided value.",
      *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="size",
      *         in="query",
      *         description="Length of resulting list. Defaults to 10.",
      *         required=false,
-     *         @SWG\Schema(type="integer"),
-     *         type="integer"
+     *         @OA\Schema(type="integer"),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )
      * )
      * @Route("/photo", name="caldera_criticalmass_rest_photo_list", methods={"GET"})
      */
-    public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager): Response
+    public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager): JsonResponse
     {
         $queryParameterList = RequestToListConverter::convert($request);
 
-        $rideList = $dataQueryManager->query($queryParameterList, Photo::class);
+        $photoList = $dataQueryManager->query($queryParameterList, Photo::class);
 
-        $view = View::create();
-        $view
-            ->setData($rideList)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_OK);
-
-        return $this->handleView($view);
+        return $this->createStandardResponse($photoList);
     }
 
     /**
@@ -304,6 +269,6 @@ class PhotoController extends BaseController
 
         $photoJson = $serializer->serialize($photo, 'json');
 
-        return new JsonResponse($photoJson, 200, [], true);
+        return $this->createStandardResponse($photoJson);
     }
 }
