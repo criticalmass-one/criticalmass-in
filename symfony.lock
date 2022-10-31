@@ -312,13 +312,17 @@
         "version": "1.8.1"
     },
     "nelmio/api-doc-bundle": {
-        "version": "2.13",
+        "version": "4.10",
         "recipe": {
             "repo": "github.com/symfony/recipes-contrib",
-            "branch": "master",
-            "version": "2.13",
-            "ref": "d13bb99357ebcd2ffb6fe808a64961f5bc1c7546"
-        }
+            "branch": "main",
+            "version": "3.0",
+            "ref": "c8e0c38e1a280ab9e37587a8fa32b251d5bc1c94"
+        },
+        "files": [
+            "config/packages/nelmio_api_doc.yaml",
+            "config/routes/nelmio_api_doc.yaml"
+        ]
     },
     "nesbot/carbon": {
         "version": "2.58.0"
@@ -912,9 +916,6 @@
         "version": "v1.1.0"
     },
     "yohang/calendr": {
-        "version": "2.1.1"
-    },
-    "zircote/swagger-php": {
         "version": "2.1.1"
     }
 }
