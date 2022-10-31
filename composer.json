@@ -24,7 +24,6 @@
         "doctrine/orm": "^2.5",
         "doctrine/doctrine-bundle": "^2.0",
         "doctrine/doctrine-migrations-bundle": "^2.0",
-        "twig/extensions": "^1.4",
         "vich/uploader-bundle": "^1.13",
         "liip/imagine-bundle": "^2.0",
         "knplabs/knp-paginator-bundle": "^5.0",
@@ -47,7 +46,7 @@
         "maxh/php-nominatim": "^1.2",
         "php-http/guzzle6-adapter": "^2.0",
         "php-http/httplug-bundle": "^1.26",
-        "salavert/time-ago-in-words": "1.*",
+        "salavert/time-ago-in-words": "^1.8",
         "emcconville/point-reduction-algorithms": "^1.2",
         "php-http/message": "^1.6",
         "symfony/swiftmailer-bundle": "^3.2",
@@ -147,6 +146,10 @@
         {
             "type": "vcs",
             "url": "https://github.com/maltehuebner/StravaPHP.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/maltehuebner/time-ago-in-words.git"
         }
     ],
     "minimum-stability": "stable"
