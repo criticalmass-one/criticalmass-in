@@ -929,6 +929,7 @@
     },
     "zircote/swagger-php": {
         "version": "2.1.1"
+    },
     "yohang/calendr": {
         "version": "2.1.1"
     }
