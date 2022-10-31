@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\File\File;
  * @ORM\Table(name="frontpage_teaser_button")
  * @ORM\Entity()
  */
-class FrontpageTeaserButton implements \Stringable
+class FrontpageTeaserButton
 {
     /**
      * @ORM\Id

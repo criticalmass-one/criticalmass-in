@@ -10,11 +10,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class TracksTransformCommand extends Command
 {
-    protected ManagerRegistry $registry;
+    /** @var ManagerRegistry $registry */
+    protected $registry;
 
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(?string $name = null, ManagerRegistry $registry)
     {
-        parent::__construct();
+        parent::__construct($name);
     }
 
     protected function configure()
@@ -34,7 +35,7 @@ class TracksTransformCommand extends Command
         foreach ($tracks as $track) {
             $output->writeln('Track #' . $track->getId());
 
-            $array = json_decode($track->getLatLngList(), null, 512, JSON_THROW_ON_ERROR);
+            $array = json_decode($track->getLatLngList());
 
             if (is_array($array) && count($array) > 0) {
                 $polyline = \Polyline::Encode($array);

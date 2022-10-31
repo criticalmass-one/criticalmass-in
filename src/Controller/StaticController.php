@@ -14,7 +14,7 @@ class StaticController extends AbstractController
 
         try {
             return $this->render($templateName);
-        } catch (InvalidArgumentException) {
+        } catch (InvalidArgumentException $e) {
             throw $this->createNotFoundException(sprintf('There is no content for slug "%s"', $slug));
         }
     }

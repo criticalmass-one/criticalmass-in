@@ -4,5 +4,5 @@ namespace App\Event\User;
 
 class UserColorChangedEvent extends AbstractUserEvent
 {
-    final const NAME = 'user.color_changed';
+    const NAME = 'user.color_changed';
 }

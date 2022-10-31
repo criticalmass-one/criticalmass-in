@@ -4,5 +4,5 @@ namespace App\Event\Participation;
 
 class ParticipationDeletedEvent extends AbstractParticipationEvent
 {
-    final const NAME = 'participation.deleted';
+    const NAME = 'participation.deleted';
 }

@@ -4,15 +4,20 @@ namespace App\Criticalmass\Profile\ParticipationTable;
 
 use App\Entity\Participation;
 
-class ParticipationYear implements \Countable, \Iterator, \Stringable
+class ParticipationYear implements \Countable, \Iterator
 {
+    /** @var int $year */
+    protected $year;
+
     /** @var array $monthList */
     protected $monthList;
 
     protected $currentMonth = 1;
 
-    public function __construct(protected int $year)
+    public function __construct(int $year)
     {
+        $this->year = $year;
+
         $this->initMonthList();
     }
 
@@ -41,7 +46,7 @@ class ParticipationYear implements \Countable, \Iterator, \Stringable
         $counter = 0;
 
         for ($month = 1; $month <= 12; ++$month) {
-            $counter += is_countable($this->monthList[$month]) ? count($this->monthList[$month]) : 0;
+            $counter += count($this->monthList[$month]);
         }
 
         return $counter;

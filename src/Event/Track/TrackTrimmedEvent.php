@@ -4,5 +4,5 @@ namespace App\Event\Track;
 
 class TrackTrimmedEvent extends AbstractTrackEvent
 {
-    final const NAME = 'track.trimmed';
+    const NAME = 'track.trimmed';
 }

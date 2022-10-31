@@ -12,6 +12,6 @@ class FacebookEvent extends AbstractFacebookNetwork
             return false;
         }
 
-        return str_contains($url, 'facebook.com/events/');
+        return strpos($url, 'facebook.com/events/') !== false;
     }
 }

@@ -12,8 +12,17 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class PrepareImagesCommand extends Command
 {
-    public function __construct(protected ManagerRegistry $doctrine, protected PhotoFilterer $photoFilterer)
+    /** @var ManagerRegistry $doctrine */
+    protected $doctrine;
+
+    /** @var PhotoFilterer $photoFilterer */
+    protected $photoFilterer;
+
+    public function __construct(ManagerRegistry $doctrine, PhotoFilterer $photoFilterer)
     {
+        $this->doctrine = $doctrine;
+        $this->photoFilterer = $photoFilterer;
+
         parent::__construct();
     }
 

@@ -8,8 +8,13 @@ use App\Criticalmass\Geo\GpxReader\TrackReader;
 
 class TrackLoop extends Loop
 {
-    public function __construct(protected TrackReader $trackReader)
+    /** @var TrackReader $trackReader */
+    protected $trackReader;
+
+    public function __construct(TrackReader $trackReader)
     {
+        $this->trackReader = $trackReader;
+
         parent::__construct();
     }
 

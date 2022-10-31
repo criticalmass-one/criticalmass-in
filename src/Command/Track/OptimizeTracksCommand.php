@@ -15,9 +15,18 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class OptimizeTracksCommand extends Command
 {
-    public function __construct(protected ManagerRegistry $registry, protected EventDispatcherInterface $eventDispatcher)
+    /** @var ManagerRegistry $registry */
+    protected $registry;
+
+    /** @var EventDispatcherInterface $eventDispatcher */
+    protected $eventDispatcher;
+
+    public function __construct(?string $name = null, ManagerRegistry $registry, EventDispatcherInterface $eventDispatcher)
     {
-        parent::__construct();
+        $this->registry = $registry;
+        $this->eventDispatcher = $eventDispatcher;
+
+        parent::__construct($name);
     }
 
     protected function configure(): void

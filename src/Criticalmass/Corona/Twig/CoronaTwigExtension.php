@@ -9,14 +9,19 @@ use Twig\TwigFunction;
 
 class CoronaTwigExtension extends AbstractExtension
 {
-    public function __construct(protected ResultFetcherInterface $resultFetcher)
+    protected ResultFetcherInterface $resultFetcher;
+
+    public function __construct(ResultFetcherInterface $resultFetcher)
     {
+        $this->resultFetcher = $resultFetcher;
     }
 
     public function getFunctions()
     {
         return [
-            new TwigFunction('corona', fn(CoordinateInterface $coordinate) => $this->resultFetcher->fetch($coordinate)),
+            new TwigFunction('corona', function (CoordinateInterface $coordinate) {
+                return $this->resultFetcher->fetch($coordinate);
+            }),
         ];
     }
 }

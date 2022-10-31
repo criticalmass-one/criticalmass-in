@@ -31,10 +31,10 @@ class AbstractCriticalmassParamConverter extends AbstractParamConverter
                 continue;
             }
 
-            $requestParameterKey = sprintf('%s%s', $this->getLowercaseEntityShortName(), ucfirst((string) $propertyName));
+            $requestParameterKey = sprintf('%s%s', $this->getLowercaseEntityShortName(), ucfirst($propertyName));
 
             if ($requestParameterValue = $request->get($requestParameterKey)) {
-                $repositoryMethod = sprintf('findOneBy%s', ucfirst((string) $propertyName));
+                $repositoryMethod = sprintf('findOneBy%s', ucfirst($propertyName));
 
                 return $this->getRepository()->$repositoryMethod($requestParameterValue);
             }

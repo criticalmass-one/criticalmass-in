@@ -10,8 +10,17 @@ use Doctrine\Common\Annotations\Reader;
 
 class PropertyParameterResolver extends AbstractParameterResolver
 {
-    public function __construct(Reader $annotationReader, protected DelegatedRouterManagerInterface $delegatedRouterManager, protected ClassParameterResolver $classParameterResolver)
+    /** @var DelegatedRouterManagerInterface $delegatedRouterManager */
+    protected $delegatedRouterManager;
+
+    /** @var ClassParameterResolver $classParameterResolver */
+    protected $classParameterResolver;
+
+    public function __construct(Reader $annotationReader, DelegatedRouterManagerInterface $delegatedRouterManager, ClassParameterResolver $classParameterResolver)
     {
+        $this->delegatedRouterManager = $delegatedRouterManager;
+        $this->classParameterResolver = $classParameterResolver;
+
         parent::__construct($annotationReader);
     }
 

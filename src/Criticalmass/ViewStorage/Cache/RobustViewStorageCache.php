@@ -13,8 +13,17 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class RobustViewStorageCache extends ViewStorageCache
 {
-    public function __construct(protected ManagerRegistry $registry, protected ViewStoragePersisterInterface $viewStoragePersister, TokenStorageInterface $tokenStorage, ProducerInterface $producer, SerializerInterface $serializer)
+    /** @var ViewStoragePersisterInterface $viewStoragePersister */
+    protected $viewStoragePersister;
+
+    /** @var ManagerRegistry $registry */
+    protected $registry;
+
+    public function __construct(ManagerRegistry $registry, ViewStoragePersisterInterface $viewStoragePersister, TokenStorageInterface $tokenStorage, ProducerInterface $producer, SerializerInterface $serializer)
     {
+        $this->viewStoragePersister = $viewStoragePersister;
+        $this->registry = $registry;
+
         parent::__construct($tokenStorage, $producer, $serializer);
     }
 
@@ -22,7 +31,7 @@ class RobustViewStorageCache extends ViewStorageCache
     {
         try {
             parent::countView($viewable);
-        } catch (AMQPIOException) {
+        } catch (AMQPIOException $exception) {
             // rabbit is not available, so just throw everything into the database and do not care about performance
 
             $view = ViewFactory::createView($viewable, $this->tokenStorage->getToken()->getUser());

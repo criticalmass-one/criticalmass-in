@@ -23,7 +23,7 @@ class ExifHandler extends AbstractExifHandler
 
         /** @var \ReflectionMethod $method */
         foreach ($reflection->getMethods() as $method) {
-            if (!str_starts_with($method->getName(), 'setExif')) {
+            if (strpos($method->getName(), 'setExif') !== 0) {
                 continue;
             }
 
@@ -41,12 +41,16 @@ class ExifHandler extends AbstractExifHandler
 
     protected function typeawareAssignment(Photo $photo, string $setMethodName, Exif $exif, string $getMethodName, string $type): Photo
     {
-        match ($type) {
-            'string' => $photo->$setMethodName((string) $exif->$getMethodName()),
-            'int' => $photo->$setMethodName((int) $exif->$getMethodName()),
-            'float' => $photo->$setMethodName((float) $exif->$getMethodName()),
-            default => $photo->$setMethodName($exif->$getMethodName()),
-        };
+        switch ($type) {
+            case 'string': $photo->$setMethodName((string) $exif->$getMethodName());
+                break;
+            case 'int': $photo->$setMethodName((int) $exif->$getMethodName());
+                break;
+            case 'float': $photo->$setMethodName((float) $exif->$getMethodName());
+                break;
+            default: $photo->$setMethodName($exif->$getMethodName());
+                break;
+        }
 
         return $photo;
     }

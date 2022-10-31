@@ -26,7 +26,7 @@ class UploadableDataHandler extends AbstractUploadableDataHandler
             }
 
             foreach ($this->propertyList as $property) {
-                $calculateMethodName = sprintf('calculate%s', ucfirst((string) $property));
+                $calculateMethodName = sprintf('calculate%s', ucfirst($property));
 
                 $value = $this->$calculateMethodName($filename);
 
@@ -34,7 +34,7 @@ class UploadableDataHandler extends AbstractUploadableDataHandler
                 // so we will just try and catch
                 try {
                     $mapping->writeProperty($entity, $property, $value);
-                } catch (InvalidArgumentException) {
+                } catch (InvalidArgumentException $exception) {
                     $this->assignPropertyWithoutMapping($entity, $property, $mapping->getFileNamePropertyName(), $value);
                 }
             }

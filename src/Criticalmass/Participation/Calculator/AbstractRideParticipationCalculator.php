@@ -7,10 +7,14 @@ use Doctrine\Persistence\ManagerRegistry;
 
 abstract class AbstractRideParticipationCalculator implements RideParticipationCalculatorInterface
 {
+    /** @var ManagerRegistry $registry */
+    protected $registry;
+
     /** @var Ride $ride */
     protected $ride;
 
-    public function __construct(protected ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry)
     {
+        $this->registry = $registry;
     }
 }

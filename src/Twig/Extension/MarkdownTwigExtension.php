@@ -8,14 +8,17 @@ use Twig\TwigFilter;
 
 class MarkdownTwigExtension extends AbstractExtension
 {
-    public function __construct(protected TextParserInterface $textParser)
+    protected TextParserInterface $textParser;
+
+    public function __construct(TextParserInterface $textParser)
     {
+        $this->textParser = $textParser;
     }
 
     public function getFilters(): array
     {
         return [
-            new TwigFilter('markdown', $this->markdown(...), ['is_safe' => ['html']]),
+            new TwigFilter('markdown', [$this, 'markdown'], ['is_safe' => ['html']]),
         ];
     }
 

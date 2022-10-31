@@ -8,8 +8,12 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class RideEstimateConverter implements RideEstimateConverterInterface
 {
-    public function __construct(protected ManagerRegistry $registry)
+    /** @var ManagerRegistry $registry */
+    protected $registry;
+
+    public function __construct(ManagerRegistry $registry)
     {
+        $this->registry = $registry;
     }
 
     public function addEstimateFromTrack(Track $track, bool $flush = true): RideEstimateConverterInterface

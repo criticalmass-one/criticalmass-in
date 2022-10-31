@@ -4,5 +4,5 @@ namespace App\Event\Track;
 
 class TrackTimeEvent extends AbstractTrackEvent
 {
-    final const NAME = 'track.time';
+    const NAME = 'track.time';
 }

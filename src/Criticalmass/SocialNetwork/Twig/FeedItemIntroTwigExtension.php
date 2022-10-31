@@ -7,12 +7,12 @@ use Twig\TwigFilter;
 
 class FeedItemIntroTwigExtension extends AbstractExtension
 {
-    final const INTRO_LENGTH = 350;
+    const INTRO_LENGTH = 350;
 
     public function getFilters(): array
     {
         return [
-            new TwigFilter('trim_intro', $this->trimIntro(...)),
+            new TwigFilter('trim_intro', [$this, 'trimIntro']),
         ];
     }
 

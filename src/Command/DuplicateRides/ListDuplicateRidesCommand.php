@@ -15,9 +15,18 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ListDuplicateRidesCommand extends Command
 {
-    public function __construct(protected ManagerRegistry $registry, protected DuplicateFinderInterface $duplicateFinder)
+    /** @var ManagerRegistry $registry */
+    protected $registry;
+
+    /** @var DuplicateFinderInterface $duplicateFinder */
+    protected $duplicateFinder;
+
+    public function __construct($name = null, ManagerRegistry $registry, DuplicateFinderInterface $duplicateFinder)
     {
-        parent::__construct();
+        $this->registry = $registry;
+        $this->duplicateFinder = $duplicateFinder;
+
+        parent::__construct($name);
     }
 
     protected function configure(): void

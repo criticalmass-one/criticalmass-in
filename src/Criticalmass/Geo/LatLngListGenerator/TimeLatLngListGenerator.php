@@ -9,7 +9,7 @@ class TimeLatLngListGenerator extends AbstractLatLngListGenerator
         $start = $this->track->getStartPoint();
         $end = $this->track->getEndPoint();
 
-        $result = [];
+        $result = array();
 
         $counter = 0;
 

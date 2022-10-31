@@ -32,7 +32,7 @@ class Parser implements ParserInterface
 
         try {
             $response = $adapter->sendRequest($request);
-        } catch (\Exception) {
+        } catch (\Exception $exception) {
             return null;
         }
 
@@ -41,7 +41,7 @@ class Parser implements ParserInterface
 
             try {
                 $htmlDomElement = \Sunra\PhpSimple\HtmlDomParser::str_get_html($htmlString);
-            } catch (\Exception) {
+            } catch (\Exception $exception) {
                 return null;
             }
 

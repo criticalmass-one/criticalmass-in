@@ -6,10 +6,15 @@ use App\Entity\Photo;
 
 class PhotoUpdatedEvent extends AbstractPhotoEvent
 {
-    final const NAME = 'photo.updated';
+    const NAME = 'photo.updated';
 
-    public function __construct(Photo $photo, protected bool $flush = true)
+    /** @var bool $flush */
+    protected $flush;
+
+    public function __construct(Photo $photo, bool $flush = true)
     {
+        $this->flush = $flush;
+
         parent::__construct($photo);
     }
 

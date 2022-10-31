@@ -7,8 +7,12 @@ use Symfony\Component\EventDispatcher\Event;
 
 abstract class AbstractPhotoEvent extends Event
 {
-    public function __construct(protected Photo $photo)
+    /** @var Photo $photo */
+    protected $photo;
+
+    public function __construct(Photo $photo)
     {
+        $this->photo = $photo;
     }
 
     public function getPhoto(): Photo

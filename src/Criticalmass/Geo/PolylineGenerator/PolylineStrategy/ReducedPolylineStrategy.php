@@ -7,7 +7,7 @@ use PointReduction\Common\Point;
 
 class ReducedPolylineStrategy implements PolylineStrategyInterface
 {
-    final const TOLERANCE = 0.05;
+    const TOLERANCE = 0.05;
 
     public function generate(array $pointList): string
     {

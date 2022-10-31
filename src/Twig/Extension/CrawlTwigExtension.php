@@ -15,17 +15,28 @@ use Twig\TwigFunction;
 
 class CrawlTwigExtension extends AbstractExtension
 {
+    protected ManagerRegistry $registry;
+    protected CrawlerInterface $crawler;
+    protected Environment $twigEnvironment;
+    protected ObfuscatorInterface $obfuscator;
+    protected FeatureManagerInterface $featureManager;
     protected array $blacklistPatternList = [];
 
-    public function __construct(protected ManagerRegistry $registry, protected CrawlerInterface $crawler, protected Environment $twigEnvironment, protected ObfuscatorInterface $obfuscator, protected FeatureManagerInterface $featureManager)
+    public function __construct(ManagerRegistry $registry, CrawlerInterface $crawler, Environment $twigEnvironment, ObfuscatorInterface $obfuscator, FeatureManagerInterface $featureManager)
     {
+        $this->registry = $registry;
+        $this->crawler = $crawler;
+        $this->twigEnvironment = $twigEnvironment;
+        $this->obfuscator = $obfuscator;
+        $this->featureManager = $featureManager;
+
         $this->populateBlacklist();
     }
 
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('parse_urls', $this->parseUrls(...), ['is_safe' => ['html']]),
+            new TwigFunction('parse_urls', [$this, 'parseUrls'], ['is_safe' => ['html']]),
         ];
     }
 

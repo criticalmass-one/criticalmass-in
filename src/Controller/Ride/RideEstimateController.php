@@ -23,10 +23,10 @@ class RideEstimateController extends AbstractController
      */
     public function addestimateAction(
         Request $request,
+        UserInterface $user = null,
         Ride $ride,
         EventDispatcherInterface $eventDispatcher,
-        ObjectRouterInterface $objectRouter,
-        UserInterface $user = null
+        ObjectRouterInterface $objectRouter
     ): Response {
         $rideEstimate = new RideEstimate();
         $rideEstimate
@@ -54,10 +54,10 @@ class RideEstimateController extends AbstractController
      */
     public function anonymousestimateAction(
         Request $request,
+        UserInterface $user = null,
         Ride $ride,
         EventDispatcherInterface $eventDispatcher,
-        ObjectRouterInterface $objectRouter,
-        UserInterface $user = null
+        ObjectRouterInterface $objectRouter
     ): Response {
         $rideEstimate = new RideEstimate();
         $rideEstimate

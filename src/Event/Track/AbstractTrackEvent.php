@@ -7,8 +7,12 @@ use Symfony\Component\EventDispatcher\Event;
 
 abstract class AbstractTrackEvent extends Event
 {
-    public function __construct(protected Track $track)
+    /** @var Track $track */
+    protected $track;
+
+    public function __construct(Track $track)
     {
+        $this->track = $track;
     }
 
     public function getTrack(): Track

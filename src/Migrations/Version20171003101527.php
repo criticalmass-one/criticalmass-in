@@ -10,6 +10,9 @@ use Doctrine\Migrations\AbstractMigration;
  */
 class Version20171003101527 extends AbstractMigration
 {
+    /**
+     * @param Schema $schema
+     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -19,6 +22,9 @@ class Version20171003101527 extends AbstractMigration
         $this->addSql('ALTER TABLE subride_audit ADD updatedAt DATETIME DEFAULT NULL COMMENT \'(DC2Type:datetime)\', CHANGE creationdatetime createdAt DATETIME DEFAULT NULL COMMENT \'(DC2Type:datetime)\'');
     }
 
+    /**
+     * @param Schema $schema
+     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs

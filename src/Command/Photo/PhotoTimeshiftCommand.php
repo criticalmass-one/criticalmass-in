@@ -18,8 +18,17 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class PhotoTimeshiftCommand extends Command
 {
-    public function __construct(protected ManagerRegistry $registry, protected EventDispatcherInterface $eventDispatcher)
+    /** @var ManagerRegistry $registry */
+    protected $registry;
+
+    /** @var EventDispatcherInterface */
+    protected $eventDispatcher;
+
+    public function __construct(ManagerRegistry $registry, EventDispatcherInterface $eventDispatcher)
     {
+        $this->registry = $registry;
+        $this->eventDispatcher = $eventDispatcher;
+
         parent::__construct();
     }
 
@@ -72,7 +81,7 @@ class PhotoTimeshiftCommand extends Command
 
         $entityManager = $this->registry->getManager();
 
-        $progressBar = new ProgressBar($output, is_countable($photos) ? count($photos) : 0);
+        $progressBar = new ProgressBar($output, count($photos));
 
         $table = new Table($output);
         $table->setHeaders([

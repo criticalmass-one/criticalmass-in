@@ -8,8 +8,12 @@ use App\Criticalmass\Geo\GpxReader\TrackReader;
 
 class TrackDistanceCalculator extends DistanceCalculator implements TrackDistanceCalculatorInterface
 {
-    public function __construct(protected TrackReader $trackReader)
+    /** @var TrackReader $trackReader */
+    protected $trackReader;
+
+    public function __construct(TrackReader $trackReader)
     {
+        $this->trackReader = $trackReader;
     }
 
     public function setTrack(Track $track): DistanceCalculatorInterface

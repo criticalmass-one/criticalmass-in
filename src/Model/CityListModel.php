@@ -7,8 +7,24 @@ use App\Entity\Ride;
 
 class CityListModel
 {
-    public function __construct(protected City $city, protected Ride $currentRide = null, protected array $cycles = [], protected int $countRides = 0)
+    /** @var City */
+    protected $city;
+
+    /** @var Ride */
+    protected $currentRide;
+
+    /** @var int $countRides */
+    protected $countRides;
+
+    /** @var array $cycles */
+    protected $cycles;
+
+    public function __construct(City $city, Ride $currentRide = null, array $cycles = [], int $countRides = 0)
     {
+        $this->city = $city;
+        $this->currentRide = $currentRide;
+        $this->cycles = $cycles;
+        $this->countRides = $countRides;
     }
 
     public function getCity(): City

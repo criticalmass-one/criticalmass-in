@@ -10,6 +10,9 @@ use Doctrine\Migrations\AbstractMigration;
  */
 class Version20170628120607 extends AbstractMigration
 {
+    /**
+     * @param Schema $schema
+     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -20,6 +23,9 @@ class Version20170628120607 extends AbstractMigration
         $this->addSql('ALTER TABLE fos_user_user DROP city_id, DROP description, DROP token, DROP phoneNumber, DROP phoneNumberVerified, DROP phoneNumberVerificationDateTime, DROP phoneNumberVerificationToken, DROP pushoverToken');
     }
 
+    /**
+     * @param Schema $schema
+     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs

@@ -12,17 +12,33 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 abstract class AbstractPhotoUploader implements PhotoUploaderInterface
 {
+    /** @var ManagerRegistry $doctrine */
+    protected $doctrine;
+
+    /** @var FilesystemInterface $filesystem */
+    protected $filesystem;
+
     /** @var User $user */
     protected $user;
 
     /** @var Ride $ride */
     protected $ride;
 
+    /** @var EventDispatcherInterface $eventDispatcher */
+    protected $eventDispatcher;
+
     /** @var array $addedPhotoList */
     protected $addedPhotoList = [];
 
-    public function __construct(protected ManagerRegistry $doctrine, protected EventDispatcherInterface $eventDispatcher, protected FilesystemInterface $filesystem, protected UploadFakerInterface $uploadFaker)
+    /** @var UploadFakerInterface $uploadFaker */
+    protected $uploadFaker;
+
+    public function __construct(ManagerRegistry $doctrine, EventDispatcherInterface $eventDispatcher, FilesystemInterface $filesystem, UploadFakerInterface $uploadFaker)
     {
+        $this->doctrine = $doctrine;
+        $this->filesystem = $filesystem;
+        $this->eventDispatcher = $eventDispatcher;
+        $this->uploadFaker = $uploadFaker;
     }
 
     public function setUser(User $user): PhotoUploaderInterface

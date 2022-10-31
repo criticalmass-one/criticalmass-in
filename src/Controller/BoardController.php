@@ -52,7 +52,7 @@ class BoardController extends AbstractController
 
         return $this->render('Board/list_threads.html.twig', [
             'threads' => $threads,
-            'board' => ($board ?: $city),
+            'board' => ($board ? $board : $city),
             'newThreadUrl' => $newThreadUrl,
         ]);
     }
@@ -81,7 +81,7 @@ class BoardController extends AbstractController
      */
     public function addThreadAction(Request $request, ObjectRouterInterface $objectRouter, Board $board = null, City $city = null): Response
     {
-        $board ??= $city;
+        $board = $board ?? $city;
 
         $data = [];
         $form = $this->createFormBuilder($data)

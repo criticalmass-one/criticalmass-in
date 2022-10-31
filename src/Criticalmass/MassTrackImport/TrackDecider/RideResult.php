@@ -8,6 +8,12 @@ use App\Entity\TrackImportCandidate;
 
 class RideResult
 {
+    /** @var Ride $ride */
+    protected $ride;
+    
+    /** @var TrackImportCandidate $activity */
+    protected $activity;
+
     /** @var float $result */
     protected $result;
 
@@ -17,8 +23,10 @@ class RideResult
     /** @var bool $match */
     protected $match = false;
 
-    public function __construct(protected Ride $ride, protected TrackImportCandidate $activity)
+    public function __construct(Ride $ride, TrackImportCandidate $activity)
     {
+        $this->ride = $ride;
+        $this->activity = $activity;
     }
 
     public function getRide(): Ride

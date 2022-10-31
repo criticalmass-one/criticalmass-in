@@ -17,8 +17,17 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class RelocatePhotosCommand extends Command
 {
-    public function __construct(protected PhotoGpsInterface $photoGps, protected ManagerRegistry $registry)
+    /** @var PhotoGpsInterface $photoGps */
+    protected $photoGps;
+
+    /** @var ManagerRegistry $registry */
+    protected $registry;
+
+    public function __construct(PhotoGpsInterface $photoGps, ManagerRegistry $registry)
     {
+        $this->photoGps = $photoGps;
+        $this->registry = $registry;
+
         parent::__construct();
     }
 
@@ -79,7 +88,7 @@ class RelocatePhotosCommand extends Command
             'Location',
         ]);
 
-        $progressBar = new ProgressBar($output, is_countable($photoList) ? count($photoList) : 0);
+        $progressBar = new ProgressBar($output, count($photoList));
 
         /** @var Photo $photo */
         foreach ($photoList as $photo) {
