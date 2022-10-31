@@ -9,23 +9,7 @@ use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 abstract class AbstractPhotoStorage implements PhotoStorageInterface
 {
-    /** @var UploaderHelper $uploaderHelper */
-    protected $uploaderHelper;
-
-    /** @var PhotoCacheInterface $photoCache */
-    protected $photoCache;
-
-    /** @var FilesystemInterface $filesystem */
-    protected $filesystem;
-
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    public function __construct(UploaderHelper $uploaderHelper, PhotoCacheInterface $photoCache, ManagerRegistry $registry, FilesystemInterface $filesystem)
+    public function __construct(protected UploaderHelper $uploaderHelper, protected PhotoCacheInterface $photoCache, protected ManagerRegistry $registry, protected FilesystemInterface $filesystem)
     {
-        $this->uploaderHelper = $uploaderHelper;
-        $this->filesystem = $filesystem;
-        $this->photoCache = $photoCache;
-        $this->registry = $registry;
     }
 }

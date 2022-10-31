@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="region")
  * @ORM\Entity(repositoryClass="App\Repository\RegionRepository")
  */
-class Region implements RouteableInterface, AuditableInterface
+class Region implements RouteableInterface, AuditableInterface, \Stringable
 {
     /**
      * @ORM\Id

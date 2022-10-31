@@ -46,7 +46,7 @@ abstract class AbstractVoter extends Voter
             preg_match('/^can([A-Za-z]+)$/', $method->getName(), $matches);
 
             if (2 === count($matches)) {
-                $attributeList[] = lcfirst(array_pop($matches));
+                $attributeList[] = lcfirst((string) array_pop($matches));
             }
         }
 
@@ -55,7 +55,7 @@ abstract class AbstractVoter extends Voter
 
     protected function getFqcn(): string
     {
-        $voterClassname = get_class($this);
+        $voterClassname = $this::class;
 
         preg_match('/(.*)\\\([A-Za-z].*)Voter/', $voterClassname, $matches);
 

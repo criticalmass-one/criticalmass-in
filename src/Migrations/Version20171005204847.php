@@ -10,9 +10,6 @@ use Doctrine\Migrations\AbstractMigration;
  */
 class Version20171005204847 extends AbstractMigration
 {
-    /**
-     * @param Schema $schema
-     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -22,9 +19,6 @@ class Version20171005204847 extends AbstractMigration
         $this->addSql('ALTER TABLE city_audit DROP isStandardable, DROP standardDayOfWeek, DROP standardWeekOfMonth, DROP isStandardableTime, DROP standardTime, DROP isStandardableLocation, DROP standardLocation, DROP standardLatitude, DROP standardLongitude');
     }
 
-    /**
-     * @param Schema $schema
-     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs

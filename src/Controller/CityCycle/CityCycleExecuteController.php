@@ -97,7 +97,7 @@ class CityCycleExecuteController extends AbstractController
 
             $em->flush();
 
-            $flashMessage = sprintf('Es wurden <strong>%d Touren</strong> automatisch angelegt.', count($rideList));
+            $flashMessage = sprintf('Es wurden <strong>%d Touren</strong> automatisch angelegt.', is_countable($rideList) ? count($rideList) : 0);
 
             $session->getFlashBag()->add('success', $flashMessage);
 

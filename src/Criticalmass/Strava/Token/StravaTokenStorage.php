@@ -6,15 +6,6 @@ use Iamstuartwilson\StravaApi;
 
 class StravaTokenStorage
 {
-    /** @var string $accessToken */
-    protected $accessToken;
-
-    /** @var string $refreshToken */
-    protected $refreshToken;
-
-    /** @var int $expiresAt */
-    protected $expiresAt;
-
     public static function createFromStravaResponse(\stdClass $response): self
     {
         return new self(
@@ -35,11 +26,8 @@ class StravaTokenStorage
         return $stravaApi;
     }
 
-    public function __construct(string $accessToken, string $refreshToken, int $expiresAt)
+    public function __construct(protected string $accessToken, protected string $refreshToken, protected int $expiresAt)
     {
-        $this->accessToken = $accessToken;
-        $this->refreshToken = $refreshToken;
-        $this->expiresAt = $expiresAt;
     }
 
     public function getAccessToken(): string

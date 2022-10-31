@@ -8,17 +8,14 @@ use Twig\TwigFunction;
 
 class CriticalmassBlogExtension extends AbstractExtension
 {
-    protected CriticalmassBlogInterface $criticalmassBlog;
-
-    public function __construct(CriticalmassBlogInterface $criticalmassBlog)
+    public function __construct(protected CriticalmassBlogInterface $criticalmassBlog)
     {
-        $this->criticalmassBlog = $criticalmassBlog;
     }
 
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('blog_articles', [$this, 'getBlogArticles']),
+            new TwigFunction('blog_articles', $this->getBlogArticles(...)),
         ];
     }
 

@@ -7,17 +7,9 @@ use Doctrine\Persistence\ManagerRegistry;
 
 abstract class AbstractNominatimCityBridge implements NominatimCityBridgeInterface
 {
-    const NOMINATIM_URL = 'https://nominatim.openstreetmap.org/';
+    final const NOMINATIM_URL = 'https://nominatim.openstreetmap.org/';
 
-    /** @var ManagerRegistry $doctrine */
-    protected $doctrine;
-
-    /** @var CityFactoryInterface $cityFactory */
-    protected $cityFactory;
-
-    public function __construct(ManagerRegistry $doctrine, CityFactoryInterface $cityFactory)
+    public function __construct(protected ManagerRegistry $doctrine, protected CityFactoryInterface $cityFactory)
     {
-        $this->doctrine = $doctrine;
-        $this->cityFactory = $cityFactory;
     }
 }

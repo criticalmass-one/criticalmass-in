@@ -4,5 +4,5 @@ namespace App\Event\Track;
 
 class TrackDeletedEvent extends AbstractTrackEvent
 {
-    const NAME = 'track.deleted';
+    final const NAME = 'track.deleted';
 }

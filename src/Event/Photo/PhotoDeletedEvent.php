@@ -4,5 +4,5 @@ namespace App\Event\Photo;
 
 class PhotoDeletedEvent extends AbstractPhotoEvent
 {
-    const NAME = 'photo.deleted';
+    final const NAME = 'photo.deleted';
 }

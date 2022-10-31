@@ -8,6 +8,6 @@ class StravaClub extends AbstractStravaNetwork
 
     public function accepts(string $url): bool
     {
-        return strpos($url, 'strava.com/clubs/') !== false;
+        return str_contains($url, 'strava.com/clubs/');
     }
 }

@@ -38,7 +38,7 @@ class ObjectRouter extends AbstractObjectRouter implements ObjectRouterInterface
 
             try {
                 return $this->router->generate($routeName, $parameterList, $referenceType);
-            } catch (InvalidParameterException $exception) {
+            } catch (InvalidParameterException) {
                 $delegatedRouter = $this->delegatedRouterManager->findDelegatedRouter($routeable);
 
                 return $delegatedRouter->generate($routeable, $routeName, $parameters, $referenceType);

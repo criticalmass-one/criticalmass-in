@@ -11,17 +11,14 @@ use Twig\TwigFunction;
 
 class NetworkIconTwigExtension extends AbstractExtension
 {
-    protected NetworkManagerInterface $networkManager;
-
-    public function __construct(NetworkManagerInterface $networkManager)
+    public function __construct(protected NetworkManagerInterface $networkManager)
     {
-        $this->networkManager = $networkManager;
     }
 
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('network_icon', [$this, 'networkIcon']),
+            new TwigFunction('network_icon', $this->networkIcon(...)),
         ];
     }
 

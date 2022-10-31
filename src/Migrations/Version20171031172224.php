@@ -10,9 +10,6 @@ use Doctrine\Migrations\AbstractMigration;
  */
 class Version20171031172224 extends AbstractMigration
 {
-    /**
-     * @param Schema $schema
-     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -23,9 +20,6 @@ class Version20171031172224 extends AbstractMigration
         $this->addSql('ALTER TABLE help_item ADD CONSTRAINT FK_5A91108512469DE2 FOREIGN KEY (category_id) REFERENCES help_category (id)');
     }
 
-    /**
-     * @param Schema $schema
-     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs

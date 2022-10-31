@@ -11,32 +11,7 @@ use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 abstract class AbstractSeoPage implements SeoPageInterface
 {
-    /** @var SonataSeoPageInterface $sonataSeoPage*/
-    protected $sonataSeoPage;
-
-    /** @var UploaderHelper $uploaderHelper */
-    protected $uploaderHelper;
-
-    /** @var CacheManager $cacheManager */
-    protected $cacheManager;
-
-    /** @var ObjectRouter $objectRouter */
-    protected $objectRouter;
-
-    /** @var UrlGeneratorInterface $urlGenerator */
-    protected $urlGenerator;
-
-    public function __construct(
-        SonataSeoPageInterface $sonataSeoPage,
-        UploaderHelper $uploaderHelper,
-        CacheManager $cacheManager,
-        ObjectRouterInterface $objectRouter,
-        UrlGeneratorInterface $urlGenerator
-    ) {
-        $this->sonataSeoPage = $sonataSeoPage;
-        $this->uploaderHelper = $uploaderHelper;
-        $this->cacheManager = $cacheManager;
-        $this->objectRouter = $objectRouter;
-        $this->urlGenerator = $urlGenerator;
+    public function __construct(protected SonataSeoPageInterface $sonataSeoPage, protected UploaderHelper $uploaderHelper, protected CacheManager $cacheManager, protected ObjectRouterInterface $objectRouter, protected UrlGeneratorInterface $urlGenerator)
+    {
     }
 }

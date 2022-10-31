@@ -4,5 +4,5 @@ namespace App\Event\City;
 
 class CityCreatedEvent extends AbstractCityEvent
 {
-    const NAME = 'city.created';
+    final const NAME = 'city.created';
 }

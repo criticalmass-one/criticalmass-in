@@ -7,12 +7,8 @@ use Symfony\Component\EventDispatcher\Event;
 
 abstract class AbstractCityEvent extends Event
 {
-    /** @var City $city */
-    protected $city;
-
-    public function __construct(City $city)
+    public function __construct(protected City $city)
     {
-        $this->city = $city;
     }
 
     public function getCity(): City

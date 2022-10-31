@@ -4,5 +4,5 @@ namespace App\Event\Participation;
 
 class ParticipationUpdatedEvent extends AbstractParticipationEvent
 {
-    const NAME = 'participation.updated';
+    final const NAME = 'participation.updated';
 }

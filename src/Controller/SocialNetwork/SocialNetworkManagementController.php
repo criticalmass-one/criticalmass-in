@@ -40,6 +40,7 @@ class SocialNetworkManagementController extends AbstractController
         ObjectRouterInterface $objectRouter,
         SocialNetworkHelperInterface $socialNetworkHelper
     ): Response {
+        $socialNetworkProfile = null;
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

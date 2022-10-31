@@ -9,12 +9,8 @@ use App\Criticalmass\Geo\PositionList\PositionListInterface;
 
 class TrackToPositionListConverter
 {
-    /** @var TrackReader $trackReader */
-    protected $trackReader;
-
-    public function __construct(TrackReader $trackReader)
+    public function __construct(protected TrackReader $trackReader)
     {
-        $this->trackReader = $trackReader;
     }
 
     public function convert(Track $track): PositionListInterface

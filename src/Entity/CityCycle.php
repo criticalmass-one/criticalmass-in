@@ -17,19 +17,19 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class CityCycle implements RouteableInterface
 {
-    const DAY_MONDAY = 1;
-    const DAY_TUESDAY = 2;
-    const DAY_WEDNESDAY = 3;
-    const DAY_THURSDAY = 4;
-    const DAY_FRIDAY = 5;
-    const DAY_SATURDAY = 6;
-    const DAY_SUNDAY = 0;
+    final const DAY_MONDAY = 1;
+    final const DAY_TUESDAY = 2;
+    final const DAY_WEDNESDAY = 3;
+    final const DAY_THURSDAY = 4;
+    final const DAY_FRIDAY = 5;
+    final const DAY_SATURDAY = 6;
+    final const DAY_SUNDAY = 0;
 
-    const WEEK_FIRST = 1;
-    const WEEK_SECOND = 2;
-    const WEEK_THIRD = 3;
-    const WEEK_FOURTH = 4;
-    const WEEK_LAST = 0;
+    final const WEEK_FIRST = 1;
+    final const WEEK_SECOND = 2;
+    final const WEEK_THIRD = 3;
+    final const WEEK_FOURTH = 4;
+    final const WEEK_LAST = 0;
 
     /**
      * @ORM\Id
@@ -335,7 +335,6 @@ class CityCycle implements RouteableInterface
 
     /**
      * @param \DateTime|null $dateTime
-     * @return bool
      * @throws \Exception
      * @deprecated
      */

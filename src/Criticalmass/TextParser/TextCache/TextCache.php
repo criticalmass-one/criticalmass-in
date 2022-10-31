@@ -7,8 +7,8 @@ use Symfony\Component\Cache\Adapter\RedisAdapter;
 
 class TextCache implements TextCacheInterface
 {
-    const CACHE_NAMESPACE = 'caldera_criticalmass_textcache';
-    const DEFAULT_TTL = 604800;
+    final const CACHE_NAMESPACE = 'caldera_criticalmass_textcache';
+    final const DEFAULT_TTL = 604800;
 
     protected AdapterInterface $cache;
 

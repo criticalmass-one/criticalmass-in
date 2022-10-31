@@ -4,5 +4,5 @@ namespace App\Event\Track;
 
 class TrackShownEvent extends AbstractTrackEvent
 {
-    const NAME = 'track.shown';
+    final const NAME = 'track.shown';
 }

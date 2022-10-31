@@ -14,13 +14,9 @@ abstract class AbstractLatLngListGenerator
      */
     protected $track;
     protected $xmlRootNode;
-    protected $trackReader;
-    protected $gapWidth;
 
-    public function __construct(TrackReader $trackReader, $gapWidth)
+    public function __construct(protected TrackReader $trackReader, protected $gapWidth)
     {
-        $this->trackReader = $trackReader;
-        $this->gapWidth = $gapWidth;
     }
 
     public function loadTrack(Track $track)

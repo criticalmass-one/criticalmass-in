@@ -192,6 +192,8 @@ services:
             - { name: liip_imagine.binary.loader, loader: App\Criticalmass\Imagine\DataLoader\RemoteStreamLoader }
 
     App\Criticalmass\Imagine\CacheResolver\RemoteCacheResolver:
+        arguments:
+            $cachePrefix: 'media/cache'
         tags:
             - { name: liip_imagine.cache.resolver, resolver: App\Criticalmass\Imagine\CacheResolver\RemoteCacheResolver }
 

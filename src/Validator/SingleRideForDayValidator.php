@@ -9,12 +9,8 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class SingleRideForDayValidator extends ConstraintValidator
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(protected ManagerRegistry $registry)
     {
-        $this->registry = $registry;
     }
 
     /**

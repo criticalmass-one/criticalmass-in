@@ -16,7 +16,7 @@ class CalendarController extends AbstractController
         try {
             $dateTimeSpec = sprintf('%d-%d-01', $year, $month);
             $dateTime = new \DateTimeImmutable($dateTimeSpec);
-        } catch (\Exception $exception) {
+        } catch (\Exception) {
             $dateTime = new \DateTimeImmutable();
         }
 

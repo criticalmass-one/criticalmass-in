@@ -4,7 +4,7 @@ namespace App\Criticalmass\CriticalmassBlog;
 
 interface CriticalmassBlogInterface
 {
-    const BLOG_FEED_URL = 'https://criticalmass.blog/feed';
+    public const BLOG_FEED_URL = 'https://criticalmass.blog/feed';
 
     public function getArticles(): array;
 }

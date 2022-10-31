@@ -14,13 +14,8 @@ class TableGenerator implements TableGeneratorInterface
     /** @var User $user */
     protected $user;
 
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(protected ManagerRegistry $registry)
     {
-        $this->registry = $registry;
-
         $this->table = new ParticipationTable();
     }
 

@@ -7,12 +7,8 @@ use Imagine\Image\ImagineInterface;
 
 class RemoteStreamLoader implements LoaderInterface
 {
-    /** @var ImagineInterface $imagine */
-    protected $imagine;
-
-    public function __construct(ImagineInterface $imagine)
+    public function __construct(protected ImagineInterface $imagine)
     {
-        $this->imagine = $imagine;
     }
 
     public function find($path)

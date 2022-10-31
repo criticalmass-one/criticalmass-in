@@ -9,17 +9,14 @@ use Twig\TwigFunction;
 
 class SocialNetworkTwigExtension extends AbstractExtension
 {
-    protected NetworkManagerInterface $networkManager;
-
-    public function __construct(NetworkManagerInterface $networkManager)
+    public function __construct(protected NetworkManagerInterface $networkManager)
     {
-        $this->networkManager = $networkManager;
     }
 
     public function getFunctions()
     {
         return [
-            new TwigFunction('getNetwork', [$this, 'getNetwork'], ['is_safe' => ['html']]),
+            new TwigFunction('getNetwork', $this->getNetwork(...), ['is_safe' => ['html']]),
         ];
     }
 

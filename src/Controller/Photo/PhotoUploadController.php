@@ -22,23 +22,23 @@ class PhotoUploadController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function uploadAction(Request $request, UserInterface $user = null, Ride $ride, PhotoUploaderInterface $photoUploader): Response
+    public function uploadAction(Request $request, Ride $ride, PhotoUploaderInterface $photoUploader, UserInterface $user = null): Response
     {
         if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->uploadPostAction($request, $user, $ride, $photoUploader);
+            return $this->uploadPostAction($request, $ride, $photoUploader, $user);
         } else {
-            return $this->uploadGetAction($request, $user, $ride, $photoUploader);
+            return $this->uploadGetAction($request, $ride, $photoUploader, $user);
         }
     }
 
-    protected function uploadGetAction(Request $request, UserInterface $user = null, Ride $ride, PhotoUploaderInterface $photoUploader): Response
+    protected function uploadGetAction(Request $request, Ride $ride, PhotoUploaderInterface $photoUploader, UserInterface $user = null): Response
     {
         return $this->render('PhotoUpload/upload.html.twig', [
             'ride' => $ride,
         ]);
     }
 
-    protected function uploadPostAction(Request $request, UserInterface $user = null, Ride $ride, PhotoUploaderInterface $photoUploader): Response
+    protected function uploadPostAction(Request $request, Ride $ride, PhotoUploaderInterface $photoUploader, UserInterface $user = null): Response
     {
         /** @var UploadedFile $uploadedFile */
         $uploadedFile = $request->files->get('file');

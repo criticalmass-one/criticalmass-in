@@ -6,13 +6,8 @@ use App\Criticalmass\Geo\Converter\GpxToPositionListConverter;
 
 class GpxLoop extends Loop
 {
-    /** @var GpxToPositionListConverter $gpxToPositionListConverter */
-    protected $gpxToPositionListConverter;
-
-    public function __construct(GpxToPositionListConverter $gpxToPositionListConverter)
+    public function __construct(protected GpxToPositionListConverter $gpxToPositionListConverter)
     {
-        $this->gpxToPositionListConverter = $gpxToPositionListConverter;
-
         parent::__construct();
     }
 

@@ -12,6 +12,6 @@ class FacebookGroup extends AbstractFacebookNetwork
             return false;
         }
         
-        return strpos($url, 'facebook.com/groups/') !== false;
+        return str_contains($url, 'facebook.com/groups/');
     }
 }

@@ -9,16 +9,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ViewEventSubscriber implements EventSubscriberInterface
 {
-    /** @var ViewStorageCacheInterface $viewStorageCache */
-    protected $viewStorageCache;
-
-    /** @var BlackListInterface $blackList */
-    protected $blackList;
-
-    public function __construct(ViewStorageCacheInterface $viewStorageCache, BlackListInterface $blackList)
+    public function __construct(protected ViewStorageCacheInterface $viewStorageCache, protected BlackListInterface $blackList)
     {
-        $this->viewStorageCache = $viewStorageCache;
-        $this->blackList = $blackList;
     }
 
     public static function getSubscribedEvents(): array

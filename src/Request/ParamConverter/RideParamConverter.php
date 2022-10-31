@@ -34,13 +34,13 @@ class RideParamConverter extends AbstractCriticalmassParamConverter
         $parts = explode('-', $rideDate);
 
         if (2 === count($parts)) {
-            list($year, $month) = $parts;
+            [$year, $month] = $parts;
 
             return new \DateTime(sprintf('%s-%s-01', $year, $month));
         }
 
         if (3 === count($parts)) {
-            list($year, $month, $day) = $parts;
+            [$year, $month, $day] = $parts;
 
             return new \DateTime(sprintf('%s-%s-%s', $year, $month, $day));
         }
@@ -70,7 +70,7 @@ class RideParamConverter extends AbstractCriticalmassParamConverter
             return null;
         }
 
-        preg_match('/^([0-9]{4,4})\-([0-9]{1,2})(?:\-?)([0-9]{1,2})?$/', $rideIdentifier, $matches);
+        preg_match('/^([0-9]{4,4})\-([0-9]{1,2})(?:\-?)([0-9]{1,2})?$/', (string) $rideIdentifier, $matches);
 
         if ($citySlug && count($matches) === 0) {
             $city = $this->findCityBySlug($request);

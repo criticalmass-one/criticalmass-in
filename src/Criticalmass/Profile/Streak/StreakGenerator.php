@@ -11,16 +11,11 @@ class StreakGenerator implements StreakGeneratorInterface
     /** @var User $user */
     protected $user;
 
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
     /** @var StreakCalculator $calculator */
     protected $calculator;
 
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(protected ManagerRegistry $registry)
     {
-        $this->registry = $registry;
-
         $this->calculator = new StreakCalculator();
     }
 

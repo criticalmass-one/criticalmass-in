@@ -7,12 +7,8 @@ use Symfony\Component\EventDispatcher\Event;
 
 abstract class AbstractParticipationEvent extends Event
 {
-    /** @var Participation $participation */
-    protected $participation;
-
-    public function __construct(Participation $participation)
+    public function __construct(protected Participation $participation)
     {
-        $this->participation = $participation;
     }
 
     public function getParticipation(): Participation

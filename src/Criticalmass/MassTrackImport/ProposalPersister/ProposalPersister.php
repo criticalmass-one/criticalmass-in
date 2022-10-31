@@ -10,15 +10,11 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class ProposalPersister implements ProposalPersisterInterface
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
     /** @var array $existentStravaActivityIds */
     protected $existentStravaActivityIds = [];
 
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(protected ManagerRegistry $registry)
     {
-        $this->registry = $registry;
     }
 
     public function persist(RideResult $rideResult): RideResult

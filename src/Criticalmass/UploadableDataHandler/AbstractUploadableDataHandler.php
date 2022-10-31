@@ -7,15 +7,7 @@ use Vich\UploaderBundle\Mapping\PropertyMappingFactory;
 
 abstract class AbstractUploadableDataHandler implements UploadableDataHandlerInterface
 {
-    /** @var PropertyMappingFactory $propertyMappingFactory */
-    protected $propertyMappingFactory;
-
-    /** @var FilesystemInterface $filesystem */
-    protected $filesystem;
-
-    public function __construct(PropertyMappingFactory $propertyMappingFactory, FilesystemInterface $filesystem)
+    public function __construct(protected PropertyMappingFactory $propertyMappingFactory, protected FilesystemInterface $filesystem)
     {
-        $this->propertyMappingFactory = $propertyMappingFactory;
-        $this->filesystem = $filesystem;
     }
 }

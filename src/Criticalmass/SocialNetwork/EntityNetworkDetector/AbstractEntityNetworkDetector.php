@@ -7,15 +7,11 @@ use App\Criticalmass\SocialNetwork\NetworkManager\NetworkManagerInterface;
 
 abstract class AbstractEntityNetworkDetector implements EntityNetworkDetectorInterface
 {
-    /** @var NetworkManagerInterface $networkManager */
-    protected $networkManager;
-
     /** @var array $networkList */
     protected $networkList = [];
 
-    public function __construct(NetworkManagerInterface $networkManager)
+    public function __construct(protected NetworkManagerInterface $networkManager)
     {
-        $this->networkManager = $networkManager;
         $this->networkList = $networkManager->getNetworkList();
 
         $this->sortNetworkList();
@@ -23,10 +19,7 @@ abstract class AbstractEntityNetworkDetector implements EntityNetworkDetectorInt
 
     protected function sortNetworkList(): self
     {
-        usort($this->networkList, function(NetworkInterface $a, NetworkInterface $b)
-        {
-            return $b->getDetectorPriority() <=> $a->getDetectorPriority();
-        });
+        usort($this->networkList, fn(NetworkInterface $a, NetworkInterface $b) => $b->getDetectorPriority() <=> $a->getDetectorPriority());
 
         return $this;
     }

@@ -13,17 +13,10 @@ use League\CommonMark\MarkdownConverterInterface;
 
 class CriticalParser implements TextParserInterface
 {
-    protected FeatureManagerInterface $featureManager;
     protected MarkdownConverterInterface $converter;
-    protected EmbedderInterface $embedder;
-    protected TextCacheInterface $textCache;
 
-    public function __construct(FeatureManagerInterface $featureManager, EmbedderInterface $embedder, TextCacheInterface $textCache)
+    public function __construct(protected FeatureManagerInterface $featureManager, protected EmbedderInterface $embedder, protected TextCacheInterface $textCache)
     {
-        $this->featureManager = $featureManager;
-        $this->embedder = $embedder;
-        $this->textCache = $textCache;
-
         $this->configure();
     }
 

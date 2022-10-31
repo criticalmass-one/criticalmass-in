@@ -10,9 +10,6 @@ use Doctrine\Migrations\AbstractMigration;
  */
 class Version20171006005149 extends AbstractMigration
 {
-    /**
-     * @param Schema $schema
-     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -21,9 +18,6 @@ class Version20171006005149 extends AbstractMigration
         $this->addSql('ALTER TABLE ride CHANGE latitude latitude DOUBLE PRECISION DEFAULT NULL, CHANGE longitude longitude DOUBLE PRECISION DEFAULT NULL');
     }
 
-    /**
-     * @param Schema $schema
-     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs

@@ -9,7 +9,7 @@ class RangeLatLngListGenerator extends AbstractLatLngListGenerator
         $start = $this->track->getStartPoint();
         $end = $this->track->getEndPoint();
 
-        $result = array();
+        $result = [];
 
         $counter = 0;
 

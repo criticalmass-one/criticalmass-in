@@ -7,14 +7,10 @@ use JMS\Serializer\SerializerInterface;
 
 class PositionListToJsonConverter
 {
-    const FORMAT = 'json';
+    final const FORMAT = 'json';
 
-    /** @var SerializerInterface $serializer */
-    protected $serializer;
-
-    public function __construct(SerializerInterface $serializer)
+    public function __construct(protected SerializerInterface $serializer)
     {
-        $this->serializer = $serializer;
     }
 
     public function convert(PositionListInterface $positionList): string

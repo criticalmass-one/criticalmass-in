@@ -9,9 +9,9 @@ use Symfony\Component\Security\Core\Security;
 
 class SecurityController extends AbstractController
 {
-    const TEMPLATE_MODE_FULL = 1;
-    const TEMPLATE_MODE_FORM = 2;
-    const TEMPLATE_MODE_MODAL = 3;
+    final const TEMPLATE_MODE_FULL = 1;
+    final const TEMPLATE_MODE_FORM = 2;
+    final const TEMPLATE_MODE_MODAL = 3;
 
     public function loginAction(Request $request, int $templateMode = self::TEMPLATE_MODE_FULL): Response
     {
@@ -73,12 +73,12 @@ class SecurityController extends AbstractController
         return $this->loginAction($request, self::TEMPLATE_MODE_MODAL);
     }
 
-    public function checkAction()
+    public function checkAction(): never
     {
         throw new \RuntimeException('You must configure the check path to be handled by the firewall using form_login in your security firewall configuration.');
     }
 
-    public function logoutAction()
+    public function logoutAction(): never
     {
         throw new \RuntimeException('You must activate the logout in your security firewall configuration.');
     }

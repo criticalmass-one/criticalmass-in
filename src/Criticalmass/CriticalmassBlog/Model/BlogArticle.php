@@ -4,15 +4,8 @@ namespace App\Criticalmass\CriticalmassBlog\Model;
 
 class BlogArticle
 {
-    protected string $title;
-    protected string $permalink;
-    protected \DateTime $dateTime;
-
-    public function __construct(string $title, string $permalink, \DateTime $dateTime)
+    public function __construct(protected string $title, protected string $permalink, protected \DateTime $dateTime)
     {
-        $this->title = $title;
-        $this->permalink = $permalink;
-        $this->dateTime = $dateTime;
     }
 
     public function getTitle(): string

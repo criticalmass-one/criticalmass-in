@@ -27,11 +27,11 @@ class CityManagementController extends AbstractController
      */
     public function addAction(
         Request $request,
-        UserInterface $user = null,
         NominatimCityBridge $nominatimCityBridge,
         EventDispatcherInterface $eventDispatcher,
         ObjectRouterInterface $objectRouter,
         CityFactoryInterface $cityFactory,
+        UserInterface $user = null,
         string $slug1 = null,
         string $slug2 = null,
         string $slug3 = null,
@@ -55,20 +55,20 @@ class CityManagementController extends AbstractController
         ]);
 
         if (Request::METHOD_POST == $request->getMethod()) {
-            return $this->addPostAction($request, $user, $eventDispatcher, $objectRouter, $city, $region, $form);
+            return $this->addPostAction($request, $eventDispatcher, $objectRouter, $city, $region, $form, $user);
         }
 
-        return $this->addGetAction($request, $user, $eventDispatcher, $objectRouter, $city, $region, $form);
+        return $this->addGetAction($request, $eventDispatcher, $objectRouter, $city, $region, $form, $user);
     }
 
     protected function addGetAction(
         Request $request,
-        UserInterface $user = null,
         EventDispatcherInterface $eventDispatcher,
         ObjectRouterInterface $objectRouter,
         City $city,
         Region $region,
-        FormInterface $form
+        FormInterface $form,
+        UserInterface $user = null
     ) {
         return $this->render('CityManagement/edit.html.twig', [
             'city' => null,
@@ -81,12 +81,12 @@ class CityManagementController extends AbstractController
 
     protected function addPostAction(
         Request $request,
-        UserInterface $user = null,
         EventDispatcherInterface $eventDispatcher,
         ObjectRouterInterface $objectRouter,
         City $city,
         Region $region,
-        FormInterface $form
+        FormInterface $form,
+        UserInterface $user = null
     ): Response {
         $form->handleRequest($request);
 
@@ -129,29 +129,29 @@ class CityManagementController extends AbstractController
      */
     public function editAction(
         Request $request,
-        UserInterface $user = null,
         EventDispatcherInterface $eventDispatcher,
         City $city,
-        ObjectRouterInterface $objectRouter
+        ObjectRouterInterface $objectRouter,
+        UserInterface $user = null
     ): Response {
         $form = $this->createForm(CityType::class, $city, [
             'action' => $objectRouter->generate($city, 'caldera_criticalmass_city_edit'),
         ]);
 
         if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->editPostAction($request, $user, $eventDispatcher, $city, $form, $objectRouter);
+            return $this->editPostAction($request, $eventDispatcher, $city, $form, $objectRouter, $user);
         }
 
-        return $this->editGetAction($request, $user, $eventDispatcher, $city, $form, $objectRouter);
+        return $this->editGetAction($request, $eventDispatcher, $city, $form, $objectRouter, $user);
     }
 
     protected function editGetAction(
         Request $request,
-        UserInterface $user = null,
         EventDispatcherInterface $eventDispatcher,
         City $city,
         FormInterface $form,
-        ObjectRouterInterface $objectRouter
+        ObjectRouterInterface $objectRouter,
+        UserInterface $user = null
     ): Response {
         return $this->render('CityManagement/edit.html.twig', [
             'city' => $city,
@@ -164,11 +164,11 @@ class CityManagementController extends AbstractController
 
     protected function editPostAction(
         Request $request,
-        UserInterface $user = null,
         EventDispatcherInterface $eventDispatcher,
         City $city,
         FormInterface $form,
-        ObjectRouterInterface $objectRouter
+        ObjectRouterInterface $objectRouter,
+        UserInterface $user = null
     ): Response {
         $form->handleRequest($request);
 

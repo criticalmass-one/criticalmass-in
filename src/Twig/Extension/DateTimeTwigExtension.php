@@ -10,7 +10,7 @@ class DateTimeTwigExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('date_time_add', [$this, 'add'], [
+            new TwigFunction('date_time_add', $this->add(...), [
                 'is_safe' => ['html'],
             ]),
         ];

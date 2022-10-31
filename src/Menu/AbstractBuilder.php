@@ -9,20 +9,8 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 abstract class AbstractBuilder
 {
-    /** @var FactoryInterface $factory */
-    protected $factory;
-
-    /** @var TokenStorageInterface $tokenStorage */
-    protected $tokenStorage;
-
-    /** @var FeatureManagerInterface $featureManager */
-    protected $featureManager;
-
-    public function __construct(FactoryInterface $factory, TokenStorageInterface $tokenStorage, FeatureManagerInterface $featureManager)
+    public function __construct(protected FactoryInterface $factory, protected TokenStorageInterface $tokenStorage, protected FeatureManagerInterface $featureManager)
     {
-        $this->factory = $factory;
-        $this->tokenStorage = $tokenStorage;
-        $this->featureManager = $featureManager;
     }
 
     protected function isUserLoggedIn(): bool

@@ -10,9 +10,6 @@ use Doctrine\Migrations\AbstractMigration;
  */
 class Version20171031225905 extends AbstractMigration
 {
-    /**
-     * @param Schema $schema
-     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -21,9 +18,6 @@ class Version20171031225905 extends AbstractMigration
         $this->addSql('ALTER TABLE help_category CHANGE intro intro LONGTEXT DEFAULT NULL, CHANGE side side VARCHAR(255) DEFAULT NULL');
     }
 
-    /**
-     * @param Schema $schema
-     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs

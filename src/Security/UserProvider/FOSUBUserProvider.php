@@ -11,13 +11,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class FOSUBUserProvider extends BaseClass
 {
-    /** @var ProfilePhotoGeneratorInterface $profilePhotoGenerator */
-    protected $profilePhotoGenerator;
-
-    public function __construct(UserManagerInterface $userManager, array $properties, ProfilePhotoGeneratorInterface $profilePhotoGenerator)
+    public function __construct(UserManagerInterface $userManager, array $properties, protected ProfilePhotoGeneratorInterface $profilePhotoGenerator)
     {
-        $this->profilePhotoGenerator = $profilePhotoGenerator;
-
         parent::__construct($userManager, $properties);
     }
 
@@ -26,7 +21,7 @@ class FOSUBUserProvider extends BaseClass
         $property = $this->getProperty($response);
         $username = $response->getUsername();
 
-        if (null !== $previousUser = $this->userManager->findUserBy(array($property => $username))) {
+        if (null !== $previousUser = $this->userManager->findUserBy([$property => $username])) {
             $previousUser = $this->setServiceData($previousUser, $response, true);
 
             $this->userManager->updateUser($previousUser);
@@ -62,8 +57,8 @@ class FOSUBUserProvider extends BaseClass
 
     protected function setUserData(UserInterface $user, UserResponseInterface $response): UserInterface
     {
-        $username = $response->getNickname() ? $response->getNickname() : $response->getUsername();
-        $email = $response->getEmail() ? $response->getEmail() : $response->getUsername();
+        $username = $response->getNickname() ?: $response->getUsername();
+        $email = $response->getEmail() ?: $response->getUsername();
 
         $user
             ->setUsername($username)

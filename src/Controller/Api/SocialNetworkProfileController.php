@@ -34,7 +34,7 @@ class SocialNetworkProfileController extends BaseController
         $autoFetch = (bool)$request->get('autoFetch');
 
         if ($entities = $request->get('entities')) {
-            $entityClassNames = explode(',', $entities);
+            $entityClassNames = explode(',', (string) $entities);
         } else {
             $entityClassNames = [];
         }

@@ -16,17 +16,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ImportImagesCommand extends Command
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    /** @var PhotoUploader $photoUploader */
-    protected $photoUploader;
-
-    public function __construct(ManagerRegistry $registry, PhotoUploader $photoUploader)
+    public function __construct(protected ManagerRegistry $registry, protected PhotoUploader $photoUploader)
     {
-        $this->registry = $registry;
-        $this->photoUploader = $photoUploader;
-
         parent::__construct();
     }
 

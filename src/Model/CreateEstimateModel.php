@@ -11,52 +11,38 @@ class CreateEstimateModel
 {
     /**
      * @JMS\Expose()
-     * @JMS\Type("DateTime<'U'>")
-     */
-    protected ?\DateTime $dateTime = null;
-
-    /**
-     * @JMS\Expose()
-     * @JMS\Type("string")
-     */
-    protected ?string $citySlug = null;
-
-    /**
-     * @JMS\Expose()
-     * @JMS\Type("float")
-     */
-    protected ?float $latitude = null;
-
-    /**
-     * @JMS\Expose()
-     * @JMS\Type("float")
-     */
-    protected ?float $longitude = null;
-
-    /**
-     * @JMS\Expose()
-     * @JMS\Type("integer")
-     */
-    protected ?int $estimation = null;
-
-    /**
-     * @JMS\Expose()
      * @JMS\Type("string")
      */
     protected ?string $source = null;
 
     public function __construct(
-        \DateTime $dateTime = null,
-        string $citySlug = null,
-        float $latitude = null,
-        float $longitude = null,
-        int $estimation
-    ) {
-        $this->dateTime = $dateTime;
-        $this->citySlug = $citySlug;
-        $this->latitude = $latitude;
-        $this->longitude = $longitude;
-        $this->estimation = $estimation;
+        /**
+         * @JMS\Expose()
+         * @JMS\Type("integer")
+         */
+        protected ?int $estimation,
+        /**
+         * @JMS\Expose()
+         * @JMS\Type("DateTime<'U'>")
+         */
+        protected ?\DateTime $dateTime = null,
+        /**
+         * @JMS\Expose()
+         * @JMS\Type("string")
+         */
+        protected ?string $citySlug = null,
+        /**
+         * @JMS\Expose()
+         * @JMS\Type("float")
+         */
+        protected ?float $latitude = null,
+        /**
+         * @JMS\Expose()
+         * @JMS\Type("float")
+         */
+        protected ?float $longitude = null
+    )
+    {
     }
 
     public function setDateTime(\DateTime $dateTime): CreateEstimateModel

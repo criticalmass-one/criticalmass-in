@@ -9,7 +9,7 @@ class RideNamerList implements RideNamerListInterface
 
     public function addRideNamer(RideNamerInterface $rideNamer): RideNamerListInterface
     {
-        $this->list[get_class($rideNamer)] = $rideNamer;
+        $this->list[$rideNamer::class] = $rideNamer;
         
         return $this;
     }

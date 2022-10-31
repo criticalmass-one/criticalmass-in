@@ -33,7 +33,7 @@ class UTCTimeType extends TimeType
         $converted = \DateTime::createFromFormat(
             '!' . $platform->getTimeFormatString(),
             $value,
-            self::$utc ? self::$utc : self::$utc = new \DateTimeZone('UTC')
+            self::$utc ?: (self::$utc = new \DateTimeZone('UTC'))
         );
 
         if (!$converted) {

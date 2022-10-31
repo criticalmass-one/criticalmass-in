@@ -24,16 +24,16 @@ class LegacyPhotoUploadController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function uploadAction(Request $request, UserInterface $user = null, Ride $ride, PhotoUploaderInterface $photoUploader): Response
+    public function uploadAction(Request $request, Ride $ride, PhotoUploaderInterface $photoUploader, UserInterface $user = null): Response
     {
         if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->uploadPostAction($request, $user, $ride, $photoUploader);
+            return $this->uploadPostAction($request, $ride, $photoUploader, $user);
         } else {
-            return $this->uploadGetAction($request, $user, $ride, $photoUploader);
+            return $this->uploadGetAction($request, $ride, $photoUploader, $user);
         }
     }
 
-    protected function uploadGetAction(Request $request, UserInterface $user = null, Ride $ride, PhotoUploaderInterface $photoUploader): Response
+    protected function uploadGetAction(Request $request, Ride $ride, PhotoUploaderInterface $photoUploader, UserInterface $user = null): Response
     {
         $form = $this->createForm(LegacyPhotoUploadType::class, new Photo());
 
@@ -43,8 +43,9 @@ class LegacyPhotoUploadController extends AbstractController
         ]);
     }
 
-    protected function uploadPostAction(Request $request, UserInterface $user = null, Ride $ride, PhotoUploaderInterface $photoUploader): Response
+    protected function uploadPostAction(Request $request, Ride $ride, PhotoUploaderInterface $photoUploader, UserInterface $user = null): Response
     {
+        $uploadedFile = null;
         /** @var UploadedFile $uploadedFile */
         $fileArray = $request->files->get('legacy_photo_upload');
 
@@ -61,6 +62,6 @@ class LegacyPhotoUploadController extends AbstractController
                 ->addUploadedFile($uploadedFile);
         }
 
-        return $this->uploadGetAction($request, $user, $ride, $photoUploader);
+        return $this->uploadGetAction($request, $ride, $photoUploader, $user);
     }
 }

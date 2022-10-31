@@ -7,15 +7,11 @@ use Symfony\Component\Filesystem\Filesystem as SymfonyFilesystem;
 
 abstract class AbstractExifWrapper implements ExifWrapperInterface
 {
-    /** @var FlysystemFilesystemInterface $flysystemFilesystem */
-    protected $flysystemFilesystem;
-
     /** @var SymfonyFilesystem $symfonyFilesystem */
     protected $symfonyFilesystem;
 
-    public function __construct(FlysystemFilesystemInterface $flysystemFilesystem)
+    public function __construct(protected FlysystemFilesystemInterface $flysystemFilesystem)
     {
-        $this->flysystemFilesystem = $flysystemFilesystem;
         $this->symfonyFilesystem = new SymfonyFilesystem();
     }
 }

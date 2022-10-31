@@ -7,8 +7,8 @@ use Symfony\Component\Cache\Adapter\RedisAdapter;
 
 class LinkCache implements LinkCacheInterface
 {
-    const CACHE_NAMESPACE = 'caldera_criticalmass_linkcache';
-    const DEFAULT_TTL = 86400;
+    final const CACHE_NAMESPACE = 'caldera_criticalmass_linkcache';
+    final const DEFAULT_TTL = 86400;
 
     protected AdapterInterface $cache;
 
