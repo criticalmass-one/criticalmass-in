@@ -4,19 +4,18 @@ namespace App\Criticalmass\Timeline;
 
 use Doctrine\Persistence\ManagerRegistry;
 use Flagception\Manager\FeatureManagerInterface;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
-use Symfony\Component\Templating\EngineInterface;
 use Symfony\Contracts\Cache\ItemInterface;
+use Twig\Environment;
 
 class CachedTimeline extends Timeline
 {
-    public function __construct(ManagerRegistry $doctrine, EngineInterface $templating, FeatureManagerInterface $featureManager, protected string $redisUrl, protected int $ttl = 300)
+    public function __construct(ManagerRegistry $doctrine, Environment $twigEnvironment, FeatureManagerInterface $featureManager, protected string $redisUrl, protected int $ttl = 300)
     {
         $this->doctrine = $doctrine;
-        $this->templating = $templating;
+        $this->twigEnvironment = $twigEnvironment;
 
-        parent::__construct($doctrine, $templating, $featureManager);
+        parent::__construct($doctrine, $twigEnvironment, $featureManager);
     }
 
     public function execute(): TimelineInterface

@@ -7,7 +7,7 @@ use App\Criticalmass\Timeline\Collector\TimelineCollectorInterface;
 use App\Criticalmass\Timeline\Item\ItemInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Flagception\Manager\FeatureManagerInterface;
-use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment;
 
 class Timeline implements TimelineInterface
 {
@@ -21,7 +21,7 @@ class Timeline implements TimelineInterface
 
     protected ?\DateTime $endDateTime = null;
 
-    public function __construct(protected ManagerRegistry $doctrine, protected EngineInterface $templating, protected FeatureManagerInterface $featureManager)
+    public function __construct(protected ManagerRegistry $doctrine, protected Environment $twigEnvironment, protected FeatureManagerInterface $featureManager)
     {
     }
 
@@ -106,7 +106,7 @@ class Timeline implements TimelineInterface
                 $this->contentList[$item->getTabName()] = [];
             }
 
-            $this->contentList[$item->getTabName()][]= $this->templating->render('Timeline/Items/' . $templateName . '.html.twig', [
+            $this->contentList[$item->getTabName()][]= $this->twigEnvironment->render('Timeline/Items/' . $templateName . '.html.twig', [
                 'item' => $item
             ]);
         }
