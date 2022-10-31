@@ -18,3 +18,5 @@ fos_user:
     from_email:
         address:        malte@caldera.cc
         sender_name:    Malte Hübner, criticalmass.in
+    service:
+        mailer: 'mailer'
