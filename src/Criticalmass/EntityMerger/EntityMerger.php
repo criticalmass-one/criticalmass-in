@@ -7,8 +7,11 @@ use JMS\Serializer\Annotation\Expose;
 
 class EntityMerger implements EntityMergerInterface
 {
-    public function __construct(protected Reader $annotationReader)
+    protected Reader $annotationReader;
+
+    public function __construct(Reader $annotationReader)
     {
+        $this->annotationReader = $annotationReader;
     }
 
     public function merge(object $source, object $destination): object
@@ -27,7 +30,7 @@ class EntityMerger implements EntityMergerInterface
                     if ($newValue) {
                         $destination->$setMethodName($newValue);
                     }
-                } catch (\TypeError) {
+                } catch (\TypeError $typeError) {
                     // deserialized entities passed to this entity merger may not be fully stuffed with properties as
                     // the serializer does not call the entity's constructor as described here:
                     // https://stackoverflow.com/questions/31948118/jms-serializer-why-are-new-objects-not-being-instantiated-through-constructor

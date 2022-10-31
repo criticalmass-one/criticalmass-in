@@ -14,8 +14,15 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class PhotoEventSubscriber implements EventSubscriberInterface
 {
-    public function __construct(protected ManagerRegistry $registry, protected PhotoGpsInterface $photoGps, protected ExifHandlerInterface $exifHandler)
+    protected ManagerRegistry $registry;
+    protected PhotoGpsInterface $photoGps;
+    protected ExifHandlerInterface $exifHandler;
+
+    public function __construct(ManagerRegistry $registry, PhotoGpsInterface $photoGps, ExifHandlerInterface $exifHandler)
     {
+        $this->registry = $registry;
+        $this->photoGps = $photoGps;
+        $this->exifHandler = $exifHandler;
     }
 
     public static function getSubscribedEvents(): array
@@ -62,7 +69,7 @@ class PhotoEventSubscriber implements EventSubscriberInterface
                     ->setTrack($track)
                     ->execute()
                     ->getPhoto();
-            } catch (\Exception) {
+            } catch (\Exception $exception) {
 
             }
         }

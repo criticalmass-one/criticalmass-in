@@ -36,7 +36,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Vich\Uploadable
  * @Routing\DefaultRoute(name="caldera_criticalmass_ride_show")
  */
-class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, OrderedEntityInterface, CoordinateInterface, \Stringable
+class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, OrderedEntityInterface, CoordinateInterface
 {
     /**
      * @ORM\Id
@@ -385,6 +385,9 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         return $this;
     }
 
+    /**
+     * @return \DateTime|null
+     */
     public function getDateTime(): ?\DateTime
     {
         return $this->dateTime;

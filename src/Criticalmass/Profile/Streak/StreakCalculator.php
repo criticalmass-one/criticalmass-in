@@ -79,7 +79,7 @@ class StreakCalculator implements StreakCalculatorInterface
         $rideList = [];
 
         foreach ($this->list as $month => $rides) {
-            if ((is_countable($rides) ? count($rides) : 0) > 0) {
+            if (count($rides) > 0) {
                 if (!$endDateTime) {
                     $endDateTime = new \DateTime(sprintf('%s-01', $month));
                 }
@@ -129,7 +129,7 @@ class StreakCalculator implements StreakCalculatorInterface
                 $startDateTime = new \DateTime(sprintf('%s-01', $month));
             }
 
-            if ((is_countable($rides) ? count($rides) : 0) > 0) {
+            if (count($rides) > 0) {
                 ++$counter;
 
                 $rideList = array_merge($rideList, $rides);

@@ -9,14 +9,17 @@ use Twig\TwigFunction;
 
 class StaticmapsTwigExtension extends AbstractExtension
 {
-    public function __construct(protected UrlGeneratorInterface $urlGenerator)
+    protected UrlGeneratorInterface $urlGenerator;
+
+    public function __construct(UrlGeneratorInterface $urlGenerator)
     {
+        $this->urlGenerator = $urlGenerator;
     }
 
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('static_map', $this->staticmap(...), ['is_safe' => ['raw']]),
+            new TwigFunction('static_map', [$this, 'staticmap',], ['is_safe' => ['raw']]),
         ];
     }
 

@@ -1,6 +1,10 @@
 gregwar_captcha_routing:
   resource: '@GregwarCaptchaBundle/Resources/config/routing/routing.yml'
 
+criticalmass:
+  resource: routes/criticalmass/routing.yml
+  prefix:   /
+
 facebook_login:
   path: /login/check-facebook
 
@@ -12,7 +16,3 @@ runkeeper_login:
 
 twitter_login:
     path: /login/check-twitter
-
-criticalmass:
-  resource: routes/criticalmass/routing.yml
-  prefix:   /

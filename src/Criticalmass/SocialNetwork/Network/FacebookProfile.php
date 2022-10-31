@@ -12,6 +12,6 @@ class FacebookProfile extends AbstractFacebookNetwork
             return false;
         }
 
-        return str_contains($url, 'facebook.com/profile.php?id=');
+        return strpos($url, 'facebook.com/profile.php?id=') !== false;
     }
 }

@@ -9,8 +9,11 @@ use JMS\Serializer\JsonSerializationVisitor;
 
 class RelationHandler
 {
-    public function __construct(protected ManagerRegistry $doctrine)
+    protected ManagerRegistry $doctrine;
+
+    public function __construct(ManagerRegistry $doctrine)
     {
+        $this->doctrine = $doctrine;
     }
 
     public function serializeRelation(JsonSerializationVisitor $visitor, $relation, array $type, Context $context): int
@@ -20,7 +23,7 @@ class RelationHandler
         }
 
         if (is_array($relation)) {
-            return array_map($this->getSingleEntityRelation(...), $relation);
+            return array_map([$this, 'getSingleEntityRelation'], $relation);
         }
 
         return $this->getSingleEntityRelation($relation);
@@ -28,7 +31,7 @@ class RelationHandler
 
     protected function getSingleEntityRelation($relation): int
     {
-        $metadata = $this->doctrine->getManager()->getClassMetadata($relation::class);
+        $metadata = $this->doctrine->getManager()->getClassMetadata(get_class($relation));
 
         $ids = $metadata->getIdentifierValues($relation);
         if (!$metadata->isIdentifierComposite) {
@@ -40,7 +43,7 @@ class RelationHandler
 
     public function deserializeRelation(JsonDeserializationVisitor $visitor, $relation, array $type, Context $context)
     {
-        $className = $type['params'][0]['name'] ?? null;
+        $className = isset($type['params'][0]['name']) ? $type['params'][0]['name'] : null;
 
         if (!class_exists($className, true)) {
             throw new \InvalidArgumentException('Class name should be explicitly set for deserialization');

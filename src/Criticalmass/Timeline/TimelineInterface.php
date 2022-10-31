@@ -6,7 +6,7 @@ use App\Criticalmass\Timeline\Collector\AbstractTimelineCollector;
 
 interface TimelineInterface
 {
-    public const MAX_ITEMS = 100;
+    const MAX_ITEMS = 100;
     
     public function addCollector(AbstractTimelineCollector $collector): TimelineInterface;
 

@@ -11,8 +11,25 @@ use Symfony\Component\Routing\RouterInterface;
 
 abstract class AbstractObjectRouter
 {
-    public function __construct(protected RouterInterface $router, protected Reader $annotationReader, protected ClassParameterResolver $classParameterResolver, protected PropertyParameterResolver $propertyParameterResolver)
+    /** @var RouterInterface $router */
+    protected $router;
+
+    /** @var Reader $annotationReader */
+    protected $annotationReader;
+
+    /** @var ClassParameterResolver $classParameterResolver */
+    protected $classParameterResolver;
+
+    /** @var PropertyParameterResolver $propertyParameterResolver */
+    protected $propertyParameterResolver;
+
+    public function __construct(RouterInterface $router, Reader $annotationReader, ClassParameterResolver $classParameterResolver, PropertyParameterResolver $propertyParameterResolver)
     {
+        $this->router = $router;
+        $this->annotationReader = $annotationReader;
+
+        $this->classParameterResolver = $classParameterResolver;
+        $this->propertyParameterResolver = $propertyParameterResolver;
     }
 
     protected function getDefaultRouteName(RouteableInterface $routeable): ?string
@@ -58,7 +75,7 @@ abstract class AbstractObjectRouter
 
     protected function getClassname(RouteableInterface $routeable): string
     {
-        $classNameParts = explode('\\', $routeable::class);
+        $classNameParts = explode('\\', get_class($routeable));
         $className = array_pop($classNameParts);
 
         return $className;

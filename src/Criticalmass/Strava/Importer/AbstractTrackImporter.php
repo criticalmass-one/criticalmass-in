@@ -23,11 +23,26 @@ abstract class AbstractTrackImporter implements TrackImporterInterface
     /** @var Ride $ride */
     protected $ride;
 
+    /** @var GpxWriter $gpxWriter */
+    protected $gpxWriter;
+
+    /** @var SessionInterface $session */
+    protected $session;
+
     /** @var StravaApi $api */
     protected $api;
 
-    final const API_URI = 'https://www.strava.com/api/v3/';
-    final const RESOULUTION = 'high';
+    /** @var UploadFakerInterface $uploadFaker */
+    protected $uploadFaker;
+
+    /** @var ManagerRegistry $registry */
+    protected $registry;
+
+    /** @var SerializerInterface $serializer */
+    protected $serializer;
+
+    const API_URI = 'https://www.strava.com/api/v3/';
+    const RESOULUTION = 'high';
 
     protected $types = [
         'time',
@@ -35,8 +50,14 @@ abstract class AbstractTrackImporter implements TrackImporterInterface
         'altitude',
     ];
 
-    public function __construct(protected GpxWriter $gpxWriter, protected SessionInterface $session, protected ManagerRegistry $registry, protected UploadFakerInterface $uploadFaker, protected SerializerInterface $serializer, string $stravaClientId, string $stravaSecret)
+    public function __construct(GpxWriter $gpxWriter, SessionInterface $session, ManagerRegistry $registry, UploadFakerInterface $uploadFaker, SerializerInterface $serializer, string $stravaClientId, string $stravaSecret)
     {
+        $this->gpxWriter = $gpxWriter;
+        $this->session = $session;
+        $this->uploadFaker = $uploadFaker;
+        $this->registry = $registry;
+        $this->serializer = $serializer;
+
         $this->api = $this->createApi((int)$stravaClientId, $stravaSecret);
     }
 

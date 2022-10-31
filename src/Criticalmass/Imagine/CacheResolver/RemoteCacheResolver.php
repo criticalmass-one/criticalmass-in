@@ -13,7 +13,7 @@ class RemoteCacheResolver extends WebPathResolver
         Filesystem $filesystem,
         RequestContext $requestContext,
         string $webRootDir,
-        string $cachePrefix,
+        string $cachePrefix = 'media/cache',
         LoggerInterface $logger
     ) {
         parent::__construct($filesystem, $requestContext, $webRootDir, $cachePrefix);

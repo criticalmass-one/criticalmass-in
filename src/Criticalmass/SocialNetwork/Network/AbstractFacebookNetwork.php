@@ -4,7 +4,7 @@ namespace App\Criticalmass\SocialNetwork\Network;
 
 abstract class AbstractFacebookNetwork extends AbstractNetwork
 {
-    final const REGEX_PATTERN = '/(?:(?:http|https):\/\/)?(?:www.)?facebook.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[?\w\-]*\/)?(?:profile.php\?id=(?=\d.*))?([\w\-]*)?/';
+    const REGEX_PATTERN = '/(?:(?:http|https):\/\/)?(?:www.)?facebook.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[?\w\-]*\/)?(?:profile.php\?id=(?=\d.*))?([\w\-]*)?/';
 
     protected string $icon = 'fab fa-facebook-f';
 

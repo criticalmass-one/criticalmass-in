@@ -14,10 +14,10 @@ class SubrideType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class, ['required' => false])
-            ->add('description', TextareaType::class, ['required' => false])
+            ->add('title', TextType::class, array('required' => false))
+            ->add('description', TextareaType::class, array('required' => false))
             ->add('time', TimeType::class)
-            ->add('location', TextType::class, ['required' => false])
+            ->add('location', TextType::class, array('required' => false))
             ->add('latitude', HiddenType::class)
             ->add('longitude', HiddenType::class);
     }

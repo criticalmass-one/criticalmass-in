@@ -11,10 +11,16 @@ use Symfony\Contracts\Cache\ItemInterface;
 
 class CachedTimeline extends Timeline
 {
-    public function __construct(ManagerRegistry $doctrine, EngineInterface $templating, FeatureManagerInterface $featureManager, protected string $redisUrl, protected int $ttl = 300)
+    protected int $ttl;
+
+    protected string $redisUrl;
+
+    public function __construct(ManagerRegistry $doctrine, EngineInterface $templating, FeatureManagerInterface $featureManager, string $redisUrl, int $cachedTimelineTtl = 300)
     {
         $this->doctrine = $doctrine;
         $this->templating = $templating;
+        $this->ttl = $cachedTimelineTtl;
+        $this->redisUrl = $redisUrl;
 
         parent::__construct($doctrine, $templating, $featureManager);
     }

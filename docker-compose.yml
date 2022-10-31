@@ -40,7 +40,7 @@ services:
         com.symfony.server.service-prefix: 'DATABASE'
 
     elasticsearch:
-      image: elasticsearch:7.17.2
+      image: elasticsearch:6.8.6
       container_name: criticalmass-elasticsearch
       environment:
         - discovery.type=single-node

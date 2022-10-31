@@ -15,8 +15,21 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class WebsiteCrawlerCommand extends Command
 {
-    public function __construct(protected ManagerRegistry $registry, protected CrawlerInterface $crawler, protected ParserInterface $parser)
+    /** @var ManagerRegistry $registry */
+    protected $registry;
+
+    /** @var CrawlerInterface $crawler */
+    protected $crawler;
+
+    /** @var ParserInterface $parser */
+    protected $parser;
+
+    public function __construct(ManagerRegistry $registry, CrawlerInterface $crawler, ParserInterface $parser)
     {
+        $this->registry = $registry;
+        $this->crawler = $crawler;
+        $this->parser = $parser;
+
         parent::__construct();
     }
 
@@ -37,7 +50,7 @@ class WebsiteCrawlerCommand extends Command
         $postList = $this->registry->getRepository(Post::class)->findByCrawled(false, $limit);
 
         rsort($postList);
-        $progressBar = new ProgressBar($output, is_countable($postList) ? count($postList) : 0);
+        $progressBar = new ProgressBar($output, count($postList));
 
         $table = new Table($output);
 

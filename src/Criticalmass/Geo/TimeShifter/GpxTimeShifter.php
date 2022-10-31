@@ -6,8 +6,12 @@ use App\Criticalmass\Geo\Converter\GpxToPositionListConverter;
 
 class GpxTimeShifter extends TimeShifter implements GpxTimeShifterInterface
 {
-    public function __construct(protected GpxToPositionListConverter $gpxToPositionListConverter)
+    /** @var GpxToPositionListConverter $gpxToPositionListConverter */
+    protected $gpxToPositionListConverter;
+
+    public function __construct(GpxToPositionListConverter $gpxToPositionListConverter)
     {
+        $this->gpxToPositionListConverter = $gpxToPositionListConverter;
     }
 
     public function loadGpxFile(string $filename): GpxTimeShifterInterface

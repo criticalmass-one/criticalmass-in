@@ -10,6 +10,9 @@ use Doctrine\Migrations\AbstractMigration;
  */
 class Version20171031230637 extends AbstractMigration
 {
+    /**
+     * @param Schema $schema
+     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -23,6 +26,9 @@ class Version20171031230637 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_89779DC1A76ED395 ON help_category (user_id)');
     }
 
+    /**
+     * @param Schema $schema
+     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs

@@ -16,19 +16,19 @@ class NameVoter implements VoterInterface
             return 1.0;
         }
 
-        if (str_contains($modelName, 'Critical Mass')) {
+        if (strpos($modelName, 'Critical Mass') !== false) {
             return 0.95;
         }
 
-        if (str_contains($modelName, 'Critical') && str_contains($modelName, 'Mass')) {
+        if (strpos($modelName, 'Critical') !== false && strpos($modelName, 'Mass') !== false) {
             return 0.95;
         }
 
-        if (str_contains($modelName, 'Critical') || str_contains($modelName, 'Mass')) {
+        if (strpos($modelName, 'Critical') !== false || strpos($modelName, 'Mass') !== false) {
             return 0.8;
         }
 
-        if (str_contains($modelName, $ride->getCity()->getCity())) {
+        if (strpos($modelName, $ride->getCity()->getCity()) !== false) {
             return 0.5;
         }
 

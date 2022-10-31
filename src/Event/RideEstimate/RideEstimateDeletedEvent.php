@@ -4,5 +4,5 @@ namespace App\Event\RideEstimate;
 
 class RideEstimateDeletedEvent extends AbstractRideEstimateEvent
 {
-    final const NAME = 'ride_estimate.deleted';
+    const NAME = 'ride_estimate.deleted';
 }

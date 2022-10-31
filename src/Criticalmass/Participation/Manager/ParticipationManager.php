@@ -12,8 +12,20 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class ParticipationManager implements ParticipationManagerInterface
 {
-    public function __construct(protected ManagerRegistry $registry, protected TokenStorageInterface $tokenStorage, protected EventDispatcherInterface $eventDispatcher)
+    /** @var ManagerRegistry $registry */
+    protected $registry;
+
+    /** @var TokenStorageInterface $tokenStorage */
+    protected $tokenStorage;
+
+    /** @var EventDispatcherInterface $eventDispatcher */
+    protected $eventDispatcher;
+
+    public function __construct(ManagerRegistry $registry, TokenStorageInterface $tokenStorage, EventDispatcherInterface $eventDispatcher)
     {
+        $this->registry = $registry;
+        $this->tokenStorage = $tokenStorage;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function participate(Ride $ride, string $status): Participation

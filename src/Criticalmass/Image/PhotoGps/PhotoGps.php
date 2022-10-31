@@ -65,7 +65,7 @@ class PhotoGps extends AbstractPhotoGps
 
         if ($exif && $gps = $exif->getGPS()) {
             if (is_string($gps)) {
-                [$lat, $lon] = explode(',', $gps);
+                list($lat, $lon) = explode(',', $gps);
 
                 $gps = [
                     'lat' => (float) $lat,

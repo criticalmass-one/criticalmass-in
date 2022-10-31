@@ -51,7 +51,7 @@ class PostController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("thread", class="App:Thread", isOptional=true, converter="thread_converter")
      */
-    public function writeThreadAction(Request $request, ObjectRouterInterface $objectRouter, Thread $thread = null): Response
+    public function writeThreadAction(Request $request, Thread $thread = null, ObjectRouterInterface $objectRouter): Response
     {
         return $this->writeAction($request, $thread, $objectRouter);
     }
@@ -123,6 +123,7 @@ class PostController extends AbstractController
      * If you call this method without any parameters, it will list everything in a timeline style.
      *
      * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function listAction(
         int $cityId = null,

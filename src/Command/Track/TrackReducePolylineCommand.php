@@ -15,9 +15,18 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class TrackReducePolylineCommand extends Command
 {
-    public function __construct(protected ManagerRegistry $registry, protected TrackPolylineHandlerInterface $trackPolylineHandler)
+    /** @var ManagerRegistry $registry */
+    protected $registry;
+
+    /** @var TrackPolylineHandlerInterface $trackPolylineHandler */
+    protected $trackPolylineHandler;
+
+    public function __construct(?string $name = null, ManagerRegistry $registry, TrackPolylineHandlerInterface $trackPolylineHandler)
     {
-        parent::__construct();
+        $this->trackPolylineHandler = $trackPolylineHandler;
+        $this->registry = $registry;
+
+        parent::__construct($name);
     }
 
     protected function configure(): void

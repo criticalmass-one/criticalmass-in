@@ -8,8 +8,12 @@ use FOS\ElasticaBundle\Finder\FinderInterface;
 
 class ElasticCityFinder implements ElasticCityFinderInterface
 {
-    public function __construct(protected FinderInterface $finder)
+    /** @var FinderInterface $finder */
+    protected $finder;
+
+    public function __construct(FinderInterface $finder)
     {
+        $this->finder = $finder;
     }
 
     public function findNearCities(City $city, int $size = 15, int $distance = 50): array
@@ -22,7 +26,7 @@ class ElasticCityFinder implements ElasticCityFinderInterface
 
         try {
             return $this->finder->find($query);
-        } catch (\Exception) {
+        } catch (\Exception $exception) {
             return [];
         }
     }

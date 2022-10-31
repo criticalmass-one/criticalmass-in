@@ -371,7 +371,7 @@ class RideController extends BaseController
 
             try {
                 $ride->setDateTime(new \DateTime($rideIdentifier));
-            } catch (\Exception) {
+            } catch (\Exception $exception) {
                 if (!$ride->hasSlug()) {
                     $ride->setSlug($rideIdentifier);
                 }
@@ -445,7 +445,7 @@ class RideController extends BaseController
 
             try {
                 $ride->setDateTime(new \DateTime($rideIdentifier));
-            } catch (\Exception) {
+            } catch (\Exception $exception) {
                 if (!$ride->hasSlug()) {
                     $ride->setSlug($rideIdentifier);
                 }

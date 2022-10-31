@@ -7,8 +7,12 @@ use Symfony\Component\EventDispatcher\Event;
 
 abstract class AbstractUserEvent extends Event
 {
-    public function __construct(protected User $user)
+    /** @var User $user */
+    protected $user;
+
+    public function __construct(User $user)
     {
+        $this->user = $user;
     }
 
     public function getUser(): User

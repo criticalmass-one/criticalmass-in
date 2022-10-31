@@ -14,8 +14,17 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class GenerateProfilePhotosCommand extends Command
 {
-    public function __construct(protected ManagerRegistry $registry, protected ProfilePhotoGeneratorInterface $profilePhotoGenerator)
+    /** @var ManagerRegistry $registry */
+    protected $registry;
+
+    /** @var ProfilePhotoGeneratorInterface $profilePhotoGenerator */
+    protected $profilePhotoGenerator;
+
+    public function __construct(ManagerRegistry $registry, ProfilePhotoGeneratorInterface $profilePhotoGenerator)
     {
+        $this->registry = $registry;
+        $this->profilePhotoGenerator = $profilePhotoGenerator;
+
         parent::__construct();
     }
 

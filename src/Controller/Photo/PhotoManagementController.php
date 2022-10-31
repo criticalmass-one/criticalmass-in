@@ -204,27 +204,27 @@ class PhotoManagementController extends AbstractController
      * @Security("is_granted('edit', photo)")
      * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
-    public function censorAction(Request $request, Photo $photo, PhotoManipulatorInterface $photoManipulator, UserInterface $user = null): Response
+    public function censorAction(Request $request, UserInterface $user = null, Photo $photo, PhotoManipulatorInterface $photoManipulator): Response
     {
         if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->censorPostAction($request, $photo, $photoManipulator, $user);
+            return $this->censorPostAction($request, $user, $photo, $photoManipulator);
         }
 
-        return $this->censorGetAction($request, $photo, $photoManipulator, $user);
+        return $this->censorGetAction($request, $user, $photo, $photoManipulator);
     }
 
-    public function censorGetAction(Request $request, Photo $photo, PhotoManipulatorInterface $photoManipulator, UserInterface $user = null): Response
+    public function censorGetAction(Request $request, UserInterface $user = null, Photo $photo, PhotoManipulatorInterface $photoManipulator): Response
     {
         return $this->render('PhotoManagement/censor.html.twig', [
             'photo' => $photo,
         ]);
     }
 
-    public function censorPostAction(Request $request, Photo $photo, PhotoManipulatorInterface $photoManipulator, UserInterface $user = null): Response
+    public function censorPostAction(Request $request, UserInterface $user = null, Photo $photo, PhotoManipulatorInterface $photoManipulator): Response
     {
-        $areaDataList = json_decode($request->getContent(), null, 512, JSON_THROW_ON_ERROR);
+        $areaDataList = json_decode($request->getContent());
 
-        if (0 === (is_countable($areaDataList) ? count($areaDataList) : 0)) {
+        if (0 === count($areaDataList)) {
             return new Response(null);
         }
 

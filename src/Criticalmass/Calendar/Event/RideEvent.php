@@ -7,11 +7,18 @@ use App\Entity\Ride;
 
 class RideEvent extends AbstractEvent
 {
-    protected \DateTime $begin;
-    protected \DateTime $end;
+    /** @var \DateTime $begin */
+    protected $begin;
 
-    public function __construct(protected Ride $ride)
+    /** @var \DateTime $end */
+    protected $end;
+
+    /** @var Ride $ride */
+    protected $ride;
+
+    public function __construct(Ride $ride)
     {
+        $this->ride = $ride;
         $this->begin = $ride->getDateTime();
         $this->end = $ride->getDateTime();
     }
@@ -21,7 +28,7 @@ class RideEvent extends AbstractEvent
         return $this->ride;
     }
 
-    public function getUid(): string
+    public function getUid()
     {
         $uid = sprintf('ride-%d', $this->ride->getId());
 
