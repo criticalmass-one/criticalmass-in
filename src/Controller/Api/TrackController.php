@@ -120,63 +120,63 @@ class TrackController extends BaseController
      *     summary="Lists tracks",
      *     @OA\Parameter(
      *         name="regionSlug",
-     *         in="body",
+     *         in="query",
      *         description="Provide a region slug",
      *         required=false,
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
      *         name="citySlug",
-     *         in="body",
+     *         in="query",
      *         description="Provide a city slug",
      *         required=false,
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
      *         name="year",
-     *         in="body",
+     *         in="query",
      *         description="Limit the result set to this year. If not set, we will search in the current month.",
      *         required=false,
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
      *         name="month",
-     *         in="body",
+     *         in="query",
      *         description="Limit the result set to this year. Must be combined with 'year'. If not set, we will search in the current month.",
      *         required=false,
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
      *         name="day",
-     *         in="body",
+     *         in="query",
      *         description="Limit the result set to this day.",
      *         required=false,
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
      *         name="orderBy",
-     *         in="body",
+     *         in="query",
      *         description="Choose a property to sort the list by.",
      *         required=false,
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
      *         name="orderDirection",
-     *         in="body",
+     *         in="query",
      *         description="Sort ascending or descending.",
      *         required=false,
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
      *         name="startValue",
-     *         in="body",
+     *         in="query",
      *         description="Start ordered list with provided value.",
      *         required=false,
      *         @OA\Schema(type="string")
      *     ),
      *     @OA\Parameter(
      *         name="size",
-     *         in="body",
+     *         in="query",
      *         description="Length of resulting list. Defaults to 10.",
      *         required=false,
      *         @OA\Schema(type="integer")

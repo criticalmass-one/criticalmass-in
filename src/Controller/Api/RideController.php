@@ -345,9 +345,7 @@ class RideController extends BaseController
      *         required=true,
      *         @OA\Schema(type="string")
      *     ),
-     *     @OA\Parameter(
-     *         name="body",
-     *         in="body",
+     *     @OA\RequestBody(
      *         description="JSON represantation of ride",
      *         required=true,
      *         @OA\Schema(type="string")
@@ -421,9 +419,7 @@ class RideController extends BaseController
      *         required=true,
      *         @OA\Schema(type="string")
      *     ),
-     *     @OA\Parameter(
-     *         name="body",
-     *         in="body",
+     *     @OA\RequestBody(
      *         description="JSON represantation of ride",
      *         required=true,
      *         @OA\Schema(type="string")

@@ -127,9 +127,7 @@ class EstimateController extends BaseController
      *         required=true,
      *         @OA\Schema(type="string"),
      *     ),
-     *     @OA\Parameter(
-     *         name="body",
-     *         in="body",
+     *     @OA\RequestBody(
      *         description="JSON representation of the estimate data",
      *         required=true,
      *         @OA\Schema(type="string")
