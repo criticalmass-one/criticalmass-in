@@ -5,7 +5,7 @@ namespace App\EventSubscriber;
 use App\Criticalmass\SeoPage\SeoPageInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class KernelEventSubscriber implements EventSubscriberInterface
@@ -21,13 +21,13 @@ class KernelEventSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function onController(FilterControllerEvent $filterControllerEvent): void
+    public function onController(ControllerEvent $controllerEvent): void
     {
-        if (!$filterControllerEvent->isMasterRequest()) {
+        if (!$controllerEvent->isMasterRequest()) {
             return;
         }
 
-        $request = $filterControllerEvent->getRequest();
+        $request = $controllerEvent->getRequest();
         $canonical = $this->generateCanonicalUrl($request);
 
         $this->seoPage->setCanonicalLink($canonical);
