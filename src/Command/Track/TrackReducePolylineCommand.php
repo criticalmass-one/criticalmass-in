@@ -15,6 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class TrackReducePolylineCommand extends Command
 {
+    protected static $defaultName = 'criticalmass:track:reduce-polyline';
     public function __construct(protected ManagerRegistry $registry, protected TrackPolylineHandlerInterface $trackPolylineHandler)
     {
         parent::__construct();
@@ -22,9 +23,7 @@ class TrackReducePolylineCommand extends Command
 
     protected function configure(): void
     {
-        $this
-            ->setName('criticalmass:track:reduce-polyline')
-            ->setDescription('')
+        $this->setDescription('')
             ->addOption('all', 'a', InputOption::VALUE_OPTIONAL, 'Generate polylines for all tracks')
             ->addArgument('trackId', InputArgument::OPTIONAL, 'Id of the track to reduce polyline');
     }

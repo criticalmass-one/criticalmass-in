@@ -17,6 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class RelocatePhotosCommand extends Command
 {
+    protected static $defaultName = 'criticalmass:photos:relocate';
     public function __construct(protected PhotoGpsInterface $photoGps, protected ManagerRegistry $registry)
     {
         parent::__construct();
@@ -24,9 +25,7 @@ class RelocatePhotosCommand extends Command
 
     protected function configure()
     {
-        $this
-            ->setName('criticalmass:photos:relocate')
-            ->setDescription('Relocate photos to tracks')
+        $this->setDescription('Relocate photos to tracks')
             ->addArgument(
                 'citySlug',
                 InputArgument::REQUIRED,

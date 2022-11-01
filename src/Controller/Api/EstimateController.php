@@ -23,6 +23,7 @@ class EstimateController extends BaseController
 {
     public function __construct(protected SerializerInterface $serializer, protected EventDispatcherInterface $eventDispatcher, protected DataQueryManagerInterface $dataQueryManager, protected ManagerRegistry $registry)
     {
+        $managerRegistry = null;
         parent::__construct($managerRegistry,$serializer);
     }
 
@@ -77,7 +78,7 @@ class EstimateController extends BaseController
         $this->managerRegistry->getManager()->persist($rideEstimation);
         $this->managerRegistry->getManager()->flush();
 
-        $this->eventDispatcher->dispatch(RideEstimateCreatedEvent::NAME, new RideEstimateCreatedEvent($rideEstimation));
+        $this->eventDispatcher->dispatch(new RideEstimateCreatedEvent($rideEstimation), RideEstimateCreatedEvent::NAME);
 
         return $this->createStandardResponse($rideEstimation);
     }
@@ -131,9 +132,9 @@ class EstimateController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     * @Route("/estimate", name="caldera_criticalmass_rest_estimate_create", methods={"POST"})
      * @ParamConverter("ride", class="App:Ride")
      */
+    #[Route(path: '/estimate', name: 'caldera_criticalmass_rest_estimate_create', methods: ['POST'])]
     public function createRideEstimateAction(Request $request, Ride $ride, SerializerInterface $serializer): JsonResponse
     {
         /** @var CreateEstimateModel $estimateModel */

@@ -238,7 +238,7 @@ class RideManagementController extends AbstractController
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function enableAction(Request $request, ManagerRegistry $registry, Ride $ride, ObjectRouterInterface $objectRouter, UserInterface $user = null): RedirectResponse
+    public function enableAction(ManagerRegistry $registry, Ride $ride, ObjectRouterInterface $objectRouter, UserInterface $user = null): RedirectResponse
     {
         $ride->setEnabled(true)
             ->setDisabledReason(null)

@@ -10,9 +10,7 @@ use Symfony\Component\Validator\Constraints as Constraints;
  */
 class LocationNameQuery extends AbstractQuery implements DoctrineQueryInterface, ElasticQueryInterface
 {
-    /**
-     * @Constraints\NotNull()
-     */
+    #[Constraints\NotNull]
     protected string $name;
 
     /**

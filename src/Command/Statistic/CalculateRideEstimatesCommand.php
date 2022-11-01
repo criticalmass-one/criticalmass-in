@@ -13,6 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CalculateRideEstimatesCommand extends Command
 {
+    protected static $defaultName = 'criticalmass:rideestimate:recalculate';
     public function __construct(protected RideEstimateHandlerInterface $rideEstimateHandler, protected ManagerRegistry $registry)
     {
         parent::__construct();
@@ -20,9 +21,7 @@ class CalculateRideEstimatesCommand extends Command
 
     protected function configure(): void
     {
-        $this
-            ->setName('criticalmass:rideestimate:recalculate')
-            ->setDescription('');
+        $this->setDescription('');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): void

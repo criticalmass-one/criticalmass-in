@@ -25,8 +25,8 @@ class Board implements BoardInterface, RouteableInterface, AutoParamConverterAbl
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected ?string $title = null;
 
     /**

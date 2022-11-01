@@ -17,6 +17,7 @@ use Symfony\Component\Console\Question\Question;
 
 class ImportRideEstimatesCommand extends Command
 {
+    protected static $defaultName = 'criticalmass:rideestimate:import';
     protected array $citySlugs = [];
 
     public function __construct(protected ManagerRegistry $registry)
@@ -26,9 +27,7 @@ class ImportRideEstimatesCommand extends Command
 
     protected function configure(): void
     {
-        $this
-            ->setName('criticalmass:rideestimate:import')
-            ->setDescription('')
+        $this->setDescription('')
             ->addArgument('year', InputArgument::REQUIRED)
             ->addArgument('month', InputArgument::REQUIRED)
             ->addArgument('filename', InputArgument::REQUIRED);

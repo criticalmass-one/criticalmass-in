@@ -12,10 +12,10 @@ use Symfony\Component\Validator\Constraints as Constraints;
 class UntilDateTimeQuery extends AbstractDateTimeQuery
 {
     /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("int")
      * @var int $untilDateTime
      */
+    #[Constraints\NotNull]
+    #[Constraints\Type('int')]
     protected $untilDateTime;
 
     /**

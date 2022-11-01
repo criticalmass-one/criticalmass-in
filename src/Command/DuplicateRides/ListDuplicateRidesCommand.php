@@ -15,6 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ListDuplicateRidesCommand extends Command
 {
+    protected static $defaultName = 'criticalmass:ride-duplicates:list';
     public function __construct(protected ManagerRegistry $registry, protected DuplicateFinderInterface $duplicateFinder)
     {
         parent::__construct();
@@ -22,9 +23,7 @@ class ListDuplicateRidesCommand extends Command
 
     protected function configure(): void
     {
-        $this
-            ->setName('criticalmass:ride-duplicates:list')
-            ->setDescription('Find duplicate rides')
+        $this->setDescription('Find duplicate rides')
             ->addArgument(
                 'citySlug',
                 InputArgument::OPTIONAL,

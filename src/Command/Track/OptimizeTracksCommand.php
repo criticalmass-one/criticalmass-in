@@ -15,6 +15,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class OptimizeTracksCommand extends Command
 {
+    protected static $defaultName = 'criticalmass:tracks:optimize';
     public function __construct(protected ManagerRegistry $registry, protected EventDispatcherInterface $eventDispatcher)
     {
         parent::__construct();
@@ -22,9 +23,7 @@ class OptimizeTracksCommand extends Command
 
     protected function configure(): void
     {
-        $this
-            ->setName('criticalmass:tracks:optimize')
-            ->setDescription('Regenerate tracks')
+        $this->setDescription('Regenerate tracks')
             ->addArgument(
                 'trackId',
                 InputArgument::OPTIONAL,

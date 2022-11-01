@@ -17,6 +17,7 @@ use Symfony\Component\Console\Question\Question;
 
 class MergeDuplicateRidesCommand extends ListDuplicateRidesCommand
 {
+    protected static $defaultName = 'criticalmass:ride-duplicates:merge';
     public function __construct(ManagerRegistry $registry, DuplicateFinderInterface $duplicateFinder, protected RideMergerInterface $rideMerger)
     {
         parent::__construct($registry, $duplicateFinder);
@@ -24,9 +25,7 @@ class MergeDuplicateRidesCommand extends ListDuplicateRidesCommand
 
     protected function configure(): void
     {
-        $this
-            ->setName('criticalmass:ride-duplicates:merge')
-            ->setDescription('Merge duplicate rides')
+        $this->setDescription('Merge duplicate rides')
             ->addArgument(
                 'citySlug',
                 InputArgument::OPTIONAL,

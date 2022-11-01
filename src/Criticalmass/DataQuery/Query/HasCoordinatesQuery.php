@@ -12,9 +12,7 @@ use Symfony\Component\Validator\Constraints as Constraints;
  */
 class HasCoordinatesQuery extends AbstractQuery implements DoctrineQueryInterface, ElasticQueryInterface
 {
-    /**
-     * @Constraints\IsTrue()
-     */
+    #[Constraints\IsTrue]
     protected bool $coordsRequired = false;
 
     /**

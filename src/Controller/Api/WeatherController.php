@@ -24,10 +24,9 @@ class WeatherController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     *
      * @ParamConverter("ride", class="App:Ride")
-     * @Route("/{citySlug}/{rideIdentifier}/weather", name="caldera_criticalmass_rest_weather_add", methods={"PUT"})
      */
+    #[Route(path: '/{citySlug}/{rideIdentifier}/weather', name: 'caldera_criticalmass_rest_weather_add', methods: ['PUT'])]
     public function addWeatherAction(Request $request, Ride $ride): JsonResponse
     {
         /** @var Weather $weather */

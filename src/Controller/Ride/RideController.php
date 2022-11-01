@@ -34,7 +34,7 @@ class RideController extends AbstractController
     /**
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function showAction(Request $request, SeoPageInterface $seoPage, EventDispatcherInterface $eventDispatcher, Ride $ride): Response
+    public function showAction(SeoPageInterface $seoPage, EventDispatcherInterface $eventDispatcher, Ride $ride): Response
     {
         $blocked = $this->getBlockedCityRepository()->findCurrentCityBlock($ride->getCity());
 

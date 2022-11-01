@@ -16,6 +16,7 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
 
 class AutoAssignNetworkCommand extends Command
 {
+    protected static $defaultName = 'criticalmass:social-network:auto-assign';
     public function __construct(protected ManagerRegistry $doctrine, protected NetworkManagerInterface $networkManager, protected NetworkDetectorInterface $networkDetector)
     {
         parent::__construct(null);
@@ -24,9 +25,7 @@ class AutoAssignNetworkCommand extends Command
 
     protected function configure(): void
     {
-        $this
-            ->setName('criticalmass:social-network:auto-assign')
-            ->setDescription('Auto-assign networks')
+        $this->setDescription('Auto-assign networks')
             ->addOption('only-diffs', null, InputOption::VALUE_NONE)
             ->addOption('auto-assign', null, InputOption::VALUE_NONE)
             ->addOption('interactive-assign', null, InputOption::VALUE_NONE)

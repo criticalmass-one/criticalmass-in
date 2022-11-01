@@ -49,9 +49,9 @@ class PhotoUploadController extends AbstractController
                 ->setUser($user)
                 ->addUploadedFile($uploadedFile);
 
-            return new Response('Success', 200);
+            return new Response('Success', Response::HTTP_OK);
         }
 
-        return new Response('', 403);
+        return new Response('', Response::HTTP_FORBIDDEN);
     }
 }

@@ -24,6 +24,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class StravaMassImportController extends AbstractController
 {
+    public function __construct(private readonly string $stravaClientId, private readonly string $stravaSecret)
+    {
+    }
     /**
      * @Security("has_role('ROLE_USER')")
      */
@@ -157,8 +160,8 @@ class StravaMassImportController extends AbstractController
         ]));
 
         $oauthOptions = [
-            'clientId' => $this->getParameter('strava.client_id'),
-            'clientSecret' => $this->getParameter('strava.secret'),
+            'clientId' => $this->stravaClientId,
+            'clientSecret' => $this->stravaSecret,
             'redirectUri' => $redirectUri,
             'scope' => 'read',
         ];

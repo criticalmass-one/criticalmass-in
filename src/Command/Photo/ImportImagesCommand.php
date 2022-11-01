@@ -16,6 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ImportImagesCommand extends Command
 {
+    protected static $defaultName = 'criticalmass:photos:import';
     public function __construct(protected ManagerRegistry $registry, protected PhotoUploader $photoUploader)
     {
         parent::__construct();
@@ -23,9 +24,7 @@ class ImportImagesCommand extends Command
 
     protected function configure(): void
     {
-        $this
-            ->setName('criticalmass:photos:import')
-            ->setDescription('Import photos to a tour')
+        $this->setDescription('Import photos to a tour')
             ->addArgument(
                 'citySlug',
                 InputArgument::REQUIRED,

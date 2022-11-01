@@ -21,6 +21,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class StravaController extends AbstractController
 {
+    public function __construct(private readonly string $stravaClientId, private readonly string $stravaSecret)
+    {
+    }
     /**
      * @Security("has_role('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
@@ -117,8 +120,8 @@ class StravaController extends AbstractController
         $redirectUri = $request->getUriForPath($objectRouter->generate($ride, 'caldera_criticalmass_strava_token'));
 
         $oauthOptions = [
-            'clientId' => $this->getParameter('strava.client_id'),
-            'clientSecret' => $this->getParameter('strava.secret'),
+            'clientId' => $this->stravaClientId,
+            'clientSecret' => $this->stravaSecret,
             'redirectUri' => $redirectUri,
             'scope' => 'read',
         ];
@@ -128,7 +131,7 @@ class StravaController extends AbstractController
 
     protected function createApi(): StravaApi
     {
-        $api = new StravaApi($this->getParameter('strava.client_id'), $this->getParameter('strava.secret'));
+        $api = new StravaApi($this->stravaClientId, $this->stravaSecret);
 
         return $api;
     }

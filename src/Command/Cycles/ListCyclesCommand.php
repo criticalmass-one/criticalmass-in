@@ -14,6 +14,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ListCyclesCommand extends Command
 {
+    protected static $defaultName = 'criticalmass:cycles:list';
     public function __construct(protected ManagerRegistry $registry, protected TranslatorInterface $translator)
     {
         parent::__construct();
@@ -21,9 +22,7 @@ class ListCyclesCommand extends Command
 
     protected function configure(): void
     {
-        $this
-            ->setName('criticalmass:cycles:list')
-            ->setDescription('Create rides for a parameterized year and month automatically')
+        $this->setDescription('Create rides for a parameterized year and month automatically')
             ->addArgument(
                 'citySlug',
                 InputArgument::REQUIRED,

@@ -14,6 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class GenerateProfilePhotosCommand extends Command
 {
+    protected static $defaultName = 'criticalmass:profile-photo:generate';
     public function __construct(protected ManagerRegistry $registry, protected ProfilePhotoGeneratorInterface $profilePhotoGenerator)
     {
         parent::__construct();
@@ -21,9 +22,7 @@ class GenerateProfilePhotosCommand extends Command
 
     protected function configure(): void
     {
-        $this
-            ->setName('criticalmass:profile-photo:generate')
-            ->setDescription('Generate profile photos')
+        $this->setDescription('Generate profile photos')
             ->addOption('overwrite', null,InputOption::VALUE_NONE)
             ->addOption('limit', null, InputOption::VALUE_REQUIRED);
     }
