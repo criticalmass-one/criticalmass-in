@@ -46,9 +46,9 @@ class TrackManagementController extends AbstractController
         $this->getManager()->flush();
 
         if ($track->getEnabled()) {
-            $eventDispatcher->dispatch(TrackShownEvent::NAME, new TrackShownEvent($track));
+            $eventDispatcher->dispatch(new TrackShownEvent($track), TrackShownEvent::NAME);
         } else {
-            $eventDispatcher->dispatch(TrackHiddenEvent::NAME, new TrackHiddenEvent($track));
+            $eventDispatcher->dispatch(new TrackHiddenEvent($track), TrackHiddenEvent::NAME);
         }
 
         return $this->redirectToRoute('caldera_criticalmass_track_list');
@@ -64,7 +64,7 @@ class TrackManagementController extends AbstractController
 
         $this->getManager()->flush();
 
-        $eventDispatcher->dispatch(TrackDeletedEvent::NAME, new TrackDeletedEvent($track));
+        $eventDispatcher->dispatch(new TrackDeletedEvent($track), TrackDeletedEvent::NAME);
 
         return $this->redirectToRoute('caldera_criticalmass_track_list');
     }

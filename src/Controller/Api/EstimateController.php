@@ -149,7 +149,7 @@ class EstimateController extends BaseController
         $this->managerRegistry->getManager()->persist($rideEstimation);
         $this->managerRegistry->getManager()->flush();
 
-        $this->eventDispatcher->dispatch(RideEstimateCreatedEvent::NAME, new RideEstimateCreatedEvent($rideEstimation));
+        $this->eventDispatcher->dispatch(new RideEstimateCreatedEvent($rideEstimation), RideEstimateCreatedEvent::NAME);
 
         return $this->createStandardResponse($rideEstimation);
     }

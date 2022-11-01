@@ -63,7 +63,7 @@ class OptimizeTracksCommand extends Command
     protected function optimizeTrack(Track $track): void
     {
         // little trick: We just fire a TrackTrimmedEvent, which will lead to regeneration of all properties
-        $this->eventDispatcher->dispatch(TrackTrimmedEvent::NAME, new TrackTrimmedEvent($track));
+        $this->eventDispatcher->dispatch(new TrackTrimmedEvent($track), TrackTrimmedEvent::NAME);
     }
 
     protected function addHeaderToTable(Table $table): void

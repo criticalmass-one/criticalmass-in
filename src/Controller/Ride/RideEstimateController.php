@@ -43,7 +43,7 @@ class RideEstimateController extends AbstractController
             $this->getManager()->persist($estimateForm->getData());
             $this->getManager()->flush();
 
-            $eventDispatcher->dispatch(RideEstimateCreatedEvent::NAME, new RideEstimateCreatedEvent($rideEstimate));
+            $eventDispatcher->dispatch(new RideEstimateCreatedEvent($rideEstimate), RideEstimateCreatedEvent::NAME);
         }
 
         return $this->redirect($objectRouter->generate($ride));
@@ -74,7 +74,7 @@ class RideEstimateController extends AbstractController
             $this->getManager()->persist($estimateForm->getData());
             $this->getManager()->flush();
 
-            $eventDispatcher->dispatch(RideEstimateCreatedEvent::NAME, new RideEstimateCreatedEvent($rideEstimate));
+            $eventDispatcher->dispatch(new RideEstimateCreatedEvent($rideEstimate), RideEstimateCreatedEvent::NAME);
 
             return $this->redirect($objectRouter->generate($ride));
         }

@@ -82,7 +82,7 @@ class TrackUploadController extends AbstractController
             $em->persist($track);
             $em->flush();
 
-            $eventDispatcher->dispatch(TrackUploadedEvent::NAME, new TrackUploadedEvent($track));
+            $eventDispatcher->dispatch(new TrackUploadedEvent($track), TrackUploadedEvent::NAME);
 
             return $this->redirect($objectRouter->generate($track));
         }

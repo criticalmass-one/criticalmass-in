@@ -47,7 +47,7 @@ class ColorController extends AbstractController
 
             $this->getDoctrine()->getManager()->flush();
 
-            $eventDispatcher->dispatch(UserColorChangedEvent::NAME, new UserColorChangedEvent($user));
+            $eventDispatcher->dispatch(new UserColorChangedEvent($user), UserColorChangedEvent::NAME);
         }
 
         return $this->colorGetAction($request, $form, $eventDispatcher, $user);

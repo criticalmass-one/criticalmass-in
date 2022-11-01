@@ -110,7 +110,7 @@ class StravaController extends AbstractController
             ->setUser($user)
             ->importTrack();
 
-        $eventDispatcher->dispatch(TrackUploadedEvent::NAME, new TrackUploadedEvent($track));
+        $eventDispatcher->dispatch(new TrackUploadedEvent($track), TrackUploadedEvent::NAME);
 
         return $this->redirect($objectRouter->generate($track));
     }

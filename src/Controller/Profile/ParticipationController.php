@@ -58,7 +58,7 @@ class ParticipationController extends AbstractController
 
         $registry->getManager()->flush();
 
-        $eventDispatcher->dispatch(ParticipationUpdatedEvent::NAME, new ParticipationUpdatedEvent($participation));
+        $eventDispatcher->dispatch(new ParticipationUpdatedEvent($participation), ParticipationUpdatedEvent::NAME);
 
         return $this->redirectToRoute('criticalmass_user_participation_list');
     }
@@ -73,7 +73,7 @@ class ParticipationController extends AbstractController
 
         $registry->getManager()->flush();
 
-        $eventDispatcher->dispatch(ParticipationDeletedEvent::NAME, new ParticipationDeletedEvent($participation));
+        $eventDispatcher->dispatch(new ParticipationDeletedEvent($participation), ParticipationDeletedEvent::NAME);
 
         return $this->redirectToRoute('criticalmass_user_participation_list');
     }

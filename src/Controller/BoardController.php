@@ -65,7 +65,7 @@ class BoardController extends AbstractController
         $posts = $this->getPostRepository()->findPostsForThread($thread);
         $board = $thread->getCity() ?? $thread->getBoard();
 
-        $eventDispatcher->dispatch(ViewEvent::NAME, new ViewEvent($thread));
+        $eventDispatcher->dispatch(new ViewEvent($thread), ViewEvent::NAME);
 
         return $this->render('Board/view_thread.html.twig', [
             'board' => $board,
