@@ -153,7 +153,7 @@ class StravaMassImportController extends AbstractController
 
     protected function initOauth(Request $request, RouterInterface $router): OAuth
     {
-        $year = $request->query->getInt('year', (new \DateTime())->format('Y'));
+        $year = $request->query->getInt('year', (int) (new \DateTime())->format('Y'));
 
         $redirectUri = $request->getUriForPath($router->generate('caldera_criticalmass_trackmassimport_token', [
             'year' => $year,
