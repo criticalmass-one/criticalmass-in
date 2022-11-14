@@ -11,7 +11,7 @@ class DurationTwigExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('human_duration', $this->duration(...), [
+            new TwigFunction('human_duration', [$this, 'duration'], [
                 'is_safe' => ['html'],
             ]),
         ];

@@ -9,14 +9,17 @@ abstract class AbstractTimelineCollector implements TimelineCollectorInterface
 {
     protected string $entityClass;
 
+    protected ManagerRegistry $doctrine;
+
     protected array $items = [];
 
     protected ?\DateTime $startDateTime = null;
 
     protected ?\DateTime $endDateTime = null;
 
-    public function __construct(protected ManagerRegistry $doctrine)
+    public function __construct(ManagerRegistry $doctrine)
     {
+        $this->doctrine = $doctrine;
     }
 
     public function setDateRange(\DateTime $startDateTime, \DateTime $endDateTime): TimelineCollectorInterface
@@ -38,7 +41,7 @@ abstract class AbstractTimelineCollector implements TimelineCollectorInterface
 
     protected function fetchEntities(): array
     {
-        $tmp = explode('\\', $this::class);
+        $tmp = explode('\\', get_class($this));
         $className = array_pop($tmp);
         $methodName = sprintf('findForTimeline%s', $className);
 

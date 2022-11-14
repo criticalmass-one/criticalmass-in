@@ -71,7 +71,7 @@ class StravaMassImportController extends AbstractController
             return $this->redirect($router->generate('caldera_criticalmass_trackmassimport_massimport', [
                 'year' => $year,
             ]));
-        } catch (\Exception) {
+        } catch (\Exception $e) {
             return $this->redirect($router->generate('caldera_criticalmass_trackmassimport_auth'));
         }
     }

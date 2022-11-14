@@ -106,7 +106,7 @@ class CityController extends AbstractController
      */
     public function getlocationsAction(City $city): Response
     {
-        return new Response(json_encode($this->getRideRepository()->getLocationsForCity($city), JSON_THROW_ON_ERROR), Response::HTTP_OK, [
+        return new Response(json_encode($this->getRideRepository()->getLocationsForCity($city)), Response::HTTP_OK, [
             'Content-Type' => 'text/json',
         ]);
     }

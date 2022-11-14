@@ -10,6 +10,9 @@ use Doctrine\Migrations\AbstractMigration;
  */
 class Version20171006125011 extends AbstractMigration
 {
+    /**
+     * @param Schema $schema
+     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -18,6 +21,9 @@ class Version20171006125011 extends AbstractMigration
         $this->addSql('ALTER TABLE frontpage_teaser CHANGE text text LONGTEXT DEFAULT NULL');
     }
 
+    /**
+     * @param Schema $schema
+     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs

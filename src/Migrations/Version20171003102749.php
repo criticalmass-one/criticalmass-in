@@ -10,6 +10,9 @@ use Doctrine\Migrations\AbstractMigration;
  */
 class Version20171003102749 extends AbstractMigration
 {
+    /**
+     * @param Schema $schema
+     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -46,6 +49,9 @@ class Version20171003102749 extends AbstractMigration
         $this->addSql('ALTER TABLE ride_audit DROP archive_parent_id, DROP archive_user_id, DROP isArchived, DROP archiveDateTime, DROP archiveMessage');
     }
 
+    /**
+     * @param Schema $schema
+     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs

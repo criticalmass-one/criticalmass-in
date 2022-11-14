@@ -11,10 +11,12 @@ use League\CommonMark\Inline\Element\Link;
 class Embedder implements EmbedderInterface
 {
     protected Embed $embed;
+    protected LinkCacheInterface $linkCache;
 
-    public function __construct(protected LinkCacheInterface $linkCache)
+    public function __construct(LinkCacheInterface $linkCache)
     {
         $this->embed = new Embed();
+        $this->linkCache = $linkCache;
     }
 
     public function processEmbedInLink(Link $link): ?HtmlInline

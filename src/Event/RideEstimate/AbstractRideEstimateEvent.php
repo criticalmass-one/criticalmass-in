@@ -7,8 +7,12 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 abstract class AbstractRideEstimateEvent extends Event
 {
-    public function __construct(protected RideEstimate $rideEstimate)
+    /** @var RideEstimate $rideEstimate */
+    protected $rideEstimate;
+
+    public function __construct(RideEstimate $rideEstimate)
     {
+        $this->rideEstimate = $rideEstimate;
     }
 
     public function getRideEstimate(): RideEstimate

@@ -116,7 +116,7 @@ class Timeline implements TimelineInterface
 
     protected function templateNameForItem(ItemInterface $item): string
     {
-        $itemFullClassName = $item::class;
+        $itemFullClassName = get_class($item);
 
         $itemClassNamespaces = explode('\\', $itemFullClassName);
 

@@ -15,7 +15,7 @@ use App\Criticalmass\Router\Annotation as Routing;
  * @ORM\Entity(repositoryClass="App\Repository\ThreadRepository")
 
  */
-class Thread implements ViewableEntity, RouteableInterface, AutoParamConverterAble, PostableInterface, \Stringable
+class Thread implements ViewableEntity, RouteableInterface, AutoParamConverterAble, PostableInterface
 {
     /**
      * @ORM\Id

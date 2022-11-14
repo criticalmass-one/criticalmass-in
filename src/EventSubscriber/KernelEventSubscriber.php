@@ -10,8 +10,11 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class KernelEventSubscriber implements EventSubscriberInterface
 {
-    public function __construct(protected SeoPageInterface $seoPage)
+    protected SeoPageInterface $seoPage;
+
+    public function __construct(SeoPageInterface $seoPage)
     {
+        $this->seoPage = $seoPage;
     }
 
     public static function getSubscribedEvents(): array

@@ -8,9 +8,9 @@ use Symfony\Contracts\Cache\ItemInterface;
 
 class CachedCriticalmassBlog extends CriticalmassBlog
 {
-    final const CACHE_NAMESPACE = 'caldera_criticalmass_blog_articles';
-    final const DEFAULT_TTL = 3600;
-    final const CACHE_KEY = 'blog_articles';
+    const CACHE_NAMESPACE = 'caldera_criticalmass_blog_articles';
+    const DEFAULT_TTL = 3600;
+    const CACHE_KEY = 'blog_articles';
 
     protected AdapterInterface $cache;
 

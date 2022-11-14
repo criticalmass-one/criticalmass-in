@@ -36,7 +36,7 @@ class WebsiteCrawlerCommand extends Command
         $postList = $this->registry->getRepository(Post::class)->findByCrawled(false, $limit);
 
         rsort($postList);
-        $progressBar = new ProgressBar($output, is_countable($postList) ? count($postList) : 0);
+        $progressBar = new ProgressBar($output, count($postList));
 
         $table = new Table($output);
 

@@ -6,8 +6,14 @@ use App\Criticalmass\Geo\EntityInterface\PositionInterface;
 
 class PositionList implements PositionListInterface
 {
-    public function __construct(protected array $list = [])
+    /**
+     * @var array $list
+     */
+    protected $list = [];
+
+    public function __construct(array $list = [])
     {
+        $this->list = $list;
     }
 
     public function getStartDateTime(): \DateTime
@@ -97,7 +103,7 @@ class PositionList implements PositionListInterface
         return $this;
     }
 
-    public function current(): mixed
+    public function current()
     {
         return current($this->list);
     }
@@ -107,7 +113,7 @@ class PositionList implements PositionListInterface
         next($this->list);
     }
 
-    public function key(): string|int|null
+    public function key()
     {
         return key($this->list);
     }

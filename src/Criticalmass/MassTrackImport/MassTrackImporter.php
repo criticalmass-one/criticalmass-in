@@ -13,8 +13,32 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class MassTrackImporter implements MassTrackImporterInterface
 {
-    public function __construct(protected ProducerInterface $producer, protected ProposalPersisterInterface $proposalPersister, protected SerializerInterface $serializer, protected TrackDeciderInterface $trackDecider, protected ActivityLoaderInterface $activityLoader, protected TokenStorageInterface $tokenStorage)
+    /** @var ActivityLoaderInterface $activityLoader */
+    protected $activityLoader;
+
+    /** @var SerializerInterface $serializer */
+    protected $serializer;
+
+    /** @var TrackDeciderInterface $trackDecider */
+    protected $trackDecider;
+
+    /** @var ProposalPersisterInterface $proposalPersister */
+    protected $proposalPersister;
+
+    /** @var ProducerInterface $producer */
+    protected $producer;
+
+    /** @var TokenStorageInterface $tokenStorage */
+    protected $tokenStorage;
+
+    public function __construct(ProducerInterface $producer, ProposalPersisterInterface $proposalPersister, SerializerInterface $serializer, TrackDeciderInterface $trackDecider, ActivityLoaderInterface $activityLoader, TokenStorageInterface $tokenStorage)
     {
+        $this->serializer = $serializer;
+        $this->trackDecider = $trackDecider;
+        $this->activityLoader = $activityLoader;
+        $this->proposalPersister = $proposalPersister;
+        $this->producer = $producer;
+        $this->tokenStorage = $tokenStorage;
     }
 
     public function setStartDateTime(\DateTime $startDateTime): MassTrackImporterInterface

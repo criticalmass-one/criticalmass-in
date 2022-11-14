@@ -6,7 +6,11 @@ use App\Criticalmass\Image\ExifWrapper\ExifWrapperInterface;
 
 abstract class AbstractExifHandler implements ExifHandlerInterface
 {
-    public function __construct(protected ExifWrapperInterface $exifWrapper)
+    /** @var ExifWrapperInterface $exifWrapper */
+    protected $exifWrapper;
+
+    public function __construct(ExifWrapperInterface $exifWrapper)
     {
+        $this->exifWrapper = $exifWrapper;
     }
 }

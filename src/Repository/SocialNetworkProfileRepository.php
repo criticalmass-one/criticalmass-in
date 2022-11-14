@@ -99,7 +99,7 @@ class SocialNetworkProfileRepository extends EntityRepository
         $methodPrefix = 'findBy';
         $entityNamespace = 'App\\Entity';
 
-        if (str_starts_with($method, $methodPrefix)) {
+        if (0 === strpos($method, $methodPrefix)) {
             $entityClassname = substr($method, 6);
 
             $fqcn = sprintf('%s\\%s', $entityNamespace, $entityClassname);

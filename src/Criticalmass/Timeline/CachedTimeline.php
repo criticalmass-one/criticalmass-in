@@ -10,10 +10,16 @@ use Twig\Environment;
 
 class CachedTimeline extends Timeline
 {
-    public function __construct(ManagerRegistry $doctrine, Environment $twigEnvironment, FeatureManagerInterface $featureManager, protected string $redisUrl, protected int $ttl = 300)
+    protected int $ttl;
+
+    protected string $redisUrl;
+
+    public function __construct(ManagerRegistry $doctrine, Environment $twigEnvironment, FeatureManagerInterface $featureManager, string $redisUrl, int $cachedTimelineTtl = 300)
     {
         $this->doctrine = $doctrine;
         $this->twigEnvironment = $twigEnvironment;
+        $this->ttl = $cachedTimelineTtl;
+        $this->redisUrl = $redisUrl;
 
         parent::__construct($doctrine, $twigEnvironment, $featureManager);
     }

@@ -19,11 +19,23 @@ abstract class AbstractPhotoGps implements PhotoGpsInterface
     /** @var array $exifData */
     protected $exifData;
 
+    /** @var TrackReader $trackReader */
+    protected $trackReader;
+
     /** @var \DateTimeZone */
     protected $dateTimeZone;
 
-    public function __construct(protected TrackReader $trackReader, protected ExifWrapperInterface $exifWrapper, protected LoopInterface $loop)
+    /** @var ExifWrapperInterface $exifWrapper */
+    protected $exifWrapper;
+
+    /** @var LoopInterface $loop */
+    protected $loop;
+
+    public function __construct(TrackReader $trackReader, ExifWrapperInterface $exifWrapper, LoopInterface $loop)
     {
+        $this->trackReader = $trackReader;
+        $this->exifWrapper = $exifWrapper;
+        $this->loop = $loop;
     }
 
     public function setDateTimeZone(\DateTimeZone $dateTimeZone = null): PhotoGpsInterface

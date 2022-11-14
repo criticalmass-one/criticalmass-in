@@ -163,8 +163,8 @@ class PhotoRepository extends EntityRepository
         $query = $builder->getQuery();
         $result = $query->getResult();
 
-        $rides = [];
-        $counter = [];
+        $rides = array();
+        $counter = array();
 
         /**
          * @var Photo $photo

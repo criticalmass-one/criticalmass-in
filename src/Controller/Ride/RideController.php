@@ -32,10 +32,14 @@ class RideController extends AbstractController
     }
 
     /**
-     * @ParamConverter("ride", class="App:Ride")
+     * @ParamConverter("ride", class="App:Ride", isOptional=true)
      */
-    public function showAction(SeoPageInterface $seoPage, EventDispatcherInterface $eventDispatcher, Ride $ride): Response
+    public function showAction(SeoPageInterface $seoPage, EventDispatcherInterface $eventDispatcher, Ride $ride = null): Response
     {
+        if (!$ride) {
+            $this->redirectToRoute('caldera_criticalmass_calendar');
+        }
+
         $blocked = $this->getBlockedCityRepository()->findCurrentCityBlock($ride->getCity());
 
         if ($blocked) {

@@ -18,7 +18,7 @@ use Symfony\Component\Console\Question\Question;
 class ImportRideEstimatesCommand extends Command
 {
     protected static $defaultName = 'criticalmass:rideestimate:import';
-    protected array $citySlugs = [];
+    protected $citySlugs = [];
 
     public function __construct(protected ManagerRegistry $registry)
     {
@@ -93,12 +93,12 @@ class ImportRideEstimatesCommand extends Command
 
     protected function parse(string $line, \DateTime $dateTime, InputInterface $input, OutputInterface $output): ?RideEstimate
     {
-        $pattern = '/([\sA-Za-z-.]+[a-z])(?:[\s\-–—:]+)([0-9.]+)/';
+        $pattern = '/([\sA-Za-z-.]+[a-z])(?:[\s-–—:]+)([0-9.]+)/';
         preg_match($pattern, $line, $matches);
 
         if (3 === count($matches)) {
-            $citySlug = trim(strtolower((string) $matches[1]));
-            $participants = intval(str_replace('.', '', (string) $matches[2]));
+            $citySlug = trim(strtolower($matches[1]));
+            $participants = intval(str_replace('.', '', $matches[2]));
 
             $ride = $this->findRide($citySlug, $dateTime);
 

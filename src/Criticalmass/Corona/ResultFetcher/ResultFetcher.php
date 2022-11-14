@@ -8,8 +8,11 @@ use JMS\Serializer\SerializerInterface;
 
 class ResultFetcher implements ResultFetcherInterface
 {
-    public function __construct(protected SerializerInterface $serializer)
+    protected SerializerInterface $serializer;
+
+    public function __construct(SerializerInterface $serializer)
     {
+        $this->serializer = $serializer;
     }
 
     public function fetch(CoordinateInterface $coordinate): ?Result
@@ -20,7 +23,7 @@ class ResultFetcher implements ResultFetcherInterface
             if ($resultString) {
                 return $this->serializer->deserialize($resultString, Result::class, 'json');
             }
-        } catch (\Exception) {
+        } catch (\Exception $exception) {
             return null;
         }
 

@@ -9,9 +9,9 @@ use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 class CachedResultFetcher extends ResultFetcher
 {
-    final const NAMESPACE = 'cmone_corona';
-    final const KEY_PREFIX = 'cmone_corona_result';
-    final const TTL = 60*60;
+    const NAMESPACE = 'cmone_corona';
+    const KEY_PREFIX = 'cmone_corona_result';
+    const TTL = 60*60;
 
     protected FilesystemAdapter $adapter;
 
@@ -26,6 +26,8 @@ class CachedResultFetcher extends ResultFetcher
     {
         $key = sprintf('%s-%s-%s', self::KEY_PREFIX, $coordinate->getLatitude(), $coordinate->getLongitude());
 
-        return $this->adapter->get($key, fn() => parent::fetch($coordinate));
+        return $this->adapter->get($key, function() use ($coordinate) {
+            return parent::fetch($coordinate);
+        });
     }
 }

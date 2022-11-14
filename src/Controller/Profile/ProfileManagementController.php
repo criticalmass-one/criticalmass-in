@@ -60,7 +60,7 @@ class ProfileManagementController extends AbstractController
                         'Deine neuer Benutzername wurde gespeichert. Du heißt jetzt ' . $user->getUsername() . '!');
 
                     return $this->redirectToRoute('criticalmass_user_usermanagement');
-                } catch (UniqueConstraintViolationException) {
+                } catch (UniqueConstraintViolationException $exception) {
                     $error = new FormError('Dieser Benutzername ist bereits vergeben.');
 
                     $usernameForm->get('username')->addError($error);
@@ -96,7 +96,7 @@ class ProfileManagementController extends AbstractController
                         'Deine neue E-Mail-Adresse wurde gespeichert. Du kannst dich ab jetzt mit ' . $user->getEmail() . ' einloggen.');
 
                     return $this->redirectToRoute('criticalmass_user_usermanagement');
-                } catch (UniqueConstraintViolationException) {
+                } catch (UniqueConstraintViolationException $exception) {
                     $error = new FormError('Diese E-Mail-Adresse ist bereits registriert worden.');
 
                     $userEmailForm->get('email')->addError($error);

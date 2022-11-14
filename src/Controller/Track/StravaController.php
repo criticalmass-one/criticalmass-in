@@ -63,7 +63,7 @@ class StravaController extends AbstractController
 
             $session->set('strava_token', $token);
             return $this->redirect($objectRouter->generate($ride, 'caldera_criticalmass_strava_list'));
-        } catch (\Exception) {
+        } catch (\Exception $e) {
             return $this->redirect($objectRouter->generate($ride, 'caldera_criticalmass_strava_auth'));
         }
     }

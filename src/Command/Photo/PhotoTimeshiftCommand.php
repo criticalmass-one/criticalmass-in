@@ -71,7 +71,7 @@ class PhotoTimeshiftCommand extends Command
 
         $entityManager = $this->registry->getManager();
 
-        $progressBar = new ProgressBar($output, is_countable($photos) ? count($photos) : 0);
+        $progressBar = new ProgressBar($output, count($photos));
 
         $table = new Table($output);
         $table->setHeaders([

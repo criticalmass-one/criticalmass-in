@@ -9,8 +9,13 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class ClassParameterResolver extends AbstractParameterResolver
 {
-    public function __construct(Reader $annotationReader, protected ParameterBagInterface $parameterBag)
+    /** @var ParameterBagInterface $parameterBag */
+    protected $parameterBag;
+
+    public function __construct(Reader $annotationReader, ParameterBagInterface $parameterBag)
     {
+        $this->parameterBag = $parameterBag;
+
         parent::__construct($annotationReader);
     }
 

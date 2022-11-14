@@ -10,6 +10,9 @@ use Doctrine\Migrations\AbstractMigration;
  */
 class Version20171006100702 extends AbstractMigration
 {
+    /**
+     * @param Schema $schema
+     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -20,6 +23,9 @@ class Version20171006100702 extends AbstractMigration
         $this->addSql('ALTER TABLE frontpage_teaser ADD CONSTRAINT FK_26FF0B978BAC62AF FOREIGN KEY (city_id) REFERENCES city (id)');
     }
 
+    /**
+     * @param Schema $schema
+     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs

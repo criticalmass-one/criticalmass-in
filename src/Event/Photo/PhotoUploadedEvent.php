@@ -6,10 +6,19 @@ use App\Entity\Photo;
 
 class PhotoUploadedEvent extends AbstractPhotoEvent
 {
-    final const NAME = 'photo.uploaded';
+    const NAME = 'photo.uploaded';
 
-    public function __construct(Photo $photo, protected bool $flush = true, protected ?string $tmpFilename = null)
+    /** @var bool $flush */
+    protected $flush;
+
+    /** @var string $tmpFilename */
+    protected $tmpFilename;
+
+    public function __construct(Photo $photo, bool $flush = true, string $tmpFilename = null)
     {
+        $this->flush = $flush;
+        $this->tmpFilename = $tmpFilename;
+
         parent::__construct($photo);
     }
 

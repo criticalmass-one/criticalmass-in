@@ -10,8 +10,11 @@ abstract class AbstractDuplicateFinder implements DuplicateFinderInterface
 {
     protected ?City $city = null;
 
-    public function __construct(protected ManagerRegistry $registry)
+    protected ManagerRegistry $registry;
+
+    public function __construct(ManagerRegistry $registry)
     {
+        $this->registry = $registry;
     }
 
     public function setCity(City $city): DuplicateFinderInterface

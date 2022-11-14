@@ -14,7 +14,7 @@ use App\Criticalmass\Router\Annotation as Routing;
  * @ORM\Entity(repositoryClass="App\Repository\BoardRepository")
  * @Routing\DefaultRoute(name="caldera_criticalmass_board_listthreads")
  */
-class Board implements BoardInterface, RouteableInterface, AutoParamConverterAble, \Stringable
+class Board implements BoardInterface, RouteableInterface, AutoParamConverterAble
 {
     /**
      * @ORM\Id

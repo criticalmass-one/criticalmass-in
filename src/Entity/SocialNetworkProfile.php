@@ -330,12 +330,12 @@ class SocialNetworkProfile
 
     public function getAdditionalData(): ?array
     {
-        return (array)json_decode($this->additionalData ?? '{}', null, 512, JSON_THROW_ON_ERROR);
+        return (array)json_decode($this->additionalData ?? '{}');
     }
 
     public function setAdditionalData(?array $additionalData): self
     {
-        $this->additionalData = json_encode($additionalData, JSON_THROW_ON_ERROR);
+        $this->additionalData = json_encode($additionalData);
 
         return $this;
     }

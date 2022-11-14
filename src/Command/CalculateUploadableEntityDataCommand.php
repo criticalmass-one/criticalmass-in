@@ -17,6 +17,9 @@ class CalculateUploadableEntityDataCommand extends Command
     protected static $defaultName = 'criticalmass:calculate-uploadable-meta';
     public function __construct(protected ManagerRegistry $registry, protected UploadableDataHandlerInterface $uploadableDataHandler)
     {
+        $this->registry = $registry;
+        $this->uploadableDataHandler = $uploadableDataHandler;
+
         parent::__construct();
     }
 
@@ -45,7 +48,7 @@ class CalculateUploadableEntityDataCommand extends Command
 
         $entityList = $this->registry->getRepository($fqcn)->matching($criteria, [], $limit, $offset);
 
-        $progressBar = new ProgressBar($output, is_countable($entityList) ? count($entityList) : 0);
+        $progressBar = new ProgressBar($output, count($entityList));
 
         foreach ($entityList as $entity) {
             $this->uploadableDataHandler->calculateForEntity($entity);

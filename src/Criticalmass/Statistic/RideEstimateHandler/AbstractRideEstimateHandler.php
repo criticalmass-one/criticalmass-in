@@ -11,10 +11,14 @@ use Doctrine\Persistence\ObjectManager;
 
 abstract class AbstractRideEstimateHandler implements RideEstimateHandlerInterface
 {
+    protected ManagerRegistry $registry;
+    protected RideEstimateCalculatorInterface $calculator;
     protected Ride $ride;
 
-    public function __construct(protected ManagerRegistry $registry, protected RideEstimateCalculatorInterface $calculator)
+    public function __construct(ManagerRegistry $registry, RideEstimateCalculatorInterface $calculator)
     {
+        $this->registry = $registry;
+        $this->calculator = $calculator;
     }
 
     public function setRide(Ride $ride): RideEstimateHandlerInterface

@@ -6,7 +6,11 @@ use App\Criticalmass\ViewStorage\Persister\ViewStoragePersisterInterface;
 
 abstract class AbstractViewConsumer
 {
-    public function __construct(protected ViewStoragePersisterInterface $viewStoragePersister)
+    /** @var ViewStoragePersisterInterface $viewSotragePersister */
+    protected $viewStoragePersister;
+
+    public function __construct(ViewStoragePersisterInterface $viewStoragePersister)
     {
+        $this->viewStoragePersister = $viewStoragePersister;
     }
 }

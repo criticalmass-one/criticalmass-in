@@ -11,8 +11,20 @@ use PhpAmqpLib\Message\AMQPMessage;
 
 class TrackImportCandidateConsumer implements ConsumerInterface
 {
-    public function __construct(protected SerializerInterface $serializer, protected ProposalPersisterInterface $proposalPersister, protected TrackDeciderInterface $trackDecider)
+    /** @var SerializerInterface $serializer */
+    protected $serializer;
+
+    /** @var ProposalPersisterInterface $proposalPersister */
+    protected $proposalPersister;
+
+    /** @var TrackDeciderInterface $trackDecider */
+    protected $trackDecider;
+
+    public function __construct(SerializerInterface $serializer, ProposalPersisterInterface $proposalPersister, TrackDeciderInterface $trackDecider)
     {
+        $this->serializer = $serializer;
+        $this->proposalPersister = $proposalPersister;
+        $this->trackDecider = $trackDecider;
     }
 
     public function execute(AMQPMessage $message): int

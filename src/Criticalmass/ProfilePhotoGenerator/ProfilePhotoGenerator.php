@@ -17,16 +17,24 @@ use League\Flysystem\FilesystemInterface;
 
 class ProfilePhotoGenerator implements ProfilePhotoGeneratorInterface
 {
-    final const FONT_FILE = '/assets/fonts/Verdana/Bold.ttf';
+    const FONT_FILE = '/assets/fonts/Verdana/Bold.ttf';
 
     /** @var User $user */
     protected $user;
 
+    /** @var string $projectDirectory */
+    protected $projectDirectory;
+
+    /** @var FilesystemInterface $filesystem */
+    protected $filesystem;
+
     /** @var PaletteInterface $palette */
     protected $palette;
 
-    public function __construct(protected FilesystemInterface $filesystem, protected string $projectDirectory)
+    public function __construct(FilesystemInterface $filesystem, string $projectDirectory)
     {
+        $this->projectDirectory = $projectDirectory;
+        $this->filesystem = $filesystem;
         $this->palette = new Palette\RGB();
     }
 

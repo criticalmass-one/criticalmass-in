@@ -8,7 +8,10 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class ActivityLoader implements ActivityLoaderInterface
 {
-    final const PER_PAGE = 100;
+    const PER_PAGE = 100;
+
+    /** @var SessionInterface $session */
+    protected $session;
 
     /** @var \DateTime $startDateTime */
     protected $startDateTime;
@@ -19,8 +22,9 @@ class ActivityLoader implements ActivityLoaderInterface
     /** @var Client $client */
     protected $client;
 
-    public function __construct(protected SessionInterface $session)
+    public function __construct(SessionInterface $session)
     {
+        $this->session = $session;
     }
 
     public function setStartDateTime(\DateTime $startDateTime): ActivityLoaderInterface

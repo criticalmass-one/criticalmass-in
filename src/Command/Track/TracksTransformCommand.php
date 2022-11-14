@@ -11,7 +11,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 class TracksTransformCommand extends Command
 {
     protected static $defaultName = 'criticalmass:tracks:transform';
-    protected ManagerRegistry $registry;
+
+    public function __construct(protected ManagerRegistry $registry)
+    {
+        parent::__construct();
+    }
 
     protected function configure()
     {
@@ -28,7 +32,7 @@ class TracksTransformCommand extends Command
         foreach ($tracks as $track) {
             $output->writeln('Track #' . $track->getId());
 
-            $array = json_decode($track->getLatLngList(), null, 512, JSON_THROW_ON_ERROR);
+            $array = json_decode($track->getLatLngList());
 
             if (is_array($array) && count($array) > 0) {
                 $polyline = \Polyline::Encode($array);

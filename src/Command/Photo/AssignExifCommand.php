@@ -16,6 +16,9 @@ class AssignExifCommand extends Command
     protected static $defaultName = 'criticalmass:photos:assign-exif';
     public function __construct(protected ManagerRegistry $registry, protected ExifHandlerInterface $exifHandler)
     {
+        $this->registry = $registry;
+        $this->exifHandler = $exifHandler;
+
         parent::__construct();
     }
 
@@ -35,7 +38,7 @@ class AssignExifCommand extends Command
 
         $photoList = $this->registry->getRepository(Photo::class)->findPhotosWithoutExifData($limit, $offset, $overwrite);
 
-        $progressBar = new ProgressBar($output, is_countable($photoList) ? count($photoList) : 0);
+        $progressBar = new ProgressBar($output, count($photoList));
 
         /** @var Photo $photo */
         foreach ($photoList as $photo) {

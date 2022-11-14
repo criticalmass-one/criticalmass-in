@@ -6,7 +6,7 @@ class SimpleLatLngListGenerator extends AbstractLatLngListGenerator
 {
     public function execute()
     {
-        $result = [];
+        $result = array();
 
         $counter = 0;
 

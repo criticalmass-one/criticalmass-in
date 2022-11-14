@@ -16,7 +16,10 @@ class CalculateRideEstimatesCommand extends Command
     protected static $defaultName = 'criticalmass:rideestimate:recalculate';
     public function __construct(protected RideEstimateHandlerInterface $rideEstimateHandler, protected ManagerRegistry $registry)
     {
-        parent::__construct();
+        $this->registry = $registry;
+        $this->rideEstimateHandler = $rideEstimateHandler;
+
+        parent::__construct($name);
     }
 
     protected function configure(): void

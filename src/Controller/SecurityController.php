@@ -10,9 +10,10 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class SecurityController extends AbstractController
 {
-    final const TEMPLATE_MODE_FULL = 1;
-    final const TEMPLATE_MODE_FORM = 2;
-    final const TEMPLATE_MODE_MODAL = 3;
+    const TEMPLATE_MODE_FULL = 1;
+    const TEMPLATE_MODE_FORM = 2;
+    const TEMPLATE_MODE_MODAL = 3;
+
     public function __construct(private readonly CsrfTokenManagerInterface $csrfTokenManager)
     {
     }
@@ -77,12 +78,12 @@ class SecurityController extends AbstractController
         return $this->loginAction($request, self::TEMPLATE_MODE_MODAL);
     }
 
-    public function checkAction(): never
+    public function checkAction()
     {
         throw new \RuntimeException('You must configure the check path to be handled by the firewall using form_login in your security firewall configuration.');
     }
 
-    public function logoutAction(): never
+    public function logoutAction()
     {
         throw new \RuntimeException('You must activate the logout in your security firewall configuration.');
     }

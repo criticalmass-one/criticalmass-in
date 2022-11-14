@@ -23,8 +23,7 @@ class EstimateController extends BaseController
 {
     public function __construct(protected SerializerInterface $serializer, protected EventDispatcherInterface $eventDispatcher, protected DataQueryManagerInterface $dataQueryManager, protected ManagerRegistry $registry)
     {
-        $managerRegistry = null;
-        parent::__construct($managerRegistry,$serializer);
+         parent::__construct($managerRegistry, $serializer);
     }
 
     /**

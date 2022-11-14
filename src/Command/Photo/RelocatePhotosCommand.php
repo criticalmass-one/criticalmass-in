@@ -78,7 +78,7 @@ class RelocatePhotosCommand extends Command
             'Location',
         ]);
 
-        $progressBar = new ProgressBar($output, is_countable($photoList) ? count($photoList) : 0);
+        $progressBar = new ProgressBar($output, count($photoList));
 
         /** @var Photo $photo */
         foreach ($photoList as $photo) {

@@ -10,6 +10,9 @@ use Doctrine\Migrations\AbstractMigration;
  */
 class Version20171002202522 extends AbstractMigration
 {
+    /**
+     * @param Schema $schema
+     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -21,6 +24,9 @@ class Version20171002202522 extends AbstractMigration
         $this->addSql('CREATE TABLE ride_audit (id INT NOT NULL, rev INT NOT NULL, user_id INT DEFAULT NULL, city_id INT DEFAULT NULL, archive_parent_id INT DEFAULT NULL, archive_user_id INT DEFAULT NULL, featured_photo INT DEFAULT NULL, title VARCHAR(255) DEFAULT NULL, description LONGTEXT DEFAULT NULL, socialDescription LONGTEXT DEFAULT NULL, dateTime DATETIME DEFAULT NULL COMMENT \'(DC2Type:datetime)\', hasTime TINYINT(1) DEFAULT NULL, hasLocation TINYINT(1) DEFAULT NULL, location VARCHAR(255) DEFAULT NULL, latitude DOUBLE PRECISION DEFAULT NULL, longitude DOUBLE PRECISION DEFAULT NULL, estimatedParticipants SMALLINT DEFAULT NULL, estimatedDistance DOUBLE PRECISION DEFAULT NULL, estimatedDuration DOUBLE PRECISION DEFAULT NULL, facebook VARCHAR(255) DEFAULT NULL, twitter VARCHAR(255) DEFAULT NULL, url VARCHAR(255) DEFAULT NULL, isArchived TINYINT(1) DEFAULT NULL, archiveDateTime DATETIME DEFAULT NULL COMMENT \'(DC2Type:datetime)\', archiveMessage LONGTEXT DEFAULT NULL, createdAt DATETIME DEFAULT NULL COMMENT \'(DC2Type:datetime)\', participationsNumberYes INT DEFAULT NULL, participationsNumberMaybe INT DEFAULT NULL, participationsNumberNo INT DEFAULT NULL, views INT DEFAULT NULL, restrictedPhotoAccess TINYINT(1) DEFAULT NULL, imageName VARCHAR(255) DEFAULT NULL, revtype VARCHAR(4) NOT NULL, INDEX rev_7e0decbd0de112a11624c181adbca6b4_idx (rev), PRIMARY KEY(id, rev)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
     }
 
+    /**
+     * @param Schema $schema
+     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs

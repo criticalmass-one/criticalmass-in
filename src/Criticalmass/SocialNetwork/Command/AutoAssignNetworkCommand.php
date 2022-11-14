@@ -111,7 +111,6 @@ class AutoAssignNetworkCommand extends Command
 
     protected function createNetworkList(): array
     {
-        $networkList = [];
         /** @var NetworkInterface $network */
         foreach ($this->networkManager->getNetworkList() as $network) {
             $networkList[$network->getIdentifier()] = $network->getName();

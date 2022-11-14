@@ -17,14 +17,22 @@ class TrackValidator implements UploadValidatorInterface
     /** @var Track $track */
     protected $track;
 
+    /** @var UploaderHelper $uploaderHelper */
+    protected $uploaderHelper;
+
+    /** @var FilesystemInterface $filesystem */
+    protected $filesystem;
+
     /** @var \SimpleXMLElement $simpleXml */
     protected $simpleXml;
 
     /** @var string $rawFileContent */
     protected $rawFileContent;
 
-    public function __construct(protected UploaderHelper $uploaderHelper, protected FilesystemInterface $filesystem)
+    public function __construct(UploaderHelper $uploaderHelper, FilesystemInterface $filesystem)
     {
+        $this->uploaderHelper = $uploaderHelper;
+        $this->filesystem = $filesystem;
     }
 
     public function loadTrack(Track $track): TrackValidator
@@ -43,7 +51,7 @@ class TrackValidator implements UploadValidatorInterface
         //echo "checkForXmlContent";
         try {
             $this->simpleXml = new \SimpleXMLElement($this->rawFileContent);
-        } catch (Exception) {
+        } catch (Exception $e) {
             throw new NoXmlException();
         }
     }
@@ -53,7 +61,7 @@ class TrackValidator implements UploadValidatorInterface
         //echo "checkForBasicGpxStructure";
         try {
             $this->simpleXml->trk->trkseg->trkpt[0];
-        } catch (Exception) {
+        } catch (Exception $e) {
             throw new NoValidGpxStructureException();
         }
     }
@@ -97,7 +105,7 @@ class TrackValidator implements UploadValidatorInterface
 
             try {
                 $dateTime = new \DateTime((string) $point->time);
-            } catch (Exception) {
+            } catch (Exception $e) {
                 throw new NoDateTimeException();
             }
         }

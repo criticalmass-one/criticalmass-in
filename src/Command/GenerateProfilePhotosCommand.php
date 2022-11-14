@@ -17,6 +17,9 @@ class GenerateProfilePhotosCommand extends Command
     protected static $defaultName = 'criticalmass:profile-photo:generate';
     public function __construct(protected ManagerRegistry $registry, protected ProfilePhotoGeneratorInterface $profilePhotoGenerator)
     {
+        $this->registry = $registry;
+        $this->profilePhotoGenerator = $profilePhotoGenerator;
+
         parent::__construct();
     }
 

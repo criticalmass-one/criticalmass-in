@@ -10,11 +10,15 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class ViewEntityFactory implements ViewEntityFactoryInterface
 {
+    /** @var ManagerRegistry $registry */
+    protected $registry;
+
     /** @var string $entityNamespace */
     protected $entityNamespace = 'App\\Entity\\';
 
-    public function __construct(protected ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry)
     {
+        $this->registry = $registry;
     }
 
     public function createViewEntity(View $view, ViewableEntity $viewableEntity): ViewEntity

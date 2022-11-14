@@ -8,6 +8,6 @@ class StravaRoute extends AbstractStravaNetwork
 
     public function accepts(string $url): bool
     {
-        return str_contains($url, 'strava.com/routes/');
+        return strpos($url, 'strava.com/routes/') !== false;
     }
 }

@@ -9,14 +9,17 @@ use Twig\TwigFunction;
 
 class RouterTwigExtension extends AbstractExtension
 {
-    public function __construct(protected ObjectRouterInterface $router)
+    protected ObjectRouterInterface $router;
+
+    public function __construct(ObjectRouterInterface $router)
     {
+        $this->router = $router;
     }
 
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('objectPath', $this->objectPath(...), [
+            new TwigFunction('objectPath', [$this, 'objectPath'], [
                 'is_safe' => ['raw'],
             ]),
         ];
