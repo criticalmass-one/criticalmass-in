@@ -60,10 +60,6 @@ class RideType extends AbstractType
             $builder->add('slug', TextType::class, ['required' => false]);
         }
 
-        if ($ride->getCity()->getShowCoronaIncidenceWarning()) {
-            $builder->add('showCoronaIncidenceWarning', CheckboxType::class, ['required' => false]);
-        }
-
         $builder->add('save', SubmitType::class);
     }
 

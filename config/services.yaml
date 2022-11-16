@@ -229,9 +229,6 @@ services:
         arguments:
             $class: '%fos_user.model.user.class%'
 
-    App\Criticalmass\Corona\ResultFetcher\ResultFetcherInterface:
-        alias: App\Criticalmass\Corona\ResultFetcher\CachedResultFetcher
-
     App\Criticalmass\CriticalmassBlog\CriticalmassBlogInterface:
         alias: App\Criticalmass\CriticalmassBlog\CachedCriticalmassBlog
 
