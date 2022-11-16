@@ -24,7 +24,6 @@
         "doctrine/orm": "^2.5",
         "doctrine/doctrine-bundle": "^2.0",
         "doctrine/doctrine-migrations-bundle": "^2.0",
-        "twig/extensions": "^1.4",
         "vich/uploader-bundle": "^1.13",
         "liip/imagine-bundle": "^2.0",
         "knplabs/knp-paginator-bundle": "^2.5",
