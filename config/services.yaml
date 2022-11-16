@@ -20,8 +20,6 @@ parameters:
     facebook.app_id: '%env(FACEBOOK_APP_ID)%'
     facebook.app_secret: '%env(FACEBOOK_APP_SECRET)%'
     facebook.default_token: '%env(FACEBOOK_DEFAULT_TOKEN)%'
-    runkeeper.client_id: '%env(RUNKEEPER_CLIENT_ID)%'
-    runkeeper.secret: '%env(RUNKEEPER_SECRET)%'
     twitter.client_id: '%env(TWITTER_CLIENT_ID)%'
     twitter.token: '%env(TWITTER_TOKEN)%'
     twitter.secret: '%env(TWITTER_SECRET)%'
@@ -230,9 +228,6 @@ services:
     App\Form\Type\RegistrationType:
         arguments:
             $class: '%fos_user.model.user.class%'
-
-    App\Criticalmass\Corona\ResultFetcher\ResultFetcherInterface:
-        alias: App\Criticalmass\Corona\ResultFetcher\CachedResultFetcher
 
     App\Criticalmass\CriticalmassBlog\CriticalmassBlogInterface:
         alias: App\Criticalmass\CriticalmassBlog\CachedCriticalmassBlog

@@ -261,11 +261,6 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
      */
     protected ?string $wikidataEntityId = null;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true, options={"default": 1})
-     */
-    private ?bool $showCoronaIncidenceWarning = true;
-
     public function __construct()
     {
         $this->rides = new ArrayCollection();
@@ -910,17 +905,5 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     public function toCoord(): CoordInterface
     {
         return new Coord($this->latitude, $this->longitude);
-    }
-
-    public function getShowCoronaIncidenceWarning(): ?bool
-    {
-        return $this->showCoronaIncidenceWarning;
-    }
-
-    public function setShowCoronaIncidenceWarning(?bool $showCoronaIncidenceWarning): self
-    {
-        $this->showCoronaIncidenceWarning = $showCoronaIncidenceWarning;
-
-        return $this;
     }
 }

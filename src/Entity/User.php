@@ -112,16 +112,6 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     protected ?string $stravaAccessToken = null;
 
     /**
-     * @ORM\Column(name="runkeeper_id", type="string", length=255, nullable=true)
-     */
-    protected ?string $runkeeperId = null;
-
-    /**
-     * @ORM\Column(name="runkeeper_access_token", type="string", length=255, nullable=true)
-     */
-    protected ?string $runkeeperAccessToken = null;
-
-    /**
      * @ORM\Column(name="twitter_id", type="string", length=255, nullable=true)
      */
     protected ?string $twitterId = null;
@@ -374,30 +364,6 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         return $this->facebookAccessToken;
     }
 
-    public function setRunkeeperId(string $runkeeperId): User
-    {
-        $this->runkeeperId = $runkeeperId;
-
-        return $this;
-    }
-
-    public function getRunkeeperId(): ?string
-    {
-        return $this->runkeeperId;
-    }
-
-    public function setRunkeeperAccessToken(string $runkeeperAccessToken): User
-    {
-        $this->runkeeperAccessToken = $runkeeperAccessToken;
-
-        return $this;
-    }
-
-    public function getRunkeeperAccessToken(): ?string
-    {
-        return $this->runkeeperAccessToken;
-    }
-
     public function setTwitterId(string $twitterId): User
     {
         $this->twitterId = $twitterId;
@@ -436,7 +402,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
 
     public function isOauthAccount(): bool
     {
-        return $this->runkeeperId || $this->stravaId || $this->facebookId || $this->isTwitterAccount();
+        return $this->stravaId || $this->facebookId || $this->isTwitterAccount();
     }
 
     public function isFacebookAccount(): bool
@@ -447,11 +413,6 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     public function isStravaAccount(): bool
     {
         return $this->stravaId !== null;
-    }
-
-    public function isRunkeeperAccount(): bool
-    {
-        return $this->facebookId !== null;
     }
 
     public function isTwitterAccount(): bool
