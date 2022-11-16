@@ -40,6 +40,7 @@ class RideType extends AbstractType
                 'date_widget' => 'single_text',
                 'date_format' => 'dd.MM.yyyy', //here
                 'time_widget' => 'single_text',
+                'html5' => false, // @todo remvoe this later
                 'compound' => true
             ])
             ->add('location', TextType::class, ['required' => false])
