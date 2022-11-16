@@ -20,7 +20,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class ParticipationController extends AbstractController
 {
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function listAction(UserInterface $user = null, ManagerRegistry $registry, TableGeneratorInterface $tableGenerator, StreakGeneratorInterface $streakGenerator, ParticipationCityListFactoryInterface $participationCityListFactory): Response
     {

@@ -22,7 +22,7 @@ class ProfileManagementController extends AbstractController
     {
     }
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function manageAction(UserInterface $user = null): Response
     {
@@ -38,7 +38,7 @@ class ProfileManagementController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function editUsernameAction(Request $request, UserInterface $user = null): Response
     {
@@ -74,7 +74,7 @@ class ProfileManagementController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function editEmailAction(Request $request, UserInterface $user = null): Response
     {

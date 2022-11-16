@@ -75,7 +75,7 @@ class BoardController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("city", class="App:City", isOptional="true")
      * @ParamConverter("board", class="App:Board", isOptional="true")
      */

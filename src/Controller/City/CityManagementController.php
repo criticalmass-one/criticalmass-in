@@ -23,7 +23,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class CityManagementController extends AbstractController
 {
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function addAction(
         Request $request,
@@ -124,7 +124,7 @@ class CityManagementController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("city", class="App:City")
      */
     public function editAction(

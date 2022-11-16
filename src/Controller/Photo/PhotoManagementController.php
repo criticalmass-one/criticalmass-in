@@ -20,7 +20,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class PhotoManagementController extends AbstractController
 {
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function listAction(UserInterface $user = null): Response
     {
@@ -64,7 +64,7 @@ class PhotoManagementController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
     public function manageAction(Request $request, PaginatorInterface $paginator, Ride $ride): Response
@@ -162,7 +162,7 @@ class PhotoManagementController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
     public function relocateAction(Ride $ride): Response

@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 class PostController extends AbstractController
 {
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("city", class="App:City", converter="city_converter")
      */
     public function writeCityAction(Request $request, City $city, ObjectRouterInterface $objectRouter): Response
@@ -30,7 +30,7 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride", converter="ride_converter")
      */
     public function writeRideAction(Request $request, Ride $ride, ObjectRouterInterface $objectRouter): Response
@@ -39,7 +39,7 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("photo", class="App:Photo", converter="photo_converter")
      */
     public function writePhotoAction(Request $request, Photo $photo, ObjectRouterInterface $objectRouter): Response
@@ -48,7 +48,7 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("thread", class="App:Thread", isOptional=true, converter="thread_converter")
      */
     public function writeThreadAction(Request $request, Thread $thread = null, ObjectRouterInterface $objectRouter): Response

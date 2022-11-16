@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class ColorController extends AbstractController
 {
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function colorAction(Request $request, EventDispatcherInterface $eventDispatcher, UserInterface $user = null): Response
     {
