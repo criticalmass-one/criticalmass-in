@@ -77,8 +77,8 @@ class CycleController extends BaseController
      * @ParamConverter("region", class="App:Region", isOptional=true)
      * @ParamConverter("validFrom", class="DateTime", isOptional=true)
      * @ParamConverter("validUntil", class="DateTime", isOptional=true)
-     * @Route("/cycles", name="caldera_criticalmass_rest_cycles_list", methods={"GET"}, options={"expose"=true})
      */
+    #[Route(path: '/cycles', name: 'caldera_criticalmass_rest_cycles_list', methods: ['GET'], options: ['expose' => true])]
     public function listAction(Request $request, City $city = null, Region $region = null, \DateTime $validFrom = null, \DateTime $validUntil = null): JsonResponse
     {
         $validNow = $request->query->getBoolean('validNow', null);

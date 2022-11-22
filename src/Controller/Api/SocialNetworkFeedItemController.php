@@ -24,10 +24,9 @@ class SocialNetworkFeedItemController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     *
      * @ParamConverter("city", class="App:City")
-     * @Route("/{citySlug}/socialnetwork-feeditems", name="caldera_criticalmass_rest_socialnetwork_feeditems_citylist", methods={"GET"})
      */
+    #[Route(path: '/{citySlug}/socialnetwork-feeditems', name: 'caldera_criticalmass_rest_socialnetwork_feeditems_citylist', methods: ['GET'])]
     public function listSocialNetworkFeedItemsCityAction(Request $request, City $city): JsonResponse
     {
         $uniqueIdentifier = $request->get('uniqueIdentifier');
@@ -49,10 +48,9 @@ class SocialNetworkFeedItemController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     *
      * @ParamConverter("socialNetworkFeedItem", class="App:SocialNetworkFeedItem")
-     * @Route("/{citySlug}/socialnetwork-feeditems/{feedItemId}", name="caldera_criticalmass_rest_socialnetwork_feeditems_update", methods={"POST"})
      */
+    #[Route(path: '/{citySlug}/socialnetwork-feeditems/{feedItemId}', name: 'caldera_criticalmass_rest_socialnetwork_feeditems_update', methods: ['POST'])]
     public function updateSocialNetworkFeedItemAction(Request $request, SocialNetworkFeedItem $socialNetworkFeedItem, EntityMergerInterface $entityMerger): JsonResponse
     {
         $updatedSocialNetworkFeedItem = $this->serializer->deserialize($request->getContent(), SocialNetworkFeedItem::class, 'json');
@@ -75,8 +73,8 @@ class SocialNetworkFeedItemController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     * @Route("/{citySlug}/socialnetwork-feeditems", name="caldera_criticalmass_rest_socialnetwork_feeditems_create", methods={"PUT"})
      */
+    #[Route(path: '/{citySlug}/socialnetwork-feeditems', name: 'caldera_criticalmass_rest_socialnetwork_feeditems_create', methods: ['PUT'])]
     public function createSocialNetworkFeedItemAction(Request $request): JsonResponse
     {
         $newSocialNetworkFeedItem = $this->serializer->deserialize($request->getContent(), SocialNetworkFeedItem::class, 'json');
@@ -87,9 +85,9 @@ class SocialNetworkFeedItemController extends BaseController
             $manager = $this->managerRegistry->getManager();
             $manager->persist($newSocialNetworkFeedItem);
             $manager->flush();
-        } catch (UniqueConstraintViolationException $exception) {
+        } catch (UniqueConstraintViolationException) {
             return $this->createErrors(JsonResponse::HTTP_CONFLICT, ['This feed item already exists.']);
-        } catch (\Exception $exception) {
+        } catch (\Exception) {
             return $this->createErrors(JsonResponse::HTTP_INTERNAL_SERVER_ERROR, ['An unknown error occured. Please try again later or report this issue to criticalmass@caldera.cc.']);
         }
 

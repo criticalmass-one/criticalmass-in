@@ -100,8 +100,8 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Expose
      * @DataQuery\Sortable
      * @DataQuery\Queryable
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected ?string $title = null;
 
     /**

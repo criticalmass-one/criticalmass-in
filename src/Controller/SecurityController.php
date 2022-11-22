@@ -6,12 +6,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class SecurityController extends AbstractController
 {
     const TEMPLATE_MODE_FULL = 1;
     const TEMPLATE_MODE_FORM = 2;
     const TEMPLATE_MODE_MODAL = 3;
+
+    public function __construct(private readonly CsrfTokenManagerInterface $csrfTokenManager)
+    {
+    }
 
     public function loginAction(Request $request, int $templateMode = self::TEMPLATE_MODE_FULL): Response
     {
@@ -38,7 +43,7 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = (null === $session) ? '' : $session->get($lastUsernameKey);
 
-        $csrfToken = $this->get('security.csrf.token_manager')->getToken('authenticate')->getValue();
+        $csrfToken = $this->csrfTokenManager->getToken('authenticate')->getValue();
 
         return $this->renderLogin([
                 'last_username' => $lastUsername,

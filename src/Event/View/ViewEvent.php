@@ -3,7 +3,7 @@
 namespace App\Event\View;
 
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class ViewEvent extends Event
 {

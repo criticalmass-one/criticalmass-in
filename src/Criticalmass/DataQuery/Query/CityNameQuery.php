@@ -13,9 +13,7 @@ use Symfony\Component\Validator\Constraints as Constraints;
  */
 class CityNameQuery extends AbstractQuery implements DoctrineQueryInterface, ElasticQueryInterface
 {
-    /**
-     * @Constraints\NotNull()
-     */
+    #[Constraints\NotNull]
     protected string $name;
 
     /**

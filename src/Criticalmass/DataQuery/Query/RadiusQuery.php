@@ -13,27 +13,27 @@ use Symfony\Component\Validator\Constraints as Constraints;
 class RadiusQuery extends AbstractQuery implements ElasticQueryInterface
 {
     /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("float")
-     * @Constraints\Range(min="-90", max="90")
      * @var float $centerLatitude
      */
+    #[Constraints\NotNull]
+    #[Constraints\Type('float')]
+    #[Constraints\Range(min: -90, max: 90)]
     protected $centerLatitude;
 
     /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("float")
-     * @Constraints\Range(min="-180", max="180")
      * @var float $centerLongitude
      */
+    #[Constraints\NotNull]
+    #[Constraints\Type('float')]
+    #[Constraints\Range(min: -180, max: 180)]
     protected $centerLongitude;
 
     /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("float")
-     * @Constraints\Range(min="0", max="50000")
      * @var float $radius
      */
+    #[Constraints\NotNull]
+    #[Constraints\Type('float')]
+    #[Constraints\Range(min: 0, max: 50000)]
     protected $radius;
 
     /**

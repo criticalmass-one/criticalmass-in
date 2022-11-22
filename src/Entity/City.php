@@ -69,21 +69,21 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
 
     /**
      * @ORM\Column(type="string", length=50)
-     * @Assert\NotBlank()
      * @JMS\Expose
      * @JMS\SerializedName("name")
      * @JMS\Groups({"ride-list"})
      * @DataQuery\Sortable
      */
+    #[Assert\NotBlank]
     protected ?string $city = null;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Assert\NotBlank()
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      * @DataQuery\Sortable
      */
+    #[Assert\NotBlank]
     protected ?string $title = null;
 
     /**
@@ -150,11 +150,11 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Assert\Type(type="int")
      * @JMS\Expose
      * @DataQuery\Queryable
      * @DataQuery\Sortable
      */
+    #[Assert\Type(type: 'int')]
     protected ?int $cityPopulation = null;
 
     /**

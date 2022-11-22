@@ -42,7 +42,7 @@ class PrefetchController extends AbstractController
             ];
         }
 
-        return new Response(json_encode($result), 200, [
+        return new Response(json_encode($result, JSON_THROW_ON_ERROR), Response::HTTP_OK, [
             'Content-Type' => 'text/json'
         ]);
     }

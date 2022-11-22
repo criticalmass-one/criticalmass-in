@@ -43,8 +43,8 @@ services:
         autoconfigure: true
         public: false
         bind:
-            $rootDirectory: '%kernel.root_dir%'
-            $webRootDir: '%kernel.root_dir%/../public'
+            $rootDirectory: '%kernel.project_dir%'
+            $webRootDir: '%kernel.project_dir%/../public'
             $staticmapsHost: '%staticmaps.host%'
             $gapWidth: '%track.gap_width%'
             $facebookAppId: '%facebook.app_id%'

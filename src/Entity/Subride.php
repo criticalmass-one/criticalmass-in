@@ -44,9 +44,9 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\NotBlank()
      * @JMS\Expose
      */
+    #[Assert\NotBlank]
     protected ?string $title = null;
 
     /**
@@ -75,9 +75,9 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\NotBlank()
      * @JMS\Expose
      */
+    #[Assert\NotBlank]
     protected ?string $location = null;
 
     /**

@@ -63,23 +63,23 @@ class CityCycle implements RouteableInterface
      * @ORM\Column(type="smallint", nullable=false)
      * @JMS\Expose()
      * @JMS\Groups({"ride-list"})
-     * @Assert\Range(min="0", max="6")
      */
+    #[Assert\Range(min: 0, max: 6)]
     protected ?int $dayOfWeek = null;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
      * @JMS\Expose()
      * @JMS\Groups({"ride-list"})
-     * @Assert\Range(min="0", max="4")
      */
+    #[Assert\Range(min: 0, max: 4)]
     protected ?int $weekOfMonth = null;
 
     /**
      * @ORM\Column(type="time", nullable=true)
-     * @Assert\Type(type="\DateTime")
      * @JMS\Expose()
      */
+    #[Assert\Type(type: '\DateTime')]
     protected ?\DateTime $time = null;
 
     /**
@@ -93,16 +93,16 @@ class CityCycle implements RouteableInterface
      * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose()
      * @JMS\Groups({"ride-list"})
-     * @Assert\NotEqualTo(value="0.0")
      */
+    #[Assert\NotEqualTo(value: '0.0')]
     protected ?float $latitude = 0.0;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose()
      * @JMS\Groups({"ride-list"})
-     * @Assert\NotEqualTo(value="0.0")
      */
+    #[Assert\NotEqualTo(value: '0.0')]
     protected ?float $longitude = 0.0;
 
     /**

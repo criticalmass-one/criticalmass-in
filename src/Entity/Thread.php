@@ -40,8 +40,8 @@ class Thread implements ViewableEntity, RouteableInterface, AutoParamConverterAb
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected ?string $title = null;
 
     /**

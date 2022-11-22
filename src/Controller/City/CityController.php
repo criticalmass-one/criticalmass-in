@@ -39,7 +39,7 @@ class CityController extends AbstractController
     /**
      * @ParamConverter("city", class="App:City")
      */
-    public function listGalleriesAction(Request $request, SeoPageInterface $seoPage, City $city): Response
+    public function listGalleriesAction(SeoPageInterface $seoPage, City $city): Response
     {
         $seoPage->setDescription('Übersicht über Fotos von Critical-Mass-Touren aus ' . $city->getCity());
 
@@ -68,7 +68,7 @@ class CityController extends AbstractController
             ]);
         }
 
-        $eventDispatcher->dispatch(ViewEvent::NAME, new ViewEvent($city));
+        $eventDispatcher->dispatch(new ViewEvent($city), ViewEvent::NAME);
 
         $blocked = $this->getBlockedCityRepository()->findCurrentCityBlock($city);
 
@@ -106,7 +106,7 @@ class CityController extends AbstractController
      */
     public function getlocationsAction(City $city): Response
     {
-        return new Response(json_encode($this->getRideRepository()->getLocationsForCity($city)), 200, [
+        return new Response(json_encode($this->getRideRepository()->getLocationsForCity($city)), Response::HTTP_OK, [
             'Content-Type' => 'text/json',
         ]);
     }
