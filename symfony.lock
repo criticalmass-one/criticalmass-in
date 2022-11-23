@@ -600,9 +600,6 @@
             "ref": "e3868d2f4a5104f19f844fe551099a00c6562527"
         }
     },
-    "symfony/css-selector": {
-        "version": "v4.2.4"
-    },
     "symfony/dependency-injection": {
         "version": "v4.1.1"
     },
