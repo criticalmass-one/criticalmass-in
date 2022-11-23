@@ -21,7 +21,7 @@ class Weather
     protected ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Ride", inversedBy="weathers")
+     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="weathers")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
     protected ?Ride $ride = null;

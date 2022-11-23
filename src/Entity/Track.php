@@ -55,13 +55,13 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
     protected ?string $username = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Ride", inversedBy="tracks")
+     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="tracks")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
     protected ?Ride $ride = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="tracks")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="tracks")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * @JMS\Groups({"timelapse", "api-private"})
      * @JMS\Expose

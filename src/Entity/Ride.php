@@ -49,13 +49,13 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     protected ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", fetch="LAZY")
+     * @ORM\ManyToOne(targetEntity="User", fetch="LAZY")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected ?User $user = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CityCycle", inversedBy="rides", fetch="LAZY")
+     * @ORM\ManyToOne(targetEntity="CityCycle", inversedBy="rides", fetch="LAZY")
      * @ORM\JoinColumn(name="cycle_id", referencedColumnName="id")
      * @JMS\Groups({"extended-ride-list"})
      * @JMS\Expose
@@ -63,7 +63,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     protected ?CityCycle $cycle = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\City", inversedBy="rides", fetch="LAZY")
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="rides", fetch="LAZY")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      * @JMS\Groups({"extended-ride-list"})
      * @JMS\Expose
@@ -74,13 +74,13 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     protected ?City $city = null;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Track", mappedBy="ride", fetch="LAZY")
+     * @ORM\OneToMany(targetEntity="Track", mappedBy="ride", fetch="LAZY")
      * @JMS\Groups({"extended-ride-list"})
      */
     protected Collection $tracks;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Subride", mappedBy="ride", fetch="LAZY")
+     * @ORM\OneToMany(targetEntity="Subride", mappedBy="ride", fetch="LAZY")
      * @JMS\Groups({"extended-ride-list"})
      */
     protected Collection $subrides;
@@ -186,13 +186,13 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     protected ?float $estimatedDuration = null;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Post", mappedBy="ride", fetch="LAZY")
+     * @ORM\OneToMany(targetEntity="Post", mappedBy="ride", fetch="LAZY")
      * @JMS\Groups({"extended-ride-list"})
      */
     protected Collection $posts;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Photo", mappedBy="ride", fetch="LAZY")
+     * @ORM\OneToMany(targetEntity="Photo", mappedBy="ride", fetch="LAZY")
      * @JMS\Groups({"extended-ride-list"})
      */
     protected Collection $photos;
@@ -233,12 +233,12 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     protected int $participationsNumberNo = 0;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Participation", mappedBy="ride", fetch="LAZY")
+     * @ORM\OneToMany(targetEntity="Participation", mappedBy="ride", fetch="LAZY")
      */
     protected Collection $participations;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\RideEstimate", mappedBy="ride", fetch="LAZY")
+     * @ORM\OneToMany(targetEntity="RideEstimate", mappedBy="ride", fetch="LAZY")
      */
     protected Collection $estimates;
 
@@ -250,7 +250,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     protected int $views = 0;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Photo", fetch="LAZY")
+     * @ORM\ManyToOne(targetEntity="Photo", fetch="LAZY")
      * @ORM\JoinColumn(name="featured_photo", referencedColumnName="id")
      */
     protected ?Photo $featuredPhoto = null;
@@ -261,7 +261,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     protected bool $restrictedPhotoAccess = false;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Weather", mappedBy="ride", fetch="LAZY")
+     * @ORM\OneToMany(targetEntity="Weather", mappedBy="ride", fetch="LAZY")
      * @ORM\OrderBy({"creationDateTime":"DESC"})
      */
     protected Collection $weathers;

@@ -32,7 +32,7 @@ class CitySlug implements RouteableInterface
     protected ?string $slug = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\City", inversedBy="slugs", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="slugs", fetch="EAGER")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected ?City $city = null;

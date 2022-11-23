@@ -24,13 +24,13 @@ class FrontpageTeaser implements PhotoInterface
     protected ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected ?User $user = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\City")
+     * @ORM\ManyToOne(targetEntity="City")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected ?City $city = null;
@@ -91,7 +91,7 @@ class FrontpageTeaser implements PhotoInterface
     protected ?\DateTime $validUntil = null;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\FrontpageTeaserButton", mappedBy="frontpageTeaser")
+     * @ORM\OneToMany(targetEntity="FrontpageTeaserButton", mappedBy="frontpageTeaser")
      * @ORM\OrderBy({"position":"ASC"})
      */
     protected Collection $buttons;

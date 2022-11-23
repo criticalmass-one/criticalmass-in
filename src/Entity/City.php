@@ -45,13 +45,13 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     protected ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected ?User $user = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Region", inversedBy="cities", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Region", inversedBy="cities", cascade={"persist"})
      * @ORM\JoinColumn(name="region_id", referencedColumnName="id")
      * @DataQuery\Queryable
      * @DataQuery\Sortable
@@ -59,7 +59,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     protected ?Region $region = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CitySlug")
+     * @ORM\ManyToOne(targetEntity="CitySlug")
      * @ORM\JoinColumn(name="main_slug_id", referencedColumnName="id")
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
@@ -116,29 +116,29 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     protected bool $enabled = true;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Ride", mappedBy="city")
+     * @ORM\OneToMany(targetEntity="Ride", mappedBy="city")
      */
     protected Collection $rides;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Post", mappedBy="city")
+     * @ORM\OneToMany(targetEntity="Post", mappedBy="city")
      */
     protected Collection $posts;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Photo", mappedBy="city")
+     * @ORM\OneToMany(targetEntity="Photo", mappedBy="city")
      */
     protected Collection $photos;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\CitySlug", mappedBy="city", cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="CitySlug", mappedBy="city", cascade={"persist","remove"})
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      */
     protected Collection $slugs;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\CityCycle", mappedBy="city", cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="CityCycle", mappedBy="city", cascade={"persist","remove"})
      */
     protected Collection $cycles;
 
@@ -241,7 +241,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     protected int $colorBlue = 0;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Thread")
+     * @ORM\ManyToOne(targetEntity="Thread")
      * @ORM\JoinColumn(name="lastthread_id", referencedColumnName="id")
      */
     protected ?Thread $lastThread = null;

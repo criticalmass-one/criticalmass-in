@@ -37,18 +37,18 @@ class Region implements RouteableInterface, AuditableInterface
     protected ?string $description = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Region", inversedBy="children", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Region", inversedBy="children", cascade={"persist"})
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
     protected ?Region $parent = null;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Region", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="Region", mappedBy="parent")
      */
     protected Collection $children;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\City", mappedBy="region")
+     * @ORM\OneToMany(targetEntity="City", mappedBy="region")
      */
     protected Collection $cities;
 

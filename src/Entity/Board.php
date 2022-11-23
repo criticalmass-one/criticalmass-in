@@ -45,7 +45,7 @@ class Board implements BoardInterface, RouteableInterface, AutoParamConverterAbl
     protected int $postNumber = 0;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Thread")
+     * @ORM\OneToOne(targetEntity="Thread")
      * @ORM\JoinColumn(name="lastthread_id", referencedColumnName="id", unique=true)
      */
     protected ?Thread $lastThread = null;

@@ -29,7 +29,7 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
     protected ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Ride", inversedBy="subrides")
+     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="subrides")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      * @JMS\Groups({"extended-subride-list"})
      * @Routing\RouteParameter(name="rideIdentifier")
@@ -93,7 +93,7 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
     protected ?float $longitude = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected ?User $user = null;

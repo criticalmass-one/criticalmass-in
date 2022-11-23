@@ -46,7 +46,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     protected $username;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Track", mappedBy="user", cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="Track", mappedBy="user", cascade={"persist","remove"})
      */
     protected Collection $tracks;
 
@@ -77,7 +77,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     protected bool $blurGalleries = false;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Participation", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Participation", mappedBy="user")
      */
     protected Collection $participations;
 

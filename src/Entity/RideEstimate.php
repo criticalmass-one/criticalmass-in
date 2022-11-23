@@ -19,13 +19,13 @@ class RideEstimate
     protected ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", fetch="LAZY")
+     * @ORM\ManyToOne(targetEntity="User", fetch="LAZY")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected ?User $user = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Ride", inversedBy="estimates", fetch="LAZY")
+     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="estimates", fetch="LAZY")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
     protected ?Ride $ride = null;

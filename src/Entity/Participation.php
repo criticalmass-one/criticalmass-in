@@ -19,13 +19,13 @@ class Participation implements AutoParamConverterAble
     protected ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Ride", inversedBy="participations")
+     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="participations")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
     protected ?Ride $ride = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="participations")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="participations")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected ?User $user = null;

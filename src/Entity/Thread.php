@@ -25,14 +25,14 @@ class Thread implements ViewableEntity, RouteableInterface, AutoParamConverterAb
     protected ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Board")
+     * @ORM\ManyToOne(targetEntity="Board")
      * @ORM\JoinColumn(name="board_id", referencedColumnName="id")
      * @Routing\RouteParameter(name="boardSlug")
      */
     protected ?Board $board = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\City")
+     * @ORM\ManyToOne(targetEntity="City")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      * @Routing\RouteParameter(name="citySlug")
      */
@@ -61,13 +61,13 @@ class Thread implements ViewableEntity, RouteableInterface, AutoParamConverterAb
     protected int $postNumber = 0;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Post")
+     * @ORM\OneToOne(targetEntity="Post")
      * @ORM\JoinColumn(name="firstpost_id", referencedColumnName="id", unique=true)
      */
     protected ?Post $firstPost = null;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Post")
+     * @ORM\OneToOne(targetEntity="Post")
      * @ORM\JoinColumn(name="lastpost_id", referencedColumnName="id", unique=true)
      */
     protected ?Post $lastPost = null;

@@ -22,42 +22,42 @@ class Post implements Crawlable
     protected ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Post", inversedBy="children")
+     * @ORM\ManyToOne(targetEntity="Post", inversedBy="children")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
     protected ?Post $parent = null;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Post", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="Post", mappedBy="parent")
      */
     protected Collection $children;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected ?User $user = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Ride", inversedBy="posts")
+     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="posts")
      * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      */
     protected ?Ride $ride = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\City", inversedBy="posts")
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="posts")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected ?City $city = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Thread")
+     * @ORM\ManyToOne(targetEntity="Thread")
      * @ORM\JoinColumn(name="thread_id", referencedColumnName="id")
      */
     protected ?Thread $thread = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Photo")
+     * @ORM\ManyToOne(targetEntity="Photo")
      * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
      */
     protected ?Photo $photo = null;

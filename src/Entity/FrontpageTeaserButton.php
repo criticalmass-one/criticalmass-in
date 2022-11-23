@@ -19,7 +19,7 @@ class FrontpageTeaserButton
     protected ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\FrontpageTeaser", inversedBy="buttons")
+     * @ORM\ManyToOne(targetEntity="FrontpageTeaser", inversedBy="buttons")
      * @ORM\JoinColumn(name="teaser_id", referencedColumnName="id")
      */
     protected ?FrontpageTeaser $frontpageTeaser = null;
