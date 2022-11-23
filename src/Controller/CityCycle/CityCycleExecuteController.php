@@ -32,7 +32,7 @@ class CityCycleExecuteController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("cityCycle", class="App:CityCycle", options={"id" = "cycleId"})
      */
     public function executeAction(Request $request, CityCycle $cityCycle, SerializerInterface $serializer): Response
@@ -72,7 +72,7 @@ class CityCycleExecuteController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("cityCycle", class="App:CityCycle", options={"id" = "cycleId"})
      */
     public function executePersistAction(Request $request, CityCycle $cityCycle, SessionInterface $session, ManagerRegistry $registry, SerializerInterface $serializer): Response

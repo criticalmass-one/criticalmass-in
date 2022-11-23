@@ -4,14 +4,10 @@ namespace App\Controller\Api;
 
 use App\Entity\City;
 use App\Entity\Location;
-use Doctrine\Persistence\ManagerRegistry;
-use FOS\RestBundle\Context\Context;
-use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\Operation;
-use Nelmio\ApiDocBundle\Annotation\Model;
-use Swagger\Annotations as SWG;
+use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 class LocationController extends BaseController
@@ -20,34 +16,27 @@ class LocationController extends BaseController
      * @Operation(
      *     tags={"Location"},
      *     summary="Retrieve a list of locations of a city",
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="citySlug",
      *         in="path",
      *         description="Slug of the city",
      *         required=true,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )
      * )
      *
      * @ParamConverter("city", class="App:City")
-     * @Route("/{citySlug}/location", name="caldera_criticalmass_rest_location_list", methods={"GET"}, options={"expose"=true})
      */
-    public function listLocationAction(ManagerRegistry $registry, City $city): Response
+    #[Route(path: '/{citySlug}/location', name: 'caldera_criticalmass_rest_location_list', methods: ['GET'], options: ['expose' => true])]
+    public function listLocationAction(City $city): JsonResponse
     {
-        $locationList = $registry->getRepository(Location::class)->findLocationsByCity($city);
+        $locationList = $this->managerRegistry->getRepository(Location::class)->findLocationsByCity($city);
 
-        $view = View::create();
-        $view
-            ->setData($locationList)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_OK);
-
-        return $this->handleView($view);
+        return $this->createStandardResponse($locationList);
     }
 
     /**
@@ -56,42 +45,31 @@ class LocationController extends BaseController
      * @Operation(
      *     tags={"Location"},
      *     summary="Show details of a location",
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="citySlug",
      *         in="path",
      *         description="Slug of the city",
      *         required=true,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="locationSlug",
      *         in="path",
      *         description="Slug of the location",
      *         required=true,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )
      * )
      *
      * @ParamConverter("location", class="App:Location")
-     * @Route("/{citySlug}/location/{locationSlug}", name="caldera_criticalmass_rest_location_show", methods={"GET"}, options={"expose"=true})
      */
-    public function showLocationAction(Location $location): Response
+    #[Route(path: '/{citySlug}/location/{locationSlug}', name: 'caldera_criticalmass_rest_location_show', methods: ['GET'], options: ['expose' => true])]
+    public function showLocationAction(Location $location): JsonResponse
     {
-        $context = new Context();
-
-        $view = View::create();
-        $view
-            ->setData($location)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_OK)
-            ->setContext($context);
-
-        return $this->handleView($view);
+        return $this->createStandardResponse($location);
     }
 }

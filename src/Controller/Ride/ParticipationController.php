@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ParticipationController extends AbstractController
 {
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
     public function rideparticipationAction(ParticipationManagerInterface $participationManager, ObjectRouterInterface $objectRouter, Ride $ride, string $status): Response

@@ -2,7 +2,6 @@
 
 namespace App\EventSubscriber;
 
-use App\Criticalmass\Geocoding\ReverseGeocoderInterface;
 use App\Criticalmass\Image\ExifHandler\ExifHandlerInterface;
 use App\Criticalmass\Image\PhotoGps\PhotoGpsInterface;
 use App\Entity\Photo;
@@ -15,22 +14,13 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class PhotoEventSubscriber implements EventSubscriberInterface
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
+    protected ManagerRegistry $registry;
+    protected PhotoGpsInterface $photoGps;
+    protected ExifHandlerInterface $exifHandler;
 
-    /** @var ReverseGeocoderInterface $reverseGeocoder */
-    protected $reverseGeocoder;
-
-    /** @var PhotoGpsInterface $photoGps */
-    protected $photoGps;
-
-    /** @var ExifHandlerInterface $exifHandler */
-    protected $exifHandler;
-
-    public function __construct(ManagerRegistry $registry, ReverseGeocoderInterface $reverseGeocoder, PhotoGpsInterface $photoGps, ExifHandlerInterface $exifHandler)
+    public function __construct(ManagerRegistry $registry, PhotoGpsInterface $photoGps, ExifHandlerInterface $exifHandler)
     {
         $this->registry = $registry;
-        $this->reverseGeocoder = $reverseGeocoder;
         $this->photoGps = $photoGps;
         $this->exifHandler = $exifHandler;
     }
@@ -51,9 +41,6 @@ class PhotoEventSubscriber implements EventSubscriberInterface
 
         $this->handleExifData($photoUploadedEvent->getPhoto(), $photoUploadedEvent->getTmpFilename());
         $this->locate($photoUploadedEvent->getPhoto());
-        $this->reverseGeocode($photoUploadedEvent->getPhoto());
-
-        $this->exportDataHandler->calculateForEntity($photoUploadedEvent->getPhoto());
 
         // and this is to flush our changes to the filesystem
         $this->registry->getManager()->flush();
@@ -62,7 +49,6 @@ class PhotoEventSubscriber implements EventSubscriberInterface
     public function onPhotoUpdated(PhotoUpdatedEvent $photoUpdatedEvent): void
     {
         $this->handleExifData($photoUpdatedEvent->getPhoto(), $photoUpdatedEvent->getTmpFilename());
-        $this->reverseGeocode($photoUpdatedEvent->getPhoto());
         $this->locate($photoUpdatedEvent->getPhoto());
 
         $this->registry->getManager()->flush();
@@ -70,11 +56,6 @@ class PhotoEventSubscriber implements EventSubscriberInterface
 
     public function onPhotoDeleted(PhotoDeletedEvent $photoDeletedEvent): void
     {
-    }
-
-    protected function reverseGeocode(Photo $photo): void
-    {
-        $this->reverseGeocoder->reverseGeocode($photo);
     }
 
     protected function locate(Photo $photo): void

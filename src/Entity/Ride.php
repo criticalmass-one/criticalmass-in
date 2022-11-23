@@ -2,13 +2,10 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\DataQuery\Annotation\EntityAnnotation as DataQuery;
-use App\Criticalmass\Geocoding\ReverseGeocodeable;
+use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation as DataQuery;
 use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
 use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
 use App\Criticalmass\Router\Annotation as Routing;
-use App\Criticalmass\Sharing\Annotation as Sharing;
-use App\Criticalmass\Sharing\ShareableInterface\Shareable;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AuditableInterface;
@@ -39,7 +36,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Vich\Uploadable
  * @Routing\DefaultRoute(name="caldera_criticalmass_ride_show")
  */
-class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, Shareable, ReverseGeocodeable, OrderedEntityInterface, CoordinateInterface
+class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, OrderedEntityInterface, CoordinateInterface
 {
     /**
      * @ORM\Id
@@ -101,18 +98,16 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @ORM\Column(type="string", length=255, nullable=false)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
-     * @Sharing\Title()
      * @DataQuery\Sortable
      * @DataQuery\Queryable
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected ?string $title = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
-     * @Sharing\Intro()
      * @DataQuery\Sortable
      * @DataQuery\Queryable
      */
@@ -292,12 +287,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     protected ?string $imageMimeType = null;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Sharing\Shorturl()
-     */
-    protected ?string $shorturl = null;
-
-    /**
      * @ORM\Column(type="boolean", options={"default"=true})
      * @OE\Boolean(true)
      * @JMS\Groups({"ride-list"})
@@ -322,11 +311,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     protected ?string $rideType = null;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Heatmap", mappedBy="ride", cascade={"persist", "remove"})
-     */
-    private ?Heatmap $heatmap = null;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\TrackImportCandidate", mappedBy="ride")
      */
     private Collection $trackImportCandidates;
@@ -342,11 +326,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @ORM\OneToMany(targetEntity=RideView::class, mappedBy="ride", fetch="LAZY")
      */
     protected Collection $viewRelation;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true, options={"default": 1})
-     */
-    private ?bool $showCoronaIncidenceWarning = true;
 
     public function __construct()
     {
@@ -409,7 +388,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         return $this->dateTime;
     }
 
-    public function setLocation(string $location = null): ReverseGeocodeable
+    public function setLocation(string $location = null): self
     {
         $this->location = $location;
 
@@ -1021,18 +1000,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         return $this;
     }
 
-    public function setShorturl(string $shorturl): Ride
-    {
-        $this->shorturl = $shorturl;
-
-        return $this;
-    }
-
-    public function getShorturl(): ?string
-    {
-        return $this->shorturl;
-    }
-
     public function setEnabled(bool $enabled): Ride
     {
         $this->enabled = $enabled;
@@ -1065,24 +1032,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     public function setRideType(string $rideType = null): Ride
     {
         $this->rideType = $rideType;
-
-        return $this;
-    }
-
-    public function getHeatmap(): ?Heatmap
-    {
-        return $this->heatmap;
-    }
-
-    public function setHeatmap(?Heatmap $heatmap): self
-    {
-        $this->heatmap = $heatmap;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newRide = $heatmap === null ? null : $this;
-        if ($newRide !== $heatmap->getRide()) {
-            $heatmap->setRide($newRide);
-        }
 
         return $this;
     }
@@ -1162,18 +1111,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
                 $viewRelation->setRide(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getShowCoronaIncidenceWarning(): ?bool
-    {
-        return $this->showCoronaIncidenceWarning;
-    }
-
-    public function setShowCoronaIncidenceWarning(?bool $showCoronaIncidenceWarning): self
-    {
-        $this->showCoronaIncidenceWarning = $showCoronaIncidenceWarning;
 
         return $this;
     }

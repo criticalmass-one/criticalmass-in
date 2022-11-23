@@ -59,7 +59,7 @@ class PhotoUploader extends AbstractPhotoUploader
 
         $this->doctrine->getManager()->persist($photo);
 
-        $this->eventDispatcher->dispatch(PhotoUploadedEvent::NAME, new PhotoUploadedEvent($photo, true, $uploadedFile->getRealPath()));
+        $this->eventDispatcher->dispatch(new PhotoUploadedEvent($photo, true, $uploadedFile->getRealPath()), PhotoUploadedEvent::NAME);
 
         $this->addedPhotoList[] = $photo;
 
@@ -79,7 +79,7 @@ class PhotoUploader extends AbstractPhotoUploader
 
         $this->doctrine->getManager()->persist($photo);
         
-        $this->eventDispatcher->dispatch(PhotoUploadedEvent::NAME, new PhotoUploadedEvent($photo, true, $tmpFilename));
+        $this->eventDispatcher->dispatch(new PhotoUploadedEvent($photo, true, $tmpFilename), PhotoUploadedEvent::NAME);
 
         $this->addedPhotoList[] = $photo;
 

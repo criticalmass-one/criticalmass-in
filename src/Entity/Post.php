@@ -79,8 +79,8 @@ class Post implements Crawlable
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected ?string $message = null;
 
     /**

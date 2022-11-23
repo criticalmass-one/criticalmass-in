@@ -14,13 +14,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CalculateUploadableEntityDataCommand extends Command
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    /** @var UploadableDataHandlerInterface $uploadableDataHandler */
-    protected $uploadableDataHandler;
-
-    public function __construct(ManagerRegistry $registry, UploadableDataHandlerInterface $uploadableDataHandler)
+    protected static $defaultName = 'criticalmass:calculate-uploadable-meta';
+    public function __construct(protected ManagerRegistry $registry, protected UploadableDataHandlerInterface $uploadableDataHandler)
     {
         $this->registry = $registry;
         $this->uploadableDataHandler = $uploadableDataHandler;
@@ -30,9 +25,7 @@ class CalculateUploadableEntityDataCommand extends Command
 
     protected function configure(): void
     {
-        $this
-            ->setName('criticalmass:calculate-uploadable-meta')
-            ->setDescription('Calculate meta for uploadable entities')
+        $this->setDescription('Calculate meta for uploadable entities')
             ->addOption('limit', 'l', InputOption::VALUE_REQUIRED, 'Number of photos to process at once')
             ->addOption('offset', 'o', InputOption::VALUE_REQUIRED, 'Offset to start processing')
             ->addOption('overwrite', 'ow', InputOption::VALUE_NONE, 'Overwrite existing values')

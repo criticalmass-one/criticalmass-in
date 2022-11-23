@@ -2,10 +2,8 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\DataQuery\Annotation\EntityAnnotation as DataQuery;
+use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation as DataQuery;
 use App\Criticalmass\Router\Annotation as Routing;
-use App\Criticalmass\Sharing\Annotation as Sharing;
-use App\Criticalmass\Sharing\ShareableInterface\Shareable;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AuditableInterface;
@@ -34,7 +32,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @JMS\ExclusionPolicy("all")
  * @Routing\DefaultRoute(name="caldera_criticalmass_city_show")
  */
-class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, AutoParamConverterAble, SocialNetworkProfileAble, PostableInterface, Shareable, StaticMapableInterface, CoordinateInterface
+class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, AutoParamConverterAble, SocialNetworkProfileAble, PostableInterface, StaticMapableInterface, CoordinateInterface
 {
     /**
      * @ORM\Id
@@ -71,22 +69,21 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
-     * @Assert\NotBlank()
      * @JMS\Expose
      * @JMS\SerializedName("name")
      * @JMS\Groups({"ride-list"})
      * @DataQuery\Sortable
      */
+    #[Assert\NotBlank]
     protected ?string $city = null;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
-     * @Assert\NotBlank()
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
-     * @Sharing\Title()
      * @DataQuery\Sortable
      */
+    #[Assert\NotBlank]
     protected ?string $title = null;
 
     /**
@@ -153,17 +150,16 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Assert\Type(type="int")
      * @JMS\Expose
      * @DataQuery\Queryable
      * @DataQuery\Sortable
      */
+    #[Assert\Type(type: 'int')]
     protected ?int $cityPopulation = null;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      * @JMS\Expose
-     * @Sharing\Intro()
      */
     protected ?string $punchLine = null;
 
@@ -257,12 +253,6 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Sharing\Shorturl()
-     */
-    protected ?string $shorturl = null;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected ?string $rideNamer = null;
 
@@ -270,16 +260,6 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected ?string $wikidataEntityId = null;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Heatmap", mappedBy="city", cascade={"persist", "remove"})
-     */
-    private ?Heatmap $heatmap = null;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true, options={"default": 1})
-     */
-    private ?bool $showCoronaIncidenceWarning = true;
 
     public function __construct()
     {
@@ -884,18 +864,6 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
         return $this;
     }
 
-    public function setShorturl(string $shorturl): City
-    {
-        $this->shorturl = $shorturl;
-
-        return $this;
-    }
-
-    public function getShorturl(): ?string
-    {
-        return $this->shorturl;
-    }
-
     public function setRideNamer(string $rideNamer): City
     {
         $this->rideNamer = $rideNamer;
@@ -920,24 +888,6 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
         return $this->wikidataEntityId;
     }
 
-    public function getHeatmap(): ?Heatmap
-    {
-        return $this->heatmap;
-    }
-
-    public function setHeatmap(?Heatmap $heatmap): self
-    {
-        $this->heatmap = $heatmap;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newCity = $heatmap === null ? null : $this;
-        if ($newCity !== $heatmap->getCity()) {
-            $heatmap->setCity($newCity);
-        }
-
-        return $this;
-    }
-
     /**
      * @JMS\VirtualProperty
      * @JMS\SerializedName("color")
@@ -955,17 +905,5 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     public function toCoord(): CoordInterface
     {
         return new Coord($this->latitude, $this->longitude);
-    }
-
-    public function getShowCoronaIncidenceWarning(): ?bool
-    {
-        return $this->showCoronaIncidenceWarning;
-    }
-
-    public function setShowCoronaIncidenceWarning(?bool $showCoronaIncidenceWarning): self
-    {
-        $this->showCoronaIncidenceWarning = $showCoronaIncidenceWarning;
-
-        return $this;
     }
 }

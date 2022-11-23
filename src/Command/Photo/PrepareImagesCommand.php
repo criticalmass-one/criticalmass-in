@@ -12,25 +12,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class PrepareImagesCommand extends Command
 {
-    /** @var ManagerRegistry $doctrine */
-    protected $doctrine;
-
-    /** @var PhotoFilterer $photoFilterer */
-    protected $photoFilterer;
-
-    public function __construct(ManagerRegistry $doctrine, PhotoFilterer $photoFilterer)
+    protected static $defaultName = 'criticalmass:photos:prepare';
+    public function __construct(protected ManagerRegistry $doctrine, protected PhotoFilterer $photoFilterer)
     {
-        $this->doctrine = $doctrine;
-        $this->photoFilterer = $photoFilterer;
-
         parent::__construct();
     }
 
     protected function configure(): void
     {
-        $this
-            ->setName('criticalmass:photos:prepare')
-            ->setDescription('Create thumbnails for photos')
+        $this->setDescription('Create thumbnails for photos')
             ->addArgument(
                 'citySlug',
                 InputArgument::REQUIRED,

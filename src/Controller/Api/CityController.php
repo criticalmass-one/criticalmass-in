@@ -2,16 +2,15 @@
 
 namespace App\Controller\Api;
 
-use App\Criticalmass\DataQuery\DataQueryManager\DataQueryManagerInterface;
-use App\Criticalmass\DataQuery\RequestParameterList\RequestToListConverter;
+use JMS\Serializer\SerializationContext;
+use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
+use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Entity\City;
-use FOS\RestBundle\Context\Context;
-use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\Operation;
-use Swagger\Annotations as SWG;
+use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CityController extends BaseController
@@ -65,154 +64,133 @@ class CityController extends BaseController
      * @Operation(
      *     tags={"City"},
      *     summary="Returns a list of critical mass cities",
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="name",
      *         in="query",
      *         description="Name of the city",
      *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="regionSlug",
      *         in="query",
      *         description="Provide a region slug",
      *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="centerLatitude",
      *         in="query",
      *         description="Latitude of a coordinate to search cities around in a given radius.",
      *         required=false,
-     *         @SWG\Schema(type="number"),
-     *         type="number"
+     *         @OA\Schema(type="number"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="centerLongitude",
      *         in="query",
      *         description="Longitude of a coordinate to search cities around in a given radius.",
      *         required=false,
-     *         @SWG\Schema(type="number"),
-     *         type="number"
+     *         @OA\Schema(type="number"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="radius",
      *         in="query",
      *         description="Radius to look around for cities.",
      *         required=false,
-     *         @SWG\Schema(type="number"),
-     *         type="number"
+     *         @OA\Schema(type="number"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="bbEastLongitude",
      *         in="query",
      *         description="East longitude of a bounding box to look for cities.",
      *         required=false,
-     *         @SWG\Schema(type="number"),
-     *         type="number"
+     *         @OA\Schema(type="number"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="bbWestLongitude",
      *         in="query",
      *         description="West longitude of a bounding box to look for cities.",
      *         required=false,
-     *         @SWG\Schema(type="number"),
-     *         type="number"
+     *         @OA\Schema(type="number"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="bbNorthLatitude",
      *         in="query",
      *         description="North latitude of a bounding box to look for cities.",
      *         required=false,
-     *         @SWG\Schema(type="number"),
-     *         type="number"
+     *         @OA\Schema(type="number"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="bbSouthLatitude",
      *         in="query",
      *         description="South latitude of a bounding box to look for cities.",
      *         required=false,
-     *         @SWG\Schema(type="number"),
-     *         type="number"
+     *         @OA\Schema(type="number"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="orderBy",
      *         in="query",
      *         description="Choose a property to sort the list by.",
      *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="orderDirection",
      *         in="query",
      *         description="Sort ascending or descending.",
      *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="distanceOrderDirection",
      *         in="query",
      *         description="Enable distance sorting in combination with radius query.",
      *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="startValue",
      *         in="query",
      *         description="Start ordered list with provided value.",
      *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="size",
      *         in="query",
      *         description="Length of resulting list. Defaults to 10.",
      *         required=false,
-     *         @SWG\Schema(type="integer"),
-     *         type="integer"
+     *         @OA\Schema(type="integer"),
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="extended",
      *         in="query",
      *         description="Set true to retrieve a more detailed list.",
      *         required=false,
-     *         @SWG\Schema(type="boolean"),
-     *         type="boolean"
+     *         @OA\Schema(type="boolean"),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )
      * )
-     * @Route("/city", name="caldera_criticalmass_rest_city_list", methods={"GET"})
      */
-    public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager): Response
+    #[Route(path: '/city', name: 'caldera_criticalmass_rest_city_list', methods: ['GET'])]
+    public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager): JsonResponse
     {
         $queryParameterList = RequestToListConverter::convert($request);
         $cityList = $dataQueryManager->query($queryParameterList, City::class);
 
-        $context = new Context();
+        $groups = ['ride-list'];
 
         if ($request->query->has('extended') && true === $request->query->getBoolean('extended')) {
-            $context->addGroup('extended-ride-list');
+            $groups[] = 'extended-ride-list';
         }
 
-        $context->addGroup('ride-list');
+        $context = new SerializationContext();
+        $context->setGroups($groups);
 
-        $view = View::create();
-        $view
-            ->setContext($context)
-            ->setData($cityList)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_OK);
-
-        return $this->handleView($view);
+        return $this->createStandardResponse($cityList, $context);
     }
 
     /**
@@ -221,31 +199,24 @@ class CityController extends BaseController
      * @Operation(
      *     tags={"City"},
      *     summary="Shows a critical mass city",
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="citySlug",
      *         in="path",
      *         description="Slug of the city",
      *         required=true,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
+     *         @OA\Schema(type="string"),
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )
      * )
      *
      * @ParamConverter("city", class="App:City")
-     * @Route("/{citySlug}", name="caldera_criticalmass_rest_city_show", methods={"GET"}, options={"expose"=true})
      */
-    public function showAction(City $city): Response
+    #[Route(path: '/{citySlug}', name: 'caldera_criticalmass_rest_city_show', methods: ['GET'], options: ['expose' => true])]
+    public function showAction(City $city): JsonResponse
     {
-        $view = View::create();
-        $view
-            ->setData($city)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_OK);
-
-        return $this->handleView($view);
+        return $this->createStandardResponse($city);
     }
 }

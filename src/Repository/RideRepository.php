@@ -455,8 +455,8 @@ class RideRepository extends EntityRepository
     }
 
     public function findRides(
-        \DateTime $fromDateTime = null,
-        \DateTime $untilDateTime = null,
+        \DateTimeInterface $fromDateTime = null,
+        \DateTimeInterface $untilDateTime = null,
         City $city = null,
         Region $region = null
     ): array {

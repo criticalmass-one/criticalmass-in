@@ -23,7 +23,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class CityManagementController extends AbstractController
 {
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function addAction(
         Request $request,
@@ -91,7 +91,7 @@ class CityManagementController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $eventDispatcher->dispatch(CityCreatedEvent::NAME, new CityCreatedEvent($city));
+            $eventDispatcher->dispatch(new CityCreatedEvent($city), CityCreatedEvent::NAME);
 
             $em = $this->getDoctrine()->getManager();
 
@@ -124,7 +124,7 @@ class CityManagementController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("city", class="App:City")
      */
     public function editAction(
@@ -179,7 +179,7 @@ class CityManagementController extends AbstractController
 
             $this->getDoctrine()->getManager()->flush();
 
-            $eventDispatcher->dispatch(CityUpdatedEvent::NAME, new CityUpdatedEvent($city));
+            $eventDispatcher->dispatch(new CityUpdatedEvent($city), CityUpdatedEvent::NAME);
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
 
