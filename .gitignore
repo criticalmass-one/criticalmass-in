@@ -55,3 +55,6 @@ criticalmass.iml
 #/phpunit.xml
 ###< phpunit/phpunit ###
 docker
+###> liip/imagine-bundle ###
+/public/media/cache/
+###< liip/imagine-bundle ###

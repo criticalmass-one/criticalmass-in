@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e9e34628b7b53180f2ba80a0cff3acbc",
+    "content-hash": "a0810670e3cb2e7bae7815a0991d3e66",
     "packages": [
         {
             "name": "calderacc/geobasic",
@@ -17430,7 +17430,8 @@
         "ext-simplexml": "*",
         "ext-fileinfo": "*",
         "ext-xmlwriter": "*",
-        "ext-json": "*"
+        "ext-json": "*",
+        "ext-zip": "*"
     },
     "platform-dev": [],
     "plugin-api-version": "2.2.0"
