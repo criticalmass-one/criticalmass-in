@@ -468,9 +468,6 @@
             "ref": "c276fa48d4713de91eb410289b3b1834acb7e403"
         }
     },
-    "predis/predis": {
-        "version": "v1.1.1"
-    },
     "presta/sitemap-bundle": {
         "version": "v1.5.3"
     },
