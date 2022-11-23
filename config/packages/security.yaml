@@ -28,12 +28,17 @@ security:
                 resource_owners:
                     facebook:  "/login/check-facebook"
                     strava:    "/login/check-strava"
-                    runkeeper: "/login/check-runkeeper"
                     twitter:   "/login/check-twitter"
                 login_path:        /login
                 failure_path:      /login
                 oauth_user_provider:
                     service: caldera.user_provider
+
+        api:
+            pattern:    ^/api
+            stateless:  true
+            anonymous:  false # can be omitted as its default value
+            security: false
 
     access_control:
         # URL of FOSUserBundle which need to be available to anonymous users
@@ -41,17 +46,10 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
-        # Admin login page needs to be access without credential
-        - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/logout$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-
-        - { path: ^/admin, role: ROLE_ADMIN }
+        #- { path: ^/api, roles: [ IS_AUTHENTICATED_FULLY ] }
 
     role_hierarchy:
         ROLE_USER:        []
-        ROLE_ADMIN:       [ROLE_USER]
-        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     access_decision_manager:
         strategy: unanimous

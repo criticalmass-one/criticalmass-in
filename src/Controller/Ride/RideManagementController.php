@@ -23,7 +23,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class RideManagementController extends AbstractController
 {
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("city", class="App:City")
      */
     public function addAction(Request $request, UserInterface $user = null, EntityManagerInterface $entityManager, City $city, ObjectRouterInterface $objectRouter): Response
@@ -91,7 +91,7 @@ class RideManagementController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
     public function editAction(Request $request, UserInterface $user = null, Ride $ride, ObjectRouterInterface $objectRouter): Response
@@ -158,7 +158,7 @@ class RideManagementController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
     public function socialPreviewAction(
@@ -215,7 +215,7 @@ class RideManagementController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
     public function disableAction(Request $request, ManagerRegistry $registry, UserInterface $user = null, Ride $ride, ObjectRouterInterface $objectRouter): RedirectResponse
@@ -235,10 +235,10 @@ class RideManagementController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function enableAction(Request $request, ManagerRegistry $registry, UserInterface $user = null, Ride $ride, ObjectRouterInterface $objectRouter): RedirectResponse
+    public function enableAction(ManagerRegistry $registry, UserInterface $user = null, Ride $ride, ObjectRouterInterface $objectRouter): RedirectResponse
     {
         $ride->setEnabled(true)
             ->setDisabledReason(null)

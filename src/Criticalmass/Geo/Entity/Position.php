@@ -3,75 +3,67 @@
 namespace App\Criticalmass\Geo\Entity;
 
 use App\Criticalmass\Geo\EntityInterface\PositionInterface;
-use Caldera\GeoBasic\Coord\Coord;
+use Caldera\GeoBasic\Coordinate\Coordinate;
 use JMS\Serializer\Annotation as JMS;
 
 /**
  * @JMS\ExclusionPolicy("all")
  */
-class Position extends Coord implements PositionInterface
+class Position extends Coordinate implements PositionInterface
 {
     /**
-     * @var float $latitude
      * @JMS\Expose
      * @JMS\Type("float")
      */
-    protected $latitude;
+    protected ?float $latitude = null;
 
     /**
-     * @var float $longitude
      * @JMS\Expose
      * @JMS\Type("float")
      */
-    protected $longitude;
+    protected ?float $longitude = null;
 
     /**
-     * @var float $accuracy
      * @JMS\Expose
      * @JMS\Type("float")
      */
-    protected $accuracy;
+    protected ?float $accuracy = null;
 
     /**
-     * @var float $altitude
      * @JMS\Expose
      * @JMS\Type("float")
      */
-    protected $altitude;
+    protected ?float $altitude = null;
 
     /**
-     * @var float $altitudeAccuracy
      * @JMS\Expose
      * @JMS\Type("float")
      */
-    protected $altitudeAccuracy;
+    protected ?float $altitudeAccuracy = null;
 
     /**
-     * @var float $heading
      * @JMS\Expose
      * @JMS\Type("float")
      */
-    protected $heading;
-
-    /** @var float $speed
-     * @JMS\Expose
-     * @JMS\Type("float")
-     */
-    protected $speed;
+    protected ?float $heading = null;
 
     /**
-     * @var int $timestamp
+     * @JMS\Expose
+     * @JMS\Type("float")
+     */
+    protected ?float $speed = null;
+
+    /**
      * @JMS\Expose
      * @JMS\Type("int")
      */
-    protected $timestamp;
+    protected ?int $timestamp = null;
 
     /**
-     * @var \DateTime $dateTime
      * @JMS\Expose
      * @JMS\Type("DateTime<'U'>")
      */
-    protected $dateTime;
+    protected ?\DateTime $dateTime = null;
 
     public function setLatitude(float $latitude): PositionInterface
     {

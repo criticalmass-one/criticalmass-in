@@ -14,6 +14,10 @@ criticalmass_socialnetwork_city_list:
     path:  /{citySlug}/socialnetwork/list
     controller: App\Controller\SocialNetwork\SocialNetworkListController::listCityAction
 
+criticalmass_socialnetwork_city_list_items:
+    path:  /{citySlug}/socialnetwork/list-items
+    controller: App\Controller\SocialNetwork\SocialNetworkItemListController::listCityItemsAction
+
 criticalmass_socialnetwork_disable:
     path:  /socialnetwork/{profileId}/disable
     controller: App\Controller\SocialNetwork\SocialNetworkManagementController::disableAction

@@ -20,21 +20,27 @@ class FrontpageController extends AbstractController
         $monthInterval = new \DateInterval('P1M');
         $startDateTime->sub($monthInterval);
 
-        $timelineContent = $cachedTimeline
+        $timelineContentList = $cachedTimeline
             ->setDateRange($startDateTime, $endDateTime)
             ->execute()
-            ->getTimelineContent();
+            ->getTimelineContentList();
 
         return $this->render('Frontpage/index.html.twig', [
-            'timelineContent' => $timelineContent,
+            'timelineContentList' => $timelineContentList,
             'frontpageTeaserList' => $frontpageTeaserList,
         ]);
     }
 
     public function rideListAction(FrontpageRideListFactory $frontpageRideListFactory): Response
     {
+        $monthList = $frontpageRideListFactory
+            ->createList()
+            ->sort()
+            ->getMonthList()
+        ;
+
         return $this->render('Frontpage/_ride_list.html.twig', [
-            'rideList' => $frontpageRideListFactory->sort(),
+            'rideList' => $monthList,
         ]);
     }
 

@@ -18,13 +18,19 @@
         {% endif %}
     {% endblock %}
 
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-info">
+                    Nach elf Jahren muss auch mal Schluss sein: <a href="https://criticalmass.blog/nach-elf-jahren-ist-schluss-criticalmass-in-sperrt-zu/">criticalmass.in wird am 30. September abgeschaltet</a>.
+                </div>
+            </div>
+        </div>
+    </div>
+
     {{ render(controller('App\\Controller\\Template\\AlertController:showCurrentAlertsAction')) }}
 
     {% block content %}{% endblock %}
 
-    {% include('Template/Includes/_adserver.html.twig') %}
-
     {% include('Template/Includes/_footer.html.twig') %}
-
-    {% include('Template/Includes/_piwik.html.twig') %}
 {% endblock %}

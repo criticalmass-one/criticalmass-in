@@ -2,15 +2,16 @@
 
 namespace App\Controller\Api;
 
-use App\Criticalmass\DataQuery\DataQueryManager\DataQueryManagerInterface;
-use App\Criticalmass\DataQuery\RequestParameterList\RequestToListConverter;
+use JMS\Serializer\SerializationContext;
+use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
+use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Entity\City;
-use FOS\RestBundle\Context\Context;
-use FOS\RestBundle\View\View;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Nelmio\ApiDocBundle\Annotation\Operation;
+use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class CityController extends BaseController
 {
@@ -18,6 +19,10 @@ class CityController extends BaseController
      * Get a list of critical mass cities.
      *
      * You may specify your query with the following parameters.
+     *
+     * <strong>Name</strong>
+     *
+     * Find a city by it's name with the <code>name</code> parameter.
      *
      * <strong>Regional query parameters</strong>
      *
@@ -41,7 +46,7 @@ class CityController extends BaseController
      * <ul>
      * <li><code>id</code></li>
      * <li><code>region</code></li>
-     * <li><code>city</code></li>
+     * <li><code>name</code></li>
      * <li><code>title</code></li>
      * <li><code>cityPopulation</code></li>
      * <li><code>latitude</code></li>
@@ -56,72 +61,162 @@ class CityController extends BaseController
      *
      * Apply <code>startValue</code> to deliver a value to start your ordered list with.
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Returns a list of critical mass cities",
-     *  section="City",
-     *  parameters={
-     *     {"name"="regionSlug", "dataType"="string", "required"=false, "description"="Provide a region slug"},
-     *     {"name"="centerLatitude", "dataType"="float", "required"=false, "description"="Latitude of a coordinate to search cities around in a given radius."},
-     *     {"name"="centerLongitude", "dataType"="float", "required"=false, "description"="Longitude of a coordinate to search cities around in a given radius."},
-     *     {"name"="radius", "dataType"="float", "required"=false, "description"="Radius to look around for cities."},
-     *     {"name"="bbEastLongitude", "dataType"="float", "required"=false, "description"="East longitude of a bounding box to look for cities."},
-     *     {"name"="bbWestLongitude", "dataType"="float", "required"=false, "description"="West longitude of a bounding box to look for cities."},
-     *     {"name"="bbNorthLatitude", "dataType"="float", "required"=false, "description"="North latitude of a bounding box to look for cities."},
-     *     {"name"="bbSouthLatitude", "dataType"="float", "required"=false, "description"="South latitude of a bounding box to look for cities."},
-     *     {"name"="orderBy", "dataType"="string", "required"=false, "description"="Choose a property to sort the list by."},
-     *     {"name"="orderDirection", "dataType"="string", "required"=false, "description"="Sort ascending or descending."},
-     *     {"name"="distanceOrderDirection", "dataType"="string", "required"=false, "description"="Enable distance sorting in combination with radius query."},
-     *     {"name"="startValue", "dataType"="string", "required"=false, "description"="Start ordered list with provided value."},
-     *     {"name"="size", "dataType"="integer", "required"=false, "description"="Length of resulting list. Defaults to 10."},
-     *     {"name"="extended", "dataType"="boolean", "required"=false, "description"="Set true to retrieve a more detailed list."}
-     *  },
+     * @Operation(
+     *     tags={"City"},
+     *     summary="Returns a list of critical mass cities",
+     *     @OA\Parameter(
+     *         name="name",
+     *         in="query",
+     *         description="Name of the city",
+     *         required=false,
+     *         @OA\Schema(type="string"),
+     *     ),
+     *     @OA\Parameter(
+     *         name="regionSlug",
+     *         in="query",
+     *         description="Provide a region slug",
+     *         required=false,
+     *         @OA\Schema(type="string"),
+     *     ),
+     *     @OA\Parameter(
+     *         name="centerLatitude",
+     *         in="query",
+     *         description="Latitude of a coordinate to search cities around in a given radius.",
+     *         required=false,
+     *         @OA\Schema(type="number"),
+     *     ),
+     *     @OA\Parameter(
+     *         name="centerLongitude",
+     *         in="query",
+     *         description="Longitude of a coordinate to search cities around in a given radius.",
+     *         required=false,
+     *         @OA\Schema(type="number"),
+     *     ),
+     *     @OA\Parameter(
+     *         name="radius",
+     *         in="query",
+     *         description="Radius to look around for cities.",
+     *         required=false,
+     *         @OA\Schema(type="number"),
+     *     ),
+     *     @OA\Parameter(
+     *         name="bbEastLongitude",
+     *         in="query",
+     *         description="East longitude of a bounding box to look for cities.",
+     *         required=false,
+     *         @OA\Schema(type="number"),
+     *     ),
+     *     @OA\Parameter(
+     *         name="bbWestLongitude",
+     *         in="query",
+     *         description="West longitude of a bounding box to look for cities.",
+     *         required=false,
+     *         @OA\Schema(type="number"),
+     *     ),
+     *     @OA\Parameter(
+     *         name="bbNorthLatitude",
+     *         in="query",
+     *         description="North latitude of a bounding box to look for cities.",
+     *         required=false,
+     *         @OA\Schema(type="number"),
+     *     ),
+     *     @OA\Parameter(
+     *         name="bbSouthLatitude",
+     *         in="query",
+     *         description="South latitude of a bounding box to look for cities.",
+     *         required=false,
+     *         @OA\Schema(type="number"),
+     *     ),
+     *     @OA\Parameter(
+     *         name="orderBy",
+     *         in="query",
+     *         description="Choose a property to sort the list by.",
+     *         required=false,
+     *         @OA\Schema(type="string"),
+     *     ),
+     *     @OA\Parameter(
+     *         name="orderDirection",
+     *         in="query",
+     *         description="Sort ascending or descending.",
+     *         required=false,
+     *         @OA\Schema(type="string"),
+     *     ),
+     *     @OA\Parameter(
+     *         name="distanceOrderDirection",
+     *         in="query",
+     *         description="Enable distance sorting in combination with radius query.",
+     *         required=false,
+     *         @OA\Schema(type="string"),
+     *     ),
+     *     @OA\Parameter(
+     *         name="startValue",
+     *         in="query",
+     *         description="Start ordered list with provided value.",
+     *         required=false,
+     *         @OA\Schema(type="string"),
+     *     ),
+     *     @OA\Parameter(
+     *         name="size",
+     *         in="query",
+     *         description="Length of resulting list. Defaults to 10.",
+     *         required=false,
+     *         @OA\Schema(type="integer"),
+     *     ),
+     *     @OA\Parameter(
+     *         name="extended",
+     *         in="query",
+     *         description="Set true to retrieve a more detailed list.",
+     *         required=false,
+     *         @OA\Schema(type="boolean"),
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     )
      * )
      */
-    public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager): Response
+    #[Route(path: '/city', name: 'caldera_criticalmass_rest_city_list', methods: ['GET'])]
+    public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager): JsonResponse
     {
         $queryParameterList = RequestToListConverter::convert($request);
         $cityList = $dataQueryManager->query($queryParameterList, City::class);
 
-        $context = new Context();
+        $groups = ['ride-list'];
 
         if ($request->query->has('extended') && true === $request->query->getBoolean('extended')) {
-            $context->addGroup('extended-ride-list');
+            $groups[] = 'extended-ride-list';
         }
 
-        $context->addGroup('ride-list');
+        $context = new SerializationContext();
+        $context->setGroups($groups);
 
-        $view = View::create();
-        $view
-            ->setContext($context)
-            ->setData($cityList)
-            ->setFormat('json')
-            ->setStatusCode(200);
-
-        return $this->handleView($view);
+        return $this->createStandardResponse($cityList, $context);
     }
 
     /**
      * Retrieve information for a city, which is identified by the parameter <code>citySlug</code>.
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Shows a critical mass city",
-     *  section="City",
-     *  requirements={
-     *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Provide the slug of a city."}
-     *  }
+     * @Operation(
+     *     tags={"City"},
+     *     summary="Shows a critical mass city",
+     *     @OA\Parameter(
+     *         name="citySlug",
+     *         in="path",
+     *         description="Slug of the city",
+     *         required=true,
+     *         @OA\Schema(type="string"),
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     )
      * )
+     *
      * @ParamConverter("city", class="App:City")
      */
-    public function showAction(City $city): Response
+    #[Route(path: '/{citySlug}', name: 'caldera_criticalmass_rest_city_show', methods: ['GET'], options: ['expose' => true])]
+    public function showAction(City $city): JsonResponse
     {
-        $view = View::create();
-        $view
-            ->setData($city)
-            ->setFormat('json')
-            ->setStatusCode(200);
-
-        return $this->handleView($view);
+        return $this->createStandardResponse($city);
     }
 }

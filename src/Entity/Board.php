@@ -21,50 +21,50 @@ class Board implements BoardInterface, RouteableInterface, AutoParamConverterAbl
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
-
-    /**
-     * @ORM\Column(type="text")
-     * @Assert\NotBlank()
-     */
-    protected $title;
+    protected ?int $id = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    protected $description;
+    #[Assert\NotBlank]
+    protected ?string $title = null;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="text", nullable=true)
      */
-    protected $threadNumber = 0;
+    protected ?string $description = null;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
-    protected $postNumber = 0;
+    protected int $threadNumber = 0;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected int $postNumber = 0;
 
     /**
      * @ORM\OneToOne(targetEntity="Thread")
-     * @ORM\JoinColumn(name="lastthread_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="lastthread_id", referencedColumnName="id", unique=true)
      */
-    protected $lastThread;
+    protected ?Thread $lastThread = null;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
-    protected $position = 0;
+    protected int $position = 0;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
-    protected $enabled = true;
+    protected bool $enabled = true;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Routing\RouteParameter(name="boardSlug")
      */
-    protected $slug;
+    protected ?string $slug = null;
 
     public function __construct()
     {

@@ -2,12 +2,19 @@
 
 namespace App\Twig\Extension;
 
-use League\CommonMark\CommonMarkConverter;
+use App\Criticalmass\TextParser\TextParserInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
 class MarkdownTwigExtension extends AbstractExtension
 {
+    protected TextParserInterface $textParser;
+
+    public function __construct(TextParserInterface $textParser)
+    {
+        $this->textParser = $textParser;
+    }
+
     public function getFilters(): array
     {
         return [
@@ -15,14 +22,13 @@ class MarkdownTwigExtension extends AbstractExtension
         ];
     }
 
-    public function markdown(string $text): string
+    public function markdown(string $text = null): string
     {
-        $converter = new CommonMarkConverter([
-            'html_input' => 'strip',
-            'allow_unsafe_links' => false,
-        ]);
+        if (!$text) {
+            return '';
+        }
 
-        return $converter->convertToHtml($text);
+        return $this->textParser->parse($text);
     }
 
     public function getName(): string

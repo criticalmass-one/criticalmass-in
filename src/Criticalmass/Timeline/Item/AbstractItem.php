@@ -6,14 +6,13 @@ use App\Entity\User;
 
 abstract class AbstractItem implements ItemInterface
 {
-    /** @var string $uniqId */
-    protected $uniqId;
+    protected string $uniqId;
 
-    /** @var \DateTime $dateTime */
-    protected $dateTime;
+    protected ?\DateTime $dateTime = null;
 
-    /** @var User $user */
-    protected $user;
+    protected ?User $user = null;
+
+    protected string $tabName = 'standard';
 
     public function __construct()
     {
@@ -47,5 +46,10 @@ abstract class AbstractItem implements ItemInterface
     public function getUser(): ?User
     {
         return $this->user;
+    }
+
+    public function getTabName(): string
+    {
+        return $this->tabName;
     }
 }

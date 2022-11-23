@@ -16,48 +16,48 @@ class FrontpageTeaserButton
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="FrontpageTeaser", inversedBy="buttons")
      * @ORM\JoinColumn(name="teaser_id", referencedColumnName="id")
      */
-    protected $frontpageTeaser;
+    protected ?FrontpageTeaser $frontpageTeaser = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $caption;
+    protected ?string $caption = null;
 
     /**
      * @ORM\Column(type="string", length=32, nullable=true)
      */
-    protected $icon;
+    protected ?string $icon = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $link;
+    protected ?string $link = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $class;
+    protected ?string $class = null;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      */
-    protected $position = 0;
+    protected int $position = 0;
 
     /**
      * @ORM\Column(type="datetime", nullable=false)
      */
-    protected $createdAt;
+    protected \DateTime $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $updatedAt;
+    protected ?\DateTime $updatedAt = null;
 
     public function __construct()
     {

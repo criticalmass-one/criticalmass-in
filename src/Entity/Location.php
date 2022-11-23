@@ -23,45 +23,45 @@ class Location implements RouteableInterface, AuditableInterface, AutoParamConve
      * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Expose
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="photos")
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="locations")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      * @Routing\RouteParameter(name="citySlug")
      */
-    protected $city;
+    protected ?City $city = null;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Routing\RouteParameter(name="locationSlug")
      * @JMS\Expose
      */
-    protected $slug;
+    protected ?string $slug = null;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose
      */
-    protected $latitude;
+    protected ?float $latitude = null;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose
      */
-    protected $longitude;
+    protected ?float $longitude = null;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @JMS\Expose
      */
-    protected $title;
+    protected ?string $title = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * @JMS\Expose
      */
-    protected $description;
+    protected ?string $description = null;
 
     public function getId(): ?int
     {

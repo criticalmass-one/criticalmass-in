@@ -4,11 +4,21 @@ namespace App\Controller\Search;
 
 use App\Controller\AbstractController;
 use Elastica\Query;
+use FOS\ElasticaBundle\Finder\TransformedFinder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class SearchController extends AbstractController
 {
+    protected TransformedFinder $cityFinder;
+    protected TransformedFinder $rideFinder;
+
+    public function __construct(TransformedFinder $cityFinder, TransformedFinder $rideFinder)
+    {
+        $this->cityFinder = $cityFinder;
+        $this->rideFinder = $rideFinder;
+    }
+
     protected function createCityQuery(string $queryPhrase): Query
     {
         if ($queryPhrase) {
@@ -59,12 +69,10 @@ class SearchController extends AbstractController
         $queryPhrase = $request->get('query');
 
         $cityQuery = $this->createCityQuery($queryPhrase);
-        $cityFinder = $this->get('fos_elastica.finder.criticalmass_city');
-        $cityResults = $cityFinder->find($cityQuery);
+        $cityResults = $this->cityFinder->find($cityQuery);
 
         $rideQuery = $this->createRideQuery($queryPhrase);
-        $rideFinder = $this->get('fos_elastica.finder.criticalmass_ride');
-        $rideResults = $rideFinder->find($rideQuery);
+        $rideResults = $this->rideFinder->find($rideQuery);
 
         return $this->render('Search/result.html.twig', [
             'cityResults' => $cityResults,

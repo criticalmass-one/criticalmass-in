@@ -2,27 +2,26 @@
 
 namespace App\Criticalmass\Timeline;
 
-use Flagception\Manager\FeatureManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Flagception\Manager\FeatureManagerInterface;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
-use Symfony\Component\Templating\EngineInterface;
+use Symfony\Contracts\Cache\ItemInterface;
+use Twig\Environment;
 
 class CachedTimeline extends Timeline
 {
-    /** @var int $ttl */
-    protected $ttl;
+    protected int $ttl;
 
-    /** @var string $redisUrl */
-    protected $redisUrl;
+    protected string $redisUrl;
 
-    public function __construct(ManagerRegistry $doctrine, EngineInterface $templating, FeatureManagerInterface $featureManager, string $redisUrl, int $cachedTimelineTtl = 300)
+    public function __construct(ManagerRegistry $doctrine, Environment $twigEnvironment, FeatureManagerInterface $featureManager, string $redisUrl, int $cachedTimelineTtl = 300)
     {
         $this->doctrine = $doctrine;
-        $this->templating = $templating;
+        $this->twigEnvironment = $twigEnvironment;
         $this->ttl = $cachedTimelineTtl;
         $this->redisUrl = $redisUrl;
 
-        parent::__construct($doctrine, $templating, $featureManager);
+        parent::__construct($doctrine, $twigEnvironment, $featureManager);
     }
 
     public function execute(): TimelineInterface
@@ -41,23 +40,17 @@ class CachedTimeline extends Timeline
 
         $cache = new RedisAdapter(
             $redisConnection,
-            $namespace = '',
-            $defaultLifetime = 0
+            'criticalmass',
+            $this->ttl
         );
 
-        $timeline = $cache->getItem($cacheKey);
+        $this->contentList = $cache->get($cacheKey, function (ItemInterface $item) {
+            $item->expiresAfter($this->ttl);
 
-        if (!$timeline->isHit()) {
             $this->process();
 
-            $timeline
-                ->set($this->content)
-                ->expiresAfter($this->ttl);
-
-            $cache->save($timeline);
-        } else {
-            $this->content = $timeline->get();
-        }
+            return $this->getTimelineContentList();
+        });
 
         return $this;
     }

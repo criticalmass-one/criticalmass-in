@@ -170,7 +170,9 @@
                             <label class="control-label" for="location">
                                 Treffpunkt:
                             </label>
-
+                            <button id="search-location-button" class="btn btn-default btn-xs pull-right" type="button">
+                                <i class="far fa-map-marker"></i>
+                            </button>
                             {{ form_widget(form.location, { 'attr' : { 'class': 'form-control' } }) }}
                         </div>
                         <p class="help-block">
@@ -182,21 +184,50 @@
                     </div>
                 </div>
 
-                {% if form.enabled is defined %}
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="control-label" for="location">
-                                Tour aktivieren:
+                            <label class="control-label" for="rideType">
+                                Art der Tour:
                             </label>
 
-                            {{ form_widget(form.enabled, { 'attr' : { 'class': 'form-control' } }) }}
+                            {{ form_widget(form.rideType, { 'attr' : { 'class': 'form-control' } }) }}
                         </div>
                         <p class="help-block">
-                            Momentan ist diese Tour deaktiviert. Wähle die Checkbox an, um sie wieder zu aktivieren.
+                            Falls es sich bei dieser Tour nicht um eine „normale“ Critical Mass handeln sollte, kannst du hier die Art dieser Tour genauer spezifizieren.
                         </p>
                     </div>
                 </div>
+
+                {% if form.slug is defined %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label" for="slug">
+                                    Slug:
+                                </label>
+
+                                {{ form_widget(form.slug, { 'attr' : { 'class': 'form-control' } }) }}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if form.enabled is defined %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label" for="location">
+                                    Tour aktivieren:
+                                </label>
+
+                                {{ form_widget(form.enabled, { 'attr' : { 'class': 'form-control' } }) }}
+                            </div>
+                            <p class="help-block">
+                                Momentan ist diese Tour deaktiviert. Wähle die Checkbox an, um sie wieder zu aktivieren.
+                            </p>
+                        </div>
+                    </div>
                 {% endif %}
 
                 <div class="row">

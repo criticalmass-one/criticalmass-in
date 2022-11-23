@@ -12,25 +12,28 @@ use Doctrine\ORM\Mapping as ORM;
 class CityView implements ViewEntity
 {
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="city_views")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
-    protected $user;
-    /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="city_views")
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
-     */
-    protected $city;
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $dateTime;
-    /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private ?int $id = null;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="city_views")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    protected ?User $user = null;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="city_views")
+     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     */
+    protected ?City $city = null;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected \DateTime $dateTime;
 
     public function __construct()
     {
