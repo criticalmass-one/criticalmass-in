@@ -10,19 +10,16 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class TracksTransformCommand extends Command
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
+    protected static $defaultName = 'criticalmass:tracks:transform';
 
-    public function __construct(?string $name = null, ManagerRegistry $registry)
+    public function __construct(protected ManagerRegistry $registry)
     {
-        parent::__construct($name);
+        parent::__construct();
     }
 
     protected function configure()
     {
-        $this
-            ->setName('criticalmass:tracks:transform')
-            ->setDescription('');
+        $this->setDescription('');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

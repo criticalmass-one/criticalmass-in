@@ -20,7 +20,7 @@ class SocialNetworkProfile
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      */
-    protected int $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="socialNetworkProfiles")
@@ -51,10 +51,10 @@ class SocialNetworkProfile
 
     /**
      * @ORM\Column(type="string")
-     * @Assert\NotBlank
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      */
+    #[Assert\NotBlank]
     protected ?string $identifier = null;
 
     /**
@@ -62,7 +62,7 @@ class SocialNetworkProfile
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      */
-    protected string $network;
+    protected ?string $network = null;
 
     /**
      * @ORM\Column(type="boolean")
@@ -84,7 +84,7 @@ class SocialNetworkProfile
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="socialNetworkProfiles")
      */
-    private User $createdBy;
+    private ?User $createdBy = null;
 
     /**
      * @ORM\Column(type="boolean")

@@ -15,22 +15,22 @@ class BlacklistedWebsite
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $pattern;
+    protected ?string $pattern = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    protected $description;
+    protected ?string $description = null;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    protected $createdAt;
+    protected ?\DateTime $createdAt = null;
 
     public function __construct()
     {

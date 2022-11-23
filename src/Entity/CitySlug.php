@@ -21,21 +21,21 @@ class CitySlug implements RouteableInterface
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      * @Routing\RouteParameter(name="citySlug")
      */
-    protected $slug;
+    protected ?string $slug = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="slugs", fetch="EAGER")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
-    protected $city;
+    protected ?City $city = null;
 
     public function __construct(string $slug = null)
     {

@@ -16,24 +16,24 @@ class ThreadView implements ViewEntity
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="photo_views")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="thread_views")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    protected $user;
+    protected ?User $user = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="Thread", inversedBy="thread_views")
      * @ORM\JoinColumn(name="thread_id", referencedColumnName="id")
      */
-    protected $thread;
+    protected ?Thread $thread = null;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $dateTime;
+    protected \DateTime $dateTime;
 
     public function __construct()
     {

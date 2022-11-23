@@ -24,32 +24,21 @@ security:
             logout:
                 invalidate_session: false
             anonymous:          true
-            fos_oauth:  true
             oauth:
                 resource_owners:
                     facebook:  "/login/check-facebook"
                     strava:    "/login/check-strava"
-                    runkeeper: "/login/check-runkeeper"
                     twitter:   "/login/check-twitter"
                 login_path:        /login
                 failure_path:      /login
                 oauth_user_provider:
                     service: caldera.user_provider
 
-        oauth_token:
-            pattern:    ^/oauth/v2/token
-            security:   false
-
-        oauth_authorize:
-            pattern:    ^/oauth/v2/auth
-            security: false
-            # Add your favorite authentication process here
-
         api:
             pattern:    ^/api
-            fos_oauth:  true
             stateless:  true
             anonymous:  false # can be omitted as its default value
+            security: false
 
     access_control:
         # URL of FOSUserBundle which need to be available to anonymous users

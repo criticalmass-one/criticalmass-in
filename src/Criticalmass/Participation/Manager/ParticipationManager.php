@@ -41,7 +41,7 @@ class ParticipationManager implements ParticipationManagerInterface
         $em->persist($participation);
         $em->flush();
 
-        $this->eventDispatcher->dispatch(ParticipationCreatedEvent::NAME, new ParticipationCreatedEvent($participation));
+        $this->eventDispatcher->dispatch(new ParticipationCreatedEvent($participation), ParticipationCreatedEvent::NAME);
 
         return $participation;
     }

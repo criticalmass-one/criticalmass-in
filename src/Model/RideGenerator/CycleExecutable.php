@@ -28,15 +28,15 @@ class CycleExecutable
     /**
      * @JMS\Expose()
      * @JMS\Type("DateTime<'U'>")
-     * @Assert\GreaterThanOrEqual("1992-09-01", message="Vor September 1992 können keine Touren angelegt werden — das ist übrigens das Datum der allerersten Critical Mass in San Francisco.")
      */
+    #[Assert\GreaterThanOrEqual('1992-09-01', message: 'Vor September 1992 können keine Touren angelegt werden — das ist übrigens das Datum der allerersten Critical Mass in San Francisco.')]
     protected ?\DateTime $fromDate = null;
 
     /**
      * @JMS\Expose()
      * @JMS\Type("DateTime<'U'>")
-     * @Assert\LessThanOrEqual("+1 years", message="Touren können maximal zwölf Monate im Voraus angelegt werden.")
      */
+    #[Assert\LessThanOrEqual('+1 years', message: 'Touren können maximal zwölf Monate im Voraus angelegt werden.')]
     protected ?\DateTime $untilDate = null;
 
     public function __construct()

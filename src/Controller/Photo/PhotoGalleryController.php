@@ -43,7 +43,7 @@ class PhotoGalleryController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @Feature("photos")
      */
     public function userlistAction(UserInterface $user = null): Response

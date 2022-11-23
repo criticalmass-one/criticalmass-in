@@ -15,29 +15,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class WebsiteCrawlerCommand extends Command
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    /** @var CrawlerInterface $crawler */
-    protected $crawler;
-
-    /** @var ParserInterface $parser */
-    protected $parser;
-
-    public function __construct(ManagerRegistry $registry, CrawlerInterface $crawler, ParserInterface $parser)
+    protected static $defaultName = 'criticalmass:website:crawl';
+    public function __construct(protected ManagerRegistry $registry, protected CrawlerInterface $crawler, protected ParserInterface $parser)
     {
-        $this->registry = $registry;
-        $this->crawler = $crawler;
-        $this->parser = $parser;
-
         parent::__construct();
     }
 
     protected function configure(): void
     {
-        $this
-            ->setName('criticalmass:website:crawl')
-            ->setDescription('Crawl websites from posts')
+        $this->setDescription('Crawl websites from posts')
             ->addArgument('limit', InputArgument::OPTIONAL, 'Number of posts to crawl per command call');
     }
 

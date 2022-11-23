@@ -15,7 +15,6 @@
             <argument type="collection">
                 <argument type="string" key="facebook">facebookId</argument>
                 <argument type="string" key="strava">stravaId</argument>
-                <argument type="string" key="runkeeper">runkeeperId</argument>
                 <argument type="string" key="twitter">twitterId</argument>
             </argument>
             <argument type="service" id="App\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGeneratorInterface" />

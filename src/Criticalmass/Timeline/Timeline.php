@@ -5,43 +5,24 @@ namespace App\Criticalmass\Timeline;
 use App\Criticalmass\Timeline\Collector\AbstractTimelineCollector;
 use App\Criticalmass\Timeline\Collector\TimelineCollectorInterface;
 use App\Criticalmass\Timeline\Item\ItemInterface;
-use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\Persistence\ManagerRegistry;
 use Flagception\Manager\FeatureManagerInterface;
-use Symfony\Bridge\Twig\TwigEngine;
-use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment;
 
 class Timeline implements TimelineInterface
 {
-    /** @var Registry $doctrine */
-    protected $doctrine;
+    protected array $collectorList = [];
 
-    /** @var TwigEngine $templating */
-    protected $templating;
+    protected array $items = [];
 
-    /** @var array $collectorList */
-    protected $collectorList = [];
+    protected array $contentList = [];
 
-    /** @var array $items */
-    protected $items = [];
+    protected ?\DateTime $startDateTime = null;
 
-    /** @var array $contentList */
-    protected $contentList = [];
+    protected ?\DateTime $endDateTime = null;
 
-    /** @var \DateTime $startDateTime */
-    protected $startDateTime = null;
-
-    /** @var \DateTime $endDateTime */
-    protected $endDateTime = null;
-
-    /** @var FeatureManagerInterface $featureManager */
-    protected $featureManager;
-
-    public function __construct(ManagerRegistry $doctrine, EngineInterface $templating, FeatureManagerInterface $featureManager)
+    public function __construct(protected ManagerRegistry $doctrine, protected Environment $twigEnvironment, protected FeatureManagerInterface $featureManager)
     {
-        $this->doctrine = $doctrine;
-        $this->templating = $templating;
-        $this->featureManager = $featureManager;
     }
 
     public function addCollector(AbstractTimelineCollector $collector): TimelineInterface
@@ -125,7 +106,7 @@ class Timeline implements TimelineInterface
                 $this->contentList[$item->getTabName()] = [];
             }
 
-            $this->contentList[$item->getTabName()][]= $this->templating->render('Timeline/Items/' . $templateName . '.html.twig', [
+            $this->contentList[$item->getTabName()][]= $this->twigEnvironment->render('Timeline/Items/' . $templateName . '.html.twig', [
                 'item' => $item
             ]);
         }

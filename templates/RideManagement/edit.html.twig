@@ -214,20 +214,20 @@
                 {% endif %}
 
                 {% if form.enabled is defined %}
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label class="control-label" for="location">
-                                Tour aktivieren:
-                            </label>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label" for="location">
+                                    Tour aktivieren:
+                                </label>
 
-                            {{ form_widget(form.enabled, { 'attr' : { 'class': 'form-control' } }) }}
+                                {{ form_widget(form.enabled, { 'attr' : { 'class': 'form-control' } }) }}
+                            </div>
+                            <p class="help-block">
+                                Momentan ist diese Tour deaktiviert. Wähle die Checkbox an, um sie wieder zu aktivieren.
+                            </p>
                         </div>
-                        <p class="help-block">
-                            Momentan ist diese Tour deaktiviert. Wähle die Checkbox an, um sie wieder zu aktivieren.
-                        </p>
                     </div>
-                </div>
                 {% endif %}
 
                 <div class="row">
