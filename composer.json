@@ -89,7 +89,6 @@
         "yohang/calendr": "dev-master"
     },
     "require-dev": {
-        "symfony/phpunit-bridge": "*",
         "phpunit/phpunit": "^8",
         "codedungeon/phpunit-result-printer": "^0.32",
         "symfony/browser-kit": "^5.0",

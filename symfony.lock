@@ -600,9 +600,6 @@
             "ref": "e3868d2f4a5104f19f844fe551099a00c6562527"
         }
     },
-    "symfony/css-selector": {
-        "version": "v4.2.4"
-    },
     "symfony/dependency-injection": {
         "version": "v4.1.1"
     },
@@ -692,15 +689,6 @@
     },
     "symfony/options-resolver": {
         "version": "v4.1.1"
-    },
-    "symfony/phpunit-bridge": {
-        "version": "3.3",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "3.3",
-            "ref": "b0e6522e50c3f9d1b24a0997cb7a8615ebcc60ca"
-        }
     },
     "symfony/polyfill-ctype": {
         "version": "v1.8.0"
