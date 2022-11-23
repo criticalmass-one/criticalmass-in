@@ -45,7 +45,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     protected ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="cities")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected ?User $user = null;
@@ -59,7 +59,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     protected ?Region $region = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="CitySlug")
+     * @ORM\ManyToOne(targetEntity="CitySlug", inversedBy="cities")
      * @ORM\JoinColumn(name="main_slug_id", referencedColumnName="id")
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
@@ -241,7 +241,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     protected int $colorBlue = 0;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Thread")
+     * @ORM\ManyToOne(targetEntity="Thread", inversedBy="cities")
      * @ORM\JoinColumn(name="lastthread_id", referencedColumnName="id")
      */
     protected ?Thread $lastThread = null;

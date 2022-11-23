@@ -122,7 +122,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     protected ?string $twitterkAccessToken = null;
 
     /**
-     *
+     * @ORM\OneToMany(targetEntity="CityCycle", mappedBy="city", cascade={"persist", "remove"})
      */
     protected Collection $cycles;
 
@@ -277,7 +277,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     }
 
     /**
-     * @ORM\PrePersist
+     * @ORM\PrePersist()
      */
     public function prePersist(): User
     {
@@ -288,7 +288,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     }
 
     /**
-     * @ORM\PreUpdate
+     * @ORM\PreUpdate()
      */
     public function preUpdate(): User
     {

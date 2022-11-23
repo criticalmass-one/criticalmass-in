@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="city_view")
- * @ORM\Entity
+ * @ORM\Entity()
  */
 class CityView implements ViewEntity
 {
@@ -25,7 +25,7 @@ class CityView implements ViewEntity
     protected ?User $user = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City")
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="city_views")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected ?City $city = null;

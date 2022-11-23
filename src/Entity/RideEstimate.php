@@ -19,7 +19,7 @@ class RideEstimate
     protected ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", fetch="LAZY")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="estimates", fetch="LAZY")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected ?User $user = null;
@@ -31,8 +31,8 @@ class RideEstimate
     protected ?Ride $ride = null;
 
     /**
-     * 
-     * 
+     * @ORM\OneToOne(targetEntity="Track", mappedBy="rideEstimate", cascade={"persist"}, fetch="LAZY")
+     * @ORM\JoinColumn(name="track_id", referencedColumnName="id")
      */
     protected ?Track $track = null;
 

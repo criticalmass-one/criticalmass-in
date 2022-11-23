@@ -19,13 +19,13 @@ class PhotoView implements ViewEntity
     protected ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="photo_views")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected ?User $user = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Photo")
+     * @ORM\ManyToOne(targetEntity="Photo", inversedBy="photo_views")
      * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
      */
     protected ?Photo $photo = null;

@@ -93,7 +93,7 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
     protected ?float $longitude = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="subrides")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected ?User $user = null;

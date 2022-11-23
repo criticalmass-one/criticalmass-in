@@ -19,7 +19,7 @@ class RideView implements ViewEntity
     protected ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="ride_views")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected ?User $user = null;

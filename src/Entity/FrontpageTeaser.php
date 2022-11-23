@@ -24,13 +24,13 @@ class FrontpageTeaser implements PhotoInterface
     protected ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="frontpageTeasers")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected ?User $user = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City")
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="frontpageTeasers")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected ?City $city = null;

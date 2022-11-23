@@ -33,7 +33,7 @@ class Post implements Crawlable
     protected Collection $children;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="posts")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected ?User $user = null;
@@ -51,13 +51,13 @@ class Post implements Crawlable
     protected ?City $city = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Thread")
+     * @ORM\ManyToOne(targetEntity="Thread", inversedBy="posts")
      * @ORM\JoinColumn(name="thread_id", referencedColumnName="id")
      */
     protected ?Thread $thread = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Photo")
+     * @ORM\ManyToOne(targetEntity="Photo", inversedBy="posts")
      * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
      */
     protected ?Photo $photo = null;

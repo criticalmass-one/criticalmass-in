@@ -25,14 +25,14 @@ class Thread implements ViewableEntity, RouteableInterface, AutoParamConverterAb
     protected ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Board")
+     * @ORM\ManyToOne(targetEntity="Board", inversedBy="threads")
      * @ORM\JoinColumn(name="board_id", referencedColumnName="id")
      * @Routing\RouteParameter(name="boardSlug")
      */
     protected ?Board $board = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City")
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="threads")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      * @Routing\RouteParameter(name="citySlug")
      */

@@ -18,7 +18,7 @@ class BlockedCity
     protected ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City", fetch="LAZY")
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="blocked_cities", fetch="LAZY")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     protected ?City $city = null;

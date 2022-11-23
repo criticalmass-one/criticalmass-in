@@ -49,7 +49,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     protected ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", fetch="LAZY")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="rides", fetch="LAZY")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected ?User $user = null;
@@ -250,7 +250,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     protected int $views = 0;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Photo", fetch="LAZY")
+     * @ORM\ManyToOne(targetEntity="Photo", inversedBy="featuredRides", fetch="LAZY")
      * @ORM\JoinColumn(name="featured_photo", referencedColumnName="id")
      */
     protected ?Photo $featuredPhoto = null;

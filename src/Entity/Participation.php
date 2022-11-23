@@ -50,11 +50,6 @@ class Participation implements AutoParamConverterAble
      */
     protected bool $goingNo = true;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private $blafeld;
-
     public function __construct()
     {
         $this->dateTime = new \DateTime();
