@@ -26,14 +26,14 @@ class Location implements RouteableInterface, AuditableInterface, AutoParamConve
     protected ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="photos")
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="locations")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      * @Routing\RouteParameter(name="citySlug")
      */
     protected ?City $city = null;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Routing\RouteParameter(name="locationSlug")
      * @JMS\Expose
      */
@@ -52,7 +52,7 @@ class Location implements RouteableInterface, AuditableInterface, AutoParamConve
     protected ?float $longitude = null;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @JMS\Expose
      */
     protected ?string $title = null;

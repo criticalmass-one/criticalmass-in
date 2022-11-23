@@ -39,41 +39,41 @@ class Thread implements ViewableEntity, RouteableInterface, AutoParamConverterAb
     protected ?City $city = null;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     #[Assert\NotBlank]
     protected ?string $title = null;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,  nullable=true)
      * @Routing\RouteParameter(name="threadSlug")
      */
     protected ?string $slug = null;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected int $views = 0;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected int $postNumber = 0;
 
     /**
      * @ORM\OneToOne(targetEntity="Post")
-     * @ORM\JoinColumn(name="firstpost_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="firstpost_id", referencedColumnName="id", unique=true)
      */
     protected ?Post $firstPost = null;
 
     /**
      * @ORM\OneToOne(targetEntity="Post")
-     * @ORM\JoinColumn(name="lastpost_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="lastpost_id", referencedColumnName="id", unique=true)
      */
     protected ?Post $lastPost = null;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected bool $enabled = true;
 

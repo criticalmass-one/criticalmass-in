@@ -19,7 +19,7 @@ class ThreadView implements ViewEntity
     protected ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="photo_views")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="thread_views")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected ?User $user = null;
@@ -31,7 +31,7 @@ class ThreadView implements ViewEntity
     protected ?Thread $thread = null;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected \DateTime $dateTime;
 

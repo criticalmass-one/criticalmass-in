@@ -66,7 +66,7 @@ class FrontpageTeaser implements PhotoInterface
     protected ?string $imageMimeType = null;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      */
     protected int $position = 0;
 
@@ -92,7 +92,7 @@ class FrontpageTeaser implements PhotoInterface
 
     /**
      * @ORM\OneToMany(targetEntity="FrontpageTeaserButton", mappedBy="frontpageTeaser")
-     * @ORM\OrderBy({"position" = "ASC"})
+     * @ORM\OrderBy({"position":"ASC"})
      */
     protected Collection $buttons;
 

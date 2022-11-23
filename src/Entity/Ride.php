@@ -121,7 +121,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     protected ?string $socialDescription = null;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      * @JMS\Type("DateTime<'U'>")
@@ -215,19 +215,19 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     protected ?\DateTime $updatedAt = null;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      * @JMS\Expose
      */
     protected int $participationsNumberYes = 0;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      * @JMS\Expose
      */
     protected int $participationsNumberMaybe = 0;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      * @JMS\Expose
      */
     protected int $participationsNumberNo = 0;
@@ -243,7 +243,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     protected Collection $estimates;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      * @DataQuery\Sortable
      * @DataQuery\Queryable
      */
@@ -256,13 +256,13 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     protected ?Photo $featuredPhoto = null;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected bool $restrictedPhotoAccess = false;
 
     /**
      * @ORM\OneToMany(targetEntity="Weather", mappedBy="ride", fetch="LAZY")
-     * @ORM\OrderBy({"creationDateTime" = "DESC"})
+     * @ORM\OrderBy({"creationDateTime":"DESC"})
      */
     protected Collection $weathers;
 

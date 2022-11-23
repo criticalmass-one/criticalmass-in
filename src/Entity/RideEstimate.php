@@ -65,7 +65,7 @@ class RideEstimate
     protected ?float $estimatedDuration = null;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected \DateTime $dateTime;
 

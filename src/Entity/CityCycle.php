@@ -41,7 +41,7 @@ class CityCycle implements RouteableInterface
     protected ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="cityCycles")
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="cycles")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      * @Routing\RouteParameter(name="citySlug")
      * @JMS\Expose()
@@ -55,7 +55,7 @@ class CityCycle implements RouteableInterface
     protected ?User $user = null;
 
     /**
-     * @ORM\OneToMany(targetEntity="Ride", mappedBy="cycle", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Ride", mappedBy="cycle", cascade={"persist","remove"})
      */
     protected Collection $rides;
 
