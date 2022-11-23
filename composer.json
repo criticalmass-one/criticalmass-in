@@ -55,7 +55,6 @@
         "symfony/flex": "^1.0",
         "khill/php-duration": "^1.0",
         "sabre/vobject": "^4.0",
-        "calderacc/socialnetwork-bundle": "^0.1",
         "oneup/flysystem-bundle": "^3.1",
         "flagception/flagception-bundle": "^4.0",
         "php-amqplib/rabbitmq-bundle": "^2.0",
