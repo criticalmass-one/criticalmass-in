@@ -7,7 +7,7 @@ use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="social_network_profile", options={"collate"="utf8mb4_unicode_ci", "charset"="utf8mb4", "collate"="utf8mb4_unicode_ci"})
+ * @ORM\Table(name="social_network_profile", options={"collate"="utf8mb4_unicode_ci", "charset"="utf8mb4"})
  * @ORM\Entity(repositoryClass="App\Repository\SocialNetworkProfileRepository")
  * @JMS\ExclusionPolicy("all")
  */
