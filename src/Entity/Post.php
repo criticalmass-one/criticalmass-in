@@ -73,18 +73,18 @@ class Post implements Crawlable
     protected ?float $longitude = null;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected ?\DateTime $dateTime = null;
 
     /**
-     * @ORM\Column(type="text")
-     * @Assert\NotBlank()
+     * @ORM\Column(type="text", nullable=true)
      */
+    #[Assert\NotBlank]
     protected ?string $message = null;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected bool $enabled = true;
 

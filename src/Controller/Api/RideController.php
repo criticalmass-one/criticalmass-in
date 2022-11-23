@@ -48,8 +48,8 @@ class RideController extends BaseController
      * )
      *
      * @ParamConverter("ride", class="App:Ride")
-     * @Route("/{citySlug}/{rideIdentifier}", name="caldera_criticalmass_rest_ride_show", methods={"GET"}, options={"expose"=true})
      */
+    #[Route(path: '/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_show', methods: ['GET'], options: ['expose' => true])]
     public function showAction(Ride $ride): JsonResponse
     {
         return $this->createStandardResponse($ride);
@@ -75,8 +75,8 @@ class RideController extends BaseController
      * )
      *
      * @ParamConverter("city", class="App:City")
-     * @Route("/{citySlug}/current", name="caldera_criticalmass_rest_ride_show_current", methods={"GET"}, options={"expose"=true})
      */
+    #[Route(path: '/{citySlug}/current', name: 'caldera_criticalmass_rest_ride_show_current', methods: ['GET'], options: ['expose' => true])]
     public function showCurrentAction(Request $request, City $city): JsonResponse
     {
         $cycleMandatory = $request->query->getBoolean('cycleMandatory', false);
@@ -85,7 +85,7 @@ class RideController extends BaseController
         $ride = $this->managerRegistry->getRepository(Ride::class)->findCurrentRideForCity($city, $cycleMandatory, $slugsAllowed);
 
         if (!$ride) {
-            return new JsonResponse([], 200, []); // @todo this should return 404, but i have no clue how to handle multiple jquery requests then
+            return new JsonResponse([], JsonResponse::HTTP_OK, []); // @todo this should return 404, but i have no clue how to handle multiple jquery requests then
         }
 
         return $this->createStandardResponse($ride);
@@ -308,8 +308,8 @@ class RideController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     * @Route("/ride", name="caldera_criticalmass_rest_ride_list", methods={"GET"})
      */
+    #[Route(path: '/ride', name: 'caldera_criticalmass_rest_ride_list', methods: ['GET'])]
     public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager): JsonResponse
     {
         $queryParameterList = RequestToListConverter::convert($request);
@@ -357,8 +357,8 @@ class RideController extends BaseController
      * )
      *
      * @ParamConverter("city", class="App:City")
-     * @Route("/{citySlug}/{rideIdentifier}", name="caldera_criticalmass_rest_ride_create", methods={"PUT"})
      */
+    #[Route(path: '/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_create', methods: ['PUT'])]
     public function createRideAction(Request $request, City $city, ValidatorInterface $validator): JsonResponse
     {
         /** @var Ride $ride */
@@ -431,8 +431,8 @@ class RideController extends BaseController
      * )
      *
      * @ParamConverter("ride", class="App:Ride")
-     * @Route("/{citySlug}/{rideIdentifier}", name="caldera_criticalmass_rest_ride_update", methods={"POST"})
      */
+    #[Route(path: '/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_update', methods: ['POST'])]
     public function updateRideAction(Request $request, Ride $ride, ValidatorInterface $validator, EntityMergerInterface $entityMerger): JsonResponse
     {
         /** @var Ride $ride */

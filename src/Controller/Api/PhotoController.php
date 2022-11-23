@@ -43,8 +43,8 @@ class PhotoController extends BaseController
      * )
      *
      * @ParamConverter("ride", class="App:Ride")
-     * @Route("/{citySlug}/{rideIdentifier}/listPhotos", name="caldera_criticalmass_rest_photo_ridelist", methods={"GET"})
      */
+    #[Route(path: '/{citySlug}/{rideIdentifier}/listPhotos', name: 'caldera_criticalmass_rest_photo_ridelist', methods: ['GET'])]
     public function listRidePhotosAction(Ride $ride): JsonResponse
     {
         $photoList = $this->managerRegistry->getRepository(Photo::class)->findPhotosByRide($ride);
@@ -246,8 +246,8 @@ class PhotoController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     * @Route("/photo", name="caldera_criticalmass_rest_photo_list", methods={"GET"})
      */
+    #[Route(path: '/photo', name: 'caldera_criticalmass_rest_photo_list', methods: ['GET'])]
     public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager): JsonResponse
     {
         $queryParameterList = RequestToListConverter::convert($request);
@@ -259,8 +259,8 @@ class PhotoController extends BaseController
 
     /**
      * @ParamConverter("ride", class="App:Ride")
-     * @Route("/photo/{id}", name="caldera_criticalmass_rest_photo_post", methods={"POST"})
      */
+    #[Route(path: '/photo/{id}', name: 'caldera_criticalmass_rest_photo_post', methods: ['POST'])]
     public function updatePhotoAction(Request $request, SerializerInterface $serializer): JsonResponse
     {
         $json = $request->getContent();

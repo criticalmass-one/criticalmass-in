@@ -28,10 +28,9 @@ class TrackController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     *
      * @ParamConverter("ride", class="App:Ride")
-     * @Route("/{citySlug}/{rideIdentifier}/listTracks", name="caldera_criticalmass_rest_track_ridelist", methods={"GET"})
      */
+    #[Route(path: '/{citySlug}/{rideIdentifier}/listTracks', name: 'caldera_criticalmass_rest_track_ridelist', methods: ['GET'])]
     public function listRideTrackAction(Ride $ride): JsonResponse
     {
         $trackList = $this->managerRegistry->getRepository(Track::class)->findByRide($ride);
@@ -50,10 +49,9 @@ class TrackController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     *
      * @ParamConverter("track", class="App:Track")
-     * @Route("/track/{trackId}", name="caldera_criticalmass_rest_track_view", methods={"GET"})
      */
+    #[Route(path: '/track/{trackId}', name: 'caldera_criticalmass_rest_track_view', methods: ['GET'])]
     public function viewAction(Track $track, UserInterface $user = null): JsonResponse
     {
         $groups = ['api-public'];
@@ -186,8 +184,8 @@ class TrackController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     * @Route("/track", name="caldera_criticalmass_rest_track_list", methods={"GET"})
      */
+    #[Route(path: '/track', name: 'caldera_criticalmass_rest_track_list', methods: ['GET'])]
     public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager,UserInterface $user = null): JsonResponse
     {
         $queryParameterList = RequestToListConverter::convert($request);

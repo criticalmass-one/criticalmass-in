@@ -9,9 +9,9 @@ use Symfony\Component\Validator\Constraints as Constraints;
 class StartValueParameter extends OrderParameter
 {
     /**
-     * @Constraints\NotNull()
      * @var $startValue
      */
+    #[Constraints\NotNull]
     protected $startValue;
 
     /**

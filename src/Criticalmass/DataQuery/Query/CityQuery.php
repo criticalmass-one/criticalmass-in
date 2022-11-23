@@ -15,10 +15,10 @@ use Symfony\Component\Validator\Constraints as Constraints;
 class CityQuery extends AbstractQuery implements DoctrineQueryInterface, ElasticQueryInterface
 {
     /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("App\Entity\City")
      * @var City $city
      */
+    #[Constraints\NotNull]
+    #[Constraints\Type(\App\Entity\City::class)]
     protected $city;
 
     /**

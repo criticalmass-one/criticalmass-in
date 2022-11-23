@@ -28,7 +28,7 @@ class RideEvent extends AbstractEvent
         return $this->ride;
     }
 
-    public function getUid()
+    public function getUid(): string
     {
         $uid = sprintf('ride-%d', $this->ride->getId());
 

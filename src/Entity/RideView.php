@@ -30,7 +30,7 @@ class RideView implements ViewEntity
     protected ?Ride $ride = null;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected \DateTime $dateTime;
 

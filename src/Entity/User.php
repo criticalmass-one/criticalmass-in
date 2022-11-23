@@ -38,45 +38,41 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     /**
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
-     * @Assert\NotBlank()
-     * @Assert\Regex(
-     *     pattern="/https?\:\/\//",
-     *     match=false,
-     *     message="Der Benutzername darf keine Url enthalten"
-     * )
      * @Routing\RouteParameter(name="username")
      * @todo Add typed property
      */
+    #[Assert\NotBlank]
+    #[Assert\Regex(pattern: '/https?\:\/\//', match: false, message: 'Der Benutzername darf keine Url enthalten')]
     protected $username;
 
     /**
-     * @ORM\OneToMany(targetEntity="Track", mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Track", mappedBy="user", cascade={"persist","remove"})
      */
     protected Collection $tracks;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected int $colorRed = 0;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected int $colorGreen = 0;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected int $colorBlue = 0;
 
     /**
-     * @ORM\Column(type="boolean", options={"default" = 0})
+     * @ORM\Column(type="boolean", nullable=true, options={"default":0})
      */
     protected bool $blurGalleries = false;
 
@@ -86,32 +82,32 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     protected Collection $participations;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected ?\DateTime $updatedAt = null;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected ?\DateTime $createdAt = null;
 
     /**
-     * @ORM\Column(name="facebook_id", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true, name="facebook_id")
      */
     protected ?string $facebookId = null;
 
     /**
-     * @ORM\Column(name="facebook_access_token", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true, name="facebook_access_token")
      */
     protected ?string $facebookAccessToken = null;
 
     /**
-     * @ORM\Column(name="strava_id", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true, name="strava_id")
      */
     protected ?string $stravaId = null;
 
     /**
-     * @ORM\Column(name="strava_access_token", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true, name="strava_access_token")
      */
     protected ?string $stravaAccessToken = null;
 

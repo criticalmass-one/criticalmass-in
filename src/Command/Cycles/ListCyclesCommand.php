@@ -10,29 +10,19 @@ use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ListCyclesCommand extends Command
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    /** @var TranslatorInterface $translator */
-    protected $translator;
-
-    public function __construct($name = null, ManagerRegistry $registry, TranslatorInterface $translator)
+    protected static $defaultName = 'criticalmass:cycles:list';
+    public function __construct(protected ManagerRegistry $registry, protected TranslatorInterface $translator)
     {
-        $this->registry = $registry;
-        $this->translator = $translator;
-
-        parent::__construct($name);
+        parent::__construct();
     }
 
     protected function configure(): void
     {
-        $this
-            ->setName('criticalmass:cycles:list')
-            ->setDescription('Create rides for a parameterized year and month automatically')
+        $this->setDescription('Create rides for a parameterized year and month automatically')
             ->addArgument(
                 'citySlug',
                 InputArgument::REQUIRED,

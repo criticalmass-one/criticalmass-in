@@ -24,10 +24,9 @@ class SocialNetworkProfileController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     *
      * @ParamConverter("city", class="App:City", isOptional="true")
-     * @Route("/socialnetwork-profiles", name="caldera_criticalmass_rest_socialnetwork_profiles_list", methods={"GET"})
      */
+    #[Route(path: '/socialnetwork-profiles', name: 'caldera_criticalmass_rest_socialnetwork_profiles_list', methods: ['GET'])]
     public function listSocialNetworkProfilesAction(Request $request, City $city = null): JsonResponse
     {
         $networkIdentifier = $request->get('networkIdentifier');
@@ -53,10 +52,9 @@ class SocialNetworkProfileController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     *
      * @ParamConverter("city", class="App:City")
-     * @Route("/{citySlug}/socialnetwork-profiles", name="caldera_criticalmass_rest_socialnetwork_profiles_citylist", methods={"GET"})
      */
+    #[Route(path: '/{citySlug}/socialnetwork-profiles', name: 'caldera_criticalmass_rest_socialnetwork_profiles_citylist', methods: ['GET'])]
     public function listSocialNetworkProfilesCityAction(City $city): JsonResponse
     {
         $profileList = $this->managerRegistry->getRepository(SocialNetworkProfile::class)->findByCity($city);
@@ -75,10 +73,9 @@ class SocialNetworkProfileController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     *
      * @ParamConverter("socialNetworkProfile", class="App:SocialNetworkProfile")
-     * @Route("/{citySlug}/socialnetwork-profiles/{profileId}", name="caldera_criticalmass_rest_socialnetwork_profiles_update", methods={"POST"})
      */
+    #[Route(path: '/{citySlug}/socialnetwork-profiles/{profileId}', name: 'caldera_criticalmass_rest_socialnetwork_profiles_update', methods: ['POST'])]
     public function updateSocialNetworkProfileAction(Request $request, SocialNetworkProfile $socialNetworkProfile, EntityMergerInterface $entityMerger): Response
     {
         $updatedSocialNetworkProfile = $this->serializer->deserialize($request->getContent(), SocialNetworkProfile::class, 'json');
@@ -101,10 +98,9 @@ class SocialNetworkProfileController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     *
      * @ParamConverter("city", class="App:City")
-     * @Route("/{citySlug}/socialnetwork-profiles", name="caldera_criticalmass_rest_socialnetwork_profiles_create", methods={"PUT"})
      */
+    #[Route(path: '/{citySlug}/socialnetwork-profiles', name: 'caldera_criticalmass_rest_socialnetwork_profiles_create', methods: ['PUT'])]
     public function createSocialNetworkProfileAction(Request $request, City $city): JsonResponse
     {
         $newSocialNetworkProfile = $this->serializer->deserialize($request->getContent(), SocialNetworkProfile::class, 'json');

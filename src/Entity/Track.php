@@ -48,7 +48,7 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
     protected ?int $id = null;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @JMS\Groups({"timelapse", "api-private"})
      * @JMS\Expose
      */
@@ -76,7 +76,7 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
     protected ?RideEstimate $rideEstimate = null;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      */
@@ -131,12 +131,12 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
     protected ?string $md5Hash = null;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected bool $enabled = true;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      * @OE\Boolean(value=false)
      */
     protected bool $deleted = false;
@@ -174,7 +174,7 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
     protected ?File $trackFile = null;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected ?string $trackFilename = null;
 
@@ -194,7 +194,11 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
     protected ?\DateTime $updatedAt = null;
 
     /**
-     * @ORM\Column(type="string", columnDefinition="ENUM('TRACK_SOURCE_GPX', 'TRACK_SOURCE_STRAVA', 'TRACK_SOURCE_RUNKEEPER', 'TRACK_SOURCE_RUNTASTIC', 'TRACK_SOURCE_DRAW', 'TRACK_SOURCE_GLYMPSE', 'TRACK_SOURCE_CRITICALMAPS', 'TRACK_SOURCE_UNKNOWN')")
+     * @ORM\Column(
+     *     type="string",
+     *     nullable=true,
+     *     columnDefinition="ENUM('TRACK_SOURCE_GPX', 'TRACK_SOURCE_STRAVA', 'TRACK_SOURCE_RUNKEEPER', 'TRACK_SOURCE_RUNTASTIC', 'TRACK_SOURCE_DRAW', 'TRACK_SOURCE_GLYMPSE', 'TRACK_SOURCE_CRITICALMAPS', 'TRACK_SOURCE_UNKNOWN')"
+     * )
      *
      * $source must be nullable du to legacy tracks without source attribution
      */

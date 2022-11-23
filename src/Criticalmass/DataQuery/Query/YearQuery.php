@@ -15,11 +15,11 @@ use Symfony\Component\Validator\Constraints as Constraints;
 class YearQuery extends AbstractDateTimeQuery implements ElasticQueryInterface, DoctrineQueryInterface
 {
     /**
-     * @Constraints\NotNull()
-     * @Constraints\GreaterThanOrEqual(value="1990")
-     * @Constraints\Type("int")
      * @var int $year
      */
+    #[Constraints\NotNull]
+    #[Constraints\GreaterThanOrEqual(value: 1990)]
+    #[Constraints\Type('int')]
     protected $year;
 
     /**

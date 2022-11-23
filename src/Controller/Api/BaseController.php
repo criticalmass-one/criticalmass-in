@@ -12,13 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 abstract class BaseController extends AbstractController
 {
-    protected ManagerRegistry $managerRegistry;
-    protected SerializerInterface $serializer;
-
-    public function __construct(ManagerRegistry $managerRegistry, SerializerInterface $serializer)
+    public function __construct(protected ManagerRegistry $managerRegistry, protected SerializerInterface $serializer)
     {
-        $this->managerRegistry = $managerRegistry;
-        $this->serializer = $serializer;
     }
 
     protected function deserializeRequest(Request $request, string $modelClass)
