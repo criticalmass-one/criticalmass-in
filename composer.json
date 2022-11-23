@@ -90,10 +90,9 @@
         "presta/sitemap-bundle": "^3.3"
     },
     "require-dev": {
-        "phpunit/phpunit": "^8",
-        "codedungeon/phpunit-result-printer": "^0.32",
         "symfony/browser-kit": "^5.0",
-        "vimeo/psalm": "^3.3",
+        "symfony/phpunit-bridge": "*",
+        "phpunit/phpunit": "^9",
         "symfony/maker-bundle": "^1.11",
         "symfony/stopwatch": "^5.0",
         "symfony/web-profiler-bundle": "^5.0",
