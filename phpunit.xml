@@ -36,6 +36,11 @@
         <!-- Delivery is disabled by default via "null://localhost" -->
         <env name="MAILER_URL" value="null://localhost"/>
         <!-- ###- symfony/swiftmailer-bundle ### -->
+
+        <!-- ###+ symfony/framework-bundle ### -->
+        <env name="APP_ENV" value="dev"/>
+        <env name="APP_SECRET" value="df8d381811406884419490af74b35ce9"/>
+        <!-- ###- symfony/framework-bundle ### -->
     </php>
 
     <testsuites>
