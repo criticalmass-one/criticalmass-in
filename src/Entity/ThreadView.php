@@ -19,13 +19,13 @@ class ThreadView implements ViewEntity
     protected ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="photo_views")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="thread_views")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected ?User $user = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Thread", inversedBy="photo_views")
+     * @ORM\ManyToOne(targetEntity="Thread", inversedBy="thread_views")
      * @ORM\JoinColumn(name="thread_id", referencedColumnName="id")
      */
     protected ?Thread $thread = null;

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="ride_view")
- * @ORM\Entity
+ * @ORM\Entity()
  */
 class RideView implements ViewEntity
 {

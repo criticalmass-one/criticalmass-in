@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="photo_view")
- * @ORM\Entity
+ * @ORM\Entity()
  */
 class PhotoView implements ViewEntity
 {
