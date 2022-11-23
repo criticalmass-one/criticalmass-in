@@ -50,15 +50,6 @@
                     soziale Netzwerke verwalten
                 </a>
             </li>
-
-            {% if is_granted('ROLE_ADMIN') %}
-                <li>
-                    <a href="{{ path('admin_app_city_edit', { id: city.id }) }}">
-                        <i class="far fa-magic"></i>
-                        Administrationsbereich
-                    </a>
-                </li>
-            {% endif %}
         </ul>
     </div>
 {% endblock %}
@@ -184,12 +175,6 @@
             <div class="col-md-3">
                 <div class="row">
                     <div class="col-md-12">
-                        {% include 'City/Includes/_live.html.twig' with { 'city': city } %}
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
                         {% include 'City/Includes/_nextTour.html.twig' with { 'city': city, 'currentRide': currentRide } %}
                     </div>
                 </div>
@@ -206,11 +191,13 @@
                     </div>
                 </div>
 
+                {% if nearCities|length > 0 %}
                 <div class="row">
                     <div class="col-md-12">
                         {% include 'City/Includes/_nearCities.html.twig' with { 'nearCities': nearCities } %}
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>

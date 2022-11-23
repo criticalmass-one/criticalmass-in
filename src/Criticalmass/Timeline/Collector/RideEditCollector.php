@@ -7,7 +7,7 @@ use App\Entity\Ride;
 
 class RideEditCollector extends AbstractTimelineCollector
 {
-    protected $entityClass = Ride::class;
+    protected string $entityClass = Ride::class;
 
     protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {

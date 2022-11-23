@@ -17,21 +17,15 @@ use Symfony\Component\Console\Question\Question;
 
 class MergeDuplicateRidesCommand extends ListDuplicateRidesCommand
 {
-    /** @var RideMergerInterface $rideMerger */
-    protected $rideMerger;
-
-    public function __construct($name = null, ManagerRegistry $registry, DuplicateFinderInterface $duplicateFinder, RideMergerInterface $rideMerger)
+    protected static $defaultName = 'criticalmass:ride-duplicates:merge';
+    public function __construct(protected ManagerRegistry $registry, protected DuplicateFinderInterface $duplicateFinder, protected RideMergerInterface $rideMerger)
     {
-        $this->rideMerger = $rideMerger;
-
-        parent::__construct($name, $registry, $duplicateFinder);
+         parent::__construct($registry, $duplicateFinder);
     }
 
     protected function configure(): void
     {
-        $this
-            ->setName('criticalmass:ride-duplicates:merge')
-            ->setDescription('Merge duplicate rides')
+        $this->setDescription('Merge duplicate rides')
             ->addArgument(
                 'citySlug',
                 InputArgument::OPTIONAL,

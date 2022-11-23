@@ -39,7 +39,7 @@ class PhotoController extends AbstractController
             throw $this->createAccessDeniedException();
         }
 
-        $eventDispatcher->dispatch(ViewEvent::NAME, new ViewEvent($photo));
+        $eventDispatcher->dispatch(new ViewEvent($photo), ViewEvent::NAME);
 
         if ($ride && $photo->getUser()) {
             /** @var Track $track */
@@ -64,7 +64,7 @@ class PhotoController extends AbstractController
         $photo = $this->getPhotoRepository()->find($photoId);
 
         if ($photo) {
-            $eventDispatcher->dispatch(ViewEvent::NAME, new ViewEvent($photo));
+            $eventDispatcher->dispatch(new ViewEvent($photo), ViewEvent::NAME);
         }
 
         return new Response(null);

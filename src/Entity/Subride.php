@@ -26,7 +26,7 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
      * @JMS\Expose
      * @Routing\RouteParameter(name="subrideId")
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="Ride", inversedBy="subrides")
@@ -35,68 +35,68 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
      * @Routing\RouteParameter(name="rideIdentifier")
      * @Routing\RouteParameter(name="citySlug")
      */
-    protected $ride;
+    protected ?Ride $ride = null;
 
     /**
      * @ORM\OneToMany(targetEntity="SocialNetworkProfile", mappedBy="subride", cascade={"persist", "remove"})
      */
-    protected $socialNetworkProfiles;
+    protected Collection $socialNetworkProfiles;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\NotBlank()
      * @JMS\Expose
      */
-    protected $title;
+    #[Assert\NotBlank]
+    protected ?string $title = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * @JMS\Expose
      */
-    protected $description;
-
-    /**
-     * @ORM\Column(type="datetime")
-     * @JMS\Expose
-     */
-    protected $dateTime;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=false)
-     * @JMS\Expose
-     */
-    protected $createdAt;
+    protected ?string $description = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @JMS\Expose
      */
-    protected $updatedAt;
+    protected ?\DateTime $dateTime = null;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=false)
+     * @JMS\Expose
+     */
+    protected \DateTime $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @JMS\Expose
+     */
+    protected ?\DateTime $updatedAt = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\NotBlank()
      * @JMS\Expose
      */
-    protected $location;
+    #[Assert\NotBlank]
+    protected ?string $location = null;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose
      */
-    protected $latitude;
+    protected ?float $latitude = null;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose
      */
-    protected $longitude;
+    protected ?float $longitude = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="subrides")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    protected $user;
+    protected ?User $user = null;
 
     public function __construct()
     {

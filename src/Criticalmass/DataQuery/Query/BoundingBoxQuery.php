@@ -2,8 +2,10 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
-use App\Criticalmass\DataQuery\Annotation\QueryAnnotation as DataQuery;
-use App\Criticalmass\DataQuery\Validator\Constraint\BoundingBoxValues;
+use MalteHuebner\DataQueryBundle\Annotation\QueryAnnotation as DataQuery;
+use MalteHuebner\DataQueryBundle\Query\AbstractQuery;
+use MalteHuebner\DataQueryBundle\Query\ElasticQueryInterface;
+use MalteHuebner\DataQueryBundle\Validator\Constraint\BoundingBoxValues;
 use Symfony\Component\Validator\Constraints as Constraints;
 
 /**
@@ -13,35 +15,35 @@ use Symfony\Component\Validator\Constraints as Constraints;
 class BoundingBoxQuery extends AbstractQuery implements ElasticQueryInterface
 {
     /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("float")
-     * @Constraints\Range(min="-90", max="90")
      * @var float $northLatitude
      */
+    #[Constraints\NotNull]
+    #[Constraints\Type('float')]
+    #[Constraints\Range(min: -90, max: 90)]
     protected $northLatitude;
 
     /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("float")
-     * @Constraints\Range(min="-90", max="90")
      * @var float $southLatitude
      */
+    #[Constraints\NotNull]
+    #[Constraints\Type('float')]
+    #[Constraints\Range(min: -90, max: 90)]
     protected $southLatitude;
 
     /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("float")
-     * @Constraints\Range(min="-180", max="180")
      * @var float $eastLongitude
      */
+    #[Constraints\NotNull]
+    #[Constraints\Type('float')]
+    #[Constraints\Range(min: -180, max: 180)]
     protected $eastLongitude;
 
     /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("float")
-     * @Constraints\Range(min="-180", max="180")
      * @var float $westLongitude
      */
+    #[Constraints\NotNull]
+    #[Constraints\Type('float')]
+    #[Constraints\Range(min: -180, max: 180)]
     protected $westLongitude;
 
     /**

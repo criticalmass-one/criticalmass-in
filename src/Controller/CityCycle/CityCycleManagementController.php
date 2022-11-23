@@ -7,7 +7,7 @@ use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Form\Type\CityCycleType;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ManagerRegistry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class CityCycleManagementController extends AbstractController
 {
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("city", class="App:City")
      */
     public function addAction(Request $request, UserInterface $user = null, City $city, ObjectRouterInterface $objectRouter): Response
@@ -72,7 +72,7 @@ class CityCycleManagementController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("cityCycle", class="App:CityCycle", options={"id" = "cycleId"})
      */
     public function editAction(Request $request, UserInterface $user = null, CityCycle $cityCycle, ObjectRouterInterface $objectRouter): Response
@@ -125,11 +125,13 @@ class CityCycleManagementController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("cityCycle", class="App:CityCycle", options={"id" = "cycleId"})
      */
-    public function disableAction(CityCycle $cityCycle, ObjectManager $objectManager, ObjectRouterInterface $objectRouter): Response
+    public function disableAction(CityCycle $cityCycle, ManagerRegistry $managerRegistry, ObjectRouterInterface $objectRouter): Response
     {
+        $manager = $managerRegistry->getManager();
+
         if ($cityCycle->getRides()->count() > 0) {
             if (!$cityCycle->getValidFrom()) {
                 $cityCycle->setValidFrom($cityCycle->getCreatedAt());
@@ -141,10 +143,10 @@ class CityCycleManagementController extends AbstractController
 
             $cityCycle->setDisabledAt(new \DateTime());
         } elseif (0 === $cityCycle->getRides()->count()) {
-            $objectManager->remove($cityCycle);
+            $manager->remove($cityCycle);
         }
 
-        $objectManager->flush();
+        $manager->flush();
 
         return $this->redirect($objectRouter->generate($cityCycle->getCity(), 'caldera_criticalmass_citycycle_list'));
     }

@@ -179,9 +179,11 @@ class PostRepository extends EntityRepository
 
         $builder
             ->select('p')
+            ->join('p.photo', 'p2')
             ->where($builder->expr()->eq('p.enabled', ':enabled'))
             ->setParameter('enabled', true)
-            ->andWhere($builder->expr()->isNotNull('p.photo'));
+            ->andWhere($builder->expr()->eq('p2.deleted', ':deleted'))
+            ->setParameter('deleted', false);
 
         if ($startDateTime) {
             $builder
@@ -200,41 +202,6 @@ class PostRepository extends EntityRepository
         }
 
         $builder->addOrderBy('p.dateTime', 'DESC');
-
-        $query = $builder->getQuery();
-
-        $result = $query->getResult();
-
-        return $result;
-    }
-
-    public function findForTimelineBlogPostCommentCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null): array
-    {
-        $builder = $this->createQueryBuilder('p');
-
-        $builder
-            ->select('p', 'bp')
-            ->where($builder->expr()->eq('p.enabled', ':enabled'))
-            ->join('p.blogPost', 'bp')
-            ->andWhere($builder->expr()->eq('bp.enabled', ':enabled'))
-            ->addOrderBy('p.dateTime', 'DESC')
-            ->setParameter('enabled', true);
-
-        if ($startDateTime) {
-            $builder
-                ->andWhere($builder->expr()->gte('p.dateTime',':startDateTime'))
-                ->setParameter('startDateTime', $startDateTime);
-        }
-
-        if ($endDateTime) {
-            $builder
-                ->andWhere($builder->expr()->lte('p.dateTime', ':endDateTime'))
-                ->setParameter('endDateTime', $endDateTime);
-        }
-
-        if ($limit) {
-            $builder->setMaxResults($limit);
-        }
 
         $query = $builder->getQuery();
 

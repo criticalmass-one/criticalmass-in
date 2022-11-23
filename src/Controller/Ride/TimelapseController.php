@@ -34,6 +34,6 @@ class TimelapseController extends AbstractController
             ->execute()
             ->getList();
 
-        return new Response($list, 200, ['Content-Type' => 'text/json']);
+        return new Response($list, Response::HTTP_OK, ['Content-Type' => 'text/json']);
     }
 }

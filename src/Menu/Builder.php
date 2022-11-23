@@ -18,16 +18,16 @@ class Builder extends AbstractBuilder
             ->setExtra('dropdown', true);
 
         $menu['Critical Mass']
-            ->addChild('Über die Critical Mass', ['route' => 'caldera_criticalmass_help_about']);
+            ->addChild('Über die Critical Mass', ['uri' => 'https://criticalmass.blog/critical-mass/was-ist-die-critical-mass/']);
 
         $menu['Critical Mass']
-            ->addChild('Häufig gestellte Fragen', ['route' => 'caldera_criticalmass_help_faq']);
+            ->addChild('Häufig gestellte Fragen', ['uri' => 'https://criticalmass.blog/critical-mass/haeufig-gestellte-fragen-zur-critical-mass/']);
 
         $menu['Critical Mass']
-            ->addChild('Hilfe', ['route' => 'caldera_criticalmass_help_index']);
+            ->addChild('Hilfe', ['uri' => 'https://criticalmass.blog/criticalmass-one/hilfe/']);
 
         $menu['Critical Mass']
-            ->addChild('Über criticalmass.in', ['route' => 'caldera_criticalmass_intro']);
+            ->addChild('Über criticalmass.in', ['uri' => 'https://criticalmass.blog/criticalmass-one/ueber-criticalmass-in/']);
 
         $menu
             ->addChild('Städte', ['uri' => '#'])
@@ -73,17 +73,21 @@ class Builder extends AbstractBuilder
                 ->addChild('Fotos', ['route' => 'caldera_criticalmass_photo_examplegallery']);
         }
 
-        if ($this->featureManager->isActive('blog')) {
-            $menu['Community']
-                ->addChild('Blog', ['route' => 'caldera_criticalmass_blog_overview']);
-        }
-
         if ($this->isUserLoggedIn()) {
             $menu->addChild('Benutzerkonto', ['uri' => '#'])
                 ->setExtra('dropdown', true);
 
-            $menu['Benutzerkonto'
-                ]->addChild('Dein Profil', ['route' => 'criticalmass_user_usermanagement']);
+            $menu['Benutzerkonto']->addChild('Dein Profil', ['route' => 'criticalmass_user_usermanagement']);
+
+            $menu['Benutzerkonto']->addChild('divider1', ['attributes' => ['role' => 'separator', 'class' => 'divider']]);
+
+            $menu['Benutzerkonto']->addChild('Profilfoto ändern', ['route' => 'criticalmass_user_profile_photo']);
+            $menu['Benutzerkonto']->addChild('Profilfarbe wählen', ['route' => 'criticalmass_user_profile_color']);
+            $menu['Benutzerkonto']->addChild('Tourübersicht', ['route' => 'criticalmass_user_participation_list']);
+            $menu['Benutzerkonto']->addChild('Deine Tracks', ['route' => 'caldera_criticalmass_track_list']);
+            $menu['Benutzerkonto']->addChild('Deine Fotos', ['route' => 'caldera_criticalmass_photo_user_list']);
+
+            $menu['Benutzerkonto']->addChild('divider2', ['attributes' => ['role' => 'separator', 'class' => 'divider']]);
 
             $menu['Benutzerkonto']
                 ->addChild('Abmelden', ['route' => 'fos_user_security_logout']);

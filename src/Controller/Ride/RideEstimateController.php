@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class RideEstimateController extends AbstractController
 {
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
     public function addestimateAction(
@@ -43,7 +43,7 @@ class RideEstimateController extends AbstractController
             $this->getManager()->persist($estimateForm->getData());
             $this->getManager()->flush();
 
-            $eventDispatcher->dispatch(RideEstimateCreatedEvent::NAME, new RideEstimateCreatedEvent($rideEstimate));
+            $eventDispatcher->dispatch(new RideEstimateCreatedEvent($rideEstimate), RideEstimateCreatedEvent::NAME);
         }
 
         return $this->redirect($objectRouter->generate($ride));
@@ -74,7 +74,7 @@ class RideEstimateController extends AbstractController
             $this->getManager()->persist($estimateForm->getData());
             $this->getManager()->flush();
 
-            $eventDispatcher->dispatch(RideEstimateCreatedEvent::NAME, new RideEstimateCreatedEvent($rideEstimate));
+            $eventDispatcher->dispatch(new RideEstimateCreatedEvent($rideEstimate), RideEstimateCreatedEvent::NAME);
 
             return $this->redirect($objectRouter->generate($ride));
         }

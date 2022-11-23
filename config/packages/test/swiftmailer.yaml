@@ -1,2 +1,2 @@
 swiftmailer:
-    url: 'smtp://localhost'
+    disable_delivery: true

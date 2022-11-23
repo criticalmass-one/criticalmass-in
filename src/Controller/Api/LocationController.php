@@ -4,64 +4,72 @@ namespace App\Controller\Api;
 
 use App\Entity\City;
 use App\Entity\Location;
-use FOS\RestBundle\Context\Context;
-use FOS\RestBundle\View\View;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Nelmio\ApiDocBundle\Annotation\Operation;
+use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Annotation\Route;
 
 class LocationController extends BaseController
 {
     /**
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Retrieve a list of locations of a city",
-     *  section="Location",
-     *  requirements={
-     *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Provide the slug of a city."}
-     *  }
+     * @Operation(
+     *     tags={"Location"},
+     *     summary="Retrieve a list of locations of a city",
+     *     @OA\Parameter(
+     *         name="citySlug",
+     *         in="path",
+     *         description="Slug of the city",
+     *         required=true,
+     *         @OA\Schema(type="string"),
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     )
      * )
+     *
      * @ParamConverter("city", class="App:City")
      */
-    public function listLocationAction(ManagerRegistry $registry, City $city): Response
+    #[Route(path: '/{citySlug}/location', name: 'caldera_criticalmass_rest_location_list', methods: ['GET'], options: ['expose' => true])]
+    public function listLocationAction(City $city): JsonResponse
     {
-        $locationList = $registry->getRepository(Location::class)->findLocationsByCity($city);
+        $locationList = $this->managerRegistry->getRepository(Location::class)->findLocationsByCity($city);
 
-        $view = View::create();
-        $view
-            ->setData($locationList)
-            ->setFormat('json')
-            ->setStatusCode(200);
-
-        return $this->handleView($view);
+        return $this->createStandardResponse($locationList);
     }
 
     /**
      * Show details of a specified location.
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Show details of a location",
-     *  section="Location",
-     *  requirements={
-     *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Provide the slug of a city."},
-     *    {"name"="locationSlug", "dataType"="string", "required"=true, "description"="Slug of the location."},
-     *  }
+     * @Operation(
+     *     tags={"Location"},
+     *     summary="Show details of a location",
+     *     @OA\Parameter(
+     *         name="citySlug",
+     *         in="path",
+     *         description="Slug of the city",
+     *         required=true,
+     *         @OA\Schema(type="string"),
+     *     ),
+     *     @OA\Parameter(
+     *         name="locationSlug",
+     *         in="path",
+     *         description="Slug of the location",
+     *         required=true,
+     *         @OA\Schema(type="string"),
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     )
      * )
+     *
      * @ParamConverter("location", class="App:Location")
      */
-    public function showLocationAction(Location $location): Response
+    #[Route(path: '/{citySlug}/location/{locationSlug}', name: 'caldera_criticalmass_rest_location_show', methods: ['GET'], options: ['expose' => true])]
+    public function showLocationAction(Location $location): JsonResponse
     {
-        $context = new Context();
-
-        $view = View::create();
-        $view
-            ->setData($location)
-            ->setFormat('json')
-            ->setStatusCode(200)
-            ->setContext($context);
-
-        return $this->handleView($view);
+        return $this->createStandardResponse($location);
     }
 }

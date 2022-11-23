@@ -2,17 +2,17 @@
 
 namespace App\Controller\Api;
 
-use App\Criticalmass\DataQuery\DataQueryManager\DataQueryManagerInterface;
-use App\Criticalmass\DataQuery\RequestParameterList\RequestToListConverter;
+use JMS\Serializer\SerializationContext;
+use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
+use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Entity\Ride;
 use App\Entity\Track;
-use FOS\RestBundle\Context\Context;
-use FOS\RestBundle\View\View;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Nelmio\ApiDocBundle\Annotation\Operation;
+use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class TrackController extends BaseController
@@ -20,61 +20,50 @@ class TrackController extends BaseController
     /**
      * Get a list of tracks which were uploaded to a specified ride.
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Retrieve a list of tracks of a ride",
-     *  section="Track",
-     *  requirements={
-     *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Provide the slug of a city."},
-     *    {"name"="rideIdentifier", "dataType"="string", "required"=true, "description"="Provide the ride identifier of a ride."},
-     *  }
+     * @Operation(
+     *     tags={"Track"},
+     *     summary="Retrieve a list of tracks of a ride",
+     *     @OA\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     )
      * )
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function listRideTrackAction(ManagerRegistry $registry, Ride $ride): Response
+    #[Route(path: '/{citySlug}/{rideIdentifier}/listTracks', name: 'caldera_criticalmass_rest_track_ridelist', methods: ['GET'])]
+    public function listRideTrackAction(Ride $ride): JsonResponse
     {
-        $trackList = $registry->getRepository(Track::class)->findByRide($ride);
+        $trackList = $this->managerRegistry->getRepository(Track::class)->findByRide($ride);
 
-        $view = View::create();
-        $view
-            ->setData($trackList)
-            ->setFormat('json')
-            ->setStatusCode(200);
-
-        return $this->handleView($view);
+        return $this->createStandardResponse($trackList);
     }
 
     /**
      * Show details of a specified track.
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Show details of a track",
-     *  section="Track",
-     *  requirements={
-     *    {"name"="trackId", "dataType"="int", "required"=true, "description"="Unique id of the track."}
-     *  }
+     * @Operation(
+     *     tags={"Track"},
+     *     summary="Show details of a track",
+     *     @OA\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     )
      * )
      * @ParamConverter("track", class="App:Track")
      */
-    public function viewAction(Track $track, UserInterface $user = null): Response
+    #[Route(path: '/track/{trackId}', name: 'caldera_criticalmass_rest_track_view', methods: ['GET'])]
+    public function viewAction(Track $track, UserInterface $user = null): JsonResponse
     {
-        $context = new Context();
-
-        $context->addGroup('api-public');
+        $groups = ['api-public'];
 
         if ($user) {
-            $context->addGroup('api-private');
+            $groups[] = 'api-private';
         }
 
-        $view = View::create();
-        $view
-            ->setData($track)
-            ->setFormat('json')
-            ->setStatusCode(200)
-            ->setContext($context);
+        $context = new SerializationContext();
+        $context->setGroups($groups);
 
-        return $this->handleView($view);
+        return $this->createStandardResponse($track, $context);
     }
 
     /**
@@ -124,43 +113,93 @@ class TrackController extends BaseController
      *
      * Apply <code>startValue</code> to deliver a value to start your ordered list with.
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Lists tracks",
-     *  parameters={
-     *     {"name"="regionSlug", "dataType"="string", "required"=false, "description"="Provide a region slug"},
-     *     {"name"="citySlug", "dataType"="string", "required"=false, "description"="Provide a city slug"},
-     *     {"name"="year", "dataType"="string", "required"=false, "description"="Limit the result set to this year. If not set, we will search in the current month."},
-     *     {"name"="month", "dataType"="string", "required"=false, "description"="Limit the result set to this year. Must be combined with 'year'. If not set, we will search in the current month."},
-     *     {"name"="day", "dataType"="string", "required"=false, "description"="Limit the result set to this day."},
-     *     {"name"="orderBy", "dataType"="string", "required"=false, "description"="Choose a property to sort the list by."},
-     *     {"name"="orderDirection", "dataType"="string", "required"=false, "description"="Sort ascending or descending."},
-     *     {"name"="startValue", "dataType"="string", "required"=false, "description"="Start ordered list with provided value."},
-     *     {"name"="size", "dataType"="integer", "required"=false, "description"="Length of resulting list. Defaults to 10."}
-     *  },
-     *  section="Track"
+     * @Operation(
+     *     tags={"Track"},
+     *     summary="Lists tracks",
+     *     @OA\Parameter(
+     *         name="regionSlug",
+     *         in="query",
+     *         description="Provide a region slug",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="citySlug",
+     *         in="query",
+     *         description="Provide a city slug",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="year",
+     *         in="query",
+     *         description="Limit the result set to this year. If not set, we will search in the current month.",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="month",
+     *         in="query",
+     *         description="Limit the result set to this year. Must be combined with 'year'. If not set, we will search in the current month.",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="day",
+     *         in="query",
+     *         description="Limit the result set to this day.",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="orderBy",
+     *         in="query",
+     *         description="Choose a property to sort the list by.",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="orderDirection",
+     *         in="query",
+     *         description="Sort ascending or descending.",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="startValue",
+     *         in="query",
+     *         description="Start ordered list with provided value.",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="size",
+     *         in="query",
+     *         description="Length of resulting list. Defaults to 10.",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     )
      * )
      */
-    public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager, UserInterface $user = null): Response
+    #[Route(path: '/track', name: 'caldera_criticalmass_rest_track_list', methods: ['GET'])]
+    public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager,UserInterface $user = null): JsonResponse
     {
         $queryParameterList = RequestToListConverter::convert($request);
         $trackList = $dataQueryManager->query($queryParameterList, Track::class);
 
-        $context = new Context();
-
-        $context->addGroup('api-public');
+        $groups = ['api-public'];
 
         if ($user) {
-            $context->addGroup('api-private');
+            $groups[] = 'api-private';
         }
 
-        $view = View::create();
-        $view
-            ->setData($trackList)
-            ->setFormat('json')
-            ->setStatusCode(200)
-            ->setContext($context);
+        $context = new SerializationContext();
+        $context->setGroups($groups);
 
-        return $this->handleView($view);
+        return $this->createStandardResponse($trackList, $context);
     }
 }

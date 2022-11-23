@@ -18,12 +18,14 @@ class PrefetchController extends AbstractController
 
         /** @var Ride $ride */
         foreach ($rides as $ride) {
+            $cityTimezone = new \DateTimeZone($ride->getCity()->getTimezone());
+
             $result[] = [
                 'type' => 'ride',
                 'url' => $objectRouter->generate($ride),
                 'value' => $ride->getTitle(),
                 'meta' => [
-                    'dateTime' => $ride->getDateTime()->format('Y-m-d\TH:i:s'),
+                    'dateTime' => $ride->getDateTime()->setTimezone($cityTimezone)->format('Y-m-d\TH:i:s'), // @todo fix timezone here
                     'location' => $ride->getLocation() ?? '',
                 ]
             ];
@@ -40,7 +42,7 @@ class PrefetchController extends AbstractController
             ];
         }
 
-        return new Response(json_encode($result), 200, [
+        return new Response(json_encode($result, JSON_THROW_ON_ERROR), Response::HTTP_OK, [
             'Content-Type' => 'text/json'
         ]);
     }
