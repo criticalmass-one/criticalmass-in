@@ -2,10 +2,6 @@ security:
     encoders:
         FOS\UserBundle\Model\UserInterface: sha512
 
-    providers:
-        fos_userbundle:
-            id: fos_user.user_provider.username
-
     firewalls:
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
@@ -15,7 +11,6 @@ security:
             pattern:             .*
             context:             user
             form_login:
-                provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
                 login_path:     /login
                 check_path:     /login_check

@@ -225,10 +225,6 @@ services:
     jms_serializer.naming_strategy:
         alias: jms_serializer.camel_case_naming_strategy
 
-    App\Form\Type\RegistrationType:
-        arguments:
-            $class: '%fos_user.model.user.class%'
-
     App\Criticalmass\CriticalmassBlog\CriticalmassBlogInterface:
         alias: App\Criticalmass\CriticalmassBlog\CachedCriticalmassBlog
 

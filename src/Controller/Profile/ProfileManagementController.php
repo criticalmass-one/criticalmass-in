@@ -18,9 +18,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class ProfileManagementController extends AbstractController
 {
-    public function __construct(private readonly UserManagerInterface $userManager)
-    {
-    }
+    //public function __construct(private readonly UserManagerInterface $userManager)
+    //{
+    //}
     /**
      * @Security("is_granted('ROLE_USER')")
      */

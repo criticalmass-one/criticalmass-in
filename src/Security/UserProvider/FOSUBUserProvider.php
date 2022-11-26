@@ -14,7 +14,7 @@ class FOSUBUserProvider extends BaseClass
     /** @var ProfilePhotoGeneratorInterface $profilePhotoGenerator */
     protected $profilePhotoGenerator;
 
-    public function __construct(UserManagerInterface $userManager, array $properties, ProfilePhotoGeneratorInterface $profilePhotoGenerator)
+    public function __construct(array $properties, ProfilePhotoGeneratorInterface $profilePhotoGenerator)
     {
         $this->profilePhotoGenerator = $profilePhotoGenerator;
 
