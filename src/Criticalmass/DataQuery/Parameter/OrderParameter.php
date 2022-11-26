@@ -2,27 +2,29 @@
 
 namespace App\Criticalmass\DataQuery\Parameter;
 
-use App\Criticalmass\DataQuery\Annotation\ParameterAnnotation as DataQuery;
-use App\Criticalmass\DataQuery\Validator\Constraint\Sortable;
+use MalteHuebner\DataQueryBundle\Annotation\ParameterAnnotation as DataQuery;
+use MalteHuebner\DataQueryBundle\Parameter\AbstractParameter;
+use MalteHuebner\DataQueryBundle\Parameter\PropertyTargetingParameterInterface;
+use MalteHuebner\DataQueryBundle\Validator\Constraint\Sortable;
 use Elastica\Query;
 use Symfony\Component\Validator\Constraints as Constraints;
 
 class OrderParameter extends AbstractParameter implements PropertyTargetingParameterInterface
 {
     /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("string")
      * @Sortable
      * @var string $propertyName
      */
+    #[Constraints\NotNull]
+    #[Constraints\Type('string')]
     protected $propertyName;
 
     /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("string")
-     * @Constraints\Choice(choices = {"ASC", "DESC"})
      * @var string $direction
      */
+    #[Constraints\NotNull]
+    #[Constraints\Type('string')]
+    #[Constraints\Choice(choices: ['ASC', 'DESC'])]
     protected $direction;
 
     /**

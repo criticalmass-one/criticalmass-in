@@ -24,7 +24,7 @@ class CitySlug implements RouteableInterface
     protected ?int $id = null;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      * @Routing\RouteParameter(name="citySlug")

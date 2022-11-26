@@ -31,7 +31,7 @@ class PhotoView implements ViewEntity
     protected ?Photo $photo = null;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected \DateTime $dateTime;
 

@@ -39,7 +39,8 @@ class RideType extends AbstractType
                 'view_timezone' => $timezone,
                 'date_widget' => 'single_text',
                 'time_widget' => 'single_text',
-                'html5' => true,
+                'html5' => false, // @todo remvoe this later
+                'compound' => true
             ])
             ->add('location', TextType::class, ['required' => false])
             ->add('latitude', HiddenType::class, ['required' => false])
@@ -57,10 +58,6 @@ class RideType extends AbstractType
 
         if ($this->isAdmin()) {
             $builder->add('slug', TextType::class, ['required' => false]);
-        }
-
-        if ($ride->getCity()->getShowCoronaIncidenceWarning()) {
-            $builder->add('showCoronaIncidenceWarning', CheckboxType::class, ['required' => false]);
         }
 
         $builder->add('save', SubmitType::class);

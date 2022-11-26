@@ -38,45 +38,41 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     /**
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
-     * @Assert\NotBlank()
-     * @Assert\Regex(
-     *     pattern="/https?\:\/\//",
-     *     match=false,
-     *     message="Der Benutzername darf keine Url enthalten"
-     * )
      * @Routing\RouteParameter(name="username")
      * @todo Add typed property
      */
+    #[Assert\NotBlank]
+    #[Assert\Regex(pattern: '/https?\:\/\//', match: false, message: 'Der Benutzername darf keine Url enthalten')]
     protected $username;
 
     /**
-     * @ORM\OneToMany(targetEntity="Track", mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Track", mappedBy="user", cascade={"persist","remove"})
      */
     protected Collection $tracks;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected int $colorRed = 0;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected int $colorGreen = 0;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      */
     protected int $colorBlue = 0;
 
     /**
-     * @ORM\Column(type="boolean", options={"default" = 0})
+     * @ORM\Column(type="boolean", nullable=true, options={"default":0})
      */
     protected bool $blurGalleries = false;
 
@@ -86,44 +82,34 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     protected Collection $participations;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected ?\DateTime $updatedAt = null;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected ?\DateTime $createdAt = null;
 
     /**
-     * @ORM\Column(name="facebook_id", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true, name="facebook_id")
      */
     protected ?string $facebookId = null;
 
     /**
-     * @ORM\Column(name="facebook_access_token", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true, name="facebook_access_token")
      */
     protected ?string $facebookAccessToken = null;
 
     /**
-     * @ORM\Column(name="strava_id", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true, name="strava_id")
      */
     protected ?string $stravaId = null;
 
     /**
-     * @ORM\Column(name="strava_access_token", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true, name="strava_access_token")
      */
     protected ?string $stravaAccessToken = null;
-
-    /**
-     * @ORM\Column(name="runkeeper_id", type="string", length=255, nullable=true)
-     */
-    protected ?string $runkeeperId = null;
-
-    /**
-     * @ORM\Column(name="runkeeper_access_token", type="string", length=255, nullable=true)
-     */
-    protected ?string $runkeeperAccessToken = null;
 
     /**
      * @ORM\Column(name="twitter_id", type="string", length=255, nullable=true)
@@ -171,11 +157,6 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
      * @ORM\OneToMany(targetEntity="App\Entity\SocialNetworkProfile", mappedBy="createdBy")
      */
     private Collection $socialNetworkProfiles;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Heatmap", mappedBy="user", cascade={"persist", "remove"})
-     */
-    private ?Heatmap $heatmap = null;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\TrackImportCandidate", mappedBy="user", orphanRemoval=true)
@@ -395,30 +376,6 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         return $this->facebookAccessToken;
     }
 
-    public function setRunkeeperId(string $runkeeperId): User
-    {
-        $this->runkeeperId = $runkeeperId;
-
-        return $this;
-    }
-
-    public function getRunkeeperId(): ?string
-    {
-        return $this->runkeeperId;
-    }
-
-    public function setRunkeeperAccessToken(string $runkeeperAccessToken): User
-    {
-        $this->runkeeperAccessToken = $runkeeperAccessToken;
-
-        return $this;
-    }
-
-    public function getRunkeeperAccessToken(): ?string
-    {
-        return $this->runkeeperAccessToken;
-    }
-
     public function setTwitterId(string $twitterId): User
     {
         $this->twitterId = $twitterId;
@@ -457,7 +414,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
 
     public function isOauthAccount(): bool
     {
-        return $this->runkeeperId || $this->stravaId || $this->facebookId || $this->isTwitterAccount();
+        return $this->stravaId || $this->facebookId || $this->isTwitterAccount();
     }
 
     public function isFacebookAccount(): bool
@@ -468,11 +425,6 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     public function isStravaAccount(): bool
     {
         return $this->stravaId !== null;
-    }
-
-    public function isRunkeeperAccount(): bool
-    {
-        return $this->facebookId !== null;
     }
 
     public function isTwitterAccount(): bool
@@ -596,24 +548,6 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
             if ($socialNetworkProfile->getCreatedBy() === $this) {
                 $socialNetworkProfile->setCreatedBy(null);
             }
-        }
-
-        return $this;
-    }
-
-    public function getHeatmap(): ?Heatmap
-    {
-        return $this->heatmap;
-    }
-
-    public function setHeatmap(?Heatmap $heatmap): self
-    {
-        $this->heatmap = $heatmap;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newUser = $heatmap === null ? null : $this;
-        if ($newUser !== $heatmap->getUser()) {
-            $heatmap->setUser($newUser);
         }
 
         return $this;

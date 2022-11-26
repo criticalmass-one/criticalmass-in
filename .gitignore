@@ -41,7 +41,6 @@ public/*.html.swp
 public/.well-known/
 public/css2/
 public/*.html
-public/heatmaps/
 public/js2/
 public/media/
 public/rides/
@@ -54,18 +53,15 @@ public/users/
 ###> symfony/framework-bundle ###
 /.env
 /.env.test
+/.env.local
 /public/bundles/
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
-
-###> phpunit/phpunit ###
-#/phpunit.xml
-###< phpunit/phpunit ###
-
+docker
 ###> symfony/phpunit-bridge ###
-.phpunit
-#/phpunit.xml
+.phpunit.result.cache
+/phpunit.xml
 ###< symfony/phpunit-bridge ###
 
 ###> symfony/webpack-encore-bundle ###
@@ -78,3 +74,6 @@ yarn-error.log
 criticalmass.iml
 .idea
 docker
+###> liip/imagine-bundle ###
+/public/media/cache/
+###< liip/imagine-bundle ###

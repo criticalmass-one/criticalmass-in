@@ -15,25 +15,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class TrackReducePolylineCommand extends Command
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    /** @var TrackPolylineHandlerInterface $trackPolylineHandler */
-    protected $trackPolylineHandler;
-
-    public function __construct(?string $name = null, ManagerRegistry $registry, TrackPolylineHandlerInterface $trackPolylineHandler)
+    protected static $defaultName = 'criticalmass:track:reduce-polyline';
+    public function __construct(protected ManagerRegistry $registry, protected TrackPolylineHandlerInterface $trackPolylineHandler)
     {
-        $this->trackPolylineHandler = $trackPolylineHandler;
-        $this->registry = $registry;
-
-        parent::__construct($name);
+        parent::__construct();
     }
 
     protected function configure(): void
     {
-        $this
-            ->setName('criticalmass:track:reduce-polyline')
-            ->setDescription('')
+        $this->setDescription('')
             ->addOption('all', 'a', InputOption::VALUE_OPTIONAL, 'Generate polylines for all tracks')
             ->addArgument('trackId', InputArgument::OPTIONAL, 'Id of the track to reduce polyline');
     }

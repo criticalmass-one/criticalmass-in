@@ -31,7 +31,6 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
 {
     const TRACK_SOURCE_GPX = 'TRACK_SOURCE_GPX';
     const TRACK_SOURCE_STRAVA = 'TRACK_SOURCE_STRAVA';
-    const TRACK_SOURCE_RUNKEEPER = 'TRACK_SOURCE_RUNKEEPER';
     const TRACK_SOURCE_RUNTASTIC = 'TRACK_SOURCE_RUNTASTIC';
     const TRACK_SOURCE_DRAW = 'TRACK_SOURCE_DRAW';
     const TRACK_SOURCE_GLYMPSE = 'TRACK_SOURCE_GLYMPSE';
@@ -49,7 +48,7 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
     protected ?int $id = null;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @JMS\Groups({"timelapse", "api-private"})
      * @JMS\Expose
      */
@@ -77,7 +76,7 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
     protected ?RideEstimate $rideEstimate = null;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      * @JMS\Groups({"timelapse", "api-public"})
      * @JMS\Expose
      */
@@ -132,12 +131,12 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
     protected ?string $md5Hash = null;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected bool $enabled = true;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      * @OE\Boolean(value=false)
      */
     protected bool $deleted = false;
@@ -175,7 +174,7 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
     protected ?File $trackFile = null;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected ?string $trackFilename = null;
 
@@ -195,7 +194,11 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
     protected ?\DateTime $updatedAt = null;
 
     /**
-     * @ORM\Column(type="string", columnDefinition="ENUM('TRACK_SOURCE_GPX', 'TRACK_SOURCE_STRAVA', 'TRACK_SOURCE_RUNKEEPER', 'TRACK_SOURCE_RUNTASTIC', 'TRACK_SOURCE_DRAW', 'TRACK_SOURCE_GLYMPSE', 'TRACK_SOURCE_CRITICALMAPS', 'TRACK_SOURCE_UNKNOWN')")
+     * @ORM\Column(
+     *     type="string",
+     *     nullable=true,
+     *     columnDefinition="ENUM('TRACK_SOURCE_GPX', 'TRACK_SOURCE_STRAVA', 'TRACK_SOURCE_RUNKEEPER', 'TRACK_SOURCE_RUNTASTIC', 'TRACK_SOURCE_DRAW', 'TRACK_SOURCE_GLYMPSE', 'TRACK_SOURCE_CRITICALMAPS', 'TRACK_SOURCE_UNKNOWN')"
+     * )
      *
      * $source must be nullable du to legacy tracks without source attribution
      */
@@ -207,11 +210,6 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
     protected ?int $stravaActitityId = null;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\HeatmapTrack", mappedBy="track")
-     */
-    private Collection $heatmapTracks;
-
-    /**
      * @ORM\Column(type="boolean")
      */
     private bool $reviewed = false;
@@ -219,8 +217,6 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
     public function __construct()
     {
         parent::__construct();
-        $this->heatmaps = new ArrayCollection();
-        $this->heatmapTracks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -538,37 +534,6 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
     public function getWaypointList(): string
     {
         return $this->geoJson;
-    }
-
-    /**
-     * @return Collection|HeatmapTrack[]
-     */
-    public function getHeatmapTracks(): Collection
-    {
-        return $this->heatmapTracks;
-    }
-
-    public function addHeatmapTrack(HeatmapTrack $heatmapTrack): self
-    {
-        if (!$this->heatmapTracks->contains($heatmapTrack)) {
-            $this->heatmapTracks[] = $heatmapTrack;
-            $heatmapTrack->setTrack($this);
-        }
-
-        return $this;
-    }
-
-    public function removeHeatmapTrack(HeatmapTrack $heatmapTrack): self
-    {
-        if ($this->heatmapTracks->contains($heatmapTrack)) {
-            $this->heatmapTracks->removeElement($heatmapTrack);
-            // set the owning side to null (unless already changed)
-            if ($heatmapTrack->getTrack() === $this) {
-                $heatmapTrack->setTrack(null);
-            }
-        }
-
-        return $this;
     }
 
     public function isReviewed(): bool

@@ -45,7 +45,7 @@ class FrontpageTeaserButton
     protected ?string $class = null;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      */
     protected int $position = 0;
 

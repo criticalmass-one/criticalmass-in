@@ -44,9 +44,9 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\NotBlank()
      * @JMS\Expose
      */
+    #[Assert\NotBlank]
     protected ?string $title = null;
 
     /**
@@ -56,7 +56,7 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
     protected ?string $description = null;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      * @JMS\Expose
      */
     protected ?\DateTime $dateTime = null;
@@ -75,19 +75,19 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\NotBlank()
      * @JMS\Expose
      */
+    #[Assert\NotBlank]
     protected ?string $location = null;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose
      */
     protected ?float $latitude = null;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose
      */
     protected ?float $longitude = null;

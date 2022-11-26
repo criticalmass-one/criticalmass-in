@@ -2,7 +2,10 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
-use App\Criticalmass\DataQuery\Annotation\QueryAnnotation as DataQuery;
+use MalteHuebner\DataQueryBundle\Annotation\QueryAnnotation as DataQuery;
+use MalteHuebner\DataQueryBundle\Query\AbstractQuery;
+use MalteHuebner\DataQueryBundle\Query\DoctrineQueryInterface;
+use MalteHuebner\DataQueryBundle\Query\ElasticQueryInterface;
 use Symfony\Component\Validator\Constraints as Constraints;
 
 /**
@@ -10,9 +13,7 @@ use Symfony\Component\Validator\Constraints as Constraints;
  */
 class RideTypeQuery extends AbstractQuery implements DoctrineQueryInterface, ElasticQueryInterface
 {
-    /**
-     * @Constraints\NotNull()
-     */
+    #[Constraints\NotNull]
     protected string $rideType;
 
     /**

@@ -24,9 +24,9 @@ class Board implements BoardInterface, RouteableInterface, AutoParamConverterAbl
     protected ?int $id = null;
 
     /**
-     * @ORM\Column(type="text")
-     * @Assert\NotBlank()
+     * @ORM\Column(type="text", nullable=true)
      */
+    #[Assert\NotBlank]
     protected ?string $title = null;
 
     /**
@@ -35,33 +35,33 @@ class Board implements BoardInterface, RouteableInterface, AutoParamConverterAbl
     protected ?string $description = null;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected int $threadNumber = 0;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected int $postNumber = 0;
 
     /**
      * @ORM\OneToOne(targetEntity="Thread")
-     * @ORM\JoinColumn(name="lastthread_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="lastthread_id", referencedColumnName="id", unique=true)
      */
     protected ?Thread $lastThread = null;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected int $position = 0;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected bool $enabled = true;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Routing\RouteParameter(name="boardSlug")
      */
     protected ?string $slug = null;

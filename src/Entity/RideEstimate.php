@@ -48,24 +48,24 @@ class RideEstimate
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
-     * @Assert\Regex("/^([0-9]{1,6})$/")
      */
+    #[Assert\Regex('/^([0-9]{1,6})$/')]
     protected ?int $estimatedParticipants = null;
 
     /**
      * @ORM\Column(type="float", nullable=true)
-     * @Assert\Regex("/^([0-9]{1,2})([\.,]*)([0-9]{0,5})$/")
      */
+    #[Assert\Regex('/^([0-9]{1,2})([\.,]*)([0-9]{0,5})$/')]
     protected ?float $estimatedDistance = null;
 
     /**
      * @ORM\Column(type="float", nullable=true)
-     * @Assert\Regex("/^([0-9]{1,2})([\.,]*)([0-9]{0,4})$/")
      */
+    #[Assert\Regex('/^([0-9]{1,2})([\.,]*)([0-9]{0,4})$/')]
     protected ?float $estimatedDuration = null;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected \DateTime $dateTime;
 

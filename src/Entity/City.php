@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\DataQuery\Annotation\EntityAnnotation as DataQuery;
+use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation as DataQuery;
 use App\Criticalmass\Router\Annotation as Routing;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
@@ -68,22 +68,22 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     protected ?CitySlug $mainSlug = null;
 
     /**
-     * @ORM\Column(type="string", length=50)
-     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=50, nullable=true)
      * @JMS\Expose
      * @JMS\SerializedName("name")
      * @JMS\Groups({"ride-list"})
      * @DataQuery\Sortable
      */
+    #[Assert\NotBlank]
     protected ?string $city = null;
 
     /**
-     * @ORM\Column(type="string", length=100)
-     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=100, nullable=true)
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      * @DataQuery\Sortable
      */
+    #[Assert\NotBlank]
     protected ?string $title = null;
 
     /**
@@ -94,7 +94,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     protected ?string $description = null;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      * @DataQuery\Queryable
@@ -102,7 +102,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     protected float $latitude = 0.0;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      * @DataQuery\Queryable
@@ -110,7 +110,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     protected float $longitude = 0.0;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      * @DataQuery\DefaultBooleanValue(value=true)
      */
     protected bool $enabled = true;
@@ -131,14 +131,14 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     protected Collection $photos;
 
     /**
-     * @ORM\OneToMany(targetEntity="CitySlug", mappedBy="city", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="CitySlug", mappedBy="city", cascade={"persist","remove"})
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      */
     protected Collection $slugs;
 
     /**
-     * @ORM\OneToMany(targetEntity="CityCycle", mappedBy="city", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="CityCycle", mappedBy="city", cascade={"persist","remove"})
      */
     protected Collection $cycles;
 
@@ -150,11 +150,11 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Assert\Type(type="int")
      * @JMS\Expose
      * @DataQuery\Queryable
      * @DataQuery\Sortable
      */
+    #[Assert\Type(type: 'int')]
     protected ?int $cityPopulation = null;
 
     /**
@@ -202,41 +202,41 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     protected ?\DateTime $createdAt = null;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected bool $enableBoard = false;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      */
     protected string $timezone = 'Europe/Berlin';
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      * @JMS\Expose
      */
     protected int $threadNumber = 0;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      * @JMS\Expose
      */
     protected int $postNumber = 0;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected int $colorRed = 0;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected int $colorGreen = 0;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected int $colorBlue = 0;
 
@@ -247,7 +247,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     protected ?Thread $lastThread = null;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected int $views = 0;
 
@@ -260,16 +260,6 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected ?string $wikidataEntityId = null;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Heatmap", mappedBy="city", cascade={"persist", "remove"})
-     */
-    private ?Heatmap $heatmap = null;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true, options={"default": 1})
-     */
-    private ?bool $showCoronaIncidenceWarning = true;
 
     public function __construct()
     {
@@ -898,24 +888,6 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
         return $this->wikidataEntityId;
     }
 
-    public function getHeatmap(): ?Heatmap
-    {
-        return $this->heatmap;
-    }
-
-    public function setHeatmap(?Heatmap $heatmap): self
-    {
-        $this->heatmap = $heatmap;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newCity = $heatmap === null ? null : $this;
-        if ($newCity !== $heatmap->getCity()) {
-            $heatmap->setCity($newCity);
-        }
-
-        return $this;
-    }
-
     /**
      * @JMS\VirtualProperty
      * @JMS\SerializedName("color")
@@ -933,17 +905,5 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     public function toCoord(): CoordInterface
     {
         return new Coord($this->latitude, $this->longitude);
-    }
-
-    public function getShowCoronaIncidenceWarning(): ?bool
-    {
-        return $this->showCoronaIncidenceWarning;
-    }
-
-    public function setShowCoronaIncidenceWarning(?bool $showCoronaIncidenceWarning): self
-    {
-        $this->showCoronaIncidenceWarning = $showCoronaIncidenceWarning;
-
-        return $this;
     }
 }

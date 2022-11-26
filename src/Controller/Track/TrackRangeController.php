@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TrackRangeController extends AbstractController
 {
+    public function __construct(private readonly string $gapWidth)
+    {
+    }
     /**
      * @Security("is_granted('edit', track)")
      * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
@@ -55,7 +58,7 @@ class TrackRangeController extends AbstractController
             // this may not be done in TrackEventSubscriber as the events are sometimes triggered automatically
             $track->setReviewed(true);
 
-            $eventDispatcher->dispatch(TrackTrimmedEvent::NAME, new TrackTrimmedEvent($track));
+            $eventDispatcher->dispatch(new TrackTrimmedEvent($track), TrackTrimmedEvent::NAME);
         }
 
         return $this->redirectToRoute('caldera_criticalmass_track_list');

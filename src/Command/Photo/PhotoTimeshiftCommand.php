@@ -18,25 +18,15 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class PhotoTimeshiftCommand extends Command
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    /** @var EventDispatcherInterface */
-    protected $eventDispatcher;
-
-    public function __construct(ManagerRegistry $registry, EventDispatcherInterface $eventDispatcher)
+    protected static $defaultName = 'criticalmass:photos:timeshift';
+    public function __construct(protected ManagerRegistry $registry, protected EventDispatcherInterface $eventDispatcher)
     {
-        $this->registry = $registry;
-        $this->eventDispatcher = $eventDispatcher;
-
         parent::__construct();
     }
 
     protected function configure(): void
     {
-        $this
-            ->setName('criticalmass:photos:timeshift')
-            ->setDescription('Timeshift photos')
+        $this->setDescription('Timeshift photos')
             ->addArgument(
                 'citySlug',
                 InputArgument::REQUIRED,
@@ -98,7 +88,7 @@ class PhotoTimeshiftCommand extends Command
             $dateTimeImmutable = $dateTimeImmutable->$modificationMethodName($interval);
             $photo->setExifCreationDate(new \DateTime(sprintf('@%d', $dateTimeImmutable->getTimestamp())));
 
-            $this->eventDispatcher->dispatch(PhotoUpdatedEvent::NAME, new PhotoUpdatedEvent($photo, false));
+            $this->eventDispatcher->dispatch(new PhotoUpdatedEvent($photo, false), PhotoUpdatedEvent::NAME);
 
             $table->addRow([
                 $photo->getId(),

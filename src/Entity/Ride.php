@@ -2,8 +2,7 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\DataQuery\Annotation\EntityAnnotation as DataQuery;
-use App\Criticalmass\Geocoding\ReverseGeocodeable;
+use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation as DataQuery;
 use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
 use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
 use App\Criticalmass\Router\Annotation as Routing;
@@ -37,7 +36,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Vich\Uploadable
  * @Routing\DefaultRoute(name="caldera_criticalmass_ride_show")
  */
-class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, ReverseGeocodeable, OrderedEntityInterface, CoordinateInterface
+class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, OrderedEntityInterface, CoordinateInterface
 {
     /**
      * @ORM\Id
@@ -101,8 +100,8 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @JMS\Expose
      * @DataQuery\Sortable
      * @DataQuery\Queryable
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected ?string $title = null;
 
     /**
@@ -122,7 +121,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     protected ?string $socialDescription = null;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      * @JMS\Groups({"ride-list"})
      * @JMS\Expose
      * @JMS\Type("DateTime<'U'>")
@@ -216,19 +215,19 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     protected ?\DateTime $updatedAt = null;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      * @JMS\Expose
      */
     protected int $participationsNumberYes = 0;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      * @JMS\Expose
      */
     protected int $participationsNumberMaybe = 0;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      * @JMS\Expose
      */
     protected int $participationsNumberNo = 0;
@@ -244,7 +243,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     protected Collection $estimates;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      * @DataQuery\Sortable
      * @DataQuery\Queryable
      */
@@ -257,13 +256,13 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     protected ?Photo $featuredPhoto = null;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected bool $restrictedPhotoAccess = false;
 
     /**
      * @ORM\OneToMany(targetEntity="Weather", mappedBy="ride", fetch="LAZY")
-     * @ORM\OrderBy({"creationDateTime" = "DESC"})
+     * @ORM\OrderBy({"creationDateTime":"DESC"})
      */
     protected Collection $weathers;
 
@@ -312,11 +311,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     protected ?string $rideType = null;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Heatmap", mappedBy="ride", cascade={"persist", "remove"})
-     */
-    private ?Heatmap $heatmap = null;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\TrackImportCandidate", mappedBy="ride")
      */
     private Collection $trackImportCandidates;
@@ -332,11 +326,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
      * @ORM\OneToMany(targetEntity=RideView::class, mappedBy="ride", fetch="LAZY")
      */
     protected Collection $viewRelation;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true, options={"default": 1})
-     */
-    private ?bool $showCoronaIncidenceWarning = true;
 
     public function __construct()
     {
@@ -399,7 +388,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         return $this->dateTime;
     }
 
-    public function setLocation(string $location = null): ReverseGeocodeable
+    public function setLocation(string $location = null): self
     {
         $this->location = $location;
 
@@ -1047,24 +1036,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         return $this;
     }
 
-    public function getHeatmap(): ?Heatmap
-    {
-        return $this->heatmap;
-    }
-
-    public function setHeatmap(?Heatmap $heatmap): self
-    {
-        $this->heatmap = $heatmap;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newRide = $heatmap === null ? null : $this;
-        if ($newRide !== $heatmap->getRide()) {
-            $heatmap->setRide($newRide);
-        }
-
-        return $this;
-    }
-
     /**
      * @return Collection|TrackImportCandidate[]
      */
@@ -1140,18 +1111,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
                 $viewRelation->setRide(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getShowCoronaIncidenceWarning(): ?bool
-    {
-        return $this->showCoronaIncidenceWarning;
-    }
-
-    public function setShowCoronaIncidenceWarning(?bool $showCoronaIncidenceWarning): self
-    {
-        $this->showCoronaIncidenceWarning = $showCoronaIncidenceWarning;
 
         return $this;
     }

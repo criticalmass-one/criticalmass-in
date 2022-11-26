@@ -51,10 +51,10 @@ class SocialNetworkProfile
 
     /**
      * @ORM\Column(type="string")
-     * @Assert\NotBlank
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      */
+    #[Assert\NotBlank]
     protected ?string $identifier = null;
 
     /**

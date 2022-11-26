@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\City;
-use App\Entity\Heatmap;
 use App\Entity\Ride;
 use App\Entity\Track;
 use App\Entity\User;
@@ -205,52 +204,5 @@ class TrackRepository extends EntityRepository
             ->orderBy('r.dateTime', $order);
 
         return $builder->getQuery();
-    }
-
-    public function findUnpaintedTracksForHeatmap(Heatmap $heatmap, int $maxResults = 5, $reviewedOnly = true): array
-    {
-        $sqb = $this->createQueryBuilder('st');
-        $sqb
-            ->select('st.id')
-            ->join('st.heatmapTracks', 'ht')
-            ->where($sqb->expr()->eq('ht.heatmap', ':heatmap'))
-            ->setParameter('heatmap', $heatmap);
-
-        $subQuery = $sqb->getQuery();
-
-        $qb = $this->createQueryBuilder('t');
-
-        if ($heatmap->getRide()) {
-            $qb->join('t.ride', 'r')
-                ->join('r.heatmap', 'h');
-        }
-
-        if ($heatmap->getCity()) {
-            $qb->join('t.ride', 'r')
-                ->join('r.city', 'c')
-                ->join('c.heatmap', 'h');
-        }
-
-        $qb
-            ->andWhere($qb->expr()->eq('h', ':heatmap'))
-            ->andWhere($qb->expr()->notIn('t.id', $subQuery->getDQL()))
-            ->andWhere($qb->expr()->eq('t.enabled', ':enabled'))
-            ->setParameter('enabled', true)
-            ->andWhere($qb->expr()->eq('t.deleted', ':deleted'))
-            ->setParameter('deleted', false)
-            ->orderBy('r.dateTime')
-            ->setParameter('heatmap', $heatmap);
-
-        if ($maxResults) {
-            $qb->setMaxResults($maxResults);
-        }
-
-        if ($reviewedOnly) {
-            $qb
-                ->andWhere($qb->expr()->eq('t.reviewed', ':reviewed'))
-                ->setParameter('reviewed', true);
-        }
-
-        return $qb->getQuery()->getResult();
     }
 }

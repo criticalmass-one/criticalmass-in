@@ -20,7 +20,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class PhotoManagementController extends AbstractController
 {
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function listAction(UserInterface $user = null): Response
     {
@@ -64,7 +64,7 @@ class PhotoManagementController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
     public function manageAction(Request $request, PaginatorInterface $paginator, Ride $ride): Response
@@ -157,7 +157,7 @@ class PhotoManagementController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
     public function relocateAction(Ride $ride): Response
@@ -208,7 +208,7 @@ class PhotoManagementController extends AbstractController
         return $this->censorGetAction($request, $user, $photo, $photoManipulator);
     }
 
-    public function censorGetAction(Request $request, UserInterface $user = null, Photo $photo, PhotoManipulatorInterface $photoManipulator): Response
+    public function censorGetAction(Photo $photo, PhotoManipulatorInterface $photoManipulator, UserInterface $user = null): Response
     {
         return $this->render('PhotoManagement/censor.html.twig', [
             'photo' => $photo,
