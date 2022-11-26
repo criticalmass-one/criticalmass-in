@@ -8,7 +8,6 @@ use App\Criticalmass\Util\ClassUtil;
 use App\Entity\City;
 use App\Entity\Ride;
 use App\Entity\SocialNetworkProfile;
-use App\Entity\Subride;
 use App\Entity\User;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,14 +30,14 @@ class SocialNetworkHelper implements SocialNetworkHelperInterface
         $this->router = $router;
     }
 
-    public function getProfileAbleObject(Ride $ride = null, Subride $subride = null, City $city = null, User $user = null): SocialNetworkProfileAble
+    public function getProfileAbleObject(Ride $ride = null, City $city = null, User $user = null): SocialNetworkProfileAble
     {
-        return $user ?? $ride ?? $city ?? $subride;
+        return $user ?? $ride ?? $city;
     }
 
     public function assignProfileAble(SocialNetworkProfile $socialNetworkProfile, Request $request): SocialNetworkProfile
     {
-        $classNameOrder = [User::class, Subride::class, Ride::class, City::class];
+        $classNameOrder = [User::class, Ride::class, City::class];
 
         foreach ($classNameOrder as $className) {
             $shortname = ClassUtil::getLowercaseShortnameFromFqcn($className);
@@ -57,7 +56,7 @@ class SocialNetworkHelper implements SocialNetworkHelperInterface
 
     public function getProfileAble(SocialNetworkProfile $socialNetworkProfile): ?SocialNetworkProfileAble
     {
-        return $socialNetworkProfile->getUser() ?? $socialNetworkProfile->getRide() ?? $socialNetworkProfile->getCity() ?? $socialNetworkProfile->getSubride();
+        return $socialNetworkProfile->getUser() ?? $socialNetworkProfile->getRide() ?? $socialNetworkProfile->getCity();
     }
 
     public function getProfileAbleShortname(SocialNetworkProfileAble $profileAble): string
