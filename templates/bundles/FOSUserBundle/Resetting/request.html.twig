@@ -28,7 +28,7 @@
                         Kennwort zurücksetzen
                     </div>
                     <div class="panel-body">
-                        <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+                        <form action="{#{{ path('fos_user_resetting_send_email') }}#}" method="POST" class="fos_user_resetting_request">
                             <div class="row">
                                 <div class="col-md-12 form-group">
                                     {% if invalid_username is defined %}

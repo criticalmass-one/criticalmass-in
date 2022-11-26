@@ -23,9 +23,9 @@
                 <p class="lead">
                     Hier kannst du dich mit deinem criticalmass.in-Benutzerkonto einloggen. Gültig sind alle
                     Benutzerkonten, die seit Anfang 2013 registriert worden sind. Falls du dein Kennwort vergessen hast,
-                    kannst du dir <a href="{{ path('fos_user_resetting_request') }}">ein neues zusenden lassen</a>. Und
+                    kannst du dir <a href="{#{{ path('fos_user_resetting_request') }}#}">ein neues zusenden lassen</a>. Und
                     falls du noch kein Benutzerkonto hast, kannst du dich <a
-                            href="{{ path('fos_user_registration_register') }}">hier registrieren</a>.
+                            href="{#{{ path('fos_user_registration_register') }}#}">hier registrieren</a>.
                 </p>
             </div>
         </div>
@@ -77,7 +77,7 @@
                         E-Mail-Adresse
                     </div>
                     <div class="panel-body">
-                        <form action="{{ path("fos_user_security_check") }}" method="post" role="form"
+                        <form action="{#{{ path("fos_user_security_check") }}#}" method="post" role="form"
                               class="form-horizontal">
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
 
@@ -122,7 +122,7 @@
 
                             <div class="row margin-top-medium">
                                 <div class="col-md-12 text-center">
-                                    <a href="{{ path('fos_user_resetting_request') }}">
+                                    <a href="{#{{ path('fos_user_resetting_request') }}#}">
                                         Kennwort vergessen?
                                     </a>
                                     <a href="{{ path('fos_user_registration_register') }}">
