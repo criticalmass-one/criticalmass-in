@@ -30,15 +30,6 @@
                     </a>
                 </li>
                 <li role="presentation">
-                    <a href="#minimass" aria-controls="settings" role="tab" data-toggle="tab">
-                        <i class="far fa-map-marker"></i>
-                        Mini-Masses
-                        <span class="badge">
-                            {{ ride.getSubrides|length }}
-                        </span>
-                    </a>
-                </li>
-                <li role="presentation">
                     <a href="#comments" aria-controls="messages" role="tab" data-toggle="tab">
                         <i class="far fa-pencil"></i>
                         Kommentare
@@ -73,7 +64,6 @@
 
             <div class="tab-content">
                 {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderDetailsTabAction', { 'ride': ride } )) }}
-                {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderSubridesTabAction', { 'ride': ride } )) }}
                 {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderPostsTabAction', { 'ride': ride } )) }}
 
                 {% if pastRide and ride.enabled %}
@@ -115,10 +105,6 @@
         {% endif %}
         {% endfor %}
         {% endif %}
-
-        {% for subride in subrides %}
-        ridePage.addSubride('{{ subride|serialize|raw|e('js') }}');
-        {% endfor %}
 
         ridePage.init();
 
