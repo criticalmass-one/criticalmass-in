@@ -16,7 +16,6 @@ use App\Entity\Region;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
 use App\Entity\SocialNetworkProfile;
-use App\Entity\Subride;
 use App\Entity\Thread;
 use App\Entity\Track;
 use App\Entity\Weather;
@@ -33,7 +32,6 @@ use App\Repository\RegionRepository;
 use App\Repository\RideEstimateRepository;
 use App\Repository\RideRepository;
 use App\Repository\SocialNetworkProfileRepository;
-use App\Repository\SubrideRepository;
 use App\Repository\ThreadRepository;
 use App\Repository\TrackRepository;
 use App\Repository\WeatherRepository;
@@ -130,12 +128,6 @@ trait RepositoryTrait
     protected function getSocialNetworkProfileRepository(): SocialNetworkProfileRepository
     {
         return $this->getDoctrine()->getRepository(SocialNetworkProfile::class);
-    }
-
-    /** @deprecated */
-    protected function getSubrideRepository(): SubrideRepository
-    {
-        return $this->getDoctrine()->getRepository(Subride::class);
     }
 
     /** @deprecated */
