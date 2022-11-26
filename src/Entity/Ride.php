@@ -80,12 +80,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     protected Collection $tracks;
 
     /**
-     * @ORM\OneToMany(targetEntity="Subride", mappedBy="ride", fetch="LAZY")
-     * @JMS\Groups({"extended-ride-list"})
-     */
-    protected Collection $subrides;
-
-    /**
      * @ORM\Column(type="string", nullable=true)
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
@@ -337,7 +331,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         $this->tracks = new ArrayCollection();
         $this->photos = new ArrayCollection();
         $this->posts = new ArrayCollection();
-        $this->subrides = new ArrayCollection();
         $this->participations = new ArrayCollection();
         $this->socialNetworkProfiles = new ArrayCollection();
         $this->trackImportCandidates = new ArrayCollection();
@@ -659,25 +652,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     public function getPhotos(): Collection
     {
         return $this->photos;
-    }
-
-    public function addSubride(Subride $subride): Ride
-    {
-        $this->subrides->add($subride);
-
-        return $this;
-    }
-
-    public function removeSubride(Subride $subrides): Ride
-    {
-        $this->subrides->removeElement($subrides);
-
-        return $this;
-    }
-
-    public function getSubrides(): Collection
-    {
-        return $this->subrides;
     }
 
     public function getDurationInterval(): \DateInterval
