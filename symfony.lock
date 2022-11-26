@@ -83,9 +83,6 @@
             "config/routes/fos_js_routing.yaml"
         ]
     },
-    "friendsofsymfony/user-bundle": {
-        "version": "v3.1.0"
-    },
     "gregwar/captcha-bundle": {
         "version": "v2.2.0"
     },

@@ -34,7 +34,6 @@
         "symfony/monolog-bundle": "^3.3",
         "sensio/framework-extra-bundle": "^5.5",
         "incenteev/composer-parameter-handler": "^2.0",
-        "friendsofsymfony/user-bundle": "^3.0",
         "hwi/oauth-bundle": "^1.4",
         "malenki/slug": "1.0.0",
         "sonata-project/intl-bundle": "^2.3",
