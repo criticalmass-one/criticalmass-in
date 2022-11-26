@@ -89,8 +89,7 @@
         "symfony/asset": "^5.0",
         "yohang/calendr": "dev-master",
         "presta/sitemap-bundle": "^3.3",
-        "symfony/http-client": "^4.1",
-        "php-http/httplug-bundle": "^1.27"
+        "symfony/http-client": "^5.0"
     },
     "require-dev": {
         "symfony/browser-kit": "^5.0",
