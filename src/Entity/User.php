@@ -9,7 +9,6 @@ use App\EntityInterface\RouteableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\User as BaseUser;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -22,7 +21,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Vich\Uploadable
  * @JMS\ExclusionPolicy("all")
  */
-class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterface, PhotoInterface
+class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterface
 {
     /**
      * @ORM\Id
@@ -30,20 +29,29 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
      * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
-     * @todo Add typed property
-     * @var int $id
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      * @Routing\RouteParameter(name="username")
-     * @todo Add typed property
      */
     #[Assert\NotBlank]
     #[Assert\Regex(pattern: '/https?\:\/\//', match: false, message: 'Der Benutzername darf keine Url enthalten')]
-    protected $username;
+    protected ?string $username = null;
+
+    #[ORM\Column(type: 'string', nullable: true)]
+    private ?string $password = null;
+
+    #[ORM\Column(type: 'json')]
+    private array $roles = [];
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $name = null;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $email = null;
 
     /**
      * @ORM\OneToMany(targetEntity="Track", mappedBy="user", cascade={"persist","remove"})
@@ -165,8 +173,6 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
 
     public function __construct()
     {
-        parent::__construct();
-
         $this->colorRed = rand(0, 255);
         $this->colorGreen = rand(0, 255);
         $this->colorBlue = rand(0, 255);
@@ -184,9 +190,70 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         return $this;
     }
 
-    public function getId(): ?int
+
+    public function getUsername(): ?string
     {
-        return $this->id;
+        return $this->username;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->username;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
     public function getColorRed(): int

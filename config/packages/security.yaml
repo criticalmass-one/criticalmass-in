@@ -2,18 +2,27 @@ security:
     encoders:
         FOS\UserBundle\Model\UserInterface: sha512
 
+    providers:
+        users:
+            entity:
+                # the class of the entity that represents users
+                class: 'App\Entity\User'
+                # the property to query by - e.g. email, username, etc
+                property: 'email'
+
     firewalls:
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
         main:
+            provider: users
             pattern:             .*
             context:             user
             form_login:
                 csrf_token_generator: security.csrf.token_manager
                 login_path:     /login
-                check_path:     /login_check
+                check_path:     /login
                 always_use_default_target_path: false
                 use_referer:                    true
             logout:
