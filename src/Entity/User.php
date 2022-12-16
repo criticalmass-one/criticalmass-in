@@ -11,6 +11,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -21,7 +22,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Vich\Uploadable
  * @JMS\ExclusionPolicy("all")
  */
-class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterface
+class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterface, UserInterface
 {
     /**
      * @ORM\Id
@@ -36,21 +37,20 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
      * @JMS\Groups({"timelapse"})
      * @JMS\Expose
      * @Routing\RouteParameter(name="username")
+     * @Assert\NotBlank()
+     * @Assert\Regex(pattern="/https?\:\/\//", match=false, message="Der Benutzername darf keine Url enthalten")
+     * @ORM\Column(type="string", nullable=true)
      */
-    #[Assert\NotBlank]
-    #[Assert\Regex(pattern: '/https?\:\/\//', match: false, message: 'Der Benutzername darf keine Url enthalten')]
     protected ?string $username = null;
 
-    #[ORM\Column(type: 'string', nullable: true)]
-    private ?string $password = null;
-
-    #[ORM\Column(type: 'json')]
+    /**
+     * @ORM\Column(type="json")
+     */
     private array $roles = [];
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $name = null;
-
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
     private ?string $email = null;
 
     /**
@@ -98,6 +98,11 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected ?\DateTime $createdAt = null;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true, name="last_login")
+     */
+    protected ?\DateTime $lastLoginAt = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true, name="facebook_id")
@@ -157,6 +162,11 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     protected ?string $imageMimeType = null;
 
     /**
+     * @ORM\Column(type="boolean", options={"default" = 1})
+     */
+    protected bool $enabled = true;
+
+    /**
      * @ORM\Column(type="boolean", options={"default" = 0})
      */
     protected bool $ownProfilePhoto = false;
@@ -181,6 +191,11 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
         $this->participations = new ArrayCollection();
         $this->socialNetworkProfiles = new ArrayCollection();
         $this->trackImportCandidates = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function setId(int $id): User
@@ -225,24 +240,9 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): self
+    public function setRoles(array $roles = []): self
     {
         $this->roles = $roles;
-
-        return $this;
-    }
-
-    /**
-     * @see PasswordAuthenticatedUserInterface
-     */
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
 
         return $this;
     }
@@ -637,5 +637,39 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
         }
 
         return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(?string $email): User
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getTwitterkAccessToken(): ?string
+    {
+        return $this->twitterkAccessToken;
+    }
+
+    public function setTwitterkAccessToken(?string $twitterkAccessToken): User
+    {
+        $this->twitterkAccessToken = $twitterkAccessToken;
+
+        return $this;
+    }
+
+    public function getSalt(): void
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    public function getPassword(): void
+    {
+        // TODO: Implement getPassword() method.
     }
 }

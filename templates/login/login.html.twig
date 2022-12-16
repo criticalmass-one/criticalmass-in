@@ -1,0 +1,10 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+    <form action="{{ path('login') }}" method="POST">
+        <input type="email" name="email">
+        <button type="submit">Send Login Link</button>
+    </form>
+{% endblock %}

@@ -1,14 +1,13 @@
 security:
+    enable_authenticator_manager: true
     encoders:
-        FOS\UserBundle\Model\UserInterface: sha512
+        App\Entity\User: sha512
 
     providers:
         users:
             entity:
-                # the class of the entity that represents users
                 class: 'App\Entity\User'
-                # the property to query by - e.g. email, username, etc
-                property: 'email'
+                property: 'username'
 
     firewalls:
         dev:
@@ -16,18 +15,14 @@ security:
             security: false
 
         main:
+            login_link:
+                check_route: login_check
+                signature_properties: [ 'id' ]
             provider: users
             pattern:             .*
             context:             user
-            form_login:
-                csrf_token_generator: security.csrf.token_manager
-                login_path:     /login
-                check_path:     /login
-                always_use_default_target_path: false
-                use_referer:                    true
             logout:
                 invalidate_session: false
-            anonymous:          true
             oauth:
                 resource_owners:
                     facebook:  "/login/check-facebook"
