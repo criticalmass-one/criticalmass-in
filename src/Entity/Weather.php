@@ -6,138 +6,136 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
 /**
- * @ORM\Table(name="weather")
- * @ORM\Entity(repositoryClass="App\Repository\WeatherRepository")
  * @JMS\ExclusionPolicy("all")
  */
+#[ORM\Table(name: 'weather')]
+#[ORM\Entity(repositoryClass: 'App\Repository\WeatherRepository')]
 class Weather
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Expose()
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="weathers")
-     * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'Ride', inversedBy: 'weathers')]
+    #[ORM\JoinColumn(name: 'ride_id', referencedColumnName: 'id')]
     protected ?Ride $ride = null;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
      * @JMS\Expose()
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected ?string $json = null;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
      * @JMS\Expose()
      */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     protected ?\DateTime $weatherDateTime = null;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
      * @JMS\Expose()
      */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     protected ?\DateTime $creationDateTime = null;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose()
      */
+    #[ORM\Column(type: 'float', nullable: true)]
     protected ?float $temperatureMin = null;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose()
      */
+    #[ORM\Column(type: 'float', nullable: true)]
     protected ?float $temperatureMax = null;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose()
      */
+    #[ORM\Column(type: 'float', nullable: true)]
     protected ?float $temperatureMorning = null;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose()
      */
+    #[ORM\Column(type: 'float', nullable: true)]
     protected ?float $temperatureDay = null;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose()
      */
+    #[ORM\Column(type: 'float', nullable: true)]
     protected ?float $temperatureEvening = null;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose()
      */
+    #[ORM\Column(type: 'float', nullable: true)]
     protected ?float $temperatureNight = null;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose()
      */
+    #[ORM\Column(type: 'float', nullable: true)]
     protected ?float $pressure = null;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose()
      */
+    #[ORM\Column(type: 'float', nullable: true)]
     protected ?float $humidity = null;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
      * @JMS\Expose()
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $weatherCode = null;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
      * @JMS\Expose()
      */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $weather = null;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
      * @JMS\Expose()
      */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $weatherDescription = null;
 
     /**
-     * @ORM\Column(type="string", length=5, nullable=true)
      * @JMS\Expose()
      */
+    #[ORM\Column(type: 'string', length: 5, nullable: true)]
     protected ?string $weatherIcon = null;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose()
      */
+    #[ORM\Column(type: 'float', nullable: true)]
     protected ?float $windSpeed = null;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose()
      */
+    #[ORM\Column(type: 'float', nullable: true)]
     protected ?float $windDirection = null;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose()
      */
+    #[ORM\Column(type: 'float', nullable: true)]
     protected ?float $clouds = null;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose()
      */
+    #[ORM\Column(type: 'float', nullable: true)]
     protected ?float $precipitation = null;
 
     public function __construct()

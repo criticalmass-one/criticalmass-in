@@ -26,147 +26,137 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CityRepository")
  * @Vich\Uploadable
- * @ORM\Table(name="city")
  * @JMS\ExclusionPolicy("all")
  * @Routing\DefaultRoute(name="caldera_criticalmass_city_show")
  */
+#[ORM\Table(name: 'city')]
+#[ORM\Entity(repositoryClass: 'App\Repository\CityRepository')]
 class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, AutoParamConverterAble, SocialNetworkProfileAble, PostableInterface, StaticMapableInterface, CoordinateInterface
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      * @DataQuery\Sortable
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="cities")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'cities')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     protected ?User $user = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Region", inversedBy="cities", cascade={"persist"})
-     * @ORM\JoinColumn(name="region_id", referencedColumnName="id")
      * @DataQuery\Queryable
      * @DataQuery\Sortable
      */
+    #[ORM\ManyToOne(targetEntity: 'Region', inversedBy: 'cities', cascade: ['persist'])]
+    #[ORM\JoinColumn(name: 'region_id', referencedColumnName: 'id')]
     protected ?Region $region = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="CitySlug", inversedBy="cities")
-     * @ORM\JoinColumn(name="main_slug_id", referencedColumnName="id")
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      * @Routing\RouteParameter(name="citySlug")
      */
+    #[ORM\ManyToOne(targetEntity: 'CitySlug', inversedBy: 'cities')]
+    #[ORM\JoinColumn(name: 'main_slug_id', referencedColumnName: 'id')]
     protected ?CitySlug $mainSlug = null;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
      * @JMS\Expose
      * @JMS\SerializedName("name")
      * @JMS\Groups({"ride-list"})
      * @DataQuery\Sortable
      */
     #[Assert\NotBlank]
+    #[ORM\Column(type: 'string', length: 50, nullable: true)]
     protected ?string $city = null;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=true)
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      * @DataQuery\Sortable
      */
     #[Assert\NotBlank]
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
     protected ?string $title = null;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected ?string $description = null;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      * @DataQuery\Queryable
      */
+    #[ORM\Column(type: 'float', nullable: true)]
     protected float $latitude = 0.0;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      * @DataQuery\Queryable
      */
+    #[ORM\Column(type: 'float', nullable: true)]
     protected float $longitude = 0.0;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
      * @DataQuery\DefaultBooleanValue(value=true)
      */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     protected bool $enabled = true;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Ride", mappedBy="city")
-     */
+    #[ORM\OneToMany(targetEntity: 'Ride', mappedBy: 'city')]
     protected Collection $rides;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Post", mappedBy="city")
-     */
+    #[ORM\OneToMany(targetEntity: 'Post', mappedBy: 'city')]
     protected Collection $posts;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Photo", mappedBy="city")
-     */
+    #[ORM\OneToMany(targetEntity: 'Photo', mappedBy: 'city')]
     protected Collection $photos;
 
     /**
-     * @ORM\OneToMany(targetEntity="CitySlug", mappedBy="city", cascade={"persist","remove"})
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      */
+    #[ORM\OneToMany(targetEntity: 'CitySlug', mappedBy: 'city', cascade: ['persist', 'remove'])]
     protected Collection $slugs;
 
-    /**
-     * @ORM\OneToMany(targetEntity="CityCycle", mappedBy="city", cascade={"persist","remove"})
-     */
+    #[ORM\OneToMany(targetEntity: 'CityCycle', mappedBy: 'city', cascade: ['persist', 'remove'])]
     protected Collection $cycles;
 
     /**
-     * @ORM\OneToMany(targetEntity="SocialNetworkProfile", mappedBy="city", cascade={"persist", "remove"})
      * @JMS\Expose
      */
+    #[ORM\OneToMany(targetEntity: 'SocialNetworkProfile', mappedBy: 'city', cascade: ['persist', 'remove'])]
     protected Collection $socialNetworkProfiles;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
      * @JMS\Expose
      * @DataQuery\Queryable
      * @DataQuery\Sortable
      */
     #[Assert\Type(type: 'int')]
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $cityPopulation = null;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @JMS\Expose
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $punchLine = null;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
      * @JMS\Expose
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected ?string $longDescription = null;
 
     /**
@@ -174,91 +164,69 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
      */
     protected ?File $imageFile = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $imageName = null;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $imageSize = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $imageMimeType = null;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
      * @DataQuery\Sortable
      */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTime $updatedAt = null;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
      * @DataQuery\Sortable
      */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     protected ?\DateTime $createdAt = null;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     protected bool $enableBoard = false;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
      * @JMS\Expose
      * @JMS\Groups({"ride-list"})
      */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected string $timezone = 'Europe/Berlin';
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
      * @JMS\Expose
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected int $threadNumber = 0;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
      * @JMS\Expose
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected int $postNumber = 0;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected int $colorRed = 0;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected int $colorGreen = 0;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected int $colorBlue = 0;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Thread", inversedBy="cities")
-     * @ORM\JoinColumn(name="lastthread_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'Thread', inversedBy: 'cities')]
+    #[ORM\JoinColumn(name: 'lastthread_id', referencedColumnName: 'id')]
     protected ?Thread $lastThread = null;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected int $views = 0;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $rideNamer = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $wikidataEntityId = null;
 
     public function __construct()

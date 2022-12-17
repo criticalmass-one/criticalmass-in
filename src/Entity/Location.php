@@ -10,57 +10,57 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
 /**
- * @ORM\Table(name="location")
- * @ORM\Entity(repositoryClass="App\Repository\LocationRepository")
  * @Routing\DefaultRoute(name="caldera_criticalmass_location_show")
  * @JMS\ExclusionPolicy("all")
  */
+#[ORM\Table(name: 'location')]
+#[ORM\Entity(repositoryClass: 'App\Repository\LocationRepository')]
 class Location implements RouteableInterface, AuditableInterface, AutoParamConverterAble
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Expose
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="locations")
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      * @Routing\RouteParameter(name="citySlug")
      */
+    #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'locations')]
+    #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
     protected ?City $city = null;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
      * @Routing\RouteParameter(name="locationSlug")
      * @JMS\Expose
      */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $slug = null;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose
      */
+    #[ORM\Column(type: 'float', nullable: true)]
     protected ?float $latitude = null;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose
      */
+    #[ORM\Column(type: 'float', nullable: true)]
     protected ?float $longitude = null;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
      * @JMS\Expose
      */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $title = null;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
      * @JMS\Expose
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected ?string $description = null;
 
     public function getId(): ?int

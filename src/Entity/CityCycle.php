@@ -11,10 +11,10 @@ use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CityCycleRepository")
- * @ORM\Table(name="city_cycle")
  * @JMS\ExclusionPolicy("all")
  */
+#[ORM\Table(name: 'city_cycle')]
+#[ORM\Entity(repositoryClass: 'App\Repository\CityCycleRepository')]
 class CityCycle implements RouteableInterface
 {
     const DAY_MONDAY = 1;
@@ -32,133 +32,129 @@ class CityCycle implements RouteableInterface
     const WEEK_LAST = 0;
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      * @Routing\RouteParameter(name="cityCycleId")
      * @JMS\Expose()
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="cycles")
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      * @Routing\RouteParameter(name="citySlug")
      * @JMS\Expose()
      */
+    #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'cycles')]
+    #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
     protected ?City $city = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="cityCycles")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'cityCycles')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     protected ?User $user = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Ride", mappedBy="cycle", cascade={"persist","remove"})
-     */
+    #[ORM\OneToMany(targetEntity: 'Ride', mappedBy: 'cycle', cascade: ['persist', 'remove'])]
     protected Collection $rides;
 
     /**
-     * @ORM\Column(type="smallint", nullable=false)
      * @JMS\Expose()
      * @JMS\Groups({"ride-list"})
      */
     #[Assert\Range(min: 0, max: 6)]
+    #[ORM\Column(type: 'smallint', nullable: false)]
     protected ?int $dayOfWeek = null;
 
     /**
-     * @ORM\Column(type="smallint", nullable=true)
      * @JMS\Expose()
      * @JMS\Groups({"ride-list"})
      */
     #[Assert\Range(min: 0, max: 4)]
+    #[ORM\Column(type: 'smallint', nullable: true)]
     protected ?int $weekOfMonth = null;
 
     /**
-     * @ORM\Column(type="time", nullable=true)
      * @JMS\Expose()
      */
     #[Assert\Type(type: '\DateTime')]
+    #[ORM\Column(type: 'time', nullable: true)]
     protected ?\DateTime $time = null;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @JMS\Expose()
      * @JMS\Groups({"ride-list"})
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $location = null;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose()
      * @JMS\Groups({"ride-list"})
      */
     #[Assert\NotEqualTo(value: '0.0')]
+    #[ORM\Column(type: 'float', nullable: true)]
     protected ?float $latitude = 0.0;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose()
      * @JMS\Groups({"ride-list"})
      */
     #[Assert\NotEqualTo(value: '0.0')]
+    #[ORM\Column(type: 'float', nullable: true)]
     protected ?float $longitude = 0.0;
 
     /**
-     * @ORM\Column(type="datetime", nullable=false)
      * @JMS\Expose()
      */
+    #[ORM\Column(type: 'datetime', nullable: false)]
     protected \DateTime $createdAt;
 
     /**
      * @JMS\Expose()
-     * @ORM\Column(type="datetime", nullable=true)
      */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     protected ?\DateTime $updatedAt = null;
 
     /**
      * @JMS\Expose()
-     * @ORM\Column(type="datetime", nullable=true)
      */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     protected ?\DateTime $disabledAt = null;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
      * @JMS\Expose()
      * @JMS\Groups({"ride-list"})
      */
+    #[ORM\Column(type: 'date', nullable: true)]
     protected ?\DateTime $validFrom = null;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
      * @JMS\Expose()
      * @JMS\Groups({"ride-list"})
      */
+    #[ORM\Column(type: 'date', nullable: true)]
     protected ?\DateTime $validUntil = null;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
      * @JMS\Expose()
      */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $rideCalculatorFqcn = null;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
      * @JMS\Expose()
      */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $description = null;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
      * @JMS\Expose()
      */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $specialDayOfWeek = null;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
      * @JMS\Expose()
      */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $specialWeekOfMonth = null;
 
     public function __construct()

@@ -13,89 +13,85 @@ use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\SubrideRepository")
- * @ORM\Table(name="subride")
  * @JMS\ExclusionPolicy("all")
  */
+#[ORM\Table(name: 'subride')]
+#[ORM\Entity(repositoryClass: 'App\Repository\SubrideRepository')]
 class Subride implements AuditableInterface, SocialNetworkProfileAble, RouteableInterface
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      * @JMS\Expose
      * @Routing\RouteParameter(name="subrideId")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="subrides")
-     * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      * @JMS\Groups({"extended-subride-list"})
      * @Routing\RouteParameter(name="rideIdentifier")
      * @Routing\RouteParameter(name="citySlug")
      */
+    #[ORM\ManyToOne(targetEntity: 'Ride', inversedBy: 'subrides')]
+    #[ORM\JoinColumn(name: 'ride_id', referencedColumnName: 'id')]
     protected ?Ride $ride = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity="SocialNetworkProfile", mappedBy="subride", cascade={"persist", "remove"})
-     */
+    #[ORM\OneToMany(targetEntity: 'SocialNetworkProfile', mappedBy: 'subride', cascade: ['persist', 'remove'])]
     protected Collection $socialNetworkProfiles;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
      * @JMS\Expose
      */
     #[Assert\NotBlank]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $title = null;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
      * @JMS\Expose
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected ?string $description = null;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
      * @JMS\Expose
      */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     protected ?\DateTime $dateTime = null;
 
     /**
-     * @ORM\Column(type="datetime", nullable=false)
      * @JMS\Expose
      */
+    #[ORM\Column(type: 'datetime', nullable: false)]
     protected \DateTime $createdAt;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
      * @JMS\Expose
      */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     protected ?\DateTime $updatedAt = null;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
      * @JMS\Expose
      */
     #[Assert\NotBlank]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $location = null;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose
      */
+    #[ORM\Column(type: 'float', nullable: true)]
     protected ?float $latitude = null;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
      * @JMS\Expose
      */
+    #[ORM\Column(type: 'float', nullable: true)]
     protected ?float $longitude = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="subrides")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'subrides')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     protected ?User $user = null;
 
     public function __construct()
