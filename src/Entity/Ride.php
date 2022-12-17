@@ -29,86 +29,80 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @JMS\ExclusionPolicy("all")
  * @CriticalAssert\SingleRideForDay
  * @Vich\Uploadable
  * @Routing\DefaultRoute(name="caldera_criticalmass_ride_show")
  */
 #[ORM\Table(name: 'ride')]
 #[ORM\Entity(repositoryClass: 'App\Repository\RideRepository')]
+#[JMS\ExclusionPolicy('all')]
 class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, OrderedEntityInterface, CoordinateInterface
 {
     /**
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
      * @DataQuery\Sortable
      */
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
     protected ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'rides', fetch: 'LAZY')]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     protected ?User $user = null;
 
-    /**
-     * @JMS\Groups({"extended-ride-list"})
-     * @JMS\Expose
-     */
     #[ORM\ManyToOne(targetEntity: 'CityCycle', inversedBy: 'rides', fetch: 'LAZY')]
     #[ORM\JoinColumn(name: 'cycle_id', referencedColumnName: 'id')]
+    #[JMS\Groups(['extended-ride-list'])]
+    #[JMS\Expose]
     protected ?CityCycle $cycle = null;
 
     /**
-     * @JMS\Groups({"extended-ride-list"})
-     * @JMS\Expose
      * @Routing\RouteParameter(name="citySlug")
      * @OE\Identical()
      * @DataQuery\Queryable
      */
     #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'rides', fetch: 'LAZY')]
     #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
+    #[JMS\Groups(['extended-ride-list'])]
+    #[JMS\Expose]
     protected ?City $city = null;
 
-    /**
-     * @JMS\Groups({"extended-ride-list"})
-     */
     #[ORM\OneToMany(targetEntity: 'Track', mappedBy: 'ride', fetch: 'LAZY')]
+    #[JMS\Groups(['extended-ride-list'])]
     protected Collection $tracks;
 
-    /**
-     * @JMS\Groups({"extended-ride-list"})
-     */
     #[ORM\OneToMany(targetEntity: 'Subride', mappedBy: 'ride', fetch: 'LAZY')]
+    #[JMS\Groups(['extended-ride-list'])]
     protected Collection $subrides;
 
     /**
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
      * @DataQuery\Sortable
      * @DataQuery\Queryable
      */
     #[ORM\Column(type: 'string', nullable: true)]
+    #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
     protected ?string $slug = null;
 
     /**
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
      * @DataQuery\Sortable
      * @DataQuery\Queryable
      */
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 255, nullable: false)]
+    #[JMS\Groups(['ride-list'])]
+    #[JMS\Expose]
     protected ?string $title = null;
 
     /**
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
      * @DataQuery\Sortable
      * @DataQuery\Queryable
      */
     #[ORM\Column(type: 'text', nullable: true)]
+    #[JMS\Groups(['ride-list'])]
+    #[JMS\Expose]
     protected ?string $description = null;
 
     /**
@@ -119,87 +113,81 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     protected ?string $socialDescription = null;
 
     /**
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
-     * @JMS\Type("DateTime<'U'>")
      * @OE\Order(direction="asc")
      * @DataQuery\Sortable
      * @DataQuery\DateTimeQueryable(format="strict_date", pattern="Y-m-d")
      */
     #[ORM\Column(type: 'datetime', nullable: true)]
+    #[JMS\Groups(['ride-list'])]
+    #[JMS\Expose]
+    #[JMS\Type("DateTime<'U'>")]
     protected \DateTime $dateTime;
 
     /**
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
      * @DataQuery\Sortable
      * @DataQuery\Queryable
      */
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[JMS\Groups(['ride-list'])]
+    #[JMS\Expose]
     protected ?string $location = null;
 
     /**
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
      * @DataQuery\Sortable
      * @DataQuery\Queryable
      */
     #[ORM\Column(type: 'float', nullable: true)]
+    #[JMS\Groups(['ride-list'])]
+    #[JMS\Expose]
     protected ?float $latitude = 0.0;
 
     /**
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
      * @DataQuery\Sortable
      * @DataQuery\Queryable
      */
     #[ORM\Column(type: 'float', nullable: true)]
+    #[JMS\Groups(['ride-list'])]
+    #[JMS\Expose]
     protected ?float $longitude = 0.0;
 
     /**
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
      * @DataQuery\Sortable
      * @DataQuery\Queryable
      */
     #[ORM\Column(type: 'smallint', nullable: true)]
+    #[JMS\Groups(['ride-list'])]
+    #[JMS\Expose]
     protected ?int $estimatedParticipants = null;
 
     /**
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
      * @DataQuery\Sortable
      * @DataQuery\Queryable
      */
     #[ORM\Column(type: 'float', nullable: true)]
+    #[JMS\Groups(['ride-list'])]
+    #[JMS\Expose]
     protected ?float $estimatedDistance = null;
 
     /**
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
      * @DataQuery\Sortable
      * @DataQuery\Queryable
      */
     #[ORM\Column(type: 'float', nullable: true)]
+    #[JMS\Groups(['ride-list'])]
+    #[JMS\Expose]
     protected ?float $estimatedDuration = null;
 
-    /**
-     * @JMS\Groups({"extended-ride-list"})
-     */
     #[ORM\OneToMany(targetEntity: 'Post', mappedBy: 'ride', fetch: 'LAZY')]
+    #[JMS\Groups(['extended-ride-list'])]
     protected Collection $posts;
 
-    /**
-     * @JMS\Groups({"extended-ride-list"})
-     */
     #[ORM\OneToMany(targetEntity: 'Photo', mappedBy: 'ride', fetch: 'LAZY')]
+    #[JMS\Groups(['extended-ride-list'])]
     protected Collection $photos;
 
-    /**
-     * @JMS\Groups({"extended-ride-list"})
-     * @JMS\Expose
-     */
     #[ORM\OneToMany(targetEntity: 'SocialNetworkProfile', mappedBy: 'ride', cascade: ['persist', 'remove'])]
+    #[JMS\Groups(['extended-ride-list'])]
+    #[JMS\Expose]
     protected ?Collection $socialNetworkProfiles = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
@@ -208,22 +196,16 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     #[ORM\Column(type: 'datetime', nullable: true)]
     protected ?\DateTime $updatedAt = null;
 
-    /**
-     * @JMS\Expose
-     */
     #[ORM\Column(type: 'integer', nullable: true)]
+    #[JMS\Expose]
     protected int $participationsNumberYes = 0;
 
-    /**
-     * @JMS\Expose
-     */
     #[ORM\Column(type: 'integer', nullable: true)]
+    #[JMS\Expose]
     protected int $participationsNumberMaybe = 0;
 
-    /**
-     * @JMS\Expose
-     */
     #[ORM\Column(type: 'integer', nullable: true)]
+    #[JMS\Expose]
     protected int $participationsNumberNo = 0;
 
     #[ORM\OneToMany(targetEntity: 'Participation', mappedBy: 'ride', fetch: 'LAZY')]
@@ -266,36 +248,34 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
 
     /**
      * @OE\Boolean(true)
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
      */
     #[ORM\Column(type: 'boolean', options: ['default' => true])]
+    #[JMS\Groups(['ride-list'])]
+    #[JMS\Expose]
     protected bool $enabled = true;
 
     /**
      * @DoctrineAssert\Enum(entity="App\DBAL\Type\RideDisabledReasonType")
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
      */
     #[ORM\Column(type: 'RideDisabledReasonType', nullable: true)]
+    #[JMS\Groups(['ride-list'])]
+    #[JMS\Expose]
     protected ?string $disabledReason = null;
 
     /**
      * @DoctrineAssert\Enum(entity="App\DBAL\Type\RideType")
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
      */
     #[ORM\Column(type: 'RideType', nullable: true)]
+    #[JMS\Groups(['ride-list'])]
+    #[JMS\Expose]
     protected ?string $rideType = null;
 
     #[ORM\OneToMany(targetEntity: 'App\Entity\TrackImportCandidate', mappedBy: 'ride')]
     private Collection $trackImportCandidates;
 
-    /**
-     * @JMS\Groups({"ride-list"})
-     * @JMS\Expose
-     */
     #[ORM\Column(type: 'text', nullable: true)]
+    #[JMS\Groups(['ride-list'])]
+    #[JMS\Expose]
     private ?string $disabledReasonMessage = null;
 
     #[ORM\OneToMany(targetEntity: RideView::class, mappedBy: 'ride', fetch: 'LAZY')]

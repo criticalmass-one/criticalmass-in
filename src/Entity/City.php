@@ -27,21 +27,21 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @Vich\Uploadable
- * @JMS\ExclusionPolicy("all")
  * @Routing\DefaultRoute(name="caldera_criticalmass_city_show")
  */
 #[ORM\Table(name: 'city')]
 #[ORM\Entity(repositoryClass: 'App\Repository\CityRepository')]
+#[JMS\ExclusionPolicy('all')]
 class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, AutoParamConverterAble, SocialNetworkProfileAble, PostableInterface, StaticMapableInterface, CoordinateInterface
 {
     /**
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
      * @DataQuery\Sortable
      */
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
     protected ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'cities')]
@@ -57,54 +57,52 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     protected ?Region $region = null;
 
     /**
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
      * @Routing\RouteParameter(name="citySlug")
      */
     #[ORM\ManyToOne(targetEntity: 'CitySlug', inversedBy: 'cities')]
     #[ORM\JoinColumn(name: 'main_slug_id', referencedColumnName: 'id')]
+    #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
     protected ?CitySlug $mainSlug = null;
 
     /**
-     * @JMS\Expose
-     * @JMS\SerializedName("name")
-     * @JMS\Groups({"ride-list"})
      * @DataQuery\Sortable
      */
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
+    #[JMS\Expose]
+    #[JMS\SerializedName('name')]
+    #[JMS\Groups(['ride-list'])]
     protected ?string $city = null;
 
     /**
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
      * @DataQuery\Sortable
      */
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
+    #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
     protected ?string $title = null;
 
-    /**
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
-     */
     #[ORM\Column(type: 'text', nullable: true)]
+    #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
     protected ?string $description = null;
 
     /**
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
      * @DataQuery\Queryable
      */
     #[ORM\Column(type: 'float', nullable: true)]
+    #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
     protected float $latitude = 0.0;
 
     /**
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
      * @DataQuery\Queryable
      */
     #[ORM\Column(type: 'float', nullable: true)]
+    #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
     protected float $longitude = 0.0;
 
     /**
@@ -122,41 +120,33 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     #[ORM\OneToMany(targetEntity: 'Photo', mappedBy: 'city')]
     protected Collection $photos;
 
-    /**
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
-     */
     #[ORM\OneToMany(targetEntity: 'CitySlug', mappedBy: 'city', cascade: ['persist', 'remove'])]
+    #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
     protected Collection $slugs;
 
     #[ORM\OneToMany(targetEntity: 'CityCycle', mappedBy: 'city', cascade: ['persist', 'remove'])]
     protected Collection $cycles;
 
-    /**
-     * @JMS\Expose
-     */
     #[ORM\OneToMany(targetEntity: 'SocialNetworkProfile', mappedBy: 'city', cascade: ['persist', 'remove'])]
+    #[JMS\Expose]
     protected Collection $socialNetworkProfiles;
 
     /**
-     * @JMS\Expose
      * @DataQuery\Queryable
      * @DataQuery\Sortable
      */
     #[Assert\Type(type: 'int')]
     #[ORM\Column(type: 'integer', nullable: true)]
+    #[JMS\Expose]
     protected ?int $cityPopulation = null;
 
-    /**
-     * @JMS\Expose
-     */
     #[ORM\Column(type: 'string', nullable: true)]
+    #[JMS\Expose]
     protected ?string $punchLine = null;
 
-    /**
-     * @JMS\Expose
-     */
     #[ORM\Column(type: 'text', nullable: true)]
+    #[JMS\Expose]
     protected ?string $longDescription = null;
 
     /**
@@ -188,23 +178,17 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     #[ORM\Column(type: 'boolean', nullable: true)]
     protected bool $enableBoard = false;
 
-    /**
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
-     */
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
     protected string $timezone = 'Europe/Berlin';
 
-    /**
-     * @JMS\Expose
-     */
     #[ORM\Column(type: 'integer', nullable: true)]
+    #[JMS\Expose]
     protected int $threadNumber = 0;
 
-    /**
-     * @JMS\Expose
-     */
     #[ORM\Column(type: 'integer', nullable: true)]
+    #[JMS\Expose]
     protected int $postNumber = 0;
 
     #[ORM\Column(type: 'integer', nullable: true)]
@@ -283,11 +267,11 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     }
 
     /**
-     * @JMS\VirtualProperty
-     * @JMS\SerializedName("slug")
-     * @JMS\Type("string")
      * @deprecated
      */
+    #[JMS\VirtualProperty]
+    #[JMS\SerializedName('slug')]
+    #[JMS\Type('string')]
     public function getMainSlugString(): string
     {
         return $this->getMainSlug()->getSlug();
@@ -856,11 +840,9 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
         return $this->wikidataEntityId;
     }
 
-    /**
-     * @JMS\VirtualProperty
-     * @JMS\SerializedName("color")
-     * @JMS\Type("array")
-     */
+    #[JMS\VirtualProperty]
+    #[JMS\SerializedName('color')]
+    #[JMS\Type('array')]
     public function getColor(): array
     {
         return [

@@ -17,56 +17,50 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @Vich\Uploadable
- * @JMS\ExclusionPolicy("all")
  */
 #[ORM\Table(name: 'fos_user_user')]
 #[ORM\Entity(repositoryClass: 'App\Repository\UserRepository')]
 #[ORM\HasLifecycleCallbacks]
+#[JMS\ExclusionPolicy('all')]
 class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterface, PhotoInterface
 {
     /**
-     * @JMS\Groups({"timelapse"})
-     * @JMS\Expose
      * @todo Add typed property
      * @var int $id
      */
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[JMS\Groups(['timelapse'])]
+    #[JMS\Expose]
     protected $id;
 
     /**
-     * @JMS\Groups({"timelapse"})
-     * @JMS\Expose
      * @Routing\RouteParameter(name="username")
      * @todo Add typed property
      */
     #[Assert\NotBlank]
     #[Assert\Regex(pattern: '/https?\:\/\//', match: false, message: 'Der Benutzername darf keine Url enthalten')]
+    #[JMS\Groups(['timelapse'])]
+    #[JMS\Expose]
     protected $username;
 
     #[ORM\OneToMany(targetEntity: 'Track', mappedBy: 'user', cascade: ['persist', 'remove'])]
     protected Collection $tracks;
 
-    /**
-     * @JMS\Groups({"timelapse"})
-     * @JMS\Expose
-     */
     #[ORM\Column(type: 'smallint', nullable: true)]
+    #[JMS\Groups(['timelapse'])]
+    #[JMS\Expose]
     protected int $colorRed = 0;
 
-    /**
-     * @JMS\Groups({"timelapse"})
-     * @JMS\Expose
-     */
     #[ORM\Column(type: 'smallint', nullable: true)]
+    #[JMS\Groups(['timelapse'])]
+    #[JMS\Expose]
     protected int $colorGreen = 0;
 
-    /**
-     * @JMS\Groups({"timelapse"})
-     * @JMS\Expose
-     */
     #[ORM\Column(type: 'smallint', nullable: true)]
+    #[JMS\Groups(['timelapse'])]
+    #[JMS\Expose]
     protected int $colorBlue = 0;
 
     #[ORM\Column(type: 'boolean', nullable: true, options: ['default' => 0])]
@@ -107,11 +101,9 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
      */
     protected ?File $imageFile = null;
 
-    /**
-     * @JMS\Groups({"timelapse"})
-     * @JMS\Expose
-     */
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[JMS\Groups(['timelapse'])]
+    #[JMS\Expose]
     protected ?string $imageName = null;
 
     #[ORM\Column(type: 'integer', nullable: true)]

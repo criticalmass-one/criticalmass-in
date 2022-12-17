@@ -5,87 +5,63 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
-/**
- * @JMS\ExclusionPolicy("all")
- */
 #[ORM\Table(name: 'social_network_feed_item')]
 #[ORM\UniqueConstraint(name: 'unique_feed_item', columns: ['social_network_profile_id', 'uniqueIdentifier'])]
 #[ORM\Entity(repositoryClass: 'App\Repository\SocialNetworkFeedItemRepository')]
+#[JMS\ExclusionPolicy('all')]
 class SocialNetworkFeedItem //implements Crawlable
 {
-    /**
-     * @JMS\Expose
-     */
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[JMS\Expose]
     protected ?int $id = null;
 
-    /**
-     * @JMS\Expose
-     * @JMS\Type("Relation<App\Entity\SocialNetworkProfile>")
-     * @JMS\SerializedName("social_network_profile_id")
-     */
     #[ORM\ManyToOne(targetEntity: 'SocialNetworkProfile', inversedBy: 'feedItems')]
     #[ORM\JoinColumn(name: 'social_network_profile_id', referencedColumnName: 'id')]
+    #[JMS\Expose]
+    #[JMS\Type('Relation<App\Entity\SocialNetworkProfile>')]
+    #[JMS\SerializedName('social_network_profile_id')]
     protected ?SocialNetworkProfile $socialNetworkProfile = null;
 
-    /**
-     * @JMS\Expose
-     */
     #[ORM\Column(type: 'string', length: 255, nullable: false)]
+    #[JMS\Expose]
     protected ?string $uniqueIdentifier = null;
 
-    /**
-     * @JMS\Expose
-     */
     #[ORM\Column(type: 'text', nullable: true)]
+    #[JMS\Expose]
     protected ?string $permalink = null;
 
-    /**
-     * @JMS\Expose
-     */
     #[ORM\Column(type: 'text', nullable: true)]
+    #[JMS\Expose]
     protected ?string $title = null;
 
-    /**
-     * @JMS\Expose
-     */
     #[ORM\Column(type: 'text', nullable: false)]
+    #[JMS\Expose]
     protected ?string $text = null;
 
-    /**
-     * @JMS\Expose
-     * @JMS\Type("DateTime<'U'>")
-     */
     #[ORM\Column(type: 'datetime', nullable: false)]
+    #[JMS\Expose]
+    #[JMS\Type("DateTime<'U'>")]
     protected ?\DateTime $dateTime = null;
 
-    /**
-     * @JMS\Expose
-     * @JMS\Type("bool")
-     */
     #[ORM\Column(type: 'boolean', nullable: false)]
+    #[JMS\Expose]
+    #[JMS\Type('bool')]
     protected bool $hidden = false;
 
-    /**
-     * @JMS\Expose
-     * @JMS\Type("bool")
-     */
     #[ORM\Column(type: 'boolean', nullable: false)]
+    #[JMS\Expose]
+    #[JMS\Type('bool')]
     protected bool $deleted = false;
 
-    /**
-     * @JMS\Expose
-     * @JMS\Type("DateTime<'U'>")
-     */
     #[ORM\Column(type: 'datetime', nullable: false)]
+    #[JMS\Expose]
+    #[JMS\Type("DateTime<'U'>")]
     protected \DateTime $createdAt;
 
-    /**
-     * @JMS\Expose
-     */
     #[ORM\Column(type: 'text', nullable: true)]
+    #[JMS\Expose]
     protected ?string $raw = null;
 
     public function __construct()

@@ -11,18 +11,16 @@ use JMS\Serializer\Annotation as JMS;
 
 /**
  * @Routing\DefaultRoute(name="caldera_criticalmass_location_show")
- * @JMS\ExclusionPolicy("all")
  */
 #[ORM\Table(name: 'location')]
 #[ORM\Entity(repositoryClass: 'App\Repository\LocationRepository')]
+#[JMS\ExclusionPolicy('all')]
 class Location implements RouteableInterface, AuditableInterface, AutoParamConverterAble
 {
-    /**
-     * @JMS\Expose
-     */
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[JMS\Expose]
     protected ?int $id = null;
 
     /**
@@ -34,33 +32,25 @@ class Location implements RouteableInterface, AuditableInterface, AutoParamConve
 
     /**
      * @Routing\RouteParameter(name="locationSlug")
-     * @JMS\Expose
      */
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[JMS\Expose]
     protected ?string $slug = null;
 
-    /**
-     * @JMS\Expose
-     */
     #[ORM\Column(type: 'float', nullable: true)]
+    #[JMS\Expose]
     protected ?float $latitude = null;
 
-    /**
-     * @JMS\Expose
-     */
     #[ORM\Column(type: 'float', nullable: true)]
+    #[JMS\Expose]
     protected ?float $longitude = null;
 
-    /**
-     * @JMS\Expose
-     */
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[JMS\Expose]
     protected ?string $title = null;
 
-    /**
-     * @JMS\Expose
-     */
     #[ORM\Column(type: 'text', nullable: true)]
+    #[JMS\Expose]
     protected ?string $description = null;
 
     public function getId(): ?int
