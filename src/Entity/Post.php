@@ -8,89 +8,59 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Table(name="post")
- * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
- */
+#[ORM\Table(name: 'post')]
+#[ORM\Entity(repositoryClass: 'App\Repository\PostRepository')]
 class Post implements Crawlable
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Post", inversedBy="children")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'Post', inversedBy: 'children')]
+    #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id')]
     protected ?Post $parent = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Post", mappedBy="parent")
-     */
+    #[ORM\OneToMany(targetEntity: 'Post', mappedBy: 'parent')]
     protected Collection $children;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="posts")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'posts')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     protected ?User $user = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="posts")
-     * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'Ride', inversedBy: 'posts')]
+    #[ORM\JoinColumn(name: 'ride_id', referencedColumnName: 'id')]
     protected ?Ride $ride = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="posts")
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'posts')]
+    #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
     protected ?City $city = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Thread", inversedBy="posts")
-     * @ORM\JoinColumn(name="thread_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'Thread', inversedBy: 'posts')]
+    #[ORM\JoinColumn(name: 'thread_id', referencedColumnName: 'id')]
     protected ?Thread $thread = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Photo", inversedBy="posts")
-     * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'Photo', inversedBy: 'posts')]
+    #[ORM\JoinColumn(name: 'photo_id', referencedColumnName: 'id')]
     protected ?Photo $photo = null;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
+    #[ORM\Column(type: 'float', nullable: true)]
     protected ?float $latitude = null;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
+    #[ORM\Column(type: 'float', nullable: true)]
     protected ?float $longitude = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     protected ?\DateTime $dateTime = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
     #[Assert\NotBlank]
+    #[ORM\Column(type: 'text', nullable: true)]
     protected ?string $message = null;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     protected bool $enabled = true;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     protected bool $crawled = false;
 
     public function __construct()

@@ -16,127 +16,82 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @ORM\Table(name="fos_user_user")
- * @ORM\HasLifecycleCallbacks
  * @Vich\Uploadable
- * @JMS\ExclusionPolicy("all")
  */
+#[ORM\Table(name: 'fos_user_user')]
+#[ORM\Entity(repositoryClass: 'App\Repository\UserRepository')]
+#[ORM\HasLifecycleCallbacks]
+#[JMS\ExclusionPolicy('all')]
 class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterface, UserInterface
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @JMS\Groups({"timelapse"})
-     * @JMS\Expose
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[JMS\Groups(['timelapse'])]
+    #[JMS\Expose]
     protected ?int $id = null;
 
-    /**
-     * @JMS\Groups({"timelapse"})
-     * @JMS\Expose
-     * @Routing\RouteParameter(name="username")
-     * @Assert\NotBlank()
-     * @Assert\Regex(pattern="/https?\:\/\//", match=false, message="Der Benutzername darf keine Url enthalten")
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected ?string $username = null;
-
-    /**
-     * @ORM\Column(type="json")
-     */
+    #[ORM\Column(type: 'json', nullable: true)]
     private array $roles = [];
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $email = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Track", mappedBy="user", cascade={"persist","remove"})
-     */
+    #[Assert\NotBlank]
+    #[Assert\Regex(pattern: '/https?\:\/\//', match: false, message: 'Der Benutzername darf keine Url enthalten')]
+    #[JMS\Groups(['timelapse'])]
+    #[JMS\Expose]
+    protected ?string $username = null;
+
+    #[ORM\OneToMany(targetEntity: 'Track', mappedBy: 'user', cascade: ['persist', 'remove'])]
     protected Collection $tracks;
 
-    /**
-     * @ORM\Column(type="smallint", nullable=true)
-     * @JMS\Groups({"timelapse"})
-     * @JMS\Expose
-     */
+    #[ORM\Column(type: 'smallint', nullable: true)]
+    #[JMS\Groups(['timelapse'])]
+    #[JMS\Expose]
     protected int $colorRed = 0;
 
-    /**
-     * @ORM\Column(type="smallint", nullable=true)
-     * @JMS\Groups({"timelapse"})
-     * @JMS\Expose
-     */
+    #[ORM\Column(type: 'smallint', nullable: true)]
+    #[JMS\Groups(['timelapse'])]
+    #[JMS\Expose]
     protected int $colorGreen = 0;
 
-    /**
-     * @ORM\Column(type="smallint", nullable=true)
-     * @JMS\Groups({"timelapse"})
-     * @JMS\Expose
-     */
+    #[ORM\Column(type: 'smallint', nullable: true)]
+    #[JMS\Groups(['timelapse'])]
+    #[JMS\Expose]
     protected int $colorBlue = 0;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true, options={"default":0})
-     */
+    #[ORM\Column(type: 'boolean', nullable: true, options: ['default' => 0])]
     protected bool $blurGalleries = false;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Participation", mappedBy="user")
-     */
+    #[ORM\OneToMany(targetEntity: 'Participation', mappedBy: 'user')]
     protected Collection $participations;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     protected ?\DateTime $updatedAt = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     protected ?\DateTime $createdAt = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true, name="last_login")
-     */
-    protected ?\DateTime $lastLoginAt = null;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true, name="facebook_id")
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true, name: 'facebook_id')]
     protected ?string $facebookId = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true, name="facebook_access_token")
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true, name: 'facebook_access_token')]
     protected ?string $facebookAccessToken = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true, name="strava_id")
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true, name: 'strava_id')]
     protected ?string $stravaId = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true, name="strava_access_token")
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true, name: 'strava_access_token')]
     protected ?string $stravaAccessToken = null;
 
-    /**
-     * @ORM\Column(name="twitter_id", type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(name: 'twitter_id', type: 'string', length: 255, nullable: true)]
     protected ?string $twitterId = null;
 
-    /**
-     * @ORM\Column(name="twitter_access_token", type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(name: 'twitter_access_token', type: 'string', length: 255, nullable: true)]
     protected ?string $twitterkAccessToken = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity="CityCycle", mappedBy="city", cascade={"persist", "remove"})
-     */
+    #[ORM\OneToMany(targetEntity: 'CityCycle', mappedBy: 'city', cascade: ['persist', 'remove'])]
     protected Collection $cycles;
 
     /**
@@ -144,41 +99,24 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
      */
     protected ?File $imageFile = null;
 
-    /**
-     * @JMS\Groups({"timelapse"})
-     * @JMS\Expose
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[JMS\Groups(['timelapse'])]
+    #[JMS\Expose]
     protected ?string $imageName = null;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $imageSize = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $imageMimeType = null;
 
-    /**
-     * @ORM\Column(type="boolean", options={"default" = 1})
-     */
-    protected bool $enabled = true;
-
-    /**
-     * @ORM\Column(type="boolean", options={"default" = 0})
-     */
+    #[ORM\Column(type: 'boolean', options: ['default' => 0])]
     protected bool $ownProfilePhoto = false;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\SocialNetworkProfile", mappedBy="createdBy")
-     */
+    #[ORM\OneToMany(targetEntity: 'App\Entity\SocialNetworkProfile', mappedBy: 'createdBy')]
     private Collection $socialNetworkProfiles;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\TrackImportCandidate", mappedBy="user", orphanRemoval=true)
-     */
+    #[ORM\OneToMany(targetEntity: 'App\Entity\TrackImportCandidate', mappedBy: 'user', orphanRemoval: true)]
     private Collection $trackImportCandidates;
 
     public function __construct()
@@ -343,9 +281,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
         return $this;
     }
 
-    /**
-     * @ORM\PrePersist()
-     */
+    #[ORM\PrePersist]
     public function prePersist(): User
     {
         $this->createdAt = new \DateTime();
@@ -354,9 +290,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
         return $this;
     }
 
-    /**
-     * @ORM\PreUpdate()
-     */
+    #[ORM\PreUpdate]
     public function preUpdate(): User
     {
         $this->updatedAt = new \DateTime();
