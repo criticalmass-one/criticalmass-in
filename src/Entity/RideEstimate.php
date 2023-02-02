@@ -5,78 +5,52 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\RideEstimateRepository")
- * @ORM\Table(name="ride_estimate")
- */
+#[ORM\Table(name: 'ride_estimate')]
+#[ORM\Entity(repositoryClass: 'App\Repository\RideEstimateRepository')]
 class RideEstimate
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="estimates", fetch="LAZY")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'estimates', fetch: 'LAZY')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     protected ?User $user = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="estimates", fetch="LAZY")
-     * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'Ride', inversedBy: 'estimates', fetch: 'LAZY')]
+    #[ORM\JoinColumn(name: 'ride_id', referencedColumnName: 'id')]
     protected ?Ride $ride = null;
 
-    /**
-     * @ORM\OneToOne(targetEntity="Track", mappedBy="rideEstimate", cascade={"persist"}, fetch="LAZY")
-     * @ORM\JoinColumn(name="track_id", referencedColumnName="id")
-     */
+    #[ORM\OneToOne(targetEntity: 'Track', mappedBy: 'rideEstimate', cascade: ['persist'], fetch: 'LAZY')]
+    #[ORM\JoinColumn(name: 'track_id', referencedColumnName: 'id')]
     protected ?Track $track = null;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
+    #[ORM\Column(type: 'float', nullable: true)]
     protected ?float $latitude = null;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
+    #[ORM\Column(type: 'float', nullable: true)]
     protected ?float $longitude = null;
 
-    /**
-     * @ORM\Column(type="smallint", nullable=true)
-     */
     #[Assert\Regex('/^([0-9]{1,6})$/')]
+    #[ORM\Column(type: 'smallint', nullable: true)]
     protected ?int $estimatedParticipants = null;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
     #[Assert\Regex('/^([0-9]{1,2})([\.,]*)([0-9]{0,5})$/')]
+    #[ORM\Column(type: 'float', nullable: true)]
     protected ?float $estimatedDistance = null;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
     #[Assert\Regex('/^([0-9]{1,2})([\.,]*)([0-9]{0,4})$/')]
+    #[ORM\Column(type: 'float', nullable: true)]
     protected ?float $estimatedDuration = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     protected \DateTime $dateTime;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     protected \DateTime $createdAt;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $source = null;
 
     public function __construct()

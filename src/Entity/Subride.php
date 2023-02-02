@@ -12,90 +12,68 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\SubrideRepository")
- * @ORM\Table(name="subride")
- * @JMS\ExclusionPolicy("all")
- */
+#[ORM\Table(name: 'subride')]
+#[ORM\Entity(repositoryClass: 'App\Repository\SubrideRepository')]
+#[JMS\ExclusionPolicy('all')]
 class Subride implements AuditableInterface, SocialNetworkProfileAble, RouteableInterface
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @JMS\Expose
      * @Routing\RouteParameter(name="subrideId")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[JMS\Expose]
     protected ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="subrides")
-     * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
-     * @JMS\Groups({"extended-subride-list"})
      * @Routing\RouteParameter(name="rideIdentifier")
      * @Routing\RouteParameter(name="citySlug")
      */
+    #[ORM\ManyToOne(targetEntity: 'Ride', inversedBy: 'subrides')]
+    #[ORM\JoinColumn(name: 'ride_id', referencedColumnName: 'id')]
+    #[JMS\Groups(['extended-subride-list'])]
     protected ?Ride $ride = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity="SocialNetworkProfile", mappedBy="subride", cascade={"persist", "remove"})
-     */
+    #[ORM\OneToMany(targetEntity: 'SocialNetworkProfile', mappedBy: 'subride', cascade: ['persist', 'remove'])]
     protected Collection $socialNetworkProfiles;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @JMS\Expose
-     */
     #[Assert\NotBlank]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[JMS\Expose]
     protected ?string $title = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @JMS\Expose
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[JMS\Expose]
     protected ?string $description = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @JMS\Expose
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[JMS\Expose]
     protected ?\DateTime $dateTime = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=false)
-     * @JMS\Expose
-     */
+    #[ORM\Column(type: 'datetime', nullable: false)]
+    #[JMS\Expose]
     protected \DateTime $createdAt;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @JMS\Expose
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[JMS\Expose]
     protected ?\DateTime $updatedAt = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @JMS\Expose
-     */
     #[Assert\NotBlank]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[JMS\Expose]
     protected ?string $location = null;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     * @JMS\Expose
-     */
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[JMS\Expose]
     protected ?float $latitude = null;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     * @JMS\Expose
-     */
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[JMS\Expose]
     protected ?float $longitude = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="subrides")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'subrides')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     protected ?User $user = null;
 
     public function __construct()
@@ -139,11 +117,9 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
         return $this->description;
     }
 
-    /**
-     * @JMS\VirtualProperty
-     * @JMS\SerializedName("timestamp")
-     * @JMS\Type("integer")
-     */
+    #[JMS\VirtualProperty]
+    #[JMS\SerializedName('timestamp')]
+    #[JMS\Type('integer')]
     public function getTimestamp(): int
     {
         return (int) $this->dateTime->format('U');
