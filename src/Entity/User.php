@@ -78,19 +78,19 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     #[ORM\Column(type: 'string', length: 255, nullable: true, name: 'facebook_id')]
     protected ?string $facebookId = null;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true, name: 'facebook_access_token')]
+    #[ORM\Column(type: 'text', nullable: true, name: 'facebook_access_token')]
     protected ?string $facebookAccessToken = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true, name: 'strava_id')]
     protected ?string $stravaId = null;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true, name: 'strava_access_token')]
+    #[ORM\Column(type: 'text', nullable: true, name: 'strava_access_token')]
     protected ?string $stravaAccessToken = null;
 
     #[ORM\Column(name: 'twitter_id', type: 'string', length: 255, nullable: true)]
     protected ?string $twitterId = null;
 
-    #[ORM\Column(name: 'twitter_access_token', type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(name: 'twitter_access_token', type: 'text', nullable: true)]
     protected ?string $twitterkAccessToken = null;
 
     #[ORM\OneToMany(targetEntity: 'CityCycle', mappedBy: 'city', cascade: ['persist', 'remove'])]
