@@ -75,16 +75,16 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     #[ORM\Column(type: 'datetime', nullable: true)]
     protected ?\DateTime $createdAt = null;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true, name: 'facebook_id')]
+    #[ORM\Column(name: 'facebook_id', type: 'string', length: 255, nullable: true)]
     protected ?string $facebookId = null;
 
-    #[ORM\Column(type: 'text', nullable: true, name: 'facebook_access_token')]
+    #[ORM\Column(name: 'facebook_access_token', type: 'text', nullable: true)]
     protected ?string $facebookAccessToken = null;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true, name: 'strava_id')]
+    #[ORM\Column(name: 'strava_id', type: 'string', length: 255, nullable: true)]
     protected ?string $stravaId = null;
 
-    #[ORM\Column(type: 'text', nullable: true, name: 'strava_access_token')]
+    #[ORM\Column(name: 'strava_access_token', type: 'text', nullable: true)]
     protected ?string $stravaAccessToken = null;
 
     #[ORM\Column(name: 'twitter_id', type: 'string', length: 255, nullable: true)]
