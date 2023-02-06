@@ -41,6 +41,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     #[Assert\Regex(pattern: '/https?\:\/\//', match: false, message: 'Der Benutzername darf keine Url enthalten')]
     #[JMS\Groups(['timelapse'])]
     #[JMS\Expose]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $username = null;
 
     #[ORM\OneToMany(targetEntity: 'Track', mappedBy: 'user', cascade: ['persist', 'remove'])]
