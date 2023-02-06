@@ -3,8 +3,85 @@
 {% block title %}{% endblock %}
 
 {% block content %}
-    <form action="{{ path('login') }}" method="POST">
-        <input type="email" name="email">
-        <button type="submit">Send Login Link</button>
-    </form>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <h1>Einloggen und losfahren!</h1>
+
+                <p class="lead">
+                    Hier kannst du dich mit deinem criticalmass.in-Benutzerkonto einloggen. Gültig sind alle
+                    Benutzerkonten, die seit Anfang 2013 registriert worden sind. Falls du dein Kennwort vergessen hast,
+                    kannst du dir <a href="{#{{ path('fos_user_resetting_request') }}#}">ein neues zusenden lassen</a>. Und
+                    falls du noch kein Benutzerkonto hast, kannst du dich <a
+                            href="{#{{ path('fos_user_registration_register') }}#}">hier registrieren</a>.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Soziale Netzwerke
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <p>
+                                    Logge dich über eines dieser sozialen Netzwerke ein &mdash; es dauert nur einen
+                                    Klick!
+                                </p>
+
+                                <div class="btn-group" role="group" aria-label="...">
+                                    <a class="btn btn-default" style="background-color: rgb(60, 90, 150); color: white;"
+                                       href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook' }) }}"
+                                       title="Sign in with Facebook">
+                                        <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                                        Facebook
+                                    </a>
+                                    <a class="btn btn-default" style="background-color: rgb(249, 77, 31); color: white;"
+                                       href="{{ path('hwi_oauth_service_redirect', {'service': 'strava' }) }}"
+                                       title="Sign in with Strava">
+                                        <i class="fab fa-strava" aria-hidden="true"></i>
+                                        Strava
+                                    </a>
+                                    <a class="btn btn-default"
+                                       style="background-color: rgb(29, 161, 242); color: white;"
+                                       href="{{ path('hwi_oauth_service_redirect', {'service': 'twitter' }) }}"
+                                       title="Sign in with Twitter">
+                                        <i class="fab fa-twitter" aria-hidden="true"></i>
+                                        Twitter
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-5">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        E-Mail-Adresse
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            Bitte gib deine E-Mail-Adresse ein, wir senden dir einen Link zum Einloggen per Mail zu!
+                        </p>
+
+                        {{ form_start(login_form) }}
+                        {{ form_row(login_form.email, { attr: { class: 'form-control' }}) }}
+
+                        <div class="text-center margin-top-medium">
+                            {{ form_row(login_form.submit, { attr: { class: 'btn btn-primary' }}) }}
+                        </div>
+
+                        {{ form_end(login_form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 {% endblock %}

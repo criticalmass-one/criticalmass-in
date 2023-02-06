@@ -93,13 +93,7 @@ class Builder extends AbstractBuilder
                 ->addChild('Abmelden', ['route' => 'logout']);
         } else {
             $menu
-                ->addChild('Anmelden', [
-                    'uri' => '#'
-                ])
-                ->setLinkAttributes([
-                    'data-toggle' => 'modal',
-                    'data-target' => '#loginModal'
-                ]);
+                ->addChild('Anmelden', ['route' => 'login']);
         }
 
 

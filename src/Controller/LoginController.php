@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\Type\LoginType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,8 +27,12 @@ class LoginController extends AbstractController
     #[Route('/login', name: 'login')]
     public function requestLoginLink(Request $request): Response
     {
+        $loginForm = $this->createForm(LoginType::class);
+
+        $loginForm->handleRequest($request);
+
         // check if login form is submitted
-        if ($request->isMethod('POST')) {
+        if ($loginForm->isSubmitted() && $loginForm->isValid()) {
             // load the user in some way (e.g. using the form input)
             $email = $request->request->get('email');
             $user = $this->userRepository->findOneBy(['email' => $email]);
@@ -47,11 +52,15 @@ class LoginController extends AbstractController
             $this->notifier->send($notification, $recipient);
 
             // render a "Login link is sent!" page
-            return $this->render('login/login_link_sent.html.twig');
+            return $this->render('login/login_link_sent.html.twig', [
+                'login_form' => $loginForm->createView(),
+            ]);
         }
 
         // if it's not submitted, render the "login" form
-        return $this->render('login/login.html.twig');
+        return $this->render('login/login.html.twig', [
+            'login_form' => $loginForm->createView(),
+        ]);
     }
 
     #[Route('/login_check', name: 'login_check')]
