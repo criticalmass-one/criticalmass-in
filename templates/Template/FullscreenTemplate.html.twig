@@ -3,15 +3,5 @@
 {% block masterContent %}
     {% include('Template/Includes/_navigation.html.twig') with { 'fullscreenMap': true } %}
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="alert alert-info">
-                    criticalmass.in wird am 30. September abgeschaltet.
-                </div>
-            </div>
-        </div>
-    </div>
-
     {% block content %}{% endblock %}
 {% endblock %}
