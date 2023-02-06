@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Form\Type\LoginType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,8 +34,8 @@ class LoginController extends AbstractController
 
         // check if login form is submitted
         if ($loginForm->isSubmitted() && $loginForm->isValid()) {
-            // load the user in some way (e.g. using the form input)
-            $email = $request->request->get('email');
+            $email = $loginForm->getData()['email'];
+
             $user = $this->userRepository->findOneBy(['email' => $email]);
 
             // create a login link for $user this returns an instance
@@ -45,6 +46,7 @@ class LoginController extends AbstractController
                 $loginLinkDetails,
                 'Dein persönlicher Login-Link für criticalmass.in!' // email subject
             );
+
             // create a recipient for this user
             $recipient = new Recipient($user->getEmail());
 
