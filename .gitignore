@@ -74,6 +74,7 @@ yarn-error.log
 criticalmass.iml
 .idea
 docker
+.yarn
 ###> liip/imagine-bundle ###
 /public/media/cache/
 ###< liip/imagine-bundle ###
