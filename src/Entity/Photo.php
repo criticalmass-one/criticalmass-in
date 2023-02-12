@@ -33,6 +33,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\Table(name: 'photo')]
 #[ORM\Entity(repositoryClass: 'App\Repository\PhotoRepository')]
 #[JMS\ExclusionPolicy('all')]
+#[ORM\Index(fields: ['exifCreationDate'], name: 'photo_exif_creation_date_index')]
 class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, StaticMapableInterface, OrderedEntityInterface, ElasticSearchPinInterface, CoordinateInterface
 {
     /**

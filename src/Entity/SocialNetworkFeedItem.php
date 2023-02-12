@@ -8,6 +8,8 @@ use JMS\Serializer\Annotation as JMS;
 #[ORM\Table(name: 'social_network_feed_item')]
 #[ORM\UniqueConstraint(name: 'unique_feed_item', columns: ['social_network_profile_id', 'uniqueIdentifier'])]
 #[ORM\Entity(repositoryClass: 'App\Repository\SocialNetworkFeedItemRepository')]
+#[ORM\Index(fields: ['dateTime'], name: 'social_network_feed_item_date_time_index')]
+#[ORM\Index(fields: ['createdAt'], name: 'social_network_feed_item_created_at_index')]
 #[JMS\ExclusionPolicy('all')]
 class SocialNetworkFeedItem //implements Crawlable
 {
