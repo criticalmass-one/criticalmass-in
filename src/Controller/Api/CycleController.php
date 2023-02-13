@@ -78,12 +78,12 @@ class CycleController extends BaseController
      * @ParamConverter("validFrom", class="DateTime", isOptional=true)
      * @ParamConverter("validUntil", class="DateTime", isOptional=true)
      */
-    #[Route(path: '/cycles', name: 'caldera_criticalmass_rest_cycles_list', methods: ['GET'], options: ['expose' => true])]
+    #[Route(path: '/cycles', name: 'caldera_criticalmass_rest_cycles_list', options: ['expose' => true], methods: ['GET'])]
     public function listAction(Request $request, City $city = null, Region $region = null, \DateTime $validFrom = null, \DateTime $validUntil = null): JsonResponse
     {
-        $validNow = $request->query->getBoolean('validNow', null);
-        $dayOfWeek = $request->query->getInt('dayOfWeek', null);
-        $weekOfMonth = $request->query->getInt('weekOfMonth', null);
+        $validNow = $request->query->getBoolean('validNow');
+        $dayOfWeek = $request->query->getInt('dayOfWeek');
+        $weekOfMonth = $request->query->getInt('weekOfMonth');
 
         $cycleList = $this->managerRegistry->getRepository(CityCycle::class)->findForApi($city, $region, $validFrom, $validUntil, $validNow, $dayOfWeek, $weekOfMonth);
 
