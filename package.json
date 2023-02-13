@@ -50,5 +50,6 @@
     "polyline-encoded": "0.0.8",
     "requirejs": "^2.3.6",
     "typeahead.js": "^0.11.1"
-  }
+  },
+  "packageManager": "yarn@3.4.1"
 }

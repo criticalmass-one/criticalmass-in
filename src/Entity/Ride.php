@@ -36,6 +36,9 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\Table(name: 'ride')]
 #[ORM\Entity(repositoryClass: 'App\Repository\RideRepository')]
 #[JMS\ExclusionPolicy('all')]
+#[ORM\Index(fields: ['dateTime'], name: 'ride_date_time_index')]
+#[ORM\Index(fields: ['createdAt'], name: 'ride_created_at_index')]
+#[ORM\Index(fields: ['updatedAt'], name: 'ride_updated_at_index')]
 class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, OrderedEntityInterface, CoordinateInterface
 {
     /**

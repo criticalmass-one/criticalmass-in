@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'post')]
 #[ORM\Entity(repositoryClass: 'App\Repository\PostRepository')]
+#[ORM\Index(fields: ['dateTime'], name: 'post_date_time_index')]
 class Post implements Crawlable
 {
     #[ORM\Id]
