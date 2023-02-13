@@ -90,7 +90,6 @@
         "yohang/calendr": "dev-master",
         "presta/sitemap-bundle": "^3.3",
         "symfony/http-client": "^5.0",
-        "presta/sitemap-bundle": "^3.3",
         "symfony/twig-bridge": "^5.0"
     },
     "require-dev": {
