@@ -5,34 +5,24 @@ namespace App\Entity;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewEntity;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="photo_view")
- * @ORM\Entity()
- */
+#[ORM\Table(name: 'photo_view')]
+#[ORM\Entity]
 class PhotoView implements ViewEntity
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="photo_views")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'photo_views')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     protected ?User $user = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Photo", inversedBy="photo_views")
-     * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'Photo', inversedBy: 'photo_views')]
+    #[ORM\JoinColumn(name: 'photo_id', referencedColumnName: 'id')]
     protected ?Photo $photo = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     protected \DateTime $dateTime;
 
     public function __construct()
