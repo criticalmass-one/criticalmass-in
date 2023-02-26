@@ -18,6 +18,9 @@ security:
             login_link:
                 check_route: login_check
                 signature_properties: [ 'id' ]
+                lifetime: 300
+                max_uses: 1
+
             provider: users
             pattern:             .*
             context:             user
