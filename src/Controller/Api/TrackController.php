@@ -34,7 +34,7 @@ class TrackController extends BaseController
      * )
      * @ParamConverter("ride", class="App:Ride")
      */
-    #[Route(path: '/{citySlug}/{rideIdentifier}/listTracks', name: 'caldera_criticalmass_rest_track_ridelist', methods: ['GET'])]
+    #[Route(path: '/{citySlug}/{rideIdentifier}/listTracks', name: 'caldera_criticalmass_rest_track_ridelist', options: ['expose' => true], methods: ['GET'])]
     public function listRideTrackAction(Ride $ride): JsonResponse
     {
         $trackList = $this->managerRegistry->getRepository(Track::class)->findByRide($ride);
