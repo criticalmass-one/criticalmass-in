@@ -48,7 +48,6 @@
         "salavert/time-ago-in-words": "^1.8",
         "emcconville/point-reduction-algorithms": "^1.2",
         "php-http/message": "^1.6",
-        "symfony/swiftmailer-bundle": "^3.2",
         "symfony/security-bundle": "^5.0",
         "symfony/apache-pack": "^1.0",
         "sunra/php-simple-html-dom-parser": "^1.5",
@@ -125,7 +124,8 @@
     "config": {
         "allow-plugins": {
             "composer/package-versions-deprecated": true,
-            "symfony/flex": true
+            "symfony/flex": true,
+            "php-http/discovery": true
         }
 
     },
