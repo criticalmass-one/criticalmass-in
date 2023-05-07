@@ -42,7 +42,7 @@
         </tr>
         <tr>
             <th>Distanz</th>
-            <td>{{ ride.getEstimatedDistance()|round(2) }} Kilometer</td>
+            <td>{{ ride.getEstimatedDistance()|round(2) }}&nbsp;km</td>
             <td>
                 {% include('AppBundle:Common/Ride:RideDistance.html.twig') with { 'ride': ride } %}
             </td>
@@ -60,7 +60,7 @@
         </tr>
         <tr>
             <th>Durchschnittsgeschwindigkeit</th>
-            <td>{{ ride.getAverageVelocity()|round(2) }} Kilometer pro Stunde</td>
+            <td>{{ ride.getAverageVelocity()|round(2) }}&nbsp;km/h</td>
             <td></td>
             <td></td>
         </tr>
