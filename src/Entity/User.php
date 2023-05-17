@@ -165,7 +165,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->username;
+        return (string) $this->email;
     }
 
     /**
