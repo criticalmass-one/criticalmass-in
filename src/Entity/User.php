@@ -31,7 +31,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     #[JMS\Expose]
     protected ?int $id = null;
 
-    #[ORM\Column(type: 'json')]
+    #[ORM\Column(type: 'json', nullable: true)]
     private ?array $roles = [];
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
