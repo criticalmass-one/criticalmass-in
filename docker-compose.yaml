@@ -16,7 +16,7 @@ services:
       com.symfony.server.service-prefix: 'REDIS'
 
   mysql:
-    image: mariadb:10.3.25
+    image: mariadb:10.9.3
     command: --default-authentication-plugin=mysql_native_password
     container_name: criticalmass-mysql
     working_dir: /application
