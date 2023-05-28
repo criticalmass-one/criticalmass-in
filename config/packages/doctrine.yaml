@@ -13,13 +13,8 @@ doctrine:
         default_table_options:
             charset: utf8
             collate: utf8_unicode_ci
-
-        dbname: '%env(resolve:DATABASE_DBNAME)%'
-        port: '%env(resolve:DATABASE_PORT)%'
-        user: '%env(resolve:DATABASE_USER)%'
-        password: '%env(resolve:DATABASE_PASSWORD)%'
-        host: '%env(resolve:DATABASE_HOST)%'
-        server_version: '%env(resolve:DATABASE_VERSION)%'
+        server_version: 'mariadb-10.9.3'
+        url: '%env(resolve:DATABASE_URL)%'
 
         types:
             datetime: App\DBAL\Type\UTCDateTimeType
