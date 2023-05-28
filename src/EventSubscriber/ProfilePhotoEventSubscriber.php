@@ -14,11 +14,8 @@ use HWI\Bundle\OAuthBundle\Event\FormEvent as HwiFormEvent;
 
 class ProfilePhotoEventSubscriber implements EventSubscriberInterface
 {
-    /** @var ProfilePhotoGenerator $profilePhotoGenerator */
-    protected $profilePhotoGenerator;
-
-    /** @var ManagerRegistry $registry */
-    protected $registry;
+    protected ProfilePhotoGenerator $profilePhotoGenerator;
+    protected ManagerRegistry $registry;
 
     public function __construct(ProfilePhotoGenerator $profilePhotoGenerator, ManagerRegistry $registry)
     {

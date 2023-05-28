@@ -13,13 +13,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class AssignExifCommand extends Command
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    /** @var ExifHandlerInterface $exifHandler */
-    protected $exifHandler;
-
-    public function __construct(ManagerRegistry $registry, ExifHandlerInterface $exifHandler)
+    protected static $defaultName = 'criticalmass:photos:assign-exif';
+    public function __construct(protected ManagerRegistry $registry, protected ExifHandlerInterface $exifHandler)
     {
         $this->registry = $registry;
         $this->exifHandler = $exifHandler;
@@ -29,9 +24,7 @@ class AssignExifCommand extends Command
 
     protected function configure(): void
     {
-        $this
-            ->setName('criticalmass:photos:assign-exif')
-            ->setDescription('Assign exif data to photos')
+        $this->setDescription('Assign exif data to photos')
             ->addOption('limit', 'l', InputOption::VALUE_REQUIRED, 'Number of photos to process at once')
             ->addOption('offset', 'o', InputOption::VALUE_REQUIRED, 'Offset to start processing')
             ->addOption('overwrite', 'ow', InputOption::VALUE_NONE, 'Overwrite existing data');

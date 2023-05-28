@@ -32,10 +32,14 @@ class RideController extends AbstractController
     }
 
     /**
-     * @ParamConverter("ride", class="App:Ride")
+     * @ParamConverter("ride", class="App:Ride", isOptional=true)
      */
-    public function showAction(Request $request, SeoPageInterface $seoPage, EventDispatcherInterface $eventDispatcher, Ride $ride): Response
+    public function showAction(SeoPageInterface $seoPage, EventDispatcherInterface $eventDispatcher, Ride $ride = null): Response
     {
+        if (!$ride) {
+            $this->redirectToRoute('caldera_criticalmass_calendar');
+        }
+
         $blocked = $this->getBlockedCityRepository()->findCurrentCityBlock($ride->getCity());
 
         if ($blocked) {
@@ -45,7 +49,7 @@ class RideController extends AbstractController
             ]);
         }
 
-        $eventDispatcher->dispatch(ViewEvent::NAME, new ViewEvent($ride));
+        $eventDispatcher->dispatch(new ViewEvent($ride), ViewEvent::NAME);
 
         $seoPage
             ->setDescription('Informationen, Strecken und Fotos von der Critical Mass in ' . $ride->getCity()->getCity() . ' am ' . $ride->getDateTime()->format('d.m.Y'))

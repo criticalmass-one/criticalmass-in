@@ -18,8 +18,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class ProfileManagementController extends AbstractController
 {
+    public function __construct(private readonly UserManagerInterface $userManager)
+    {
+    }
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function manageAction(UserInterface $user = null): Response
     {
@@ -35,7 +38,7 @@ class ProfileManagementController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function editUsernameAction(Request $request, UserInterface $user = null): Response
     {
@@ -48,7 +51,7 @@ class ProfileManagementController extends AbstractController
 
             if ($usernameForm->isSubmitted() && $usernameForm->isValid()) {
                 /** @var $userManager UserManagerInterface */
-                $userManager = $this->get('fos_user.user_manager');
+                $userManager = $this->userManager;
 
                 try {
                     $userManager->updateUser($user);
@@ -71,7 +74,7 @@ class ProfileManagementController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function editEmailAction(Request $request, UserInterface $user = null): Response
     {
@@ -84,7 +87,7 @@ class ProfileManagementController extends AbstractController
 
             if ($userEmailForm->isSubmitted() && $userEmailForm->isValid()) {
                 /** @var $userManager UserManagerInterface */
-                $userManager = $this->get('fos_user.user_manager');
+                $userManager = $this->userManager;
 
                 try {
                     $userManager->updateUser($user);

@@ -20,8 +20,6 @@ parameters:
     facebook.app_id: '%env(FACEBOOK_APP_ID)%'
     facebook.app_secret: '%env(FACEBOOK_APP_SECRET)%'
     facebook.default_token: '%env(FACEBOOK_DEFAULT_TOKEN)%'
-    runkeeper.client_id: '%env(RUNKEEPER_CLIENT_ID)%'
-    runkeeper.secret: '%env(RUNKEEPER_SECRET)%'
     twitter.client_id: '%env(TWITTER_CLIENT_ID)%'
     twitter.token: '%env(TWITTER_TOKEN)%'
     twitter.secret: '%env(TWITTER_SECRET)%'
@@ -36,11 +34,7 @@ parameters:
     upload_destination.ride_photo: '%kernel.project_dir%/public/rides'
     upload_destination.frontpage_teaser: '%kernel.project_dir%/public/teaser'
     upload_destination.user_photo: '%kernel.project_dir%/public/users'
-    upload_destination.heatmap_tile: '%kernel.project_dir%/public/heatmaps'
     staticmaps.host: '%env(STATICMAPS_HOST)%'
-    yourls.api_hostname: '%env(YOURLS_API_HOSTNAME)%'
-    yourls.api_username: '%env(YOURLS_API_USERNAME)%'
-    yourls.api_password: '%env(YOURLS_API_PASSWORD)%'
     assets_version: '%env(ASSETS_VERSION)%'
 
 services:
@@ -49,8 +43,8 @@ services:
         autoconfigure: true
         public: false
         bind:
-            $rootDirectory: '%kernel.root_dir%'
-            $webRootDir: '%kernel.root_dir%/../public'
+            $rootDirectory: '%kernel.project_dir%'
+            $webRootDir: '%kernel.project_dir%/../public'
             $staticmapsHost: '%staticmaps.host%'
             $gapWidth: '%track.gap_width%'
             $facebookAppId: '%facebook.app_id%'
@@ -69,6 +63,7 @@ services:
             $criticalmassRideGeneratorUrl: '%env(CRITICALMASS_RIDE_GENERATOR_URL)%'
             $instagramScraperProxyServerAddress: '%env(INSTAGRAM_SCRAPER_PROXY_ADDRESS)%'
             $instagramScraperProxyServerPort: '%env(INSTAGRAM_SCRAPER_PROXY_PORT)%'
+            cachePrefix: 'media/cache'
 
     App\:
         resource: '../src/*'
@@ -80,12 +75,6 @@ services:
         tags: ['controller.service_arguments']
 
     Symfony\Component\Routing\RouteCollection: ~
-
-    Caldera\YourlsApiManager\YourlsApiManager:
-        arguments:
-            - '%yourls.api_hostname%'
-            - '%yourls.api_username%'
-            - '%yourls.api_password%'
 
     Sonata\SeoBundle\Seo\SeoPageInterface:
         alias: sonata.seo.page.default
@@ -125,18 +114,6 @@ services:
     App\Criticalmass\UploadValidator\TrackValidator:
         arguments:
             $filesystem: '@oneup_flysystem.flysystem_track_track_filesystem'
-
-    App\Criticalmass\Heatmap\Tile\TilePersister:
-        arguments:
-            $filesystem: '@oneup_flysystem.flysystem_heatmap_tile_filesystem'
-
-    App\Criticalmass\Heatmap\Tile\TileLoader:
-        arguments:
-            $filesystem: '@oneup_flysystem.flysystem_heatmap_tile_filesystem'
-
-    App\Criticalmass\Heatmap\Remover\HeatmapRemover:
-        arguments:
-            $filesystem: '@oneup_flysystem.flysystem_heatmap_tile_filesystem'
 
     App\Criticalmass\Geocoding\ReverseGeocoderInterface:
         alias: App\Criticalmass\Geocoding\CachedReverseGeocoder
@@ -248,20 +225,14 @@ services:
     jms_serializer.naming_strategy:
         alias: jms_serializer.camel_case_naming_strategy
 
-    App\Criticalmass\ViewStorage\BlackList\BlackList:
-        arguments:
-            $crawlerDetect: '@crawler_detect'
-
     App\Form\Type\RegistrationType:
         arguments:
             $class: '%fos_user.model.user.class%'
 
-    App\Criticalmass\Corona\ResultFetcher\ResultFetcherInterface:
-        alias: App\Criticalmass\Corona\ResultFetcher\CachedResultFetcher
-
     App\Criticalmass\CriticalmassBlog\CriticalmassBlogInterface:
         alias: App\Criticalmass\CriticalmassBlog\CachedCriticalmassBlog
 
-    App\Criticalmass\DataQuery\FinderFactory\FinderFactory:
+    App\Controller\Search\SearchController:
         arguments:
-            $finder: '@fos_elastica.finder.criticalmass_ride'
+            $cityFinder: '@fos_elastica.finder.criticalmass_city'
+            $rideFinder: '@fos_elastica.finder.criticalmass_ride'

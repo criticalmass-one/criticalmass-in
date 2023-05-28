@@ -8,53 +8,35 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="region")
- * @ORM\Entity(repositoryClass="App\Repository\RegionRepository")
- */
+#[ORM\Table(name: 'region')]
+#[ORM\Entity(repositoryClass: 'App\Repository\RegionRepository')]
 class Region implements RouteableInterface, AuditableInterface
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $slug = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $name = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected ?string $description = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Region", inversedBy="children", cascade={"persist"})
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'Region', inversedBy: 'children', cascade: ['persist'])]
+    #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id')]
     protected ?Region $parent = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Region", mappedBy="parent")
-     */
+    #[ORM\OneToMany(targetEntity: 'Region', mappedBy: 'parent')]
     protected Collection $children;
 
-    /**
-     * @ORM\OneToMany(targetEntity="City", mappedBy="region")
-     */
+    #[ORM\OneToMany(targetEntity: 'City', mappedBy: 'region')]
     protected Collection $cities;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $wikidataEntityId = null;
 
     public function __construct()

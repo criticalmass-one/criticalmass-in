@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 class CityCycleController extends AbstractController
 {
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("city", class="App:City")
      */
     public function listAction(City $city, ManagerRegistry $registry): Response
@@ -28,7 +28,7 @@ class CityCycleController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("cityCycle", class="App:CityCycle")
      */
     public function listRidesAction(CityCycle $cityCycle, ManagerRegistry $registry): Response

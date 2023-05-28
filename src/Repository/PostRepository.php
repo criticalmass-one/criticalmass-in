@@ -179,9 +179,11 @@ class PostRepository extends EntityRepository
 
         $builder
             ->select('p')
+            ->join('p.photo', 'p2')
             ->where($builder->expr()->eq('p.enabled', ':enabled'))
             ->setParameter('enabled', true)
-            ->andWhere($builder->expr()->isNotNull('p.photo'));
+            ->andWhere($builder->expr()->eq('p2.deleted', ':deleted'))
+            ->setParameter('deleted', false);
 
         if ($startDateTime) {
             $builder

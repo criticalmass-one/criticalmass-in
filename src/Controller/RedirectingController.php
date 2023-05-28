@@ -14,6 +14,6 @@ class RedirectingController extends AbstractController
 
         $url = str_replace($pathInfo, rtrim($pathInfo, ' /'), $requestUri);
 
-        return $this->redirect($url, 301);
+        return $this->redirect($url, RedirectResponse::HTTP_MOVED_PERMANENTLY);
     }
 }
