@@ -88,7 +88,8 @@
         "yohang/calendr": "dev-master",
         "presta/sitemap-bundle": "^3.3",
         "symfony/twig-bridge": "^5.0",
-        "symfony/mailer": "^5.0"
+        "symfony/mailer": "^5.0",
+        "symfony/cache": "^5.0"
     },
     "require-dev": {
         "symfony/browser-kit": "^5.0",
