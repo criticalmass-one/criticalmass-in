@@ -6,15 +6,13 @@ use FOS\UserBundle\Mailer\MailerInterface;
 use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Twig\Environment;
 use Symfony\Component\Mailer\MailerInterface as SymfonyMailer;
 
 class MailHandler implements MailerInterface
 {
     public function __construct(
         protected SymfonyMailer $mailer,
-        protected UrlGeneratorInterface $router,
-        protected Environment $twig
+        protected UrlGeneratorInterface $router
     ) {
 
     }
