@@ -7,6 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'ride_estimate')]
 #[ORM\Entity(repositoryClass: 'App\Repository\RideEstimateRepository')]
+#[ORM\Index(fields: ['dateTime'], name: 'ride_estimate_date_time_index')]
 class RideEstimate
 {
     #[ORM\Id]
