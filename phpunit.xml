@@ -29,18 +29,14 @@
         <env name="ASSETS_VERSION" value="v2019-11-30" />
         <env name="REDIS_URL" value="redis://localhost"/>
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="verbose=0"/>
-
-        <!-- ###+ symfony/swiftmailer-bundle ### -->
-        <!-- For Gmail as a transport, use: "gmail://username:password@localhost" -->
-        <!-- For a generic SMTP server, use: "smtp://localhost:25?encryption=&auth_mode=" -->
-        <!-- Delivery is disabled by default via "null://localhost" -->
-        <env name="MAILER_URL" value="null://localhost"/>
-        <!-- ###- symfony/swiftmailer-bundle ### -->
-
         <!-- ###+ symfony/framework-bundle ### -->
         <env name="APP_ENV" value="dev"/>
         <env name="APP_SECRET" value="df8d381811406884419490af74b35ce9"/>
         <!-- ###- symfony/framework-bundle ### -->
+
+        <!-- ###+ symfony/mailer ### -->
+        <!-- MAILER_DSN=null://null -->
+        <!-- ###- symfony/mailer ### -->
     </php>
 
     <testsuites>
