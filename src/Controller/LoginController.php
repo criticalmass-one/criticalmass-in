@@ -34,7 +34,6 @@ class LoginController extends AbstractController
 
         $loginForm->handleRequest($request);
 
-        // check if login form is submitted
         if ($loginForm->isSubmitted() && $loginForm->isValid()) {
             $email = $loginForm->getData()['email'];
 
@@ -44,28 +43,22 @@ class LoginController extends AbstractController
                 $user = $this->createNewUser($email);
             }
 
-            // create a login link for $user this returns an instance
-            // of LoginLinkDetails
             $loginLinkDetails = $this->loginLinkHandler->createLoginLink($user);
 
             $notification = new LoginLinkNotification(
                 $loginLinkDetails,
-                'Dein persönlicher Login-Link für criticalmass.in!' // email subject
+                'Dein persönlicher Login-Link für criticalmass.in!'
             );
 
-            // create a recipient for this user
             $recipient = new Recipient($user->getEmail());
 
-            // send the notification to the user
             $this->notifier->send($notification, $recipient);
 
-            // render a "Login link is sent!" page
             return $this->render('login/login_link_sent.html.twig', [
                 'login_form' => $loginForm->createView(),
             ]);
         }
 
-        // if it's not submitted, render the "login" form
         return $this->render('login/login.html.twig', [
             'login_form' => $loginForm->createView(),
         ]);
