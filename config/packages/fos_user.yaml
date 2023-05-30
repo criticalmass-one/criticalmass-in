@@ -19,4 +19,4 @@ fos_user:
         address:        malte@caldera.cc
         sender_name:    Malte Hübner, criticalmass.in
     service:
-        mailer: 'mailer'
+        mailer: App\Criticalmass\Mailer\MailHandler

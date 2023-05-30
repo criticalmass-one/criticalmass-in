@@ -4,7 +4,7 @@ namespace App\Criticalmass\Timeline;
 
 use Doctrine\Persistence\ManagerRegistry;
 use Flagception\Manager\FeatureManagerInterface;
-use Symfony\Component\Cache\Adapter\RedisAdapter;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Contracts\Cache\ItemInterface;
 use Twig\Environment;
 
@@ -12,14 +12,11 @@ class CachedTimeline extends Timeline
 {
     protected int $ttl;
 
-    protected string $redisUrl;
-
-    public function __construct(ManagerRegistry $doctrine, Environment $twigEnvironment, FeatureManagerInterface $featureManager, string $redisUrl, int $cachedTimelineTtl = 300)
+    public function __construct(ManagerRegistry $doctrine, Environment $twigEnvironment, FeatureManagerInterface $featureManager, int $cachedTimelineTtl = 300)
     {
         $this->doctrine = $doctrine;
         $this->twigEnvironment = $twigEnvironment;
         $this->ttl = $cachedTimelineTtl;
-        $this->redisUrl = $redisUrl;
 
         parent::__construct($doctrine, $twigEnvironment, $featureManager);
     }
@@ -36,11 +33,8 @@ class CachedTimeline extends Timeline
             $cacheKey .= '-end-' . $this->endDateTime->format('Y-m-d');
         }
 
-        $redisConnection = RedisAdapter::createConnection($this->redisUrl);
-
-        $cache = new RedisAdapter(
-            $redisConnection,
-            'criticalmass',
+        $cache = new FilesystemAdapter(
+            'criticalmass-timeline',
             $this->ttl
         );
 
