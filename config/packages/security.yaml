@@ -1,7 +1,5 @@
 security:
     enable_authenticator_manager: true
-    encoders:
-        App\Entity\User: sha512
 
     providers:
         users:
@@ -22,17 +20,17 @@ security:
                 max_uses: 1
 
             provider: users
-            pattern:             .*
-            context:             user
+            pattern: .*
+            context: user
             logout:
                 invalidate_session: false
             oauth:
                 resource_owners:
-                    facebook:  "/login/check-facebook"
-                    strava:    "/login/check-strava"
-                    twitter:   "/login/check-twitter"
-                login_path:        /login
-                failure_path:      /login
+                    facebook: '/login/check-facebook'
+                    strava: '/login/check-strava'
+                    twitter: '/login/check-twitter'
+                login_path: '/login'
+                failure_path: '/login'
                 oauth_user_provider:
                     service: caldera.user_provider
 
