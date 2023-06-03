@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\Router\Annotation as Routing;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\RouteableInterface;
@@ -11,6 +10,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Security\Core\User\LegacyPasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -18,11 +18,11 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * @Vich\Uploadable
  */
-#[ORM\Table(name: 'user')]
+#[ORM\Table(name: 'fos_user_user')]
 #[ORM\Entity(repositoryClass: 'App\Repository\UserRepository')]
 #[ORM\HasLifecycleCallbacks]
 #[JMS\ExclusionPolicy('all')]
-class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterface, UserInterface
+class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterface, UserInterface, LegacyPasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
@@ -43,6 +43,12 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     #[JMS\Expose]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $username = null;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    protected ?string $salt = null;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    protected ?string $password = null;
 
     #[ORM\OneToMany(targetEntity: 'Track', mappedBy: 'user', cascade: ['persist', 'remove'])]
     protected Collection $tracks;
@@ -599,13 +605,27 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
         return $this;
     }
 
-    public function getSalt(): void
+    public function getSalt(): string
     {
-        // TODO: Implement getSalt() method.
+        return $this->salt;
     }
 
-    public function getPassword(): void
+    public function setSalt(string $salt): self
     {
-        // TODO: Implement getPassword() method.
+        $this->salt = $salt;
+
+        return $this;
+    }
+
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
     }
 }

@@ -69,14 +69,18 @@
                             Bitte gib deine E-Mail-Adresse ein, wir senden dir einen Link zum Einloggen per Mail zu!
                         </p>
 
-                        {{ form_start(login_form) }}
-                        {{ form_row(login_form.email, { attr: { class: 'form-control' }}) }}
+                        <form action="{{ path('login') }}" method="post">
+                            <label for="username">Email:</label>
+                            <input type="text" id="username" name="_username" value="{{ last_username }}"/>
 
-                        <div class="text-center margin-top-medium">
-                            {{ form_row(login_form.submit, { attr: { class: 'btn btn-primary' }}) }}
-                        </div>
+                            <label for="password">Password:</label>
+                            <input type="password" id="password" name="_password"/>
 
-                        {{ form_end(login_form) }}
+                            {# If you want to control the URL the user is redirected to on success
+        <input type="hidden" name="_target_path" value="/account"/> #}
+
+                            <button type="submit">login</button>
+                        </form>
                     </div>
                 </div>
             </div>
