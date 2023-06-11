@@ -38,7 +38,6 @@ class RideType extends AbstractType
                 'model_timezone' => 'UTC',
                 'view_timezone' => $timezone,
                 'date_widget' => 'single_text',
-                'date_format' => 'dd.MM.yyyy', //here
                 'time_widget' => 'single_text',
                 'html5' => false, // @todo remvoe this later
                 'compound' => true

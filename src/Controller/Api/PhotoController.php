@@ -44,7 +44,7 @@ class PhotoController extends BaseController
      *
      * @ParamConverter("ride", class="App:Ride")
      */
-    #[Route(path: '/{citySlug}/{rideIdentifier}/listPhotos', name: 'caldera_criticalmass_rest_photo_ridelist', methods: ['GET'])]
+    #[Route(path: '/{citySlug}/{rideIdentifier}/listPhotos', name: 'caldera_criticalmass_rest_photo_ridelist', options: ['expose' => true], methods: ['GET'])]
     public function listRidePhotosAction(Ride $ride): JsonResponse
     {
         $photoList = $this->managerRegistry->getRepository(Photo::class)->findPhotosByRide($ride);

@@ -25,225 +25,28 @@
 
 {% block content %}
     <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Fotos ausrichten</h1>
-        </div>
-    </div>
-
-    {% if track %}
-    <div class="row">
-        <div class="col-md-12">
-            <div id="map" style="height: 350px;">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Fotos ausrichten</h1>
             </div>
         </div>
-        {% else %}
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="alert alert-danger" role="alert">
-                        <strong>Kein Track gefunden!</strong> Bitte lade erst einen GPX-Track deiner Tour hoch, um
-                        anschließend Fotos zu verorten.
-                    </div>
+
+        {% if track %}
+        <div class="row">
+            <div class="col-md-12">
+                <div id="map" style="height: 350px;">
                 </div>
             </div>
-        {% endif %}
+            {% else %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-danger" role="alert">
+                            <strong>Kein Track gefunden!</strong> Bitte lade erst einen GPX-Track deiner Tour hoch, um
+                            anschließend Fotos zu verorten.
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
     </div>
-
-    {% if track %}
-        <script type="text/javascript">
-            CriticalMass.loadModule('RelocatePhotosPage', null, null, function (relocatePage) {
-                relocatePage.setTrack({{ track.latLngList }}, {{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }});
-
-                {% for photo in photos %}
-                relocatePage.addPhoto({{ photo.id }}, {{ photo.latitude }}, {{ photo.longitude }}, '{{ photo.description|e('js') }}', '{{ photo.dateTime.format('Y-m-d H:i:s') }}', '{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}');
-                {% endfor %}
-
-                relocatePage.init();
-
-                relocatePage.relocateByTime(600);
-            });
-        </script>
-    {% endif %}
-    {#
-    <script type="text/javascript">
-        /* Map */
-        var map = L.map('map');
-
-        /* Tilelayer */
-        var tileLayer = L.tileLayer('https://{s}.tiles.mapbox.com/v3/maltehuebner.i1c90m12/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-            detectRetina: true
-        });
-
-        tileLayer.addTo(map);
-
-        /* View */
-        map.setView([53.550556, 9.993333], 13);
-
-        var coords = {};
-
-        var polyline = null;
-        var photoContainer = new Container();
-
-        function resetPolyline()
-        {
-            if (polyline != null)
-            {
-                map.removeLayer(polyline);
-                polyline = null;
-            }
-        }
-
-        function loadTrack(trackId)
-        {
-            $.ajax({
-                url: '/app_dev.php/gallery/loadtrack/' + trackId,
-                success: function(result)
-                {
-                    createPolyline(JSON.parse(result));
-                }
-            });
-        }
-
-        function createPolyline(ajaxResponse) {
-            var polylineLatLngArray = new Array();
-            resetPolyline();
-
-            for (var index = 0; index < ajaxResponse.length; ++index)
-            {
-                var latLng = L.latLng(parseFloat(ajaxResponse[index].lat), parseFloat(ajaxResponse[index].lng));
-                coords[ajaxResponse[index].dateTime] = latLng;
-                polylineLatLngArray.push(latLng);
-            }
-
-            polyline = L.polyline(polylineLatLngArray, { color: 'red' });
-            polyline.addTo(map);
-            map.fitBounds(polyline.getBounds());
-
-            loadPhotos();
-        }
-
-        function loadPhotos()
-        {
-            $.ajax({
-                url: '/app_dev.php/gallery/loadphotos/{{ ride.getId() }}',
-                success: function(result)
-                {
-                    placePhotos(JSON.parse(result));
-                }
-            });
-        }
-
-        function placePhotos(ajaxResponse)
-        {
-            var photoNumber = 0;
-            var photoData = ajaxResponse[photoNumber];
-
-            for (var timestamp in coords)
-            {
-                if (timestamp > photoData.dateTime)
-                {
-                    var latLng = coords[timestamp];
-                    var photo = new DragablePhoto(photoData.id, latLng.lat, latLng.lng, 'Foo');
-                    photo.setTimestamp(timestamp);
-
-                    photoContainer.add(photo);
-
-                    ++photoNumber;
-                    photoData = ajaxResponse[photoNumber];
-                }
-
-            }
-
-            photoContainer.addTo(map);
-            photoContainer.snapTo(map, polyline);
-            photoContainer.addEvent('dragend', function(event)
-            {
-                var marker = event.target;
-
-                rearrangePhotos(findTimestampForLatLng(marker.getLatLng()) - marker.timestamp, marker.timestamp);
-            });
-        }
-
-        function rearrangePhotos(offset, ignoreTimestamp)
-        {
-            var index;
-
-            for (index = 0; index < photoContainer.countEntities(); ++index)
-            {
-                var photo = photoContainer.getEntity(index);
-
-                if (photo.timestamp != ignoreTimestamp)
-                {
-                    var newTimestamp = parseInt(photo.timestamp) + parseInt(offset);
-
-                    var newLatLng = findLatLngForTimestamp(newTimestamp);
-
-                    photo.setMarkerLatLng(newLatLng);
-                }
-            }
-        }
-
-        function findLatLngForTimestamp(timestamp)
-        {
-            var smallerTimestamp = null;
-
-            for (var coordTimestamp in coords)
-            {
-                if (smallerTimestamp == null)
-                {
-                    smallerTimestamp = coordTimestamp;
-
-                }
-                else if (coordTimestamp < timestamp)
-                {
-                    smallerTimestamp = coordTimestamp;
-                }
-                else
-                {
-                    break;
-                }
-            }
-
-            return coords[smallerTimestamp];
-        }
-
-        function findTimestampForLatLng(latLng)
-        {
-            var smallestDistance = null;
-            var smallestTimestamp = null;
-
-            for (var timestamp in coords)
-            {
-                var coord = coords[timestamp];
-
-                if (smallestDistance == null)
-                {
-                    smallestDistance = coord.distanceTo(latLng);
-                    smallestTimestamp = timestamp;
-                }
-                else
-                {
-                    var distance = coord.distanceTo(latLng);
-
-                    if (distance < smallestDistance)
-                    {
-                        smallestDistance = distance;
-                        smallestTimestamp = timestamp;
-                    }
-                }
-
-            }
-
-            return smallestTimestamp;
-        }
-
-        $('#trackSelect').on('change', function()
-        {
-            var trackId = this.value;
-
-            loadTrack(trackId);
-        });
-        </script>#}
-
 {% endblock %}
