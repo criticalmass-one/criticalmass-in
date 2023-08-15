@@ -20,9 +20,6 @@ class AssignExifCommand extends Command
 {
     public function __construct(protected ManagerRegistry $registry, protected ExifHandlerInterface $exifHandler)
     {
-        $this->registry = $registry;
-        $this->exifHandler = $exifHandler;
-
         parent::__construct();
     }
 

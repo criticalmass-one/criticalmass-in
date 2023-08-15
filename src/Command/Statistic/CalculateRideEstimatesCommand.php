@@ -20,12 +20,8 @@ class CalculateRideEstimatesCommand extends Command
 {
     public function __construct(protected RideEstimateHandlerInterface $rideEstimateHandler, protected ManagerRegistry $registry)
     {
-        $this->registry = $registry;
-        $this->rideEstimateHandler = $rideEstimateHandler;
-
-        parent::__construct($name);
+        parent::__construct();
     }
-
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

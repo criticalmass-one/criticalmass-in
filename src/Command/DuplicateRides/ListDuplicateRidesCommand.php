@@ -23,10 +23,7 @@ class ListDuplicateRidesCommand extends Command
     protected static $defaultName = 'criticalmass:ride-duplicates:list';
     public function __construct(protected ManagerRegistry $registry, protected DuplicateFinderInterface $duplicateFinder)
     {
-        $this->registry = $registry;
-        $this->duplicateFinder = $duplicateFinder;
-
-        parent::__construct($name);
+        parent::__construct();
     }
 
     protected function configure(): void

@@ -21,9 +21,6 @@ class CalculateUploadableEntityDataCommand extends Command
 {
     public function __construct(protected ManagerRegistry $registry, protected UploadableDataHandlerInterface $uploadableDataHandler)
     {
-        $this->registry = $registry;
-        $this->uploadableDataHandler = $uploadableDataHandler;
-
         parent::__construct();
     }
 
