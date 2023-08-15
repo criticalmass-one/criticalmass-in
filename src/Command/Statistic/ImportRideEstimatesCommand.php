@@ -15,9 +15,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
 
+#[AsCommand(
+    name: 'criticalmass:rideestimate:import',
+    description: 'Import ride estimates',
+)]
 class ImportRideEstimatesCommand extends Command
 {
-    protected static $defaultName = 'criticalmass:rideestimate:import';
     protected $citySlugs = [];
 
     public function __construct(protected ManagerRegistry $registry)
@@ -27,7 +30,7 @@ class ImportRideEstimatesCommand extends Command
 
     protected function configure(): void
     {
-        $this->setDescription('')
+        $this
             ->addArgument('year', InputArgument::REQUIRED)
             ->addArgument('month', InputArgument::REQUIRED)
             ->addArgument('filename', InputArgument::REQUIRED);

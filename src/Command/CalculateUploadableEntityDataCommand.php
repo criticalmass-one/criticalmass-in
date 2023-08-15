@@ -5,6 +5,7 @@ namespace App\Command;
 use App\Criticalmass\UploadableDataHandler\UploadableDataHandlerInterface;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
@@ -12,9 +13,12 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'criticalmass:calculate-uploadable-meta',
+    description: 'Calculate meta for uploadable entities',
+)]
 class CalculateUploadableEntityDataCommand extends Command
 {
-    protected static $defaultName = 'criticalmass:calculate-uploadable-meta';
     public function __construct(protected ManagerRegistry $registry, protected UploadableDataHandlerInterface $uploadableDataHandler)
     {
         $this->registry = $registry;
@@ -25,7 +29,7 @@ class CalculateUploadableEntityDataCommand extends Command
 
     protected function configure(): void
     {
-        $this->setDescription('Calculate meta for uploadable entities')
+        $this
             ->addOption('limit', 'l', InputOption::VALUE_REQUIRED, 'Number of photos to process at once')
             ->addOption('offset', 'o', InputOption::VALUE_REQUIRED, 'Offset to start processing')
             ->addOption('overwrite', 'ow', InputOption::VALUE_NONE, 'Overwrite existing values')

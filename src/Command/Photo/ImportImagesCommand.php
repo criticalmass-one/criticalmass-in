@@ -8,15 +8,19 @@ use App\Entity\Track;
 use App\Entity\User;
 use App\Criticalmass\Image\PhotoUploader\PhotoUploader;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'criticalmass:photos:import',
+    description: 'Import photos to a tour',
+)]
 class ImportImagesCommand extends Command
 {
-    protected static $defaultName = 'criticalmass:photos:import';
     public function __construct(protected ManagerRegistry $registry, protected PhotoUploader $photoUploader)
     {
         parent::__construct();
@@ -24,7 +28,7 @@ class ImportImagesCommand extends Command
 
     protected function configure(): void
     {
-        $this->setDescription('Import photos to a tour')
+        $this
             ->addArgument(
                 'citySlug',
                 InputArgument::REQUIRED,

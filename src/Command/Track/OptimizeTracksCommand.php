@@ -13,9 +13,12 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
+#[AsCommand(
+    name: 'criticalmass:tracks:optimize',
+    description: 'Optimize tracks',
+)]
 class OptimizeTracksCommand extends Command
 {
-    protected static $defaultName = 'criticalmass:tracks:optimize';
     public function __construct(protected ManagerRegistry $registry, protected EventDispatcherInterface $eventDispatcher)
     {
         parent::__construct();
@@ -23,7 +26,7 @@ class OptimizeTracksCommand extends Command
 
     protected function configure(): void
     {
-        $this->setDescription('Regenerate tracks')
+        $this
             ->addArgument(
                 'trackId',
                 InputArgument::OPTIONAL,

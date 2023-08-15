@@ -5,6 +5,7 @@ namespace App\Command;
 use App\Entity\User;
 use App\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGeneratorInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Table;
@@ -12,6 +13,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'criticalmass:profile-photo:generate',
+    description: 'Generate profile photos',
+)]
 class GenerateProfilePhotosCommand extends Command
 {
     protected static $defaultName = 'criticalmass:profile-photo:generate';
@@ -25,7 +30,7 @@ class GenerateProfilePhotosCommand extends Command
 
     protected function configure(): void
     {
-        $this->setDescription('Generate profile photos')
+        $this
             ->addOption('overwrite', null,InputOption::VALUE_NONE)
             ->addOption('limit', null, InputOption::VALUE_REQUIRED);
     }

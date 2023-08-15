@@ -5,6 +5,7 @@ namespace App\Command\Track;
 use App\Criticalmass\Geo\TrackPolylineHandler\TrackPolylineHandlerInterface;
 use App\Entity\Track;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Table;
@@ -13,9 +14,12 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'criticalmass:track:reduce-polyline',
+    description: 'Reduce polylines of tracks',
+)]
 class TrackReducePolylineCommand extends Command
 {
-    protected static $defaultName = 'criticalmass:track:reduce-polyline';
     public function __construct(protected ManagerRegistry $registry, protected TrackPolylineHandlerInterface $trackPolylineHandler)
     {
         parent::__construct();
@@ -23,7 +27,7 @@ class TrackReducePolylineCommand extends Command
 
     protected function configure(): void
     {
-        $this->setDescription('')
+        $this
             ->addOption('all', 'a', InputOption::VALUE_OPTIONAL, 'Generate polylines for all tracks')
             ->addArgument('trackId', InputArgument::OPTIONAL, 'Id of the track to reduce polyline');
     }

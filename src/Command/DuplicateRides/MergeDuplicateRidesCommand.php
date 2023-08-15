@@ -7,6 +7,7 @@ use App\Criticalmass\RideDuplicates\RideMerger\RideMergerInterface;
 use App\Entity\City;
 use App\Entity\Ride;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
@@ -15,9 +16,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
 
+#[AsCommand(
+    name: 'criticalmass:ride-duplicates:merge',
+    description: 'Merge duplicate rides',
+)]
 class MergeDuplicateRidesCommand extends ListDuplicateRidesCommand
 {
-    protected static $defaultName = 'criticalmass:ride-duplicates:merge';
     public function __construct(protected ManagerRegistry $registry, protected DuplicateFinderInterface $duplicateFinder, protected RideMergerInterface $rideMerger)
     {
          parent::__construct($registry, $duplicateFinder);
@@ -25,12 +29,7 @@ class MergeDuplicateRidesCommand extends ListDuplicateRidesCommand
 
     protected function configure(): void
     {
-        $this->setDescription('Merge duplicate rides')
-            ->addArgument(
-                'citySlug',
-                InputArgument::OPTIONAL,
-                'City slug'
-            );
+        $this->addArgument('citySlug',InputArgument::OPTIONAL,'City slug');
     }
 
     protected function handleDuplicates(InputInterface $input, OutputInterface $output, array $duplicateRides): void
