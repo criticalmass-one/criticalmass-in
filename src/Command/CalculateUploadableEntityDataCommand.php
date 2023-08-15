@@ -33,7 +33,8 @@ class CalculateUploadableEntityDataCommand extends Command
             ->addOption('limit', 'l', InputOption::VALUE_REQUIRED, 'Number of photos to process at once')
             ->addOption('offset', 'o', InputOption::VALUE_REQUIRED, 'Offset to start processing')
             ->addOption('overwrite', 'ow', InputOption::VALUE_NONE, 'Overwrite existing values')
-            ->addArgument('entityClassname', InputArgument::REQUIRED, 'Classname of entity');
+            ->addArgument('entityClassname', InputArgument::REQUIRED, 'Classname of entity')
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

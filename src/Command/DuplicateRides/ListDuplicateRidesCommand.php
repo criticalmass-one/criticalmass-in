@@ -31,12 +31,7 @@ class ListDuplicateRidesCommand extends Command
 
     protected function configure(): void
     {
-        $this->setDescription('Find duplicate rides')
-            ->addArgument(
-                'citySlug',
-                InputArgument::OPTIONAL,
-                'City slug'
-            );
+        $this->addArgument('citySlug',InputArgument::OPTIONAL,'City slug');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

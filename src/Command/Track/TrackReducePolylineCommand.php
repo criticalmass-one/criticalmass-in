@@ -29,7 +29,8 @@ class TrackReducePolylineCommand extends Command
     {
         $this
             ->addOption('all', 'a', InputOption::VALUE_OPTIONAL, 'Generate polylines for all tracks')
-            ->addArgument('trackId', InputArgument::OPTIONAL, 'Id of the track to reduce polyline');
+            ->addArgument('trackId', InputArgument::OPTIONAL, 'Id of the track to reduce polyline')
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

@@ -32,7 +32,8 @@ class OptimizeTracksCommand extends Command
                 InputArgument::OPTIONAL,
                 'Id of the track to optimize'
             )
-            ->addOption('all', 'a', InputOption::VALUE_NONE, 'Optimize all tracks');
+            ->addOption('all', 'a', InputOption::VALUE_NONE, 'Optimize all tracks')
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

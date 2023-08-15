@@ -32,7 +32,8 @@ class GenerateProfilePhotosCommand extends Command
     {
         $this
             ->addOption('overwrite', null,InputOption::VALUE_NONE)
-            ->addOption('limit', null, InputOption::VALUE_REQUIRED);
+            ->addOption('limit', null, InputOption::VALUE_REQUIRED)
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

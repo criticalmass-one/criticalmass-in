@@ -31,7 +31,8 @@ class AssignExifCommand extends Command
         $this
             ->addOption('limit', 'l', InputOption::VALUE_REQUIRED, 'Number of photos to process at once')
             ->addOption('offset', 'o', InputOption::VALUE_REQUIRED, 'Offset to start processing')
-            ->addOption('overwrite', 'ow', InputOption::VALUE_NONE, 'Overwrite existing data');
+            ->addOption('overwrite', 'ow', InputOption::VALUE_NONE, 'Overwrite existing data')
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

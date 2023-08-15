@@ -33,7 +33,8 @@ class ImportRideEstimatesCommand extends Command
         $this
             ->addArgument('year', InputArgument::REQUIRED)
             ->addArgument('month', InputArgument::REQUIRED)
-            ->addArgument('filename', InputArgument::REQUIRED);
+            ->addArgument('filename', InputArgument::REQUIRED)
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

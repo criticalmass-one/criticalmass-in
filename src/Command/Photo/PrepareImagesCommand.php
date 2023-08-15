@@ -48,10 +48,12 @@ class PrepareImagesCommand extends Command
             return Command::FAILURE;
         }
 
-        $this->photoFilterer
+        $this
+            ->photoFilterer
             ->setOutput($output)
             ->setRide($ride)
-            ->filter();
+            ->filter()
+        ;
 
         return Command::SUCCESS;
     }
