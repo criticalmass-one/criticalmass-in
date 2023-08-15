@@ -32,7 +32,7 @@ class TrackReducePolylineCommand extends Command
             ->addArgument('trackId', InputArgument::OPTIONAL, 'Id of the track to reduce polyline');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($input->hasOption('all') && $input->getOption('all')) {
             $tracks = $this->registry->getRepository(Track::class)->findAll();
@@ -40,7 +40,8 @@ class TrackReducePolylineCommand extends Command
             $tracks = [$this->registry->getRepository(Track::class)->find($trackId)];
         } else {
             $output->writeln('No tracks selected to refresh.');
-            return;
+
+            return Command::FAILURE;
         }
 
         $progressBar = new ProgressBar($output, count($tracks));
@@ -74,5 +75,7 @@ class TrackReducePolylineCommand extends Command
 
         $progressBar->finish();
         $table->render();
+
+        return Command::SUCCESS;
     }
 }

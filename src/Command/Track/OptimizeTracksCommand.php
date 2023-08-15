@@ -35,7 +35,7 @@ class OptimizeTracksCommand extends Command
             ->addOption('all', 'a', InputOption::VALUE_NONE, 'Optimize all tracks');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $repository = $this->registry->getRepository(Track::class);
 
@@ -61,6 +61,8 @@ class OptimizeTracksCommand extends Command
         }
 
         $table->render();
+
+        return Command::SUCCESS;
     }
 
     protected function optimizeTrack(Track $track): void

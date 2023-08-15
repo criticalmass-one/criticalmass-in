@@ -51,7 +51,7 @@ class ImportImagesCommand extends Command
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $ride = $this->getRide($input->getArgument('citySlug'), $input->getArgument('rideIdentifier'));
         $user = $this->registry->getRepository(User::class)->findOneByUsername($input->getArgument('username'));
@@ -77,6 +77,7 @@ class ImportImagesCommand extends Command
 
         $table->render();
 
+        return Command::SUCCESS;
     }
 
     protected function getRide(string $citySlug, string $rideIdentifier): ?Ride

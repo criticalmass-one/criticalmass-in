@@ -34,7 +34,7 @@ class AssignExifCommand extends Command
             ->addOption('overwrite', 'ow', InputOption::VALUE_NONE, 'Overwrite existing data');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $limit = $input->getOption('limit') ? (int) $input->getOption('limit') : null;
         $offset = $input->getOption('offset') ? (int) $input->getOption('offset') : null;
@@ -58,5 +58,7 @@ class AssignExifCommand extends Command
         $this->registry->getManager()->flush();
 
         $progressBar->finish();
+
+        return Command::SUCCESS;
     }
 }

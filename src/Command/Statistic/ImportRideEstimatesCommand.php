@@ -36,7 +36,7 @@ class ImportRideEstimatesCommand extends Command
             ->addArgument('filename', InputArgument::REQUIRED);
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $dateTimeSpec = sprintf('%d-%d-01', $input->getArgument('year'), $input->getArgument('month'));
         $dateTime = new \DateTime($dateTimeSpec);
@@ -85,6 +85,8 @@ class ImportRideEstimatesCommand extends Command
 
             $output->writeln('Persisted estimations. Please recalculate now.');
         }
+
+        return Command::SUCCESS;
     }
 
     protected function readFromFile(string $filename): array

@@ -52,7 +52,7 @@ class RelocatePhotosCommand extends Command
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($input->hasArgument('photoDateTimeZone') && $input->getArgument('photoDateTimeZone')) {
             $dateTimeZone = new \DateTimeZone($input->getArgument('photoDateTimeZone'));
@@ -104,5 +104,7 @@ class RelocatePhotosCommand extends Command
         $progressBar->finish();
         $this->registry->getManager()->flush();
         $table->render();
+
+        return Command::SUCCESS;
     }
 }

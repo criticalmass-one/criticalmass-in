@@ -35,7 +35,7 @@ class GenerateProfilePhotosCommand extends Command
             ->addOption('limit', null, InputOption::VALUE_REQUIRED);
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $overwrite = $input->getOption('overwrite');
         $limit = $input->getOption('limit');
@@ -44,7 +44,8 @@ class GenerateProfilePhotosCommand extends Command
 
         if (0 === count($userList)) {
             $output->writeln(sprintf('<info>%s</info>', 'All profile photos are up to date'));
-            return;
+
+            return Command::SUCCESS;
         }
 
         $progress = new ProgressBar($output, count($userList));
@@ -66,6 +67,8 @@ class GenerateProfilePhotosCommand extends Command
         
         $progress->finish();
         $table->render();
+
+        return Command::SUCCESS;
     }
 
     protected function findUsers(bool $all = false): array

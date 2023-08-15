@@ -30,7 +30,7 @@ class WebsiteCrawlerCommand extends Command
         $this->addArgument('limit', InputArgument::OPTIONAL, 'Number of posts to crawl per command call');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if (!$limit = (int) $input->getArgument('limit')) {
             $limit = null;
@@ -82,5 +82,7 @@ class WebsiteCrawlerCommand extends Command
 
         $progressBar->finish();
         $table->render();
+
+        return Command::SUCCESS;
     }
 }

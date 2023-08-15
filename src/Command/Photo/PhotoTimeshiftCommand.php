@@ -59,7 +59,7 @@ class PhotoTimeshiftCommand extends Command
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $interval = new \DateInterval($input->getArgument('dateInterval'));
         $modificationMethodName = $input->getArgument('direction');
@@ -109,6 +109,8 @@ class PhotoTimeshiftCommand extends Command
         $table->render();
 
         $entityManager->flush();
+
+        return Command::SUCCESS;
     }
 
     protected function getRide(string $citySlug, string $rideIdentifier): ?Ride

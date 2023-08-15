@@ -36,7 +36,7 @@ class CalculateUploadableEntityDataCommand extends Command
             ->addArgument('entityClassname', InputArgument::REQUIRED, 'Classname of entity');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $limit = $input->getOption('limit') ? (int)$input->getOption('limit') : null;
         $offset = $input->getOption('offset') ? (int)$input->getOption('offset') : null;
@@ -62,6 +62,8 @@ class CalculateUploadableEntityDataCommand extends Command
 
         $this->registry->getManager()->flush();
         $progressBar->finish();
+
+        return Command::SUCCESS;
     }
 
     protected function calculateCriteria(Criteria $criteria, string $fqcn): Criteria

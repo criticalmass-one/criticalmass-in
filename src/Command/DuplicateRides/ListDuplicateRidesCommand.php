@@ -39,7 +39,7 @@ class ListDuplicateRidesCommand extends Command
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         /** @var string $citySlug */
         $citySlugString = $input->getArgument('citySlug');
@@ -62,6 +62,8 @@ class ListDuplicateRidesCommand extends Command
         foreach ($duplicateRideList as $duplicateRides) {
             $this->handleDuplicates($input, $output, $duplicateRides);
         }
+
+        return Command::SUCCESS;
     }
 
     protected function handleDuplicates(InputInterface $input, OutputInterface $output, array $duplicateRides): void

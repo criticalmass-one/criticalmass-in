@@ -27,7 +27,7 @@ class CalculateRideEstimatesCommand extends Command
     }
 
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $rides = $this->registry->getRepository(Ride::class)->findAll();
 
@@ -63,5 +63,7 @@ class CalculateRideEstimatesCommand extends Command
         
         $table->render();
         $progressBar->finish();
+
+        return Command::SUCCESS;
     }
 }

@@ -29,7 +29,7 @@ class ListCyclesCommand extends Command
         $this->addArgument('citySlug', InputArgument::REQUIRED,'City slug');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         /** @var string $citySlug */
         $citySlugString = $input->getArgument('citySlug');
@@ -64,5 +64,7 @@ class ListCyclesCommand extends Command
         }
 
         $table->render();
+
+        return Command::SUCCESS;
     }
 }

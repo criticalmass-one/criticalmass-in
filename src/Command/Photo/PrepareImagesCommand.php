@@ -37,7 +37,7 @@ class PrepareImagesCommand extends Command
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $citySlug = $input->getArgument('citySlug');
         $rideIdentifier = $input->getArgument('rideIdentifier');
@@ -45,13 +45,15 @@ class PrepareImagesCommand extends Command
         $ride = $this->getRide($citySlug, $rideIdentifier);
 
         if (!$ride) {
-            return;
+            return Command::FAILURE;
         }
 
         $this->photoFilterer
             ->setOutput($output)
             ->setRide($ride)
             ->filter();
+
+        return Command::SUCCESS;
     }
 
     protected function getRide(string $citySlug, string $rideIdentifier): ?Ride

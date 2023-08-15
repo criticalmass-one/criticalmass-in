@@ -20,7 +20,7 @@ class TracksTransformCommand extends Command
         parent::__construct();
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $tracks = $this->registry->getRepository(Track::class)->findAll();
 
@@ -44,5 +44,7 @@ class TracksTransformCommand extends Command
         }
 
         $em->flush();
+
+        return Command::SUCCESS;
     }
 }
