@@ -19,7 +19,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class GenerateProfilePhotosCommand extends Command
 {
-    protected static $defaultName = 'criticalmass:profile-photo:generate';
     public function __construct(protected ManagerRegistry $registry, protected ProfilePhotoGeneratorInterface $profilePhotoGenerator)
     {
         parent::__construct();
