@@ -5,35 +5,25 @@ namespace App\Entity;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewEntity;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="promotion_view")
- * @ORM\Entity()
- */
+#[ORM\Table(name: 'promotion_view')]
+#[ORM\Entity]
 class PromotionView implements ViewEntity
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    protected ?int $id = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="promotion_views")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
-    protected $user;
+    #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'promotion_views')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    protected ?User $user = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Promotion", inversedBy="promotion_views")
-     * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
-     */
-    protected $promotion;
+    #[ORM\ManyToOne(targetEntity: 'Promotion', inversedBy: 'promotion_views')]
+    #[ORM\JoinColumn(name: 'photo_id', referencedColumnName: 'id')]
+    protected ?Promotion $promotion = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $dateTime;
+    #[ORM\Column(type: 'datetime')]
+    protected \DateTime $dateTime;
 
     public function __construct()
     {

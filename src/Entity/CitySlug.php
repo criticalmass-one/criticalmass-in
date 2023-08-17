@@ -7,35 +7,29 @@ use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\CitySlugRepository")
- * @ORM\Table(name="cityslug")
- * @JMS\ExclusionPolicy("all")
- */
+#[ORM\Table(name: 'cityslug')]
+#[ORM\Entity(repositoryClass: 'App\Repository\CitySlugRepository')]
+#[JMS\ExclusionPolicy('all')]
 class CitySlug implements RouteableInterface
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
-     */
-    protected $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
+    protected ?int $id = null;
 
     /**
-     * @ORM\Column(type="string", length=50)
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
      * @Routing\RouteParameter(name="citySlug")
      */
-    protected $slug;
+    #[ORM\Column(type: 'string', length: 50, nullable: true)]
+    #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
+    protected ?string $slug = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="slugs", fetch="EAGER")
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
-     */
-    protected $city;
+    #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'slugs', fetch: 'EAGER')]
+    #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
+    protected ?City $city = null;
 
     public function __construct(string $slug = null)
     {

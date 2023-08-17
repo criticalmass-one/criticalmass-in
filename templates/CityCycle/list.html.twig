@@ -85,6 +85,7 @@
                             </td>
 
                             <td>
+                                {# keep timezone as utc as we want to deliver the "raw" time here #}
                                 {{ cycle.time|date('H:i', 'UTC') }} Uhr
                             </td>
 

@@ -15,7 +15,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class ProfilePhotoController extends AbstractController
 {
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function uploadAction(Request $request, UserInterface $user = null): Response
     {

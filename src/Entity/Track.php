@@ -4,8 +4,8 @@ namespace App\Entity;
 
 use App\Criticalmass\Geo\Entity\Track as GeoTrack;
 use App\Criticalmass\Geo\EntityInterface\TrackInterface;
-use App\Criticalmass\OrderedEntities\Annotation as OE;
-use App\Criticalmass\OrderedEntities\OrderedEntityInterface;
+use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
+use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
 use App\Criticalmass\Router\Annotation as Routing;
 use App\Criticalmass\UploadableDataHandler\UploadableEntity;
 use App\Criticalmass\UploadFaker\FakeUploadable;
@@ -20,18 +20,18 @@ use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Table(name="track")
- * @ORM\Entity(repositoryClass="App\Repository\TrackRepository")
  * @Vich\Uploadable
- * @JMS\ExclusionPolicy("all")
  * @Routing\DefaultRoute(name="caldera_criticalmass_track_view")
  * @OE\OrderedEntity()
  */
+#[ORM\Table(name: 'track')]
+#[ORM\Entity(repositoryClass: 'App\Repository\TrackRepository')]
+#[JMS\ExclusionPolicy('all')]
+#[ORM\Index(fields: ['creationDateTime'], name: 'track_creation_date_time_index')]
 class Track extends GeoTrack implements RouteableInterface, StaticMapableInterface, TrackInterface, UploadableEntity, FakeUploadable, OrderedEntityInterface
 {
     const TRACK_SOURCE_GPX = 'TRACK_SOURCE_GPX';
     const TRACK_SOURCE_STRAVA = 'TRACK_SOURCE_STRAVA';
-    const TRACK_SOURCE_RUNKEEPER = 'TRACK_SOURCE_RUNKEEPER';
     const TRACK_SOURCE_RUNTASTIC = 'TRACK_SOURCE_RUNTASTIC';
     const TRACK_SOURCE_DRAW = 'TRACK_SOURCE_DRAW';
     const TRACK_SOURCE_GLYMPSE = 'TRACK_SOURCE_GLYMPSE';
@@ -39,194 +39,140 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
     const TRACK_SOURCE_UNKNOWN = 'TRACK_SOURCE_UNKNOWN';
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @JMS\Groups({"timelapse", "api-public"})
-     * @JMS\Expose
      * @Routing\RouteParameter(name="trackId")
      */
-    protected $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[JMS\Groups(['timelapse', 'api-public'])]
+    #[JMS\Expose]
+    protected ?int $id = null;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[JMS\Groups(['timelapse', 'api-private'])]
+    #[JMS\Expose]
+    protected ?string $username = null;
+
+    #[ORM\ManyToOne(targetEntity: 'Ride', inversedBy: 'tracks')]
+    #[ORM\JoinColumn(name: 'ride_id', referencedColumnName: 'id')]
+    protected ?Ride $ride = null;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @JMS\Groups({"timelapse", "api-private"})
-     * @JMS\Expose
-     */
-    protected $username;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="tracks")
-     * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
-     */
-    protected $ride;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="tracks")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     * @JMS\Groups({"timelapse", "api-private"})
-     * @JMS\Expose
      * @OE\Identical()
      */
-    protected $user;
+    #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'tracks')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    #[JMS\Groups(['timelapse', 'api-private'])]
+    #[JMS\Expose]
+    protected ?User $user = null;
+
+    #[ORM\OneToOne(targetEntity: 'RideEstimate', mappedBy: 'track', cascade: ['all'], orphanRemoval: true)]
+    #[ORM\JoinColumn(name: 'estimate_id', referencedColumnName: 'id')]
+    protected ?RideEstimate $rideEstimate = null;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[JMS\Groups(['timelapse', 'api-public'])]
+    #[JMS\Expose]
+    protected ?\DateTime $creationDateTime = null;
 
     /**
-     * @ORM\OneToOne(targetEntity="RideEstimate", mappedBy="track", cascade={"all"}, orphanRemoval=true)
-     * @ORM\JoinColumn(name="estimate_id", referencedColumnName="id")
-     */
-    protected $rideEstimate;
-
-    /**
-     * @ORM\Column(type="datetime")
-     * @JMS\Groups({"timelapse", "api-public"})
-     * @JMS\Expose
-     */
-    protected $creationDateTime;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @JMS\Groups({"timelapse", "api-public"})
-     * @JMS\Expose
      * @OE\Order(direction="asc")
      */
-    protected $startDateTime;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[JMS\Groups(['timelapse', 'api-public'])]
+    #[JMS\Expose]
+    protected ?\DateTime $startDateTime = null;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[JMS\Groups(['timelapse', 'api-public'])]
+    #[JMS\Expose]
+    protected ?\DateTime $endDateTime = null;
+
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[JMS\Groups(['timelapse', 'api-public'])]
+    #[JMS\Expose]
+    protected ?float $distance = null;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[JMS\Groups(['timelapse', 'api-public'])]
+    #[JMS\Expose]
+    protected ?int $points = null;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[JMS\Groups(['timelapse', 'api-public'])]
+    #[JMS\Expose]
+    protected ?int $startPoint = null;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[JMS\Groups(['timelapse', 'api-public'])]
+    #[JMS\Expose]
+    protected ?int $endPoint = null;
+
+    #[ORM\Column(type: 'string', length: 32, nullable: true)]
+    protected ?string $md5Hash = null;
+
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    protected bool $enabled = true;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @JMS\Groups({"timelapse", "api-public"})
-     * @JMS\Expose
-     */
-    protected $endDateTime;
-
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     * @JMS\Groups({"timelapse", "api-public"})
-     * @JMS\Expose
-     */
-    protected $distance;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @JMS\Groups({"timelapse", "api-public"})
-     * @JMS\Expose
-     */
-    protected $points;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @JMS\Groups({"timelapse", "api-public"})
-     * @JMS\Expose
-     */
-    protected $startPoint;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @JMS\Groups({"timelapse", "api-public"})
-     * @JMS\Expose
-     */
-    protected $endPoint;
-
-    /**
-     * @ORM\Column(type="string", length=32, nullable=true)
-     */
-    protected $md5Hash;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $enabled = true;
-
-    /**
-     * @ORM\Column(type="boolean")
      * @OE\Boolean(value=false)
      */
-    protected $deleted = false;
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    protected bool $deleted = false;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
      * @deprecated
      */
-    protected $latLngList;
+    #[ORM\Column(type: 'text', nullable: true)]
+    protected ?string $latLngList = null;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    protected ?string $geoJson = null;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[JMS\Groups(['timelapse', 'api-public'])]
+    #[JMS\Expose]
+    #[JMS\SerializedName('polylineString')]
+    protected ?string $polyline = null;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[JMS\Groups(['timelapse', 'api-public'])]
+    #[JMS\Expose]
+    #[JMS\SerializedName('reducedPolylineString')]
+    protected ?string $reducedPolyline = null;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    protected $geoJson;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @JMS\Groups({"timelapse", "api-public"})
-     * @JMS\Expose
-     * @JMS\SerializedName("polylineString")
-     */
-    protected $polyline;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @JMS\Groups({"timelapse", "api-public"})
-     * @JMS\Expose
-     * @JMS\SerializedName("reducedPolylineString")
-     */
-    protected $reducedPolyline;
-
-    /**
-     * @var File $trackFile
      * @Vich\UploadableField(mapping="track_file", fileNameProperty="trackFilename",  size="trackSize", mimeType="trackMimeType")
      */
-    protected $trackFile;
+    protected ?File $trackFile = null;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    protected ?string $trackFilename = null;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    protected ?int $trackSize = null;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    protected ?string $trackMimeType = null;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected ?\DateTime $updatedAt = null;
 
     /**
-     * @var string $trackFilename
-     * @ORM\Column(type="string", length=255)
+     * $source must be nullable du to legacy tracks without source attribution
      */
-    protected $trackFilename;
+    #[ORM\Column(type: 'string', nullable: true, columnDefinition: "ENUM('TRACK_SOURCE_GPX', 'TRACK_SOURCE_STRAVA', 'TRACK_SOURCE_RUNKEEPER', 'TRACK_SOURCE_RUNTASTIC', 'TRACK_SOURCE_DRAW', 'TRACK_SOURCE_GLYMPSE', 'TRACK_SOURCE_CRITICALMAPS', 'TRACK_SOURCE_UNKNOWN')")]
+    protected ?string $source = self::TRACK_SOURCE_UNKNOWN;
 
-    /**
-     * @var int $trackSize
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    protected $trackSize;
+    #[ORM\Column(type: 'bigint', nullable: true)]
+    protected ?int $stravaActitityId = null;
 
-    /**
-     * @var string $trackMimeType
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $trackMimeType;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     *
-     * @var \DateTime
-     */
-    protected $updatedAt;
-
-    /**
-     * @ORM\Column(type="string", columnDefinition="ENUM('TRACK_SOURCE_GPX', 'TRACK_SOURCE_STRAVA', 'TRACK_SOURCE_RUNKEEPER', 'TRACK_SOURCE_RUNTASTIC', 'TRACK_SOURCE_DRAW', 'TRACK_SOURCE_GLYMPSE', 'TRACK_SOURCE_CRITICALMAPS', 'TRACK_SOURCE_UNKNOWN')")
-     */
-    protected $source = self::TRACK_SOURCE_UNKNOWN;
-
-    /**
-     * @ORM\Column(type="bigint", nullable=true)
-     *
-     * @var integer
-     */
-    protected $stravaActitityId;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\HeatmapTrack", mappedBy="track")
-     */
-    private $heatmapTracks;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $reviewed = false;
+    #[ORM\Column(type: 'boolean')]
+    private bool $reviewed = false;
 
     public function __construct()
     {
         parent::__construct();
-        $this->heatmaps = new ArrayCollection();
-        $this->heatmapTracks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -354,11 +300,9 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
         return $this->reducedPolyline;
     }
 
-    /**
-     * @JMS\Groups({"timelapse"})
-     * @JMS\VirtualProperty
-     * @JMS\SerializedName("colorRed")
-     */
+    #[JMS\Groups(['timelapse'])]
+    #[JMS\VirtualProperty]
+    #[JMS\SerializedName('colorRed')]
     public function getColorRed(): ?int
     {
         if ($this->getUser()) {
@@ -372,11 +316,9 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
         return null;
     }
 
-    /**
-     * @JMS\Groups({"timelapse"})
-     * @JMS\VirtualProperty
-     * @JMS\SerializedName("colorGreen")
-     */
+    #[JMS\Groups(['timelapse'])]
+    #[JMS\VirtualProperty]
+    #[JMS\SerializedName('colorGreen')]
     public function getColorGreen(): ?int
     {
         if ($this->getUser()) {
@@ -390,11 +332,9 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
         return null;
     }
 
-    /**
-     * @JMS\Groups({"timelapse"})
-     * @JMS\VirtualProperty
-     * @JMS\SerializedName("colorBlue")
-     */
+    #[JMS\Groups(['timelapse'])]
+    #[JMS\VirtualProperty]
+    #[JMS\SerializedName('colorBlue')]
     public function getColorBlue(): ?int
     {
         if ($this->getUser()) {
@@ -544,37 +484,6 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
     public function getWaypointList(): string
     {
         return $this->geoJson;
-    }
-
-    /**
-     * @return Collection|HeatmapTrack[]
-     */
-    public function getHeatmapTracks(): Collection
-    {
-        return $this->heatmapTracks;
-    }
-
-    public function addHeatmapTrack(HeatmapTrack $heatmapTrack): self
-    {
-        if (!$this->heatmapTracks->contains($heatmapTrack)) {
-            $this->heatmapTracks[] = $heatmapTrack;
-            $heatmapTrack->setTrack($this);
-        }
-
-        return $this;
-    }
-
-    public function removeHeatmapTrack(HeatmapTrack $heatmapTrack): self
-    {
-        if ($this->heatmapTracks->contains($heatmapTrack)) {
-            $this->heatmapTracks->removeElement($heatmapTrack);
-            // set the owning side to null (unless already changed)
-            if ($heatmapTrack->getTrack() === $this) {
-                $heatmapTrack->setTrack(null);
-            }
-        }
-
-        return $this;
     }
 
     public function isReviewed(): bool

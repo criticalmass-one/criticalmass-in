@@ -2,22 +2,15 @@
 
 namespace App;
 
-use App\Criticalmass\DataQuery\DependencyInjection\Compiler\ParameterPass;
-use App\Criticalmass\DataQuery\DependencyInjection\Compiler\QueryPass;
-use App\Criticalmass\DataQuery\Parameter\ParameterInterface;
-use App\Criticalmass\DataQuery\Query\QueryInterface;
 use App\Criticalmass\MassTrackImport\Voter\VoterInterface;
 use App\Criticalmass\Profile\Deletion\UserPartDeleter\UserPartDeleterInterface;
 use App\Criticalmass\RideNamer\RideNamerInterface;
 use App\Criticalmass\Router\DelegatedRouter\DelegatedRouterInterface;
-use App\Criticalmass\Sharing\Network\ShareNetworkInterface;
-use App\Criticalmass\SocialNetwork\DependencyInjection\Compiler\SocialNetworkFetcherPass;
 use App\Criticalmass\SocialNetwork\DependencyInjection\Compiler\SocialNetworkPass;
 use App\Criticalmass\SocialNetwork\Network\NetworkInterface;
 use App\Criticalmass\Timeline\Collector\TimelineCollectorInterface;
 use App\DependencyInjection\Compiler\ObjectRouterPass;
 use App\DependencyInjection\Compiler\RideNamerPass;
-use App\DependencyInjection\Compiler\ShareNetworkPass;
 use App\DependencyInjection\Compiler\TimelineCollectorPass;
 use App\DependencyInjection\Compiler\TrackVoterPass;
 use App\DependencyInjection\Compiler\TwigSeoExtensionPass;
@@ -27,7 +20,7 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
-use Symfony\Component\Routing\RouteCollectionBuilder;
+use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
 class Kernel extends BaseKernel
 {
@@ -78,9 +71,6 @@ class Kernel extends BaseKernel
         $container->registerForAutoconfiguration(DelegatedRouterInterface::class)->addTag('object_router.delegated_router');
         $container->addCompilerPass(new ObjectRouterPass());
 
-        $container->addCompilerPass(new ShareNetworkPass());
-        $container->registerForAutoconfiguration(ShareNetworkInterface::class)->addTag('share.network');
-
         $container->addCompilerPass(new RideNamerPass());
         $container->registerForAutoconfiguration(RideNamerInterface::class)->addTag('ride_namer');
 
@@ -89,12 +79,6 @@ class Kernel extends BaseKernel
         $container->addCompilerPass(new TrackVoterPass());
         $container->registerForAutoconfiguration(VoterInterface::class)->addTag('mass_track_import.voter');
 
-        $container->addCompilerPass(new QueryPass());
-        $container->registerForAutoconfiguration(QueryInterface::class)->addTag('data_query.query');
-
-        $container->addCompilerPass(new ParameterPass());
-        $container->registerForAutoconfiguration(ParameterInterface::class)->addTag('data_query.parameter');
-
         $container->addCompilerPass(new SocialNetworkPass());
         $container->registerForAutoconfiguration(NetworkInterface::class)->addTag('social_network.network');
 
@@ -102,12 +86,15 @@ class Kernel extends BaseKernel
         $container->registerForAutoconfiguration(UserPartDeleterInterface::class)->addTag('user.part_deleter');
     }
 
-    protected function configureRoutes(RouteCollectionBuilder $routes): void
+    protected function configureRoutes(RoutingConfigurator $routes): void
     {
-        $confDir = $this->getProjectDir().'/config';
+        $routes->import('../config/{routes}/'.$this->environment.'/*.yaml');
+        $routes->import('../config/{routes}/*.yaml');
 
-        $routes->import($confDir.'/{routes}/*'.self::CONFIG_EXTS, '/', 'glob');
-        $routes->import($confDir.'/{routes}/'.$this->environment.'/**/*'.self::CONFIG_EXTS, '/', 'glob');
-        $routes->import($confDir.'/{routes}'.self::CONFIG_EXTS, '/', 'glob');
+        if (is_file(\dirname(__DIR__).'/config/routes.yaml')) {
+            $routes->import('../config/routes.yaml');
+        } else {
+            $routes->import('../config/{routes}.php');
+        }
     }
 }

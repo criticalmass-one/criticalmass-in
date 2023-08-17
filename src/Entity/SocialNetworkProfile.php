@@ -6,126 +6,90 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Table(name="social_network_profile", options={"charset"="utf8mb4", "collate"="utf8mb4_unicode_ci"})
- * @ORM\Entity(repositoryClass="App\Repository\SocialNetworkProfileRepository")
- * @JMS\ExclusionPolicy("all")
- */
+#[ORM\Table(name: 'social_network_profile', options: ['charset' => 'utf8mb4', 'collate' => 'utf8mb4_unicode_ci'])]
+#[ORM\Entity(repositoryClass: 'App\Repository\SocialNetworkProfileRepository')]
+#[JMS\ExclusionPolicy('all')]
 class SocialNetworkProfile
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
-     */
-    protected int $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
+    protected ?int $id = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="socialNetworkProfiles")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'socialNetworkProfiles')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     protected ?User $user = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="socialNetworkProfiles")
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
-     * @JMS\Expose
-     * @JMS\Type("Relation<App\Entity\City>")
-     * @JMS\SerializedName("city_id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'socialNetworkProfiles')]
+    #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
+    #[JMS\Expose]
+    #[JMS\Type('Relation<App\Entity\City>')]
+    #[JMS\SerializedName('city_id')]
     protected ?City $city = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="socialNetworkProfiles")
-     * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'Ride', inversedBy: 'socialNetworkProfiles')]
+    #[ORM\JoinColumn(name: 'ride_id', referencedColumnName: 'id')]
     protected ?Ride $ride = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Subride", inversedBy="socialNetworkProfiles")
-     * @ORM\JoinColumn(name="subride_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'Subride', inversedBy: 'socialNetworkProfiles')]
+    #[ORM\JoinColumn(name: 'subride_id', referencedColumnName: 'id')]
     protected ?Subride $subride = null;
 
-    /**
-     * @ORM\Column(type="string")
-     * @Assert\NotBlank
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
-     */
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'string')]
+    #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
     protected ?string $identifier = null;
 
-    /**
-     * @ORM\Column(type="string")
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
-     */
-    protected string $network;
+    #[ORM\Column(type: 'string')]
+    #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
+    protected ?string $network = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     protected bool $mainNetwork = false;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     protected bool $enabled = true;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
     private ?\DateTime $createdAt = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="socialNetworkProfiles")
-     */
-    private User $createdBy;
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User', inversedBy: 'socialNetworkProfiles')]
+    private ?User $createdBy = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
-     */
+    #[ORM\Column(type: 'boolean')]
+    #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
     protected bool $autoPublish = true;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
     protected ?\DateTime $lastFetchSuccessDateTime = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
     protected ?\DateTime $lastFetchFailureDateTime = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
     protected ?string $lastFetchFailureError = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
-     */
+    #[ORM\Column(type: 'boolean')]
+    #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
     protected $autoFetch = true;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
     protected $additionalData;
 
     public function getId(): ?int

@@ -10,72 +10,55 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Criticalmass\Router\Annotation as Routing;
 
-/**
- * @ORM\Table(name="thread")
- * @ORM\Entity(repositoryClass="App\Repository\ThreadRepository")
-
- */
+#[ORM\Table(name: 'thread')]
+#[ORM\Entity(repositoryClass: 'App\Repository\ThreadRepository')]
 class Thread implements ViewableEntity, RouteableInterface, AutoParamConverterAble, PostableInterface
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    protected ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Board", inversedBy="threads")
-     * @ORM\JoinColumn(name="board_id", referencedColumnName="id")
      * @Routing\RouteParameter(name="boardSlug")
      */
-    protected $board;
+    #[ORM\ManyToOne(targetEntity: 'Board', inversedBy: 'threads')]
+    #[ORM\JoinColumn(name: 'board_id', referencedColumnName: 'id')]
+    protected ?Board $board = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="threads")
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      * @Routing\RouteParameter(name="citySlug")
      */
-    protected $city;
+    #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'threads')]
+    #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
+    protected ?City $city = null;
+
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'text', nullable: true)]
+    protected ?string $title = null;
 
     /**
-     * @ORM\Column(type="text")
-     * @Assert\NotBlank()
-     */
-    protected $title;
-
-    /**
-     * @ORM\Column(type="string", length=255)
      * @Routing\RouteParameter(name="threadSlug")
      */
-    protected $slug;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    protected ?string $slug = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected $views = 0;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    protected int $views = 0;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected $postNumber = 0;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    protected int $postNumber = 0;
 
-    /**
-     * @ORM\OneToOne(targetEntity="Post")
-     * @ORM\JoinColumn(name="firstpost_id", referencedColumnName="id")
-     */
-    protected $firstPost;
+    #[ORM\OneToOne(targetEntity: 'Post')]
+    #[ORM\JoinColumn(name: 'firstpost_id', referencedColumnName: 'id', unique: true)]
+    protected ?Post $firstPost = null;
 
-    /**
-     * @ORM\OneToOne(targetEntity="Post")
-     * @ORM\JoinColumn(name="lastpost_id", referencedColumnName="id")
-     */
-    protected $lastPost;
+    #[ORM\OneToOne(targetEntity: 'Post')]
+    #[ORM\JoinColumn(name: 'lastpost_id', referencedColumnName: 'id', unique: true)]
+    protected ?Post $lastPost = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $enabled = true;
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    protected bool $enabled = true;
 
     public function __construct()
     {
