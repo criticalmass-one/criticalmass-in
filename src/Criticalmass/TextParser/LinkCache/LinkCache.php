@@ -3,7 +3,7 @@
 namespace App\Criticalmass\TextParser\LinkCache;
 
 use Symfony\Component\Cache\Adapter\AdapterInterface;
-use Symfony\Component\Cache\Adapter\RedisAdapter;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 class LinkCache implements LinkCacheInterface
 {
@@ -12,10 +12,9 @@ class LinkCache implements LinkCacheInterface
 
     protected AdapterInterface $cache;
 
-    public function __construct(string $redisUrl)
+    public function __construct()
     {
-        $this->cache = new RedisAdapter(
-            RedisAdapter::createConnection($redisUrl),
+        $this->cache = new FilesystemAdapter(
             self::CACHE_NAMESPACE,
             self::DEFAULT_TTL,
         );

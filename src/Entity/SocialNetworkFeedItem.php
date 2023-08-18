@@ -5,88 +5,65 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
-/**
- * @ORM\Table(name="social_network_feed_item", uniqueConstraints={
- *   @ORM\UniqueConstraint(name="unique_feed_item", columns={"social_network_profile_id", "uniqueIdentifier"})
- *    })
- * @ORM\Entity(repositoryClass="App\Repository\SocialNetworkFeedItemRepository")
- * @JMS\ExclusionPolicy("all")
- */
+#[ORM\Table(name: 'social_network_feed_item')]
+#[ORM\UniqueConstraint(name: 'unique_feed_item', columns: ['social_network_profile_id', 'uniqueIdentifier'])]
+#[ORM\Entity(repositoryClass: 'App\Repository\SocialNetworkFeedItemRepository')]
+#[ORM\Index(fields: ['dateTime'], name: 'social_network_feed_item_date_time_index')]
+#[ORM\Index(fields: ['createdAt'], name: 'social_network_feed_item_created_at_index')]
+#[JMS\ExclusionPolicy('all')]
 class SocialNetworkFeedItem //implements Crawlable
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @JMS\Expose
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[JMS\Expose]
     protected ?int $id = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="SocialNetworkProfile", inversedBy="feedItems")
-     * @ORM\JoinColumn(name="social_network_profile_id", referencedColumnName="id")
-     * @JMS\Expose
-     * @JMS\Type("Relation<App\Entity\SocialNetworkProfile>")
-     * @JMS\SerializedName("social_network_profile_id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'SocialNetworkProfile', inversedBy: 'feedItems')]
+    #[ORM\JoinColumn(name: 'social_network_profile_id', referencedColumnName: 'id')]
+    #[JMS\Expose]
+    #[JMS\Type('Relation<App\Entity\SocialNetworkProfile>')]
+    #[JMS\SerializedName('social_network_profile_id')]
     protected ?SocialNetworkProfile $socialNetworkProfile = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=false)
-     * @JMS\Expose
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: false)]
+    #[JMS\Expose]
     protected ?string $uniqueIdentifier = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @JMS\Expose
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[JMS\Expose]
     protected ?string $permalink = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @JMS\Expose
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[JMS\Expose]
     protected ?string $title = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=false)
-     * @JMS\Expose
-     */
+    #[ORM\Column(type: 'text', nullable: false)]
+    #[JMS\Expose]
     protected ?string $text = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=false)
-     * @JMS\Expose
-     * @JMS\Type("DateTime<'U'>")
-     */
+    #[ORM\Column(type: 'datetime', nullable: false)]
+    #[JMS\Expose]
+    #[JMS\Type("DateTime<'U'>")]
     protected ?\DateTime $dateTime = null;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=false)
-     * @JMS\Expose
-     * @JMS\Type("bool")
-     */
+    #[ORM\Column(type: 'boolean', nullable: false)]
+    #[JMS\Expose]
+    #[JMS\Type('bool')]
     protected bool $hidden = false;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=false)
-     * @JMS\Expose
-     * @JMS\Type("bool")
-     */
+    #[ORM\Column(type: 'boolean', nullable: false)]
+    #[JMS\Expose]
+    #[JMS\Type('bool')]
     protected bool $deleted = false;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=false)
-     * @JMS\Expose
-     * @JMS\Type("DateTime<'U'>")
-     */
+    #[ORM\Column(type: 'datetime', nullable: false)]
+    #[JMS\Expose]
+    #[JMS\Type("DateTime<'U'>")]
     protected \DateTime $createdAt;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @JMS\Expose
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[JMS\Expose]
     protected ?string $raw = null;
 
     public function __construct()

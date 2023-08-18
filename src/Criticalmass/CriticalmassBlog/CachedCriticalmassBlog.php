@@ -3,7 +3,7 @@
 namespace App\Criticalmass\CriticalmassBlog;
 
 use Symfony\Component\Cache\Adapter\AdapterInterface;
-use Symfony\Component\Cache\Adapter\RedisAdapter;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Contracts\Cache\ItemInterface;
 
 class CachedCriticalmassBlog extends CriticalmassBlog
@@ -14,10 +14,9 @@ class CachedCriticalmassBlog extends CriticalmassBlog
 
     protected AdapterInterface $cache;
 
-    public function __construct(string $redisUrl)
+    public function __construct()
     {
-        $this->cache = new RedisAdapter(
-            RedisAdapter::createConnection($redisUrl),
+        $this->cache = new FilesystemAdapter(
             static::CACHE_NAMESPACE,
             static::DEFAULT_TTL,
         );
