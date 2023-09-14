@@ -7,6 +7,7 @@ use App\Entity\CitySlug;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
