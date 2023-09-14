@@ -20,7 +20,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class ListDuplicateRidesCommand extends Command
 {
-    protected static $defaultName = 'criticalmass:ride-duplicates:list';
     public function __construct(protected ManagerRegistry $registry, protected DuplicateFinderInterface $duplicateFinder)
     {
         parent::__construct();
