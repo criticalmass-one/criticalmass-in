@@ -5,6 +5,7 @@ namespace App\Command\Cycles;
 use App\Entity\CityCycle;
 use App\Entity\CitySlug;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
@@ -12,9 +13,12 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[AsCommand(
+    name: 'criticalmass:cycles:list',
+    description: 'List all cycles for a city',
+)]
 class ListCyclesCommand extends Command
 {
-    protected static $defaultName = 'criticalmass:cycles:list';
     public function __construct(protected ManagerRegistry $registry, protected TranslatorInterface $translator)
     {
         parent::__construct();
@@ -22,15 +26,10 @@ class ListCyclesCommand extends Command
 
     protected function configure(): void
     {
-        $this->setDescription('Create rides for a parameterized year and month automatically')
-            ->addArgument(
-                'citySlug',
-                InputArgument::REQUIRED,
-                'City slug'
-            );
+        $this->addArgument('citySlug', InputArgument::REQUIRED,'City slug');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         /** @var string $citySlug */
         $citySlugString = $input->getArgument('citySlug');
@@ -65,5 +64,7 @@ class ListCyclesCommand extends Command
         }
 
         $table->render();
+
+        return Command::SUCCESS;
     }
 }
