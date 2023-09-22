@@ -28,7 +28,6 @@ class MailHandler implements MailerInterface
         $text .= 'Malte'."\n";
 
         $email = (new Email())
-            ->from('maltehuebner@gmx.org')
             ->to($user->getEmail())
             ->subject('Setze jetzt dein Kennwort für criticalmass.in zurück')
             ->text($text)
@@ -47,7 +46,6 @@ class MailHandler implements MailerInterface
         $text .= 'Malte'."\n";
 
         $email = (new Email())
-            ->from('maltehuebner@gmx.org')
             ->to($user->getEmail())
             ->subject('Setze jetzt dein Kennwort für criticalmass.in zurück')
             ->text($text)

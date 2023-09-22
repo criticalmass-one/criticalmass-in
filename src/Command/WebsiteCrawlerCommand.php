@@ -6,6 +6,7 @@ use App\Criticalmass\Website\Crawler\CrawlerInterface;
 use App\Criticalmass\Website\Parser\ParserInterface;
 use App\Entity\Post;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Table;
@@ -13,9 +14,12 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'criticalmass:website:crawl',
+    description: 'Crawl websites from posts',
+)]
 class WebsiteCrawlerCommand extends Command
 {
-    protected static $defaultName = 'criticalmass:website:crawl';
     public function __construct(protected ManagerRegistry $registry, protected CrawlerInterface $crawler, protected ParserInterface $parser)
     {
         parent::__construct();
@@ -23,11 +27,10 @@ class WebsiteCrawlerCommand extends Command
 
     protected function configure(): void
     {
-        $this->setDescription('Crawl websites from posts')
-            ->addArgument('limit', InputArgument::OPTIONAL, 'Number of posts to crawl per command call');
+        $this->addArgument('limit', InputArgument::OPTIONAL, 'Number of posts to crawl per command call');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if (!$limit = (int) $input->getArgument('limit')) {
             $limit = null;
@@ -79,5 +82,7 @@ class WebsiteCrawlerCommand extends Command
 
         $progressBar->finish();
         $table->render();
+
+        return Command::SUCCESS;
     }
 }
