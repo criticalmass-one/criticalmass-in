@@ -5,6 +5,7 @@ namespace App\Command\Track;
 use App\Entity\Track;
 use App\Event\Track\TrackTrimmedEvent;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
@@ -13,9 +14,12 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
+#[AsCommand(
+    name: 'criticalmass:tracks:optimize',
+    description: 'Optimize tracks',
+)]
 class OptimizeTracksCommand extends Command
 {
-    protected static $defaultName = 'criticalmass:tracks:optimize';
     public function __construct(protected ManagerRegistry $registry, protected EventDispatcherInterface $eventDispatcher)
     {
         parent::__construct();
@@ -23,16 +27,17 @@ class OptimizeTracksCommand extends Command
 
     protected function configure(): void
     {
-        $this->setDescription('Regenerate tracks')
+        $this
             ->addArgument(
                 'trackId',
                 InputArgument::OPTIONAL,
                 'Id of the track to optimize'
             )
-            ->addOption('all', 'a', InputOption::VALUE_NONE, 'Optimize all tracks');
+            ->addOption('all', 'a', InputOption::VALUE_NONE, 'Optimize all tracks')
+        ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $repository = $this->registry->getRepository(Track::class);
 
@@ -58,6 +63,8 @@ class OptimizeTracksCommand extends Command
         }
 
         $table->render();
+
+        return Command::SUCCESS;
     }
 
     protected function optimizeTrack(Track $track): void

@@ -7,6 +7,7 @@ use App\Entity\CitySlug;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
@@ -15,9 +16,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
 
+#[AsCommand(
+    name: 'criticalmass:rideestimate:import',
+    description: 'Import ride estimates',
+)]
 class ImportRideEstimatesCommand extends Command
 {
-    protected static $defaultName = 'criticalmass:rideestimate:import';
     protected $citySlugs = [];
 
     public function __construct(protected ManagerRegistry $registry)
@@ -27,13 +31,14 @@ class ImportRideEstimatesCommand extends Command
 
     protected function configure(): void
     {
-        $this->setDescription('')
+        $this
             ->addArgument('year', InputArgument::REQUIRED)
             ->addArgument('month', InputArgument::REQUIRED)
-            ->addArgument('filename', InputArgument::REQUIRED);
+            ->addArgument('filename', InputArgument::REQUIRED)
+        ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $dateTimeSpec = sprintf('%d-%d-01', $input->getArgument('year'), $input->getArgument('month'));
         $dateTime = new \DateTime($dateTimeSpec);
@@ -82,6 +87,8 @@ class ImportRideEstimatesCommand extends Command
 
             $output->writeln('Persisted estimations. Please recalculate now.');
         }
+
+        return Command::SUCCESS;
     }
 
     protected function readFromFile(string $filename): array
