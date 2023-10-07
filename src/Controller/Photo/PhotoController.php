@@ -28,6 +28,10 @@ class PhotoController extends AbstractController
         ExifWrapperInterface $exifWrapper,
         Photo $photo
     ): Response {
+        if (!$photo->isEnabled() || $photo->isDeleted()) {
+            throw $this->createAccessDeniedException();
+        }
+
         $city = $photo->getCity();
 
         $ride = $photo->getRide();
