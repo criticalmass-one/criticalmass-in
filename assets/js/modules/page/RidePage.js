@@ -1,4 +1,4 @@
-define(['CriticalService', 'Map', 'Container', 'ClusterContainer', 'CityEntity', 'RideEntity', 'TimelapseTrackEntity', 'SubrideEntity', 'MapLayerControl', 'PhotoEntity', 'PhotoViewModal', 'Timelapse'], function (CriticalService) {
+define(['CriticalService', 'Map', 'Container', 'ClusterContainer', 'CityEntity', 'RideEntity', 'TimelapseTrackEntity', 'MapLayerControl', 'PhotoEntity', 'PhotoViewModal', 'Timelapse'], function (CriticalService) {
 
     RidePage = function (context, options) {
         this.options = options;
@@ -9,7 +9,6 @@ define(['CriticalService', 'Map', 'Container', 'ClusterContainer', 'CityEntity',
         this._initLayerControl();
         this._initTrackToggleEvent();
         this._initPhotoViewModal();
-        this._initSubrideEvents();
         this._initTimelapse();
 
         this._CriticalService = CriticalService;
@@ -18,7 +17,6 @@ define(['CriticalService', 'Map', 'Container', 'ClusterContainer', 'CityEntity',
     RidePage.prototype._map = null;
     RidePage.prototype._ride = null;
     RidePage.prototype._city = null;
-    RidePage.prototype._subrideContainer = null;
     RidePage.prototype._layerControl = null;
     RidePage.prototype._layers = null;
     RidePage.prototype._timelapse = null;
@@ -68,7 +66,6 @@ define(['CriticalService', 'Map', 'Container', 'ClusterContainer', 'CityEntity',
 
         this._rideContainer.addToControl(this._layers, 'Tour');
         this._cityContainer.addToControl(this._layers, 'Städte');
-        this._subrideContainer.addToControl(this._layers, 'Mini-Masses');
         this._trackContainer.addToControl(this._layers, 'Tracks');
         this._photoContainer.addToControl(this._layers, 'Fotos');
 
@@ -85,7 +82,6 @@ define(['CriticalService', 'Map', 'Container', 'ClusterContainer', 'CityEntity',
     };
 
     RidePage.prototype._initContainers = function () {
-        this._subrideContainer = new Container();
         this._trackContainer = new Container();
         this._cityContainer = new Container();
         this._rideContainer = new Container();
@@ -93,7 +89,6 @@ define(['CriticalService', 'Map', 'Container', 'ClusterContainer', 'CityEntity',
     };
 
     RidePage.prototype._initLayers = function () {
-        this._subrideContainer.addToMap(this._map);
         this._trackContainer.addToMap(this._map);
         this._cityContainer.addToMap(this._map);
         this._rideContainer.addToMap(this._map);
@@ -131,32 +126,6 @@ define(['CriticalService', 'Map', 'Container', 'ClusterContainer', 'CityEntity',
         this._ride = this._CriticalService.factory.createRide(rideJson);
 
         this._ride.addToContainer(this._rideContainer);
-    };
-
-    RidePage.prototype.addSubride = function (subrideJson) {
-        var subride = this._CriticalService.factory.createSubride(subrideJson);
-
-        subride.addToContainer(this._subrideContainer, subride.getId());
-    };
-
-    RidePage.prototype._initSubrideEvents = function () {
-        var that = this;
-
-        $('.subride a.subride-link').on('click', function () {
-            var subrideId = $(this).data('subride-id');
-
-            that._panMapToSubride(subrideId);
-        });
-    };
-
-    RidePage.prototype._panMapToSubride = function (subrideId) {
-        var subride = this._subrideContainer.getEntity(subrideId);
-
-        subride.openPopup();
-
-        var latLng = subride.getLatLng();
-
-        this._map.setView(latLng, 14);
     };
 
     RidePage.prototype.addTrack = function (trackJson) {

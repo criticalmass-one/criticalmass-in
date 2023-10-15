@@ -5,7 +5,6 @@ namespace App\Factory\SocialNetworkProfile;
 use App\Entity\City;
 use App\Entity\Ride;
 use App\Entity\SocialNetworkProfile;
-use App\Entity\Subride;
 use App\Entity\User;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -43,13 +42,6 @@ class SocialNetworkProfileFactory implements SocialNetworkProfileFactoryInterfac
     public function withRide(Ride $ride): SocialNetworkProfileFactoryInterface
     {
         $this->socialNetworkProfile->setRide($ride);
-
-        return $this;
-    }
-
-    public function withSubride(Subride $subride): SocialNetworkProfileFactoryInterface
-    {
-        $this->socialNetworkProfile->setSubride($subride);
 
         return $this;
     }

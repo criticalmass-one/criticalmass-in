@@ -42,17 +42,6 @@ class RideTabsController extends AbstractController
         ]);
     }
 
-    public function renderSubridesTabAction(Ride $ride): Response
-    {
-        $subrides = $this->getSubrideRepository()->getSubridesForRide($ride);
-
-        return $this->render('RideTabs/SubridesTab.html.twig', [
-            'ride' => $ride,
-            'subrides' => $subrides,
-            'dateTime' => new \DateTime(),
-        ]);
-    }
-
     public function renderStatisticTabAction(Ride $ride): Response
     {
         return $this->render('RideTabs/StatisticTab.html.twig', [

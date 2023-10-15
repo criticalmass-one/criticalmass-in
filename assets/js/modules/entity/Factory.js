@@ -27,14 +27,6 @@ define([], function () {
         return eventEntity;
     };
 
-    Factory.prototype.createSubride = function (subrideJson) {
-        var subrideEntity = new SubrideEntity();
-
-        subrideEntity = this._transferProperties(subrideEntity, subrideJson);
-
-        return subrideEntity;
-    };
-
     Factory.prototype.createCity = function (cityJson) {
         var cityEntity = new CityEntity();
 

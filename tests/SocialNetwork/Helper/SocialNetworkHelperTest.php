@@ -7,7 +7,6 @@ use App\Criticalmass\SocialNetwork\Helper\SocialNetworkHelper;
 use App\Entity\City;
 use App\Entity\Ride;
 use App\Entity\SocialNetworkProfile;
-use App\Entity\Subride;
 use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use PHPUnit\Framework\TestCase;
@@ -38,19 +37,6 @@ class SocialNetworkHelperTest extends TestCase
         $ride = new Ride();
         $socialNetworkProfileRide = (new SocialNetworkProfile())->setRide($ride);
         $this->assertEquals($ride, $socialNetworkHelper->getProfileAble($socialNetworkProfileRide));
-    }
-
-
-    public function testGetProfileAbleSubride(): void
-    {
-        $registry = $this->createMock(ManagerRegistry::class);
-        $objectRouter = $this->createMock(ObjectRouterInterface::class);
-
-        $socialNetworkHelper = new SocialNetworkHelper($registry, $objectRouter);
-
-        $subride = new Subride();
-        $socialNetworkProfileSubride = (new SocialNetworkProfile())->setSubride($subride);
-        $this->assertEquals($subride, $socialNetworkHelper->getProfileAble($socialNetworkProfileSubride));
     }
 
     public function testGetProfileAbleUser(): void
@@ -86,7 +72,6 @@ class SocialNetworkHelperTest extends TestCase
         $this->assertEquals('User', $socialNetworkHelper->getProfileAbleShortname(new User()));
         $this->assertEquals('City', $socialNetworkHelper->getProfileAbleShortname(new City()));
         $this->assertEquals('Ride', $socialNetworkHelper->getProfileAbleShortname(new Ride()));
-        $this->assertEquals('Subride', $socialNetworkHelper->getProfileAbleShortname(new Subride()));
     }
 
     public function testAssignProfileAbleCity(): void
@@ -104,7 +89,6 @@ class SocialNetworkHelperTest extends TestCase
 
         $this->assertEquals($city, $socialNetworkProfile->getCity());
         $this->assertNull($socialNetworkProfile->getRide());
-        $this->assertNull($socialNetworkProfile->getSubride());
         $this->assertNull($socialNetworkProfile->getUser());
     }
 
@@ -123,26 +107,6 @@ class SocialNetworkHelperTest extends TestCase
 
         $this->assertNull($socialNetworkProfile->getCity());
         $this->assertEquals($ride, $socialNetworkProfile->getRide());
-        $this->assertNull($socialNetworkProfile->getSubride());
-        $this->assertNull($socialNetworkProfile->getUser());
-    }
-
-    public function testAssignProfileAbleSubride(): void
-    {
-        $registry = $this->createMock(ManagerRegistry::class);
-        $objectRouter = $this->createMock(ObjectRouterInterface::class);
-
-        $socialNetworkHelper = new SocialNetworkHelper($registry, $objectRouter);
-
-        $subride = new Subride();
-        $request = new Request(['subride' => $subride]);
-
-        $socialNetworkProfile = new SocialNetworkProfile();
-        $socialNetworkHelper->assignProfileAble($socialNetworkProfile, $request);
-
-        $this->assertNull($socialNetworkProfile->getCity());
-        $this->assertNull($socialNetworkProfile->getRide());
-        $this->assertEquals($subride, $socialNetworkProfile->getSubride());
         $this->assertNull($socialNetworkProfile->getUser());
     }
 
@@ -161,7 +125,6 @@ class SocialNetworkHelperTest extends TestCase
 
         $this->assertNull($socialNetworkProfile->getCity());
         $this->assertNull($socialNetworkProfile->getRide());
-        $this->assertNull($socialNetworkProfile->getSubride());
         $this->assertEquals($user, $socialNetworkProfile->getUser());
     }
 
@@ -193,21 +156,6 @@ class SocialNetworkHelperTest extends TestCase
 
         $socialNetworkHelper = new SocialNetworkHelper($registry, $objectRouter);
         $socialNetworkHelper->getRouteName($ride, 'test');
-    }
-
-    public function testGetRouteNameSubride(): void
-    {
-        $subride = new Subride();
-
-        $registry = $this->createMock(ManagerRegistry::class);
-        $objectRouter = $this->createMock(ObjectRouterInterface::class);
-        $objectRouter
-            ->expects($this->once())
-            ->method('generate')
-            ->with($this->equalTo($subride), $this->equalTo('criticalmass_socialnetwork_subride_test'));
-
-        $socialNetworkHelper = new SocialNetworkHelper($registry, $objectRouter);
-        $socialNetworkHelper->getRouteName($subride, 'test');
     }
 
     public function testGetRouteNameUser(): void
@@ -271,30 +219,6 @@ class SocialNetworkHelperTest extends TestCase
 
         $socialNetworkHelper = new SocialNetworkHelper($registry, $objectRouter);
         $socialNetworkHelper->getProfileList($ride);
-    }
-
-    public function testGetProfileListSubride(): void
-    {
-        $subride = new Subride();
-
-        $repository = $this->createMock(EntityRepository::class);
-        $repository
-            ->expects($this->once())
-            ->method('__call')
-            ->with($this->equalTo('findBySubride'), $this->equalTo([$subride]))
-            ->will($this->returnValue([]));
-
-        $registry = $this->createMock(ManagerRegistry::class);
-        $registry
-            ->expects($this->once())
-            ->method('getRepository')
-            ->with($this->equalTo(SocialNetworkProfile::class))
-            ->will($this->returnValue($repository));
-
-        $objectRouter = $this->createMock(ObjectRouterInterface::class);
-
-        $socialNetworkHelper = new SocialNetworkHelper($registry, $objectRouter);
-        $socialNetworkHelper->getProfileList($subride);
     }
 
     public function testGetProfileListUser(): void
