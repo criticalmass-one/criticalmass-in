@@ -67,7 +67,7 @@ services:
 
     App\:
         resource: '../src/*'
-        exclude: '../src/{DQL,Entity,Manager,Menu,Migrations,Model,Repository,Tests,UserProvider,Criticalmass/UploadValidator/UploadValidatorException}'
+        exclude: '../src/{DQL,Entity,Manager,Menu,Migrations,Model,Tests,UserProvider,Criticalmass/UploadValidator/UploadValidatorException}'
 
     App\Controller\:
         resource: '../src/Controller'
@@ -224,10 +224,6 @@ services:
 
     jms_serializer.naming_strategy:
         alias: jms_serializer.camel_case_naming_strategy
-
-    App\Form\Type\RegistrationType:
-        arguments:
-            $class: '%fos_user.model.user.class%'
 
     App\Criticalmass\CriticalmassBlog\CriticalmassBlogInterface:
         alias: App\Criticalmass\CriticalmassBlog\CachedCriticalmassBlog

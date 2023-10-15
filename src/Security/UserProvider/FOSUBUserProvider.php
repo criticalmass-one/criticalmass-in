@@ -4,21 +4,18 @@ namespace App\Security\UserProvider;
 
 use App\Entity\User;
 use App\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGeneratorInterface;
-use FOS\UserBundle\Model\UserManagerInterface;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
-use HWI\Bundle\OAuthBundle\Security\Core\User\FOSUBUserProvider as BaseClass;
+use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthAwareUserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class FOSUBUserProvider extends BaseClass
+class FOSUBUserProvider implements OAuthAwareUserProviderInterface
 {
     /** @var ProfilePhotoGeneratorInterface $profilePhotoGenerator */
     protected $profilePhotoGenerator;
 
-    public function __construct(UserManagerInterface $userManager, array $properties, ProfilePhotoGeneratorInterface $profilePhotoGenerator)
+    public function __construct(array $properties, ProfilePhotoGeneratorInterface $profilePhotoGenerator)
     {
         $this->profilePhotoGenerator = $profilePhotoGenerator;
-
-        parent::__construct($userManager, $properties);
     }
 
     public function connect(UserInterface $user, UserResponseInterface $response): void
@@ -53,7 +50,7 @@ class FOSUBUserProvider extends BaseClass
             return $user;
         }
 
-        $user = parent::loadUserByOAuthUserResponse($response);
+        //$user = parent::loadUserByOAuthUserResponse($response);
 
         $user = $this->setServiceData($user, $response);
 

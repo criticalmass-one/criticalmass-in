@@ -34,7 +34,6 @@
         "symfony/monolog-bundle": "^3.3",
         "sensio/framework-extra-bundle": "^5.5",
         "incenteev/composer-parameter-handler": "^2.0",
-        "friendsofsymfony/user-bundle": "^3.0",
         "hwi/oauth-bundle": "^1.4",
         "malenki/slug": "1.0.0",
         "sonata-project/intl-bundle": "^2.3",
@@ -88,7 +87,11 @@
         "presta/sitemap-bundle": "^3.3",
         "symfony/twig-bridge": "^5.0",
         "symfony/mailer": "^5.0",
-        "symfony/cache": "^5.0"
+        "symfony/cache": "^5.0",
+        "symfony/notifier": "^5.0",
+        "symfony/twig-bundle": "^5.0",
+        "twig/cssinliner-extra": "^3.4",
+        "twig/inky-extra": "^3.4"
     },
     "require-dev": {
         "symfony/browser-kit": "^5.0",

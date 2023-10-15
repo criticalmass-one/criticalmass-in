@@ -90,16 +90,10 @@ class Builder extends AbstractBuilder
             $menu['Benutzerkonto']->addChild('divider2', ['attributes' => ['role' => 'separator', 'class' => 'divider']]);
 
             $menu['Benutzerkonto']
-                ->addChild('Abmelden', ['route' => 'fos_user_security_logout']);
+                ->addChild('Abmelden', ['route' => 'logout']);
         } else {
             $menu
-                ->addChild('Anmelden', [
-                    'uri' => '#'
-                ])
-                ->setLinkAttributes([
-                    'data-toggle' => 'modal',
-                    'data-target' => '#loginModal'
-                ]);
+                ->addChild('Anmelden', ['route' => 'login']);
         }
 
 

@@ -26,7 +26,7 @@ class ProfilePhotoEventSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            FOSUserEvents::REGISTRATION_SUCCESS => 'onFosRegistrationSuccess',
+            //FOSUserEvents::REGISTRATION_SUCCESS => 'onFosRegistrationSuccess',
             HWIOAuthEvents::CONNECT_INITIALIZE => 'onHwiRegistrationSuccess',
             UserColorChangedEvent::NAME => 'onUserColorChange',
         ];
