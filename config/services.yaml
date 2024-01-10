@@ -236,3 +236,7 @@ services:
         arguments:
             $cityFinder: '@fos_elastica.finder.criticalmass_city'
             $rideFinder: '@fos_elastica.finder.criticalmass_ride'
+
+    App\Criticalmass\Profile\Deletion\UserPartDeleter\UserProfilePhotoDeleter:
+      arguments:
+        $filesystem: '@oneup_flysystem.flysystem_user_photo_filesystem'

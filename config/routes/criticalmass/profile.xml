@@ -39,4 +39,8 @@
     <route id="criticalmass_user_profile_color" path="/profile/color">
         <default key="_controller">App\Controller\Profile\ColorController::colorAction</default>
     </route>
+
+    <route id="criticalmass_user_profile_delete" path="/profile/delete">
+        <default key="_controller">App\Controller\Profile\ProfileDeletionController::deleteAction</default>
+    </route>
 </routes>
