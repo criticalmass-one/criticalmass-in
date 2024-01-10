@@ -8,6 +8,7 @@ use App\Entity\Track;
 use App\Entity\User;
 use App\Event\Photo\PhotoUpdatedEvent;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Table;
@@ -16,9 +17,12 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
+#[AsCommand(
+    name: 'criticalmass:photos:timeshift',
+    description: 'Timeshift photos',
+)]
 class PhotoTimeshiftCommand extends Command
 {
-    protected static $defaultName = 'criticalmass:photos:timeshift';
     public function __construct(protected ManagerRegistry $registry, protected EventDispatcherInterface $eventDispatcher)
     {
         parent::__construct();
@@ -26,7 +30,7 @@ class PhotoTimeshiftCommand extends Command
 
     protected function configure(): void
     {
-        $this->setDescription('Timeshift photos')
+        $this
             ->addArgument(
                 'citySlug',
                 InputArgument::REQUIRED,
@@ -55,7 +59,7 @@ class PhotoTimeshiftCommand extends Command
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $interval = new \DateInterval($input->getArgument('dateInterval'));
         $modificationMethodName = $input->getArgument('direction');
@@ -105,6 +109,8 @@ class PhotoTimeshiftCommand extends Command
         $table->render();
 
         $entityManager->flush();
+
+        return Command::SUCCESS;
     }
 
     protected function getRide(string $citySlug, string $rideIdentifier): ?Ride
