@@ -83,5 +83,23 @@
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <form method="POST">
+                    <button type="submit" class="btn btn-danger" name="delete" value="1">
+                        Benutzerkonto löschen
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="row margin-top-large">
+            <div class="col-md-12 text-center">
+                <a href="{{ path('criticalmass_user_usermanagement') }}">
+                    Abbrechen
+                </a>
+            </div>
+        </div>
     </div>
 {% endblock %}
