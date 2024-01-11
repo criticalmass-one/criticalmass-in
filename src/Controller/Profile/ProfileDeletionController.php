@@ -2,15 +2,14 @@
 
 namespace App\Controller\Profile;
 
-use App\Criticalmass\Profile\Deletion\UserDeleter;
+use App\Controller\AbstractController;
 use App\Criticalmass\Profile\Deletion\UserDeleterInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class ProfileDeletionController extends Controller
+class ProfileDeletionController extends AbstractController
 {
     /**
      * @Security("is_granted('cancel', user)")
@@ -25,6 +24,7 @@ class ProfileDeletionController extends Controller
     protected function deleteGetAction(Request $request, UserInterface $user, UserDeleterInterface $userDeleter): Response
     {
         $userDeleter->deleteUser($user);
+
         return $this->render('ProfileDeletion/cancel.html.twig');
     }
 }
