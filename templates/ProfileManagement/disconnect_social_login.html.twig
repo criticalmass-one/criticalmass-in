@@ -12,21 +12,24 @@
     </li>
 
     <li class="active">
-        E-Mail-Adresse ändern
+        Logindaten aktualisieren
     </li>
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-md-8 col-md-offset-2">
                 <h2>
-                    E-Mail-Adresse ändern
+                    Logindaten aktualisieren
                 </h2>
 
                 <p class="lead">
-                    Hier kannst du deine E-Mail-Adresse ändern &mdash; denk daran, dich beim nächsten Mal mit deiner
-                    neuen E-Mail-Adresse einzuloggen.
+                    Du loggst dich bislang offenbar über X, ehemals Twitter, oder Facebook ein. Leider treten bei beiden Anbietern regelmäßig Login-Probleme auf, so dass wir nicht garantieren können, den Login über diese Netzwerke auch in Zukunft zu ermöglichen. Hier kannst du deinen Login von X oder Facebook aktualisieren, so dass du dich künftig mit deiner E-Mail-Adresse und einem Kennwort anmeldest.
+                </p>
+
+                <p class="lead">
+                    Der Login über Strava ist davon nicht betroffen und wird auch in Zukunft funktionieren.
                 </p>
             </div>
         </div>
@@ -41,8 +44,7 @@
                     </div>
                     <div class="panel-body form-group{% if form_errors(disconnectForm.email) %} has-error has-feedback{% endif %}">
                         <p>
-                            Dein Benutzername wird öffentlich angezeigt &mdash; außerdem brauchst du ihn zum Einloggen,
-                            wenn du dich nicht über ein soziales Netzwerk anmeldest.
+                            Du wirst dich künftig über deine E-Mail-Adresse einloggen:
                         </p>
 
                         {{ form_errors(disconnectForm.email) }}
