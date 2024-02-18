@@ -65,7 +65,8 @@
                             Wähle bitte ein sicheres Kennwort, mit dem du dich künftig auf criticalmass.in einloggst. Gib das Kennwort zur Sicherheit bitte ein zweites Mal ein, um Tippfehler zu vermeiden.
                         </p>
 
-                        {{ form_errors(disconnectForm.plainPassword) }}
+                        {{ form_errors(disconnectForm.plainPassword.first) }}
+                        {{ form_errors(disconnectForm.plainPassword.second) }}
 
                         <label class="control-label" for="">
                             Dein neues Kennwort:

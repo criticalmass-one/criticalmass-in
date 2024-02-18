@@ -25,6 +25,7 @@ class DisconnectSocialNetworkLoginType extends ChangePasswordFormType
                 'attr' => [
                     'autocomplete' => 'email',
                 ],
+                'required' => true,
             ]);
     }
 }

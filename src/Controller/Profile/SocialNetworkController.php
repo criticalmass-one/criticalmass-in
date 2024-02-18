@@ -56,8 +56,12 @@ class SocialNetworkController extends AbstractController
             $user->setFacebookAccessToken(null);
 
             $this->userManager->updateUser($user);
+
+            return $this->redirectToRoute('criticalmass_user_usermanagement');
         }
 
-        return $this->redirectToRoute('criticalmass_user_usermanagement');
+        return $this->render('ProfileManagement/disconnect_social_login.html.twig', [
+            'disconnectForm' => $form->createView(),
+        ]);
     }
 }
