@@ -525,4 +525,9 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
 
         return $this;
     }
+
+    public function hasSocialLogin(): bool
+    {
+        return $this->stravaId || $this->facebookId || $this->twitterId;
+    }
 }

@@ -1,0 +1,93 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% form_theme disconnectForm 'Form/theme.html.twig' %}
+
+{% block title %}Dein Benutzerprofil{% endblock %}
+
+{% block breadcrumb %}
+    <li>
+        <a href="{{ path('criticalmass_user_usermanagement') }}">
+            Dein Benutzerkonto
+        </a>
+    </li>
+
+    <li class="active">
+        E-Mail-Adresse ändern
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <h2>
+                    E-Mail-Adresse ändern
+                </h2>
+
+                <p class="lead">
+                    Hier kannst du deine E-Mail-Adresse ändern &mdash; denk daran, dich beim nächsten Mal mit deiner
+                    neuen E-Mail-Adresse einzuloggen.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                {{ form_start(disconnectForm) }}
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Deine E-Mail-Adresse
+                    </div>
+                    <div class="panel-body form-group{% if form_errors(disconnectForm.email) %} has-error has-feedback{% endif %}">
+                        <p>
+                            Dein Benutzername wird öffentlich angezeigt &mdash; außerdem brauchst du ihn zum Einloggen,
+                            wenn du dich nicht über ein soziales Netzwerk anmeldest.
+                        </p>
+
+                        {{ form_errors(disconnectForm.email) }}
+
+                        <label class="control-label" for="">
+                            Deine E-Mail-Adresse:
+                        </label>
+                        {{ form_widget(disconnectForm.email, { 'attr' : { 'class': 'form-control'} }) }}
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Dein neues Kennwort
+                    </div>
+                    <div class="panel-body form-group{% if form_errors(disconnectForm.plainPassword) %} has-error has-feedback{% endif %}">
+                        <p>
+                            Wähle bitte ein sicheres Kennwort, mit dem du dich künftig auf criticalmass.in einloggst. Gib das Kennwort zur Sicherheit bitte ein zweites Mal ein, um Tippfehler zu vermeiden.
+                        </p>
+
+                        {{ form_errors(disconnectForm.plainPassword) }}
+
+                        <label class="control-label" for="">
+                            Dein neues Kennwort:
+                        </label>
+                        {{ form_widget(disconnectForm.plainPassword.first, { 'attr' : { 'class': 'form-control'} }) }}
+
+                        <label class="control-label" for="">
+                            Dein neues Kennwort (Wiederholung):
+                        </label>
+                        {{ form_widget(disconnectForm.plainPassword.second, { 'attr' : { 'class': 'form-control'} }) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        {{ form_widget(disconnectForm.submit, { attr: { class: 'btn btn-primary' }}) }}
+
+                        <a href="{{ path('criticalmass_user_usermanagement') }}">
+                            Abbrechen
+                        </a>
+                    </div>
+                </div>
+                {{ form_end(disconnectForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

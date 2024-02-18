@@ -39,4 +39,8 @@
     <route id="criticalmass_user_profile_color" path="/profile/color">
         <default key="_controller">App\Controller\Profile\ColorController::colorAction</default>
     </route>
+
+    <route id="criticalmass_user_profile_disconnect_social" path="/profile/disconnect-social-login">
+        <default key="_controller">App\Controller\Profile\SocialNetworkController::disconnectLoginAction</default>
+    </route>
 </routes>
