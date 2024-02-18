@@ -294,7 +294,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         return $this->stravaAccessToken;
     }
 
-    public function setFacebookId(string $facebookId): User
+    public function setFacebookId(?string $facebookId): User
     {
         $this->facebookId = $facebookId;
 
@@ -306,7 +306,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         return $this->facebookId;
     }
 
-    public function setFacebookAccessToken(string $facebookAccessToken): User
+    public function setFacebookAccessToken(?string $facebookAccessToken): User
     {
         $this->facebookAccessToken = $facebookAccessToken;
 
@@ -318,7 +318,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         return $this->facebookAccessToken;
     }
 
-    public function setTwitterId(string $twitterId): User
+    public function setTwitterId(?string $twitterId): User
     {
         $this->twitterId = $twitterId;
 
@@ -330,7 +330,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         return $this->twitterId;
     }
 
-    public function setTwitterAccessToken(string $twitterkAccessToken): User
+    public function setTwitterAccessToken(?string $twitterkAccessToken): User
     {
         $this->twitterkAccessToken = $twitterkAccessToken;
 
@@ -356,7 +356,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
 
     public function isOauthAccount(): bool
     {
-        return $this->stravaId || $this->facebookId || $this->isTwitterAccount();
+        return $this->stravaId || $this->facebookId || $this->twitterId;
     }
 
     public function isFacebookAccount(): bool
@@ -528,6 +528,11 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
 
     public function hasSocialLogin(): bool
     {
-        return $this->stravaId || $this->facebookId || $this->twitterId;
+        return $this->isStravaAccount() || $this->isFacebookAccount() || $this->isTwitterAccount();
+    }
+
+    public function hasSocialLoginButStrava(): bool
+    {
+        return $this->isFacebookAccount() || $this->isTwitterAccount();
     }
 }

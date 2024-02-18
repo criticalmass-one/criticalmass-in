@@ -19,6 +19,7 @@ class SocialNetworkController extends AbstractController
     {
 
     }
+
     /**
      * @Security("is_granted('ROLE_USER')")
      */
@@ -28,20 +29,20 @@ class SocialNetworkController extends AbstractController
         $form->add('submit', SubmitType::class);
 
         if ($request->isMethod(Request::METHOD_POST)) {
-            return $this->uploadPostAction($request, $user, $form);
+            return $this->disconnectPostAction($request, $user, $form);
         } else {
-            return $this->uploadGetAction($request, $user, $form);
+            return $this->disconnectGetAction($request, $user, $form);
         }
     }
 
-    protected function uploadGetAction(Request $request, UserInterface $user = null, FormInterface $form): Response
+    protected function disconnectGetAction(Request $request, UserInterface $user = null, FormInterface $form): Response
     {
         return $this->render('ProfileManagement/disconnect_social_login.html.twig', [
             'disconnectForm' => $form->createView(),
         ]);
     }
 
-    public function uploadPostAction(Request $request, UserInterface $user = null, FormInterface $form): Response
+    public function disconnectPostAction(Request $request, UserInterface $user = null, FormInterface $form): Response
     {
         $form->handleRequest($request);
 
@@ -49,9 +50,14 @@ class SocialNetworkController extends AbstractController
             /** @var User $user */
             $user = $form->getData();
 
+            $user->setTwitterId(null);
+            $user->setTwitterAccessToken(null);
+            $user->setFacebookId(null);
+            $user->setFacebookAccessToken(null);
+
             $this->userManager->updateUser($user);
         }
 
-        return $this->uploadGetAction($request, $user, $form);
+        return $this->redirectToRoute('criticalmass_user_usermanagement');
     }
 }
