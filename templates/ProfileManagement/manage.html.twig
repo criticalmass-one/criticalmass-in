@@ -39,7 +39,7 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <div class="row">
-                    {% if app.user.socialLoginButStrava %}
+                    {% if app.user.deprecatedSocialLogin %}
                     <div class="col-md-6">
                         <div class="panel panel-danger">
                             <div class="panel-heading">
@@ -197,7 +197,7 @@
                                 Kennwort ändern
                             </div>
                             <div class="panel-body">
-                                {% if app.user.socialLoginButStrava and not is_granted('ROLE_ADMIN') %}
+                                {% if app.user.deprecatedSocialLogin and not is_granted('ROLE_ADMIN') %}
                                     <div class="alert alert-info" role="alert">
                                         Du kannst dein Kennwort nicht ändern, weil du dich über ein soziales Netzwerk
                                         bei criticalmass.in anmeldest.
@@ -243,7 +243,7 @@
                                 E-Mail-Adresse ändern
                             </div>
                             <div class="panel-body">
-                                {% if app.user.socialLoginButStrava and not is_granted('ROLE_ADMIN') %}
+                                {% if app.user.deprecatedSocialLogin and not is_granted('ROLE_ADMIN') %}
                                     <div class="alert alert-info" role="alert">
                                         Du kannst deine E-Mail-Adresse nicht ändern, weil du dich über ein soziales
                                         Netzwerk bei criticalmass.in anmeldest.

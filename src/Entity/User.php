@@ -531,7 +531,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         return $this->isStravaAccount() || $this->isFacebookAccount() || $this->isTwitterAccount();
     }
 
-    public function hasSocialLoginButStrava(): bool
+    public function hasDeprecatedSocialLogin(): bool
     {
         return $this->isFacebookAccount() || $this->isTwitterAccount();
     }
