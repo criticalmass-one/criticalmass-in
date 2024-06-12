@@ -1,0 +1,105 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Dein Benutzerprofil{% endblock %}
+
+{% block breadcrumb %}
+    <li class="active">Dein Benutzerkonto</li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h2>
+                    Benutzerkonto löschen
+                </h2>
+
+                <p class="lead">
+                    Schade, dass du dein Benutzerkonto löschen möchtest. Hier siehst du, welche Daten beim Löschen unwiderruflich entfernt werden und welche deiner Daten und Änderungen bestehen bleiben:
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Diese Daten werden gelöscht
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <li>
+                                dein Profilfoto
+                            </li>
+
+                            <li>
+                                dein Benutzerprofil und von dir eingegebene Daten
+                            </li>
+
+                            <li>
+                                von dir hochgeladene Tracks
+                            </li>
+
+                            <li>
+                                von dir hochgeladene Fotos
+                            </li>
+
+                            <li>
+                                deine Kommentare und Forenbeiträge
+                            </li>
+
+                            <li>
+                                deine Teilnahmen an Critical-Mass-Touren
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Diese Daten bleiben bestehen
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <li>
+                                von dir angelegte oder editierte Touren
+                            </li>
+
+                            <li>
+                                von dir angelegte oder editierte Städte
+                            </li>
+
+                            <li>
+                                von dir angelegte oder editierte Zubringertouren
+                            </li>
+
+                            <li>
+                                deine abgegebenen Teilnehmerschätzungen
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <form method="POST">
+                    <button type="submit" class="btn btn-danger" name="delete" value="1">
+                        Benutzerkonto löschen
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="row margin-top-large">
+            <div class="col-md-12 text-center">
+                <a href="{{ path('criticalmass_user_usermanagement') }}">
+                    Abbrechen
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

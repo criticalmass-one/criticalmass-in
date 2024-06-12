@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Criticalmass\MassTrackImport\Voter\VoterInterface;
+use App\Criticalmass\Profile\Deletion\UserPartDeleter\UserPartDeleterInterface;
 use App\Criticalmass\RideNamer\RideNamerInterface;
 use App\Criticalmass\Router\DelegatedRouter\DelegatedRouterInterface;
 use App\Criticalmass\SocialNetwork\DependencyInjection\Compiler\SocialNetworkPass;
@@ -13,6 +14,7 @@ use App\DependencyInjection\Compiler\RideNamerPass;
 use App\DependencyInjection\Compiler\TimelineCollectorPass;
 use App\DependencyInjection\Compiler\TrackVoterPass;
 use App\DependencyInjection\Compiler\TwigSeoExtensionPass;
+use App\DependencyInjection\Compiler\UserPartDeleterCollectorPass;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Resource\FileResource;
@@ -79,6 +81,9 @@ class Kernel extends BaseKernel
 
         $container->addCompilerPass(new SocialNetworkPass());
         $container->registerForAutoconfiguration(NetworkInterface::class)->addTag('social_network.network');
+
+        $container->addCompilerPass(new UserPartDeleterCollectorPass());
+        $container->registerForAutoconfiguration(UserPartDeleterInterface::class)->addTag('user.part_deleter');
     }
 
     protected function configureRoutes(RoutingConfigurator $routes): void
