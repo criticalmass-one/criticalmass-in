@@ -33,10 +33,6 @@ class SocialNetworkProfile
     #[ORM\JoinColumn(name: 'ride_id', referencedColumnName: 'id')]
     protected ?Ride $ride = null;
 
-    #[ORM\ManyToOne(targetEntity: 'Subride', inversedBy: 'socialNetworkProfiles')]
-    #[ORM\JoinColumn(name: 'subride_id', referencedColumnName: 'id')]
-    protected ?Subride $subride = null;
-
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string')]
     #[JMS\Expose]
@@ -136,18 +132,6 @@ class SocialNetworkProfile
     public function setRide(Ride $ride = null): SocialNetworkProfile
     {
         $this->ride = $ride;
-
-        return $this;
-    }
-
-    public function getSubride(): ?Subride
-    {
-        return $this->subride;
-    }
-
-    public function setSubride(Subride $subride = null): SocialNetworkProfile
-    {
-        $this->subride = $subride;
 
         return $this;
     }

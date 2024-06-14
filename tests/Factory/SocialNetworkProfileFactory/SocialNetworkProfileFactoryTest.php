@@ -4,7 +4,6 @@ namespace Tests\Factory\SocialNetworkProfileFactory;
 
 use App\Entity\City;
 use App\Entity\Ride;
-use App\Entity\Subride;
 use App\Entity\User;
 use App\Factory\SocialNetworkProfile\SocialNetworkProfileFactory;
 use PHPUnit\Framework\TestCase;
@@ -24,7 +23,6 @@ class SocialNetworkProfileFactoryTest extends TestCase
 
         $this->assertNull($socialNetworkProfile->getCity());
         $this->assertNull($socialNetworkProfile->getRide());
-        $this->assertNull($socialNetworkProfile->getSubride());
         $this->assertNull($socialNetworkProfile->getUser());
     }
 
@@ -39,7 +37,6 @@ class SocialNetworkProfileFactoryTest extends TestCase
 
         $this->assertEquals($city, $socialNetworkProfile->getCity());
         $this->assertNull($socialNetworkProfile->getRide());
-        $this->assertNull($socialNetworkProfile->getSubride());
         $this->assertNull($socialNetworkProfile->getUser());
     }
 
@@ -54,22 +51,6 @@ class SocialNetworkProfileFactoryTest extends TestCase
 
         $this->assertNull($socialNetworkProfile->getCity());
         $this->assertEquals($ride, $socialNetworkProfile->getRide());
-        $this->assertNull($socialNetworkProfile->getSubride());
-        $this->assertNull($socialNetworkProfile->getUser());
-    }
-
-    public function testSocialNetworkProfileFactoryWithSubride(): void
-    {
-        $subride = new Subride();
-
-        $socialNetworkProfileFactory = new SocialNetworkProfileFactory();
-        $socialNetworkProfile = $socialNetworkProfileFactory
-            ->withSubride($subride)
-            ->build();
-
-        $this->assertNull($socialNetworkProfile->getCity());
-        $this->assertNull($socialNetworkProfile->getRide());
-        $this->assertEquals($subride, $socialNetworkProfile->getSubride());
         $this->assertNull($socialNetworkProfile->getUser());
     }
 
@@ -84,7 +65,6 @@ class SocialNetworkProfileFactoryTest extends TestCase
 
         $this->assertNull($socialNetworkProfile->getCity());
         $this->assertNull($socialNetworkProfile->getRide());
-        $this->assertNull($socialNetworkProfile->getSubride());
         $this->assertEquals($user, $socialNetworkProfile->getUser());
     }
 

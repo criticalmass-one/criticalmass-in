@@ -327,27 +327,6 @@ class RideRepository extends EntityRepository
         return $query->getOneOrNullResult();
     }
 
-    public function getPreviousRideWithSubrides(Ride $ride): array
-    {
-        $builder = $this->createQueryBuilder('r');
-
-        $builder
-            ->select('r')
-            ->join('r.subrides', 'sr')
-            ->where($builder->expr()->lt('r.dateTime', ':dateTime'))
-            ->andWhere($builder->expr()->eq('r.city', ':city'))
-            ->addOrderBy('r.dateTime', 'DESC')
-            ->setMaxResults(1)
-            ->setParameter('city', $ride->getCity())
-            ->setParameter('dateTime', $ride->getDateTime());
-
-        $query = $builder->getQuery();
-
-        $result = $query->getOneOrNullResult();
-
-        return $result;
-    }
-
     public function getLocationsForCity(City $city): array
     {
         $builder = $this->createQueryBuilder('r');

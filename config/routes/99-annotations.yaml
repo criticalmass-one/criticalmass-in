@@ -35,11 +35,6 @@ controllers_api_photo:
   type: annotation
   prefix: '/api/'
 
-controllers_api_subride:
-  resource: '../../src/Controller/Api/SubrideController.php'
-  type: annotation
-  prefix: '/api/'
-
 controllers_api_track:
   resource: '../../src/Controller/Api/TrackController.php'
   type: annotation

@@ -92,7 +92,6 @@ class RideController extends AbstractController
             'ride' => $ride,
             'tracks' => $this->getTrackRepository()->findTracksByRide($ride),
             'photos' => $this->getPhotoRepository()->findPhotosByRide($ride),
-            'subrides' => $this->getSubrideRepository()->getSubridesForRide($ride),
             'dateTime' => new \DateTime(),
             'weatherForecast' => $weatherForecast,
             'participation' => $participation,
