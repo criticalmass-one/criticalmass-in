@@ -16,9 +16,9 @@ security:
             security: false
 
         main:
-            form_login:
-                login_path: login
-                check_path: login
+            login_link:
+                check_route: login_check
+                signature_properties: [ 'email' ]
 
             provider: users
             pattern: .*
