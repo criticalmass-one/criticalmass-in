@@ -103,12 +103,6 @@ const buildFontawesome = gulp.series(copyFontawesomeFonts);
 
 /* Assets */
 
-function copyColorpickerImages() {
-    return gulp
-        .src('node_modules/bootstrap-colorpicker/dist/img/bootstrap-colorpicker/*')
-        .pipe(gulp.dest('public/images/colorpicker/'));
-}
-
 function copyDatatableImages() {
     return gulp
         .src('node_modules/datatables/media/images/*')
@@ -120,7 +114,7 @@ function copyAssetImages() {
         .pipe(gulp.dest('public/images/'));
 }
 
-const buildAssets = gulp.series(copyColorpickerImages, copyDatatableImages, copyAssetImages);
+const buildAssets = gulp.series(copyDatatableImages, copyAssetImages);
 
 
 /* CSS */
