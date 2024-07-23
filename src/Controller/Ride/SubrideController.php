@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class SubrideController extends AbstractController
 {
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
     public function addAction(Request $request, Ride $ride, UserInterface $user, ObjectRouterInterface $objectRouter): Response
@@ -79,7 +79,7 @@ class SubrideController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("subride", class="App:Subride", options={"id" = "subrideId"})
      */
     public function editAction(Request $request, Subride $subride, ObjectRouterInterface $objectRouter): Response
@@ -126,7 +126,7 @@ class SubrideController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
     public function preparecopyAction(Ride $ride): Response
@@ -140,7 +140,7 @@ class SubrideController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("oldRide", class="App:Ride")
      * @ParamConverter("newDate", options={"format": "Y-m-d"})
      */

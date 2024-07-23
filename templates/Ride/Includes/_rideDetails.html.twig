@@ -31,14 +31,6 @@
                                 <meta itemprop="latitude" content="{{ ride.latitude }}" />
                                 <meta itemprop="longitude" content="{{ ride.longitude }}" />
                             </div>
-                            {% set location = nominatim_location(ride) %}
-                            {% if location %}
-                                <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-                                    <meta itemprop="streetAddress" content="{% if location.streetName %}{{ location.streetName }}{% elseif location.subLocality %}{{ location.subLocality }}{% endif %}" />
-                                    <meta itemprop="addressLocality" content="{{ location.locality }}" />
-                                    <meta itemprop="postalCode" content="{{ location.postalCode }}" />
-                                </div>
-                            {% endif %}
                         {% else %}
                             <dd>
                                 {% if app.user %}

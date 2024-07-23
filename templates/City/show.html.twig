@@ -165,11 +165,13 @@
                     </div>
                 </div>
 
+                {% if nearCities|length > 0 %}
                 <div class="row mt-2">
                     <div class="col-12">
                         {% include 'City/Includes/_nearCities.html.twig' with { 'nearCities': nearCities } %}
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>

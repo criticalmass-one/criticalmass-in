@@ -6,18 +6,20 @@
             </h5>
             <div class="card-body">
                 <ul class="list-unstyled">
-                    {% for day in rideList %}
-                        <li class="mt-2">
-                            <strong>
-                                {{ day.dateTime|format_date('eeee, dd. MMMM YYYY') }}
-                            </strong>
+                    {% for month in rideList %}
+                        {% for day in month %}
+                            <li>
+                                <h5>
+                                    {{ day.dateTime|format_date('eeee, dd. MMMM YYYY') }}
+                                </h5>
 
-                            <ul class="list-unstyled">
-                                {% for ride in day %}
-                                {% include 'Common/Ride/simple_city_time_list_item.html.twig' with { ride: ride } %}
-                                {% endfor %}
-                            </ul>
-                        </li>
+                                <ul class="list-unstyled">
+                                    {% for ride in day %}
+                                    {% include 'Common/Ride/simple_city_time_list_item.html.twig' with { ride: ride } %}
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% endfor %}
                     {% endfor %}
                 </ul>
             </div>

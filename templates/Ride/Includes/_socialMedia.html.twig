@@ -1,20 +1,19 @@
+{% if socialNetworkProfiles|length > 0 %}
 <div class="card">
     <div class="card-header">
         Soziale Netze
     </div>
 
-    {% if socialNetworkProfiles|length > 0 %}
-        <div class="card-body text-center">
-            <div class="btn-group-vertical">
-                {% for profile in socialNetworkProfiles %}
-                    {% set network = getNetwork(profile.network) %}
+    <div class="card-body text-center">
+        <div class="btn-group-vertical">
+            {% for profile in socialNetworkProfiles %}
+                {% set network = getNetwork(profile.network) %}
 
-                    <a href="{{ profile.identifier }}" class="btn" style="background-color: {{ network.backgroundColor }}; color: {{ network.textColor }};">
-                        <i class="{{ network.icon }}"></i>
-                        {{ network.name }}
-                    </a>
-                {% endfor %}
-            </div>
+                <a href="{{ profile.identifier }}" class="btn" style="background-color: {{ network.backgroundColor }}; color: {{ network.textColor }};">
+                    <i class="{{ network.icon }}"></i>
+                    {{ network.name }}
+                </a>
+            {% endfor %}
         </div>
     {% endif %}
 
@@ -63,3 +62,4 @@
         </ul>
     </div>
 </div>
+{% endif %}

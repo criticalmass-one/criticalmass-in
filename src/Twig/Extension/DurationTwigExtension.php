@@ -3,13 +3,15 @@
 namespace App\Twig\Extension;
 
 use Khill\Duration\Duration;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class DurationTwigExtension extends \Twig_Extension
+class DurationTwigExtension extends AbstractExtension
 {
     public function getFunctions(): array
     {
         return [
-            new \Twig_SimpleFunction('human_duration', [$this, 'duration'], [
+            new TwigFunction('human_duration', [$this, 'duration'], [
                 'is_safe' => ['html'],
             ]),
         ];
@@ -29,4 +31,3 @@ class DurationTwigExtension extends \Twig_Extension
         return 'duration_extension';
     }
 }
-

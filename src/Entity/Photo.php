@@ -2,14 +2,11 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\DataQuery\Annotation\EntityAnnotation as DataQuery;
-use App\Criticalmass\Geocoding\ReverseGeocodeable;
+use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation as DataQuery;
 use App\Criticalmass\Image\PhotoManipulator\PhotoInterface\ManipulateablePhotoInterface;
-use App\Criticalmass\OrderedEntities\Annotation as OE;
-use App\Criticalmass\OrderedEntities\OrderedEntityInterface;
+use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
+use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
 use App\Criticalmass\Router\Annotation as Routing;
-use App\Criticalmass\Sharing\Annotation as Sharing;
-use App\Criticalmass\Sharing\ShareableInterface\Shareable;
 use App\Criticalmass\UploadFaker\FakeUploadable;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AutoParamConverterAble;
@@ -21,6 +18,7 @@ use App\EntityInterface\RouteableInterface;
 use App\EntityInterface\StaticMapableInterface;
 use Caldera\GeoBasic\Coord\Coord;
 use Caldera\GeoBasic\Coord\CoordInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
@@ -28,246 +26,206 @@ use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Table(name="photo")
  * @Vich\Uploadable
- * @ORM\Entity(repositoryClass="App\Repository\PhotoRepository")
- * @JMS\ExclusionPolicy("all")
  * @Routing\DefaultRoute(name="caldera_criticalmass_photo_show_ride")
  * @OE\OrderedEntity()
  */
-class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, Shareable, StaticMapableInterface, ReverseGeocodeable, OrderedEntityInterface, ElasticSearchPinInterface, CoordinateInterface
+#[ORM\Table(name: 'photo')]
+#[ORM\Entity(repositoryClass: 'App\Repository\PhotoRepository')]
+#[JMS\ExclusionPolicy('all')]
+#[ORM\Index(fields: ['exifCreationDate'], name: 'photo_exif_creation_date_index')]
+class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, StaticMapableInterface, OrderedEntityInterface, ElasticSearchPinInterface, CoordinateInterface
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @JMS\Expose
      * @Routing\RouteParameter(name="photoId")
-     * @DataQuery\Sortable
+     * @DataQuery\Sortable()
      */
-    protected $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[JMS\Expose]
+    protected ?int $id = null;
+
+    #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'photos')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    protected ?User $user = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="photos")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
-    protected $user;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="photos")
-     * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
      * @Routing\RouteParameter(name="rideIdentifier")
      * @OE\Identical()
      * @DataQuery\Queryable
      */
-    protected $ride;
+    #[ORM\ManyToOne(targetEntity: 'Ride', inversedBy: 'photos')]
+    #[ORM\JoinColumn(name: 'ride_id', referencedColumnName: 'id')]
+    protected ?Ride $ride = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="photos")
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      * @Routing\RouteParameter(name="citySlug")
      * @DataQuery\Queryable
      */
-    protected $city;
+    #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'photos')]
+    #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
+    protected ?City $city = null;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
-     * @JMS\Expose
-     * @DataQuery\Sortable
+     * @DataQuery\Sortable()
      * @DataQuery\Queryable
-     * @var float $latitude
      */
-    protected $latitude = null;
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[JMS\Expose]
+    protected ?float $latitude = null;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
-     * @JMS\Expose
-     * @DataQuery\Sortable
+     * @DataQuery\Sortable()
      * @DataQuery\Queryable
-     * @var float $longitude
      */
-    protected $longitude = null;
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[JMS\Expose]
+    protected ?float $longitude = null;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
-     * @JMS\Expose
-     * @Sharing\Intro()
-     * @DataQuery\Sortable
+     * @DataQuery\Sortable()
      */
-    protected $description;
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[JMS\Expose]
+    protected ?string $description = null;
 
     /**
-     * @ORM\Column(type="integer")
-     * @DataQuery\Sortable
+     * @DataQuery\Sortable()
      */
-    protected $views = 0;
+    #[ORM\Column(type: 'integer')]
+    #[JMS\Expose]
+    protected int $views = 0;
 
     /**
-     * @ORM\Column(type="boolean")
      * @OE\Boolean(value=true)
      * @DataQuery\DefaultBooleanValue(value=true, alias="isEnabled")
      */
-    protected $enabled = true;
+    #[ORM\Column(type: 'boolean')]
+    protected bool $enabled = true;
 
     /**
-     * @ORM\Column(type="boolean")
      * @OE\Boolean(value=false)
      * @DataQuery\DefaultBooleanValue(value=false, alias="isDeleted")
      */
-    protected $deleted = false;
+    #[ORM\Column(type: 'boolean')]
+    protected bool $deleted = false;
 
     /**
-     * @ORM\Column(type="datetime")
-     * @JMS\Expose
-     * @DataQuery\Sortable
+     * @DataQuery\Sortable()
      */
-    protected $creationDateTime;
+    #[ORM\Column(type: 'datetime')]
+    #[JMS\Expose]
+    protected ?\DateTime $creationDateTime = null;
 
     /**
-     * @var File $imageFile
      * @Vich\UploadableField(mapping="photo_photo", fileNameProperty="imageName", size="imageSize", mimeType="imageMimeType")
      */
-    protected $imageFile;
+    protected ?File $imageFile = null;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    #[JMS\Expose]
+    protected ?string $imageName = null;
 
     /**
-     * @var string
-     * @var string $imageName
-     * @ORM\Column(type="string", length=255)
+     * @DataQuery\Sortable()
      */
-    protected $imageName;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[JMS\Expose]
+    protected ?int $imageSize = null;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[JMS\Expose]
+    protected ?string $imageMimeType = null;
 
     /**
-     * @var int $imageSize
-     * @ORM\Column(type="integer", nullable=true)
-     * @DataQuery\Sortable
-     */
-    protected $imageSize;
-
-    /**
-     * @var string $imageMimeType
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $imageMimeType;
-
-    /**
-     * @var string $imageGoogleCloudHash
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $imageGoogleCloudHash;
-
-    /**
-     * @var File
      * @Vich\UploadableField(mapping="photo_photo", fileNameProperty="backupName")
      */
-    protected $backupFile;
+    #[JMS\Expose]
+    protected ?File $backupFile = null;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[JMS\Expose]
+    protected ?string $backupName = null;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[JMS\Expose]
+    protected ?int $backupSize = null;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[JMS\Expose]
+    protected ?string $backupMimeType = null;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @DataQuery\Sortable()
      */
-    protected $backupName;
+    #[ORM\Column(type: 'datetime')]
+    #[JMS\Expose]
+    protected ?\DateTime $updatedAt = null;
+
+    #[ORM\OneToMany(targetEntity: 'Ride', mappedBy: 'featuredPhoto', fetch: 'LAZY')]
+    protected Collection $featuredRides;
 
     /**
-     * @var int $backupSize
-     * @ORM\Column(type="integer", nullable=true)
+     * @DataQuery\Queryable()
+     * @DataQuery\Sortable()
      */
-    protected $backupSize;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
+    protected ?string $location = null;
+
+    #[ORM\OneToMany(targetEntity: 'Post', mappedBy: 'photo')]
+    protected Collection $posts;
 
     /**
-     * @var string $backupMimeType
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @DataQuery\Sortable()
      */
-    protected $backupMimeType;
+    #[ORM\Column(type: 'string', nullable: true)]
+    #[JMS\Expose]
+    protected ?string $exifExposure = null;
 
     /**
-     * @var string $backupGoogleCloudHash
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @DataQuery\Sortable()
      */
-    protected $backupGoogleCloudHash;
+    #[ORM\Column(type: 'string', nullable: true)]
+    #[JMS\Expose]
+    protected ?string $exifAperture = null;
 
     /**
-     * @ORM\Column(type="datetime")
-     * @DataQuery\Sortable
-     * @var \DateTime
+     * @DataQuery\Sortable()
      */
-    protected $updatedAt;
+    #[ORM\Column(type: 'smallint', nullable: true)]
+    #[JMS\Expose]
+    protected ?int $exifIso = null;
 
     /**
-     * @ORM\OneToMany(targetEntity="Photo", mappedBy="featuredPhoto", fetch="LAZY")
+     * @DataQuery\Sortable()
      */
-    protected $featuredRides;
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[JMS\Expose]
+    protected ?float $exifFocalLength = null;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Sharing\Shorturl()
+     * @DataQuery\Sortable()
      */
-    protected $shorturl;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[JMS\Expose]
+    protected ?string $exifCamera = null;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
-     * @DataQuery\Sortable
-     */
-    protected $location;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Post", mappedBy="photo")
-     */
-    protected $posts;
-
-    /**
-     * @var string $exifExposure
-     * @ORM\Column(type="string", nullable=true)
-     * @JMS\Expose
-     * @DataQuery\Sortable
-     */
-    protected $exifExposure;
-
-    /**
-     * @var string $exifAperture
-     * @ORM\Column(type="string", nullable=true)
-     * @JMS\Expose
-     * @DataQuery\Sortable
-     */
-    protected $exifAperture;
-
-    /**
-     * @var int $exifIso
-     * @ORM\Column(type="smallint", nullable=true)
-     * @JMS\Expose
-     * @DataQuery\Sortable
-     */
-    protected $exifIso;
-
-    /**
-     * @var float $exifFocalLength
-     * @ORM\Column(type="float", nullable=true)
-     * @JMS\Expose
-     * @DataQuery\Sortable
-     */
-    protected $exifFocalLength;
-
-    /**
-     * @var string $exifCamera
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @JMS\Expose
-     * @DataQuery\Sortable
-     */
-    protected $exifCamera;
-
-    /**
-     * @var \DateTime $exifCreationDate
-     * @ORM\Column(type="datetime")
      * @OE\Order(direction="asc")
-     * @JMS\Expose
      * @DataQuery\DateTimeQueryable(format="strict_date_hour_minute_second", pattern="Y-m-d\TH:i:s")
-     * @DataQuery\Sortable
+     * @DataQuery\Sortable()
      */
-    protected $exifCreationDate;
+    #[ORM\Column(type: 'datetime')]
+    #[JMS\Expose]
+    protected ?\DateTime $exifCreationDate = null;
 
     public function __construct()
     {
+        $this->posts = new ArrayCollection();
+        $this->featuredRides = new ArrayCollection();
         $this->exifCreationDate = new \DateTime();
         $this->creationDateTime = new \DateTime();
         $this->updatedAt = new \DateTime();
@@ -528,19 +486,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     }
 
 
-    public function setShorturl(string $shorturl): Photo
-    {
-        $this->shorturl = $shorturl;
-
-        return $this;
-    }
-
-    public function getShorturl(): ?string
-    {
-        return $this->shorturl;
-    }
-
-    public function setLocation(string $location = null): ReverseGeocodeable
+    public function setLocation(string $location = null): self
     {
         $this->location = $location;
 
@@ -632,30 +578,6 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     public function setExifCreationDate(\DateTime $exifCreationDate): Photo
     {
         $this->exifCreationDate = $exifCreationDate;
-
-        return $this;
-    }
-
-    public function getImageGoogleCloudHash(): ?string
-    {
-        return $this->imageGoogleCloudHash;
-    }
-
-    public function setImageGoogleCloudHash(string $imageGoogleCloudHash): Photo
-    {
-        $this->imageGoogleCloudHash = $imageGoogleCloudHash;
-
-        return $this;
-    }
-
-    public function getBackupGoogleCloudHash(): ?string
-    {
-        return $this->backupGoogleCloudHash;
-    }
-
-    public function setBackupGoogleCloudHash(string $backupGoogleCloudHash): Photo
-    {
-        $this->backupGoogleCloudHash = $backupGoogleCloudHash;
 
         return $this;
     }

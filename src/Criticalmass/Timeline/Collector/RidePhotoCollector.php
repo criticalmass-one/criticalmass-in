@@ -7,7 +7,7 @@ use App\Entity\Photo;
 
 class RidePhotoCollector extends AbstractTimelineCollector
 {
-    protected $entityClass = Photo::class;
+    protected string $entityClass = Photo::class;
 
     protected function groupEntities(array $photoEntities): array
     {

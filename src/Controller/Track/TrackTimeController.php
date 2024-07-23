@@ -64,7 +64,7 @@ class TrackTimeController extends AbstractController
                 ->shift($interval)
                 ->saveTrack();
 
-            $eventDispatcher->dispatch(TrackTimeEvent::NAME, new TrackTimeEvent($track));
+            $eventDispatcher->dispatch(new TrackTimeEvent($track), TrackTimeEvent::NAME);
         }
 
         return $this->redirectToRoute('caldera_criticalmass_track_list');

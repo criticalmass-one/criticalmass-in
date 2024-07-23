@@ -26,7 +26,7 @@
 
                             {% if ride.estimatedDistance and ride.estimatedDistance > 0 %}
                                 <dt>Distanz</dt>
-                                <dd>{{ ride.estimatedDistance|number_format(2) }}&nbsp;Kilometer</dd>
+                                <dd>{{ ride.estimatedDistance|number_format(2) }}&nbsp;km</dd>
                             {% endif %}
 
                             {% if ride.getDurationInterval() and ride.getDurationInterval().format('%h:%i') != '0:0' %}
@@ -36,7 +36,7 @@
 
                             {% if ride.getAverageVelocity and ride.getAverageVelocity > 0 %}
                                 <dt>Durchschnittsgeschwindigkeit</dt>
-                                <dd>{{ ride.getAverageVelocity()|number_format(2) }} Kilometer&nbsp;pro&nbsp;Stunde</dd>
+                                <dd>{{ ride.getAverageVelocity()|number_format(2) }}&nbsp;km/h</dd>
                             {% endif %}
                         </dl>
                     </div>

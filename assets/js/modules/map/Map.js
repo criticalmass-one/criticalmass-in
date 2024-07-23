@@ -9,8 +9,8 @@ define(['jquery', 'leaflet', 'CityMarker', 'LocationMarker'], function ($, L) {
     };
 
     Map.prototype._defaults = {
-        tileLayerUrl: 'https://tiles.caldera.cc/wikimedia-intl/{z}/{x}/{y}.png',
-        mapAttribution: 'Wikimedia maps beta | Map data &copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap contributors</a>',
+        tileLayerUrl: 'https://tiles.caldera.cc/mapnik/{z}/{x}/{y}.png',
+        mapAttribution: '<a href="https://www.openstreetmap.org/">Karte hergestellt aus OpenStreetMap-Daten</a> | Lizenz: <a href="https://opendatacommons.org/licenses/odbl/">Open Database License (ODbL)</a>',
         detectRetina: true,
         defaultLatitude: 51.0851708,
         defaultLongitude: 5.9692092,

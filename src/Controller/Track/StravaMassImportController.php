@@ -24,8 +24,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class StravaMassImportController extends AbstractController
 {
+    public function __construct(private readonly string $stravaClientId, private readonly string $stravaSecret)
+    {
+    }
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function authAction(Request $request, RouterInterface $router): Response
     {
@@ -45,7 +48,7 @@ class StravaMassImportController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function tokenAction(Request $request, SessionInterface $session, RouterInterface $router): Response
     {
@@ -74,7 +77,7 @@ class StravaMassImportController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function massImportAction(Request $request, MassTrackImporterInterface $massTrackImporter): Response
     {
@@ -97,7 +100,7 @@ class StravaMassImportController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function listridesAction(ManagerRegistry $registry, UserInterface $user = null): Response
     {
@@ -109,7 +112,7 @@ class StravaMassImportController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function rejectAction(Request $request, UserInterface $user, ObjectRouterInterface $objectRouter, ManagerRegistry $registry): Response
     {
@@ -130,7 +133,7 @@ class StravaMassImportController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
     public function importAction(Request $request, UserInterface $user, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, Ride $ride, TrackImporterInterface $trackImporter): Response
@@ -143,22 +146,22 @@ class StravaMassImportController extends AbstractController
             ->setUser($user)
             ->importTrack();
 
-        $eventDispatcher->dispatch(TrackUploadedEvent::NAME, new TrackUploadedEvent($track));
+        $eventDispatcher->dispatch(new TrackUploadedEvent($track), TrackUploadedEvent::NAME);
 
         return $this->redirect($objectRouter->generate($track));
     }
 
     protected function initOauth(Request $request, RouterInterface $router): OAuth
     {
-        $year = $request->query->getInt('year', (new \DateTime())->format('Y'));
+        $year = $request->query->getInt('year', (int) (new \DateTime())->format('Y'));
 
         $redirectUri = $request->getUriForPath($router->generate('caldera_criticalmass_trackmassimport_token', [
             'year' => $year,
         ]));
 
         $oauthOptions = [
-            'clientId' => $this->getParameter('strava.client_id'),
-            'clientSecret' => $this->getParameter('strava.secret'),
+            'clientId' => $this->stravaClientId,
+            'clientSecret' => $this->stravaSecret,
             'redirectUri' => $redirectUri,
             'scope' => 'read',
         ];
