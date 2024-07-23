@@ -44,12 +44,6 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $username = null;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    protected ?string $salt = null;
-
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    protected ?string $password = null;
-
     #[ORM\OneToMany(targetEntity: 'Track', mappedBy: 'user', cascade: ['persist', 'remove'])]
     protected Collection $tracks;
 
@@ -607,25 +601,21 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
 
     public function getSalt(): string
     {
-        return $this->salt;
+        return '';
     }
 
     public function setSalt(string $salt): self
     {
-        $this->salt = $salt;
-
         return $this;
     }
 
     public function getPassword(): string
     {
-        return $this->password;
+        return '';
     }
 
     public function setPassword(string $password): self
     {
-        $this->password = $password;
-
         return $this;
     }
 }

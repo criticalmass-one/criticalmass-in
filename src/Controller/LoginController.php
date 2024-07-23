@@ -12,8 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Notifier\NotifierInterface;
 use Symfony\Component\Notifier\Recipient\Recipient;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\Security\Http\LoginLink\LoginLinkDetails;
 use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
 use Symfony\Component\Security\Http\LoginLink\LoginLinkNotification;
 
@@ -27,16 +25,52 @@ class LoginController extends AbstractController
 
     }
 
-    #[Route('/login', name: 'login')]
-    public function loginAction(AuthenticationUtils $authenticationUtils): Response
-    {
-        $error = $authenticationUtils->getLastAuthenticationError();
-        $lastUsername = $authenticationUtils->getLastUsername();
+    #[Route('/login', name: 'login', methods: ['GET'])]
+    public function login(): Response {
+               $loginForm = $this->createForm(LoginType::class);
 
-        return $this->render('login/login.html.twig', [
-            'last_username' => $lastUsername,
-            'error'         => $error,
+        return $this->render('security/login.html.twig', [
+            'login_form' => $loginForm->createView(),
         ]);
+    }
+
+    #[Route('/login', name: 'login_perform', methods: ['POST'])]
+    public function loginPerform(
+        NotifierInterface $notifier,
+        LoginLinkHandlerInterface $loginLinkHandler,
+        UserRepository $userRepository,
+        Request $request
+    ): Response {
+        $form = $this->createForm(LoginType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $email = $data['email'];
+
+            $user = $userRepository->findOneBy(['email' => $email]);
+
+            if (!$user) {
+                $user = $this->createNewUser($email);
+            }
+
+            $loginLinkDetails = $loginLinkHandler->createLoginLink($user);
+
+            // create a notification based on the login link details
+            $notification = new LoginLinkNotification(
+                $loginLinkDetails,
+                'Welcome to MY WEBSITE!' // email subject
+            );
+            // create a recipient for this user
+            $recipient = new Recipient($user->getEmail());
+
+            // send the notification to the user
+            $notifier->send($notification, $recipient);
+
+            // render a "Login link is sent!" page
+            return $this->render('security/login_link_sent.html.twig');
+        }
+
     }
 
     public function createNewUser(string $email): User
