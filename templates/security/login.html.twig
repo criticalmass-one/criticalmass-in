@@ -69,12 +69,7 @@
                             Bitte gib deine E-Mail-Adresse ein, wir senden dir einen Link zum Einloggen per Mail zu!
                         </p>
 
-                        <form action="{{ path('login') }}" method="post">
-                            <label for="username">Email:</label>
-                            <input type="text" id="username" name="_username" value="{{ last_username }}"/>
-
-                            <button type="submit">login</button>
-                        </form>
+                        {{ form(login_form) }}
                     </div>
                 </div>
             </div>
