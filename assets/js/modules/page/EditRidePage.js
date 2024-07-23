@@ -1,4 +1,4 @@
-define(['Map', 'LocationMarker', 'typeahead.jquery', 'bloodhound', 'bootstrap-datepicker', 'Geocoding'], function () {
+define(['Map', 'LocationMarker', 'typeahead.jquery', 'bloodhound', 'Geocoding'], function () {
 
     var EditRidePage = function (context, options) {
         this.settings = $.extend(this._defaults, options);
@@ -46,7 +46,6 @@ define(['Map', 'LocationMarker', 'typeahead.jquery', 'bloodhound', 'bootstrap-da
         this._initCityMarker();
         this._initLocationMarker();
         this._initEventListeners();
-        this._initDatePicker();
         //this._initLocationSearch();
         this._initGeolocationEvents();
     };
@@ -271,16 +270,6 @@ define(['Map', 'LocationMarker', 'typeahead.jquery', 'bloodhound', 'bootstrap-da
             that._moveLocationMarker(latLng);
             that._updateLocationPosition(latLng);
             that.map.setView(latLng, 15);
-        });
-    };
-
-    EditRidePage.prototype._initDatePicker = function () {
-        $('.datepicker').datepicker({
-            format: 'dd.mm.yyyy',
-            autoclose: true,
-            todayHighlight: true,
-            weekStart: 1,
-            zIndexOffset: 1000
         });
     };
 
