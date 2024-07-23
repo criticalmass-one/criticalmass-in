@@ -128,14 +128,14 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label class="control-label" for="">Gültig ab:</label>
-                    {{ form_widget(form.validFrom, { 'attr' : { 'class': 'form-control datepicker'} }) }}
+                    {{ form_widget(form.validFrom) }}
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-group">
                     <label class="control-label" for="">Gültig bis:</label>
-                    {{ form_widget(form.validUntil, { 'attr' : { 'class': 'form-control datepicker'} }) }}
+                    {{ form_widget(form.validUntil) }}
                 </div>
             </div>
         </div>

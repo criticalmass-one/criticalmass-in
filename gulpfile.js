@@ -103,12 +103,6 @@ const buildFontawesome = gulp.series(copyFontawesomeFonts);
 
 /* Assets */
 
-function copyColorpickerImages() {
-    return gulp
-        .src('node_modules/bootstrap-colorpicker/dist/img/bootstrap-colorpicker/*')
-        .pipe(gulp.dest('public/images/colorpicker/'));
-}
-
 function copyDatatableImages() {
     return gulp
         .src('node_modules/datatables/media/images/*')
@@ -120,7 +114,7 @@ function copyAssetImages() {
         .pipe(gulp.dest('public/images/'));
 }
 
-const buildAssets = gulp.series(copyColorpickerImages, copyDatatableImages, copyAssetImages);
+const buildAssets = gulp.series(copyDatatableImages, copyAssetImages);
 
 
 /* CSS */
@@ -139,7 +133,6 @@ function minifyCss() {
             'node_modules/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css',
             'node_modules/bootstrap-slider/dist/css/bootstrap-slider.min.css',
             'node_modules/dropzone/dist/min/dropzone.min.css',
-            'node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css',
             'node_modules/datatables/media/css/jquery.dataTables.min.css',
             'node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css',
             'node_modules/leaflet.locatecontrol/dist/L.Control.Locate.min.css',
@@ -169,31 +162,28 @@ function copyJsModules() {
         .pipe(gulp.dest('public/js/'));
 }
 
-gulp.task('copy-js-external', function () {
-    return gulp.src([
-        'node_modules/bootstrap/dist/js/bootstrap.js',
-        'node_modules/bootstrap/dist/js/bootstrap.min.js',
-        'node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js',
-        'node_modules/dropzone/dist/dropzone-amd-module.js',
-        'node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
-        'node_modules/bootstrap-slider/dist/bootstrap-slider.js',
-        'node_modules/dateformat/lib/dateformat.js',
-        'node_modules/jquery/dist/jquery.js',
-        'node_modules/jquery/dist/jquery.min.js',
-        'node_modules/typeahead.js/dist/bloodhound.js',
-        'node_modules/typeahead.js/dist/typeahead.jquery.js',
-        'node_modules/leaflet/dist/leaflet.js',
-        'node_modules/leaflet.markercluster/dist/leaflet.markercluster.js',
-        'node_modules/leaflet.locatecontrol/src/L.Control.Locate.js',
-        'node_modules/chart.js/dist/Chart.bundle.js',
-        'node_modules/datatables/media/js/jquery.dataTables.js',
-        'node_modules/cookie-notice/dist/cookie.notice.js',
-        'node_modules/leaflet-sleep/Leaflet.Sleep.js',
-        'node_modules/jquery-select-areas/jquery.selectareas.js',
-        'node_modules/requirejs/require.js',
-        'node_modules/polyline-encoded/Polyline.encoded.js',
-        'node_modules/leaflet-groupedlayercontrol/src/leaflet.groupedlayercontrol.js',
-    ])
+function copyJsExternal() {
+    return gulp
+        .src([
+            'node_modules/bootstrap/dist/js/bootstrap.min.js',
+            'node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js',
+            'node_modules/dropzone/dist/dropzone-amd-module.js',
+            'node_modules/bootstrap-slider/dist/bootstrap-slider.js',
+            'node_modules/dateformat/lib/dateformat.js',
+            'node_modules/jquery/dist/jquery.min.js',
+            'node_modules/typeahead.js/dist/bloodhound.js',
+            'node_modules/typeahead.js/dist/typeahead.jquery.js',
+            'node_modules/leaflet/dist/leaflet.js',
+            'node_modules/leaflet.markercluster/dist/leaflet.markercluster.js',
+            'node_modules/leaflet.locatecontrol/src/L.Control.Locate.js',
+            'node_modules/chart.js/dist/Chart.bundle.js',
+            'node_modules/datatables/media/js/jquery.dataTables.js',
+            'node_modules/leaflet-sleep/Leaflet.Sleep.js',
+            'node_modules/jquery-select-areas/jquery.selectareas.js',
+            'node_modules/requirejs/require.js',
+            'node_modules/polyline-encoded/Polyline.encoded.js',
+            'node_modules/leaflet-groupedlayercontrol/src/leaflet.groupedlayercontrol.js',
+        ])
         .pipe(gulp.dest('public/js/'));
 }
 

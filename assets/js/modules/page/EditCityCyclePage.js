@@ -1,4 +1,4 @@
-define(['Map', 'LocationMarker', 'CityMarker', 'bootstrap-datepicker'], function () {
+define(['Map', 'LocationMarker', 'CityMarker'], function () {
     var EditCityCyclePage = function (context, settings) {
         this.settings = $.extend(this._defaults, settings);
 
@@ -30,7 +30,6 @@ define(['Map', 'LocationMarker', 'CityMarker', 'bootstrap-datepicker'], function
     EditCityCyclePage.prototype._init = function () {
         this._initLatLngs();
         this._initMap();
-        this._initDatePicker();
     };
 
     EditCityCyclePage.prototype._initLatLngs = function () {
@@ -105,16 +104,6 @@ define(['Map', 'LocationMarker', 'CityMarker', 'bootstrap-datepicker'], function
     EditCityCyclePage.prototype._updateLocationPosition = function (position) {
         $(this.settings.latitudeInputSelector).val(position.lat);
         $(this.settings.longitudeInputSelector).val(position.lng);
-    };
-
-    EditCityCyclePage.prototype._initDatePicker = function () {
-        $('.datepicker').datepicker({
-            format: 'dd.mm.yyyy',
-            autoclose: true,
-            todayHighlight: true,
-            weekStart: 1,
-            zIndexOffset: 1000
-        });
     };
 
     return EditCityCyclePage;
