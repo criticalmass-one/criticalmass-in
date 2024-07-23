@@ -178,7 +178,6 @@ function copyJsExternal() {
             'node_modules/leaflet.locatecontrol/src/L.Control.Locate.js',
             'node_modules/chart.js/dist/Chart.bundle.js',
             'node_modules/datatables/media/js/jquery.dataTables.js',
-            'node_modules/cookie-notice/dist/cookie.notice.js',
             'node_modules/leaflet-sleep/Leaflet.Sleep.js',
             'node_modules/jquery-select-areas/jquery.selectareas.js',
             'node_modules/requirejs/require.js',
