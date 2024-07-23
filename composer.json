@@ -88,7 +88,10 @@
         "presta/sitemap-bundle": "^3.3",
         "symfony/twig-bridge": "^5.0",
         "symfony/mailer": "^5.0",
-        "symfony/cache": "^5.0"
+        "symfony/cache": "^5.0",
+        "symfony/webpack-encore-bundle": "^2.1",
+        "symfony/ux-turbo": "^2.18",
+        "symfony/stimulus-bundle": "^2.14"
     },
     "require-dev": {
         "symfony/browser-kit": "^5.0",
