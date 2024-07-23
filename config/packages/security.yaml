@@ -7,9 +7,6 @@ security:
                 class: 'App\Entity\User'
                 property: 'email'
 
-    password_hashers:
-        Symfony\Component\Security\Core\User\LegacyPasswordAuthenticatedUserInterface: 'auto'
-
     firewalls:
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
@@ -19,7 +16,6 @@ security:
             login_link:
                 check_route: login_check
                 signature_properties: [ 'email' ]
-
             provider: users
             pattern: .*
             context: user
