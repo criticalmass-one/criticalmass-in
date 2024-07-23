@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\Type\LoginType;
+use App\Notifier\CriticalMassLoginLinkNotification;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,7 +14,6 @@ use Symfony\Component\Notifier\NotifierInterface;
 use Symfony\Component\Notifier\Recipient\Recipient;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
-use Symfony\Component\Security\Http\LoginLink\LoginLinkNotification;
 
 class LoginController extends AbstractController
 {
@@ -57,9 +57,9 @@ class LoginController extends AbstractController
             $loginLinkDetails = $loginLinkHandler->createLoginLink($user);
 
             // create a notification based on the login link details
-            $notification = new LoginLinkNotification(
+            $notification = new CriticalMassLoginLinkNotification(
                 $loginLinkDetails,
-                'Welcome to MY WEBSITE!' // email subject
+                'Dein Login auf criticalmass.in'
             );
             // create a recipient for this user
             $recipient = new Recipient($user->getEmail());
@@ -71,6 +71,7 @@ class LoginController extends AbstractController
             return $this->render('security/login_link_sent.html.twig');
         }
 
+        return $this->redirectToRoute('login');
     }
 
     public function createNewUser(string $email): User
