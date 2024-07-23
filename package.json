@@ -17,14 +17,12 @@
     "gulp-css-replace-url": "^0.2.4",
     "gulp-flatten": "^0.4.0",
     "gulp-minify": "^3.1.0",
-    "gulp-sass": "^5.1.0",
-    "node-sass": "^9.0.0"
+    "gulp-sass": "^5.1.0"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bootstrap": "^3.4.1",
-    "bootstrap-colorpicker": "^2.5.3",
     "bootstrap-datepicker": "^1.9.0",
     "bootstrap-sass": "^3.4.1",
     "bootstrap-slider": "^10.6.2",
@@ -42,6 +40,7 @@
     "leaflet-sleep": "^0.5.1",
     "leaflet.locatecontrol": "^0.68.0",
     "leaflet.markercluster": "^1.4.1",
+    "node-sass": "^9.0.0",
     "npm": "^8.19.2",
     "polyline-encoded": "0.0.8",
     "requirejs": "^2.3.6",
