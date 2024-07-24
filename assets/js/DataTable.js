@@ -1,4 +1,4 @@
-import dataTables from 'dataTables'; // @todo: replace jQuery here
+import dataTables from 'datatables.net-bs';
 
 export default class DataTable {
     constructor(element, options) {
