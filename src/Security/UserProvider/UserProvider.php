@@ -4,18 +4,21 @@ namespace App\Security\UserProvider;
 
 use App\Entity\User;
 use App\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGeneratorInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthAwareUserProviderInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class FOSUBUserProvider implements OAuthAwareUserProviderInterface
+class UserProvider implements OAuthAwareUserProviderInterface
 {
-    /** @var ProfilePhotoGeneratorInterface $profilePhotoGenerator */
-    protected $profilePhotoGenerator;
-
-    public function __construct(array $properties, ProfilePhotoGeneratorInterface $profilePhotoGenerator)
+    public function __construct(
+        private ParameterBagInterface $parameterBag,
+        private ProfilePhotoGeneratorInterface $profilePhotoGenerator,
+        private ManagerRegistry $managerRegistry
+    )
     {
-        $this->profilePhotoGenerator = $profilePhotoGenerator;
+
     }
 
     public function connect(UserInterface $user, UserResponseInterface $response): void
@@ -23,15 +26,17 @@ class FOSUBUserProvider implements OAuthAwareUserProviderInterface
         $property = $this->getProperty($response);
         $username = $response->getUsername();
 
-        if (null !== $previousUser = $this->userManager->findUserBy(array($property => $username))) {
+        $previousUser = $this->findUserBy([$property => $username]);
+
+        if (null !== $previousUser) {
             $previousUser = $this->setServiceData($previousUser, $response, true);
 
-            $this->userManager->updateUser($previousUser);
+            $this->updateUser($previousUser);
         }
 
         $user = $this->setServiceData($user, $response);
 
-        $this->userManager->updateUser($user);
+        $this->updateUser($user);
     }
 
     public function loadUserByOAuthUserResponse(UserResponseInterface $response): UserInterface
@@ -39,18 +44,16 @@ class FOSUBUserProvider implements OAuthAwareUserProviderInterface
         $user = $this->findUserByUsername($response);
 
         if (null === $user) {
-            $user = $this->userManager->createUser();
+            $user = $this->createUser();
 
             $user = $this->setUserData($user, $response);
 
             $user = $this->setServiceData($user, $response);
 
-            $this->userManager->updateUser($user);
+            $this->updateUser();
 
             return $user;
         }
-
-        //$user = parent::loadUserByOAuthUserResponse($response);
 
         $user = $this->setServiceData($user, $response);
 
@@ -103,12 +106,12 @@ class FOSUBUserProvider implements OAuthAwareUserProviderInterface
         $service = $response->getResourceOwner()->getName();
         $serviceId = sprintf('%sId', strtolower($service));
 
-        return $this->userManager->findUserBy([$serviceId => $response->getUsername()]);
+        return $this->findUserBy([$serviceId => $response->getUsername()]);
     }
 
     protected function findUserByEmail(UserResponseInterface $response): ?UserInterface
     {
-        return $this->userManager->findUserBy(['email' => $response->getEmail()]);
+        return $this->findUserBy(['email' => $response->getEmail()]);
     }
 
     /**
@@ -121,5 +124,24 @@ class FOSUBUserProvider implements OAuthAwareUserProviderInterface
             ->generate();
 
         return $user;
+    }
+
+    private function createUser(): User
+    {
+        $user = new User();
+
+        $this->managerRegistry->getManager()->persist($user);
+
+        return $user;
+    }
+
+    private function updateUser(): void
+    {
+        $this->managerRegistry->getManager()->flush();
+    }
+
+    private function findUserBy(array $criteria): ?User
+    {
+        return $this->managerRegistry->getRepository(User::class)->findOneBy($criteria);
     }
 }

@@ -9,7 +9,7 @@
     <services>
         <service id="fos_user.doctrine_registry" alias="doctrine"/>
 
-        <service id="caldera.user_provider" class="App\Security\UserProvider\FOSUBUserProvider">
+        <service id="caldera.user_provider" class="App\Security\UserProvider\UserProvider">
             <argument type="collection">
                 <argument type="string" key="facebook">facebookId</argument>
                 <argument type="string" key="strava">stravaId</argument>
