@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class RegistrationType extends RegistrationFormType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
 
