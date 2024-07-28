@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e3671ab265778e5c547b544752e25116",
+    "content-hash": "0bd097315a29e5c7f5c762fcf4a259b1",
     "packages": [
         {
             "name": "calderacc/geobasic",
@@ -3039,88 +3039,68 @@
         },
         {
             "name": "hwi/oauth-bundle",
-            "version": "1.4.5",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hwi/HWIOAuthBundle.git",
-                "reference": "bc4e5ecf43d6177576fc0776a92fe5e3c856c3df"
+                "reference": "c9cd9f2ffa55a353b6902eb811315ebd3782d3bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hwi/HWIOAuthBundle/zipball/bc4e5ecf43d6177576fc0776a92fe5e3c856c3df",
-                "reference": "bc4e5ecf43d6177576fc0776a92fe5e3c856c3df",
+                "url": "https://api.github.com/repos/hwi/HWIOAuthBundle/zipball/c9cd9f2ffa55a353b6902eb811315ebd3782d3bd",
+                "reference": "c9cd9f2ffa55a353b6902eb811315ebd3782d3bd",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.3 || ^8.0",
-                "php-http/client-common": "^2.0",
-                "php-http/client-implementation": "^1.0",
-                "php-http/discovery": "^1.0",
-                "php-http/httplug": "^2.0",
-                "php-http/message-factory": "^1.0",
-                "psr/http-message": "^1.0",
-                "symfony/form": "^4.4|^5.1",
-                "symfony/framework-bundle": "^4.4|^5.1",
-                "symfony/options-resolver": "^4.4|^5.1",
-                "symfony/security-bundle": "^4.4|^5.1",
-                "symfony/templating": "^4.4|^5.1",
-                "symfony/yaml": "^4.4|^5.1"
+                "php": "^8.1",
+                "symfony/deprecation-contracts": "^3.0",
+                "symfony/form": "^5.4 || ^6.3 || ^7.0",
+                "symfony/framework-bundle": "^5.4 || ^6.3 || ^7.0",
+                "symfony/http-client": "^5.4 || ^6.3 || ^7.0",
+                "symfony/options-resolver": "^5.4 || ^6.3 || ^7.0",
+                "symfony/routing": "^5.4 || ^6.3 || ^7.0",
+                "symfony/security-bundle": "^5.4 || ^6.3 || ^7.0",
+                "symfony/twig-bundle": "^5.4 || ^6.3 || ^7.0"
             },
             "conflict": {
-                "symfony/cache": "^6.0",
-                "symfony/config": "^6.0",
-                "symfony/dependency-injection": "^6.0",
-                "symfony/doctrine-bridge": "^6.0",
-                "symfony/error-handler": "^6.0",
-                "symfony/http-foundation": "^6.0",
-                "symfony/password-hasher": "^6.0",
-                "symfony/property-info": "^6.0",
-                "symfony/security-core": "^6.0",
-                "symfony/security-csrf": "^6.0",
-                "symfony/security-http": "^6.0",
-                "symfony/twig-bridge": "^6.0",
-                "twig/twig": "<1.34"
+                "symfony/security-bundle": ">=6.0,<6.3.4",
+                "twig/twig": "<1.43|>=2.0,<2.13"
             },
             "require-dev": {
-                "doctrine/doctrine-bundle": "^2.0",
-                "doctrine/orm": "^2.6.4",
-                "friendsofphp/php-cs-fixer": "^3.0",
-                "friendsofsymfony/user-bundle": "^2.1",
-                "php-http/guzzle6-adapter": "^2.0",
-                "php-http/httplug-bundle": "^1.7",
-                "phpstan/phpstan": "^0.12.91",
-                "phpunit/phpunit": "^9.5.5",
-                "symfony/browser-kit": "^4.4|^5.1",
-                "symfony/css-selector": "^4.4|^5.1",
+                "doctrine/doctrine-bundle": "^2.4",
+                "doctrine/orm": "^2.9",
+                "firebase/php-jwt": "^6.8",
+                "friendsofphp/php-cs-fixer": "^3.23",
+                "phpstan/extension-installer": "^1.3",
+                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan-symfony": "^1.3",
+                "phpunit/phpunit": "^9.6.11",
+                "symfony/browser-kit": "^5.4 || ^6.3 || ^7.0",
+                "symfony/css-selector": "^5.4 || ^6.3 || ^7.0",
                 "symfony/monolog-bundle": "^3.4",
-                "symfony/phpunit-bridge": "^5.3",
-                "symfony/property-access": "^4.4|^5.1",
-                "symfony/stopwatch": "^5.1",
-                "symfony/translation": "^4.4|^5.1",
-                "symfony/twig-bundle": "^4.4|^5.1",
-                "symfony/validator": "^4.4|^5.1"
+                "symfony/phpunit-bridge": "^5.4 || ^6.3 || ^7.0",
+                "symfony/property-access": "^5.4 || ^6.3 || ^7.0",
+                "symfony/stopwatch": "^5.4 || ^6.3 || ^7.0",
+                "symfony/translation": "^5.4 || ^6.3 || ^7.0",
+                "symfony/validator": "^5.4 || ^6.3 || ^7.0",
+                "symfony/yaml": "^5.4 || ^6.3 || ^7.0"
             },
             "suggest": {
                 "doctrine/doctrine-bundle": "to use Doctrine user provider",
-                "friendsofsymfony/user-bundle": "to connect FOSUB with this bundle",
-                "php-http/httplug-bundle": "to provide required HTTP client with ease.",
+                "firebase/php-jwt": "to use JWT utility functions",
                 "symfony/property-access": "to use FOSUB integration with this bundle",
                 "symfony/twig-bundle": "to use the Twig hwi_oauth_* functions"
             },
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-1.4": "1.4-dev"
+                    "dev-master": "2.0-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "HWI\\Bundle\\OAuthBundle\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Test/",
-                    "/Tests/"
-                ]
+                    "HWI\\Bundle\\OAuthBundle\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -3144,8 +3124,8 @@
                     "homepage": "https://github.com/hwi/HWIOAuthBundle/contributors"
                 }
             ],
-            "description": "Support for authenticating users using both OAuth1.0a and OAuth2 in Symfony2.",
-            "homepage": "http://github.com/hwi/HWIOAuthBundle",
+            "description": "Support for authenticating users using both OAuth1.0a and OAuth2 in Symfony.",
+            "homepage": "https://github.com/hwi/HWIOAuthBundle",
             "keywords": [
                 "37signals",
                 "Authentication",
@@ -3215,9 +3195,15 @@
             ],
             "support": {
                 "issues": "https://github.com/hwi/HWIOAuthBundle/issues",
-                "source": "https://github.com/hwi/HWIOAuthBundle/tree/1.4.5"
+                "source": "https://github.com/hwi/HWIOAuthBundle/tree/2.2.0"
             },
-            "time": "2021-12-08T13:27:40+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/stloyd",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-02-28T13:59:26+00:00"
         },
         {
             "name": "iamstuartwilson/strava",
@@ -12105,6 +12091,175 @@
             "time": "2024-07-09T20:57:15+00:00"
         },
         {
+            "name": "symfony/http-client",
+            "version": "v5.4.42",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/http-client.git",
+                "reference": "ed17728617f53903ac684aa4f7a1739f121798d3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/http-client/zipball/ed17728617f53903ac684aa4f7a1739f121798d3",
+                "reference": "ed17728617f53903ac684aa4f7a1739f121798d3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.5",
+                "psr/log": "^1|^2|^3",
+                "symfony/deprecation-contracts": "^2.1|^3",
+                "symfony/http-client-contracts": "^2.5.3",
+                "symfony/polyfill-php73": "^1.11",
+                "symfony/polyfill-php80": "^1.16",
+                "symfony/service-contracts": "^1.0|^2|^3"
+            },
+            "provide": {
+                "php-http/async-client-implementation": "*",
+                "php-http/client-implementation": "*",
+                "psr/http-client-implementation": "1.0",
+                "symfony/http-client-implementation": "2.4"
+            },
+            "require-dev": {
+                "amphp/amp": "^2.5",
+                "amphp/http-client": "^4.2.1",
+                "amphp/http-tunnel": "^1.0",
+                "amphp/socket": "^1.1",
+                "guzzlehttp/promises": "^1.4|^2.0",
+                "nyholm/psr7": "^1.0",
+                "php-http/httplug": "^1.0|^2.0",
+                "php-http/message-factory": "^1.0",
+                "psr/http-client": "^1.0",
+                "symfony/dependency-injection": "^4.4|^5.0|^6.0",
+                "symfony/http-kernel": "^4.4.13|^5.1.5|^6.0",
+                "symfony/process": "^4.4|^5.0|^6.0",
+                "symfony/stopwatch": "^4.4|^5.0|^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\HttpClient\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides powerful methods to fetch HTTP resources synchronously or asynchronously",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "http"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/http-client/tree/v5.4.42"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-07-10T08:10:21+00:00"
+        },
+        {
+            "name": "symfony/http-client-contracts",
+            "version": "v2.5.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/http-client-contracts.git",
+                "reference": "e5cc97c2b4a4db0ba26bebc154f1426e3fd1d2f1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/http-client-contracts/zipball/e5cc97c2b4a4db0ba26bebc154f1426e3fd1d2f1",
+                "reference": "e5cc97c2b4a4db0ba26bebc154f1426e3fd1d2f1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.5"
+            },
+            "suggest": {
+                "symfony/http-client-implementation": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "2.5-dev"
+                },
+                "thanks": {
+                    "name": "symfony/contracts",
+                    "url": "https://github.com/symfony/contracts"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Contracts\\HttpClient\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Generic abstractions related to HTTP clients",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "abstractions",
+                "contracts",
+                "decoupling",
+                "interfaces",
+                "interoperability",
+                "standards"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/http-client-contracts/tree/v2.5.3"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-03-26T19:42:53+00:00"
+        },
+        {
             "name": "symfony/http-foundation",
             "version": "v5.4.42",
             "source": {
@@ -14873,74 +15028,6 @@
                 }
             ],
             "time": "2024-07-20T18:38:32+00:00"
-        },
-        {
-            "name": "symfony/templating",
-            "version": "v5.4.40",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/templating.git",
-                "reference": "9eae6e708a65ea50e2072e99c87b193b24d3f028"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/templating/zipball/9eae6e708a65ea50e2072e99c87b193b24d3f028",
-                "reference": "9eae6e708a65ea50e2072e99c87b193b24d3f028",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.2.5",
-                "symfony/polyfill-ctype": "~1.8"
-            },
-            "require-dev": {
-                "psr/log": "^1|^2|^3"
-            },
-            "suggest": {
-                "psr/log-implementation": "For using debug logging in loaders"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Templating\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Provides all the tools needed to build any kind of template system",
-            "homepage": "https://symfony.com",
-            "support": {
-                "source": "https://github.com/symfony/templating/tree/v5.4.40"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2024-05-31T14:33:22+00:00"
         },
         {
             "name": "symfony/translation",

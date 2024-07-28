@@ -1,13 +1,6 @@
 hwi_oauth:
     firewall_names: ['main']
 
-    fosub:
-        username_iterations: 30
-        properties:
-            facebook: facebookId
-            strava: stravaId
-            twitter: twitterId
-
     resource_owners:
         facebook:
             type:                facebook
