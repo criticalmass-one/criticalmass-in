@@ -23,8 +23,12 @@ class UserProvider implements OAuthAwareUserProviderInterface
 
     public function connect(UserInterface $user, UserResponseInterface $response): void
     {
+        dd('Ewfwefewf');
+        dd($response);
         $property = $this->getProperty($response);
         $username = $response->getUsername();
+
+        dd($property);
 
         $previousUser = $this->findUserBy([$property => $username]);
 
@@ -144,4 +148,17 @@ class UserProvider implements OAuthAwareUserProviderInterface
     {
         return $this->managerRegistry->getRepository(User::class)->findOneBy($criteria);
     }
+
+    private function getProperty(UserResponseInterface $response)
+    {
+        $resourceOwnerName = $response->getResourceOwner()->getName();
+
+        if (!isset($this->properties[$resourceOwnerName])) {
+            throw new \RuntimeException(sprintf("No property defined for entity for resource owner '%s'.", $resourceOwnerName));
+        }
+
+        return $this->properties[$resourceOwnerName];
+    }
+
+
 }
