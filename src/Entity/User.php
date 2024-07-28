@@ -65,6 +65,9 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     #[ORM\Column(type: 'boolean', nullable: true, options: ['default' => 0])]
     protected bool $blurGalleries = false;
 
+    #[ORM\Column(type: 'boolean', nullable: true, options: ['default' => 0])]
+    protected bool $enabled = false;
+
     #[ORM\OneToMany(targetEntity: 'Participation', mappedBy: 'user')]
     protected Collection $participations;
 
@@ -617,5 +620,15 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     public function setPassword(string $password): self
     {
         return $this;
+    }
+
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): void
+    {
+        $this->enabled = $enabled;
     }
 }
