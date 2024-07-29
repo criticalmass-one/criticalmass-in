@@ -29,7 +29,7 @@ security:
                 login_path: '/login'
                 failure_path: '/login'
                 oauth_user_provider:
-                    service: HWI\Bundle\OAuthBundle\Security\Core\User\EntityUserProvider
+                    service: App\Security\UserProvider\UserProvider
 
         api:
             pattern:    ^/api

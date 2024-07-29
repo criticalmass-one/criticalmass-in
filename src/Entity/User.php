@@ -627,8 +627,10 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
         return $this->enabled;
     }
 
-    public function setEnabled(bool $enabled): void
+    public function setEnabled(bool $enabled): self
     {
         $this->enabled = $enabled;
+
+        return $this;
     }
 }

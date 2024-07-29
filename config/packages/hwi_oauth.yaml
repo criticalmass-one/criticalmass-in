@@ -16,3 +16,5 @@ hwi_oauth:
             type:                twitter
             client_id:           '%twitter.client_id%'
             client_secret:       '%twitter.secret%'
+            options:
+                include_email: true

@@ -3,153 +3,65 @@
 namespace App\Security\UserProvider;
 
 use App\Entity\User;
-use App\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGeneratorInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectRepository;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
+use HWI\Bundle\OAuthBundle\Security\Core\Exception\AccountNotLinkedException;
 use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthAwareUserProviderInterface;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-class UserProvider implements OAuthAwareUserProviderInterface
+class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInterface
 {
-    public function __construct(
-        private ParameterBagInterface $parameterBag,
-        private ProfilePhotoGeneratorInterface $profilePhotoGenerator,
-        private ManagerRegistry $managerRegistry
-    )
-    {
+    private ObjectManager $em;
+    private string $class = User::class;
+    private ?ObjectRepository $repository = null;
 
+    /**
+     * @var array<string, string>
+     */
+    private array $properties = [
+        'identifier' => 'id',
+    ];
+
+    /**
+     * @param string                $class      User entity class to load
+     * @param array<string, string> $properties Mapping of resource owners to properties
+     */
+    public function __construct(ManagerRegistry $registry, array $properties, ?string $managerName = null)
+    {
+        $this->em = $registry->getManager($managerName);
+        $this->properties = array_merge($this->properties, $properties);
     }
 
-    public function connect(UserInterface $user, UserResponseInterface $response): void
+    public function loadUserByIdentifier(string $identifier): UserInterface
     {
-        dd('Ewfwefewf');
-        dd($response);
-        $property = $this->getProperty($response);
-        $username = $response->getUsername();
+        $user = $this->findUser(['username' => $identifier]);
 
-        dd($property);
-
-        $previousUser = $this->findUserBy([$property => $username]);
-
-        if (null !== $previousUser) {
-            $previousUser = $this->setServiceData($previousUser, $response, true);
-
-            $this->updateUser($previousUser);
-        }
-
-        $user = $this->setServiceData($user, $response);
-
-        $this->updateUser($user);
-    }
-
-    public function loadUserByOAuthUserResponse(UserResponseInterface $response): UserInterface
-    {
-        $user = $this->findUserByUsername($response);
-
-        if (null === $user) {
-            $user = $this->createUser();
-
-            $user = $this->setUserData($user, $response);
-
-            $user = $this->setServiceData($user, $response);
-
-            $this->updateUser();
-
-            return $user;
-        }
-
-        $user = $this->setServiceData($user, $response);
-
-        return $user;
-    }
-
-    protected function setUserData(UserInterface $user, UserResponseInterface $response): UserInterface
-    {
-        $username = $response->getNickname() ? $response->getNickname() : $response->getUsername();
-        $email = $response->getEmail() ? $response->getEmail() : $response->getUsername();
-
-        $user
-            ->setUsername($username)
-            ->setEmail($email)
-            ->setPassword('')
-            ->setEnabled(true);
-
-        $this->setupProfilePhoto($user);
-
-        return $user;
-    }
-
-    protected function setServiceData(
-        UserInterface $user,
-        UserResponseInterface $response,
-        bool $clear = false
-    ): UserInterface {
-        $username = $response->getUsername();
-        $service = $response->getResourceOwner()->getName();
-
-        $setter = sprintf('set%s', ucfirst($service));
-        $setterId = sprintf('%sId', $setter);
-        $setterToken = sprintf('%sAccessToken', $setter);
-
-        if ($clear) {
-            $user
-                ->$setterId(null)
-                ->$setterToken(null);
-        } else {
-            $user
-                ->$setterId($username)
-                ->$setterToken($response->getAccessToken());
+        if (!$user) {
+            throw $this->createUserNotFoundException($identifier, sprintf("User '%s' not found.", $identifier));
         }
 
         return $user;
-    }
-
-    protected function findUserByUsername(UserResponseInterface $response): ?UserInterface
-    {
-        $service = $response->getResourceOwner()->getName();
-        $serviceId = sprintf('%sId', strtolower($service));
-
-        return $this->findUserBy([$serviceId => $response->getUsername()]);
-    }
-
-    protected function findUserByEmail(UserResponseInterface $response): ?UserInterface
-    {
-        return $this->findUserBy(['email' => $response->getEmail()]);
     }
 
     /**
-     * @TODO This should be done via event subscriber during hwio process, but it does not work :(
+     * Symfony <5.4 BC layer.
+     *
+     * @param string $username
+     *
+     * @return UserInterface
      */
-    protected function setupProfilePhoto(User $user): User
+    public function loadUserByUsername($username)
     {
-        $this->profilePhotoGenerator
-            ->setUser($user)
-            ->generate();
-
-        return $user;
+        return $this->loadUserByIdentifier($username);
     }
 
-    private function createUser(): User
-    {
-        $user = new User();
-
-        $this->managerRegistry->getManager()->persist($user);
-
-        return $user;
-    }
-
-    private function updateUser(): void
-    {
-        $this->managerRegistry->getManager()->flush();
-    }
-
-    private function findUserBy(array $criteria): ?User
-    {
-        return $this->managerRegistry->getRepository(User::class)->findOneBy($criteria);
-    }
-
-    private function getProperty(UserResponseInterface $response)
+    public function loadUserByOAuthUserResponse(UserResponseInterface $response): ?UserInterface
     {
         $resourceOwnerName = $response->getResourceOwner()->getName();
 
@@ -157,8 +69,76 @@ class UserProvider implements OAuthAwareUserProviderInterface
             throw new \RuntimeException(sprintf("No property defined for entity for resource owner '%s'.", $resourceOwnerName));
         }
 
-        return $this->properties[$resourceOwnerName];
+        $username = method_exists($response, 'getUserIdentifier') ? $response->getUserIdentifier() : $response->getUsername();
+
+        if (null === $user = $this->findUser([$this->properties[$resourceOwnerName] => $username])) {
+            $user = $this->createUser($response, $resourceOwnerName, $username);
+        }
+
+        return $user;
     }
 
+    public function refreshUser(UserInterface $user): UserInterface
+    {
+        $accessor = PropertyAccess::createPropertyAccessor();
+        $identifier = $this->properties['identifier'];
+        if (!$accessor->isReadable($user, $identifier) || !$this->supportsClass($user::class)) {
+            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', $user::class));
+        }
 
+        $userId = $accessor->getValue($user, $identifier);
+
+        $username = $user->getUserIdentifier();
+
+        if (null === $user = $this->findUser([$identifier => $userId])) {
+            throw $this->createUserNotFoundException($username, sprintf('User with ID "%d" could not be reloaded.', $userId));
+        }
+
+        return $user;
+    }
+
+    public function supportsClass($class): bool
+    {
+        return $class === $this->class || is_subclass_of($class, $this->class);
+    }
+
+    private function findUser(array $criteria): ?UserInterface
+    {
+        if (null === $this->repository) {
+            $this->repository = $this->em->getRepository($this->class);
+        }
+
+        return $this->repository->findOneBy($criteria);
+    }
+
+    private function createUserNotFoundException(string $username, string $message): UserNotFoundException
+    {
+        $exception = new AccountNotLinkedException($message);
+        $exception->setUserIdentifier($username);
+
+        return $exception;
+    }
+
+    private function createUser(UserResponseInterface $response, string $resourceOwnerName, string $username): User
+    {
+        $user = new User();
+
+        $accessor = PropertyAccess::createPropertyAccessor();
+        $accessor->setValue($user, $this->properties[$resourceOwnerName], $username);
+
+        $user
+            ->setUsername($response->getNickname())
+            ->setEnabled(true)
+            ->setLastLogin(new \DateTime())
+        ;
+
+        if ($response->getEmail()) {
+            $user->setEmail($response->getEmail());
+        }
+
+        $this->em->persist($user);
+        $this->em->flush();
+
+        return $user;
+    }
 }

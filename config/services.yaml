@@ -233,9 +233,8 @@ services:
             $cityFinder: '@fos_elastica.finder.criticalmass_city'
             $rideFinder: '@fos_elastica.finder.criticalmass_ride'
 
-    HWI\Bundle\OAuthBundle\Security\Core\User\EntityUserProvider:
+    App\Security\UserProvider\UserProvider:
         arguments:
-            $class: App\Entity\User
             $properties:
                 'facebook': 'facebookId'
                 'strava': 'stravaId'
