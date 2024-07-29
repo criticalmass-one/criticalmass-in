@@ -10,15 +10,11 @@ parameters:
     database_password: '%env(DATABASE_PASSWORD)%'
     track.gap_width: 10
     strava.client_id: '%env(STRAVA_CLIENT_ID)%'
-    strava.token: '%env(STRAVA_TOKEN)%'
     strava.secret: '%env(STRAVA_SECRET)%'
     facebook.app_id: '%env(FACEBOOK_APP_ID)%'
     facebook.app_secret: '%env(FACEBOOK_APP_SECRET)%'
-    facebook.default_token: '%env(FACEBOOK_DEFAULT_TOKEN)%'
     twitter.client_id: '%env(TWITTER_CLIENT_ID)%'
     twitter.token: '%env(TWITTER_TOKEN)%'
-    twitter.secret: '%env(TWITTER_SECRET)%'
-    photo_tsv.access_key: '%env(PHOTO_TSV_ACCESS_KEY)%'
     timeline.ttl: 60
     notification.mail.sender_address: malte@criticalmass.in
     request_listener.http_port: 80
@@ -30,7 +26,6 @@ parameters:
     upload_destination.frontpage_teaser: '%kernel.project_dir%/public/teaser'
     upload_destination.user_photo: '%kernel.project_dir%/public/users'
     staticmaps.host: '%env(STATICMAPS_HOST)%'
-    assets_version: '%env(ASSETS_VERSION)%'
 
 services:
     _defaults:
