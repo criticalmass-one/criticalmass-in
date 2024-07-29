@@ -50,7 +50,7 @@ services:
             $projectDirectory: '%kernel.project_dir%'
             $redisUrl: '%env(REDIS_URL)%'
             $criticalmassRideGeneratorUrl: '%env(CRITICALMASS_RIDE_GENERATOR_URL)%'
-            cachePrefix: 'media/cache'
+            $cachePrefix: 'media/cache'
 
     App\:
         resource: '../src/*'
