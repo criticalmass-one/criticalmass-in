@@ -6,11 +6,9 @@ use App\Controller\AbstractController;
 use App\Entity\Participation;
 use App\Entity\Photo;
 use App\Entity\Track;
-use App\Form\Type\UserEmailType;
 use App\Form\Type\UsernameType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
-use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -70,42 +68,6 @@ class ProfileManagementController extends AbstractController
 
         return $this->render('ProfileManagement/edit_username.html.twig', [
             'usernameForm' => $usernameForm->createView(),
-        ]);
-    }
-
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     */
-    public function editEmailAction(Request $request, UserInterface $user = null): Response
-    {
-        $userEmailForm = $this->createForm(UserEmailType::class, $user, [
-            'action' => $this->generateUrl('criticalmass_user_usermanagement_editemail')
-        ]);
-
-        if ($request->isMethod(Request::METHOD_POST)) {
-            $userEmailForm->handleRequest($request);
-
-            if ($userEmailForm->isSubmitted() && $userEmailForm->isValid()) {
-                /** @var $userManager UserManagerInterface */
-                $userManager = $this->userManager;
-
-                try {
-                    $userManager->updateUser($user);
-
-                    $this->addFlash('success',
-                        'Deine neue E-Mail-Adresse wurde gespeichert. Du kannst dich ab jetzt mit ' . $user->getEmail() . ' einloggen.');
-
-                    return $this->redirectToRoute('criticalmass_user_usermanagement');
-                } catch (UniqueConstraintViolationException $exception) {
-                    $error = new FormError('Diese E-Mail-Adresse ist bereits registriert worden.');
-
-                    $userEmailForm->get('email')->addError($error);
-                }
-            }
-        }
-
-        return $this->render('ProfileManagement/edit_email.html.twig', [
-            'userEmailForm' => $userEmailForm->createView(),
         ]);
     }
 }
