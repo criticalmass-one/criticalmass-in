@@ -6,6 +6,7 @@ use App\Controller\AbstractController;
 use App\Entity\Participation;
 use App\Entity\Photo;
 use App\Entity\Track;
+use App\Form\Type\UserEmailType;
 use App\Form\Type\UsernameType;
 use Doctrine\Persistence\ManagerRegistry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -71,6 +72,45 @@ class ProfileManagementController extends AbstractController
 
         return $this->render('ProfileManagement/edit_username.html.twig', [
             'usernameForm' => $usernameForm->createView(),
+        ]);
+    }
+
+
+    /**
+     * @Security("is_granted('ROLE_USER')")
+     */
+    public function editEmailAction(
+        Request $request,
+        ManagerRegistry $managerRegistry,
+        UserInterface $user = null
+    ): Response {
+        $userEmailForm = $this->createForm(UserEmailType::class, $user, [
+            'action' => $this->generateUrl('criticalmass_user_usermanagement_editemail')
+        ]);
+
+        if ($request->isMethod(Request::METHOD_POST)) {
+            $userEmailForm->handleRequest($request);
+
+            if ($userEmailForm->isSubmitted() && $userEmailForm->isValid()) {
+                try {
+                    $managerRegistry->getManager()->flush();
+
+                    $this->addFlash('success',
+                        sprintf('Deine neue E-Mail-Adresse wurde gespeichert. Du kannst dich ab jetzt mit %s einloggen.',
+                            $user->getEmail()
+                        ));
+
+                    return $this->redirectToRoute('criticalmass_user_usermanagement');
+                } catch (UniqueConstraintViolationException $exception) {
+                    $error = new FormError('Diese E-Mail-Adresse ist bereits registriert worden.');
+
+                    $userEmailForm->get('email')->addError($error);
+                }
+            }
+        }
+
+        return $this->render('ProfileManagement/edit_email.html.twig', [
+            'userEmailForm' => $userEmailForm->createView(),
         ]);
     }
 }

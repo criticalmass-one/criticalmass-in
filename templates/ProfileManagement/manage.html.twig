@@ -192,24 +192,17 @@
                                 E-Mail-Adresse ändern
                             </div>
                             <div class="panel-body">
-                                {% if app.user.oauthAccount and not is_granted('ROLE_ADMIN') %}
-                                    <div class="alert alert-info" role="alert">
-                                        Du kannst deine E-Mail-Adresse nicht ändern, weil du dich über ein soziales
-                                        Netzwerk bei criticalmass.in anmeldest.
-                                    </div>
-                                {% else %}
-                                    <p>
-                                        Hier kannst du deine E-Mail-Adresse ändern. Bedenke bitte, dass du dich künftig
-                                        mit deinen neuen Benutzerdaten einloggen musst.
-                                    </p>
+                                <p>
+                                    Hier kannst du deine E-Mail-Adresse ändern. Bedenke bitte, dass du dich künftig
+                                    mit deinen neuen Benutzerdaten einloggen musst.
+                                </p>
 
-                                    <p class="text-center">
-                                        <a class="btn btn-default"
-                                           href="{{ path('criticalmass_user_usermanagement_editemail') }}">
-                                            E-Mail-Adresse ändern
-                                        </a>
-                                    </p>
-                                {% endif %}
+                                <p class="text-center">
+                                    <a class="btn btn-default"
+                                       href="{{ path('criticalmass_user_usermanagement_editemail') }}">
+                                        E-Mail-Adresse ändern
+                                    </a>
+                                </p>
                             </div>
                         </div>
                     </div>
