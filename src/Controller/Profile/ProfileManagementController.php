@@ -7,6 +7,7 @@ use App\Entity\Participation;
 use App\Entity\Photo;
 use App\Entity\Track;
 use App\Form\Type\UsernameType;
+use Doctrine\Persistence\ManagerRegistry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Component\Form\FormError;
@@ -38,8 +39,11 @@ class ProfileManagementController extends AbstractController
     /**
      * @Security("is_granted('ROLE_USER')")
      */
-    public function editUsernameAction(Request $request, UserInterface $user = null): Response
-    {
+    public function editUsernameAction(
+        Request $request,
+        ManagerRegistry $managerRegistry,
+        UserInterface $user = null
+    ): Response {
         $usernameForm = $this->createForm(UsernameType::class, $user, [
             'action' => $this->generateUrl('criticalmass_user_usermanagement_editusername')
         ]);
@@ -48,14 +52,13 @@ class ProfileManagementController extends AbstractController
             $usernameForm->handleRequest($request);
 
             if ($usernameForm->isSubmitted() && $usernameForm->isValid()) {
-                /** @var $userManager UserManagerInterface */
-                $userManager = $this->userManager;
-
                 try {
-                    $userManager->updateUser($user);
+                    $managerRegistry->getManager()->flush();
 
                     $this->addFlash('success',
-                        'Deine neuer Benutzername wurde gespeichert. Du heißt jetzt ' . $user->getUsername() . '!');
+                        sprintf('Deine neuer Benutzername wurde gespeichert. Du heißt jetzt %s!',
+                            $user->getUsername()
+                        ));
 
                     return $this->redirectToRoute('criticalmass_user_usermanagement');
                 } catch (UniqueConstraintViolationException $exception) {
