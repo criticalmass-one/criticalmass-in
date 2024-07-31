@@ -26,8 +26,9 @@ class LoginController extends AbstractController
     }
 
     #[Route('/login', name: 'login', methods: ['GET'])]
-    public function login(): Response {
-               $loginForm = $this->createForm(LoginType::class);
+    public function login(): Response
+    {
+       $loginForm = $this->createForm(LoginType::class);
 
         return $this->render('security/login.html.twig', [
             'login_form' => $loginForm->createView(),

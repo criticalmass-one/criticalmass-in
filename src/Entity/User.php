@@ -77,6 +77,9 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     #[ORM\Column(type: 'datetime', nullable: true)]
     protected ?\DateTime $createdAt = null;
 
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected ?\DateTime $lastLogin = null;
+
     #[ORM\Column(name: 'facebook_id', type: 'string', length: 255, nullable: true)]
     protected ?string $facebookId = null;
 
@@ -630,6 +633,18 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     public function setEnabled(bool $enabled): self
     {
         $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    public function getLastLogin(): ?\DateTime
+    {
+        return $this->lastLogin;
+    }
+
+    public function setLastLogin(?\DateTime $lastLogin = null): self
+    {
+        $this->lastLogin = $lastLogin;
 
         return $this;
     }
