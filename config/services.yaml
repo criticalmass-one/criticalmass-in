@@ -34,7 +34,6 @@ parameters:
     upload_destination.ride_photo: '%kernel.project_dir%/public/rides'
     upload_destination.frontpage_teaser: '%kernel.project_dir%/public/teaser'
     upload_destination.user_photo: '%kernel.project_dir%/public/users'
-    staticmaps.host: '%env(STATICMAPS_HOST)%'
     assets_version: '%env(ASSETS_VERSION)%'
 
 services:
@@ -45,7 +44,6 @@ services:
         bind:
             $rootDirectory: '%kernel.project_dir%'
             $webRootDir: '%kernel.project_dir%/../public'
-            $staticmapsHost: '%staticmaps.host%'
             $gapWidth: '%track.gap_width%'
             $facebookAppId: '%facebook.app_id%'
             $facebookAppSecret: '%facebook.app_secret%'
