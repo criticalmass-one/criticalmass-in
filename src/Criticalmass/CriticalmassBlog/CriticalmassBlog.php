@@ -9,7 +9,11 @@ class CriticalmassBlog implements CriticalmassBlogInterface
 {
     public function getArticles(): array
     {
-        $feed = Reader::import(static::BLOG_FEED_URL);
+        try {
+            $feed = Reader::import(static::BLOG_FEED_URL);
+        } catch (\RuntimeException $exception) {
+            return [];
+        }
 
         $articleList = [];
 
