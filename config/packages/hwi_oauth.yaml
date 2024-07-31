@@ -12,6 +12,8 @@ hwi_oauth:
             type:                strava
             client_id:           '%strava.client_id%'
             client_secret:       '%strava.secret%'
+            options:
+                use_authorization_to_get_token: false
         twitter:
             type:                twitter
             client_id:           '%twitter.client_id%'
