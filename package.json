@@ -41,7 +41,7 @@
     "node-sass": "^9.0.0",
     "npm": "^8.19.2",
     "polyline-encoded": "0.0.8",
-    "requirejs": "^2.3.6",
+    "requirejs": "^2.3.7",
     "typeahead.js": "^0.11.1"
   }
 }
