@@ -3,6 +3,10 @@
 ###############################################################################
 version: "3.1"
 services:
+  mailer:
+    image: schickling/mailcatcher
+    ports: [ 1025, 1080 ]
+
   memcached:
     image: memcached:alpine
     container_name: criticalmass-memcached
