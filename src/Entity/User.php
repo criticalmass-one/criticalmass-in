@@ -77,7 +77,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     #[ORM\Column(type: 'datetime', nullable: true)]
     protected ?\DateTime $createdAt = null;
 
-    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[ORM\Column(name: 'last_login', type: 'datetime', nullable: true)]
     protected ?\DateTime $lastLogin = null;
 
     #[ORM\Column(name: 'facebook_id', type: 'string', length: 255, nullable: true)]
