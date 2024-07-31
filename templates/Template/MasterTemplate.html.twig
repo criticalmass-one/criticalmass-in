@@ -30,17 +30,6 @@
 
 <body class="{% if app.user %}logged-in{% else %}not-logged-in{% endif %} {% block bodyClass %}{% endblock %} with-top-navbar">
 
-{% if not app.user %}
-    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                {{ render(controller('App\\Controller\\SecurityController::loginFormModalAction' )) }}
-            </div>
-        </div>
-    </div>
-{% endif %}
-
 {% block masterContent %}{% endblock %}
 
 <script src="{{ asset('/js/jquery.min.js') }}"></script>
@@ -48,7 +37,6 @@
 
 {% block additionalFooterElements %}{% endblock %}
 <script>
-    CriticalMass.loadModule('CookieNotice');
     CriticalMass.loadModule('HintModal', '.modal-hint');
 </script>
 </body>

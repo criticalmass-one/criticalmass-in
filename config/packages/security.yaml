@@ -1,10 +1,11 @@
 security:
-    encoders:
-        FOS\UserBundle\Model\UserInterface: sha512
+    enable_authenticator_manager: true
 
     providers:
-        fos_userbundle:
-            id: fos_user.user_provider.username
+        users:
+            entity:
+                class: 'App\Entity\User'
+                property: 'email'
 
     firewalls:
         dev:
@@ -12,27 +13,23 @@ security:
             security: false
 
         main:
-            pattern:             .*
-            context:             user
-            form_login:
-                provider: fos_userbundle
-                csrf_token_generator: security.csrf.token_manager
-                login_path:     /login
-                check_path:     /login_check
-                always_use_default_target_path: false
-                use_referer:                    true
+            login_link:
+                check_route: login_check
+                signature_properties: [ 'email' ]
+            provider: users
+            pattern: .*
+            context: user
             logout:
                 invalidate_session: false
-            anonymous:          true
             oauth:
                 resource_owners:
-                    facebook:  "/login/check-facebook"
-                    strava:    "/login/check-strava"
-                    twitter:   "/login/check-twitter"
-                login_path:        /login
-                failure_path:      /login
+                    facebook: '/login/check-facebook'
+                    strava: '/login/check-strava'
+                    twitter: '/login/check-twitter'
+                login_path: '/login'
+                failure_path: '/login'
                 oauth_user_provider:
-                    service: caldera.user_provider
+                    service: App\Security\UserProvider\UserProvider
 
         api:
             pattern:    ^/api
