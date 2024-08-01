@@ -173,6 +173,13 @@
                     </div>
 
                     <div class="form-group">
+                        <label class="control-label" for="identifier">
+                            Netzwerk:
+                        </label>
+                        {{ form_widget(addProfileForm.network, { 'attr' : { 'class': 'form-control' } }) }}
+                    </div>
+
+                    <div class="form-group">
                         <label class="control-label" for="mainNetwork">
                             Hauptprofil:
                         </label>
