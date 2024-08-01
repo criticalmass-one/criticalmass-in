@@ -81,3 +81,7 @@ docker
 
 .yarnrc.yml
 
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###
