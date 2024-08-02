@@ -2,7 +2,6 @@
 
 namespace App\Controller\Api;
 
-use JMS\Serializer\SerializationContext;
 use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
 use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Criticalmass\EntityMerger\EntityMergerInterface;
@@ -321,10 +320,7 @@ class RideController extends BaseController
             $groups[] = 'extended-ride-list';
         }
 
-        $context = new SerializationContext();
-        $context->setGroups($groups);
-
-        return $this->createStandardResponse($rideList, $context);
+        return $this->createStandardResponse($rideList);
     }
 
     /**

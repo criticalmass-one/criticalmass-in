@@ -2,7 +2,6 @@
 
 namespace App\Controller\Api;
 
-use JMS\Serializer\SerializationContext;
 use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
 use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Entity\City;

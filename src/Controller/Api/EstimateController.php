@@ -9,7 +9,6 @@ use App\Entity\Ride;
 use App\Entity\RideEstimate;
 use App\Event\RideEstimate\RideEstimateCreatedEvent;
 use App\Model\CreateEstimateModel;
-use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Operation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use OpenApi\Annotations as OA;
@@ -18,10 +17,15 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class EstimateController extends BaseController
 {
-    public function __construct(protected SerializerInterface $serializer, protected EventDispatcherInterface $eventDispatcher, protected DataQueryManagerInterface $dataQueryManager, protected ManagerRegistry $registry)
+    public function __construct(
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly DataQueryManagerInterface $dataQueryManager,
+        ManagerRegistry $managerRegistry,
+        SerializerInterface $serializer)
     {
          parent::__construct($managerRegistry, $serializer);
     }

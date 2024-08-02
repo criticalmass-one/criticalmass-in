@@ -8,38 +8,19 @@ use App\Criticalmass\UploadFaker\UploadFakerInterface;
 use App\Entity\Ride;
 use App\Entity\User;
 use Iamstuartwilson\StravaApi;
-use JMS\Serializer\SerializerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
 abstract class AbstractTrackImporter implements TrackImporterInterface
 {
-    /** @var int $activityId */
-    protected $activityId;
+    protected int $activityId;
 
-    /** @var User $user */
-    protected $user;
+    protected User $user;
 
-    /** @var Ride $ride */
-    protected $ride;
+    protected Ride $ride;
 
-    /** @var GpxWriter $gpxWriter */
-    protected $gpxWriter;
-
-    /** @var SessionInterface $session */
-    protected $session;
-
-    /** @var StravaApi $api */
-    protected $api;
-
-    /** @var UploadFakerInterface $uploadFaker */
-    protected $uploadFaker;
-
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    /** @var SerializerInterface $serializer */
-    protected $serializer;
+    protected StravaApi $api;
 
     const API_URI = 'https://www.strava.com/api/v3/';
     const RESOULUTION = 'high';
@@ -50,14 +31,16 @@ abstract class AbstractTrackImporter implements TrackImporterInterface
         'altitude',
     ];
 
-    public function __construct(GpxWriter $gpxWriter, SessionInterface $session, ManagerRegistry $registry, UploadFakerInterface $uploadFaker, SerializerInterface $serializer, string $stravaClientId, string $stravaSecret)
+    public function __construct(
+        protected readonly GpxWriter $gpxWriter,
+        protected readonly SessionInterface $session,
+        protected readonly ManagerRegistry $registry,
+        protected readonly UploadFakerInterface $uploadFaker,
+        protected readonly SerializerInterface $serializer,
+        string $stravaClientId,
+        string $stravaSecret
+    )
     {
-        $this->gpxWriter = $gpxWriter;
-        $this->session = $session;
-        $this->uploadFaker = $uploadFaker;
-        $this->registry = $registry;
-        $this->serializer = $serializer;
-
         $this->api = $this->createApi((int)$stravaClientId, $stravaSecret);
     }
 

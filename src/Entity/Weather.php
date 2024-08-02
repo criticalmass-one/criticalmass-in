@@ -3,97 +3,77 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation as JMS;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Table(name: 'weather')]
 #[ORM\Entity(repositoryClass: 'App\Repository\WeatherRepository')]
-#[JMS\ExclusionPolicy('all')]
 class Weather
 {
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    #[JMS\Expose]
     protected ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: 'Ride', inversedBy: 'weathers')]
     #[ORM\JoinColumn(name: 'ride_id', referencedColumnName: 'id')]
+    #[Ignore]
     protected ?Ride $ride = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[JMS\Expose]
     protected ?string $json = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    #[JMS\Expose]
     protected ?\DateTime $weatherDateTime = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    #[JMS\Expose]
     protected ?\DateTime $creationDateTime = null;
 
     #[ORM\Column(type: 'float', nullable: true)]
-    #[JMS\Expose]
     protected ?float $temperatureMin = null;
 
     #[ORM\Column(type: 'float', nullable: true)]
-    #[JMS\Expose]
     protected ?float $temperatureMax = null;
 
     #[ORM\Column(type: 'float', nullable: true)]
-    #[JMS\Expose]
     protected ?float $temperatureMorning = null;
 
     #[ORM\Column(type: 'float', nullable: true)]
-    #[JMS\Expose]
     protected ?float $temperatureDay = null;
 
     #[ORM\Column(type: 'float', nullable: true)]
-    #[JMS\Expose]
     protected ?float $temperatureEvening = null;
 
     #[ORM\Column(type: 'float', nullable: true)]
-    #[JMS\Expose]
     protected ?float $temperatureNight = null;
 
     #[ORM\Column(type: 'float', nullable: true)]
-    #[JMS\Expose]
     protected ?float $pressure = null;
 
     #[ORM\Column(type: 'float', nullable: true)]
-    #[JMS\Expose]
     protected ?float $humidity = null;
 
     #[ORM\Column(type: 'integer', nullable: true)]
-    #[JMS\Expose]
     protected ?int $weatherCode = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[JMS\Expose]
     protected ?string $weather = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[JMS\Expose]
     protected ?string $weatherDescription = null;
 
     #[ORM\Column(type: 'string', length: 5, nullable: true)]
-    #[JMS\Expose]
     protected ?string $weatherIcon = null;
 
     #[ORM\Column(type: 'float', nullable: true)]
-    #[JMS\Expose]
     protected ?float $windSpeed = null;
 
     #[ORM\Column(type: 'float', nullable: true)]
-    #[JMS\Expose]
     protected ?float $windDirection = null;
 
     #[ORM\Column(type: 'float', nullable: true)]
-    #[JMS\Expose]
     protected ?float $clouds = null;
 
     #[ORM\Column(type: 'float', nullable: true)]
-    #[JMS\Expose]
     protected ?float $precipitation = null;
 
     public function __construct()
