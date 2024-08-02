@@ -215,16 +215,6 @@ services:
         arguments:
             $finder: '@fos_elastica.finder.criticalmass_city'
 
-    App\Serializer\JMSSerializer\Handler\RelationHandler:
-        tags:
-            - { name: jms_serializer.handler, type: Relation, direction: serialization, format: json, method: serializeRelation}
-            - { name: jms_serializer.handler, type: Relation, direction: deserialization, format: json, method: deserializeRelation}
-            - { name: jms_serializer.handler, type: Relation<?>, direction: serialization, format: json, method: serializeRelation}
-            - { name: jms_serializer.handler, type: Relation<?>, direction: deserialization, format: json, method: deserializeRelation}
-
-    jms_serializer.naming_strategy:
-        alias: jms_serializer.camel_case_naming_strategy
-
     App\Criticalmass\CriticalmassBlog\CriticalmassBlogInterface:
         alias: App\Criticalmass\CriticalmassBlog\CachedCriticalmassBlog
 
