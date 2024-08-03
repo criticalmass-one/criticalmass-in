@@ -62,7 +62,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div id="map" style="height: 350px;"></div>
+                <div id="map" class="map" style="height: 350px;" data-polyline="{{ track.polyline }}" data-polyline-color="{{ track.user.color }}"></div>
             </div>
         </div>
 
@@ -161,12 +161,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        CriticalMass.loadModule('TrackViewPage', null, null, function (viewPage) {
-            viewPage.addTrack('{{ track|serialize|raw|e('js') }}');
-
-            viewPage.focus();
-        });
-    </script>
 {% endblock %}

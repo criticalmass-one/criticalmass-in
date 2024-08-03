@@ -58,7 +58,7 @@ class Track extends BaseTrack
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    protected ?string $polyline = null;
+    protected ?string $polyline;
 
     /**
      * @ORM\Column(type="text", nullable=true)

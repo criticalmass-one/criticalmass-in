@@ -62,7 +62,7 @@
         {{ form_start(form) }}
         <div class="row">
             <div class="col-md-12">
-                <div id="map" style="height: 250px;"></div>
+                <div id="map" class="map" style="height: 250px;" data-map-center-latitude="{{ ride.latitude }}" data-map-center-longitude="{{ ride.longitude }}" data-map-zoomlevel="10" data-marker-type="subride" data-marker-latitude-target="subride_latitude" data-marker-longitude-target="subride_longitude"></div>
             </div>
         </div>
 
@@ -163,12 +163,4 @@
 
         </form>
     </div>
-
-    <script type="text/javascript">
-        CriticalMass.loadModule('EditSubridePage', null, null, function (page) {
-            page.addRide('{{ ride|serialize|raw|e('js') }}');
-            page.addCity('{{ city|serialize|raw|e('js') }}');
-            page.init();
-        });
-    </script>
 {% endblock %}

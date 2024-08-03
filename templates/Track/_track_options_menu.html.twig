@@ -61,7 +61,7 @@
 
         {% endif %}
         <li>
-            <a class="delete-track" href="#" data-track-id="{{ track.id }}">
+            <a href="{{ path('caldera_criticalmass_rest_track_delete', { trackId: track.id }) }}" class="delete-protection" data-delete-modal-title="Track löschen" data-delete-modal-text="Möchtest du diesen Track von der <strong>{{ track.ride.city.title }}</strong> vom <strong>{{ track.ride.dateTime|date('d.m.Y') }}</strong> wirklich löschen?">
                 <i class="far fa-trash-alt"></i>
                 Löschen
             </a>
