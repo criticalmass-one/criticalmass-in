@@ -42,6 +42,7 @@ class CityCycle implements RouteableInterface
      */
     #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'cycles')]
     #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
+    #[Ignore]
     protected ?City $city = null;
 
     #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'cityCycles')]
