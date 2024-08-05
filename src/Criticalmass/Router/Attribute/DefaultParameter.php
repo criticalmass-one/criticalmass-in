@@ -1,17 +1,17 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\Router\Annotation;
+namespace App\Criticalmass\Router\Attribute;
 
-/**
- * @Annotation
- */
-class DefaultParameter extends AbstractAnnotation
+#[\Attribute]
+class DefaultParameter implements AttributeInterface
 {
-    /** @var string $routeParameterName */
-    protected $routeParameterName;
+    public function __construct(
+        private string $routeParameterName,
+        private string $parameterName
+    )
+    {
 
-    /** @var string $parameterName */
-    protected $parameterName;
+    }
 
     public function getRouteParameterName(): string
     {

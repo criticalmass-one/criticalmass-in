@@ -2,15 +2,16 @@
 
 namespace App\Criticalmass\Router\Attribute;
 
-use Attribute;
-
-#[Attribute]
-class RouteParameter
+#[\Attribute]
+class RouteParameter implements AttributeInterface
 {
     public function __construct(
         private ?string $name = null,
         private ?string $dateFormat = null
-    ) {}
+    )
+    {
+
+    }
 
     public function getName(): ?string
     {
