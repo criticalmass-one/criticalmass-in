@@ -11,7 +11,7 @@
 {% block breadcrumb %}
     {% if city %}
         <li>
-            <a href="{{ objectPath(city) }}">
+            <a href="{{ object_path(city) }}">
                 {{ city.city }}
             </a>
         </li>
@@ -28,7 +28,7 @@
 
         {% if (region.parent and region.parent.parent and region.parent.parent.parent and not region.parent.parent.parent.isWorld()) %}
             <li>
-                <a href="{{ objectPath(region.parent.parent.parent) }}">
+                <a href="{{ object_path(region.parent.parent.parent) }}">
                     {{ region.parent.parent.parent.name }}
                 </a>
             </li>
@@ -36,7 +36,7 @@
 
         {% if (region.parent and region.parent.parent and not region.parent.parent.isWorld()) %}
             <li>
-                <a href="{{ objectPath(region.parent.parent) }}">
+                <a href="{{ object_path(region.parent.parent) }}">
                     {{ region.parent.parent.name }}
                 </a>
             </li>
@@ -45,14 +45,14 @@
 
         {% if (region.parent and not region.parent.isWorld()) %}
             <li>
-                <a href="{{ objectPath(region.parent) }}">
+                <a href="{{ object_path(region.parent) }}">
                     {{ region.parent.name }}
                 </a>
             </li>
         {% endif %}
 
         <li>
-            <a href="{{ objectPath(region) }}">
+            <a href="{{ object_path(region) }}">
                 {{ region.name }}
             </a>
         </li>
@@ -199,11 +199,11 @@
             <div class="col-md-12">
                 <div class="btn-group pull-right">
                     {% if city %}
-                        <a href="{{ objectPath(city) }}" class="btn btn-default">
+                        <a href="{{ object_path(city) }}" class="btn btn-default">
                             Abbrechen
                         </a>
                     {% else %}
-                        <a href="{{ objectPath(region) }}" class="btn btn-default">
+                        <a href="{{ object_path(region) }}" class="btn btn-default">
                             Abbrechen
                         </a>
                     {% endif %}

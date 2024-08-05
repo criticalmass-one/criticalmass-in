@@ -19,7 +19,7 @@ class RouterTwigExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('objectPath', [$this, 'objectPath'], [
+            new TwigFunction('object_path', [$this, 'objectPath'], [
                 'is_safe' => ['raw'],
             ]),
         ];

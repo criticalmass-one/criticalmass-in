@@ -6,13 +6,13 @@
 
 {% block breadcrumb %}
     <li>
-        <a href="{{ objectPath(cityCycle.city) }}">
+        <a href="{{ object_path(cityCycle.city) }}">
             {{ cityCycle.city.city }}
         </a>
     </li>
 
     <li>
-        <a href="{{ objectPath(cityCycle.city, 'caldera_criticalmass_citycycle_list') }}">
+        <a href="{{ object_path(cityCycle.city, 'caldera_criticalmass_citycycle_list') }}">
             Turnusliste
         </a>
     </li>
