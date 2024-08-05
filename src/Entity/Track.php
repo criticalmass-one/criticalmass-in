@@ -6,7 +6,7 @@ use App\Criticalmass\Geo\Entity\Track as GeoTrack;
 use App\Criticalmass\Geo\EntityInterface\TrackInterface;
 use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
 use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
-use App\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Router\Attribute as Routing;
 use App\Criticalmass\UploadableDataHandler\UploadableEntity;
 use App\Criticalmass\UploadFaker\FakeUploadable;
 use App\EntityInterface\RouteableInterface;
@@ -21,9 +21,9 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @Vich\Uploadable
- * @Routing\DefaultRoute(name="caldera_criticalmass_track_view")
  * @OE\OrderedEntity()
  */
+#[Routing\DefaultRoute(name: 'caldera_criticalmass_track_view')]
 #[ORM\Table(name: 'track')]
 #[ORM\Entity(repositoryClass: 'App\Repository\TrackRepository')]
 #[JMS\ExclusionPolicy('all')]
@@ -38,9 +38,7 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
     const TRACK_SOURCE_CRITICALMAPS = 'TRACK_SOURCE_CRITICALMAPS';
     const TRACK_SOURCE_UNKNOWN = 'TRACK_SOURCE_UNKNOWN';
 
-    /**
-     * @Routing\RouteParameter(name="trackId")
-     */
+    #[Routing\RouteParameter(name: 'trackId')]
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
