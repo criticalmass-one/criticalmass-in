@@ -2,26 +2,19 @@
 
 namespace App\Criticalmass\Router\ParameterResolver;
 
-use App\Criticalmass\Router\Annotation\AbstractAnnotation;
-use App\Criticalmass\Router\Annotation\RouteParameter;
+use App\Criticalmass\Router\Attribute\AttributeInterface;
 use App\Criticalmass\Router\DelegatedRouterManager\DelegatedRouterManagerInterface;
 use App\EntityInterface\RouteableInterface;
-use Doctrine\Common\Annotations\Reader;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
-class PropertyParameterResolver extends AbstractParameterResolver
+class PropertyParameterResolver implements ParameterResolverInterface
 {
-    /** @var DelegatedRouterManagerInterface $delegatedRouterManager */
-    protected $delegatedRouterManager;
-
-    /** @var ClassParameterResolver $classParameterResolver */
-    protected $classParameterResolver;
-
-    public function __construct(Reader $annotationReader, DelegatedRouterManagerInterface $delegatedRouterManager, ClassParameterResolver $classParameterResolver)
+    public function __construct(
+        private readonly DelegatedRouterManagerInterface $delegatedRouterManager,
+        private readonly ClassParameterResolver $classParameterResolver
+    )
     {
-        $this->delegatedRouterManager = $delegatedRouterManager;
-        $this->classParameterResolver = $classParameterResolver;
 
-        parent::__construct($annotationReader);
     }
 
     public function resolve(RouteableInterface $routeable, string $variableName): ?string
@@ -31,22 +24,18 @@ class PropertyParameterResolver extends AbstractParameterResolver
         $properties = $reflectionClass->getProperties();
 
         foreach ($properties as $key => $property) {
-            $parameterAnnotations = $this->annotationReader->getPropertyAnnotations($property);
+            $parameterAttributes = $property->getAttributes();
 
-            /** @var AbstractAnnotation $parameterAnnotation */
-            foreach ($parameterAnnotations as $parameterAnnotation) {
-                if ($parameterAnnotation instanceof RouteParameter) {
-                    if ($parameterAnnotation->getName() !== $variableName) {
+            /** @var AttributeInterface $parameterAttribute */
+            foreach ($parameterAttributes as $parameterAttribute) {
+                if ($parameterAttribute->getName() === 'App\Criticalmass\Router\Attribute\RouteParameter') {
+                    if ($parameterAttribute->getArguments()['name'] !== $variableName) {
                         continue;
                     }
 
-                    $getMethodName = sprintf('get%s', ucfirst($property->getName()));
+                    $propertyAccessor = PropertyAccess::createPropertyAccessor();
 
-                    if (!$reflectionClass->hasMethod($getMethodName)) {
-                        continue;
-                    }
-
-                    $value = $routeable->$getMethodName();
+                    $value = $propertyAccessor->getValue($routeable, $property->getName());
 
                     if (is_object($value) && $value instanceof RouteableInterface) {
                         if ($delegatedRouter = $this->delegatedRouterManager->findDelegatedRouter($value)) {
@@ -57,7 +46,7 @@ class PropertyParameterResolver extends AbstractParameterResolver
                     }
 
                     if (is_object($value) && $value instanceof \DateTime) {
-                        $value = $value->format($parameterAnnotation->getDateFormat());
+                        $value = $value->format($parameterAttribute->getDateFormat());
                     }
 
                     return (string) $value;
