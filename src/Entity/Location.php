@@ -7,20 +7,18 @@ use App\EntityInterface\AuditableInterface;
 use App\EntityInterface\AutoParamConverterAble;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation as JMS;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 /**
  * @Routing\DefaultRoute(name="caldera_criticalmass_location_show")
  */
 #[ORM\Table(name: 'location')]
 #[ORM\Entity(repositoryClass: 'App\Repository\LocationRepository')]
-#[JMS\ExclusionPolicy('all')]
 class Location implements RouteableInterface, AuditableInterface, AutoParamConverterAble
 {
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    #[JMS\Expose]
     protected ?int $id = null;
 
     /**
@@ -28,29 +26,25 @@ class Location implements RouteableInterface, AuditableInterface, AutoParamConve
      */
     #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'locations')]
     #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
+    #[Ignore]
     protected ?City $city = null;
 
     /**
      * @Routing\RouteParameter(name="locationSlug")
      */
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[JMS\Expose]
     protected ?string $slug = null;
 
     #[ORM\Column(type: 'float', nullable: true)]
-    #[JMS\Expose]
     protected ?float $latitude = null;
 
     #[ORM\Column(type: 'float', nullable: true)]
-    #[JMS\Expose]
     protected ?float $longitude = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[JMS\Expose]
     protected ?string $title = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[JMS\Expose]
     protected ?string $description = null;
 
     public function getId(): ?int

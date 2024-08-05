@@ -20,8 +20,10 @@ use Caldera\GeoBasic\Coord\CoordInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\Ignore;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -31,7 +33,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 #[ORM\Table(name: 'city')]
 #[ORM\Entity(repositoryClass: 'App\Repository\CityRepository')]
-#[JMS\ExclusionPolicy('all')]
 #[ORM\Index(fields: ['createdAt'], name: 'city_created_at_index')]
 class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, AutoParamConverterAble, SocialNetworkProfileAble, PostableInterface, StaticMapableInterface, CoordinateInterface
 {
@@ -41,12 +42,12 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    #[JMS\Expose]
-    #[JMS\Groups(['ride-list'])]
+    #[Groups(['ride-list'])]
     protected ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'cities')]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    #[Ignore]
     protected ?User $user = null;
 
     /**
@@ -55,6 +56,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
      */
     #[ORM\ManyToOne(targetEntity: 'Region', inversedBy: 'cities', cascade: ['persist'])]
     #[ORM\JoinColumn(name: 'region_id', referencedColumnName: 'id')]
+    #[Ignore]
     protected ?Region $region = null;
 
     /**
@@ -62,8 +64,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
      */
     #[ORM\ManyToOne(targetEntity: 'CitySlug', inversedBy: 'cities')]
     #[ORM\JoinColumn(name: 'main_slug_id', referencedColumnName: 'id')]
-    #[JMS\Expose]
-    #[JMS\Groups(['ride-list'])]
+    #[Groups(['ride-list'])]
     protected ?CitySlug $mainSlug = null;
 
     /**
@@ -71,9 +72,8 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
      */
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
-    #[JMS\Expose]
-    #[JMS\SerializedName('name')]
-    #[JMS\Groups(['ride-list'])]
+    #[SerializedName('name')]
+    #[Groups(['ride-list'])]
     protected ?string $city = null;
 
     /**
@@ -81,56 +81,55 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
      */
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
-    #[JMS\Expose]
-    #[JMS\Groups(['ride-list'])]
+    #[Groups(['ride-list'])]
     protected ?string $title = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[JMS\Expose]
-    #[JMS\Groups(['ride-list'])]
+    #[Groups(['ride-list'])]
     protected ?string $description = null;
 
     /**
      * @DataQuery\Queryable
      */
     #[ORM\Column(type: 'float', nullable: true)]
-    #[JMS\Expose]
-    #[JMS\Groups(['ride-list'])]
+    #[Groups(['ride-list'])]
     protected float $latitude = 0.0;
 
     /**
      * @DataQuery\Queryable
      */
     #[ORM\Column(type: 'float', nullable: true)]
-    #[JMS\Expose]
-    #[JMS\Groups(['ride-list'])]
+    #[Groups(['ride-list'])]
     protected float $longitude = 0.0;
 
     /**
      * @DataQuery\DefaultBooleanValue(value=true)
      */
     #[ORM\Column(type: 'boolean', nullable: true)]
+    #[Ignore]
     protected bool $enabled = true;
 
     #[ORM\OneToMany(targetEntity: 'Ride', mappedBy: 'city')]
+    #[Ignore]
     protected Collection $rides;
 
     #[ORM\OneToMany(targetEntity: 'Post', mappedBy: 'city')]
+    #[Ignore]
     protected Collection $posts;
 
     #[ORM\OneToMany(targetEntity: 'Photo', mappedBy: 'city')]
+    #[Ignore]
     protected Collection $photos;
 
     #[ORM\OneToMany(targetEntity: 'CitySlug', mappedBy: 'city', cascade: ['persist', 'remove'])]
-    #[JMS\Expose]
-    #[JMS\Groups(['ride-list'])]
+    #[Groups(['ride-list'])]
     protected Collection $slugs;
 
     #[ORM\OneToMany(targetEntity: 'CityCycle', mappedBy: 'city', cascade: ['persist', 'remove'])]
+    #[Ignore]
     protected Collection $cycles;
 
     #[ORM\OneToMany(targetEntity: 'SocialNetworkProfile', mappedBy: 'city', cascade: ['persist', 'remove'])]
-    #[JMS\Expose]
     protected Collection $socialNetworkProfiles;
 
     /**
@@ -139,79 +138,87 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
      */
     #[Assert\Type(type: 'int')]
     #[ORM\Column(type: 'integer', nullable: true)]
-    #[JMS\Expose]
     protected ?int $cityPopulation = null;
 
     #[ORM\Column(type: 'string', nullable: true)]
-    #[JMS\Expose]
     protected ?string $punchLine = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[JMS\Expose]
     protected ?string $longDescription = null;
 
     /**
      * @Vich\UploadableField(mapping="city_photo", fileNameProperty="imageName", size="imageSize", mimeType="imageMimeType")
      */
+    #[Ignore]
     protected ?File $imageFile = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Ignore]
     protected ?string $imageName = null;
 
     #[ORM\Column(type: 'integer', nullable: true)]
+    #[Ignore]
     protected ?int $imageSize = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Ignore]
     protected ?string $imageMimeType = null;
 
     /**
      * @DataQuery\Sortable
      */
     #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Ignore]
     private ?\DateTime $updatedAt = null;
 
     /**
      * @DataQuery\Sortable
      */
     #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Ignore]
     protected ?\DateTime $createdAt = null;
 
     #[ORM\Column(type: 'boolean', nullable: true)]
+    #[Ignore]
     protected bool $enableBoard = false;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[JMS\Expose]
-    #[JMS\Groups(['ride-list'])]
+    #[Groups(['ride-list'])]
     protected string $timezone = 'Europe/Berlin';
 
     #[ORM\Column(type: 'integer', nullable: true)]
-    #[JMS\Expose]
     protected int $threadNumber = 0;
 
     #[ORM\Column(type: 'integer', nullable: true)]
-    #[JMS\Expose]
     protected int $postNumber = 0;
 
     #[ORM\Column(type: 'integer', nullable: true)]
+    #[Ignore]
     protected int $colorRed = 0;
 
     #[ORM\Column(type: 'integer', nullable: true)]
+    #[Ignore]
     protected int $colorGreen = 0;
 
     #[ORM\Column(type: 'integer', nullable: true)]
+    #[Ignore]
     protected int $colorBlue = 0;
 
     #[ORM\ManyToOne(targetEntity: 'Thread', inversedBy: 'cities')]
     #[ORM\JoinColumn(name: 'lastthread_id', referencedColumnName: 'id')]
+    #[Ignore]
     protected ?Thread $lastThread = null;
 
     #[ORM\Column(type: 'integer', nullable: true)]
+    #[Ignore]
     protected int $views = 0;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Ignore]
     protected ?string $rideNamer = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Ignore]
     protected ?string $wikidataEntityId = null;
 
     public function __construct()
@@ -270,9 +277,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     /**
      * @deprecated
      */
-    #[JMS\VirtualProperty]
-    #[JMS\SerializedName('slug')]
-    #[JMS\Type('string')]
+    #[SerializedName('slug')]
     public function getMainSlugString(): string
     {
         return $this->getMainSlug()->getSlug();
@@ -841,9 +846,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
         return $this->wikidataEntityId;
     }
 
-    #[JMS\VirtualProperty]
-    #[JMS\SerializedName('color')]
-    #[JMS\Type('array')]
+    #[SerializedName('color')]
     public function getColor(): array
     {
         return [

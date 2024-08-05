@@ -9,12 +9,13 @@ use App\EntityInterface\RouteableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation as JMS;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\Ignore;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'subride')]
 #[ORM\Entity(repositoryClass: 'App\Repository\SubrideRepository')]
-#[JMS\ExclusionPolicy('all')]
 class Subride implements AuditableInterface, SocialNetworkProfileAble, RouteableInterface
 {
     /**
@@ -23,7 +24,6 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    #[JMS\Expose]
     protected ?int $id = null;
 
     /**
@@ -32,48 +32,42 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
      */
     #[ORM\ManyToOne(targetEntity: 'Ride', inversedBy: 'subrides')]
     #[ORM\JoinColumn(name: 'ride_id', referencedColumnName: 'id')]
-    #[JMS\Groups(['extended-subride-list'])]
+    #[Groups(['extended-subride-list'])]
     protected ?Ride $ride = null;
 
     #[ORM\OneToMany(targetEntity: 'SocialNetworkProfile', mappedBy: 'subride', cascade: ['persist', 'remove'])]
+    #[Ignore]
     protected Collection $socialNetworkProfiles;
 
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[JMS\Expose]
     protected ?string $title = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[JMS\Expose]
     protected ?string $description = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    #[JMS\Expose]
     protected ?\DateTime $dateTime = null;
 
     #[ORM\Column(type: 'datetime', nullable: false)]
-    #[JMS\Expose]
     protected \DateTime $createdAt;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    #[JMS\Expose]
     protected ?\DateTime $updatedAt = null;
 
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[JMS\Expose]
     protected ?string $location = null;
 
     #[ORM\Column(type: 'float', nullable: true)]
-    #[JMS\Expose]
     protected ?float $latitude = null;
 
     #[ORM\Column(type: 'float', nullable: true)]
-    #[JMS\Expose]
     protected ?float $longitude = null;
 
     #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'subrides')]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    #[Ignore]
     protected ?User $user = null;
 
     public function __construct()
@@ -117,9 +111,7 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
         return $this->description;
     }
 
-    #[JMS\VirtualProperty]
-    #[JMS\SerializedName('timestamp')]
-    #[JMS\Type('integer')]
+    #[SerializedName('timestamp')]
     public function getTimestamp(): int
     {
         return (int) $this->dateTime->format('U');
