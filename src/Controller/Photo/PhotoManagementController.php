@@ -13,12 +13,19 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class PhotoManagementController extends AbstractController
 {
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker)
+    {
+        parent::__construct($authorizationChecker);
+    }
+
     /**
      * @Security("is_granted('ROLE_USER')")
      */
@@ -234,5 +241,30 @@ class PhotoManagementController extends AbstractController
             ->save();
 
         return new Response($newFilename);
+    }
+
+    protected function saveReferer(Request $request): string
+    {
+        $referer = $request->headers->get('referer');
+
+        $this->getSession()->set('referer', $referer);
+
+        return $referer;
+    }
+
+    protected function getSavedReferer(): ?string
+    {
+        return $this->getSession()->get('referer');
+    }
+
+    protected function createRedirectResponseForSavedReferer(): RedirectResponse
+    {
+        $referer = $this->getSavedReferer();
+
+        if (!$referer) {
+            throw new \Exception('No saved referer found to redirect to.');
+        }
+
+        return new RedirectResponse($referer);
     }
 }
