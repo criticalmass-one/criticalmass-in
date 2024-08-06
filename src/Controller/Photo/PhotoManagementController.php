@@ -8,6 +8,7 @@ use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Photo;
 use App\Entity\Ride;
 use App\Form\Type\PhotoCoordType;
+use App\Repository\TrackRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -137,14 +138,19 @@ class PhotoManagementController extends AbstractController
         }
     }
 
-    protected function placeSingleGetAction(Request $request, Photo $photo, FormInterface $form, ManagerRegistry $registry): Response
-    {
+    protected function placeSingleGetAction(
+        Request $request,
+        Photo $photo,
+        FormInterface $form,
+        ManagerRegistry $registry,
+        TrackRepository $trackRepository
+    ): Response {
         $this->saveReferer($request);
 
         $previousPhoto = $this->getPhotoRepository()->getPreviousPhoto($photo);
         $nextPhoto = $this->getPhotoRepository()->getNextPhoto($photo);
 
-        $track = $this->getTrackRepository()->findByUserAndRide($photo->getRide(), $this->getUser());
+        $track = $trackRepository->findByUserAndRide($photo->getRide(), $this->getUser());
 
         return $this->render('PhotoManagement/place.html.twig', [
             'photo' => $photo,
@@ -172,11 +178,13 @@ class PhotoManagementController extends AbstractController
      * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function relocateAction(Ride $ride): Response
-    {
+    public function relocateAction(
+        TrackRepository $trackRepository,
+        Ride $ride
+    ): Response {
         $photos = $this->getPhotoRepository()->findPhotosByUserAndRide($this->getUser(), $ride);
 
-        $track = $this->getTrackRepository()->findByUserAndRide($ride, $this->getUser());
+        $track = $trackRepository->findByUserAndRide($ride, $this->getUser());
 
         return $this->render('PhotoManagement/relocate.html.twig', [
             'ride' => $ride,

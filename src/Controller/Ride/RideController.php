@@ -9,6 +9,7 @@ use App\Repository\BlockedCityRepository;
 use App\Repository\ParticipationRepository;
 use App\Repository\RideRepository;
 use App\Repository\SubrideRepository;
+use App\Repository\TrackRepository;
 use App\Repository\WeatherRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Controller\AbstractController;
@@ -43,6 +44,7 @@ class RideController extends AbstractController
         ParticipationRepository $participationRepository,
         SubrideRepository $subrideRepository,
         WeatherRepository $weatherRepository,
+        TrackRepository $trackRepository,
         SeoPageInterface $seoPage,
         EventDispatcherInterface $eventDispatcher,
         Ride $ride = null
@@ -101,7 +103,7 @@ class RideController extends AbstractController
         return $this->render('Ride/show.html.twig', [
             'city' => $ride->getCity(),
             'ride' => $ride,
-            'tracks' => $this->getTrackRepository()->findTracksByRide($ride),
+            'tracks' => $trackRepository->findTracksByRide($ride),
             'photos' => $this->getPhotoRepository()->findPhotosByRide($ride),
             'subrides' => $subrideRepository->getSubridesForRide($ride),
             'dateTime' => new \DateTime(),

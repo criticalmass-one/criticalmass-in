@@ -12,6 +12,7 @@ use App\Form\Type\RideEstimateType;
 use App\Repository\LocationRepository;
 use App\Repository\SocialNetworkProfileRepository;
 use App\Repository\SubrideRepository;
+use App\Repository\TrackRepository;
 use App\Repository\WeatherRepository;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -28,9 +29,11 @@ class RideTabsController extends AbstractController
         ]);
     }
 
-    public function renderTracksTabAction(Ride $ride): Response
-    {
-        $tracks = $this->getTrackRepository()->findTracksByRide($ride);
+    public function renderTracksTabAction(
+        TrackRepository $trackRepository,
+        Ride $ride
+    ): Response {
+        $tracks = $trackRepository->findTracksByRide($ride);
 
         return $this->render('RideTabs/TracksTab.html.twig', [
             'ride' => $ride,

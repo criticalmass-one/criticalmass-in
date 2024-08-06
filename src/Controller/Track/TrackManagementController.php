@@ -5,6 +5,7 @@ namespace App\Controller\Track;
 use App\Event\Track\TrackDeletedEvent;
 use App\Event\Track\TrackHiddenEvent;
 use App\Event\Track\TrackShownEvent;
+use App\Repository\TrackRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -30,9 +31,13 @@ class TrackManagementController extends AbstractController
     /**
      * @Security("is_granted('ROLE_USER')")
      */
-    public function listAction(Request $request, UserInterface $user = null, PaginatorInterface $paginator)
-    {
-        $query = $this->getTrackRepository()->findByUserQuery($user, null, false);
+    public function listAction(
+        Request $request,
+        TrackRepository $trackRepository,
+        PaginatorInterface $paginator,
+        UserInterface $user = null
+    ): Response {
+        $query = $trackRepository->findByUserQuery($user, null, false);
 
         $pagination = $paginator->paginate(
             $query,

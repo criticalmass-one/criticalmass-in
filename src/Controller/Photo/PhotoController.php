@@ -8,6 +8,7 @@ use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Entity\Photo;
 use App\Entity\Track;
 use App\Event\View\ViewEvent;
+use App\Repository\TrackRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,6 +26,7 @@ class PhotoController extends AbstractController
     public function showAction(
         SeoPageInterface $seoPage,
         EventDispatcherInterface $eventDispatcher,
+        TrackRepository $trackRepository,
         ExifWrapperInterface $exifWrapper,
         Photo $photo
     ): Response {
@@ -43,7 +45,7 @@ class PhotoController extends AbstractController
 
         if ($ride && $photo->getUser()) {
             /** @var Track $track */
-            $track = $this->getTrackRepository()->findByUserAndRide($ride, $photo->getUser());
+            $track = $trackRepository->findByUserAndRide($ride, $photo->getUser());
         }
 
         $this->setSeoMetaDetails($seoPage, $photo);

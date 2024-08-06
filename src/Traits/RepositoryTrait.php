@@ -42,10 +42,4 @@ trait RepositoryTrait
     {
         return $this->getDoctrine()->getRepository(Photo::class);
     }
-
-    /** @deprecated */
-    protected function getTrackRepository(): TrackRepository
-    {
-        return $this->getDoctrine()->getRepository(Track::class);
-    }
 }
