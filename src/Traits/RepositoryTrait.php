@@ -108,10 +108,4 @@ trait RepositoryTrait
     {
         return $this->getDoctrine()->getRepository(Participation::class);
     }
-
-    /** @deprecated */
-    protected function getSocialNetworkProfileRepository(): SocialNetworkProfileRepository
-    {
-        return $this->getDoctrine()->getRepository(SocialNetworkProfile::class);
-    }
 }

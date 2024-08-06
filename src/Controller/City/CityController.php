@@ -7,6 +7,7 @@ use App\Criticalmass\ElasticCityFinder\ElasticCityFinderInterface;
 use App\Entity\City;
 use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Event\View\ViewEvent;
+use App\Repository\SocialNetworkProfileRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,8 +55,14 @@ class CityController extends AbstractController
     /**
      * @ParamConverter("city", class="App:City", isOptional=true)
      */
-    public function showAction(Request $request, ElasticCityFinderInterface $elasticCityFinder, SeoPageInterface $seoPage, EventDispatcherInterface $eventDispatcher, City $city = null): Response
-    {
+    public function showAction(
+        Request $request,
+        SocialNetworkProfileRepository $socialNetworkProfileRepository,
+        ElasticCityFinderInterface $elasticCityFinder,
+        SeoPageInterface $seoPage,
+        EventDispatcherInterface $eventDispatcher,
+        City $city = null
+    ): Response {
         if (!$city) {
             $citySlug = $request->get('citySlug');
 
@@ -97,7 +104,7 @@ class CityController extends AbstractController
             'locations' => $this->getLocationRepository()->findLocationsByCity($city),
             'photos' => $this->getPhotoRepository()->findSomePhotos(8, null, $city),
             'rides' => $this->getRideRepository()->findRidesForCity($city, 'DESC', 6),
-            'socialNetworkProfiles' => $this->getSocialNetworkProfileRepository()->findByCity($city),
+            'socialNetworkProfiles' => $socialNetworkProfileRepository->findByCity($city),
         ]);
     }
 
