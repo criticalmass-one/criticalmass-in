@@ -68,12 +68,6 @@ trait RepositoryTrait
     }
 
     /** @deprecated */
-    protected function getPostRepository(): PostRepository
-    {
-        return $this->getDoctrine()->getRepository(Post::class);
-    }
-
-    /** @deprecated */
     protected function getTrackRepository(): TrackRepository
     {
         return $this->getDoctrine()->getRepository(Track::class);

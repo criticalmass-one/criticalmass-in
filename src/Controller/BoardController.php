@@ -6,6 +6,7 @@ use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Board;
 use App\Event\View\ViewEvent;
 use App\Repository\BoardRepository;
+use App\Repository\PostRepository;
 use App\Repository\ThreadRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -68,9 +69,12 @@ class BoardController extends AbstractController
     /**
      * @ParamConverter("thread", class="App:Thread")
      */
-    public function viewThreadAction(EventDispatcherInterface $eventDispatcher, Thread $thread): Response
-    {
-        $posts = $this->getPostRepository()->findPostsForThread($thread);
+    public function viewThreadAction(
+        PostRepository $postRepository,
+        EventDispatcherInterface $eventDispatcher,
+        Thread $thread
+    ): Response {
+        $posts = $postRepository->findPostsForThread($thread);
         $board = $thread->getCity() ?? $thread->getBoard();
 
         $eventDispatcher->dispatch(new ViewEvent($thread), ViewEvent::NAME);
