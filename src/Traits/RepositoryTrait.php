@@ -78,10 +78,4 @@ trait RepositoryTrait
     {
         return $this->getDoctrine()->getRepository(Track::class);
     }
-
-    /** @deprecated */
-    protected function getThreadRepository(): ThreadRepository
-    {
-        return $this->getDoctrine()->getRepository(Thread::class);
-    }
 }

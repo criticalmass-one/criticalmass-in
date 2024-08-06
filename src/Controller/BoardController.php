@@ -6,6 +6,7 @@ use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Board;
 use App\Event\View\ViewEvent;
 use App\Repository\BoardRepository;
+use App\Repository\ThreadRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Entity\City;
@@ -36,19 +37,23 @@ class BoardController extends AbstractController
      * @ParamConverter("city", class="App:City", isOptional="true")
      * @ParamConverter("board", class="App:Board", isOptional="true")
      */
-    public function listThreadsAction(ObjectRouterInterface $objectRouter, Board $board = null, City $city = null): Response
-    {
+    public function listThreadsAction(
+        ThreadRepository $threadRepository,
+        ObjectRouterInterface $objectRouter,
+        Board $board = null,
+        City $city = null
+    ): Response {
         $threads = [];
         $newThreadUrl = '';
 
         if ($board) {
-            $threads = $this->getThreadRepository()->findThreadsForBoard($board);
+            $threads = $threadRepository->findThreadsForBoard($board);
 
             $newThreadUrl = $objectRouter->generate($board, 'caldera_criticalmass_board_addthread');
         }
 
         if ($city) {
-            $threads = $this->getThreadRepository()->findThreadsForCity($city);
+            $threads = $threadRepository->findThreadsForCity($city);
 
             $newThreadUrl = $objectRouter->generate($city, 'caldera_criticalmass_board_addcitythread');
         }
