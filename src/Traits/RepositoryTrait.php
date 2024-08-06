@@ -38,12 +38,6 @@ use Doctrine\Common\Persistence\ObjectRepository;
 trait RepositoryTrait
 {
     /** @deprecated */
-    protected function getBlockedCityRepository(): BlockedCityRepository
-    {
-        return $this->getDoctrine()->getRepository(BlockedCity::class);
-    }
-
-    /** @deprecated */
     protected function getBoardRepository(): BoardRepository
     {
         return $this->getDoctrine()->getRepository(Board::class);

@@ -5,6 +5,7 @@ namespace App\Controller\Ride;
 use App\Entity\Ride;
 use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Event\View\ViewEvent;
+use App\Repository\BlockedCityRepository;
 use App\Repository\ParticipationRepository;
 use App\Repository\SubrideRepository;
 use App\Repository\WeatherRepository;
@@ -36,6 +37,7 @@ class RideController extends AbstractController
      * @ParamConverter("ride", class="App:Ride", isOptional=true)
      */
     public function showAction(
+        BlockedCityRepository $blockedCityRepository,
         ParticipationRepository $participationRepository,
         SubrideRepository $subrideRepository,
         WeatherRepository $weatherRepository,
@@ -47,7 +49,7 @@ class RideController extends AbstractController
             $this->redirectToRoute('caldera_criticalmass_calendar');
         }
 
-        $blocked = $this->getBlockedCityRepository()->findCurrentCityBlock($ride->getCity());
+        $blocked = $blockedCityRepository->findCurrentCityBlock($ride->getCity());
 
         if ($blocked) {
             return $this->render('Ride/blocked.html.twig', [

@@ -7,6 +7,7 @@ use App\Criticalmass\ElasticCityFinder\ElasticCityFinderInterface;
 use App\Entity\City;
 use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Event\View\ViewEvent;
+use App\Repository\BlockedCityRepository;
 use App\Repository\SocialNetworkProfileRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -58,6 +59,7 @@ class CityController extends AbstractController
     public function showAction(
         Request $request,
         SocialNetworkProfileRepository $socialNetworkProfileRepository,
+        BlockedCityRepository $blockedCityRepository,
         ElasticCityFinderInterface $elasticCityFinder,
         SeoPageInterface $seoPage,
         EventDispatcherInterface $eventDispatcher,
@@ -77,7 +79,7 @@ class CityController extends AbstractController
 
         $eventDispatcher->dispatch(new ViewEvent($city), ViewEvent::NAME);
 
-        $blocked = $this->getBlockedCityRepository()->findCurrentCityBlock($city);
+        $blocked = $blockedCityRepository->findCurrentCityBlock($city);
 
         if ($blocked) {
             return $this->render('City/blocked.html.twig', [
