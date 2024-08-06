@@ -5,12 +5,11 @@ namespace App\Controller\Ride;
 use App\Entity\Ride;
 use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Event\View\ViewEvent;
-use App\Form\Type\RideDisableType;
+use App\Repository\WeatherRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Controller\AbstractController;
 use App\Entity\Weather;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class RideController extends AbstractController
@@ -34,8 +33,12 @@ class RideController extends AbstractController
     /**
      * @ParamConverter("ride", class="App:Ride", isOptional=true)
      */
-    public function showAction(SeoPageInterface $seoPage, EventDispatcherInterface $eventDispatcher, Ride $ride = null): Response
-    {
+    public function showAction(
+        WeatherRepository $weatherRepository,
+        SeoPageInterface $seoPage,
+        EventDispatcherInterface $eventDispatcher,
+        Ride $ride = null
+    ): Response {
         if (!$ride) {
             $this->redirectToRoute('caldera_criticalmass_calendar');
         }
@@ -72,7 +75,7 @@ class RideController extends AbstractController
         /**
          * @var Weather $weather
          */
-        $weather = $this->getWeatherRepository()->findCurrentWeatherForRide($ride);
+        $weather = $weatherRepository->findCurrentWeatherForRide($ride);
 
         if ($weather) {
             $weatherForecast = round($weather->getTemperatureEvening()) . ' °C, ' . $weather->getWeatherDescription();

@@ -120,10 +120,4 @@ trait RepositoryTrait
     {
         return $this->getDoctrine()->getRepository(Subride::class);
     }
-
-    /** @deprecated */
-    protected function getWeatherRepository(): WeatherRepository
-    {
-        return $this->getDoctrine()->getRepository(Weather::class);
-    }
 }

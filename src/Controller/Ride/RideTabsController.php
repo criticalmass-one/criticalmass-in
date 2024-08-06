@@ -9,6 +9,7 @@ use App\Entity\RideEstimate;
 use App\Entity\Weather;
 use App\Form\Type\RideDisableType;
 use App\Form\Type\RideEstimateType;
+use App\Repository\WeatherRepository;
 use Symfony\Component\HttpFoundation\Response;
 
 class RideTabsController extends AbstractController
@@ -61,12 +62,15 @@ class RideTabsController extends AbstractController
         ]);
     }
 
-    public function renderDetailsTabAction(Ride $ride, ObjectRouterInterface $objectRouter): Response
-    {
+    public function renderDetailsTabAction(
+        WeatherRepository $weatherRepository,
+        Ride $ride,
+        ObjectRouterInterface $objectRouter
+    ): Response {
         /**
          * @var Weather $weather
          */
-        $weather = $this->getWeatherRepository()->findCurrentWeatherForRide($ride);
+        $weather = $weatherRepository->findCurrentWeatherForRide($ride);
 
         if ($weather) {
             $weatherForecast = round($weather->getTemperatureEvening()) . ' °C, ' . $weather->getWeatherDescription();
