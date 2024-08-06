@@ -67,7 +67,7 @@ class PhotoManagementController extends AbstractController
 
         $registry->getManager()->flush();
 
-        return $this->createRedirectResponseForSavedReferer();
+        return $this->createRedirectResponseForSavedReferer($request);
     }
 
     /**
@@ -102,7 +102,7 @@ class PhotoManagementController extends AbstractController
 
         $registry->getManager()->flush();
 
-        return $this->createRedirectResponseForSavedReferer();
+        return $this->createRedirectResponseForSavedReferer($request);
     }
 
     /**
@@ -117,7 +117,7 @@ class PhotoManagementController extends AbstractController
 
         $registry->getManager()->flush();
 
-        return $this->createRedirectResponseForSavedReferer();
+        return $this->createRedirectResponseForSavedReferer($request);
     }
 
     /**
@@ -165,7 +165,7 @@ class PhotoManagementController extends AbstractController
             $registry->getManager()->flush();
         }
 
-        return $this->createRedirectResponseForSavedReferer();
+        return $this->createRedirectResponseForSavedReferer($request);
     }
 
     /**
@@ -204,7 +204,7 @@ class PhotoManagementController extends AbstractController
             ->rotate($angle)
             ->save();
 
-        return $this->createRedirectResponseForSavedReferer();
+        return $this->createRedirectResponseForSavedReferer($request);
     }
 
     /**
@@ -247,19 +247,19 @@ class PhotoManagementController extends AbstractController
     {
         $referer = $request->headers->get('referer');
 
-        $this->getSession()->set('referer', $referer);
+        $request->getSession()->set('referer', $referer);
 
         return $referer;
     }
 
-    protected function getSavedReferer(): ?string
+    protected function getSavedReferer(Request $request): ?string
     {
-        return $this->getSession()->get('referer');
+        return $request->getSession()->get('referer');
     }
 
-    protected function createRedirectResponseForSavedReferer(): RedirectResponse
+    protected function createRedirectResponseForSavedReferer(Request $request): RedirectResponse
     {
-        $referer = $this->getSavedReferer();
+        $referer = $this->getSavedReferer($request);
 
         if (!$referer) {
             throw new \Exception('No saved referer found to redirect to.');
