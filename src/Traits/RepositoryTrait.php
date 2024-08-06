@@ -44,12 +44,6 @@ trait RepositoryTrait
     }
 
     /** @deprecated */
-    protected function getCityRepository(): CityRepository
-    {
-        return $this->getDoctrine()->getRepository(City::class);
-    }
-
-    /** @deprecated */
     protected function getRegionRepository(): RegionRepository
     {
         return $this->getDoctrine()->getRepository(Region::class);

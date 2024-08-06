@@ -6,6 +6,7 @@ use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Board;
 use App\Event\View\ViewEvent;
 use App\Repository\BoardRepository;
+use App\Repository\CityRepository;
 use App\Repository\PostRepository;
 use App\Repository\ThreadRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -25,12 +26,13 @@ use Symfony\Component\HttpFoundation\Response;
 class BoardController extends AbstractController
 {
     public function overviewAction(
+        CityRepository $cityRepository,
         BoardRepository $boardRepository
     ): Response
     {
         return $this->render('Board/overview.html.twig', [
             'boards' => $boardRepository->findEnabledBoards(),
-            'cities' => $this->getCityRepository()->findCitiesWithBoard(),
+            'cities' => $cityRepository->findCitiesWithBoard(),
         ]);
     }
 

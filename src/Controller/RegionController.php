@@ -2,12 +2,17 @@
 
 namespace App\Controller;
 
+use App\Repository\CityRepository;
 use Symfony\Component\HttpFoundation\Response;
 
 class RegionController extends AbstractController
 {
-    public function indexAction(string $slug1 = null, string $slug2 = null, string $slug3 = null): Response
-    {
+    public function indexAction(
+        CityRepository $cityRepository,
+        string $slug1 = null,
+        string $slug2 = null,
+        string $slug3 = null
+    ): Response {
         $region = null;
 
         if ($slug1 && $slug2 && $slug3) {
@@ -20,15 +25,15 @@ class RegionController extends AbstractController
             $region = $this->getRegionRepository()->find(1);
         }
 
-        $cities = $this->getCityRepository()->findCitiesOfRegion($region);
-        $allCities = $this->getCityRepository()->findChildrenCitiesOfRegion($region);
+        $cities = $cityRepository->findCitiesOfRegion($region);
+        $allCities = $cityRepository->findChildrenCitiesOfRegion($region);
         $regions = $this->getRegionRepository()->findByParentRegion($region);
 
         $cityCounter = [];
 
         // do not name it $region as $region is already in use
         foreach ($regions as $region2) {
-            $cityCounter[$region2->getId()] = $this->getCityRepository()->countChildrenCitiesOfRegion($region2);
+            $cityCounter[$region2->getId()] = $cityRepository->countChildrenCitiesOfRegion($region2);
         }
 
         return $this->render('Region/index.html.twig', [
