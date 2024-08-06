@@ -8,6 +8,7 @@ use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Photo;
 use App\Entity\Ride;
 use App\Form\Type\PhotoCoordType;
+use App\Repository\PhotoRepository;
 use App\Repository\TrackRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -30,19 +31,25 @@ class PhotoManagementController extends AbstractController
     /**
      * @Security("is_granted('ROLE_USER')")
      */
-    public function listAction(UserInterface $user = null): Response
-    {
+    public function listAction(
+        PhotoRepository $photoRepository,
+        UserInterface $user = null
+    ): Response {
         return $this->render('PhotoManagement/user_list.html.twig', [
-            'result' => $this->getPhotoRepository()->findRidesWithPhotoCounterByUser($user),
+            'result' => $photoRepository->findRidesWithPhotoCounterByUser($user),
         ]);
     }
 
     /**
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function ridelistAction(Request $request, PaginatorInterface $paginator, Ride $ride): Response
-    {
-        $query = $this->getPhotoRepository()->buildQueryPhotosByRide($ride);
+    public function ridelistAction(
+        Request $request,
+        PaginatorInterface $paginator,
+        PhotoRepository $photoRepository,
+        Ride $ride
+    ): Response {
+        $query = $photoRepository->buildQueryPhotosByRide($ride);
 
         $pagination = $paginator->paginate(
             $query,
@@ -75,9 +82,14 @@ class PhotoManagementController extends AbstractController
      * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function manageAction(Request $request, PaginatorInterface $paginator, Ride $ride): Response
+    public function manageAction(
+        Request $request,
+        PaginatorInterface $paginator,
+        Ride $ride,
+        PhotoRepository $photoRepository
+    ): Response
     {
-        $query = $this->getPhotoRepository()->buildQueryPhotosByUserAndRide($this->getUser(), $ride);
+        $query = $photoRepository->buildQueryPhotosByUserAndRide($this->getUser(), $ride);
 
         $pagination = $paginator->paginate(
             $query,
@@ -143,12 +155,13 @@ class PhotoManagementController extends AbstractController
         Photo $photo,
         FormInterface $form,
         ManagerRegistry $registry,
-        TrackRepository $trackRepository
+        TrackRepository $trackRepository,
+        PhotoRepository $photoRepository
     ): Response {
         $this->saveReferer($request);
 
-        $previousPhoto = $this->getPhotoRepository()->getPreviousPhoto($photo);
-        $nextPhoto = $this->getPhotoRepository()->getNextPhoto($photo);
+        $previousPhoto = $photoRepository->getPreviousPhoto($photo);
+        $nextPhoto = $photoRepository->getNextPhoto($photo);
 
         $track = $trackRepository->findByUserAndRide($photo->getRide(), $this->getUser());
 
@@ -180,9 +193,10 @@ class PhotoManagementController extends AbstractController
      */
     public function relocateAction(
         TrackRepository $trackRepository,
+        PhotoRepository $photoRepository,
         Ride $ride
     ): Response {
-        $photos = $this->getPhotoRepository()->findPhotosByUserAndRide($this->getUser(), $ride);
+        $photos = $photoRepository->findPhotosByUserAndRide($this->getUser(), $ride);
 
         $track = $trackRepository->findByUserAndRide($ride, $this->getUser());
 

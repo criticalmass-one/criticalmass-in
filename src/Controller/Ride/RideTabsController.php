@@ -10,6 +10,7 @@ use App\Entity\Weather;
 use App\Form\Type\RideDisableType;
 use App\Form\Type\RideEstimateType;
 use App\Repository\LocationRepository;
+use App\Repository\PhotoRepository;
 use App\Repository\SocialNetworkProfileRepository;
 use App\Repository\SubrideRepository;
 use App\Repository\TrackRepository;
@@ -18,9 +19,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RideTabsController extends AbstractController
 {
-    public function renderPhotosTabAction(Ride $ride): Response
-    {
-        $photos = $this->getPhotoRepository()->findPhotosByRide($ride);
+    public function renderPhotosTabAction(
+        PhotoRepository $photoRepository,
+        Ride $ride
+    ): Response {
+        $photos = $photoRepository->findPhotosByRide($ride);
 
         return $this->render('RideTabs/GalleryTab.html.twig', [
             'ride' => $ride,

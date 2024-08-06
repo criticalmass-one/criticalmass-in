@@ -37,9 +37,5 @@ use Doctrine\Common\Persistence\ObjectRepository;
 /** @deprecated */
 trait RepositoryTrait
 {
-    /** @deprecated */
-    protected function getPhotoRepository(): PhotoRepository
-    {
-        return $this->getDoctrine()->getRepository(Photo::class);
-    }
+
 }

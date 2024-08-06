@@ -9,6 +9,7 @@ use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Event\View\ViewEvent;
 use App\Repository\BlockedCityRepository;
 use App\Repository\LocationRepository;
+use App\Repository\PhotoRepository;
 use App\Repository\RideRepository;
 use App\Repository\SocialNetworkProfileRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -47,11 +48,14 @@ class CityController extends AbstractController
     /**
      * @ParamConverter("city", class="App:City")
      */
-    public function listGalleriesAction(SeoPageInterface $seoPage, City $city): Response
-    {
+    public function listGalleriesAction(
+        PhotoRepository $photoRepository,
+        SeoPageInterface $seoPage,
+        City $city
+    ): Response {
         $seoPage->setDescription('Übersicht über Fotos von Critical-Mass-Touren aus ' . $city->getCity());
 
-        $result = $this->getPhotoRepository()->findRidesWithPhotoCounter($city);
+        $result = $photoRepository->findRidesWithPhotoCounter($city);
 
         return $this->render('City/gallery_list.html.twig', [
             'city' => $city,
@@ -68,6 +72,7 @@ class CityController extends AbstractController
         LocationRepository $locationRepository,
         SocialNetworkProfileRepository $socialNetworkProfileRepository,
         BlockedCityRepository $blockedCityRepository,
+        PhotoRepository $photoRepository,
         ElasticCityFinderInterface $elasticCityFinder,
         SeoPageInterface $seoPage,
         EventDispatcherInterface $eventDispatcher,
@@ -112,7 +117,7 @@ class CityController extends AbstractController
             'currentRide' => $rideRepository->findCurrentRideForCity($city),
             'nearCities' => $elasticCityFinder->findNearCities($city),
             'locations' => $locationRepository->findLocationsByCity($city),
-            'photos' => $this->getPhotoRepository()->findSomePhotos(8, null, $city),
+            'photos' => $photoRepository->findSomePhotos(8, null, $city),
             'rides' => $rideRepository->findRidesForCity($city, 'DESC', 6),
             'socialNetworkProfiles' => $socialNetworkProfileRepository->findByCity($city),
         ]);

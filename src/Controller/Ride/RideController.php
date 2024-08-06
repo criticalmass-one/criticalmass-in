@@ -7,6 +7,7 @@ use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Event\View\ViewEvent;
 use App\Repository\BlockedCityRepository;
 use App\Repository\ParticipationRepository;
+use App\Repository\PhotoRepository;
 use App\Repository\RideRepository;
 use App\Repository\SubrideRepository;
 use App\Repository\TrackRepository;
@@ -45,6 +46,7 @@ class RideController extends AbstractController
         SubrideRepository $subrideRepository,
         WeatherRepository $weatherRepository,
         TrackRepository $trackRepository,
+        PhotoRepository $photoRepository,
         SeoPageInterface $seoPage,
         EventDispatcherInterface $eventDispatcher,
         Ride $ride = null
@@ -104,7 +106,7 @@ class RideController extends AbstractController
             'city' => $ride->getCity(),
             'ride' => $ride,
             'tracks' => $trackRepository->findTracksByRide($ride),
-            'photos' => $this->getPhotoRepository()->findPhotosByRide($ride),
+            'photos' => $photoRepository->findPhotosByRide($ride),
             'subrides' => $subrideRepository->getSubridesForRide($ride),
             'dateTime' => new \DateTime(),
             'weatherForecast' => $weatherForecast,

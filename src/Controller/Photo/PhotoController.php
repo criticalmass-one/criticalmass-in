@@ -8,6 +8,7 @@ use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Entity\Photo;
 use App\Entity\Track;
 use App\Event\View\ViewEvent;
+use App\Repository\PhotoRepository;
 use App\Repository\TrackRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -58,12 +59,15 @@ class PhotoController extends AbstractController
         ]);
     }
 
-    public function ajaxphotoviewAction(Request $request, EventDispatcherInterface $eventDispatcher): Response
-    {
+    public function ajaxphotoviewAction(
+        Request $request,
+        PhotoRepository $photoRepository,
+        EventDispatcherInterface $eventDispatcher
+    ): Response {
         $photoId = $request->get('photoId');
 
         /** @var Photo $photo */
-        $photo = $this->getPhotoRepository()->find($photoId);
+        $photo = $photoRepository->find($photoId);
 
         if ($photo) {
             $eventDispatcher->dispatch(new ViewEvent($photo), ViewEvent::NAME);
