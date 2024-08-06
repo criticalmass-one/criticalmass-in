@@ -5,6 +5,7 @@ namespace App\Controller\Ride;
 use App\Entity\Ride;
 use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Event\View\ViewEvent;
+use App\Repository\ParticipationRepository;
 use App\Repository\SubrideRepository;
 use App\Repository\WeatherRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -35,6 +36,7 @@ class RideController extends AbstractController
      * @ParamConverter("ride", class="App:Ride", isOptional=true)
      */
     public function showAction(
+        ParticipationRepository $participationRepository,
         SubrideRepository $subrideRepository,
         WeatherRepository $weatherRepository,
         SeoPageInterface $seoPage,
@@ -86,7 +88,7 @@ class RideController extends AbstractController
         }
 
         if ($this->getUser()) {
-            $participation = $this->getParticipationRepository()->findParticipationForUserAndRide($this->getUser(),
+            $participation = $participationRepository->findParticipationForUserAndRide($this->getUser(),
                 $ride);
         } else {
             $participation = null;

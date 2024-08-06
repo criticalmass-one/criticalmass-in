@@ -102,10 +102,4 @@ trait RepositoryTrait
     {
         return $this->getDoctrine()->getRepository(Thread::class);
     }
-
-    /** @deprecated */
-    protected function getParticipationRepository(): ParticipationRepository
-    {
-        return $this->getDoctrine()->getRepository(Participation::class);
-    }
 }
