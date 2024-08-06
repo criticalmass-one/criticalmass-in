@@ -7,6 +7,7 @@ use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Entity\City;
 use App\Entity\Region;
 use App\Entity\Ride;
+use App\Repository\RideRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -15,9 +16,12 @@ class StatisticController extends AbstractController
     /**
      * @ParamConverter("city", class="App:City")
      */
-    public function citystatisticAction(SeoPageInterface $seoPage, City $city): Response
-    {
-        $rides = $this->getRideRepository()->findRidesForCity($city);
+    public function citystatisticAction(
+        SeoPageInterface $seoPage,
+        RideRepository $rideRepository,
+        City $city
+    ): Response {
+        $rides = $rideRepository->findRidesForCity($city);
 
         $seoPage->setDescription(sprintf('Critical-Mass-Statistiken aus %s: Teilnehmer, Fahrtdauer, Fahrtlänge, Touren', $city->getCity()));
 
@@ -27,8 +31,10 @@ class StatisticController extends AbstractController
         ]);
     }
 
-    public function overviewAction(SeoPageInterface $seoPage): Response
-    {
+    public function overviewAction(
+        SeoPageInterface $seoPage,
+        RideRepository $rideRepository
+    ): Response {
         /** @var Region $region */
         $region = $this->getRegionRepository()->find(3);
 
@@ -38,7 +44,7 @@ class StatisticController extends AbstractController
         $startDateTime = new \DateTime();
         $startDateTime->sub($twoYearInterval);
 
-        $rides = $this->getRideRepository()->findRidesInRegionInInterval($region, $startDateTime, $endDateTime);
+        $rides = $rideRepository->findRidesInRegionInInterval($region, $startDateTime, $endDateTime);
 
         $citiesWithoutEstimates = $this->findCitiesWithoutParticipationEstimates($rides);
         $rides = $this->filterRideList($rides, $citiesWithoutEstimates);

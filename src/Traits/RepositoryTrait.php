@@ -38,12 +38,6 @@ use Doctrine\Common\Persistence\ObjectRepository;
 trait RepositoryTrait
 {
     /** @deprecated */
-    protected function getRideRepository(): RideRepository
-    {
-        return $this->getDoctrine()->getRepository(Ride::class);
-    }
-
-    /** @deprecated */
     protected function getRegionRepository(): RegionRepository
     {
         return $this->getDoctrine()->getRepository(Region::class);

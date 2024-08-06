@@ -7,6 +7,7 @@ use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Event\View\ViewEvent;
 use App\Repository\BlockedCityRepository;
 use App\Repository\ParticipationRepository;
+use App\Repository\RideRepository;
 use App\Repository\SubrideRepository;
 use App\Repository\WeatherRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -17,9 +18,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RideController extends AbstractController
 {
-    public function listAction(): Response
-    {
-        $ridesResult = $this->getRideRepository()->findRidesInInterval();
+    public function listAction(
+        RideRepository $rideRepository
+    ): Response {
+        $ridesResult = $rideRepository->findRidesInInterval();
 
         $rides = [];
 

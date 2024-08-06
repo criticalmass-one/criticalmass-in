@@ -9,6 +9,7 @@ use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Event\View\ViewEvent;
 use App\Repository\BlockedCityRepository;
 use App\Repository\LocationRepository;
+use App\Repository\RideRepository;
 use App\Repository\SocialNetworkProfileRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -20,22 +21,26 @@ class CityController extends AbstractController
     /**
      * @ParamConverter("city", class="App:City")
      */
-    public function missingStatsAction(City $city): Response
-    {
+    public function missingStatsAction(
+        RideRepository $rideRepository,
+        City $city
+    ): Response {
         return $this->render('City/missing_stats.html.twig', [
             'city' => $city,
-            'rides' => $this->getRideRepository()->findRidesWithoutStatisticsForCity($city),
+            'rides' => $rideRepository->findRidesWithoutStatisticsForCity($city),
         ]);
     }
 
     /**
      * @ParamConverter("city", class="App:City")
      */
-    public function listRidesAction(City $city): Response
-    {
+    public function listRidesAction(
+        RideRepository $rideRepository,
+        City $city
+    ): Response {
         return $this->render('City/ride_list.html.twig', [
             'city' => $city,
-            'rides' => $this->getRideRepository()->findRidesForCity($city),
+            'rides' => $rideRepository->findRidesForCity($city),
         ]);
     }
 
@@ -59,6 +64,7 @@ class CityController extends AbstractController
      */
     public function showAction(
         Request $request,
+        RideRepository $rideRepository,
         LocationRepository $locationRepository,
         SocialNetworkProfileRepository $socialNetworkProfileRepository,
         BlockedCityRepository $blockedCityRepository,
@@ -103,11 +109,11 @@ class CityController extends AbstractController
 
         return $this->render('City/show.html.twig', [
             'city' => $city,
-            'currentRide' => $this->getRideRepository()->findCurrentRideForCity($city),
+            'currentRide' => $rideRepository->findCurrentRideForCity($city),
             'nearCities' => $elasticCityFinder->findNearCities($city),
             'locations' => $locationRepository->findLocationsByCity($city),
             'photos' => $this->getPhotoRepository()->findSomePhotos(8, null, $city),
-            'rides' => $this->getRideRepository()->findRidesForCity($city, 'DESC', 6),
+            'rides' => $rideRepository->findRidesForCity($city, 'DESC', 6),
             'socialNetworkProfiles' => $socialNetworkProfileRepository->findByCity($city),
         ]);
     }
@@ -115,9 +121,11 @@ class CityController extends AbstractController
     /**
      * @ParamConverter("city", class="App:City")
      */
-    public function getlocationsAction(City $city): Response
-    {
-        return new Response(json_encode($this->getRideRepository()->getLocationsForCity($city)), Response::HTTP_OK, [
+    public function getlocationsAction(
+        RideRepository $rideRepository,
+        City $city
+    ): Response {
+        return new Response(json_encode($rideRepository->getLocationsForCity($city)), Response::HTTP_OK, [
             'Content-Type' => 'text/json',
         ]);
     }

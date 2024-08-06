@@ -7,17 +7,19 @@ use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\City;
 use App\Entity\Ride;
 use App\Repository\CityRepository;
+use App\Repository\RideRepository;
 use Symfony\Component\HttpFoundation\Response;
 
 class PrefetchController extends AbstractController
 {
     public function prefetchAction(
+        RideRepository $rideRepository,
         CityRepository $cityRepository,
         ObjectRouterInterface $objectRouter
     ): Response {
         $result = [];
 
-        $rides = $this->getRideRepository()->findCurrentRides();
+        $rides = $rideRepository->findCurrentRides();
 
         /** @var Ride $ride */
         foreach ($rides as $ride) {
