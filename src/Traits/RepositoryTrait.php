@@ -114,10 +114,4 @@ trait RepositoryTrait
     {
         return $this->getDoctrine()->getRepository(SocialNetworkProfile::class);
     }
-
-    /** @deprecated */
-    protected function getSubrideRepository(): SubrideRepository
-    {
-        return $this->getDoctrine()->getRepository(Subride::class);
-    }
 }

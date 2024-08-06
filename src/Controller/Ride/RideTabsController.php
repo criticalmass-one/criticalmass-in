@@ -9,6 +9,7 @@ use App\Entity\RideEstimate;
 use App\Entity\Weather;
 use App\Form\Type\RideDisableType;
 use App\Form\Type\RideEstimateType;
+use App\Repository\SubrideRepository;
 use App\Repository\WeatherRepository;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -43,9 +44,11 @@ class RideTabsController extends AbstractController
         ]);
     }
 
-    public function renderSubridesTabAction(Ride $ride): Response
-    {
-        $subrides = $this->getSubrideRepository()->getSubridesForRide($ride);
+    public function renderSubridesTabAction(
+        Ride $ride,
+        SubrideRepository $subrideRepository
+    ): Response {
+        $subrides = $subrideRepository->getSubridesForRide($ride);
 
         return $this->render('RideTabs/SubridesTab.html.twig', [
             'ride' => $ride,

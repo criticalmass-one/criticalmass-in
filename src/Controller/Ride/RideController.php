@@ -5,6 +5,7 @@ namespace App\Controller\Ride;
 use App\Entity\Ride;
 use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Event\View\ViewEvent;
+use App\Repository\SubrideRepository;
 use App\Repository\WeatherRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Controller\AbstractController;
@@ -34,6 +35,7 @@ class RideController extends AbstractController
      * @ParamConverter("ride", class="App:Ride", isOptional=true)
      */
     public function showAction(
+        SubrideRepository $subrideRepository,
         WeatherRepository $weatherRepository,
         SeoPageInterface $seoPage,
         EventDispatcherInterface $eventDispatcher,
@@ -95,7 +97,7 @@ class RideController extends AbstractController
             'ride' => $ride,
             'tracks' => $this->getTrackRepository()->findTracksByRide($ride),
             'photos' => $this->getPhotoRepository()->findPhotosByRide($ride),
-            'subrides' => $this->getSubrideRepository()->getSubridesForRide($ride),
+            'subrides' => $subrideRepository->getSubridesForRide($ride),
             'dateTime' => new \DateTime(),
             'weatherForecast' => $weatherForecast,
             'participation' => $participation,
