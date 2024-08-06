@@ -38,12 +38,6 @@ use Doctrine\Common\Persistence\ObjectRepository;
 trait RepositoryTrait
 {
     /** @deprecated */
-    protected function getBoardRepository(): BoardRepository
-    {
-        return $this->getDoctrine()->getRepository(Board::class);
-    }
-
-    /** @deprecated */
     protected function getFrontpageTeaserRepository(): FrontpageTeaserRepository
     {
         return $this->getDoctrine()->getRepository(FrontpageTeaser::class);

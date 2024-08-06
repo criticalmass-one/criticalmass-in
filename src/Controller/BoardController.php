@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Board;
 use App\Event\View\ViewEvent;
+use App\Repository\BoardRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Entity\City;
@@ -21,10 +22,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BoardController extends AbstractController
 {
-    public function overviewAction(): Response
+    public function overviewAction(
+        BoardRepository $boardRepository
+    ): Response
     {
         return $this->render('Board/overview.html.twig', [
-            'boards' => $this->getBoardRepository()->findEnabledBoards(),
+            'boards' => $boardRepository->findEnabledBoards(),
             'cities' => $this->getCityRepository()->findCitiesWithBoard(),
         ]);
     }
