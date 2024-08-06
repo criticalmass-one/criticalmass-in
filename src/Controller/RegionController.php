@@ -3,12 +3,15 @@
 namespace App\Controller;
 
 use App\Repository\CityRepository;
+use App\Repository\RegionRepository;
+use App\Repository\RideRepository;
 use Symfony\Component\HttpFoundation\Response;
 
 class RegionController extends AbstractController
 {
     public function indexAction(
         CityRepository $cityRepository,
+        RegionRepository $regionRepository,
         string $slug1 = null,
         string $slug2 = null,
         string $slug3 = null
@@ -16,18 +19,18 @@ class RegionController extends AbstractController
         $region = null;
 
         if ($slug1 && $slug2 && $slug3) {
-            $region = $this->getRegionRepository()->findOneBySlug($slug3);
+            $region = $regionRepository->findOneBySlug($slug3);
         } elseif ($slug1 && $slug2) {
-            $region = $this->getRegionRepository()->findOneBySlug($slug2);
+            $region = $regionRepository->findOneBySlug($slug2);
         } elseif ($slug1) {
-            $region = $this->getRegionRepository()->findOneBySlug($slug1);
+            $region = $regionRepository->findOneBySlug($slug1);
         } else {
-            $region = $this->getRegionRepository()->find(1);
+            $region = $regionRepository->find(1);
         }
 
         $cities = $cityRepository->findCitiesOfRegion($region);
         $allCities = $cityRepository->findChildrenCitiesOfRegion($region);
-        $regions = $this->getRegionRepository()->findByParentRegion($region);
+        $regions = $regionRepository->findByParentRegion($region);
 
         $cityCounter = [];
 

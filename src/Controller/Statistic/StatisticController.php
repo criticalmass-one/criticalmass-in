@@ -7,6 +7,7 @@ use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Entity\City;
 use App\Entity\Region;
 use App\Entity\Ride;
+use App\Repository\RegionRepository;
 use App\Repository\RideRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,10 +34,11 @@ class StatisticController extends AbstractController
 
     public function overviewAction(
         SeoPageInterface $seoPage,
-        RideRepository $rideRepository
+        RideRepository $rideRepository,
+        RegionRepository $regionRepository
     ): Response {
         /** @var Region $region */
-        $region = $this->getRegionRepository()->find(3);
+        $region = $regionRepository->find(3);
 
         $endDateTime = new \DateTime();
         $twoYearInterval = new \DateInterval('P2Y');
