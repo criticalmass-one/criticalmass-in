@@ -2,7 +2,6 @@
 
 namespace App\Traits;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 /** @deprecated */
@@ -14,11 +13,5 @@ trait UtilTrait
         $session = new Session();
 
         return $session;
-    }
-
-    /** @deprecated  */
-    protected function getManager(): EntityManagerInterface
-    {
-        return $this->getDoctrine()->getManager();
     }
 }
