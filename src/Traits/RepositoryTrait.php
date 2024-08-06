@@ -5,8 +5,6 @@ namespace App\Traits;
 use App\Entity\BlockedCity;
 use App\Entity\Board;
 use App\Entity\City;
-use App\Entity\CityCycle;
-use App\Entity\CitySlug;
 use App\Entity\FrontpageTeaser;
 use App\Entity\Location;
 use App\Entity\Participation;
@@ -14,7 +12,6 @@ use App\Entity\Photo;
 use App\Entity\Post;
 use App\Entity\Region;
 use App\Entity\Ride;
-use App\Entity\RideEstimate;
 use App\Entity\SocialNetworkProfile;
 use App\Entity\Subride;
 use App\Entity\Thread;
@@ -22,7 +19,6 @@ use App\Entity\Track;
 use App\Entity\Weather;
 use App\Repository\BlockedCityRepository;
 use App\Repository\BoardRepository;
-use App\Repository\CityCycleRepository;
 use App\Repository\CityRepository;
 use App\Repository\FrontpageTeaserRepository;
 use App\Repository\LocationRepository;
@@ -30,7 +26,6 @@ use App\Repository\ParticipationRepository;
 use App\Repository\PhotoRepository;
 use App\Repository\PostRepository;
 use App\Repository\RegionRepository;
-use App\Repository\RideEstimateRepository;
 use App\Repository\RideRepository;
 use App\Repository\SocialNetworkProfileRepository;
 use App\Repository\SubrideRepository;
@@ -64,18 +59,6 @@ trait RepositoryTrait
     protected function getRideRepository(): RideRepository
     {
         return $this->getDoctrine()->getRepository(Ride::class);
-    }
-
-    /** @deprecated */
-    protected function getCityCycleRepository(): CityCycleRepository
-    {
-        return $this->getDoctrine()->getRepository(CityCycle::class);
-    }
-
-    /** @deprecated */
-    protected function getCitySlugRepository(): ObjectRepository
-    {
-        return $this->getDoctrine()->getRepository(CitySlug::class);
     }
 
     /** @deprecated */
@@ -142,11 +125,5 @@ trait RepositoryTrait
     protected function getWeatherRepository(): WeatherRepository
     {
         return $this->getDoctrine()->getRepository(Weather::class);
-    }
-
-    /** @deprecated */
-    protected function getRideEstimationRepository(): RideEstimateRepository
-    {
-        return $this->getDoctrine()->getRepository(RideEstimate::class);
     }
 }
