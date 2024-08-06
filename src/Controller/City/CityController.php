@@ -8,6 +8,7 @@ use App\Entity\City;
 use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Event\View\ViewEvent;
 use App\Repository\BlockedCityRepository;
+use App\Repository\LocationRepository;
 use App\Repository\SocialNetworkProfileRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -58,6 +59,7 @@ class CityController extends AbstractController
      */
     public function showAction(
         Request $request,
+        LocationRepository $locationRepository,
         SocialNetworkProfileRepository $socialNetworkProfileRepository,
         BlockedCityRepository $blockedCityRepository,
         ElasticCityFinderInterface $elasticCityFinder,
@@ -103,7 +105,7 @@ class CityController extends AbstractController
             'city' => $city,
             'currentRide' => $this->getRideRepository()->findCurrentRideForCity($city),
             'nearCities' => $elasticCityFinder->findNearCities($city),
-            'locations' => $this->getLocationRepository()->findLocationsByCity($city),
+            'locations' => $locationRepository->findLocationsByCity($city),
             'photos' => $this->getPhotoRepository()->findSomePhotos(8, null, $city),
             'rides' => $this->getRideRepository()->findRidesForCity($city, 'DESC', 6),
             'socialNetworkProfiles' => $socialNetworkProfileRepository->findByCity($city),

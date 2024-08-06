@@ -9,6 +9,7 @@ use App\Entity\RideEstimate;
 use App\Entity\Weather;
 use App\Form\Type\RideDisableType;
 use App\Form\Type\RideEstimateType;
+use App\Repository\LocationRepository;
 use App\Repository\SocialNetworkProfileRepository;
 use App\Repository\SubrideRepository;
 use App\Repository\WeatherRepository;
@@ -67,6 +68,7 @@ class RideTabsController extends AbstractController
     }
 
     public function renderDetailsTabAction(
+        LocationRepository $locationRepository,
         WeatherRepository $weatherRepository,
         SocialNetworkProfileRepository $socialNetworkProfileRepository,
         Ride $ride,
@@ -87,7 +89,7 @@ class RideTabsController extends AbstractController
             'action' => $objectRouter->generate($ride, 'caldera_criticalmass_ride_addestimate'),
         ]);
 
-        $location = $this->getLocationRepository()->findLocationForRide($ride);
+        $location = $locationRepository->findLocationForRide($ride);
 
         $disableForm = $this
             ->createForm(RideDisableType::class, $ride, [
