@@ -18,7 +18,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * @Vich\Uploadable
  */
-#[ORM\Table(name: 'fos_user_user')]
+#[ORM\Table(name: 'user')]
 #[ORM\Entity(repositoryClass: 'App\Repository\UserRepository')]
 #[ORM\HasLifecycleCallbacks]
 #[JMS\ExclusionPolicy('all')]
