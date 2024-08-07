@@ -24,7 +24,6 @@
         <env name="DATABASE_URL" value="mysql://root:root@127.0.0.1/criticalmass" />
         <env name="APP_SECRET" value="fwfu3pr9" />
         <env name="APP_ENV" value="test"/>
-        <env name="STATICMAPS_HOST" value="" />
         <env name="RABBITMQ_URL" value="" />
         <env name="ASSETS_VERSION" value="v2019-11-30" />
         <env name="REDIS_URL" value="redis://localhost"/>
