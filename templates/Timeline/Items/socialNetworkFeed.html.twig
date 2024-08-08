@@ -107,7 +107,7 @@
                 <div class="col-md-12">
                     <p>
                         <a href="{{ item.socialNetworkFeedItem.permalink }}">
-                            {{ item.socialNetworkFeedItem.text }}
+                            {{ item.socialNetworkFeedItem.text|striptags }}
                         </a>
                     </p>
                 </div>
