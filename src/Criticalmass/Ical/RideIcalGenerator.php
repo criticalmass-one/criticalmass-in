@@ -2,10 +2,26 @@
 
 namespace App\Criticalmass\Ical;
 
+use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Ride;
+use Sabre\VObject\Component\VCalendar;
+use Symfony\Component\Routing\Router;
 
-class RideIcalGenerator extends AbstractIcalGenerator
+class RideIcalGenerator implements RideIcalGeneratorInterface
 {
+    public function __construct(
+        private readonly VCalendar $calendar,
+        private readonly ObjectRouterInterface $objectRouter
+    )
+    {
+
+    }
+
+    public function getSerializedContent(): string
+    {
+        return $this->calendar->serialize();
+    }
+
     public function generateForRide(Ride $ride): RideIcalGenerator
     {
         $vevent = [];
