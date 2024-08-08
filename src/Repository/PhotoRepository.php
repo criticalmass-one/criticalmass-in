@@ -6,12 +6,18 @@ use App\Entity\City;
 use App\Entity\Photo;
 use App\Entity\Ride;
 use App\Entity\User;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 
-class PhotoRepository extends EntityRepository
+class PhotoRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Photo::class);
+    }
+
     public function findRidesWithPhotoCounterByUser(User $user): array
     {
         $builder = $this->createQueryBuilder('photo');

@@ -6,12 +6,17 @@ use App\Entity\City;
 use App\Entity\Ride;
 use App\Entity\Track;
 use App\Entity\User;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
-use function Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 
-class TrackRepository extends EntityRepository
+class TrackRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Track::class);
+    }
+
     /** @deprecated */
     public function findTracksByRide(Ride $ride): array
     {

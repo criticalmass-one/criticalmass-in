@@ -2,10 +2,17 @@
 
 namespace App\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use App\Entity\Alert;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-class AlertRepository extends EntityRepository
+class AlertRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Alert::class);
+    }
+
     public function findCurrentAlerts(): array
     {
         $qb = $this->createQueryBuilder('a');

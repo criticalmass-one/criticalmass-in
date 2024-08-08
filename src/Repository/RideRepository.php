@@ -7,10 +7,16 @@ use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Entity\Region;
 use App\Entity\Ride;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-class RideRepository extends EntityRepository
+class RideRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Ride::class);
+    }
+
     public function findCurrentRideForCity(City $city, bool $cycleMandatory = false, bool $slugsAllowed = true): ?Ride
     {
         $dateTime = \DateTime::createFromFormat('U', (string)time()); // this will allow to mock the clock in functional tests

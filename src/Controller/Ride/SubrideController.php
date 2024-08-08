@@ -4,6 +4,7 @@ namespace App\Controller\Ride;
 
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Ride;
+use App\Repository\RideRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Controller\AbstractController;
@@ -129,9 +130,11 @@ class SubrideController extends AbstractController
      * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function preparecopyAction(Ride $ride): Response
-    {
-        $oldRide = $this->getRideRepository()->getPreviousRideWithSubrides($ride);
+    public function preparecopyAction(
+        RideRepository $rideRepository,
+        Ride $ride
+    ): Response {
+        $oldRide = $rideRepository->getPreviousRideWithSubrides($ride);
 
         return $this->render('Subride/preparecopy.html.twig', [
             'oldRide' => $oldRide,
@@ -144,9 +147,13 @@ class SubrideController extends AbstractController
      * @ParamConverter("oldRide", class="App:Ride")
      * @ParamConverter("newDate", options={"format": "Y-m-d"})
      */
-    public function copyAction(Ride $oldRide, \DateTime $newDate, ObjectRouterInterface $objectRouter): Response
-    {
-        $ride = $this->getRideRepository()->findCityRideByDate($oldRide->getCity(), $newDate);
+    public function copyAction(
+        Ride $oldRide,
+        \DateTime $newDate,
+        ObjectRouterInterface $objectRouter,
+        RideRepository $rideRepository
+    ): Response {
+        $ride = $rideRepository->findCityRideByDate($oldRide->getCity(), $newDate);
 
         $em = $this->getDoctrine()->getManager();
 

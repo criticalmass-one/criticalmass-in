@@ -2,11 +2,17 @@
 
 namespace App\Repository;
 
-use App\Entity\City;
-use Doctrine\ORM\EntityRepository;
+use App\Entity\FrontpageTeaser;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-class FrontpageTeaserRepository extends EntityRepository
+class FrontpageTeaserRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, FrontpageTeaser::class);
+    }
+
     public function findForFrontpage(): array
     {
         $dateTime = new \DateTime();

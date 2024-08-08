@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\City;
 use App\Entity\Location;
 use App\Entity\Ride;
+use App\Repository\LocationRepository;
 use FOS\ElasticaBundle\Finder\FinderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,9 +16,11 @@ class LocationController extends AbstractController
     /**
      * @ParamConverter("city", class="App:City")
      */
-    public function listlocationsAction(City $city): Response
-    {
-        $locations = $this->getLocationRepository()->findLocationsByCity($city);
+    public function listlocationsAction(
+        LocationRepository $locationRepository,
+        City $city
+    ): Response {
+        $locations = $locationRepository->findLocationsByCity($city);
 
         return $this->render('Location/list.html.twig', [
             'locations' => $locations,
@@ -27,11 +30,13 @@ class LocationController extends AbstractController
     /**
      * @ParamConverter("location", class="App:Location")
      */
-    public function showAction(Location $location): Response
-    {
+    public function showAction(
+        LocationRepository $locationRepository,
+        Location $location
+    ): Response {
         $rides = $this->findRidesForLocation($location);
 
-        $locations = $this->getLocationRepository()->findLocationsByCity($location->getCity());
+        $locations = $locationRepository->findLocationsByCity($location->getCity());
 
         return $this->render('Location/show.html.twig', [
             'location' => $location,
@@ -44,9 +49,11 @@ class LocationController extends AbstractController
     /**
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function rideAction(Ride $ride): Response
-    {
-        $location = $this->getLocationRepository()->findLocationForRide($ride);
+    public function rideAction(
+        LocationRepository $locationRepository,
+        Ride $ride
+    ): Response {
+        $location = $locationRepository->findLocationForRide($ride);
 
         if (!$location) {
             throw new NotFoundHttpException();
@@ -54,7 +61,7 @@ class LocationController extends AbstractController
 
         $rides = $this->findRidesForLocation($location);
 
-        $locations = $this->getLocationRepository()->findLocationsByCity($ride->getCity());
+        $locations = $locationRepository->findLocationsByCity($ride->getCity());
 
         return $this->render('Location/show.html.twig', [
             'location' => $location,
