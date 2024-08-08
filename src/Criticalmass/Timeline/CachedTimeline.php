@@ -10,16 +10,7 @@ use Twig\Environment;
 
 class CachedTimeline extends Timeline
 {
-    protected int $ttl;
-
-    public function __construct(ManagerRegistry $doctrine, Environment $twigEnvironment, FeatureManagerInterface $featureManager, int $cachedTimelineTtl = 300)
-    {
-        $this->doctrine = $doctrine;
-        $this->twigEnvironment = $twigEnvironment;
-        $this->ttl = $cachedTimelineTtl;
-
-        parent::__construct($doctrine, $twigEnvironment, $featureManager);
-    }
+    private const int TTL = 300;
 
     public function execute(): TimelineInterface
     {
@@ -35,11 +26,11 @@ class CachedTimeline extends Timeline
 
         $cache = new FilesystemAdapter(
             'criticalmass-timeline',
-            $this->ttl
+            self::TTL
         );
 
         $this->contentList = $cache->get($cacheKey, function (ItemInterface $item) {
-            $item->expiresAfter($this->ttl);
+            $item->expiresAfter(self::TTL);
 
             $this->process();
 
