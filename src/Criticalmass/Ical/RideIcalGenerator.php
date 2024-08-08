@@ -60,6 +60,8 @@ class RideIcalGenerator implements RideIcalGeneratorInterface
             $vevent['UID'] = $uid;
         }
 
+        $vevent['URL'] = $this->objectRouter->generate($ride, null, [], Router::ABSOLUTE_URL);
+
         $this->calendar->VEVENT = $vevent;
 
         if (!$uid) {
