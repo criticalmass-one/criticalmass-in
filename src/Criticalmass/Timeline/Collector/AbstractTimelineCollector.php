@@ -8,18 +8,13 @@ use Doctrine\Persistence\ManagerRegistry;
 abstract class AbstractTimelineCollector implements TimelineCollectorInterface
 {
     protected string $entityClass;
-
-    protected ManagerRegistry $doctrine;
-
     protected array $items = [];
-
     protected ?\DateTime $startDateTime = null;
-
     protected ?\DateTime $endDateTime = null;
 
-    public function __construct(ManagerRegistry $doctrine)
+    public function __construct(protected readonly ManagerRegistry $doctrine)
     {
-        $this->doctrine = $doctrine;
+
     }
 
     public function setDateRange(\DateTime $startDateTime, \DateTime $endDateTime): TimelineCollectorInterface

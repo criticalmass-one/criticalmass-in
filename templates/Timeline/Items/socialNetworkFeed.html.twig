@@ -89,4 +89,29 @@
             </div>
         </div>
     {% endif %}
+
+    {% if item.socialNetworkFeedItem.socialNetworkProfile.network == 'mastodon' %}
+        <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="{{ objectPath(city) }}">
+                        <strong>
+                            {{ city.title }}
+                        </strong>
+                    </a>
+                    hat etwas auf Mastodon veröffentlicht:
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <p>
+                        <a href="{{ item.socialNetworkFeedItem.permalink }}">
+                            {{ item.socialNetworkFeedItem.text }}
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 </div>

@@ -21,8 +21,11 @@ class Timeline implements TimelineInterface
 
     protected ?\DateTime $endDateTime = null;
 
-    public function __construct(protected ManagerRegistry $doctrine, protected Environment $twigEnvironment, protected FeatureManagerInterface $featureManager)
-    {
+    public function __construct(
+        protected readonly ManagerRegistry $doctrine,
+        protected readonly Environment $twigEnvironment,
+        protected readonly FeatureManagerInterface $featureManager
+    ) {
     }
 
     public function addCollector(AbstractTimelineCollector $collector): TimelineInterface
