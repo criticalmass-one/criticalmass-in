@@ -4,17 +4,17 @@
 
 {% block breadcrumb %}
     <li>
-        <a href="{{ objectPath(ride.city) }}">
+        <a href="{{ object_path(ride.city) }}">
             {{ ride.city.title }}
         </a>
     </li>
     <li>
-        <a href="{{ objectPath(ride) }}">
+        <a href="{{ object_path(ride) }}">
             {{ ride.title }}
         </a>
     </li>
     <li>
-        <a href="{{ objectPath(ride, 'caldera_criticalmass_photo_manage') }}">
+        <a href="{{ object_path(ride, 'caldera_criticalmass_photo_manage') }}">
             Fotos verwalten
         </a>
     </li>

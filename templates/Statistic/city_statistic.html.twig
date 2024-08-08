@@ -10,7 +10,7 @@
     </li>
 
     <li>
-        <a href="{{ objectPath(city) }}">
+        <a href="{{ object_path(city) }}">
             {{ city.city }}
         </a>
     </li>
@@ -34,7 +34,7 @@
                     Wie viele, wie lange, wohin? Diese Seite bereitet die statistischen Daten auf, die von Teilnehmern
                     der Critical Mass in {{ city.city }} nach einer Tour eingearbeitet worden sind &mdash; entweder von
                     den importieren GPX-Tracks oder mit Schätzungen der Teilnehmerzahlen. Schau dir außerdem die <a
-                            href="{{ objectPath(city, 'caldera_criticalmass_city_missingstats') }}">Liste
+                            href="{{ object_path(city, 'caldera_criticalmass_city_missingstats') }}">Liste
                         von Touren ohne Statistiken</a> an, um eventuell Zahlenmaterial nachzutragen.
                 </p>
             </div>

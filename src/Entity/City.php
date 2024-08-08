@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation as DataQuery;
-use App\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Router\Attribute as Routing;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AuditableInterface;
@@ -26,8 +26,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @Vich\Uploadable
- * @Routing\DefaultRoute(name="caldera_criticalmass_city_show")
  */
+#[Routing\DefaultRoute(name: 'caldera_criticalmass_city_show')]
 #[ORM\Table(name: 'city')]
 #[ORM\Entity(repositoryClass: 'App\Repository\CityRepository')]
 #[JMS\ExclusionPolicy('all')]
@@ -56,9 +56,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     #[ORM\JoinColumn(name: 'region_id', referencedColumnName: 'id')]
     protected ?Region $region = null;
 
-    /**
-     * @Routing\RouteParameter(name="citySlug")
-     */
+    #[Routing\RouteParameter(name: 'citySlug')]
     #[ORM\ManyToOne(targetEntity: 'CitySlug', inversedBy: 'cities')]
     #[ORM\JoinColumn(name: 'main_slug_id', referencedColumnName: 'id')]
     #[JMS\Expose]

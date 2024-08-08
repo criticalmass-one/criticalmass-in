@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Router\Attribute as Routing;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
@@ -19,9 +19,7 @@ class CitySlug implements RouteableInterface
     #[JMS\Groups(['ride-list'])]
     protected ?int $id = null;
 
-    /**
-     * @Routing\RouteParameter(name="citySlug")
-     */
+    #[Routing\RouteParameter(name: 'citySlug')]
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     #[JMS\Expose]
     #[JMS\Groups(['ride-list'])]
