@@ -82,7 +82,7 @@ class PostController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->managerRegistry->getManager();
 
             $post->setUser($this->getUser());
             $em->persist($post);

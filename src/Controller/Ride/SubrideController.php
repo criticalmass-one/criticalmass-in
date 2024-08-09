@@ -57,7 +57,7 @@ class SubrideController extends AbstractController
         $actionUrl = $objectRouter->generate($subride->getRide(), 'caldera_criticalmass_subride_add');
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->managerRegistry->getManager();
             $em->persist($form->getData());
             $em->flush();
 
@@ -111,7 +111,7 @@ class SubrideController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->managerRegistry->getManager();
             $em->flush();
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
@@ -155,7 +155,7 @@ class SubrideController extends AbstractController
     ): Response {
         $ride = $rideRepository->findCityRideByDate($oldRide->getCity(), $newDate);
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->managerRegistry->getManager();
 
         /** @var Subride $oldSubride */
         foreach ($oldRide->getSubrides() as $oldSubride) {

@@ -46,7 +46,7 @@ class ProfilePhotoController extends AbstractController
 
             $user->setOwnProfilePhoto(true);
 
-            $this->getDoctrine()->getManager()->flush();
+            $this->managerRegistry->getManager()->flush();
         }
 
         return $this->uploadGetAction($request, $user, $form);
