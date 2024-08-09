@@ -5,7 +5,7 @@ namespace App\Entity;
 use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation as DataQuery;
 use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
 use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
-use App\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Router\Attribute as Routing;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AuditableInterface;
@@ -15,7 +15,6 @@ use App\EntityInterface\ParticipateableInterface;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
-use App\EntityInterface\StaticMapableInterface;
 use App\Validator\Constraint as CriticalAssert;
 use Caldera\GeoBasic\Coord\Coord;
 use Caldera\GeoBasic\Coord\CoordInterface;
@@ -32,14 +31,14 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * @CriticalAssert\SingleRideForDay
  * @Vich\Uploadable
- * @Routing\DefaultRoute(name="caldera_criticalmass_ride_show")
  */
+#[Routing\DefaultRoute(name: 'caldera_criticalmass_ride_show')]
 #[ORM\Table(name: 'ride')]
 #[ORM\Entity(repositoryClass: 'App\Repository\RideRepository')]
 #[ORM\Index(fields: ['dateTime'], name: 'ride_date_time_index')]
 #[ORM\Index(fields: ['createdAt'], name: 'ride_created_at_index')]
 #[ORM\Index(fields: ['updatedAt'], name: 'ride_updated_at_index')]
-class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, StaticMapableInterface, OrderedEntityInterface, CoordinateInterface
+class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, OrderedEntityInterface, CoordinateInterface
 {
     /**
      * @DataQuery\Sortable
@@ -61,10 +60,10 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     protected ?CityCycle $cycle = null;
 
     /**
-     * @Routing\RouteParameter(name="citySlug")
      * @OE\Identical()
      * @DataQuery\Queryable
      */
+    #[Routing\RouteParameter(name: 'citySlug')]
     #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'rides', fetch: 'LAZY')]
     #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
     #[Groups(['extended-ride-list'])]

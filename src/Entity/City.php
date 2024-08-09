@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation as DataQuery;
-use App\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Router\Attribute as Routing;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AuditableInterface;
@@ -14,7 +14,6 @@ use App\EntityInterface\ElasticSearchPinInterface;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
-use App\EntityInterface\StaticMapableInterface;
 use Caldera\GeoBasic\Coord\Coord;
 use Caldera\GeoBasic\Coord\CoordInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -29,12 +28,12 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @Vich\Uploadable
- * @Routing\DefaultRoute(name="caldera_criticalmass_city_show")
  */
+#[Routing\DefaultRoute(name: 'caldera_criticalmass_city_show')]
 #[ORM\Table(name: 'city')]
 #[ORM\Entity(repositoryClass: 'App\Repository\CityRepository')]
 #[ORM\Index(fields: ['createdAt'], name: 'city_created_at_index')]
-class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, AutoParamConverterAble, SocialNetworkProfileAble, PostableInterface, StaticMapableInterface, CoordinateInterface
+class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, AutoParamConverterAble, SocialNetworkProfileAble, PostableInterface, CoordinateInterface
 {
     /**
      * @DataQuery\Sortable
@@ -59,9 +58,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     #[Ignore]
     protected ?Region $region = null;
 
-    /**
-     * @Routing\RouteParameter(name="citySlug")
-     */
+    #[Routing\RouteParameter(name: 'citySlug')]
     #[ORM\ManyToOne(targetEntity: 'CitySlug', inversedBy: 'cities')]
     #[ORM\JoinColumn(name: 'main_slug_id', referencedColumnName: 'id')]
     #[Groups(['ride-list'])]

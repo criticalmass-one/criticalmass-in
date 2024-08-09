@@ -59,8 +59,6 @@ class RideController extends AbstractController
             $seoPage->setPreviewPhoto($ride);
         } elseif ($ride->getFeaturedPhoto()) {
             $seoPage->setPreviewPhoto($ride->getFeaturedPhoto());
-        } else {
-            $seoPage->setPreviewMap($ride);
         }
 
         if ($ride->getSocialDescription()) {

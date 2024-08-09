@@ -6,7 +6,7 @@ use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation as DataQuery;
 use App\Criticalmass\Image\PhotoManipulator\PhotoInterface\ManipulateablePhotoInterface;
 use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
 use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
-use App\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Router\Attribute as Routing;
 use App\Criticalmass\UploadFaker\FakeUploadable;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AutoParamConverterAble;
@@ -15,7 +15,6 @@ use App\EntityInterface\ElasticSearchPinInterface;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
-use App\EntityInterface\StaticMapableInterface;
 use Caldera\GeoBasic\Coord\Coord;
 use Caldera\GeoBasic\Coord\CoordInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -28,18 +27,18 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @Vich\Uploadable
- * @Routing\DefaultRoute(name="caldera_criticalmass_photo_show_ride")
  * @OE\OrderedEntity()
  */
+#[Routing\DefaultRoute(name: 'caldera_criticalmass_photo_show_ride')]
 #[ORM\Table(name: 'photo')]
 #[ORM\Entity(repositoryClass: 'App\Repository\PhotoRepository')]
 #[ORM\Index(fields: ['exifCreationDate'], name: 'photo_exif_creation_date_index')]
-class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, StaticMapableInterface, OrderedEntityInterface, ElasticSearchPinInterface, CoordinateInterface
+class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, OrderedEntityInterface, ElasticSearchPinInterface, CoordinateInterface
 {
     /**
-     * @Routing\RouteParameter(name="photoId")
      * @DataQuery\Sortable()
      */
+    #[Routing\RouteParameter(name: 'photoId')]
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
@@ -51,19 +50,19 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     protected ?User $user = null;
 
     /**
-     * @Routing\RouteParameter(name="rideIdentifier")
      * @OE\Identical()
      * @DataQuery\Queryable
      */
+    #[Routing\RouteParameter(name: 'rideIdentifier')]
     #[ORM\ManyToOne(targetEntity: 'Ride', inversedBy: 'photos')]
     #[ORM\JoinColumn(name: 'ride_id', referencedColumnName: 'id')]
     #[Ignore]
     protected ?Ride $ride = null;
 
     /**
-     * @Routing\RouteParameter(name="citySlug")
      * @DataQuery\Queryable
      */
+    #[Routing\RouteParameter(name: 'citySlug')]
     #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'photos')]
     #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
     #[Ignore]

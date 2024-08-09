@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Router\Attribute as Routing;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -29,17 +29,13 @@ class CityCycle implements RouteableInterface
     const WEEK_FOURTH = 4;
     const WEEK_LAST = 0;
 
-    /**
-     * @Routing\RouteParameter(name="cityCycleId")
-     */
+    #[Routing\RouteParameter(name: 'cityCycleId')]
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
-    /**
-     * @Routing\RouteParameter(name="citySlug")
-     */
+    #[Routing\RouteParameter(name: 'citySlug')]
     #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'cycles')]
     #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
     #[Ignore]

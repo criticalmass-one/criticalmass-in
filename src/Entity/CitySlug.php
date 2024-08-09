@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Router\Attribute as Routing;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -17,9 +17,7 @@ class CitySlug implements RouteableInterface
     #[Groups(['ride-list'])]
     protected ?int $id = null;
 
-    /**
-     * @Routing\RouteParameter(name="citySlug")
-     */
+    #[Routing\RouteParameter(name: 'citySlug')]
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     #[Groups(['ride-list'])]
     protected ?string $slug = null;

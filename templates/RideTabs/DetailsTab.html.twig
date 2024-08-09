@@ -4,13 +4,13 @@
             <div class="btn-group pull-right" style="margin-top: 16px;">
             {% if app.user %}
                 {% if not ride.enabled %}
-                    <a class="btn btn-success" href="{{ objectPath(ride, 'caldera_criticalmass_ride_enable') }}"
+                    <a class="btn btn-success" href="{{ object_path(ride, 'caldera_criticalmass_ride_enable') }}"
                        title="Tour freischalten">
                         <i class="far fa-unlock-alt"></i>
                         Tour wieder aktivieren
                     </a>
                 {% else %}
-                    <a class="btn btn-success" href="{{ objectPath(ride, 'caldera_criticalmass_ride_edit') }}"
+                    <a class="btn btn-success" href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}"
                        title="Tour bearbeiten">
                         <i class="far fa-cogs"></i>
                         Tour editieren
@@ -23,13 +23,13 @@
                 </button>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="{{ objectPath(ride, 'criticalmass_socialnetwork_ride_list') }}">
+                        <a href="{{ object_path(ride, 'criticalmass_socialnetwork_ride_list') }}">
                             soziale Netzwerke verwalten
                         </a>
                     </li>
 
                     <li>
-                        <a href="{{ objectPath(ride, 'caldera_criticalmass_ride_socialpreview') }}">
+                        <a href="{{ object_path(ride, 'caldera_criticalmass_ride_socialpreview') }}">
                             Vorschau für soziale Netzwerke
                         </a>
                     </li>
@@ -92,7 +92,7 @@
                 <div class="alert alert-info">
                     <strong>Huch?</strong>
                     Schade, bislang hat noch niemand Informationen über diese Tour hinterlegt. Wenn du Lust und Zeit
-                    hast, kannst du {{ ride.title }} <a href="{{ objectPath(ride, 'caldera_criticalmass_ride_edit') }}">hier editieren</a>:
+                    hast, kannst du {{ ride.title }} <a href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}">hier editieren</a>:
 
                     <ul>
                         <li>
@@ -109,7 +109,7 @@
                     </ul>
 
                     <p class="text-center margin-top-medium">
-                        <a href="{{ objectPath(ride, 'caldera_criticalmass_ride_edit') }}"
+                        <a href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}"
                            class="btn btn-primary btn-lg">
                             Tour editieren
                         </a>
