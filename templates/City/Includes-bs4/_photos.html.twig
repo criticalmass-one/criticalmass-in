@@ -2,7 +2,7 @@
 <div class="card d-md-block d-lg-block mb-4">
     <div class="card-body">
         <h6 class="mb-3">
-            Fotos aus {{ city.city }} <small>· <a href="{{ objectPath(city, 'caldera_criticalmass_city_listgalleries') }}">Liste</a></small>
+            Fotos aus {{ city.city }} <small>· <a href="{{ object_path(city, 'caldera_criticalmass_city_listgalleries') }}">Liste</a></small>
         </h6>
         <div data-grid="images" data-target-height="150" class="text-center">
         {% for photo in photos %}

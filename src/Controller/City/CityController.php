@@ -108,8 +108,6 @@ class CityController extends AbstractController
 
         if ($city->getImageName()) {
             $seoPage->setPreviewPhoto($city);
-        } else {
-            $seoPage->setPreviewMap($city);
         }
 
         return $this->render('City/show.html.twig', [

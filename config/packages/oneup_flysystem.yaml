@@ -2,22 +2,22 @@ oneup_flysystem:
     adapters:
         photo_photo_adapter:
             local:
-                directory: '%upload_destination.photo%'
+                location: '%upload_destination.photo%'
         user_photo_adapter:
             local:
-                directory: '%upload_destination.user_photo%'
+                location: '%upload_destination.user_photo%'
         city_image_adapter:
             local:
-                directory: '%upload_destination.city_photo%'
+                location: '%upload_destination.city_photo%'
         ride_image_adapter:
             local:
-                directory: '%upload_destination.ride_photo%'
+                location: '%upload_destination.ride_photo%'
         frontpage_teaser_adapter:
             local:
-                directory: '%upload_destination.frontpage_teaser%'
+                location: '%upload_destination.frontpage_teaser%'
         track_track_adapter:
             local:
-                directory: '%upload_destination.track%'
+                location: '%upload_destination.track%'
 
     filesystems:
         flysystem_photo_photo:

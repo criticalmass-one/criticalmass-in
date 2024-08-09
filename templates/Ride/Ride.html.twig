@@ -50,7 +50,7 @@
                 {% if pastRide and ride.enabled %}
                     {% if feature('photos') %}
                         <li role="presentation">
-                            <a href="{{ objectPath(ride, 'caldera_criticalmass_photo_ride_list') }}">
+                            <a href="{{ object_path(ride, 'caldera_criticalmass_photo_ride_list') }}">
                                 <i class="far fa-camera"></i>
                                 Galerie
                                 <span class="badge">
@@ -86,8 +86,8 @@
 
 <script>
     var pageOptions = {
-        photoViewPageUrl: '{{ objectPath(ride, 'caldera_criticalmass_photo_show_ride', { photoId: 'photoId'}) }}',
-        photoCounterUrl: '{{ objectPath(ride, 'caldera_criticalmass_photo_ajaxview') }}',
+        photoViewPageUrl: '{{ object_path(ride, 'caldera_criticalmass_photo_show_ride', { photoId: 'photoId'}) }}',
+        photoCounterUrl: '{{ object_path(ride, 'caldera_criticalmass_photo_ajaxview') }}',
         citySlug: '{{ city.slug }}',
         rideDate: '{{ ride.dateTime|date('Y-m-d') }}'
     };
