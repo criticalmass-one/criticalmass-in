@@ -14,10 +14,4 @@ abstract class AbstractController extends AbstractFrameworkController
     public function __construct(private readonly AuthorizationCheckerInterface $authorizationChecker)
     {
     }
-
-    protected function isLoggedIn(): bool
-    {
-        return $this->authorizationChecker
-            ->isGranted('IS_AUTHENTICATED_FULLY');
-    }
 }
