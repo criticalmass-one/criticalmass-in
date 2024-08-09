@@ -5,6 +5,10 @@ namespace App\Controller;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Board;
 use App\Event\View\ViewEvent;
+use App\Repository\BoardRepository;
+use App\Repository\CityRepository;
+use App\Repository\PostRepository;
+use App\Repository\ThreadRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Entity\City;
@@ -21,11 +25,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BoardController extends AbstractController
 {
-    public function overviewAction(): Response
+    public function overviewAction(
+        CityRepository $cityRepository,
+        BoardRepository $boardRepository
+    ): Response
     {
         return $this->render('Board/overview.html.twig', [
-            'boards' => $this->getBoardRepository()->findEnabledBoards(),
-            'cities' => $this->getCityRepository()->findCitiesWithBoard(),
+            'boards' => $boardRepository->findEnabledBoards(),
+            'cities' => $cityRepository->findCitiesWithBoard(),
         ]);
     }
 
@@ -33,19 +40,23 @@ class BoardController extends AbstractController
      * @ParamConverter("city", class="App:City", isOptional="true")
      * @ParamConverter("board", class="App:Board", isOptional="true")
      */
-    public function listThreadsAction(ObjectRouterInterface $objectRouter, Board $board = null, City $city = null): Response
-    {
+    public function listThreadsAction(
+        ThreadRepository $threadRepository,
+        ObjectRouterInterface $objectRouter,
+        Board $board = null,
+        City $city = null
+    ): Response {
         $threads = [];
         $newThreadUrl = '';
 
         if ($board) {
-            $threads = $this->getThreadRepository()->findThreadsForBoard($board);
+            $threads = $threadRepository->findThreadsForBoard($board);
 
             $newThreadUrl = $objectRouter->generate($board, 'caldera_criticalmass_board_addthread');
         }
 
         if ($city) {
-            $threads = $this->getThreadRepository()->findThreadsForCity($city);
+            $threads = $threadRepository->findThreadsForCity($city);
 
             $newThreadUrl = $objectRouter->generate($city, 'caldera_criticalmass_board_addcitythread');
         }
@@ -60,9 +71,12 @@ class BoardController extends AbstractController
     /**
      * @ParamConverter("thread", class="App:Thread")
      */
-    public function viewThreadAction(EventDispatcherInterface $eventDispatcher, Thread $thread): Response
-    {
-        $posts = $this->getPostRepository()->findPostsForThread($thread);
+    public function viewThreadAction(
+        PostRepository $postRepository,
+        EventDispatcherInterface $eventDispatcher,
+        Thread $thread
+    ): Response {
+        $posts = $postRepository->findPostsForThread($thread);
         $board = $thread->getCity() ?? $thread->getBoard();
 
         $eventDispatcher->dispatch(new ViewEvent($thread), ViewEvent::NAME);
