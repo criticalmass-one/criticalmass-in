@@ -6,50 +6,83 @@ use App\Criticalmass\EntityMerger\EntityMergerInterface;
 use App\Entity\City;
 use App\Entity\SocialNetworkFeedItem;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
-use Nelmio\ApiDocBundle\Annotation\Operation;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[OA\Tag(name: "Social Network Feed Item")]
 class SocialNetworkFeedItemController extends BaseController
 {
     /**
-     * @Operation(
-     *     tags={"Social Network Feed Item"},
-     *     summary="Retrieve a list of social network feed items assigned to profiles of a city",
-     *     @OA\Response(
-     *         response="200",
-     *         description="Returned when successful"
-     *     )
-     * )
+     * Returns a list of social network feed items for a specified city.
+     *
      * @ParamConverter("city", class="App:City")
      */
+    #[OA\Response(
+        response: 200,
+        description: "Returned when successful"
+    )]
+    #[OA\Parameter(
+        name: 'citySlug',
+        in: 'path',
+        description: 'Provide a city slug for the corresponding socialnetwork feed item',
+        schema: new OA\Schema(type: 'string'),
+        required: true
+    )]
+    #[OA\Parameter(
+        name: 'uniqueIdentifier',
+        in: 'query',
+        description: 'Only return items matching this unique identifier',
+        schema: new OA\Schema(type: 'string'),
+        required: false
+    )]
+    #[OA\Parameter(
+        name: 'networkIdentifier',
+        in: 'query',
+        description: 'Limit results to the specified social network',
+        schema: new OA\Schema(type: 'string'),
+        required: false
+    )]
     #[Route(path: '/{citySlug}/socialnetwork-feeditems', name: 'caldera_criticalmass_rest_socialnetwork_feeditems_citylist', methods: ['GET'])]
     public function listSocialNetworkFeedItemsCityAction(Request $request, City $city): JsonResponse
     {
         $uniqueIdentifier = $request->get('uniqueIdentifier');
         $networkIdentifier = $request->get('networkIdentifier');
 
-        $profileList = $this->managerRegistry->getRepository(SocialNetworkFeedItem::class)->findByCityAndProperties($city, $uniqueIdentifier, $networkIdentifier);
+        $feedItemList = $this->managerRegistry->getRepository(SocialNetworkFeedItem::class)->findByCityAndProperties($city, $uniqueIdentifier, $networkIdentifier);
 
-        return $this->createStandardResponse($profileList);
+        return $this->createStandardResponse($feedItemList);
     }
 
     /**
      * Update properties of a social network feed item.
-     *
-     * @Operation(
-     *     tags={"Social Network Feed Item"},
-     *     summary="Update properties of a social network feed item",
-     *     @OA\Response(
-     *         response="200",
-     *         description="Returned when successful"
-     *     )
-     * )
      * @ParamConverter("socialNetworkFeedItem", class="App:SocialNetworkFeedItem")
      */
+    #[OA\RequestBody(
+        description: "Serialized Feed Item Content",
+        required: true,
+        content: new OA\JsonContent()
+    )]
+    #[OA\Response(
+        response: 200,
+        description: "Returned when successful"
+    )]
+    #[OA\Parameter(
+        name: 'citySlug',
+        in: 'path',
+        description: 'Provide a city slug for the corresponding socialnetwork feed item',
+        schema: new OA\Schema(type: 'string'),
+        required: true
+    )]
+    #[OA\Parameter(
+        name: 'feedItemId',
+        in: 'path',
+        description: 'ID of socialnetwork feed item to update',
+        schema: new OA\Schema(type: 'integer'),
+        required: true
+    )]
     #[Route(path: '/{citySlug}/socialnetwork-feeditems/{feedItemId}', name: 'caldera_criticalmass_rest_socialnetwork_feeditems_update', methods: ['POST'])]
     public function updateSocialNetworkFeedItemAction(Request $request, SocialNetworkFeedItem $socialNetworkFeedItem, EntityMergerInterface $entityMerger): JsonResponse
     {
@@ -64,16 +97,23 @@ class SocialNetworkFeedItemController extends BaseController
 
     /**
      * Create a new social network feed item and assign it to the provided profile.
-     *
-     * @Operation(
-     *     tags={"Social Network Feed Item"},
-     *     summary="Create a new social network feed item",
-     *     @OA\Response(
-     *         response="200",
-     *         description="Returned when successful"
-     *     )
-     * )
      */
+    #[OA\RequestBody(
+        description: "Serialized Feed Item Content",
+        required: true,
+        content: new OA\JsonContent()
+    )]
+    #[OA\Response(
+        response: 200,
+        description: "Returned when successful"
+    )]
+    #[OA\Parameter(
+        name: 'citySlug',
+        in: 'path',
+        description: 'Provide a city slug for the corresponding socialnetwork feed item',
+        schema: new OA\Schema(type: 'string'),
+        required: true
+    )]
     #[Route(path: '/{citySlug}/socialnetwork-feeditems', name: 'caldera_criticalmass_rest_socialnetwork_feeditems_create', methods: ['PUT'])]
     public function createSocialNetworkFeedItemAction(Request $request): JsonResponse
     {
@@ -85,9 +125,9 @@ class SocialNetworkFeedItemController extends BaseController
             $manager = $this->managerRegistry->getManager();
             $manager->persist($newSocialNetworkFeedItem);
             $manager->flush();
-        } catch (UniqueConstraintViolationException) {
+        } catch (UniqueConstraintViolationException $exception) {
             return $this->createErrors(JsonResponse::HTTP_CONFLICT, ['This feed item already exists.']);
-        } catch (\Exception) {
+        } catch (\Exception $exception) {
             return $this->createErrors(JsonResponse::HTTP_INTERNAL_SERVER_ERROR, ['An unknown error occured. Please try again later or report this issue to criticalmass@caldera.cc.']);
         }
 
