@@ -26,24 +26,24 @@ class SocialNetworkFeedItemController extends BaseController
     )]
     #[OA\Parameter(
         name: 'citySlug',
-        in: 'path',
         description: 'Provide a city slug for the corresponding socialnetwork feed item',
-        schema: new OA\Schema(type: 'string'),
-        required: true
+        in: 'path',
+        required: true,
+        schema: new OA\Schema(type: 'string')
     )]
     #[OA\Parameter(
         name: 'uniqueIdentifier',
-        in: 'query',
         description: 'Only return items matching this unique identifier',
-        schema: new OA\Schema(type: 'string'),
-        required: false
+        in: 'query',
+        required: false,
+        schema: new OA\Schema(type: 'string')
     )]
     #[OA\Parameter(
         name: 'networkIdentifier',
-        in: 'query',
         description: 'Limit results to the specified social network',
-        schema: new OA\Schema(type: 'string'),
-        required: false
+        in: 'query',
+        required: false,
+        schema: new OA\Schema(type: 'string')
     )]
     #[Route(path: '/{citySlug}/socialnetwork-feeditems', name: 'caldera_criticalmass_rest_socialnetwork_feeditems_citylist', methods: ['GET'])]
     public function listSocialNetworkFeedItemsCityAction(Request $request, City $city): JsonResponse
@@ -71,17 +71,17 @@ class SocialNetworkFeedItemController extends BaseController
     )]
     #[OA\Parameter(
         name: 'citySlug',
-        in: 'path',
         description: 'Provide a city slug for the corresponding socialnetwork feed item',
-        schema: new OA\Schema(type: 'string'),
-        required: true
+        in: 'path',
+        required: true,
+        schema: new OA\Schema(type: 'string')
     )]
     #[OA\Parameter(
         name: 'feedItemId',
-        in: 'path',
         description: 'ID of socialnetwork feed item to update',
-        schema: new OA\Schema(type: 'integer'),
-        required: true
+        in: 'path',
+        required: true,
+        schema: new OA\Schema(type: 'integer')
     )]
     #[Route(path: '/{citySlug}/socialnetwork-feeditems/{feedItemId}', name: 'caldera_criticalmass_rest_socialnetwork_feeditems_update', methods: ['POST'])]
     public function updateSocialNetworkFeedItemAction(Request $request, SocialNetworkFeedItem $socialNetworkFeedItem, EntityMergerInterface $entityMerger): JsonResponse
@@ -109,10 +109,10 @@ class SocialNetworkFeedItemController extends BaseController
     )]
     #[OA\Parameter(
         name: 'citySlug',
-        in: 'path',
         description: 'Provide a city slug for the corresponding socialnetwork feed item',
-        schema: new OA\Schema(type: 'string'),
-        required: true
+        in: 'path',
+        required: true,
+        schema: new OA\Schema(type: 'string')
     )]
     #[Route(path: '/{citySlug}/socialnetwork-feeditems', name: 'caldera_criticalmass_rest_socialnetwork_feeditems_create', methods: ['PUT'])]
     public function createSocialNetworkFeedItemAction(Request $request): JsonResponse
