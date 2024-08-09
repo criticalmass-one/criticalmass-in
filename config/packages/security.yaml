@@ -34,7 +34,6 @@ security:
         api:
             pattern:    ^/api
             stateless:  true
-            anonymous:  false # can be omitted as its default value
             security: false
 
     access_control:
