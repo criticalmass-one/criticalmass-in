@@ -29,6 +29,7 @@ class Weather
     protected ?\DateTime $weatherDateTime = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
+    #[JMS\Type("DateTime<'U'>")]
     #[JMS\Expose]
     protected ?\DateTime $creationDateTime = null;
 
