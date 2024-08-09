@@ -90,7 +90,9 @@
         "symfony/notifier": "^5.0",
         "symfony/twig-bundle": "^5.0",
         "twig/cssinliner-extra": "^3.10",
-        "twig/inky-extra": "^3.10"
+        "twig/inky-extra": "^3.10",
+        "symfony/serializer": "^5.0",
+        "symfony/property-access": "^5.0"
     },
     "require-dev": {
         "symfony/browser-kit": "^5.0",

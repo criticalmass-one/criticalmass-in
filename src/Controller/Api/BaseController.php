@@ -4,17 +4,17 @@ namespace App\Controller\Api;
 
 use App\Controller\AbstractController;
 use App\Criticalmass\Api\Errors;
+use App\Serializer\CriticalSerializerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 
 abstract class BaseController extends AbstractController
 {
     public function __construct(
         protected readonly ManagerRegistry $managerRegistry,
-        protected readonly SerializerInterface $serializer,
+        protected readonly CriticalSerializerInterface $serializer,
         AuthorizationCheckerInterface $authorizationChecker
     )
     {
