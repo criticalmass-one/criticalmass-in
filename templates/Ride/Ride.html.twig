@@ -94,13 +94,13 @@
 
     CriticalMass.loadModule('RidePage', null, pageOptions, function (ridePage) {
         {% if ride.location and ride.latitude and ride.longitude and ride.latitude != 0 and ride.getLongitude != 0 %}
-        ridePage.addRide('{{ ride|serialize|raw|e('js') }}');
+        ridePage.addRide('{{ ride|jms_serialize|raw|e('js') }}');
         {% else %}
-        ridePage.addCity('{{ city|serialize|raw|e('js') }}');
+        ridePage.addCity('{{ city|jms_serialize|raw|e('js') }}');
         {% endif %}
 
         {% for track in tracks %}
-        ridePage.addTrack('{{ track|serialize('json', serialization_context().setGroups('timelapse'))|raw|e('js') }}');
+        ridePage.addTrack('{{ track|jms_serialize('json', jms_serialization_context().setGroups('timelapse'))|raw|e('js') }}');
         {% endfor %}
 
         {% if feature('photos') %}
@@ -111,13 +111,13 @@
         {% else %}
         {% set blur = false %}
         {% endif %}
-        ridePage.addPhoto('{{ photo|serialize|raw|e('js') }}', '{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}', '{{ blur }}');
+        ridePage.addPhoto('{{ photo|jms_serialize|raw|e('js') }}', '{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}', '{{ blur }}');
         {% endif %}
         {% endfor %}
         {% endif %}
 
         {% for subride in subrides %}
-        ridePage.addSubride('{{ subride|serialize|raw|e('js') }}');
+        ridePage.addSubride('{{ subride|jms_serialize|raw|e('js') }}');
         {% endfor %}
 
         ridePage.init();

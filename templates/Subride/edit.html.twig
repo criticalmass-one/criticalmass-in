@@ -166,8 +166,8 @@
 
     <script type="text/javascript">
         CriticalMass.loadModule('EditSubridePage', null, null, function (page) {
-            page.addRide('{{ ride|serialize|raw|e('js') }}');
-            page.addCity('{{ city|serialize|raw|e('js') }}');
+            page.addRide('{{ ride|jms_serialize('json')|raw|e('js') }}');
+            page.addCity('{{ city|jms_serialize('json')|raw|e('js') }}');
             page.init();
         });
     </script>
