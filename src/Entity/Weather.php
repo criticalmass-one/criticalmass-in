@@ -25,6 +25,7 @@ class Weather
     protected ?string $json = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
+    #[JMS\Type("DateTime<'U'>")]
     #[JMS\Expose]
     protected ?\DateTime $weatherDateTime = null;
 
