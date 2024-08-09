@@ -26,9 +26,9 @@ class ProfileManagementController extends AbstractController
      */
     public function manageAction(UserInterface $user = null): Response
     {
-        $participationCounter = $this->getDoctrine()->getRepository(Participation::class)->countByUser($user);
-        $trackCounter = $this->getDoctrine()->getRepository(Track::class)->countByUser($user);
-        $photoCounter = $this->getDoctrine()->getRepository(Photo::class)->countByUser($user);
+        $participationCounter = $this->managerRegistry->getRepository(Participation::class)->countByUser($user);
+        $trackCounter = $this->managerRegistry->getRepository(Track::class)->countByUser($user);
+        $photoCounter = $this->managerRegistry->getRepository(Photo::class)->countByUser($user);
 
         return $this->render('ProfileManagement/manage.html.twig', [
             'participationCounter' => $participationCounter,

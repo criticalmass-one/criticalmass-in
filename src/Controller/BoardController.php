@@ -151,7 +151,7 @@ class BoardController extends AbstractController
             $post->setThread($thread);
             $post->setDateTime(new \DateTime());
 
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->managerRegistry->getManager();
 
             $em->persist($post);
             $em->persist($thread);

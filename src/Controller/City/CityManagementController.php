@@ -94,7 +94,7 @@ class CityManagementController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $eventDispatcher->dispatch(new CityCreatedEvent($city), CityCreatedEvent::NAME);
 
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->managerRegistry->getManager();
 
             $citySlugs = CitySlugHandler::createSlugsForCity($city);
 
@@ -178,7 +178,7 @@ class CityManagementController extends AbstractController
                 ->setUpdatedAt(new \DateTime())
                 ->setUser($user);
 
-            $this->getDoctrine()->getManager()->flush();
+            $this->managerRegistry->getManager()->flush();
 
             $eventDispatcher->dispatch(new CityUpdatedEvent($city), CityUpdatedEvent::NAME);
 

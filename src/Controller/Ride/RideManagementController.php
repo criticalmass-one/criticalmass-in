@@ -142,7 +142,7 @@ class RideManagementController extends AbstractController
                 $ride->setDisabledReason(null);
             }
 
-            $this->getDoctrine()->getManager()->flush();
+            $this->managerRegistry->getManager()->flush();
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
 

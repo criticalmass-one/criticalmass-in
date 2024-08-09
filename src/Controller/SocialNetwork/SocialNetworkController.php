@@ -76,9 +76,9 @@ class SocialNetworkController extends AbstractController
                 $socialNetworkProfile->setNetwork(self::DEFAULT_NETWORK);
             }
 
-            $this->getDoctrine()->getManager()->persist($socialNetworkProfile);
+            $this->managerRegistry->getManager()->persist($socialNetworkProfile);
 
-            $this->getDoctrine()->getManager()->flush();
+            $this->managerRegistry->getManager()->flush();
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
 
