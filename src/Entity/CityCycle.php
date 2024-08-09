@@ -130,14 +130,14 @@ class CityCycle implements RouteableInterface
         return $this->city;
     }
 
-    public function setUser(User $user): CityCycle
+    public function setUser(?User $user): CityCycle
     {
         $this->user = $user;
 
         return $this;
     }
 
-    public function getUser(): User
+    public function getUser(): ?User
     {
         return $this->user;
     }
