@@ -24,7 +24,7 @@
         "doctrine/orm": "^2.5",
         "doctrine/doctrine-bundle": "^2.0",
         "doctrine/doctrine-migrations-bundle": "^3.0",
-        "vich/uploader-bundle": "^1.13",
+        "vich/uploader-bundle": "^2.4",
         "liip/imagine-bundle": "^2.0",
         "knplabs/knp-paginator-bundle": "^5.0",
         "friendsofsymfony/elastica-bundle": "^6.0",
