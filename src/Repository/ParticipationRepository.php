@@ -5,10 +5,16 @@ namespace App\Repository;
 use App\Entity\Participation;
 use App\Entity\Ride;
 use App\Entity\User;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-class ParticipationRepository extends EntityRepository
+class ParticipationRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Participation::class);
+    }
+
     public function findParticipationForUserAndRide(User $user, Ride $ride): ?Participation
     {
         $builder = $this->createQueryBuilder('p');

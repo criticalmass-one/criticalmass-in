@@ -6,6 +6,7 @@ use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Photo;
 use App\EntityInterface\PostableInterface;
 use App\Criticalmass\Util\ClassUtil;
+use App\Repository\PostRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Entity\City;
@@ -81,7 +82,7 @@ class PostController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->managerRegistry->getManager();
 
             $post->setUser($this->getUser());
             $em->persist($post);
@@ -126,6 +127,7 @@ class PostController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function listAction(
+        PostRepository $postRepository,
         int $cityId = null,
         int $rideId = null,
         int $photoId = null
@@ -148,7 +150,7 @@ class PostController extends AbstractController
         }
 
         /* Now fetch all posts with matching criteria. */
-        $posts = $this->getPostRepository()->findBy($criteria, ['dateTime' => 'DESC']);
+        $posts = $postRepository->findBy($criteria, ['dateTime' => 'DESC']);
 
         /* And render our shit. */
         return $this->render('Post/list.html.twig', ['posts' => $posts]);

@@ -2,12 +2,15 @@
 
 namespace App\Controller;
 
-use App\Traits\RepositoryTrait;
-use App\Traits\UtilTrait;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as AbstractFrameworkController;
 
 abstract class AbstractController extends AbstractFrameworkController
 {
-    use RepositoryTrait;
-    use UtilTrait;
+    public function __construct(
+        protected readonly ManagerRegistry $managerRegistry
+    )
+    {
+
+    }
 }
