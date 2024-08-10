@@ -7,6 +7,11 @@ use App\Criticalmass\ElasticCityFinder\ElasticCityFinderInterface;
 use App\Entity\City;
 use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Event\View\ViewEvent;
+use App\Repository\BlockedCityRepository;
+use App\Repository\LocationRepository;
+use App\Repository\PhotoRepository;
+use App\Repository\RideRepository;
+use App\Repository\SocialNetworkProfileRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,33 +22,40 @@ class CityController extends AbstractController
     /**
      * @ParamConverter("city", class="App:City")
      */
-    public function missingStatsAction(City $city): Response
-    {
+    public function missingStatsAction(
+        RideRepository $rideRepository,
+        City $city
+    ): Response {
         return $this->render('City/missing_stats.html.twig', [
             'city' => $city,
-            'rides' => $this->getRideRepository()->findRidesWithoutStatisticsForCity($city),
+            'rides' => $rideRepository->findRidesWithoutStatisticsForCity($city),
         ]);
     }
 
     /**
      * @ParamConverter("city", class="App:City")
      */
-    public function listRidesAction(City $city): Response
-    {
+    public function listRidesAction(
+        RideRepository $rideRepository,
+        City $city
+    ): Response {
         return $this->render('City/ride_list.html.twig', [
             'city' => $city,
-            'rides' => $this->getRideRepository()->findRidesForCity($city),
+            'rides' => $rideRepository->findRidesForCity($city),
         ]);
     }
 
     /**
      * @ParamConverter("city", class="App:City")
      */
-    public function listGalleriesAction(SeoPageInterface $seoPage, City $city): Response
-    {
+    public function listGalleriesAction(
+        PhotoRepository $photoRepository,
+        SeoPageInterface $seoPage,
+        City $city
+    ): Response {
         $seoPage->setDescription('Übersicht über Fotos von Critical-Mass-Touren aus ' . $city->getCity());
 
-        $result = $this->getPhotoRepository()->findRidesWithPhotoCounter($city);
+        $result = $photoRepository->findRidesWithPhotoCounter($city);
 
         return $this->render('City/gallery_list.html.twig', [
             'city' => $city,
@@ -54,8 +66,18 @@ class CityController extends AbstractController
     /**
      * @ParamConverter("city", class="App:City", isOptional=true)
      */
-    public function showAction(Request $request, ElasticCityFinderInterface $elasticCityFinder, SeoPageInterface $seoPage, EventDispatcherInterface $eventDispatcher, City $city = null): Response
-    {
+    public function showAction(
+        Request $request,
+        RideRepository $rideRepository,
+        LocationRepository $locationRepository,
+        SocialNetworkProfileRepository $socialNetworkProfileRepository,
+        BlockedCityRepository $blockedCityRepository,
+        PhotoRepository $photoRepository,
+        ElasticCityFinderInterface $elasticCityFinder,
+        SeoPageInterface $seoPage,
+        EventDispatcherInterface $eventDispatcher,
+        City $city = null
+    ): Response {
         if (!$city) {
             $citySlug = $request->get('citySlug');
 
@@ -70,7 +92,7 @@ class CityController extends AbstractController
 
         $eventDispatcher->dispatch(new ViewEvent($city), ViewEvent::NAME);
 
-        $blocked = $this->getBlockedCityRepository()->findCurrentCityBlock($city);
+        $blocked = $blockedCityRepository->findCurrentCityBlock($city);
 
         if ($blocked) {
             return $this->render('City/blocked.html.twig', [
@@ -90,21 +112,23 @@ class CityController extends AbstractController
 
         return $this->render('City/show.html.twig', [
             'city' => $city,
-            'currentRide' => $this->getRideRepository()->findCurrentRideForCity($city),
+            'currentRide' => $rideRepository->findCurrentRideForCity($city),
             'nearCities' => $elasticCityFinder->findNearCities($city),
-            'locations' => $this->getLocationRepository()->findLocationsByCity($city),
-            'photos' => $this->getPhotoRepository()->findSomePhotos(8, null, $city),
-            'rides' => $this->getRideRepository()->findRidesForCity($city, 'DESC', 6),
-            'socialNetworkProfiles' => $this->getSocialNetworkProfileRepository()->findByCity($city),
+            'locations' => $locationRepository->findLocationsByCity($city),
+            'photos' => $photoRepository->findSomePhotos(8, null, $city),
+            'rides' => $rideRepository->findRidesForCity($city, 'DESC', 6),
+            'socialNetworkProfiles' => $socialNetworkProfileRepository->findByCity($city),
         ]);
     }
 
     /**
      * @ParamConverter("city", class="App:City")
      */
-    public function getlocationsAction(City $city): Response
-    {
-        return new Response(json_encode($this->getRideRepository()->getLocationsForCity($city)), Response::HTTP_OK, [
+    public function getlocationsAction(
+        RideRepository $rideRepository,
+        City $city
+    ): Response {
+        return new Response(json_encode($rideRepository->getLocationsForCity($city)), Response::HTTP_OK, [
             'Content-Type' => 'text/json',
         ]);
     }

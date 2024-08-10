@@ -12,6 +12,7 @@ use App\Event\City\CityCreatedEvent;
 use App\Event\City\CityUpdatedEvent;
 use App\Factory\City\CityFactoryInterface;
 use App\Form\Type\CityType;
+use App\Repository\RegionRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -93,7 +94,7 @@ class CityManagementController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $eventDispatcher->dispatch(new CityCreatedEvent($city), CityCreatedEvent::NAME);
 
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->managerRegistry->getManager();
 
             $citySlugs = CitySlugHandler::createSlugsForCity($city);
 
@@ -177,7 +178,7 @@ class CityManagementController extends AbstractController
                 ->setUpdatedAt(new \DateTime())
                 ->setUser($user);
 
-            $this->getDoctrine()->getManager()->flush();
+            $this->managerRegistry->getManager()->flush();
 
             $eventDispatcher->dispatch(new CityUpdatedEvent($city), CityUpdatedEvent::NAME);
 
@@ -196,12 +197,13 @@ class CityManagementController extends AbstractController
     }
 
     protected function getRegion(
+        RegionRepository $regionRepository,
         NominatimCityBridge $nominatimCityBridge,
         string $regionSlug = null,
         string $citySlug = null
     ): ?Region {
         if ($regionSlug) {
-            return $this->getRegionRepository()->findOneBySlug($regionSlug);
+            return $regionRepository->findOneBySlug($regionSlug);
         }
 
         if ($citySlug) {

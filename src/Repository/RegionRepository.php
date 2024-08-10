@@ -3,10 +3,16 @@
 namespace App\Repository;
 
 use App\Entity\Region;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-class RegionRepository extends EntityRepository
+class RegionRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Region::class);
+    }
+
     public function findByParentRegion(Region $region): array
     {
         $builder = $this->createQueryBuilder('r');
