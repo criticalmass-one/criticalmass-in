@@ -16,32 +16,37 @@ class WeatherController extends BaseController
 {
     /**
      * Add weather data to a specific ride.
+     *
      * @ParamConverter("ride", class="App:Ride")
      */
     #[OA\Response(
         response: 200,
-        description: "Returned when successful"
+        description: "Returned when successful."
     )]
     #[OA\Parameter(
-        name: 'citySlug',
-        description: 'Provide a city slug for the ride’s city',
-        in: 'path',
+        name: "citySlug",
+        description: "Provide a city slug for the ride’s city.",
+        in: "path",
         required: true,
-        schema: new OA\Schema(type: 'string')
+        schema: new OA\Schema(type: "string")
     )]
     #[OA\Parameter(
-        name: 'rideIdentifier',
-        description: 'Identifier of the ride',
-        in: 'path',
+        name: "rideIdentifier",
+        description: "Identifier of the ride.",
+        in: "path",
         required: true,
-        schema: new OA\Schema(type: 'string')
+        schema: new OA\Schema(type: "string")
     )]
     #[OA\RequestBody(
-        description: "Serialized weather data",
+        description: "Serialized weather data.",
         required: true,
         content: new OA\JsonContent(ref: new Model(type: Weather::class))
     )]
-    #[Route(path: '/{citySlug}/{rideIdentifier}/weather', name: 'caldera_criticalmass_rest_weather_add', methods: ['PUT'])]
+    #[Route(
+        path: "/{citySlug}/{rideIdentifier}/weather",
+        name: "caldera_criticalmass_rest_weather_add",
+        methods: ["PUT"]
+    )]
     public function addWeatherAction(Request $request, Ride $ride): JsonResponse
     {
         /** @var Weather $weather */

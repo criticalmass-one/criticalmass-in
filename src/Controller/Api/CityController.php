@@ -170,7 +170,11 @@ class CityController extends BaseController
         response: 200,
         description: "Returned when successful."
     )]
-    #[Route(path: '/city', name: 'caldera_criticalmass_rest_city_list', methods: ['GET'])]
+    #[Route(
+        path: "/city",
+        name: "caldera_criticalmass_rest_city_list",
+        methods: ["GET"]
+    )]
     public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager): JsonResponse
     {
         $queryParameterList = RequestToListConverter::convert($request);

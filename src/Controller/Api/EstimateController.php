@@ -10,24 +10,29 @@ use App\Entity\RideEstimate;
 use App\Event\RideEstimate\RideEstimateCreatedEvent;
 use App\Model\CreateEstimateModel;
 use JMS\Serializer\SerializerInterface;
-use Nelmio\ApiDocBundle\Annotation\Operation;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
+#[OA\Tag(name: "Estimate")]
 class EstimateController extends BaseController
 {
-    public function __construct(protected SerializerInterface $serializer, protected EventDispatcherInterface $eventDispatcher, protected DataQueryManagerInterface $dataQueryManager, protected ManagerRegistry $registry)
-    {
-         parent::__construct($managerRegistry, $serializer);
+    public function __construct(
+        protected readonly SerializerInterface $serializer,
+        protected readonly ManagerRegistry $registry,
+        protected readonly EventDispatcherInterface $eventDispatcher,
+        protected readonly DataQueryManagerInterface $dataQueryManage
+    ) {
+
     }
 
     /**
-     * Use this endpoint to add an participant estimate like this:
+     * Use this endpoint to add a participant estimate like this:
      *
      * <pre>{
      *   "latitude": 53.549280,
@@ -46,23 +51,16 @@ class EstimateController extends BaseController
 
      * If you know which in which ride the user participates, please use the other endpoint and specify
      * <code>citySlug</code> and <code>rideIdentifier</code>.
-     *
-     * @Operation(
-     *     tags={"Estimate"},
-     *     summary="Adds an estimation to statistic",
-     *     @OA\Parameter(
-     *         name="body",
-     *         in="body",
-     *         description="JSON representation of the estimate data",
-     *         required=true,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Response(
-     *         response="200",
-     *         description="Returned when successful"
-     *     )
-     * )
      */
+    #[OA\RequestBody(
+        description: "JSON representation of the estimate data",
+        required: true,
+        content: new OA\JsonContent(ref: new Model(type: RideEstimate::class))
+    )]
+    #[OA\Response(
+        response: 200,
+        description: "Returned when successful."
+    )]
     public function createEstimateAction(Request $request): JsonResponse
     {
         /** @var CreateEstimateModel $estimateModel */
@@ -104,37 +102,37 @@ class EstimateController extends BaseController
      * If you like you can provide details about your app or homepage in the <code>source</code> property or just
      * default to null.
      *
-     * @Operation(
-     *     tags={"Estimate"},
-     *     summary="Adds an estimation to statistic",
-     *     @OA\Parameter(
-     *         name="citySlug",
-     *         in="path",
-     *         description="Slug of the ride’s city",
-     *         required=true,
-     *         @OA\Schema(type="string"),
-     *     ),
-     *     @OA\Parameter(
-     *         name="rideIdentifier",
-     *         in="path",
-     *         description="Identifier of the ride",
-     *         required=true,
-     *         @OA\Schema(type="string"),
-     *     ),
-     *     @OA\RequestBody(
-     *         description="JSON representation of the estimate data",
-     *         required=true,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Response(
-     *         response="200",
-     *         description="Returned when successful"
-     *     )
-     * )
      * @ParamConverter("ride", class="App:Ride")
      */
-    #[Route(path: '/estimate', name: 'caldera_criticalmass_rest_estimate_create', methods: ['POST'])]
-    public function createRideEstimateAction(Request $request, Ride $ride, SerializerInterface $serializer): JsonResponse
+    #[OA\Parameter(
+        name: "citySlug",
+        description: "Slug of the ride’s city.",
+        in: "path",
+        required: true,
+        schema: new OA\Schema(type: "string")
+    )]
+    #[OA\Parameter(
+        name: "rideIdentifier",
+        description: "Identifier of the ride.",
+        in: "path",
+        required: true,
+        schema: new OA\Schema(type: "string")
+    )]
+    #[OA\RequestBody(
+        description: "JSON representation of the estimate data",
+        required: true,
+        content: new OA\JsonContent(ref: new Model(type: RideEstimate::class))
+    )]
+    #[OA\Response(
+        response: 200,
+        description: "Returned when successful."
+    )]
+    #[Route(
+        path: "/estimate",
+        name: "caldera_criticalmass_rest_estimate_create",
+        methods: ["POST"]
+    )]
+    public function createRideEstimateAction(Request $request, Ride $ride): JsonResponse
     {
         /** @var CreateEstimateModel $estimateModel */
         $estimateModel = $this->deserializeRequest($request, CreateEstimateModel::class);
