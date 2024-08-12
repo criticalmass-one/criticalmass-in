@@ -54,7 +54,6 @@
         "sabre/vobject": "^4.0",
         "oneup/flysystem-bundle": "^4.12.2",
         "flagception/flagception-bundle": "^4.0",
-        "php-amqplib/rabbitmq-bundle": "^2.0",
         "ext-fileinfo": "*",
         "ext-xmlwriter": "*",
         "ext-json": "*",
@@ -91,7 +90,8 @@
         "symfony/notifier": "^5.0",
         "symfony/twig-bundle": "^5.0",
         "twig/cssinliner-extra": "^3.10",
-        "twig/inky-extra": "^3.10"
+        "twig/inky-extra": "^3.10",
+        "symfony/amqp-messenger": "^5.0"
     },
     "require-dev": {
         "symfony/browser-kit": "^5.0",
