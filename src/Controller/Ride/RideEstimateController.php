@@ -19,14 +19,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class RideEstimateController extends AbstractController
 {
-    public function __construct(
-        private readonly ManagerRegistry $managerRegistry,
-        AuthorizationChecker $authorizationChecker
-    )
-    {
-        parent::__construct($authorizationChecker);
-    }
-
     /**
      * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
