@@ -9,36 +9,20 @@ use App\Criticalmass\MassTrackImport\TrackDecider\TrackDeciderInterface;
 use App\Entity\User;
 use JMS\Serializer\SerializerInterface;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class MassTrackImporter implements MassTrackImporterInterface
 {
-    /** @var ActivityLoaderInterface $activityLoader */
-    protected $activityLoader;
+    public function __construct(
+        private readonly MessageBusInterface $messageBus,
+        private readonly ProposalPersisterInterface $proposalPersister,
+        private readonly SerializerInterface $serializer,
+        private readonly TrackDeciderInterface $trackDecider,
+        private readonly ActivityLoaderInterface $activityLoader,
+        private readonly TokenStorageInterface $tokenStorage
+    ) {
 
-    /** @var SerializerInterface $serializer */
-    protected $serializer;
-
-    /** @var TrackDeciderInterface $trackDecider */
-    protected $trackDecider;
-
-    /** @var ProposalPersisterInterface $proposalPersister */
-    protected $proposalPersister;
-
-    /** @var ProducerInterface $producer */
-    protected $producer;
-
-    /** @var TokenStorageInterface $tokenStorage */
-    protected $tokenStorage;
-
-    public function __construct(ProducerInterface $producer, ProposalPersisterInterface $proposalPersister, SerializerInterface $serializer, TrackDeciderInterface $trackDecider, ActivityLoaderInterface $activityLoader, TokenStorageInterface $tokenStorage)
-    {
-        $this->serializer = $serializer;
-        $this->trackDecider = $trackDecider;
-        $this->activityLoader = $activityLoader;
-        $this->proposalPersister = $proposalPersister;
-        $this->producer = $producer;
-        $this->tokenStorage = $tokenStorage;
     }
 
     public function setStartDateTime(\DateTime $startDateTime): MassTrackImporterInterface
@@ -64,9 +48,7 @@ class MassTrackImporter implements MassTrackImporterInterface
 
             $activity->setUser($this->getUser());
 
-            $serializedActivity = $this->serializer->serialize($activity, 'json');
-
-            $this->producer->publish($serializedActivity);
+            $this->messageBus->dispatch($activity);
         }
 
         return [];
