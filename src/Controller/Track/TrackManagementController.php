@@ -20,14 +20,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class TrackManagementController extends AbstractController
 {
-    public function __construct(
-        private readonly ManagerRegistry $managerRegistry,
-        AuthorizationChecker $authorizationChecker
-    )
-    {
-        parent::__construct($authorizationChecker);
-    }
-
     /**
      * @Security("is_granted('ROLE_USER')")
      */
