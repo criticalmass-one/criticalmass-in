@@ -28,3 +28,23 @@ framework:
         json_manifest_path: ~
     router:
         strict_requirements: ~
+
+    messenger:
+        serializer:
+            default_serializer: messenger.transport.symfony_serializer
+        transports:
+            track_import_candidate:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                retry_strategy:
+                    max_retries: 3
+                    delay: 1000
+                    multiplier: 2
+                    max_delay: 2500
+                options:
+                    exchange:
+                        name: track_import_candidate
+                        type: direct
+                    queues:
+                        track_import_candidate: track_import_candidate
+        routing:
+            App\Entity\TrackImportCandidate: track_import_candidate

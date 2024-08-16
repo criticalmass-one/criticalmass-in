@@ -2,14 +2,15 @@
 
 namespace App\Consumer;
 
-use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
-use PhpAmqpLib\Message\AMQPMessage;
 
-class ViewConsumer extends AbstractViewConsumer implements ConsumerInterface
+class ViewConsumer implements ConsumerInterface
 {
+    #[\Override]
     public function execute(AMQPMessage $message): int
     {
-        $this->viewStoragePersister->persistViews([$message->getBody()]);
+        $value = $this->serializer->deserialize($message->getBody(), Value::class, 'json');
+
+        $this->persister->persistValues([$value]);
 
         return self::MSG_ACK;
     }
