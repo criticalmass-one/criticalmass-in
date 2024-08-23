@@ -9,7 +9,12 @@ framework:
     php_errors:
         log: true
 
-    cache: ~
+    cache:
+        pools:
+            doctrine.system_cache_pool:
+                adapter: cache.adapter.filesystem
+            doctrine.result_cache_pool:
+                adapter: cache.adapter.filesystem
 
     translator: { fallbacks: [de] }
     form: ~
