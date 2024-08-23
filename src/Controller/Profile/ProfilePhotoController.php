@@ -19,6 +19,7 @@ class ProfilePhotoController extends AbstractController
      */
     public function uploadAction(Request $request, UserInterface $user = null): Response
     {
+        $user = clone $user; // otherwise doctrine will try to serialize the user object and fail with the File property
         $form = $this->createForm(UserProfilePhotoType::class, $user);
         $form->add('submit', SubmitType::class);
 
