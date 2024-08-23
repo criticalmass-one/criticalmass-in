@@ -11,8 +11,6 @@ use App\Criticalmass\UploadableDataHandler\UploadableEntity;
 use App\Criticalmass\UploadFaker\FakeUploadable;
 use App\EntityInterface\RouteableInterface;
 use Caldera\GeoBasic\Track\TrackInterface as BaseTrackInterface;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
