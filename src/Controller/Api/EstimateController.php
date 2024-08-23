@@ -22,10 +22,10 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 class EstimateController extends BaseController
 {
     public function __construct(
-        protected readonly ManagerRegistry $managerRegistry,
         protected readonly SerializerInterface $serializer,
         protected readonly EventDispatcherInterface $eventDispatcher,
         protected readonly DataQueryManagerInterface $dataQueryManager,
+        protected readonly ManagerRegistry $registry
     ) {
 
     }
