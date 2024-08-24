@@ -300,10 +300,6 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     {
         if ($this->getUser()) {
             return $this->getUser()->getColorRed();
-        } elseif ($this->getTicket()) {
-            return $this->getTicket()->getColorRed();
-        } elseif ($this->getCriticalmapsUser()) {
-            return $this->getCriticalmapsUser()->getColorRed();
         }
 
         return null;
@@ -316,10 +312,6 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     {
         if ($this->getUser()) {
             return $this->getUser()->getColorGreen();
-        } elseif ($this->getTicket()) {
-            return $this->getTicket()->getColorGreen();
-        } elseif ($this->getCriticalmapsUser()) {
-            return $this->getCriticalmapsUser()->getColorGreen();
         }
 
         return null;
@@ -332,10 +324,6 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     {
         if ($this->getUser()) {
             return $this->getUser()->getColorBlue();
-        } elseif ($this->getTicket()) {
-            return $this->getTicket()->getColorBlue();
-        } elseif ($this->getCriticalmapsUser()) {
-            return $this->getCriticalmapsUser()->getColorBlue();
         }
 
         return null;
