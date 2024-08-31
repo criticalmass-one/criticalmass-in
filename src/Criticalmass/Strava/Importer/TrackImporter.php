@@ -19,35 +19,26 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class TrackImporter implements TrackImporterInterface
 {
-    /** @var int $activityId */
-    protected $activityId;
+    protected int $activityId;
 
-    /** @var User $user */
-    protected $user;
+    protected User $user;
 
-    /** @var Ride $ride */
-    protected $ride;
+    protected Ride $ride;
 
-    /** @var GpxWriter $gpxWriter */
-    protected $gpxWriter;
+    protected GpxWriter$gpxWriter;
 
-    /** @var SessionInterface $session */
-    protected $session;
+    protected SessionInterface $session;
 
-    /** @var StravaApi $api */
-    protected $api;
+    protected StravaApi $api;
 
-    /** @var UploadFakerInterface $uploadFaker */
-    protected $uploadFaker;
+    protected UploadFakerInterface $uploadFaker;
 
-    /** @var ManagerRegistry $registry */
-    protected $registry;
+    protected ManagerRegistry $registry;
 
-    /** @var SerializerInterface $serializer */
-    protected $serializer;
+    protected SerializerInterface $serializer;
 
-    const API_URI = 'https://www.strava.com/api/v3/';
-    const RESOULUTION = 'high';
+    const string API_URI = 'https://www.strava.com/api/v3/';
+    const string RESOULUTION = 'high';
 
     protected $types = [
         'time',
