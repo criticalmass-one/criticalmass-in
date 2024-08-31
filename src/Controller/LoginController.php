@@ -17,6 +17,8 @@ use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
 
 class LoginController extends AbstractController
 {
+    const string DEFAULT_USERNAME = 'anonymous cyclist';
+
     public function __construct(
         protected UserRepository $userRepository,
         protected ManagerRegistry $managerRegistry
@@ -78,7 +80,10 @@ class LoginController extends AbstractController
     public function createNewUser(string $email): User
     {
         $user = new User();
-        $user->setEmail($email);
+        $user
+            ->setEmail($email)
+            ->setUsername(self::DEFAULT_USERNAME)
+        ;
 
         $em = $this->managerRegistry->getManager();
 
