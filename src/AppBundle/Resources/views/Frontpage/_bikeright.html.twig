@@ -1,0 +1,61 @@
+{% if bikeright_visible %}
+    <div class="card mt-3">
+        <div class="card-body">
+            <p class="float-right">
+                <small>
+                    Anzeige
+                </small>
+            </p>
+
+            <p class="text-center">
+                <a href="https://bikeright.de/">
+                    <img src="{{ asset('/bundles/app/images/bikeright/logo.png') }}" alt="BikeRight" style="width: 273px; height 51px; margin: 0 auto; clear: both;"/>
+                </a>
+            </p>
+
+            <h5 class="text-center">
+                Die neue Online-Rechtsberatung<br />für Radfahrer
+            </h5>
+
+            <ul class="media-list">
+                <li class="media">
+                    <img class="media-object mr-3 align-self-start img-fluid" src="{{ asset('/bundles/app/images/bikeright/help.png') }}" style="width: 50px; height: 50px;">
+                    <div class="media-body">
+                        <strong>
+                            Fahrradunfall gehabt?
+                        </strong>
+
+                        <p>
+                            Unsere Anwälte beraten und vertreten euch kostenfrei!
+                        </p>
+
+                        <p>
+                            <a href="https://bikeright.de/" class="btn btn-primary">
+                                Zur Website
+                            </a>
+                        </p>
+                    </div>
+                </li>
+
+                <li class="media mt-3">
+                    <img class="media-object mr-3 align-self-start" src="{{ asset('/bundles/app/images/bikeright/questionmark.png') }}" style="width: 50px; height: 50px;">
+                    <div class="media-body">
+                        <strong>
+                            Fragen zum Fahrradrecht?
+                        </strong>
+
+                        <p>
+                            Ab sofort erhalten Community-Mitglieder kostenfreie Rechtsberatung bikeright.de!
+                        </p>
+
+                        <p>
+                            <a href="{{ path('criticalmass_user_bikeright_view') }}" class="btn btn-primary">
+                                Jetzt Rabatt-Code anfordern
+                            </a>
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+{% endif %}
