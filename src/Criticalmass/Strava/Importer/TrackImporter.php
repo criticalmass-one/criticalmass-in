@@ -14,8 +14,7 @@ use App\Entity\Track;
 use App\Entity\User;
 use Doctrine\Persistence\ManagerRegistry;
 use Iamstuartwilson\StravaApi;
-use JMS\Serializer\SerializerInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class TrackImporter implements TrackImporterInterface
 {
@@ -34,7 +33,7 @@ class TrackImporter implements TrackImporterInterface
 
     public function __construct(
         private readonly GpxWriter $gpxWriter,
-        private readonly SessionInterface $session,
+        private readonly RequestStack $requestStack,
         private readonly ManagerRegistry $registry,
         private readonly UploadFakerInterface $uploadFaker,
         string $stravaClientId,
@@ -48,8 +47,10 @@ class TrackImporter implements TrackImporterInterface
     {
         $api = new StravaApi($stravaClientId, $stravaSecret);
 
+        $session = $this->requestStack->getSession();
+
         /** @var StravaTokenStorage $token */
-        $token = $this->session->get('strava_token');
+        $token = $session->get('strava_token');
         $api = StravaTokenStorage::setAccessToken($api, $token);
 
         return $api;
