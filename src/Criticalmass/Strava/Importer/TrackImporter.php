@@ -20,23 +20,9 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class TrackImporter implements TrackImporterInterface
 {
     private int $activityId;
-
     private User $user;
-
     private Ride $ride;
-
-    private GpxWriter$gpxWriter;
-
-    private SessionInterface $session;
-
     private StravaApi $api;
-
-    private UploadFakerInterface $uploadFaker;
-
-    private ManagerRegistry $registry;
-
-    private SerializerInterface $serializer;
-
     private const string API_URI = 'https://www.strava.com/api/v3/';
     private const string RESOULUTION = 'high';
 
@@ -46,14 +32,16 @@ class TrackImporter implements TrackImporterInterface
         'altitude',
     ];
 
-    public function __construct(GpxWriter $gpxWriter, SessionInterface $session, ManagerRegistry $registry, UploadFakerInterface $uploadFaker, SerializerInterface $serializer, string $stravaClientId, string $stravaSecret)
+    public function __construct(
+        private readonly GpxWriter $gpxWriter,
+        private readonly SessionInterface $session,
+        private readonly ManagerRegistry $registry,
+        private readonly UploadFakerInterface $uploadFaker,
+        private readonly SerializerInterface $serializer,
+        string $stravaClientId,
+        string $stravaSecret
+    )
     {
-        $this->gpxWriter = $gpxWriter;
-        $this->session = $session;
-        $this->uploadFaker = $uploadFaker;
-        $this->registry = $registry;
-        $this->serializer = $serializer;
-
         $this->api = $this->createApi((int)$stravaClientId, $stravaSecret);
     }
 
