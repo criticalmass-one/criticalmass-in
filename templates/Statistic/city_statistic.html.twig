@@ -102,23 +102,27 @@
                         {% if weather %}
                             <tr>
                                 <td>
-                                    {{ ride.dateTime | date('d.m.Y H:i') }}
+                                    {{ ride.dateTime | date('d.m.Y H:i') }}&nbsp;Uhr
                                 </td>
                                 <td>
-                                    {{ weather.temperatureEvening }}&nbsp;°C
+                                    {{ weather.temperatureEvening|number_format(2) }}&nbsp;°C
                                 </td>
                                 <td>
-                                    {{ weather.precipitation }}&nbsp;mm
+                                    {{ weather.precipitation|number_format(2) }}&nbsp;mm
                                 </td>
                                 <td>
-                                    {{ weather.windSpeed }}&nbsp;m/s
+                                    {{ weather.windSpeed|number_format(2) }}&nbsp;m/s
                                 </td>
                                 <td>
-                                    {{ ride.estimatedParticipants|default('unbekannt') }}
+                                    {% if ride.estimatedParticipants %}
+                                    {{ ride.estimatedParticipants|number_format(0) }}
+                                    {% else %}
+                                    unbekannt
+                                    {% endif %}
                                 </td>
                                 <td>
                                     {% if ride.estimatedDistance %}
-                                    {{ ride.estimatedDistance|round(2) }}&nbsp;km
+                                    {{ ride.estimatedDistance|number_format(2) }}&nbsp;km
                                     {% else %}
                                     unbekannt
                                     {% endif %}
