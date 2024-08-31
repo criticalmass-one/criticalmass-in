@@ -105,16 +105,16 @@
                                     {{ ride.dateTime | date('d.m.Y H:i') }}
                                 </td>
                                 <td>
-                                    {{ weather.temperatureEvening }} °C
+                                    {{ weather.temperatureEvening }}&nbsp;°C
                                 </td>
                                 <td>
-                                    {{ weather.precipitation }} Millimeter
+                                    {{ weather.precipitation }}&nbsp;mm
                                 </td>
                                 <td>
-                                    {{ weather.windSpeed }} Meter pro Sekunde
+                                    {{ weather.windSpeed }}&nbsp;m/s
                                 </td>
                                 <td>
-                                    {{ ride.estimatedParticipants | default('unbekannt') }}
+                                    {{ ride.estimatedParticipants|default('unbekannt') }}
                                 </td>
                                 <td>
                                     {{ ride.estimatedDistance | default('unbekannt') }}
