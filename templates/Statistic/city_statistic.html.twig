@@ -117,7 +117,11 @@
                                     {{ ride.estimatedParticipants|default('unbekannt') }}
                                 </td>
                                 <td>
-                                    {{ ride.estimatedDistance | default('unbekannt') }}
+                                    {% if ride.estimatedDistance %}
+                                    {{ ride.estimatedDistance|round(2) }}&nbsp;km
+                                    {% else %}
+                                    unbekannt
+                                    {% endif %}
                                 </td>
                             </tr>
                         {% endif %}
