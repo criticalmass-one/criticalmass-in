@@ -37,7 +37,6 @@ class TrackImporter implements TrackImporterInterface
         private readonly SessionInterface $session,
         private readonly ManagerRegistry $registry,
         private readonly UploadFakerInterface $uploadFaker,
-        private readonly SerializerInterface $serializer,
         string $stravaClientId,
         string $stravaSecret
     )
