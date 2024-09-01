@@ -151,7 +151,7 @@ class Track extends BaseTrack
         return $this;
     }
 
-    public function getDistance(): float
+    public function getDistance(): ?float
     {
         return $this->distance;
     }

@@ -17,17 +17,17 @@
         </button>
 
         <div class="dropdown-menu" aria-labelledby="city-dropdown">
-            <a class="dropdown-item" href="{{ objectPath(city, 'caldera_criticalmass_city_edit') }}">
+            <a class="dropdown-item" href="{{ object_path(city, 'caldera_criticalmass_city_edit') }}">
                 <i class="far fa-cogs"></i>
                 Stadt editieren
             </a>
 
-            <a class="dropdown-item" href="{{ objectPath(city, 'caldera_criticalmass_ride_add') }}">
+            <a class="dropdown-item" href="{{ object_path(city, 'caldera_criticalmass_ride_add') }}">
                 <i class="far fa-plus"></i>
                 Tour hinzufügen
             </a>
 
-            <a class="dropdown-item" href="{{ objectPath(city, 'caldera_criticalmass_citycycle_list') }}">
+            <a class="dropdown-item" href="{{ object_path(city, 'caldera_criticalmass_citycycle_list') }}">
                 <i class="far fa-calendar"></i>
                 Turnus
             </a>
@@ -86,7 +86,7 @@
                                 <strong>Huch?</strong>
                                 Schade, bislang hat noch niemand Informationen über {{ city.city }} hinterlegt. Wenn du
                                 Lust und Zeit hast, kannst du {{ city.title }} <a
-                                        href="{{ objectPath(city, 'caldera_criticalmass_city_edit') }}">hier
+                                        href="{{ object_path(city, 'caldera_criticalmass_city_edit') }}">hier
                                     beschreiben</a>:
 
                                 <ul>
@@ -105,7 +105,7 @@
                                 </ul>
 
                                 <p class="text-center margin-top-medium">
-                                    <a href="{{ objectPath(city, 'caldera_criticalmass_city_edit') }}" class="btn btn-primary btn-lg">
+                                    <a href="{{ object_path(city, 'caldera_criticalmass_city_edit') }}" class="btn btn-primary btn-lg">
                                         {{ city.city }} editieren
                                     </a>
                                 </p>
@@ -125,7 +125,7 @@
                                                 {{ ride.dateTime|format_datetime(null, 'de', 'Europe/Berlin', constant('IntlDateFormatter::LONG'), constant('IntlDateFormatter::SHORT')) }}&nbsp;Uhr
                                             </small>
                                             <h6>
-                                                <a href="{{ objectPath(ride) }}">
+                                                <a href="{{ object_path(ride) }}">
                                                     {{ ride.title }}
                                                 </a>
                                             </h6>
@@ -155,7 +155,7 @@
 
                 <div class="row mb-3">
                     <div class="col-12 text-center">
-                        <a href="{{ objectPath(city, 'caldera_criticalmass_city_listrides') }}" class="btn btn-primary">
+                        <a href="{{ object_path(city, 'caldera_criticalmass_city_listrides') }}" class="btn btn-primary">
                             <i class="far fa-list"></i>
                             weitere Touren anzeigen
                         </a>

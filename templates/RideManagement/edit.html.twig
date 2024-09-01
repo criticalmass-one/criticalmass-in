@@ -18,14 +18,14 @@
     </li>
 
     <li>
-        <a href="{{ objectPath(city) }}">
+        <a href="{{ object_path(city) }}">
             {{ city.city }}
         </a>
     </li>
 
     {% if ride %}
         <li>
-            <a href="{{ objectPath(ride) }}">
+            <a href="{{ object_path(ride) }}">
                 {{ ride.title }}
             </a>
         </li>
@@ -246,11 +246,11 @@
                         <div class="form-group">
                             <div class="btn-group pull-right" role="group" aria-label="...">
                                 {% if ride %}
-                                    <a href="{{ objectPath(ride) }}" class="btn btn-default">
+                                    <a href="{{ object_path(ride) }}" class="btn btn-default">
                                         Abbrechen
                                     </a>
                                 {% else %}
-                                    <a href="{{ objectPath(city) }}" class="btn btn-default">
+                                    <a href="{{ object_path(city) }}" class="btn btn-default">
                                         Abbrechen
                                     </a>
                                 {% endif %}

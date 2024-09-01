@@ -1,7 +1,7 @@
 <div class="col-md-4 margin-bottom-medium">
     <div class="panel panel-default{% if not track.enabled %} panel-warning{% elseif not track.reviewed %} panel-danger{% endif %}">
         <div class="panel-heading">
-            <a href="{{ objectPath(track.ride) }}">
+            <a href="{{ object_path(track.ride) }}">
                 {{ track.ride.title }}
             </a>
         </div>
@@ -22,7 +22,7 @@
                             </dt>
 
                             <dd>
-                                <a href="{{ objectPath(track.ride.city) }}">
+                                <a href="{{ object_path(track.ride.city) }}">
                                     {{ track.ride.city.city }}
                                 </a>
                             </dd>
@@ -51,7 +51,7 @@
                         </dt>
 
                         <dd>
-                            <a href="{{ objectPath(track) }}">
+                            <a href="{{ object_path(track) }}">
                                 {{ track.ride.dateTime|date('d.m.Y') }}
                             </a>
                         </dd>

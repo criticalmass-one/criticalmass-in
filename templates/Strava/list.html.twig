@@ -9,12 +9,12 @@
         </a>
     </li>
     <li>
-        <a href="{{ objectPath(ride.city) }}">
+        <a href="{{ object_path(ride.city) }}">
             {{ ride.city.city }}
         </a>
     </li>
     <li>
-        <a href="{{ objectPath(ride) }}">
+        <a href="{{ object_path(ride) }}">
             {{ ride.title }}
         </a>
     </li>
@@ -88,7 +88,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="text-center">
-                                    <a class="btn btn-success" href="{{ objectPath(ride, 'caldera_criticalmass_strava_import') }}?activityId={{ activity.id }}">
+                                    <a class="btn btn-success" href="{{ object_path(ride, 'caldera_criticalmass_strava_import') }}?activityId={{ activity.id }}">
                                         {# TODO #}
                                         <i class="far fa-download"></i>
                                         Track importieren
@@ -117,7 +117,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <a href="{{ objectPath(ride) }}" class="btn btn-default pull-right">
+                <a href="{{ object_path(ride) }}" class="btn btn-default pull-right">
                     Abbrechen
                 </a>
             </div>

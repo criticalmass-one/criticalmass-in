@@ -6,7 +6,7 @@ use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation as DataQuery;
 use App\Criticalmass\Image\PhotoManipulator\PhotoInterface\ManipulateablePhotoInterface;
 use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
 use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
-use App\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Router\Attribute as Routing;
 use App\Criticalmass\UploadFaker\FakeUploadable;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AutoParamConverterAble;
@@ -25,10 +25,10 @@ use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @Vich\Uploadable
- * @Routing\DefaultRoute(name="caldera_criticalmass_photo_show_ride")
  * @OE\OrderedEntity()
  */
+#[Vich\Uploadable]
+#[Routing\DefaultRoute(name: 'caldera_criticalmass_photo_show_ride')]
 #[ORM\Table(name: 'photo')]
 #[ORM\Entity(repositoryClass: 'App\Repository\PhotoRepository')]
 #[JMS\ExclusionPolicy('all')]
@@ -36,9 +36,9 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, OrderedEntityInterface, ElasticSearchPinInterface, CoordinateInterface
 {
     /**
-     * @Routing\RouteParameter(name="photoId")
      * @DataQuery\Sortable()
      */
+    #[Routing\RouteParameter(name: 'photoId')]
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
@@ -50,18 +50,18 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     protected ?User $user = null;
 
     /**
-     * @Routing\RouteParameter(name="rideIdentifier")
      * @OE\Identical()
      * @DataQuery\Queryable
      */
+    #[Routing\RouteParameter(name: 'rideIdentifier')]
     #[ORM\ManyToOne(targetEntity: 'Ride', inversedBy: 'photos')]
     #[ORM\JoinColumn(name: 'ride_id', referencedColumnName: 'id')]
     protected ?Ride $ride = null;
 
     /**
-     * @Routing\RouteParameter(name="citySlug")
      * @DataQuery\Queryable
      */
+    #[Routing\RouteParameter(name: 'citySlug')]
     #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'photos')]
     #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
     protected ?City $city = null;
@@ -117,9 +117,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     #[JMS\Expose]
     protected ?\DateTime $creationDateTime = null;
 
-    /**
-     * @Vich\UploadableField(mapping="photo_photo", fileNameProperty="imageName", size="imageSize", mimeType="imageMimeType")
-     */
+    #[Vich\UploadableField(mapping: 'photo_photo', fileNameProperty: 'imageName', size: 'imageSize', mimeType: 'imageMimeType')]
     protected ?File $imageFile = null;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -137,9 +135,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     #[JMS\Expose]
     protected ?string $imageMimeType = null;
 
-    /**
-     * @Vich\UploadableField(mapping="photo_photo", fileNameProperty="backupName")
-     */
+    #[Vich\UploadableField(mapping: 'photo_photo', fileNameProperty: 'backupName')]
     #[JMS\Expose]
     protected ?File $backupFile = null;
 

@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation as DataQuery;
-use App\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Router\Attribute as Routing;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AuditableInterface;
@@ -24,10 +24,8 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @Vich\Uploadable
- * @Routing\DefaultRoute(name="caldera_criticalmass_city_show")
- */
+#[Vich\Uploadable]
+#[Routing\DefaultRoute(name: 'caldera_criticalmass_city_show')]
 #[ORM\Table(name: 'city')]
 #[ORM\Entity(repositoryClass: 'App\Repository\CityRepository')]
 #[JMS\ExclusionPolicy('all')]
@@ -56,9 +54,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     #[ORM\JoinColumn(name: 'region_id', referencedColumnName: 'id')]
     protected ?Region $region = null;
 
-    /**
-     * @Routing\RouteParameter(name="citySlug")
-     */
+    #[Routing\RouteParameter(name: 'citySlug')]
     #[ORM\ManyToOne(targetEntity: 'CitySlug', inversedBy: 'cities')]
     #[ORM\JoinColumn(name: 'main_slug_id', referencedColumnName: 'id')]
     #[JMS\Expose]
@@ -149,9 +145,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     #[JMS\Expose]
     protected ?string $longDescription = null;
 
-    /**
-     * @Vich\UploadableField(mapping="city_photo", fileNameProperty="imageName", size="imageSize", mimeType="imageMimeType")
-     */
+    #[Vich\UploadableField(mapping: 'city_photo', fileNameProperty: 'imageName', size: 'imageSize', mimeType: 'imageMimeType')]
     protected ?File $imageFile = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]

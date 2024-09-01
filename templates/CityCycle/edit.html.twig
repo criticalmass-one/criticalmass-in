@@ -10,13 +10,13 @@
 
 {% block breadcrumb %}
     <li>
-        <a href="{{ objectPath(city) }}">
+        <a href="{{ object_path(city) }}">
             {{ city.city }}
         </a>
     </li>
 
     <li>
-        <a href="{{ objectPath(city, 'caldera_criticalmass_citycycle_list') }}">
+        <a href="{{ object_path(city, 'caldera_criticalmass_citycycle_list') }}">
             Turnusliste
         </a>
     </li>
@@ -48,7 +48,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="alert alert-info">
-                    Wenn du lediglich eine einzelne Tour für {{ city.city }} erstellen möchtest, nutze bitte <strong><a href="{{ objectPath(city, 'caldera_criticalmass_ride_add') }}">dieses Formular</a></strong>.
+                    Wenn du lediglich eine einzelne Tour für {{ city.city }} erstellen möchtest, nutze bitte <strong><a href="{{ object_path(city, 'caldera_criticalmass_ride_add') }}">dieses Formular</a></strong>.
                 </div>
             </div>
         </div>
@@ -155,7 +155,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="btn-group pull-right">
-                    <a href="{{ objectPath(city) }}" class="btn btn-default">
+                    <a href="{{ object_path(city) }}" class="btn btn-default">
                         Abbrechen
                     </a>
                     <button type="submit" class="btn btn-success">

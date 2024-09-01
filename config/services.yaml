@@ -237,3 +237,5 @@ services:
                 'facebook': 'facebookId'
                 'strava': 'stravaId'
                 'twitter': 'twitterId'
+
+    Sabre\VObject\Component\VCalendar: ~

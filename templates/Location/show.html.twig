@@ -10,13 +10,13 @@
     </li>
 
     <li>
-        <a href="{{ objectPath(location.city) }}">
+        <a href="{{ object_path(location.city) }}">
             {{ location.city.city }}
         </a>
     </li>
     {% if ride %}
         <li>
-            <a href="{{ objectPath(ride) }}">
+            <a href="{{ object_path(ride) }}">
                 {{ ride.title }}
             </a>
         </li>
@@ -82,7 +82,7 @@
                             <ul>
                                 {% for ride in rides %}
                                     <li>
-                                        <a href="{{ objectPath(ride) }}">
+                                        <a href="{{ object_path(ride) }}">
                                             {{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}
                                         </a>
                                     </li>
@@ -101,7 +101,7 @@
                         <ul>
                             {% for location in locations %}
                                 <li>
-                                    <a href="{{ objectPath(location) }}">
+                                    <a href="{{ object_path(location) }}">
                                         {{ location.title }}
                                     </a>
                                 </li>

@@ -71,13 +71,13 @@
                             {% for ride in participationList %}
                                 <tr>
                                     <td>
-                                        <a href="{{ objectPath(ride) }}">
+                                        <a href="{{ object_path(ride) }}">
                                             {{ ride.dateTime|date('d.m.Y') }}
                                         </a>
                                     </td>
 
                                     <td>
-                                        <a href="{{ objectPath(ride.city) }}">
+                                        <a href="{{ object_path(ride.city) }}">
                                             {{ ride.city.city }}
                                         </a>
                                     </td>
@@ -117,13 +117,13 @@
                             {% for ride in distanceList %}
                                 <tr>
                                     <td>
-                                        <a href="{{ objectPath(ride) }}">
+                                        <a href="{{ object_path(ride) }}">
                                             {{ ride.dateTime|date('d.m.Y') }}
                                         </a>
                                     </td>
 
                                     <td>
-                                        <a href="{{ objectPath(ride.city) }}">
+                                        <a href="{{ object_path(ride.city) }}">
                                             {{ ride.city.city }}
                                         </a>
                                     </td>
@@ -163,13 +163,13 @@
                             {% for ride in durationList %}
                                 <tr>
                                     <td>
-                                        <a href="{{ objectPath(ride) }}">
+                                        <a href="{{ object_path(ride) }}">
                                             {{ ride.dateTime|date('d.m.Y') }}
                                         </a>
                                     </td>
 
                                     <td>
-                                        <a href="{{ objectPath(ride.city) }}">
+                                        <a href="{{ object_path(ride.city) }}">
                                             {{ ride.city.city }}
                                         </a>
                                     </td>

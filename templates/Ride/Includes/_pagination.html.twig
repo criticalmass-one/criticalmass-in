@@ -4,7 +4,7 @@
 <ul class="pager">
     {% if previous_ride %}
         <li class="previous">
-            <a href="{{ objectPath(previous_ride) }}">
+            <a href="{{ object_path(previous_ride) }}">
                 &larr; Vorige Tour
             </a>
         </li>
@@ -18,7 +18,7 @@
 
     {% if next_ride %}
         <li class="next">
-            <a href="{{ objectPath(next_ride) }}">
+            <a href="{{ object_path(next_ride) }}">
                 Nächste Tour &rarr;
             </a>
         </li>

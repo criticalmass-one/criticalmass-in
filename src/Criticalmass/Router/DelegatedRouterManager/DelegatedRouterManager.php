@@ -8,11 +8,9 @@ use App\EntityInterface\RouteableInterface;
 
 class DelegatedRouterManager implements DelegatedRouterManagerInterface
 {
-    /** @var array $delegatedRouterList */
-    protected $delegatedRouterList = [];
+    protected array $delegatedRouterList = [];
 
-    /** @var ObjectRouterInterface $objectRouter */
-    protected $objectRouter;
+    protected ?ObjectRouterInterface $objectRouter = null;
 
     public function setObjectRouter(ObjectRouterInterface $objectRouter): DelegatedRouterManagerInterface
     {
