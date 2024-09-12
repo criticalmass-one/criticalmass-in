@@ -19,7 +19,7 @@ define(['leaflet'], function () {
      * @since 2015-01-19
      * @private
      */
-    Container.prototype._list = null;
+    Container.prototype._list = [];
 
     Container.prototype._indexList = [];
 
@@ -52,8 +52,9 @@ define(['leaflet'], function () {
         if (typeof index === 'undefined') {
             this._list.push(entity);
         } else {
-            this._list[index] = entity;
+            this._list.splice(index, 0, entity);
 
+            console.log(this._list);
             this._indexList.push(index);
         }
 
