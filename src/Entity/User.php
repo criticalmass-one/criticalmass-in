@@ -239,6 +239,18 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
         return $this;
     }
 
+    public function setColor(string $color): User
+    {
+        list($this->colorRed, $this->colorGreen, $this->colorBlue) = sscanf($color, "#%02x%02x%02x");
+
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return sprintf('#%02x%02x%02x', $this->colorRed, $this->colorGreen, $this->colorBlue);
+    }
+
     /**
      * @deprecated
      */

@@ -1,5 +1,8 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
+{% set previous_photo = previous_entity(photo) %}
+{% set next_photo = next_entity(photo) %}
+
 {% block title %}Foto platzieren{% endblock %}
 
 {% block breadcrumb %}
@@ -45,7 +48,19 @@
             </div>
 
             <div class="col-md-9">
-                <div id="map" style="height: 300px;">
+                <div id="map-photo"
+                     class="map"
+                     data-map-marker-draggable="true"
+                     data-map-marker-clickable="false"
+                     data-map-center-latitude="{{ photo.latitude }}"
+                     data-map-center-longitude="{{ photo.longitude }}"
+                     data-map-marker-latitude="{{ photo.latitude }}"
+                     data-map-marker-longitude="{{ photo.longitude }}"
+                     data-map-marker-latitude-target="photo_coord_latitude"
+                     data-map-marker-longitude-target="photo_coord_longitude"
+                     data-map-marker-type="photo"
+                     data-map-zoomlevel="13"
+                     style="height: 50vh;">
                 </div>
             </div>
         </div>
@@ -72,9 +87,9 @@
         <div class="row">
             <div class="col-md-12">
                 <ul class="pager">
-                    {% if previousPhoto %}
+                    {% if previous_photo %}
                         <li class="previous">
-                            <a href="{{ object_path(previousPhoto) }}">
+                            <a href="{{ object_path(previous_photo) }}">
                                 &larr; Voriges Foto
                             </a>
                         </li>
@@ -86,9 +101,9 @@
                         </li>
                     {% endif %}
 
-                    {% if nextPhoto %}
+                    {% if next_photo %}
                         <li class="next">
-                            <a href="{{ object_path(nextPhoto) }}">
+                            <a href="{{ object_path(next_photo) }}">
                                 Nächstes Foto &rarr;
                             </a>
                         </li>
@@ -103,29 +118,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        var pageOptions = {
-            startCoord: {
-                latitude: {{ photo.ride.latitude }},
-                longitude: {{ photo.ride.longitude }}
-            },
-            inputFields: {
-                latitude: '#photo_coord_latitude',
-                longitude: '#photo_coord_longitude'
-            }
-        };
-
-        CriticalMass.loadModule('PlacePhotoPage', null, pageOptions, function (placePage) {
-            {% if track %}
-            placePage.addTrack('{{ track|jms_serialize('json')|raw|e('js') }}');
-            {% endif %}
-
-            placePage.addRide('{{ photo.ride|jms_serialize('json')|raw|e('js') }}');
-
-            placePage.setPhoto('{{ photo|jms_serialize('json')|raw|e('js') }}', '{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}');
-
-            placePage.init();
-        });
-    </script>
 {% endblock %}

@@ -57,6 +57,7 @@
         "php-amqplib/rabbitmq-bundle": "^2.0",
         "ext-fileinfo": "*",
         "ext-xmlwriter": "*",
+        "symfony/webpack-encore-bundle": "^1.14",
         "ext-json": "*",
         "ext-zip": "*",
         "fresh/doctrine-enum-bundle": "^8.0",
@@ -85,6 +86,7 @@
         "symfony/asset": "^6.0",
         "yohang/calendr": "dev-master",
         "presta/sitemap-bundle": "^3.3",
+        "symfony/http-client": "^6.0",
         "symfony/twig-bridge": "^6.0",
         "symfony/mailer": "^6.0",
         "symfony/cache": "^6.0",
@@ -115,7 +117,8 @@
         ],
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+            "assets:install %PUBLIC_DIR%": "symfony-cmd",
+            "ckeditor:install": "symfony-cmd"
         },
         "reset-test-db": [
             "bin/console --env=test doctrine:database:drop --force",

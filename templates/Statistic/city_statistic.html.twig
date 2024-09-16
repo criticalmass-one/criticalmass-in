@@ -55,7 +55,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <canvas id="chart" style="width: 100%; height: 250px;"></canvas>
+                <canvas id="chart" style="width: 100%; height: 75vh;"></canvas>
             </div>
         </div>
 
@@ -135,13 +135,8 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-        CriticalMass.loadModule('CityStatisticPage', null, null, function (page) {
-            {% for ride in rides %}
-            page.addRideData('{{ ride.dateTime|date('Y-m-d') }}', {{ ride.estimatedParticipants|default(0) }}, {{ ride.estimatedDuration|default(0) }}, {{ ride.estimatedDistance|default(0) }});
-            {% endfor %}
 
-            page.createChart($('#chart'));
-        });
-    </script>
+    {% for ride in rides %}
+        <div class="ride-data" data-ride-datetime="{{ ride.dateTime|date('Y-m-d') }}" data-estimated-participants="{{ ride.estimatedParticipants|default(0) }}" data-estimated-duration="{{ ride.estimatedDuration|default(0) }}" data-estimated-distance="{{ ride.estimatedDistance|default(0) }}"></div>
+    {% endfor %}
 {% endblock %}

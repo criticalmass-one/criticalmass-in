@@ -65,7 +65,7 @@
         {% if allCities|length > 0 %}
             <div class="row">
                 <div class="col-md-12">
-                    <div id="map" style="height: 350px;"></div>
+                    <div class="map" id="region-map" style="height: 350px;" data-api-type="city" data-api-query="{{ path('caldera_criticalmass_rest_city_list', { regionSlug: region.slug, size: 500 }) }}"></div>
                 </div>
             </div>
         {% endif %}
@@ -138,16 +138,4 @@
             </div>
         {% endif %}
     </div>
-
-    {% if allCities|length > 0 %}
-        <script>
-            CriticalMass.loadModule('RegionPage', null, null, function (regionPage) {
-                {% for city in allCities %}
-                regionPage.addCity('{{ city|jms_serialize('json')|raw|e('js') }}');
-                {% endfor %}
-
-                regionPage.setFocus();
-            });
-        </script>
-    {% endif %}
 {% endblock %}

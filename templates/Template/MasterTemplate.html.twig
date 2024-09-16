@@ -1,3 +1,7 @@
+{% if entrypoint is not defined %}
+    {% set entrypoint = 'app' %}
+{% endif %}
+
 <!DOCTYPE html>
 <html {{ sonata_seo_html_attributes() }}>
 <head {{ sonata_seo_head_attributes() }}>
@@ -17,27 +21,23 @@
     {{ sonata_seo_link_canonical() }}
     {{ sonata_seo_lang_alternates() }}
 
-    <link rel="stylesheet" href="{{ asset('/css/criticalmass.min.css') }}"/>
+    {{ encore_entry_link_tags(entrypoint) }}
 
     <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 
-    <script src="{{ asset('/js/require.min.js') }}"></script>
-    <script src="{{ asset('/js/CriticalMass.js') }}"></script>
-
     {% block additionalHeaderElements %}{% endblock %}
+
+    {{ encore_entry_script_tags(entrypoint) }}
+
 </head>
 
 <body class="{% if app.user %}logged-in{% else %}not-logged-in{% endif %} {% block bodyClass %}{% endblock %} with-top-navbar">
 
 {% block masterContent %}{% endblock %}
 
-<script src="{{ asset('/js/jquery.min.js') }}"></script>
-<script src="{{ asset('/js/bootstrap.min.js') }}"></script>
+{{ encore_entry_script_tags(entrypoint) }}
 
 {% block additionalFooterElements %}{% endblock %}
-<script>
-    CriticalMass.loadModule('HintModal', '.modal-hint');
-</script>
 </body>
 </html>
