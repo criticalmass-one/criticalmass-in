@@ -2,13 +2,59 @@
 
 namespace App\Criticalmass\Image\PhotoUploader;
 
+use App\Criticalmass\UploadFaker\UploadFakerInterface;
 use App\Entity\Photo;
+use App\Entity\Ride;
+use App\Entity\Track;
+use App\Entity\User;
 use App\Event\Photo\PhotoUploadedEvent;
 use DirectoryIterator;
+use Doctrine\Persistence\ManagerRegistry;
+use League\Flysystem\Filesystem;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class PhotoUploader extends AbstractPhotoUploader
+class PhotoUploader implements PhotoUploaderInterface
 {
+    /** @var User $user */
+    protected $user;
+
+    /** @var Ride $ride */
+    protected $ride;
+
+    /** @var array $addedPhotoList */
+    protected $addedPhotoList = [];
+
+    public function __construct(
+        private readonly ManagerRegistry $doctrine,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly Filesystem $filesystem,
+        private readonly UploadFakerInterface $uploadFaker
+    )
+    {
+
+    }
+
+    public function setUser(User $user): PhotoUploaderInterface
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function setRide(Ride $ride): PhotoUploaderInterface
+    {
+        $this->ride = $ride;
+
+        return $this;
+    }
+
+    /** @deprecated  */
+    public function setTrack(Track $track = null): PhotoUploaderInterface
+    {
+        return $this;
+    }
+
     public function addFile(string $filename): PhotoUploaderInterface
     {
         $this->createPhotoEntity($filename);
