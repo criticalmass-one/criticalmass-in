@@ -16,14 +16,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class PhotoUploader implements PhotoUploaderInterface
 {
-    /** @var User $user */
-    protected $user;
-
-    /** @var Ride $ride */
-    protected $ride;
-
-    /** @var array $addedPhotoList */
-    protected $addedPhotoList = [];
+    private User $user;
+    private Ride $ride;
+    private array $addedPhotoList = [];
 
     public function __construct(
         private readonly ManagerRegistry $doctrine,
