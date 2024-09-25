@@ -9,7 +9,12 @@ framework:
     php_errors:
         log: true
 
-    cache: ~
+    cache:
+        pools:
+            doctrine.system_cache_pool:
+                adapter: cache.adapter.filesystem
+            doctrine.result_cache_pool:
+                adapter: cache.adapter.filesystem
 
     translator: { fallbacks: [de] }
     form: ~
@@ -21,10 +26,18 @@ framework:
     session:
         handler_id:  session.handler.native_file
         save_path:   '%kernel.project_dir%/../var/sessions/%kernel.environment%'
-    fragments:       ~
+    fragments:
+        path: /_fragment
     http_method_override: true
     assets:
         version: '%assets_version%'
         json_manifest_path: ~
     router:
         strict_requirements: ~
+
+when@test:
+    framework:
+        test: true
+        session:
+            storage_id: session.storage.mock_file
+        profiler: { enabled: true, collect: false }

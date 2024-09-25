@@ -143,7 +143,7 @@
         <script>
             CriticalMass.loadModule('RegionPage', null, null, function (regionPage) {
                 {% for city in allCities %}
-                regionPage.addCity('{{ city|serialize|raw|e('js') }}');
+                regionPage.addCity('{{ city|jms_serialize('json')|raw|e('js') }}');
                 {% endfor %}
 
                 regionPage.setFocus();

@@ -24,9 +24,9 @@ class EstimateController extends BaseController
 {
     public function __construct(
         protected readonly SerializerInterface $serializer,
-        protected readonly ManagerRegistry $registry,
         protected readonly EventDispatcherInterface $eventDispatcher,
-        protected readonly DataQueryManagerInterface $dataQueryManage
+        protected readonly DataQueryManagerInterface $dataQueryManager,
+        protected readonly ManagerRegistry $registry
     ) {
 
     }

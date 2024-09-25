@@ -118,12 +118,12 @@
 
         CriticalMass.loadModule('PlacePhotoPage', null, pageOptions, function (placePage) {
             {% if track %}
-            placePage.addTrack('{{ track|serialize('json')|raw|e('js') }}');
+            placePage.addTrack('{{ track|jms_serialize('json')|raw|e('js') }}');
             {% endif %}
 
-            placePage.addRide('{{ photo.ride|serialize|raw|e('js') }}');
+            placePage.addRide('{{ photo.ride|jms_serialize('json')|raw|e('js') }}');
 
-            placePage.setPhoto('{{ photo|serialize|raw|e('js') }}', '{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}');
+            placePage.setPhoto('{{ photo|jms_serialize('json')|raw|e('js') }}', '{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}');
 
             placePage.init();
         });

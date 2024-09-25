@@ -29,8 +29,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @CriticalAssert\SingleRideForDay
- * @Vich\Uploadable
  */
+#[Vich\Uploadable]
 #[Routing\DefaultRoute(name: 'caldera_criticalmass_ride_show')]
 #[ORM\Table(name: 'ride')]
 #[ORM\Entity(repositoryClass: 'App\Repository\RideRepository')]
@@ -234,9 +234,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     #[ORM\OrderBy(['creationDateTime' => 'DESC'])]
     protected Collection $weathers;
 
-    /**
-     * @Vich\UploadableField(mapping="ride_photo", fileNameProperty="imageName",  size="imageSize", mimeType="imageMimeType")
-     */
+    #[Vich\UploadableField(mapping: 'ride_photo', fileNameProperty: 'imageName', size: 'imageSize', mimeType: 'imageMimeType')]
     protected ?File $imageFile = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]

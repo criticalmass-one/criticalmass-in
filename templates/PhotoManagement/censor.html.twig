@@ -37,7 +37,7 @@
 
     <script>
         CriticalMass.loadModule('PhotoCensorPage', null, null, function (page) {
-            page.setPhoto('{{ photo|serialize|raw|e('js') }}', '{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}');
+            page.setPhoto('{{ photo|jms_serialize('json')|raw|e('js') }}', '{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}');
             page.init();
         });
     </script>
