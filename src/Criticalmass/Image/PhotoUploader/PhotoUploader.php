@@ -23,7 +23,6 @@ class PhotoUploader implements PhotoUploaderInterface
     public function __construct(
         private readonly ManagerRegistry $doctrine,
         private readonly EventDispatcherInterface $eventDispatcher,
-        private readonly Filesystem $filesystem,
         private readonly UploadFakerInterface $uploadFaker
     )
     {
