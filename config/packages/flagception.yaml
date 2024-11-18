@@ -7,6 +7,8 @@ flagception:
         frontpage_advertisment:
             default: false
         strava_track_upload:
-            default: true
+            default: false
+        strava_track_view_public:
+            default: false
         oembed:
             default: true

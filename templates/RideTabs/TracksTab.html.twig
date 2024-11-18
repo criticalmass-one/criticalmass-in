@@ -62,31 +62,33 @@
                     {% set trackNumber = 0 %}
 
                     {% for track in tracks %}
-                        <tr>
-                            <td style="background-color: rgb({{ track.getColorRed() }}, {{ track.getColorGreen() }}, {{ track.getColorBlue() }});">
-                                <input type="checkbox" class="track-visibility-toggle" data-track-id="{{ track.id }}"
-                                       checked="checked"/>
-                            </td>
-                            <td>
-                                {{ track.user.username }}
-                            </td>
-                            <td>
-                                {% if track.getDurationInterval() %}
-                                    {{ human_duration(track.getDurationInSeconds()) }}
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if track.distance %}
-                                    {{ track.distance|round(2) }}&nbsp;km
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if track.getAverageVelocity() %}
-                                    {{ track.getAverageVelocity()|round(2) }}&nbsp;km/h
-                                {% endif %}
-                            </td>
-                        </tr>
-                        {% set trackNumber = trackNumber + 1 %}
+                        {% if is_granted('publicView', track) %}
+                            <tr>
+                                <td style="background-color: rgb({{ track.getColorRed() }}, {{ track.getColorGreen() }}, {{ track.getColorBlue() }});">
+                                    <input type="checkbox" class="track-visibility-toggle" data-track-id="{{ track.id }}"
+                                           checked="checked"/>
+                                </td>
+                                <td>
+                                    {{ track.user.username }}
+                                </td>
+                                <td>
+                                    {% if track.getDurationInterval() %}
+                                        {{ human_duration(track.getDurationInSeconds()) }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if track.distance %}
+                                        {{ track.distance|round(2) }}&nbsp;km
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if track.getAverageVelocity() %}
+                                        {{ track.getAverageVelocity()|round(2) }}&nbsp;km/h
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% set trackNumber = trackNumber + 1 %}
+                        {% endif %}
                     {% endfor %}
                 </table>
             {% else %}
