@@ -8,7 +8,7 @@ use Flagception\Manager\FeatureManagerInterface;
 
 class TrackVoter extends AbstractVoter
 {
-    public function __construct(private FeatureManagerInterface $featureManager)
+    public function __construct(private readonly FeatureManagerInterface $featureManager)
     {
 
 
