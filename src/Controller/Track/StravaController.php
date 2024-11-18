@@ -18,12 +18,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Flagception\Bundle\FlagceptionBundle\Annotations\Feature;
 
+/**
+ * @Feature('strava_track_upload')
+ */
 class StravaController extends AbstractController
 {
     public function __construct(private readonly string $stravaClientId, private readonly string $stravaSecret)
     {
     }
+
     /**
      * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")

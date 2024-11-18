@@ -38,6 +38,13 @@ class RideTabsController extends AbstractController
     ): Response {
         $tracks = $trackRepository->findTracksByRide($ride);
 
+        // this is more a qnd solution and should be refactored
+        foreach ($tracks as $key => $track) {
+            if (!$this->isGranted('publicView', $track)) {
+                unset($tracks[$key]);
+            }
+        }
+
         return $this->render('RideTabs/TracksTab.html.twig', [
             'ride' => $ride,
             'tracks' => $tracks,
