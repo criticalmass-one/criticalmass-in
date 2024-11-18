@@ -9,6 +9,6 @@ flagception:
         strava_track_upload:
             default: false
         strava_track_view_public:
-            default: false
+            default: true
         oembed:
             default: true
