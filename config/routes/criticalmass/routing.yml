@@ -74,10 +74,6 @@ caldera_criticalmass_participation:
     resource: 'participation.yml'
     prefix:   /
 
-caldera_criticalmass_strava:
-    resource: 'strava.yml'
-    prefix: /
-
 caldera_criticalmass_timeline:
     resource: 'timeline.yml'
     prefix: /
