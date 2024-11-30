@@ -6,6 +6,10 @@ caldera_criticalmass_photo_show_ride:
     path: /{citySlug}/{rideIdentifier}/photo/{photoId}
     controller: App\Controller\Photo\PhotoController::showAction
 
+caldera_criticalmass_photo_download:
+    path: /{citySlug}/{rideIdentifier}/photo/{photoId}/download
+    controller: App\Controller\Photo\PhotoDownloadController::downloadAction
+
 caldera_criticalmass_photo_show:
     path: /photo/{photoId}
     controller: App\Controller\Photo\PhotoController::showAction
