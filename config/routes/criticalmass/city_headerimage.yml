@@ -1,0 +1,3 @@
+caldera_criticalmass_city_headerimage:
+  path:  /{citySlug}/headerimage
+  controller: App\Controller\City\CityHeaderImageController::uploadAction
