@@ -98,6 +98,14 @@ caldera_criticalmass_citycycle:
     resource: 'citycycle.yml'
     prefix: /
 
+caldera_criticalmass_citypreview:
+    resource: 'city_preview.yml'
+    prefix: /
+
+caldera_criticalmass_ride:
+    resource: 'ride.yml'
+    prefix: /
+
 caldera_criticalmass_social_network:
     resource: 'social_network.yml'
     prefix: /
@@ -108,10 +116,6 @@ caldera_criticalmass_static:
 
 caldera_criticalmass_ridemanagement:
     resource: 'ridemanagement.yml'
-    prefix: /
-
-caldera_criticalmass_ride:
-    resource: 'ride.yml'
     prefix: /
 
 caldera_criticalmass_rideestimate:
