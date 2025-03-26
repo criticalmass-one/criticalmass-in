@@ -100,10 +100,19 @@ class RideController extends AbstractController
             $participation = null;
         }
 
+        $tracks = $trackRepository->findTracksByRide($ride);
+
+        // this is more a qnd solution and should be refactored
+        foreach ($tracks as $key => $track) {
+            if (!$this->isGranted('publicView', $track)) {
+                unset($tracks[$key]);
+            }
+        }
+
         return $this->render('Ride/show.html.twig', [
             'city' => $ride->getCity(),
             'ride' => $ride,
-            'tracks' => $trackRepository->findTracksByRide($ride),
+            'tracks' => $tracks,
             'photos' => $photoRepository->findPhotosByRide($ride),
             'subrides' => $subrideRepository->getSubridesForRide($ride),
             'dateTime' => new \DateTime(),
