@@ -8,9 +8,9 @@ define(['CriticalService', 'Map', 'Container', 'ClusterContainer', 'CityEntity',
         this._initLayers();
         this._initLayerControl();
         this._initTrackToggleEvent();
-        this._initPhotoViewModal();
         this._initSubrideEvents();
         this._initTimelapse();
+        this._initPhotoViewModal();
 
         this._CriticalService = CriticalService;
     };

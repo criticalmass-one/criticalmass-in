@@ -6,7 +6,7 @@ define(['MarkerEntity', 'leaflet.extra-markers'], function () {
     PhotoEntity.prototype.constructor = PhotoEntity;
 
     PhotoEntity.prototype._description = null;
-    PhotoEntity.prototype._dateTime = null;
+    PhotoEntity.prototype._creationDateTime = null;
     PhotoEntity.prototype._filename = null;
 
     PhotoEntity.prototype._initIcon = function () {
@@ -39,7 +39,7 @@ define(['MarkerEntity', 'leaflet.extra-markers'], function () {
     };
 
     PhotoEntity.prototype.getDateTime = function () {
-        return this._dateTime;
+        return this._creationDateTime;
     };
 
     return PhotoEntity;
