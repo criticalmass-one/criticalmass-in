@@ -39,7 +39,7 @@ class RideType extends AbstractType
                 'view_timezone' => $timezone,
                 'date_widget' => 'single_text',
                 'time_widget' => 'single_text',
-                'html5' => false, // @todo remvoe this later
+                'html5' => true,
                 'compound' => true
             ])
             ->add('location', TextType::class, ['required' => false])
