@@ -70,25 +70,17 @@
 
         {{ include('Flash/_flash.html.twig') }}
 
-        {% if ride is defined and ride is not null %}
-        {% set latitude = ride.latitude %}
-        {% set longitude = ride.longitude %}
-        {% else %}
-        {% set latitude = city.latitude %}
-        {% set longitude = city.longitude %}
-        {% endif %}
-
         {{ form_start(form) }}
         <div class="row">
             <div class="col-md-12">
                 <div id="map" class="map" style="height: 250px;"
                      data-map-marker-draggable="true"
-                     data-map-center-latitude="{{ latitude }}"
-                     data-map-center-longitude="{{ longitude }}"
+                     data-map-center-latitude="{{ ride.latitude }}"
+                     data-map-center-longitude="{{ ride.longitude }}"
                      data-map-zoomlevel="10"
                      data-map-marker-type="ride"
-                     data-map-marker-latitude-target="ride_latitude"
-                     data-map-marker-longitude-target="ride_longitude"
+                     data-map-marker-latitude-target="{{ form.latitude.vars.id }}"
+                     data-map-marker-longitude-target="{{ form.longitude.vars.id }}"
                 >
 
                 </div>
