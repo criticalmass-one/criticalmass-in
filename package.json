@@ -18,7 +18,7 @@
     "@symfony/webpack-encore": "^2.0.0",
     "core-js": "^3.0.0",
     "regenerator-runtime": "^0.13.2",
-    "sass": "^1.55.0",
+    "sass": "^1.89.0",
     "sass-loader": "^9.0.1 || ^10.0.0 || ^11.0.0 || ^12.0.0",
     "stimulus": "^2.0.0",
     "webpack-notifier": "^1.6.0"
@@ -45,7 +45,6 @@
     "leaflet-sleep": "^0.5.2",
     "leaflet.locatecontrol": "^0.68.0",
     "leaflet.markercluster": "^1.4.1",
-    "node-sass": "^9.0.0",
     "npm": "^8.19.2",
     "polyline-encoded": "0.0.8",
     "requirejs": "^2.3.7",
