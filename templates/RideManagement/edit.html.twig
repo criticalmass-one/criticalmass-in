@@ -70,13 +70,21 @@
 
         {{ include('Flash/_flash.html.twig') }}
 
+        {% if ride is defined and ride is not null %}
+        {% set latitude = ride.latitude %}
+        {% set longitude = ride.longitude %}
+        {% else %}
+        {% set latitude = city.latitude %}
+        {% set longitude = city.longitude %}
+        {% endif %}
+
         {{ form_start(form) }}
         <div class="row">
             <div class="col-md-12">
                 <div id="map" class="map" style="height: 250px;"
                      data-map-marker-draggable="true"
-                     data-map-center-latitude="{{ ride.latitude|default(ride.city.latitude) }}"
-                     data-map-center-longitude="{{ ride.longitude|default(ride.city.longitude) }}"
+                     data-map-center-latitude="{{ latitude }}"
+                     data-map-center-longitude="{{ longitude }}"
                      data-map-zoomlevel="10"
                      data-map-marker-type="ride"
                      data-map-marker-latitude-target="ride_latitude"
@@ -179,7 +187,7 @@
                                 Treffpunkt:
                             </label>
                             <button class="btn btn-default btn-xs pull-right geocode"
-                                    data-geocoding-query-suffix="{{ ride.city.city }},{{ ride.city.region }},{{ ride.city.region.parent }}"
+                                    data-geocoding-query-suffix="{{ city.city }},{{ city.region }},{{ city.region.parent }}"
                                     data-geocoding-query-selector="#ride_location"
                                     type="button">
                                 <i class="far fa-map-marker"></i>
