@@ -62,7 +62,7 @@
         "ext-zip": "*",
         "fresh/doctrine-enum-bundle": "^8.0",
         "doctrine/annotations": "^2.0",
-        "league/commonmark": "^1.0",
+        "league/commonmark": "^2.6",
         "nesbot/carbon": "^2.24",
         "iamstuartwilson/strava": "^1.4",
         "gregwar/captcha-bundle": "^2.1",
