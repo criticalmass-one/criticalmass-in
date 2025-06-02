@@ -75,7 +75,7 @@ class CityManagementController extends AbstractController
         FormInterface $form
     ) {
         return $this->render('CityManagement/edit.html.twig', [
-            'city' => null,
+            'city' => $city,
             'form' => $form->createView(),
             'country' => $region->getParent()->getName(),
             'state' => $region->getName(),
@@ -179,7 +179,8 @@ class CityManagementController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $city
                 ->setUpdatedAt(new \DateTime())
-                ->setUser($user);
+                ->setUser($user)
+            ;
 
             $this->managerRegistry->getManager()->flush();
 

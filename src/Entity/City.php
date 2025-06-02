@@ -243,7 +243,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
         return $this;
     }
 
-    public function getMainSlug(): CitySlug
+    public function getMainSlug(): ?CitySlug
     {
         return $this->mainSlug;
     }

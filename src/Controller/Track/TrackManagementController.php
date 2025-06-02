@@ -2,7 +2,6 @@
 
 namespace App\Controller\Track;
 
-use App\Event\Track\TrackDeletedEvent;
 use App\Event\Track\TrackHiddenEvent;
 use App\Event\Track\TrackShownEvent;
 use App\Repository\TrackRepository;

@@ -128,7 +128,7 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     #[JMS\Groups(['timelapse', 'api-public'])]
     #[JMS\Expose]
     #[JMS\SerializedName('polylineString')]
-    protected ?string $polyline = null;
+    protected ?string $polyline;
 
     #[ORM\Column(type: 'text', nullable: true)]
     #[JMS\Groups(['timelapse', 'api-public'])]

@@ -22,7 +22,7 @@ class RideTrackCollector extends AbstractTimelineCollector
                 ->setRideTitle($trackEntity->getRide()->getTitle())
                 ->setDistance($trackEntity->getDistance())
                 ->setDuration($trackEntity->getDurationInSeconds())
-                ->setPolyline($trackEntity->getPolyline())
+                ->setPolyline($trackEntity->getPolyline()) // @todo use reduced polyline later
                 ->setPolylineColor('rgb(' . $trackEntity->getUser()->getColorRed() . ', ' . $trackEntity->getUser()->getColorGreen() . ', ' . $trackEntity->getUser()->getColorBlue() . ')')
                 ->setDateTime($trackEntity->getCreationDateTime())
                 ->setRideEnabled($trackEntity->getRide()->isEnabled());
