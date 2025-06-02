@@ -48,15 +48,11 @@ class CriticalParser implements TextParserInterface
 
         if ($this->textCache->has($text)) {
             $parsedText = $this->textCache->get($text);
-
-            if (!is_string($parsedText)) {
-                return $parsedText->getContent();
-            }
         } else {
             $parsedText = $this->converter->convert($text);
             $this->textCache->set($text, $parsedText->getContent());
         }
 
-        return $parsedText;
+        return $parsedText->getContent();
     }
 }
