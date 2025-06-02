@@ -7,23 +7,20 @@ use App\Criticalmass\TextParser\EmbedExtension\EmbedExtension;
 use App\Criticalmass\TextParser\TextCache\TextCacheInterface;
 use Flagception\Manager\FeatureManagerInterface;
 use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Autolink\AutolinkExtension;
 use League\CommonMark\MarkdownConverterInterface;
 
 class CriticalParser implements TextParserInterface
 {
-    protected FeatureManagerInterface $featureManager;
     protected MarkdownConverterInterface $converter;
-    protected EmbedderInterface $embedder;
-    protected TextCacheInterface $textCache;
 
-    public function __construct(FeatureManagerInterface $featureManager, EmbedderInterface $embedder, TextCacheInterface $textCache)
+    public function __construct(
+        private FeatureManagerInterface $featureManager,
+        private EmbedderInterface $embedder,
+        private TextCacheInterface $textCache
+    )
     {
-        $this->featureManager = $featureManager;
-        $this->embedder = $embedder;
-        $this->textCache = $textCache;
-
         $this->configure();
     }
 
@@ -45,15 +42,15 @@ class CriticalParser implements TextParserInterface
         $this->converter = new CommonMarkConverter($config, $environment);
     }
 
-    public function parse(string $rawText): string
+    public function parse(string $text): string
     {
         $parsedText = null;
 
-        if ($this->textCache->has($rawText)) {
-            $parsedText = $this->textCache->get($rawText);
+        if ($this->textCache->has($text)) {
+            $parsedText = $this->textCache->get($text);
         } else {
-            $parsedText = $this->converter->convertToHtml($rawText);
-            $this->textCache->set($rawText, $parsedText);
+            $parsedText = $this->converter->convert($text);
+            $this->textCache->set($text, $parsedText->getContent());
         }
 
         return $parsedText;
