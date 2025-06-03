@@ -576,18 +576,6 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
         return $this;
     }
 
-    public function getTwitterkAccessToken(): ?string
-    {
-        return $this->twitterkAccessToken;
-    }
-
-    public function setTwitterkAccessToken(?string $twitterkAccessToken): User
-    {
-        $this->twitterkAccessToken = $twitterkAccessToken;
-
-        return $this;
-    }
-
     public function getSalt(): string
     {
         return '';
