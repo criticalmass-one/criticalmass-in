@@ -34,7 +34,6 @@ parameters:
     upload_destination.ride_photo: '%kernel.project_dir%/public/rides'
     upload_destination.frontpage_teaser: '%kernel.project_dir%/public/teaser'
     upload_destination.user_photo: '%kernel.project_dir%/public/users'
-    staticmaps.host: '%env(STATICMAPS_HOST)%'
     assets_version: '%env(ASSETS_VERSION)%'
 
 services:
@@ -45,7 +44,6 @@ services:
         bind:
             $rootDirectory: '%kernel.project_dir%'
             $webRootDir: '%kernel.project_dir%/../public'
-            $staticmapsHost: '%staticmaps.host%'
             $gapWidth: '%track.gap_width%'
             $facebookAppId: '%facebook.app_id%'
             $facebookAppSecret: '%facebook.app_secret%'
@@ -67,7 +65,7 @@ services:
 
     App\:
         resource: '../src/*'
-        exclude: '../src/{DQL,Entity,Manager,Menu,Migrations,Model,Repository,Tests,UserProvider,Criticalmass/UploadValidator/UploadValidatorException}'
+        exclude: '../src/{DQL,Entity,Manager,Menu,Migrations,Model,Tests,UserProvider,Criticalmass/UploadValidator/UploadValidatorException}'
 
     App\Controller\:
         resource: '../src/Controller'
@@ -84,10 +82,6 @@ services:
             $flysystemFilesystem: '@oneup_flysystem.flysystem_photo_photo_filesystem'
 
     App\Criticalmass\Image\PhotoManipulator\Storage\PhotoStorage:
-        arguments:
-            $filesystem: '@oneup_flysystem.flysystem_photo_photo_filesystem'
-
-    App\Criticalmass\Image\PhotoUploader\PhotoUploader:
         arguments:
             $filesystem: '@oneup_flysystem.flysystem_photo_photo_filesystem'
 
@@ -225,10 +219,6 @@ services:
     jms_serializer.naming_strategy:
         alias: jms_serializer.camel_case_naming_strategy
 
-    App\Form\Type\RegistrationType:
-        arguments:
-            $class: '%fos_user.model.user.class%'
-
     App\Criticalmass\CriticalmassBlog\CriticalmassBlogInterface:
         alias: App\Criticalmass\CriticalmassBlog\CachedCriticalmassBlog
 
@@ -236,3 +226,12 @@ services:
         arguments:
             $cityFinder: '@fos_elastica.finder.criticalmass_city'
             $rideFinder: '@fos_elastica.finder.criticalmass_ride'
+
+    App\Security\UserProvider\UserProvider:
+        arguments:
+            $properties:
+                'facebook': 'facebookId'
+                'strava': 'stravaId'
+                'twitter': 'twitterId'
+
+    Sabre\VObject\Component\VCalendar: ~

@@ -12,7 +12,7 @@
 
         <div class="row">
             <div class="col-12">
-                <p>Von der Tour <a href="{{ objectPath(oldRide) }}">{{ oldRide.title }}</a>
+                <p>Von der Tour <a href="{{ object_path(oldRide) }}">{{ oldRide.title }}</a>
                     ({{ oldRide.dateTime.format('d.m.Y H:i') }} Uhr) können die folgenden Mini-Masses kopiert werden:
                 </p>
             </div>
@@ -35,10 +35,10 @@
         <div class="row">
             <div class="col-12">
                 <div class="btn-group pull-right" role="group" aria-label="...">
-                    <a href="{{ objectPath(newRide) }}" class="btn btn-default">
+                    <a href="{{ object_path(newRide) }}" class="btn btn-default">
                         Abbrechen
                     </a>
-                    <a href="{{ objectPath(oldRide, 'caldera_criticalmass_subride_copy', { newDate: newRide.dateTime|date('Y-m-d') }) }}"
+                    <a href="{{ object_path(oldRide, 'caldera_criticalmass_subride_copy', { newDate: newRide.dateTime|date('Y-m-d') }) }}"
                        class="btn btn-primary">Kopieren</a>
                 </div>
             </div>

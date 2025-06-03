@@ -44,17 +44,17 @@
                     {% for key, ride in result.rides %}
                         <tr class="ride">
                             <td>
-                                <a href="{{ objectPath(ride) }}">
+                                <a href="{{ object_path(ride) }}">
                                     {{ ride.dateTime.format('d.m.Y') }}
                                 </a>
                             </td>
                             <td>
-                                <a href="{{ objectPath(ride) }}">
+                                <a href="{{ object_path(ride) }}">
                                     {{ ride.title }}
                                 </a>
                             </td>
                             <td>
-                                <a href="{{ objectPath(ride, 'caldera_criticalmass_photo_ride_list') }}">
+                                <a href="{{ object_path(ride, 'caldera_criticalmass_photo_ride_list') }}">
                                     {{ result.counter[key] }}
                                 </a>
                             </td>

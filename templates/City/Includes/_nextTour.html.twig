@@ -6,7 +6,7 @@
         {% if currentRide %}
             <div class="row">
                 <div class="col-12 text-center">
-                    <a href="{{ objectPath(currentRide) }}">
+                    <a href="{{ object_path(currentRide) }}">
                         <h3 class="mt-0">
                             {{ currentRide.title }}
                         </h3>
@@ -37,7 +37,7 @@
                         {% if currentRide.location and currentRide.latitude and currentRide.longitude %}
                             <dd>{{ currentRide.location }}</dd>
                         {% else %}
-                            <a href="{{ objectPath(currentRide, 'caldera_criticalmass_ride_edit') }}">
+                            <a href="{{ object_path(currentRide, 'caldera_criticalmass_ride_edit') }}">
                                 noch nicht bekannt
                             </a>
                         {% endif %}
@@ -54,7 +54,7 @@
 
         <div class="row mt-2">
             <div class="col-12 text-center">
-                <a href="{{ objectPath(city, 'caldera_criticalmass_city_listrides') }}" class="btn btn-primary">
+                <a href="{{ object_path(city, 'caldera_criticalmass_city_listrides') }}" class="btn btn-primary">
                     <i class="far fa-list"></i>
                     weitere Touren anzeigen
                 </a>

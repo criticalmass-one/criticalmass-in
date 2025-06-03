@@ -83,9 +83,6 @@
             "config/routes/fos_js_routing.yaml"
         ]
     },
-    "friendsofsymfony/user-bundle": {
-        "version": "v3.1.0"
-    },
     "gregwar/captcha-bundle": {
         "version": "v2.2.0"
     },
@@ -195,7 +192,7 @@
         ]
     },
     "php-http/discovery": {
-        "version": "1.18",
+        "version": "1.19",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -219,7 +216,7 @@
         ]
     },
     "phpstan/phpstan": {
-        "version": "1.10",
+        "version": "1.11",
         "recipe": {
             "repo": "github.com/symfony/recipes-contrib",
             "branch": "main",
@@ -259,6 +256,18 @@
             "config/packages/sensio_framework_extra.yaml"
         ]
     },
+    "sonata-project/block-bundle": {
+        "version": "5.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "4.11",
+            "ref": "b4edd2a1e6ac1827202f336cac2771cb529de542"
+        },
+        "files": [
+            "config/packages/sonata_block.yaml"
+        ]
+    },
     "sonata-project/exporter": {
         "version": "2.13",
         "recipe": {
@@ -267,6 +276,18 @@
             "version": "2.4",
             "ref": "93d6df022ef1dc24bdfa8667ddd560bbde89a7cc"
         }
+    },
+    "sonata-project/form-extensions": {
+        "version": "2.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.4",
+            "ref": "9c8a1e8ce2b1f215015ed16652c4ed18eb5867fd"
+        },
+        "files": [
+            "config/packages/sonata_form.yaml"
+        ]
     },
     "sonata-project/intl-bundle": {
         "version": "2.14.1"
@@ -311,12 +332,12 @@
         ]
     },
     "symfony/framework-bundle": {
-        "version": "5.4",
+        "version": "6.4",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
-            "version": "5.4",
-            "ref": "3cd216a4d007b78d8554d44a5b1c0a446dab24fb"
+            "version": "6.4",
+            "ref": "a91c965766ad3ff2ae15981801643330eb42b6a5"
         },
         "files": [
             "config/packages/cache.yaml",
@@ -360,6 +381,18 @@
         },
         "files": [
             "config/packages/monolog.yaml"
+        ]
+    },
+    "symfony/notifier": {
+        "version": "5.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "5.0",
+            "ref": "178877daf79d2dbd62129dd03612cb1a2cb407cc"
+        },
+        "files": [
+            "config/packages/notifier.yaml"
         ]
     },
     "symfony/phpunit-bridge": {

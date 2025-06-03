@@ -1,3 +1,4 @@
+{% if nearCities|length > 0 %}
 <div class="card">
     <div class="card-header">
         Städte in der Umgebung
@@ -6,7 +7,7 @@
         <ul class="list-unstyled">
             {% for city in nearCities %}
                 <li>
-                    <a href="{{ objectPath(city) }}">
+                    <a href="{{ object_path(city) }}">
                         {{ city.city }}
                     </a>
                 </li>
@@ -14,3 +15,4 @@
         </ul>
     </div>
 </div>
+{% endif %}

@@ -2,7 +2,7 @@
 
 namespace App\Controller\Ride;
 
-use App\Criticalmass\Ical\RideIcalGenerator;
+use App\Criticalmass\Ical\RideIcalGeneratorInterface;
 use App\Entity\Ride;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Controller\AbstractController;
@@ -13,8 +13,10 @@ class CalendarController extends AbstractController
     /**
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function icalAction(Ride $ride, RideIcalGenerator $rideIcalGenerator): Response
-    {
+    public function icalAction(
+        RideIcalGeneratorInterface $rideIcalGenerator,
+        Ride $ride
+    ): Response {
         $content = $rideIcalGenerator
             ->generateForRide($ride)
             ->getSerializedContent();

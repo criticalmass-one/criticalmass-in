@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Router\Attribute as Routing;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\EntityInterface\AuditableInterface;
 use App\EntityInterface\RouteableInterface;
@@ -17,19 +17,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[JMS\ExclusionPolicy('all')]
 class Subride implements AuditableInterface, SocialNetworkProfileAble, RouteableInterface
 {
-    /**
-     * @Routing\RouteParameter(name="subrideId")
-     */
+    #[Routing\RouteParameter(name: 'subrideId')]
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     #[JMS\Expose]
     protected ?int $id = null;
 
-    /**
-     * @Routing\RouteParameter(name="rideIdentifier")
-     * @Routing\RouteParameter(name="citySlug")
-     */
+    #[Routing\RouteParameter(name: 'rideIdentifier')]
+    #[Routing\RouteParameter(name: 'citySlug')]
     #[ORM\ManyToOne(targetEntity: 'Ride', inversedBy: 'subrides')]
     #[ORM\JoinColumn(name: 'ride_id', referencedColumnName: 'id')]
     #[JMS\Groups(['extended-subride-list'])]

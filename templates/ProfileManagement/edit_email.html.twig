@@ -45,43 +45,42 @@
 
             {{ form_start(userEmailForm) }}
 
-            <div class="row">
-                <div class="col-md-6 col-md-offset-3">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Deine E-Mail-Adresse
-                        </div>
-                        <div class="panel-body form-group form-group{% if form_errors(userEmailForm.email) %} has-error has-feedback{% endif %}">
-                            <p>
-                                Deine E-Mail-Adresse wird selbstverständlich nirgendwo öffentlich angezeigt.
-                            </p>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Deine E-Mail-Adresse
+                    </div>
+                    <div class="panel-body form-group form-group{% if form_errors(userEmailForm.email) %} has-error has-feedback{% endif %}">
+                        <p>
+                            Deine E-Mail-Adresse wird selbstverständlich nirgendwo öffentlich angezeigt.
+                        </p>
 
-                            {{ form_errors(userEmailForm.email) }}
+                        {{ form_errors(userEmailForm.email) }}
 
-                            <label class="control-label" for="">
-                                E-Mail-Adresse:
-                            </label>
-                            {{ form_widget(userEmailForm.email, { 'attr' : { 'class': 'form-control'} }) }}
-                        </div>
+                        <label class="control-label" for="">
+                            E-Mail-Adresse:
+                        </label>
+                        {{ form_widget(userEmailForm.email, { 'attr' : { 'class': 'form-control'} }) }}
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="row">
-                <div class="col-md-6 col-md-offset-3 text-center">
-                    <div class="btn-group" role="group">
-                        <a href="{{ path('criticalmass_user_usermanagement') }}" class="btn btn-default">
-                            Abbrechen
-                        </a>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 text-center">
+                <div class="btn-group" role="group">
+                    <a href="{{ path('criticalmass_user_usermanagement') }}" class="btn btn-default">
+                        Abbrechen
+                    </a>
 
-                        <button type="submit" class="btn btn-primary">
-                            Speichern
-                        </button>
-                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        Speichern
+                    </button>
                 </div>
             </div>
+        </div>
 
-            {{ form_end(userEmailForm) }}
-        {% endif %}
+        {{ form_end(userEmailForm) }}
     </div>
 {% endblock %}

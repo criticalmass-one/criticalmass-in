@@ -24,7 +24,7 @@
                     Wie viele, wie lange, wohin? Diese Seite bereitet die statistischen Daten auf, die von Teilnehmern
                     der Critical Mass in {{ city.city }} nach einer Tour eingearbeitet worden sind &mdash; entweder von
                     den importieren GPX-Tracks oder mit Schätzungen der Teilnehmerzahlen. Schau dir außerdem die <a
-                            href="{{ objectPath(city, 'caldera_criticalmass_city_missingstats') }}">Liste
+                            href="{{ object_path(city, 'caldera_criticalmass_city_missingstats') }}">Liste
                         von Touren ohne Statistiken</a> an, um eventuell Zahlenmaterial nachzutragen.
                 </p>
             </div>
@@ -45,7 +45,7 @@
 
         <div class="row">
             <div class="col-12">
-                <canvas id="chart" style="width: 100%; height: 250px;"></canvas>
+                <canvas id="chart" style="width: 100%; height: 75vh;"></canvas>
             </div>
         </div>
 
@@ -92,22 +92,30 @@
                         {% if weather %}
                             <tr>
                                 <td>
-                                    {{ ride.dateTime | date('d.m.Y H:i') }}
+                                    {{ ride.dateTime | date('d.m.Y H:i') }}&nbsp;Uhr
                                 </td>
                                 <td>
-                                    {{ weather.temperatureEvening }} °C
+                                    {{ weather.temperatureEvening|number_format(2) }}&nbsp;°C
                                 </td>
                                 <td>
-                                    {{ weather.precipitation }} Millimeter
+                                    {{ weather.precipitation|number_format(2) }}&nbsp;mm
                                 </td>
                                 <td>
-                                    {{ weather.windSpeed }} Meter pro Sekunde
+                                    {{ weather.windSpeed|number_format(2) }}&nbsp;m/s
                                 </td>
                                 <td>
-                                    {{ ride.estimatedParticipants | default('unbekannt') }}
+                                    {% if ride.estimatedParticipants %}
+                                    {{ ride.estimatedParticipants|number_format(0) }}
+                                    {% else %}
+                                    unbekannt
+                                    {% endif %}
                                 </td>
                                 <td>
-                                    {{ ride.estimatedDistance | default('unbekannt') }}
+                                    {% if ride.estimatedDistance %}
+                                    {{ ride.estimatedDistance|number_format(2) }}&nbsp;km
+                                    {% else %}
+                                    unbekannt
+                                    {% endif %}
                                 </td>
                             </tr>
                         {% endif %}
@@ -117,13 +125,8 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-        CriticalMass.loadModule('CityStatisticPage', null, null, function (page) {
-            {% for ride in rides %}
-            page.addRideData('{{ ride.dateTime|date('Y-m-d') }}', {{ ride.estimatedParticipants|default(0) }}, {{ ride.estimatedDuration|default(0) }}, {{ ride.estimatedDistance|default(0) }});
-            {% endfor %}
 
-            page.createChart($('#chart'));
-        });
-    </script>
+    {% for ride in rides %}
+        <div class="ride-data" data-ride-datetime="{{ ride.dateTime|date('Y-m-d') }}" data-estimated-participants="{{ ride.estimatedParticipants|default(0) }}" data-estimated-duration="{{ ride.estimatedDuration|default(0) }}" data-estimated-distance="{{ ride.estimatedDistance|default(0) }}"></div>
+    {% endfor %}
 {% endblock %}

@@ -69,7 +69,7 @@
                     <button id="track-upload-button" type="submit" class="btn btn-primary">
                         Track hochladen
                     </button>
-                    <a href="{{ objectPath(ride) }}" class="btn btn-secondary">
+                    <a href="{{ object_path(ride) }}" class="btn btn-secondary">
                         Abbrechen
                     </a>
                 </div>
@@ -79,9 +79,4 @@
         {{ form_end(form) }}
 
     </div>
-
-
-    <script type="text/javascript">
-        CriticalMass.loadModule('TrackUploadPage');
-    </script>
 {% endblock %}

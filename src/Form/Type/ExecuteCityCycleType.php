@@ -16,12 +16,14 @@ class ExecuteCityCycleType extends AbstractType
                 'view_timezone' => 'UTC',
                 'widget' => 'single_text',
                 'required' => true,
+                'html5' => true,
             ])
             ->add('untilDate', DateType::class, [
                 'model_timezone' => 'UTC',
                 'view_timezone' => 'UTC',
                 'widget' => 'single_text',
                 'required' => true,
+                'html5' => true,
             ]);
     }
 

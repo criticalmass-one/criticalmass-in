@@ -4,6 +4,7 @@ namespace App\Controller\Ride;
 
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Event\RideEstimate\RideEstimateCreatedEvent;
+use Doctrine\Persistence\ManagerRegistry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Controller\AbstractController;
@@ -13,6 +14,7 @@ use App\Form\Type\RideEstimateType;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class RideEstimateController extends AbstractController
@@ -40,8 +42,9 @@ class RideEstimateController extends AbstractController
         $estimateForm->handleRequest($request);
 
         if ($estimateForm->isValid()) {
-            $this->getManager()->persist($estimateForm->getData());
-            $this->getManager()->flush();
+            $manager = $this->managerRegistry->getManager();
+            $manager->persist($estimateForm->getData());
+            $manager->flush();
 
             $eventDispatcher->dispatch(new RideEstimateCreatedEvent($rideEstimate), RideEstimateCreatedEvent::NAME);
         }
@@ -71,8 +74,9 @@ class RideEstimateController extends AbstractController
         $estimateForm->handleRequest($request);
 
         if ($estimateForm->isValid()) {
-            $this->getManager()->persist($estimateForm->getData());
-            $this->getManager()->flush();
+            $manager = $this->managerRegistry->getManager();
+            $manager->persist($estimateForm->getData());
+            $manager->flush();
 
             $eventDispatcher->dispatch(new RideEstimateCreatedEvent($rideEstimate), RideEstimateCreatedEvent::NAME);
 

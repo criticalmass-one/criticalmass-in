@@ -48,25 +48,25 @@
                 {% for ride in rides %}
                     <tr>
                         <td class="col-xs-4 col-sm-3 col-md-2 col-lg-2">
-                            <a href="{{ objectPath(ride.city) }}">
+                            <a href="{{ object_path(ride.city) }}">
                                 {{ ride.city.city }}
                             </a>
                         </td>
 
                         <td class="hidden-xs col-sm-3 col-md-2 col-lg-2">
-                            <a href="{{ objectPath(ride) }}">
+                            <a href="{{ object_path(ride) }}">
                                 {{ ride.getTime().format('H:i') }} Uhr
                             </a>
                         </td>
 
                         <td class="col-xs-8 col-sm-6 col-md-4 col-lg-4">
-                            <a href="{{ objectPath(ride) }}">
+                            <a href="{{ object_path(ride) }}">
                                 {% if ride.location %}{{ ride.location }}{% endif %}
                             </a>
                         </td>
 
                         <td class="hidden-xs hidden-sm col-md-4 col-lg-4">
-                            <a href="{{ objectPath(ride) }}">
+                            <a href="{{ object_path(ride) }}">
                                 {{ ride.title }}
                             </a>
                         </td>

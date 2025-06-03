@@ -116,7 +116,7 @@
             <div class="col-12">
                 <p class="text-center">
                     Die Profile der übergeordneten Stadt {{ profileAble.city.city }} werden getrennt von dieser Liste verwaltet:<br />
-                    <a class="btn btn-secondary mt-1" href="{{ objectPath(profileAble.city, 'criticalmass_socialnetwork_city_list') }}">Profile der Stadt verwalten</a>
+                    <a class="btn btn-secondary mt-1" href="{{ object_path(profileAble.city, 'criticalmass_socialnetwork_city_list') }}">Profile der Stadt verwalten</a>
                 </p>
             </div>
         </div>
@@ -133,6 +133,13 @@
             </label>
             {{ form_widget(addProfileForm.identifier, { 'attr' : { 'class': 'form-control' } }) }}
         </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="identifier">
+                            Netzwerk:
+                        </label>
+                        {{ form_widget(addProfileForm.network, { 'attr' : { 'class': 'form-control' } }) }}
+                    </div>
 
         <div class="form-group">
             <label class="control-label" for="mainNetwork">

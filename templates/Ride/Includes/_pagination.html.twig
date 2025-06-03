@@ -5,7 +5,7 @@
     <ul class="pagination justify-content-center">
         {% if previous_ride %}
         <li class="page-item">
-            <a class="page-link" href="{{ objectPath(previous_ride) }}">
+            <a class="page-link" href="{{ object_path(previous_ride) }}">
                 &larr; Vorige Tour
             </a>
         </li>
@@ -19,7 +19,7 @@
 
         {% if next_ride %}
         <li class="page-item">
-            <a class="page-link" href="{{ objectPath(nextRide) }}">
+            <a class="page-link" href="{{ object_path(nextRide) }}">
                 Nächste Tour &rarr;
             </a>
         </li>

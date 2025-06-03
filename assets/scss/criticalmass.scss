@@ -1,6 +1,7 @@
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
+@import "../../node_modules/leaflet/dist/leaflet.css";
+@import "../../node_modules/leaflet-extra-markers/dist/css/leaflet.extra-markers.min.css";
 @import "criticalmass/criticalmass";
-@import "criticalmass/bikeright4";
 @import "criticalmass/frontpage4";
 
 .input-daterange input {

@@ -7,10 +7,16 @@ use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Entity\Region;
 use App\Entity\Ride;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-class RideRepository extends EntityRepository
+class RideRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Ride::class);
+    }
+
     public function findCurrentRideForCity(City $city, bool $cycleMandatory = false, bool $slugsAllowed = true): ?Ride
     {
         $dateTime = \DateTime::createFromFormat('U', (string)time()); // this will allow to mock the clock in functional tests
@@ -517,20 +523,20 @@ class RideRepository extends EntityRepository
     ): array {
         $builder = $this->createQueryBuilder('ride');
 
-        $builder->select('ride');
+        $builder->select(['ride', 'city', 'region1']);
 
         $builder->join('ride.city', 'city');
         $builder->join('city.region', 'region1');
 
+        $builder->where($builder->expr()->eq('region1.parent', $region->getId()));
+
         if ($startDateTime) {
-            $builder->where($builder->expr()->gt('ride.dateTime', '\'' . $startDateTime->format('Y-m-d') . '\''));
+            $builder->andWhere($builder->expr()->gt('ride.dateTime', '\'' . $startDateTime->format('Y-m-d') . '\''));
         }
 
         if ($endDateTime) {
-            $builder->where($builder->expr()->lt('ride.dateTime', '\'' . $endDateTime->format('Y-m-d') . '\''));
+            $builder->andWhere($builder->expr()->lt('ride.dateTime', '\'' . $endDateTime->format('Y-m-d') . '\''));
         }
-
-        $builder->andWhere($builder->expr()->eq('region1.parent', $region->getId()));
 
         $builder->addOrderBy('city.city', 'ASC');
         $builder->addOrderBy('ride.dateTime', 'DESC');

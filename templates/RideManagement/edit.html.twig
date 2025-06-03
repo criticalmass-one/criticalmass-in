@@ -52,7 +52,15 @@
         {{ form_start(form) }}
         <div class="row">
             <div class="col-12">
-                <div id="map" style="height: 250px;">
+                <div id="map" class="map" style="height: 250px;"
+                     data-map-marker-draggable="true"
+                     data-map-center-latitude="{{ ride.latitude }}"
+                     data-map-center-longitude="{{ ride.longitude }}"
+                     data-map-zoomlevel="10"
+                     data-map-marker-type="ride"
+                     data-map-marker-latitude-target="{{ form.latitude.vars.id }}"
+                     data-map-marker-longitude-target="{{ form.longitude.vars.id }}"
+                >
 
                 </div>
             </div>
@@ -110,7 +118,7 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <div class="alert alert-warning" role="alert" id="doubleMonthRide" style="display: none;">
+                        <div class="alert alert-warning d-none hidden" role="alert" id="doubleMonthRide">
                             <strong>
                                 Vorsicht!
                             </strong>
@@ -118,7 +126,7 @@
                             Touren stattfinden?
                         </div>
 
-                        <div class="alert alert-danger" role="alert" id="doubleDayRide" style="display: none;">
+                        <div class="alert alert-danger d-none hidden" role="alert" id="doubleDayRide">
                             <strong>
                                 Achtung!
                             </strong>
@@ -132,11 +140,11 @@
                             </label>
                             <div class="row">
                                 <div class="col-md-6">
-                                    {{ form_widget(form.dateTime.date) }}
+                                    {{ form_widget(form.dateTime.date, { attr: { class: 'form-control check-ride-date' } }) }}
                                 </div>
 
                                 <div class="col-md-6">
-                                    {{ form_widget(form.dateTime.time, { attr: { class: 'form-control' } }) }}
+                                    {{ form_widget(form.dateTime.time, { attr: { class: 'form-control check-ride-date' } }) }}
                                 </div>
                             </div>
                         </div>
@@ -149,7 +157,10 @@
                             <label class="control-label" for="location">
                                 Treffpunkt:
                             </label>
-                            <button id="search-location-button" class="btn btn-default btn-xs pull-right" type="button">
+                            <button class="btn btn-default btn-xs pull-right geocode"
+                                    data-geocoding-query-suffix="{{ city.city }},{{ city.region }},{{ city.region.parent }}"
+                                    data-geocoding-query-selector="#ride_location"
+                                    type="button">
                                 <i class="far fa-map-marker"></i>
                             </button>
                             {{ form_widget(form.location, { 'attr' : { 'class': 'form-control' } }) }}
@@ -215,11 +226,11 @@
                         <div class="form-group">
                             <div class="btn-group pull-right" role="group" aria-label="...">
                                 {% if ride %}
-                                    <a href="{{ objectPath(ride) }}" class="btn btn-secondary">
+                                    <a href="{{ object_path(ride) }}" class="btn btn-secondary">
                                         Abbrechen
                                     </a>
                                 {% else %}
-                                    <a href="{{ objectPath(city) }}" class="btn btn-secondary">
+                                    <a href="{{ object_path(city) }}" class="btn btn-secondary">
                                         Abbrechen
                                     </a>
                                 {% endif %}
@@ -238,22 +249,4 @@
 
         </form>
     </div>
-
-    <script>
-        var options = {
-            citySlug: '{{ city.mainSlug.slug() }}'
-        };
-
-        CriticalMass.loadModule('EditRidePage', null, options, function (editRidePage) {
-            var cityLatLng = L.latLng({{ city.latitude }}, {{ city.longitude }});
-
-            editRidePage.setCityLatLng(cityLatLng);
-
-            {% if ride and ride.id %}
-            editRidePage.setRideDateTime(new Date({{ ride.dateTime|date('U') * 1000 }}));
-            {% endif %}
-
-            editRidePage.init();
-        });
-    </script>
 {% endblock %}

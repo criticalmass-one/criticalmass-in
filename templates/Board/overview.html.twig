@@ -38,7 +38,7 @@
                     {% for board in boards %}
                         <tr>
                             <td>
-                                <a href="{{ objectPath(board) }}">
+                                <a href="{{ object_path(board) }}">
                                     <h6 class="mt-0">
                                         {{ board.title }}
                                     </h6>
@@ -58,7 +58,7 @@
                                 {% if board.lastThread %}
                                     <img class="pull-left img-fluid" style="margin-right: 5px; height: 60px;"
                                          src="{{ vich_uploader_asset(board.lastThread.lastPost.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}" alt="..."/>
-                                    <a href="{{ objectPath(board.lastThread) }}">
+                                    <a href="{{ object_path(board.lastThread) }}">
                                         {{ board.lastThread.title }}
                                     </a>
                                     <br/>
@@ -79,7 +79,7 @@
                     {% for city in cities %}
                         <tr>
                             <td>
-                                <a href="{{ objectPath(city, 'caldera_criticalmass_board_listcitythreads') }}">
+                                <a href="{{ object_path(city, 'caldera_criticalmass_board_listcitythreads') }}">
                                     <h6 class="mt-0">
                                         {{ city.title }}
                                     </h6>
@@ -99,7 +99,7 @@
                                 {% if city.lastThread %}
                                     <img class="pull-left img-fluid" style="margin-right: 5px; height: 60px;"
                                          src="{{ vich_uploader_asset(city.lastThread.lastPost.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}" alt="..."/>
-                                    <a href="{{ objectPath(city.lastThread) }}">
+                                    <a href="{{ object_path(city.lastThread) }}">
                                         {{ city.lastThread.title }}
                                     </a>
                                     <br/>

@@ -3,10 +3,17 @@
 namespace App\Repository;
 
 use App\Entity\Ride;
-use Doctrine\ORM\EntityRepository;
+use App\Entity\Subride;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-class SubrideRepository extends EntityRepository
+class SubrideRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Subride::class);
+    }
+
     public function getSubridesForRide(Ride $ride): array
     {
         $builder = $this->createQueryBuilder('sr');

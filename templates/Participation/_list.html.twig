@@ -25,13 +25,13 @@
             {% for participation in participationList %}
                 <tr>
                     <td>
-                        <a href="{{ objectPath(participation.ride) }}">
+                        <a href="{{ object_path(participation.ride) }}">
                             {{ participation.ride.title }}
                         </a>
                     </td>
 
                     <td>
-                        <a href="{{ objectPath(participation.ride.city) }}">
+                        <a href="{{ object_path(participation.ride.city) }}">
                             {{ participation.ride.city.city }}
                         </a>
                     </td>

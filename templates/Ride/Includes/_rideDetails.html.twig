@@ -20,7 +20,7 @@
                         {% if ride.location and ride.latitude and ride.longitude %}
                             {% if location %}
                                 <dd itemprop="name">
-                                    <a href="{{ objectPath(ride, 'caldera_criticalmass_location_ride') }}">
+                                    <a href="{{ object_path(ride, 'caldera_criticalmass_location_ride') }}">
                                         {{ ride.location }}
                                     </a>
                                 </dd>
@@ -34,7 +34,7 @@
                         {% else %}
                             <dd>
                                 {% if app.user %}
-                                    <a href="{{ objectPath(ride, 'caldera_criticalmass_ride_edit') }}">
+                                    <a href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}">
                                         noch nicht bekannt
                                     </a>
                                 {% else %}
@@ -53,7 +53,7 @@
 
                 {% if ride.dateTime %}
                     <p class="text-center">
-                        <a href="{{ objectPath(ride, 'caldera_criticalmass_ride_ical') }}" class="btn btn-primary">
+                        <a href="{{ object_path(ride, 'caldera_criticalmass_ride_ical') }}" class="btn btn-primary">
                             <i class="far fa-calendar"></i>
                             Kalendereintrag merken
                         </a>

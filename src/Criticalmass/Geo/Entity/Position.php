@@ -15,13 +15,13 @@ class Position extends Coordinate implements PositionInterface
      * @JMS\Expose
      * @JMS\Type("float")
      */
-    protected ?float $latitude = null;
+    protected ?float $latitude;
 
     /**
      * @JMS\Expose
      * @JMS\Type("float")
      */
-    protected ?float $longitude = null;
+    protected ?float $longitude;
 
     /**
      * @JMS\Expose

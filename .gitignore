@@ -13,8 +13,18 @@
 !bin/symfony_requirements
 
 # Assets and user uploads
-/public/bundles/
 /public/uploads/
+/public/tracks
+/public/photos
+/public/cities
+/public/images
+/public/img
+/public/js
+/public/fonts
+/public/css
+/node_modules
+/assets/css
+/public/build
 /public/tracks/
 /public/photos/
 /public/cities/
@@ -23,10 +33,7 @@
 /public/js/
 /public/fonts/
 /public/css/
-/node_modules/
 /assets/css/
-node_modules2/
-node_modules_alt/
 public/*.html.swp
 public/.well-known/
 public/css2/
@@ -37,12 +44,8 @@ public/rides/
 public/teaser/
 public/users/
 
-node_modules
-
 # Backup entities generated with doctrine:generate:entities command
 **/Entity/*~
-criticalmass.iml
-.idea
 
 ###> symfony/framework-bundle ###
 /.env
@@ -58,6 +61,16 @@ docker
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###
+
+criticalmass.iml
+.idea
+.yarn
 ###> liip/imagine-bundle ###
 /public/media/cache/
 ###< liip/imagine-bundle ###
@@ -66,9 +79,5 @@ docker
 phpstan.neon
 ###< phpstan/phpstan ###
 
-###> symfony/webpack-encore-bundle ###
-/node_modules/
-/public/build/
-npm-debug.log
-yarn-error.log
-###< symfony/webpack-encore-bundle ###
+.yarnrc.yml
+

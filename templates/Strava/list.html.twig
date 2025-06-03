@@ -37,7 +37,8 @@
 
                         <div class="row">
                             <div class="col-12">
-                                <div id="map-{{ activity.id }}" class="preview-map" style="height: 150px;" data-polyline="{{ activity.map.summary_polyline }}"></div>
+                                <div id="map-{{ activity.id }}" class="map" style="height: 150px;" data-polyline="{{ activity.map.summary_polyline }}"
+                                     data-polyline-color="{{ app.user.color }}"></div>
                             </div>
                         </div>
 
@@ -64,7 +65,7 @@
 
                         <div class="row">
                             <div class="col-12 text-center">
-                                <a class="btn btn-primary" href="{{ objectPath(ride, 'caldera_criticalmass_strava_import') }}?activityId={{ activity.id }}">
+                                <a class="btn btn-primary" href="{{ object_path(ride, 'caldera_criticalmass_strava_import') }}?activityId={{ activity.id }}">
                                     {# TODO #}
                                     <i class="far fa-download"></i>
                                     Track importieren
@@ -92,14 +93,10 @@
 
         <div class="row mt-2">
             <div class="col-12">
-                <a href="{{ objectPath(ride) }}" class="btn btn-secondary pull-right">
+                <a href="{{ object_path(ride) }}" class="btn btn-secondary pull-right">
                     Abbrechen
                 </a>
             </div>
         </div>
     </div>
-
-    <script>
-        CriticalMass.loadModule('StravaImportPage');
-    </script>
 {% endblock %}

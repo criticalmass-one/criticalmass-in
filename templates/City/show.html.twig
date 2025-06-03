@@ -76,7 +76,7 @@
                                 <strong>Huch?</strong>
                                 Schade, bislang hat noch niemand Informationen über {{ city.city }} hinterlegt. Wenn du
                                 Lust und Zeit hast, kannst du {{ city.title }} <a
-                                        href="{{ objectPath(city, 'caldera_criticalmass_city_edit') }}">hier
+                                        href="{{ object_path(city, 'caldera_criticalmass_city_edit') }}">hier
                                     beschreiben</a>:
 
                                 <ul>
@@ -95,7 +95,7 @@
                                 </ul>
 
                                 <p class="text-center mt-2">
-                                    <a href="{{ objectPath(city, 'caldera_criticalmass_city_edit') }}"
+                                    <a href="{{ object_path(city, 'caldera_criticalmass_city_edit') }}"
                                        class="btn btn-primary btn-lg">
                                         {{ city.city }} editieren
                                     </a>
@@ -113,7 +113,7 @@
                             </h2>
 
                             <p>
-                                Hier siehst du ein paar Fotos aus {{ city.city }}. Schau dir auch die <a href="{{ objectPath(city, 'caldera_criticalmass_city_listgalleries') }}">Übersicht über Fotos aus {{ city.city }}</a> an.
+                                Hier siehst du ein paar Fotos aus {{ city.city }}. Schau dir auch die <a href="{{ object_path(city, 'caldera_criticalmass_city_listgalleries') }}">Übersicht über Fotos aus {{ city.city }}</a> an.
                             </p>
                         </div>
                     </div>
@@ -123,7 +123,7 @@
                             {% for photo in photos %}
                                 <div class="col-6 col-sm-4 col-md-3 col-lg-3">
                                     <div class="photo-thumb mb-2 text-center">
-                                        <a href="{{ objectPath(photo) }}">
+                                        <a href="{{ object_path(photo) }}">
                                             <img class="img-fluid img-thumbnail" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
                                         </a>
                                     </div>
@@ -165,7 +165,7 @@
                     </div>
                 </div>
 
-                {% if nearCities|length > 0 %}
+                {% if nearCities and nearCities|length > 0 %}
                 <div class="row mt-2">
                     <div class="col-12">
                         {% include 'City/Includes/_nearCities.html.twig' with { 'nearCities': nearCities } %}

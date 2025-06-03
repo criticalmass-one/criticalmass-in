@@ -1,10 +1,27 @@
-import './bootstrap.js';
-/*
- * Welcome to your app's main JavaScript file!
- *
- * We recommend including the built version of this JavaScript file
- * (and its CSS file) in your base layout (base.html.twig).
- */
+//import './styles/app.css';
+import './scss/criticalmass.scss';
+import 'dropzone/dist/dropzone.css';
 
-// any CSS you import will output into a single css file (app.css in this case)
-import './styles/app.css';
+//window.bootstrap = bootstrap;
+require('bootstrap');
+
+import GeocodingButton from './js/GeocodingButton';
+import Map from './js/Map';
+import DataTable from './js/DataTable';
+import Search from './js/Search';
+import HintModal from './js/HintModal';
+import RideDateChecker from './js/RideDateChecker';
+import PhotoUpload from './js/PhotoUpload';
+import DeleteModal from './js/util/DeleteModal';
+import SubmitButtonDisabler from './js/util/SubmitButtonDisabler';
+import ScrollToPost from './js/util/ScrollToPost';
+import Sharing from './js/Sharing';
+import TrackRangePage from './js/TrackRangePage';
+import StatisticPage from './js/StatisticPage';
+import StatisticCityPage from './js/StatisticCityPage';
+
+import '@fortawesome/fontawesome-pro/js/fontawesome';
+import '@fortawesome/fontawesome-pro/js/solid';
+import '@fortawesome/fontawesome-pro/js/regular';
+
+export {Sharing, TrackRangePage, ScrollToPost, SubmitButtonDisabler, DeleteModal, PhotoUpload, RideDateChecker, GeocodingButton, Map, DataTable, Search, HintModal, StatisticPage, StatisticCityPage};

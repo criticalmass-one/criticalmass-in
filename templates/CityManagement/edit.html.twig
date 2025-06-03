@@ -53,7 +53,17 @@
 
         <div class="row">
             <div class="col-12">
-                <div id="map" style="height: 250px;"></div>
+                <div id="map" class="map" style="height: 250px;"
+                     data-map-marker-draggable="true"
+                     data-map-center-latitude="{{ city.latitude }}"
+                     data-map-center-longitude="{{ city.longitude }}"
+                     data-map-zoomlevel="10"
+                     data-map-marker-type="city"
+                     data-map-marker-latitude-target="city_latitude"
+                     data-map-marker-longitude-target="city_longitude"
+                >
+
+                </div>
             </div>
         </div>
 
@@ -81,7 +91,7 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <button id="search-city-button" class="btn btn-outline-secondary btn-sm pull-right" type="button">
+                        <button class="btn btn-outline-secondary btn-sm pull-right geocode" type="button" data-geocoding-query-selector="#city_city" data-geocoding-query-part-selector="#city_region">
                             <i class="far fa-map-marker"></i>
                         </button>
 
@@ -153,12 +163,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="btn-group pull-right">
-                    {% if city %}
-                        <a href="{{ objectPath(city) }}" class="btn btn-secondary">
+                    {% if city and city.mainSlug %}
+                        <a href="{{ object_path(city) }}" class="btn btn-secondary">
                             Abbrechen
                         </a>
                     {% else %}
-                        <a href="{{ objectPath(region) }}" class="btn btn-secondary">
+                        <a href="{{ object_path(region) }}" class="btn btn-secondary">
                             Abbrechen
                         </a>
                     {% endif %}
@@ -170,13 +180,4 @@
         </div>
         {{ form_end(form) }}
     </div>
-
-    <script type="text/javascript">
-        var options = {
-            country: '{{ country }}',
-            state: '{{ state }}'
-        };
-
-        CriticalMass.loadModule('EditCityPage', options, null);
-    </script>
 {% endblock %}

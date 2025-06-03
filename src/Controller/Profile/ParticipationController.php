@@ -26,7 +26,7 @@ class ParticipationController extends AbstractController
     {
         $streakGenerator->setUser($user);
 
-        $repository = $this->getDoctrine()->getRepository(Participation::class);
+        $repository = $this->managerRegistry->getRepository(Participation::class);
 
         $participationTable = $tableGenerator->setUser($user)->generate()->getTable();
 

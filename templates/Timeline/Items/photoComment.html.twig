@@ -13,7 +13,7 @@
 
         <div class="row">
             <div class="col-12">
-                <a href="{{ objectPath(item.ride) }}">
+                <a href="{{ object_path(item.ride) }}">
                     <h4>
                         {{ item.ride.title }}
                     </h4>
@@ -24,7 +24,7 @@
         {% for post in item.postList %}
         <div class="row">
             <div class="col-4">
-                <a href="{{ objectPath(post.photo) }}#post-{{ post.id }}">
+                <a href="{{ object_path(post.photo) }}#post-{{ post.id }}">
                     <img src="{{ vich_uploader_asset(post.photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" class="img-fluid img-thumbnail" />
                 </a>
             </div>

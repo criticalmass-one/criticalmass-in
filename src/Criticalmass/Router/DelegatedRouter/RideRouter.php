@@ -9,8 +9,12 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class RideRouter extends AbstractDelegatedRouter
 {
     /** @param Ride $ride */
-    public function generate(RouteableInterface $ride, string $routeName = null, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
-    {
+    public function generate(
+        RouteableInterface $ride,
+        string $routeName = null,
+        array $parameters = [],
+        int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH
+    ): string {
         $parameterList = array_merge($this->generateParameterList($ride, $routeName), $parameters);
 
         return $this->router->generate($routeName, $parameterList, $referenceType);

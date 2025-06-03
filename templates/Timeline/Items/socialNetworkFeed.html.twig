@@ -11,7 +11,7 @@
         <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
             <div class="row">
                 <div class="col-md-12">
-                    <a href="{{ objectPath(city) }}">
+                    <a href="{{ object_path(city) }}">
                         <strong>
                             {{ city.title }}
                         </strong>
@@ -38,7 +38,7 @@
     <div class="col-9 col-md-10">
         <div class="row">
             <div class="col-12">
-                <a href="{{ objectPath((source)) }}">
+                <a href="{{ object_path((source)) }}">
                     <strong>
                         {{ sourceName }}
                     </strong>
@@ -71,7 +71,7 @@
         <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
             <div class="row">
                 <div class="col-md-12">
-                    <a href="{{ objectPath(city) }}">
+                    <a href="{{ object_path(city) }}">
                         <strong>
                             {{ city.title }}
                         </strong>
@@ -85,6 +85,31 @@
                     <p>
                         <a href="{{ item.socialNetworkFeedItem.permalink }}">
                             {{ item.socialNetworkFeedItem.text }}
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if item.socialNetworkFeedItem.socialNetworkProfile.network == 'mastodon' %}
+        <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="{{ object_path(city) }}">
+                        <strong>
+                            {{ city.title }}
+                        </strong>
+                    </a>
+                    hat etwas auf Mastodon veröffentlicht:
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <p>
+                        <a href="{{ item.socialNetworkFeedItem.permalink }}">
+                            {{ item.socialNetworkFeedItem.text|striptags }}
                         </a>
                     </p>
                 </div>

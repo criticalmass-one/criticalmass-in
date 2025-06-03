@@ -26,7 +26,7 @@
         {{ form_start(profileColorForm) }}
         <div class="row">
             <div class="col-12 col-md-4 offset-md-4 text-center">
-                <input type="color" value="{{ rgb_to_hex(user.colorRed, user.colorGreen, user.colorBlue) }}" class="form-control" />
+                {{ form_row(profileColorForm.color) }}
             </div>
         </div>
 

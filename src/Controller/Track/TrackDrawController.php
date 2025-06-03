@@ -48,7 +48,7 @@ class TrackDrawController extends AbstractController
             ->setUsername($this->getUser()->getUsername())
             ->setTrackFilename('foo');
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->managerRegistry->getManager();
         $em->persist($track);
         $em->flush();
 
@@ -86,7 +86,7 @@ class TrackDrawController extends AbstractController
         $track->setPolyline($polyline);
         $track->setGeoJson($geojson);
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->managerRegistry->getManager();
         $em->persist($track);
         $em->flush();
 

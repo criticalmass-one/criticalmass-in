@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-12">
                 <a class="btn btn-primary pull-right"
-                   href="{{ objectPath(city, 'caldera_criticalmass_citycycle_add') }}">
+                   href="{{ object_path(city, 'caldera_criticalmass_citycycle_add') }}">
                     Turnus ergänzen
                 </a>
 
@@ -105,22 +105,22 @@
                                 {% if not cycle.disabledAt %}
                                     <div class="btn-group">
                                         <a class="btn btn-secondary btn-xs" title="Turnus editieren"
-                                           href="{{ objectPath(cycle, 'caldera_criticalmass_citycycle_edit') }}">
+                                           href="{{ object_path(cycle, 'caldera_criticalmass_citycycle_edit') }}">
                                             <i class="far fa-wrench"></i>
                                         </a>
 
                                         <a class="btn btn-default btn-xs" title="zugehörige Touren anzeigen"
-                                           href="{{ objectPath(cycle, 'caldera_criticalmass_citycycle_ride_list') }}">
+                                           href="{{ object_path(cycle, 'caldera_criticalmass_citycycle_ride_list') }}">
                                             <i class="far fa-bicycle"></i>
                                         </a>
 
                                         <a class="btn btn-secondary btn-xs" title="Turnus manuell auslösen"
-                                           href="{{ objectPath(cycle, 'caldera_criticalmass_citycycle_execute') }}">
+                                           href="{{ object_path(cycle, 'caldera_criticalmass_citycycle_execute') }}">
                                             <i class="far fa-play"></i>
                                         </a>
 
                                         <a class="btn btn-default btn-xs" title="Turnus deaktivieren"
-                                           href="{{ objectPath(cycle, 'caldera_criticalmass_citycycle_disable') }}">
+                                           href="{{ object_path(cycle, 'caldera_criticalmass_citycycle_disable') }}">
                                             <i class="far fa-trash-alt"></i>
                                         </a>
                                     </div>
