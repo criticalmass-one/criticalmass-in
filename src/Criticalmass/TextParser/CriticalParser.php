@@ -53,6 +53,10 @@ class CriticalParser implements TextParserInterface
             $this->textCache->set($text, $parsedText->getContent());
         }
 
-        return $parsedText->getContent();
+        if (!is_string($parsedText)) {
+            return $parsedText->getContent();
+        }
+
+        return $parsedText;
     }
 }
