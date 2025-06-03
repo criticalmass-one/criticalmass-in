@@ -394,7 +394,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
 
     public function isOauthAccount(): bool
     {
-        return $this->stravaId || $this->facebookId || $this->isTwitterAccount();
+        return $this->stravaId || $this->facebookId;
     }
 
     public function isFacebookAccount(): bool
@@ -405,11 +405,6 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     public function isStravaAccount(): bool
     {
         return $this->stravaId !== null;
-    }
-
-    public function isTwitterAccount(): bool
-    {
-        return $this->twitterId !== null;
     }
 
     public function addCycle(CityCycle $cityCycle): User
