@@ -44,7 +44,6 @@ class TrackRangeController extends AbstractController
             'form' => $form->createView(),
             'track' => $track,
             'latLngList' => $latLngListGenerator->getList(),
-            'gapWidth' => $this->gapWidth,
         ]);
     }
 

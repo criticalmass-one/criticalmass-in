@@ -136,23 +136,4 @@
         {{ block('navigation') }}
 </div>
 
-    <script>
-        CriticalMass.loadModule('ViewPhotoPage', null, null, function (page) {
-            {% if previous_photo %}
-            page.setPreviousPhotoUrl('{{ object_path(previous_photo) }}');
-            {% endif %}
-
-            {% if next_photo %}
-            page.setNextPhotoUrl('{{ object_path(next_photo) }}');
-            {% endif %}
-
-            {% if photo.hasCoordinates() %}
-            page.setPhoto('{{ photo|jms_serialize('json')|raw|e('js') }}', '{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}');
-            page.initMap();
-            {% endif %}
-        });
-
-        CriticalMass.loadModule('ScrollToPost');
-    </script>
-
-    {% endblock %}
+{% endblock %}

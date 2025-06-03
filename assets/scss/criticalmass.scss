@@ -1,4 +1,6 @@
-@import "../../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+@import "bootstrap3";
+@import "../../node_modules/leaflet/dist/leaflet.css";
+@import "../../node_modules/leaflet-extra-markers/dist/css/leaflet.extra-markers.min.css";
 @import "criticalmass/criticalmass";
 @import "criticalmass/frontpage3";
 

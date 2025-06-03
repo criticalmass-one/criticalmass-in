@@ -35,7 +35,7 @@ old_sound_rabbit_mq:
             exchange_options: { name: 'criticalmass_view', type: direct }
             queue_options:    { name: 'criticalmass_view' }
             callback:         App\Consumer\ViewBatchConsumer
-            qos_options:      { prefetch_size: 0, prefetch_count: 50000, global: false }
+            qos_options:      { prefetch_size: 0, prefetch_count: 500, global: false }
             timeout_wait:     5
             auto_setup_fabric: false
             idle_timeout_exit_code: -2
