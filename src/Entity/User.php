@@ -90,12 +90,6 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     #[ORM\Column(name: 'strava_access_token', type: 'text', nullable: true)]
     protected ?string $stravaAccessToken = null;
 
-    #[ORM\Column(name: 'twitter_id', type: 'string', length: 255, nullable: true)]
-    protected ?string $twitterId = null;
-
-    #[ORM\Column(name: 'twitter_access_token', type: 'text', nullable: true)]
-    protected ?string $twitterkAccessToken = null;
-
     #[ORM\OneToMany(targetEntity: 'CityCycle', mappedBy: 'city', cascade: ['persist', 'remove'])]
     protected Collection $cycles;
 
@@ -384,30 +378,6 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     public function getFacebookAccessToken(): ?string
     {
         return $this->facebookAccessToken;
-    }
-
-    public function setTwitterId(string $twitterId): User
-    {
-        $this->twitterId = $twitterId;
-
-        return $this;
-    }
-
-    public function getTwitterId(): ?string
-    {
-        return $this->twitterId;
-    }
-
-    public function setTwitterAccessToken(string $twitterkAccessToken): User
-    {
-        $this->twitterkAccessToken = $twitterkAccessToken;
-
-        return $this;
-    }
-
-    public function getTwitterAccessToken(): ?string
-    {
-        return $this->twitterkAccessToken;
     }
 
     public function setBlurGalleries(bool $blurGalleries): User
