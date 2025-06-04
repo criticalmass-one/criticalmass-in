@@ -3,10 +3,16 @@ import polylineEncoded from 'polyline-encoded';
 import markerCluster from 'leaflet.markercluster';
 import extraMarkers from 'leaflet-extra-markers';
 
+const TYPE_RIDE = 'ride';
+const TYPE_CITY = 'city';
+const TYPE_PHOTO = 'photo';
+const TYPE_SUBRIDE = 'subride';
+const TYPE_LOCATION = 'location';
+
 export default class Map {
     mapContainer;
     map;
-    polylineList = [];
+    polylineList = {};
 
     rideIcon = L.ExtraMarkers.icon({
         icon: 'fa-bicycle',
@@ -76,7 +82,6 @@ export default class Map {
 
         if (mapCenterLatitude && mapCenterLongitude && mapZoomLevel) {
             const mapCenter = L.latLng(mapCenterLatitude, mapCenterLongitude);
-
             this.map.setView(mapCenter, mapZoomLevel);
         }
     }
@@ -99,12 +104,10 @@ export default class Map {
             };
 
             const marker = L.marker(markerLatLng, options);
-
             marker.addTo(this.map);
 
             marker.on('moveend', (event) => {
                 const latLng = event.target.getLatLng();
-
                 markerLatitudeTarget.value = latLng.lat;
                 markerLongitudeTarget.value = latLng.lng;
             });
@@ -126,7 +129,6 @@ export default class Map {
             };
 
             const marker = L.marker(markerLatLng, options);
-
             marker.addTo(this.map);
         }
     }
@@ -137,9 +139,7 @@ export default class Map {
 
         if (polylineString && polylineColorString) {
             const polyline = L.Polyline.fromEncoded(polylineString, {color: polylineColorString});
-
             polyline.addTo(this.map);
-
             this.map.fitBounds(polyline.getBounds());
         }
     }
@@ -147,22 +147,17 @@ export default class Map {
     addPolyline(polylineString, polylineColorString, identifier) {
         if (polylineString && polylineColorString) {
             const polyline = L.Polyline.fromEncoded(polylineString, {color: polylineColorString});
-
             polyline.addTo(this.map);
-
             this.polylineList[identifier] = polyline;
-
             this.map.fitBounds(polyline.getBounds());
         }
     }
 
     updatePolyline(polylineString, polylineColorString, identifier) {
-        if (polylineString && polylineColorString) {
+        if (polylineString && polylineColorString && this.polylineList[identifier]) {
             const polyline = L.Polyline.fromEncoded(polylineString, {color: polylineColorString});
             const latLngList = polyline.getLatLngs();
-
             this.polylineList[identifier].setLatLngs(latLngList);
-
             this.map.fitBounds(polyline.getBounds());
         }
     }
@@ -171,125 +166,86 @@ export default class Map {
         const apiQueryUrl = this.mapContainer.dataset.apiQuery;
         const dataType = this.mapContainer.dataset.apiType;
         const dataIcon = this.getIconForType(dataType);
-        const that = this;
 
         if (apiQueryUrl) {
-            fetch(apiQueryUrl).then((response) => {
-                return response.json();
-            }).then((resultList) => {
-                const layer = L.featureGroup();
+            fetch(apiQueryUrl).then((response) => response.json()).then((resultList) => {
+                if (!Array.isArray(resultList)) return;
 
-                for (var i in resultList) {
-                    const data = resultList[i];
+                const layer = L.featureGroup();
+                for (const data of resultList) {
+                    if (!data.latitude || !data.longitude) continue;
                     const dataLatLng = L.latLng(data.latitude, data.longitude);
                     const marker = L.marker(dataLatLng, {icon: dataIcon});
-
                     marker.addTo(layer);
                 }
 
-                layer.addTo(that.map);
-                that.map.fitBounds(layer.getBounds());
-            }).catch(function (err) {
+                layer.addTo(this.map);
+                this.map.fitBounds(layer.getBounds());
+            }).catch((err) => {
                 console.warn(err);
             });
         }
     }
 
     loadRide() {
-        const that = this;
         const citySlug = this.mapContainer.dataset.citySlug;
         const rideIdentifier = this.mapContainer.dataset.rideIdentifier;
 
         if (citySlug && rideIdentifier) {
-            const rideUrl = Routing.generate('caldera_criticalmass_rest_ride_show', {
-                citySlug: citySlug,
-                rideIdentifier: rideIdentifier
-            });
-
-            fetch(rideUrl).then((response) => {
-                return response.json();
-            }).then((ride) => {
+            const rideUrl = Routing.generate('caldera_criticalmass_rest_ride_show', { citySlug, rideIdentifier });
+            fetch(rideUrl).then((response) => response.json()).then((ride) => {
                 const rideLatLng = L.latLng(ride.latitude, ride.longitude);
-
-                const marker = L.marker(rideLatLng, {icon: that.rideIcon});
-
-                that.map.setView(rideLatLng, 10);
-                marker.addTo(that.map);
-            }).catch(function (err) {
-                console.warn(err);
-            });
+                const marker = L.marker(rideLatLng, {icon: this.rideIcon});
+                this.map.setView(rideLatLng, 10);
+                marker.addTo(this.map);
+            }).catch((err) => console.warn(err));
         }
     }
 
     loadPhotos() {
-        const that = this;
         const citySlug = this.mapContainer.dataset.citySlug;
         const rideIdentifier = this.mapContainer.dataset.rideIdentifier;
 
         if (citySlug && rideIdentifier) {
-            const photoUrl = Routing.generate('caldera_criticalmass_rest_photo_ridelist', {
-                citySlug: citySlug,
-                rideIdentifier: rideIdentifier
-            });
-
-            fetch(photoUrl).then((response) => {
-                return response.json();
-            }).then((photoList) => {
+            const photoUrl = Routing.generate('caldera_criticalmass_rest_photo_ridelist', { citySlug, rideIdentifier });
+            fetch(photoUrl).then((response) => response.json()).then((photoList) => {
                 const photoLayer = L.markerClusterGroup({
                     showCoverageOnHover: false,
-                    iconCreateFunction: function (cluster) {
-                        return that.photoIcon;
-                    }
+                    iconCreateFunction: () => this.photoIcon
                 });
 
-                for (const i in photoList) {
-                    const photo = photoList[i];
-
+                for (const photo of photoList) {
                     if (photo.latitude && photo.longitude) {
                         const photoLatLng = L.latLng(photo.latitude, photo.longitude);
-
                         const marker = L.marker(photoLatLng);
                         marker.addTo(photoLayer);
                     }
                 }
 
-                photoLayer.addTo(that.map);
-            }).catch(function (err) {
-                console.warn(err);
-            });
+                photoLayer.addTo(this.map);
+            }).catch((err) => console.warn(err));
         }
     }
 
     loadTracks() {
-        const that = this;
         const citySlug = this.mapContainer.dataset.citySlug;
         const rideIdentifier = this.mapContainer.dataset.rideIdentifier;
 
         if (citySlug && rideIdentifier) {
-            const trackUrl = Routing.generate('caldera_criticalmass_rest_track_ridelist', {
-                citySlug: citySlug,
-                rideIdentifier: rideIdentifier
-            });
-
-            fetch(trackUrl).then((response) => {
-                return response.json();
-            }).then((trackList) => {
+            const trackUrl = Routing.generate('caldera_criticalmass_rest_track_ridelist', { citySlug, rideIdentifier });
+            fetch(trackUrl).then((response) => response.json()).then((trackList) => {
                 const trackLayer = L.featureGroup();
 
-                for (const i in trackList) {
-                    const track = trackList[i];
+                for (const track of trackList) {
                     const polylineString = track.polylineString;
                     const polylineColor = 'red';
                     const polyline = L.Polyline.fromEncoded(polylineString, {color: polylineColor});
-
                     polyline.addTo(trackLayer);
                 }
 
-                that.map.fitBounds(trackLayer.getBounds());
-                trackLayer.addTo(that.map);
-            }).catch(function (err) {
-                console.warn(err);
-            });
+                this.map.fitBounds(trackLayer.getBounds());
+                trackLayer.addTo(this.map);
+            }).catch((err) => console.warn(err));
         }
     }
 
@@ -306,38 +262,22 @@ export default class Map {
             }
 
             const markerLatLng = L.latLng(latitude, longitude);
-
-            const marker = L.marker(markerLatLng, { icon: that.rideIcon });
-
+            const marker = L.marker(markerLatLng, { icon: this.rideIcon });
             marker.markerNumber = markerNumber;
-
             marker.addTo(markerLayer);
-
             return true;
         }
-
         return false;
     }
 
     getIconForType(type) {
-        if ('ride' === type) {
-            return this.rideIcon;
-        }
-
-        if ('city' === type) {
-            return this.cityIcon;
-        }
-
-        if ('photo' === type) {
-            return this.photoIcon;
-        }
-
-        if ('subride' === type) {
-            return this.subrideIcon;
-        }
-
-        if ('location' === type) {
-            return this.locationIcon;
+        switch (type) {
+            case TYPE_RIDE: return this.rideIcon;
+            case TYPE_CITY: return this.cityIcon;
+            case TYPE_PHOTO: return this.photoIcon;
+            case TYPE_SUBRIDE: return this.subrideIcon;
+            case TYPE_LOCATION: return this.locationIcon;
+            default: return this.rideIcon;
         }
     }
 
@@ -358,9 +298,7 @@ export default class Map {
                 const boundingbox = result.boundingbox;
                 const northWest = new L.latLng([boundingbox[1], boundingbox[2]]);
                 const southEast = new L.latLng([boundingbox[0], boundingbox[3]]);
-
                 const bounds = new L.latLngBounds(northWest, southEast);
-
                 this.map.flyToBounds(bounds);
             } else {
                 this.map.setView(mapCenter);
@@ -377,6 +315,7 @@ export default class Map {
 
         document.addEventListener('map-clear', () => {
             this.map.eachLayer((layer) => {
+                if (layer instanceof L.TileLayer) return;
                 this.map.removeLayer(layer);
             });
         });
@@ -384,7 +323,8 @@ export default class Map {
 
     disableInteraction() {
         if (this.mapContainer.dataset.lockMap) {
-            this.mapContainer.querySelector('.leaflet-control-zoom').remove();
+            const zoomControl = this.mapContainer.querySelector('.leaflet-control-zoom');
+            if (zoomControl) zoomControl.remove();
             this.mapContainer.style.cursor = 'default';
             this.map.dragging.disable();
             this.map.touchZoom.disable();
@@ -392,16 +332,15 @@ export default class Map {
             this.map.scrollWheelZoom.disable();
             this.map.boxZoom.disable();
             this.map.keyboard.disable();
-
             if (this.map.tap) {
                 this.map.tap.disable();
             }
         }
-    };
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.map').forEach(function (mapContainer) {
+    document.querySelectorAll('.map').forEach((mapContainer) => {
         new Map(mapContainer);
     });
 });
