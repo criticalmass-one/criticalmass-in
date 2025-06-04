@@ -15,10 +15,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class ProfilePhotoController extends AbstractController
 {
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function uploadAction(Request $request, UserInterface $user = null): Response
     {
+        $user = clone $user; // otherwise doctrine will try to serialize the user object and fail with the File property
         $form = $this->createForm(UserProfilePhotoType::class, $user);
         $form->add('submit', SubmitType::class);
 
@@ -46,7 +47,7 @@ class ProfilePhotoController extends AbstractController
 
             $user->setOwnProfilePhoto(true);
 
-            $this->getDoctrine()->getManager()->flush();
+            $this->managerRegistry->getManager()->flush();
         }
 
         return $this->uploadGetAction($request, $user, $form);

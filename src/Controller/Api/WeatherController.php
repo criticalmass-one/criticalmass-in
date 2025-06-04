@@ -4,53 +4,42 @@ namespace App\Controller\Api;
 
 use App\Entity\Ride;
 use App\Entity\Weather;
-use Doctrine\Common\Persistence\ManagerRegistry;
-use FOS\RestBundle\Context\Context;
-use FOS\RestBundle\View\View;
-use JMS\Serializer\SerializerInterface;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Nelmio\ApiDocBundle\Annotation\Operation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use OpenApi\Annotations as OA;
 
 class WeatherController extends BaseController
 {
     /**
      * Add weather data to a specific ride.
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Add weather data for a ride",
-     *  section="Weather",
-     *  requirements={
-     *    {"name"="citySlug", "dataType"="string", "required"=true, "description"="Provide the slug of a city"},
-     *    {"name"="rideIdentifier", "dataType"="string", "required"=true, "description"="Provide the ride identifier of a ride"},
-     *  }
+     * @Operation(
+     *     tags={"Weather"},
+     *     summary="Add weather data for a ride",
+     *     @OA\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     )
      * )
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function addWeatherAction(Request $request, Ride $ride, ManagerRegistry $managerRegistry, SerializerInterface $serializer): Response
+    #[Route(path: '/{citySlug}/{rideIdentifier}/weather', name: 'caldera_criticalmass_rest_weather_add', methods: ['PUT'])]
+    public function addWeatherAction(Request $request, Ride $ride): JsonResponse
     {
         /** @var Weather $weather */
-        $weather = $this->deserializeRequest($request, $serializer, Weather::class);
+        $weather = $this->deserializeRequest($request, Weather::class);
 
         $weather
             ->setRide($ride)
             ->setCreationDateTime(new \DateTime());
 
-        $manager = $managerRegistry->getManager();
+        $manager = $this->managerRegistry->getManager();
         $manager->persist($weather);
         $manager->flush();
 
-        $context = new Context();
-
-        $view = View::create();
-        $view
-            ->setData($weather)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_CREATED)
-            ->setContext($context);
-
-        return $this->handleView($view);
+        return $this->createStandardResponse($ride, null, JsonResponse::HTTP_CREATED);
     }
 }

@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class ColorController extends AbstractController
 {
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function colorAction(Request $request, EventDispatcherInterface $eventDispatcher, UserInterface $user = null): Response
     {
@@ -45,9 +45,9 @@ class ColorController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
 
-            $this->getDoctrine()->getManager()->flush();
+            $this->managerRegistry->getManager()->flush();
 
-            $eventDispatcher->dispatch(UserColorChangedEvent::NAME, new UserColorChangedEvent($user));
+            $eventDispatcher->dispatch(new UserColorChangedEvent($user), UserColorChangedEvent::NAME);
         }
 
         return $this->colorGetAction($request, $user, $form, $eventDispatcher);

@@ -4,6 +4,7 @@ namespace App\Controller\Ride;
 
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Ride;
+use App\Repository\RideRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Controller\AbstractController;
@@ -17,7 +18,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class SubrideController extends AbstractController
 {
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
     public function addAction(Request $request, Ride $ride, UserInterface $user, ObjectRouterInterface $objectRouter): Response
@@ -56,7 +57,7 @@ class SubrideController extends AbstractController
         $actionUrl = $objectRouter->generate($subride->getRide(), 'caldera_criticalmass_subride_add');
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->managerRegistry->getManager();
             $em->persist($form->getData());
             $em->flush();
 
@@ -79,7 +80,7 @@ class SubrideController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("subride", class="App:Subride", options={"id" = "subrideId"})
      */
     public function editAction(Request $request, Subride $subride, ObjectRouterInterface $objectRouter): Response
@@ -110,7 +111,7 @@ class SubrideController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->managerRegistry->getManager();
             $em->flush();
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
@@ -126,12 +127,14 @@ class SubrideController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
-    public function preparecopyAction(Ride $ride): Response
-    {
-        $oldRide = $this->getRideRepository()->getPreviousRideWithSubrides($ride);
+    public function preparecopyAction(
+        RideRepository $rideRepository,
+        Ride $ride
+    ): Response {
+        $oldRide = $rideRepository->getPreviousRideWithSubrides($ride);
 
         return $this->render('Subride/preparecopy.html.twig', [
             'oldRide' => $oldRide,
@@ -140,15 +143,19 @@ class SubrideController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("oldRide", class="App:Ride")
      * @ParamConverter("newDate", options={"format": "Y-m-d"})
      */
-    public function copyAction(Ride $oldRide, \DateTime $newDate, ObjectRouterInterface $objectRouter): Response
-    {
-        $ride = $this->getRideRepository()->findCityRideByDate($oldRide->getCity(), $newDate);
+    public function copyAction(
+        Ride $oldRide,
+        \DateTime $newDate,
+        ObjectRouterInterface $objectRouter,
+        RideRepository $rideRepository
+    ): Response {
+        $ride = $rideRepository->findCityRideByDate($oldRide->getCity(), $newDate);
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->managerRegistry->getManager();
 
         /** @var Subride $oldSubride */
         foreach ($oldRide->getSubrides() as $oldSubride) {

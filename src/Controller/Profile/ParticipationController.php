@@ -20,13 +20,13 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class ParticipationController extends AbstractController
 {
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function listAction(UserInterface $user = null, ManagerRegistry $registry, TableGeneratorInterface $tableGenerator, StreakGeneratorInterface $streakGenerator, ParticipationCityListFactoryInterface $participationCityListFactory): Response
     {
         $streakGenerator->setUser($user);
 
-        $repository = $this->getDoctrine()->getRepository(Participation::class);
+        $repository = $this->managerRegistry->getRepository(Participation::class);
 
         $participationTable = $tableGenerator->setUser($user)->generate()->getTable();
 
@@ -58,7 +58,7 @@ class ParticipationController extends AbstractController
 
         $registry->getManager()->flush();
 
-        $eventDispatcher->dispatch(ParticipationUpdatedEvent::NAME, new ParticipationUpdatedEvent($participation));
+        $eventDispatcher->dispatch(new ParticipationUpdatedEvent($participation), ParticipationUpdatedEvent::NAME);
 
         return $this->redirectToRoute('criticalmass_user_participation_list');
     }
@@ -73,7 +73,7 @@ class ParticipationController extends AbstractController
 
         $registry->getManager()->flush();
 
-        $eventDispatcher->dispatch(ParticipationDeletedEvent::NAME, new ParticipationDeletedEvent($participation));
+        $eventDispatcher->dispatch(new ParticipationDeletedEvent($participation), ParticipationDeletedEvent::NAME);
 
         return $this->redirectToRoute('criticalmass_user_participation_list');
     }

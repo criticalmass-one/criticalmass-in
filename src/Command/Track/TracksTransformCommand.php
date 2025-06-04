@@ -4,28 +4,23 @@ namespace App\Command\Track;
 
 use App\Entity\Track;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'criticalmass:tracks:transform',
+    description: 'Transform tracks',
+)]
 class TracksTransformCommand extends Command
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    public function __construct(?string $name = null, ManagerRegistry $registry)
+    public function __construct(protected ManagerRegistry $registry)
     {
-        parent::__construct($name);
+        parent::__construct();
     }
 
-    protected function configure()
-    {
-        $this
-            ->setName('criticalmass:tracks:transform')
-            ->setDescription('');
-    }
-
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $tracks = $this->registry->getRepository(Track::class)->findAll();
 
@@ -49,5 +44,7 @@ class TracksTransformCommand extends Command
         }
 
         $em->flush();
+
+        return Command::SUCCESS;
     }
 }

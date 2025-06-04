@@ -1,3 +1,4 @@
+{% if socialNetworkProfiles|length > 0 %}
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">
@@ -5,63 +6,17 @@
         </h3>
     </div>
 
-    {% if socialNetworkProfiles|length > 0 %}
-        <div class="panel-body text-center">
-            <div class="btn-group-vertical">
-                {% for profile in socialNetworkProfiles %}
-                    {% set network = getNetwork(profile.network) %}
-
-                    <a href="{{ profile.identifier }}" class="btn" style="background-color: {{ network.backgroundColor }}; color: {{ network.textColor }};">
-                        <i class="{{ network.icon }}"></i>
-                        {{ network.name }}
-                    </a>
-                {% endfor %}
-            </div>
-        </div>
-    {% endif %}
-
     <div class="panel-body text-center">
-        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="far fa-share-square"></i>
-            in sozialen Netzen teilen
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu">
-            <li>
-                {{ shareDropdownLink(ride, 'mail') }}
-            </li>
+        <div class="btn-group-vertical">
+            {% for profile in socialNetworkProfiles %}
+                {% set network = getNetwork(profile.network) %}
 
-            <li>
-                {{ shareDropdownLink(ride, 'twitter') }}
-            </li>
-
-            <li>
-                {{ shareDropdownLink(ride, 'facebook') }}
-            </li>
-
-            <li>
-                {{ shareDropdownLink(ride, 'google') }}
-            </li>
-
-            <li>
-                {{ shareDropdownLink(ride, 'xing') }}
-            </li>
-
-            <li>
-                {{ shareDropdownLink(ride, 'linkedin') }}
-            </li>
-
-            <li>
-                {{ shareDropdownLink(ride, 'whatsapp') }}
-            </li>
-
-            <li>
-                {{ shareDropdownLink(ride, 'pinterest') }}
-            </li>
-
-            <li>
-                {{ shareDropdownLink(ride, 'reddit') }}
-            </li>
-        </ul>
+                <a href="{{ profile.identifier }}" class="btn" style="background-color: {{ network.backgroundColor }}; color: {{ network.textColor }};">
+                    <i class="{{ network.icon }}"></i>
+                    {{ network.name }}
+                </a>
+            {% endfor %}
+        </div>
     </div>
 </div>
+{% endif %}

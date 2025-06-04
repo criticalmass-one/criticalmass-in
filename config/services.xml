@@ -9,17 +9,6 @@
     <services>
         <service id="fos_user.doctrine_registry" alias="doctrine"/>
 
-        <service id="caldera.user_provider" class="App\Security\UserProvider\FOSUBUserProvider">
-            <argument type="service" id="fos_user.user_manager"/>
-            <argument type="collection">
-                <argument type="string" key="facebook">facebookId</argument>
-                <argument type="string" key="strava">stravaId</argument>
-                <argument type="string" key="runkeeper">runkeeperId</argument>
-                <argument type="string" key="twitter">twitterId</argument>
-            </argument>
-            <argument type="service" id="App\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGeneratorInterface" />
-        </service>
-
         <service id="App\Menu\Builder">
             <argument type="service" id="knp_menu.factory"/>
             <argument type="service" id="security.token_storage"/>

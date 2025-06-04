@@ -2,201 +2,136 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\Router\Annotation as Routing;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\User as BaseUser;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Security\Core\User\LegacyPasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @ORM\Table(name="fos_user_user")
- * @ORM\HasLifecycleCallbacks
- * @Vich\Uploadable
- * @JMS\ExclusionPolicy("all")
- */
-class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterface, PhotoInterface
+#[Vich\Uploadable]
+#[ORM\Table(name: 'user')]
+#[ORM\Entity(repositoryClass: 'App\Repository\UserRepository')]
+#[ORM\HasLifecycleCallbacks]
+#[JMS\ExclusionPolicy('all')]
+class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterface, UserInterface, LegacyPasswordAuthenticatedUserInterface
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @JMS\Groups({"timelapse"})
-     * @JMS\Expose
-     */
-    protected $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[JMS\Groups(['timelapse'])]
+    #[JMS\Expose]
+    protected ?int $id = null;
 
-    /**
-     * @var string
-     * @JMS\Groups({"timelapse"})
-     * @JMS\Expose
-     * @Assert\NotBlank()
-     * @Routing\RouteParameter(name="username")
-     */
-    protected $username;
+    #[ORM\Column(type: 'json', nullable: true)]
+    private ?array $roles = [];
 
-    /**
-     * @ORM\OneToMany(targetEntity="Track", mappedBy="user", cascade={"persist", "remove"})
-     */
-    protected $tracks;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $email = null;
 
-    /**
-     * @ORM\Column(type="smallint")
-     * @JMS\Groups({"timelapse"})
-     * @JMS\Expose
-     */
-    protected $colorRed = 0;
+    #[Assert\NotBlank]
+    #[Assert\Regex(pattern: '/https?\:\/\//', match: false, message: 'Der Benutzername darf keine Url enthalten')]
+    #[JMS\Groups(['timelapse'])]
+    #[JMS\Expose]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    protected ?string $username = null;
 
-    /**
-     * @ORM\Column(type="smallint")
-     * @JMS\Groups({"timelapse"})
-     * @JMS\Expose
-     */
-    protected $colorGreen = 0;
+    #[ORM\OneToMany(targetEntity: 'Track', mappedBy: 'user', cascade: ['persist', 'remove'])]
+    protected Collection $tracks;
 
-    /**
-     * @ORM\Column(type="smallint")
-     * @JMS\Groups({"timelapse"})
-     * @JMS\Expose
-     */
-    protected $colorBlue = 0;
+    #[ORM\Column(type: 'smallint', nullable: true)]
+    #[JMS\Groups(['timelapse'])]
+    #[JMS\Expose]
+    protected int $colorRed = 0;
 
-    /**
-     * @ORM\Column(type="boolean", options={"default" = 0})
-     */
-    protected $blurGalleries = false;
+    #[ORM\Column(type: 'smallint', nullable: true)]
+    #[JMS\Groups(['timelapse'])]
+    #[JMS\Expose]
+    protected int $colorGreen = 0;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Participation", mappedBy="user")
-     */
-    protected $participations;
+    #[ORM\Column(type: 'smallint', nullable: true)]
+    #[JMS\Groups(['timelapse'])]
+    #[JMS\Expose]
+    protected int $colorBlue = 0;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $updatedAt;
+    #[ORM\Column(type: 'boolean', nullable: true, options: ['default' => 0])]
+    protected bool $blurGalleries = false;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $createdAt;
+    #[ORM\Column(type: 'boolean', nullable: true, options: ['default' => 0])]
+    protected bool $enabled = false;
 
-    /**
-     * @ORM\Column(name="facebook_id", type="string", length=255, nullable=true)
-     */
-    protected $facebookId;
+    #[ORM\OneToMany(targetEntity: 'Participation', mappedBy: 'user')]
+    protected Collection $participations;
 
-    /**
-     * @ORM\Column(name="facebook_access_token", type="string", length=255, nullable=true)
-     */
-    protected $facebookAccessToken;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected ?\DateTime $updatedAt = null;
 
-    /**
-     * @ORM\Column(name="strava_id", type="string", length=255, nullable=true)
-     */
-    protected $stravaId;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected ?\DateTime $createdAt = null;
 
-    /**
-     * @ORM\Column(name="strava_access_token", type="string", length=255, nullable=true)
-     */
-    protected $stravaAccessToken;
+    #[ORM\Column(name: 'last_login', type: 'datetime', nullable: true)]
+    protected ?\DateTime $lastLogin = null;
 
-    /**
-     * @ORM\Column(name="runkeeper_id", type="string", length=255, nullable=true)
-     */
-    protected $runkeeperId;
+    #[ORM\Column(name: 'facebook_id', type: 'string', length: 255, nullable: true)]
+    protected ?string $facebookId = null;
 
-    /**
-     * @ORM\Column(name="runkeeper_access_token", type="string", length=255, nullable=true)
-     */
-    protected $runkeeperAccessToken;
+    #[ORM\Column(name: 'facebook_access_token', type: 'text', nullable: true)]
+    protected ?string $facebookAccessToken = null;
 
-    /**
-     * @ORM\Column(name="twitter_id", type="string", length=255, nullable=true)
-     */
-    protected $twitterId;
+    #[ORM\Column(name: 'strava_id', type: 'string', length: 255, nullable: true)]
+    protected ?string $stravaId = null;
 
-    /**
-     * @ORM\Column(name="twitter_access_token", type="string", length=255, nullable=true)
-     */
-    protected $twitterkAccessToken;
+    #[ORM\Column(name: 'strava_access_token', type: 'text', nullable: true)]
+    protected ?string $stravaAccessToken = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity="CityCycle", mappedBy="city", cascade={"persist", "remove"})
-     */
-    protected $cycles;
+    #[ORM\OneToMany(targetEntity: 'CityCycle', mappedBy: 'city', cascade: ['persist', 'remove'])]
+    protected Collection $cycles;
 
-    /**
-     * @var File $imageFile
-     * @Vich\UploadableField(mapping="user_photo", fileNameProperty="imageName", size="imageSize", mimeType="imageMimeType")
-     */
-    protected $imageFile;
+    #[Vich\UploadableField(mapping: 'user_photo', fileNameProperty: 'imageName', size: 'imageSize', mimeType: 'imageMimeType')]
+    protected ?File $imageFile = null;
 
-    /**
-     * @var string $imageName
-     * @JMS\Groups({"timelapse"})
-     * @JMS\Expose
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $imageName;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[JMS\Groups(['timelapse'])]
+    #[JMS\Expose]
+    protected ?string $imageName = null;
 
-    /**
-     * @var int $imageSize
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    protected $imageSize;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    protected ?int $imageSize = null;
 
-    /**
-     * @var string $imageMimeType
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $imageMimeType;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    protected ?string $imageMimeType = null;
 
-    /**
-     * @ORM\Column(type="boolean", options={"default" = 0})
-     */
-    protected $ownProfilePhoto = false;
+    #[ORM\Column(type: 'boolean', options: ['default' => 0])]
+    protected bool $ownProfilePhoto = false;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\SocialNetworkProfile", mappedBy="createdBy")
-     */
-    private $socialNetworkProfiles;
+    #[ORM\OneToMany(targetEntity: 'App\Entity\SocialNetworkProfile', mappedBy: 'createdBy')]
+    private Collection $socialNetworkProfiles;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\BlogPost", mappedBy="user")
-     */
-    private $blogPosts;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Heatmap", mappedBy="user", cascade={"persist", "remove"})
-     */
-    private $heatmap;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\TrackImportCandidate", mappedBy="user", orphanRemoval=true)
-     */
-    private $trackImportCandidates;
+    #[ORM\OneToMany(targetEntity: 'App\Entity\TrackImportCandidate', mappedBy: 'user', orphanRemoval: true)]
+    private Collection $trackImportCandidates;
 
     public function __construct()
     {
-        parent::__construct();
-
         $this->colorRed = rand(0, 255);
         $this->colorGreen = rand(0, 255);
         $this->colorBlue = rand(0, 255);
+        $this->createdAt = new \DateTime();
 
         $this->tracks = new ArrayCollection();
         $this->participations = new ArrayCollection();
-        $this->blogPosts = new ArrayCollection();
         $this->socialNetworkProfiles = new ArrayCollection();
         $this->trackImportCandidates = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function setId(int $id): User
@@ -206,9 +141,60 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         return $this;
     }
 
-    public function getId(): ?int
+
+    public function getUsername(): ?string
     {
-        return $this->id;
+        return $this->username;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles = []): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function hasRole(string $role): bool
+    {
+        return in_array($role, $this->roles);
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
     public function getColorRed(): int
@@ -245,6 +231,18 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         $this->colorBlue = $colorBlue;
 
         return $this;
+    }
+
+    public function setColor(string $color): User
+    {
+        list($this->colorRed, $this->colorGreen, $this->colorBlue) = sscanf($color, "#%02x%02x%02x");
+
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return sprintf('#%02x%02x%02x', $this->colorRed, $this->colorGreen, $this->colorBlue);
     }
 
     /**
@@ -298,9 +296,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         return $this;
     }
 
-    /**
-     * @ORM\PrePersist()
-     */
+    #[ORM\PrePersist]
     public function prePersist(): User
     {
         $this->createdAt = new \DateTime();
@@ -309,9 +305,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         return $this;
     }
 
-    /**
-     * @ORM\PreUpdate()
-     */
+    #[ORM\PreUpdate]
     public function preUpdate(): User
     {
         $this->updatedAt = new \DateTime();
@@ -386,54 +380,6 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         return $this->facebookAccessToken;
     }
 
-    public function setRunkeeperId(string $runkeeperId): User
-    {
-        $this->runkeeperId = $runkeeperId;
-
-        return $this;
-    }
-
-    public function getRunkeeperId(): ?string
-    {
-        return $this->runkeeperId;
-    }
-
-    public function setRunkeeperAccessToken(string $runkeeperAccessToken): User
-    {
-        $this->runkeeperAccessToken = $runkeeperAccessToken;
-
-        return $this;
-    }
-
-    public function getRunkeeperAccessToken(): ?string
-    {
-        return $this->runkeeperAccessToken;
-    }
-
-    public function setTwitterId(string $twitterId): User
-    {
-        $this->twitterId = $twitterId;
-
-        return $this;
-    }
-
-    public function getTwitterId(): ?string
-    {
-        return $this->twitterId;
-    }
-
-    public function setTwitterAccessToken(string $twitterkAccessToken): User
-    {
-        $this->twitterkAccessToken = $twitterkAccessToken;
-
-        return $this;
-    }
-
-    public function getTwitterAccessToken(): ?string
-    {
-        return $this->twitterkAccessToken;
-    }
-
     public function setBlurGalleries(bool $blurGalleries): User
     {
         $this->blurGalleries = $blurGalleries;
@@ -448,7 +394,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
 
     public function isOauthAccount(): bool
     {
-        return $this->runkeeperId || $this->stravaId || $this->facebookId || $this->isTwitterAccount();
+        return $this->stravaId || $this->facebookId;
     }
 
     public function isFacebookAccount(): bool
@@ -459,16 +405,6 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     public function isStravaAccount(): bool
     {
         return $this->stravaId !== null;
-    }
-
-    public function isRunkeeperAccount(): bool
-    {
-        return $this->facebookId !== null;
-    }
-
-    public function isTwitterAccount(): bool
-    {
-        return $this->twitterId !== null;
     }
 
     public function addCycle(CityCycle $cityCycle): User
@@ -562,37 +498,6 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     }
 
     /**
-     * @return Collection|BlogPost[]
-     */
-    public function getBlogPosts(): Collection
-    {
-        return $this->blogPosts;
-    }
-
-    public function addBlogPost(BlogPost $blogPost): self
-    {
-        if (!$this->blogPosts->contains($blogPost)) {
-            $this->blogPosts[] = $blogPost;
-            $blogPost->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBlogPost(BlogPost $blogPost): self
-    {
-        if ($this->blogPosts->contains($blogPost)) {
-            $this->blogPosts->removeElement($blogPost);
-            // set the owning side to null (unless already changed)
-            if ($blogPost->getUser() === $this) {
-                $blogPost->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|SocialNetworkProfile[]
      */
     public function getSocialNetworkProfiles(): Collection
@@ -618,24 +523,6 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
             if ($socialNetworkProfile->getCreatedBy() === $this) {
                 $socialNetworkProfile->setCreatedBy(null);
             }
-        }
-
-        return $this;
-    }
-
-    public function getHeatmap(): ?Heatmap
-    {
-        return $this->heatmap;
-    }
-
-    public function setHeatmap(?Heatmap $heatmap): self
-    {
-        $this->heatmap = $heatmap;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newUser = $heatmap === null ? null : $this;
-        if ($newUser !== $heatmap->getUser()) {
-            $heatmap->setUser($newUser);
         }
 
         return $this;
@@ -668,6 +555,62 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
                 $trackImportCandidate->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(?string $email): User
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getSalt(): string
+    {
+        return '';
+    }
+
+    public function setSalt(string $salt): self
+    {
+        return $this;
+    }
+
+    public function getPassword(): string
+    {
+        return '';
+    }
+
+    public function setPassword(string $password): self
+    {
+        return $this;
+    }
+
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): self
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    public function getLastLogin(): ?\DateTime
+    {
+        return $this->lastLogin;
+    }
+
+    public function setLastLogin(?\DateTime $lastLogin = null): self
+    {
+        $this->lastLogin = $lastLogin;
 
         return $this;
     }

@@ -4,43 +4,29 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="alert")
- * @ORM\Entity(repositoryClass="App\Repository\AlertRepository")
- */
+#[ORM\Table(name: 'alert')]
+#[ORM\Entity(repositoryClass: 'App\Repository\AlertRepository')]
 class Alert
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $title;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $title = null;
 
-    /**
-     * @ORM\Column(type="text")
-     */
-    private $message;
+    #[ORM\Column(type: 'text')]
+    private ?string $message = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $fromDateTime;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?\DateTime $fromDateTime = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $untilDateTime;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?\DateTime $untilDateTime = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $type;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $type = null;
 
     public function getId(): ?int
     {

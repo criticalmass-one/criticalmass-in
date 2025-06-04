@@ -2,84 +2,60 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\DataQuery\Annotation\EntityAnnotation as DataQuery;
-use App\Criticalmass\Router\Annotation as Routing;
+use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation as DataQuery;
+use App\Criticalmass\Router\Attribute as Routing;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AutoParamConverterAble;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="promotion")
- * @ORM\Entity(repositoryClass="App\Repository\PromotionRepository")
- * @Routing\DefaultRoute(name="caldera_criticalmass_promotion_show")
- */
+#[Routing\DefaultRoute(name: 'caldera_criticalmass_promotion_show')]
+#[ORM\Table(name: 'promotion')]
+#[ORM\Entity(repositoryClass: 'App\Repository\PromotionRepository')]
 class Promotion implements AutoParamConverterAble, ViewableEntity, RouteableInterface
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    private ?int $id = null;
+
+    #[Routing\RouteParameter(name: 'promotionSlug')]
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $slug = null;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $title = null;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $description = null;
+
+    #[ORM\Column(type: 'datetime')]
+    private \DateTime $createdAt;
+
+    #[ORM\Column(type: 'datetime')]
+    private ?\DateTime $updatedAt = null;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $query = null;
+
+    #[ORM\Column(type: 'boolean')]
+    private ?bool $showMap = false;
+
+    #[ORM\Column(type: 'float', nullable: true)]
+    private ?float $mapCenterLatitude = null;
+
+    #[ORM\Column(type: 'float', nullable: true)]
+    private ?float $mapCenterLongitude = null;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private ?int $mapZoomLevel = null;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Routing\RouteParameter(name="promotionSlug")
-     */
-    private $slug;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $title;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $description;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $createdAt;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $updatedAt;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $query;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $showMap;
-
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private $mapCenterLatitude;
-
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private $mapCenterLongitude;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $mapZoomLevel;
-
-    /**
-     * @ORM\Column(type="integer", options={"default"=0})
      * @DataQuery\Sortable
      * @DataQuery\Queryable
      */
-    protected $views = 0;
+    #[ORM\Column(type: 'integer', options: ['default' => 0])]
+    protected int $views = 0;
 
     public function getId(): ?int
     {

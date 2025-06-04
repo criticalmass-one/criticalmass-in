@@ -38,11 +38,11 @@
                     <div class="alert alert-danger">
                         <div class="btn-group pull-right">
                             <a class="btn btn-success"
-                               href="{{ objectPath(track, 'caldera_criticalmass_track_range') }}">
+                               href="{{ object_path(track, 'caldera_criticalmass_track_range') }}">
                                 <i class="far fa-cut"></i>&nbsp;Track beschneiden
                             </a>
                             <a class="btn btn-default"
-                               href="{{ objectPath(track, 'caldera_criticalmass_track_approve') }}">
+                               href="{{ object_path(track, 'caldera_criticalmass_track_approve') }}">
                                 <i class="far fa-check"></i>&nbsp;Track bestätigen
                             </a>
                         </div>
@@ -53,7 +53,7 @@
                         <br/>
                         Bitte bestägtige, dass dein Track nur den tatsächlichen Routenverlauf der Critical Mass abbildet
                         und etwaige An- und Abfahrten nicht enthalten sind. Du kannst deinen Track <a
-                                href="{{ objectPath(track, 'caldera_criticalmass_track_range') }}">ganz einfach online
+                                href="{{ object_path(track, 'caldera_criticalmass_track_range') }}">ganz einfach online
                             beschneiden</a>.
                     </div>
                 </div>
@@ -62,7 +62,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div id="map" style="height: 350px;"></div>
+                <div id="map" class="map" style="height: 350px;" data-polyline="{{ track.polyline }}" data-polyline-color="{{ track.user.color }}"></div>
             </div>
         </div>
 
@@ -73,7 +73,7 @@
                         Tour:
                     </dt>
                     <dd>
-                        <a href="{{ objectPath(track.ride) }}">
+                        <a href="{{ object_path(track.ride) }}">
                             {{ track.ride.title }}
                         </a>
                     </dd>
@@ -112,7 +112,7 @@
                         Distanz:
                     </dt>
                     <dd>
-                        {{ track.distance|number_format(2) }}&nbsp;Kilometer
+                        {{ track.distance|number_format(2) }}&nbsp;km
                     </dd>
                 </dl>
             </div>
@@ -136,7 +136,7 @@
                 <ul class="pager">
                     {% if previous_track %}
                         <li class="previous">
-                            <a href="{{ objectPath(previous_track) }}">
+                            <a href="{{ object_path(previous_track) }}">
                                 &larr; Voriger Track
                             </a>
                         </li>
@@ -148,7 +148,7 @@
 
                     {% if next_track %}
                         <li class="next">
-                            <a href="{{ objectPath(next_track) }}">
+                            <a href="{{ object_path(next_track) }}">
                                 Nächster Track &rarr;
                             </a>
                         </li>
@@ -161,10 +161,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        CriticalMass.loadModule('TrackViewPage', null, null, function (viewPage) {
-            viewPage.loadTrack({{ track.id }});
-        });
-    </script>
 {% endblock %}

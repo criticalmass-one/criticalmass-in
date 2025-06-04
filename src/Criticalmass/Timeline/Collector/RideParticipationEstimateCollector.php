@@ -7,7 +7,7 @@ use App\Entity\RideEstimate;
 
 class RideParticipationEstimateCollector extends AbstractTimelineCollector
 {
-    protected $entityClass = RideEstimate::class;
+    protected string $entityClass = RideEstimate::class;
 
     protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {

@@ -2,66 +2,51 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Router\Attribute as Routing;
+use App\Criticalmass\Router\Attribute\RouteParameter;
 use App\EntityInterface\AuditableInterface;
 use App\EntityInterface\AutoParamConverterAble;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
-/**
- * @ORM\Table(name="location")
- * @ORM\Entity(repositoryClass="App\Repository\LocationRepository")
- * @Routing\DefaultRoute(name="caldera_criticalmass_location_show")
- * @JMS\ExclusionPolicy("all")
- */
+#[Routing\DefaultRoute(name: 'caldera_criticalmass_location_show')]
+#[ORM\Table(name: 'location')]
+#[ORM\Entity(repositoryClass: 'App\Repository\LocationRepository')]
+#[JMS\ExclusionPolicy('all')]
 class Location implements RouteableInterface, AuditableInterface, AutoParamConverterAble
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @JMS\Expose
-     */
-    protected $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[JMS\Expose]
+    protected ?int $id = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="photos")
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
-     * @Routing\RouteParameter(name="citySlug")
-     */
-    protected $city;
+    #[RouteParameter(name: 'citySlug')]
+    #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'locations')]
+    #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
+    protected ?City $city = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Routing\RouteParameter(name="locationSlug")
-     * @JMS\Expose
-     */
-    protected $slug;
+    #[RouteParameter(name: 'locationSlug')]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[JMS\Expose]
+    protected ?string $slug = null;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     * @JMS\Expose
-     */
-    protected $latitude;
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[JMS\Expose]
+    protected ?float $latitude = null;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     * @JMS\Expose
-     */
-    protected $longitude;
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[JMS\Expose]
+    protected ?float $longitude = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @JMS\Expose
-     */
-    protected $title;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[JMS\Expose]
+    protected ?string $title = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @JMS\Expose
-     */
-    protected $description;
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[JMS\Expose]
+    protected ?string $description = null;
 
     public function getId(): ?int
     {

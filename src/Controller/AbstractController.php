@@ -2,19 +2,15 @@
 
 namespace App\Controller;
 
-use App\Traits\RepositoryTrait;
-use App\Traits\UtilTrait;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as AbstractFrameworkController;
 
-abstract class AbstractController extends Controller
+abstract class AbstractController extends AbstractFrameworkController
 {
-    use RepositoryTrait;
-    use UtilTrait;
-
-    protected function isLoggedIn(): bool
+    public function __construct(
+        protected readonly ManagerRegistry $managerRegistry
+    )
     {
-        return $this
-            ->get('security.authorization_checker')
-            ->isGranted('IS_AUTHENTICATED_FULLY');
+
     }
 }

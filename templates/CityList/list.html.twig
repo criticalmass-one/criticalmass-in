@@ -21,8 +21,8 @@
                 <p>
                     Auf den Sattel, fertig, los: Die folgende Liste enthält mittlerweile {{ cityList|length }} Städte.
                     Bitte bedenke, dass die folgenden Informationen aus verschiedenen Quellen im Internet stammen und
-                    womöglich veraltet oder schlichtweg falsch sein können. Überprüfe bitte vorher die einschlägigen
-                    Quellen wie facebook oder twitter, bevor du dich auf den Weg machst.
+                    womöglich veraltet oder schlichtweg falsch sein können. Überprüfe bitte vorher weitere Quellen,
+                    bevor du dich auf den Weg machst.
                 </p>
             </div>
         </div>
@@ -44,22 +44,19 @@
                         <th>
                             Touren
                         </th>
-                        <th>
-
-                        </th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for city in cityList %}
                         <tr data-city-slug="{{ city.city.getMainSlugString() }}">
                             <td>
-                                <a href="{{ objectPath(city.city) }}">
+                                <a href="{{ object_path(city.city) }}">
                                     {{ city.city.city }}
                                 </a>
                             </td>
                             <td>
                                 {% if city.currentRide %}
-                                    <a href="{{ objectPath(city.currentRide) }}">
+                                    <a href="{{ object_path(city.currentRide) }}">
                                         {{ city.currentRide.dateTime|format_datetime(null, 'de', city.city.timezone, constant('IntlDateFormatter::LONG'), constant('IntlDateFormatter::SHORT')) }}
                                         &nbsp;Uhr
                                     </a>
@@ -76,14 +73,9 @@
                                 </ul>
                             </td>
                             <td>
-                                <a href="{{ objectPath(city.city, 'caldera_criticalmass_city_listrides') }}">
+                                <a href="{{ object_path(city.city, 'caldera_criticalmass_city_listrides') }}">
                                     {{ city.countRides }}
                                 </a>
-                            </td>
-                            <td>
-                                <button class="btn btn-default show-more">
-                                    <i class="far fa-plus-circle"></i>
-                                </button>
                             </td>
                         </tr>
                     {% endfor %}
@@ -93,10 +85,4 @@
         </div>
     </div>
 
-{% endblock %}
-
-{% block additionalFooterElements %}
-    <script>
-        CriticalMass.loadModule('CityListPage', '#city-list-table');
-    </script>
 {% endblock %}

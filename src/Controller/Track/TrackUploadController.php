@@ -20,7 +20,7 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
 class TrackUploadController extends AbstractController
 {
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
     public function uploadAction(Request $request, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, Ride $ride, TrackValidator $trackValidator): Response
@@ -53,7 +53,7 @@ class TrackUploadController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->managerRegistry->getManager();
 
             /** @var Track $track */
             $track = $form->getData();
@@ -82,7 +82,7 @@ class TrackUploadController extends AbstractController
             $em->persist($track);
             $em->flush();
 
-            $eventDispatcher->dispatch(TrackUploadedEvent::NAME, new TrackUploadedEvent($track));
+            $eventDispatcher->dispatch(new TrackUploadedEvent($track), TrackUploadedEvent::NAME);
 
             return $this->redirect($objectRouter->generate($track));
         }
