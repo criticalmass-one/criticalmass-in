@@ -57,9 +57,10 @@
                             Bitte gib deine E-Mail-Adresse ein, wir senden dir einen Link zum Einloggen per Mail zu!
                         </p>
 
-                        {{ form(login_form) }}
-
+                        {{ form_start(login_form) }}
+                        {{ form_row(login_form.email) }}
                         <div class="frc-captcha mb-3 mx-auto" data-sitekey="{{ app.request.server.get('FRIENDLYCAPTCHA_SITE_KEY') }}"></div>
+                        {{ form_end(login_form) }}
                     </div>
                 </div>
             </div>
