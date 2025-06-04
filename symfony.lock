@@ -68,6 +68,18 @@
             "src/DBAL/Types/.gitignore"
         ]
     },
+    "fresh/vich-uploader-serialization-bundle": {
+        "version": "v2.4.2"
+    },
+    "friendsofsymfony/ckeditor-bundle": {
+        "version": "2.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "2.0",
+            "ref": "8eb1cd0962ded6a6d6e1e5a9b6d3e888f9f94ff6"
+        }
+    },
     "friendsofsymfony/elastica-bundle": {
         "version": "6.2",
         "recipe": {

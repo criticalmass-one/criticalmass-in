@@ -90,7 +90,8 @@
         "symfony/twig-bundle": "^6.0",
         "twig/cssinliner-extra": "^3.10",
         "twig/inky-extra": "^3.10",
-        "symfony/runtime": "^6.0"
+        "symfony/runtime": "^6.0",
+        "fresh/vich-uploader-serialization-bundle": "^2.4"
     },
     "require-dev": {
         "symfony/browser-kit": "^6.0",

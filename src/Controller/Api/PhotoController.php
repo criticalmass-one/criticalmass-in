@@ -6,6 +6,7 @@ use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
 use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Entity\Photo;
 use App\Entity\Ride;
+use Doctrine\Persistence\ManagerRegistry;
 use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Operation;
 use OpenApi\Annotations as OA;
@@ -50,6 +51,27 @@ class PhotoController extends BaseController
         $photoList = $this->managerRegistry->getRepository(Photo::class)->findPhotosByRide($ride);
 
         return $this->createStandardResponse($photoList);
+    }
+
+    /**
+     * Retrieve a photo identified by it's id.
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Retrieve a photo identified by it's id",
+     *  section="Photo",
+     * )
+     * @ParamConverter("photo", class="App:Photo")
+     */
+    public function showPhotoAction(ManagerRegistry $registry, Photo $photo): Response
+    {
+        $view = View::create();
+        $view
+            ->setData($photo)
+            ->setFormat('json')
+            ->setStatusCode(200);
+
+        return $this->handleView($view);
     }
 
     /**
