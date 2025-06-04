@@ -2,7 +2,6 @@
 
 namespace App\Controller\Api;
 
-use JMS\Serializer\SerializationContext;
 use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
 use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Entity\Ride;
@@ -64,10 +63,7 @@ class TrackController extends BaseController
             $groups[] = 'api-private';
         }
 
-        $context = new SerializationContext();
-        $context->setGroups($groups);
-
-        return $this->createStandardResponse($track, $context);
+        return $this->createStandardResponse($track);
     }
 
     /**
@@ -201,10 +197,7 @@ class TrackController extends BaseController
             $groups[] = 'api-private';
         }
 
-        $context = new SerializationContext();
-        $context->setGroups($groups);
-
-        return $this->createStandardResponse($trackList, $context);
+        return $this->createStandardResponse($trackList);
     }
 
 

@@ -4,18 +4,21 @@ namespace App\Controller\Api;
 
 use App\Controller\AbstractController;
 use App\Criticalmass\Api\Errors;
+use App\Serializer\CriticalSerializerInterface;
 use Doctrine\Persistence\ManagerRegistry;
-use JMS\Serializer\SerializationContext;
-use JMS\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 abstract class BaseController extends AbstractController
 {
     public function __construct(
-        protected readonly ManagerRegistry $managerRegistry,
-        protected readonly SerializerInterface $serializer
-    ) {
+        private readonly ManagerRegistry $managerRegistry,
+        private readonly CriticalSerializerInterface $serializer,
+        AuthorizationCheckerInterface $authorizationChecker
+    )
+    {
+        parent::__construct($authorizationChecker);
     }
 
     protected function deserializeRequest(Request $request, string $modelClass)
@@ -38,7 +41,7 @@ abstract class BaseController extends AbstractController
         return new JsonResponse($this->serializer->serialize($error, 'json'), $statusCode);
     }
 
-    protected function createStandardResponse($responseObject, ?SerializationContext $context = null, int $httpStatus = JsonResponse::HTTP_OK, array $headerList = []): JsonResponse
+    protected function createStandardResponse($responseObject, array $context = [], int $httpStatus = JsonResponse::HTTP_OK, array $headerList = []): JsonResponse
     {
         return new JsonResponse($this->serializer->serialize($responseObject, 'json', $context), $httpStatus, $headerList, true);
     }
