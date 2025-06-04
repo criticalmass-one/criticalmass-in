@@ -8,8 +8,6 @@ sonata_seo:
                 keywords:             Critical Mass, Fotos, Tracks, Live-Tracking
                 description:          criticalmass.in sammelt Fotos und Tourdaten über die Critical Mass
                 robots:               index, follow
-                'twitter:site':       '@calderacc'
-                'twitter:creator':    '@maltehuebner'
             property:
                 'fb:app_id':          '216780188685195'
                 'og:type':            Website
