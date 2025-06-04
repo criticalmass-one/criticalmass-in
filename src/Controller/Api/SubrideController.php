@@ -23,7 +23,7 @@ class SubrideController extends BaseController
      * )
      * @ParamConverter("ride", class="App:Ride")
      */
-    #[Route(path: '/{citySlug}/{rideIdentifier}/subride', name: 'caldera_criticalmass_rest_subride_list', options: ['expose' => true], methods: ['GET'])]
+    #[Route(path: '/{citySlug}/{rideIdentifier}/subride', name: 'caldera_criticalmass_rest_subride_list', methods: ['GET'])]
     public function listSubrideAction(Ride $ride): JsonResponse
     {
         $subrideList = $this->managerRegistry->getRepository(Subride::class)->findByRide($ride);

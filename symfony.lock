@@ -80,18 +80,6 @@
             "config/packages/fos_elastica.yaml"
         ]
     },
-    "friendsofsymfony/jsrouting-bundle": {
-        "version": "2.8",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "main",
-            "version": "2.3",
-            "ref": "a9f2e49180f75cdc71ae279a929c4b2e0638de84"
-        },
-        "files": [
-            "config/routes/fos_js_routing.yaml"
-        ]
-    },
     "hwi/oauth-bundle": {
         "version": "1.4",
         "recipe": {

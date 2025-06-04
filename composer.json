@@ -29,7 +29,6 @@
         "knplabs/knp-paginator-bundle": "^5.0",
         "friendsofsymfony/elastica-bundle": "^6.0",
         "emcconville/google-map-polyline-encoding-tool": ">=1.2.1",
-        "friendsofsymfony/jsrouting-bundle": "^3.0",
         "jms/serializer-bundle": "^5.0",
         "symfony/monolog-bundle": "^3.3",
         "sensio/framework-extra-bundle": "^6.0",

@@ -201,10 +201,7 @@ export default class Map {
         const rideIdentifier = this.mapContainer.dataset.rideIdentifier;
 
         if (citySlug && rideIdentifier) {
-            const rideUrl = Routing.generate('caldera_criticalmass_rest_ride_show', {
-                citySlug: citySlug,
-                rideIdentifier: rideIdentifier
-            });
+            const rideUrl = `/${encodeURIComponent(citySlug)}/${encodeURIComponent(rideIdentifier)}`;
 
             fetch(rideUrl).then((response) => {
                 return response.json();
@@ -227,10 +224,7 @@ export default class Map {
         const rideIdentifier = this.mapContainer.dataset.rideIdentifier;
 
         if (citySlug && rideIdentifier) {
-            const photoUrl = Routing.generate('caldera_criticalmass_rest_photo_ridelist', {
-                citySlug: citySlug,
-                rideIdentifier: rideIdentifier
-            });
+            const photoUrl = `/${encodeURIComponent(citySlug)}/${encodeURIComponent(rideIdentifier)}/listPhotos`;
 
             fetch(photoUrl).then((response) => {
                 return response.json();
@@ -266,10 +260,7 @@ export default class Map {
         const rideIdentifier = this.mapContainer.dataset.rideIdentifier;
 
         if (citySlug && rideIdentifier) {
-            const trackUrl = Routing.generate('caldera_criticalmass_rest_track_ridelist', {
-                citySlug: citySlug,
-                rideIdentifier: rideIdentifier
-            });
+            const trackUrl = `/${encodeURIComponent(citySlug)}/${encodeURIComponent(rideIdentifier)}/listTracks`;
 
             fetch(trackUrl).then((response) => {
                 return response.json();
