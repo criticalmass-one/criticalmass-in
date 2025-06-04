@@ -29,8 +29,6 @@
         "knplabs/knp-paginator-bundle": "^5.0",
         "friendsofsymfony/elastica-bundle": "^6.0",
         "emcconville/google-map-polyline-encoding-tool": ">=1.2.1",
-        "friendsofsymfony/jsrouting-bundle": "^2.0",
-        "jms/serializer-bundle": "^5.0",
         "symfony/monolog-bundle": "^3.3",
         "sensio/framework-extra-bundle": "^6.0",
         "incenteev/composer-parameter-handler": "^2.0",
@@ -91,7 +89,7 @@
         "symfony/twig-bundle": "^6.0",
         "twig/cssinliner-extra": "^3.10",
         "twig/inky-extra": "^3.10",
-        "symfony/serializer": "^5.0",
+        "symfony/serializer": "^6.0",
         "symfony/property-access": "^5.0",
         "symfony/runtime": "^6.0"
     },
