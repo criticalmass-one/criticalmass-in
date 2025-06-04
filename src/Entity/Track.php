@@ -389,22 +389,6 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
         return 0;
     }
 
-    public function getAverageVelocity(): ?float
-    {
-        if ($this->startDateTime && $this->endDateTime && $this->distance) {
-            $kilometres = $this->getDistance();
-            $seconds = $this->getEndDateTime()->getTimestamp() - $this->getStartDateTime()->getTimestamp();
-
-            $hours = (float)$seconds / 3600;
-
-            $velocity = $kilometres / ($hours + 0.0001);
-
-            return $velocity;
-        }
-
-        return null;
-    }
-
     public function getStartTime(): \DateTime
     {
         return $this->startDateTime;
