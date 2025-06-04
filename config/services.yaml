@@ -32,6 +32,8 @@ parameters:
     upload_destination.frontpage_teaser: '%kernel.project_dir%/public/teaser'
     upload_destination.user_photo: '%kernel.project_dir%/public/users'
     assets_version: '%env(ASSETS_VERSION)%'
+    friendlycaptcha_api_key: '%env(FRIENDLYCAPTCHA_API_KEY)%'
+    friendlycaptcha_site_key: '%env(FRIENDLYCAPTCHA_SITE_KEY)%'
 
 services:
     _defaults:
