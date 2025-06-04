@@ -26,12 +26,15 @@ class FriendlyCaptcha implements FriendlyCaptchaInterface
         $captchaSolution = $request->request->get('frc-captcha-solution');
 
         $client = HttpClient::create();
+
+        $payload = [
+            'solution' => $captchaSolution,
+            'secret' => $this->apiKey,
+            'sitekey' => $this->siteKey,
+        ];
+
         $response = $client->request('POST', self::API_URL, [
-            'json' => [
-                'solution' => $captchaSolution,
-                'secret' => $this->apiKey,
-                'sitekey' => $this->siteKey,
-            ]
+            'json' => $payload,
         ]);
 
         if ($response->getStatusCode() !== 200) {
