@@ -1,6 +1,7 @@
 //import './styles/app.css';
 import './scss/criticalmass.scss';
 import 'dropzone/dist/dropzone.css';
+import 'friendly-challenge/widget';
 
 //window.bootstrap = bootstrap;
 require('bootstrap');

@@ -58,6 +58,8 @@
                         </p>
 
                         {{ form(login_form) }}
+
+                        <div class="frc-captcha mb-3 mx-auto" data-sitekey="{{ app.request.server.get('FRIENDLYCAPTCHA_SITE_KEY') }}"></div>
                     </div>
                 </div>
             </div>
