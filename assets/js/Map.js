@@ -260,10 +260,7 @@ export default class Map {
         const rideIdentifier = this.mapContainer.dataset.rideIdentifier;
 
         if (citySlug && rideIdentifier) {
-            const trackUrl = Routing.generate('caldera_criticalmass_rest_track_ridelist', {
-                citySlug: citySlug,
-                rideIdentifier: rideIdentifier
-            });
+            const trackUrl = `/${encodeURIComponent(citySlug)}/${encodeURIComponent(rideIdentifier)}/listTracks`;
 
             fetch(trackUrl).then((response) => {
                 return response.json();
