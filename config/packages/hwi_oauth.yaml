@@ -14,9 +14,3 @@ hwi_oauth:
             client_secret:       '%strava.secret%'
             options:
                 use_authorization_to_get_token: false
-        twitter:
-            type:                twitter
-            client_id:           '%twitter.client_id%'
-            client_secret:       '%twitter.secret%'
-            options:
-                include_email: true

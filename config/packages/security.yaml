@@ -25,7 +25,6 @@ security:
                 resource_owners:
                     facebook: '/login/check-facebook'
                     strava: '/login/check-strava'
-                    twitter: '/login/check-twitter'
                 login_path: '/login'
                 failure_path: '/login'
                 oauth_user_provider:
