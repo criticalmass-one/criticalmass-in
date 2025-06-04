@@ -44,6 +44,15 @@
                 </a>
             </li>
         {% endif %}
+
+        {% if timelineContentList.mastodon is defined %}
+            <li role="presentation">
+                <a href="#mastodon" aria-controls="mastodon" role="tab" data-toggle="tab">
+                    <i class="far fa-mastodon"></i>
+                    Mastodon-Beiträge
+                </a>
+            </li>
+        {% endif %}
     </ul>
 
     <div class="tab-content margin-top-medium">
@@ -92,6 +101,16 @@
         {% if timelineContentList.homepage is defined %}
             <div role="tabpanel" class="tab-pane{% if hasActive == false %} active{% endif %}" id="www">
                 {% for content in timelineContentList.homepage %}
+                    {{ content|raw }}
+                {% endfor %}
+            </div>
+
+            {% set hasActive = true %}
+        {% endif %}
+
+        {% if timelineContentList.mastodon is defined %}
+            <div role="tabpanel" class="tab-pane{% if hasActive == false %} active{% endif %}" id="mastodon">
+                {% for content in timelineContentList.mastodon %}
                     {{ content|raw }}
                 {% endfor %}
             </div>

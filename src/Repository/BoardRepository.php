@@ -3,10 +3,16 @@
 namespace App\Repository;
 
 use App\Entity\Board;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-class BoardRepository extends EntityRepository
+class BoardRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Board::class);
+    }
+
     public function findEnabledBoards(): array
     {
         $builder = $this->createQueryBuilder('b');

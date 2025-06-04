@@ -21,7 +21,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class LegacyPhotoUploadController extends AbstractController
 {
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
     public function uploadAction(Request $request, UserInterface $user = null, Ride $ride, PhotoUploaderInterface $photoUploader): Response

@@ -2,17 +2,14 @@
 
 namespace App\Criticalmass\Timeline\Item;
 
-use App\Entity\Photo;
 use App\Entity\Post;
 use App\Entity\Ride;
 
 class PhotoCommentItem extends AbstractItem
 {
-    /** @var array $postList*/
-    public $postList = [];
+    public array $postList = [];
 
-    /** @var Ride $ride */
-    public $ride;
+    public ?Ride $ride = null;
 
     public function addPost(Post $post): PhotoCommentItem
     {

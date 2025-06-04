@@ -2,10 +2,8 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\DataQuery\Annotation\EntityAnnotation as DataQuery;
-use App\Criticalmass\Router\Annotation as Routing;
-use App\Criticalmass\Sharing\Annotation as Sharing;
-use App\Criticalmass\Sharing\ShareableInterface\Shareable;
+use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation as DataQuery;
+use App\Criticalmass\Router\Attribute as Routing;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AuditableInterface;
@@ -16,7 +14,6 @@ use App\EntityInterface\ElasticSearchPinInterface;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
-use App\EntityInterface\StaticMapableInterface;
 use Caldera\GeoBasic\Coord\Coord;
 use Caldera\GeoBasic\Coord\CoordInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -27,263 +24,188 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\CityRepository")
- * @Vich\Uploadable
- * @ORM\Table(name="city")
- * @JMS\ExclusionPolicy("all")
- * @Routing\DefaultRoute(name="caldera_criticalmass_city_show")
- */
-class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, AutoParamConverterAble, SocialNetworkProfileAble, PostableInterface, Shareable, StaticMapableInterface, CoordinateInterface
+#[Vich\Uploadable]
+#[Routing\DefaultRoute(name: 'caldera_criticalmass_city_show')]
+#[ORM\Table(name: 'city')]
+#[ORM\Entity(repositoryClass: 'App\Repository\CityRepository')]
+#[JMS\ExclusionPolicy('all')]
+#[ORM\Index(fields: ['createdAt'], name: 'city_created_at_index')]
+class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, AutoParamConverterAble, SocialNetworkProfileAble, PostableInterface, CoordinateInterface
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
      * @DataQuery\Sortable
      */
-    protected $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
+    protected ?int $id = null;
+
+    #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'cities')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    protected ?User $user = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="cities")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
-    protected $user;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Region", inversedBy="cities", cascade={"persist"})
-     * @ORM\JoinColumn(name="region_id", referencedColumnName="id")
      * @DataQuery\Queryable
      * @DataQuery\Sortable
      */
-    protected $region;
+    #[ORM\ManyToOne(targetEntity: 'Region', inversedBy: 'cities', cascade: ['persist'])]
+    #[ORM\JoinColumn(name: 'region_id', referencedColumnName: 'id')]
+    protected ?Region $region = null;
+
+    #[Routing\RouteParameter(name: 'citySlug')]
+    #[ORM\ManyToOne(targetEntity: 'CitySlug', inversedBy: 'cities')]
+    #[ORM\JoinColumn(name: 'main_slug_id', referencedColumnName: 'id')]
+    #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
+    protected ?CitySlug $mainSlug = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="CitySlug", inversedBy="cities")
-     * @ORM\JoinColumn(name="main_slug_id", referencedColumnName="id")
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
-     * @Routing\RouteParameter(name="citySlug")
-     */
-    protected $mainSlug;
-
-    /**
-     * @ORM\Column(type="string", length=50)
-     * @Assert\NotBlank()
-     * @JMS\Expose
-     * @JMS\SerializedName("name")
-     * @JMS\Groups({"ride-list"})
      * @DataQuery\Sortable
      */
-    protected $city;
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'string', length: 50, nullable: true)]
+    #[JMS\Expose]
+    #[JMS\SerializedName('name')]
+    #[JMS\Groups(['ride-list'])]
+    protected ?string $city = null;
 
     /**
-     * @ORM\Column(type="string", length=100)
-     * @Assert\NotBlank()
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
-     * @Sharing\Title()
      * @DataQuery\Sortable
      */
-    protected $title;
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
+    #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
+    protected ?string $title = null;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
+    protected ?string $description = null;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
-     */
-    protected $description;
-
-    /**
-     * @ORM\Column(type="float")
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
      * @DataQuery\Queryable
-     * @var float $latitude
      */
-    protected $latitude = 0.0;
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
+    protected float $latitude = 0.0;
 
     /**
-     * @ORM\Column(type="float")
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
      * @DataQuery\Queryable
-     * @var float $longitude
      */
-    protected $longitude = 0.0;
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
+    protected float $longitude = 0.0;
 
     /**
-     * @ORM\Column(type="boolean")
      * @DataQuery\DefaultBooleanValue(value=true)
      */
-    protected $enabled = true;
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    protected bool $enabled = true;
+
+    #[ORM\OneToMany(targetEntity: 'Ride', mappedBy: 'city')]
+    protected Collection $rides;
+
+    #[ORM\OneToMany(targetEntity: 'Post', mappedBy: 'city')]
+    protected Collection $posts;
+
+    #[ORM\OneToMany(targetEntity: 'Photo', mappedBy: 'city')]
+    protected Collection $photos;
+
+    #[ORM\OneToMany(targetEntity: 'CitySlug', mappedBy: 'city', cascade: ['persist', 'remove'])]
+    #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
+    protected Collection $slugs;
+
+    #[ORM\OneToMany(targetEntity: 'CityCycle', mappedBy: 'city', cascade: ['persist', 'remove'])]
+    protected Collection $cycles;
+
+    #[ORM\OneToMany(targetEntity: 'SocialNetworkProfile', mappedBy: 'city', cascade: ['persist', 'remove'])]
+    #[JMS\Expose]
+    protected Collection $socialNetworkProfiles;
 
     /**
-     * @ORM\OneToMany(targetEntity="Ride", mappedBy="city")
-     */
-    protected $rides;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Post", mappedBy="city")
-     */
-    protected $posts;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Photo", mappedBy="city")
-     */
-    protected $photos;
-
-    /**
-     * @ORM\OneToMany(targetEntity="CitySlug", mappedBy="city", cascade={"persist", "remove"})
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
-     */
-    protected $slugs;
-
-    /**
-     * @ORM\OneToMany(targetEntity="CityCycle", mappedBy="city", cascade={"persist", "remove"})
-     */
-    protected $cycles;
-
-    /**
-     * @ORM\OneToMany(targetEntity="SocialNetworkProfile", mappedBy="city", cascade={"persist", "remove"})
-     * @JMS\Expose
-     */
-    protected $socialNetworkProfiles;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Assert\Type(type="int")
-     * @JMS\Expose
      * @DataQuery\Queryable
      * @DataQuery\Sortable
      */
-    protected $cityPopulation = 0;
+    #[Assert\Type(type: 'int')]
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[JMS\Expose]
+    protected ?int $cityPopulation = null;
+
+    #[ORM\Column(type: 'string', nullable: true)]
+    #[JMS\Expose]
+    protected ?string $punchLine = null;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[JMS\Expose]
+    protected ?string $longDescription = null;
+
+    #[Vich\UploadableField(mapping: 'city_photo', fileNameProperty: 'imageName', size: 'imageSize', mimeType: 'imageMimeType')]
+    protected ?File $imageFile = null;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    protected ?string $imageName = null;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    protected ?int $imageSize = null;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    protected ?string $imageMimeType = null;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
-     * @JMS\Expose
-     * @Sharing\Intro()
-     */
-    protected $punchLine;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @JMS\Expose
-     */
-    protected $longDescription;
-
-    /**
-     * @var File $imageFile
-     * @Vich\UploadableField(mapping="city_photo", fileNameProperty="imageName", size="imageSize", mimeType="imageMimeType")
-     */
-    protected $imageFile;
-
-    /**
-     * @var string $imageName
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $imageName;
-
-    /**
-     * @var int $imageSize
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    protected $imageSize;
-
-    /**
-     * @var string $imageMimeType
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $imageMimeType;
-
-    /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime", nullable=true)
      * @DataQuery\Sortable
      */
-    private $updatedAt;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?\DateTime $updatedAt = null;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime", nullable=true)
      * @DataQuery\Sortable
      */
-    protected $createdAt;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected ?\DateTime $createdAt = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $enableBoard = false;
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    protected bool $enableBoard = false;
 
-    /**
-     * @var string
-     * @ORM\Column(type="string", length=255)
-     * @JMS\Expose
-     * @JMS\Groups({"ride-list"})
-     */
-    protected $timezone = 'Europe/Berlin';
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
+    protected string $timezone = 'Europe/Berlin';
 
-    /**
-     * @ORM\Column(type="integer")
-     * @JMS\Expose
-     */
-    protected $threadNumber = 0;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[JMS\Expose]
+    protected int $threadNumber = 0;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @JMS\Expose
-     */
-    protected $postNumber = 0;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[JMS\Expose]
+    protected int $postNumber = 0;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected $colorRed = 0;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    protected int $colorRed = 0;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected $colorGreen = 0;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    protected int $colorGreen = 0;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected $colorBlue = 0;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    protected int $colorBlue = 0;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Thread", inversedBy="cities")
-     * @ORM\JoinColumn(name="lastthread_id", referencedColumnName="id")
-     */
-    protected $lastThread;
+    #[ORM\ManyToOne(targetEntity: 'Thread', inversedBy: 'cities')]
+    #[ORM\JoinColumn(name: 'lastthread_id', referencedColumnName: 'id')]
+    protected ?Thread $lastThread = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected $views = 0;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    protected int $views = 0;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Sharing\Shorturl()
-     */
-    protected $shorturl;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    protected ?string $rideNamer = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $rideNamer;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $wikidataEntityId;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Heatmap", mappedBy="city", cascade={"persist", "remove"})
-     */
-    private $heatmap;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    protected ?string $wikidataEntityId = null;
 
     public function __construct()
     {
@@ -321,7 +243,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
         return $this;
     }
 
-    public function getMainSlug(): CitySlug
+    public function getMainSlug(): ?CitySlug
     {
         return $this->mainSlug;
     }
@@ -339,11 +261,11 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     }
 
     /**
-     * @JMS\VirtualProperty
-     * @JMS\SerializedName("slug")
-     * @JMS\Type("string")
      * @deprecated
      */
+    #[JMS\VirtualProperty]
+    #[JMS\SerializedName('slug')]
+    #[JMS\Type('string')]
     public function getMainSlugString(): string
     {
         return $this->getMainSlug()->getSlug();
@@ -822,6 +744,15 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
         return null;
     }
 
+    public function getContinent(): ?Region
+    {
+        if ($this->getCountry()) {
+            return $this->getCountry()->getParent();
+        }
+
+        return null;
+    }
+
     public function getDateTime(): ?\DateTime
     {
         return null;
@@ -879,18 +810,6 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
         return $this;
     }
 
-    public function setShorturl(string $shorturl): City
-    {
-        $this->shorturl = $shorturl;
-
-        return $this;
-    }
-
-    public function getShorturl(): ?string
-    {
-        return $this->shorturl;
-    }
-
     public function setRideNamer(string $rideNamer): City
     {
         $this->rideNamer = $rideNamer;
@@ -915,29 +834,9 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
         return $this->wikidataEntityId;
     }
 
-    public function getHeatmap(): ?Heatmap
-    {
-        return $this->heatmap;
-    }
-
-    public function setHeatmap(?Heatmap $heatmap): self
-    {
-        $this->heatmap = $heatmap;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newCity = $heatmap === null ? null : $this;
-        if ($newCity !== $heatmap->getCity()) {
-            $heatmap->setCity($newCity);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @JMS\VirtualProperty
-     * @JMS\SerializedName("color")
-     * @JMS\Type("array")
-     */
+    #[JMS\VirtualProperty]
+    #[JMS\SerializedName('color')]
+    #[JMS\Type('array')]
     public function getColor(): array
     {
         return [

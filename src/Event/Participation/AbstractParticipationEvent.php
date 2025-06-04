@@ -3,7 +3,7 @@
 namespace App\Event\Participation;
 
 use App\Entity\Participation;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 abstract class AbstractParticipationEvent extends Event
 {

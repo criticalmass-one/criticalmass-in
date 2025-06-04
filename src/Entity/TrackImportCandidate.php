@@ -7,144 +7,94 @@ use Caldera\GeoBasic\Coord\CoordInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
-/**
- * @JMS\ExclusionPolicy("all")
- * @ORM\Table(name="track_candidate")
- * @ORM\Entity(repositoryClass="App\Repository\TrackImportCandidateRepository")
- */
+#[ORM\Table(name: 'track_candidate')]
+#[ORM\Entity(repositoryClass: 'App\Repository\TrackImportCandidateRepository')]
+#[JMS\ExclusionPolicy('all')]
 class TrackImportCandidate
 {
-    /**
-     * @var int $id
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     * @JMS\Expose
-     * @JMS\Type("int")
-     */
-    protected $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    #[JMS\Expose]
+    #[JMS\Type('int')]
+    protected ?int $id = null;
 
-    /**
-     * @var User $user
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="trackImportCandidates")
-     * @ORM\JoinColumn(nullable=false)
-     * @JMS\Expose
-     * @JMS\Type("Relation<App\Entity\User>")
-     */
-    protected $user;
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User', inversedBy: 'trackImportCandidates')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[JMS\Expose]
+    #[JMS\Type('Relation<App\Entity\User>')]
+    protected ?User $user = null;
 
-    /**
-     * @var Ride $ride
-     * @ORM\ManyToOne(targetEntity="App\Entity\Ride", inversedBy="trackImportCandidates")
-     * @ORM\JoinColumn(nullable=false)
-     * @JMS\Expose
-     * @JMS\Type("Relation<App\Entity\Ride>")
-     */
-    private $ride;
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Ride', inversedBy: 'trackImportCandidates')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[JMS\Expose]
+    #[JMS\Type('Relation<App\Entity\Ride>')]
+    private ?Ride $ride = null;
 
-    /**
-     * @var int $activityId
-     * @ORM\Column(type="bigint")
-     * @JMS\Expose
-     * @JMS\Type("int")
-     */
-    protected $activityId;
+    #[ORM\Column(type: 'bigint')]
+    #[JMS\Expose]
+    #[JMS\Type('int')]
+    protected ?int $activityId = null;
 
-    /**
-     * @var string $name
-     * @ORM\Column(type="string")
-     * @JMS\Expose
-     * @JMS\Type("string")
-     */
-    protected $name;
+    #[ORM\Column(type: 'string')]
+    #[JMS\Expose]
+    #[JMS\Type('string')]
+    protected ?string $name = null;
 
-    /**
-     * @var float $distance
-     * @ORM\Column(type="float")
-     * @JMS\Expose
-     * @JMS\Type("float")
-     */
-    protected $distance;
+    #[ORM\Column(type: 'float')]
+    #[JMS\Expose]
+    #[JMS\Type('float')]
+    protected ?float $distance = null;
 
-    /**
-     * @var int $elapsedTime
-     * @ORM\Column(type="integer")
-     * @JMS\Expose
-     * @JMS\Type("int")
-     */
-    protected $elapsedTime;
+    #[ORM\Column(type: 'integer')]
+    #[JMS\Expose]
+    #[JMS\Type('int')]
+    protected ?int $elapsedTime = null;
 
-    /**
-     * @var string $type
-     * @ORM\Column(type="string")
-     * @JMS\Expose
-     * @JMS\Type("string")
-     */
-    protected $type;
+    #[ORM\Column(type: 'string')]
+    #[JMS\Expose]
+    #[JMS\Type('string')]
+    protected ?string $type = null;
 
-    /**
-     * @var \DateTime $startDateTime
-     * @ORM\Column(type="datetime")
-     * @JMS\Expose
-     * @JMS\Type("DateTime")
-     */
-    protected $startDateTime;
+    #[ORM\Column(type: 'datetime')]
+    #[JMS\Expose]
+    #[JMS\Type('DateTime')]
+    protected ?\DateTime $startDateTime = null;
 
-    /**
-     * @var float $startLatitude
-     * @ORM\Column(type="float")
-     * @JMS\Expose
-     * @JMS\Type("float")
-     */
-    protected $startLatitude;
+    #[ORM\Column(type: 'float')]
+    #[JMS\Expose]
+    #[JMS\Type('float')]
+    protected ?float $startLatitude = null;
 
-    /**
-     * @var float $startLongitude
-     * @ORM\Column(type="float")
-     * @JMS\Expose
-     * @JMS\Type("float")
-     */
-    protected $startLongitude;
+    #[ORM\Column(type: 'float')]
+    #[JMS\Expose]
+    #[JMS\Type('float')]
+    protected ?float $startLongitude = null;
 
-    /**
-     * @var float $endLatitude
-     * @ORM\Column(type="float")
-     * @JMS\Expose
-     * @JMS\Type("float")
-     */
-    protected $endLatitude;
+    #[ORM\Column(type: 'float')]
+    #[JMS\Expose]
+    #[JMS\Type('float')]
+    protected ?float $endLatitude = null;
 
-    /**
-     * @var float $endLongitude
-     * @ORM\Column(type="float")
-     * @JMS\Expose
-     * @JMS\Type("float")
-     */
-    protected $endLongitude;
+    #[ORM\Column(type: 'float')]
+    #[JMS\Expose]
+    #[JMS\Type('float')]
+    protected ?float $endLongitude = null;
 
-    /**
-     * @var string $polyline
-     * @ORM\Column(type="text")
-     * @JMS\Expose
-     * @JMS\Type("string")
-     */
-    protected $polyline;
+    #[ORM\Column(type: 'text')]
+    #[JMS\Expose]
+    #[JMS\Type('string')]
+    protected ?string $polyline = null;
 
-    /**
-     * @var \DateTime $createdAt
-     * @ORM\Column(type="datetime")
-     * @JMS\Expose
-     * @JMS\Type("DateTime")
-     */
-    protected $createdAt;
+    #[ORM\Column(type: 'datetime')]
+    #[JMS\Expose]
+    #[JMS\Type('DateTime')]
+    protected ?\DateTime $createdAt;
 
-    /**
-     * @var bool $rejected
-     * @ORM\Column(type="boolean")
-     * @JMS\Expose
-     * @JMS\Type("bool")
-     */
-    protected $rejected = false;
+    #[ORM\Column(type: 'boolean')]
+    #[JMS\Expose]
+    #[JMS\Type('bool')]
+    protected bool $rejected = false;
 
     public function __construct()
     {

@@ -9,12 +9,11 @@ doctrine:
     dbal:
         # configure these for your database server
         driver: 'pdo_mysql'
-        server_version: '5.7'
         charset: utf8mb4
         default_table_options:
             charset: utf8
             collate: utf8_unicode_ci
-
+        server_version: 'mariadb-10.9.3'
         url: '%env(resolve:DATABASE_URL)%'
 
         types:
@@ -22,6 +21,7 @@ doctrine:
             date: App\DBAL\Type\UTCDateType
             time: App\DBAL\Type\UTCTimeType
             RideDisabledReasonType: App\DBAL\Type\RideDisabledReasonType
+            RideType: App\DBAL\Type\RideType
         mapping_types:
             enum: string
 
@@ -32,7 +32,7 @@ doctrine:
         mappings:
             App:
                 is_bundle: false
-                type: annotation
+                type: attribute
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
@@ -46,3 +46,36 @@ doctrine:
                 dayofweek: App\DQL\DayOfWeekFunction
             numeric_functions:
                 rand: App\DQL\RandFunction
+
+when@prod:
+    doctrine:
+        orm:
+            metadata_cache_driver:
+                type: pool
+                pool: doctrine.system_cache_pool
+            query_cache_driver:
+                type: pool
+                pool: doctrine.system_cache_pool
+            result_cache_driver:
+                type: pool
+                pool: doctrine.result_cache_pool
+
+    services:
+        doctrine.result_cache_provider:
+            class: Symfony\Component\Cache\FilesystemAdapter
+            public: false
+            arguments:
+                - '@doctrine.result_cache_pool'
+        doctrine.system_cache_provider:
+            class: Symfony\Component\Cache\FilesystemAdapter
+            public: false
+            arguments:
+                - '@doctrine.system_cache_pool'
+
+    framework:
+        cache:
+            pools:
+                doctrine.result_cache_pool:
+                    adapter: cache.app
+                doctrine.system_cache_pool:
+                    adapter: cache.system

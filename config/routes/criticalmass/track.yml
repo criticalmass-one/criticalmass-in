@@ -1,9 +1,3 @@
-caldera_criticalmass_track_delete:
-    path:  /track/delete/{trackId}
-    controller: App\Controller\Track\TrackManagementController::deleteAction
-    options:
-        expose: true
-
 caldera_criticalmass_track_toggle:
     path:  /track/toggle/{trackId}
     controller: App\Controller\Track\TrackManagementController::toggleAction

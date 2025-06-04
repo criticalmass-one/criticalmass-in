@@ -15,7 +15,7 @@
         <div class="col-md-12">
             {% if app.user %}
                 <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
-                    <a class="btn btn-success" href="{{ objectPath(ride, 'caldera_criticalmass_gallery_photos_upload_ride') }}" title="Fotos hochladen">
+                    <a class="btn btn-success" href="{{ object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') }}" title="Fotos hochladen">
                         <i class="far fa-camera"></i>
                         Fotos hochladen</a>
                 </div>
@@ -29,12 +29,12 @@
         <div class="col-md-12">
             {% if photos|length == 0 and photoUploadEnabled %}
                 <div class="alert alert-info" role="alert">
-                    <strong>Schade!</strong> Bislang hat noch niemand Fotos von dieser Tour hochgeladen &mdash; <a href="{{ objectPath(ride, 'caldera_criticalmass_gallery_photos_upload_ride') }}" title="Fotos hochladen">Du kannst noch immer der Erste sein</a>.
+                    <strong>Schade!</strong> Bislang hat noch niemand Fotos von dieser Tour hochgeladen &mdash; <a href="{{ object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') }}" title="Fotos hochladen">Du kannst noch immer der Erste sein</a>.
                 </div>
             {% elseif photos|length == 0 %}
                 <div class="alert alert-info" role="alert">
                     <strong>Schade!</strong> Bislang hat noch niemand Fotos von dieser Tour hochgeladen. Als <a
-                            href="{{ path('fos_user_security_login') }}">angemeldeter Nutzer</a> könntest du hier der
+                            href="{{ path('login') }}">angemeldeter Nutzer</a> könntest du hier der
                     Erste sein.
                 </div>
             {% else %}
@@ -44,7 +44,7 @@
                         {% for photo in photos %}
                             <div class="col-md-3">
                                 <div class="photo margin-bottom-medium text-center">
-                                    <a href="{{ objectPath(photo) }}">
+                                    <a href="{{ object_path(photo) }}">
                                         <img src="#"
                                              data-src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
                                     </a>

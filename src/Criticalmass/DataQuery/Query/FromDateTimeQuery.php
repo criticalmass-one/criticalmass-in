@@ -2,7 +2,8 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
-use App\Criticalmass\DataQuery\Annotation\QueryAnnotation as DataQuery;
+use MalteHuebner\DataQueryBundle\Annotation\QueryAnnotation as DataQuery;
+use MalteHuebner\DataQueryBundle\Query\AbstractDateTimeQuery;
 use Symfony\Component\Validator\Constraints as Constraints;
 
 /**
@@ -11,10 +12,10 @@ use Symfony\Component\Validator\Constraints as Constraints;
 class FromDateTimeQuery extends AbstractDateTimeQuery
 {
     /**
-     * @Constraints\NotNull()
-     * @Constraints\Type("int")
      * @var int $fromDateTime
      */
+    #[Constraints\NotNull]
+    #[Constraints\Type('int')]
     protected $fromDateTime;
 
     /**

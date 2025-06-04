@@ -10,8 +10,12 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class BoardRouter extends AbstractDelegatedRouter
 {
     /** @param BoardInterface $board */
-    public function generate(RouteableInterface $board, string $routeName = null, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
-    {
+    public function generate(
+        RouteableInterface $board,
+        string $routeName = null,
+        array $parameters = [],
+        int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH
+    ): string {
         if ($board instanceof Board && !$routeName) {
             $routeName = 'caldera_criticalmass_board_listthreads';
         } elseif (!$routeName) {

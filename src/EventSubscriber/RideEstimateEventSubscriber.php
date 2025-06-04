@@ -12,11 +12,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class RideEstimateEventSubscriber implements EventSubscriberInterface
 {
-    /** @var RideEstimateHandlerInterface $rideEstimateHandler */
-    protected $rideEstimateHandler;
-
-    /** @var ManagerRegistry $registry */
-    protected $registry;
+    protected RideEstimateHandlerInterface $rideEstimateHandler;
+    protected ManagerRegistry $registry;
 
     public function __construct(
         ManagerRegistry $registry,

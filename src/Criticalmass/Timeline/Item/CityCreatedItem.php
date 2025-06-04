@@ -6,11 +6,9 @@ use App\Entity\City;
 
 class CityCreatedItem extends AbstractItem
 {
-    /** @var City $city */
-    protected $city;
+    protected ?City $city = null;
 
-    /** @var string $cityName */
-    protected $cityName;
+    protected ?string $cityName = null;
 
     public function getCity(): City
     {

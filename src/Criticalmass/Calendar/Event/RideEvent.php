@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Criticalmass\Calendar\Event;
 
@@ -28,7 +28,7 @@ class RideEvent extends AbstractEvent
         return $this->ride;
     }
 
-    public function getUid()
+    public function getUid(): string
     {
         $uid = sprintf('ride-%d', $this->ride->getId());
 

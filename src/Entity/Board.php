@@ -7,64 +7,44 @@ use App\EntityInterface\BoardInterface;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Router\Attribute as Routing;
 
-/**
- * @ORM\Table(name="board")
- * @ORM\Entity(repositoryClass="App\Repository\BoardRepository")
- * @Routing\DefaultRoute(name="caldera_criticalmass_board_listthreads")
- */
+#[Routing\DefaultRoute(name: 'caldera_criticalmass_board_listthreads')]
+#[ORM\Table(name: 'board')]
+#[ORM\Entity(repositoryClass: 'App\Repository\BoardRepository')]
 class Board implements BoardInterface, RouteableInterface, AutoParamConverterAble
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    protected ?int $id = null;
 
-    /**
-     * @ORM\Column(type="text")
-     * @Assert\NotBlank()
-     */
-    protected $title;
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'text', nullable: true)]
+    protected ?string $title = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    protected $description;
+    #[ORM\Column(type: 'text', nullable: true)]
+    protected ?string $description = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected $threadNumber = 0;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    protected int $threadNumber = 0;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected $postNumber = 0;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    protected int $postNumber = 0;
 
-    /**
-     * @ORM\OneToOne(targetEntity="Thread")
-     * @ORM\JoinColumn(name="lastthread_id", referencedColumnName="id")
-     */
-    protected $lastThread;
+    #[ORM\OneToOne(targetEntity: 'Thread')]
+    #[ORM\JoinColumn(name: 'lastthread_id', referencedColumnName: 'id', unique: true)]
+    protected ?Thread $lastThread = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected $position = 0;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    protected int $position = 0;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $enabled = true;
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    protected bool $enabled = true;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Routing\RouteParameter(name="boardSlug")
-     */
-    protected $slug;
+    #[Routing\RouteParameter(name: 'boardSlug')]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    protected ?string $slug = null;
 
     public function __construct()
     {

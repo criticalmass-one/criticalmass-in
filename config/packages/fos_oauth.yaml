@@ -1,8 +1,0 @@
-fos_oauth_server:
-  db_driver: orm
-  client_class: App\Entity\OauthClient
-  access_token_class: App\Entity\OauthAccessToken
-  refresh_token_class: App\Entity\OauthRefreshToken
-  auth_code_class: App\Entity\OauthAuthCode
-  service:
-    user_provider: fos_user.user_provider.username

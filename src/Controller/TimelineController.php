@@ -20,10 +20,10 @@ class TimelineController extends AbstractController
 
         $endDateTime = new \DateTime($year . '-' . $month . '-' . $startDateTime->format('t'));
 
-        $timelineContent = $cachedTimeline
+        $timelineContentList = $cachedTimeline
             ->setDateRange($startDateTime, $endDateTime)
             ->execute()
-            ->getTimelineContent();
+            ->getTimelineContentList();
 
         $nextDateTime = $this->getNextDateTime($startDateTime);
         $previousDateTime = $this->getPreviousDateTime($startDateTime);
@@ -37,7 +37,7 @@ class TimelineController extends AbstractController
         }
 
         return $this->render('Timeline/yearmonth.html.twig', [
-            'timelineContent' => $timelineContent,
+            'timelineContentList' => $timelineContentList,
             'startDateTime' => $startDateTime,
             'endDateTime' => $endDateTime,
             'nextDateTime' => $nextDateTime,

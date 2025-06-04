@@ -10,8 +10,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ParticipationEventSubscriber implements EventSubscriberInterface
 {
-    /** @var RideParticipationCalculatorInterface $rideParticipationCalculator */
-    protected $rideParticipationCalculator;
+    protected RideParticipationCalculatorInterface $rideParticipationCalculator;
 
     public function __construct(RideParticipationCalculatorInterface $rideParticipationCalculator)
     {

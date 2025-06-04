@@ -2,12 +2,15 @@
 
 namespace App\Twig\Extension;
 
-class ColorTwigExtension extends \Twig_Extension
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
+
+class ColorTwigExtension extends AbstractExtension
 {
     public function getFunctions(): array
     {
         return [
-            new \Twig_SimpleFunction('rgb_to_hex', [$this, 'rgbToHex'], ['is_safe' => ['html']]),
+            new TwigFunction('rgb_to_hex', [$this, 'rgbToHex'], ['is_safe' => ['html']]),
         ];
     }
 
@@ -21,4 +24,3 @@ class ColorTwigExtension extends \Twig_Extension
         return 'color_extension';
     }
 }
-

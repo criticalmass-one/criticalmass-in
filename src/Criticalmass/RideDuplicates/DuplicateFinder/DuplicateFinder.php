@@ -2,30 +2,8 @@
 
 namespace App\Criticalmass\RideDuplicates\DuplicateFinder;
 
-use App\Entity\City;
-use App\Entity\Ride;
-use Doctrine\Persistence\ManagerRegistry;
-
-class DuplicateFinder implements DuplicateFinderInterface
+class DuplicateFinder extends AbstractDuplicateFinder
 {
-    /** @var City $city */
-    protected $city;
-
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    public function __construct(ManagerRegistry $registry)
-    {
-        $this->registry = $registry;
-    }
-
-    public function setCity(City $city): DuplicateFinderInterface
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
     public function findDuplicates(): array
     {
         $rideList = $this->findRides();
@@ -62,14 +40,5 @@ class DuplicateFinder implements DuplicateFinderInterface
         }
 
         return $duplicateRideList;
-    }
-
-    protected function findRides(): array
-    {
-        if ($this->city) {
-            return $this->registry->getRepository(Ride::class)->findRidesForCity($this->city);
-        } else {
-            return $this->registry->getRepository(Ride::class)->findAll();
-        }
     }
 }

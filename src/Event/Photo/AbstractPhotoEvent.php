@@ -3,7 +3,7 @@
 namespace App\Event\Photo;
 
 use App\Entity\Photo;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 abstract class AbstractPhotoEvent extends Event
 {

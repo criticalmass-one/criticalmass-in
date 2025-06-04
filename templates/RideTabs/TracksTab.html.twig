@@ -12,14 +12,14 @@
                 <ul class="dropdown-menu">
                     {% if feature('strava_track_upload') %}
                     <li>
-                        <a href="{{ objectPath(ride, 'caldera_criticalmass_strava_auth') }}">
+                        <a href="{{ object_path(ride, 'caldera_criticalmass_strava_auth') }}">
                             <i class="fab fa-strava"></i>
                             Track von Strava importieren
                         </a>
                     </li>
                     {% endif %}
                     <li>
-                        <a href="{{ objectPath(ride, 'caldera_criticalmass_track_upload') }}"
+                        <a href="{{ object_path(ride, 'caldera_criticalmass_track_upload') }}"
                            title="Track hochladen">
                             <i class="far fa-upload"></i>
                             GPX-Datei hochladen
@@ -77,12 +77,12 @@
                             </td>
                             <td>
                                 {% if track.distance %}
-                                    {{ track.distance|round(2) }}&nbsp;Kilometer
+                                    {{ track.distance|round(2) }}&nbsp;km
                                 {% endif %}
                             </td>
                             <td>
                                 {% if track.getAverageVelocity() %}
-                                    {{ track.getAverageVelocity()|round(2) }} Kilometer pro Stunde
+                                    {{ track.getAverageVelocity()|round(2) }}&nbsp;km/h
                                 {% endif %}
                             </td>
                         </tr>
@@ -97,7 +97,7 @@
                     </div>
                 {% else %}
                     <div class="alert alert-info" role="alert"><strong>Schade!</strong> Bislang hat noch niemand eine
-                        GPX-Datei hochgeladen. Als <a href="{{ path('fos_user_security_login') }}">angemeldeter
+                        GPX-Datei hochgeladen. Als <a href="{{ path('login') }}">angemeldeter
                             Nutzer</a> könntest du hier der Erste sein.
                     </div>
                 {% endif %}

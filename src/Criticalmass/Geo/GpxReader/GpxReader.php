@@ -3,7 +3,7 @@
 namespace App\Criticalmass\Geo\GpxReader;
 
 use App\Criticalmass\Geo\Exception\GpxFileNotFoundException;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 
 class GpxReader implements GpxReaderInterface
 {
@@ -13,12 +13,11 @@ class GpxReader implements GpxReaderInterface
     /** @var \SimpleXMLElement[]  $trackPointList */
     protected $trackPointList = [];
 
-    /** @var FilesystemInterface $filesystem */
-    protected $filesystem;
-
-    public function __construct(FilesystemInterface $filesystem)
+    public function __construct(
+        private readonly FilesystemOperator $filesystem
+    )
     {
-        $this->filesystem = $filesystem;
+
     }
 
     public function loadFromString(string $gpxString): GpxReaderInterface

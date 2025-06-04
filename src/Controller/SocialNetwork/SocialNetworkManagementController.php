@@ -46,9 +46,9 @@ class SocialNetworkManagementController extends AbstractController
             /** @var SocialNetworkProfile $socialNetworkProfile */
             $socialNetworkProfile = $form->getData();
 
-            $this->getDoctrine()->getManager()->persist($socialNetworkProfile);
+            $this->managerRegistry->getManager()->persist($socialNetworkProfile);
 
-            $this->getDoctrine()->getManager()->flush();
+            $this->managerRegistry->getManager()->flush();
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
         }

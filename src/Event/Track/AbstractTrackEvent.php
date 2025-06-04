@@ -3,7 +3,7 @@
 namespace App\Event\Track;
 
 use App\Entity\Track;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 abstract class AbstractTrackEvent extends Event
 {

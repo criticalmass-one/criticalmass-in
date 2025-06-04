@@ -1,11 +1,11 @@
 <tr>
     <td>
-        <a href="{{ objectPath(ride.city) }}">
+        <a href="{{ object_path(ride.city) }}">
             {{ ride.city.city }}
         </a>
     </td>
     <td>
-        <a href="{{ objectPath(ride) }}">
+        <a href="{{ object_path(ride) }}">
             {{ ride.dateTime|date('d.m.Y') }}
         </a>
     </td>
@@ -16,7 +16,7 @@
     </td>
     <td>
         {% if ride.estimatedDistance %}
-            {{ ride.estimatedDistance|number_format(2) }} Kilometer
+            {{ ride.estimatedDistance|number_format(2) }}&nbsp;km
         {% endif %}
     </td>
     <td>
@@ -26,7 +26,7 @@
     </td>
     <td>
         {% if ride.durationInterval and ride.estimatedDistance %}
-            {{ ride.averageVelocity|number_format(2) }} Kilometer&nbsp;pro&nbsp;Stunde
+            {{ ride.averageVelocity|number_format(2) }}&nbsp;km/h
         {% endif %}
     </td>
 </tr>

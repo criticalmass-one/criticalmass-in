@@ -15,7 +15,6 @@ class UserProfilePhotoType extends AbstractType
                 VichFileType::class, [
                     'required' => false,
                     'allow_delete' => false,
-                    'download_link' => false,
                 ]
             );
     }

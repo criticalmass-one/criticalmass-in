@@ -9,7 +9,7 @@ use App\Criticalmass\UploadValidator\UploadValidatorException\TrackValidatorExce
 use App\Criticalmass\UploadValidator\UploadValidatorException\TrackValidatorException\NoXmlException;
 use App\Entity\Track;
 use Exception;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class TrackValidator implements UploadValidatorInterface
@@ -17,22 +17,17 @@ class TrackValidator implements UploadValidatorInterface
     /** @var Track $track */
     protected $track;
 
-    /** @var UploaderHelper $uploaderHelper */
-    protected $uploaderHelper;
-
-    /** @var FilesystemInterface $filesystem */
-    protected $filesystem;
-
     /** @var \SimpleXMLElement $simpleXml */
     protected $simpleXml;
 
     /** @var string $rawFileContent */
     protected $rawFileContent;
 
-    public function __construct(UploaderHelper $uploaderHelper, FilesystemInterface $filesystem)
+    public function __construct(
+        private readonly UploaderHelper $uploaderHelper,
+        private readonly FilesystemOperator $filesystem)
     {
-        $this->uploaderHelper = $uploaderHelper;
-        $this->filesystem = $filesystem;
+
     }
 
     public function loadTrack(Track $track): TrackValidator

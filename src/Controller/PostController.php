@@ -3,10 +3,10 @@
 namespace App\Controller;
 
 use App\Criticalmass\Router\ObjectRouterInterface;
-use App\Entity\BlogPost;
 use App\Entity\Photo;
 use App\EntityInterface\PostableInterface;
 use App\Criticalmass\Util\ClassUtil;
+use App\Repository\PostRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Entity\City;
@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 class PostController extends AbstractController
 {
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("city", class="App:City", converter="city_converter")
      */
     public function writeCityAction(Request $request, City $city, ObjectRouterInterface $objectRouter): Response
@@ -31,7 +31,7 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride", converter="ride_converter")
      */
     public function writeRideAction(Request $request, Ride $ride, ObjectRouterInterface $objectRouter): Response
@@ -40,7 +40,7 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("photo", class="App:Photo", converter="photo_converter")
      */
     public function writePhotoAction(Request $request, Photo $photo, ObjectRouterInterface $objectRouter): Response
@@ -49,21 +49,12 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("thread", class="App:Thread", isOptional=true, converter="thread_converter")
      */
     public function writeThreadAction(Request $request, Thread $thread = null, ObjectRouterInterface $objectRouter): Response
     {
         return $this->writeAction($request, $thread, $objectRouter);
-    }
-
-    /**
-     * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("blogPost", class="App:BlogPost", converter="blogpost_converter")
-     */
-    public function writeBlogPostAction(Request $request, BlogPost $blogPost, ObjectRouterInterface $objectRouter): Response
-    {
-        return $this->writeAction($request, $blogPost, $objectRouter);
     }
 
     public function writeAction(Request $request, PostableInterface $postable, ObjectRouterInterface $objectRouter): Response
@@ -91,7 +82,7 @@ class PostController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->managerRegistry->getManager();
 
             $post->setUser($this->getUser());
             $em->persist($post);
@@ -136,10 +127,10 @@ class PostController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function listAction(
+        PostRepository $postRepository,
         int $cityId = null,
         int $rideId = null,
-        int $photoId = null,
-        int $blogPostId = null
+        int $photoId = null
     ): Response {
         /* We do not want disabled posts. */
         $criteria = ['enabled' => true];
@@ -158,12 +149,8 @@ class PostController extends AbstractController
             $criteria['photo'] = $photoId;
         }
 
-        if ($blogPostId) {
-            $criteria['blogPost'] = $blogPostId;
-        }
-
         /* Now fetch all posts with matching criteria. */
-        $posts = $this->getPostRepository()->findBy($criteria, ['dateTime' => 'DESC']);
+        $posts = $postRepository->findBy($criteria, ['dateTime' => 'DESC']);
 
         /* And render our shit. */
         return $this->render('Post/list.html.twig', ['posts' => $posts]);

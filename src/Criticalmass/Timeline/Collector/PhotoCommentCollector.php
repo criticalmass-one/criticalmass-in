@@ -7,7 +7,7 @@ use App\Criticalmass\Timeline\Item\PhotoCommentItem;
 
 class PhotoCommentCollector extends AbstractTimelineCollector
 {
-    protected $entityClass = Post::class;
+    protected string $entityClass = Post::class;
 
     protected function groupEntities(array $postEntities): array
     {

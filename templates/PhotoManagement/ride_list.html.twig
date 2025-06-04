@@ -9,12 +9,12 @@
         </a>
     </li>
     <li>
-        <a href="{{ objectPath(ride.city) }}">
+        <a href="{{ object_path(ride.city) }}">
             {{ ride.city.city }}
         </a>
     </li>
     <li>
-        <a href="{{ objectPath(ride) }}">
+        <a href="{{ object_path(ride) }}">
             {{ ride.title }}
         </a>
     </li>
@@ -29,7 +29,7 @@
             <div class="col-md-12">
                 {% if app.getUser() %}
                     <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
-                        <a class="btn btn-success" href="{{ objectPath(ride, 'caldera_criticalmass_gallery_photos_upload_ride') }}" title="Fotos hochladen">
+                        <a class="btn btn-success" href="{{ object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') }}" title="Fotos hochladen">
                             <i class="far fa-camera"></i>
                             Fotos hochladen
                         </a>
@@ -51,7 +51,7 @@
                                 Schade!
                             </strong>
                             Bislang hat noch niemand Fotos von dieser Tour hochgeladen. Mit einem <a
-                                    href="{{ path('fos_user_security_login') }}">criticalmass.in-Benutzerkonto</a>
+                                    href="{{ path('login') }}">criticalmass.in-Benutzerkonto</a>
                             könntest du deine Fotos hochladen.
                         </div>
                     </div>
@@ -74,7 +74,7 @@
                     {% for photo in pagination %}
                         <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
                             <div class="photo-thumb margin-bottom-medium text-center">
-                                <a href="{{ objectPath(photo) }}">
+                                <a href="{{ object_path(photo) }}">
                                     <img src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
                                 </a>
                             </div>

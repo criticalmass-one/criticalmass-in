@@ -8,6 +8,8 @@ use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Entity\Photo;
 use App\Entity\Track;
 use App\Event\View\ViewEvent;
+use App\Repository\PhotoRepository;
+use App\Repository\TrackRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,6 +27,7 @@ class PhotoController extends AbstractController
     public function showAction(
         SeoPageInterface $seoPage,
         EventDispatcherInterface $eventDispatcher,
+        TrackRepository $trackRepository,
         ExifWrapperInterface $exifWrapper,
         Photo $photo
     ): Response {
@@ -39,11 +42,11 @@ class PhotoController extends AbstractController
             throw $this->createAccessDeniedException();
         }
 
-        $eventDispatcher->dispatch(ViewEvent::NAME, new ViewEvent($photo));
+        $eventDispatcher->dispatch(new ViewEvent($photo), ViewEvent::NAME);
 
         if ($ride && $photo->getUser()) {
             /** @var Track $track */
-            $track = $this->getTrackRepository()->findByUserAndRide($ride, $photo->getUser());
+            $track = $trackRepository->findByUserAndRide($ride, $photo->getUser());
         }
 
         $this->setSeoMetaDetails($seoPage, $photo);
@@ -56,15 +59,18 @@ class PhotoController extends AbstractController
         ]);
     }
 
-    public function ajaxphotoviewAction(Request $request, EventDispatcherInterface $eventDispatcher): Response
-    {
+    public function ajaxphotoviewAction(
+        Request $request,
+        PhotoRepository $photoRepository,
+        EventDispatcherInterface $eventDispatcher
+    ): Response {
         $photoId = $request->get('photoId');
 
         /** @var Photo $photo */
-        $photo = $this->getPhotoRepository()->find($photoId);
+        $photo = $photoRepository->find($photoId);
 
         if ($photo) {
-            $eventDispatcher->dispatch(ViewEvent::NAME, new ViewEvent($photo));
+            $eventDispatcher->dispatch(new ViewEvent($photo), ViewEvent::NAME);
         }
 
         return new Response(null);

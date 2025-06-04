@@ -19,6 +19,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class SocialNetworkController extends AbstractController
 {
+    private const string DEFAULT_NETWORK = 'homepage';
+
     /**
      * @ParamConverter("city", class="App:City", isOptional=true)
      * @ParamConverter("ride", class="App:Ride", isOptional=true)
@@ -70,11 +72,13 @@ class SocialNetworkController extends AbstractController
 
             if ($network) {
                 $socialNetworkProfile->setNetwork($network->getIdentifier());
+            } else {
+                $socialNetworkProfile->setNetwork(self::DEFAULT_NETWORK);
             }
 
-            $this->getDoctrine()->getManager()->persist($socialNetworkProfile);
+            $this->managerRegistry->getManager()->persist($socialNetworkProfile);
 
-            $this->getDoctrine()->getManager()->flush();
+            $this->managerRegistry->getManager()->flush();
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
 

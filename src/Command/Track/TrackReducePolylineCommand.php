@@ -5,6 +5,7 @@ namespace App\Command\Track;
 use App\Criticalmass\Geo\TrackPolylineHandler\TrackPolylineHandlerInterface;
 use App\Entity\Track;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Table;
@@ -13,32 +14,26 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'criticalmass:track:reduce-polyline',
+    description: 'Reduce polylines of tracks',
+)]
 class TrackReducePolylineCommand extends Command
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    /** @var TrackPolylineHandlerInterface $trackPolylineHandler */
-    protected $trackPolylineHandler;
-
-    public function __construct(?string $name = null, ManagerRegistry $registry, TrackPolylineHandlerInterface $trackPolylineHandler)
+    public function __construct(protected ManagerRegistry $registry, protected TrackPolylineHandlerInterface $trackPolylineHandler)
     {
-        $this->trackPolylineHandler = $trackPolylineHandler;
-        $this->registry = $registry;
-
-        parent::__construct($name);
+        parent::__construct();
     }
 
     protected function configure(): void
     {
         $this
-            ->setName('criticalmass:track:reduce-polyline')
-            ->setDescription('')
             ->addOption('all', 'a', InputOption::VALUE_OPTIONAL, 'Generate polylines for all tracks')
-            ->addArgument('trackId', InputArgument::OPTIONAL, 'Id of the track to reduce polyline');
+            ->addArgument('trackId', InputArgument::OPTIONAL, 'Id of the track to reduce polyline')
+        ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($input->hasOption('all') && $input->getOption('all')) {
             $tracks = $this->registry->getRepository(Track::class)->findAll();
@@ -46,7 +41,8 @@ class TrackReducePolylineCommand extends Command
             $tracks = [$this->registry->getRepository(Track::class)->find($trackId)];
         } else {
             $output->writeln('No tracks selected to refresh.');
-            return;
+
+            return Command::FAILURE;
         }
 
         $progressBar = new ProgressBar($output, count($tracks));
@@ -80,5 +76,7 @@ class TrackReducePolylineCommand extends Command
 
         $progressBar->finish();
         $table->render();
+
+        return Command::SUCCESS;
     }
 }

@@ -14,16 +14,7 @@
                         {{ form_widget(form.message, {'attr': {'class': 'form-control', 'rows': 10}}) }}
                     </div>
 
-                    <div class="form-group">
-                        <input type="checkbox" id="form-post-share-location" checked="checked"/> Wenn du diese Checkbox
-                        aktivierst, speichern wir deinen Aufenthaltsort zu deinem Kommentar, um ihn später auf einer
-                        Karte verorten zu können. Natürlich kannst du später die Koordinaten deines Kommentares
-                        entfernen.
-                    </div>
-
                     {{ form_widget(form._token) }}
-                    {{ form_widget(form.latitude) }}
-                    {{ form_widget(form.longitude) }}
                 </div>
                 <div class="modal-footer">
                     <div class="btn-group" role="group" aria-label="...">
@@ -40,7 +31,4 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-        CriticalMass.loadModule('WritePost', '#form-post');
-    </script>
 {% endif %}

@@ -10,8 +10,8 @@ class CalendarController extends AbstractController
 {
     public function indexAction(Request $request, SeoPageInterface $seoPage): Response
     {
-        $year = $request->query->getInt('year', (new \DateTime())->format('Y'));
-        $month = $request->query->getInt('month', (new \DateTime())->format('m'));
+        $year = $request->query->getInt('year', (int) (new \DateTime())->format('Y'));
+        $month = $request->query->getInt('month', (int) (new \DateTime())->format('m'));
 
         try {
             $dateTimeSpec = sprintf('%d-%d-01', $year, $month);

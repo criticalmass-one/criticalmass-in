@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Model;
 
@@ -10,38 +10,40 @@ use JMS\Serializer\Annotation as JMS;
 class CreateEstimateModel
 {
     /**
-     * @var \DateTime $dateTime
      * @JMS\Expose()
      * @JMS\Type("DateTime<'U'>")
      */
-    protected $dateTime;
+    protected ?\DateTime $dateTime = null;
 
     /**
-     * @var string $citySlug
      * @JMS\Expose()
      * @JMS\Type("string")
      */
-    protected $citySlug;
+    protected ?string $citySlug = null;
 
     /**
-     * @var float $latitude
      * @JMS\Expose()
      * @JMS\Type("float")
      */
-    protected $latitude;
+    protected ?float $latitude = null;
 
-    /** @var float $longitude
+    /**
      * @JMS\Expose()
      * @JMS\Type("float")
      */
-    protected $longitude;
+    protected ?float $longitude = null;
 
     /**
-     * @var int $estimation
      * @JMS\Expose()
      * @JMS\Type("integer")
      */
-    protected $estimation;
+    protected ?int $estimation = null;
+
+    /**
+     * @JMS\Expose()
+     * @JMS\Type("string")
+     */
+    protected ?string $source = null;
 
     public function __construct(
         \DateTime $dateTime = null,
@@ -64,7 +66,7 @@ class CreateEstimateModel
         return $this;
     }
 
-    public function getDateTime(): \DateTime
+    public function getDateTime(): ?\DateTime
     {
         return $this->dateTime;
     }
@@ -115,5 +117,17 @@ class CreateEstimateModel
     public function getEstimation(): int
     {
         return $this->estimation;
+    }
+
+    public function setSource(string $source): CreateEstimateModel
+    {
+        $this->source = $source;
+
+        return $this;
+    }
+
+    public function getSource(): ?string
+    {
+        return $this->source;
     }
 }

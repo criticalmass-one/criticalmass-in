@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TrackRangeController extends AbstractController
 {
+    public function __construct(private readonly string $gapWidth)
+    {
+    }
     /**
      * @Security("is_granted('edit', track)")
      * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
@@ -41,7 +44,6 @@ class TrackRangeController extends AbstractController
             'form' => $form->createView(),
             'track' => $track,
             'latLngList' => $latLngListGenerator->getList(),
-            'gapWidth' => $this->getParameter('track.gap_width'),
         ]);
     }
 
@@ -53,10 +55,14 @@ class TrackRangeController extends AbstractController
             /** @var Track $track */
             $track = $form->getData();
 
+            $track
+            // assure that end point does not exceed number of points due to round problems in javascript
+                ->setEndPoint(min($track->getEndPoint(), $track->getPoints()))
             // this may not be done in TrackEventSubscriber as the events are sometimes triggered automatically
-            $track->setReviewed(true);
+                ->setReviewed(true)
+            ;
 
-            $eventDispatcher->dispatch(TrackTrimmedEvent::NAME, new TrackTrimmedEvent($track));
+            $eventDispatcher->dispatch(new TrackTrimmedEvent($track), TrackTrimmedEvent::NAME);
         }
 
         return $this->redirectToRoute('caldera_criticalmass_track_list');

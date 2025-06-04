@@ -4,13 +4,13 @@
 
 {% block breadcrumb %}
     <li>
-        <a href="{{ objectPath(city) }}">
+        <a href="{{ object_path(city) }}">
             {{ city.city }}
         </a>
     </li>
 
     <li>
-        <a href="{{ objectPath(cityCycle.city, 'caldera_criticalmass_citycycle_list') }}">
+        <a href="{{ object_path(cityCycle.city, 'caldera_criticalmass_citycycle_list') }}">
             Turnusliste
         </a>
     </li>
@@ -129,7 +129,7 @@
                                     {% for ride in rideList %}
                                         <tr>
                                             <td>
-                                                <a href="{{ objectPath(ride) }}" title="zur Tourseite">
+                                                <a href="{{ object_path(ride) }}" title="zur Tourseite">
                                                     {{ ride.title }}
                                                 </a>
                                             </td>
@@ -148,7 +148,7 @@
 
                                             <td>
                                                 <a class="btn btn-xs btn-default"
-                                                   href="{{ objectPath(ride, 'caldera_criticalmass_ride_edit') }}"
+                                                   href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}"
                                                    title="Tour editieren">
                                                     <i class="fa fa-wrench"></i>
                                                 </a>

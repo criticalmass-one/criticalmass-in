@@ -3,7 +3,7 @@
 namespace App\Event\City;
 
 use App\Entity\City;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 abstract class AbstractCityEvent extends Event
 {

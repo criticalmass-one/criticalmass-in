@@ -6,7 +6,7 @@ use App\Criticalmass\Geo\Converter\PositionToXmlTrackPointConverter;
 use App\Criticalmass\Geo\EntityInterface\PositionInterface;
 use App\Criticalmass\Geo\PositionList\PositionList;
 use App\Criticalmass\Geo\PositionList\PositionListInterface;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 
 class GpxWriter implements GpxWriterInterface
 {
@@ -22,14 +22,12 @@ class GpxWriter implements GpxWriterInterface
     /** @var \XMLWriter $writer */
     protected $writer;
 
-    /** @var FilesystemInterface $filesystem */
-    protected $filesystem;
-
-    public function __construct(FilesystemInterface $filesystem)
+    public function __construct(
+        private readonly FilesystemOperator $filesystem
+    )
     {
         $this->writer = new \XMLWriter();
         $this->positionList = new PositionList();
-        $this->filesystem = $filesystem;
     }
 
     public function setPositionList(PositionListInterface $positionList): GpxWriterInterface

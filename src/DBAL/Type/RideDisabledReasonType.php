@@ -14,7 +14,7 @@ final class RideDisabledReasonType extends AbstractEnumType
     public const CANCELLED_AUTHORITIES = 'CANCELLED_AUTHORITIES';
     public const CANCELLED = 'CANCELLED';
 
-    public static $choices = [
+    public static array $choices = [
         self::DUPLICATE => 'diese Tour ist ein Duplikat einer anderen Tour, die in der gleichen Woche stattfindet',
         self::WRONG_WEBSITE_HANDLING => 'diese Tour wurde infolge einer manuellen Fehlbedienung der Webseite angelegt',
         self::WRONG_AUTO_GNERATION => 'diese Tour wurde automatisch generiert, obwohl sie nicht stattindet',

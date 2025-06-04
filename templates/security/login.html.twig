@@ -1,0 +1,69 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <h1>Einloggen und losfahren!</h1>
+
+                <p class="lead">
+                    Du kannst dich entweder über ein gesellschaftliches Netzwerk oder über deine E-Mail-Adresse einloggen.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Soziale Netzwerke
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <p>
+                                    Logge dich über eines dieser sozialen Netzwerke ein &mdash; es dauert nur einen Klick!
+                                </p>
+
+                                <div class="btn-group" role="group" aria-label="...">
+                                    <a class="btn btn-default" style="background-color: rgb(60, 90, 150); color: white;"
+                                       href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook' }) }}"
+                                       title="Sign in with Facebook">
+                                        <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                                        Facebook
+                                    </a>
+                                    <a class="btn btn-default" style="background-color: rgb(249, 77, 31); color: white;"
+                                       href="{{ path('hwi_oauth_service_redirect', {'service': 'strava' }) }}"
+                                       title="Sign in with Strava">
+                                        <i class="fab fa-strava" aria-hidden="true"></i>
+                                        Strava
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-5">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        E-Mail-Adresse
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            Bitte gib deine E-Mail-Adresse ein, wir senden dir einen Link zum Einloggen per Mail zu!
+                        </p>
+
+                        {{ form_start(login_form) }}
+                        {{ form_row(login_form.email) }}
+                        <div class="frc-captcha mb-3 mx-auto" data-sitekey="{{ app.request.server.get('FRIENDLYCAPTCHA_SITE_KEY') }}"></div>
+                        {{ form_end(login_form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

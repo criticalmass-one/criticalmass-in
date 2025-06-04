@@ -3,7 +3,6 @@
 namespace App\EventSubscriber;
 
 use App\Criticalmass\Router\ObjectRouterInterface;
-use App\Entity\BlogPost;
 use App\Entity\City;
 use App\Entity\Ride;
 use Doctrine\Persistence\ManagerRegistry;
@@ -14,11 +13,8 @@ use Presta\SitemapBundle\Sitemap\Url\UrlConcrete;
 
 class SitemapEventSubscriber implements EventSubscriberInterface
 {
-    /** @var ObjectRouterInterface $router */
-    protected $router;
-
-    /** @var ManagerRegistry $registry */
-    protected $registry;
+    protected ObjectRouterInterface $router;
+    protected ManagerRegistry $registry;
 
     public function __construct(ObjectRouterInterface $router, ManagerRegistry $registry)
     {
@@ -37,7 +33,6 @@ class SitemapEventSubscriber implements EventSubscriberInterface
     {
         $this->registerRideUrls($event->getUrlContainer());
         $this->registerCityUrls($event->getUrlContainer());
-        $this->registerBlogUrls($event->getUrlContainer());
     }
 
     public function registerCityUrls(UrlContainerInterface $urlContainer): void
@@ -61,18 +56,6 @@ class SitemapEventSubscriber implements EventSubscriberInterface
             $url = $this->router->generate($ride);
 
             $urlContainer->addUrl(new UrlConcrete($url), 'ride');
-        }
-    }
-
-    public function registerBlogUrls(UrlContainerInterface $urlContainer): void
-    {
-        $blogPostList = $this->registry->getRepository(BlogPost::class)->findAll();
-
-        /** @var BlogPost $blogPost */
-        foreach ($blogPostList as $blogPost) {
-            $url = $this->router->generate($blogPost);
-
-            $urlContainer->addUrl(new UrlConcrete($url), 'blogPost');
         }
     }
 }

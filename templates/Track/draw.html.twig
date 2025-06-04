@@ -28,7 +28,7 @@
         <div class="row">
             <div class="col-md-12">
                 <form method="post"
-                      action="{{ objectPath(track, 'caldera_criticalmass_track_draw') }}">
+                      action="{{ object_path(track, 'caldera_criticalmass_track_draw') }}">
                     <input type="hidden" id="polyline" name="polyline"/>
                     <input type="hidden" id="geojson" name="geojson"/>
 
@@ -39,17 +39,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        CriticalMass.loadModule('TrackDrawPage', null, null, function (drawPage) {
-            drawPage.setRide('{{ ride|serialize|raw|e('js') }}');
-
-            {% if track %}
-            drawPage.setTrack('{{ track|serialize|raw|e('js') }}');
-            {% endif %}
-
-            drawPage.init();
-        });
-    </script>
-
 {% endblock %}

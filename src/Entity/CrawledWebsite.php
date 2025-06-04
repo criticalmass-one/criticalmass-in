@@ -4,43 +4,29 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="crawled_website")
- * @ORM\Entity()
- */
+#[ORM\Table(name: 'crawled_website')]
+#[ORM\Entity]
 class CrawledWebsite
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    protected ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $url;
+    #[ORM\Column(type: 'string', nullable: true)]
+    protected ?string $url = null;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $imageUrl;
+    #[ORM\Column(type: 'string', nullable: true)]
+    protected ?string $imageUrl = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    protected $title;
+    #[ORM\Column(type: 'text', nullable: true)]
+    protected ?string $title = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    protected $description;
+    #[ORM\Column(type: 'text', nullable: true)]
+    protected ?string $description = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $createdAt;
+    #[ORM\Column(type: 'datetime')]
+    protected \DateTime $createdAt;
 
     public function __construct()
     {

@@ -36,15 +36,15 @@ class CityCycleType extends AbstractType
                 'model_timezone' => 'UTC',
                 'view_timezone' => 'UTC',
                 'widget' => 'single_text',
-                'format' => 'dd.MM.yyyy',
                 'required' => false,
+                'html5' => false, // @todo remvoe this later
             ])
             ->add('validUntil', DateType::class, [
                 'model_timezone' => 'UTC',
                 'view_timezone' => 'UTC',
                 'widget' => 'single_text',
-                'format' => 'dd.MM.yyyy',
                 'required' => false,
+                'html5' => false, // @todo remvoe this later
             ]);
 
         if (!$cycle->getRideCalculatorFqcn()) {

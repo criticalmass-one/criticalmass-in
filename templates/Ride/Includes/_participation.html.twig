@@ -14,21 +14,21 @@
             <ul class="dropdown-menu" style="z-index: 99999;">
                 {# TODO #}
                 <li>
-                    <a href="{{ objectPath(ride, 'caldera_criticalmass_participation_ride', { status: 'yes' }) }}">
+                    <a href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'yes' }) }}">
                         <i class="far fa-check"></i>
                         Ja
                     </a>
                 </li>
                 {% if pastRide %}
                     <li>
-                        <a href="{{ objectPath(ride, 'caldera_criticalmass_participation_ride', { status: 'no' }) }}">
+                        <a href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'no' }) }}">
                             <i class="far fa-times"></i>
                             Nein
                         </a>
                     </li>
                 {% else %}
                     <li>
-                        <a href="{{ objectPath(ride, 'caldera_criticalmass_participation_ride', { status: 'maybe' }) }}">
+                        <a href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'maybe' }) }}">
                             <i class="far fa-circle-o"></i>
                             Vielleicht
                         </a>
@@ -50,14 +50,14 @@
                 <ul class="dropdown-menu" style="z-index: 99999;">
                     {% if not pastRide %}
                         <li>
-                            <a href="{{ objectPath(ride, 'caldera_criticalmass_participation_ride', { status: 'maybe' }) }}">
+                            <a href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'maybe' }) }}">
                                 <i class="far fa-circle-o"></i>
                                 Vielleicht
                             </a>
                         </li>
                     {% endif %}
                     <li>
-                        <a href="{{ objectPath(ride, 'caldera_criticalmass_participation_ride', { status: 'no' }) }}">
+                        <a href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'no' }) }}">
                             <i class="far fa-times"></i>
                             {% if pastRide %}
                                 Nicht teilgenommen
@@ -78,14 +78,14 @@
                 </button>
                 <ul class="dropdown-menu" style="z-index: 99999;">
                     <li>
-                        <a href="{{ objectPath(ride, 'caldera_criticalmass_participation_ride', { status: 'yes' }) }}">
+                        <a href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'yes' }) }}">
                             <i class="far fa-check"></i>
                             Zusagen
                         </a>
                     </li>
 
                     <li>
-                        <a href="{{ objectPath(ride, 'caldera_criticalmass_participation_ride', { status: 'no' }) }}">
+                        <a href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'no' }) }}">
                             <i class="far fa-times"></i>
                             Absagen
                         </a>
@@ -106,7 +106,7 @@
                 </button>
                 <ul class="dropdown-menu" style="z-index: 99999;">
                     <li>
-                        <a href="{{ objectPath(ride, 'caldera_criticalmass_participation_ride', { status: 'yes' }) }}">
+                        <a href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'yes' }) }}">
                             <i class="far fa-check"></i>
                             {% if pastRide %}
                                 Du hast teilgenommen
@@ -117,7 +117,7 @@
                     </li>
                     {% if not pastRide %}
                         <li>
-                            <a href="{{ objectPath(ride, 'caldera_criticalmass_participation_ride', { status: 'maybe' }) }}">
+                            <a href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'maybe' }) }}">
                                 <i class="far fa-circle-o"></i>
                                 Vielleicht
                             </a>

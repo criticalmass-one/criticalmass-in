@@ -4,7 +4,6 @@ namespace App\Criticalmass\SeoPage;
 
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\RouteableInterface;
-use App\EntityInterface\StaticMapableInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface as SymfonyUrlGeneratorInterface;
 
 class SeoPage extends AbstractSeoPage
@@ -23,16 +22,6 @@ class SeoPage extends AbstractSeoPage
         $this->sonataSeoPage
             ->addMeta('name', 'description', $description)
             ->addMeta('property', 'og:description', $description);
-
-        return $this;
-    }
-
-    public function setPreviewMap(StaticMapableInterface $staticMapable): SeoPageInterface
-    {
-        $this->sonataSeoPage
-            ->addMeta('property', 'og:image', $this->urlGenerator->generate($staticMapable, 600, 315), ['escape' => false])
-            ->addMeta('name', 'twitter:image', $this->urlGenerator->generate($staticMapable, 800, 320), ['escape' => false])
-            ->addMeta('name', 'twitter:card', 'summary_large_image');
 
         return $this;
     }

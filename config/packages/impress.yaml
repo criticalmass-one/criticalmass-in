@@ -1,0 +1,4 @@
+malte_huebner_impress:
+  source: remote_json
+  remote:
+    url: https://maltehuebner.de/malte.json

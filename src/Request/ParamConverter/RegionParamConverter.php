@@ -12,6 +12,8 @@ class RegionParamConverter extends AbstractParamConverter
     {
         $regionSlug = $request->get('regionSlug');
 
+        $region = null;
+        
         if ($regionSlug) {
             $region = $this->registry->getRepository(Region::class)->findOneBySlug($regionSlug);
         }

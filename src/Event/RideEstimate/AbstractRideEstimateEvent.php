@@ -3,7 +3,7 @@
 namespace App\Event\RideEstimate;
 
 use App\Entity\RideEstimate;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 abstract class AbstractRideEstimateEvent extends Event
 {

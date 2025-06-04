@@ -6,19 +6,14 @@ use App\Criticalmass\Statistic\RideEstimateCalculator\RideEstimateCalculatorInte
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
 use App\Repository\RideEstimateRepository;
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
 
 abstract class AbstractRideEstimateHandler implements RideEstimateHandlerInterface
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    /** @var RideEstimateCalculatorInterface $calculator */
-    protected $calculator;
-
-    /** @var Ride $ride */
-    protected $ride;
+    protected ManagerRegistry $registry;
+    protected RideEstimateCalculatorInterface $calculator;
+    protected Ride $ride;
 
     public function __construct(ManagerRegistry $registry, RideEstimateCalculatorInterface $calculator)
     {

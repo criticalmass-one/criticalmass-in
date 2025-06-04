@@ -2,8 +2,8 @@
 
 namespace App\Controller\Promotion;
 
-use App\Criticalmass\DataQuery\DataQueryManager\DataQueryManagerInterface;
-use App\Criticalmass\DataQuery\RequestParameterList\QueryStringToListConverter;
+use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
+use MalteHuebner\DataQueryBundle\RequestParameterList\QueryStringToListConverter;
 use App\Criticalmass\ViewStorage\Cache\ViewStorageCacheInterface;
 use App\Entity\Promotion;
 use App\Entity\Ride;

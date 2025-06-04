@@ -5,32 +5,25 @@ namespace App\Entity;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewEntity;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="city_view")
- * @ORM\Entity()
- */
+#[ORM\Table(name: 'city_view')]
+#[ORM\Entity]
 class CityView implements ViewEntity
 {
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="city_views")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
-    protected $user;
-    /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="city_views")
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
-     */
-    protected $city;
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $dateTime;
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private ?int $id = null;
+
+    #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'city_views')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    protected ?User $user = null;
+
+    #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'city_views')]
+    #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
+    protected ?City $city = null;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected \DateTime $dateTime;
 
     public function __construct()
     {

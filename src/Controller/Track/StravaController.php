@@ -21,8 +21,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class StravaController extends AbstractController
 {
+    public function __construct(private readonly string $stravaClientId, private readonly string $stravaSecret)
+    {
+    }
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
     public function authAction(Request $request, Ride $ride, ObjectRouterInterface $objectRouter): Response
@@ -45,7 +48,7 @@ class StravaController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
     public function tokenAction(Request $request, Ride $ride, ObjectRouterInterface $objectRouter, SessionInterface $session): Response
@@ -66,7 +69,7 @@ class StravaController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
     public function listridesAction(Ride $ride, SessionInterface $session): Response
@@ -94,7 +97,7 @@ class StravaController extends AbstractController
     }
 
     /**
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
     public function importAction(Request $request, UserInterface $user, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, Ride $ride, TrackImporterInterface $trackImporter): Response
@@ -107,7 +110,7 @@ class StravaController extends AbstractController
             ->setUser($user)
             ->importTrack();
 
-        $eventDispatcher->dispatch(TrackUploadedEvent::NAME, new TrackUploadedEvent($track));
+        $eventDispatcher->dispatch(new TrackUploadedEvent($track), TrackUploadedEvent::NAME);
 
         return $this->redirect($objectRouter->generate($track));
     }
@@ -117,8 +120,8 @@ class StravaController extends AbstractController
         $redirectUri = $request->getUriForPath($objectRouter->generate($ride, 'caldera_criticalmass_strava_token'));
 
         $oauthOptions = [
-            'clientId' => $this->getParameter('strava.client_id'),
-            'clientSecret' => $this->getParameter('strava.secret'),
+            'clientId' => $this->stravaClientId,
+            'clientSecret' => $this->stravaSecret,
             'redirectUri' => $redirectUri,
             'scope' => 'read',
         ];
@@ -128,7 +131,7 @@ class StravaController extends AbstractController
 
     protected function createApi(): StravaApi
     {
-        $api = new StravaApi($this->getParameter('strava.client_id'), $this->getParameter('strava.secret'));
+        $api = new StravaApi($this->stravaClientId, $this->stravaSecret);
 
         return $api;
     }

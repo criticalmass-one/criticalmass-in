@@ -7,7 +7,7 @@ use App\Criticalmass\Timeline\Item\ThreadPostItem;
 
 class ThreadPostCollector extends AbstractTimelineCollector
 {
-    protected $entityClass = Post::class;
+    protected string $entityClass = Post::class;
 
     protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {

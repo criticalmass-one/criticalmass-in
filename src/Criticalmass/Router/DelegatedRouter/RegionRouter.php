@@ -9,8 +9,12 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class RegionRouter extends AbstractDelegatedRouter
 {
     /** @param Region $region */
-    public function generate(RouteableInterface $region, string $routeName = null, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
-    {
+    public function generate(
+        RouteableInterface $region,
+        string $routeName = null,
+        array $parameters = [],
+        int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH
+    ): string {
         if ($region->getParent() == null) {
             return $this->router->generate('caldera_criticalmass_region_world', [], $referenceType);
         } elseif ($region->getParent()->getParent() == null) {

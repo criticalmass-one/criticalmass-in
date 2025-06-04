@@ -1,59 +1,51 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
 {% block breadcrumb %}
+    <li>
+        <a href="{{ path('caldera_criticalmass_city_list') }}">
+            Städteliste
+        </a>
+    </li>
+
     {% if profileAbleType == 'city' %}
         <li>
-            <a href="{{ path('caldera_criticalmass_city_list') }}">
-                Städteliste
-            </a>
-        </li>
-
-        <li>
-            <a href="{{ objectPath(profileAble) }}">
+            <a href="{{ object_path(profileAble) }}">
                 {{ profileAble.city }}
             </a>
         </li>
 
         <li>
-            <a href="{{ objectPath(profileAble, 'criticalmass_socialnetwork_city_list') }}">
+            <a href="{{ object_path(profileAble, 'criticalmass_socialnetwork_city_list') }}">
                 Soziale Netzwerke
             </a>
-        </li>
-
-        <li class="active">
-            Soziales Netzwerk editieren
         </li>
     {% endif %}
 
     {% if profileAbleType == 'ride' %}
-        <li>
-            <a href="{{ path('caldera_criticalmass_city_list') }}">
-                Städteliste
-            </a>
-        </li>
+
 
         <li>
-            <a href="{{ objectPath(profileAble.city) }}">
+            <a href="{{ object_path(profileAble.city) }}">
                 {{ profileAble.city.city }}
             </a>
         </li>
 
         <li>
-            <a href="{{ objectPath(profileAble) }}">
+            <a href="{{ object_path(profileAble) }}">
                 {{ profileAble.title }}
             </a>
         </li>
 
         <li>
-            <a href="{{ objectPath(profileAble, 'criticalmass_socialnetwork_ride_list') }}">
+            <a href="{{ object_path(profileAble, 'criticalmass_socialnetwork_ride_list') }}">
                 Soziale Netzwerke
             </a>
         </li>
-
-        <li class="active">
-            Soziales Netzwerk editieren
-        </li>
     {% endif %}
+
+    <li class="active">
+        Soziales Netzwerk editieren
+    </li>
 {% endblock %}
 
 {% block content %}
@@ -97,7 +89,8 @@
                 <div class="row">
                      <div class="col-md-12 form-group">
                          <div class="btn-group pull-right">
-                             <a href="" class="btn btn-default">
+                             {% set cancel_path = object_path(profileAble, 'criticalmass_socialnetwork_' ~ profileAbleType ~ '_list') %}
+                             <a href="{{ cancel_path }}" class="btn btn-default">
                                  Abbrechen
                              </a>
 

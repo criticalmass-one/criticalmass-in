@@ -8,6 +8,7 @@ use App\Entity\Ride;
 use App\Entity\Track;
 use App\Entity\User;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Table;
@@ -15,27 +16,20 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'criticalmass:photos:relocate',
+    description: 'Relocate photos to tracks',
+)]
 class RelocatePhotosCommand extends Command
 {
-    /** @var PhotoGpsInterface $photoGps */
-    protected $photoGps;
-
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    public function __construct(PhotoGpsInterface $photoGps, ManagerRegistry $registry)
+    public function __construct(protected PhotoGpsInterface $photoGps, protected ManagerRegistry $registry)
     {
-        $this->photoGps = $photoGps;
-        $this->registry = $registry;
-
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->setName('criticalmass:photos:relocate')
-            ->setDescription('Relocate photos to tracks')
             ->addArgument(
                 'citySlug',
                 InputArgument::REQUIRED,
@@ -58,7 +52,7 @@ class RelocatePhotosCommand extends Command
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($input->hasArgument('photoDateTimeZone') && $input->getArgument('photoDateTimeZone')) {
             $dateTimeZone = new \DateTimeZone($input->getArgument('photoDateTimeZone'));
@@ -110,5 +104,7 @@ class RelocatePhotosCommand extends Command
         $progressBar->finish();
         $this->registry->getManager()->flush();
         $table->render();
+
+        return Command::SUCCESS;
     }
 }

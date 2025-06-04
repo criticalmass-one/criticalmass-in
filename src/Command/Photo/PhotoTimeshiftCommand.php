@@ -8,6 +8,7 @@ use App\Entity\Track;
 use App\Entity\User;
 use App\Event\Photo\PhotoUpdatedEvent;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Table;
@@ -16,27 +17,20 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
+#[AsCommand(
+    name: 'criticalmass:photos:timeshift',
+    description: 'Timeshift photos',
+)]
 class PhotoTimeshiftCommand extends Command
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
-
-    /** @var EventDispatcherInterface */
-    protected $eventDispatcher;
-
-    public function __construct(ManagerRegistry $registry, EventDispatcherInterface $eventDispatcher)
+    public function __construct(protected ManagerRegistry $registry, protected EventDispatcherInterface $eventDispatcher)
     {
-        $this->registry = $registry;
-        $this->eventDispatcher = $eventDispatcher;
-
         parent::__construct();
     }
 
     protected function configure(): void
     {
         $this
-            ->setName('criticalmass:photos:timeshift')
-            ->setDescription('Timeshift photos')
             ->addArgument(
                 'citySlug',
                 InputArgument::REQUIRED,
@@ -65,7 +59,7 @@ class PhotoTimeshiftCommand extends Command
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $interval = new \DateInterval($input->getArgument('dateInterval'));
         $modificationMethodName = $input->getArgument('direction');
@@ -98,7 +92,7 @@ class PhotoTimeshiftCommand extends Command
             $dateTimeImmutable = $dateTimeImmutable->$modificationMethodName($interval);
             $photo->setExifCreationDate(new \DateTime(sprintf('@%d', $dateTimeImmutable->getTimestamp())));
 
-            $this->eventDispatcher->dispatch(PhotoUpdatedEvent::NAME, new PhotoUpdatedEvent($photo, false));
+            $this->eventDispatcher->dispatch(new PhotoUpdatedEvent($photo, false), PhotoUpdatedEvent::NAME);
 
             $table->addRow([
                 $photo->getId(),
@@ -115,6 +109,8 @@ class PhotoTimeshiftCommand extends Command
         $table->render();
 
         $entityManager->flush();
+
+        return Command::SUCCESS;
     }
 
     protected function getRide(string $citySlug, string $rideIdentifier): ?Ride

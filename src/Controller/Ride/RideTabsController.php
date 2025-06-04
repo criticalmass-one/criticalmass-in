@@ -9,13 +9,21 @@ use App\Entity\RideEstimate;
 use App\Entity\Weather;
 use App\Form\Type\RideDisableType;
 use App\Form\Type\RideEstimateType;
+use App\Repository\LocationRepository;
+use App\Repository\PhotoRepository;
+use App\Repository\SocialNetworkProfileRepository;
+use App\Repository\SubrideRepository;
+use App\Repository\TrackRepository;
+use App\Repository\WeatherRepository;
 use Symfony\Component\HttpFoundation\Response;
 
 class RideTabsController extends AbstractController
 {
-    public function renderPhotosTabAction(Ride $ride): Response
-    {
-        $photos = $this->getPhotoRepository()->findPhotosByRide($ride);
+    public function renderPhotosTabAction(
+        PhotoRepository $photoRepository,
+        Ride $ride
+    ): Response {
+        $photos = $photoRepository->findPhotosByRide($ride);
 
         return $this->render('RideTabs/GalleryTab.html.twig', [
             'ride' => $ride,
@@ -24,9 +32,11 @@ class RideTabsController extends AbstractController
         ]);
     }
 
-    public function renderTracksTabAction(Ride $ride): Response
-    {
-        $tracks = $this->getTrackRepository()->findTracksByRide($ride);
+    public function renderTracksTabAction(
+        TrackRepository $trackRepository,
+        Ride $ride
+    ): Response {
+        $tracks = $trackRepository->findTracksByRide($ride);
 
         return $this->render('RideTabs/TracksTab.html.twig', [
             'ride' => $ride,
@@ -42,9 +52,11 @@ class RideTabsController extends AbstractController
         ]);
     }
 
-    public function renderSubridesTabAction(Ride $ride): Response
-    {
-        $subrides = $this->getSubrideRepository()->getSubridesForRide($ride);
+    public function renderSubridesTabAction(
+        Ride $ride,
+        SubrideRepository $subrideRepository
+    ): Response {
+        $subrides = $subrideRepository->getSubridesForRide($ride);
 
         return $this->render('RideTabs/SubridesTab.html.twig', [
             'ride' => $ride,
@@ -61,12 +73,17 @@ class RideTabsController extends AbstractController
         ]);
     }
 
-    public function renderDetailsTabAction(Ride $ride, ObjectRouterInterface $objectRouter): Response
-    {
+    public function renderDetailsTabAction(
+        LocationRepository $locationRepository,
+        WeatherRepository $weatherRepository,
+        SocialNetworkProfileRepository $socialNetworkProfileRepository,
+        Ride $ride,
+        ObjectRouterInterface $objectRouter
+    ): Response {
         /**
          * @var Weather $weather
          */
-        $weather = $this->getWeatherRepository()->findCurrentWeatherForRide($ride);
+        $weather = $weatherRepository->findCurrentWeatherForRide($ride);
 
         if ($weather) {
             $weatherForecast = round($weather->getTemperatureEvening()) . ' °C, ' . $weather->getWeatherDescription();
@@ -78,7 +95,7 @@ class RideTabsController extends AbstractController
             'action' => $objectRouter->generate($ride, 'caldera_criticalmass_ride_addestimate'),
         ]);
 
-        $location = $this->getLocationRepository()->findLocationForRide($ride);
+        $location = $locationRepository->findLocationForRide($ride);
 
         $disableForm = $this
             ->createForm(RideDisableType::class, $ride, [
@@ -92,7 +109,7 @@ class RideTabsController extends AbstractController
             'estimateForm' => $estimateForm->createView(),
             'weatherForecast' => $weatherForecast,
             'location' => $location,
-            'socialNetworkProfiles' => $this->getSocialNetworkProfileRepository()->findByRide($ride),
+            'socialNetworkProfiles' => $socialNetworkProfileRepository->findByRide($ride),
             'disableForm' => $disableForm
         ]);
     }

@@ -7,7 +7,7 @@ use App\Criticalmass\Timeline\Item\CityCreatedItem;
 
 class CityCreatedCollector extends AbstractTimelineCollector
 {
-    protected $entityClass = City::class;
+    protected string $entityClass = City::class;
 
     protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {

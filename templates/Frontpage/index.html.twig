@@ -46,31 +46,10 @@
             </div>
 
             <div class="col-md-4">
-                {% if feature('frontpage_advertisment') %}
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">
-                                    Anzeige
-                                </h3>
-                            </div>
-                            <div class="panel-body text-center" style="padding: 0;">
-                                <!-- Revive Adserver Asynchronous JS Tag - Generated with Revive Adserver v4.1.3 -->
-                                <ins data-revive-zoneid="20" data-revive-id="41009926173ca0d1c900a7dc0a6dd401"></ins>
-                                <script async src="//adserver.caldera.cc/delivery/asyncjs.php"></script>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% endif %}
-
                 {{ render(controller('App\\Controller\\FrontpageController::rideListAction')) }}
             </div>
         </div>
     </div>
-
-    {% include('Template/Includes/_adserver.html.twig') %}
 
     {% include('Template/Includes/_footer.html.twig') %}
 {% endblock %}

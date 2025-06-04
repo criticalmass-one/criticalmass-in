@@ -8,18 +8,20 @@
             </div>
             <div class="panel-body">
                 <ul class="list-unstyled">
-                    {% for day in rideList %}
-                        <li>
-                            <h4>
-                                {{ day.dateTime|format_date('eeee, dd. MMMM YYYY') }}
-                            </h4>
+                    {% for month in rideList %}
+                        {% for day in month %}
+                            <li>
+                                <h5>
+                                    {{ day.dateTime|format_date('eeee, dd. MMMM YYYY') }}
+                                </h5>
 
-                            <ul>
-                                {% for ride in day %}
-                                {% include 'Common/Ride/simple_city_time_list_item.html.twig' with { ride: ride } %}
-                                {% endfor %}
-                            </ul>
-                        </li>
+                                <ul>
+                                    {% for ride in day %}
+                                    {% include 'Common/Ride/simple_city_time_list_item.html.twig' with { ride: ride } %}
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% endfor %}
                     {% endfor %}
                 </ul>
             </div>

@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
-use App\Criticalmass\DataQuery\Annotation\QueryAnnotation as DataQuery;
+use MalteHuebner\DataQueryBundle\Annotation\QueryAnnotation as DataQuery;
 use App\Criticalmass\Util\DateTimeUtil;
 use Symfony\Component\Validator\Constraints as Constraints;
 
@@ -12,11 +12,11 @@ use Symfony\Component\Validator\Constraints as Constraints;
 class DateQuery extends MonthQuery
 {
     /**
-     * @Constraints\NotNull()
-     * @Constraints\Range(min="1", max="31")
-     * @Constraints\Type("int")
      * @var int $day
      */
+    #[Constraints\NotNull]
+    #[Constraints\Range(min: 1, max: 31)]
+    #[Constraints\Type('int')]
     protected $day;
 
     /**
