@@ -2,13 +2,6 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\DataQuery\Annotation\EntityAnnotation as DataQuery;
-use App\Criticalmass\Geocoding\ReverseGeocodeable;
-use App\Criticalmass\OrderedEntities\Annotation as OE;
-use App\Criticalmass\OrderedEntities\OrderedEntityInterface;
-use App\Criticalmass\Router\Annotation as Routing;
-use App\Criticalmass\Sharing\Annotation as Sharing;
-use App\Criticalmass\Sharing\ShareableInterface\Shareable;
 use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation as DataQuery;
 use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
 use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
@@ -22,7 +15,6 @@ use App\EntityInterface\ParticipateableInterface;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
-use App\EntityInterface\StaticMapableInterface;
 use App\Validator\Constraint as CriticalAssert;
 use Caldera\GeoBasic\Coord\Coord;
 use Caldera\GeoBasic\Coord\CoordInterface;
