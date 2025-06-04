@@ -213,7 +213,7 @@ class CityController extends BaseController
      *
      * @ParamConverter("city", class="App:City")
      */
-    #[Route(path: '/{citySlug}', name: 'caldera_criticalmass_rest_city_show', methods: ['GET'], options: ['expose' => true])]
+    #[Route(path: '/{citySlug}', name: 'caldera_criticalmass_rest_city_show', methods: ['GET'])]
     public function showAction(City $city): JsonResponse
     {
         return $this->createStandardResponse($city);

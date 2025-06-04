@@ -7,8 +7,8 @@ use Caldera\GeoBasic\Coordinate\Coordinate;
 
 class Position extends Coordinate implements PositionInterface
 {
-    protected ?float $latitude = null;
-    protected ?float $longitude = null;
+    protected ?float $latitude;
+    protected ?float $longitude;
     protected ?float $accuracy = null;
     protected ?float $altitude = null;
     protected ?float $altitudeAccuracy = null;

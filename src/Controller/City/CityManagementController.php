@@ -13,6 +13,7 @@ use App\Event\City\CityUpdatedEvent;
 use App\Factory\City\CityFactoryInterface;
 use App\Form\Type\CityType;
 use App\Repository\RegionRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -28,6 +29,7 @@ class CityManagementController extends AbstractController
      */
     public function addAction(
         Request $request,
+        ManagerRegistry $managerRegistry,
         UserInterface $user = null,
         NominatimCityBridge $nominatimCityBridge,
         EventDispatcherInterface $eventDispatcher,
@@ -38,7 +40,8 @@ class CityManagementController extends AbstractController
         string $slug3 = null,
         string $citySlug = null
     ): Response {
-        $region = $this->getRegion($nominatimCityBridge, $slug3, $citySlug);
+        $regionRepository = $managerRegistry->getRepository(Region::class);
+        $region = $this->getRegion($nominatimCityBridge, $regionRepository, $slug3, $citySlug);
 
         if ($citySlug) {
             $city = $nominatimCityBridge->lookupCity($citySlug);
@@ -72,7 +75,7 @@ class CityManagementController extends AbstractController
         FormInterface $form
     ) {
         return $this->render('CityManagement/edit.html.twig', [
-            'city' => null,
+            'city' => $city,
             'form' => $form->createView(),
             'country' => $region->getParent()->getName(),
             'state' => $region->getName(),
@@ -176,7 +179,8 @@ class CityManagementController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $city
                 ->setUpdatedAt(new \DateTime())
-                ->setUser($user);
+                ->setUser($user)
+            ;
 
             $this->managerRegistry->getManager()->flush();
 
@@ -197,8 +201,8 @@ class CityManagementController extends AbstractController
     }
 
     protected function getRegion(
-        RegionRepository $regionRepository,
         NominatimCityBridge $nominatimCityBridge,
+        RegionRepository $regionRepository,
         string $regionSlug = null,
         string $citySlug = null
     ): ?Region {

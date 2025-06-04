@@ -16,9 +16,7 @@ use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @Vich\Uploadable
- */
+#[Vich\Uploadable]
 #[ORM\Table(name: 'user')]
 #[ORM\Entity(repositoryClass: 'App\Repository\UserRepository')]
 #[ORM\HasLifecycleCallbacks]
@@ -100,21 +98,11 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     #[Ignore]
     protected ?string $stravaAccessToken = null;
 
-    #[ORM\Column(name: 'twitter_id', type: 'string', length: 255, nullable: true)]
-    #[Ignore]
-    protected ?string $twitterId = null;
-
-    #[ORM\Column(name: 'twitter_access_token', type: 'text', nullable: true)]
-    #[Ignore]
-    protected ?string $twitterkAccessToken = null;
-
     #[ORM\OneToMany(targetEntity: 'CityCycle', mappedBy: 'city', cascade: ['persist', 'remove'])]
     #[Ignore]
     protected Collection $cycles;
 
-    /**
-     * @Vich\UploadableField(mapping="user_photo", fileNameProperty="imageName", size="imageSize", mimeType="imageMimeType")
-     */
+    #[Vich\UploadableField(mapping: 'user_photo', fileNameProperty: 'imageName', size: 'imageSize', mimeType: 'imageMimeType')]
     protected ?File $imageFile = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
@@ -216,7 +204,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     /**
      * @see UserInterface
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
@@ -256,6 +244,18 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
         $this->colorBlue = $colorBlue;
 
         return $this;
+    }
+
+    public function setColor(string $color): User
+    {
+        list($this->colorRed, $this->colorGreen, $this->colorBlue) = sscanf($color, "#%02x%02x%02x");
+
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return sprintf('#%02x%02x%02x', $this->colorRed, $this->colorGreen, $this->colorBlue);
     }
 
     /**
@@ -393,30 +393,6 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
         return $this->facebookAccessToken;
     }
 
-    public function setTwitterId(string $twitterId): User
-    {
-        $this->twitterId = $twitterId;
-
-        return $this;
-    }
-
-    public function getTwitterId(): ?string
-    {
-        return $this->twitterId;
-    }
-
-    public function setTwitterAccessToken(string $twitterkAccessToken): User
-    {
-        $this->twitterkAccessToken = $twitterkAccessToken;
-
-        return $this;
-    }
-
-    public function getTwitterAccessToken(): ?string
-    {
-        return $this->twitterkAccessToken;
-    }
-
     public function setBlurGalleries(bool $blurGalleries): User
     {
         $this->blurGalleries = $blurGalleries;
@@ -431,7 +407,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
 
     public function isOauthAccount(): bool
     {
-        return $this->stravaId || $this->facebookId || $this->isTwitterAccount();
+        return $this->stravaId || $this->facebookId;
     }
 
     public function isFacebookAccount(): bool
@@ -442,11 +418,6 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     public function isStravaAccount(): bool
     {
         return $this->stravaId !== null;
-    }
-
-    public function isTwitterAccount(): bool
-    {
-        return $this->twitterId !== null;
     }
 
     public function addCycle(CityCycle $cityCycle): User
@@ -609,18 +580,6 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     public function setEmail(?string $email): User
     {
         $this->email = $email;
-
-        return $this;
-    }
-
-    public function getTwitterkAccessToken(): ?string
-    {
-        return $this->twitterkAccessToken;
-    }
-
-    public function setTwitterkAccessToken(?string $twitterkAccessToken): User
-    {
-        $this->twitterkAccessToken = $twitterkAccessToken;
 
         return $this;
     }

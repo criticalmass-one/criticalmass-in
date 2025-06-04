@@ -26,9 +26,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @Vich\Uploadable
- */
+#[Vich\Uploadable]
 #[Routing\DefaultRoute(name: 'caldera_criticalmass_city_show')]
 #[ORM\Table(name: 'city')]
 #[ORM\Entity(repositoryClass: 'App\Repository\CityRepository')]
@@ -143,10 +141,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     #[ORM\Column(type: 'text', nullable: true)]
     protected ?string $longDescription = null;
 
-    /**
-     * @Vich\UploadableField(mapping="city_photo", fileNameProperty="imageName", size="imageSize", mimeType="imageMimeType")
-     */
-    #[Ignore]
+    #[Vich\UploadableField(mapping: 'city_photo', fileNameProperty: 'imageName', size: 'imageSize', mimeType: 'imageMimeType')]
     protected ?File $imageFile = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
@@ -254,7 +249,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
         return $this;
     }
 
-    public function getMainSlug(): CitySlug
+    public function getMainSlug(): ?CitySlug
     {
         return $this->mainSlug;
     }

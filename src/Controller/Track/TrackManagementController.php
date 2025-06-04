@@ -2,7 +2,6 @@
 
 namespace App\Controller\Track;
 
-use App\Event\Track\TrackDeletedEvent;
 use App\Event\Track\TrackHiddenEvent;
 use App\Event\Track\TrackShownEvent;
 use App\Repository\TrackRepository;
@@ -20,14 +19,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class TrackManagementController extends AbstractController
 {
-    public function __construct(
-        private readonly ManagerRegistry $managerRegistry,
-        AuthorizationChecker $authorizationChecker
-    )
-    {
-        parent::__construct($authorizationChecker);
-    }
-
     /**
      * @Security("is_granted('ROLE_USER')")
      */

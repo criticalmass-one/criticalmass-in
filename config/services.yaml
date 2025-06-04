@@ -20,9 +20,6 @@ parameters:
     facebook.app_id: '%env(FACEBOOK_APP_ID)%'
     facebook.app_secret: '%env(FACEBOOK_APP_SECRET)%'
     facebook.default_token: '%env(FACEBOOK_DEFAULT_TOKEN)%'
-    twitter.client_id: '%env(TWITTER_CLIENT_ID)%'
-    twitter.token: '%env(TWITTER_TOKEN)%'
-    twitter.secret: '%env(TWITTER_SECRET)%'
     photo_tsv.access_key: '%env(PHOTO_TSV_ACCESS_KEY)%'
     timeline.ttl: 60
     notification.mail.sender_address: malte@criticalmass.in
@@ -35,6 +32,8 @@ parameters:
     upload_destination.frontpage_teaser: '%kernel.project_dir%/public/teaser'
     upload_destination.user_photo: '%kernel.project_dir%/public/users'
     assets_version: '%env(ASSETS_VERSION)%'
+    friendlycaptcha_api_key: '%env(FRIENDLYCAPTCHA_API_KEY)%'
+    friendlycaptcha_site_key: '%env(FRIENDLYCAPTCHA_SITE_KEY)%'
 
 services:
     _defaults:
@@ -48,8 +47,6 @@ services:
             $facebookAppId: '%facebook.app_id%'
             $facebookAppSecret: '%facebook.app_secret%'
             $facebookDefaultToken: '%facebook.default_token%'
-            $twitterClientId: '%twitter.client_id%'
-            $twitterSecret: '%twitter.secret%'
             $uploadDestinationPhoto: '%upload_destination.photo%'
             $uploadDestinationTrack: '%upload_destination.track%'
             $uploadDestinationUserPhoto: '%upload_destination.user_photo%'
@@ -82,10 +79,6 @@ services:
             $flysystemFilesystem: '@oneup_flysystem.flysystem_photo_photo_filesystem'
 
     App\Criticalmass\Image\PhotoManipulator\Storage\PhotoStorage:
-        arguments:
-            $filesystem: '@oneup_flysystem.flysystem_photo_photo_filesystem'
-
-    App\Criticalmass\Image\PhotoUploader\PhotoUploader:
         arguments:
             $filesystem: '@oneup_flysystem.flysystem_photo_photo_filesystem'
 
@@ -226,6 +219,5 @@ services:
             $properties:
                 'facebook': 'facebookId'
                 'strava': 'stravaId'
-                'twitter': 'twitterId'
 
     Sabre\VObject\Component\VCalendar: ~

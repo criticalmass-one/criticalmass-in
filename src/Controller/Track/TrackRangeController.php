@@ -44,7 +44,6 @@ class TrackRangeController extends AbstractController
             'form' => $form->createView(),
             'track' => $track,
             'latLngList' => $latLngListGenerator->getList(),
-            'gapWidth' => $this->gapWidth,
         ]);
     }
 
@@ -56,8 +55,12 @@ class TrackRangeController extends AbstractController
             /** @var Track $track */
             $track = $form->getData();
 
+            $track
+            // assure that end point does not exceed number of points due to round problems in javascript
+                ->setEndPoint(min($track->getEndPoint(), $track->getPoints()))
             // this may not be done in TrackEventSubscriber as the events are sometimes triggered automatically
-            $track->setReviewed(true);
+                ->setReviewed(true)
+            ;
 
             $eventDispatcher->dispatch(new TrackTrimmedEvent($track), TrackTrimmedEvent::NAME);
         }
