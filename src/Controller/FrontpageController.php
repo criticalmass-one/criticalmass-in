@@ -47,9 +47,4 @@ class FrontpageController extends AbstractController
             'rideList' => $monthList,
         ]);
     }
-
-    public function introAction(): Response
-    {
-        return $this->render('Frontpage/intro.html.twig');
-    }
 }
