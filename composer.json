@@ -65,7 +65,6 @@
         "league/commonmark": "^2.6",
         "nesbot/carbon": "^2.24",
         "iamstuartwilson/strava": "^1.4",
-        "gregwar/captcha-bundle": "^2.1",
         "embed/embed": "^4.1",
         "guzzlehttp/psr7": "^1.6",
         "twig/extra-bundle": "^3.10",
