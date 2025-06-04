@@ -3,24 +3,29 @@
 namespace App\Criticalmass\CriticalmassBlog;
 
 use App\Criticalmass\CriticalmassBlog\Model\BlogArticle;
-use Laminas\Feed\Reader\Reader;
 
 class CriticalmassBlog implements CriticalmassBlogInterface
 {
     public function getArticles(): array
     {
         try {
-            $feed = Reader::import(static::BLOG_FEED_URL);
-        } catch (\RuntimeException $exception) {
+            $xml = @simplexml_load_file(static::BLOG_FEED_URL, 'SimpleXMLElement', LIBXML_NOCDATA);
+
+            if (!$xml || !isset($xml->channel->item)) {
+                return [];
+            }
+        } catch (\Exception $e) {
             return [];
         }
 
         $articleList = [];
 
-        foreach ($feed as $entry) {
-            $article = new BlogArticle($entry->getTitle(), $entry->getPermalink(), $entry->getDateCreated());
+        foreach ($xml->channel->item as $entry) {
+            $title = (string) $entry->title;
+            $link = (string) $entry->link;
+            $pubDate = new \DateTime((string) $entry->pubDate);
 
-            $articleList[] = $article;
+            $articleList[] = new BlogArticle($title, $link, $pubDate);
         }
 
         return $articleList;
