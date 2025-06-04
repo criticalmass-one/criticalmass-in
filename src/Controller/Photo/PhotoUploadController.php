@@ -47,7 +47,8 @@ class PhotoUploadController extends AbstractController
             $photoUploader
                 ->setRide($ride)
                 ->setUser($user)
-                ->addUploadedFile($uploadedFile);
+                ->addUploadedFile($uploadedFile)
+            ;
 
             return new Response('Success', Response::HTTP_OK);
         }

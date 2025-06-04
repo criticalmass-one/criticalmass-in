@@ -31,7 +31,10 @@ class RideManagementController extends AbstractController
         $ride = new Ride();
         $ride
             ->setCity($city)
-            ->setUser($user);
+            ->setUser($user)
+            ->setLatitude($city->getLatitude())
+            ->setLongitude($city->getLongitude())
+        ;
 
         $form = $this->createForm(RideType::class, $ride, [
             'action' => $objectRouter->generate($city,'caldera_criticalmass_ride_add'),
@@ -47,7 +50,7 @@ class RideManagementController extends AbstractController
     protected function addGetAction(Request $request, UserInterface $user = null, Ride $ride, EntityManagerInterface $entityManager, ObjectRouterInterface $objectRouter, City $city, FormInterface $form): Response
     {
         return $this->render('RideManagement/edit.html.twig', [
-            'ride' => null,
+            'ride' => $ride,
             'form' => $form->createView(),
             'city' => $city,
             'dateTime' => new \DateTime(),

@@ -49,7 +49,7 @@ class RideController extends BaseController
      *
      * @ParamConverter("ride", class="App:Ride")
      */
-    #[Route(path: '/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_show', methods: ['GET'], options: ['expose' => true])]
+    #[Route(path: '/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_show', methods: ['GET'])]
     public function showAction(Ride $ride): JsonResponse
     {
         return $this->createStandardResponse($ride);
@@ -76,7 +76,7 @@ class RideController extends BaseController
      *
      * @ParamConverter("city", class="App:City")
      */
-    #[Route(path: '/{citySlug}/current', name: 'caldera_criticalmass_rest_ride_show_current', methods: ['GET'], options: ['expose' => true])]
+    #[Route(path: '/{citySlug}/current', name: 'caldera_criticalmass_rest_ride_show_current', methods: ['GET'])]
     public function showCurrentAction(Request $request, City $city): JsonResponse
     {
         $cycleMandatory = $request->query->getBoolean('cycleMandatory', false);

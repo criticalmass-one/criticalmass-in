@@ -7,10 +7,14 @@ use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
 use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Entity\Ride;
 use App\Entity\Track;
+use App\Event\Track\TrackDeletedEvent;
+use Doctrine\Persistence\ManagerRegistry;
 use Nelmio\ApiDocBundle\Annotation\Operation;
 use OpenApi\Annotations as OA;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -201,5 +205,22 @@ class TrackController extends BaseController
         $context->setGroups($groups);
 
         return $this->createStandardResponse($trackList, $context);
+    }
+
+
+    /**
+     * @Security("is_granted('edit', track)")
+     * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
+     * @Route("/track/{trackId}", name="caldera_criticalmass_rest_track_delete", methods={"DELETE"})
+     */
+    public function deleteAction(Track $track, EventDispatcherInterface $eventDispatcher, ManagerRegistry $managerRegistry): Response
+    {
+        $track->setDeleted(true);
+
+        $managerRegistry->getManager()->flush();
+
+        $eventDispatcher->dispatch(TrackDeletedEvent::NAME, new TrackDeletedEvent($track));
+
+        return $this->redirectToRoute('caldera_criticalmass_track_list');
     }
 }

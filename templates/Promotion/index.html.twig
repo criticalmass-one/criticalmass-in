@@ -7,7 +7,7 @@
         {% if rideList|length > 0 and promotion.hasMap %}
             <div class="row">
                 <div class="col-md-12">
-                    <div id="map" style="height: 350px;"></div>
+                    <div class="map" id="promotion-map" data-ride-api-query="{{ path('caldera_criticalmass_rest_ride_list') ~ '?' ~ promotion.query|raw }}&extended=true" style="height: 350px;"></div>
                 </div>
             </div>
         {% endif %}
@@ -30,7 +30,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <table class="table" id="ride-table">
+                <table class="table data-table" id="ride-table">
                     <thead>
                     <tr>
                         <th>Datum</th>
@@ -73,14 +73,5 @@
             </div>
         </div>
     </div>
-
-    {% if rideList|length > 0 %}
-        <script>
-            CriticalMass.loadModule('PromotionPage', null, null, function (promotionPage) {
-                promotionPage.loadRides('{{ promotion.query|raw }}&extended=true');
-                promotionPage.initMapView({{ promotion.mapCenterLatitude }}, {{ promotion.mapCenterLongitude }}, {{ promotion.mapZoomLevel }});
-            });
-        </script>
-    {% endif %}
 {% endblock %}
 

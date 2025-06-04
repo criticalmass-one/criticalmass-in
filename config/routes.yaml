@@ -7,9 +7,6 @@ facebook_login:
 strava_login:
   path: /login/check-strava
 
-twitter_login:
-  path: /login/check-twitter
-
 criticalmass:
   resource: routes/criticalmass/routing.yml
   prefix:   /

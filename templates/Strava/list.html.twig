@@ -56,8 +56,9 @@
 
                         <div class="row">
                             <div class="col-md-12">
-                                <div id="map-{{ activity.id }}" class="preview-map" style="height: 150px;"
-                                     data-polyline="{{ activity.map.summary_polyline }}">
+                                <div id="map-{{ activity.id }}" class="map" style="height: 150px;"
+                                     data-polyline="{{ activity.map.summary_polyline }}"
+                                     data-polyline-color="{{ app.user.color }}">
 
                                 </div>
                             </div>
@@ -122,8 +123,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        CriticalMass.loadModule('StravaImportPage');
-    </script>
 {% endblock %}

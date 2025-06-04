@@ -98,9 +98,4 @@
 
         {% include('Calendar/_pagination.html.twig') with { 'previousMonth': previousMonth, 'nextMonth': nextMonth } %}
     </div>
-
-    <script type="text/javascript">
-        CriticalMass.loadModule('CalendarPage', '#calendar');
-    </script>
-
 {% endblock %}
