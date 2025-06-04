@@ -224,10 +224,7 @@ export default class Map {
         const rideIdentifier = this.mapContainer.dataset.rideIdentifier;
 
         if (citySlug && rideIdentifier) {
-            const photoUrl = Routing.generate('caldera_criticalmass_rest_photo_ridelist', {
-                citySlug: citySlug,
-                rideIdentifier: rideIdentifier
-            });
+            const photoUrl = `/${encodeURIComponent(citySlug)}/${encodeURIComponent(rideIdentifier)}/listPhotos`;
 
             fetch(photoUrl).then((response) => {
                 return response.json();
