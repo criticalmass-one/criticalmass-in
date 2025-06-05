@@ -2,30 +2,22 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
-use MalteHuebner\DataQueryBundle\Annotation\QueryAnnotation as DataQuery;
+use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use App\Criticalmass\Util\DateTimeUtil;
 use Symfony\Component\Validator\Constraints as Constraints;
 
-/**
- * @DataQuery\RequiredEntityProperty(propertyName="dateTime", propertyType="DateTime")
- */
+#[DataQuery\RequiredEntityProperty(propertyName: 'dateTime', propertyType: 'DateTime')]
 class DateQuery extends MonthQuery
 {
-    /**
-     * @var int $day
-     */
     #[Constraints\NotNull]
     #[Constraints\Range(min: 1, max: 31)]
     #[Constraints\Type('int')]
-    protected $day;
+    protected int $day;
 
-    /**
-     * @DataQuery\RequiredQueryParameter(parameterName="day")
-     */
+    #[DataQuery\RequiredQueryParameter(parameterName: 'day')]
     public function setDay(int $day): DateQuery
     {
         $this->day = $day;
-
         return $this;
     }
 
@@ -34,13 +26,11 @@ class DateQuery extends MonthQuery
         $fromDateTime = DateTimeUtil::getDayStartDateTime($this->toDateTime());
         $untilDateTime = DateTimeUtil::getDayEndDateTime($this->toDateTime());
 
-        $dateTimeQuery = new \Elastica\Query\Range($this->propertyName, [
+        return new \Elastica\Query\Range($this->propertyName, [
             'gte' => $fromDateTime->format($this->dateTimePattern),
             'lte' => $untilDateTime->format($this->dateTimePattern),
             'format' => $this->dateTimeFormat,
         ]);
-
-        return $dateTimeQuery;
     }
 
     protected function toDateTime(): \DateTime

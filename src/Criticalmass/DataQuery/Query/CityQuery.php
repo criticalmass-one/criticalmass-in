@@ -2,32 +2,24 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
-use MalteHuebner\DataQueryBundle\Annotation\QueryAnnotation as DataQuery;
+use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use App\Entity\City;
 use MalteHuebner\DataQueryBundle\Query\AbstractQuery;
 use MalteHuebner\DataQueryBundle\Query\DoctrineQueryInterface;
 use MalteHuebner\DataQueryBundle\Query\ElasticQueryInterface;
 use Symfony\Component\Validator\Constraints as Constraints;
 
-/**
- * @DataQuery\RequiredEntityProperty(propertyName="slug")
- */
+#[DataQuery\RequiredEntityProperty(propertyName: 'slug')]
 class CityQuery extends AbstractQuery implements DoctrineQueryInterface, ElasticQueryInterface
 {
-    /**
-     * @var City $city
-     */
     #[Constraints\NotNull]
-    #[Constraints\Type(\App\Entity\City::class)]
-    protected $city;
+    #[Constraints\Type(City::class)]
+    protected City $city;
 
-    /**
-     * @DataQuery\RequiredQueryParameter(parameterName="citySlug")
-     */
+    #[DataQuery\RequiredQueryParameter(parameterName: 'citySlug')]
     public function setCity(City $city): CityQuery
     {
         $this->city = $city;
-
         return $this;
     }
 

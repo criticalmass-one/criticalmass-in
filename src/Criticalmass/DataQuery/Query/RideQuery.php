@@ -2,32 +2,24 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
-use MalteHuebner\DataQueryBundle\Annotation\QueryAnnotation as DataQuery;
+use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use App\Entity\Ride;
 use MalteHuebner\DataQueryBundle\Query\AbstractQuery;
 use MalteHuebner\DataQueryBundle\Query\DoctrineQueryInterface;
 use MalteHuebner\DataQueryBundle\Query\ElasticQueryInterface;
 use Symfony\Component\Validator\Constraints as Constraints;
 
-/**
- * @DataQuery\RequiredEntityProperty(propertyName="slug")
- */
+#[DataQuery\RequiredEntityProperty(propertyName: 'slug')]
 class RideQuery extends AbstractQuery implements DoctrineQueryInterface, ElasticQueryInterface
 {
-    /**
-     * @var Ride $ride
-     */
     #[Constraints\NotNull]
-    #[Constraints\Type(\App\Entity\Ride::class)]
-    protected $ride;
+    #[Constraints\Type(Ride::class)]
+    protected Ride $ride;
 
-    /**
-     * @DataQuery\RequiredQueryParameter(parameterName="rideIdentifier")
-     */
+    #[DataQuery\RequiredQueryParameter(parameterName: 'rideIdentifier')]
     public function setRide(Ride $ride): RideQuery
     {
         $this->ride = $ride;
-
         return $this;
     }
 

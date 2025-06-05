@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\DataQuery\Parameter;
 
-use MalteHuebner\DataQueryBundle\Annotation\ParameterAnnotation as DataQuery;
+use MalteHuebner\DataQueryBundle\Attribute\ParameterAttribute as DataQuery;
 use MalteHuebner\DataQueryBundle\Parameter\AbstractParameter;
 use MalteHuebner\DataQueryBundle\Parameter\PropertyTargetingParameterInterface;
 use MalteHuebner\DataQueryBundle\Validator\Constraint\Sortable;
@@ -11,29 +11,20 @@ use Symfony\Component\Validator\Constraints as Constraints;
 
 class OrderParameter extends AbstractParameter implements PropertyTargetingParameterInterface
 {
-    /**
-     * @Sortable
-     * @var string $propertyName
-     */
+    #[Sortable]
     #[Constraints\NotNull]
     #[Constraints\Type('string')]
-    protected $propertyName;
+    protected string $propertyName;
 
-    /**
-     * @var string $direction
-     */
     #[Constraints\NotNull]
     #[Constraints\Type('string')]
     #[Constraints\Choice(choices: ['ASC', 'DESC'])]
-    protected $direction;
+    protected string $direction;
 
-    /**
-     * @DataQuery\RequiredParameter(parameterName="orderBy")
-     */
+    #[DataQuery\RequiredParameter(parameterName: 'orderBy')]
     public function setPropertyName(string $propertyName): OrderParameter
     {
         $this->propertyName = $propertyName;
-
         return $this;
     }
 
@@ -42,13 +33,10 @@ class OrderParameter extends AbstractParameter implements PropertyTargetingParam
         return $this->propertyName;
     }
 
-    /**
-     * @DataQuery\RequiredParameter(parameterName="orderDirection")
-     */
+    #[DataQuery\RequiredParameter(parameterName: 'orderDirection')]
     public function setDirection(string $direction): OrderParameter
     {
         $this->direction = strtoupper($direction);
-
         return $this;
     }
 

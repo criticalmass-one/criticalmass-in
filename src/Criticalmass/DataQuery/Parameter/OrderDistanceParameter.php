@@ -2,62 +2,44 @@
 
 namespace App\Criticalmass\DataQuery\Parameter;
 
-use MalteHuebner\DataQueryBundle\Annotation\ParameterAnnotation as DataQuery;
+use MalteHuebner\DataQueryBundle\Attribute\ParameterAttribute as DataQuery;
 use Elastica\Query;
 use MalteHuebner\DataQueryBundle\Parameter\AbstractParameter;
 use Symfony\Component\Validator\Constraints as Constraints;
 
 class OrderDistanceParameter extends AbstractParameter
 {
-    /**
-     * @var float $latitude
-     */
     #[Constraints\NotNull]
     #[Constraints\Type('float')]
-    protected $latitude;
+    protected float $latitude;
 
-    /**
-     * @var float $longitude
-     */
     #[Constraints\NotNull]
     #[Constraints\Type('float')]
-    protected $longitude;
+    protected float $longitude;
 
-    /**
-     * @var string $direction
-     */
     #[Constraints\NotNull]
     #[Constraints\Type('string')]
     #[Constraints\Choice(choices: ['ASC', 'DESC'])]
-    protected $direction;
+    protected string $direction;
 
-    /**
-     * @DataQuery\RequiredParameter(parameterName="centerLatitude")
-     */
+    #[DataQuery\RequiredParameter(parameterName: 'centerLatitude')]
     public function setLatitude(float $latitude): OrderDistanceParameter
     {
         $this->latitude = $latitude;
-
         return $this;
     }
 
-    /**
-     * @DataQuery\RequiredParameter(parameterName="centerLongitude")
-     */
+    #[DataQuery\RequiredParameter(parameterName: 'centerLongitude')]
     public function setLongitude(float $longitude): OrderDistanceParameter
     {
         $this->longitude = $longitude;
-
         return $this;
     }
 
-    /**
-     * @DataQuery\RequiredParameter(parameterName="distanceOrderDirection")
-     */
+    #[DataQuery\RequiredParameter(parameterName: 'distanceOrderDirection')]
     public function setDirection(string $direction): OrderDistanceParameter
     {
         $this->direction = strtoupper($direction);
-
         return $this;
     }
 

@@ -2,25 +2,19 @@
 
 namespace App\Criticalmass\DataQuery\Parameter;
 
-use MalteHuebner\DataQueryBundle\Annotation\ParameterAnnotation as DataQuery;
+use MalteHuebner\DataQueryBundle\Attribute\ParameterAttribute as DataQuery;
 use Elastica\Query;
 use Symfony\Component\Validator\Constraints as Constraints;
 
 class StartValueParameter extends OrderParameter
 {
-    /**
-     * @var $startValue
-     */
     #[Constraints\NotNull]
-    protected $startValue;
+    protected mixed $startValue;
 
-    /**
-     * @DataQuery\RequiredParameter(parameterName="startValue")
-     */
-    public function setStartValue($startValue): StartValueParameter
+    #[DataQuery\RequiredParameter(parameterName: 'startValue')]
+    public function setStartValue(mixed $startValue): StartValueParameter
     {
         $this->startValue = $startValue;
-
         return $this;
     }
 
@@ -33,9 +27,8 @@ class StartValueParameter extends OrderParameter
         } else {
             $whereClause['lte'] = $this->startValue;
         }
-        
-        $startQuery = new \Elastica\Query\Range($this->propertyName, $whereClause);
 
+        $startQuery = new \Elastica\Query\Range($this->propertyName, $whereClause);
         $query->getQuery()->addMust($startQuery);
 
         return $query;
