@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation as DataQuery;
+use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute as DataQuery;
 use App\Criticalmass\Router\Attribute as Routing;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
@@ -32,24 +32,20 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\Index(fields: ['createdAt'], name: 'city_created_at_index')]
 class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, AutoParamConverterAble, SocialNetworkProfileAble, PostableInterface, CoordinateInterface
 {
-    /**
-     * @DataQuery\Sortable
-     */
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     #[JMS\Expose]
     #[JMS\Groups(['ride-list'])]
+    #[DataQuery\Sortable]
     protected ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'cities')]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     protected ?User $user = null;
 
-    /**
-     * @DataQuery\Queryable
-     * @DataQuery\Sortable
-     */
+    #[DataQuery\Sortable]
+    #[DataQuery\Queryable]
     #[ORM\ManyToOne(targetEntity: 'Region', inversedBy: 'cities', cascade: ['persist'])]
     #[ORM\JoinColumn(name: 'region_id', referencedColumnName: 'id')]
     protected ?Region $region = null;
@@ -61,9 +57,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     #[JMS\Groups(['ride-list'])]
     protected ?CitySlug $mainSlug = null;
 
-    /**
-     * @DataQuery\Sortable
-     */
+    #[DataQuery\Sortable]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     #[JMS\Expose]
@@ -71,9 +65,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     #[JMS\Groups(['ride-list'])]
     protected ?string $city = null;
 
-    /**
-     * @DataQuery\Sortable
-     */
+    #[DataQuery\Sortable]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     #[JMS\Expose]
@@ -85,25 +77,19 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     #[JMS\Groups(['ride-list'])]
     protected ?string $description = null;
 
-    /**
-     * @DataQuery\Queryable
-     */
+    #[DataQuery\Queryable]
     #[ORM\Column(type: 'float', nullable: true)]
     #[JMS\Expose]
     #[JMS\Groups(['ride-list'])]
     protected float $latitude = 0.0;
 
-    /**
-     * @DataQuery\Queryable
-     */
+    #[DataQuery\Queryable]
     #[ORM\Column(type: 'float', nullable: true)]
     #[JMS\Expose]
     #[JMS\Groups(['ride-list'])]
     protected float $longitude = 0.0;
 
-    /**
-     * @DataQuery\DefaultBooleanValue(value=true)
-     */
+    #[DataQuery\DefaultBooleanValue(value: true)]
     #[ORM\Column(type: 'boolean', nullable: true)]
     protected bool $enabled = true;
 
@@ -128,10 +114,8 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     #[JMS\Expose]
     protected Collection $socialNetworkProfiles;
 
-    /**
-     * @DataQuery\Queryable
-     * @DataQuery\Sortable
-     */
+    #[DataQuery\Sortable]
+    #[DataQuery\Queryable]
     #[Assert\Type(type: 'int')]
     #[ORM\Column(type: 'integer', nullable: true)]
     #[JMS\Expose]
@@ -157,15 +141,11 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $imageMimeType = null;
 
-    /**
-     * @DataQuery\Sortable
-     */
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTime $updatedAt = null;
 
-    /**
-     * @DataQuery\Sortable
-     */
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'datetime', nullable: true)]
     protected ?\DateTime $createdAt = null;
 
@@ -555,9 +535,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
         return $this;
     }
 
-    /**
-     * @DataQuery\Queryable
-     */
+    #[DataQuery\Queryable]
     public function getPin(): string
     {
         return sprintf('%f,%f', $this->latitude, $this->longitude);

@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation as DataQuery;
+use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute as DataQuery;
 use App\Criticalmass\Image\PhotoManipulator\PhotoInterface\ManipulateablePhotoInterface;
 use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
 use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
@@ -35,14 +35,12 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\Index(fields: ['exifCreationDate'], name: 'photo_exif_creation_date_index')]
 class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, OrderedEntityInterface, ElasticSearchPinInterface, CoordinateInterface
 {
-    /**
-     * @DataQuery\Sortable()
-     */
     #[Routing\RouteParameter(name: 'photoId')]
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     #[JMS\Expose]
+    #[DataQuery\Sortable]
     protected ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'photos')]
@@ -51,68 +49,56 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
 
     /**
      * @OE\Identical()
-     * @DataQuery\Queryable
      */
+    #[DataQuery\Queryable]
     #[Routing\RouteParameter(name: 'rideIdentifier')]
     #[ORM\ManyToOne(targetEntity: 'Ride', inversedBy: 'photos')]
     #[ORM\JoinColumn(name: 'ride_id', referencedColumnName: 'id')]
     protected ?Ride $ride = null;
 
-    /**
-     * @DataQuery\Queryable
-     */
+    #[DataQuery\Queryable]
     #[Routing\RouteParameter(name: 'citySlug')]
     #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'photos')]
     #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
     protected ?City $city = null;
 
-    /**
-     * @DataQuery\Sortable()
-     * @DataQuery\Queryable
-     */
+    #[DataQuery\Queryable]
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'float', nullable: true)]
     #[JMS\Expose]
     protected ?float $latitude = null;
 
-    /**
-     * @DataQuery\Sortable()
-     * @DataQuery\Queryable
-     */
+    #[DataQuery\Queryable]
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'float', nullable: true)]
     #[JMS\Expose]
     protected ?float $longitude = null;
 
-    /**
-     * @DataQuery\Sortable()
-     */
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'text', nullable: true)]
     #[JMS\Expose]
     protected ?string $description = null;
 
-    /**
-     * @DataQuery\Sortable()
-     */
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'integer')]
     #[JMS\Expose]
     protected int $views = 0;
 
     /**
      * @OE\Boolean(value=true)
-     * @DataQuery\DefaultBooleanValue(value=true, alias="isEnabled")
      */
+    #[DataQuery\DefaultBooleanValue(alias: 'isEnabled', value: true)]
     #[ORM\Column(type: 'boolean')]
     protected bool $enabled = true;
 
     /**
      * @OE\Boolean(value=false)
-     * @DataQuery\DefaultBooleanValue(value=false, alias="isDeleted")
      */
+    #[DataQuery\DefaultBooleanValue(alias: 'isDeleted', value: false)]
     #[ORM\Column(type: 'boolean')]
     protected bool $deleted = false;
 
-    /**
-     * @DataQuery\Sortable()
-     */
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'datetime')]
     #[JMS\Expose]
     protected ?\DateTime $creationDateTime = null;
@@ -124,9 +110,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     #[JMS\Expose]
     protected ?string $imageName = null;
 
-    /**
-     * @DataQuery\Sortable()
-     */
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'integer', nullable: true)]
     #[JMS\Expose]
     protected ?int $imageSize = null;
@@ -151,9 +135,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     #[JMS\Expose]
     protected ?string $backupMimeType = null;
 
-    /**
-     * @DataQuery\Sortable()
-     */
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'datetime')]
     #[JMS\Expose]
     protected ?\DateTime $updatedAt = null;
@@ -161,10 +143,8 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     #[ORM\OneToMany(targetEntity: 'Ride', mappedBy: 'featuredPhoto', fetch: 'LAZY')]
     protected Collection $featuredRides;
 
-    /**
-     * @DataQuery\Queryable()
-     * @DataQuery\Sortable()
-     */
+    #[DataQuery\Queryable]
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[JMS\Expose]
     #[JMS\Groups(['ride-list'])]
@@ -173,46 +153,36 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     #[ORM\OneToMany(targetEntity: 'Post', mappedBy: 'photo')]
     protected Collection $posts;
 
-    /**
-     * @DataQuery\Sortable()
-     */
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'string', nullable: true)]
     #[JMS\Expose]
     protected ?string $exifExposure = null;
 
-    /**
-     * @DataQuery\Sortable()
-     */
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'string', nullable: true)]
     #[JMS\Expose]
     protected ?string $exifAperture = null;
 
-    /**
-     * @DataQuery\Sortable()
-     */
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'smallint', nullable: true)]
     #[JMS\Expose]
     protected ?int $exifIso = null;
 
-    /**
-     * @DataQuery\Sortable()
-     */
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'float', nullable: true)]
     #[JMS\Expose]
     protected ?float $exifFocalLength = null;
 
-    /**
-     * @DataQuery\Sortable()
-     */
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[JMS\Expose]
     protected ?string $exifCamera = null;
 
     /**
      * @OE\Order(direction="asc")
-     * @DataQuery\DateTimeQueryable(format="strict_date_hour_minute_second", pattern="Y-m-d\TH:i:s")
-     * @DataQuery\Sortable()
      */
+    #[DataQuery\DateTimeQueryable(format: 'strict_date_hour_minute_second', pattern: 'Y-m-d\TH:i:s')]
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'datetime')]
     #[JMS\Expose]
     protected ?\DateTime $exifCreationDate = null;
@@ -582,9 +552,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return (string) $this->id;
     }
 
-    /**
-     * @DataQuery\Queryable
-     */
+    #[DataQuery\Queryable]
     public function getPin(): string
     {
         return sprintf('%f,%f', $this->latitude, $this->longitude);
