@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class RideApiTest extends WebTestCase
 {
-    public function testDefaultListLength()
+    public function testDefaultListLength(): void
     {
         $client = static::createClient();
         $client->request('GET', '/api/ride');
@@ -18,7 +18,7 @@ class RideApiTest extends WebTestCase
         $this->assertLessThanOrEqual(10, count($data));
     }
 
-    public function testCustomListLength()
+    public function testLimitSizeToTwentyfive(): void
     {
         $client = static::createClient();
         $client->request('GET', '/api/ride?size=25');
@@ -30,7 +30,19 @@ class RideApiTest extends WebTestCase
         $this->assertLessThanOrEqual(25, count($data));
     }
 
-    public function testFilterByCitySlug()
+    public function testLimitSizeToFive(): void
+    {
+        $client = static::createClient();
+        $client->request('GET', '/api/ride?size=5');
+
+        $this->assertResponseIsSuccessful();
+        $data = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertIsArray($data);
+        $this->assertLessThanOrEqual(5, count($data));
+    }
+
+    public function testFilterByCitySlug(): void
     {
         $client = static::createClient();
         $client->request('GET', '/api/ride?citySlug=hamburg');
@@ -47,7 +59,7 @@ class RideApiTest extends WebTestCase
         }
     }
 
-    public function testFilterByDate()
+    public function testFilterByYearMonthDay(): void
     {
         $client = static::createClient();
         $client->request('GET', '/api/ride?year=2022&month=6&day=24');
@@ -63,7 +75,36 @@ class RideApiTest extends WebTestCase
         }
     }
 
-    public function testFilterByRadius()
+    public function testFilterByYearMonth(): void
+    {
+        $client = static::createClient();
+        $client->request('GET', '/api/ride?year=2015&month=8');
+
+        $this->assertResponseIsSuccessful();
+        $data = json_decode($client->getResponse()->getContent(), true);
+
+        foreach ($data as $ride) {
+            $date = new \DateTime('@' . $ride['date_time']);
+            $this->assertEquals(2015, (int) $date->format('Y'));
+            $this->assertEquals(8, (int) $date->format('n'));
+        }
+    }
+
+    public function testFilterByYear(): void
+    {
+        $client = static::createClient();
+        $client->request('GET', '/api/ride?year=2019');
+
+        $this->assertResponseIsSuccessful();
+        $data = json_decode($client->getResponse()->getContent(), true);
+
+        foreach ($data as $ride) {
+            $date = new \DateTime('@' . $ride['date_time']);
+            $this->assertEquals(2019, (int) $date->format('Y'));
+        }
+    }
+
+    public function testFilterByRadiusInHamburg(): void
     {
         $client = static::createClient();
         $client->request('GET', '/api/ride?centerLatitude=53.55&centerLongitude=10.0&radius=20');
@@ -77,7 +118,18 @@ class RideApiTest extends WebTestCase
         }
     }
 
-    public function testSortByEstimatedParticipantsDescending()
+    public function testFilterByRadiusInTheMiddleOfNowhere(): void
+    {
+        $client = static::createClient();
+        $client->request('GET', '/api/ride?centerLatitude=90&centerLongitude=0&radius=20');
+
+        $this->assertResponseIsSuccessful();
+        $data = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertEmpty($data);
+    }
+
+    public function testSortByEstimatedParticipantsDescending(): void
     {
         $client = static::createClient();
         $client->request('GET', '/api/ride?orderBy=estimatedParticipants&orderDirection=desc');
@@ -89,6 +141,79 @@ class RideApiTest extends WebTestCase
         $sorted = $participants;
         rsort($sorted);
         $this->assertEquals($sorted, $participants);
+    }
+
+    /**
+     * @dataProvider rideTypeProvider
+     */
+    public function testFilterByRideType(string $rideType): void
+    {
+        $client = static::createClient();
+        $client->request('GET', '/api/ride?rideType=' . $rideType);
+
+        $this->assertResponseIsSuccessful();
+        $data = json_decode($client->getResponse()->getContent(), true);
+
+        foreach ($data as $ride) {
+            $this->assertSame(strtoupper($rideType), $ride['ride_type']);
+        }
+    }
+
+    public function rideTypeProvider(): array
+    {
+        return [
+            ['critical_mass'],
+            ['kidical_mass'],
+            ['night_ride'],
+            ['lunch_ride'],
+            ['dawn_ride'],
+            ['dusk_ride'],
+            ['demonstration'],
+            ['alleycat'],
+            ['tour'],
+            ['event'],
+        ];
+    }
+
+    /**
+     * @dataProvider orderParameterProvider
+     */
+    public function testSortByOrderParameter(string $orderBy, string $direction): void
+    {
+        $client = static::createClient();
+        $client->request('GET', sprintf('/api/ride?orderBy=%s&orderDirection=%s', $orderBy, $direction));
+
+        $this->assertResponseIsSuccessful();
+        $data = $client->getResponse()->toArray();
+
+        $this->assertNotEmpty($data);
+
+        $values = array_column($data, $orderBy);
+        $sorted = $values;
+
+        if ($direction === 'asc') {
+            sort($sorted);
+        } else {
+            rsort($sorted);
+        }
+
+        $this->assertSame($sorted, $values);
+    }
+
+    public function orderParameterProvider(): array
+    {
+        return [
+            ['id', 'asc'], ['id', 'desc'],
+            ['slug', 'asc'], ['slug', 'desc'],
+            ['title', 'asc'], ['title', 'desc'],
+            ['latitude', 'asc'], ['latitude', 'desc'],
+            ['longitude', 'asc'], ['longitude', 'desc'],
+            ['estimatedParticipants', 'asc'], ['estimatedParticipants', 'desc'],
+            ['estimatedDuration', 'asc'], ['estimatedDuration', 'desc'],
+            ['estimatedDistance', 'asc'], ['estimatedDistance', 'desc'],
+            ['views', 'asc'], ['views', 'desc'],
+            ['dateTime', 'asc'], ['dateTime', 'desc'],
+        ];
     }
 
     private function calculateDistance(float $lat1, float $lon1, float $lat2, float $lon2): float
