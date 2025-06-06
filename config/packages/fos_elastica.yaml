@@ -5,7 +5,7 @@ fos_elastica:
         criticalmass_ride:
             client: default
             finder: ~
-            index_name: criticalmass_%env(APP_ENV)%_ride
+            index_name: criticalmass_prod_ride
             settings:
                 index:
                     analysis:
@@ -27,6 +27,7 @@ fos_elastica:
                 location: { type: keyword }
                 rideType: { type: keyword }
                 isEnabled: ~
+                estimatedParticipants: { type: keyword }
                 dateTime: { type: date, format: "strict_date_optional_time" }
                 pin: { type: geo_point }
             persistence:
@@ -39,7 +40,7 @@ fos_elastica:
         criticalmass_city:
             client: default
             finder: ~
-            index_name: criticalmass_%env(APP_ENV)%_city
+            index_name: criticalmass_prod_city
             settings:
                 index:
                     analysis:
@@ -76,7 +77,7 @@ fos_elastica:
         criticalmass_photo:
             client: default
             finder: ~
-            index_name: criticalmass_%env(APP_ENV)%_photo
+            index_name: criticalmass_prod_photo
             settings:
                 index:
                     analysis:
@@ -120,7 +121,7 @@ fos_elastica:
         criticalmass_track:
             client: default
             finder: ~
-            index_name: criticalmass_%env(APP_ENV)%_track
+            index_name: criticalmass_prod_track
             settings:
                 index:
                     analysis:
