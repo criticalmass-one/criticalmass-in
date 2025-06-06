@@ -202,10 +202,6 @@ services:
     App\Criticalmass\ViewStorage\Cache\ViewStorageCacheInterface:
         alias: App\Criticalmass\ViewStorage\Cache\RobustViewStorageCache
 
-    App\Criticalmass\ElasticCityFinder\ElasticCityFinder:
-        arguments:
-            $finder: '@fos_elastica.finder.criticalmass_city'
-
     App\Serializer\JMSSerializer\Handler\RelationHandler:
         tags:
             - { name: jms_serializer.handler, type: Relation, direction: serialization, format: json, method: serializeRelation}
@@ -218,11 +214,6 @@ services:
 
     App\Criticalmass\CriticalmassBlog\CriticalmassBlogInterface:
         alias: App\Criticalmass\CriticalmassBlog\CachedCriticalmassBlog
-
-    App\Controller\Search\SearchController:
-        arguments:
-            $cityFinder: '@fos_elastica.finder.criticalmass_city'
-            $rideFinder: '@fos_elastica.finder.criticalmass_ride'
 
     App\Security\UserProvider\UserProvider:
         arguments:

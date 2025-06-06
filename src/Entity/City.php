@@ -51,7 +51,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     protected ?Region $region = null;
 
     #[Routing\RouteParameter(name: 'citySlug')]
-    #[ORM\ManyToOne(targetEntity: 'CitySlug', inversedBy: 'cities')]
+    #[ORM\ManyToOne(targetEntity: 'CitySlug', inversedBy: 'city')]
     #[ORM\JoinColumn(name: 'main_slug_id', referencedColumnName: 'id')]
     #[JMS\Expose]
     #[JMS\Groups(['ride-list'])]
