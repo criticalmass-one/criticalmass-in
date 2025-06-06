@@ -3,76 +3,27 @@
 namespace App\Controller\Search;
 
 use App\Controller\AbstractController;
-use Elastica\Query;
-use FOS\ElasticaBundle\Finder\TransformedFinder;
+use App\Repository\CityRepository;
+use App\Repository\RideRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class SearchController extends AbstractController
 {
-    protected TransformedFinder $cityFinder;
-    protected TransformedFinder $rideFinder;
-
-    public function __construct(TransformedFinder $cityFinder, TransformedFinder $rideFinder)
+    public function __construct(
+        private CityRepository $cityRepository,
+        private RideRepository $rideRepository
+    )
     {
-        $this->cityFinder = $cityFinder;
-        $this->rideFinder = $rideFinder;
-    }
 
-    protected function createCityQuery(string $queryPhrase): Query
-    {
-        if ($queryPhrase) {
-            $simpleQueryString = new \Elastica\Query\SimpleQueryString($queryPhrase,
-                ['title', 'description', 'location']);
-        } else {
-            $simpleQueryString = new \Elastica\Query\MatchAll();
-        }
-
-        $enabledFilter = new \Elastica\Query\Term(['isEnabled' => true]);
-
-        $boolQuery = new \Elastica\Query\BoolQuery();
-        $boolQuery
-            ->addMust($enabledFilter)
-            ->addMust($simpleQueryString);
-
-        $query = new \Elastica\Query($boolQuery);
-
-        $query->setSize(50);
-        $query->addSort('_score');
-
-        return $query;
-    }
-
-    protected function createRideQuery(string $queryPhrase): Query
-    {
-        if ($queryPhrase) {
-            $simpleQueryString = new \Elastica\Query\SimpleQueryString($queryPhrase,
-                ['title', 'description', 'location']);
-        } else {
-            $simpleQueryString = new \Elastica\Query\MatchAll();
-        }
-
-        $boolQuery = new \Elastica\Query\BoolQuery();
-        $boolQuery
-            ->addMust($simpleQueryString);
-
-        $query = new \Elastica\Query($boolQuery);
-
-        $query->setSize(50);
-        $query->addSort('_score');
-
-        return $query;
     }
 
     public function queryAction(Request $request): Response
     {
-        $queryPhrase = $request->get('query');
+        $queryPhrase = $request->get('query', '');
 
-        $cityQuery = $this->createCityQuery($queryPhrase);
-        $cityResults = $this->cityFinder->find($cityQuery);
-
-        $rideQuery = $this->createRideQuery($queryPhrase);
-        $rideResults = $this->rideFinder->find($rideQuery);
+        $cityResults = $this->cityRepository->searchByQuery($queryPhrase);
+        $rideResults = $this->rideRepository->searchByQuery($queryPhrase);
 
         return $this->render('Search/result.html.twig', [
             'cityResults' => $cityResults,

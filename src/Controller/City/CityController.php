@@ -8,6 +8,7 @@ use App\Entity\City;
 use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Event\View\ViewEvent;
 use App\Repository\BlockedCityRepository;
+use App\Repository\CityRepository;
 use App\Repository\LocationRepository;
 use App\Repository\PhotoRepository;
 use App\Repository\RideRepository;
@@ -69,11 +70,11 @@ class CityController extends AbstractController
     public function showAction(
         Request $request,
         RideRepository $rideRepository,
+        CityRepository $cityRepository,
         LocationRepository $locationRepository,
         SocialNetworkProfileRepository $socialNetworkProfileRepository,
         BlockedCityRepository $blockedCityRepository,
         PhotoRepository $photoRepository,
-        ElasticCityFinderInterface $elasticCityFinder,
         SeoPageInterface $seoPage,
         EventDispatcherInterface $eventDispatcher,
         City $city = null
@@ -113,7 +114,7 @@ class CityController extends AbstractController
         return $this->render('City/show.html.twig', [
             'city' => $city,
             'currentRide' => $rideRepository->findCurrentRideForCity($city),
-            'nearCities' => $elasticCityFinder->findNearCities($city),
+            'nearCities' => $cityRepository->findNearCities($city),
             'locations' => $locationRepository->findLocationsByCity($city),
             'photos' => $photoRepository->findSomePhotos(8, null, $city),
             'rides' => $rideRepository->findRidesForCity($city, 'DESC', 6),
