@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Criticalmass\Util\DateTimeUtil;
 use App\Entity\City;
 use App\Entity\CityCycle;
+use App\Entity\Location;
 use App\Entity\Region;
 use App\Entity\Ride;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -660,5 +661,41 @@ class RideRepository extends ServiceEntityRepository
         $query = $builder->getQuery();
 
         return $query->getResult();
+    }
+
+    public function findRidesForLocation(Location $location, float $radiusInMeters = 500, int $limit = 25): array
+    {
+        if (!$location->getLatitude() || !$location->getLongitude()) {
+            return [];
+        }
+
+        $latitude = $location->getLatitude();
+        $longitude = $location->getLongitude();
+        $earthRadius = 6371000; // Meter
+
+        $sql = <<<SQL
+SELECT *, (
+    $earthRadius * acos(
+        cos(radians(:latitude)) * cos(radians(latitude)) *
+        cos(radians(longitude) - radians(:longitude)) +
+        sin(radians(:latitude)) * sin(radians(latitude))
+    )
+) AS distance
+FROM ride
+HAVING distance <= :radius
+ORDER BY dateTime ASC
+LIMIT :limit
+SQL;
+
+        $conn = $this->getEntityManager()->getConnection();
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue('latitude', $latitude);
+        $stmt->bindValue('longitude', $longitude);
+        $stmt->bindValue('radius', $radiusInMeters);
+        $stmt->bindValue('limit', $limit, \PDO::PARAM_INT);
+
+        $result = $stmt->executeQuery()->fetchAllAssociative();
+
+        return $result;
     }
 }
