@@ -2,15 +2,19 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
-use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use App\Entity\Region;
+use Doctrine\ORM\AbstractQuery as AbstractOrmQuery;
+use Doctrine\ORM\QueryBuilder;
+use Elastica\Query\BoolQuery;
+use Elastica\Query\Term;
+use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use MalteHuebner\DataQueryBundle\Query\AbstractQuery;
-use MalteHuebner\DataQueryBundle\Query\DoctrineQueryInterface;
 use MalteHuebner\DataQueryBundle\Query\ElasticQueryInterface;
+use MalteHuebner\DataQueryBundle\Query\OrmQueryInterface;
 use Symfony\Component\Validator\Constraints as Constraints;
 
 #[DataQuery\RequiredEntityProperty(propertyName: 'region')]
-class RegionQuery extends AbstractQuery implements DoctrineQueryInterface, ElasticQueryInterface
+class RegionQuery extends AbstractQuery implements OrmQueryInterface, ElasticQueryInterface
 {
     #[Constraints\NotNull]
     #[Constraints\Type(Region::class)]
@@ -30,13 +34,24 @@ class RegionQuery extends AbstractQuery implements DoctrineQueryInterface, Elast
 
     public function createElasticQuery(): \Elastica\Query\AbstractQuery
     {
-        $regionQuery = new \Elastica\Query\BoolQuery();
         $regionName = $this->region->getName();
 
-        $regionQuery->addShould(new \Elastica\Query\Term(['region' => $regionName]));
-        $regionQuery->addShould(new \Elastica\Query\Term(['country' => $regionName]));
-        $regionQuery->addShould(new \Elastica\Query\Term(['continent' => $regionName]));
+        $regionQuery = new BoolQuery();
+        $regionQuery->addShould(new Term(['region' => $regionName]));
+        $regionQuery->addShould(new Term(['country' => $regionName]));
+        $regionQuery->addShould(new Term(['continent' => $regionName]));
 
         return $regionQuery;
+    }
+
+    public function createOrmQuery(QueryBuilder $queryBuilder): AbstractOrmQuery
+    {
+        $expr = $queryBuilder->expr();
+
+        $queryBuilder
+            ->andWhere($expr->eq('e.region', ':region'))
+            ->setParameter('region', $this->region);
+
+        return $queryBuilder->getQuery();
     }
 }

@@ -2,14 +2,17 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
+use Doctrine\ORM\AbstractQuery as AbstractOrmQuery;
+use Doctrine\ORM\QueryBuilder;
+use Elastica\Query\Term;
 use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use MalteHuebner\DataQueryBundle\Query\AbstractQuery;
-use MalteHuebner\DataQueryBundle\Query\DoctrineQueryInterface;
 use MalteHuebner\DataQueryBundle\Query\ElasticQueryInterface;
+use MalteHuebner\DataQueryBundle\Query\OrmQueryInterface;
 use Symfony\Component\Validator\Constraints as Constraints;
 
 #[DataQuery\RequiredEntityProperty(propertyName: 'name')]
-class CityNameQuery extends AbstractQuery implements DoctrineQueryInterface, ElasticQueryInterface
+class CityNameQuery extends AbstractQuery implements OrmQueryInterface, ElasticQueryInterface
 {
     #[Constraints\NotNull]
     protected string $name;
@@ -28,6 +31,17 @@ class CityNameQuery extends AbstractQuery implements DoctrineQueryInterface, Ela
 
     public function createElasticQuery(): \Elastica\Query\AbstractQuery
     {
-        return new \Elastica\Query\Term(['city' => $this->name]);
+        return new Term(['city' => $this->name]);
+    }
+
+    public function createOrmQuery(QueryBuilder $queryBuilder): AbstractOrmQuery
+    {
+        $alias = $queryBuilder->getRootAliases()[0];
+
+        $queryBuilder
+            ->andWhere($queryBuilder->expr()->eq(sprintf('%s.city', $alias), ':city'))
+            ->setParameter('city', $this->name);
+
+        return $queryBuilder->getQuery();
     }
 }

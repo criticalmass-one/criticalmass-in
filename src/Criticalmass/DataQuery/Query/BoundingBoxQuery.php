@@ -2,15 +2,18 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
+use Doctrine\ORM\AbstractQuery as AbstractOrmQuery;
+use Doctrine\ORM\QueryBuilder;
 use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use MalteHuebner\DataQueryBundle\Query\AbstractQuery;
 use MalteHuebner\DataQueryBundle\Query\ElasticQueryInterface;
+use MalteHuebner\DataQueryBundle\Query\OrmQueryInterface;
 use MalteHuebner\DataQueryBundle\Validator\Constraint\BoundingBoxValues;
 use Symfony\Component\Validator\Constraints as Constraints;
 
 #[DataQuery\RequiredEntityProperty(propertyName: 'pin', propertyType: 'string')]
 #[BoundingBoxValues]
-class BoundingBoxQuery extends AbstractQuery implements ElasticQueryInterface
+class BoundingBoxQuery extends AbstractQuery implements ElasticQueryInterface, OrmQueryInterface
 {
     #[Constraints\NotNull]
     #[Constraints\Type('float')]
@@ -108,5 +111,27 @@ class BoundingBoxQuery extends AbstractQuery implements ElasticQueryInterface
         ]);
 
         return $geoQuery;
+    }
+
+    public function createOrmQuery(QueryBuilder $queryBuilder): AbstractOrmQuery
+    {
+        $alias = $queryBuilder->getRootAliases()[0];
+        $expr = $queryBuilder->expr();
+
+        $queryBuilder
+            ->andWhere($expr->andX(
+                $expr->gte(sprintf('%s.latitude', $alias), ':southLatitude'),
+                $expr->lte(sprintf('%s.latitude', $alias), ':northLatitude')
+            ))
+            ->andWhere($expr->andX(
+                $expr->gte(sprintf('%s.longitude', $alias), ':westLongitude'),
+                $expr->lte(sprintf('%s.longitude', $alias), ':eastLongitude')
+            ))
+            ->setParameter('southLatitude', $this->southLatitude)
+            ->setParameter('northLatitude', $this->northLatitude)
+            ->setParameter('westLongitude', $this->westLongitude)
+            ->setParameter('eastLongitude', $this->eastLongitude);
+
+        return $queryBuilder->getQuery();
     }
 }
