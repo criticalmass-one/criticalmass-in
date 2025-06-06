@@ -215,11 +215,6 @@ services:
     App\Criticalmass\CriticalmassBlog\CriticalmassBlogInterface:
         alias: App\Criticalmass\CriticalmassBlog\CachedCriticalmassBlog
 
-    App\Controller\Search\SearchController:
-        arguments:
-            $cityFinder: '@fos_elastica.finder.criticalmass_city'
-            $rideFinder: '@fos_elastica.finder.criticalmass_ride'
-
     App\Security\UserProvider\UserProvider:
         arguments:
             $properties:

@@ -311,4 +311,30 @@ SQL;
 
         return $query->getResult();
     }
+
+    public function searchByQuery(string $query, int $maxResults = 50): array
+    {
+        $qb = $this->createQueryBuilder('c');
+        $expr = $qb->expr();
+
+        $conditions = [$expr->eq('c.enabled', ':enabled')];
+        $parameters = ['enabled' => true];
+
+        if ($query !== '') {
+            $likeExpr = $expr->orX(
+                $expr->like('c.title', ':q'),
+                $expr->like('c.description', ':q'),
+            );
+            $conditions[] = $likeExpr;
+            $parameters['q'] = '%' . $query . '%';
+        }
+
+        $qb->where(call_user_func_array([$expr, 'andX'], $conditions))
+            ->setParameters($parameters)
+            ->setMaxResults($maxResults)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
 }

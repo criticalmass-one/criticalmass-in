@@ -726,4 +726,25 @@ SQL;
         return $query->getResult();
     }
 
+    public function searchByQuery(string $query, int $maxResults = 50): array
+    {
+        $qb = $this->createQueryBuilder('r');
+        $expr = $qb->expr();
+
+        if ($query !== '') {
+            $qb->where(
+                $expr->orX(
+                    $expr->like('r.title', ':q'),
+                    $expr->like('r.description', ':q'),
+                    $expr->like('r.location', ':q')
+                )
+            )->setParameter('q', sprintf('%%%s%%', $query));
+        }
+
+        return $qb
+            ->setMaxResults($maxResults)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }
