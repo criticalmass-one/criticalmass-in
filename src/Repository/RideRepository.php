@@ -8,7 +8,9 @@ use App\Entity\CityCycle;
 use App\Entity\Location;
 use App\Entity\Region;
 use App\Entity\Ride;
+use App\Entity\CitySlug;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
 
 class RideRepository extends ServiceEntityRepository
@@ -671,31 +673,57 @@ class RideRepository extends ServiceEntityRepository
 
         $latitude = $location->getLatitude();
         $longitude = $location->getLongitude();
-        $earthRadius = 6371000; // Meter
+        $earthRadius = 6371000;
+
+        $rsm = new ResultSetMapping();
+
+        $rsm->addEntityResult(Ride::class, 'r');
+        $rsm->addFieldResult('r', 'id', 'id');
+        $rsm->addFieldResult('r', 'dateTime', 'dateTime');
+        $rsm->addFieldResult('r', 'latitude', 'latitude');
+        $rsm->addFieldResult('r', 'longitude', 'longitude');
+        $rsm->addFieldResult('r', 'title', 'title');
+
+        $rsm->addJoinedEntityResult(City::class, 'c', 'r', 'city');
+        $rsm->addFieldResult('c', 'c_id', 'id');
+
+        $rsm->addJoinedEntityResult(CitySlug::class, 'cs', 'c', 'mainSlug');
+        $rsm->addFieldResult('cs', 'cs_id', 'id');
+        $rsm->addFieldResult('cs', 'cs_slug', 'slug');
 
         $sql = <<<SQL
-SELECT *, (
-    $earthRadius * acos(
-        cos(radians(:latitude)) * cos(radians(latitude)) *
-        cos(radians(longitude) - radians(:longitude)) +
-        sin(radians(:latitude)) * sin(radians(latitude))
-    )
-) AS distance
-FROM ride
+SELECT 
+    r.id,
+    r.dateTime,
+    r.latitude,
+    r.longitude,
+    r.title,
+    r.city_id,
+    c.id AS c_id,
+    cs.id AS cs_id,
+    cs.slug AS cs_slug,
+    (
+        $earthRadius * acos(
+            cos(radians(:latitude)) * cos(radians(r.latitude)) *
+            cos(radians(r.longitude) - radians(:longitude)) +
+            sin(radians(:latitude)) * sin(radians(r.latitude))
+        )
+    ) AS distance
+FROM ride r
+INNER JOIN city c ON r.city_id = c.id
+INNER JOIN cityslug cs ON cs.id = c.main_slug_id
 HAVING distance <= :radius
-ORDER BY dateTime ASC
+ORDER BY r.dateTime DESC
 LIMIT :limit
 SQL;
 
-        $conn = $this->getEntityManager()->getConnection();
-        $stmt = $conn->prepare($sql);
-        $stmt->bindValue('latitude', $latitude);
-        $stmt->bindValue('longitude', $longitude);
-        $stmt->bindValue('radius', $radiusInMeters);
-        $stmt->bindValue('limit', $limit, \PDO::PARAM_INT);
+        $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
+        $query->setParameter('latitude', $latitude);
+        $query->setParameter('longitude', $longitude);
+        $query->setParameter('radius', $radiusInMeters);
+        $query->setParameter('limit', $limit, \PDO::PARAM_INT);
 
-        $result = $stmt->executeQuery()->fetchAllAssociative();
-
-        return $result;
+        return $query->getResult();
     }
+
 }
