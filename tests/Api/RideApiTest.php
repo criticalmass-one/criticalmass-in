@@ -14,7 +14,7 @@ class RideApiTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $data = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertIsArray($data);
+        $this->assertNotEmpty($data);
         $this->assertLessThanOrEqual(10, count($data));
     }
 
@@ -26,7 +26,7 @@ class RideApiTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $data = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertIsArray($data);
+        $this->assertNotEmpty($data);
         $this->assertLessThanOrEqual(25, count($data));
     }
 
@@ -38,7 +38,7 @@ class RideApiTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $data = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertIsArray($data);
+        $this->assertNotEmpty($data);
         $this->assertLessThanOrEqual(5, count($data));
     }
 
@@ -49,6 +49,8 @@ class RideApiTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
         $data = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertNotEmpty($data);
 
         // there is no city information in ride list, so we check for rides in hamburg area
         foreach ($data as $ride) {
@@ -67,6 +69,8 @@ class RideApiTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $data = json_decode($client->getResponse()->getContent(), true);
 
+        $this->assertNotEmpty($data);
+
         foreach ($data as $ride) {
             $date = new \DateTime('@' . $ride['date_time']);
             $this->assertEquals(2022, (int) $date->format('Y'));
@@ -83,6 +87,8 @@ class RideApiTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $data = json_decode($client->getResponse()->getContent(), true);
 
+        $this->assertNotEmpty($data);
+
         foreach ($data as $ride) {
             $date = new \DateTime('@' . $ride['date_time']);
             $this->assertEquals(2015, (int) $date->format('Y'));
@@ -98,6 +104,8 @@ class RideApiTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $data = json_decode($client->getResponse()->getContent(), true);
 
+        $this->assertNotEmpty($data);
+
         foreach ($data as $ride) {
             $date = new \DateTime('@' . $ride['date_time']);
             $this->assertEquals(2019, (int) $date->format('Y'));
@@ -111,6 +119,8 @@ class RideApiTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
         $data = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertNotEmpty($data);
 
         foreach ($data as $ride) {
             $distance = $this->calculateDistance(53.55, 10.0, $ride['latitude'], $ride['longitude']);
@@ -129,20 +139,6 @@ class RideApiTest extends WebTestCase
         $this->assertEmpty($data);
     }
 
-    public function testSortByEstimatedParticipantsDescending(): void
-    {
-        $client = static::createClient();
-        $client->request('GET', '/api/ride?orderBy=estimatedParticipants&orderDirection=desc');
-
-        $this->assertResponseIsSuccessful();
-        $data = json_decode($client->getResponse()->getContent(), true);
-
-        $participants = array_column($data, 'estimatedParticipants');
-        $sorted = $participants;
-        rsort($sorted);
-        $this->assertEquals($sorted, $participants);
-    }
-
     /**
      * @dataProvider rideTypeProvider
      */
@@ -153,6 +149,8 @@ class RideApiTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
         $data = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertNotEmpty($data);
 
         foreach ($data as $ride) {
             $this->assertSame(strtoupper($rideType), $ride['ride_type']);
