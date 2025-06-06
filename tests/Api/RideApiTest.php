@@ -38,6 +38,7 @@ class RideApiTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $data = json_decode($client->getResponse()->getContent(), true);
 
+        // there is no city information in ride list, so we check for rides in hamburg area
         foreach ($data as $ride) {
             $this->assertGreaterThan(53.3, $ride['latitude']);
             $this->assertLessThan(53.8, $ride['latitude']);
@@ -49,16 +50,16 @@ class RideApiTest extends WebTestCase
     public function testFilterByDate()
     {
         $client = static::createClient();
-        $client->request('GET', '/api/ride?year=2024&month=5&day=12');
+        $client->request('GET', '/api/ride?year=2022&month=6&day=24');
 
         $this->assertResponseIsSuccessful();
         $data = json_decode($client->getResponse()->getContent(), true);
 
         foreach ($data as $ride) {
-            $date = new \DateTime($ride['dateTime']);
-            $this->assertEquals(2024, (int) $date->format('Y'));
-            $this->assertEquals(5, (int) $date->format('n'));
-            $this->assertEquals(12, (int) $date->format('j'));
+            $date = new \DateTime('@' . $ride['date_time']);
+            $this->assertEquals(2022, (int) $date->format('Y'));
+            $this->assertEquals(6, (int) $date->format('n'));
+            $this->assertEquals(24, (int) $date->format('j'));
         }
     }
 
