@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\City;
 use App\Entity\Region;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 class CityRepository extends ServiceEntityRepository
@@ -270,6 +271,43 @@ class CityRepository extends ServiceEntityRepository
             ->setMaxResults($limit);
 
         $query = $builder->getQuery();
+
+        return $query->getResult();
+    }
+
+    public function findNearCities(City $city, int $size = 15, float $distance = 50.0): array
+    {
+        if (!$city->getLatitude() || !$city->getLongitude()) {
+            return [];
+        }
+
+        $em = $this->getEntityManager();
+
+        $rsm = new ResultSetMappingBuilder($em);
+        $rsm->addRootEntityFromClassMetadata(City::class, 'c');
+
+        $sql = <<<SQL
+SELECT c.*
+FROM city c
+WHERE c.enabled = 1
+  AND c.id != :id
+  AND (6371 * acos(
+           cos(radians(:lat)) * cos(radians(c.latitude)) * cos(radians(c.longitude) - radians(:lon)) +
+           sin(radians(:lat)) * sin(radians(c.latitude))
+       )) <= :distance
+ORDER BY (6371 * acos(
+             cos(radians(:lat)) * cos(radians(c.latitude)) * cos(radians(c.longitude) - radians(:lon)) +
+             sin(radians(:lat)) * sin(radians(c.latitude))
+         )) ASC
+LIMIT :size
+SQL;
+
+        $query = $em->createNativeQuery($sql, $rsm);
+        $query->setParameter('lat', $city->getLatitude());
+        $query->setParameter('lon', $city->getLongitude());
+        $query->setParameter('id', $city->getId());
+        $query->setParameter('distance', $distance);
+        $query->setParameter('size', $size, \PDO::PARAM_INT);
 
         return $query->getResult();
     }
