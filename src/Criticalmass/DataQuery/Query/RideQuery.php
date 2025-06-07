@@ -2,7 +2,6 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
-use Doctrine\ORM\AbstractQuery as AbstractOrmQuery;
 use Doctrine\ORM\QueryBuilder;
 use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use App\Entity\Ride;
@@ -35,7 +34,7 @@ class RideQuery extends AbstractQuery implements OrmQueryInterface, ElasticQuery
         return new \Elastica\Query\Term(['rideId' => $this->getRide()->getId()]);
     }
 
-    public function createOrmQuery(QueryBuilder $queryBuilder): AbstractOrmQuery
+    public function createOrmQuery(QueryBuilder $queryBuilder): QueryBuilder
     {
         $expr = $queryBuilder->expr();
         $alias = $queryBuilder->getRootAliases()[0];
@@ -44,6 +43,6 @@ class RideQuery extends AbstractQuery implements OrmQueryInterface, ElasticQuery
             ->andWhere($expr->eq(sprintf('%s.id', $alias), ':rideId'))
             ->setParameter('rideId', $this->ride->getId());
 
-        return $queryBuilder->getQuery();
+        return $queryBuilder;
     }
 }

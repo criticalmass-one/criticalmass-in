@@ -3,7 +3,6 @@
 namespace App\Criticalmass\DataQuery\Query;
 
 use App\Entity\Region;
-use Doctrine\ORM\AbstractQuery as AbstractOrmQuery;
 use Doctrine\ORM\QueryBuilder;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\Term;
@@ -44,7 +43,7 @@ class RegionQuery extends AbstractQuery implements OrmQueryInterface, ElasticQue
         return $regionQuery;
     }
 
-    public function createOrmQuery(QueryBuilder $queryBuilder): AbstractOrmQuery
+    public function createOrmQuery(QueryBuilder $queryBuilder): QueryBuilder
     {
         $expr = $queryBuilder->expr();
 
@@ -52,6 +51,6 @@ class RegionQuery extends AbstractQuery implements OrmQueryInterface, ElasticQue
             ->andWhere($expr->eq('e.region', ':region'))
             ->setParameter('region', $this->region);
 
-        return $queryBuilder->getQuery();
+        return $queryBuilder;
     }
 }

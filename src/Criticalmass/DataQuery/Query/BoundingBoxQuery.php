@@ -2,7 +2,6 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
-use Doctrine\ORM\AbstractQuery as AbstractOrmQuery;
 use Doctrine\ORM\QueryBuilder;
 use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use MalteHuebner\DataQueryBundle\Query\AbstractQuery;
@@ -113,7 +112,7 @@ class BoundingBoxQuery extends AbstractQuery implements ElasticQueryInterface, O
         return $geoQuery;
     }
 
-    public function createOrmQuery(QueryBuilder $queryBuilder): AbstractOrmQuery
+    public function createOrmQuery(QueryBuilder $queryBuilder): QueryBuilder
     {
         $alias = $queryBuilder->getRootAliases()[0];
         $expr = $queryBuilder->expr();
@@ -130,8 +129,9 @@ class BoundingBoxQuery extends AbstractQuery implements ElasticQueryInterface, O
             ->setParameter('southLatitude', $this->southLatitude)
             ->setParameter('northLatitude', $this->northLatitude)
             ->setParameter('westLongitude', $this->westLongitude)
-            ->setParameter('eastLongitude', $this->eastLongitude);
+            ->setParameter('eastLongitude', $this->eastLongitude)
+        ;
 
-        return $queryBuilder->getQuery();
+        return $queryBuilder;
     }
 }

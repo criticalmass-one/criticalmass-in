@@ -2,7 +2,6 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
-use Doctrine\ORM\AbstractQuery as AbstractOrmQuery;
 use Doctrine\ORM\QueryBuilder;
 use Elastica\Query\Term;
 use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
@@ -34,7 +33,7 @@ class CityNameQuery extends AbstractQuery implements OrmQueryInterface, ElasticQ
         return new Term(['city' => $this->name]);
     }
 
-    public function createOrmQuery(QueryBuilder $queryBuilder): AbstractOrmQuery
+    public function createOrmQuery(QueryBuilder $queryBuilder): QueryBuilder
     {
         $alias = $queryBuilder->getRootAliases()[0];
 
@@ -42,6 +41,6 @@ class CityNameQuery extends AbstractQuery implements OrmQueryInterface, ElasticQ
             ->andWhere($queryBuilder->expr()->eq(sprintf('%s.city', $alias), ':city'))
             ->setParameter('city', $this->name);
 
-        return $queryBuilder->getQuery();
+        return $queryBuilder;
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
-use Doctrine\ORM\AbstractQuery as AbstractOrmQuery;
 use Doctrine\ORM\QueryBuilder;
 use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use MalteHuebner\DataQueryBundle\Query\AbstractQuery;
@@ -33,7 +32,7 @@ class RideTypeQuery extends AbstractQuery implements OrmQueryInterface, ElasticQ
         return new \Elastica\Query\Term(['rideType' => strtoupper($this->rideType)]);
     }
 
-    public function createOrmQuery(QueryBuilder $queryBuilder): AbstractOrmQuery
+    public function createOrmQuery(QueryBuilder $queryBuilder): QueryBuilder
     {
         $expr = $queryBuilder->expr();
         $alias = $queryBuilder->getRootAliases()[0];
@@ -42,6 +41,6 @@ class RideTypeQuery extends AbstractQuery implements OrmQueryInterface, ElasticQ
             ->andWhere($expr->eq(sprintf('%s.rideType', $alias), ':rideType'))
             ->setParameter('rideType', strtoupper($this->rideType));
 
-        return $queryBuilder->getQuery();
+        return $queryBuilder;
     }
 }

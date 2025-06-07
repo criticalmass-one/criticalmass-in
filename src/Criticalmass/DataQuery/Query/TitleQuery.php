@@ -33,7 +33,7 @@ class TitleQuery extends AbstractQuery implements OrmQueryInterface, ElasticQuer
         return new \Elastica\Query\Wildcard('title', sprintf('*%s*', $this->title));
     }
 
-    public function createOrmQuery(QueryBuilder $queryBuilder): AbstractOrmQuery
+    public function createOrmQuery(QueryBuilder $queryBuilder): QueryBuilder
     {
         $expr = $queryBuilder->expr();
         $alias = $queryBuilder->getRootAliases()[0];
@@ -43,6 +43,6 @@ class TitleQuery extends AbstractQuery implements OrmQueryInterface, ElasticQuer
             ->setParameter('title', sprintf('%%%s%%', $this->title))
         ;
 
-        return $queryBuilder->getQuery();
+        return $queryBuilder;
     }
 }
