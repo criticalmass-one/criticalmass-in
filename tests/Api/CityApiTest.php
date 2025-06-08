@@ -70,15 +70,85 @@ class CityApiTest extends WebTestCase
         }
     }
 
-    public function testDistanceOrderDirection(): void
+    /**
+     * @dataProvider provideCenterCoordinatesAndOptions
+     */
+    public function testDistanceOrderDirection(
+        float $centerLat,
+        float $centerLon,
+        int $radius,
+        string $order
+    ): void
     {
+        $apiUri = sprintf(
+            '/api/city?centerLatitude=%f&centerLongitude=%f&radius=%d&distanceOrderDirection=%s',
+            $centerLat,
+            $centerLon,
+            $radius,
+            $order
+        );
+
         $client = static::createClient();
-        $client->request('GET', '/api/city?centerLatitude=53.55&centerLongitude=10.0&radius=50&distanceOrderDirection=asc');
+        $client->request('GET', $apiUri);
 
         $this->assertResponseIsSuccessful();
         $data = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertNotEmpty($data);
+
+        $distances = array_map(
+            fn($city) => $this->haversine($centerLat, $centerLon, $city['latitude'], $city['longitude']),
+            $data
+        );
+
+        $sorted = $distances;
+        $order === 'asc' ? sort($sorted) : rsort($sorted);
+
+        $this->assertSame($sorted, $distances, 'Cities are not sorted by ascending distance.');
+    }
+
+    private function haversine(float $lat1, float $lon1, float $lat2, float $lon2): float
+    {
+        $earthRadius = 6371; // km
+
+        $dLat = deg2rad($lat2 - $lat1);
+        $dLon = deg2rad($lon2 - $lon1);
+
+        $a = sin($dLat / 2) * sin($dLat / 2) +
+            cos(deg2rad($lat1)) * cos(deg2rad($lat2)) *
+            sin($dLon / 2) * sin($dLon / 2);
+        $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+
+        return $earthRadius * $c;
+    }
+
+    public static function provideCenterCoordinatesAndOptions(): array
+    {
+        return [
+            // Hamburg: 53.55, 10.0
+            [53.55, 10.0, 1, 'asc'],
+            [53.55, 10.0, 1, 'desc'],
+            [53.55, 10.0, 10, 'asc'],
+            [53.55, 10.0, 10, 'desc'],
+            [53.55, 10.0, 100, 'asc'],
+            [53.55, 10.0, 100, 'desc'],
+
+            // Berlin: 52.52, 13.405
+            [52.52, 13.405, 1, 'asc'],
+            [52.52, 13.405, 1, 'desc'],
+            [52.52, 13.405, 10, 'asc'],
+            [52.52, 13.405, 10, 'desc'],
+            [52.52, 13.405, 100, 'asc'],
+            [52.52, 13.405, 100, 'desc'],
+
+            // Köln: 50.9375, 6.9603
+            [50.9375, 6.94, 1, 'asc'],
+            [50.9375, 6.94, 1, 'desc'],
+            [50.9375, 6.94, 10, 'asc'],
+            [50.9375, 6.94, 10, 'desc'],
+            [50.9375, 6.94, 100, 'asc'],
+            [50.9375, 6.94, 100, 'desc'],
+        ];
     }
 
     public function testStartValue(): void
@@ -136,3 +206,4 @@ class CityApiTest extends WebTestCase
         ];
     }
 }
+
