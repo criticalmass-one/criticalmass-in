@@ -23,7 +23,6 @@ class SocialNetworkController extends AbstractController
 
     /**
      * @ParamConverter("city", class="App:City", isOptional=true)
-     * @ParamConverter("ride", class="App:Ride", isOptional=true)
      * @ParamConverter("subride", class="App:Subride", isOptional=true)
      * @ParamConverter("user", class="App:User", isOptional=true)
      */

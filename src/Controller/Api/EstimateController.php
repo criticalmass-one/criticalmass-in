@@ -135,7 +135,6 @@ class EstimateController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     * @ParamConverter("ride", class="App:Ride")
      */
     #[Route(path: '/estimate', name: 'caldera_criticalmass_rest_estimate_create', methods: ['POST'])]
     public function createRideEstimateAction(Request $request, Ride $ride, SerializerInterface $serializer): JsonResponse

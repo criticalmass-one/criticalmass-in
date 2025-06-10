@@ -37,9 +37,6 @@ class RideController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("ride", class="App:Ride", isOptional=true)
-     */
     public function showAction(
         BlockedCityRepository $blockedCityRepository,
         ParticipationRepository $participationRepository,

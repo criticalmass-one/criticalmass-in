@@ -20,9 +20,6 @@ use Flagception\Bundle\FlagceptionBundle\Annotations\Feature;
  */
 class PhotoGalleryController extends AbstractController
 {
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     public function galleryAction(
         Request $request,
         PaginatorInterface $paginator,

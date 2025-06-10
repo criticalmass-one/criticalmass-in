@@ -40,9 +40,6 @@ class PhotoManagementController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     public function ridelistAction(
         Request $request,
         PaginatorInterface $paginator,
@@ -80,7 +77,6 @@ class PhotoManagementController extends AbstractController
 
     /**
      * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("ride", class="App:Ride")
      */
     public function manageAction(
         Request $request,
@@ -182,7 +178,6 @@ class PhotoManagementController extends AbstractController
 
     /**
      * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("ride", class="App:Ride")
      */
     public function relocateAction(
         TrackRepository $trackRepository,

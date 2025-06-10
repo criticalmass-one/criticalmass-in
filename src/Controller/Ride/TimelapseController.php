@@ -12,9 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TimelapseController extends AbstractController
 {
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     public function showAction(
         TrackRepository $trackRepository,
         Ride $ride

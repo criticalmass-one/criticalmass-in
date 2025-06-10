@@ -10,9 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CalendarController extends AbstractController
 {
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     public function icalAction(
         RideIcalGeneratorInterface $rideIcalGenerator,
         Ride $ride

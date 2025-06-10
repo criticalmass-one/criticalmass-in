@@ -95,7 +95,6 @@ class RideManagementController extends AbstractController
 
     /**
      * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("ride", class="App:Ride")
      */
     public function editAction(Request $request, UserInterface $user = null, Ride $ride, ObjectRouterInterface $objectRouter): Response
     {
@@ -162,7 +161,6 @@ class RideManagementController extends AbstractController
 
     /**
      * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("ride", class="App:Ride")
      */
     public function socialPreviewAction(
         EntityManagerInterface $entityManager,
@@ -219,7 +217,6 @@ class RideManagementController extends AbstractController
 
     /**
      * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("ride", class="App:Ride")
      */
     public function disableAction(Request $request, ManagerRegistry $registry, UserInterface $user = null, Ride $ride, ObjectRouterInterface $objectRouter): RedirectResponse
     {
@@ -239,7 +236,6 @@ class RideManagementController extends AbstractController
 
     /**
      * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("ride", class="App:Ride")
      */
     public function enableAction(ManagerRegistry $registry, UserInterface $user = null, Ride $ride, ObjectRouterInterface $objectRouter): RedirectResponse
     {

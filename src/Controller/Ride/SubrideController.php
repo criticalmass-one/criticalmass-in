@@ -19,7 +19,6 @@ class SubrideController extends AbstractController
 {
     /**
      * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("ride", class="App:Ride")
      */
     public function addAction(Request $request, Ride $ride, UserInterface $user, ObjectRouterInterface $objectRouter): Response
     {
@@ -128,7 +127,6 @@ class SubrideController extends AbstractController
 
     /**
      * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("ride", class="App:Ride")
      */
     public function preparecopyAction(
         RideRepository $rideRepository,

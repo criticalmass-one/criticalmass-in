@@ -21,7 +21,6 @@ class SubrideController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     * @ParamConverter("ride", class="App:Ride")
      */
     #[Route(path: '/{citySlug}/{rideIdentifier}/subride', name: 'caldera_criticalmass_rest_subride_list', methods: ['GET'])]
     public function listSubrideAction(Ride $ride): JsonResponse

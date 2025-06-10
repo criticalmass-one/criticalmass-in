@@ -48,9 +48,6 @@ class LocationController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     public function rideAction(
         LocationRepository $locationRepository,
         RideRepository $rideRepository,

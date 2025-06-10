@@ -34,9 +34,6 @@ class SocialNetworkListController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     public function listRideAction(ObjectRouterInterface $router, Ride $ride, SocialNetworkProfileFactoryInterface $socialNetworkProfileFactory, SocialNetworkHelperInterface $socialNetworkHelper, UserInterface $user = null): Response
     {
         $addProfileForm = $this->getAddProfileForm($router, $ride, $socialNetworkProfileFactory, $user, $socialNetworkHelper);

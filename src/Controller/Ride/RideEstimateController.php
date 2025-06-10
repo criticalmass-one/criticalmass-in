@@ -21,7 +21,6 @@ class RideEstimateController extends AbstractController
 {
     /**
      * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("ride", class="App:Ride")
      */
     public function addestimateAction(
         Request $request,
@@ -52,9 +51,6 @@ class RideEstimateController extends AbstractController
         return $this->redirect($objectRouter->generate($ride));
     }
 
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     public function anonymousestimateAction(
         Request $request,
         UserInterface $user = null,

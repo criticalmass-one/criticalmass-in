@@ -14,7 +14,6 @@ class TrackDrawController extends AbstractController
 {
     /**
      * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("ride", class="App:Ride")
      */
     public function drawAction(Request $request, Ride $ride): Response
     {

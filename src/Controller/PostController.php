@@ -32,7 +32,6 @@ class PostController extends AbstractController
 
     /**
      * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("ride", class="App:Ride", converter="ride_converter")
      */
     public function writeRideAction(Request $request, Ride $ride, ObjectRouterInterface $objectRouter): Response
     {

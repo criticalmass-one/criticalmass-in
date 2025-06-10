@@ -14,7 +14,6 @@ class ParticipationController extends AbstractController
 {
     /**
      * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("ride", class="App:Ride")
      */
     public function rideparticipationAction(ParticipationManagerInterface $participationManager, ObjectRouterInterface $objectRouter, Ride $ride, string $status): Response
     {
