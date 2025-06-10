@@ -78,12 +78,14 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     protected ?string $description = null;
 
     #[DataQuery\Queryable]
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'float', nullable: true)]
     #[JMS\Expose]
     #[JMS\Groups(['ride-list'])]
     protected float $latitude = 0.0;
 
     #[DataQuery\Queryable]
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'float', nullable: true)]
     #[JMS\Expose]
     #[JMS\Groups(['ride-list'])]
@@ -119,6 +121,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     #[Assert\Type(type: 'int')]
     #[ORM\Column(type: 'integer', nullable: true)]
     #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
     protected ?int $cityPopulation = null;
 
     #[ORM\Column(type: 'string', nullable: true)]

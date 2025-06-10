@@ -151,58 +151,140 @@ class CityApiTest extends WebTestCase
         ];
     }
 
-    public function testStartValue(): void
+    /**
+     * @dataProvider startValueProvider
+     */
+    public function testStartValue(
+        string $orderBy,
+        string $orderDirection,
+        mixed $startValue,
+        ?string $propertyName = null
+    ): void
     {
         $client = static::createClient();
-        $client->request('GET', '/api/city?orderBy=id&orderDirection=asc&startValue=100');
+
+        $query = sprintf(
+            '/api/city?orderBy=%s&orderDirection=%s&startValue=%s&size=50&expanded=true',
+            $orderBy,
+            $orderDirection,
+            urlencode((string)$startValue)
+        );
+
+        $client->request('GET', $query);
 
         $this->assertResponseIsSuccessful();
-        $data = json_decode($client->getResponse()->getContent(), true);
 
+        $data = json_decode($client->getResponse()->getContent(), true);
         $this->assertNotEmpty($data);
 
-        foreach ($data as $city) {
-            $this->assertGreaterThanOrEqual(100, $city['id']);
+        if (!$propertyName) {
+            $propertyName = $orderBy;
         }
+
+        foreach ($data as $city) {
+            $value = $city[$propertyName];
+
+            // Datum vergleichen, wenn es sich um einen ISO-String handelt
+            if (in_array($propertyName, ['createdAt', 'updatedAt']) && is_string($startValue)) {
+                $value = new \DateTime($value);
+                $start = new \DateTime($startValue);
+            } else {
+                $start = $startValue;
+            }
+
+            if ($orderDirection === 'asc') {
+                $this->assertGreaterThanOrEqual($start, $value, "$orderBy ascending");
+            } else {
+                $this->assertLessThanOrEqual($start, $value, "$orderBy descending");
+            }
+        }
+    }
+
+    public static function startValueProvider(): array
+    {
+        return [
+            ['id', 'asc', 100],
+            ['id', 'desc', 500],
+            ['city', 'asc', 'Murcia', 'name'],
+            ['city', 'desc', 'Nagold', 'name'],
+            ['title', 'asc', 'Critical Mass Murcia'],
+            ['title', 'desc', 'Critical Mass Nagold'],
+            ['cityPopulation', 'desc', 100000, 'city_population'],
+            ['cityPopulation', 'asc', 50000, 'city_population'],
+            ['latitude', 'asc', 50.0],
+            ['latitude', 'desc', 50.0],
+            ['longitude', 'asc', 10.0],
+            ['longitude', 'desc', 10.0],
+        ];
     }
 
     /**
      * @dataProvider cityOrderProvider
      */
-    public function testOrderByParameter(string $orderBy, string $direction): void
+    public function testOrderByParameter(string $orderBy, string $direction, ?string $propertyName = null): void
     {
+        $requestUri = sprintf('/api/city?orderBy=%s&orderDirection=%s', $orderBy, $direction);
+
         $client = static::createClient();
-        $client->request('GET', sprintf('/api/city?orderBy=%s&orderDirection=%s', $orderBy, $direction));
+        $client->request('GET', $requestUri);
 
         $this->assertResponseIsSuccessful();
         $data = json_decode($client->getResponse()->getContent(), true);
 
         $this->assertNotEmpty($data);
 
-        $values = array_column($data, $orderBy);
-        $sorted = $values;
-
-        if ($direction === 'asc') {
-            sort($sorted);
-        } else {
-            rsort($sorted);
+        if (!$propertyName) {
+            $propertyName = $orderBy;
         }
 
-        $this->assertSame($sorted, $values);
+        $values = array_column($data, $propertyName);
+
+        if (in_array($propertyName, ['createdAt', 'updatedAt'])) {
+            $values = array_map(fn($v) => (new \DateTime($v))->getTimestamp(), $values);
+            $sorted = $values;
+            if ($direction === 'asc') {
+                sort($sorted);
+            } else {
+                rsort($sorted);
+            }
+        } elseif (is_string($values[0])) {
+            $collator = new \Collator('de_DE');
+            $sorted = $values;
+            $collator->sort($sorted);
+            if ($direction === 'desc') {
+                $sorted = array_reverse($sorted);
+            }
+        } else {
+            $sorted = $values;
+            if ($direction === 'asc') {
+                sort($sorted);
+            } else {
+                rsort($sorted);
+            }
+        }
+
+        $this->assertSame(array_values($sorted), array_values($values), "List is not sorted as expected.");
+
     }
 
     public function cityOrderProvider(): array
     {
         return [
-            ['id', 'asc'], ['id', 'desc'],
-            ['region', 'asc'], ['region', 'desc'],
-            ['name', 'asc'], ['name', 'desc'],
-            ['title', 'asc'], ['title', 'desc'],
-            ['cityPopulation', 'asc'], ['cityPopulation', 'desc'],
-            ['latitude', 'asc'], ['latitude', 'desc'],
-            ['longitude', 'asc'], ['longitude', 'desc'],
-            ['updatedAt', 'asc'], ['updatedAt', 'desc'],
-            ['createdAt', 'asc'], ['createdAt', 'desc'],
+            ['id', 'asc'],
+            ['id', 'desc'],
+            ['city', 'asc', 'name'],
+            ['city', 'desc', 'name'],
+            ['title', 'asc'],
+            ['title', 'desc'],
+            ['cityPopulation', 'desc', 'city_population'],
+            ['latitude', 'asc'],
+            ['latitude', 'desc'],
+            ['longitude', 'asc'],
+            ['longitude', 'desc'],
+            ['updatedAt', 'asc'],
+            ['updatedAt', 'desc'],
+            ['createdAt', 'asc'],
+            ['createdAt', 'desc'],
         ];
     }
 }

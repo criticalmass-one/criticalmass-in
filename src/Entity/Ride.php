@@ -197,6 +197,8 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'integer', nullable: true)]
+    #[JMS\Groups(['ride-list'])]
+    #[JMS\Expose]
     protected int $views = 0;
 
     #[ORM\ManyToOne(targetEntity: 'Photo', inversedBy: 'featuredRides', fetch: 'LAZY')]
