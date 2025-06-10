@@ -43,7 +43,6 @@ class TrackManagementController extends AbstractController
 
     /**
      * @Security("is_granted('edit', track)")
-     * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
      */
     public function toggleAction(EventDispatcherInterface $eventDispatcher, Track $track): Response
     {
@@ -62,7 +61,6 @@ class TrackManagementController extends AbstractController
 
     /**
      * @Security("is_granted('edit', track)")
-     * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
      */
     public function deleteAction(Track $track, EventDispatcherInterface $eventDispatcher): Response
     {

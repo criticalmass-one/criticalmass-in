@@ -24,9 +24,6 @@ class TimelapseController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
-     */
     public function loadtrackAction(TimeLatLngListGenerator $generator, Track $track): Response
     {
         $list = $generator

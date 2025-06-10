@@ -13,7 +13,6 @@ class TrackController extends AbstractController
 {
     /**
      * @Security("is_granted('view', track)")
-     * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
      */
     public function viewAction(Track $track): Response
     {
@@ -24,7 +23,6 @@ class TrackController extends AbstractController
 
     /**
      * @Security("is_granted('approve', track)")
-     * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
      */
     public function approveAction(Track $track, ManagerRegistry $registry): Response
     {
@@ -33,7 +31,7 @@ class TrackController extends AbstractController
         $registry->getManager()->flush();
 
         return $this->redirectToRoute('caldera_criticalmass_track_view', [
-            'trackId' => $track->getId(),
+            'id' => $track->getId(),
         ]);
     }
 }

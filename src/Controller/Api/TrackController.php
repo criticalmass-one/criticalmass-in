@@ -52,7 +52,6 @@ class TrackController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     * @ParamConverter("track", class="App:Track")
      */
     #[Route(path: '/track/{trackId}', name: 'caldera_criticalmass_rest_track_view', methods: ['GET'])]
     public function viewAction(Track $track, UserInterface $user = null): JsonResponse
@@ -209,8 +208,7 @@ class TrackController extends BaseController
 
     /**
      * @Security("is_granted('edit', track)")
-     * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
-     * @Route("/track/{trackId}", name="caldera_criticalmass_rest_track_delete", methods={"DELETE"})
+     * @Route("/track/{id}", name="caldera_criticalmass_rest_track_delete", methods={"DELETE"})
      */
     public function deleteAction(Track $track, EventDispatcherInterface $eventDispatcher, ManagerRegistry $managerRegistry): Response
     {

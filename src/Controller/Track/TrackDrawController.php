@@ -56,7 +56,6 @@ class TrackDrawController extends AbstractController
 
     /**
      * @Security("is_granted('edit', track)")
-     * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
      */
     public function editAction(Request $request, Track $track): Response
     {

@@ -9,8 +9,8 @@ use App\Criticalmass\Strava\Token\StravaTokenStorage;
 use App\Criticalmass\Util\DateTimeUtil;
 use App\Entity\Ride;
 use App\Event\Track\TrackUploadedEvent;
+use Doctrine\Persistence\ManagerRegistry;
 use Iamstuartwilson\StravaApi;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Strava\API\OAuth;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -21,9 +21,15 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class StravaController extends AbstractController
 {
-    public function __construct(private readonly string $stravaClientId, private readonly string $stravaSecret)
+    public function __construct(
+        ManagerRegistry $managerRegistry,
+        private readonly string $stravaClientId,
+        private readonly string $stravaSecret
+    )
     {
+        parent::__construct($managerRegistry);
     }
+
     /**
      * @Security("is_granted('ROLE_USER')")
      */

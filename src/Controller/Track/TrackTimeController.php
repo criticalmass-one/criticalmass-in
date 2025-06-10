@@ -20,7 +20,6 @@ class TrackTimeController extends AbstractController
 {
     /**
      * @Security("is_granted('edit', track)")
-     * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
      */
     public function timeAction(Request $request, ObjectRouterInterface $objectRouter, EventDispatcherInterface $eventDispatcher, Track $track, TrackTimeShifterInterface $trackTimeshift): Response
     {

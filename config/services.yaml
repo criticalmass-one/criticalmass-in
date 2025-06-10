@@ -167,10 +167,6 @@ services:
         tags:
             - { name: request.param_converter, priority: 0, converter: socialnetworkfeeditem_converter }
 
-    App\Request\ParamConverter\TrackParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 0, converter: track_converter }
-
     App\Criticalmass\Imagine\DataLoader\RemoteStreamLoader:
         arguments: ['@liip_imagine']
         tags:

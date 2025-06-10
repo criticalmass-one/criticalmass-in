@@ -14,7 +14,6 @@ class TrackDownloadController extends AbstractController
 {
     /**
      * @Security("is_granted('edit', track)")
-     * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
      */
     public function downloadAction(Track $track, UploaderHelper $uploaderHelper): Response
     {
