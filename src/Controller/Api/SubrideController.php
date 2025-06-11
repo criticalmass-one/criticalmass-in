@@ -41,9 +41,8 @@ class SubrideController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     * @ParamConverter("subride", class="App:Subride")
      */
-    #[Route(path: '/{citySlug}/{rideIdentifier}/{subrideId}', name: 'caldera_criticalmass_rest_subride_show', requirements: ['subrideId' => '\d+'], methods: ['GET'])]
+    #[Route(path: '/{citySlug}/{rideIdentifier}/{id}', name: 'caldera_criticalmass_rest_subride_show', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function showSubrideAction(Subride $subride): JsonResponse
     {
         return $this->createStandardResponse($subride);

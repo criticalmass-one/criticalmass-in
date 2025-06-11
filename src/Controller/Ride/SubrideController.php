@@ -80,7 +80,6 @@ class SubrideController extends AbstractController
 
     /**
      * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("subride", class="App:Subride", options={"id" = "subrideId"})
      */
     public function editAction(Request $request, Subride $subride, ObjectRouterInterface $objectRouter): Response
     {
