@@ -38,7 +38,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     /**
      * @DataQuery\Sortable()
      */
-    #[Routing\RouteParameter(name: 'photoId')]
+    #[Routing\RouteParameter(name: 'id')]
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]

@@ -62,7 +62,6 @@ class PhotoManagementController extends AbstractController
 
     /**
      * @Security("is_granted('edit', photo)")
-     * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
     public function deleteAction(Request $request, Photo $photo, ManagerRegistry $registry): Response
     {
@@ -101,7 +100,6 @@ class PhotoManagementController extends AbstractController
 
     /**
      * @Security("is_granted('edit', photo)")
-     * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
     public function toggleAction(Request $request, Photo $photo, ManagerRegistry $registry): Response
     {
@@ -116,7 +114,6 @@ class PhotoManagementController extends AbstractController
 
     /**
      * @Security("is_granted('edit', photo)")
-     * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
     public function featuredPhotoAction(Request $request, Photo $photo, ManagerRegistry $registry): Response
     {
@@ -131,7 +128,6 @@ class PhotoManagementController extends AbstractController
 
     /**
      * @Security("is_granted('edit', photo)")
-     * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
     public function placeSingleAction(Request $request, Photo $photo, ObjectRouterInterface $objectRouter, ManagerRegistry $registry): Response
     {
@@ -197,7 +193,6 @@ class PhotoManagementController extends AbstractController
 
     /**
      * @Security("is_granted('edit', photo)")
-     * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
     public function rotateAction(Request $request, Photo $photo, PhotoManipulatorInterface $photoManipulator): Response
     {
@@ -219,7 +214,6 @@ class PhotoManagementController extends AbstractController
 
     /**
      * @Security("is_granted('edit', photo)")
-     * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
     public function censorAction(Request $request, UserInterface $user = null, Photo $photo, PhotoManipulatorInterface $photoManipulator): Response
     {

@@ -21,9 +21,6 @@ use Flagception\Bundle\FlagceptionBundle\Annotations\Feature;
  */
 class PhotoController extends AbstractController
 {
-    /**
-     * @ParamConverter("photo", class="App:Photo", options={"id" = "photoId"})
-     */
     public function showAction(
         SeoPageInterface $seoPage,
         EventDispatcherInterface $eventDispatcher,

@@ -139,10 +139,6 @@ services:
         tags:
             - { name: request.param_converter, priority: 0, converter: participation_converter }
 
-    App\Request\ParamConverter\PhotoParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 0, converter: photo_converter }
-
     App\Request\ParamConverter\PromotionParamConverter:
         tags:
             - { name: request.param_converter, priority: 0, converter: promotion_converter }

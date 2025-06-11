@@ -39,7 +39,6 @@ class PostController extends AbstractController
 
     /**
      * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("photo", class="App:Photo", converter="photo_converter")
      */
     public function writePhotoAction(Request $request, Photo $photo, ObjectRouterInterface $objectRouter): Response
     {
