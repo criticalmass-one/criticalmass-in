@@ -8,15 +8,17 @@ use App\Criticalmass\ViewStorage\Cache\ViewStorageCacheInterface;
 use App\Entity\Promotion;
 use App\Entity\Ride;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
 class PromotionController extends AbstractController
 {
-    /**
-     * @ParamConverter("promotion", class="App:Promotion")
-     */
-    public function showAction(Promotion $promotion, DataQueryManagerInterface $dataQueryManager, ViewStorageCacheInterface $viewStorageCache): Response
+    public function showAction(
+        #[MapEntity(mapping: ['promotionSlug' => 'slug'])] Promotion $promotion,
+        DataQueryManagerInterface $dataQueryManager,
+        ViewStorageCacheInterface $viewStorageCache
+    ): Response
     {
         $viewStorageCache->countView($promotion);
         
