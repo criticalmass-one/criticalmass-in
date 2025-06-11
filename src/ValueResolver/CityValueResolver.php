@@ -28,6 +28,10 @@ class CityValueResolver implements ValueResolverInterface
             $request->get('citySlug')
         );
 
+        if (!$citySlug && $argument->isNullable()) {
+            return [];
+        }
+
         if (!$citySlug && !$argument->isNullable()) {
             throw new NotFoundHttpException('City not found');
         }
