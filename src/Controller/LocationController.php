@@ -25,9 +25,6 @@ class LocationController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("location", class="App:Location")
-     */
     public function showAction(
         LocationRepository $locationRepository,
         RideRepository $rideRepository,

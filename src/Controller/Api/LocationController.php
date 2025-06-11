@@ -62,10 +62,8 @@ class LocationController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     *
-     * @ParamConverter("location", class="App:Location")
      */
-    #[Route(path: '/{citySlug}/location/{locationSlug}', name: 'caldera_criticalmass_rest_location_show', methods: ['GET'])]
+    #[Route(path: '/{citySlug}/location/{slug}', name: 'caldera_criticalmass_rest_location_show', methods: ['GET'])]
     public function showLocationAction(Location $location): JsonResponse
     {
         return $this->createStandardResponse($location);
