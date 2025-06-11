@@ -9,9 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class ProfileController extends AbstractController
 {
-    /**
-     * @ParamConverter("user", class="App:User")
-     */
     public function showAction(User $user): Response
     {
         return $this->render('App:Profile:show.html.twig', [

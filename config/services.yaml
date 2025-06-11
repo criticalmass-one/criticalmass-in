@@ -135,10 +135,6 @@ services:
         tags:
             - { name: request.param_converter, priority: 0, converter: participation_converter }
 
-    App\Request\ParamConverter\UserParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 10, converter: user_converter }
-
     App\Request\ParamConverter\SocialNetworkProfileParamConverter:
         tags:
             - { name: request.param_converter, priority: 0, converter: socialnetworkprofile_converter }
