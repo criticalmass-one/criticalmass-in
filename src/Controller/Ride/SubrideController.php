@@ -141,16 +141,20 @@ class SubrideController extends AbstractController
 
     /**
      * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("oldRide", class="App:Ride")
-     * @ParamConverter("newDate", options={"format": "Y-m-d"})
      */
     public function copyAction(
         Ride $oldRide,
-        \DateTime $newDate,
+        string $newDate,
         ObjectRouterInterface $objectRouter,
         RideRepository $rideRepository
     ): Response {
-        $ride = $rideRepository->findCityRideByDate($oldRide->getCity(), $newDate);
+        $newDateObj = \DateTime::createFromFormat('Y-m-d', $newDate);
+
+        if (!$newDateObj) {
+            throw new \InvalidArgumentException('Invalid date format. Expected Y-m-d');
+        }
+
+        $ride = $rideRepository->findCityRideByDate($oldRide->getCity(), $newDateObj);
 
         $em = $this->managerRegistry->getManager();
 
