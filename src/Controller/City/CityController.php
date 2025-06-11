@@ -20,9 +20,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CityController extends AbstractController
 {
-    /**
-     * @ParamConverter("city", class="App:City")
-     */
     public function missingStatsAction(
         RideRepository $rideRepository,
         City $city
@@ -33,9 +30,6 @@ class CityController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("city", class="App:City")
-     */
     public function listRidesAction(
         RideRepository $rideRepository,
         City $city
@@ -46,9 +40,6 @@ class CityController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("city", class="App:City")
-     */
     public function listGalleriesAction(
         PhotoRepository $photoRepository,
         SeoPageInterface $seoPage,
@@ -64,9 +55,6 @@ class CityController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("city", class="App:City", isOptional=true)
-     */
     public function showAction(
         Request $request,
         RideRepository $rideRepository,
@@ -122,9 +110,6 @@ class CityController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("city", class="App:City")
-     */
     public function getlocationsAction(
         RideRepository $rideRepository,
         City $city

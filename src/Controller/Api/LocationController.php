@@ -28,8 +28,6 @@ class LocationController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     *
-     * @ParamConverter("city", class="App:City")
      */
     #[Route(path: '/{citySlug}/location', name: 'caldera_criticalmass_rest_location_list', methods: ['GET'])]
     public function listLocationAction(City $city): JsonResponse

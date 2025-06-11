@@ -11,9 +11,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SocialNetworkItemListController extends AbstractController
 {
-    /**
-     * @ParamConverter("city", class="App:City")
-     */
     public function listCityItemsAction(City $city, ManagerRegistry $registry): Response
     {
         $itemList = $registry->getRepository(SocialNetworkFeedItem::class);

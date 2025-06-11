@@ -14,9 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class StatisticController extends AbstractController
 {
-    /**
-     * @ParamConverter("city", class="App:City")
-     */
     public function citystatisticAction(
         SeoPageInterface $seoPage,
         RideRepository $rideRepository,

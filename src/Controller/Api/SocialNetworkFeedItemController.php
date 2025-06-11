@@ -24,7 +24,6 @@ class SocialNetworkFeedItemController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     * @ParamConverter("city", class="App:City")
      */
     #[Route(path: '/{citySlug}/socialnetwork-feeditems', name: 'caldera_criticalmass_rest_socialnetwork_feeditems_citylist', methods: ['GET'])]
     public function listSocialNetworkFeedItemsCityAction(Request $request, City $city): JsonResponse

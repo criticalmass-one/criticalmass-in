@@ -71,8 +71,6 @@ class RideController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     *
-     * @ParamConverter("city", class="App:City")
      */
     #[Route(path: '/{citySlug}/current', name: 'caldera_criticalmass_rest_ride_show_current', methods: ['GET'])]
     public function showCurrentAction(Request $request, City $city): JsonResponse
@@ -353,8 +351,6 @@ class RideController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     *
-     * @ParamConverter("city", class="App:City")
      */
     #[Route(path: '/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_create', methods: ['PUT'])]
     public function createRideAction(Request $request, City $city, ValidatorInterface $validator): JsonResponse

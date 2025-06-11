@@ -15,7 +15,6 @@ class CityCycleController extends AbstractController
 {
     /**
      * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("city", class="App:City")
      */
     public function listAction(City $city, ManagerRegistry $registry): Response
     {

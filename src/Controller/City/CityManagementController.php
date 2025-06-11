@@ -129,7 +129,6 @@ class CityManagementController extends AbstractController
 
     /**
      * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("city", class="App:City")
      */
     public function editAction(
         Request $request,

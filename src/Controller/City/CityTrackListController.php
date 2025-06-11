@@ -13,9 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CityTrackListController extends AbstractController
 {
-    /**
-     * @ParamConverter("city", class="App:City")
-     */
     public function listTracksAction(Request $request, City $city, ManagerRegistry $registry, PaginatorInterface $paginator): Response
     {
         $query = $registry->getRepository(Track::class)->findByCityQuery($city, 'DESC');

@@ -24,7 +24,6 @@ class RideManagementController extends AbstractController
 {
     /**
      * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("city", class="App:City")
      */
     public function addAction(Request $request, UserInterface $user = null, EntityManagerInterface $entityManager, City $city, ObjectRouterInterface $objectRouter): Response
     {

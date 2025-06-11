@@ -22,7 +22,6 @@ class SocialNetworkController extends AbstractController
     private const string DEFAULT_NETWORK = 'homepage';
 
     /**
-     * @ParamConverter("city", class="App:City", isOptional=true)
      * @ParamConverter("subride", class="App:Subride", isOptional=true)
      * @ParamConverter("user", class="App:User", isOptional=true)
      */

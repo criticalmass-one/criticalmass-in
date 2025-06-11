@@ -23,7 +23,6 @@ class PostController extends AbstractController
 {
     /**
      * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("city", class="App:City", converter="city_converter")
      */
     public function writeCityAction(Request $request, City $city, ObjectRouterInterface $objectRouter): Response
     {

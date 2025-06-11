@@ -14,9 +14,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class LocationController extends AbstractController
 {
-    /**
-     * @ParamConverter("city", class="App:City")
-     */
     public function listlocationsAction(
         LocationRepository $locationRepository,
         City $city

@@ -73,7 +73,6 @@ class CycleController extends BaseController
      *     )
      * )
      *
-     * @ParamConverter("city", class="App:City", isOptional=true)
      * @ParamConverter("region", class="App:Region", isOptional=true)
      * @ParamConverter("validFrom", class="DateTime", isOptional=true)
      * @ParamConverter("validUntil", class="DateTime", isOptional=true)

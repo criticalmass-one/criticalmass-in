@@ -19,9 +19,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class SocialNetworkListController extends AbstractController
 {
-    /**
-     * @ParamConverter("city", class="App:City")
-     */
     public function listCityAction(ObjectRouterInterface $router, City $city, SocialNetworkProfileFactory $socialNetworkProfileFactory, SocialNetworkHelperInterface $socialNetworkHelper, UserInterface $user): Response
     {
         $addProfileForm = $this->getAddProfileForm($router, $city, $socialNetworkProfileFactory, $user, $socialNetworkHelper);

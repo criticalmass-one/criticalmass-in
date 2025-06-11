@@ -37,7 +37,6 @@ class BoardController extends AbstractController
     }
 
     /**
-     * @ParamConverter("city", class="App:City", isOptional="true")
      * @ParamConverter("board", class="App:Board", isOptional="true")
      */
     public function listThreadsAction(
@@ -90,7 +89,6 @@ class BoardController extends AbstractController
 
     /**
      * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("city", class="App:City", isOptional="true")
      * @ParamConverter("board", class="App:Board", isOptional="true")
      */
     public function addThreadAction(Request $request, ObjectRouterInterface $objectRouter, Board $board = null, City $city = null): Response
