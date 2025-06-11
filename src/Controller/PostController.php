@@ -47,7 +47,6 @@ class PostController extends AbstractController
 
     /**
      * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("thread", class="App:Thread", isOptional=true, converter="thread_converter")
      */
     public function writeThreadAction(Request $request, Thread $thread = null, ObjectRouterInterface $objectRouter): Response
     {
@@ -173,8 +172,11 @@ class PostController extends AbstractController
 
         $routeName = sprintf('caldera_criticalmass_timeline_post_write_%s', $lcShortname);
         $parameterName = sprintf('%sId', $lcfirstShortname);
-
         $parameter = [$parameterName => $postable->getId()];
+
+        if ($postable instanceof Thread) {
+            $parameter = ['threadSlug' => $postable->getSlug()];
+        }
 
         return $this->generateUrl($routeName, $parameter);
     }

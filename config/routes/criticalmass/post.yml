@@ -15,5 +15,5 @@ caldera_criticalmass_timeline_post_write_photo:
     controller: App\Controller\PostController::writePhotoAction
 
 caldera_criticalmass_timeline_post_write_thread:
-    path:     /write/thread/{id}
+    path:     /write/thread/{threadSlug}
     controller: App\Controller\PostController::writeThreadAction

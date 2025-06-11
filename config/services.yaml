@@ -131,10 +131,6 @@ services:
         tags:
             - { name: request.param_converter, priority: 0, converter: board_converter }
 
-    App\Request\ParamConverter\ThreadParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 0, converter: thread_converter }
-
     App\Request\ParamConverter\ParticipationParamConverter:
         tags:
             - { name: request.param_converter, priority: 0, converter: participation_converter }

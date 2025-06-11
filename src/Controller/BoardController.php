@@ -16,6 +16,7 @@ use App\Entity\Post;
 use App\Entity\Thread;
 use App\EntityInterface\BoardInterface;
 use Malenki\Slug;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -67,9 +68,6 @@ class BoardController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("thread", class="App:Thread")
-     */
     public function viewThreadAction(
         PostRepository $postRepository,
         EventDispatcherInterface $eventDispatcher,
