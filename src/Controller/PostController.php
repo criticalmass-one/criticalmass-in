@@ -168,11 +168,9 @@ class PostController extends AbstractController
     protected function generateActionUrl(PostableInterface $postable): string
     {
         $lcShortname = ClassUtil::getLowercaseShortname($postable);
-        $lcfirstShortname = ClassUtil::getLcfirstShortname($postable);
 
         $routeName = sprintf('caldera_criticalmass_timeline_post_write_%s', $lcShortname);
-        $parameterName = sprintf('%sId', $lcfirstShortname);
-        $parameter = [$parameterName => $postable->getId()];
+        $parameter = ['id' => $postable->getId()];
 
         if ($postable instanceof Thread) {
             $parameter = ['threadSlug' => $postable->getSlug()];
