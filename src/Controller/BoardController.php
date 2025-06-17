@@ -37,13 +37,10 @@ class BoardController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("board", class="App:Board", isOptional="true")
-     */
     public function listThreadsAction(
         ThreadRepository $threadRepository,
         ObjectRouterInterface $objectRouter,
-        Board $board = null,
+        #[MapEntity(mapping: ['boardSlug' => 'slug'])] Board $board = null,
         City $city = null
     ): Response {
         $threads = [];
@@ -87,10 +84,13 @@ class BoardController extends AbstractController
 
     /**
      * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("board", class="App:Board", isOptional="true")
      */
-    public function addThreadAction(Request $request, ObjectRouterInterface $objectRouter, Board $board = null, City $city = null): Response
-    {
+    public function addThreadAction(
+        Request $request,
+        ObjectRouterInterface $objectRouter,
+        #[MapEntity(mapping: ['boardSlug' => 'slug'])] Board $board = null,
+        City $city = null
+    ): Response {
         $board = $board ?? $city;
 
         $data = [];
