@@ -47,7 +47,6 @@ class SocialNetworkFeedItemController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     * @ParamConverter("socialNetworkFeedItem", class="App:SocialNetworkFeedItem")
      */
     #[Route(path: '/{citySlug}/socialnetwork-feeditems/{feedItemId}', name: 'caldera_criticalmass_rest_socialnetwork_feeditems_update', methods: ['POST'])]
     public function updateSocialNetworkFeedItemAction(Request $request, SocialNetworkFeedItem $socialNetworkFeedItem, EntityMergerInterface $entityMerger): JsonResponse
