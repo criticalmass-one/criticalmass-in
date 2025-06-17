@@ -119,10 +119,6 @@ services:
     App\Criticalmass\Geo\Loop\LoopInterface:
         alias: App\Criticalmass\Geo\Loop\TrackLoop
 
-    App\Request\ParamConverter\RegionParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 0, converter: region_converter }
-
     App\Request\ParamConverter\CityCycleParamConverter:
         tags:
             - { name: request.param_converter, priority: 0, converter: citycycle_converter }

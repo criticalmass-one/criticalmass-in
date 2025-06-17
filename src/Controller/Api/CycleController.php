@@ -6,6 +6,7 @@ use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Entity\Region;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\Operation;
@@ -73,13 +74,17 @@ class CycleController extends BaseController
      *     )
      * )
      *
-     * @ParamConverter("region", class="App:Region", isOptional=true)
      * @ParamConverter("validFrom", class="DateTime", isOptional=true)
      * @ParamConverter("validUntil", class="DateTime", isOptional=true)
      */
     #[Route(path: '/cycles', name: 'caldera_criticalmass_rest_cycles_list', methods: ['GET'])]
-    public function listAction(Request $request, City $city = null, Region $region = null, \DateTime $validFrom = null, \DateTime $validUntil = null): JsonResponse
-    {
+    public function listAction(
+        Request $request,
+        City $city = null,
+        Region $region = null,
+        \DateTime $validFrom = null,
+        \DateTime $validUntil = null
+    ): JsonResponse {
         $validNow = $request->query->getBoolean('validNow');
         $dayOfWeek = $request->query->getInt('dayOfWeek');
         $weekOfMonth = $request->query->getInt('weekOfMonth');

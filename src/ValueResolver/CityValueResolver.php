@@ -20,7 +20,10 @@ class CityValueResolver implements ValueResolverInterface
 
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
-        if ($argument->getType() !== City::class) {
+        if ($argument->getType() !== City::class
+            || $argument->getName() !== 'city'
+            || !$request->query->has('citySlug')
+        ) {
             return [];
         }
 

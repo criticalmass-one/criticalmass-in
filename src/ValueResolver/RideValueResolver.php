@@ -20,7 +20,10 @@ class RideValueResolver implements ValueResolverInterface
 
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
-        if ($argument->getType() !== Ride::class) {
+        if (
+            $argument->getType() !== Ride::class
+            || $argument->getName() !== 'ride'
+        ) {
             return [];
         }
 
