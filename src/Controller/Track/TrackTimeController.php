@@ -5,7 +5,6 @@ namespace App\Controller\Track;
 use App\Criticalmass\Geo\TimeShifter\TrackTimeShifterInterface;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Event\Track\TrackTimeEvent;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Controller\AbstractController;
 use App\Entity\Track;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -18,9 +17,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class TrackTimeController extends AbstractController
 {
-    /**
-     * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
-     */
     #[IsGranted('edit', 'track')]
     public function timeAction(Request $request, ObjectRouterInterface $objectRouter, EventDispatcherInterface $eventDispatcher, Track $track, TrackTimeShifterInterface $trackTimeshift): Response
     {

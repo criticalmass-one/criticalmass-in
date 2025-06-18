@@ -9,7 +9,9 @@ use App\Criticalmass\Strava\Token\StravaTokenStorage;
 use App\Criticalmass\Util\DateTimeUtil;
 use App\Entity\Ride;
 use App\Event\Track\TrackUploadedEvent;
+use Doctrine\Persistence\ManagerRegistry;
 use Iamstuartwilson\StravaApi;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Strava\API\OAuth;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -21,13 +23,15 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class StravaController extends AbstractController
 {
-    public function __construct(private readonly string $stravaClientId, private readonly string $stravaSecret)
+    public function __construct(
+        ManagerRegistry $managerRegistry,
+        private readonly string $stravaClientId,
+        private readonly string $stravaSecret
+    )
     {
+        parent::__construct($managerRegistry);
     }
 
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     #[IsGranted('ROLE_USER')]
     public function authAction(Request $request, Ride $ride, ObjectRouterInterface $objectRouter): Response
     {
@@ -48,9 +52,6 @@ class StravaController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     #[IsGranted('ROLE_USER')]
     public function tokenAction(Request $request, Ride $ride, ObjectRouterInterface $objectRouter, SessionInterface $session): Response
     {
@@ -69,9 +70,6 @@ class StravaController extends AbstractController
         }
     }
 
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     #[IsGranted('ROLE_USER')]
     public function listridesAction(Ride $ride, SessionInterface $session): Response
     {
@@ -97,9 +95,6 @@ class StravaController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     #[IsGranted('ROLE_USER')]
     public function importAction(Request $request, UserInterface $user, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, Ride $ride, TrackImporterInterface $trackImporter): Response
     {

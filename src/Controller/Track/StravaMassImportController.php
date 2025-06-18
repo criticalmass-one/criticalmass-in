@@ -10,7 +10,6 @@ use App\Entity\Ride;
 use App\Entity\TrackImportCandidate;
 use App\Event\Track\TrackUploadedEvent;
 use Carbon\Carbon;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Strava\API\OAuth;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -124,9 +123,6 @@ class StravaMassImportController extends AbstractController
         return $this->redirectToRoute('caldera_criticalmass_trackmassimport_list');
     }
 
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     #[IsGranted('ROLE_USER')]
     public function importAction(Request $request, UserInterface $user, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, Ride $ride, TrackImporterInterface $trackImporter): Response
     {

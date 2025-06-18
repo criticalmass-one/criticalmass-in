@@ -4,7 +4,6 @@ namespace App\Controller\Track;
 
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Event\Track\TrackUploadedEvent;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use App\Criticalmass\UploadValidator\TrackValidator;
@@ -19,9 +18,6 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class TrackUploadController extends AbstractController
 {
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     #[IsGranted('ROLE_USER')]
     public function uploadAction(Request $request, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, Ride $ride, TrackValidator $trackValidator): Response
     {

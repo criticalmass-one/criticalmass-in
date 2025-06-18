@@ -6,7 +6,6 @@ use App\Event\Track\TrackHiddenEvent;
 use App\Event\Track\TrackShownEvent;
 use App\Repository\TrackRepository;
 use Knp\Component\Pager\PaginatorInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Controller\AbstractController;
 use App\Entity\Track;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -37,9 +36,6 @@ class TrackManagementController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
-     */
     #[IsGranted('edit', 'track')]
     public function toggleAction(EventDispatcherInterface $eventDispatcher, Track $track): Response
     {
@@ -56,9 +52,6 @@ class TrackManagementController extends AbstractController
         return $this->redirectToRoute('caldera_criticalmass_track_list');
     }
 
-    /**
-     * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
-     */
     #[IsGranted('edit', 'track')]
     public function deleteAction(Track $track, EventDispatcherInterface $eventDispatcher): Response
     {

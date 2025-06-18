@@ -9,7 +9,6 @@ use App\Criticalmass\Profile\Streak\StreakGeneratorInterface;
 use App\Entity\Participation;
 use App\Event\Participation\ParticipationDeletedEvent;
 use App\Event\Participation\ParticipationUpdatedEvent;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,12 +40,13 @@ class ParticipationController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("participation", class="App:Participation", options={"id": "participationId"})
-     */
     #[IsGranted('cancel', 'participation')]
-    public function updateAction(Request $request, ManagerRegistry $registry, EventDispatcherInterface $eventDispatcher, Participation $participation): Response
-    {
+    public function updateAction(
+        Request $request,
+        ManagerRegistry $registry,
+        EventDispatcherInterface $eventDispatcher,
+        Participation $participation
+    ): Response {
         $status = $request->query->get('status', 'maybe');
 
         $participation
@@ -61,12 +61,12 @@ class ParticipationController extends AbstractController
         return $this->redirectToRoute('criticalmass_user_participation_list');
     }
 
-    /**
-     * @ParamConverter("participation", class="App:Participation", options={"id": "participationId"})
-     */
     #[IsGranted('delete', 'participation')]
-    public function deleteAction(ManagerRegistry $registry, EventDispatcherInterface $eventDispatcher,  Participation $participation): Response
-    {
+    public function deleteAction(
+        ManagerRegistry $registry,
+        EventDispatcherInterface $eventDispatcher,
+        Participation $participation
+    ): Response {
         $registry->getManager()->remove($participation);
 
         $registry->getManager()->flush();

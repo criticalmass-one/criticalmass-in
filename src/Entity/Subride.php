@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[JMS\ExclusionPolicy('all')]
 class Subride implements AuditableInterface, SocialNetworkProfileAble, RouteableInterface
 {
-    #[Routing\RouteParameter(name: 'subrideId')]
+    #[Routing\RouteParameter(name: 'id')]
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]

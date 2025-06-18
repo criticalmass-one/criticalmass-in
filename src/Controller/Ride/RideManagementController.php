@@ -10,7 +10,6 @@ use App\Form\Type\RideDisableType;
 use App\Form\Type\RideSocialPreviewType;
 use App\Form\Type\RideType;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;
@@ -22,9 +21,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class RideManagementController extends AbstractController
 {
-    /**
-     * @ParamConverter("city", class="App:City")
-     */
     #[IsGranted('ROLE_USER')]
     public function addAction(Request $request, UserInterface $user = null, EntityManagerInterface $entityManager, City $city, ObjectRouterInterface $objectRouter): Response
     {
@@ -93,9 +89,6 @@ class RideManagementController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     #[IsGranted('ROLE_USER')]
     public function editAction(Request $request, UserInterface $user = null, Ride $ride, ObjectRouterInterface $objectRouter): Response
     {
@@ -160,9 +153,6 @@ class RideManagementController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     #[IsGranted('ROLE_USER')]
     public function socialPreviewAction(
         EntityManagerInterface $entityManager,
@@ -217,9 +207,6 @@ class RideManagementController extends AbstractController
         return $this->socialPreviewGetAction($entityManager, $request, $user, $ride, $form);
     }
 
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     #[IsGranted('ROLE_USER')]
     public function disableAction(Request $request, ManagerRegistry $registry, UserInterface $user = null, Ride $ride, ObjectRouterInterface $objectRouter): RedirectResponse
     {
@@ -237,9 +224,6 @@ class RideManagementController extends AbstractController
         return $this->redirect($objectRouter->generate($ride));
     }
 
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     #[IsGranted('ROLE_USER')]
     public function enableAction(ManagerRegistry $registry, UserInterface $user = null, Ride $ride, ObjectRouterInterface $objectRouter): RedirectResponse
     {

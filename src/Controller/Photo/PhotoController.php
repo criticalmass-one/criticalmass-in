@@ -13,7 +13,6 @@ use App\Repository\TrackRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Flagception\Bundle\FlagceptionBundle\Annotations\Feature;
 
 /**
@@ -21,9 +20,6 @@ use Flagception\Bundle\FlagceptionBundle\Annotations\Feature;
  */
 class PhotoController extends AbstractController
 {
-    /**
-     * @ParamConverter("photo", class="App:Photo", options={"id" = "photoId"})
-     */
     public function showAction(
         SeoPageInterface $seoPage,
         EventDispatcherInterface $eventDispatcher,

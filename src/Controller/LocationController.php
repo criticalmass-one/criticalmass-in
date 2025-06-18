@@ -7,16 +7,11 @@ use App\Entity\Location;
 use App\Entity\Ride;
 use App\Repository\LocationRepository;
 use App\Repository\RideRepository;
-use FOS\ElasticaBundle\Finder\FinderInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class LocationController extends AbstractController
 {
-    /**
-     * @ParamConverter("city", class="App:City")
-     */
     public function listlocationsAction(
         LocationRepository $locationRepository,
         City $city
@@ -28,9 +23,6 @@ class LocationController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("location", class="App:Location")
-     */
     public function showAction(
         LocationRepository $locationRepository,
         RideRepository $rideRepository,
@@ -48,9 +40,6 @@ class LocationController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     public function rideAction(
         LocationRepository $locationRepository,
         RideRepository $rideRepository,

@@ -6,16 +6,12 @@ use App\Controller\AbstractController;
 use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Entity\Ride;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class CityCycleController extends AbstractController
 {
-    /**
-     * @ParamConverter("city", class="App:City")
-     */
     #[IsGranted('ROLE_USER')]
     public function listAction(City $city, ManagerRegistry $registry): Response
     {
@@ -27,12 +23,11 @@ class CityCycleController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("cityCycle", class="App:CityCycle")
-     */
     #[IsGranted('ROLE_USER')]
-    public function listRidesAction(CityCycle $cityCycle, ManagerRegistry $registry): Response
-    {
+    public function listRidesAction(
+        CityCycle $cityCycle,
+        ManagerRegistry $registry
+    ): Response {
         $rideRepository = $registry->getRepository(Ride::class);
 
         return $this->render('CityCycle/ride_list.html.twig', [

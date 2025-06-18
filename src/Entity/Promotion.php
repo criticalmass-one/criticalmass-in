@@ -5,14 +5,13 @@ namespace App\Entity;
 use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation as DataQuery;
 use App\Criticalmass\Router\Attribute as Routing;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
-use App\EntityInterface\AutoParamConverterAble;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 #[Routing\DefaultRoute(name: 'caldera_criticalmass_promotion_show')]
 #[ORM\Table(name: 'promotion')]
 #[ORM\Entity(repositoryClass: 'App\Repository\PromotionRepository')]
-class Promotion implements AutoParamConverterAble, ViewableEntity, RouteableInterface
+class Promotion implements ViewableEntity, RouteableInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

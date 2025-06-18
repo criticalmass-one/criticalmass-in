@@ -8,7 +8,6 @@ use App\Entity\Photo;
 use App\Entity\Ride;
 use App\Form\Type\LegacyPhotoUploadType;
 use Flagception\Bundle\FlagceptionBundle\Annotations\Feature;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,9 +19,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
  */
 class LegacyPhotoUploadController extends AbstractController
 {
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     #[IsGranted('ROLE_USER')]
     public function uploadAction(Request $request, UserInterface $user = null, Ride $ride, PhotoUploaderInterface $photoUploader): Response
     {

@@ -7,7 +7,6 @@ use App\Entity\Photo;
 use App\EntityInterface\PostableInterface;
 use App\Criticalmass\Util\ClassUtil;
 use App\Repository\PostRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Entity\City;
 use App\Entity\Post;
 use App\Entity\Ride;
@@ -21,36 +20,24 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class PostController extends AbstractController
 {
-    /**
-     * @ParamConverter("city", class="App:City", converter="city_converter")
-     */
     #[IsGranted('ROLE_USER')]
     public function writeCityAction(Request $request, City $city, ObjectRouterInterface $objectRouter): Response
     {
         return $this->writeAction($request, $city, $objectRouter);
     }
 
-    /**
-     * @ParamConverter("ride", class="App:Ride", converter="ride_converter")
-     */
     #[IsGranted('ROLE_USER')]
     public function writeRideAction(Request $request, Ride $ride, ObjectRouterInterface $objectRouter): Response
     {
         return $this->writeAction($request, $ride, $objectRouter);
     }
 
-    /**
-     * @ParamConverter("photo", class="App:Photo", converter="photo_converter")
-     */
     #[IsGranted('ROLE_USER')]
     public function writePhotoAction(Request $request, Photo $photo, ObjectRouterInterface $objectRouter): Response
     {
         return $this->writeAction($request, $photo, $objectRouter);
     }
 
-    /**
-     * @ParamConverter("thread", class="App:Thread", isOptional=true, converter="thread_converter")
-     */
     #[IsGranted('ROLE_USER')]
     public function writeThreadAction(Request $request, Thread $thread = null, ObjectRouterInterface $objectRouter): Response
     {
@@ -172,12 +159,13 @@ class PostController extends AbstractController
     protected function generateActionUrl(PostableInterface $postable): string
     {
         $lcShortname = ClassUtil::getLowercaseShortname($postable);
-        $lcfirstShortname = ClassUtil::getLcfirstShortname($postable);
 
         $routeName = sprintf('caldera_criticalmass_timeline_post_write_%s', $lcShortname);
-        $parameterName = sprintf('%sId', $lcfirstShortname);
+        $parameter = ['id' => $postable->getId()];
 
-        $parameter = [$parameterName => $postable->getId()];
+        if ($postable instanceof Thread) {
+            $parameter = ['threadSlug' => $postable->getSlug()];
+        }
 
         return $this->generateUrl($routeName, $parameter);
     }

@@ -4,7 +4,6 @@ namespace App\Controller\Ride;
 
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Event\RideEstimate\RideEstimateCreatedEvent;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Controller\AbstractController;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
@@ -17,9 +16,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class RideEstimateController extends AbstractController
 {
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     #[IsGranted('ROLE_USER')]
     public function addestimateAction(
         Request $request,
@@ -50,9 +46,6 @@ class RideEstimateController extends AbstractController
         return $this->redirect($objectRouter->generate($ride));
     }
 
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     public function anonymousestimateAction(
         Request $request,
         UserInterface $user = null,

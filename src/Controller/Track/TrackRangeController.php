@@ -7,7 +7,6 @@ use App\Criticalmass\Geo\LatLngListGenerator\SimpleLatLngListGenerator;
 use App\Entity\Track;
 use App\Event\Track\TrackTrimmedEvent;
 use App\Form\Type\TrackRangeType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,9 +20,6 @@ class TrackRangeController extends AbstractController
 
     }
 
-    /**
-     * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
-     */
     #[IsGranted('edit', 'track')]
     public function rangeAction(Request $request, Track $track, SimpleLatLngListGenerator $latLngListGenerator, EventDispatcherInterface $eventDispatcher): Response
     {

@@ -7,7 +7,6 @@ use App\Criticalmass\Router\Attribute as Routing;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AuditableInterface;
-use App\EntityInterface\AutoParamConverterAble;
 use App\EntityInterface\BoardInterface;
 use App\EntityInterface\CoordinateInterface;
 use App\EntityInterface\ElasticSearchPinInterface;
@@ -30,7 +29,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\Entity(repositoryClass: 'App\Repository\CityRepository')]
 #[JMS\ExclusionPolicy('all')]
 #[ORM\Index(fields: ['createdAt'], name: 'city_created_at_index')]
-class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, AutoParamConverterAble, SocialNetworkProfileAble, PostableInterface, CoordinateInterface
+class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, SocialNetworkProfileAble, PostableInterface, CoordinateInterface
 {
     /**
      * @DataQuery\Sortable

@@ -11,6 +11,7 @@ use App\Form\Type\PhotoCoordType;
 use App\Repository\PhotoRepository;
 use App\Repository\TrackRepository;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Form\FormInterface;
@@ -38,9 +39,6 @@ class PhotoManagementController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     public function ridelistAction(
         Request $request,
         PaginatorInterface $paginator,
@@ -61,9 +59,6 @@ class PhotoManagementController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
-     */
     #[IsGranted('edit', 'photo')]
     public function deleteAction(Request $request, Photo $photo, ManagerRegistry $registry): Response
     {
@@ -76,9 +71,6 @@ class PhotoManagementController extends AbstractController
         return $this->createRedirectResponseForSavedReferer($request);
     }
 
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     #[IsGranted('ROLE_USER')]
     public function manageAction(
         Request $request,
@@ -101,9 +93,6 @@ class PhotoManagementController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
-     */
     #[IsGranted('edit', 'photo')]
     public function toggleAction(Request $request, Photo $photo, ManagerRegistry $registry): Response
     {
@@ -116,9 +105,6 @@ class PhotoManagementController extends AbstractController
         return $this->createRedirectResponseForSavedReferer($request);
     }
 
-    /**
-     * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
-     */
     #[IsGranted('edit', 'photo')]
     public function featuredPhotoAction(Request $request, Photo $photo, ManagerRegistry $registry): Response
     {
@@ -131,9 +117,6 @@ class PhotoManagementController extends AbstractController
         return $this->createRedirectResponseForSavedReferer($request);
     }
 
-    /**
-     * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
-     */
     #[IsGranted('edit', 'photo')]
     public function placeSingleAction(Request $request, Photo $photo, ObjectRouterInterface $objectRouter, ManagerRegistry $registry): Response
     {
@@ -178,9 +161,6 @@ class PhotoManagementController extends AbstractController
         return $this->createRedirectResponseForSavedReferer($request);
     }
 
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     #[IsGranted('ROLE_USER')]
     public function relocateAction(
         TrackRepository $trackRepository,
@@ -198,9 +178,6 @@ class PhotoManagementController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
-     */
     #[IsGranted('edit', 'photo')]
     public function rotateAction(Request $request, Photo $photo, PhotoManipulatorInterface $photoManipulator): Response
     {
@@ -220,9 +197,6 @@ class PhotoManagementController extends AbstractController
         return $this->createRedirectResponseForSavedReferer($request);
     }
 
-    /**
-     * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
-     */
     #[IsGranted('edit', 'photo')]
     public function censorAction(Request $request, UserInterface $user = null, Photo $photo, PhotoManipulatorInterface $photoManipulator): Response
     {

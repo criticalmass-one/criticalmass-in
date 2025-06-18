@@ -9,12 +9,12 @@ use App\Repository\BoardRepository;
 use App\Repository\CityRepository;
 use App\Repository\PostRepository;
 use App\Repository\ThreadRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Entity\City;
 use App\Entity\Post;
 use App\Entity\Thread;
 use App\EntityInterface\BoardInterface;
 use Malenki\Slug;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -36,14 +36,10 @@ class BoardController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("city", class="App:City", isOptional="true")
-     * @ParamConverter("board", class="App:Board", isOptional="true")
-     */
     public function listThreadsAction(
         ThreadRepository $threadRepository,
         ObjectRouterInterface $objectRouter,
-        Board $board = null,
+        #[MapEntity(mapping: ['boardSlug' => 'slug'])] Board $board = null,
         City $city = null
     ): Response {
         $threads = [];
@@ -68,9 +64,6 @@ class BoardController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("thread", class="App:Thread")
-     */
     public function viewThreadAction(
         PostRepository $postRepository,
         EventDispatcherInterface $eventDispatcher,
@@ -88,13 +81,14 @@ class BoardController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("city", class="App:City", isOptional="true")
-     * @ParamConverter("board", class="App:Board", isOptional="true")
-     */
+
     #[IsGranted('ROLE_USER')]
-    public function addThreadAction(Request $request, ObjectRouterInterface $objectRouter, Board $board = null, City $city = null): Response
-    {
+    public function addThreadAction(
+        Request $request,
+        ObjectRouterInterface $objectRouter,
+        #[MapEntity(mapping: ['boardSlug' => 'slug'])] Board $board = null,
+        City $city = null
+    ): Response {
         $board = $board ?? $city;
 
         $data = [];

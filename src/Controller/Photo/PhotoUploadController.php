@@ -3,7 +3,6 @@
 namespace App\Controller\Photo;
 
 use App\Criticalmass\Image\PhotoUploader\PhotoUploaderInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Controller\AbstractController;
 use App\Entity\Ride;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -18,9 +17,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
  */
 class PhotoUploadController extends AbstractController
 {
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     #[IsGranted('ROLE_USER')]
     public function uploadAction(Request $request, UserInterface $user = null, Ride $ride, PhotoUploaderInterface $photoUploader): Response
     {

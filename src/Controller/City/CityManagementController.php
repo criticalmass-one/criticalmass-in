@@ -14,7 +14,6 @@ use App\Factory\City\CityFactoryInterface;
 use App\Form\Type\CityType;
 use App\Repository\RegionRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -125,9 +124,6 @@ class CityManagementController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("city", class="App:City")
-     */
     #[IsGranted('ROLE_USER')]
     public function editAction(
         Request $request,

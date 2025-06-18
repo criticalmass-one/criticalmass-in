@@ -9,7 +9,6 @@ use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
 use App\Criticalmass\Router\Attribute as Routing;
 use App\Criticalmass\UploadFaker\FakeUploadable;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
-use App\EntityInterface\AutoParamConverterAble;
 use App\EntityInterface\CoordinateInterface;
 use App\EntityInterface\ElasticSearchPinInterface;
 use App\EntityInterface\PhotoInterface;
@@ -33,12 +32,12 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\Entity(repositoryClass: 'App\Repository\PhotoRepository')]
 #[JMS\ExclusionPolicy('all')]
 #[ORM\Index(fields: ['exifCreationDate'], name: 'photo_exif_creation_date_index')]
-class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, AutoParamConverterAble, OrderedEntityInterface, ElasticSearchPinInterface, CoordinateInterface
+class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, OrderedEntityInterface, ElasticSearchPinInterface, CoordinateInterface
 {
     /**
      * @DataQuery\Sortable()
      */
-    #[Routing\RouteParameter(name: 'photoId')]
+    #[Routing\RouteParameter(name: 'id')]
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]

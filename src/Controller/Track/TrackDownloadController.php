@@ -3,7 +3,6 @@
 namespace App\Controller\Track;
 
 use League\Flysystem\Filesystem;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Controller\AbstractController;
 use App\Entity\Track;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,9 +11,6 @@ use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class TrackDownloadController extends AbstractController
 {
-    /**
-     * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
-     */
     #[IsGranted('edit', 'track')]
     public function downloadAction(Track $track, UploaderHelper $uploaderHelper): Response
     {

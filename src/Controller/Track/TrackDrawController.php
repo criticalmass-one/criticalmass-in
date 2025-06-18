@@ -2,7 +2,6 @@
 
 namespace App\Controller\Track;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Controller\AbstractController;
 use App\Entity\Ride;
 use App\Entity\Track;
@@ -12,9 +11,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class TrackDrawController extends AbstractController
 {
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     #[IsGranted('ROLE_USER')]
     public function drawAction(Request $request, Ride $ride): Response
     {
@@ -55,9 +51,6 @@ class TrackDrawController extends AbstractController
         return $this->redirectToRoute('caldera_criticalmass_track_list');
     }
 
-    /**
-     * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
-     */
     #[IsGranted('edit', 'track')]
     public function editAction(Request $request, Track $track): Response
     {

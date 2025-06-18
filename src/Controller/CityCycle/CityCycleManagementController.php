@@ -8,7 +8,6 @@ use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Form\Type\CityCycleType;
 use Doctrine\Persistence\ManagerRegistry;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,9 +16,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class CityCycleManagementController extends AbstractController
 {
-    /**
-     * @ParamConverter("city", class="App:City")
-     */
     #[IsGranted('ROLE_USER')]
     public function addAction(Request $request, UserInterface $user = null, City $city, ObjectRouterInterface $objectRouter): Response
     {
@@ -71,12 +67,13 @@ class CityCycleManagementController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("cityCycle", class="App:CityCycle", options={"id" = "cycleId"})
-     */
     #[IsGranted('ROLE_USER')]
-    public function editAction(Request $request, UserInterface $user = null, CityCycle $cityCycle, ObjectRouterInterface $objectRouter): Response
-    {
+    public function editAction(
+        Request $request,
+        UserInterface $user = null,
+        CityCycle $cityCycle,
+        ObjectRouterInterface $objectRouter
+    ): Response {
         $cityCycle->setUser($user);
 
         $form = $this->createForm(CityCycleType::class, $cityCycle, [
@@ -124,12 +121,12 @@ class CityCycleManagementController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("cityCycle", class="App:CityCycle", options={"id" = "cycleId"})
-     */
     #[IsGranted('ROLE_USER')]
-    public function disableAction(CityCycle $cityCycle, ManagerRegistry $managerRegistry, ObjectRouterInterface $objectRouter): Response
-    {
+    public function disableAction(
+        CityCycle $cityCycle,
+        ManagerRegistry $managerRegistry,
+        ObjectRouterInterface $objectRouter
+    ): Response {
         $manager = $managerRegistry->getManager();
 
         if ($cityCycle->getRides()->count() > 0) {

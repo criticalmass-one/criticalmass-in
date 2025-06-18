@@ -13,16 +13,12 @@ use App\Repository\LocationRepository;
 use App\Repository\PhotoRepository;
 use App\Repository\RideRepository;
 use App\Repository\SocialNetworkProfileRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class CityController extends AbstractController
 {
-    /**
-     * @ParamConverter("city", class="App:City")
-     */
     public function missingStatsAction(
         RideRepository $rideRepository,
         City $city
@@ -33,9 +29,6 @@ class CityController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("city", class="App:City")
-     */
     public function listRidesAction(
         RideRepository $rideRepository,
         City $city
@@ -46,9 +39,6 @@ class CityController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("city", class="App:City")
-     */
     public function listGalleriesAction(
         PhotoRepository $photoRepository,
         SeoPageInterface $seoPage,
@@ -64,9 +54,6 @@ class CityController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("city", class="App:City", isOptional=true)
-     */
     public function showAction(
         Request $request,
         RideRepository $rideRepository,
@@ -122,9 +109,6 @@ class CityController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("city", class="App:City")
-     */
     public function getlocationsAction(
         RideRepository $rideRepository,
         City $city

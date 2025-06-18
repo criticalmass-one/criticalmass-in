@@ -5,7 +5,6 @@ namespace App\Controller\Ride;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Ride;
 use App\Repository\RideRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Controller\AbstractController;
 use App\Entity\Subride;
 use App\Form\Type\SubrideType;
@@ -17,9 +16,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class SubrideController extends AbstractController
 {
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     #[IsGranted('ROLE_USER')]
     public function addAction(Request $request, Ride $ride, UserInterface $user, ObjectRouterInterface $objectRouter): Response
     {
@@ -79,9 +75,6 @@ class SubrideController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("subride", class="App:Subride", options={"id" = "subrideId"})
-     */
     #[IsGranted('ROLE_USER')]
     public function editAction(Request $request, Subride $subride, ObjectRouterInterface $objectRouter): Response
     {
@@ -126,9 +119,6 @@ class SubrideController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     #[IsGranted('ROLE_USER')]
     public function preparecopyAction(
         RideRepository $rideRepository,
@@ -142,18 +132,20 @@ class SubrideController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("oldRide", class="App:Ride")
-     * @ParamConverter("newDate", options={"format": "Y-m-d"})
-     */
     #[IsGranted('ROLE_USER')]
     public function copyAction(
         Ride $oldRide,
-        \DateTime $newDate,
+        string $newDate,
         ObjectRouterInterface $objectRouter,
         RideRepository $rideRepository
     ): Response {
-        $ride = $rideRepository->findCityRideByDate($oldRide->getCity(), $newDate);
+        $newDateObj = \DateTime::createFromFormat('Y-m-d', $newDate);
+
+        if (!$newDateObj) {
+            throw new \InvalidArgumentException('Invalid date format. Expected Y-m-d');
+        }
+
+        $ride = $rideRepository->findCityRideByDate($oldRide->getCity(), $newDateObj);
 
         $em = $this->managerRegistry->getManager();
 
