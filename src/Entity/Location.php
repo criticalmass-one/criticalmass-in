@@ -27,7 +27,7 @@ class Location implements RouteableInterface, AuditableInterface, AutoParamConve
     #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
     protected ?City $city = null;
 
-    #[RouteParameter(name: 'locationSlug')]
+    #[RouteParameter(name: 'slug')]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[JMS\Expose]
     protected ?string $slug = null;
