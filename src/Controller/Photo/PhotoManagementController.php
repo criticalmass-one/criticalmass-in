@@ -63,9 +63,9 @@ class PhotoManagementController extends AbstractController
     }
 
     /**
-     * @Security("is_granted('edit', photo)")
      * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
+    #[IsGranted('edit', 'photo')]
     public function deleteAction(Request $request, Photo $photo, ManagerRegistry $registry): Response
     {
         $this->saveReferer($request);
@@ -103,9 +103,9 @@ class PhotoManagementController extends AbstractController
     }
 
     /**
-     * @Security("is_granted('edit', photo)")
      * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
+    #[IsGranted('edit', 'photo')]
     public function toggleAction(Request $request, Photo $photo, ManagerRegistry $registry): Response
     {
         $this->saveReferer($request);
@@ -118,9 +118,9 @@ class PhotoManagementController extends AbstractController
     }
 
     /**
-     * @Security("is_granted('edit', photo)")
      * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
+    #[IsGranted('edit', 'photo')]
     public function featuredPhotoAction(Request $request, Photo $photo, ManagerRegistry $registry): Response
     {
         $this->saveReferer($request);
@@ -133,9 +133,9 @@ class PhotoManagementController extends AbstractController
     }
 
     /**
-     * @Security("is_granted('edit', photo)")
      * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
+    #[IsGranted('edit', 'photo')]
     public function placeSingleAction(Request $request, Photo $photo, ObjectRouterInterface $objectRouter, ManagerRegistry $registry): Response
     {
         $form = $this->createForm(PhotoCoordType::class, $photo, [
@@ -200,9 +200,9 @@ class PhotoManagementController extends AbstractController
     }
 
     /**
-     * @Security("is_granted('edit', photo)")
      * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
+    #[IsGranted('edit', 'photo')]
     public function rotateAction(Request $request, Photo $photo, PhotoManipulatorInterface $photoManipulator): Response
     {
         $this->saveReferer($request);
@@ -222,9 +222,9 @@ class PhotoManagementController extends AbstractController
     }
 
     /**
-     * @Security("is_granted('edit', photo)")
      * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
      */
+    #[IsGranted('edit', 'photo')]
     public function censorAction(Request $request, UserInterface $user = null, Photo $photo, PhotoManipulatorInterface $photoManipulator): Response
     {
         if (Request::METHOD_POST === $request->getMethod()) {

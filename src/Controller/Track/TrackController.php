@@ -8,13 +8,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class TrackController extends AbstractController
 {
     /**
-     * @Security("is_granted('view', track)")
      * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
      */
+    #[IsGranted('view', 'track')]
     public function viewAction(Track $track): Response
     {
         return $this->render('Track/view.html.twig', [
@@ -23,9 +24,9 @@ class TrackController extends AbstractController
     }
 
     /**
-     * @Security("is_granted('approve', track)")
      * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
      */
+    #[IsGranted('approve', 'track')]
     public function approveAction(Track $track, ManagerRegistry $registry): Response
     {
         $track->setReviewed(true);

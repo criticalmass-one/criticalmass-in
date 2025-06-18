@@ -43,9 +43,9 @@ class ParticipationController extends AbstractController
     }
 
     /**
-     * @Security("is_granted('cancel', participation)")
      * @ParamConverter("participation", class="App:Participation", options={"id": "participationId"})
      */
+    #[IsGranted('cancel', 'participation')]
     public function updateAction(Request $request, ManagerRegistry $registry, EventDispatcherInterface $eventDispatcher, Participation $participation): Response
     {
         $status = $request->query->get('status', 'maybe');
@@ -63,9 +63,9 @@ class ParticipationController extends AbstractController
     }
 
     /**
-     * @Security("is_granted('delete', participation)")
      * @ParamConverter("participation", class="App:Participation", options={"id": "participationId"})
      */
+    #[IsGranted('delete', 'participation')]
     public function deleteAction(ManagerRegistry $registry, EventDispatcherInterface $eventDispatcher,  Participation $participation): Response
     {
         $registry->getManager()->remove($participation);

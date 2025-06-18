@@ -18,6 +18,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class TrackController extends BaseController
 {
@@ -209,10 +210,10 @@ class TrackController extends BaseController
 
 
     /**
-     * @Security("is_granted('edit', track)")
      * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
      * @Route("/track/{trackId}", name="caldera_criticalmass_rest_track_delete", methods={"DELETE"})
      */
+    #[IsGranted('edit', 'track')]
     public function deleteAction(Track $track, EventDispatcherInterface $eventDispatcher, ManagerRegistry $managerRegistry): Response
     {
         $track->setDeleted(true);

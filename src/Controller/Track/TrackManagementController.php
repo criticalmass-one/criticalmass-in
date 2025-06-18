@@ -39,9 +39,9 @@ class TrackManagementController extends AbstractController
     }
 
     /**
-     * @Security("is_granted('edit', track)")
      * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
      */
+    #[IsGranted('edit', 'track')]
     public function toggleAction(EventDispatcherInterface $eventDispatcher, Track $track): Response
     {
         $track->setEnabled(!$track->getEnabled());
@@ -58,9 +58,9 @@ class TrackManagementController extends AbstractController
     }
 
     /**
-     * @Security("is_granted('edit', track)")
      * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
      */
+    #[IsGranted('edit', 'track')]
     public function deleteAction(Track $track, EventDispatcherInterface $eventDispatcher): Response
     {
         $track->setDeleted(true);
