@@ -9,7 +9,6 @@ use App\Repository\BoardRepository;
 use App\Repository\CityRepository;
 use App\Repository\PostRepository;
 use App\Repository\ThreadRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Entity\City;
 use App\Entity\Post;
 use App\Entity\Thread;
@@ -22,6 +21,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class BoardController extends AbstractController
 {
@@ -81,9 +81,8 @@ class BoardController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     */
+
+    #[IsGranted('ROLE_USER')]
     public function addThreadAction(
         Request $request,
         ObjectRouterInterface $objectRouter,

@@ -2,18 +2,16 @@
 
 namespace App\Controller\Track;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Controller\AbstractController;
 use App\Entity\Ride;
 use App\Entity\Track;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class TrackDrawController extends AbstractController
 {
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     */
+    #[IsGranted('ROLE_USER')]
     public function drawAction(Request $request, Ride $ride): Response
     {
         if (Request::METHOD_POST === $request->getMethod()) {
@@ -53,9 +51,7 @@ class TrackDrawController extends AbstractController
         return $this->redirectToRoute('caldera_criticalmass_track_list');
     }
 
-    /**
-     * @Security("is_granted('edit', track)")
-     */
+    #[IsGranted('edit', 'track')]
     public function editAction(Request $request, Track $track): Response
     {
         $ride = $track->getRide();

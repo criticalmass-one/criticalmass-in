@@ -11,8 +11,8 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Flagception\Bundle\FlagceptionBundle\Annotations\Feature;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * @Feature("photos")
@@ -44,9 +44,9 @@ class PhotoGalleryController extends AbstractController
     }
 
     /**
-     * @Security("is_granted('ROLE_USER')")
      * @Feature("photos")
      */
+    #[IsGranted('ROLE_USER')]
     public function userlistAction(
         PhotoRepository $photoRepository,
         UserInterface $user = null

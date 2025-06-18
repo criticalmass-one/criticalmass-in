@@ -3,17 +3,15 @@
 namespace App\Controller\Track;
 
 use League\Flysystem\Filesystem;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Controller\AbstractController;
 use App\Entity\Track;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class TrackDownloadController extends AbstractController
 {
-    /**
-     * @Security("is_granted('edit', track)")
-     */
+    #[IsGranted('edit', 'track')]
     public function downloadAction(Track $track, UploaderHelper $uploaderHelper): Response
     {
         /** @var Filesystem $filesystem */

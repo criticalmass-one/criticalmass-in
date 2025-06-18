@@ -6,15 +6,13 @@ use App\Controller\AbstractController;
 use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Entity\Ride;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class CityCycleController extends AbstractController
 {
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     */
+    #[IsGranted('ROLE_USER')]
     public function listAction(City $city, ManagerRegistry $registry): Response
     {
         $cityCycleRepository = $registry->getRepository(CityCycle::class);
@@ -25,9 +23,7 @@ class CityCycleController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     */
+    #[IsGranted('ROLE_USER')]
     public function listRidesAction(
         CityCycle $cityCycle,
         ManagerRegistry $registry

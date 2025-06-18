@@ -6,19 +6,17 @@ use App\Event\Track\TrackHiddenEvent;
 use App\Event\Track\TrackShownEvent;
 use App\Repository\TrackRepository;
 use Knp\Component\Pager\PaginatorInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Controller\AbstractController;
 use App\Entity\Track;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class TrackManagementController extends AbstractController
 {
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     */
+    #[IsGranted('ROLE_USER')]
     public function listAction(
         Request $request,
         TrackRepository $trackRepository,
@@ -38,9 +36,7 @@ class TrackManagementController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("is_granted('edit', track)")
-     */
+    #[IsGranted('edit', 'track')]
     public function toggleAction(EventDispatcherInterface $eventDispatcher, Track $track): Response
     {
         $track->setEnabled(!$track->getEnabled());
@@ -56,9 +52,7 @@ class TrackManagementController extends AbstractController
         return $this->redirectToRoute('caldera_criticalmass_track_list');
     }
 
-    /**
-     * @Security("is_granted('edit', track)")
-     */
+    #[IsGranted('edit', 'track')]
     public function deleteAction(Track $track, EventDispatcherInterface $eventDispatcher): Response
     {
         $track->setDeleted(true);

@@ -5,7 +5,6 @@ namespace App\Controller\Ride;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Ride;
 use App\Repository\RideRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Controller\AbstractController;
 use App\Entity\Subride;
 use App\Form\Type\SubrideType;
@@ -13,12 +12,11 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class SubrideController extends AbstractController
 {
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     */
+    #[IsGranted('ROLE_USER')]
     public function addAction(Request $request, Ride $ride, UserInterface $user, ObjectRouterInterface $objectRouter): Response
     {
         $subride = new Subride();
@@ -77,9 +75,7 @@ class SubrideController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     */
+    #[IsGranted('ROLE_USER')]
     public function editAction(Request $request, Subride $subride, ObjectRouterInterface $objectRouter): Response
     {
         $form = $this->createForm(SubrideType::class, $subride, [
@@ -123,9 +119,7 @@ class SubrideController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     */
+    #[IsGranted('ROLE_USER')]
     public function preparecopyAction(
         RideRepository $rideRepository,
         Ride $ride
@@ -138,9 +132,7 @@ class SubrideController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     */
+    #[IsGranted('ROLE_USER')]
     public function copyAction(
         Ride $oldRide,
         string $newDate,

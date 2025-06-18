@@ -12,6 +12,7 @@ use App\Repository\PhotoRepository;
 use App\Repository\TrackRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -19,6 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class PhotoManagementController extends AbstractController
 {
@@ -27,9 +29,7 @@ class PhotoManagementController extends AbstractController
         parent::__construct($authorizationChecker);
     }
 
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     */
+    #[IsGranted('ROLE_USER')]
     public function listAction(
         PhotoRepository $photoRepository,
         UserInterface $user = null
@@ -59,9 +59,7 @@ class PhotoManagementController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("is_granted('edit', photo)")
-     */
+    #[IsGranted('edit', 'photo')]
     public function deleteAction(Request $request, Photo $photo, ManagerRegistry $registry): Response
     {
         $this->saveReferer($request);
@@ -73,9 +71,7 @@ class PhotoManagementController extends AbstractController
         return $this->createRedirectResponseForSavedReferer($request);
     }
 
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     */
+    #[IsGranted('ROLE_USER')]
     public function manageAction(
         Request $request,
         PaginatorInterface $paginator,
@@ -97,9 +93,7 @@ class PhotoManagementController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("is_granted('edit', photo)")
-     */
+    #[IsGranted('edit', 'photo')]
     public function toggleAction(Request $request, Photo $photo, ManagerRegistry $registry): Response
     {
         $this->saveReferer($request);
@@ -111,9 +105,7 @@ class PhotoManagementController extends AbstractController
         return $this->createRedirectResponseForSavedReferer($request);
     }
 
-    /**
-     * @Security("is_granted('edit', photo)")
-     */
+    #[IsGranted('edit', 'photo')]
     public function featuredPhotoAction(Request $request, Photo $photo, ManagerRegistry $registry): Response
     {
         $this->saveReferer($request);
@@ -125,9 +117,7 @@ class PhotoManagementController extends AbstractController
         return $this->createRedirectResponseForSavedReferer($request);
     }
 
-    /**
-     * @Security("is_granted('edit', photo)")
-     */
+    #[IsGranted('edit', 'photo')]
     public function placeSingleAction(Request $request, Photo $photo, ObjectRouterInterface $objectRouter, ManagerRegistry $registry): Response
     {
         $form = $this->createForm(PhotoCoordType::class, $photo, [
@@ -171,9 +161,7 @@ class PhotoManagementController extends AbstractController
         return $this->createRedirectResponseForSavedReferer($request);
     }
 
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     */
+    #[IsGranted('ROLE_USER')]
     public function relocateAction(
         TrackRepository $trackRepository,
         PhotoRepository $photoRepository,
@@ -190,9 +178,7 @@ class PhotoManagementController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("is_granted('edit', photo)")
-     */
+    #[IsGranted('edit', 'photo')]
     public function rotateAction(Request $request, Photo $photo, PhotoManipulatorInterface $photoManipulator): Response
     {
         $this->saveReferer($request);
@@ -211,9 +197,7 @@ class PhotoManagementController extends AbstractController
         return $this->createRedirectResponseForSavedReferer($request);
     }
 
-    /**
-     * @Security("is_granted('edit', photo)")
-     */
+    #[IsGranted('edit', 'photo')]
     public function censorAction(Request $request, UserInterface $user = null, Photo $photo, PhotoManipulatorInterface $photoManipulator): Response
     {
         if (Request::METHOD_POST === $request->getMethod()) {

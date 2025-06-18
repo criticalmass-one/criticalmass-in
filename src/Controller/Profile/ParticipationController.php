@@ -9,18 +9,16 @@ use App\Criticalmass\Profile\Streak\StreakGeneratorInterface;
 use App\Entity\Participation;
 use App\Event\Participation\ParticipationDeletedEvent;
 use App\Event\Participation\ParticipationUpdatedEvent;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ParticipationController extends AbstractController
 {
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     */
+    #[IsGranted('ROLE_USER')]
     public function listAction(UserInterface $user = null, ManagerRegistry $registry, TableGeneratorInterface $tableGenerator, StreakGeneratorInterface $streakGenerator, ParticipationCityListFactoryInterface $participationCityListFactory): Response
     {
         $streakGenerator->setUser($user);
@@ -42,9 +40,7 @@ class ParticipationController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("is_granted('cancel', participation)")
-     */
+    #[IsGranted('cancel', 'participation')]
     public function updateAction(
         Request $request,
         ManagerRegistry $registry,
@@ -65,9 +61,7 @@ class ParticipationController extends AbstractController
         return $this->redirectToRoute('criticalmass_user_participation_list');
     }
 
-    /**
-     * @Security("is_granted('delete', participation)")
-     */
+    #[IsGranted('delete', 'participation')]
     public function deleteAction(
         ManagerRegistry $registry,
         EventDispatcherInterface $eventDispatcher,

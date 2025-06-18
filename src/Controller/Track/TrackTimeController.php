@@ -5,7 +5,6 @@ namespace App\Controller\Track;
 use App\Criticalmass\Geo\TimeShifter\TrackTimeShifterInterface;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Event\Track\TrackTimeEvent;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Controller\AbstractController;
 use App\Entity\Track;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -14,12 +13,11 @@ use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class TrackTimeController extends AbstractController
 {
-    /**
-     * @Security("is_granted('edit', track)")
-     */
+    #[IsGranted('edit', 'track')]
     public function timeAction(Request $request, ObjectRouterInterface $objectRouter, EventDispatcherInterface $eventDispatcher, Track $track, TrackTimeShifterInterface $trackTimeshift): Response
     {
         $form = $this->createFormBuilder($track)

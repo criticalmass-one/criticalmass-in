@@ -11,12 +11,12 @@ use App\Event\Track\TrackDeletedEvent;
 use Doctrine\Persistence\ManagerRegistry;
 use Nelmio\ApiDocBundle\Annotation\Operation;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class TrackController extends BaseController
 {
@@ -206,9 +206,9 @@ class TrackController extends BaseController
 
 
     /**
-     * @Security("is_granted('edit', track)")
      * @Route("/track/{id}", name="caldera_criticalmass_rest_track_delete", methods={"DELETE"})
      */
+    #[IsGranted('edit', 'track')]
     public function deleteAction(Track $track, EventDispatcherInterface $eventDispatcher, ManagerRegistry $managerRegistry): Response
     {
         $track->setDeleted(true);
