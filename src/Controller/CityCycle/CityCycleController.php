@@ -28,10 +28,11 @@ class CityCycleController extends AbstractController
 
     /**
      * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("cityCycle", class="App:CityCycle")
      */
-    public function listRidesAction(CityCycle $cityCycle, ManagerRegistry $registry): Response
-    {
+    public function listRidesAction(
+        CityCycle $cityCycle,
+        ManagerRegistry $registry
+    ): Response {
         $rideRepository = $registry->getRepository(Ride::class);
 
         return $this->render('CityCycle/ride_list.html.twig', [
