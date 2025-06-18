@@ -7,7 +7,6 @@ use App\Entity\Photo;
 use App\EntityInterface\PostableInterface;
 use App\Criticalmass\Util\ClassUtil;
 use App\Repository\PostRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Entity\City;
 use App\Entity\Post;

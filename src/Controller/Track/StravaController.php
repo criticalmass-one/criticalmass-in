@@ -11,7 +11,6 @@ use App\Entity\Ride;
 use App\Event\Track\TrackUploadedEvent;
 use Iamstuartwilson\StravaApi;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Strava\API\OAuth;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;

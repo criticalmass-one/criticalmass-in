@@ -9,7 +9,6 @@ use App\Entity\Ride;
 use App\Form\Type\LegacyPhotoUploadType;
 use Flagception\Bundle\FlagceptionBundle\Annotations\Feature;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

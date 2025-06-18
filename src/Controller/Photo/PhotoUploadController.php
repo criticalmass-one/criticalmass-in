@@ -4,7 +4,6 @@ namespace App\Controller\Photo;
 
 use App\Criticalmass\Image\PhotoUploader\PhotoUploaderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Controller\AbstractController;
 use App\Entity\Ride;
 use Symfony\Component\HttpFoundation\File\UploadedFile;

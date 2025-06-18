@@ -5,7 +5,6 @@ namespace App\Controller\Profile;
 use App\Controller\AbstractController;
 use App\Event\User\UserColorChangedEvent;
 use App\Form\Type\ProfileColorType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormInterface;

@@ -11,7 +11,6 @@ use App\Form\Type\RideSocialPreviewType;
 use App\Form\Type\RideType;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;

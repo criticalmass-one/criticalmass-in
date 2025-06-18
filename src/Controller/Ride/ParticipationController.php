@@ -7,7 +7,6 @@ use App\Criticalmass\Participation\Manager\ParticipationManagerInterface;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Ride;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 

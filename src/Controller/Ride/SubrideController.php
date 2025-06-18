@@ -6,7 +6,6 @@ use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Ride;
 use App\Repository\RideRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Controller\AbstractController;
 use App\Entity\Subride;
 use App\Form\Type\SubrideType;

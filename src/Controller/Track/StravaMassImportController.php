@@ -11,7 +11,6 @@ use App\Entity\TrackImportCandidate;
 use App\Event\Track\TrackUploadedEvent;
 use Carbon\Carbon;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Strava\API\OAuth;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

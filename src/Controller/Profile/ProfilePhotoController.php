@@ -5,7 +5,6 @@ namespace App\Controller\Profile;
 use App\Controller\AbstractController;
 use App\Entity\User;
 use App\Form\Type\UserProfilePhotoType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;

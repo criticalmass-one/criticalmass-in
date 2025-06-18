@@ -9,7 +9,6 @@ use App\Entity\Track;
 use App\Form\Type\UserEmailType;
 use App\Form\Type\UsernameType;
 use Doctrine\Persistence\ManagerRegistry;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;

@@ -10,7 +10,6 @@ use App\Repository\CityRepository;
 use App\Repository\PostRepository;
 use App\Repository\ThreadRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Entity\City;
 use App\Entity\Post;
 use App\Entity\Thread;
