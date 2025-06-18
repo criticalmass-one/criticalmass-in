@@ -22,7 +22,6 @@ class CityValueResolver implements ValueResolverInterface
     {
         if ($argument->getType() !== City::class
             || $argument->getName() !== 'city'
-            || !$request->query->has('citySlug')
         ) {
             return [];
         }
