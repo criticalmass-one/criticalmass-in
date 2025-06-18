@@ -11,12 +11,11 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ProfilePhotoController extends AbstractController
 {
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     */
+    #[IsGranted('ROLE_USER')]
     public function uploadAction(Request $request, UserInterface $user = null): Response
     {
         $user = clone $user; // otherwise doctrine will try to serialize the user object and fail with the File property

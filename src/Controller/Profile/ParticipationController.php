@@ -16,12 +16,11 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ParticipationController extends AbstractController
 {
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     */
+    #[IsGranted('ROLE_USER')]
     public function listAction(UserInterface $user = null, ManagerRegistry $registry, TableGeneratorInterface $tableGenerator, StreakGeneratorInterface $streakGenerator, ParticipationCityListFactoryInterface $participationCityListFactory): Response
     {
         $streakGenerator->setUser($user);

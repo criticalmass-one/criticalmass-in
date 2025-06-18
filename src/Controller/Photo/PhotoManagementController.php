@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class PhotoManagementController extends AbstractController
 {
@@ -28,9 +29,7 @@ class PhotoManagementController extends AbstractController
         parent::__construct($authorizationChecker);
     }
 
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     */
+    #[IsGranted('ROLE_USER')]
     public function listAction(
         PhotoRepository $photoRepository,
         UserInterface $user = null
@@ -79,9 +78,9 @@ class PhotoManagementController extends AbstractController
     }
 
     /**
-     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
+    #[IsGranted('ROLE_USER')]
     public function manageAction(
         Request $request,
         PaginatorInterface $paginator,
@@ -181,9 +180,9 @@ class PhotoManagementController extends AbstractController
     }
 
     /**
-     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
+    #[IsGranted('ROLE_USER')]
     public function relocateAction(
         TrackRepository $trackRepository,
         PhotoRepository $photoRepository,

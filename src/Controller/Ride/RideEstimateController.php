@@ -16,13 +16,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class RideEstimateController extends AbstractController
 {
     /**
-     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
+    #[IsGranted('ROLE_USER')]
     public function addestimateAction(
         Request $request,
         UserInterface $user = null,

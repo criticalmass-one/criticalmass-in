@@ -22,6 +22,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class BoardController extends AbstractController
 {
@@ -89,10 +90,10 @@ class BoardController extends AbstractController
     }
 
     /**
-     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("city", class="App:City", isOptional="true")
      * @ParamConverter("board", class="App:Board", isOptional="true")
      */
+    #[IsGranted('ROLE_USER')]
     public function addThreadAction(Request $request, ObjectRouterInterface $objectRouter, Board $board = null, City $city = null): Response
     {
         $board = $board ?? $city;

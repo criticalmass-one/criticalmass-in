@@ -9,13 +9,14 @@ use App\Entity\Ride;
 use App\Entity\Track;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class TrackDrawController extends AbstractController
 {
     /**
-     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride")
      */
+    #[IsGranted('ROLE_USER')]
     public function drawAction(Request $request, Ride $ride): Response
     {
         if (Request::METHOD_POST === $request->getMethod()) {
