@@ -7,7 +7,6 @@ use App\Entity\Photo;
 use App\EntityInterface\PostableInterface;
 use App\Criticalmass\Util\ClassUtil;
 use App\Repository\PostRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Entity\City;
 use App\Entity\Post;
@@ -18,40 +17,41 @@ use App\Form\Type\PostType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class PostController extends AbstractController
 {
     /**
-     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("city", class="App:City", converter="city_converter")
      */
+    #[IsGranted('ROLE_USER')]
     public function writeCityAction(Request $request, City $city, ObjectRouterInterface $objectRouter): Response
     {
         return $this->writeAction($request, $city, $objectRouter);
     }
 
     /**
-     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("ride", class="App:Ride", converter="ride_converter")
      */
+    #[IsGranted('ROLE_USER')]
     public function writeRideAction(Request $request, Ride $ride, ObjectRouterInterface $objectRouter): Response
     {
         return $this->writeAction($request, $ride, $objectRouter);
     }
 
     /**
-     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("photo", class="App:Photo", converter="photo_converter")
      */
+    #[IsGranted('ROLE_USER')]
     public function writePhotoAction(Request $request, Photo $photo, ObjectRouterInterface $objectRouter): Response
     {
         return $this->writeAction($request, $photo, $objectRouter);
     }
 
     /**
-     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("thread", class="App:Thread", isOptional=true, converter="thread_converter")
      */
+    #[IsGranted('ROLE_USER')]
     public function writeThreadAction(Request $request, Thread $thread = null, ObjectRouterInterface $objectRouter): Response
     {
         return $this->writeAction($request, $thread, $objectRouter);

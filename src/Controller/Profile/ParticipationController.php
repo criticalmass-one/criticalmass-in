@@ -10,18 +10,16 @@ use App\Entity\Participation;
 use App\Event\Participation\ParticipationDeletedEvent;
 use App\Event\Participation\ParticipationUpdatedEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ParticipationController extends AbstractController
 {
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     */
+    #[IsGranted('ROLE_USER')]
     public function listAction(UserInterface $user = null, ManagerRegistry $registry, TableGeneratorInterface $tableGenerator, StreakGeneratorInterface $streakGenerator, ParticipationCityListFactoryInterface $participationCityListFactory): Response
     {
         $streakGenerator->setUser($user);
@@ -44,9 +42,9 @@ class ParticipationController extends AbstractController
     }
 
     /**
-     * @Security("is_granted('cancel', participation)")
      * @ParamConverter("participation", class="App:Participation", options={"id": "participationId"})
      */
+    #[IsGranted('cancel', 'participation')]
     public function updateAction(Request $request, ManagerRegistry $registry, EventDispatcherInterface $eventDispatcher, Participation $participation): Response
     {
         $status = $request->query->get('status', 'maybe');
@@ -64,9 +62,9 @@ class ParticipationController extends AbstractController
     }
 
     /**
-     * @Security("is_granted('delete', participation)")
      * @ParamConverter("participation", class="App:Participation", options={"id": "participationId"})
      */
+    #[IsGranted('delete', 'participation')]
     public function deleteAction(ManagerRegistry $registry, EventDispatcherInterface $eventDispatcher,  Participation $participation): Response
     {
         $registry->getManager()->remove($participation);

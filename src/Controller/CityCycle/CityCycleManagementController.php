@@ -9,18 +9,18 @@ use App\Entity\CityCycle;
 use App\Form\Type\CityCycleType;
 use Doctrine\Persistence\ManagerRegistry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class CityCycleManagementController extends AbstractController
 {
     /**
-     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("city", class="App:City")
      */
+    #[IsGranted('ROLE_USER')]
     public function addAction(Request $request, UserInterface $user = null, City $city, ObjectRouterInterface $objectRouter): Response
     {
         $cityCycle = new CityCycle();
@@ -72,9 +72,9 @@ class CityCycleManagementController extends AbstractController
     }
 
     /**
-     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("cityCycle", class="App:CityCycle", options={"id" = "cycleId"})
      */
+    #[IsGranted('ROLE_USER')]
     public function editAction(Request $request, UserInterface $user = null, CityCycle $cityCycle, ObjectRouterInterface $objectRouter): Response
     {
         $cityCycle->setUser($user);
@@ -125,9 +125,9 @@ class CityCycleManagementController extends AbstractController
     }
 
     /**
-     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("cityCycle", class="App:CityCycle", options={"id" = "cycleId"})
      */
+    #[IsGranted('ROLE_USER')]
     public function disableAction(CityCycle $cityCycle, ManagerRegistry $managerRegistry, ObjectRouterInterface $objectRouter): Response
     {
         $manager = $managerRegistry->getManager();

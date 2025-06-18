@@ -15,18 +15,16 @@ use App\Form\Type\CityType;
 use App\Repository\RegionRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class CityManagementController extends AbstractController
 {
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     */
+    #[IsGranted('ROLE_USER')]
     public function addAction(
         Request $request,
         ManagerRegistry $managerRegistry,
@@ -128,9 +126,9 @@ class CityManagementController extends AbstractController
     }
 
     /**
-     * @Security("is_granted('ROLE_USER')")
      * @ParamConverter("city", class="App:City")
      */
+    #[IsGranted('ROLE_USER')]
     public function editAction(
         Request $request,
         UserInterface $user = null,
