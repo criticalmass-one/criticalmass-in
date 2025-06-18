@@ -17,11 +17,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SocialNetworkManagementController extends AbstractController
 {
-    /**
-     * @ParamConverter("socialNetworkProfile", class="App:SocialNetworkProfile", options={"id" = "profileId"})
-     */
-    public function editAction(Request $request, SocialNetworkProfile $socialNetworkProfile, ObjectRouterInterface $objectRouter, SocialNetworkHelperInterface $socialNetworkHelper): Response
-    {
+    public function editAction(
+        Request $request,
+        SocialNetworkProfile $socialNetworkProfile,
+        ObjectRouterInterface $objectRouter,
+        SocialNetworkHelperInterface $socialNetworkHelper
+    ): Response {
         $form = $this->createForm(
             SocialNetworkProfileEditType::class,
             $socialNetworkProfile
@@ -72,9 +73,6 @@ class SocialNetworkManagementController extends AbstractController
         );
     }
 
-    /**
-     * @ParamConverter("socialNetworkProfile", class="App:SocialNetworkProfile", options={"id" = "profileId"})
-     */
     public function disableAction(
         EntityManagerInterface $entityManager,
         SocialNetworkProfile $socialNetworkProfile,

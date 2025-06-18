@@ -19,9 +19,9 @@ criticalmass_socialnetwork_city_list_items:
     controller: App\Controller\SocialNetwork\SocialNetworkItemListController::listCityItemsAction
 
 criticalmass_socialnetwork_disable:
-    path:  /socialnetwork/{profileId}/disable
+    path:  /socialnetwork/{id}/disable
     controller: App\Controller\SocialNetwork\SocialNetworkManagementController::disableAction
 
 criticalmass_socialnetwork_edit:
-    path:  /socialnetwork/{profileId}/edit
+    path:  /socialnetwork/{id}/edit
     controller: App\Controller\SocialNetwork\SocialNetworkManagementController::editAction

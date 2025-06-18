@@ -21,9 +21,6 @@ class SocialNetworkController extends AbstractController
 {
     private const string DEFAULT_NETWORK = 'homepage';
 
-    /**
-     * @ParamConverter("user", class="App:User", isOptional=true)
-     */
     public function addAction(
         Request $request,
         EntityNetworkDetectorInterface $networkDetector,

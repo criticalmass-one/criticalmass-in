@@ -71,11 +71,13 @@ class SocialNetworkProfileController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     * @ParamConverter("socialNetworkProfile", class="App:SocialNetworkProfile")
      */
-    #[Route(path: '/{citySlug}/socialnetwork-profiles/{profileId}', name: 'caldera_criticalmass_rest_socialnetwork_profiles_update', methods: ['POST'])]
-    public function updateSocialNetworkProfileAction(Request $request, SocialNetworkProfile $socialNetworkProfile, EntityMergerInterface $entityMerger): Response
-    {
+    #[Route(path: '/{citySlug}/socialnetwork-profiles/{id}', name: 'caldera_criticalmass_rest_socialnetwork_profiles_update', methods: ['POST'])]
+    public function updateSocialNetworkProfileAction(
+        Request $request,
+        SocialNetworkProfile $socialNetworkProfile,
+        EntityMergerInterface $entityMerger
+    ): Response {
         $updatedSocialNetworkProfile = $this->serializer->deserialize($request->getContent(), SocialNetworkProfile::class, 'json');
 
         $entityMerger->merge($updatedSocialNetworkProfile, $socialNetworkProfile);
