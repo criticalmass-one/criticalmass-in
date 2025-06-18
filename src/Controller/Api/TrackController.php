@@ -14,7 +14,7 @@ use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -204,10 +204,7 @@ class TrackController extends BaseController
         return $this->createStandardResponse($trackList, $context);
     }
 
-
-    /**
-     * @Route("/track/{id}", name="caldera_criticalmass_rest_track_delete", methods={"DELETE"})
-     */
+    #[Route('/track/{id}', name: 'caldera_criticalmass_rest_track_delete', methods: ['DELETE'])]
     #[IsGranted('edit', 'track')]
     public function deleteAction(Track $track, EventDispatcherInterface $eventDispatcher, ManagerRegistry $managerRegistry): Response
     {

@@ -31,7 +31,6 @@
         "emcconville/google-map-polyline-encoding-tool": ">=1.2.1",
         "jms/serializer-bundle": "^5.0",
         "symfony/monolog-bundle": "^3.3",
-        "sensio/framework-extra-bundle": "^6.0",
         "incenteev/composer-parameter-handler": "^2.0",
         "hwi/oauth-bundle": "^2.2",
         "malenki/slug": "1.0.0",
