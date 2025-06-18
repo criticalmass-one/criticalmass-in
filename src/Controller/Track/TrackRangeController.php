@@ -7,7 +7,6 @@ use App\Criticalmass\Geo\LatLngListGenerator\SimpleLatLngListGenerator;
 use App\Entity\Track;
 use App\Event\Track\TrackTrimmedEvent;
 use App\Form\Type\TrackRangeType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;

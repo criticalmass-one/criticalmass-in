@@ -7,8 +7,6 @@ use App\Entity\Location;
 use App\Entity\Ride;
 use App\Repository\LocationRepository;
 use App\Repository\RideRepository;
-use FOS\ElasticaBundle\Finder\FinderInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 

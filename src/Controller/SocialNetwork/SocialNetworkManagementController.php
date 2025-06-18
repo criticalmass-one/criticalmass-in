@@ -10,7 +10,6 @@ use App\Criticalmass\Util\ClassUtil;
 use App\Entity\SocialNetworkProfile;
 use App\Form\Type\SocialNetworkProfileEditType;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

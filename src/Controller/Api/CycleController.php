@@ -5,8 +5,6 @@ namespace App\Controller\Api;
 use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Entity\Region;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\Operation;

@@ -7,7 +7,6 @@ use App\Criticalmass\Geo\LatLngListGenerator\TimeLatLngListGenerator;
 use App\Entity\Ride;
 use App\Entity\Track;
 use App\Repository\TrackRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 
 class TimelapseController extends AbstractController

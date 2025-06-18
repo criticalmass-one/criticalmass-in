@@ -11,7 +11,6 @@ use App\Form\Type\PhotoCoordType;
 use App\Repository\PhotoRepository;
 use App\Repository\TrackRepository;
 use Knp\Component\Pager\PaginatorInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Form\FormInterface;

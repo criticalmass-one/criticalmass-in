@@ -13,7 +13,6 @@ use App\Repository\TrackRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Flagception\Bundle\FlagceptionBundle\Annotations\Feature;
 
 /**

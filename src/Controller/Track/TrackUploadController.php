@@ -4,7 +4,6 @@ namespace App\Controller\Track;
 
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Event\Track\TrackUploadedEvent;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;

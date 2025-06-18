@@ -5,16 +5,13 @@ namespace App\Controller\Track;
 use App\Event\Track\TrackHiddenEvent;
 use App\Event\Track\TrackShownEvent;
 use App\Repository\TrackRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Controller\AbstractController;
 use App\Entity\Track;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class TrackManagementController extends AbstractController

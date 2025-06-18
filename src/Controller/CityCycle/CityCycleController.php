@@ -6,7 +6,6 @@ use App\Controller\AbstractController;
 use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Entity\Ride;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;

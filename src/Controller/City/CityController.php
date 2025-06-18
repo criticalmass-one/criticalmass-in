@@ -13,7 +13,6 @@ use App\Repository\LocationRepository;
 use App\Repository\PhotoRepository;
 use App\Repository\RideRepository;
 use App\Repository\SocialNetworkProfileRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

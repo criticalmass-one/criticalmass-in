@@ -4,7 +4,6 @@ namespace App\Controller\Ride;
 
 use App\Criticalmass\Ical\RideIcalGeneratorInterface;
 use App\Entity\Ride;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 

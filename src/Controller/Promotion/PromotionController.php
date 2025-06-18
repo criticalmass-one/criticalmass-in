@@ -7,7 +7,6 @@ use MalteHuebner\DataQueryBundle\RequestParameterList\QueryStringToListConverter
 use App\Criticalmass\ViewStorage\Cache\ViewStorageCacheInterface;
 use App\Entity\Promotion;
 use App\Entity\Ride;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
