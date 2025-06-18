@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 abstract class BaseController extends AbstractController
 {
     public function __construct(
-        private readonly ManagerRegistry $managerRegistry,
+        protected readonly ManagerRegistry $managerRegistry,
         private readonly CriticalSerializerInterface $serializer,
         AuthorizationCheckerInterface $authorizationChecker
     )

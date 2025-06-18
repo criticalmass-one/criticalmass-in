@@ -3,7 +3,6 @@
 namespace App\Controller\City;
 
 use App\Controller\AbstractController;
-use App\Criticalmass\ElasticCityFinder\ElasticCityFinderInterface;
 use App\Entity\City;
 use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Event\View\ViewEvent;

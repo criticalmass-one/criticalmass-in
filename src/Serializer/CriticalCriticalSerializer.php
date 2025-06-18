@@ -8,6 +8,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
+use Symfony\Component\Serializer\Mapping\Loader\LoaderChain;
 use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
@@ -46,7 +47,12 @@ class CriticalCriticalSerializer implements CriticalSerializerInterface
             DateTimeNormalizer::FORMAT_KEY => 'Y-m-d\TH:i:sP',
         ];
 
-        $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+        $classMetadataFactory = new ClassMetadataFactory(
+            new LoaderChain([
+                new AttributeLoader(),
+                new AnnotationLoader(new AnnotationReader()),
+            ])
+        );
 
         $normalizers = [
             new DateTimeNormalizer($dateTimeNormalizerOptions),
