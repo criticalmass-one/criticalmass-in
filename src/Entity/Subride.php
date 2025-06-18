@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: 'App\Repository\SubrideRepository')]
 class Subride implements AuditableInterface, SocialNetworkProfileAble, RouteableInterface
 {
-    #[Routing\RouteParameter(name: 'subrideId')]
+    #[Routing\RouteParameter(name: 'id')]
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]

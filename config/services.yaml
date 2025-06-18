@@ -119,62 +119,6 @@ services:
     App\Criticalmass\Geo\Loop\LoopInterface:
         alias: App\Criticalmass\Geo\Loop\TrackLoop
 
-    App\Request\ParamConverter\RideParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 0, converter: ride_converter }
-
-    App\Request\ParamConverter\RegionParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 0, converter: region_converter }
-
-    App\Request\ParamConverter\CityParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 0, converter: city_converter }
-
-    App\Request\ParamConverter\CityCycleParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 0, converter: citycycle_converter }
-
-    App\Request\ParamConverter\LocationParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 0, converter: location_converter }
-
-    App\Request\ParamConverter\BoardParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 0, converter: board_converter }
-
-    App\Request\ParamConverter\ThreadParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 0, converter: thread_converter }
-
-    App\Request\ParamConverter\ParticipationParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 0, converter: participation_converter }
-
-    App\Request\ParamConverter\PhotoParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 0, converter: photo_converter }
-
-    App\Request\ParamConverter\PromotionParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 0, converter: promotion_converter }
-
-    App\Request\ParamConverter\UserParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 10, converter: user_converter }
-
-    App\Request\ParamConverter\SocialNetworkProfileParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 0, converter: socialnetworkprofile_converter }
-
-    App\Request\ParamConverter\SocialNetworkFeedItemParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 0, converter: socialnetworkfeeditem_converter }
-
-    App\Request\ParamConverter\TrackParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 0, converter: track_converter }
-
     App\Criticalmass\Imagine\DataLoader\RemoteStreamLoader:
         arguments: ['@liip_imagine']
         tags:
@@ -208,11 +152,6 @@ services:
 
     App\Criticalmass\CriticalmassBlog\CriticalmassBlogInterface:
         alias: App\Criticalmass\CriticalmassBlog\CachedCriticalmassBlog
-
-    App\Controller\Search\SearchController:
-        arguments:
-            $cityFinder: '@fos_elastica.finder.criticalmass_city'
-            $rideFinder: '@fos_elastica.finder.criticalmass_ride'
 
     App\Security\UserProvider\UserProvider:
         arguments:

@@ -8,7 +8,6 @@ use App\Entity\Photo;
 use App\Entity\Ride;
 use Nelmio\ApiDocBundle\Annotation\Operation;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -42,7 +41,6 @@ class PhotoController extends BaseController
      *     )
      * )
      *
-     * @ParamConverter("ride", class="App:Ride")
      */
     #[Route(path: '/{citySlug}/{rideIdentifier}/listPhotos', name: 'caldera_criticalmass_rest_photo_ridelist', methods: ['GET'])]
     public function listRidePhotosAction(Ride $ride): JsonResponse
@@ -257,9 +255,6 @@ class PhotoController extends BaseController
         return $this->createStandardResponse($photoList);
     }
 
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     #[Route(path: '/photo/{id}', name: 'caldera_criticalmass_rest_photo_post', methods: ['POST'])]
     public function updatePhotoAction(Request $request, SerializerInterface $serializer): JsonResponse
     {

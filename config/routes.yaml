@@ -1,6 +1,3 @@
-gregwar_captcha_routing:
-  resource: '@GregwarCaptchaBundle/Resources/config/routing/routing.yml'
-
 facebook_login:
   path: /login/check-facebook
 

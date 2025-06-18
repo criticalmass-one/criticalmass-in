@@ -9,7 +9,6 @@ use App\Entity\City;
 use App\Entity\Ride;
 use Nelmio\ApiDocBundle\Annotation\Operation;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -45,8 +44,6 @@ class RideController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     *
-     * @ParamConverter("ride", class="App:Ride")
      */
     #[Route(path: '/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_show', methods: ['GET'])]
     public function showAction(Ride $ride): JsonResponse
@@ -72,8 +69,6 @@ class RideController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     *
-     * @ParamConverter("city", class="App:City")
      */
     #[Route(path: '/{citySlug}/current', name: 'caldera_criticalmass_rest_ride_show_current', methods: ['GET'])]
     public function showCurrentAction(Request $request, City $city): JsonResponse
@@ -351,8 +346,6 @@ class RideController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     *
-     * @ParamConverter("city", class="App:City")
      */
     #[Route(path: '/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_create', methods: ['PUT'])]
     public function createRideAction(Request $request, City $city, ValidatorInterface $validator): JsonResponse
@@ -426,7 +419,6 @@ class RideController extends BaseController
      *     )
      * )
      *
-     * @ParamConverter("ride", class="App:Ride")
      */
     #[Route(path: '/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_update', methods: ['POST'])]
     public function updateRideAction(Request $request, Ride $ride, ValidatorInterface $validator, EntityMergerInterface $entityMerger): JsonResponse

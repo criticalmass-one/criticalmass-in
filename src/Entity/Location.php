@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Criticalmass\Router\Attribute as Routing;
 use App\Criticalmass\Router\Attribute\RouteParameter;
 use App\EntityInterface\AuditableInterface;
-use App\EntityInterface\AutoParamConverterAble;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Ignore;
@@ -13,7 +12,7 @@ use Symfony\Component\Serializer\Annotation\Ignore;
 #[Routing\DefaultRoute(name: 'caldera_criticalmass_location_show')]
 #[ORM\Table(name: 'location')]
 #[ORM\Entity(repositoryClass: 'App\Repository\LocationRepository')]
-class Location implements RouteableInterface, AuditableInterface, AutoParamConverterAble
+class Location implements RouteableInterface, AuditableInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
@@ -26,7 +25,7 @@ class Location implements RouteableInterface, AuditableInterface, AutoParamConve
     #[Ignore]
     protected ?City $city = null;
 
-    #[RouteParameter(name: 'locationSlug')]
+    #[RouteParameter(name: 'slug')]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $slug = null;
 

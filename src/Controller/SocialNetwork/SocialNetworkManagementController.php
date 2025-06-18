@@ -10,18 +10,18 @@ use App\Criticalmass\Util\ClassUtil;
 use App\Entity\SocialNetworkProfile;
 use App\Form\Type\SocialNetworkProfileEditType;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class SocialNetworkManagementController extends AbstractController
 {
-    /**
-     * @ParamConverter("socialNetworkProfile", class="App:SocialNetworkProfile", options={"id" = "profileId"})
-     */
-    public function editAction(Request $request, SocialNetworkProfile $socialNetworkProfile, ObjectRouterInterface $objectRouter, SocialNetworkHelperInterface $socialNetworkHelper): Response
-    {
+    public function editAction(
+        Request $request,
+        SocialNetworkProfile $socialNetworkProfile,
+        ObjectRouterInterface $objectRouter,
+        SocialNetworkHelperInterface $socialNetworkHelper
+    ): Response {
         $form = $this->createForm(
             SocialNetworkProfileEditType::class,
             $socialNetworkProfile
@@ -72,9 +72,6 @@ class SocialNetworkManagementController extends AbstractController
         );
     }
 
-    /**
-     * @ParamConverter("socialNetworkProfile", class="App:SocialNetworkProfile", options={"id" = "profileId"})
-     */
     public function disableAction(
         EntityManagerInterface $entityManager,
         SocialNetworkProfile $socialNetworkProfile,

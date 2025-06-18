@@ -11,7 +11,6 @@ use App\Entity\SocialNetworkProfile;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Factory\SocialNetworkProfile\SocialNetworkProfileFactoryInterface;
 use App\Form\Type\SocialNetworkProfileAddType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,12 +20,6 @@ class SocialNetworkController extends AbstractController
 {
     private const string DEFAULT_NETWORK = 'homepage';
 
-    /**
-     * @ParamConverter("city", class="App:City", isOptional=true)
-     * @ParamConverter("ride", class="App:Ride", isOptional=true)
-     * @ParamConverter("subride", class="App:Subride", isOptional=true)
-     * @ParamConverter("user", class="App:User", isOptional=true)
-     */
     public function addAction(
         Request $request,
         EntityNetworkDetectorInterface $networkDetector,

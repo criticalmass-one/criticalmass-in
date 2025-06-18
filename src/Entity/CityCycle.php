@@ -29,7 +29,7 @@ class CityCycle implements RouteableInterface
     const WEEK_FOURTH = 4;
     const WEEK_LAST = 0;
 
-    #[Routing\RouteParameter(name: 'cityCycleId')]
+    #[Routing\RouteParameter(name: 'id')]
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
