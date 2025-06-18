@@ -7,7 +7,6 @@ use App\Event\Track\TrackShownEvent;
 use App\Repository\TrackRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Controller\AbstractController;
 use App\Entity\Track;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

@@ -3,7 +3,6 @@
 namespace App\Controller\Track;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Controller\AbstractController;
 use App\Entity\Ride;
 use App\Entity\Track;

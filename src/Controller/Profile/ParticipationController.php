@@ -10,7 +10,6 @@ use App\Entity\Participation;
 use App\Event\Participation\ParticipationDeletedEvent;
 use App\Event\Participation\ParticipationUpdatedEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
