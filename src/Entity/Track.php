@@ -462,9 +462,4 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
 
         return $this;
     }
-
-    public function elasticable(): bool
-    {
-        return $this->enabled && !$this->deleted && $this->reviewed;
-    }
 }
