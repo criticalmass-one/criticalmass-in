@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ed75b76cacc615af8b2a8d32c9dc085c",
+    "content-hash": "f85b8561c7fb15f8bcb4de3a8d80c228",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -4612,7 +4612,7 @@
         },
         {
             "name": "maltehuebner/dataquery-bundle",
-            "version": "dev-main",
+            "version": "0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maltehuebner/dataquery-bundle.git",
@@ -4639,7 +4639,6 @@
                 "doctrine/orm": "To use the Doctrine ORM integration",
                 "friendsofsymfony/elastica-bundle": "To use the FOS Elastica Bundle integration"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -16964,7 +16963,6 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "composer/package-versions-deprecated": 20,
-        "maltehuebner/dataquery-bundle": 20,
         "yohang/calendr": 20
     },
     "prefer-stable": false,
