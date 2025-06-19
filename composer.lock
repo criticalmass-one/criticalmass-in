@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "821e4a67c5085d5ce8583424095c7109",
+    "content-hash": "f1e89dea387c20193bf9119d585ef2fd",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -2433,43 +2433,42 @@
         },
         {
             "name": "fresh/doctrine-enum-bundle",
-            "version": "v8.1.1",
+            "version": "v9.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fre5h/DoctrineEnumBundle.git",
-                "reference": "02166fc9efef617a26318936bb444dcd05f59e62"
+                "reference": "60a0d7299b8825a6f2cef84da78a7426a38bc236"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fre5h/DoctrineEnumBundle/zipball/02166fc9efef617a26318936bb444dcd05f59e62",
-                "reference": "02166fc9efef617a26318936bb444dcd05f59e62",
+                "url": "https://api.github.com/repos/fre5h/DoctrineEnumBundle/zipball/60a0d7299b8825a6f2cef84da78a7426a38bc236",
+                "reference": "60a0d7299b8825a6f2cef84da78a7426a38bc236",
                 "shasum": ""
             },
             "require": {
-                "doctrine/common": "^3.2",
-                "doctrine/dbal": "^3.3",
-                "doctrine/doctrine-bundle": "^2.5",
-                "doctrine/orm": "^2.11",
+                "doctrine/common": "^3.4",
+                "doctrine/dbal": "^3.6",
+                "doctrine/doctrine-bundle": "^2.9",
+                "doctrine/orm": "^2.15",
                 "php": ">=8.1",
-                "symfony/config": "^5.4 || ^6.0",
-                "symfony/dependency-injection": "^5.4 || ^6.0",
-                "symfony/doctrine-bridge": "^5.4 || ^6.0",
-                "symfony/framework-bundle": "^5.4 || ^6.0",
-                "symfony/http-kernel": "^5.4 || ^6.0",
-                "symfony/validator": "^5.4 || ^6.0",
-                "twig/twig": "^3.3"
+                "symfony/config": "^6.1",
+                "symfony/dependency-injection": "^6.1",
+                "symfony/doctrine-bridge": "^6.1",
+                "symfony/framework-bundle": "^6.1",
+                "symfony/http-kernel": "^6.1",
+                "symfony/validator": "^6.1",
+                "twig/twig": "^3.6"
             },
             "require-dev": {
-                "escapestudios/symfony2-coding-standard": "^3.12",
+                "escapestudios/symfony2-coding-standard": "^3.13",
                 "jetbrains/phpstorm-attributes": "^1.0",
-                "phpstan/phpstan": "^1.4",
-                "phpstan/phpstan-doctrine": "^1.2",
-                "phpstan/phpstan-phpunit": "^1.0",
-                "phpstan/phpstan-symfony": "^1.1",
-                "phpunit/phpunit": "^9.5",
+                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan-doctrine": "^1.3",
+                "phpstan/phpstan-phpunit": "^1.3",
+                "phpstan/phpstan-symfony": "^1.3",
+                "phpunit/phpunit": "^10.1",
                 "slam/phpstan-extensions": "^6.0",
-                "symfony/form": "^5.4 || ^6.0",
-                "symfony/yaml": "^5.4 || ^6.0"
+                "symfony/form": "^6.1"
             },
             "type": "symfony-bundle",
             "autoload": {
@@ -2514,7 +2513,7 @@
             "support": {
                 "email": "genvaldartem@gmail.com",
                 "issues": "https://github.com/fre5h/DoctrineEnumBundle/issues",
-                "source": "https://github.com/fre5h/DoctrineEnumBundle/tree/v8.1.1"
+                "source": "https://github.com/fre5h/DoctrineEnumBundle/tree/v9.2.0"
             },
             "funding": [
                 {
@@ -2522,7 +2521,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-01-26T09:07:09+00:00"
+            "time": "2023-12-01T10:32:30+00:00"
         },
         {
             "name": "friendsofphp/proxy-manager-lts",
