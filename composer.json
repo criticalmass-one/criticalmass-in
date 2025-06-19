@@ -57,7 +57,7 @@
         "symfony/webpack-encore-bundle": "^1.14",
         "ext-json": "*",
         "ext-zip": "*",
-        "fresh/doctrine-enum-bundle": "^8.0",
+        "fresh/doctrine-enum-bundle": "^9.0",
         "doctrine/annotations": "^2.0",
         "league/commonmark": "^2.6",
         "nesbot/carbon": "^2.24",
