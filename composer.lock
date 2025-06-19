@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f85b8561c7fb15f8bcb4de3a8d80c228",
+    "content-hash": "b026e69e7026309f351492954c44673c",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -2300,16 +2300,16 @@
         },
         {
             "name": "flagception/flagception",
-            "version": "1.9.1",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/playox/flagception-sdk.git",
-                "reference": "e5ebf9760057a38ee884a1c4872e43522f2225cc"
+                "reference": "6934e73ea1ab43611a43bf85922349a83561177b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/playox/flagception-sdk/zipball/e5ebf9760057a38ee884a1c4872e43522f2225cc",
-                "reference": "e5ebf9760057a38ee884a1c4872e43522f2225cc",
+                "url": "https://api.github.com/repos/playox/flagception-sdk/zipball/6934e73ea1ab43611a43bf85922349a83561177b",
+                "reference": "6934e73ea1ab43611a43bf85922349a83561177b",
                 "shasum": ""
             },
             "require": {
@@ -2354,28 +2354,27 @@
             ],
             "support": {
                 "issues": "https://github.com/playox/flagception-sdk/issues",
-                "source": "https://github.com/playox/flagception-sdk/tree/1.9.1"
+                "source": "https://github.com/playox/flagception-sdk/tree/2.0.0"
             },
-            "time": "2023-11-28T20:25:43+00:00"
+            "time": "2025-02-26T16:11:43+00:00"
         },
         {
             "name": "flagception/flagception-bundle",
-            "version": "4.4.2",
+            "version": "6.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/playox/flagception-bundle.git",
-                "reference": "f98520e4ba42207b9df91a266c26aa148137eaba"
+                "reference": "4a38e99bb998331dbbd7321a7dbca1aaa852a5b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/playox/flagception-bundle/zipball/f98520e4ba42207b9df91a266c26aa148137eaba",
-                "reference": "f98520e4ba42207b9df91a266c26aa148137eaba",
+                "url": "https://api.github.com/repos/playox/flagception-bundle/zipball/4a38e99bb998331dbbd7321a7dbca1aaa852a5b1",
+                "reference": "4a38e99bb998331dbbd7321a7dbca1aaa852a5b1",
                 "shasum": ""
             },
             "require": {
-                "doctrine/annotations": "^1.7 | ^2.0",
-                "flagception/flagception": "^1.5",
-                "php": "^7.1.3 | ^8.0",
+                "flagception/flagception": "^2.0",
+                "php": "^8.0",
                 "symfony/config": "^4.4 | ^5.0 | ^6.0 | ^7.0",
                 "symfony/dependency-injection": "^4.4 | ^5.0 | ^6.0 | ^7.0",
                 "symfony/http-kernel": "^4.4 | ^5.0 | ^6.0 | ^7.0",
@@ -2383,7 +2382,7 @@
                 "twig/twig": "^1.18|^2.0|^3.0"
             },
             "require-dev": {
-                "flagception/database-activator": "^1.0",
+                "flagception/database-activator": "^2.0",
                 "php-coveralls/php-coveralls": "^2.0",
                 "squizlabs/php_codesniffer": "^3.3.1",
                 "symfony/phpunit-bridge": "^5.0 | ^6.0 | ^7.0",
@@ -2428,9 +2427,9 @@
             ],
             "support": {
                 "issues": "https://github.com/playox/flagception-bundle/issues",
-                "source": "https://github.com/playox/flagception-bundle/tree/4.4.2"
+                "source": "https://github.com/playox/flagception-bundle/tree/6.0.0"
             },
-            "time": "2024-01-15T13:28:08+00:00"
+            "time": "2025-02-27T13:45:44+00:00"
         },
         {
             "name": "fresh/doctrine-enum-bundle",

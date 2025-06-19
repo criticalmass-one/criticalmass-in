@@ -51,7 +51,7 @@
         "khill/php-duration": "^1.0",
         "sabre/vobject": "^4.0",
         "oneup/flysystem-bundle": "^4.12.2",
-        "flagception/flagception-bundle": "^4.0",
+        "flagception/flagception-bundle": "^6.0",
         "php-amqplib/rabbitmq-bundle": "^2.0",
         "ext-fileinfo": "*",
         "ext-xmlwriter": "*",
