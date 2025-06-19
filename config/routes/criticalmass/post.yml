@@ -3,17 +3,17 @@ caldera_criticalmass_timeline_post_write:
     controller: App\Controller\PostController::writeAction
 
 caldera_criticalmass_timeline_post_write_ride:
-    path:     /write/ride/{rideId}
+    path:     /write/ride/{id}
     controller: App\Controller\PostController::writeRideAction
 
 caldera_criticalmass_timeline_post_write_city:
-    path:     /write/city/{cityId}
+    path:     /write/city/{id}
     controller: App\Controller\PostController::writeCityAction
 
 caldera_criticalmass_timeline_post_write_photo:
-    path:     /write/photo/{photoId}
+    path:     /write/photo/{id}
     controller: App\Controller\PostController::writePhotoAction
 
 caldera_criticalmass_timeline_post_write_thread:
-    path:     /write/thread/{threadId}
+    path:     /write/thread/{threadSlug}
     controller: App\Controller\PostController::writeThreadAction

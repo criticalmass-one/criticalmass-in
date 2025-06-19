@@ -35,7 +35,7 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     const TRACK_SOURCE_CRITICALMAPS = 'TRACK_SOURCE_CRITICALMAPS';
     const TRACK_SOURCE_UNKNOWN = 'TRACK_SOURCE_UNKNOWN';
 
-    #[Routing\RouteParameter(name: 'trackId')]
+    #[Routing\RouteParameter(name: 'id')]
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
