@@ -231,17 +231,13 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
     #[JMS\Expose]
     protected bool $enabled = true;
 
-    /**
-     * @DoctrineAssert\Enum(entity="App\DBAL\Type\RideDisabledReasonType")
-     */
+    #[DoctrineAssert\EnumType(entity: 'App\DBAL\Type\RideDisabledReasonType')]
     #[ORM\Column(type: 'RideDisabledReasonType', nullable: true)]
     #[JMS\Groups(['ride-list'])]
     #[JMS\Expose]
     protected ?string $disabledReason = null;
 
-    /**
-     * @DoctrineAssert\Enum(entity="App\DBAL\Type\RideType")
-     */
+    #[DoctrineAssert\EnumType(entity: 'App\DBAL\Type\RideType')]
     #[ORM\Column(type: 'RideType', nullable: true)]
     #[JMS\Groups(['ride-list'])]
     #[JMS\Expose]
