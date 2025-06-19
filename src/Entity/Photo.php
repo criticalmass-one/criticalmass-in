@@ -10,7 +10,6 @@ use App\Criticalmass\Router\Attribute as Routing;
 use App\Criticalmass\UploadFaker\FakeUploadable;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\CoordinateInterface;
-use App\EntityInterface\ElasticSearchPinInterface;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
