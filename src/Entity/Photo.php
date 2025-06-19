@@ -551,11 +551,6 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return (string) $this->id;
     }
 
-    public function elasticable(): bool
-    {
-        return $this->ride && $this->enabled && !$this->deleted;
-    }
-
     public function toCoord(): CoordInterface
     {
         return new Coord($this->latitude, $this->longitude);
