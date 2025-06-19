@@ -12,21 +12,21 @@ use App\Event\City\CityCreatedEvent;
 use App\Event\City\CityUpdatedEvent;
 use App\Factory\City\CityFactoryInterface;
 use App\Form\Type\CityType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use App\Repository\RegionRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class CityManagementController extends AbstractController
 {
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     */
+    #[IsGranted('ROLE_USER')]
     public function addAction(
         Request $request,
+        ManagerRegistry $managerRegistry,
         UserInterface $user = null,
         NominatimCityBridge $nominatimCityBridge,
         EventDispatcherInterface $eventDispatcher,
@@ -37,7 +37,8 @@ class CityManagementController extends AbstractController
         string $slug3 = null,
         string $citySlug = null
     ): Response {
-        $region = $this->getRegion($nominatimCityBridge, $slug3, $citySlug);
+        $regionRepository = $managerRegistry->getRepository(Region::class);
+        $region = $this->getRegion($nominatimCityBridge, $regionRepository, $slug3, $citySlug);
 
         if ($citySlug) {
             $city = $nominatimCityBridge->lookupCity($citySlug);
@@ -71,7 +72,7 @@ class CityManagementController extends AbstractController
         FormInterface $form
     ) {
         return $this->render('CityManagement/edit.html.twig', [
-            'city' => null,
+            'city' => $city,
             'form' => $form->createView(),
             'country' => $region->getParent()->getName(),
             'state' => $region->getName(),
@@ -93,7 +94,7 @@ class CityManagementController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $eventDispatcher->dispatch(new CityCreatedEvent($city), CityCreatedEvent::NAME);
 
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->managerRegistry->getManager();
 
             $citySlugs = CitySlugHandler::createSlugsForCity($city);
 
@@ -123,10 +124,7 @@ class CityManagementController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("city", class="App:City")
-     */
+    #[IsGranted('ROLE_USER')]
     public function editAction(
         Request $request,
         UserInterface $user = null,
@@ -175,9 +173,10 @@ class CityManagementController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $city
                 ->setUpdatedAt(new \DateTime())
-                ->setUser($user);
+                ->setUser($user)
+            ;
 
-            $this->getDoctrine()->getManager()->flush();
+            $this->managerRegistry->getManager()->flush();
 
             $eventDispatcher->dispatch(new CityUpdatedEvent($city), CityUpdatedEvent::NAME);
 
@@ -197,11 +196,12 @@ class CityManagementController extends AbstractController
 
     protected function getRegion(
         NominatimCityBridge $nominatimCityBridge,
+        RegionRepository $regionRepository,
         string $regionSlug = null,
         string $citySlug = null
     ): ?Region {
         if ($regionSlug) {
-            return $this->getRegionRepository()->findOneBySlug($regionSlug);
+            return $regionRepository->findOneBySlug($regionSlug);
         }
 
         if ($citySlug) {

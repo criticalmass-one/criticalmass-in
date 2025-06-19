@@ -46,3 +46,40 @@ doctrine:
                 dayofweek: App\DQL\DayOfWeekFunction
             numeric_functions:
                 rand: App\DQL\RandFunction
+                asin: DoctrineExtensions\Query\Mysql\Asin
+                cos: DoctrineExtensions\Query\Mysql\Cos
+                power: DoctrineExtensions\Query\Mysql\Power
+                radians: DoctrineExtensions\Query\Mysql\Radians
+                sin: DoctrineExtensions\Query\Mysql\Sin
+when@prod:
+    doctrine:
+        orm:
+            metadata_cache_driver:
+                type: pool
+                pool: doctrine.system_cache_pool
+            query_cache_driver:
+                type: pool
+                pool: doctrine.system_cache_pool
+            result_cache_driver:
+                type: pool
+                pool: doctrine.result_cache_pool
+
+    services:
+        doctrine.result_cache_provider:
+            class: Symfony\Component\Cache\FilesystemAdapter
+            public: false
+            arguments:
+                - '@doctrine.result_cache_pool'
+        doctrine.system_cache_provider:
+            class: Symfony\Component\Cache\FilesystemAdapter
+            public: false
+            arguments:
+                - '@doctrine.system_cache_pool'
+
+    framework:
+        cache:
+            pools:
+                doctrine.result_cache_pool:
+                    adapter: cache.app
+                doctrine.system_cache_pool:
+                    adapter: cache.system

@@ -13,7 +13,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <a href="{{ objectPath(item.ride) }}">
+                <a href="{{ object_path(item.ride) }}">
                     <h4>
                         {{ item.rideTitle }}
                     </h4>
@@ -25,11 +25,11 @@
         <div class="row">
             <div class="col-md-12">
                 <div id="map-{{ item.uniqId }}"
-                     class="timeline-item-ride-map"
-                     data-polyline="{{ item.polyline }}"
-                     data-polyline-color="{{ item.polylineColor }}"
+                     class="map timeline-item-ride-map"
                      data-lock-map="true"
                      data-map-marker-clickable="false"
+                     data-polyline-color="{{ item.polylineColor }}"
+                     data-polyline="{{ item.polyline }}"
                      style="height: 150px;">
                 </div>
             </div>
@@ -75,9 +75,3 @@
         </div>
     </div>
 </div>
-
-{% if item.polyline %}
-<script type="text/javascript">
-    CriticalMass.loadModule('AutoMap', 'map-{{ item.uniqId }}');
-</script>
-{% endif %}

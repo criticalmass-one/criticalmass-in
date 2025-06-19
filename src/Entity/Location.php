@@ -2,20 +2,18 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Router\Attribute as Routing;
+use App\Criticalmass\Router\Attribute\RouteParameter;
 use App\EntityInterface\AuditableInterface;
-use App\EntityInterface\AutoParamConverterAble;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
-/**
- * @Routing\DefaultRoute(name="caldera_criticalmass_location_show")
- */
+#[Routing\DefaultRoute(name: 'caldera_criticalmass_location_show')]
 #[ORM\Table(name: 'location')]
 #[ORM\Entity(repositoryClass: 'App\Repository\LocationRepository')]
 #[JMS\ExclusionPolicy('all')]
-class Location implements RouteableInterface, AuditableInterface, AutoParamConverterAble
+class Location implements RouteableInterface, AuditableInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
@@ -23,16 +21,12 @@ class Location implements RouteableInterface, AuditableInterface, AutoParamConve
     #[JMS\Expose]
     protected ?int $id = null;
 
-    /**
-     * @Routing\RouteParameter(name="citySlug")
-     */
+    #[RouteParameter(name: 'citySlug')]
     #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'locations')]
     #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
     protected ?City $city = null;
 
-    /**
-     * @Routing\RouteParameter(name="locationSlug")
-     */
+    #[RouteParameter(name: 'slug')]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[JMS\Expose]
     protected ?string $slug = null;

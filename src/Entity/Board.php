@@ -2,19 +2,16 @@
 
 namespace App\Entity;
 
-use App\EntityInterface\AutoParamConverterAble;
 use App\EntityInterface\BoardInterface;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Router\Attribute as Routing;
 
-/**
- * @Routing\DefaultRoute(name="caldera_criticalmass_board_listthreads")
- */
+#[Routing\DefaultRoute(name: 'caldera_criticalmass_board_listthreads')]
 #[ORM\Table(name: 'board')]
 #[ORM\Entity(repositoryClass: 'App\Repository\BoardRepository')]
-class Board implements BoardInterface, RouteableInterface, AutoParamConverterAble
+class Board implements BoardInterface, RouteableInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
@@ -44,9 +41,7 @@ class Board implements BoardInterface, RouteableInterface, AutoParamConverterAbl
     #[ORM\Column(type: 'boolean', nullable: true)]
     protected bool $enabled = true;
 
-    /**
-     * @Routing\RouteParameter(name="boardSlug")
-     */
+    #[Routing\RouteParameter(name: 'boardSlug')]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $slug = null;
 

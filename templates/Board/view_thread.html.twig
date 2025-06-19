@@ -10,7 +10,7 @@
     </li>
 
     <li>
-        <a href="{{ objectPath(board) }}">
+        <a href="{{ object_path(board) }}">
             {{ board.title }}
         </a>
     </li>
@@ -30,7 +30,7 @@
                         <i class="far fa-comment"></i>
                         Antwort hinzufügen
                     </button>
-                    {{ render(controller('App\\Controller\\PostController::writeThreadAction', { 'threadId': thread.id, 'noButton': true })) }}
+                    {{ render(controller('App\\Controller\\PostController::writeThreadAction', { 'threadSlug': thread.slug, 'noButton': true })) }}
                 {% endif %}
                 <h2>
                     {{ thread.title }}
@@ -48,8 +48,4 @@
             </div>
         </div>
     </div>
-
-    <script type="text/javascript">
-        CriticalMass.loadModule('ScrollToPost');
-    </script>
 {% endblock %}

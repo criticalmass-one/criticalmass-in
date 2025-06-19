@@ -5,20 +5,19 @@ namespace App\Controller\Profile;
 use App\Controller\AbstractController;
 use App\Entity\User;
 use App\Form\Type\UserProfilePhotoType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ProfilePhotoController extends AbstractController
 {
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     */
+    #[IsGranted('ROLE_USER')]
     public function uploadAction(Request $request, UserInterface $user = null): Response
     {
+        $user = clone $user; // otherwise doctrine will try to serialize the user object and fail with the File property
         $form = $this->createForm(UserProfilePhotoType::class, $user);
         $form->add('submit', SubmitType::class);
 
@@ -46,7 +45,7 @@ class ProfilePhotoController extends AbstractController
 
             $user->setOwnProfilePhoto(true);
 
-            $this->getDoctrine()->getManager()->flush();
+            $this->managerRegistry->getManager()->flush();
         }
 
         return $this->uploadGetAction($request, $user, $form);

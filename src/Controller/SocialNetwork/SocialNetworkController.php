@@ -11,7 +11,6 @@ use App\Entity\SocialNetworkProfile;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Factory\SocialNetworkProfile\SocialNetworkProfileFactoryInterface;
 use App\Form\Type\SocialNetworkProfileAddType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,12 +18,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class SocialNetworkController extends AbstractController
 {
-    /**
-     * @ParamConverter("city", class="App:City", isOptional=true)
-     * @ParamConverter("ride", class="App:Ride", isOptional=true)
-     * @ParamConverter("subride", class="App:Subride", isOptional=true)
-     * @ParamConverter("user", class="App:User", isOptional=true)
-     */
+    private const string DEFAULT_NETWORK = 'homepage';
+
     public function addAction(
         Request $request,
         EntityNetworkDetectorInterface $networkDetector,
@@ -70,11 +65,13 @@ class SocialNetworkController extends AbstractController
 
             if ($network) {
                 $socialNetworkProfile->setNetwork($network->getIdentifier());
+            } else {
+                $socialNetworkProfile->setNetwork(self::DEFAULT_NETWORK);
             }
 
-            $this->getDoctrine()->getManager()->persist($socialNetworkProfile);
+            $this->managerRegistry->getManager()->persist($socialNetworkProfile);
 
-            $this->getDoctrine()->getManager()->flush();
+            $this->managerRegistry->getManager()->flush();
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
 

@@ -8,23 +8,20 @@ use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Entity\Photo;
 use App\Entity\Track;
 use App\Event\View\ViewEvent;
+use App\Repository\PhotoRepository;
+use App\Repository\TrackRepository;
+use Flagception\Bundle\FlagceptionBundle\Attribute\Feature;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Flagception\Bundle\FlagceptionBundle\Annotations\Feature;
 
-/**
- * @Feature("photos")
- */
+#[Feature('photos')]
 class PhotoController extends AbstractController
 {
-    /**
-     * @ParamConverter("photo", class="App:Photo", options={"id" = "photoId"})
-     */
     public function showAction(
         SeoPageInterface $seoPage,
         EventDispatcherInterface $eventDispatcher,
+        TrackRepository $trackRepository,
         ExifWrapperInterface $exifWrapper,
         Photo $photo
     ): Response {
@@ -47,7 +44,7 @@ class PhotoController extends AbstractController
 
         if ($ride && $photo->getUser()) {
             /** @var Track $track */
-            $track = $this->getTrackRepository()->findByUserAndRide($ride, $photo->getUser());
+            $track = $trackRepository->findByUserAndRide($ride, $photo->getUser());
         }
 
         $this->setSeoMetaDetails($seoPage, $photo);
@@ -60,12 +57,15 @@ class PhotoController extends AbstractController
         ]);
     }
 
-    public function ajaxphotoviewAction(Request $request, EventDispatcherInterface $eventDispatcher): Response
-    {
+    public function ajaxphotoviewAction(
+        Request $request,
+        PhotoRepository $photoRepository,
+        EventDispatcherInterface $eventDispatcher
+    ): Response {
         $photoId = $request->get('photoId');
 
         /** @var Photo $photo */
-        $photo = $this->getPhotoRepository()->find($photoId);
+        $photo = $photoRepository->find($photoId);
 
         if ($photo) {
             $eventDispatcher->dispatch(new ViewEvent($photo), ViewEvent::NAME);

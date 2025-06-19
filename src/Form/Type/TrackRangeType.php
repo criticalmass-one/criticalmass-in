@@ -12,7 +12,11 @@ class TrackRangeType extends AbstractType
     {
         $builder
             ->add('startPoint', HiddenType::class)
-            ->add('endPoint', HiddenType::class);
+            ->add('endPoint', HiddenType::class)
+            ->add('points', HiddenType::class)
+            ->add('polyline', HiddenType::class)
+            ->add('reducedPolyline', HiddenType::class)
+        ;
     }
 
     public function getName(): string

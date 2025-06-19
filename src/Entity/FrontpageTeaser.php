@@ -9,9 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @Vich\Uploadable
- */
+#[Vich\Uploadable]
 #[ORM\Table(name: 'frontpage_teaser')]
 #[ORM\Entity(repositoryClass: 'App\Repository\FrontpageTeaserRepository')]
 class FrontpageTeaser implements PhotoInterface
@@ -35,9 +33,7 @@ class FrontpageTeaser implements PhotoInterface
     #[ORM\Column(type: 'text', nullable: true)]
     protected ?string $text = null;
 
-    /**
-     * @Vich\UploadableField(mapping="frontpage_teaser", fileNameProperty="imageName",  size="imageSize", mimeType="imageMimeType")
-     */
+    #[Vich\UploadableField(mapping: 'frontpage_teaser', fileNameProperty: 'imageName', size: 'imageSize', mimeType: 'imageMimeType')]
     protected ?File $imageFile = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]

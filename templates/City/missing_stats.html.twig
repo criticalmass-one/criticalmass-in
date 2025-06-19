@@ -10,7 +10,7 @@
     </li>
 
     <li>
-        <a href="{{ objectPath(city) }}">
+        <a href="{{ object_path(city) }}">
             {{ city.city }}
         </a>
     </li>
@@ -65,13 +65,13 @@
                     {% for ride in rides %}
                         <tr>
                             <td>
-                                <a href="{{ objectPath(ride) }}">
+                                <a href="{{ object_path(ride) }}">
                                     {{ ride.dateTime|date('d.m.Y') }}
                                 </a>
                             </td>
 
                             <td>
-                                <a href="{{ objectPath(ride) }}">
+                                <a href="{{ object_path(ride) }}">
                                     {{ ride.title }}
                                 </a>
                             </td>

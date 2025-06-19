@@ -54,3 +54,8 @@ controller_api_city:
   resource: '../../src/Controller/Api/CityController.php'
   type: annotation
   prefix: '/api/'
+
+controller_login:
+  resource: '../../src/Controller/LoginController.php'
+  type: annotation
+  prefix: '/'

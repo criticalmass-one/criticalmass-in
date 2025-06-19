@@ -24,11 +24,11 @@
         <default key="_controller">App\Controller\Profile\ParticipationController::listAction</default>
     </route>
 
-    <route id="criticalmass_user_participation_update" path="/profile/participation/{participationId/update">
+    <route id="criticalmass_user_participation_update" path="/profile/participation/{id}/update">
         <default key="_controller">App\Controller\Profile\ParticipationController::updateAction</default>
     </route>
 
-    <route id="criticalmass_user_participation_delete" path="/profile/participation/{participationId/delete">
+    <route id="criticalmass_user_participation_delete" path="/profile/participation/{id}/delete">
         <default key="_controller">App\Controller\Profile\ParticipationController::deleteAction</default>
     </route>
 
