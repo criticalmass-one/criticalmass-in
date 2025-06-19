@@ -29,7 +29,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\Entity(repositoryClass: 'App\Repository\CityRepository')]
 #[JMS\ExclusionPolicy('all')]
 #[ORM\Index(fields: ['createdAt'], name: 'city_created_at_index')]
-class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, SocialNetworkProfileAble, PostableInterface, CoordinateInterface
+class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableInterface, AuditableInterface, SocialNetworkProfileAble, PostableInterface, CoordinateInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
@@ -535,12 +535,6 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
         $this->imageMimeType = $imageMimeType;
 
         return $this;
-    }
-
-    #[DataQuery\Queryable]
-    public function getPin(): string
-    {
-        return sprintf('%f,%f', $this->latitude, $this->longitude);
     }
 
     public function getCoord(): Coord

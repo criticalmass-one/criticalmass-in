@@ -38,7 +38,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\Index(fields: ['dateTime'], name: 'ride_date_time_index')]
 #[ORM\Index(fields: ['createdAt'], name: 'ride_created_at_index')]
 #[ORM\Index(fields: ['updatedAt'], name: 'ride_updated_at_index')]
-class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, OrderedEntityInterface, CoordinateInterface
+class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, OrderedEntityInterface, CoordinateInterface
 {
     #[DataQuery\Sortable]
     #[ORM\Id]
@@ -629,16 +629,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         }
 
         return $this->getEstimatedDistance() / $this->getEstimatedDuration();
-    }
-
-    #[DataQuery\Queryable]
-    public function getPin(): string
-    {
-        if (!$this->latitude || !$this->longitude) {
-            return '0,0';
-        }
-
-        return sprintf('%f,%f', $this->latitude, $this->longitude);
     }
 
     public function getCreatedAt(): \DateTime

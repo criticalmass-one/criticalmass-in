@@ -32,7 +32,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\Entity(repositoryClass: 'App\Repository\PhotoRepository')]
 #[JMS\ExclusionPolicy('all')]
 #[ORM\Index(fields: ['exifCreationDate'], name: 'photo_exif_creation_date_index')]
-class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, OrderedEntityInterface, ElasticSearchPinInterface, CoordinateInterface
+class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterface, RouteableInterface, PostableInterface, OrderedEntityInterface, CoordinateInterface
 {
     #[Routing\RouteParameter(name: 'id')]
     #[ORM\Id]
@@ -549,12 +549,6 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     public function __toString(): string
     {
         return (string) $this->id;
-    }
-
-    #[DataQuery\Queryable]
-    public function getPin(): string
-    {
-        return sprintf('%f,%f', $this->latitude, $this->longitude);
     }
 
     public function elasticable(): bool
