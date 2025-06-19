@@ -1,0 +1,46 @@
+<li class="media list-group-item p-4">
+    <img class="media-object d-flex align-self-start mr-3" src="{{ gravatarUrl(item.user) }}" />
+    <div class="media-body">
+        <div class="media-heading">
+            <small class="float-right text-muted">
+                {{ item.dateTime|date('d.m.Y H:i') }}&nbsp;Uhr
+            </small>
+            <h6>
+                {{ item.user.username }}
+            </h6>
+        </div>
+
+        <p>
+            {{ item.user.username }} hat einen Track hochgeladen:
+        </p>
+
+        <div class="card mb-3">
+            <div class="card-img-top" id="map-{{ item.uniqId }}"
+                 data-polyline="{{ item.polyline }}"
+                 data-polyline-color="{{ item.polylineColor }}"
+                 data-lock-map="true"
+                 data-map-marker-clickable="false"
+                 style="height: 150px;">
+
+            </div>
+
+            <div class="card-body">
+                <a href="{{ objectPath(item.ride) }}">
+                    <h5 class="card-title">
+                        {{ item.rideTitle }}
+                    </h5>
+                </a>
+
+                <p class="card-text">
+                    <strong>Datum:</strong> {{ item.ride.dateTime|date('d.m.Y') }}<br />
+                    <strong>Länge:</strong> {{ item.distance|number_format(2, ',', '.') }} Kilometer<br />
+                    <strong>Dauer:</strong> {{ (item.duration / 60 / 60)|number_format(2, ',', '.') }} Stunden
+                </p>
+            </div>
+        </div>
+    </div>
+</li>
+
+<script type="text/javascript">
+    CriticalMass.loadModule('AutoMap', 'map-{{ item.uniqId }}');
+</script>
