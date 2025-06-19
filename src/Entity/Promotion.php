@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation as DataQuery;
+use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute as DataQuery;
 use App\Criticalmass\Router\Attribute as Routing;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\RouteableInterface;
@@ -49,10 +49,8 @@ class Promotion implements ViewableEntity, RouteableInterface
     #[ORM\Column(type: 'integer', nullable: true)]
     private ?int $mapZoomLevel = null;
 
-    /**
-     * @DataQuery\Sortable
-     * @DataQuery\Queryable
-     */
+    #[DataQuery\Queryable]
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'integer', options: ['default' => 0])]
     protected int $views = 0;
 
