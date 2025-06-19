@@ -27,7 +27,6 @@
         "vich/uploader-bundle": "^2.4",
         "liip/imagine-bundle": "^2.0",
         "knplabs/knp-paginator-bundle": "^5.0",
-        "friendsofsymfony/elastica-bundle": "^6.0",
         "emcconville/google-map-polyline-encoding-tool": ">=1.2.1",
         "jms/serializer-bundle": "^5.0",
         "symfony/monolog-bundle": "^3.3",
