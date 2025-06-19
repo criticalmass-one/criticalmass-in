@@ -7,23 +7,23 @@ caldera_criticalmass_photo_manage:
     controller: App\Controller\Photo\PhotoManagementController::manageAction
 
 caldera_criticalmass_photo_place_single:
-    path: /photo/{photoId}/place
+    path: /photo/{id}/place
     controller: App\Controller\Photo\PhotoManagementController::placeSingleAction
 
 caldera_criticalmass_photo_rotate:
-    path: /photo/{photoId}/rotate
+    path: /photo/{id}/rotate
     controller: App\Controller\Photo\PhotoManagementController::rotateAction
 
 caldera_criticalmass_photo_toggle:
-    path: /photo/{photoId}/toggle
+    path: /photo/{id}/toggle
     controller: App\Controller\Photo\PhotoManagementController::toggleAction
 
 caldera_criticalmass_photo_featured:
-    path: /photo/{photoId}/featured
+    path: /photo/{id}/featured
     controller: App\Controller\Photo\PhotoManagementController::featuredPhotoAction
 
 caldera_criticalmass_photo_delete:
-    path: /managephotos/{photoId}/delete
+    path: /managephotos/{id}/delete
     controller: App\Controller\Photo\PhotoManagementController::deleteAction
 
 caldera_criticalmass_photo_relocate:
@@ -35,11 +35,11 @@ caldera_criticalmass_gallery_photos_rearrange:
     controller: App\Controller\Photo\PhotoManagementController::rearrangeAction
 
 caldera_criticalmass_photo_censor:
-    path: /photo/{photoId}/censor
+    path: /photo/{id}/censor
     controller: App\Controller\Photo\PhotoManagementController::censorAction
 
 caldera_criticalmass_photo_censor_short:
-    path: /photo/{photoId}/censor
+    path: /photo/{id}/censor
     controller: App\Controller\Photo\PhotoManagementController::censorAction
     options:
         expose: true
