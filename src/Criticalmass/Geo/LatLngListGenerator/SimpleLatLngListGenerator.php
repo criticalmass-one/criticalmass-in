@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\Geo\LatLngListGenerator;
 
+/** @deprecated  */
 class SimpleLatLngListGenerator extends AbstractLatLngListGenerator
 {
     public function execute(): self

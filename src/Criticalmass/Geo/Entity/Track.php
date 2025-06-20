@@ -10,6 +10,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * @ORM\MappedSuperclass
  * @Vich\Uploadable
+ * @deprecated
  */
 class Track extends BaseTrack
 {

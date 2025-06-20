@@ -5,6 +5,7 @@ namespace App\Criticalmass\Geo\GpxReader;
 use App\Criticalmass\Geo\Exception\GpxFileNotFoundException;
 use League\Flysystem\FilesystemOperator;
 
+/** @deprecated  */
 class GpxReader implements GpxReaderInterface
 {
     /** @var \SimpleXMLElement $rootNode */

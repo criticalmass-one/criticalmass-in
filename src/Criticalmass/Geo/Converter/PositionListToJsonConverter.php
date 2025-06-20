@@ -5,6 +5,7 @@ namespace App\Criticalmass\Geo\Converter;
 use App\Criticalmass\Geo\PositionList\PositionListInterface;
 use JMS\Serializer\SerializerInterface;
 
+/** @deprecated  */
 class PositionListToJsonConverter
 {
     const FORMAT = 'json';

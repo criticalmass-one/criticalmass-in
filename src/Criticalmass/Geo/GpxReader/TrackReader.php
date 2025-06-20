@@ -4,6 +4,7 @@ namespace App\Criticalmass\Geo\GpxReader;
 
 use App\Criticalmass\Geo\Entity\Track;
 
+/** @deprecated  */
 class TrackReader extends GpxReader
 {
     /** @var Track $track */

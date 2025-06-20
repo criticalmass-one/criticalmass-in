@@ -7,6 +7,7 @@ use App\Criticalmass\Geo\GpxReader\TrackReader;
 use App\Criticalmass\Geo\PositionList\PositionList;
 use App\Criticalmass\Geo\PositionList\PositionListInterface;
 
+/** @deprecated  */
 class TrackToPositionListConverter
 {
     /** @var TrackReader $trackReader */

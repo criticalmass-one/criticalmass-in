@@ -8,6 +8,7 @@ use App\Criticalmass\Geo\PositionList\PositionList;
 use App\Criticalmass\Geo\PositionList\PositionListInterface;
 use League\Flysystem\FilesystemOperator;
 
+/** @deprecated  */
 class GpxWriter implements GpxWriterInterface
 {
     /** @var PositionListInterface $positionList */

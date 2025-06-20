@@ -5,6 +5,7 @@ namespace App\Criticalmass\Geo\LatLngListGenerator;
 use App\Criticalmass\Geo\Entity\Track;
 use App\Criticalmass\Geo\GpxReader\TrackReader;
 
+/** @deprecated  */
 abstract class AbstractLatLngListGenerator
 {
     const WIDTH = 10;

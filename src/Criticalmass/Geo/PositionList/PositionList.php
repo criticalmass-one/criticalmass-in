@@ -4,6 +4,7 @@ namespace App\Criticalmass\Geo\PositionList;
 
 use App\Criticalmass\Geo\EntityInterface\PositionInterface;
 
+/** @deprecated  */
 class PositionList implements PositionListInterface
 {
     /**

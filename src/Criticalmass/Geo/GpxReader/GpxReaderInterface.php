@@ -5,6 +5,7 @@ namespace App\Criticalmass\Geo\GpxReader;
 use App\Criticalmass\Geo\EntityInterface\PositionInterface;
 use App\Criticalmass\Geo\PositionList\PositionListInterface;
 
+/** @deprecated  */
 interface GpxReaderInterface
 {
     public function loadFromString(string $gpxString): GpxReaderInterface;

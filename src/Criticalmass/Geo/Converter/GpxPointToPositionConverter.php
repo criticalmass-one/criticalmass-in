@@ -5,6 +5,7 @@ namespace App\Criticalmass\Geo\Converter;
 use App\Criticalmass\Geo\Entity\Position;
 use App\Criticalmass\Geo\EntityInterface\PositionInterface;
 
+/** @deprecated  */
 class GpxPointToPositionConverter
 {
     private function __construct()

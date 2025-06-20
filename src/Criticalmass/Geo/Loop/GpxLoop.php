@@ -4,6 +4,7 @@ namespace App\Criticalmass\Geo\Loop;
 
 use App\Criticalmass\Geo\Converter\GpxToPositionListConverter;
 
+/** @deprecated  */
 class GpxLoop extends Loop
 {
     /** @var GpxToPositionListConverter $gpxToPositionListConverter */

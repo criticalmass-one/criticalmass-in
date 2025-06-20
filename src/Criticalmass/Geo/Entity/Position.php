@@ -8,6 +8,7 @@ use JMS\Serializer\Annotation as JMS;
 
 /**
  * @JMS\ExclusionPolicy("all")
+ * @deprecated
  */
 class Position extends Coordinate implements PositionInterface
 {

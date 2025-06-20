@@ -4,6 +4,7 @@ namespace App\Criticalmass\Geo\EntityInterface;
 
 use Caldera\GeoBasic\Coord\CoordInterface;
 
+/** @deprecated  */
 interface PositionInterface extends CoordInterface
 {
     public function setLatitude(float $latitude): PositionInterface;

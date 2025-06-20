@@ -5,6 +5,7 @@ namespace App\Criticalmass\Geo\Converter;
 use App\Criticalmass\Geo\EntityInterface\PositionInterface;
 use App\Criticalmass\Geo\PositionList\PositionListInterface;
 
+/** @deprecated  */
 class PositionListToPointListConverter
 {
     private function __construct()

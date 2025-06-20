@@ -7,6 +7,7 @@ use App\Criticalmass\Geo\EntityInterface\PositionInterface;
 use App\Criticalmass\Geo\GpxReader\GpxReaderInterface;
 use App\Criticalmass\Geo\PositionList\PositionList;
 
+/** @deprecated  */
 class GpxToPositionListConverter
 {
     /** @var GpxReaderInterface $gpxReader */

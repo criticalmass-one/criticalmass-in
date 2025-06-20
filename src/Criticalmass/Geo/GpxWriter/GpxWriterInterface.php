@@ -4,6 +4,7 @@ namespace App\Criticalmass\Geo\GpxWriter;
 
 use App\Criticalmass\Geo\PositionList\PositionListInterface;
 
+/** @deprecated  */
 interface GpxWriterInterface
 {
     public function getGpxContent(): string;

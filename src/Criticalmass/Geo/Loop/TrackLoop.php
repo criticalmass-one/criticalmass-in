@@ -6,6 +6,7 @@ use App\Criticalmass\Geo\Converter\TrackToPositionListConverter;
 use App\Criticalmass\Geo\Entity\Track;
 use App\Criticalmass\Geo\GpxReader\TrackReader;
 
+/** @deprecated  */
 class TrackLoop extends Loop
 {
     /** @var TrackReader $trackReader */

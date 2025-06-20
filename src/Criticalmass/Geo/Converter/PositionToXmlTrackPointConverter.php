@@ -4,6 +4,7 @@ namespace App\Criticalmass\Geo\Converter;
 
 use App\Criticalmass\Geo\EntityInterface\PositionInterface;
 
+/** @deprecated  */
 class PositionToXmlTrackPointConverter
 {
     private function __construct()

@@ -5,6 +5,7 @@ namespace App\Criticalmass\Geo\Loop;
 use App\Criticalmass\Geo\EntityInterface\PositionInterface;
 use App\Criticalmass\Geo\PositionList\PositionListInterface;
 
+/** @deprecated  */
 class Loop implements LoopInterface
 {
     /** @var \DateTimeZone $dateTimeZone */
