@@ -20,6 +20,12 @@ use App\Event\Track\TrackTrimmedEvent;
 use App\Event\Track\TrackUpdatedEvent;
 use App\Event\Track\TrackUploadedEvent;
 use Doctrine\Persistence\ManagerRegistry;
+use League\Flysystem\FilesystemOperator;
+use phpGPX\Models\GpxFile;
+use phpGPX\Models\Segment;
+use phpGPX\phpGPX;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class TrackEventSubscriber implements EventSubscriberInterface
@@ -34,6 +40,7 @@ class TrackEventSubscriber implements EventSubscriberInterface
     protected ParticipationManagerInterface $participationManager;
 
     public function __construct(
+        private readonly ParameterBagInterface $parameterBag,
         ManagerRegistry $registry,
         RideEstimateHandler $rideEstimateHandler,
         RideEstimateConverterInterface $rideEstimateConverter,
@@ -114,12 +121,19 @@ class TrackEventSubscriber implements EventSubscriberInterface
 
     public function onTrackUploaded(TrackUploadedEvent $trackUploadedEvent): void
     {
+        $phpGpx = new PhpGpx();
         $track = $trackUploadedEvent->getTrack();
 
-        $this->loadTrackProperties($track);
+        $trackDirectory = $this->parameterBag->get('upload_destination.track');
+        $filename = sprintf('%s/%s', $trackDirectory, $track->getTrackFilename());
+        $gpxFile = $phpGpx->load($filename);
+
+        $this->loadTrackProperties($track, $gpxFile);
         $this->addRideEstimate($track, $track->getRide());
         $this->updateLatLngList($track);
         $this->updatePolyline($track);
+
+        dd($track);
 
         $this->registry->getManager()->flush();
 
@@ -168,23 +182,20 @@ class TrackEventSubscriber implements EventSubscriberInterface
         $track->setLatLngList($this->rangeLatLngListGenerator->getList());
     }
 
-    protected function loadTrackProperties(Track $track): void
+    protected function loadTrackProperties(Track $track, GpxFile $gpxFile): void
     {
-        $this->trackReader->loadTrack($track);
+        $gpxTrack = $gpxFile->tracks[0];
+        $gpxStats = $gpxTrack->stats;
+        $pointCounter = count($gpxTrack->getPoints());
 
         $track
-            ->setPoints($this->trackReader->countPoints())
+            ->setPoints($pointCounter)
             ->setStartPoint(0)
-            ->setEndPoint($this->trackReader->countPoints() - 1)
-            ->setStartDateTime($this->trackReader->getStartDateTime())
-            ->setEndDateTime($this->trackReader->getEndDateTime());
-
-
-        $distance = $this->trackDistanceCalculator
-            ->setTrack($track)
-            ->calculate();
-
-        $track->setDistance($distance);
+            ->setEndPoint($pointCounter - 1)
+            ->setStartDateTime($gpxStats->startedAt)
+            ->setEndDateTime($gpxStats->finishedAt)
+            ->setDistance($gpxStats->distance)
+        ;
     }
 
     protected function calculateTrackDistance(Track $track): void
