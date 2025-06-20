@@ -36,7 +36,7 @@ class ExifHandler extends AbstractExifHandler
             $sourceType = $exif->$exifGetMethodName();
 
             if ($targetType === $sourceType) {
-                $this->typeawareAssignment($photo, $photoSetMethodName, $exif, $exifGetMethodName, $type->getName());
+                $this->typeawareAssignment($photo, $photoSetMethodName, $exif, $exifGetMethodName, $targetType->getName());
             }
         }
 
