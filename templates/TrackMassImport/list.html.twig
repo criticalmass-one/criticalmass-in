@@ -42,7 +42,7 @@
                                 <dl>
                                     <dt>Tour:</dt>
                                     <dd>
-                                        <a href="{{ objectPath(candidate.ride) }}">{{ candidate.ride.title }}</a>
+                                        <a href="{{ object_path(candidate.ride) }}">{{ candidate.ride.title }}</a>
                                     </dd>
                                 </dl>
                             </div>
@@ -67,7 +67,7 @@
                                 <dl>
                                     <dt>Stadt:</dt>
                                     <dd>
-                                        <a href="{{ objectPath(candidate.ride.city) }}">{{ candidate.ride.city.city }}</a>
+                                        <a href="{{ object_path(candidate.ride.city) }}">{{ candidate.ride.city.city }}</a>
                                     </dd>
                                 </dl>
                             </div>
@@ -99,7 +99,7 @@
                                 <div class="text-center">
                                     <div class="btn-group">
                                         <a class="btn btn-success"
-                                           href="{{ objectPath(candidate.ride, 'caldera_criticalmass_strava_import') }}?activityId={{ candidate.activityId }}">
+                                           href="{{ object_path(candidate.ride, 'caldera_criticalmass_strava_import') }}?activityId={{ candidate.activityId }}">
                                             <i class="far fa-check"></i>
                                             Importieren
                                         </a>
@@ -120,8 +120,4 @@
             {% endif %}
         </div>
     </div>
-
-    <script>
-        CriticalMass.loadModule('StravaImportPage');
-    </script>
 {% endblock %}

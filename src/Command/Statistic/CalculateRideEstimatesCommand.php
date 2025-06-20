@@ -5,29 +5,25 @@ namespace App\Command\Statistic;
 use App\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandlerInterface;
 use App\Entity\Ride;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'criticalmass:rideestimate:recalculate',
+    description: 'Recalculate ride estimates',
+)]
 class CalculateRideEstimatesCommand extends Command
 {
-    protected static $defaultName = 'criticalmass:rideestimate:recalculate';
     public function __construct(protected RideEstimateHandlerInterface $rideEstimateHandler, protected ManagerRegistry $registry)
     {
-        $this->registry = $registry;
-        $this->rideEstimateHandler = $rideEstimateHandler;
-
-        parent::__construct($name);
+        parent::__construct();
     }
 
-    protected function configure(): void
-    {
-        $this->setDescription('');
-    }
-
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $rides = $this->registry->getRepository(Ride::class)->findAll();
 
@@ -63,5 +59,7 @@ class CalculateRideEstimatesCommand extends Command
         
         $table->render();
         $progressBar->finish();
+
+        return Command::SUCCESS;
     }
 }

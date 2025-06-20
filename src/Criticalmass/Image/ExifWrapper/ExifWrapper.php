@@ -3,11 +3,22 @@
 namespace App\Criticalmass\Image\ExifWrapper;
 
 use App\Entity\Photo;
+use League\Flysystem\FilesystemOperator;
 use PHPExif\Exif;
 use PHPExif\Reader\Reader;
+use Symfony\Component\Filesystem\Filesystem as SymfonyFilesystem;
 
-class ExifWrapper extends AbstractExifWrapper
+class ExifWrapper implements ExifWrapperInterface
 {
+    /** @var SymfonyFilesystem $symfonyFilesystem */
+    protected $symfonyFilesystem;
+
+    public function __construct(
+        protected readonly FilesystemOperator $flysystemFilesystem)
+    {
+        $this->symfonyFilesystem = new SymfonyFilesystem();
+    }
+
     public function getExifData(Photo $photo): ?Exif
     {
         $filename = $this->dumpFileToTmp($photo);

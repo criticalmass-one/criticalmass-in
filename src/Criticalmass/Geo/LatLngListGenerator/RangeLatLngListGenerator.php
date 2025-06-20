@@ -4,17 +4,16 @@ namespace App\Criticalmass\Geo\LatLngListGenerator;
 
 class RangeLatLngListGenerator extends AbstractLatLngListGenerator
 {
-    public function execute()
+    public function execute(): self
     {
         $start = $this->track->getStartPoint();
         $end = $this->track->getEndPoint();
 
-        $result = array();
-
+        $result = [];
         $counter = 0;
 
         foreach ($this->xmlRootNode->trk->trkseg->trkpt as $point) {
-            if ($counter >= $start && $counter < $end && $counter % $this->gapWidth == 0) {
+            if ($counter >= $start && $counter < $end && $counter % self::WIDTH === 0) {
                 $result[] = '[' . $point['lat'] . ',' . $point['lon'] . ']';
             }
 

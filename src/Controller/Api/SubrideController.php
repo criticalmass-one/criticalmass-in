@@ -6,7 +6,6 @@ use App\Entity\Ride;
 use App\Entity\Subride;
 use Nelmio\ApiDocBundle\Annotation\Operation;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -21,9 +20,8 @@ class SubrideController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     * @ParamConverter("ride", class="App:Ride")
      */
-    #[Route(path: '/{citySlug}/{rideIdentifier}/subride', name: 'caldera_criticalmass_rest_subride_list', methods: ['GET'], options: ['expose' => true])]
+    #[Route(path: '/{citySlug}/{rideIdentifier}/subride', name: 'caldera_criticalmass_rest_subride_list', methods: ['GET'])]
     public function listSubrideAction(Ride $ride): JsonResponse
     {
         $subrideList = $this->managerRegistry->getRepository(Subride::class)->findByRide($ride);
@@ -42,9 +40,8 @@ class SubrideController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     * @ParamConverter("subride", class="App:Subride")
      */
-    #[Route(path: '/{citySlug}/{rideIdentifier}/{subrideId}', name: 'caldera_criticalmass_rest_subride_show', methods: ['GET'])]
+    #[Route(path: '/{citySlug}/{rideIdentifier}/{id}', name: 'caldera_criticalmass_rest_subride_show', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function showSubrideAction(Subride $subride): JsonResponse
     {
         return $this->createStandardResponse($subride);

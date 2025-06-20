@@ -2,48 +2,45 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\Router\Annotation as Routing;
 use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\User as BaseUser;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Security\Core\User\LegacyPasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @Vich\Uploadable
- */
-#[ORM\Table(name: 'fos_user_user')]
+#[Vich\Uploadable]
+#[ORM\Table(name: 'user')]
 #[ORM\Entity(repositoryClass: 'App\Repository\UserRepository')]
 #[ORM\HasLifecycleCallbacks]
 #[JMS\ExclusionPolicy('all')]
-class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterface, PhotoInterface
+class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterface, UserInterface, LegacyPasswordAuthenticatedUserInterface
 {
-    /**
-     * @todo Add typed property
-     * @var int $id
-     */
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     #[JMS\Groups(['timelapse'])]
     #[JMS\Expose]
-    protected $id;
+    protected ?int $id = null;
 
-    /**
-     * @Routing\RouteParameter(name="username")
-     * @todo Add typed property
-     */
+    #[ORM\Column(type: 'json', nullable: true)]
+    private ?array $roles = [];
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $email = null;
+
     #[Assert\NotBlank]
     #[Assert\Regex(pattern: '/https?\:\/\//', match: false, message: 'Der Benutzername darf keine Url enthalten')]
     #[JMS\Groups(['timelapse'])]
     #[JMS\Expose]
-    protected $username;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    protected ?string $username = null;
 
     #[ORM\OneToMany(targetEntity: 'Track', mappedBy: 'user', cascade: ['persist', 'remove'])]
     protected Collection $tracks;
@@ -66,6 +63,9 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     #[ORM\Column(type: 'boolean', nullable: true, options: ['default' => 0])]
     protected bool $blurGalleries = false;
 
+    #[ORM\Column(type: 'boolean', nullable: true, options: ['default' => 0])]
+    protected bool $enabled = false;
+
     #[ORM\OneToMany(targetEntity: 'Participation', mappedBy: 'user')]
     protected Collection $participations;
 
@@ -74,6 +74,9 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     protected ?\DateTime $createdAt = null;
+
+    #[ORM\Column(name: 'last_login', type: 'datetime', nullable: true)]
+    protected ?\DateTime $lastLogin = null;
 
     #[ORM\Column(name: 'facebook_id', type: 'string', length: 255, nullable: true)]
     protected ?string $facebookId = null;
@@ -87,18 +90,10 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     #[ORM\Column(name: 'strava_access_token', type: 'text', nullable: true)]
     protected ?string $stravaAccessToken = null;
 
-    #[ORM\Column(name: 'twitter_id', type: 'string', length: 255, nullable: true)]
-    protected ?string $twitterId = null;
-
-    #[ORM\Column(name: 'twitter_access_token', type: 'text', nullable: true)]
-    protected ?string $twitterkAccessToken = null;
-
     #[ORM\OneToMany(targetEntity: 'CityCycle', mappedBy: 'city', cascade: ['persist', 'remove'])]
     protected Collection $cycles;
 
-    /**
-     * @Vich\UploadableField(mapping="user_photo", fileNameProperty="imageName", size="imageSize", mimeType="imageMimeType")
-     */
+    #[Vich\UploadableField(mapping: 'user_photo', fileNameProperty: 'imageName', size: 'imageSize', mimeType: 'imageMimeType')]
     protected ?File $imageFile = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
@@ -123,16 +118,20 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
 
     public function __construct()
     {
-        parent::__construct();
-
         $this->colorRed = rand(0, 255);
         $this->colorGreen = rand(0, 255);
         $this->colorBlue = rand(0, 255);
+        $this->createdAt = new \DateTime();
 
         $this->tracks = new ArrayCollection();
         $this->participations = new ArrayCollection();
         $this->socialNetworkProfiles = new ArrayCollection();
         $this->trackImportCandidates = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function setId(int $id): User
@@ -142,9 +141,60 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         return $this;
     }
 
-    public function getId(): ?int
+
+    public function getUsername(): ?string
     {
-        return $this->id;
+        return $this->username;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles = []): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function hasRole(string $role): bool
+    {
+        return in_array($role, $this->roles);
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
     public function getColorRed(): int
@@ -181,6 +231,18 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         $this->colorBlue = $colorBlue;
 
         return $this;
+    }
+
+    public function setColor(string $color): User
+    {
+        list($this->colorRed, $this->colorGreen, $this->colorBlue) = sscanf($color, "#%02x%02x%02x");
+
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return sprintf('#%02x%02x%02x', $this->colorRed, $this->colorGreen, $this->colorBlue);
     }
 
     /**
@@ -318,30 +380,6 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
         return $this->facebookAccessToken;
     }
 
-    public function setTwitterId(string $twitterId): User
-    {
-        $this->twitterId = $twitterId;
-
-        return $this;
-    }
-
-    public function getTwitterId(): ?string
-    {
-        return $this->twitterId;
-    }
-
-    public function setTwitterAccessToken(string $twitterkAccessToken): User
-    {
-        $this->twitterkAccessToken = $twitterkAccessToken;
-
-        return $this;
-    }
-
-    public function getTwitterAccessToken(): ?string
-    {
-        return $this->twitterkAccessToken;
-    }
-
     public function setBlurGalleries(bool $blurGalleries): User
     {
         $this->blurGalleries = $blurGalleries;
@@ -356,7 +394,7 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
 
     public function isOauthAccount(): bool
     {
-        return $this->stravaId || $this->facebookId || $this->isTwitterAccount();
+        return $this->stravaId || $this->facebookId;
     }
 
     public function isFacebookAccount(): bool
@@ -367,11 +405,6 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
     public function isStravaAccount(): bool
     {
         return $this->stravaId !== null;
-    }
-
-    public function isTwitterAccount(): bool
-    {
-        return $this->twitterId !== null;
     }
 
     public function addCycle(CityCycle $cityCycle): User
@@ -522,6 +555,62 @@ class User extends BaseUser implements SocialNetworkProfileAble, RouteableInterf
                 $trackImportCandidate->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(?string $email): User
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getSalt(): string
+    {
+        return '';
+    }
+
+    public function setSalt(string $salt): self
+    {
+        return $this;
+    }
+
+    public function getPassword(): string
+    {
+        return '';
+    }
+
+    public function setPassword(string $password): self
+    {
+        return $this;
+    }
+
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): self
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    public function getLastLogin(): ?\DateTime
+    {
+        return $this->lastLogin;
+    }
+
+    public function setLastLogin(?\DateTime $lastLogin = null): self
+    {
+        $this->lastLogin = $lastLogin;
 
         return $this;
     }

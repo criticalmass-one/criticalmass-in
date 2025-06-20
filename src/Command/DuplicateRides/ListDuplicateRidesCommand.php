@@ -7,34 +7,30 @@ use App\Entity\City;
 use App\Entity\CitySlug;
 use App\Entity\Ride;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'criticalmass:ride-duplicates:list',
+    description: 'Find duplicate rides',
+)]
 class ListDuplicateRidesCommand extends Command
 {
-    protected static $defaultName = 'criticalmass:ride-duplicates:list';
     public function __construct(protected ManagerRegistry $registry, protected DuplicateFinderInterface $duplicateFinder)
     {
-        $this->registry = $registry;
-        $this->duplicateFinder = $duplicateFinder;
-
-        parent::__construct($name);
+        parent::__construct();
     }
 
     protected function configure(): void
     {
-        $this->setDescription('Find duplicate rides')
-            ->addArgument(
-                'citySlug',
-                InputArgument::OPTIONAL,
-                'City slug'
-            );
+        $this->addArgument('citySlug',InputArgument::OPTIONAL,'City slug');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         /** @var string $citySlug */
         $citySlugString = $input->getArgument('citySlug');
@@ -57,6 +53,8 @@ class ListDuplicateRidesCommand extends Command
         foreach ($duplicateRideList as $duplicateRides) {
             $this->handleDuplicates($input, $output, $duplicateRides);
         }
+
+        return Command::SUCCESS;
     }
 
     protected function handleDuplicates(InputInterface $input, OutputInterface $output, array $duplicateRides): void

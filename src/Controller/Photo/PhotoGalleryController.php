@@ -6,29 +6,28 @@ use App\Controller\AbstractController;
 use App\Entity\City;
 use App\Entity\Photo;
 use App\Entity\Ride;
+use App\Repository\PhotoRepository;
+use Flagception\Bundle\FlagceptionBundle\Attribute\Feature;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Flagception\Bundle\FlagceptionBundle\Annotations\Feature;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-/**
- * @Feature("photos")
- */
+#[Feature('photos')]
 class PhotoGalleryController extends AbstractController
 {
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
-    public function galleryAction(Request $request, PaginatorInterface $paginator, Ride $ride): Response
-    {
+    public function galleryAction(
+        Request $request,
+        PaginatorInterface $paginator,
+        PhotoRepository $photoRepository,
+        Ride $ride
+    ): Response {
         if ($ride && $ride->getRestrictedPhotoAccess() && !$this->getUser()) {
             throw $this->createAccessDeniedException();
         }
 
-        $query = $this->getPhotoRepository()->buildQueryPhotosByRide($ride);
+        $query = $photoRepository->buildQueryPhotosByRide($ride);
 
         $pagination = $paginator->paginate(
             $query,
@@ -42,25 +41,24 @@ class PhotoGalleryController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     * @Feature("photos")
-     */
-    public function userlistAction(UserInterface $user = null): Response
-    {
-        $result = $this->getPhotoRepository()->findRidesWithPhotoCounterByUser($user);
+    #[Feature('photos')]
+    #[IsGranted('ROLE_USER')]
+    public function userlistAction(
+        PhotoRepository $photoRepository,
+        UserInterface $user = null
+    ): Response {
+        $result = $photoRepository->findRidesWithPhotoCounterByUser($user);
 
         return $this->render('PhotoGallery/user_list.html.twig', [
             'result' => $result,
         ]);
     }
 
-    /**
-     * @Feature("photos")
-     */
-    public function examplegalleryAction(): Response
-    {
-        $photos = $this->getPhotoRepository()->findSomePhotos(32);
+    #[Feature('photos')]
+    public function examplegalleryAction(
+        PhotoRepository $photoRepository
+    ): Response {
+        $photos = $photoRepository->findSomePhotos(32);
 
         $cityList = [];
 

@@ -1,13 +1,6 @@
 hwi_oauth:
     firewall_names: ['main']
 
-    fosub:
-        username_iterations: 30
-        properties:
-            facebook: facebookId
-            strava: stravaId
-            twitter: twitterId
-
     resource_owners:
         facebook:
             type:                facebook
@@ -19,7 +12,5 @@ hwi_oauth:
             type:                strava
             client_id:           '%strava.client_id%'
             client_secret:       '%strava.secret%'
-        twitter:
-            type:                twitter
-            client_id:           '%twitter.client_id%'
-            client_secret:       '%twitter.secret%'
+            options:
+                use_authorization_to_get_token: false
