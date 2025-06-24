@@ -224,7 +224,7 @@ export default class Map {
         const rideIdentifier = this.mapContainer.dataset.rideIdentifier;
 
         if (citySlug && rideIdentifier) {
-            const photoUrl = `/${encodeURIComponent(citySlug)}/${encodeURIComponent(rideIdentifier)}/listPhotos`;
+            const photoUrl = `/api/${encodeURIComponent(citySlug)}/${encodeURIComponent(rideIdentifier)}/listPhotos`;
 
             fetch(photoUrl).then((response) => {
                 return response.json();
@@ -260,7 +260,7 @@ export default class Map {
         const rideIdentifier = this.mapContainer.dataset.rideIdentifier;
 
         if (citySlug && rideIdentifier) {
-            const trackUrl = `/${encodeURIComponent(citySlug)}/${encodeURIComponent(rideIdentifier)}/listTracks`;
+            const trackUrl = `/api/${encodeURIComponent(citySlug)}/${encodeURIComponent(rideIdentifier)}/listTracks`;
 
             fetch(trackUrl).then((response) => {
                 return response.json();

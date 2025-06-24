@@ -46,7 +46,11 @@ doctrine:
                 dayofweek: App\DQL\DayOfWeekFunction
             numeric_functions:
                 rand: App\DQL\RandFunction
-
+                asin: DoctrineExtensions\Query\Mysql\Asin
+                cos: DoctrineExtensions\Query\Mysql\Cos
+                power: DoctrineExtensions\Query\Mysql\Power
+                radians: DoctrineExtensions\Query\Mysql\Radians
+                sin: DoctrineExtensions\Query\Mysql\Sin
 when@prod:
     doctrine:
         orm:

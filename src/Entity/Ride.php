@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation as DataQuery;
+use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute as DataQuery;
 use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
 use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
 use App\Criticalmass\Router\Attribute as Routing;
@@ -10,7 +10,6 @@ use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AuditableInterface;
 use App\EntityInterface\CoordinateInterface;
-use App\EntityInterface\ElasticSearchPinInterface;
 use App\EntityInterface\ParticipateableInterface;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
@@ -38,11 +37,9 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\Index(fields: ['dateTime'], name: 'ride_date_time_index')]
 #[ORM\Index(fields: ['createdAt'], name: 'ride_created_at_index')]
 #[ORM\Index(fields: ['updatedAt'], name: 'ride_updated_at_index')]
-class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, OrderedEntityInterface, CoordinateInterface
+class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, RouteableInterface, AuditableInterface, PostableInterface, SocialNetworkProfileAble, OrderedEntityInterface, CoordinateInterface
 {
-    /**
-     * @DataQuery\Sortable
-     */
+    #[DataQuery\Sortable]
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
@@ -61,8 +58,8 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
 
     /**
      * @OE\Identical()
-     * @DataQuery\Queryable
      */
+    #[DataQuery\Sortable]
     #[Routing\RouteParameter(name: 'citySlug')]
     #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'rides', fetch: 'LAZY')]
     #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
@@ -77,92 +74,72 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     #[Groups(['extended-ride-list'])]
     protected Collection $subrides;
 
-    /**
-     * @DataQuery\Sortable
-     * @DataQuery\Queryable
-     */
+    #[DataQuery\Sortable]
+    #[DataQuery\Queryable]
     #[ORM\Column(type: 'string', nullable: true)]
     #[Groups(['ride-list'])]
     protected ?string $slug = null;
 
-    /**
-     * @DataQuery\Sortable
-     * @DataQuery\Queryable
-     */
+    #[DataQuery\Sortable]
+    #[DataQuery\Queryable]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 255, nullable: false)]
     #[Groups(['ride-list'])]
     protected ?string $title = null;
 
-    /**
-     * @DataQuery\Sortable
-     * @DataQuery\Queryable
-     */
+    #[DataQuery\Sortable]
+    #[DataQuery\Queryable]
     #[ORM\Column(type: 'text', nullable: true)]
     #[Groups(['ride-list'])]
     protected ?string $description = null;
 
-    /**
-     * @DataQuery\Sortable
-     * @DataQuery\Queryable
-     */
+    #[DataQuery\Sortable]
+    #[DataQuery\Queryable]
     #[ORM\Column(type: 'text', nullable: true)]
     #[Ignore]
     protected ?string $socialDescription = null;
 
     /**
      * @OE\Order(direction="asc")
-     * @DataQuery\Sortable
-     * @DataQuery\DateTimeQueryable(format="strict_date", pattern="Y-m-d")
      */
+    #[DataQuery\Sortable]
+    #[DataQuery\DateTimeQueryable(format: 'strict_date', pattern: 'Y-m-d')]
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Groups(['ride-list'])]
     protected \DateTime $dateTime;
 
-    /**
-     * @DataQuery\Sortable
-     * @DataQuery\Queryable
-     */
+    #[DataQuery\Sortable]
+    #[DataQuery\Queryable]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Groups(['ride-list'])]
     protected ?string $location = null;
 
-    /**
-     * @DataQuery\Sortable
-     * @DataQuery\Queryable
-     */
+    #[DataQuery\Sortable]
+    #[DataQuery\Queryable]
     #[ORM\Column(type: 'float', nullable: true)]
     #[Groups(['ride-list'])]
     protected ?float $latitude = 0.0;
 
-    /**
-     * @DataQuery\Sortable
-     * @DataQuery\Queryable
-     */
+    #[DataQuery\Sortable]
+    #[DataQuery\Queryable]
     #[ORM\Column(type: 'float', nullable: true)]
     #[Groups(['ride-list'])]
     protected ?float $longitude = 0.0;
 
-    /**
-     * @DataQuery\Sortable
-     * @DataQuery\Queryable
-     */
+    #[DataQuery\Sortable]
+    #[DataQuery\Queryable]
     #[ORM\Column(type: 'smallint', nullable: true)]
     #[Groups(['ride-list'])]
     protected ?int $estimatedParticipants = null;
 
-    /**
-     * @DataQuery\Sortable
-     * @DataQuery\Queryable
-     */
+    #[DataQuery\Sortable]
+    #[DataQuery\Queryable]
     #[ORM\Column(type: 'float', nullable: true)]
     #[Groups(['ride-list'])]
     protected ?float $estimatedDistance = null;
 
-    /**
-     * @DataQuery\Sortable
-     * @DataQuery\Queryable
-     */
+    #[DataQuery\Sortable]
+    #[DataQuery\Queryable]
     #[ORM\Column(type: 'float', nullable: true)]
     #[Groups(['ride-list'])]
     protected ?float $estimatedDuration = null;
@@ -204,10 +181,8 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     #[Ignore]
     protected Collection $estimates;
 
-    /**
-     * @DataQuery\Sortable
-     * @DataQuery\Queryable
-     */
+    #[DataQuery\Sortable]
+    #[DataQuery\Queryable]
     #[ORM\Column(type: 'integer', nullable: true)]
     #[Ignore]
     protected int $views = 0;
@@ -248,16 +223,12 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
     #[Groups(['ride-list'])]
     protected bool $enabled = true;
 
-    /**
-     * @DoctrineAssert\Enum(entity="App\DBAL\Type\RideDisabledReasonType")
-     */
+    #[DoctrineAssert\EnumType(entity: 'App\DBAL\Type\RideDisabledReasonType')]
     #[ORM\Column(type: 'RideDisabledReasonType', nullable: true)]
     #[Groups(['ride-list'])]
     protected ?string $disabledReason = null;
 
-    /**
-     * @DoctrineAssert\Enum(entity="App\DBAL\Type\RideType")
-     */
+    #[DoctrineAssert\EnumType(entity: 'App\DBAL\Type\RideType')]
     #[ORM\Column(type: 'RideType', nullable: true)]
     #[Groups(['ride-list'])]
     protected ?string $rideType = null;
@@ -646,18 +617,6 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         return $this->getEstimatedDistance() / $this->getEstimatedDuration();
     }
 
-    /**
-     * @DataQuery\Queryable
-     */
-    public function getPin(): string
-    {
-        if (!$this->latitude || !$this->longitude) {
-            return '0,0';
-        }
-
-        return sprintf('%f,%f', $this->latitude, $this->longitude);
-    }
-
     public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
@@ -737,9 +696,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, ElasticSearchPin
         return $this;
     }
 
-    /**
-     * @DataQuery\Queryable
-     */
+    #[DataQuery\Queryable]
     public function getRegion(): ?Region
     {
         if ($this->city) {
