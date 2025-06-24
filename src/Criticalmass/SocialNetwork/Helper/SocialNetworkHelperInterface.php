@@ -2,12 +2,12 @@
 
 namespace App\Criticalmass\SocialNetwork\Helper;
 
-use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Entity\City;
 use App\Entity\Ride;
 use App\Entity\SocialNetworkProfile;
 use App\Entity\Subride;
 use App\Entity\User;
+use App\EntityInterface\SocialNetworkProfileAble;
 use Symfony\Component\HttpFoundation\Request;
 
 interface SocialNetworkHelperInterface

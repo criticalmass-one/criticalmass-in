@@ -2,10 +2,10 @@
 
 namespace App\Repository;
 
-use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Criticalmass\SocialNetwork\FeedFetcher\FetchInfo;
 use App\Entity\City;
 use App\Entity\SocialNetworkProfile;
+use App\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
