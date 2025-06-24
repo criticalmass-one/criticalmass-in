@@ -11,7 +11,6 @@ use App\Entity\Subride;
 use App\Entity\User;
 use App\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\Request;
 
 class SocialNetworkHelper implements SocialNetworkHelperInterface
 {
@@ -25,25 +24,6 @@ class SocialNetworkHelper implements SocialNetworkHelperInterface
     public function getProfileAbleObject(Ride $ride = null, Subride $subride = null, City $city = null, User $user = null): SocialNetworkProfileAble
     {
         return $user ?? $ride ?? $city ?? $subride;
-    }
-
-    public function assignProfileAble(SocialNetworkProfile $socialNetworkProfile, Request $request): SocialNetworkProfile
-    {
-        $classNameOrder = [User::class, Subride::class, Ride::class, City::class];
-
-        foreach ($classNameOrder as $className) {
-            $shortname = ClassUtil::getLowercaseShortnameFromFqcn($className);
-
-            if ($request->get($shortname)) {
-                $setMethodName = sprintf('set%s', ucfirst($shortname));
-
-                $socialNetworkProfile->$setMethodName($request->get($shortname));
-
-                break;
-            }
-        }
-
-        return $socialNetworkProfile;
     }
 
     public function getProfileAble(SocialNetworkProfile $socialNetworkProfile): ?SocialNetworkProfileAble

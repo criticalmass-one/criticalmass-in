@@ -8,12 +8,10 @@ use App\Entity\SocialNetworkProfile;
 use App\Entity\Subride;
 use App\Entity\User;
 use App\EntityInterface\SocialNetworkProfileAble;
-use Symfony\Component\HttpFoundation\Request;
 
 interface SocialNetworkHelperInterface
 {
     public function getProfileAbleObject(Ride $ride = null, Subride $subride = null, City $city = null, User $user = null): SocialNetworkProfileAble;
-    public function assignProfileAble(SocialNetworkProfile $socialNetworkProfile, Request $request): SocialNetworkProfile;
     public function getProfileAble(SocialNetworkProfile $socialNetworkProfile): ?SocialNetworkProfileAble;
     public function getProfileAbleShortname(SocialNetworkProfileAble $profileAble): string;
     public function getRouteName(SocialNetworkProfileAble $profileAble, string $actionName): string;
