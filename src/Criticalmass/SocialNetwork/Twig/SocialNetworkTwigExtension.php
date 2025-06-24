@@ -7,15 +7,15 @@ use App\Criticalmass\SocialNetwork\NetworkManager\NetworkManagerInterface;
 use App\Entity\SocialNetworkFeedItem;
 use App\Entity\SocialNetworkProfile;
 use Twig\Extension\AbstractExtension;
-use Twig\TwigFunction;
+use Twig\TwigFilter;
 
-class NetworkIconTwigExtension extends AbstractExtension
+class SocialNetworkTwigExtension extends AbstractExtension
 {
-    protected NetworkManagerInterface $networkManager;
+    const INTRO_LENGTH = 350;
 
-    public function __construct(NetworkManagerInterface $networkManager)
+    public function __construct(private readonly NetworkManagerInterface $networkManager)
     {
-        $this->networkManager = $networkManager;
+
     }
 
     public function getFunctions(): array
@@ -23,6 +23,35 @@ class NetworkIconTwigExtension extends AbstractExtension
         return [
             new TwigFunction('network_icon', [$this, 'networkIcon']),
         ];
+    }
+
+    public function getFilters(): array
+    {
+        return [
+            new TwigFilter('trim_intro', [$this, 'trimIntro']),
+        ];
+    }
+
+    public function trimIntro(string $text): string
+    {
+        $text = strip_tags($text);
+        $textLength = strlen($text);
+
+        if ($textLength > self::INTRO_LENGTH) {
+            $additionalLength = self::INTRO_LENGTH;
+
+            while ($additionalLength < $textLength - 1) {
+                ++$additionalLength;
+
+                if (in_array($text[$additionalLength], ['.', ';', '!', '?', '…'])) {
+                    break;
+                }
+            }
+
+            return substr($text, 0, $additionalLength + 1);
+        }
+
+       return $text;
     }
 
     public function networkIcon($param): string
