@@ -3,9 +3,9 @@
 namespace App\Entity;
 
 use App\Criticalmass\Router\Attribute as Routing;
-use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\EntityInterface\AuditableInterface;
 use App\EntityInterface\RouteableInterface;
+use App\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;

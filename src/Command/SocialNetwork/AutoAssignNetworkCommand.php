@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\SocialNetwork\Command;
+namespace App\Command\SocialNetwork;
 
 use App\Criticalmass\SocialNetwork\Network\NetworkInterface;
 use App\Criticalmass\SocialNetwork\NetworkDetector\NetworkDetectorInterface;

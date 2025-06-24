@@ -7,8 +7,10 @@ use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Criticalmass\SocialNetwork\EntityNetworkDetector\EntityNetworkDetectorInterface;
 use App\Criticalmass\SocialNetwork\Helper\SocialNetworkHelperInterface;
 use App\Criticalmass\Util\ClassUtil;
+use App\Entity\City;
+use App\Entity\Ride;
 use App\Entity\SocialNetworkProfile;
-use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use App\EntityInterface\SocialNetworkProfileAble;
 use App\Factory\SocialNetworkProfile\SocialNetworkProfileFactoryInterface;
 use App\Form\Type\SocialNetworkProfileAddType;
 use Symfony\Component\Form\FormInterface;
@@ -26,13 +28,20 @@ class SocialNetworkController extends AbstractController
         ObjectRouterInterface $objectRouter,
         SocialNetworkProfileFactoryInterface $networkProfileFactory,
         SocialNetworkHelperInterface $socialNetworkHelper,
+        City $city = null,
+        Ride $ride = null,
         UserInterface $user = null
     ): Response {
         $socialNetworkProfile = $networkProfileFactory
             ->withCreatedBy($user)
-            ->build();
+            ->build()
+        ;
 
-        $socialNetworkProfile = $socialNetworkHelper->assignProfileAble($socialNetworkProfile, $request);
+        if ($city) {
+            $socialNetworkProfile->setCity($city);
+        } elseif ($ride) {
+            $socialNetworkProfile->setRide($ride);
+        }
 
         $form = $this->createForm(
             SocialNetworkProfileAddType::class,
@@ -40,9 +49,9 @@ class SocialNetworkController extends AbstractController
         );
 
         if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->addPostAction($request, $form, $networkDetector, $objectRouter, $socialNetworkHelper);
+            return $this->addPostAction($request, $form, $networkDetector, $objectRouter, $socialNetworkHelper, $city, $ride);
         } else {
-            return $this->addGetAction($request, $form, $networkDetector, $objectRouter, $socialNetworkHelper);
+            return $this->addGetAction($request, $form, $networkDetector, $objectRouter, $socialNetworkHelper, $city, $ride);
         }
     }
 
@@ -51,7 +60,9 @@ class SocialNetworkController extends AbstractController
         FormInterface $form,
         EntityNetworkDetectorInterface $networkDetector,
         ObjectRouterInterface $objectRouter,
-        SocialNetworkHelperInterface $socialNetworkHelper
+        SocialNetworkHelperInterface $socialNetworkHelper,
+        City $city = null,
+        Ride $ride = null
     ): Response {
         $form->handleRequest($request);
 
@@ -59,7 +70,11 @@ class SocialNetworkController extends AbstractController
             /** @var SocialNetworkProfile $socialNetworkProfile */
             $socialNetworkProfile = $form->getData();
 
-            $socialNetworkProfile = $socialNetworkHelper->assignProfileAble($socialNetworkProfile, $request);
+            if ($city) {
+                $socialNetworkProfile->setCity($city);
+            } elseif ($ride) {
+                $socialNetworkProfile->setRide($ride);
+            }
 
             $network = $networkDetector->detect($socialNetworkProfile);
 
@@ -88,7 +103,9 @@ class SocialNetworkController extends AbstractController
         FormInterface $form,
         EntityNetworkDetectorInterface $networkDetector,
         ObjectRouterInterface $objectRouter,
-        SocialNetworkHelperInterface $socialNetworkHelper
+        SocialNetworkHelperInterface $socialNetworkHelper,
+        City $city = null,
+        Ride $ride = null
     ): Response {
         $socialNetworkProfile = $form->getData();
 

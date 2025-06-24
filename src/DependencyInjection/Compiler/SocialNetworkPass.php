@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\SocialNetwork\DependencyInjection\Compiler;
+namespace App\DependencyInjection\Compiler;
 
 use App\Criticalmass\SocialNetwork\NetworkManager\NetworkManagerInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;

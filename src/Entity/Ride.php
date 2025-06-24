@@ -2,11 +2,7 @@
 
 namespace App\Entity;
 
-use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute as DataQuery;
-use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
-use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
 use App\Criticalmass\Router\Attribute as Routing;
-use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AuditableInterface;
 use App\EntityInterface\CoordinateInterface;
@@ -14,6 +10,7 @@ use App\EntityInterface\ParticipateableInterface;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
+use App\EntityInterface\SocialNetworkProfileAble;
 use App\Validator\Constraint as CriticalAssert;
 use Caldera\GeoBasic\Coord\Coord;
 use Caldera\GeoBasic\Coord\CoordInterface;
@@ -22,6 +19,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 use JMS\Serializer\Annotation as JMS;
+use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute as DataQuery;
+use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
+use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
