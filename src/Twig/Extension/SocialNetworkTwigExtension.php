@@ -4,28 +4,74 @@ namespace App\Twig\Extension;
 
 use App\Criticalmass\SocialNetwork\Network\NetworkInterface;
 use App\Criticalmass\SocialNetwork\NetworkManager\NetworkManagerInterface;
+use App\Entity\SocialNetworkFeedItem;
+use App\Entity\SocialNetworkProfile;
 use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 class SocialNetworkTwigExtension extends AbstractExtension
 {
-    protected NetworkManagerInterface $networkManager;
+    const INTRO_LENGTH = 350;
 
-    public function __construct(NetworkManagerInterface $networkManager)
+    public function __construct(private readonly NetworkManagerInterface $networkManager)
     {
-        $this->networkManager = $networkManager;
+
     }
 
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
+            new TwigFunction('network_icon', [$this, 'networkIcon']),
             new TwigFunction('getNetwork', [$this, 'getNetwork'], ['is_safe' => ['html']]),
         ];
     }
 
-    public function getName(): string
+    public function getFilters(): array
     {
-        return 'social_network_extension';
+        return [
+            new TwigFilter('trim_intro', [$this, 'trimIntro']),
+        ];
+    }
+
+    public function trimIntro(string $text): string
+    {
+        $text = strip_tags($text);
+        $textLength = strlen($text);
+
+        if ($textLength > self::INTRO_LENGTH) {
+            $additionalLength = self::INTRO_LENGTH;
+
+            while ($additionalLength < $textLength - 1) {
+                ++$additionalLength;
+
+                if (in_array($text[$additionalLength], ['.', ';', '!', '?', '…'])) {
+                    break;
+                }
+            }
+
+            return substr($text, 0, $additionalLength + 1);
+        }
+
+       return $text;
+    }
+
+    public function networkIcon($param): string
+    {
+        if ($param instanceof SocialNetworkFeedItem) {
+            $networkIdentifier = $param->getSocialNetworkProfile()->getNetwork();
+        } elseif ($param instanceof SocialNetworkProfile) {
+            $networkIdentifier = $param->getNetwork();
+        } elseif (is_string($param)) {
+            $networkIdentifier = $param;
+        } else {
+            throw new \InvalidArgumentException('Parameter must be instance of SocialNetworkFeedItem or SocialNetworkProfile or a string identifying the network.');
+        }
+
+        /** @var NetworkInterface $network */
+        $network = $this->networkManager->getNetworkList()[$networkIdentifier];
+
+        return $network->getIcon();
     }
 
     public function getNetwork(string $identifier): ?NetworkInterface
@@ -36,4 +82,10 @@ class SocialNetworkTwigExtension extends AbstractExtension
 
         return $this->networkManager->getNetwork($identifier);
     }
+
+    public function getName(): string
+    {
+        return 'social_network_extension';
+    }
+
 }
