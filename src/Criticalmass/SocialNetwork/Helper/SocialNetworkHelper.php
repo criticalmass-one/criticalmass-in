@@ -15,20 +15,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SocialNetworkHelper implements SocialNetworkHelperInterface
 {
-    /**
-     * @var ManagerRegistry $registry
-     */
-    protected $registry;
+    public function __construct(
+        private readonly ManagerRegistry $registry,
+        private readonly ObjectRouterInterface $router
+    ) {
 
-    /**
-     * @var ObjectRouterInterface $router
-     */
-    protected $router;
-
-    public function __construct(ManagerRegistry $registry, ObjectRouterInterface $router)
-    {
-        $this->registry = $registry;
-        $this->router = $router;
     }
 
     public function getProfileAbleObject(Ride $ride = null, Subride $subride = null, City $city = null, User $user = null): SocialNetworkProfileAble
