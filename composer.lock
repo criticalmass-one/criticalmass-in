@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "adbbb81a7df96837eb8aacaeb8d5f375",
+    "content-hash": "e9403d7bbc391d53130646ae596a5536",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -4424,12 +4424,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/maltehuebner/dataquery-bundle.git",
-                "reference": "8cf81b5408c77b2ce56b732c61855a6d7f04a40e"
+                "reference": "4f460bb29ce0d81d4c68de88c4516cfff7798570"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maltehuebner/dataquery-bundle/zipball/8cf81b5408c77b2ce56b732c61855a6d7f04a40e",
-                "reference": "8cf81b5408c77b2ce56b732c61855a6d7f04a40e",
+                "url": "https://api.github.com/repos/maltehuebner/dataquery-bundle/zipball/4f460bb29ce0d81d4c68de88c4516cfff7798570",
+                "reference": "4f460bb29ce0d81d4c68de88c4516cfff7798570",
                 "shasum": ""
             },
             "require": {
@@ -4464,7 +4464,7 @@
                 "issues": "https://github.com/maltehuebner/dataquery-bundle/issues",
                 "source": "https://github.com/maltehuebner/dataquery-bundle/tree/0.7.1"
             },
-            "time": "2024-09-03T18:25:48+00:00"
+            "time": "2025-06-19T08:12:13+00:00"
         },
         {
             "name": "maltehuebner/impress-bundle",
@@ -6889,16 +6889,16 @@
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "3.0.44",
+            "version": "3.0.45",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "1d0b5e7e1434678411787c5a0535e68907cf82d9"
+                "reference": "bd81b90d5963c6b9d87de50357585375223f4dd8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/1d0b5e7e1434678411787c5a0535e68907cf82d9",
-                "reference": "1d0b5e7e1434678411787c5a0535e68907cf82d9",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/bd81b90d5963c6b9d87de50357585375223f4dd8",
+                "reference": "bd81b90d5963c6b9d87de50357585375223f4dd8",
                 "shasum": ""
             },
             "require": {
@@ -6979,7 +6979,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpseclib/phpseclib/issues",
-                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.44"
+                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.45"
             },
             "funding": [
                 {
@@ -6995,7 +6995,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-06-15T09:59:26+00:00"
+            "time": "2025-06-22T22:54:43+00:00"
         },
         {
             "name": "phpstan/phpdoc-parser",
