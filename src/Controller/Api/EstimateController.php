@@ -2,6 +2,8 @@
 
 namespace App\Controller\Api;
 
+use App\Serializer\CriticalCriticalSerializer;
+use App\Serializer\CriticalSerializerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
 use MalteHuebner\DataQueryBundle\RequestParameterList\RequestParameterList;
@@ -22,7 +24,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 class EstimateController extends BaseController
 {
     public function __construct(
-        private readonly SerializerInterface $serializer,
+        protected readonly CriticalSerializerInterface $serializer,
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly DataQueryManagerInterface $dataQueryManager,
         protected readonly ManagerRegistry $managerRegistry,

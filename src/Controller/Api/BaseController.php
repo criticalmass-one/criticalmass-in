@@ -13,7 +13,7 @@ abstract class BaseController extends AbstractController
 {
     public function __construct(
         protected readonly ManagerRegistry $managerRegistry,
-        private readonly CriticalSerializerInterface $serializer
+        protected readonly CriticalSerializerInterface $serializer
     )
     {
 
