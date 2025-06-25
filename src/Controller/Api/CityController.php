@@ -185,8 +185,7 @@ class CityController extends BaseController
             $groups[] = 'extended-ride-list';
         }
 
-        $context = new SerializationContext();
-        $context->setGroups($groups);
+        $context = ['groups' => $groups];
 
         return $this->createStandardResponse($cityList, $context);
     }
@@ -213,6 +212,8 @@ class CityController extends BaseController
     #[Route(path: '/{citySlug}', name: 'caldera_criticalmass_rest_city_show', methods: ['GET'])]
     public function showAction(City $city): JsonResponse
     {
-        return $this->createStandardResponse($city);
+        $groups = ['ride-list'];
+
+        return $this->createStandardResponse($city, $groups);
     }
 }

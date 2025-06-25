@@ -8,17 +8,15 @@ use App\Serializer\CriticalSerializerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 abstract class BaseController extends AbstractController
 {
     public function __construct(
         protected readonly ManagerRegistry $managerRegistry,
-        private readonly CriticalSerializerInterface $serializer,
-        AuthorizationCheckerInterface $authorizationChecker
+        private readonly CriticalSerializerInterface $serializer
     )
     {
-        parent::__construct($authorizationChecker);
+
     }
 
     protected function deserializeRequest(Request $request, string $modelClass)
