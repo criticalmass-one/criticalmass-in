@@ -48,7 +48,9 @@ class RideController extends BaseController
     #[Route(path: '/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_show', methods: ['GET'])]
     public function showAction(Ride $ride): JsonResponse
     {
-        return $this->createStandardResponse($ride);
+        $context = ['groups' => 'ride-details'];
+
+        return $this->createStandardResponse($ride, $context);
     }
 
     /**

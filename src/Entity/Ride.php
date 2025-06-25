@@ -43,7 +43,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'ride-details'])]
     protected ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'rides', fetch: 'LAZY')]
@@ -53,7 +53,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
 
     #[ORM\ManyToOne(targetEntity: 'CityCycle', inversedBy: 'rides', fetch: 'LAZY')]
     #[ORM\JoinColumn(name: 'cycle_id', referencedColumnName: 'id')]
-    #[Groups(['extended-ride-list'])]
+    #[Groups(['extended-ride-list', 'ride-details'])]
     protected ?CityCycle $cycle = null;
 
     /**
@@ -63,11 +63,11 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
     #[Routing\RouteParameter(name: 'citySlug')]
     #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'rides', fetch: 'LAZY')]
     #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
-    #[Groups(['extended-ride-list'])]
+    #[Groups(['extended-ride-list', 'ride-details'])]
     protected ?City $city = null;
 
     #[ORM\OneToMany(targetEntity: 'Track', mappedBy: 'ride', fetch: 'LAZY')]
-    #[Groups(['extended-ride-list'])]
+    #[Groups(['extended-ride-list', 'ride-details'])]
     protected Collection $tracks;
 
     #[ORM\OneToMany(targetEntity: 'Subride', mappedBy: 'ride', fetch: 'LAZY')]
@@ -77,20 +77,20 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'string', nullable: true)]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'ride-details'])]
     protected ?string $slug = null;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 255, nullable: false)]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'ride-details'])]
     protected ?string $title = null;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'ride-details'])]
     protected ?string $description = null;
 
     #[DataQuery\Sortable]
@@ -105,55 +105,55 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
     #[DataQuery\Sortable]
     #[DataQuery\DateTimeQueryable(format: 'strict_date', pattern: 'Y-m-d')]
     #[ORM\Column(type: 'datetime', nullable: true)]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'ride-details'])]
     protected \DateTime $dateTime;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'ride-details'])]
     protected ?string $location = null;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'float', nullable: true)]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'ride-details'])]
     protected ?float $latitude = 0.0;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'float', nullable: true)]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'ride-details'])]
     protected ?float $longitude = 0.0;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'smallint', nullable: true)]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'ride-details'])]
     protected ?int $estimatedParticipants = null;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'float', nullable: true)]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'ride-details'])]
     protected ?float $estimatedDistance = null;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'float', nullable: true)]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'ride-details'])]
     protected ?float $estimatedDuration = null;
 
     #[ORM\OneToMany(targetEntity: 'Post', mappedBy: 'ride', fetch: 'LAZY')]
-    #[Groups(['extended-ride-list'])]
+    #[Groups(['extended-ride-list', 'ride-details'])]
     protected Collection $posts;
 
     #[ORM\OneToMany(targetEntity: 'Photo', mappedBy: 'ride', fetch: 'LAZY')]
-    #[Groups(['extended-ride-list'])]
+    #[Groups(['extended-ride-list', 'ride-details'])]
     protected Collection $photos;
 
     #[ORM\OneToMany(targetEntity: 'SocialNetworkProfile', mappedBy: 'ride', cascade: ['persist', 'remove'])]
-    #[Groups(['extended-ride-list'])]
+    #[Groups(['extended-ride-list', 'ride-details'])]
     protected ?Collection $socialNetworkProfiles = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
@@ -230,7 +230,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
 
     #[DoctrineAssert\EnumType(entity: 'App\DBAL\Type\RideType')]
     #[ORM\Column(type: 'RideType', nullable: true)]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'ride-details'])]
     protected ?string $rideType = null;
 
     #[ORM\OneToMany(targetEntity: 'App\Entity\TrackImportCandidate', mappedBy: 'ride')]

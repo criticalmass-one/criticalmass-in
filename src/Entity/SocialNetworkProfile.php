@@ -15,7 +15,7 @@ class SocialNetworkProfile
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'ride-details'])]
     protected ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'socialNetworkProfiles')]
@@ -26,6 +26,7 @@ class SocialNetworkProfile
     #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'socialNetworkProfiles')]
     #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
     #[SerializedName('city_id')]
+    #[Ignore]
     protected ?City $city = null;
 
     #[ORM\ManyToOne(targetEntity: 'Ride', inversedBy: 'socialNetworkProfiles')]
@@ -40,11 +41,11 @@ class SocialNetworkProfile
 
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string')]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'ride-details'])]
     protected ?string $identifier = null;
 
     #[ORM\Column(type: 'string')]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'ride-details'])]
     protected ?string $network = null;
 
     #[ORM\Column(type: 'boolean')]

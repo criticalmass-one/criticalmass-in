@@ -38,6 +38,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     #[DataQuery\Sortable]
+    #[Groups(['ride-details'])]
     protected ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'photos')]
@@ -65,11 +66,13 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     #[DataQuery\Queryable]
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['ride-details'])]
     protected ?float $latitude = null;
 
     #[DataQuery\Queryable]
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['ride-details'])]
     protected ?float $longitude = null;
 
     #[DataQuery\Sortable]

@@ -4,13 +4,14 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\SerializedName;
+use Symfony\Component\Serializer\Attribute\Ignore;
 
 #[ORM\Table(name: 'social_network_feed_item')]
 #[ORM\UniqueConstraint(name: 'unique_feed_item', columns: ['social_network_profile_id', 'uniqueIdentifier'])]
 #[ORM\Entity(repositoryClass: 'App\Repository\SocialNetworkFeedItemRepository')]
 #[ORM\Index(fields: ['dateTime'], name: 'social_network_feed_item_date_time_index')]
 #[ORM\Index(fields: ['createdAt'], name: 'social_network_feed_item_created_at_index')]
-class SocialNetworkFeedItem //implements Crawlable
+class SocialNetworkFeedItem
 {
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
@@ -20,6 +21,7 @@ class SocialNetworkFeedItem //implements Crawlable
     #[ORM\ManyToOne(targetEntity: 'SocialNetworkProfile', inversedBy: 'feedItems')]
     #[ORM\JoinColumn(name: 'social_network_profile_id', referencedColumnName: 'id')]
     #[SerializedName('social_network_profile_id')]
+    #[Ignore]
     protected ?SocialNetworkProfile $socialNetworkProfile = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: false)]

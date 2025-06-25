@@ -34,7 +34,7 @@ class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableI
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'ride-details'])]
     #[DataQuery\Sortable]
     protected ?int $id = null;
 
@@ -48,25 +48,27 @@ class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableI
     #[ORM\ManyToOne(targetEntity: 'Region', inversedBy: 'cities', cascade: ['persist'])]
     #[ORM\JoinColumn(name: 'region_id', referencedColumnName: 'id')]
     #[Ignore]
+    #[Groups(['ride-details'])]
     protected ?Region $region = null;
 
     #[Routing\RouteParameter(name: 'citySlug')]
     #[ORM\ManyToOne(targetEntity: 'CitySlug', inversedBy: 'city')]
     #[ORM\JoinColumn(name: 'main_slug_id', referencedColumnName: 'id')]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'ride-details'])]
+    #[Ignore]
     protected ?CitySlug $mainSlug = null;
 
     #[DataQuery\Sortable]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     #[SerializedName('name')]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'ride-details'])]
     protected ?string $city = null;
 
     #[DataQuery\Sortable]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'ride-details'])]
     protected ?string $title = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
@@ -76,13 +78,13 @@ class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableI
     #[DataQuery\Queryable]
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'float', nullable: true)]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'ride-details'])]
     protected float $latitude = 0.0;
 
     #[DataQuery\Queryable]
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'float', nullable: true)]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'ride-details'])]
     protected float $longitude = 0.0;
 
     #[DataQuery\DefaultBooleanValue(value: true)]
@@ -111,12 +113,14 @@ class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableI
     protected Collection $cycles;
 
     #[ORM\OneToMany(targetEntity: 'SocialNetworkProfile', mappedBy: 'city', cascade: ['persist', 'remove'])]
+    #[Ignore]
     protected Collection $socialNetworkProfiles;
 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[Assert\Type(type: 'int')]
     #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['ride-list'])]
     protected ?int $cityPopulation = null;
 
     #[ORM\Column(type: 'string', nullable: true)]
@@ -711,6 +715,7 @@ class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableI
         return $this;
     }
 
+    #[Ignore]
     public function getCountry(): ?Region
     {
         if ($this->region) {
@@ -720,6 +725,7 @@ class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableI
         return null;
     }
 
+    #[Ignore]
     public function getContinent(): ?Region
     {
         if ($this->getCountry()) {
