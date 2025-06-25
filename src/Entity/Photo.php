@@ -114,7 +114,6 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     protected ?string $imageMimeType = null;
 
     #[Vich\UploadableField(mapping: 'photo_photo', fileNameProperty: 'backupName')]
-    #[JMS\Expose]
     protected ?File $backupFile = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
