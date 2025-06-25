@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace App\Criticalmass\SocialNetwork\NetworkDetector;
+namespace App\Criticalmass\SocialNetwork\EntityNetworkDetector;
 
 use App\Criticalmass\SocialNetwork\Network\NetworkInterface;
-use App\Criticalmass\SocialNetwork\NetworkManager\NetworkManager;
 use App\Criticalmass\SocialNetwork\NetworkManager\NetworkManagerInterface;
+use App\Entity\SocialNetworkProfile;
 
-class NetworkDetector implements NetworkDetectorInterface
+class EntityNetworkDetector implements EntityNetworkDetectorInterface
 {
     private array $networkList = [];
 
@@ -17,9 +17,9 @@ class NetworkDetector implements NetworkDetectorInterface
         $this->sortNetworkList();
     }
 
-    protected function sortNetworkList(): NetworkDetector
+    protected function sortNetworkList(): self
     {
-        usort($this->networkList, function(NetworkInterface $a, NetworkInterface$b)
+        usort($this->networkList, function(NetworkInterface $a, NetworkInterface $b)
         {
             return $b->getDetectorPriority() <=> $a->getDetectorPriority();
         });
@@ -27,11 +27,15 @@ class NetworkDetector implements NetworkDetectorInterface
         return $this;
     }
 
-    public function detect(string $url): ?NetworkInterface
+    public function detect(SocialNetworkProfile $socialNetworkProfile): ?NetworkInterface
     {
+        if (!$socialNetworkProfile->getIdentifier()) {
+            return null;
+        }
+
         /** @var NetworkInterface $network */
         foreach ($this->networkList as $network) {
-            if ($network->accepts($url)) {
+            if ($network->accepts($socialNetworkProfile->getIdentifier())) {
                 return $network;
             }
         }
