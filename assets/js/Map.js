@@ -201,7 +201,7 @@ export default class Map {
         const rideIdentifier = this.mapContainer.dataset.rideIdentifier;
 
         if (citySlug && rideIdentifier) {
-            const rideUrl = `/${encodeURIComponent(citySlug)}/${encodeURIComponent(rideIdentifier)}`;
+            const rideUrl = `/api/${encodeURIComponent(citySlug)}/${encodeURIComponent(rideIdentifier)}`;
 
             fetch(rideUrl).then((response) => {
                 return response.json();
