@@ -229,25 +229,27 @@ export default class Map {
             fetch(photoUrl).then((response) => {
                 return response.json();
             }).then((photoList) => {
-                const photoLayer = L.markerClusterGroup({
-                    showCoverageOnHover: false,
-                    iconCreateFunction: function (cluster) {
-                        return that.photoIcon;
+                if (photoList.length > 0) {
+                    const photoLayer = L.markerClusterGroup({
+                        showCoverageOnHover: false,
+                        iconCreateFunction: function (cluster) {
+                            return that.photoIcon;
+                        }
+                    });
+
+                    for (const i in photoList) {
+                        const photo = photoList[i];
+
+                        if (photo.latitude && photo.longitude) {
+                            const photoLatLng = L.latLng(photo.latitude, photo.longitude);
+
+                            const marker = L.marker(photoLatLng);
+                            marker.addTo(photoLayer);
+                        }
                     }
-                });
 
-                for (const i in photoList) {
-                    const photo = photoList[i];
-
-                    if (photo.latitude && photo.longitude) {
-                        const photoLatLng = L.latLng(photo.latitude, photo.longitude);
-
-                        const marker = L.marker(photoLatLng);
-                        marker.addTo(photoLayer);
-                    }
+                    photoLayer.addTo(that.map);
                 }
-
-                photoLayer.addTo(that.map);
             }).catch(function (err) {
                 console.warn(err);
             });
@@ -265,19 +267,21 @@ export default class Map {
             fetch(trackUrl).then((response) => {
                 return response.json();
             }).then((trackList) => {
-                const trackLayer = L.featureGroup();
+                if (trackList.length > 0) {
+                    const trackLayer = L.featureGroup();
 
-                for (const i in trackList) {
-                    const track = trackList[i];
-                    const polylineString = track.polylineString;
-                    const polylineColor = 'red';
-                    const polyline = L.Polyline.fromEncoded(polylineString, {color: polylineColor});
+                    for (const i in trackList) {
+                        const track = trackList[i];
+                        const polylineString = track.polylineString;
+                        const polylineColor = 'red';
+                        const polyline = L.Polyline.fromEncoded(polylineString, {color: polylineColor});
 
-                    polyline.addTo(trackLayer);
+                        polyline.addTo(trackLayer);
+                    }
+
+                    that.map.fitBounds(trackLayer.getBounds());
+                    trackLayer.addTo(that.map);
                 }
-
-                that.map.fitBounds(trackLayer.getBounds());
-                trackLayer.addTo(that.map);
             }).catch(function (err) {
                 console.warn(err);
             });
