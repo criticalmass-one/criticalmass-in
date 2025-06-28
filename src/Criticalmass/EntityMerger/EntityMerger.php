@@ -3,7 +3,7 @@
 namespace App\Criticalmass\EntityMerger;
 
 use Doctrine\Common\Annotations\Reader;
-use JMS\Serializer\Annotation\Expose;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 class EntityMerger implements EntityMergerInterface
 {
@@ -48,12 +48,12 @@ class EntityMerger implements EntityMergerInterface
         $propertyAnnotations = $this->annotationReader->getPropertyAnnotations($reflectionProperty);
 
         foreach ($propertyAnnotations as $propertyAnnotation) {
-            if ($propertyAnnotation instanceof Expose) {
-                return true;
+            if ($propertyAnnotation instanceof Ignore) {
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 
     protected function generateSetMethodName(\ReflectionProperty $reflectionProperty): string

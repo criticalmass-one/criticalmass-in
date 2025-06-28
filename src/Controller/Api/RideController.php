@@ -2,7 +2,6 @@
 
 namespace App\Controller\Api;
 
-use JMS\Serializer\SerializationContext;
 use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
 use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Criticalmass\EntityMerger\EntityMergerInterface;
@@ -49,7 +48,9 @@ class RideController extends BaseController
     #[Route(path: '/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_show', methods: ['GET'])]
     public function showAction(Ride $ride): JsonResponse
     {
-        return $this->createStandardResponse($ride);
+        $context = ['groups' => 'ride-details'];
+
+        return $this->createStandardResponse($ride, $context);
     }
 
     /**
@@ -316,10 +317,7 @@ class RideController extends BaseController
             $groups[] = 'extended-ride-list';
         }
 
-        $context = new SerializationContext();
-        $context->setGroups($groups);
-
-        return $this->createStandardResponse($rideList, $context);
+        return $this->createStandardResponse($rideList);
     }
 
     /**

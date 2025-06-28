@@ -5,11 +5,11 @@ namespace App\Criticalmass\ViewStorage\Cache;
 use App\Criticalmass\ViewStorage\Persister\ViewStoragePersisterInterface;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\Criticalmass\ViewStorage\ViewModel\ViewFactory;
-use JMS\Serializer\SerializerInterface;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use PhpAmqpLib\Exception\AMQPIOException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class RobustViewStorageCache extends ViewStorageCache
 {

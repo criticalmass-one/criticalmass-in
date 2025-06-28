@@ -2,6 +2,8 @@
 
 namespace App\Controller\Api;
 
+use App\Serializer\CriticalCriticalSerializer;
+use App\Serializer\CriticalSerializerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
 use MalteHuebner\DataQueryBundle\RequestParameterList\RequestParameterList;
@@ -9,7 +11,6 @@ use App\Entity\Ride;
 use App\Entity\RideEstimate;
 use App\Event\RideEstimate\RideEstimateCreatedEvent;
 use App\Model\CreateEstimateModel;
-use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Operation;
 use OpenApi\Annotations as OA;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -17,16 +18,20 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class EstimateController extends BaseController
 {
     public function __construct(
-        protected readonly SerializerInterface $serializer,
-        protected readonly EventDispatcherInterface $eventDispatcher,
-        protected readonly DataQueryManagerInterface $dataQueryManager,
-        protected readonly ManagerRegistry $registry
-    ) {
-
+        protected readonly CriticalSerializerInterface $serializer,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly DataQueryManagerInterface $dataQueryManager,
+        protected readonly ManagerRegistry $managerRegistry,
+        AuthorizationCheckerInterface $authorizationChecker
+    )
+    {
+         parent::__construct($this->managerRegistry, $this->serializer, $authorizationChecker);
     }
 
     /**

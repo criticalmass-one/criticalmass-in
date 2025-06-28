@@ -3,28 +3,20 @@
 namespace App\Criticalmass\ViewStorage\Persister;
 
 use App\Criticalmass\ViewStorage\ViewEntityFactory\ViewEntityFactoryInterface;
-use JMS\Serializer\SerializerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Serializer\SerializerInterface;
 
 abstract class AbstractViewStoragePersister implements ViewStoragePersisterInterface
 {
-    /** @var ManagerRegistry $registry */
-    protected $registry;
+    protected string $entityNamespace = 'App\\Entity\\';
 
-    /** @var SerializerInterface $serializer */
-    protected $serializer;
-
-    /** @var ViewEntityFactoryInterface $viewEntityFactory */
-    protected $viewEntityFactory;
-
-    /** @var string $entityNamespace */
-    protected $entityNamespace = 'App\\Entity\\';
-
-    public function __construct(ManagerRegistry $registry, SerializerInterface $serializer, ViewEntityFactoryInterface $viewEntityFactory)
+    public function __construct(
+        protected readonly ManagerRegistry $registry,
+        protected readonly SerializerInterface $serializer,
+        protected readonly ViewEntityFactoryInterface $viewEntityFactory
+    )
     {
-        $this->registry = $registry;
-        $this->serializer = $serializer;
-        $this->viewEntityFactory = $viewEntityFactory;
+
     }
 
     public function setEntityNamespace(string $entityNamespace): ViewStoragePersisterInterface

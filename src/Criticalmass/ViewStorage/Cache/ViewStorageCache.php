@@ -5,9 +5,9 @@ namespace App\Criticalmass\ViewStorage\Cache;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\Criticalmass\ViewStorage\ViewModel\ViewFactory;
 use App\Entity\User;
-use JMS\Serializer\SerializerInterface;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class ViewStorageCache implements ViewStorageCacheInterface
 {
