@@ -14,7 +14,7 @@ vich_uploader:
 
     user_photo:
       uri_prefix: ''
-      upload_destination: oneup_flysystem.flysystem_user_photo_filesystem_filesystem
+      upload_destination: oneup_flysystem.flysystem_user_photo_filesystem
       namer: vich_uploader.namer_uniqid
       delete_on_remove: true
       delete_on_update: true
