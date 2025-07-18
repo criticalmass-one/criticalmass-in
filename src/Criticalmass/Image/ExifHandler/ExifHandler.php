@@ -2,11 +2,17 @@
 
 namespace App\Criticalmass\Image\ExifHandler;
 
+use App\Criticalmass\Image\ExifWrapper\ExifWrapperInterface;
 use App\Entity\Photo;
 use PHPExif\Exif;
 
-class ExifHandler extends AbstractExifHandler
+class ExifHandler implements ExifHandlerInterface
 {
+    public function __construct(private readonly ExifWrapperInterface $exifWrapper)
+    {
+
+    }
+
     public function readExifDataFromPhotoFile(Photo $photo): ?Exif
     {
         return $this->readExifDataFromFile($photo->getImageName());
@@ -31,9 +37,13 @@ class ExifHandler extends AbstractExifHandler
             $exifGetMethodName = sprintf('get%s', $exifProperty);
             $photoSetMethodName = $method->getName();
 
-            $type = $method->getParameters()[0]->getType();
+            $targetType = $method->getParameters()[0]->getType();
 
-            $this->typeawareAssignment($photo, $photoSetMethodName, $exif, $exifGetMethodName, $type->getName());
+            $sourceType = $exif->$exifGetMethodName();
+
+            if ($targetType === $sourceType) {
+                $this->typeawareAssignment($photo, $photoSetMethodName, $exif, $exifGetMethodName, $targetType->getName());
+            }
         }
 
         return $photo;
