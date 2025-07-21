@@ -24,7 +24,7 @@ class CalendarController extends AbstractController
         $response->headers->set('Cache-Control', 'private');
         $response->headers->set('Content-type', 'text/calendar');
         $response->headers->set('Content-Disposition', sprintf('attachment; filename="%s";', $filename));
-        $response->headers->set('Content-length', strlen($content));
+        $response->headers->set('Content-length', (string) strlen($content));
 
         return $response;
     }
