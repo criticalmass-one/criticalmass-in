@@ -48,6 +48,6 @@ class ViewStoragePersister extends AbstractViewStoragePersister
 
     protected function getEntity(string $className, int $entityId): ViewableEntity
     {
-        return $this->registry->getRepository(sprintf('App\\Entity\\%s', $className))->find($entityId);
+        return $this->registry->getRepository(sprintf('App\Entity\%s', $className))->find($entityId);
     }
 }

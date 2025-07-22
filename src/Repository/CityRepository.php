@@ -2,11 +2,19 @@
 
 namespace App\Repository;
 
+use App\Entity\City;
 use App\Entity\Region;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 
-class CityRepository extends EntityRepository
+class CityRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, City::class);
+    }
+
     public function findCitiesWithoutWikidataEntityId(): array
     {
         $builder = $this->createQueryBuilder('c');
@@ -266,4 +274,67 @@ class CityRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function findNearCities(City $city, int $size = 15, float $distance = 50.0): array
+    {
+        if (!$city->getLatitude() || !$city->getLongitude()) {
+            return [];
+        }
+
+        $em = $this->getEntityManager();
+
+        $rsm = new ResultSetMappingBuilder($em);
+        $rsm->addRootEntityFromClassMetadata(City::class, 'c');
+
+        $sql = <<<SQL
+SELECT c.*
+FROM city c
+WHERE c.enabled = 1
+  AND c.id != :id
+  AND (6371 * acos(
+           cos(radians(:lat)) * cos(radians(c.latitude)) * cos(radians(c.longitude) - radians(:lon)) +
+           sin(radians(:lat)) * sin(radians(c.latitude))
+       )) <= :distance
+ORDER BY (6371 * acos(
+             cos(radians(:lat)) * cos(radians(c.latitude)) * cos(radians(c.longitude) - radians(:lon)) +
+             sin(radians(:lat)) * sin(radians(c.latitude))
+         )) ASC
+LIMIT :size
+SQL;
+
+        $query = $em->createNativeQuery($sql, $rsm);
+        $query->setParameter('lat', $city->getLatitude());
+        $query->setParameter('lon', $city->getLongitude());
+        $query->setParameter('id', $city->getId());
+        $query->setParameter('distance', $distance);
+        $query->setParameter('size', $size, \PDO::PARAM_INT);
+
+        return $query->getResult();
+    }
+
+    public function searchByQuery(string $query, int $maxResults = 50): array
+    {
+        $qb = $this->createQueryBuilder('c');
+        $expr = $qb->expr();
+
+        $conditions = [$expr->eq('c.enabled', ':enabled')];
+        $parameters = ['enabled' => true];
+
+        if ($query !== '') {
+            $likeExpr = $expr->orX(
+                $expr->like('c.title', ':q'),
+                $expr->like('c.description', ':q'),
+            );
+            $conditions[] = $likeExpr;
+            $parameters['q'] = '%' . $query . '%';
+        }
+
+        $qb->where(call_user_func_array([$expr, 'andX'], $conditions))
+            ->setParameters($parameters)
+            ->setMaxResults($maxResults)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
 }

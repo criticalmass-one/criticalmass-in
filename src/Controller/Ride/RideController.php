@@ -7,20 +7,25 @@ use App\DBAL\Type\RideType;
 use App\Entity\Ride;
 use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Event\View\ViewEvent;
-use App\Form\Type\RideDisableType;
 use Carbon\Carbon;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use App\Repository\BlockedCityRepository;
+use App\Repository\ParticipationRepository;
+use App\Repository\PhotoRepository;
+use App\Repository\RideRepository;
+use App\Repository\SubrideRepository;
+use App\Repository\TrackRepository;
+use App\Repository\WeatherRepository;
 use App\Controller\AbstractController;
 use App\Entity\Weather;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class RideController extends AbstractController
 {
-    public function listAction(): Response
-    {
-        $ridesResult = $this->getRideRepository()->findRidesInInterval();
+    public function listAction(
+        RideRepository $rideRepository
+    ): Response {
+        $ridesResult = $rideRepository->findRidesInInterval();
 
         $rides = [];
 
@@ -34,12 +39,20 @@ class RideController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
-    public function showAction(Request $request, SeoPageInterface $seoPage, EventDispatcherInterface $eventDispatcher, ActivityCalculatorInterface $activityCalculator, Ride $ride): Response
-    {
-        $blocked = $this->getBlockedCityRepository()->findCurrentCityBlock($ride->getCity());
+    public function showAction(
+        BlockedCityRepository $blockedCityRepository,
+        ParticipationRepository $participationRepository,
+        SubrideRepository $subrideRepository,
+        WeatherRepository $weatherRepository,
+        TrackRepository $trackRepository,
+        PhotoRepository $photoRepository,
+        SeoPageInterface $seoPage, EventDispatcherInterface $eventDispatcher, ActivityCalculatorInterface $activityCalculator, Ride $ride = null
+    ): Response {
+        if (!$ride) {
+            $this->redirectToRoute('caldera_criticalmass_calendar');
+        }
+
+        $blocked = $blockedCityRepository->findCurrentCityBlock($ride->getCity());
 
         if ($blocked) {
             return $this->render('Ride/blocked.html.twig', [
@@ -47,6 +60,8 @@ class RideController extends AbstractController
                 'blocked' => $blocked
             ]);
         }
+
+        $eventDispatcher->dispatch(new ViewEvent($ride), ViewEvent::NAME);
 
         $seoPage
             ->setDescription('Informationen, Strecken und Fotos von der Critical Mass in ' . $ride->getCity()->getCity() . ' am ' . $ride->getDateTime()->format('d.m.Y'))
@@ -56,8 +71,6 @@ class RideController extends AbstractController
             $seoPage->setPreviewPhoto($ride);
         } elseif ($ride->getFeaturedPhoto()) {
             $seoPage->setPreviewPhoto($ride->getFeaturedPhoto());
-        } else {
-            $seoPage->setPreviewMap($ride);
         }
 
         if ($ride->getSocialDescription()) {
@@ -69,7 +82,7 @@ class RideController extends AbstractController
         /**
          * @var Weather $weather
          */
-        $weather = $this->getWeatherRepository()->findCurrentWeatherForRide($ride);
+        $weather = $weatherRepository->findCurrentWeatherForRide($ride);
 
         if ($weather) {
             $weatherForecast = round($weather->getTemperatureEvening()) . ' °C, ' . $weather->getWeatherDescription();
@@ -78,7 +91,7 @@ class RideController extends AbstractController
         }
 
         if ($this->getUser()) {
-            $participation = $this->getParticipationRepository()->findParticipationForUserAndRide($this->getUser(),
+            $participation = $participationRepository->findParticipationForUserAndRide($this->getUser(),
                 $ride);
         } else {
             $participation = null;
@@ -88,9 +101,9 @@ class RideController extends AbstractController
             'city' => $ride->getCity(),
             'ride' => $ride,
             'activity_index' => $activityCalculator->calculate($ride->getCity()),
-            'tracks' => $this->getTrackRepository()->findTracksByRide($ride),
-            'photos' => $this->getPhotoRepository()->findPhotosByRide($ride),
-            'subrides' => $this->getSubrideRepository()->getSubridesForRide($ride),
+            'tracks' => $trackRepository->findTracksByRide($ride),
+            'photos' => $photoRepository->findPhotosByRide($ride),
+            'subrides' => $subrideRepository->getSubridesForRide($ride),
             'dateTime' => new \DateTime(),
             'weatherForecast' => $weatherForecast,
             'participation' => $participation,

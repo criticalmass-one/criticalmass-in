@@ -7,11 +7,12 @@ use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Criticalmass\SocialNetwork\EntityNetworkDetector\EntityNetworkDetectorInterface;
 use App\Criticalmass\SocialNetwork\Helper\SocialNetworkHelperInterface;
 use App\Criticalmass\Util\ClassUtil;
+use App\Entity\City;
+use App\Entity\Ride;
 use App\Entity\SocialNetworkProfile;
-use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
+use App\EntityInterface\SocialNetworkProfileAble;
 use App\Factory\SocialNetworkProfile\SocialNetworkProfileFactoryInterface;
 use App\Form\Type\SocialNetworkProfileAddType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,25 +20,28 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class SocialNetworkController extends AbstractController
 {
-    /**
-     * @ParamConverter("city", class="App:City", isOptional=true)
-     * @ParamConverter("ride", class="App:Ride", isOptional=true)
-     * @ParamConverter("subride", class="App:Subride", isOptional=true)
-     * @ParamConverter("user", class="App:User", isOptional=true)
-     */
+    private const string DEFAULT_NETWORK = 'homepage';
+
     public function addAction(
         Request $request,
         EntityNetworkDetectorInterface $networkDetector,
         ObjectRouterInterface $objectRouter,
         SocialNetworkProfileFactoryInterface $networkProfileFactory,
         SocialNetworkHelperInterface $socialNetworkHelper,
+        City $city = null,
+        Ride $ride = null,
         UserInterface $user = null
     ): Response {
         $socialNetworkProfile = $networkProfileFactory
             ->withCreatedBy($user)
-            ->build();
+            ->build()
+        ;
 
-        $socialNetworkProfile = $socialNetworkHelper->assignProfileAble($socialNetworkProfile, $request);
+        if ($city) {
+            $socialNetworkProfile->setCity($city);
+        } elseif ($ride) {
+            $socialNetworkProfile->setRide($ride);
+        }
 
         $form = $this->createForm(
             SocialNetworkProfileAddType::class,
@@ -45,9 +49,9 @@ class SocialNetworkController extends AbstractController
         );
 
         if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->addPostAction($request, $form, $networkDetector, $objectRouter, $socialNetworkHelper);
+            return $this->addPostAction($request, $form, $networkDetector, $objectRouter, $socialNetworkHelper, $city, $ride);
         } else {
-            return $this->addGetAction($request, $form, $networkDetector, $objectRouter, $socialNetworkHelper);
+            return $this->addGetAction($request, $form, $networkDetector, $objectRouter, $socialNetworkHelper, $city, $ride);
         }
     }
 
@@ -56,7 +60,9 @@ class SocialNetworkController extends AbstractController
         FormInterface $form,
         EntityNetworkDetectorInterface $networkDetector,
         ObjectRouterInterface $objectRouter,
-        SocialNetworkHelperInterface $socialNetworkHelper
+        SocialNetworkHelperInterface $socialNetworkHelper,
+        City $city = null,
+        Ride $ride = null
     ): Response {
         $form->handleRequest($request);
 
@@ -64,17 +70,23 @@ class SocialNetworkController extends AbstractController
             /** @var SocialNetworkProfile $socialNetworkProfile */
             $socialNetworkProfile = $form->getData();
 
-            $socialNetworkProfile = $socialNetworkHelper->assignProfileAble($socialNetworkProfile, $request);
+            if ($ride) {
+                $socialNetworkProfile->setRide($ride);
+            } elseif ($city) {
+                $socialNetworkProfile->setCity($city);
+            }
 
             $network = $networkDetector->detect($socialNetworkProfile);
 
             if ($network) {
                 $socialNetworkProfile->setNetwork($network->getIdentifier());
+            } else {
+                $socialNetworkProfile->setNetwork(self::DEFAULT_NETWORK);
             }
 
-            $this->getDoctrine()->getManager()->persist($socialNetworkProfile);
+            $this->managerRegistry->getManager()->persist($socialNetworkProfile);
 
-            $this->getDoctrine()->getManager()->flush();
+            $this->managerRegistry->getManager()->flush();
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
 
@@ -91,7 +103,9 @@ class SocialNetworkController extends AbstractController
         FormInterface $form,
         EntityNetworkDetectorInterface $networkDetector,
         ObjectRouterInterface $objectRouter,
-        SocialNetworkHelperInterface $socialNetworkHelper
+        SocialNetworkHelperInterface $socialNetworkHelper,
+        City $city = null,
+        Ride $ride = null
     ): Response {
         $socialNetworkProfile = $form->getData();
 

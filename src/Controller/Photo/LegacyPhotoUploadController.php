@@ -7,23 +7,17 @@ use App\Criticalmass\Image\PhotoUploader\PhotoUploaderInterface;
 use App\Entity\Photo;
 use App\Entity\Ride;
 use App\Form\Type\LegacyPhotoUploadType;
-use Flagception\Bundle\FlagceptionBundle\Annotations\Feature;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Flagception\Bundle\FlagceptionBundle\Attribute\Feature;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-/**
- * @Feature("photos")
- */
+#[Feature('photos')]
 class LegacyPhotoUploadController extends AbstractController
 {
-    /**
-     * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("ride", class="App:Ride")
-     */
+    #[IsGranted('ROLE_USER')]
     public function uploadAction(Request $request, UserInterface $user = null, Ride $ride, PhotoUploaderInterface $photoUploader): Response
     {
         if (Request::METHOD_POST === $request->getMethod()) {

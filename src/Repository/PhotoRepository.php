@@ -6,12 +6,18 @@ use App\Entity\City;
 use App\Entity\Photo;
 use App\Entity\Ride;
 use App\Entity\User;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 
-class PhotoRepository extends EntityRepository
+class PhotoRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Photo::class);
+    }
+
     public function findRidesWithPhotoCounterByUser(User $user): array
     {
         $builder = $this->createQueryBuilder('photo');
@@ -83,26 +89,6 @@ class PhotoRepository extends EntityRepository
 
         if ($offset) {
             $builder->setFirstResult($offset);
-        }
-
-        $query = $builder->getQuery();
-
-        return $query->getResult();
-    }
-
-    public function findGeocodeablePhotos(int $limit = 50, ?bool $emptyLocationOnly = false): array
-    {
-        $builder = $this->createQueryBuilder('p');
-
-        $builder
-            ->select('p')
-            ->where($builder->expr()->isNotNull('p.latitude'))
-            ->andWhere($builder->expr()->isNotNull('p.longitude'))
-            ->orderBy('p.exifCreationDate', 'asc')
-            ->setMaxResults($limit);
-
-        if ($emptyLocationOnly) {
-            $builder->andWhere($builder->expr()->isNull('p.location'));
         }
 
         $query = $builder->getQuery();

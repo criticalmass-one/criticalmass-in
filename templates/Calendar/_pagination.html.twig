@@ -1,12 +1,12 @@
 <ul class="pager">
     <li class="previous">
-        <a href="{{ path('caldera_criticalmass_calendar', { 'year': previousMonth|date('Y'), 'month': previousMonth|date('m') }) }}">
+        <a href="{{ path('caldera_criticalmass_calendar', { 'year': previousMonth|date('Y'), 'month': previousMonth|date('n') }) }}">
             &larr; {{ previousMonth|format_date('MMMM YYYY') }}
         </a>
     </li>
 
     <li class="next">
-        <a href="{{ path('caldera_criticalmass_calendar', { 'year': nextMonth|date('Y'), 'month': nextMonth|date('m') }) }}">
+        <a href="{{ path('caldera_criticalmass_calendar', { 'year': nextMonth|date('Y'), 'month': nextMonth|date('n') }) }}">
             {{ nextMonth|format_date('MMMM YYYY') }} &rarr;
         </a>
     </li>

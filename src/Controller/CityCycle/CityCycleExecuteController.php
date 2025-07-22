@@ -11,13 +11,12 @@ use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use GuzzleHttp\Client;
 use JMS\Serializer\SerializerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class CityCycleExecuteController extends AbstractController
 {
@@ -31,12 +30,12 @@ class CityCycleExecuteController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("cityCycle", class="App:CityCycle", options={"id" = "cycleId"})
-     */
-    public function executeAction(Request $request, CityCycle $cityCycle, SerializerInterface $serializer): Response
-    {
+    #[IsGranted('ROLE_USER')]
+    public function executeAction(
+        Request $request,
+        CityCycle $cityCycle,
+        SerializerInterface $serializer
+    ): Response {
         $dateTime = new Carbon();
         $sixMonthInterval = new CarbonInterval('P6M');
 
@@ -71,12 +70,14 @@ class CityCycleExecuteController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("cityCycle", class="App:CityCycle", options={"id" = "cycleId"})
-     */
-    public function executePersistAction(Request $request, CityCycle $cityCycle, SessionInterface $session, ManagerRegistry $registry, SerializerInterface $serializer): Response
-    {
+    #[IsGranted('ROLE_USER')]
+    public function executePersistAction(
+        Request $request,
+        CityCycle $cityCycle,
+        SessionInterface $session,
+        ManagerRegistry $registry,
+        SerializerInterface $serializer
+    ): Response {
         if (Request::METHOD_POST === $request->getMethod() && $request->request->getInt('fromDate') && $request->request->get('untilDate')) {
             $executeable = new CycleExecutable();
             $executeable
@@ -103,13 +104,13 @@ class CityCycleExecuteController extends AbstractController
 
             return $this->redirectToRoute('caldera_criticalmass_city_listrides', [
                 'citySlug' => $cityCycle->getCity()->getMainSlug()->getSlug(),
-                'cityCycleId' => $cityCycle->getId(),
+                'id' => $cityCycle->getId(),
             ]);
         }
 
         return $this->redirectToRoute('caldera_criticalmass_citycycle_execute', [
             'citySlug' => $cityCycle->getCity()->getMainSlug()->getSlug(),
-            'cityCycleId' => $cityCycle->getId(),
+            'id' => $cityCycle->getId(),
         ]);
     }
 }

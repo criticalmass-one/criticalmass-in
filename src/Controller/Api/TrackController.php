@@ -2,21 +2,21 @@
 
 namespace App\Controller\Api;
 
-use App\Criticalmass\DataQuery\DataQueryManager\DataQueryManagerInterface;
-use App\Criticalmass\DataQuery\RequestParameterList\RequestToListConverter;
+use JMS\Serializer\SerializationContext;
+use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
+use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Entity\Ride;
 use App\Entity\Track;
+use App\Event\Track\TrackDeletedEvent;
 use Doctrine\Persistence\ManagerRegistry;
-use FOS\RestBundle\Context\Context;
-use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\Operation;
-use Nelmio\ApiDocBundle\Annotation\Model;
-use Swagger\Annotations as SWG;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use OpenApi\Annotations as OA;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class TrackController extends BaseController
 {
@@ -26,26 +26,18 @@ class TrackController extends BaseController
      * @Operation(
      *     tags={"Track"},
      *     summary="Retrieve a list of tracks of a ride",
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )
      * )
-     *
-     * @ParamConverter("ride", class="App:Ride")
-     * @Route("/{citySlug}/{rideIdentifier}/listTracks", name="caldera_criticalmass_rest_track_ridelist", methods={"GET"})
      */
-    public function listRideTrackAction(ManagerRegistry $registry, Ride $ride): Response
+    #[Route(path: '/{citySlug}/{rideIdentifier}/listTracks', name: 'caldera_criticalmass_rest_track_ridelist', methods: ['GET'])]
+    public function listRideTrackAction(Ride $ride): JsonResponse
     {
-        $trackList = $registry->getRepository(Track::class)->findByRide($ride);
+        $trackList = $this->managerRegistry->getRepository(Track::class)->findByRide($ride);
 
-        $view = View::create();
-        $view
-            ->setData($trackList)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_OK);
-
-        return $this->handleView($view);
+        return $this->createStandardResponse($trackList);
     }
 
     /**
@@ -54,33 +46,25 @@ class TrackController extends BaseController
      * @Operation(
      *     tags={"Track"},
      *     summary="Show details of a track",
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )
      * )
-     *
-     * @ParamConverter("track", class="App:Track")
-     * @Route("/track/{trackId}", name="caldera_criticalmass_rest_track_view", methods={"GET"})
      */
-    public function viewAction(Track $track, UserInterface $user = null): Response
+    #[Route(path: '/track/{trackId}', name: 'caldera_criticalmass_rest_track_view', methods: ['GET'])]
+    public function viewAction(Track $track, UserInterface $user = null): JsonResponse
     {
-        $context = new Context();
-
-        $context->addGroup('api-public');
+        $groups = ['api-public'];
 
         if ($user) {
-            $context->addGroup('api-private');
+            $groups[] = 'api-private';
         }
 
-        $view = View::create();
-        $view
-            ->setData($track)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_OK)
-            ->setContext($context);
+        $context = new SerializationContext();
+        $context->setGroups($groups);
 
-        return $this->handleView($view);
+        return $this->createStandardResponse($track, $context);
     }
 
     /**
@@ -133,96 +117,103 @@ class TrackController extends BaseController
      * @Operation(
      *     tags={"Track"},
      *     summary="Lists tracks",
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="regionSlug",
-     *         in="body",
+     *         in="query",
      *         description="Provide a region slug",
      *         required=false,
-     *         @SWG\Schema(type="string")
+     *         @OA\Schema(type="string")
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="citySlug",
-     *         in="body",
+     *         in="query",
      *         description="Provide a city slug",
      *         required=false,
-     *         @SWG\Schema(type="string")
+     *         @OA\Schema(type="string")
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="year",
-     *         in="body",
+     *         in="query",
      *         description="Limit the result set to this year. If not set, we will search in the current month.",
      *         required=false,
-     *         @SWG\Schema(type="string")
+     *         @OA\Schema(type="string")
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="month",
-     *         in="body",
+     *         in="query",
      *         description="Limit the result set to this year. Must be combined with 'year'. If not set, we will search in the current month.",
      *         required=false,
-     *         @SWG\Schema(type="string")
+     *         @OA\Schema(type="string")
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="day",
-     *         in="body",
+     *         in="query",
      *         description="Limit the result set to this day.",
      *         required=false,
-     *         @SWG\Schema(type="string")
+     *         @OA\Schema(type="string")
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="orderBy",
-     *         in="body",
+     *         in="query",
      *         description="Choose a property to sort the list by.",
      *         required=false,
-     *         @SWG\Schema(type="string")
+     *         @OA\Schema(type="string")
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="orderDirection",
-     *         in="body",
+     *         in="query",
      *         description="Sort ascending or descending.",
      *         required=false,
-     *         @SWG\Schema(type="string")
+     *         @OA\Schema(type="string")
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="startValue",
-     *         in="body",
+     *         in="query",
      *         description="Start ordered list with provided value.",
      *         required=false,
-     *         @SWG\Schema(type="string")
+     *         @OA\Schema(type="string")
      *     ),
-     *     @SWG\Parameter(
+     *     @OA\Parameter(
      *         name="size",
-     *         in="body",
+     *         in="query",
      *         description="Length of resulting list. Defaults to 10.",
      *         required=false,
-     *         @SWG\Schema(type="integer")
+     *         @OA\Schema(type="integer")
      *     ),
-     *     @SWG\Response(
+     *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )
      * )
-     * @Route("/track", name="caldera_criticalmass_rest_track_list", methods={"GET"})
      */
-    public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager, UserInterface $user = null): Response
+    #[Route(path: '/track', name: 'caldera_criticalmass_rest_track_list', methods: ['GET'])]
+    public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager,UserInterface $user = null): JsonResponse
     {
         $queryParameterList = RequestToListConverter::convert($request);
         $trackList = $dataQueryManager->query($queryParameterList, Track::class);
 
-        $context = new Context();
-
-        $context->addGroup('api-public');
+        $groups = ['api-public'];
 
         if ($user) {
-            $context->addGroup('api-private');
+            $groups[] = 'api-private';
         }
 
-        $view = View::create();
-        $view
-            ->setData($trackList)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_OK)
-            ->setContext($context);
+        $context = new SerializationContext();
+        $context->setGroups($groups);
 
-        return $this->handleView($view);
+        return $this->createStandardResponse($trackList, $context);
+    }
+
+    #[Route('/track/{id}', name: 'caldera_criticalmass_rest_track_delete', methods: ['DELETE'])]
+    #[IsGranted('edit', 'track')]
+    public function deleteAction(Track $track, EventDispatcherInterface $eventDispatcher, ManagerRegistry $managerRegistry): Response
+    {
+        $track->setDeleted(true);
+
+        $managerRegistry->getManager()->flush();
+
+        $eventDispatcher->dispatch(TrackDeletedEvent::NAME, new TrackDeletedEvent($track));
+
+        return $this->redirectToRoute('caldera_criticalmass_track_list');
     }
 }

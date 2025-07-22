@@ -10,8 +10,6 @@ use App\Entity\Ride;
 use App\Entity\TrackImportCandidate;
 use App\Event\Track\TrackUploadedEvent;
 use Carbon\Carbon;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Strava\API\OAuth;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -21,12 +19,16 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class StravaMassImportController extends AbstractController
 {
-    /**
-     * @Security("has_role('ROLE_USER')")
-     */
+    public function __construct(private readonly string $stravaClientId, private readonly string $stravaSecret)
+    {
+
+    }
+
+    #[IsGranted('ROLE_USER')]
     public function authAction(Request $request, RouterInterface $router): Response
     {
         $oauth = $this->initOauth($request, $router);
@@ -44,9 +46,7 @@ class StravaMassImportController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("has_role('ROLE_USER')")
-     */
+    #[IsGranted('ROLE_USER')]
     public function tokenAction(Request $request, SessionInterface $session, RouterInterface $router): Response
     {
         $error = $request->get('error');
@@ -73,9 +73,7 @@ class StravaMassImportController extends AbstractController
         }
     }
 
-    /**
-     * @Security("has_role('ROLE_USER')")
-     */
+    #[IsGranted('ROLE_USER')]
     public function massImportAction(Request $request, MassTrackImporterInterface $massTrackImporter): Response
     {
         $year = $request->query->getInt('year', (new \DateTime())->format('Y'));
@@ -96,9 +94,7 @@ class StravaMassImportController extends AbstractController
         return $this->redirectToRoute('caldera_criticalmass_trackmassimport_list');
     }
 
-    /**
-     * @Security("has_role('ROLE_USER')")
-     */
+    #[IsGranted('ROLE_USER')]
     public function listridesAction(ManagerRegistry $registry, UserInterface $user = null): Response
     {
         $list = $registry->getRepository(TrackImportCandidate::class)->findCandidatesForUser($user);
@@ -108,9 +104,7 @@ class StravaMassImportController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("has_role('ROLE_USER')")
-     */
+    #[IsGranted('ROLE_USER')]
     public function rejectAction(Request $request, UserInterface $user, ObjectRouterInterface $objectRouter, ManagerRegistry $registry): Response
     {
         $activityId = (int)$request->get('activityId');
@@ -129,10 +123,7 @@ class StravaMassImportController extends AbstractController
         return $this->redirectToRoute('caldera_criticalmass_trackmassimport_list');
     }
 
-    /**
-     * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("ride", class="App:Ride")
-     */
+    #[IsGranted('ROLE_USER')]
     public function importAction(Request $request, UserInterface $user, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, Ride $ride, TrackImporterInterface $trackImporter): Response
     {
         $activityId = (int)$request->get('activityId');
@@ -143,22 +134,22 @@ class StravaMassImportController extends AbstractController
             ->setUser($user)
             ->importTrack();
 
-        $eventDispatcher->dispatch(TrackUploadedEvent::NAME, new TrackUploadedEvent($track));
+        $eventDispatcher->dispatch(new TrackUploadedEvent($track), TrackUploadedEvent::NAME);
 
         return $this->redirect($objectRouter->generate($track));
     }
 
     protected function initOauth(Request $request, RouterInterface $router): OAuth
     {
-        $year = $request->query->getInt('year', (new \DateTime())->format('Y'));
+        $year = $request->query->getInt('year', (int) (new \DateTime())->format('Y'));
 
         $redirectUri = $request->getUriForPath($router->generate('caldera_criticalmass_trackmassimport_token', [
             'year' => $year,
         ]));
 
         $oauthOptions = [
-            'clientId' => $this->getParameter('strava.client_id'),
-            'clientSecret' => $this->getParameter('strava.secret'),
+            'clientId' => $this->stravaClientId,
+            'clientSecret' => $this->stravaSecret,
             'redirectUri' => $redirectUri,
             'scope' => 'read',
         ];

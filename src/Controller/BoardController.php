@@ -5,47 +5,54 @@ namespace App\Controller;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Board;
 use App\Event\View\ViewEvent;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use App\Repository\BoardRepository;
+use App\Repository\CityRepository;
+use App\Repository\PostRepository;
+use App\Repository\ThreadRepository;
 use App\Entity\City;
 use App\Entity\Post;
 use App\Entity\Thread;
 use App\EntityInterface\BoardInterface;
 use Malenki\Slug;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class BoardController extends AbstractController
 {
-    public function overviewAction(): Response
+    public function overviewAction(
+        CityRepository $cityRepository,
+        BoardRepository $boardRepository
+    ): Response
     {
         return $this->render('Board/overview.html.twig', [
-            'boards' => $this->getBoardRepository()->findEnabledBoards(),
-            'cities' => $this->getCityRepository()->findCitiesWithBoard(),
+            'boards' => $boardRepository->findEnabledBoards(),
+            'cities' => $cityRepository->findCitiesWithBoard(),
         ]);
     }
 
-    /**
-     * @ParamConverter("city", class="App:City", isOptional="true")
-     * @ParamConverter("board", class="App:Board", isOptional="true")
-     */
-    public function listThreadsAction(ObjectRouterInterface $objectRouter, Board $board = null, City $city = null): Response
-    {
+    public function listThreadsAction(
+        ThreadRepository $threadRepository,
+        ObjectRouterInterface $objectRouter,
+        #[MapEntity(mapping: ['boardSlug' => 'slug'])] Board $board = null,
+        City $city = null
+    ): Response {
         $threads = [];
         $newThreadUrl = '';
 
         if ($board) {
-            $threads = $this->getThreadRepository()->findThreadsForBoard($board);
+            $threads = $threadRepository->findThreadsForBoard($board);
 
             $newThreadUrl = $objectRouter->generate($board, 'caldera_criticalmass_board_addthread');
         }
 
         if ($city) {
-            $threads = $this->getThreadRepository()->findThreadsForCity($city);
+            $threads = $threadRepository->findThreadsForCity($city);
 
             $newThreadUrl = $objectRouter->generate($city, 'caldera_criticalmass_board_addcitythread');
         }
@@ -57,15 +64,15 @@ class BoardController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("thread", class="App:Thread")
-     */
-    public function viewThreadAction(EventDispatcherInterface $eventDispatcher, Thread $thread): Response
-    {
-        $posts = $this->getPostRepository()->findPostsForThread($thread);
+    public function viewThreadAction(
+        PostRepository $postRepository,
+        EventDispatcherInterface $eventDispatcher,
+        Thread $thread
+    ): Response {
+        $posts = $postRepository->findPostsForThread($thread);
         $board = $thread->getCity() ?? $thread->getBoard();
 
-        $eventDispatcher->dispatch(ViewEvent::NAME, new ViewEvent($thread));
+        $eventDispatcher->dispatch(new ViewEvent($thread), ViewEvent::NAME);
 
         return $this->render('Board/view_thread.html.twig', [
             'board' => $board,
@@ -74,13 +81,14 @@ class BoardController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("city", class="App:City", isOptional="true")
-     * @ParamConverter("board", class="App:Board", isOptional="true")
-     */
-    public function addThreadAction(Request $request, ObjectRouterInterface $objectRouter, Board $board = null, City $city = null): Response
-    {
+
+    #[IsGranted('ROLE_USER')]
+    public function addThreadAction(
+        Request $request,
+        ObjectRouterInterface $objectRouter,
+        #[MapEntity(mapping: ['boardSlug' => 'slug'])] Board $board = null,
+        City $city = null
+    ): Response {
         $board = $board ?? $city;
 
         $data = [];
@@ -137,7 +145,7 @@ class BoardController extends AbstractController
             $post->setThread($thread);
             $post->setDateTime(new \DateTime());
 
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->managerRegistry->getManager();
 
             $em->persist($post);
             $em->persist($thread);

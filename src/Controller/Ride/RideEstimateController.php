@@ -4,8 +4,6 @@ namespace App\Controller\Ride;
 
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Event\RideEstimate\RideEstimateCreatedEvent;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Controller\AbstractController;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
@@ -14,13 +12,11 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class RideEstimateController extends AbstractController
 {
-    /**
-     * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("ride", class="App:Ride")
-     */
+    #[IsGranted('ROLE_USER')]
     public function addestimateAction(
         Request $request,
         UserInterface $user = null,
@@ -40,18 +36,16 @@ class RideEstimateController extends AbstractController
         $estimateForm->handleRequest($request);
 
         if ($estimateForm->isValid()) {
-            $this->getManager()->persist($estimateForm->getData());
-            $this->getManager()->flush();
+            $manager = $this->managerRegistry->getManager();
+            $manager->persist($estimateForm->getData());
+            $manager->flush();
 
-            $eventDispatcher->dispatch(RideEstimateCreatedEvent::NAME, new RideEstimateCreatedEvent($rideEstimate));
+            $eventDispatcher->dispatch(new RideEstimateCreatedEvent($rideEstimate), RideEstimateCreatedEvent::NAME);
         }
 
         return $this->redirect($objectRouter->generate($ride));
     }
 
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     public function anonymousestimateAction(
         Request $request,
         UserInterface $user = null,
@@ -71,10 +65,11 @@ class RideEstimateController extends AbstractController
         $estimateForm->handleRequest($request);
 
         if ($estimateForm->isValid()) {
-            $this->getManager()->persist($estimateForm->getData());
-            $this->getManager()->flush();
+            $manager = $this->managerRegistry->getManager();
+            $manager->persist($estimateForm->getData());
+            $manager->flush();
 
-            $eventDispatcher->dispatch(RideEstimateCreatedEvent::NAME, new RideEstimateCreatedEvent($rideEstimate));
+            $eventDispatcher->dispatch(new RideEstimateCreatedEvent($rideEstimate), RideEstimateCreatedEvent::NAME);
 
             return $this->redirect($objectRouter->generate($ride));
         }

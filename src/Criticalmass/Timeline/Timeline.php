@@ -7,14 +7,10 @@ use App\Criticalmass\Timeline\Collector\TimelineCollectorInterface;
 use App\Criticalmass\Timeline\Item\ItemInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Flagception\Manager\FeatureManagerInterface;
-use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment;
 
 class Timeline implements TimelineInterface
 {
-    protected ManagerRegistry $doctrine;
-
-    protected EngineInterface $templating;
-
     protected array $collectorList = [];
 
     protected array $items = [];
@@ -25,13 +21,11 @@ class Timeline implements TimelineInterface
 
     protected ?\DateTime $endDateTime = null;
 
-    protected FeatureManagerInterface $featureManager;
-
-    public function __construct(ManagerRegistry $doctrine, EngineInterface $templating, FeatureManagerInterface $featureManager)
-    {
-        $this->doctrine = $doctrine;
-        $this->templating = $templating;
-        $this->featureManager = $featureManager;
+    public function __construct(
+        protected readonly ManagerRegistry $doctrine,
+        protected readonly Environment $twigEnvironment,
+        protected readonly FeatureManagerInterface $featureManager
+    ) {
     }
 
     public function addCollector(AbstractTimelineCollector $collector): TimelineInterface
@@ -115,7 +109,7 @@ class Timeline implements TimelineInterface
                 $this->contentList[$item->getTabName()] = [];
             }
 
-            $this->contentList[$item->getTabName()][]= $this->templating->render('Timeline/Items/' . $templateName . '.html.twig', [
+            $this->contentList[$item->getTabName()][]= $this->twigEnvironment->render('Timeline/Items/' . $templateName . '.html.twig', [
                 'item' => $item
             ]);
         }

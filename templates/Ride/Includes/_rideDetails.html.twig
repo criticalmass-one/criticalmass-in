@@ -20,7 +20,7 @@
                         {% if ride.location and ride.latitude and ride.longitude %}
                             {% if location %}
                                 <dd itemprop="name">
-                                    <a href="{{ objectPath(ride, 'caldera_criticalmass_location_ride') }}">
+                                    <a href="{{ object_path(ride, 'caldera_criticalmass_location_ride') }}">
                                         {{ ride.location }}
                                     </a>
                                 </dd>
@@ -31,18 +31,10 @@
                                 <meta itemprop="latitude" content="{{ ride.latitude }}" />
                                 <meta itemprop="longitude" content="{{ ride.longitude }}" />
                             </div>
-                            {% set location = nominatim_location(ride) %}
-                            {% if location %}
-                                <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-                                    <meta itemprop="streetAddress" content="{% if location.streetName %}{{ location.streetName }}{% elseif location.subLocality %}{{ location.subLocality }}{% endif %}" />
-                                    <meta itemprop="addressLocality" content="{{ location.locality }}" />
-                                    <meta itemprop="postalCode" content="{{ location.postalCode }}" />
-                                </div>
-                            {% endif %}
                         {% else %}
                             <dd>
                                 {% if app.user %}
-                                    <a href="{{ objectPath(ride, 'caldera_criticalmass_ride_edit') }}">
+                                    <a href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}">
                                         noch nicht bekannt
                                     </a>
                                 {% else %}
@@ -61,7 +53,7 @@
 
                 {% if ride.dateTime %}
                     <p class="text-center">
-                        <a href="{{ objectPath(ride, 'caldera_criticalmass_ride_ical') }}" class="btn btn-success">
+                        <a href="{{ object_path(ride, 'caldera_criticalmass_ride_ical') }}" class="btn btn-success">
                             <i class="far fa-calendar"></i>
                             Kalendereintrag merken
                         </a>

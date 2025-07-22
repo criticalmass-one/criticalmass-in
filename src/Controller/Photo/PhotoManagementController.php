@@ -8,33 +8,36 @@ use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Photo;
 use App\Entity\Ride;
 use App\Form\Type\PhotoCoordType;
+use App\Repository\PhotoRepository;
+use App\Repository\TrackRepository;
 use Knp\Component\Pager\PaginatorInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class PhotoManagementController extends AbstractController
 {
-    /**
-     * @Security("has_role('ROLE_USER')")
-     */
-    public function listAction(UserInterface $user = null): Response
-    {
+    #[IsGranted('ROLE_USER')]
+    public function listAction(
+        PhotoRepository $photoRepository,
+        UserInterface $user = null
+    ): Response {
         return $this->render('PhotoManagement/user_list.html.twig', [
-            'result' => $this->getPhotoRepository()->findRidesWithPhotoCounterByUser($user),
+            'result' => $photoRepository->findRidesWithPhotoCounterByUser($user),
         ]);
     }
 
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
-    public function ridelistAction(Request $request, PaginatorInterface $paginator, Ride $ride): Response
-    {
-        $query = $this->getPhotoRepository()->buildQueryPhotosByRide($ride);
+    public function ridelistAction(
+        Request $request,
+        PaginatorInterface $paginator,
+        PhotoRepository $photoRepository,
+        Ride $ride
+    ): Response {
+        $query = $photoRepository->buildQueryPhotosByRide($ride);
 
         $pagination = $paginator->paginate(
             $query,
@@ -48,10 +51,7 @@ class PhotoManagementController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("is_granted('edit', photo)")
-     * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
-     */
+    #[IsGranted('edit', 'photo')]
     public function deleteAction(Request $request, Photo $photo, ManagerRegistry $registry): Response
     {
         $this->saveReferer($request);
@@ -60,16 +60,18 @@ class PhotoManagementController extends AbstractController
 
         $registry->getManager()->flush();
 
-        return $this->createRedirectResponseForSavedReferer();
+        return $this->createRedirectResponseForSavedReferer($request);
     }
 
-    /**
-     * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("ride", class="App:Ride")
-     */
-    public function manageAction(Request $request, PaginatorInterface $paginator, Ride $ride): Response
+    #[IsGranted('ROLE_USER')]
+    public function manageAction(
+        Request $request,
+        PaginatorInterface $paginator,
+        Ride $ride,
+        PhotoRepository $photoRepository
+    ): Response
     {
-        $query = $this->getPhotoRepository()->buildQueryPhotosByUserAndRide($this->getUser(), $ride);
+        $query = $photoRepository->buildQueryPhotosByUserAndRide($this->getUser(), $ride);
 
         $pagination = $paginator->paginate(
             $query,
@@ -83,10 +85,7 @@ class PhotoManagementController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("is_granted('edit', photo)")
-     * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
-     */
+    #[IsGranted('edit', 'photo')]
     public function toggleAction(Request $request, Photo $photo, ManagerRegistry $registry): Response
     {
         $this->saveReferer($request);
@@ -95,13 +94,10 @@ class PhotoManagementController extends AbstractController
 
         $registry->getManager()->flush();
 
-        return $this->createRedirectResponseForSavedReferer();
+        return $this->createRedirectResponseForSavedReferer($request);
     }
 
-    /**
-     * @Security("is_granted('edit', photo)")
-     * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
-     */
+    #[IsGranted('edit', 'photo')]
     public function featuredPhotoAction(Request $request, Photo $photo, ManagerRegistry $registry): Response
     {
         $this->saveReferer($request);
@@ -110,13 +106,10 @@ class PhotoManagementController extends AbstractController
 
         $registry->getManager()->flush();
 
-        return $this->createRedirectResponseForSavedReferer();
+        return $this->createRedirectResponseForSavedReferer($request);
     }
 
-    /**
-     * @Security("is_granted('edit', photo)")
-     * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
-     */
+    #[IsGranted('edit', 'photo')]
     public function placeSingleAction(Request $request, Photo $photo, ObjectRouterInterface $objectRouter, ManagerRegistry $registry): Response
     {
         $form = $this->createForm(PhotoCoordType::class, $photo, [
@@ -130,19 +123,18 @@ class PhotoManagementController extends AbstractController
         }
     }
 
-    protected function placeSingleGetAction(Request $request, Photo $photo, FormInterface $form, ManagerRegistry $registry): Response
-    {
+    protected function placeSingleGetAction(
+        Request $request,
+        Photo $photo,
+        FormInterface $form,
+        TrackRepository $trackRepository
+    ): Response {
         $this->saveReferer($request);
 
-        $previousPhoto = $this->getPhotoRepository()->getPreviousPhoto($photo);
-        $nextPhoto = $this->getPhotoRepository()->getNextPhoto($photo);
-
-        $track = $this->getTrackRepository()->findByUserAndRide($photo->getRide(), $this->getUser());
+        $track = $trackRepository->findByUserAndRide($photo->getRide(), $this->getUser());
 
         return $this->render('PhotoManagement/place.html.twig', [
             'photo' => $photo,
-            'previousPhoto' => $previousPhoto,
-            'nextPhoto' => $nextPhoto,
             'track' => $track,
             'form' => $form->createView(),
         ]);
@@ -158,18 +150,18 @@ class PhotoManagementController extends AbstractController
             $registry->getManager()->flush();
         }
 
-        return $this->createRedirectResponseForSavedReferer();
+        return $this->createRedirectResponseForSavedReferer($request);
     }
 
-    /**
-     * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("ride", class="App:Ride")
-     */
-    public function relocateAction(Ride $ride): Response
-    {
-        $photos = $this->getPhotoRepository()->findPhotosByUserAndRide($this->getUser(), $ride);
+    #[IsGranted('ROLE_USER')]
+    public function relocateAction(
+        TrackRepository $trackRepository,
+        PhotoRepository $photoRepository,
+        Ride $ride
+    ): Response {
+        $photos = $photoRepository->findPhotosByUserAndRide($this->getUser(), $ride);
 
-        $track = $this->getTrackRepository()->findByUserAndRide($ride, $this->getUser());
+        $track = $trackRepository->findByUserAndRide($ride, $this->getUser());
 
         return $this->render('PhotoManagement/relocate.html.twig', [
             'ride' => $ride,
@@ -178,10 +170,7 @@ class PhotoManagementController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("is_granted('edit', photo)")
-     * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
-     */
+    #[IsGranted('edit', 'photo')]
     public function rotateAction(Request $request, Photo $photo, PhotoManipulatorInterface $photoManipulator): Response
     {
         $this->saveReferer($request);
@@ -197,13 +186,10 @@ class PhotoManagementController extends AbstractController
             ->rotate($angle)
             ->save();
 
-        return $this->createRedirectResponseForSavedReferer();
+        return $this->createRedirectResponseForSavedReferer($request);
     }
 
-    /**
-     * @Security("is_granted('edit', photo)")
-     * @ParamConverter("photo", class="App:Photo", options={"id": "photoId"})
-     */
+    #[IsGranted('edit', 'photo')]
     public function censorAction(Request $request, UserInterface $user = null, Photo $photo, PhotoManipulatorInterface $photoManipulator): Response
     {
         if (Request::METHOD_POST === $request->getMethod()) {
@@ -213,7 +199,7 @@ class PhotoManagementController extends AbstractController
         return $this->censorGetAction($request, $user, $photo, $photoManipulator);
     }
 
-    public function censorGetAction(Request $request, UserInterface $user = null, Photo $photo, PhotoManipulatorInterface $photoManipulator): Response
+    public function censorGetAction(Photo $photo, PhotoManipulatorInterface $photoManipulator, UserInterface $user = null): Response
     {
         return $this->render('PhotoManagement/censor.html.twig', [
             'photo' => $photo,
@@ -234,5 +220,30 @@ class PhotoManagementController extends AbstractController
             ->save();
 
         return new Response($newFilename);
+    }
+
+    protected function saveReferer(Request $request): string
+    {
+        $referer = $request->headers->get('referer');
+
+        $request->getSession()->set('referer', $referer);
+
+        return $referer;
+    }
+
+    protected function getSavedReferer(Request $request): ?string
+    {
+        return $request->getSession()->get('referer');
+    }
+
+    protected function createRedirectResponseForSavedReferer(Request $request): RedirectResponse
+    {
+        $referer = $this->getSavedReferer($request);
+
+        if (!$referer) {
+            throw new \Exception('No saved referer found to redirect to.');
+        }
+
+        return new RedirectResponse($referer);
     }
 }

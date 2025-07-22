@@ -21,7 +21,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <div id="map" style="height: 350px;"></div>
+        <div id="map" style="height: 350px;" class="map" data-city-slug="{{ ride.city.mainSlugString }}" data-ride-identifier="{{ ride.slug|default(ride.dateTime|date('Y-m-d')) }}"></div>
     </div>
 </div>
 
@@ -56,7 +56,7 @@
                 {% if pastRide and ride.enabled %}
                     {% if feature('photos') %}
                         <li role="presentation">
-                            <a href="{{ objectPath(ride, 'caldera_criticalmass_photo_ride_list') }}">
+                            <a href="{{ object_path(ride, 'caldera_criticalmass_photo_ride_list') }}">
                                 <i class="far fa-camera"></i>
                                 Galerie
                                 <span class="badge">
@@ -75,12 +75,6 @@
                         </a>
                     </li>
                 {% endif %}
-                <li role="presentation">
-                    <a href="#corona" aria-controls="messages" role="tab" data-toggle="tab">
-                        <i class="far fa-virus"></i>
-                        Corona
-                    </a>
-                </li>
             </ul>
 
             <div class="tab-content">
@@ -91,53 +85,7 @@
                 {% if pastRide and ride.enabled %}
                     {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderTracksTabAction', { 'ride': ride } )) }}
                 {% endif %}
-
-                {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderCoronaTabAction', { 'ride': ride } )) }}
             </div>
         </div>
     </div>
 </div>
-
-<script>
-    var pageOptions = {
-        photoViewPageUrl: '{{ objectPath(ride, 'caldera_criticalmass_photo_show_ride', { photoId: 'photoId'}) }}',
-        photoCounterUrl: '{{ objectPath(ride, 'caldera_criticalmass_photo_ajaxview') }}',
-        citySlug: '{{ city.slug }}',
-        rideDate: '{{ ride.dateTime|date('Y-m-d') }}'
-    };
-
-    CriticalMass.loadModule('RidePage', null, pageOptions, function (ridePage) {
-        {% if ride.location and ride.latitude and ride.longitude and ride.latitude != 0 and ride.getLongitude != 0 %}
-        ridePage.addRide('{{ ride|serialize|raw|e('js') }}');
-        {% else %}
-        ridePage.addCity('{{ city|serialize|raw|e('js') }}');
-        {% endif %}
-
-        {% for track in tracks %}
-        ridePage.addTrack('{{ track|serialize('json', serialization_context().setGroups('timelapse'))|raw|e('js') }}');
-        {% endfor %}
-
-        {% if feature('photos') %}
-        {% for photo in photos %}
-        {% if photo.hasCoordinates() %}
-        {% if photo.user.blurGalleries %}
-        {% set blur = true %}
-        {% else %}
-        {% set blur = false %}
-        {% endif %}
-        ridePage.addPhoto('{{ photo|serialize|raw|e('js') }}', '{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}', '{{ blur }}');
-        {% endif %}
-        {% endfor %}
-        {% endif %}
-
-        {% for subride in subrides %}
-        ridePage.addSubride('{{ subride|serialize|raw|e('js') }}');
-        {% endfor %}
-
-        ridePage.init();
-
-        ridePage.focus();
-    });
-
-    CriticalMass.loadModule('ScrollToPost');
-</script>

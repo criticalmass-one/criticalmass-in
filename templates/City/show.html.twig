@@ -28,28 +28,28 @@
         </button>
         <ul class="dropdown-menu">
             <li>
-                <a href="{{ objectPath(city, 'caldera_criticalmass_city_edit') }}">
+                <a href="{{ object_path(city, 'caldera_criticalmass_city_edit') }}">
                     <i class="far fa-cogs"></i>
                     Stadt editieren
                 </a>
             </li>
 
             <li>
-                <a href="{{ objectPath(city, 'caldera_criticalmass_ride_add') }}">
+                <a href="{{ object_path(city, 'caldera_criticalmass_ride_add') }}">
                     <i class="far fa-plus"></i>
                     Tour hinzufügen
                 </a>
             </li>
 
             <li>
-                <a href="{{ objectPath(city, 'caldera_criticalmass_citycycle_list') }}">
+                <a href="{{ object_path(city, 'caldera_criticalmass_citycycle_list') }}">
                     <i class="far fa-calendar"></i>
                     Turnus verwalten
                 </a>
             </li>
 
             <li>
-                <a href="{{ objectPath(city, 'criticalmass_socialnetwork_city_list') }}">
+                <a href="{{ object_path(city, 'criticalmass_socialnetwork_city_list') }}">
                     <i class="far fa-at"></i>
                     soziale Netzwerke verwalten
                 </a>
@@ -119,7 +119,7 @@
                                 <strong>Huch?</strong>
                                 Schade, bislang hat noch niemand Informationen über {{ city.city }} hinterlegt. Wenn du
                                 Lust und Zeit hast, kannst du {{ city.title }} <a
-                                        href="{{ objectPath(city, 'caldera_criticalmass_city_edit') }}">hier
+                                        href="{{ object_path(city, 'caldera_criticalmass_city_edit') }}">hier
                                     beschreiben</a>:
 
                                 <ul>
@@ -138,7 +138,7 @@
                                 </ul>
 
                                 <p class="text-center margin-top-medium">
-                                    <a href="{{ objectPath(city, 'caldera_criticalmass_city_edit') }}"
+                                    <a href="{{ object_path(city, 'caldera_criticalmass_city_edit') }}"
                                        class="btn btn-primary btn-lg">
                                         {{ city.city }} editieren
                                     </a>
@@ -156,7 +156,7 @@
                             </h2>
 
                             <p>
-                                Hier siehst du ein paar Fotos aus {{ city.city }}. Schau dir auch die <a href="{{ objectPath(city, 'caldera_criticalmass_city_listgalleries') }}">Übersicht über Fotos aus {{ city.city }}</a> an.
+                                Hier siehst du ein paar Fotos aus {{ city.city }}. Schau dir auch die <a href="{{ object_path(city, 'caldera_criticalmass_city_listgalleries') }}">Übersicht über Fotos aus {{ city.city }}</a> an.
                             </p>
                         </div>
                     </div>
@@ -166,7 +166,7 @@
                             {% for photo in photos %}
                                 <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
                                     <div class="photo-thumb margin-bottom-medium text-center">
-                                        <a href="{{ objectPath(photo) }}">
+                                        <a href="{{ object_path(photo) }}">
                                             <img class="img-responsive"
                                                  src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
                                         </a>
@@ -179,20 +179,6 @@
             </div>
 
             <div class="col-md-3">
-                {% if feature('corona') and city is defined and city.showCoronaIncidenceWarning %}
-                <div class="row">
-                    <div class="col-md-12">
-                        {% include 'Corona/_corona.html.twig' with { 'city': city } %}
-                    </div>
-                </div>
-                {% endif %}
-
-                <div class="row">
-                    <div class="col-md-12">
-                        {% include 'City/Includes/_live.html.twig' with { 'city': city } %}
-                    </div>
-                </div>
-
                 <div class="row">
                     <div class="col-md-12">
                         {% include 'City/Includes/_nextTour.html.twig' with { 'city': city, 'currentRide': currentRide } %}
@@ -211,7 +197,7 @@
                     </div>
                 </div>
 
-                {% if nearCities and nearCities.length > 0 %}
+                {% if nearCities and nearCities|length > 0 %}
                 <div class="row">
                     <div class="col-md-12">
                         {% include 'City/Includes/_nearCities.html.twig' with { 'nearCities': nearCities } %}

@@ -10,18 +10,18 @@ use Symfony\Component\HttpFoundation\Response;
 
 class FooterController extends AbstractController
 {
-    public function promotionListAction(ManagerRegistry $registry): Response
+    public function promotionListAction(): Response
     {
-        $promotionList = $registry->getRepository(Promotion::class)->findBy([], ['createdAt' => 'DESC']);
+        $promotionList = $this->managerRegistry->getRepository(Promotion::class)->findBy([], ['createdAt' => 'DESC']);
 
         return $this->render('Template/Includes/_footer_promotion_list.html.twig', [
             'promotionList' => $promotionList,
         ]);
     }
 
-    public function cityListAction(ManagerRegistry $registry): Response
+    public function cityListAction(): Response
     {
-        $cityList = $registry->getRepository(City::class)->findPopularCities();
+        $cityList = $this->managerRegistry->getRepository(City::class)->findPopularCities();
 
         return $this->render('Template/Includes/_footer_city_list.html.twig', [
             'cityList' => $cityList,
