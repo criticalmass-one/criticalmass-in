@@ -70,10 +70,10 @@ class SocialNetworkController extends AbstractController
             /** @var SocialNetworkProfile $socialNetworkProfile */
             $socialNetworkProfile = $form->getData();
 
-            if ($city) {
-                $socialNetworkProfile->setCity($city);
-            } elseif ($ride) {
+            if ($ride) {
                 $socialNetworkProfile->setRide($ride);
+            } elseif ($city) {
+                $socialNetworkProfile->setCity($city);
             }
 
             $network = $networkDetector->detect($socialNetworkProfile);
