@@ -15,7 +15,7 @@ class ThreadsPost extends AbstractNetwork
     public function accepts(string $url): bool
     {
         $patterns = [
-            '/^https?:\/\/(www\.)?threads\.net\/@[\w.]+\/post\/[0-9]+\/?$/i',
+            '/^https?:\/\/(www\.)?threads\.(net|com)\/@[\w.]+\/post\/[0-9]+\/?$/i',
         ];
 
         foreach ($patterns as $pattern) {
