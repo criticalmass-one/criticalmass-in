@@ -150,12 +150,14 @@ export default class extends Controller {
                     showCoverageOnHover: false,
                     iconCreateFunction: () => this.photoIcon
                 });
+
                 for (const p of photos) {
                     if (p.latitude && p.longitude) {
                         const latLng = L.latLng(p.latitude, p.longitude);
-                        cluster.addLayer(L.marker(latLng));
+                        cluster.addLayer(L.marker(latLng, { icon: this.photoIcon }));
                     }
                 }
+                
                 cluster.addTo(this.map);
             })
             .catch(console.warn);
