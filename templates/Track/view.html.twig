@@ -62,7 +62,14 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div id="map" class="map" style="height: 350px;" data-polyline="{{ track.polyline }}" data-polyline-color="{{ track.user.color }}"></div>
+                <div
+                        id="map"
+                        class="map"
+                        style="height: 350px;"
+                        data-controller="map"
+                        data-polyline="{{ track.polyline }}"
+                        data-polyline-color="{{ track.user.color }}"
+                ></div>
             </div>
         </div>
 

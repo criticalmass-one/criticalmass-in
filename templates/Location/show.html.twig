@@ -50,15 +50,20 @@
                 {% if location.hasCoordinates() %}
                     <div class="row">
                         <div class="col-md-12">
-                            <div id="map" class="map" style="height: 150px;"
-                                 data-map-center-latitude="{{ location.latitude }}"
-                                 data-map-center-longitude="{{ location.longitude }}"
-                                 data-map-zoomlevel="13"
-                                 data-lock-map="true"
-                                 data-marker-latitude="{{ location.latitude }}"
-                                 data-marker-longitude="{{ location.longitude }}"
-                                 data-marker-type="location"
+                            <div
+                                    id="map"
+                                    class="map"
+                                    style="height: 150px;"
+                                    data-controller="map"
+                                    data-map-center-latitude="{{ location.latitude }}"
+                                    data-map-center-longitude="{{ location.longitude }}"
+                                    data-map-zoomlevel="13"
+                                    data-lock-map="true"
+                                    data-map-marker-latitude="{{ location.latitude }}"
+                                    data-map-marker-longitude="{{ location.longitude }}"
+                                    data-map-marker-type="location"
                             ></div>
+
                         </div>
                     </div>
                 {% endif %}

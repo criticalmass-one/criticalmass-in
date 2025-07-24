@@ -24,14 +24,16 @@
         {% if item.polyline %}
         <div class="row">
             <div class="col-md-12">
-                <div id="map-{{ item.uniqId }}"
-                     class="map timeline-item-ride-map"
-                     data-lock-map="true"
-                     data-map-marker-clickable="false"
-                     data-polyline-color="{{ item.polylineColor }}"
-                     data-polyline="{{ item.polyline }}"
-                     style="height: 150px;">
-                </div>
+                <div
+                        id="map-{{ item.uniqId }}"
+                        class="map timeline-item-ride-map"
+                        data-controller="map"
+                        data-lock-map="true"
+                        data-map-marker-clickable="false"
+                        data-polyline-color="{{ item.polylineColor }}"
+                        data-polyline="{{ item.polyline }}"
+                        style="height: 150px;"
+                ></div>
             </div>
         </div>
         {% endif %}

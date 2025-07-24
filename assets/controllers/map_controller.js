@@ -11,11 +11,6 @@ const TYPE_SUBRIDE = 'subride';
 const TYPE_LOCATION = 'location';
 
 export default class extends Controller {
-    static targets = [
-        'markerLatitude',
-        'markerLongitude'
-    ];
-
     connect() {
         this.polylineList = {};
 
@@ -64,8 +59,16 @@ export default class extends Controller {
         const lat = this.element.dataset.mapCenterLatitude;
         const lng = this.element.dataset.mapCenterLongitude;
 
-        if (draggable && markerType && this.hasMarkerLatitudeTarget && this.hasMarkerLongitudeTarget) {
-            const markerLatLng = L.latLng(this.markerLatitudeTarget.value || lat, this.markerLongitudeTarget.value || lng);
+        if (draggable && markerType) {
+            const latTargetId = this.element.dataset.mapMarkerLatitudeTarget;
+            const lngTargetId = this.element.dataset.mapMarkerLongitudeTarget;
+
+            const latInput = document.getElementById(latTargetId);
+            const lngInput = document.getElementById(lngTargetId);
+
+            if (!latInput || !lngInput) return;
+
+            const markerLatLng = L.latLng(latInput.value || lat, lngInput.value || lng);
 
             const marker = L.marker(markerLatLng, {
                 draggable: true,
@@ -75,12 +78,13 @@ export default class extends Controller {
 
             marker.on('moveend', (event) => {
                 const latLng = event.target.getLatLng();
-                this.markerLatitudeTarget.value = latLng.lat;
-                this.markerLongitudeTarget.value = latLng.lng;
+                latInput.value = latLng.lat;
+                lngInput.value = latLng.lng;
             });
 
             marker.addTo(this.map);
         }
+
     }
 
     addProvidedPolyline() {
@@ -157,7 +161,7 @@ export default class extends Controller {
                         cluster.addLayer(L.marker(latLng, { icon: this.photoIcon }));
                     }
                 }
-                
+
                 cluster.addTo(this.map);
             })
             .catch(console.warn);
