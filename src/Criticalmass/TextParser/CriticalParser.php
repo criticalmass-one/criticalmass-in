@@ -35,7 +35,7 @@ class CriticalParser implements TextParserInterface
         $environment->addExtension(new AutolinkExtension());
 
         $config = [
-            'html_input' => '',
+            'html_input' => 'strip',
             'allow_unsafe_links' => false,
         ];
 
