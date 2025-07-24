@@ -7,18 +7,19 @@ use App\Criticalmass\TextParser\EmbedExtension\EmbedExtension;
 use App\Criticalmass\TextParser\TextCache\TextCacheInterface;
 use Flagception\Manager\FeatureManagerInterface;
 use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\ConverterInterface;
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Autolink\AutolinkExtension;
-use League\CommonMark\MarkdownConverterInterface;
 
 class CriticalParser implements TextParserInterface
 {
-    protected MarkdownConverterInterface $converter;
+    private readonly ConverterInterface $converter;
 
     public function __construct(
-        private FeatureManagerInterface $featureManager,
-        private EmbedderInterface $embedder,
-        private TextCacheInterface $textCache
+        private readonly FeatureManagerInterface $featureManager,
+        private readonly EmbedderInterface $embedder,
+        private readonly TextCacheInterface $textCache
     )
     {
         $this->configure();
@@ -26,37 +27,35 @@ class CriticalParser implements TextParserInterface
 
     protected function configure(): void
     {
-        $environment = Environment::createCommonMarkEnvironment();
-
-        if ($this->featureManager->isActive('oembed')) {
-            $environment->addExtension(new EmbedExtension($this->embedder));
-        }
-
-        $environment->addExtension(new AutolinkExtension());
-
         $config = [
             'html_input' => 'strip',
             'allow_unsafe_links' => false,
         ];
 
-        $this->converter = new CommonMarkConverter($config, $environment);
+        $environment = new Environment($config);
+
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new AutolinkExtension());
+
+        if ($this->featureManager->isActive('oembed')) {
+            $environment->addExtension(new EmbedExtension($this->embedder));
+        }
+
+        $this->converter = new CommonMarkConverter($config);
     }
 
     public function parse(string $text): string
     {
-        $parsedText = null;
-
         if ($this->textCache->has($text)) {
-            $parsedText = $this->textCache->get($text);
-        } else {
-            $parsedText = $this->converter->convert($text);
-            $this->textCache->set($text, $parsedText->getContent());
+            $cached = $this->textCache->get($text);
+            return is_string($cached) ? $cached : $cached->getContent();
         }
 
-        if (!is_string($parsedText)) {
-            return $parsedText->getContent();
-        }
+        $parsed = $this->converter->convert($text);
+        $content = $parsed->getContent();
 
-        return $parsedText;
+        $this->textCache->set($text, $content);
+
+        return $content;
     }
 }
