@@ -57,20 +57,14 @@ export default class RideDateChecker {
 
     searchForMonth(date, successCallback, errorCallback) {
         const rideDate = [date.getFullYear(), date.getMonth() + 1].join('-');
-        const url = Routing.generate('caldera_criticalmass_rest_ride_show', {
-            citySlug: this.getCitySlug(),
-            rideIdentifier: rideDate
-        });
+        const url = '/' + encodeURIComponent(this.getCitySlug()) + '/' + encodeURIComponent(rideDate);
 
         this.urlExists(url, successCallback, errorCallback);
     }
 
     searchForMonthDay(date, successCallback, errorCallback) {
         const rideDate = [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-');
-        const url = Routing.generate('caldera_criticalmass_rest_ride_show', {
-            citySlug: this.getCitySlug(),
-            rideIdentifier: rideDate
-        });
+        const url = '/' + encodeURIComponent(this.getCitySlug()) + '/' + encodeURIComponent(rideDate);
 
         this.urlExists(url, successCallback, errorCallback);
     }

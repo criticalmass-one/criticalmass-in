@@ -14,7 +14,7 @@ export default class Search {
     }
 
     initBloodhound() {
-        const url = Routing.generate('caldera_criticalmass_search_prefetch');
+        const url = '/search/prefetch';
 
         this.bloodhound = new Bloodhound({
             datumTokenizer: function (data) {

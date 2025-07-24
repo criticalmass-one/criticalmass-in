@@ -8,7 +8,6 @@ use App\Entity\SocialNetworkFeedItem;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Nelmio\ApiDocBundle\Annotation\Operation;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,7 +23,6 @@ class SocialNetworkFeedItemController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     * @ParamConverter("city", class="App:City")
      */
     #[Route(path: '/{citySlug}/socialnetwork-feeditems', name: 'caldera_criticalmass_rest_socialnetwork_feeditems_citylist', methods: ['GET'])]
     public function listSocialNetworkFeedItemsCityAction(Request $request, City $city): JsonResponse
@@ -48,7 +46,6 @@ class SocialNetworkFeedItemController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     * @ParamConverter("socialNetworkFeedItem", class="App:SocialNetworkFeedItem")
      */
     #[Route(path: '/{citySlug}/socialnetwork-feeditems/{feedItemId}', name: 'caldera_criticalmass_rest_socialnetwork_feeditems_update', methods: ['POST'])]
     public function updateSocialNetworkFeedItemAction(Request $request, SocialNetworkFeedItem $socialNetworkFeedItem, EntityMergerInterface $entityMerger): JsonResponse

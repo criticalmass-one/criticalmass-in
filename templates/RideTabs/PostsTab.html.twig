@@ -21,7 +21,7 @@
             {{ render(controller('App\\Controller\\PostController::listAction', { 'rideId': ride.getId() })) }}
 
             {% if app.getUser() %}
-                {{ render(controller('App\\Controller\\PostController::writeRideAction', { 'rideId': ride.getId(), 'noButton': true })) }}
+                {{ render(controller('App\\Controller\\PostController::writeRideAction', { 'id': ride.id, 'noButton': true })) }}
             {% endif %}
         </div>
     </div>

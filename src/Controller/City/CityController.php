@@ -3,25 +3,21 @@
 namespace App\Controller\City;
 
 use App\Controller\AbstractController;
-use App\Criticalmass\ElasticCityFinder\ElasticCityFinderInterface;
 use App\Entity\City;
 use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Event\View\ViewEvent;
 use App\Repository\BlockedCityRepository;
+use App\Repository\CityRepository;
 use App\Repository\LocationRepository;
 use App\Repository\PhotoRepository;
 use App\Repository\RideRepository;
 use App\Repository\SocialNetworkProfileRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class CityController extends AbstractController
 {
-    /**
-     * @ParamConverter("city", class="App:City")
-     */
     public function missingStatsAction(
         RideRepository $rideRepository,
         City $city
@@ -32,9 +28,6 @@ class CityController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("city", class="App:City")
-     */
     public function listRidesAction(
         RideRepository $rideRepository,
         City $city
@@ -45,9 +38,6 @@ class CityController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("city", class="App:City")
-     */
     public function listGalleriesAction(
         PhotoRepository $photoRepository,
         SeoPageInterface $seoPage,
@@ -63,17 +53,14 @@ class CityController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("city", class="App:City", isOptional=true)
-     */
     public function showAction(
         Request $request,
         RideRepository $rideRepository,
+        CityRepository $cityRepository,
         LocationRepository $locationRepository,
         SocialNetworkProfileRepository $socialNetworkProfileRepository,
         BlockedCityRepository $blockedCityRepository,
         PhotoRepository $photoRepository,
-        ElasticCityFinderInterface $elasticCityFinder,
         SeoPageInterface $seoPage,
         EventDispatcherInterface $eventDispatcher,
         City $city = null
@@ -113,7 +100,7 @@ class CityController extends AbstractController
         return $this->render('City/show.html.twig', [
             'city' => $city,
             'currentRide' => $rideRepository->findCurrentRideForCity($city),
-            'nearCities' => $elasticCityFinder->findNearCities($city),
+            'nearCities' => $cityRepository->findNearCities($city),
             'locations' => $locationRepository->findLocationsByCity($city),
             'photos' => $photoRepository->findSomePhotos(8, null, $city),
             'rides' => $rideRepository->findRidesForCity($city, 'DESC', 6),
@@ -121,9 +108,6 @@ class CityController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("city", class="App:City")
-     */
     public function getlocationsAction(
         RideRepository $rideRepository,
         City $city

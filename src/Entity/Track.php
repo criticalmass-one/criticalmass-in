@@ -35,7 +35,7 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     const TRACK_SOURCE_CRITICALMAPS = 'TRACK_SOURCE_CRITICALMAPS';
     const TRACK_SOURCE_UNKNOWN = 'TRACK_SOURCE_UNKNOWN';
 
-    #[Routing\RouteParameter(name: 'trackId')]
+    #[Routing\RouteParameter(name: 'id')]
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
@@ -389,22 +389,6 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
         return 0;
     }
 
-    public function getAverageVelocity(): ?float
-    {
-        if ($this->startDateTime && $this->endDateTime && $this->distance) {
-            $kilometres = $this->getDistance();
-            $seconds = $this->getEndDateTime()->getTimestamp() - $this->getStartDateTime()->getTimestamp();
-
-            $hours = (float)$seconds / 3600;
-
-            $velocity = $kilometres / ($hours + 0.0001);
-
-            return $velocity;
-        }
-
-        return null;
-    }
-
     public function getStartTime(): \DateTime
     {
         return $this->startDateTime;
@@ -477,10 +461,5 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
         $this->reviewed = $reviewed;
 
         return $this;
-    }
-
-    public function elasticable(): bool
-    {
-        return $this->enabled && !$this->deleted && $this->reviewed;
     }
 }

@@ -1,9 +1,9 @@
 caldera_criticalmass_track_toggle:
-    path:  /track/toggle/{trackId}
+    path:  /track/toggle/{id}
     controller: App\Controller\Track\TrackManagementController::toggleAction
 
 caldera_criticalmass_track_download:
-    path:  /track/download/{trackId}
+    path:  /track/download/{id}
     controller: App\Controller\Track\TrackDownloadController::downloadAction
 
 caldera_criticalmass_track_gpxgenerate:
@@ -19,19 +19,19 @@ caldera_criticalmass_track_upload:
     controller: App\Controller\Track\TrackUploadController::uploadAction
 
 caldera_criticalmass_track_view:
-    path:  /track/view/{trackId}
+    path:  /track/view/{id}
     controller: App\Controller\Track\TrackController::viewAction
 
 caldera_criticalmass_track_range:
-    path:  /track/range/{trackId}
+    path:  /track/range/{id}
     controller: App\Controller\Track\TrackRangeController::rangeAction
 
 caldera_criticalmass_track_approve:
-    path:  /track/{trackId}/approve
+    path:  /track/{id}/approve
     controller: App\Controller\Track\TrackController::approveAction
 
 caldera_criticalmass_track_time:
-    path:  /track/time/{trackId}
+    path:  /track/time/{id}
     controller: App\Controller\Track\TrackTimeController::timeAction
 
 caldera_criticalmass_track_draw:
@@ -39,5 +39,5 @@ caldera_criticalmass_track_draw:
     controller: App\Controller\Track\TrackDrawController::drawAction
 
 caldera_criticalmass_track_edit:
-    path:  /track/edit/{trackId}
+    path:  /track/edit/{id}
     controller: App\Controller\Track\TrackManagementController::editAction
