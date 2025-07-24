@@ -122,10 +122,7 @@ export default class extends Controller {
 
         if (!citySlug || !rideIdentifier) return;
 
-        const url = Routing.generate('caldera_criticalmass_rest_ride_show', {
-            citySlug: citySlug,
-            rideIdentifier: rideIdentifier
-        });
+        const url = `/api/${citySlug}/${rideIdentifier}`;
 
         fetch(url)
             .then(res => res.json())
@@ -144,10 +141,7 @@ export default class extends Controller {
 
         if (!citySlug || !rideIdentifier) return;
 
-        const url = Routing.generate('caldera_criticalmass_rest_photo_ridelist', {
-            citySlug: citySlug,
-            rideIdentifier: rideIdentifier
-        });
+        const url = `/api/${citySlug}/${rideIdentifier}/listPhotos`;
 
         fetch(url)
             .then(res => res.json())
@@ -173,10 +167,7 @@ export default class extends Controller {
 
         if (!citySlug || !rideIdentifier) return;
 
-        const url = Routing.generate('caldera_criticalmass_rest_track_ridelist', {
-            citySlug: citySlug,
-            rideIdentifier: rideIdentifier
-        });
+        const url = `/api/${citySlug}/${rideIdentifier}/listTracks`;
 
         fetch(url)
             .then(res => res.json())
