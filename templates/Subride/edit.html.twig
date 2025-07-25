@@ -62,7 +62,18 @@
         {{ form_start(form) }}
         <div class="row">
             <div class="col-md-12">
-                <div id="map" class="map" style="height: 250px;" data-map-center-latitude="{{ ride.latitude }}" data-map-center-longitude="{{ ride.longitude }}" data-map-zoomlevel="10" data-marker-type="subride" data-marker-latitude-target="subride_latitude" data-marker-longitude-target="subride_longitude"></div>
+                <div id="map"
+                     class="map"
+                     data-controller="map"
+                     style="height: 250px;"
+                     data-map-center-latitude="{{ ride.latitude }}"
+                     data-map-center-longitude="{{ ride.longitude }}"
+                     data-map-zoomlevel="10"
+                     data-map-marker-draggable="true"
+                     data-map-marker-type="subride"
+                     data-map-marker-latitude-target="subride_latitude"
+                     data-map-marker-longitude-target="subride_longitude">
+                </div>
             </div>
         </div>
 
