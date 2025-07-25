@@ -52,7 +52,6 @@ export default class extends Controller {
             this.map.setView(L.latLng(lat, lng), zoom);
         }
     }
-
     setDraggableMarkerByProvidedData() {
         const draggable = this.element.dataset.mapMarkerDraggable;
         const markerType = this.element.dataset.mapMarkerType;
