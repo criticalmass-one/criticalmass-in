@@ -9,14 +9,10 @@ use App\Entity\Region;
 use App\Entity\Ride;
 use App\Repository\RegionRepository;
 use App\Repository\RideRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 
 class StatisticController extends AbstractController
 {
-    /**
-     * @ParamConverter("city", class="App:City")
-     */
     public function citystatisticAction(
         SeoPageInterface $seoPage,
         RideRepository $rideRepository,

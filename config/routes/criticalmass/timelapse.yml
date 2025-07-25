@@ -3,7 +3,7 @@ caldera_criticalmass_timelapse_homepage:
     controller: App\Controller\Ride\TimelapseController::showAction
 
 caldera_criticalmass_timelapse_load:
-    path:     /{citySlug}/{rideIdentifier}/timelapse/load/{trackId}
+    path:     /{citySlug}/{rideIdentifier}/timelapse/load/{id}
     controller: App\Controller\Ride\TimelapseController::loadtrackAction
     options:
         expose: true

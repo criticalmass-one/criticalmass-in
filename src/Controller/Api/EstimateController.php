@@ -11,7 +11,6 @@ use App\Event\RideEstimate\RideEstimateCreatedEvent;
 use App\Model\CreateEstimateModel;
 use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use OpenApi\Attributes as OA;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -102,7 +101,6 @@ class EstimateController extends BaseController
      * If you like you can provide details about your app or homepage in the <code>source</code> property or just
      * default to null.
      *
-     * @ParamConverter("ride", class="App:Ride")
      */
     #[OA\Parameter(
         name: "citySlug",

@@ -7,7 +7,6 @@ use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
 use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Entity\City;
 use OpenApi\Attributes as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -194,8 +193,6 @@ class CityController extends BaseController
 
     /**
      * Retrieve information for a city, which is identified by the parameter <code>citySlug</code>.
-     *
-     * @ParamConverter("city", class="App:City")
      */
     #[OA\Parameter(
         name: "citySlug",
@@ -208,7 +205,7 @@ class CityController extends BaseController
         response: 200,
         description: "Returned when successful."
     )]
-    #[Route(path: '/{citySlug}', name: 'caldera_criticalmass_rest_city_show', methods: ['GET'], options: ['expose' => true])]
+    #[Route(path: '/{citySlug}', name: 'caldera_criticalmass_rest_city_show', methods: ['GET'])]
     public function showAction(City $city): JsonResponse
     {
         return $this->createStandardResponse($city);

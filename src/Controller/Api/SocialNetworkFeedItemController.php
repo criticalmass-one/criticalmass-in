@@ -7,7 +7,6 @@ use App\Entity\City;
 use App\Entity\SocialNetworkFeedItem;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use OpenApi\Attributes as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,8 +16,7 @@ class SocialNetworkFeedItemController extends BaseController
 {
     /**
      * Returns a list of social network feed items for a specified city.
-     *
-     * @ParamConverter("city", class="App:City")
+
      */
     #[OA\Response(
         response: 200,
@@ -58,7 +56,6 @@ class SocialNetworkFeedItemController extends BaseController
 
     /**
      * Update properties of a social network feed item.
-     * @ParamConverter("socialNetworkFeedItem", class="App:SocialNetworkFeedItem")
      */
     #[OA\RequestBody(
         description: "Serialized Feed Item Content",

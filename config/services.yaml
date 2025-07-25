@@ -20,9 +20,6 @@ parameters:
     facebook.app_id: '%env(FACEBOOK_APP_ID)%'
     facebook.app_secret: '%env(FACEBOOK_APP_SECRET)%'
     facebook.default_token: '%env(FACEBOOK_DEFAULT_TOKEN)%'
-    twitter.client_id: '%env(TWITTER_CLIENT_ID)%'
-    twitter.token: '%env(TWITTER_TOKEN)%'
-    twitter.secret: '%env(TWITTER_SECRET)%'
     photo_tsv.access_key: '%env(PHOTO_TSV_ACCESS_KEY)%'
     timeline.ttl: 60
     notification.mail.sender_address: malte@criticalmass.in
@@ -35,6 +32,8 @@ parameters:
     upload_destination.frontpage_teaser: '%kernel.project_dir%/public/teaser'
     upload_destination.user_photo: '%kernel.project_dir%/public/users'
     assets_version: '%env(ASSETS_VERSION)%'
+    friendlycaptcha_api_key: '%env(FRIENDLYCAPTCHA_API_KEY)%'
+    friendlycaptcha_site_key: '%env(FRIENDLYCAPTCHA_SITE_KEY)%'
 
 services:
     _defaults:
@@ -48,8 +47,6 @@ services:
             $facebookAppId: '%facebook.app_id%'
             $facebookAppSecret: '%facebook.app_secret%'
             $facebookDefaultToken: '%facebook.default_token%'
-            $twitterClientId: '%twitter.client_id%'
-            $twitterSecret: '%twitter.secret%'
             $uploadDestinationPhoto: '%upload_destination.photo%'
             $uploadDestinationTrack: '%upload_destination.track%'
             $uploadDestinationUserPhoto: '%upload_destination.user_photo%'
@@ -122,62 +119,6 @@ services:
     App\Criticalmass\Geo\Loop\LoopInterface:
         alias: App\Criticalmass\Geo\Loop\TrackLoop
 
-    App\Request\ParamConverter\RideParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 0, converter: ride_converter }
-
-    App\Request\ParamConverter\RegionParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 0, converter: region_converter }
-
-    App\Request\ParamConverter\CityParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 0, converter: city_converter }
-
-    App\Request\ParamConverter\CityCycleParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 0, converter: citycycle_converter }
-
-    App\Request\ParamConverter\LocationParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 0, converter: location_converter }
-
-    App\Request\ParamConverter\BoardParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 0, converter: board_converter }
-
-    App\Request\ParamConverter\ThreadParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 0, converter: thread_converter }
-
-    App\Request\ParamConverter\ParticipationParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 0, converter: participation_converter }
-
-    App\Request\ParamConverter\PhotoParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 0, converter: photo_converter }
-
-    App\Request\ParamConverter\PromotionParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 0, converter: promotion_converter }
-
-    App\Request\ParamConverter\UserParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 10, converter: user_converter }
-
-    App\Request\ParamConverter\SocialNetworkProfileParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 0, converter: socialnetworkprofile_converter }
-
-    App\Request\ParamConverter\SocialNetworkFeedItemParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 0, converter: socialnetworkfeeditem_converter }
-
-    App\Request\ParamConverter\TrackParamConverter:
-        tags:
-            - { name: request.param_converter, priority: 0, converter: track_converter }
-
     App\Criticalmass\Imagine\DataLoader\RemoteStreamLoader:
         arguments: ['@liip_imagine']
         tags:
@@ -205,10 +146,6 @@ services:
     App\Criticalmass\ViewStorage\Cache\ViewStorageCacheInterface:
         alias: App\Criticalmass\ViewStorage\Cache\RobustViewStorageCache
 
-    App\Criticalmass\ElasticCityFinder\ElasticCityFinder:
-        arguments:
-            $finder: '@fos_elastica.finder.criticalmass_city'
-
     App\Serializer\JMSSerializer\Handler\RelationHandler:
         tags:
             - { name: jms_serializer.handler, type: Relation, direction: serialization, format: json, method: serializeRelation}
@@ -222,16 +159,10 @@ services:
     App\Criticalmass\CriticalmassBlog\CriticalmassBlogInterface:
         alias: App\Criticalmass\CriticalmassBlog\CachedCriticalmassBlog
 
-    App\Controller\Search\SearchController:
-        arguments:
-            $cityFinder: '@fos_elastica.finder.criticalmass_city'
-            $rideFinder: '@fos_elastica.finder.criticalmass_ride'
-
     App\Security\UserProvider\UserProvider:
         arguments:
             $properties:
                 'facebook': 'facebookId'
                 'strava': 'stravaId'
-                'twitter': 'twitterId'
 
     Sabre\VObject\Component\VCalendar: ~

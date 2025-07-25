@@ -21,7 +21,7 @@
         {{ render(controller('App\\Controller\\PostController::listAction', { 'photoId': photo.id })) }}
 
         {% if app.getUser() %}
-            {{ render(controller('App\\Controller\\PostController::writePhotoAction', { 'photoId': photo.id, 'noButton': true })) }}
+            {{ render(controller('App\\Controller\\PostController::writePhotoAction', { 'id': photo.id, 'noButton': true })) }}
         {% endif %}
     </div>
 </div>

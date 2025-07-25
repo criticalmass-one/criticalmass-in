@@ -2,24 +2,22 @@
 
 namespace App\Entity;
 
-use MalteHuebner\DataQueryBundle\Annotation\EntityAnnotation as DataQuery;
 use App\Criticalmass\Router\Attribute as Routing;
-use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AuditableInterface;
-use App\EntityInterface\AutoParamConverterAble;
 use App\EntityInterface\BoardInterface;
 use App\EntityInterface\CoordinateInterface;
-use App\EntityInterface\ElasticSearchPinInterface;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
+use App\EntityInterface\SocialNetworkProfileAble;
 use Caldera\GeoBasic\Coord\Coord;
 use Caldera\GeoBasic\Coord\CoordInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
+use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute as DataQuery;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -30,40 +28,34 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\Entity(repositoryClass: 'App\Repository\CityRepository')]
 #[JMS\ExclusionPolicy('all')]
 #[ORM\Index(fields: ['createdAt'], name: 'city_created_at_index')]
-class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface, PhotoInterface, RouteableInterface, AuditableInterface, AutoParamConverterAble, SocialNetworkProfileAble, PostableInterface, CoordinateInterface
+class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableInterface, AuditableInterface, SocialNetworkProfileAble, PostableInterface, CoordinateInterface
 {
-    /**
-     * @DataQuery\Sortable
-     */
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     #[JMS\Expose]
     #[JMS\Groups(['ride-list'])]
+    #[DataQuery\Sortable]
     protected ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'cities')]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     protected ?User $user = null;
 
-    /**
-     * @DataQuery\Queryable
-     * @DataQuery\Sortable
-     */
+    #[DataQuery\Sortable]
+    #[DataQuery\Queryable]
     #[ORM\ManyToOne(targetEntity: 'Region', inversedBy: 'cities', cascade: ['persist'])]
     #[ORM\JoinColumn(name: 'region_id', referencedColumnName: 'id')]
     protected ?Region $region = null;
 
     #[Routing\RouteParameter(name: 'citySlug')]
-    #[ORM\ManyToOne(targetEntity: 'CitySlug', inversedBy: 'cities')]
+    #[ORM\ManyToOne(targetEntity: 'CitySlug', inversedBy: 'city')]
     #[ORM\JoinColumn(name: 'main_slug_id', referencedColumnName: 'id')]
     #[JMS\Expose]
     #[JMS\Groups(['ride-list'])]
     protected ?CitySlug $mainSlug = null;
 
-    /**
-     * @DataQuery\Sortable
-     */
+    #[DataQuery\Sortable]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     #[JMS\Expose]
@@ -71,9 +63,7 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     #[JMS\Groups(['ride-list'])]
     protected ?string $city = null;
 
-    /**
-     * @DataQuery\Sortable
-     */
+    #[DataQuery\Sortable]
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     #[JMS\Expose]
@@ -85,25 +75,21 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     #[JMS\Groups(['ride-list'])]
     protected ?string $description = null;
 
-    /**
-     * @DataQuery\Queryable
-     */
+    #[DataQuery\Queryable]
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'float', nullable: true)]
     #[JMS\Expose]
     #[JMS\Groups(['ride-list'])]
     protected float $latitude = 0.0;
 
-    /**
-     * @DataQuery\Queryable
-     */
+    #[DataQuery\Queryable]
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'float', nullable: true)]
     #[JMS\Expose]
     #[JMS\Groups(['ride-list'])]
     protected float $longitude = 0.0;
 
-    /**
-     * @DataQuery\DefaultBooleanValue(value=true)
-     */
+    #[DataQuery\DefaultBooleanValue(value: true)]
     #[ORM\Column(type: 'boolean', nullable: true)]
     protected bool $enabled = true;
 
@@ -128,13 +114,12 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     #[JMS\Expose]
     protected Collection $socialNetworkProfiles;
 
-    /**
-     * @DataQuery\Queryable
-     * @DataQuery\Sortable
-     */
+    #[DataQuery\Sortable]
+    #[DataQuery\Queryable]
     #[Assert\Type(type: 'int')]
     #[ORM\Column(type: 'integer', nullable: true)]
     #[JMS\Expose]
+    #[JMS\Groups(['ride-list'])]
     protected ?int $cityPopulation = null;
 
     #[ORM\Column(type: 'string', nullable: true)]
@@ -157,15 +142,11 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $imageMimeType = null;
 
-    /**
-     * @DataQuery\Sortable
-     */
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTime $updatedAt = null;
 
-    /**
-     * @DataQuery\Sortable
-     */
+    #[DataQuery\Sortable]
     #[ORM\Column(type: 'datetime', nullable: true)]
     protected ?\DateTime $createdAt = null;
 
@@ -553,14 +534,6 @@ class City implements BoardInterface, ViewableEntity, ElasticSearchPinInterface,
         $this->imageMimeType = $imageMimeType;
 
         return $this;
-    }
-
-    /**
-     * @DataQuery\Queryable
-     */
-    public function getPin(): string
-    {
-        return sprintf('%f,%f', $this->latitude, $this->longitude);
     }
 
     public function getCoord(): Coord

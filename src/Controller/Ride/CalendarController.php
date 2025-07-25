@@ -4,15 +4,11 @@ namespace App\Controller\Ride;
 
 use App\Criticalmass\Ical\RideIcalGeneratorInterface;
 use App\Entity\Ride;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
 class CalendarController extends AbstractController
 {
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     public function icalAction(
         RideIcalGeneratorInterface $rideIcalGenerator,
         Ride $ride
@@ -28,7 +24,7 @@ class CalendarController extends AbstractController
         $response->headers->set('Cache-Control', 'private');
         $response->headers->set('Content-type', 'text/calendar');
         $response->headers->set('Content-Disposition', sprintf('attachment; filename="%s";', $filename));
-        $response->headers->set('Content-length', strlen($content));
+        $response->headers->set('Content-length', (string) strlen($content));
 
         return $response;
     }

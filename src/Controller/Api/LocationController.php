@@ -6,7 +6,6 @@ use App\Entity\City;
 use App\Entity\Location;
 use Nelmio\ApiDocBundle\Annotation\Operation;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -28,10 +27,8 @@ class LocationController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     *
-     * @ParamConverter("city", class="App:City")
      */
-    #[Route(path: '/{citySlug}/location', name: 'caldera_criticalmass_rest_location_list', methods: ['GET'], options: ['expose' => true])]
+    #[Route(path: '/{citySlug}/location', name: 'caldera_criticalmass_rest_location_list', methods: ['GET'])]
     public function listLocationAction(City $city): JsonResponse
     {
         $locationList = $this->managerRegistry->getRepository(Location::class)->findLocationsByCity($city);
@@ -64,10 +61,8 @@ class LocationController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     *
-     * @ParamConverter("location", class="App:Location")
      */
-    #[Route(path: '/{citySlug}/location/{locationSlug}', name: 'caldera_criticalmass_rest_location_show', methods: ['GET'], options: ['expose' => true])]
+    #[Route(path: '/{citySlug}/location/{slug}', name: 'caldera_criticalmass_rest_location_show', methods: ['GET'])]
     public function showLocationAction(Location $location): JsonResponse
     {
         return $this->createStandardResponse($location);

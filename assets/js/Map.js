@@ -201,10 +201,7 @@ export default class Map {
         const rideIdentifier = this.mapContainer.dataset.rideIdentifier;
 
         if (citySlug && rideIdentifier) {
-            const rideUrl = Routing.generate('caldera_criticalmass_rest_ride_show', {
-                citySlug: citySlug,
-                rideIdentifier: rideIdentifier
-            });
+            const rideUrl = `/api/${encodeURIComponent(citySlug)}/${encodeURIComponent(rideIdentifier)}`;
 
             fetch(rideUrl).then((response) => {
                 return response.json();
@@ -227,33 +224,32 @@ export default class Map {
         const rideIdentifier = this.mapContainer.dataset.rideIdentifier;
 
         if (citySlug && rideIdentifier) {
-            const photoUrl = Routing.generate('caldera_criticalmass_rest_photo_ridelist', {
-                citySlug: citySlug,
-                rideIdentifier: rideIdentifier
-            });
+            const photoUrl = `/api/${encodeURIComponent(citySlug)}/${encodeURIComponent(rideIdentifier)}/listPhotos`;
 
             fetch(photoUrl).then((response) => {
                 return response.json();
             }).then((photoList) => {
-                const photoLayer = L.markerClusterGroup({
-                    showCoverageOnHover: false,
-                    iconCreateFunction: function (cluster) {
-                        return that.photoIcon;
+                if (photoList.length > 0) {
+                    const photoLayer = L.markerClusterGroup({
+                        showCoverageOnHover: false,
+                        iconCreateFunction: function (cluster) {
+                            return that.photoIcon;
+                        }
+                    });
+
+                    for (const i in photoList) {
+                        const photo = photoList[i];
+
+                        if (photo.latitude && photo.longitude) {
+                            const photoLatLng = L.latLng(photo.latitude, photo.longitude);
+
+                            const marker = L.marker(photoLatLng);
+                            marker.addTo(photoLayer);
+                        }
                     }
-                });
 
-                for (const i in photoList) {
-                    const photo = photoList[i];
-
-                    if (photo.latitude && photo.longitude) {
-                        const photoLatLng = L.latLng(photo.latitude, photo.longitude);
-
-                        const marker = L.marker(photoLatLng);
-                        marker.addTo(photoLayer);
-                    }
+                    photoLayer.addTo(that.map);
                 }
-
-                photoLayer.addTo(that.map);
             }).catch(function (err) {
                 console.warn(err);
             });
@@ -266,27 +262,26 @@ export default class Map {
         const rideIdentifier = this.mapContainer.dataset.rideIdentifier;
 
         if (citySlug && rideIdentifier) {
-            const trackUrl = Routing.generate('caldera_criticalmass_rest_track_ridelist', {
-                citySlug: citySlug,
-                rideIdentifier: rideIdentifier
-            });
+            const trackUrl = `/api/${encodeURIComponent(citySlug)}/${encodeURIComponent(rideIdentifier)}/listTracks`;
 
             fetch(trackUrl).then((response) => {
                 return response.json();
             }).then((trackList) => {
-                const trackLayer = L.featureGroup();
+                if (trackList.length > 0) {
+                    const trackLayer = L.featureGroup();
 
-                for (const i in trackList) {
-                    const track = trackList[i];
-                    const polylineString = track.polylineString;
-                    const polylineColor = 'red';
-                    const polyline = L.Polyline.fromEncoded(polylineString, {color: polylineColor});
+                    for (const i in trackList) {
+                        const track = trackList[i];
+                        const polylineString = track.polylineString;
+                        const polylineColor = 'red';
+                        const polyline = L.Polyline.fromEncoded(polylineString, {color: polylineColor});
 
-                    polyline.addTo(trackLayer);
+                        polyline.addTo(trackLayer);
+                    }
+
+                    that.map.fitBounds(trackLayer.getBounds());
+                    trackLayer.addTo(that.map);
                 }
-
-                that.map.fitBounds(trackLayer.getBounds());
-                trackLayer.addTo(that.map);
             }).catch(function (err) {
                 console.warn(err);
             });

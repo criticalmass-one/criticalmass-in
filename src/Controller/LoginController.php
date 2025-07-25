@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Criticalmass\FriendlyCaptcha\FriendlyCaptchaInterface;
 use App\Entity\User;
 use App\Form\Type\LoginType;
 use App\Notifier\CriticalMassLoginLinkNotification;
@@ -20,8 +21,9 @@ class LoginController extends AbstractController
     const string DEFAULT_USERNAME = 'anonymous cyclist';
 
     public function __construct(
-        protected UserRepository $userRepository,
-        protected ManagerRegistry $managerRegistry
+        private readonly UserRepository $userRepository,
+        private readonly ManagerRegistry $managerRegistry,
+        private readonly FriendlyCaptchaInterface $friendlyCaptcha
     )
     {
 
@@ -46,6 +48,12 @@ class LoginController extends AbstractController
     ): Response {
         $form = $this->createForm(LoginType::class);
         $form->handleRequest($request);
+
+        $captchaValid = $this->friendlyCaptcha->checkCaptcha($request);
+
+        if (!$captchaValid) {
+            return $this->redirectToRoute('login');
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();

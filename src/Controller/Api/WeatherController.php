@@ -5,7 +5,6 @@ namespace App\Controller\Api;
 use App\Entity\Ride;
 use App\Entity\Weather;
 use Nelmio\ApiDocBundle\Annotation\Model;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,8 +15,6 @@ class WeatherController extends BaseController
 {
     /**
      * Add weather data to a specific ride.
-     *
-     * @ParamConverter("ride", class="App:Ride")
      */
     #[OA\Response(
         response: 200,
