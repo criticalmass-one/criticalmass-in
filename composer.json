@@ -74,7 +74,7 @@
         "symfony/proxy-manager-bridge": "^6.0",
         "symfony/framework-bundle": "^6.0",
         "symfony/dotenv": "^6.0",
-        "maltehuebner/dataquery-bundle": "0.7.1",
+        "maltehuebner/dataquery-bundle": "0.8",
         "jaybizzle/crawler-detect": "^1.2",
         "nelmio/api-doc-bundle": "^4.10",
         "symfony/asset": "^6.0",
