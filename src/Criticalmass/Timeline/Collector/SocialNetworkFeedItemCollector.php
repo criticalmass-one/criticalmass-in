@@ -11,8 +11,6 @@ class SocialNetworkFeedItemCollector extends AbstractTimelineCollector
 
     protected function convertGroupedEntities(array $groupedEntities): AbstractTimelineCollector
     {
-        //return $this;
-        
         /** @var SocialNetworkFeedItem $itemEntity */
         foreach ($groupedEntities as $itemEntity) {
             $item = new SocialNetworkFeedItemItem();

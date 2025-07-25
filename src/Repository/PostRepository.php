@@ -3,12 +3,19 @@
 namespace App\Repository;
 
 use App\Entity\City;
+use App\Entity\Post;
 use App\Entity\Ride;
 use App\Entity\Thread;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-class PostRepository extends EntityRepository
+class PostRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Post::class);
+    }
+
     public function findByCrawled(bool $crawled, int $limit = null): array
     {
         $qb = $this->createQueryBuilder('p');

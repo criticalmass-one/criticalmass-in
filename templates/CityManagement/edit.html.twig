@@ -9,9 +9,9 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block breadcrumb %}
-    {% if city %}
+    {% if city and city.mainSlug %}
         <li>
-            <a href="{{ objectPath(city) }}">
+            <a href="{{ object_path(city) }}">
                 {{ city.city }}
             </a>
         </li>
@@ -28,7 +28,7 @@
 
         {% if (region.parent and region.parent.parent and region.parent.parent.parent and not region.parent.parent.parent.isWorld()) %}
             <li>
-                <a href="{{ objectPath(region.parent.parent.parent) }}">
+                <a href="{{ object_path(region.parent.parent.parent) }}">
                     {{ region.parent.parent.parent.name }}
                 </a>
             </li>
@@ -36,7 +36,7 @@
 
         {% if (region.parent and region.parent.parent and not region.parent.parent.isWorld()) %}
             <li>
-                <a href="{{ objectPath(region.parent.parent) }}">
+                <a href="{{ object_path(region.parent.parent) }}">
                     {{ region.parent.parent.name }}
                 </a>
             </li>
@@ -45,14 +45,14 @@
 
         {% if (region.parent and not region.parent.isWorld()) %}
             <li>
-                <a href="{{ objectPath(region.parent) }}">
+                <a href="{{ object_path(region.parent) }}">
                     {{ region.parent.name }}
                 </a>
             </li>
         {% endif %}
 
         <li>
-            <a href="{{ objectPath(region) }}">
+            <a href="{{ object_path(region) }}">
                 {{ region.name }}
             </a>
         </li>
@@ -78,7 +78,17 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div id="map" style="height: 250px;"></div>
+                <div id="map" class="map" style="height: 250px;"
+                     data-map-marker-draggable="true"
+                     data-map-center-latitude="{{ city.latitude }}"
+                     data-map-center-longitude="{{ city.longitude }}"
+                     data-map-zoomlevel="10"
+                     data-map-marker-type="city"
+                     data-map-marker-latitude-target="city_latitude"
+                     data-map-marker-longitude-target="city_longitude"
+                >
+
+                </div>
             </div>
         </div>
 
@@ -114,7 +124,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group{% if form_errors(form.city) %} has-error has-feedback{% endif %}">
-                            <button id="search-city-button" class="btn btn-default btn-xs pull-right" type="button">
+                            <button class="btn btn-default btn-xs pull-right geocode" type="button" data-geocoding-query-selector="#city_city" data-geocoding-query-part-selector="#city_region">
                                 <i class="far fa-map-marker"></i>
                             </button>
                             <label class="control-label" for="">Name:</label>
@@ -198,12 +208,12 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="btn-group pull-right">
-                    {% if city %}
-                        <a href="{{ objectPath(city) }}" class="btn btn-default">
+                    {% if city and city.mainSlug %}
+                        <a href="{{ object_path(city) }}" class="btn btn-default">
                             Abbrechen
                         </a>
                     {% else %}
-                        <a href="{{ objectPath(region) }}" class="btn btn-default">
+                        <a href="{{ object_path(region) }}" class="btn btn-default">
                             Abbrechen
                         </a>
                     {% endif %}
@@ -215,13 +225,4 @@
         </div>
         {{ form_end(form) }}
     </div>
-
-    <script type="text/javascript">
-        var options = {
-            country: '{{ country }}',
-            state: '{{ state }}'
-        };
-
-        CriticalMass.loadModule('EditCityPage', options, null);
-    </script>
 {% endblock %}

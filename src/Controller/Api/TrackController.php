@@ -7,13 +7,16 @@ use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
 use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Entity\Ride;
 use App\Entity\Track;
+use App\Event\Track\TrackDeletedEvent;
+use Doctrine\Persistence\ManagerRegistry;
 use Nelmio\ApiDocBundle\Annotation\Operation;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class TrackController extends BaseController
 {
@@ -28,7 +31,6 @@ class TrackController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     * @ParamConverter("ride", class="App:Ride")
      */
     #[Route(path: '/{citySlug}/{rideIdentifier}/listTracks', name: 'caldera_criticalmass_rest_track_ridelist', methods: ['GET'])]
     public function listRideTrackAction(Ride $ride): JsonResponse
@@ -49,7 +51,6 @@ class TrackController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     * @ParamConverter("track", class="App:Track")
      */
     #[Route(path: '/track/{trackId}', name: 'caldera_criticalmass_rest_track_view', methods: ['GET'])]
     public function viewAction(Track $track, UserInterface $user = null): JsonResponse
@@ -201,5 +202,18 @@ class TrackController extends BaseController
         $context->setGroups($groups);
 
         return $this->createStandardResponse($trackList, $context);
+    }
+
+    #[Route('/track/{id}', name: 'caldera_criticalmass_rest_track_delete', methods: ['DELETE'])]
+    #[IsGranted('edit', 'track')]
+    public function deleteAction(Track $track, EventDispatcherInterface $eventDispatcher, ManagerRegistry $managerRegistry): Response
+    {
+        $track->setDeleted(true);
+
+        $managerRegistry->getManager()->flush();
+
+        $eventDispatcher->dispatch(TrackDeletedEvent::NAME, new TrackDeletedEvent($track));
+
+        return $this->redirectToRoute('caldera_criticalmass_track_list');
     }
 }

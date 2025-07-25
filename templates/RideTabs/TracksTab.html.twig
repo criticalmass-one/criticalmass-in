@@ -12,14 +12,14 @@
                 <ul class="dropdown-menu">
                     {% if feature('strava_track_upload') %}
                     <li>
-                        <a href="{{ objectPath(ride, 'caldera_criticalmass_strava_auth') }}">
+                        <a href="{{ object_path(ride, 'caldera_criticalmass_strava_auth') }}">
                             <i class="fab fa-strava"></i>
                             Track von Strava importieren
                         </a>
                     </li>
                     {% endif %}
                     <li>
-                        <a href="{{ objectPath(ride, 'caldera_criticalmass_track_upload') }}"
+                        <a href="{{ object_path(ride, 'caldera_criticalmass_track_upload') }}"
                            title="Track hochladen">
                             <i class="far fa-upload"></i>
                             GPX-Datei hochladen
@@ -81,8 +81,9 @@
                                 {% endif %}
                             </td>
                             <td>
-                                {% if track.getAverageVelocity() %}
-                                    {{ track.getAverageVelocity()|round(2) }}&nbsp;km/h
+                                {% set track_average_velocity = average_velocity(track) %}
+                                {% if track_average_velocity %}
+                                    {{ track_average_velocity|round(2) }}&nbsp;km/h
                                 {% endif %}
                             </td>
                         </tr>

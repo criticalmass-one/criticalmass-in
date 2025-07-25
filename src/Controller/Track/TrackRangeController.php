@@ -7,22 +7,20 @@ use App\Criticalmass\Geo\LatLngListGenerator\SimpleLatLngListGenerator;
 use App\Entity\Track;
 use App\Event\Track\TrackTrimmedEvent;
 use App\Form\Type\TrackRangeType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class TrackRangeController extends AbstractController
 {
     public function __construct(private readonly string $gapWidth)
     {
+
     }
-    /**
-     * @Security("is_granted('edit', track)")
-     * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
-     */
+
+    #[IsGranted('edit', 'track')]
     public function rangeAction(Request $request, Track $track, SimpleLatLngListGenerator $latLngListGenerator, EventDispatcherInterface $eventDispatcher): Response
     {
         $form = $this->createForm(TrackRangeType::class, $track);
@@ -44,7 +42,6 @@ class TrackRangeController extends AbstractController
             'form' => $form->createView(),
             'track' => $track,
             'latLngList' => $latLngListGenerator->getList(),
-            'gapWidth' => $this->gapWidth,
         ]);
     }
 
@@ -56,8 +53,12 @@ class TrackRangeController extends AbstractController
             /** @var Track $track */
             $track = $form->getData();
 
+            $track
+            // assure that end point does not exceed number of points due to round problems in javascript
+                ->setEndPoint(min($track->getEndPoint(), $track->getPoints()))
             // this may not be done in TrackEventSubscriber as the events are sometimes triggered automatically
-            $track->setReviewed(true);
+                ->setReviewed(true)
+            ;
 
             $eventDispatcher->dispatch(new TrackTrimmedEvent($track), TrackTrimmedEvent::NAME);
         }

@@ -13,12 +13,12 @@
                 <h4 class="media-heading username">
                     {% if post.getRide() %}
                     {{ post.getUser().getUsername() }} schreibt zu
-                        <a href="{{ objectPath(post.ride) }}">
+                        <a href="{{ object_path(post.ride) }}">
                             {{ post.ride.title }}
                         </a>:
                     {% elseif post.getCity() %}
                     {{ post.getUser().getUsername() }} schreibt über
-                    <a href="{{ objectPath(post.city) }}">
+                    <a href="{{ object_path(post.city) }}">
                         {{ post.city.title }}
                     </a>:
                     {% else %}

@@ -3,32 +3,27 @@
 namespace App\Entity;
 
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
-use App\EntityInterface\AutoParamConverterAble;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Router\Attribute as Routing;
 
 #[ORM\Table(name: 'thread')]
 #[ORM\Entity(repositoryClass: 'App\Repository\ThreadRepository')]
-class Thread implements ViewableEntity, RouteableInterface, AutoParamConverterAble, PostableInterface
+class Thread implements ViewableEntity, RouteableInterface, PostableInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
-    /**
-     * @Routing\RouteParameter(name="boardSlug")
-     */
+    #[Routing\RouteParameter(name: 'boardSlug')]
     #[ORM\ManyToOne(targetEntity: 'Board', inversedBy: 'threads')]
     #[ORM\JoinColumn(name: 'board_id', referencedColumnName: 'id')]
     protected ?Board $board = null;
 
-    /**
-     * @Routing\RouteParameter(name="citySlug")
-     */
+    #[Routing\RouteParameter(name: 'citySlug')]
     #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'threads')]
     #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
     protected ?City $city = null;
@@ -37,9 +32,7 @@ class Thread implements ViewableEntity, RouteableInterface, AutoParamConverterAb
     #[ORM\Column(type: 'text', nullable: true)]
     protected ?string $title = null;
 
-    /**
-     * @Routing\RouteParameter(name="threadSlug")
-     */
+    #[Routing\RouteParameter(name: 'threadSlug')]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $slug = null;
 

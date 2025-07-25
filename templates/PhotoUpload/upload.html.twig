@@ -12,13 +12,13 @@
     </li>
 
     <li>
-        <a href="{{ objectPath(city) }}">
+        <a href="{{ object_path(city) }}">
             {{ city.title }}
         </a>
     </li>
 
     <li>
-        <a href="{{ objectPath(ride) }}">
+        <a href="{{ object_path(ride) }}">
             {{ ride.title }}
         </a>
     </li>
@@ -48,7 +48,7 @@
 
                 <p>
                     Falls dieser Uploader nicht funktionieren sollte, kannst du auch unseren <a
-                            href="{{ objectPath(ride, 'caldera_criticalmass_gallery_legacy_photos_upload_ride') }}">alten
+                            href="{{ object_path(ride, 'caldera_criticalmass_gallery_legacy_photos_upload_ride') }}">alten
                         Uploader</a> ausprobieren.
                 </p>
                 <p>
@@ -63,14 +63,10 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <form action="{{ objectPath(ride, 'caldera_criticalmass_gallery_photos_upload_ride') }}" class="dropzone" id="photo-dropzone">
+                    <form action="{{ object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') }}" class="dropzone" id="photo-dropzone">
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-        CriticalMass.loadModule('UploadPhotoPage', '#photo-dropzone');
-    </script>
 {% endblock %}

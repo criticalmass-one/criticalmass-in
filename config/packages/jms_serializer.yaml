@@ -9,3 +9,19 @@ jms_serializer:
   handlers:
     datetime:
       default_timezone: 'UTC'
+
+when@dev:
+  jms_serializer:
+    visitors:
+      json_serialization:
+        options: 1216 # json_encode options bitmask, suggested JSON_PRETTY_PRINT in development
+      json_deserialization:
+        options: 1216 # json_decode options bitmask
+
+when@prod:
+  jms_serializer:
+    visitors:
+      json_serialization:
+        options: 1088 # json_encode options bitmask, suggested JSON_PRETTY_PRINT in development
+      json_deserialization:
+        options: 1088 # json_decode options bitmask

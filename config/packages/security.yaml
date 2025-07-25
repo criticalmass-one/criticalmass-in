@@ -25,7 +25,6 @@ security:
                 resource_owners:
                     facebook: '/login/check-facebook'
                     strava: '/login/check-strava'
-                    twitter: '/login/check-twitter'
                 login_path: '/login'
                 failure_path: '/login'
                 oauth_user_provider:
@@ -34,14 +33,13 @@ security:
         api:
             pattern:    ^/api
             stateless:  true
-            anonymous:  false # can be omitted as its default value
             security: false
 
     access_control:
         # URL of FOSUserBundle which need to be available to anonymous users
-        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login$, role: PUBLIC_ACCESS }
+        - { path: ^/register, role: PUBLIC_ACCESS }
+        - { path: ^/resetting, role: PUBLIC_ACCESS }
 
 
     role_hierarchy:

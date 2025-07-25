@@ -7,23 +7,19 @@ use App\Criticalmass\Geo\GpxReader\TrackReader;
 
 abstract class AbstractLatLngListGenerator
 {
-    protected $list;
+    const WIDTH = 10;
 
-    /**
-     * @var Track $track
-     */
-    protected $track;
+    protected string $list = '';
+    protected Track $track;
     protected $xmlRootNode;
-    protected $trackReader;
-    protected $gapWidth;
+    protected TrackReader $trackReader;
 
-    public function __construct(TrackReader $trackReader, $gapWidth)
+    public function __construct(TrackReader $trackReader)
     {
         $this->trackReader = $trackReader;
-        $this->gapWidth = $gapWidth;
     }
 
-    public function loadTrack(Track $track)
+    public function loadTrack(Track $track): self
     {
         $this->track = $track;
 
@@ -34,9 +30,9 @@ abstract class AbstractLatLngListGenerator
         return $this;
     }
 
-    public abstract function execute();
+    public abstract function execute(): self;
 
-    public function getList()
+    public function getList(): string
     {
         return $this->list;
     }

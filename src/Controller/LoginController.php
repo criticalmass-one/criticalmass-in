@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Criticalmass\FriendlyCaptcha\FriendlyCaptchaInterface;
 use App\Entity\User;
 use App\Form\Type\LoginType;
 use App\Notifier\CriticalMassLoginLinkNotification;
@@ -17,9 +18,12 @@ use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
 
 class LoginController extends AbstractController
 {
+    const string DEFAULT_USERNAME = 'anonymous cyclist';
+
     public function __construct(
-        protected UserRepository $userRepository,
-        protected ManagerRegistry $managerRegistry
+        private readonly UserRepository $userRepository,
+        private readonly ManagerRegistry $managerRegistry,
+        private readonly FriendlyCaptchaInterface $friendlyCaptcha
     )
     {
 
@@ -44,6 +48,12 @@ class LoginController extends AbstractController
     ): Response {
         $form = $this->createForm(LoginType::class);
         $form->handleRequest($request);
+
+        $captchaValid = $this->friendlyCaptcha->checkCaptcha($request);
+
+        if (!$captchaValid) {
+            return $this->redirectToRoute('login');
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
@@ -78,7 +88,10 @@ class LoginController extends AbstractController
     public function createNewUser(string $email): User
     {
         $user = new User();
-        $user->setEmail($email);
+        $user
+            ->setEmail($email)
+            ->setUsername(self::DEFAULT_USERNAME)
+        ;
 
         $em = $this->managerRegistry->getManager();
 
