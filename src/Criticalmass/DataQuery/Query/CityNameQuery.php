@@ -2,6 +2,8 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
+use App\Entity\City;
+use App\Entity\Ride;
 use Doctrine\ORM\QueryBuilder;
 use Elastica\Query\Term;
 use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
@@ -16,7 +18,11 @@ class CityNameQuery extends AbstractQuery implements OrmQueryInterface, ElasticQ
     #[Constraints\NotNull]
     protected string $name;
 
-    #[DataQuery\RequiredQueryParameter(parameterName: 'name')]
+    #[DataQuery\RequiredQueryParameter(
+        parameterName: 'name',
+        repository: City::class,
+        repositoryMethod: 'findOneByName'
+    )]
     public function setName(string $name): CityNameQuery
     {
         $this->name = $name;
@@ -37,9 +43,18 @@ class CityNameQuery extends AbstractQuery implements OrmQueryInterface, ElasticQ
     {
         $alias = $queryBuilder->getRootAliases()[0];
 
-        $queryBuilder
-            ->andWhere($queryBuilder->expr()->eq(sprintf('%s.city', $alias), ':city'))
-            ->setParameter('city', $this->name);
+        if (Ride::class === $this->entityFqcn) {
+            $queryBuilder
+                ->join(sprintf('%s.city', $alias), 'c')
+                ->andWhere($queryBuilder->expr()->eq('c.city', ':city'))
+            ;
+        }
+
+        if (City::class === $this->entityFqcn) {
+            $queryBuilder->andWhere($queryBuilder->expr()->eq(sprintf('%s.city', $alias), ':city'));
+        }
+
+        $queryBuilder->setParameter('city', $this->name);
 
         return $queryBuilder;
     }
