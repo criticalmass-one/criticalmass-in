@@ -86,6 +86,12 @@
                     {{ photo.exifCamera }}
                 </dd>
             {% endif %}
+
+            <dt>Foto herunterladen</dt>
+            <dd>
+                {% set rideIdentifier = ride.slug ? ride.slug : ride.dateTime|date('Y-m-d') %}
+                <a href="{{ path('caldera_criticalmass_photo_download', { citySlug: city.getMainSlugString, rideIdentifier: rideIdentifier, photoId: photo.id }) }}">Download</a>
+            </dd>
         </dl>
     </div>
 </div>
