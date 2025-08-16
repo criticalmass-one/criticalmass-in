@@ -188,6 +188,12 @@ class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableI
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $wikidataEntityId = null;
 
+    /**
+     * @ORM\Column(type="float", nullable=false, options={"default": 0})
+     * @JMS\Expose()
+     */
+    protected float $activityIndex = 0;
+
     public function __construct()
     {
         $this->rides = new ArrayCollection();
@@ -822,5 +828,17 @@ class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableI
     public function toCoord(): CoordInterface
     {
         return new Coord($this->latitude, $this->longitude);
+    }
+
+    public function setActivityIndex(float $activityIndex): self
+    {
+        $this->activityIndex = $activityIndex;
+
+        return $this;
+    }
+
+    public function getActivityIndex(): float
+    {
+        return $this->activityIndex;
     }
 }
