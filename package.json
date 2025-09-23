@@ -37,7 +37,7 @@
     "dropzone": "^5.7.2",
     "flatpickr": "^4.6.6",
     "friendly-challenge": "^0.9.19",
-    "handlebars": "^4.7.7",
+    "handlebars": "^4.7.8",
     "jquery": "^3.5.1",
     "jquery-select-areas": "^0.1.0",
     "leaflet": "^1.7.1",

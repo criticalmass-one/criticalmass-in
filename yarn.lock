@@ -3202,7 +3202,7 @@
   "resolved" "https://registry.npmjs.org/handle-thing/-/handle-thing-2.0.1.tgz"
   "version" "2.0.1"
 
-"handlebars@^4.7.7":
+"handlebars@^4.7.8":
   "integrity" "sha512-vafaFqs8MZkRrSX7sFVUdo3ap/eNiLnb4IakshzvP56X5Nr1iGKAIqdX6tMlm6HcNRIkr6AxO5jFEoJzzpT8aQ=="
   "resolved" "https://registry.npmjs.org/handlebars/-/handlebars-4.7.8.tgz"
   "version" "4.7.8"
