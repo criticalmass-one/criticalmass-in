@@ -1,0 +1,3 @@
+caldera_criticalmass_city_preview_manage:
+    path:  /{citySlug}/preview-select
+    controller: App\Controller\City\CityPreviewController::selectAction
