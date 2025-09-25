@@ -3,6 +3,7 @@
 namespace App\Controller\City;
 
 use App\Controller\AbstractController;
+use App\Criticalmass\Activity\ActivityCalculatorInterface;
 use App\Entity\City;
 use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Event\View\ViewEvent;
@@ -60,10 +61,7 @@ class CityController extends AbstractController
         LocationRepository $locationRepository,
         SocialNetworkProfileRepository $socialNetworkProfileRepository,
         BlockedCityRepository $blockedCityRepository,
-        PhotoRepository $photoRepository,
-        SeoPageInterface $seoPage,
-        EventDispatcherInterface $eventDispatcher,
-        City $city = null
+        PhotoRepository $photoRepository, SeoPageInterface $seoPage, EventDispatcherInterface $eventDispatcher, ActivityCalculatorInterface $activityCalculator, City $city = null
     ): Response {
         if (!$city) {
             $citySlug = $request->get('citySlug');
@@ -99,6 +97,7 @@ class CityController extends AbstractController
 
         return $this->render('City/show.html.twig', [
             'city' => $city,
+            'activity_index' => $activityCalculator->calculate($city),
             'currentRide' => $rideRepository->findCurrentRideForCity($city),
             'nearCities' => $cityRepository->findNearCities($city),
             'locations' => $locationRepository->findLocationsByCity($city),
