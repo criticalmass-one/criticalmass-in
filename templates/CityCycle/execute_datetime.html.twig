@@ -136,6 +136,7 @@
                                 <div class="form-group{% if form_errors(form.fromDate) %} has-error has-feedback{% endif %}">
                                     <label class="control-label" for="">Startdatum:</label>
                                     {{ form_errors(form.fromDate) }}
+                                    {{ form_widget(form.fromDate) }}
                                     <p class="help-block">
                                         Bitte im Format <code>dd.mm.jjjj</code> angeben.
                                     </p>
@@ -148,6 +149,7 @@
                                 <div class="form-group{% if form_errors(form.untilDate) %} has-error has-feedback{% endif %}">
                                     <label class="control-label" for="">Enddatum:</label>
                                     {{ form_errors(form.untilDate) }}
+                                    {{ form_widget(form.untilDate) }}
                                     <p class="help-block">
                                         Bitte im Format <code>dd.mm.jjjj</code> angeben.
                                     </p>
