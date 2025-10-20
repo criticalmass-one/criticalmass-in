@@ -119,6 +119,13 @@ class CityFactory implements CityFactoryInterface
         return $this;
     }
 
+    public function withTitle(string $title): CityFactoryInterface
+    {
+        $this->city->setTitle($title);
+
+        return $this;
+    }
+
     public function build(): City
     {
         return $this->city;

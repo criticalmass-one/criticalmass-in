@@ -21,5 +21,6 @@ interface CityFactoryInterface
     public function withCreatedAt(\DateTime $createdAt): CityFactoryInterface;
     public function withRegion(Region $region): CityFactoryInterface;
     public function withUser(UserInterface $user): CityFactoryInterface;
+    public function withTitle(string $title): CityFactoryInterface;
     public function build(): City;
 }
