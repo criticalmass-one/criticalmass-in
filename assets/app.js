@@ -1,4 +1,4 @@
-//import './styles/app.css';
+import './styles/app.css';
 import './scss/criticalmass.scss';
 import 'dropzone/dist/dropzone.css';
 import 'friendly-challenge/widget';

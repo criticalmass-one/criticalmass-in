@@ -19,7 +19,7 @@ class PromotionController extends AbstractController
         ViewStorageCacheInterface $viewStorageCache
     ): Response
     {
-        $viewStorageCache->countView($promotion);
+        //$viewStorageCache->countView($promotion);
         
         $requestParameterList = QueryStringToListConverter::convert($promotion->getQuery());
 

@@ -1,8 +1,68 @@
 import L from 'leaflet';
+import Handlebars from 'Handlebars';
 import polylineEncoded from 'polyline-encoded';
 import markerCluster from 'leaflet.markercluster';
 import extraMarkers from 'leaflet-extra-markers';
+// kleine Utils
+const toDate = (dateLike) => {
+    if (dateLike == null) return null;
+    if (dateLike instanceof Date) return dateLike;
+    if (typeof dateLike === 'number') {
+        // Sekunden -> ms
+        return new Date(dateLike > 2e10 ? dateLike : dateLike * 1000);
+    }
+    return new Date(dateLike);
+};
 
+const getCitySlug = (city) => {
+    return city?.main_slug?.slug || city?.slug || (Array.isArray(city?.slugs) && city.slugs[0]?.slug) || 'unknown';
+};
+
+const getDateTimeField = (item) => item?.date_time ?? item?.dateTime ?? null;
+
+// Datum YYYY-MM-DD (für URLs)
+Handlebars.registerHelper('formatYmd', function (item) {
+    const d = toDate(getDateTimeField(item));
+    if (!d || isNaN(d)) return '';
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+});
+
+// Datum lokal formatiert (z. B. 21.09.2025)
+Handlebars.registerHelper('formatDateLocal', function (item) {
+    const d = toDate(getDateTimeField(item));
+    if (!d || isNaN(d)) return '';
+    const tz = item?.city?.timezone || 'Europe/Berlin';
+    return new Intl.DateTimeFormat('de-DE', {
+        timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit'
+    }).format(d);
+});
+
+// Uhrzeit lokal formatiert (z. B. 15:30)
+Handlebars.registerHelper('formatTimeLocal', function (item) {
+    const d = toDate(getDateTimeField(item));
+    if (!d || isNaN(d)) return '';
+    const tz = item?.city?.timezone || 'Europe/Berlin';
+    return new Intl.DateTimeFormat('de-DE', {
+        timeZone: tz, hour: '2-digit', minute: '2-digit'
+    }).format(d);
+});
+
+// URL: /{citySlug}/{slug || YYYY-MM-DD(date_time)}
+Handlebars.registerHelper('rideUrl', function (item) {
+    const citySlug = getCitySlug(item?.city);
+    const tail = (item?.slug && item.slug.length) ? item.slug : Handlebars.helpers.formatYmd(item);
+    return `/${citySlug}/${tail}`;
+});
+
+// \n -> <br> für Beschreibung (falls du sie irgendwo nutzt)
+Handlebars.registerHelper('nl2br', function (text) {
+    if (text == null) return '';
+    const s = String(text).replace(/\r\n|\r|\n/g, '<br>');
+    return new Handlebars.SafeString(s);
+});
 export default class Map {
     mapContainer;
     map;
@@ -12,39 +72,37 @@ export default class Map {
         icon: 'fa-bicycle',
         markerColor: 'red',
         shape: 'circle',
-        prefix: 'far'
+        prefix: 'fas'
     });
     locationIcon = L.ExtraMarkers.icon({
         icon: 'fa-bicycle',
         markerColor: 'white',
         shape: 'circle',
-        prefix: 'far'
+        prefix: 'fas'
     });
     subrideIcon = L.ExtraMarkers.icon({
         icon: 'fa-bicycle',
         markerColor: 'green',
         shape: 'circle',
-        prefix: 'far'
+        prefix: 'fas'
     });
     cityIcon = L.ExtraMarkers.icon({
         icon: 'fa-university',
         markerColor: 'blue',
         shape: 'circle',
-        prefix: 'far'
+        prefix: 'fas'
     });
     photoIcon = L.ExtraMarkers.icon({
         icon: 'fa-camera',
         markerColor: 'yellow',
         shape: 'square',
-        prefix: 'far'
+        prefix: 'fas'
     });
 
     constructor(mapContainer, options) {
         this.mapContainer = mapContainer;
-
         const defaults = {};
-
-        this.settings = {...defaults, ...options};
+        this.settings = { ...defaults, ...options };
 
         this.createMap();
         this.setViewByProvidedData();
@@ -52,59 +110,56 @@ export default class Map {
         this.setDraggableMarkerByProvidedData();
         this.addProvidedPolyline();
         this.queryApi();
-        this.loadRide();
-        this.loadPhotos();
-        this.loadTracks();
         this.initEventListeners();
         this.disableInteraction();
     }
 
     createMap() {
-        this.map = new L.map(this.mapContainer.id);
+        this.map = L.map(this.mapContainer, { zoomControl: true });
         this.mapContainer.map = this.map;
 
-        const basemap = L.tileLayer('https://tiles.caldera.cc/wikimedia-intl/{z}/{x}/{y}.png', {
-            attribution: 'Wikimedia maps beta | Map data &copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+        const basemap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
         });
         basemap.addTo(this.map);
+
+        // Fallback-View falls keine Daten
+        if (!this.map._loaded) {
+            this.map.setView([51.1657, 10.4515], 6); // Deutschland Mitte
+        }
     }
 
     setViewByProvidedData() {
-        const mapCenterLatitude = this.mapContainer.dataset.mapCenterLatitude;
-        const mapCenterLongitude = this.mapContainer.dataset.mapCenterLongitude;
-        const mapZoomLevel = this.mapContainer.dataset.mapZoomlevel;
-
-        if (mapCenterLatitude && mapCenterLongitude && mapZoomLevel) {
+        const { mapCenterLatitude, mapCenterLongitude, mapZoomlevel } = this.mapContainer.dataset;
+        if (mapCenterLatitude && mapCenterLongitude && mapZoomlevel) {
             const mapCenter = L.latLng(mapCenterLatitude, mapCenterLongitude);
-
-            this.map.setView(mapCenter, mapZoomLevel);
+            this.map.setView(mapCenter, mapZoomlevel);
         }
     }
 
     setDraggableMarkerByProvidedData() {
-        const draggable = this.mapContainer.dataset.mapMarkerDraggable;
-        const markerType = this.mapContainer.dataset.mapMarkerType;
-        const mapCenterLatitude = this.mapContainer.dataset.mapCenterLatitude;
-        const mapCenterLongitude = this.mapContainer.dataset.mapCenterLongitude;
-        const markerLatitudeTarget = document.getElementById(this.mapContainer.dataset.mapMarkerLatitudeTarget);
-        const markerLongitudeTarget = document.getElementById(this.mapContainer.dataset.mapMarkerLongitudeTarget);
+        const { mapMarkerDraggable, mapMarkerType, mapCenterLatitude, mapCenterLongitude, mapMarkerLatitudeTarget, mapMarkerLongitudeTarget } = this.mapContainer.dataset;
 
-        if (draggable && markerLatitudeTarget && markerLongitudeTarget && markerType) {
-            const markerLatLng = L.latLng(markerLatitudeTarget.value || mapCenterLatitude, markerLongitudeTarget.value || mapCenterLongitude);
+        const markerLatitudeTarget = document.getElementById(mapMarkerLatitudeTarget);
+        const markerLongitudeTarget = document.getElementById(mapMarkerLongitudeTarget);
+
+        if (mapMarkerDraggable && markerLatitudeTarget && markerLongitudeTarget && mapMarkerType) {
+            const markerLatLng = L.latLng(
+                markerLatitudeTarget.value || mapCenterLatitude,
+                markerLongitudeTarget.value || mapCenterLongitude
+            );
 
             const options = {
                 draggable: true,
                 autoPan: true,
-                icon: this.getIconForType(markerType)
+                icon: this.getIconForType(mapMarkerType)
             };
 
             const marker = L.marker(markerLatLng, options);
-
             marker.addTo(this.map);
 
             marker.on('moveend', (event) => {
                 const latLng = event.target.getLatLng();
-
                 markerLatitudeTarget.value = latLng.lat;
                 markerLongitudeTarget.value = latLng.lng;
             });
@@ -112,274 +167,95 @@ export default class Map {
     }
 
     setMarkerByProvidedData() {
-        const draggable = this.mapContainer.dataset.mapMarkerDraggable;
-        const markerType = this.mapContainer.dataset.mapMarkerType;
-        const markerLatitude = this.mapContainer.dataset.mapMarkerLatitude;
-        const markerLongitude = this.mapContainer.dataset.mapMarkerLongitude;
+        const { mapMarkerDraggable, mapMarkerType, mapMarkerLatitude, mapMarkerLongitude } = this.mapContainer.dataset;
 
-        if (!draggable && markerLatitude && markerLongitude && markerType) {
-            const markerLatLng = L.latLng(markerLatitude, markerLongitude);
-
+        if (!mapMarkerDraggable && mapMarkerLatitude && mapMarkerLongitude && mapMarkerType) {
+            const markerLatLng = L.latLng(mapMarkerLatitude, mapMarkerLongitude);
             const options = {
                 autoPan: true,
-                icon: this.getIconForType(markerType)
+                icon: this.getIconForType(mapMarkerType)
             };
-
             const marker = L.marker(markerLatLng, options);
-
             marker.addTo(this.map);
         }
     }
 
     addProvidedPolyline() {
-        const polylineString = this.mapContainer.dataset.polyline;
-        const polylineColorString = this.mapContainer.dataset.polylineColor;
-
-        if (polylineString && polylineColorString) {
-            const polyline = L.Polyline.fromEncoded(polylineString, {color: polylineColorString});
-
-            polyline.addTo(this.map);
-
-            this.map.fitBounds(polyline.getBounds());
+        const { polyline, polylineColor } = this.mapContainer.dataset;
+        if (polyline && polylineColor) {
+            const pl = L.Polyline.fromEncoded(polyline, { color: polylineColor });
+            pl.addTo(this.map);
+            this.map.fitBounds(pl.getBounds());
         }
     }
 
-    addPolyline(polylineString, polylineColorString, identifier) {
-        if (polylineString && polylineColorString) {
-            const polyline = L.Polyline.fromEncoded(polylineString, {color: polylineColorString});
-
-            polyline.addTo(this.map);
-
-            this.polylineList[identifier] = polyline;
-
-            this.map.fitBounds(polyline.getBounds());
-        }
+    getIconForType(type) {
+        if (type === 'ride') return this.rideIcon;
+        if (type === 'city') return this.cityIcon;
+        if (type === 'photo') return this.photoIcon;
+        if (type === 'subride') return this.subrideIcon;
+        if (type === 'location') return this.locationIcon;
     }
 
-    updatePolyline(polylineString, polylineColorString, identifier) {
-        if (polylineString && polylineColorString) {
-            const polyline = L.Polyline.fromEncoded(polylineString, {color: polylineColorString});
-            const latLngList = polyline.getLatLngs();
-
-            this.polylineList[identifier].setLatLngs(latLngList);
-
-            this.map.fitBounds(polyline.getBounds());
-        }
-    }
-
+    /** =========================
+     *  API + Popup-Templates
+     *  ========================= */
     queryApi() {
         const apiQueryUrl = this.mapContainer.dataset.apiQuery;
-        const dataType = this.mapContainer.dataset.apiType;
-        const dataIcon = this.getIconForType(dataType);
-        const that = this;
+        const type = this.mapContainer.dataset.apiType || 'ride';
+        const icon = this.getIconForType(type) || new L.Icon.Default();
 
-        if (apiQueryUrl) {
-            fetch(apiQueryUrl).then((response) => {
-                return response.json();
-            }).then((resultList) => {
+        let popupTpl = this.mapContainer.dataset.popupTemplate;
+        const tplId = this.mapContainer.dataset.popupTemplateId;
+
+        if (!popupTpl && tplId) {
+            const el = document.getElementById(tplId);
+            if (el) popupTpl = el.innerHTML.trim();
+        }
+
+        if (!apiQueryUrl) return;
+
+        fetch(apiQueryUrl)
+            .then(r => r.json())
+            .then(json => {
+                const list = Array.isArray(json) ? json : (json.items || json.results || []);
+
+                if (!Array.isArray(list) || list.length === 0) return;
+
                 const layer = L.featureGroup();
 
-                for (var i in resultList) {
-                    const data = resultList[i];
-                    const dataLatLng = L.latLng(data.latitude, data.longitude);
-                    const marker = L.marker(dataLatLng, {icon: dataIcon});
+                const popupTemplate = popupTpl ? Handlebars.compile(popupTpl) : null;
+
+                for (const item of list) {
+                    const lat = parseFloat(item.latitude ?? item.lat ?? item?.location?.lat);
+                    const lng = parseFloat(item.longitude ?? item.lon ?? item.lng ?? item?.location?.lon);
+                    if (!Number.isFinite(lat) || !Number.isFinite(lng)) continue;
+
+                    const marker = L.marker([lat, lng], { icon });
+
+                    if (popupTemplate) {
+                        marker.bindPopup(popupTemplate(item));
+                    }
 
                     marker.addTo(layer);
                 }
 
-                layer.addTo(that.map);
-                that.map.fitBounds(layer.getBounds());
-            }).catch(function (err) {
-                console.warn(err);
-            });
-        }
-    }
-
-    loadRide() {
-        const that = this;
-        const citySlug = this.mapContainer.dataset.citySlug;
-        const rideIdentifier = this.mapContainer.dataset.rideIdentifier;
-
-        if (citySlug && rideIdentifier) {
-            const rideUrl = `/api/${encodeURIComponent(citySlug)}/${encodeURIComponent(rideIdentifier)}`;
-
-            fetch(rideUrl).then((response) => {
-                return response.json();
-            }).then((ride) => {
-                const rideLatLng = L.latLng(ride.latitude, ride.longitude);
-
-                const marker = L.marker(rideLatLng, {icon: that.rideIcon});
-
-                that.map.setView(rideLatLng, 10);
-                marker.addTo(that.map);
-            }).catch(function (err) {
-                console.warn(err);
-            });
-        }
-    }
-
-    loadPhotos() {
-        const that = this;
-        const citySlug = this.mapContainer.dataset.citySlug;
-        const rideIdentifier = this.mapContainer.dataset.rideIdentifier;
-
-        if (citySlug && rideIdentifier) {
-            const photoUrl = `/api/${encodeURIComponent(citySlug)}/${encodeURIComponent(rideIdentifier)}/listPhotos`;
-
-            fetch(photoUrl).then((response) => {
-                return response.json();
-            }).then((photoList) => {
-                if (photoList.length > 0) {
-                    const photoLayer = L.markerClusterGroup({
-                        showCoverageOnHover: false,
-                        iconCreateFunction: function (cluster) {
-                            return that.photoIcon;
-                        }
-                    });
-
-                    for (const i in photoList) {
-                        const photo = photoList[i];
-
-                        if (photo.latitude && photo.longitude) {
-                            const photoLatLng = L.latLng(photo.latitude, photo.longitude);
-
-                            const marker = L.marker(photoLatLng);
-                            marker.addTo(photoLayer);
-                        }
-                    }
-
-                    photoLayer.addTo(that.map);
+                if (layer.getLayers().length) {
+                    layer.addTo(this.map);
+                    this.map.fitBounds(layer.getBounds());
                 }
-            }).catch(function (err) {
-                console.warn(err);
-            });
-        }
-    }
-
-    loadTracks() {
-        const that = this;
-        const citySlug = this.mapContainer.dataset.citySlug;
-        const rideIdentifier = this.mapContainer.dataset.rideIdentifier;
-
-        if (citySlug && rideIdentifier) {
-            const trackUrl = `/api/${encodeURIComponent(citySlug)}/${encodeURIComponent(rideIdentifier)}/listTracks`;
-
-            fetch(trackUrl).then((response) => {
-                return response.json();
-            }).then((trackList) => {
-                if (trackList.length > 0) {
-                    const trackLayer = L.featureGroup();
-
-                    for (const i in trackList) {
-                        const track = trackList[i];
-                        const polylineString = track.polylineString;
-                        const polylineColor = 'red';
-                        const polyline = L.Polyline.fromEncoded(polylineString, {color: polylineColor});
-
-                        polyline.addTo(trackLayer);
-                    }
-
-                    that.map.fitBounds(trackLayer.getBounds());
-                    trackLayer.addTo(that.map);
-                }
-            }).catch(function (err) {
-                console.warn(err);
-            });
-        }
-    }
-
-    addMarkerByNumber(markerNumber, mapContainer, markerLayer) {
-        const markerLatitudePropertyName = 'mapMarker' + markerNumber + 'Latitude';
-        const markerLongitudePropertyName = 'mapMarker' + markerNumber + 'Longitude';
-
-        if (markerLatitudePropertyName in mapContainer.dataset && markerLongitudePropertyName in mapContainer.dataset) {
-            const latitude = this.mapContainer.dataset[markerLatitudePropertyName];
-            const longitude = this.mapContainer.dataset[markerLongitudePropertyName];
-
-            if (markerNumber === '') {
-                markerNumber = 0;
-            }
-
-            const markerLatLng = L.latLng(latitude, longitude);
-
-            const marker = L.marker(markerLatLng, { icon: that.rideIcon });
-
-            marker.markerNumber = markerNumber;
-
-            marker.addTo(markerLayer);
-
-            return true;
-        }
-
-        return false;
-    }
-
-    getIconForType(type) {
-        if ('ride' === type) {
-            return this.rideIcon;
-        }
-
-        if ('city' === type) {
-            return this.cityIcon;
-        }
-
-        if ('photo' === type) {
-            return this.photoIcon;
-        }
-
-        if ('subride' === type) {
-            return this.subrideIcon;
-        }
-
-        if ('location' === type) {
-            return this.locationIcon;
-        }
+            })
+            .catch(err => console.warn(err));
     }
 
     initEventListeners() {
-        document.addEventListener('geocoding-result', (event) => {
-            const result = event.result;
-            const latitude = parseFloat(result.lat);
-            const longitude = parseFloat(result.lon);
-            const mapCenter = L.latLng(latitude, longitude);
-
-            this.map.eachLayer((layer) => {
-                if (layer instanceof L.Marker) {
-                    layer.setLatLng(mapCenter);
-                }
-            });
-
-            if (result.boundingbox) {
-                const boundingbox = result.boundingbox;
-                const northWest = new L.latLng([boundingbox[1], boundingbox[2]]);
-                const southEast = new L.latLng([boundingbox[0], boundingbox[3]]);
-
-                const bounds = new L.latLngBounds(northWest, southEast);
-
-                this.map.flyToBounds(bounds);
-            } else {
-                this.map.setView(mapCenter);
-            }
-        });
-
-        document.addEventListener('map-polyline-add', (polylineEvent) => {
-            this.addPolyline(polylineEvent.polylineString, polylineEvent.colorString, polylineEvent.identifier);
-        });
-
-        document.addEventListener('map-polyline-update', (polylineEvent) => {
-            this.updatePolyline(polylineEvent.polylineString, polylineEvent.colorString, polylineEvent.identifier);
-        });
-
-        document.addEventListener('map-clear', () => {
-            this.map.eachLayer((layer) => {
-                this.map.removeLayer(layer);
-            });
-        });
+        // hier kannst du deine Event-Listener ergänzen
     }
 
     disableInteraction() {
         if (this.mapContainer.dataset.lockMap) {
-            this.mapContainer.querySelector('.leaflet-control-zoom').remove();
+            const z = this.mapContainer.querySelector('.leaflet-control-zoom');
+            if (z) z.remove();
             this.mapContainer.style.cursor = 'default';
             this.map.dragging.disable();
             this.map.touchZoom.disable();
@@ -387,12 +263,9 @@ export default class Map {
             this.map.scrollWheelZoom.disable();
             this.map.boxZoom.disable();
             this.map.keyboard.disable();
-
-            if (this.map.tap) {
-                this.map.tap.disable();
-            }
+            if (this.map.tap) this.map.tap.disable();
         }
-    };
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
