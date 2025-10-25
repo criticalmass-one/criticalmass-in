@@ -15,7 +15,15 @@
 
 <div class="row">
     <div class="col-md-12">
-        <div id="map" style="height: 350px;" class="map" data-city-slug="{{ ride.city.mainSlugString }}" data-ride-identifier="{{ ride.slug|default(ride.dateTime|date('Y-m-d')) }}"></div>
+        <div
+                id="map"
+                style="height: 350px;"
+                class="map"
+                data-map-zoomlevel="14"
+                data-map-marker-type="ride"
+                data-map-marker-latitude="{{ ride.latitude }}"
+                data-map-marker-longitude="{{ ride.longitude }}">
+        </div>
     </div>
 </div>
 

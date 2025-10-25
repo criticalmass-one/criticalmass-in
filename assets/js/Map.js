@@ -1,8 +1,10 @@
 import L from 'leaflet';
 import Handlebars from 'Handlebars';
+import { MaptilerLayer } from '@maptiler/leaflet-maptilersdk';
 import polylineEncoded from 'polyline-encoded';
 import markerCluster from 'leaflet.markercluster';
 import extraMarkers from 'leaflet-extra-markers';
+
 // kleine Utils
 const toDate = (dateLike) => {
     if (dateLike == null) return null;
@@ -116,38 +118,98 @@ export default class Map {
 
     createMap() {
         this.map = L.map(this.mapContainer, { zoomControl: true });
+
+        new MaptilerLayer({
+            apiKey: '1jtZ0vdO3g9JKCOlepnM',
+        }).addTo(this.map);
+
         this.mapContainer.map = this.map;
 
-        const basemap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap contributors'
-        });
-        basemap.addTo(this.map);
-
-        // Fallback-View falls keine Daten
         if (!this.map._loaded) {
-            this.map.setView([51.1657, 10.4515], 6); // Deutschland Mitte
+            this.map.setView([51.1657, 10.4515], 6);
         }
     }
 
     setViewByProvidedData() {
-        const { mapCenterLatitude, mapCenterLongitude, mapZoomlevel } = this.mapContainer.dataset;
-        if (mapCenterLatitude && mapCenterLongitude && mapZoomlevel) {
+        const {
+            mapCenterLatitude,
+            mapCenterLongitude,
+            mapZoomlevel,
+            mapMarkerLatitude,
+            mapMarkerLongitude
+        } = this.mapContainer.dataset;
+
+        // 1. explizite Center-Koordinaten
+        if (mapCenterLatitude && mapCenterLongitude) {
             const mapCenter = L.latLng(mapCenterLatitude, mapCenterLongitude);
-            this.map.setView(mapCenter, mapZoomlevel);
+            const zoom = mapZoomlevel ? parseInt(mapZoomlevel) : 13;
+            this.map.setView(mapCenter, zoom);
+            return;
+        }
+
+        // 2. kein Center gesetzt → auf Marker (statischen) gehen
+        if (mapMarkerLatitude && mapMarkerLongitude) {
+            const markerLatLng = L.latLng(mapMarkerLatitude, mapMarkerLongitude);
+            const zoom = mapZoomlevel ? parseInt(mapZoomlevel) : 14;
+            this.map.setView(markerLatLng, zoom);
+            return;
+        }
+
+        // 3. Fallback
+        this.map.setView([51.1657, 10.4515], 6);
+    }
+
+    /**
+     * Setzt einen statischen Marker (nicht draggable),
+     * wenn data-map-marker-draggable NICHT gesetzt ist.
+     */
+    setMarkerByProvidedData() {
+        const {
+            mapMarkerDraggable,
+            mapMarkerType,
+            mapMarkerLatitude,
+            mapMarkerLongitude
+        } = this.mapContainer.dataset;
+
+        if (
+            !mapMarkerDraggable &&
+            mapMarkerLatitude &&
+            mapMarkerLongitude &&
+            mapMarkerType
+        ) {
+            const markerLatLng = L.latLng(mapMarkerLatitude, mapMarkerLongitude);
+            const options = {
+                autoPan: true,
+                icon: this.getIconForType(mapMarkerType)
+            };
+            const marker = L.marker(markerLatLng, options);
+            marker.addTo(this.map);
         }
     }
 
+    /**
+     * Setzt einen verschiebbaren Marker und synchronisiert ihn mit Input-Feldern.
+     * Falls kein eigenes Karten-Center gesetzt ist, wird hier auf den Marker gezentert.
+     */
     setDraggableMarkerByProvidedData() {
-        const { mapMarkerDraggable, mapMarkerType, mapCenterLatitude, mapCenterLongitude, mapMarkerLatitudeTarget, mapMarkerLongitudeTarget } = this.mapContainer.dataset;
+        const {
+            mapMarkerDraggable,
+            mapMarkerType,
+            mapCenterLatitude,
+            mapCenterLongitude,
+            mapMarkerLatitudeTarget,
+            mapMarkerLongitudeTarget
+        } = this.mapContainer.dataset;
 
         const markerLatitudeTarget = document.getElementById(mapMarkerLatitudeTarget);
         const markerLongitudeTarget = document.getElementById(mapMarkerLongitudeTarget);
 
         if (mapMarkerDraggable && markerLatitudeTarget && markerLongitudeTarget && mapMarkerType) {
-            const markerLatLng = L.latLng(
-                markerLatitudeTarget.value || mapCenterLatitude,
-                markerLongitudeTarget.value || mapCenterLongitude
-            );
+            // Startposition: erst Inputwerte, sonst Center, sonst Deutschland
+            const startLat = markerLatitudeTarget.value || mapCenterLatitude || 51.1657;
+            const startLng = markerLongitudeTarget.value || mapCenterLongitude || 10.4515;
+
+            const markerLatLng = L.latLng(startLat, startLng);
 
             const options = {
                 draggable: true,
@@ -158,25 +220,18 @@ export default class Map {
             const marker = L.marker(markerLatLng, options);
             marker.addTo(this.map);
 
+            // Karte auf Marker zentrieren, falls kein eigenes Center gesetzt wurde
+            if (!mapCenterLatitude || !mapCenterLongitude) {
+                const currentZoom = this.map.getZoom() || 14;
+                this.map.setView(markerLatLng, currentZoom);
+            }
+
+            // Bei Verschieben -> neue Werte zurück in die Inputs schreiben
             marker.on('moveend', (event) => {
                 const latLng = event.target.getLatLng();
                 markerLatitudeTarget.value = latLng.lat;
                 markerLongitudeTarget.value = latLng.lng;
             });
-        }
-    }
-
-    setMarkerByProvidedData() {
-        const { mapMarkerDraggable, mapMarkerType, mapMarkerLatitude, mapMarkerLongitude } = this.mapContainer.dataset;
-
-        if (!mapMarkerDraggable && mapMarkerLatitude && mapMarkerLongitude && mapMarkerType) {
-            const markerLatLng = L.latLng(mapMarkerLatitude, mapMarkerLongitude);
-            const options = {
-                autoPan: true,
-                icon: this.getIconForType(mapMarkerType)
-            };
-            const marker = L.marker(markerLatLng, options);
-            marker.addTo(this.map);
         }
     }
 
@@ -195,6 +250,7 @@ export default class Map {
         if (type === 'photo') return this.photoIcon;
         if (type === 'subride') return this.subrideIcon;
         if (type === 'location') return this.locationIcon;
+        return new L.Icon.Default();
     }
 
     /** =========================
