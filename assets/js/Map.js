@@ -1,5 +1,6 @@
 import L from 'leaflet';
 import Handlebars from 'Handlebars';
+import { MaptilerLayer } from "@maptiler/leaflet-maptilersdk";
 import polylineEncoded from 'polyline-encoded';
 import markerCluster from 'leaflet.markercluster';
 import extraMarkers from 'leaflet-extra-markers';
@@ -116,16 +117,15 @@ export default class Map {
 
     createMap() {
         this.map = L.map(this.mapContainer, { zoomControl: true });
+
+        new MaptilerLayer({
+            apiKey: '1jtZ0vdO3g9JKCOlepnM',
+        }).addTo(this.map);
+
         this.mapContainer.map = this.map;
 
-        const basemap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap contributors'
-        });
-        basemap.addTo(this.map);
-
-        // Fallback-View falls keine Daten
         if (!this.map._loaded) {
-            this.map.setView([51.1657, 10.4515], 6); // Deutschland Mitte
+            this.map.setView([51.1657, 10.4515], 6);
         }
     }
 
