@@ -1,5 +1,5 @@
 import L from 'leaflet';
-import Handlebars from 'Handlebars';
+import Handlebars from 'handlebars';
 import { MaptilerLayer } from '@maptiler/leaflet-maptilersdk';
 import polylineEncoded from 'polyline-encoded';
 import markerCluster from 'leaflet.markercluster';
