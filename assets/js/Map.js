@@ -119,9 +119,16 @@ export default class Map {
     createMap() {
         this.map = L.map(this.mapContainer, { zoomControl: true });
 
-        new MaptilerLayer({
-            apiKey: '1jtZ0vdO3g9JKCOlepnM',
-        }).addTo(this.map);
+        const apiKey = '1jtZ0vdO3g9JKCOlepnM';
+        L.tileLayer(
+            `https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=${apiKey}`,
+            {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors &copy; <a href="https://www.maptiler.com/">MapTiler</a>',
+                tileSize: 512,
+                zoomOffset: -1,
+                maxZoom: 19
+            }
+        ).addTo(this.map);
 
         this.mapContainer.map = this.map;
 
