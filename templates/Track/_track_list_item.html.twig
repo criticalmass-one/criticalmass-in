@@ -8,12 +8,15 @@
         <div class="panel-body">
             <div class="row margin-bottom-medium">
                 <div class="col-md-12">
-                    <div id="map-range"
-                         class="map"
-                         data-controller="track-range-map"
-                         data-lock-map="true"
-                         style="height: 50vh;">
-                    </div>
+                    <div
+                        id="map-{{ track.id }}"
+                        class="map"
+                        style="height: 150px;"
+                        data-controller="map"
+                        data-polyline-color="{{ track.user.color }}"
+                        data-polyline="{{ track.polyline }}"
+                    ></div>
+
                 </div>
             </div>
 
