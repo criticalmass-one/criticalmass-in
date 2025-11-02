@@ -3,7 +3,7 @@
         {% if ride.location and ride.latitude and ride.longitude %}
             <div id="map-{{ ride.id }}"
                  class="map"
-                 data-controller="map"
+                 data-controller="map--map"
                  style="height: 150px;"
                  data-map-center-latitude="{{ ride.latitude }}"
                  data-map-center-longitude="{{ ride.longitude }}"
@@ -16,7 +16,7 @@
         {% else %}
             <div id="map-{{ ride.city.id }}"
                  class="map"
-                 data-controller="map"
+                 data-controller="map--map"
                  style="height: 150px;"
                  data-map-center-latitude="{{ ride.city.latitude }}"
                  data-map-center-longitude="{{ ride.city.longitude }}"

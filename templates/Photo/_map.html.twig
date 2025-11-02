@@ -8,7 +8,7 @@
         <div class="panel-body">
             <div id="map-{{ photo.id }}"
                  class="map"
-                 data-controller="map"
+                 data-controller="map--map"
                  style="height: 150px;"
                  data-map-center-latitude="{{ photo.latitude }}"
                  data-map-center-longitude="{{ photo.longitude }}"
@@ -17,10 +17,10 @@
                  data-map-marker-latitude="{{ photo.latitude }}"
                  data-map-marker-longitude="{{ photo.longitude }}"
                  data-map-marker-type="photo"
-                    {% if track %}
-                        data-polyline="{{ track.polyline }}"
-                        data-polyline-color="rgb({{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }})"
-                    {% endif %}
+                {% if track %}
+                    data-polyline="{{ track.polyline }}"
+                    data-polyline-color="rgb({{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }})"
+                {% endif %}
             ></div>
         </div>
     </div>
