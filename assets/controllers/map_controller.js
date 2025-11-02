@@ -65,7 +65,7 @@ export default class extends BaseMapController {
         const markerPrefix = ds.mapMarkerPrefix;
         const type = ds.mapMarkerType;
 
-        // 1) manuelle Konfig hat Vorrang
+        // manuelle Konfig hat Vorrang
         if (iconName || markerColor || markerShape || markerPrefix) {
             if (L.ExtraMarkers && typeof L.ExtraMarkers.icon === 'function') {
                 return L.ExtraMarkers.icon({
@@ -78,7 +78,7 @@ export default class extends BaseMapController {
             return new L.Icon.Default();
         }
 
-        // 2) typisierte Marker (ride, city, location, photo)
+        // typisierte Marker
         if (type && L.ExtraMarkers && typeof L.ExtraMarkers.icon === 'function') {
             if (type === 'ride') {
                 return L.ExtraMarkers.icon({
@@ -114,7 +114,6 @@ export default class extends BaseMapController {
             }
         }
 
-        // 3) Fallback
         return new L.Icon.Default();
     }
 
@@ -123,16 +122,15 @@ export default class extends BaseMapController {
         const encoded = ds.polyline;
         if (!encoded) return null;
 
-        const color = ds.polylineColor || '#ff0000';
+        const color = this.normalizeColor(ds.polylineColor) || '#ff0000';
 
-        // bevorzugt: wenn irgendein Plugin L.Polyline.fromEncoded registriert hat
+        // falls fromEncoded vorhanden ist
         if (L.Polyline && typeof L.Polyline.fromEncoded === 'function') {
             const pl = L.Polyline.fromEncoded(encoded, { color });
             pl.addTo(this.map);
             return pl;
         }
 
-        // sonst: selbst decoden
         try {
             const latLngs = polylineEncoded.decode(encoded);
             const pl = L.polyline(latLngs, { color, weight: 3 }).addTo(this.map);
@@ -141,6 +139,30 @@ export default class extends BaseMapController {
             console.warn('map_controller: polyline konnte nicht dekodiert werden', e);
             return null;
         }
+    }
+
+    normalizeColor(input) {
+        if (!input) return null;
+        const c = input.trim();
+
+        // "#a11edc" oder "red" → einfach durchreichen
+        if (!c.startsWith('rgb')) {
+            return c;
+        }
+
+        // "rgb(161, 30, 220)" → in hex umwandeln
+        const m = c.match(/rgb\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)/i);
+        if (!m) return c;
+
+        const toHex = (v) => {
+            const n = Math.max(0, Math.min(255, parseInt(v, 10)));
+            return n.toString(16).padStart(2, '0');
+        };
+
+        const r = toHex(m[1]);
+        const g = toHex(m[2]);
+        const b = toHex(m[3]);
+        return `#${r}${g}${b}`;
     }
 
     lockIfRequested() {

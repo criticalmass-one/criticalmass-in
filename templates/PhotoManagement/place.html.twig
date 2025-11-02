@@ -50,19 +50,22 @@
             <div class="col-md-9">
                 <div id="map-photo"
                      class="map"
-                     data-controller="map"
-                     data-map-marker-draggable="true"
-                     data-map-marker-clickable="false"
-                     data-map-center-latitude="{{ photo.latitude }}"
-                     data-map-center-longitude="{{ photo.longitude }}"
-                     data-map-marker-latitude="{{ photo.latitude }}"
-                     data-map-marker-longitude="{{ photo.longitude }}"
-                     data-map-marker-latitude-target="photo_coord_latitude"
-                     data-map-marker-longitude-target="photo_coord_longitude"
-                     data-map-marker-type="photo"
-                     data-map-zoomlevel="13"
-                     style="height: 50vh;">
-                </div>
+                     data-controller="form-map"
+                     style="height: 50vh;"
+
+                     data-form-map-center-latitude-value="{{ photo.latitude }}"
+                     data-form-map-center-longitude-value="{{ photo.longitude }}"
+                     data-form-map-zoom-value="13"
+
+                     data-form-map-marker-latitude-target-value="{{ form.latitude.vars.id }}"
+                     data-form-map-marker-longitude-target-value="{{ form.longitude.vars.id }}"
+
+                     data-form-map-marker-icon-value="fa-camera"
+                     data-form-map-marker-color-value="yellow"
+                     data-form-map-marker-shape-value="square"
+                     data-form-map-marker-prefix-value="fas"
+                ></div>
+
             </div>
         </div>
 
