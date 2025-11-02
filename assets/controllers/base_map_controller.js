@@ -13,7 +13,8 @@ export default class extends Controller {
     static values = {
         centerLatitude: Number,
         centerLongitude: Number,
-        zoom: { type: Number, default: 6 }
+        zoom: { type: Number, default: 12 },
+        maptilerKey: String
     };
 
     connect() {
@@ -25,17 +26,25 @@ export default class extends Controller {
             zoomControl: true
         });
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap contributors'
-        }).addTo(this.map);
+        // 1. Map zentrieren
+        const lat = this.hasCenterLatitudeValue ? this.centerLatitudeValue : 51.1657;
+        const lng = this.hasCenterLongitudeValue ? this.centerLongitudeValue : 10.4515;
+        const zoom = this.zoomValue ?? 12;
+        this.map.setView([lat, lng], zoom);
 
-        // View setzen
-        if (this.hasCenterLatitudeValue && this.hasCenterLongitudeValue) {
-            this.map.setView([this.centerLatitudeValue, this.centerLongitudeValue], this.zoomValue);
-        } else {
-            // Deutschland-Mitteleinstellung
-            this.map.setView([51.1657, 10.4515], this.zoomValue);
-        }
+        // 2. MapTiler-Layer
+        // Key: entweder aus data-Attribut oder dein fixer Key
+        const key = this.hasMaptilerKeyValue ? this.maptilerKeyValue : '1jtZ0vdO3g9JKCOlepnM';
+
+        L.tileLayer(
+            `https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=${key}`,
+            {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors &copy; <a href="https://www.maptiler.com/">MapTiler</a>',
+                tileSize: 512,
+                zoomOffset: -1,
+                maxZoom: 19
+            }
+        ).addTo(this.map);
 
         // falls Container anfangs unsichtbar war
         setTimeout(() => this.map.invalidateSize(), 80);
