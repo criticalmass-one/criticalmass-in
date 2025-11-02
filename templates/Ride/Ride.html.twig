@@ -20,9 +20,8 @@
             style="height: 350px;"
             data-ride-map-city-slug-value="{{ ride.city.mainSlugString }}"
             data-ride-map-ride-identifier-value="{{ ride.slug|default(ride.dateTime|date('Y-m-d')) }}"
-            data-ride-map-center-latitude-value="{{ city.latitude }}"
-            data-ride-map-center-longitude-value="{{ city.longitude }}"
-            data-ride-map-zoomlevel-value="12"
+            data-ride-map-location-latitude-value="{{ ride.latitude }}"
+            data-ride-map-location-longitude-value="{{ ride.longitude }}"
         ></div>
     </div>
 </div>
