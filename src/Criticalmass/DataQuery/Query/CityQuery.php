@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
+use App\Entity\CitySlug;
 use App\Entity\Ride;
 use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use App\Entity\City;
@@ -18,7 +19,12 @@ class CityQuery extends AbstractQuery implements OrmQueryInterface, ElasticQuery
     #[Constraints\Type(City::class)]
     protected City $city;
 
-    #[DataQuery\RequiredQueryParameter(parameterName: 'citySlug')]
+    #[DataQuery\RequiredQueryParameter(
+        parameterName: 'citySlug',
+        repository: CitySlug::class,
+        repositoryMethod: 'findOneBySlug',
+        accessor: 'getCity'
+    )]
     public function setCity(City $city): CityQuery
     {
         $this->city = $city;

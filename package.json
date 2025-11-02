@@ -28,6 +28,7 @@
   "license": "ISC",
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@maptiler/leaflet-maptilersdk": "^4.1.1",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "bootstrap": "^3.4.1",
     "bootstrap-sass": "^3.4.1",
@@ -38,7 +39,7 @@
     "dropzone": "^5.7.2",
     "flatpickr": "^4.6.6",
     "friendly-challenge": "^0.9.19",
-    "handlebars": "^4.7.7",
+    "handlebars": "^4.7.8",
     "jquery": "^3.5.1",
     "jquery-select-areas": "^0.1.0",
     "leaflet": "^1.7.1",
