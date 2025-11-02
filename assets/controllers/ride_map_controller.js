@@ -1,18 +1,20 @@
-// controllers/ride_map_controller.js
+// assets/controllers/ride_map_controller.js
 import BaseMapController from './base_map_controller';
 import L from 'leaflet';
-// wenn deine Tracks encoded sind, nimm das hier dazu
-// import polylineEncoded from 'polyline-encoded';
+import 'leaflet-extra-markers/dist/css/leaflet.extra-markers.min.css';
+import 'leaflet.markercluster';
+import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+import polylineEncoded from 'polyline-encoded';
 
 export default class extends BaseMapController {
     static values = {
         ...BaseMapController.values,
 
-        // zum automatischen Zusammenbauen
+        // aus dem Template
         citySlug: String,
         rideIdentifier: String,
 
-        // oder direkt
+        // alternative, explizit gesetzte URLs
         trackUrl: String,
         photosUrl: String,
 
@@ -22,13 +24,17 @@ export default class extends BaseMapController {
     };
 
     connect() {
+        // Basiskarte (MapTiler, Center, Fallback …)
         super.connect();
 
         this.addMeetingMarker();
-        this.loadTrack();
+        this.loadTracks();
         this.loadPhotos();
     }
 
+    /* --------------------------------------------------------
+     *  Marker für Treffpunkt
+     * ----------------------------------------------------- */
     addMeetingMarker() {
         // 1. Priorität: expliziter Treffpunkt
         if (this.hasMeetingLatitudeValue && this.hasMeetingLongitudeValue) {
@@ -36,58 +42,110 @@ export default class extends BaseMapController {
             return;
         }
 
-        // 2. Fallback: Kartenmittelpunkt
+        // 2. Fallback: Mittelpunkt der Karte
         if (this.hasCenterLatitudeValue && this.hasCenterLongitudeValue) {
             this.createRideMarker(this.centerLatitudeValue, this.centerLongitudeValue);
         }
     }
 
     createRideMarker(lat, lng) {
-        // hier kannst du dein Extra-Marker-Setup reinnehmen, wenn du willst
+        // blauer ExtraMarkers-Marker mit fa-university
+        let icon;
+
+        if (L.ExtraMarkers && typeof L.ExtraMarkers.icon === 'function') {
+            icon = L.ExtraMarkers.icon({
+                icon: 'fa-university',
+                markerColor: 'blue',
+                shape: 'circle',
+                prefix: 'fas'
+            });
+        } else {
+            // Fallback, falls ExtraMarkers mal nicht geladen
+            icon = new L.Icon.Default();
+        }
+
         const marker = this.createMarker(lat, lng, {
+            icon,
             title: 'Treffpunkt'
         });
+
         marker.bindPopup('Treffpunkt');
+
         return marker;
     }
 
+    /* --------------------------------------------------------
+     *  Tracks laden – alte Logik (/listTracks) zuerst
+     * ----------------------------------------------------- */
     getTrackUrl() {
+        // 1) explizit gesetzt?
         if (this.hasTrackUrlValue) {
             return this.trackUrlValue;
         }
+
+        // 2) aus citySlug + rideIdentifier bauen (altes Schema)
         if (this.hasCitySlugValue && this.hasRideIdentifierValue) {
-            return `/api/${this.citySlugValue}/${this.rideIdentifierValue}/track?format=geojson`;
+            // wie früher:
+            // /api/{citySlug}/{rideIdentifier}/listTracks
+            return `/api/${encodeURIComponent(this.citySlugValue)}/${encodeURIComponent(this.rideIdentifierValue)}/listTracks`;
         }
+
         return null;
     }
 
-    async loadTrack() {
+    async loadTracks() {
         const url = this.getTrackUrl();
         if (!url) return;
 
         try {
-            const geojson = await this.loadJson(url);
+            const trackList = await this.loadJson(url);
 
-            const layer = L.geoJSON(geojson, {
-                style: {
-                    color: '#ff0000',
+            // falls API mal {} und nicht [] liefert
+            if (!Array.isArray(trackList) || !trackList.length) {
+                return;
+            }
+
+            const trackLayer = L.featureGroup();
+
+            for (const track of trackList) {
+                const polylineString = track.polylineString || track.polyline || null;
+                if (!polylineString) continue;
+
+                // wie früher: encoded polyline -> Leaflet-Poyline
+                const latLngs = polylineEncoded.decode(polylineString);
+                const polyline = L.polyline(latLngs, {
+                    color: 'red',
                     weight: 3
-                }
-            }).addTo(this.map);
+                });
+                polyline.addTo(trackLayer);
+            }
 
-            this.fitTo(layer);
-        } catch (e) {
-            console.warn('Ride track load failed', e);
+            // auf die Tracks zoomen
+            if (trackLayer.getLayers().length) {
+                trackLayer.addTo(this.map);
+                this.fitTo(trackLayer);
+            }
+        } catch (err) {
+            console.warn('Ride tracks load failed', err);
         }
     }
 
+    /* --------------------------------------------------------
+     *  Fotos laden – alte Logik (/listPhotos) + MarkerCluster
+     * ----------------------------------------------------- */
     getPhotosUrl() {
+        // 1) explizit gesetzt?
         if (this.hasPhotosUrlValue) {
             return this.photosUrlValue;
         }
+
+        // 2) aus citySlug + rideIdentifier bauen (altes Schema)
         if (this.hasCitySlugValue && this.hasRideIdentifierValue) {
-            return `/api/${this.citySlugValue}/${this.rideIdentifierValue}/photos?format=json`;
+            // wie früher:
+            // /api/{citySlug}/{rideIdentifier}/listPhotos
+            return `/api/${encodeURIComponent(this.citySlugValue)}/${encodeURIComponent(this.rideIdentifierValue)}/listPhotos`;
         }
+
         return null;
     }
 
@@ -96,18 +154,30 @@ export default class extends BaseMapController {
         if (!url) return;
 
         try {
-            const list = await this.loadJson(url);
-            if (!Array.isArray(list) || !list.length) return;
+            const photoList = await this.loadJson(url);
+            if (!Array.isArray(photoList) || !photoList.length) {
+                return;
+            }
 
-            const group = this.createFeatureGroup();
+            // Cluster-Layer wie früher
+            const that = this;
+            const photoLayer = L.markerClusterGroup({
+                showCoverageOnHover: false,
+                iconCreateFunction: function () {
+                    // Cluster bekommt einfach dasselbe Icon wie ein Foto
+                    return that.getPhotoIcon();
+                }
+            });
 
-            for (const photo of list) {
+            for (const photo of photoList) {
+                if (!photo.latitude || !photo.longitude) continue;
+
                 const lat = parseFloat(photo.latitude);
                 const lng = parseFloat(photo.longitude);
                 if (!Number.isFinite(lat) || !Number.isFinite(lng)) continue;
 
                 const marker = L.marker([lat, lng], {
-                    // hier könntest du auch ein Kamera-Icon nehmen
+                    icon: that.getPhotoIcon(),
                     title: photo.title || 'Foto'
                 });
 
@@ -116,13 +186,27 @@ export default class extends BaseMapController {
                     marker.bindPopup(`<img src='${src}' alt='' style='max-width:150px;'>`);
                 }
 
-                group.addLayer(marker);
+                photoLayer.addLayer(marker);
             }
 
-            // nicht zwingend fitBounds, weil Track das schon macht
-            // this.fitTo(group);
-        } catch (e) {
-            console.warn('Ride photos load failed', e);
+            photoLayer.addTo(this.map);
+        } catch (err) {
+            console.warn('Ride photos load failed', err);
         }
+    }
+
+    /* --------------------------------------------------------
+     *  Foto-Icon (ExtraMarkers, gelb)
+     * ----------------------------------------------------- */
+    getPhotoIcon() {
+        if (L.ExtraMarkers && typeof L.ExtraMarkers.icon === 'function') {
+            return L.ExtraMarkers.icon({
+                icon: 'fa-camera',
+                markerColor: 'yellow',
+                shape: 'square',
+                prefix: 'fas'
+            });
+        }
+        return new L.Icon.Default();
     }
 }
