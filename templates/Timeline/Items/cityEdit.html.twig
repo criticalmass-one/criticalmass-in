@@ -24,19 +24,19 @@
         {% if item.city.latitude and item.city.longitude %}
         <div class="row">
             <div class="col-md-12">
-                <div id="map-{{ item.uniqId }}"
-                     style="height: 150px;"
-                     class="map"
-                     data-controller="map"
-                     data-map-center-latitude="{{ item.city.latitude }}"
-                     data-map-center-longitude="{{ item.city.longitude }}"
-                     data-map-zoomlevel="13"
-                     data-lock-map="true"
-                     data-map-marker-latitude="{{ item.city.latitude }}"
-                     data-map-marker-longitude="{{ item.city.longitude }}"
-                     data-map-marker-type="city">
+                <div
+                    id="map-{{ item.uniqId }}"
+                    class="map"
+                    data-controller="map"
+                    style="height: 150px;"
+                    data-map-center-latitude="{{ item.city.latitude }}"
+                    data-map-center-longitude="{{ item.city.longitude }}"
+                    data-map-zoomlevel="13"
+                    data-lock-map="true"
+                    data-map-marker-latitude="{{ item.city.latitude }}"
+                    data-map-marker-longitude="{{ item.city.longitude }}"
+                    data-map-marker-type="city">
                 </div>
-
             </div>
         </div>
         {% endif %}

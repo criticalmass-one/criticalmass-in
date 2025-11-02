@@ -1,17 +1,23 @@
 // controllers/map_controller.js
 import BaseMapController from './base_map_controller';
 import L from 'leaflet';
+import polylineEncoded from 'polyline-encoded';
 
 export default class extends BaseMapController {
-    connect() {
+    async connect() {
         super.connect();
 
         const hasLegacyCenter = this.applyLegacyCenter();
         const marker = this.addMarkerFromDataset();
+        const polylineLayer = this.addPolylineFromDataset();
 
         this.lockIfRequested();
 
-        // wenn kein zentrierendes Attribut da war, aber ein Marker → auf Marker zentrieren
+        if (polylineLayer) {
+            this.fitTo(polylineLayer);
+            return;
+        }
+
         if (!hasLegacyCenter && marker) {
             const zoom = this.getLegacyZoom() ?? this.map.getZoom();
             this.map.setView(marker.getLatLng(), zoom);
@@ -59,7 +65,7 @@ export default class extends BaseMapController {
         const markerPrefix = ds.mapMarkerPrefix;
         const type = ds.mapMarkerType;
 
-        // manuelle Angabe hat Vorrang
+        // 1) manuelle Konfig hat Vorrang
         if (iconName || markerColor || markerShape || markerPrefix) {
             if (L.ExtraMarkers && typeof L.ExtraMarkers.icon === 'function') {
                 return L.ExtraMarkers.icon({
@@ -72,7 +78,7 @@ export default class extends BaseMapController {
             return new L.Icon.Default();
         }
 
-        // typisierte Marker
+        // 2) typisierte Marker (ride, city, location, photo)
         if (type && L.ExtraMarkers && typeof L.ExtraMarkers.icon === 'function') {
             if (type === 'ride') {
                 return L.ExtraMarkers.icon({
@@ -108,8 +114,33 @@ export default class extends BaseMapController {
             }
         }
 
-        // Fallback
+        // 3) Fallback
         return new L.Icon.Default();
+    }
+
+    addPolylineFromDataset() {
+        const ds = this.element.dataset;
+        const encoded = ds.polyline;
+        if (!encoded) return null;
+
+        const color = ds.polylineColor || '#ff0000';
+
+        // bevorzugt: wenn irgendein Plugin L.Polyline.fromEncoded registriert hat
+        if (L.Polyline && typeof L.Polyline.fromEncoded === 'function') {
+            const pl = L.Polyline.fromEncoded(encoded, { color });
+            pl.addTo(this.map);
+            return pl;
+        }
+
+        // sonst: selbst decoden
+        try {
+            const latLngs = polylineEncoded.decode(encoded);
+            const pl = L.polyline(latLngs, { color, weight: 3 }).addTo(this.map);
+            return pl;
+        } catch (e) {
+            console.warn('map_controller: polyline konnte nicht dekodiert werden', e);
+            return null;
+        }
     }
 
     lockIfRequested() {
