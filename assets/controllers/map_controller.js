@@ -13,17 +13,20 @@ export default class extends BaseMapController {
 
         this.lockIfRequested();
 
+        // 1) wenn Polyline da → immer auf Polyline zoomen
         if (polylineLayer) {
             this.fitTo(polylineLayer);
             return;
         }
 
+        // 2) sonst: wenn kein eigenes Center, aber Marker → auf Marker
         if (!hasLegacyCenter && marker) {
             const zoom = this.getLegacyZoom() ?? this.map.getZoom();
             this.map.setView(marker.getLatLng(), zoom);
         }
     }
 
+    // alte Attribute für Center unterstützen
     applyLegacyCenter() {
         const ds = this.element.dataset;
         const lat = parseFloat(ds.mapCenterLatitude);
@@ -44,6 +47,7 @@ export default class extends BaseMapController {
         return Number.isFinite(zi) ? zi : null;
     }
 
+    // Marker aus data-map-marker-* lesen
     addMarkerFromDataset() {
         const ds = this.element.dataset;
 
@@ -65,7 +69,7 @@ export default class extends BaseMapController {
         const markerPrefix = ds.mapMarkerPrefix;
         const type = ds.mapMarkerType;
 
-        // manuelle Konfig hat Vorrang
+        // manuelle Konfiguration hat Vorrang
         if (iconName || markerColor || markerShape || markerPrefix) {
             if (L.ExtraMarkers && typeof L.ExtraMarkers.icon === 'function') {
                 return L.ExtraMarkers.icon({
@@ -114,9 +118,11 @@ export default class extends BaseMapController {
             }
         }
 
+        // Fallback
         return new L.Icon.Default();
     }
 
+    // Polyline aus data-polyline laden
     addPolylineFromDataset() {
         const ds = this.element.dataset;
         const encoded = ds.polyline;
@@ -124,13 +130,14 @@ export default class extends BaseMapController {
 
         const color = this.normalizeColor(ds.polylineColor) || '#ff0000';
 
-        // falls fromEncoded vorhanden ist
+        // wenn Leaflet-Encoded-Plugin da ist
         if (L.Polyline && typeof L.Polyline.fromEncoded === 'function') {
             const pl = L.Polyline.fromEncoded(encoded, { color });
             pl.addTo(this.map);
             return pl;
         }
 
+        // sonst selbst decoden
         try {
             const latLngs = polylineEncoded.decode(encoded);
             const pl = L.polyline(latLngs, { color, weight: 3 }).addTo(this.map);
@@ -141,30 +148,34 @@ export default class extends BaseMapController {
         }
     }
 
+    // Farbangaben robuster machen
     normalizeColor(input) {
         if (!input) return null;
         const c = input.trim();
 
-        // "#a11edc" oder "red" → einfach durchreichen
-        if (!c.startsWith('rgb')) {
-            return c;
+        // rgb(…, …, …)
+        if (c.startsWith('rgb')) {
+            const m = c.match(/rgb\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)/i);
+            if (!m) return c;
+            const toHex = (v) => {
+                const n = Math.max(0, Math.min(255, parseInt(v, 10)));
+                return n.toString(16).padStart(2, '0');
+            };
+            return `#${toHex(m[1])}${toHex(m[2])}${toHex(m[3])}`;
         }
 
-        // "rgb(161, 30, 220)" → in hex umwandeln
-        const m = c.match(/rgb\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)/i);
-        if (!m) return c;
+        // schon ein hex mit #
+        if (c.startsWith('#')) return c;
 
-        const toHex = (v) => {
-            const n = Math.max(0, Math.min(255, parseInt(v, 10)));
-            return n.toString(16).padStart(2, '0');
-        };
+        // nackter hex: 6 oder 3 Stellen
+        if (/^[0-9a-fA-F]{6}$/.test(c)) return `#${c}`;
+        if (/^[0-9a-fA-F]{3}$/.test(c)) return `#${c}`;
 
-        const r = toHex(m[1]);
-        const g = toHex(m[2]);
-        const b = toHex(m[3]);
-        return `#${r}${g}${b}`;
+        // alles andere (color names) durchreichen
+        return c;
     }
 
+    // ggf. Karte sperren
     lockIfRequested() {
         const ds = this.element.dataset;
         if (ds.lockMap === 'true' || ds.lockMap === '1') {
