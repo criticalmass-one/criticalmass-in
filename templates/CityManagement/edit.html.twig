@@ -79,19 +79,20 @@
         <div class="row">
             <div class="col-md-12">
                 <div
-                        id="map-{{ city.id }}"  {# ID eindeutig machen #}
+                        id="map-city"
                         class="map"
-                        style="height: 250px;"
-                        data-controller="map"
-                        data-map-marker-draggable="true"
-                        data-map-center-latitude="{{ city.latitude }}"
-                        data-map-center-longitude="{{ city.longitude }}"
-                        data-map-zoomlevel="10"
-                        data-map-marker-type="city"
-                        data-map-marker-latitude-target="city_latitude"
-                        data-map-marker-longitude-target="city_longitude"
+                        style="height:250px;"
+                        data-controller="form-map"
+                        data-form-map-center-latitude-value="{{ city.latitude }}"
+                        data-form-map-center-longitude-value="{{ city.longitude }}"
+                        data-form-map-zoom-value="10"
+                        data-form-map-marker-latitude-target-value="{{ form.latitude.vars.id }}"
+                        data-form-map-marker-longitude-target-value="{{ form.longitude.vars.id }}"
+                        data-form-map-marker-icon-value="fa-university"
+                        data-form-map-marker-color-value="blue"
+                        data-form-map-marker-shape-value="circle"
+                        data-form-map-marker-prefix-value="fas"
                 ></div>
-
             </div>
         </div>
 
