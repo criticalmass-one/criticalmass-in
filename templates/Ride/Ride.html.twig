@@ -18,10 +18,10 @@
         <div
             data-controller="map--ride-map"
             style="height: 350px;"
-            data-ride-map-city-slug-value="{{ ride.city.mainSlugString }}"
-            data-ride-map-ride-identifier-value="{{ ride.slug|default(ride.dateTime|date('Y-m-d')) }}"
-            data-ride-map-location-latitude-value="{{ ride.latitude }}"
-            data-ride-map-location-longitude-value="{{ ride.longitude }}"
+            data-map--ride-map-city-slug-value="{{ ride.city.mainSlugString }}"
+            data-map--ride-map-ride-identifier-value="{{ ride.slug|default(ride.dateTime|date('Y-m-d')) }}"
+            data-map--ride-map-latitude-value="{{ ride.latitude }}"
+            data-map--ride-map-longitude-value="{{ ride.longitude }}"
         ></div>
     </div>
 </div>

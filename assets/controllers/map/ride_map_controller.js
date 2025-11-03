@@ -11,20 +11,20 @@ export default class extends BaseMapController {
         ...BaseMapController.values,
         citySlug: String,
         rideIdentifier: String,
-        locationLatitude: Number,
-        locationLongitude: Number
+        latitude: Number,
+        longitude: Number
     };
 
     async connect() {
         super.connect();
 
-        if (!this.hasLocationLatitudeValue || !this.hasLocationLongitudeValue) {
-            console.error('[ride-map] locationLatitude/locationLongitude sind Pflicht!');
+        if (!this.hasLatitudeValue || !this.hasLongitudeValue) {
+            console.error('[ride-map] latitude/longitude sind Pflicht!');
             return;
         }
 
         this.map.setView(
-            [this.locationLatitudeValue, this.locationLongitudeValue],
+            [this.latitudeValue, this.longitudeValue],
             14
         );
 
@@ -37,8 +37,8 @@ export default class extends BaseMapController {
     }
 
     addLocationMarker() {
-        const lat = this.locationLatitudeValue;
-        const lng = this.locationLongitudeValue;
+        const lat = this.latitudeValue;
+        const lng = this.longitudeValue;
 
         const icon = L.ExtraMarkers.icon({
             icon: 'fa-university',
