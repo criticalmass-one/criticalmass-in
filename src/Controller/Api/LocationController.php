@@ -4,65 +4,63 @@ namespace App\Controller\Api;
 
 use App\Entity\City;
 use App\Entity\Location;
-use Nelmio\ApiDocBundle\Annotation\Operation;
-use OpenApi\Annotations as OA;
+use Doctrine\Persistence\ManagerRegistry;
+use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[OA\Tag(name: 'Location')]
 class LocationController extends BaseController
 {
-    /**
-     * @Operation(
-     *     tags={"Location"},
-     *     summary="Retrieve a list of locations of a city",
-     *     @OA\Parameter(
-     *         name="citySlug",
-     *         in="path",
-     *         description="Slug of the city",
-     *         required=true,
-     *         @OA\Schema(type="string"),
-     *     ),
-     *     @OA\Response(
-     *         response="200",
-     *         description="Returned when successful"
-     *     )
-     * )
-     */
-    #[Route(path: '/{citySlug}/location', name: 'caldera_criticalmass_rest_location_list', methods: ['GET'])]
-    public function listLocationAction(City $city): JsonResponse
+    #[Route(path: '/api/{citySlug}/location', name: 'caldera_criticalmass_rest_location_list', methods: ['GET'])]
+    #[OA\Get(
+        path: '/api/{citySlug}/location',
+        summary: 'Retrieve a list of locations of a city',
+        parameters: [
+            new OA\Parameter(
+                name: 'citySlug',
+                in: 'path',
+                description: 'Slug of the city',
+                required: true,
+                schema: new OA\Schema(type: 'string')
+            ),
+        ],
+        responses: [
+            new OA\Response(response: 200, description: 'Returned when successful'),
+        ]
+    )]
+    public function listLocationAction(ManagerRegistry $registry, City $city): JsonResponse
     {
-        $locationList = $this->managerRegistry->getRepository(Location::class)->findLocationsByCity($city);
+        $locationList = $registry->getRepository(Location::class)->findLocationsByCity($city);
 
         return $this->createStandardResponse($locationList);
     }
 
-    /**
-     * Show details of a specified location.
-     *
-     * @Operation(
-     *     tags={"Location"},
-     *     summary="Show details of a location",
-     *     @OA\Parameter(
-     *         name="citySlug",
-     *         in="path",
-     *         description="Slug of the city",
-     *         required=true,
-     *         @OA\Schema(type="string"),
-     *     ),
-     *     @OA\Parameter(
-     *         name="locationSlug",
-     *         in="path",
-     *         description="Slug of the location",
-     *         required=true,
-     *         @OA\Schema(type="string"),
-     *     ),
-     *     @OA\Response(
-     *         response="200",
-     *         description="Returned when successful"
-     *     )
-     * )
-     */
-    #[Route(path: '/{citySlug}/location/{slug}', name: 'caldera_criticalmass_rest_location_show', methods: ['GET'])]
+    #[Route(path: '/api/{citySlug}/location/{slug}', name: 'caldera_criticalmass_rest_location_show', methods: ['GET'])]
+    #[OA\Get(
+        path: '/api/{citySlug}/location/{slug}',
+        summary: 'Show details of a location',
+        parameters: [
+            new OA\Parameter(
+                name: 'citySlug',
+                in: 'path',
+                description: 'Slug of the city',
+                required: true,
+                schema: new OA\Schema(type: 'string')
+            ),
+            new OA\Parameter(
+                name: 'slug',
+                in: 'path',
+                description: 'Slug of the location',
+                required: true,
+                schema: new OA\Schema(type: 'string')
+            ),
+        ],
+        responses: [
+            new OA\Response(response: 200, description: 'Returned when successful'),
+            new OA\Response(response: 404, description: 'Not found'),
+        ]
+    )]
     public function showLocationAction(Location $location): JsonResponse
     {
         return $this->createStandardResponse($location);
