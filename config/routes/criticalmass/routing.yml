@@ -10,10 +10,6 @@ caldera_criticalmass_profile:
     resource: 'profile.xml'
     prefix: /
 
-caldera_criticalmass_calendar:
-    resource: 'calendar.yml'
-    prefix: /
-
 caldera_criticalmass_post:
     resource: 'post.yml'
     prefix: /post
