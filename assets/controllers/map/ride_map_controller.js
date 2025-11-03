@@ -20,6 +20,7 @@ export default class extends BaseMapController {
 
         if (!this.hasLatitudeValue || !this.hasLongitudeValue) {
             console.error('[ride-map] latitude/longitude sind Pflicht!');
+
             return;
         }
 
@@ -33,7 +34,9 @@ export default class extends BaseMapController {
         const trackLayer = await this.loadTracks();
         this.loadPhotos();
 
-        if (trackLayer) this.fitTo(trackLayer);
+        if (trackLayer) {
+            this.fitTo(trackLayer);
+        }
     }
 
     addLocationMarker() {
@@ -85,6 +88,7 @@ export default class extends BaseMapController {
 
             if (trackLayer.getLayers().length) {
                 trackLayer.addTo(this.map);
+
                 return trackLayer;
             }
 
@@ -120,7 +124,10 @@ export default class extends BaseMapController {
             for (const photo of photoList) {
                 const lat = parseFloat(photo.latitude);
                 const lng = parseFloat(photo.longitude);
-                if (!Number.isFinite(lat) || !Number.isFinite(lng)) continue;
+
+                if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+                    continue;
+                }
 
                 const marker = L.marker([lat, lng], {
                     icon: this.getPhotoIcon(),

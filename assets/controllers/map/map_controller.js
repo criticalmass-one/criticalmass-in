@@ -1,17 +1,14 @@
-// controllers/map_controller.js
 import BaseMapController from './base_map_controller';
 import L from 'leaflet';
 import polylineEncoded from 'polyline-encoded';
 
 export default class extends BaseMapController {
     static values = {
-        // aus BaseMap erneut deklarieren (Stimulus vererbt static values nicht!)
         centerLatitude: Number,
         centerLongitude: Number,
         zoom: { type: Number, default: 12 },
         maptilerKey: String,
 
-        // Marker + Lock
         markerLatitude: Number,
         markerLongitude: Number,
         markerType: String,
@@ -21,7 +18,6 @@ export default class extends BaseMapController {
         markerPrefix: String,
         lockMap: Boolean,
 
-        // Polyline
         polyline: String,
         polylineColor: String
     };
@@ -39,15 +35,16 @@ export default class extends BaseMapController {
             return;
         }
 
-        // Wenn kein Polyline vorhanden ist: optional auf Marker zentrieren,
-        // aber nur wenn KEIN explizites Center gesetzt wurde.
         if (marker && !(this.hasCenterLatitudeValue && this.hasCenterLongitudeValue)) {
             this.map.setView(marker.getLatLng(), this.zoomValue ?? this.map.getZoom());
         }
     }
 
     addMarkerFromValues() {
-        if (!this.hasMarkerLatitudeValue || !this.hasMarkerLongitudeValue) return null;
+        if (!this.hasMarkerLatitudeValue || !this.hasMarkerLongitudeValue) {
+            return null;
+        }
+
         const lat = this.markerLatitudeValue;
         const lng = this.markerLongitudeValue;
         const icon = this.buildIconFromValues();
@@ -72,30 +69,68 @@ export default class extends BaseMapController {
 
         if (this.hasMarkerTypeValue && L.ExtraMarkers && typeof L.ExtraMarkers.icon === 'function') {
             const type = this.mapMarkerTypeValue;
-            if (type === 'ride')     return L.ExtraMarkers.icon({ icon: 'fa-bicycle',       markerColor: 'red',    shape: 'circle', prefix: 'fas' });
-            if (type === 'city')     return L.ExtraMarkers.icon({ icon: 'fa-university',     markerColor: 'blue',   shape: 'circle', prefix: 'fas' });
-            if (type === 'photo')    return L.ExtraMarkers.icon({ icon: 'fa-camera',         markerColor: 'yellow', shape: 'square', prefix: 'fas' });
-            if (type === 'location') return L.ExtraMarkers.icon({ icon: 'fa-map-marker-alt', markerColor: 'green',  shape: 'circle', prefix: 'fas' });
+            if (type === 'ride') {
+                return L.ExtraMarkers.icon({
+                    icon: 'fa-bicycle',
+                    markerColor: 'red',
+                    shape: 'circle',
+                    prefix: 'fas'
+                });
+            }
+
+            if (type === 'city') {
+                return L.ExtraMarkers.icon({
+                    icon: 'fa-university',
+                    markerColor: 'blue',
+                    shape: 'circle',
+                    prefix: 'fas'
+                });
+            }
+
+            if (type === 'photo') {
+                return L.ExtraMarkers.icon({
+                    icon: 'fa-camera',
+                    markerColor: 'yellow',
+                    shape: 'square',
+                    prefix: 'fas'
+                });
+            }
+
+            if (type === 'location') {
+                return L.ExtraMarkers.icon({
+                    icon: 'fa-map-marker-alt',
+                    markerColor: 'green',
+                    shape: 'circle',
+                    prefix: 'fas'
+                });
+            }
         }
 
         return new L.Icon.Default();
     }
 
     addPolylineFromValues() {
-        if (!this.hasPolylineValue) return null;
+        if (!this.hasPolylineValue) {
+            return null;
+        }
+
         const encoded = this.polylineValue;
         const color = this.normalizeColor(this.polylineColorValue) || '#ff0000';
 
         if (L.Polyline && typeof L.Polyline.fromEncoded === 'function') {
             const pl = L.Polyline.fromEncoded(encoded, { color });
             pl.addTo(this.map);
+
             return pl;
         }
+
         try {
             const latLngs = polylineEncoded.decode(encoded);
+
             return L.polyline(latLngs, { color, weight: 3 }).addTo(this.map);
         } catch (e) {
             console.warn('map_controller: polyline konnte nicht dekodiert werden', e);
+
             return null;
         }
     }
@@ -103,10 +138,12 @@ export default class extends BaseMapController {
     lockIfRequested() {
         if (this.hasLockMapValue && this.lockMapValue === true) {
             this.disableInteraction();
+
             return;
         }
-        // Fallback für alte Attribute weiter möglich:
+
         const ds = this.element.dataset;
+
         if (ds.lockMap === 'true' || ds.lockMap === '1') {
             this.disableInteraction();
         }

@@ -1,4 +1,3 @@
-// assets/controllers/form_map_controller.js
 import BaseMapController from './base_map_controller';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
