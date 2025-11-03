@@ -75,4 +75,67 @@ export default class extends Controller {
         }
         return res.json();
     }
+
+    normalizeColor(input) {
+        if (!input) return null;
+        const c = String(input).trim();
+
+        // rgb(…, …, …)
+        if (/^rgb\s*\(/i.test(c)) {
+            const m = c.match(/rgb\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)/i);
+            if (!m) return c;
+            const toHex = (v) => {
+                const n = Math.max(0, Math.min(255, parseInt(v, 10)));
+                return n.toString(16).padStart(2, '0');
+            };
+            return `#${toHex(m[1])}${toHex(m[2])}${toHex(m[3])}`;
+        }
+
+        // bereits Hex?
+        if (c.startsWith('#')) return c;
+
+        // nacktes Hex
+        if (/^[0-9a-fA-F]{6}$/.test(c)) return `#${c}`;
+        if (/^[0-9a-fA-F]{3}$/.test(c)) return `#${c}`;
+
+        // Farbnamen o. ä. durchreichen
+        return c;
+    }
+
+    disableInteraction() {
+        if (!this.map) return;
+        this.map.dragging.disable();
+        this.map.touchZoom.disable();
+        this.map.doubleClickZoom.disable();
+        this.map.scrollWheelZoom.disable();
+        this.map.boxZoom.disable();
+        this.map.keyboard.disable();
+        // Zoom-Control entfernen, wenn vorhanden
+        if (this.map.zoomControl) this.map.removeControl(this.map.zoomControl);
+        // Cursor neutral, CSS-Hinweis
+        this.element.style.cursor = 'default';
+        this.element.classList.add('leaflet-interactions-disabled');
+        this._interactionDisabled = true;
+    }
+
+    enableInteraction() {
+        if (!this.map) return;
+        this.map.dragging.enable();
+        this.map.touchZoom.enable();
+        this.map.doubleClickZoom.enable();
+        this.map.scrollWheelZoom.enable();
+        this.map.boxZoom.enable();
+        this.map.keyboard.enable();
+        // Zoom-Control wieder hinzufügen
+        if (!this.map.zoomControl) {
+            this.map.zoomControl = L.control.zoom().addTo(this.map);
+        }
+        this.element.style.cursor = '';
+        this.element.classList.remove('leaflet-interactions-disabled');
+        this._interactionDisabled = false;
+    }
+
+    isInteractionDisabled() {
+        return !!this._interactionDisabled;
+    }
 }
