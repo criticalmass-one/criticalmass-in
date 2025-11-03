@@ -7,7 +7,15 @@
         {% if rideList|length > 0 and promotion.hasMap %}
             <div class="row">
                 <div class="col-md-12">
-                    <div class="map" id="promotion-map" data-popup-template-id="ride-popup" data-api-type="ride" data-api-query="{{ path('caldera_criticalmass_rest_ride_list') ~ '?' ~ promotion.query|raw }}&extended=true" style="height: 350px;"></div>
+                    <div
+                        class="map"
+                        id="promotion-map"
+                        data-controller="map--query-map"
+                        data-map--popup-template-id-value="ride-popup"
+                        data-map--api-type-value="ride"
+                        data-map--api-query-value="{{ path('caldera_criticalmass_rest_ride_list') ~ '?' ~ promotion.query|raw }}&extended=true"
+                        style="height: 350px;"
+                    ></div>
                 </div>
             </div>
         {% endif %}
