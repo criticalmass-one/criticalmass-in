@@ -74,10 +74,6 @@ caldera_criticalmass_citylist:
     resource: 'citylist.yml'
     prefix: /
 
-caldera_criticalmass_city:
-    resource: 'city.yml'
-    prefix: /
-
 caldera_criticalmass_citymanagement:
     resource: 'citymanagement.yml'
     prefix: /
