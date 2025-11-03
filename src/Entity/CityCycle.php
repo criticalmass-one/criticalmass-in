@@ -29,7 +29,7 @@ class CityCycle implements RouteableInterface
     const WEEK_FOURTH = 4;
     const WEEK_LAST = 0;
 
-    #[Routing\RouteParameter(name: 'cityCycleId')]
+    #[Routing\RouteParameter(name: 'id')]
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
@@ -75,13 +75,13 @@ class CityCycle implements RouteableInterface
     #[ORM\Column(type: 'float', nullable: true)]
     #[JMS\Expose]
     #[JMS\Groups(['ride-list'])]
-    protected ?float $latitude = 0.0;
+    protected ?float $latitude = null;
 
     #[Assert\NotEqualTo(value: '0.0')]
     #[ORM\Column(type: 'float', nullable: true)]
     #[JMS\Expose]
     #[JMS\Groups(['ride-list'])]
-    protected ?float $longitude = 0.0;
+    protected ?float $longitude = null;
 
     #[ORM\Column(type: 'datetime', nullable: false)]
     #[JMS\Expose]

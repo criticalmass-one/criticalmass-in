@@ -81,8 +81,9 @@
                                 {% endif %}
                             </td>
                             <td>
-                                {% if track.getAverageVelocity() %}
-                                    {{ track.getAverageVelocity()|round(2) }}&nbsp;km/h
+                                {% set track_average_velocity = average_velocity(track) %}
+                                {% if track_average_velocity %}
+                                    {{ track_average_velocity|round(2) }}&nbsp;km/h
                                 {% endif %}
                             </td>
                         </tr>

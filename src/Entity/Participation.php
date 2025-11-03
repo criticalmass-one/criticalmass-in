@@ -2,12 +2,11 @@
 
 namespace App\Entity;
 
-use App\EntityInterface\AutoParamConverterAble;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'participation')]
 #[ORM\Entity(repositoryClass: 'App\Repository\ParticipationRepository')]
-class Participation implements AutoParamConverterAble
+class Participation
 {
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]

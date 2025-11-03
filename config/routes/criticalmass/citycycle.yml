@@ -3,7 +3,7 @@ caldera_criticalmass_citycycle_list:
     controller: App\Controller\CityCycle\CityCycleController::listAction
 
 caldera_criticalmass_citycycle_ride_list:
-    path:  /{citySlug}/cycles/{cityCycleId}/list
+    path:  /{citySlug}/cycles/{id}/list
     controller: App\Controller\CityCycle\CityCycleController::listRidesAction
 
 caldera_criticalmass_citycycle_add:
@@ -11,17 +11,17 @@ caldera_criticalmass_citycycle_add:
     controller: App\Controller\CityCycle\CityCycleManagementController::addAction
 
 caldera_criticalmass_citycycle_edit:
-    path:  /{citySlug}/cycles/{cityCycleId}/edit
+    path:  /{citySlug}/cycles/{id}/edit
     controller: App\Controller\CityCycle\CityCycleManagementController::editAction
 
 caldera_criticalmass_citycycle_disable:
-    path:  /{citySlug}/cycles/{cityCycleId}/disable
+    path:  /{citySlug}/cycles/{id}/disable
     controller: App\Controller\CityCycle\CityCycleManagementController::disableAction
 
 caldera_criticalmass_citycycle_execute:
-    path:  /{citySlug}/cycles/{cityCycleId}/execute
+    path:  /{citySlug}/cycles/{id}/execute
     controller: App\Controller\CityCycle\CityCycleExecuteController::executeAction
 
 caldera_criticalmass_citycycle_execute_persist:
-    path:  /{citySlug}/cycles/{cityCycleId}/execute-persist
+    path:  /{citySlug}/cycles/{id}/execute-persist
     controller: App\Controller\CityCycle\CityCycleExecuteController::executePersistAction

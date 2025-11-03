@@ -6,20 +6,21 @@
             </h3>
         </div>
         <div class="panel-body">
-            <div id="map" class="map" style="height: 150px;"
-                 data-map-center-latitude="{{ photo.latitude }}"
-                 data-map-center-longitude="{{ photo.longitude }}"
-                 data-map-zoomlevel="13"
-                 data-lock-map="true"
-                 data-map-marker-latitude="{{ photo.latitude }}"
-                 data-map-marker-longitude="{{ photo.longitude }}"
-                 data-map-marker-color="yellow"
-                 data-map-marker-icon="fa-camera"
-                 data-map-marker-shape="circle"
-                    {% if track %}
-                        data-polyline="{{ track.polyline }}"
-                        data-polyline-color="rgb({{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }})"
-                    {% endif %}
+            <div id="map-{{ photo.id }}"
+                 class="map"
+                 data-controller="map--map"
+                 style="height: 150px;"
+                 data-map--map-center-latitude-value="{{ photo.latitude }}"
+                 data-map--map-center-longitude-value="{{ photo.longitude }}"
+                 data-map--map-zoom-value="13"
+                 data-map--map-lock-map-value="true"
+                 data-map--map-marker-latitude-value="{{ photo.latitude }}"
+                 data-map--map-marker-longitude-value="{{ photo.longitude }}"
+                 data-map--map-marker-type-value="photo"
+                {% if track %}
+                    data-map--polyline-value="{{ track.polyline }}"
+                    data-map--polyline-color-value="rgb({{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }})"
+                {% endif %}
             ></div>
         </div>
     </div>

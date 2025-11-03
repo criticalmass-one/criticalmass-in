@@ -56,10 +56,12 @@
 
                         <div class="row">
                             <div class="col-md-12">
-                                <div id="map-{{ activity.id }}" class="map" style="height: 150px;"
-                                     data-polyline="{{ activity.map.summary_polyline }}"
-                                     data-polyline-color="{{ app.user.color }}">
-
+                                <div id="map-{{ activity.id }}"
+                                     class="map"
+                                     data-controller="map--map"
+                                     style="height: 150px;"
+                                     data-map--polyline-value="{{ activity.map.summary_polyline }}"
+                                     data-map--polyline-color-value="{{ app.user.color }}">
                                 </div>
                             </div>
                         </div>

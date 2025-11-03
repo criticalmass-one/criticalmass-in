@@ -13,11 +13,12 @@ abstract class AbstractNetworkDetectorTest extends TestCase
     protected function getNetworkDetector(): NetworkDetectorInterface
     {
         $networkManager = new NetworkManager();
+        $networkManager->addNetwork(new Network\BlueskyProfile());
+        $networkManager->addNetwork(new Network\DiscordChat());
         $networkManager->addNetwork(new Network\FacebookEvent());
         $networkManager->addNetwork(new Network\FacebookGroup());
         //$networkManager->addNetwork(new Network\FacebookPage());
         $networkManager->addNetwork(new Network\FacebookProfile());
-        $networkManager->addNetwork(new Network\DiscordChat());
         $networkManager->addNetwork(new Network\Flickr());
         $networkManager->addNetwork(new Network\Google());
         $networkManager->addNetwork(new Network\Homepage());

@@ -8,7 +8,6 @@ use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Entity\City;
 use Nelmio\ApiDocBundle\Annotation\Operation;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -211,8 +210,6 @@ class CityController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     *
-     * @ParamConverter("city", class="App:City")
      */
     #[Route(path: '/{citySlug}', name: 'caldera_criticalmass_rest_city_show', methods: ['GET'])]
     public function showAction(City $city): JsonResponse

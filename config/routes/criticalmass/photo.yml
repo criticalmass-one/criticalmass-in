@@ -3,11 +3,11 @@ caldera_criticalmass_photo_ajaxview:
     controller: App\Controller\Photo\PhotoController::ajaxphotoviewAction
 
 caldera_criticalmass_photo_show_ride:
-    path: /{citySlug}/{rideIdentifier}/photo/{photoId}
+    path: /{citySlug}/{rideIdentifier}/photo/{id}
     controller: App\Controller\Photo\PhotoController::showAction
 
 caldera_criticalmass_photo_show:
-    path: /photo/{photoId}
+    path: /photo/{id}
     controller: App\Controller\Photo\PhotoController::showAction
     options:
         expose: true

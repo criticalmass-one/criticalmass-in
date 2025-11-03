@@ -11,7 +11,6 @@ use App\Event\RideEstimate\RideEstimateCreatedEvent;
 use App\Model\CreateEstimateModel;
 use JMS\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Operation;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use OpenApi\Annotations as OA;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -135,7 +134,6 @@ class EstimateController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     * @ParamConverter("ride", class="App:Ride")
      */
     #[Route(path: '/estimate', name: 'caldera_criticalmass_rest_estimate_create', methods: ['POST'])]
     public function createRideEstimateAction(Request $request, Ride $ride, SerializerInterface $serializer): JsonResponse

@@ -23,23 +23,30 @@ export default class RideDateChecker {
         const messageDoubleDayRide = document.getElementById('doubleDayRide');
         const submitButton = document.getElementById('rideSubmitButton');
 
-        // there is already a ride for this day
+        // es gibt bereits eine Fahrt an diesem Tag
         const daySuccessCallback = function () {
             messageDoubleMonthRide.classList.add('d-none', 'hidden');
             messageDoubleDayRide.classList.remove('d-none', 'hidden');
             submitButton.disabled = true;
         };
 
-        // there is already a ride for this month
+        // es gibt im Monat schon eine Fahrt, aber nicht an diesem Tag
+        const dayFailCallback = function () {
+            messageDoubleMonthRide.classList.remove('d-none', 'hidden');
+            messageDoubleDayRide.classList.add('d-none', 'hidden');
+            submitButton.disabled = false;
+        };
+
+        // es gibt im Monat schon eine Fahrt -> Day-Check entscheidet weiter
         const monthSuccessCallback = function () {
             messageDoubleMonthRide.classList.remove('d-none', 'hidden');
             messageDoubleDayRide.classList.add('d-none', 'hidden');
-            submitButton.disabled = true;
 
-            this.searchForMonthDay(date, daySuccessCallback);
+            // WICHTIG: Button hier nicht deaktivieren, Day-Check entscheidet!
+            this.searchForMonthDay(date, daySuccessCallback, dayFailCallback);
         }.bind(this);
 
-        // everything is fine
+        // alles frei
         const monthFailCallback = function () {
             messageDoubleMonthRide.classList.add('d-none', 'hidden');
             messageDoubleDayRide.classList.add('d-none', 'hidden');
@@ -103,18 +110,19 @@ export default class RideDateChecker {
 
     urlExists(url, successCallback, failureCallback) {
         const http = new XMLHttpRequest();
-
-        http.open('HEAD', url);
+        http.open('HEAD', url, true);
         http.onreadystatechange = function () {
-            if (this.readyState === this.DONE && this.status === 200) {
-                successCallback();
+            if (this.readyState !== this.DONE) return;
+
+            if (this.status === 200) {
+                successCallback && successCallback();
             } else {
-                if (failureCallback) {
-                    failureCallback();
-                }
+                failureCallback && failureCallback();
             }
         };
-
+        http.onerror = function () {
+            failureCallback && failureCallback();
+        };
         http.send();
     }
 }

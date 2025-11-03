@@ -9,21 +9,16 @@ use App\Entity\Track;
 use App\Form\Type\UserEmailType;
 use App\Form\Type\UsernameType;
 use Doctrine\Persistence\ManagerRegistry;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ProfileManagementController extends AbstractController
 {
-    //public function __construct(private readonly UserManagerInterface $userManager)
-    //{
-    //}
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     */
+    #[IsGranted('ROLE_USER')]
     public function manageAction(UserInterface $user = null): Response
     {
         $participationCounter = $this->managerRegistry->getRepository(Participation::class)->countByUser($user);
@@ -37,9 +32,7 @@ class ProfileManagementController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     */
+    #[IsGranted('ROLE_USER')]
     public function editUsernameAction(
         Request $request,
         ManagerRegistry $managerRegistry,
@@ -75,10 +68,7 @@ class ProfileManagementController extends AbstractController
         ]);
     }
 
-
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     */
+    #[IsGranted('ROLE_USER')]
     public function editEmailAction(
         Request $request,
         ManagerRegistry $managerRegistry,

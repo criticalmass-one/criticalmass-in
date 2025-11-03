@@ -5,8 +5,6 @@ namespace App\Controller\Ride;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Ride;
 use App\Repository\RideRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Controller\AbstractController;
 use App\Entity\Subride;
 use App\Form\Type\SubrideType;
@@ -14,13 +12,11 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class SubrideController extends AbstractController
 {
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("ride", class="App:Ride")
-     */
+    #[IsGranted('ROLE_USER')]
     public function addAction(Request $request, Ride $ride, UserInterface $user, ObjectRouterInterface $objectRouter): Response
     {
         $subride = new Subride();
@@ -79,10 +75,7 @@ class SubrideController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("subride", class="App:Subride", options={"id" = "subrideId"})
-     */
+    #[IsGranted('ROLE_USER')]
     public function editAction(Request $request, Subride $subride, ObjectRouterInterface $objectRouter): Response
     {
         $form = $this->createForm(SubrideType::class, $subride, [
@@ -126,10 +119,7 @@ class SubrideController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("ride", class="App:Ride")
-     */
+    #[IsGranted('ROLE_USER')]
     public function preparecopyAction(
         RideRepository $rideRepository,
         Ride $ride
@@ -142,18 +132,20 @@ class SubrideController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("oldRide", class="App:Ride")
-     * @ParamConverter("newDate", options={"format": "Y-m-d"})
-     */
+    #[IsGranted('ROLE_USER')]
     public function copyAction(
         Ride $oldRide,
-        \DateTime $newDate,
+        string $newDate,
         ObjectRouterInterface $objectRouter,
         RideRepository $rideRepository
     ): Response {
-        $ride = $rideRepository->findCityRideByDate($oldRide->getCity(), $newDate);
+        $newDateObj = \DateTime::createFromFormat('Y-m-d', $newDate);
+
+        if (!$newDateObj) {
+            throw new \InvalidArgumentException('Invalid date format. Expected Y-m-d');
+        }
+
+        $ride = $rideRepository->findCityRideByDate($oldRide->getCity(), $newDateObj);
 
         $em = $this->managerRegistry->getManager();
 

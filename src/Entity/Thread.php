@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
-use App\EntityInterface\AutoParamConverterAble;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,7 +11,7 @@ use App\Criticalmass\Router\Attribute as Routing;
 
 #[ORM\Table(name: 'thread')]
 #[ORM\Entity(repositoryClass: 'App\Repository\ThreadRepository')]
-class Thread implements ViewableEntity, RouteableInterface, AutoParamConverterAble, PostableInterface
+class Thread implements ViewableEntity, RouteableInterface, PostableInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]

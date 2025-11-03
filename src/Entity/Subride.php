@@ -3,9 +3,9 @@
 namespace App\Entity;
 
 use App\Criticalmass\Router\Attribute as Routing;
-use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\EntityInterface\AuditableInterface;
 use App\EntityInterface\RouteableInterface;
+use App\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[JMS\ExclusionPolicy('all')]
 class Subride implements AuditableInterface, SocialNetworkProfileAble, RouteableInterface
 {
-    #[Routing\RouteParameter(name: 'subrideId')]
+    #[Routing\RouteParameter(name: 'id')]
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]

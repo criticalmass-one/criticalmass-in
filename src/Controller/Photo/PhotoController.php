@@ -10,20 +10,14 @@ use App\Entity\Track;
 use App\Event\View\ViewEvent;
 use App\Repository\PhotoRepository;
 use App\Repository\TrackRepository;
+use Flagception\Bundle\FlagceptionBundle\Attribute\Feature;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Flagception\Bundle\FlagceptionBundle\Annotations\Feature;
 
-/**
- * @Feature("photos")
- */
+#[Feature('photos')]
 class PhotoController extends AbstractController
 {
-    /**
-     * @ParamConverter("photo", class="App:Photo", options={"id" = "photoId"})
-     */
     public function showAction(
         SeoPageInterface $seoPage,
         EventDispatcherInterface $eventDispatcher,
@@ -31,6 +25,10 @@ class PhotoController extends AbstractController
         ExifWrapperInterface $exifWrapper,
         Photo $photo
     ): Response {
+        if (!$photo->isEnabled() || $photo->isDeleted()) {
+            throw $this->createAccessDeniedException();
+        }
+
         $city = $photo->getCity();
 
         $ride = $photo->getRide();

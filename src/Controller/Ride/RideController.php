@@ -12,7 +12,6 @@ use App\Repository\RideRepository;
 use App\Repository\SubrideRepository;
 use App\Repository\TrackRepository;
 use App\Repository\WeatherRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Controller\AbstractController;
 use App\Entity\Weather;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -37,9 +36,6 @@ class RideController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("ride", class="App:Ride", isOptional=true)
-     */
     public function showAction(
         BlockedCityRepository $blockedCityRepository,
         ParticipationRepository $participationRepository,

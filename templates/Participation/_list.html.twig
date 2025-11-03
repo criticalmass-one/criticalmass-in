@@ -41,18 +41,18 @@
                     </td>
 
                     <td class="btn-group btn-group-xs">
-                        <a href="{{ path('criticalmass_user_participation_delete', { participationId: participation.id }) }}" class="btn btn-default" title="Diesen Eintrag komplett löschen">
+                        <a href="{{ path('criticalmass_user_participation_delete', { id: participation.id }) }}" class="btn btn-default" title="Diesen Eintrag komplett löschen">
                             <i class="far fa-trash-alt"></i>
                         </a>
 
                         {% if not participation.goingYes %}
-                        <a href="{{ path('criticalmass_user_participation_update', { participationId: participation.id, status: 'yes' }) }}" class="btn btn-success" title="Deine Teilnahme speichern">
+                        <a href="{{ path('criticalmass_user_participation_update', { id: participation.id, status: 'yes' }) }}" class="btn btn-success" title="Deine Teilnahme speichern">
                             <i class="far fa-check"></i>
                         </a>
                         {% endif %}
 
                         {% if not participation.goingNo %}
-                        <a href="{{ path('criticalmass_user_participation_update', { participationId: participation.id, status: 'no' }) }}" class="btn btn-danger" title="Deine Teilnahme zurückziehen">
+                        <a href="{{ path('criticalmass_user_participation_update', { id: participation.id, status: 'no' }) }}" class="btn btn-danger" title="Deine Teilnahme zurückziehen">
                             <i class="far fa-times"></i>
                         </a>
                         {% endif %}

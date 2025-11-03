@@ -5,7 +5,6 @@ namespace App\Controller\Api;
 use App\Entity\Ride;
 use App\Entity\Weather;
 use Nelmio\ApiDocBundle\Annotation\Operation;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,7 +23,6 @@ class WeatherController extends BaseController
      *         description="Returned when successful"
      *     )
      * )
-     * @ParamConverter("ride", class="App:Ride")
      */
     #[Route(path: '/{citySlug}/{rideIdentifier}/weather', name: 'caldera_criticalmass_rest_weather_add', methods: ['PUT'])]
     public function addWeatherAction(Request $request, Ride $ride): JsonResponse

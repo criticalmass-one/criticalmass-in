@@ -7,14 +7,10 @@ use App\Criticalmass\Geo\LatLngListGenerator\TimeLatLngListGenerator;
 use App\Entity\Ride;
 use App\Entity\Track;
 use App\Repository\TrackRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 
 class TimelapseController extends AbstractController
 {
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
     public function showAction(
         TrackRepository $trackRepository,
         Ride $ride
@@ -27,9 +23,6 @@ class TimelapseController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
-     */
     public function loadtrackAction(TimeLatLngListGenerator $generator, Track $track): Response
     {
         $list = $generator
