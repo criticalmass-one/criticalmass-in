@@ -54,10 +54,6 @@ caldera_criticalmass_statistic:
     resource: 'statistic.yml'
     prefix: /
 
-caldera_criticalmass_location:
-    resource: 'location.yml'
-    prefix: /
-
 caldera_criticalmass_timelapse:
     resource: 'timelapse.yml'
     prefix:   /
