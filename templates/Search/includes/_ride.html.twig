@@ -5,26 +5,26 @@
                  class="map"
                  data-controller="map--map"
                  style="height: 150px;"
-                 data-map---map-center-latitude="{{ ride.latitude }}"
-                 data-map---map-center-longitude="{{ ride.longitude }}"
-                 data-map---map-zoomlevel="13"
-                 data-map---lock-map="true"
-                 data-map---map-marker-latitude="{{ ride.latitude }}"
-                 data-map---map-marker-longitude="{{ ride.longitude }}"
-                 data-map---map-marker-type="ride">
+                 data-map--map-center-latitude="{{ ride.latitude }}"
+                 data-map--map-center-longitude="{{ ride.longitude }}"
+                 data-map--map-zoomlevel="13"
+                 data-map--lock-map="true"
+                 data-map--map-marker-latitude="{{ ride.latitude }}"
+                 data-map--map-marker-longitude="{{ ride.longitude }}"
+                 data-map--map-marker-type="ride">
             </div>
         {% else %}
             <div id="map-{{ ride.city.id }}"
                  class="map"
                  data-controller="map--map"
                  style="height: 150px;"
-                 data-map---map-center-latitude="{{ ride.city.latitude }}"
-                 data-map---map-center-longitude="{{ ride.city.longitude }}"
-                 data-map---map-zoomlevel="13"
-                 data-map---lock-map="true"
-                 data-map---map-marker-latitude="{{ ride.city.latitude }}"
-                 data-map---map-marker-longitude="{{ ride.city.longitude }}"
-                 data-map---map-marker-type="city">
+                 data-map--map-center-latitude="{{ ride.city.latitude }}"
+                 data-map--map-center-longitude="{{ ride.city.longitude }}"
+                 data-map--map-zoomlevel="13"
+                 data-map--lock-map="true"
+                 data-map--map-marker-latitude="{{ ride.city.latitude }}"
+                 data-map--map-marker-longitude="{{ ride.city.longitude }}"
+                 data-map--map-marker-type="city">
             </div>
         {% endif %}
     </div>

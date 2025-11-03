@@ -10,16 +10,16 @@
                  class="map"
                  data-controller="map--map"
                  style="height: 150px;"
-                 data-map---map-center-latitude="{{ photo.latitude }}"
-                 data-map---map-center-longitude="{{ photo.longitude }}"
-                 data-map---map-zoomlevel="13"
-                 data-map---lock-map="true"
-                 data-map---map-marker-latitude="{{ photo.latitude }}"
-                 data-map---map-marker-longitude="{{ photo.longitude }}"
-                 data-map---map-marker-type="photo"
+                 data-map--map-center-latitude="{{ photo.latitude }}"
+                 data-map--map-center-longitude="{{ photo.longitude }}"
+                 data-map--map-zoomlevel="13"
+                 data-map--lock-map="true"
+                 data-map--map-marker-latitude="{{ photo.latitude }}"
+                 data-map--map-marker-longitude="{{ photo.longitude }}"
+                 data-map--map-marker-type="photo"
                 {% if track %}
-                    data-map---polyline="{{ track.polyline }}"
-                    data-map---polyline-color="rgb({{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }})"
+                    data-map--polyline="{{ track.polyline }}"
+                    data-map--polyline-color="rgb({{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }})"
                 {% endif %}
             ></div>
         </div>
