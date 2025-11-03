@@ -1,7 +1,3 @@
-caldera_criticalmass_promotion:
-    resource: 'promotion.yml'
-    prefix: /promotion
-
 caldera_criticalmass_trackmassimport:
     resource: 'track_mass_import.yml'
     prefix: /
