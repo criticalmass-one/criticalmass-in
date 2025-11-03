@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class WeatherController extends BaseController
 {
     #[Route(
-        path: '/{citySlug}/{rideIdentifier}/weather',
+        path: '/api/{citySlug}/{rideIdentifier}/weather',
         name: 'caldera_criticalmass_rest_weather_add',
         methods: ['PUT']
     )]

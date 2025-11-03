@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CityController extends BaseController
 {
     #[Route(
-        path: '/city',
+        path: '/api/city',
         name: 'caldera_criticalmass_rest_city_list',
         methods: ['GET']
     )]
@@ -56,7 +56,7 @@ class CityController extends BaseController
         $cityList = $dataQueryManager->query($queryParameterList, City::class);
 
         $groups = ['ride-list'];
-        
+
         if ($request->query->has('extended') && $request->query->getBoolean('extended') === true) {
             $groups[] = 'extended-ride-list';
         }
@@ -68,7 +68,7 @@ class CityController extends BaseController
     }
 
     #[Route(
-        path: '/city/{citySlug}',
+        path: '/api/city/{citySlug}',
         name: 'caldera_criticalmass_rest_city_show',
         methods: ['GET']
     )]
