@@ -22,8 +22,10 @@ export default class extends Controller {
     }
 
     initMap() {
+        const locked = this.hasLockMapValue && this.lockMapValue === 'true';
+
         this.map = L.map(this.element, {
-            zoomControl: true
+            zoomControl: !locked,   // ← erzeugt kein Zoom-Control, wenn gesperrt
         });
 
         // 1. Map zentrieren
@@ -104,32 +106,50 @@ export default class extends Controller {
 
     disableInteraction() {
         if (!this.map) return;
+
+        // Interaktionen vollständig deaktivieren
         this.map.dragging.disable();
         this.map.touchZoom.disable();
         this.map.doubleClickZoom.disable();
         this.map.scrollWheelZoom.disable();
         this.map.boxZoom.disable();
         this.map.keyboard.disable();
-        // Zoom-Control entfernen, wenn vorhanden
-        if (this.map.zoomControl) this.map.removeControl(this.map.zoomControl);
-        // Cursor neutral, CSS-Hinweis
+
+        // Falls es ein Zoom-Control gibt → entfernen
+        if (this.map.zoomControl) {
+            this.map.removeControl(this.map.zoomControl);
+            this.map.zoomControl = null;
+        }
+
+        // Alle weiteren Controls (falls vorhanden) optional deaktivieren
+        if (this.map.attributionControl) {
+            this.map.attributionControl.remove();
+            this.map.attributionControl = null;
+        }
+
+        // Cursor neutralisieren
         this.element.style.cursor = 'default';
         this.element.classList.add('leaflet-interactions-disabled');
+
         this._interactionDisabled = true;
     }
 
+
     enableInteraction() {
         if (!this.map) return;
+
         this.map.dragging.enable();
         this.map.touchZoom.enable();
         this.map.doubleClickZoom.enable();
         this.map.scrollWheelZoom.enable();
         this.map.boxZoom.enable();
         this.map.keyboard.enable();
-        // Zoom-Control wieder hinzufügen
+
+        // Zoom-Control bei Bedarf wieder hinzufügen
         if (!this.map.zoomControl) {
             this.map.zoomControl = L.control.zoom().addTo(this.map);
         }
+
         this.element.style.cursor = '';
         this.element.classList.remove('leaflet-interactions-disabled');
         this._interactionDisabled = false;
