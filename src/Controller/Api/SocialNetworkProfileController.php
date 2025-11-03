@@ -14,12 +14,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class SocialNetworkProfileController extends BaseController
 {
     #[Route(
-        path: '/api/socialnetwork-profiles',
+        path: '/socialnetwork-profiles',
         name: 'caldera_criticalmass_rest_socialnetwork_profiles_list',
         methods: ['GET']
     )]
     #[OA\Get(
-        path: '/api/socialnetwork-profiles',
+        path: '/socialnetwork-profiles',
         summary: 'Search for social network profiles',
         parameters: [
             new OA\Parameter(
@@ -76,12 +76,12 @@ class SocialNetworkProfileController extends BaseController
     }
 
     #[Route(
-        path: '/api/{citySlug}/socialnetwork-profiles',
+        path: '/{citySlug}/socialnetwork-profiles',
         name: 'caldera_criticalmass_rest_socialnetwork_profiles_citylist',
         methods: ['GET']
     )]
     #[OA\Get(
-        path: '/api/{citySlug}/socialnetwork-profiles',
+        path: '/{citySlug}/socialnetwork-profiles',
         summary: 'Retrieve a list of social network profiles assigned to a city',
         parameters: [
             new OA\Parameter(
@@ -107,12 +107,12 @@ class SocialNetworkProfileController extends BaseController
     }
 
     #[Route(
-        path: '/api/{citySlug}/socialnetwork-profiles/{id}',
+        path: '/{citySlug}/socialnetwork-profiles/{id}',
         name: 'caldera_criticalmass_rest_socialnetwork_profiles_update',
         methods: ['POST']
     )]
     #[OA\Post(
-        path: '/api/{citySlug}/socialnetwork-profiles/{id}',
+        path: '/{citySlug}/socialnetwork-profiles/{id}',
         summary: 'Update properties of a social network profile',
         parameters: [
             new OA\Parameter(
@@ -160,12 +160,12 @@ class SocialNetworkProfileController extends BaseController
     }
 
     #[Route(
-        path: '/api/{citySlug}/socialnetwork-profiles',
+        path: '/{citySlug}/socialnetwork-profiles',
         name: 'caldera_criticalmass_rest_socialnetwork_profiles_create',
         methods: ['PUT']
     )]
     #[OA\Put(
-        path: '/api/{citySlug}/socialnetwork-profiles',
+        path: '/{citySlug}/socialnetwork-profiles',
         summary: 'Create a new social network profile and assign it to the provided city',
         parameters: [
             new OA\Parameter(

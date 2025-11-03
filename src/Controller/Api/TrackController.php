@@ -21,9 +21,9 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[OA\Tag(name: 'Track')]
 class TrackController extends BaseController
 {
-    #[Route(path: '/api/{citySlug}/{rideIdentifier}/listTracks', name: 'caldera_criticalmass_rest_track_ridelist', methods: ['GET'])]
+    #[Route(path: '/{citySlug}/{rideIdentifier}/listTracks', name: 'caldera_criticalmass_rest_track_ridelist', methods: ['GET'])]
     #[OA\Get(
-        path: '/api/{citySlug}/{rideIdentifier}/listTracks',
+        path: '/{citySlug}/{rideIdentifier}/listTracks',
         summary: 'Retrieve a list of tracks of a ride',
         parameters: [
             new OA\Parameter(
@@ -52,9 +52,9 @@ class TrackController extends BaseController
         return $this->createStandardResponse($trackList);
     }
 
-    #[Route(path: '/api/track/{id}', name: 'caldera_criticalmass_rest_track_view', methods: ['GET'])]
+    #[Route(path: '/track/{id}', name: 'caldera_criticalmass_rest_track_view', methods: ['GET'])]
     #[OA\Get(
-        path: '/api/track/{id}',
+        path: '/track/{id}',
         summary: 'Show details of a track',
         parameters: [
             new OA\Parameter(
@@ -83,9 +83,9 @@ class TrackController extends BaseController
         return $this->createStandardResponse($track, $context);
     }
 
-    #[Route(path: '/api/track', name: 'caldera_criticalmass_rest_track_list', methods: ['GET'])]
+    #[Route(path: '/track', name: 'caldera_criticalmass_rest_track_list', methods: ['GET'])]
     #[OA\Get(
-        path: '/api/track',
+        path: '/track',
         summary: 'Lists tracks',
         parameters: [
             new OA\Parameter(name: 'regionSlug', in: 'query', description: 'Provide a region slug', required: false, schema: new OA\Schema(type: 'string')),
@@ -123,7 +123,7 @@ class TrackController extends BaseController
     #[Route('/api/track/{id}', name: 'caldera_criticalmass_rest_track_delete', methods: ['DELETE'])]
     #[IsGranted(attribute: 'edit', subject: 'track')]
     #[OA\Delete(
-        path: '/api/track/{id}',
+        path: '/track/{id}',
         summary: 'Soft-delete a track (marks as deleted)',
         parameters: [
             new OA\Parameter(

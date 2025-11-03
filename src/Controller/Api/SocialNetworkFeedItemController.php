@@ -15,12 +15,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class SocialNetworkFeedItemController extends BaseController
 {
     #[Route(
-        path: '/api/{citySlug}/socialnetwork-feeditems',
+        path: '/{citySlug}/socialnetwork-feeditems',
         name: 'caldera_criticalmass_rest_socialnetwork_feeditems_citylist',
         methods: ['GET']
     )]
     #[OA\Get(
-        path: '/api/{citySlug}/socialnetwork-feeditems',
+        path: '/{citySlug}/socialnetwork-feeditems',
         summary: 'Returns a list of social network feed items for a specified city.',
         parameters: [
             new OA\Parameter(
@@ -62,12 +62,12 @@ class SocialNetworkFeedItemController extends BaseController
     }
 
     #[Route(
-        path: '/api/{citySlug}/socialnetwork-feeditems/{feedItemId}',
+        path: '/{citySlug}/socialnetwork-feeditems/{feedItemId}',
         name: 'caldera_criticalmass_rest_socialnetwork_feeditems_update',
         methods: ['POST']
     )]
     #[OA\Post(
-        path: '/api/{citySlug}/socialnetwork-feeditems/{feedItemId}',
+        path: '/{citySlug}/socialnetwork-feeditems/{feedItemId}',
         summary: 'Update properties of a social network feed item.',
         parameters: [
             new OA\Parameter(
@@ -115,12 +115,12 @@ class SocialNetworkFeedItemController extends BaseController
     }
 
     #[Route(
-        path: '/api/{citySlug}/socialnetwork-feeditems',
+        path: '/{citySlug}/socialnetwork-feeditems',
         name: 'caldera_criticalmass_rest_socialnetwork_feeditems_create',
         methods: ['PUT']
     )]
     #[OA\Put(
-        path: '/api/{citySlug}/socialnetwork-feeditems',
+        path: '/{citySlug}/socialnetwork-feeditems',
         summary: 'Create a new social network feed item and assign it to the provided profile.',
         parameters: [
             new OA\Parameter(

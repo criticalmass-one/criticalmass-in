@@ -15,12 +15,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class CityController extends BaseController
 {
     #[Route(
-        path: '/api/city',
+        path: '/city',
         name: 'caldera_criticalmass_rest_city_list',
         methods: ['GET']
     )]
     #[OA\Get(
-        path: '/api/city',
+        path: '/city',
         summary: 'Get a list of critical mass cities.',
         description: 'Filter per name/region, geo (radius/bbox), sortierung, paging, etc.',
         parameters: [
@@ -68,12 +68,12 @@ class CityController extends BaseController
     }
 
     #[Route(
-        path: '/api/city/{citySlug}',
+        path: '/city/{citySlug}',
         name: 'caldera_criticalmass_rest_city_show',
         methods: ['GET']
     )]
     #[OA\Get(
-        path: '/api/city/{citySlug}',
+        path: '/city/{citySlug}',
         summary: 'Retrieve information for a city identified by its slug.',
         parameters: [
             new OA\Parameter(

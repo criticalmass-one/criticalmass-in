@@ -18,9 +18,9 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 #[OA\Tag(name: 'Ride')]
 class RideController extends BaseController
 {
-    #[Route(path: '/api/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_show', methods: ['GET'])]
+    #[Route(path: '/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_show', methods: ['GET'])]
     #[OA\Get(
-        path: '/api/{citySlug}/{rideIdentifier}',
+        path: '/{citySlug}/{rideIdentifier}',
         summary: 'Returns ride details',
         parameters: [
             new OA\Parameter(
@@ -48,9 +48,9 @@ class RideController extends BaseController
         return $this->createStandardResponse($ride);
     }
 
-    #[Route(path: '/api/{citySlug}/current', name: 'caldera_criticalmass_rest_ride_show_current', methods: ['GET'])]
+    #[Route(path: '/{citySlug}/current', name: 'caldera_criticalmass_rest_ride_show_current', methods: ['GET'])]
     #[OA\Get(
-        path: '/api/{citySlug}/current',
+        path: '/{citySlug}/current',
         summary: 'Returns details of the next ride in the city',
         parameters: [
             new OA\Parameter(
@@ -95,9 +95,9 @@ class RideController extends BaseController
         return $this->createStandardResponse($ride);
     }
 
-    #[Route(path: '/api/ride', name: 'caldera_criticalmass_rest_ride_list', methods: ['GET'])]
+    #[Route(path: '/ride', name: 'caldera_criticalmass_rest_ride_list', methods: ['GET'])]
     #[OA\Get(
-        path: '/api/ride',
+        path: '/ride',
         summary: 'Lists rides',
         parameters: [
             new OA\Parameter(name: 'regionSlug', in: 'query', description: 'Provide a region slug', required: false, schema: new OA\Schema(type: 'string')),
@@ -158,9 +158,9 @@ class RideController extends BaseController
         return $this->createStandardResponse($rideList, $context);
     }
 
-    #[Route(path: '/api/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_create', methods: ['PUT'])]
+    #[Route(path: '/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_create', methods: ['PUT'])]
     #[OA\Put(
-        path: '/api/{citySlug}/{rideIdentifier}',
+        path: '/{citySlug}/{rideIdentifier}',
         summary: 'Creates a new ride',
         parameters: [
             new OA\Parameter(
@@ -227,9 +227,9 @@ class RideController extends BaseController
         return $this->createStandardResponse($ride, $context);
     }
 
-    #[Route(path: '/api/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_update', methods: ['POST'])]
+    #[Route(path: '/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_update', methods: ['POST'])]
     #[OA\Post(
-        path: '/api/{citySlug}/{rideIdentifier}',
+        path: '/{citySlug}/{rideIdentifier}',
         summary: 'Updates a ride',
         parameters: [
             new OA\Parameter(

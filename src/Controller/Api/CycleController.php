@@ -14,9 +14,9 @@ use Symfony\Component\Routing\Annotation\Route;
 #[OA\Tag(name: 'Cycles')]
 class CycleController extends BaseController
 {
-    #[Route(path: '/api/cycles', name: 'caldera_criticalmass_rest_cycles_list', methods: ['GET'])]
+    #[Route(path: '/cycles', name: 'caldera_criticalmass_rest_cycles_list', methods: ['GET'])]
     #[OA\Get(
-        path: '/api/cycles',
+        path: '/cycles',
         summary: 'Returns a list of city cycles',
         parameters: [
             new OA\Parameter(

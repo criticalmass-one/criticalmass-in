@@ -12,12 +12,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class SubrideController extends BaseController
 {
     #[Route(
-        path: '/api/{citySlug}/{rideIdentifier}/subride',
+        path: '/{citySlug}/{rideIdentifier}/subride',
         name: 'caldera_criticalmass_rest_subride_list',
         methods: ['GET']
     )]
     #[OA\Get(
-        path: '/api/{citySlug}/{rideIdentifier}/subride',
+        path: '/{citySlug}/{rideIdentifier}/subride',
         summary: 'Retrieve a list of subrides of a ride',
         parameters: [
             new OA\Parameter(
@@ -49,13 +49,13 @@ class SubrideController extends BaseController
     }
 
     #[Route(
-        path: '/api/{citySlug}/{rideIdentifier}/{id}',
+        path: '/{citySlug}/{rideIdentifier}/{id}',
         name: 'caldera_criticalmass_rest_subride_show',
         requirements: ['id' => '\d+'],
         methods: ['GET']
     )]
     #[OA\Get(
-        path: '/api/{citySlug}/{rideIdentifier}/{id}',
+        path: '/{citySlug}/{rideIdentifier}/{id}',
         summary: 'Show details of a subride',
         parameters: [
             new OA\Parameter(

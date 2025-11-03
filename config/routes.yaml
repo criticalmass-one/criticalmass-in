@@ -8,3 +8,7 @@ criticalmass:
   resource: routes/criticalmass/routing.yml
   prefix:   /
 
+api_controllers:
+  resource: '../src/Controller/Api/'
+  type: attribute
+  prefix: '/api'

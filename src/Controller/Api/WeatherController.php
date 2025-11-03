@@ -14,12 +14,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class WeatherController extends BaseController
 {
     #[Route(
-        path: '/api/{citySlug}/{rideIdentifier}/weather',
+        path: '/{citySlug}/{rideIdentifier}/weather',
         name: 'caldera_criticalmass_rest_weather_add',
         methods: ['PUT']
     )]
     #[OA\Put(
-        path: '/api/{citySlug}/{rideIdentifier}/weather',
+        path: '/{citySlug}/{rideIdentifier}/weather',
         summary: 'Add weather data to a specific ride',
         parameters: [
             new OA\Parameter(

@@ -32,12 +32,12 @@ class EstimateController extends BaseController
      * Autodetect ride by coordinates & timestamp.
      */
     #[Route(
-        path: '/api/estimate',
+        path: '/estimate',
         name: 'caldera_criticalmass_rest_estimate_create',
         methods: ['POST']
     )]
     #[OA\Post(
-        path: '/api/estimate',
+        path: '/estimate',
         summary: 'Create a participant estimate (ride autodetected by coords/date)',
         requestBody: new OA\RequestBody(
             description: 'JSON representation of the estimate data',
@@ -74,12 +74,12 @@ class EstimateController extends BaseController
      * Add estimate for a specific ride (identified by citySlug & rideIdentifier).
      */
     #[Route(
-        path: '/api/{citySlug}/{rideIdentifier}/estimate',
+        path: '/{citySlug}/{rideIdentifier}/estimate',
         name: 'caldera_criticalmass_rest_estimate_create_for_ride',
         methods: ['POST']
     )]
     #[OA\Post(
-        path: '/api/{citySlug}/{rideIdentifier}/estimate',
+        path: '/{citySlug}/{rideIdentifier}/estimate',
         summary: 'Create a participant estimate for a specific ride',
         parameters: [
             new OA\Parameter(

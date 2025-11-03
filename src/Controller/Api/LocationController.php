@@ -12,9 +12,9 @@ use Symfony\Component\Routing\Annotation\Route;
 #[OA\Tag(name: 'Location')]
 class LocationController extends BaseController
 {
-    #[Route(path: '/api/{citySlug}/location', name: 'caldera_criticalmass_rest_location_list', methods: ['GET'])]
+    #[Route(path: '/{citySlug}/location', name: 'caldera_criticalmass_rest_location_list', methods: ['GET'])]
     #[OA\Get(
-        path: '/api/{citySlug}/location',
+        path: '/{citySlug}/location',
         summary: 'Retrieve a list of locations of a city',
         parameters: [
             new OA\Parameter(
@@ -36,9 +36,9 @@ class LocationController extends BaseController
         return $this->createStandardResponse($locationList);
     }
 
-    #[Route(path: '/api/{citySlug}/location/{slug}', name: 'caldera_criticalmass_rest_location_show', methods: ['GET'])]
+    #[Route(path: '/{citySlug}/location/{slug}', name: 'caldera_criticalmass_rest_location_show', methods: ['GET'])]
     #[OA\Get(
-        path: '/api/{citySlug}/location/{slug}',
+        path: '/{citySlug}/location/{slug}',
         summary: 'Show details of a location',
         parameters: [
             new OA\Parameter(

@@ -18,7 +18,7 @@ class PhotoController extends BaseController
 {
     #[Route(path: '/{citySlug}/{rideIdentifier}/listPhotos', name: 'caldera_criticalmass_rest_photo_ridelist', methods: ['GET'])]
     #[OA\Get(
-        path: '/api/{citySlug}/{rideIdentifier}/listPhotos',
+        path: '/{citySlug}/{rideIdentifier}/listPhotos',
         summary: 'Retrieve a list of photos of a ride',
         parameters: [
             new OA\Parameter(
@@ -49,7 +49,7 @@ class PhotoController extends BaseController
 
     #[Route(path: '/photo/{id}', name: 'caldera_criticalmass_rest_photo_show', methods: ['GET'])]
     #[OA\Get(
-        path: '/api/photo/{id}',
+        path: '/photo/{id}',
         summary: 'Retrieve a photo by its id',
         parameters: [
             new OA\Parameter(
@@ -72,7 +72,7 @@ class PhotoController extends BaseController
 
     #[Route(path: '/photo', name: 'caldera_criticalmass_rest_photo_list', methods: ['GET'])]
     #[OA\Get(
-        path: '/api/photo',
+        path: '/photo',
         summary: 'Lists photos',
         parameters: [
             // Regional
@@ -116,7 +116,7 @@ class PhotoController extends BaseController
 
     #[Route(path: '/photo/{id}', name: 'caldera_criticalmass_rest_photo_post', methods: ['POST'])]
     #[OA\Post(
-        path: '/api/photo/{id}',
+        path: '/photo/{id}',
         summary: 'Update a photo by payload (JSON)',
         parameters: [
             new OA\Parameter(
