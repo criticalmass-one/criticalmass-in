@@ -14,10 +14,6 @@ caldera_criticalmass_track:
     resource: 'track.yml'
     prefix: /
 
-caldera_criticalmass_search:
-    resource: 'search.yml'
-    prefix: /
-
 caldera_criticalmass_frontpage:
     resource: 'frontpage.yml'
     prefix: /
