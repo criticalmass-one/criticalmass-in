@@ -2,37 +2,49 @@
 
 namespace App\Controller\Api;
 
-use JMS\Serializer\SerializationContext;
-use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
-use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Entity\Ride;
 use App\Entity\Track;
 use App\Event\Track\TrackDeletedEvent;
 use Doctrine\Persistence\ManagerRegistry;
-use Nelmio\ApiDocBundle\Annotation\Operation;
-use OpenApi\Annotations as OA;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use JMS\Serializer\SerializationContext;
+use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
+use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
+use OpenApi\Attributes as OA;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[OA\Tag(name: 'Track')]
 class TrackController extends BaseController
 {
-    /**
-     * Get a list of tracks which were uploaded to a specified ride.
-     *
-     * @Operation(
-     *     tags={"Track"},
-     *     summary="Retrieve a list of tracks of a ride",
-     *     @OA\Response(
-     *         response="200",
-     *         description="Returned when successful"
-     *     )
-     * )
-     */
-    #[Route(path: '/{citySlug}/{rideIdentifier}/listTracks', name: 'caldera_criticalmass_rest_track_ridelist', methods: ['GET'])]
+    #[Route(path: '/api/{citySlug}/{rideIdentifier}/listTracks', name: 'caldera_criticalmass_rest_track_ridelist', methods: ['GET'])]
+    #[OA\Get(
+        path: '/api/{citySlug}/{rideIdentifier}/listTracks',
+        summary: 'Retrieve a list of tracks of a ride',
+        parameters: [
+            new OA\Parameter(
+                name: 'citySlug',
+                in: 'path',
+                description: 'Provide a city slug',
+                required: true,
+                schema: new OA\Schema(type: 'string')
+            ),
+            new OA\Parameter(
+                name: 'rideIdentifier',
+                in: 'path',
+                description: 'Ride identifier (date like 2011-06-24 or custom slug)',
+                required: true,
+                schema: new OA\Schema(type: 'string')
+            ),
+        ],
+        responses: [
+            new OA\Response(response: 200, description: 'Returned when successful'),
+        ]
+    )]
     public function listRideTrackAction(Ride $ride): JsonResponse
     {
         $trackList = $this->managerRegistry->getRepository(Track::class)->findByRide($ride);
@@ -40,23 +52,27 @@ class TrackController extends BaseController
         return $this->createStandardResponse($trackList);
     }
 
-    /**
-     * Show details of a specified track.
-     *
-     * @Operation(
-     *     tags={"Track"},
-     *     summary="Show details of a track",
-     *     @OA\Response(
-     *         response="200",
-     *         description="Returned when successful"
-     *     )
-     * )
-     */
-    #[Route(path: '/track/{trackId}', name: 'caldera_criticalmass_rest_track_view', methods: ['GET'])]
-    public function viewAction(Track $track, UserInterface $user = null): JsonResponse
+    #[Route(path: '/api/track/{id}', name: 'caldera_criticalmass_rest_track_view', methods: ['GET'])]
+    #[OA\Get(
+        path: '/api/track/{id}',
+        summary: 'Show details of a track',
+        parameters: [
+            new OA\Parameter(
+                name: 'id',
+                in: 'path',
+                description: 'Track ID',
+                required: true,
+                schema: new OA\Schema(type: 'integer')
+            ),
+        ],
+        responses: [
+            new OA\Response(response: 200, description: 'Returned when successful'),
+            new OA\Response(response: 404, description: 'Track not found'),
+        ]
+    )]
+    public function viewAction(Track $track, ?UserInterface $user = null): JsonResponse
     {
         $groups = ['api-public'];
-
         if ($user) {
             $groups[] = 'api-private';
         }
@@ -67,133 +83,33 @@ class TrackController extends BaseController
         return $this->createStandardResponse($track, $context);
     }
 
-    /**
-     * Get a list of uploaded tracks.
-     *
-     * You may specify your query with the following parameters.
-     *
-     * <strong>List length</strong>
-     *
-     * The length of your results defaults to 10. Use <code>size</code> to request more or less results.
-     *
-     * <strong>Regional query parameters</strong>
-     *
-     * <ul>
-     * <li><code>regionSlug</code>: Provide a slug like <code>schleswig-holstein</code> to retrieve only tracks from cities of this region.</li>
-     * <li><code>citySlug</code>: Limit the resulting list to a city like <code>hamburg</code>, <code>new-york</code> or <code>muenchen</code>.</li>
-     * </ul>
-     *
-     * <strong>Date-related query parameters</strong>
-     *
-     * <ul>
-     * <li><code>year</code>: Retrieve only tracks of the provided <code>year</code>.</li>
-     * <li><code>month</code>: Retrieve only tracks of the provided <code>year</code> and <code>month</code>. This will only work in combination with the previous <code>year</code> parameter.</li>
-     * <li><code>day</code>: Limit the result list to a <code>day</code>. This parameter must be used with <code>year</code> and <code>month</code>.</li>
-     * </ul>
-     *
-     * <strong>Order parameters</strong>
-     *
-     * Sort the resulting list with the parameter <code>orderBy</code> and choose from one of the following properties:
-     *
-     * <ul>
-     * <li><code>id</code></li>
-     * <li><code>slug</code></li>
-     * <li><code>title</code></li>
-     * <li><code>description</code></li>
-     * <li><code>socialDescription</code></li>
-     * <li><code>latitude</code></li>
-     * <li><code>longitude</code></li>
-     * <li><code>estimatedParticipants</code></li>
-     * <li><code>estimatedDuration</code></li>
-     * <li><code>estimatedDistance</code></li>
-     * <li><code>views</code></li>
-     * <li><code>dateTime</code></li>
-     * </ul>
-     *
-     * Specify the order direction with <code>orderDirection=asc</code> or <code>orderDirection=desc</code>.
-     *
-     * Apply <code>startValue</code> to deliver a value to start your ordered list with.
-     *
-     * @Operation(
-     *     tags={"Track"},
-     *     summary="Lists tracks",
-     *     @OA\Parameter(
-     *         name="regionSlug",
-     *         in="query",
-     *         description="Provide a region slug",
-     *         required=false,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="citySlug",
-     *         in="query",
-     *         description="Provide a city slug",
-     *         required=false,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="year",
-     *         in="query",
-     *         description="Limit the result set to this year. If not set, we will search in the current month.",
-     *         required=false,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="month",
-     *         in="query",
-     *         description="Limit the result set to this year. Must be combined with 'year'. If not set, we will search in the current month.",
-     *         required=false,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="day",
-     *         in="query",
-     *         description="Limit the result set to this day.",
-     *         required=false,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="orderBy",
-     *         in="query",
-     *         description="Choose a property to sort the list by.",
-     *         required=false,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="orderDirection",
-     *         in="query",
-     *         description="Sort ascending or descending.",
-     *         required=false,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="startValue",
-     *         in="query",
-     *         description="Start ordered list with provided value.",
-     *         required=false,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Parameter(
-     *         name="size",
-     *         in="query",
-     *         description="Length of resulting list. Defaults to 10.",
-     *         required=false,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response="200",
-     *         description="Returned when successful"
-     *     )
-     * )
-     */
-    #[Route(path: '/track', name: 'caldera_criticalmass_rest_track_list', methods: ['GET'])]
-    public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager,UserInterface $user = null): JsonResponse
+    #[Route(path: '/api/track', name: 'caldera_criticalmass_rest_track_list', methods: ['GET'])]
+    #[OA\Get(
+        path: '/api/track',
+        summary: 'Lists tracks',
+        parameters: [
+            new OA\Parameter(name: 'regionSlug', in: 'query', description: 'Provide a region slug', required: false, schema: new OA\Schema(type: 'string')),
+            new OA\Parameter(name: 'citySlug', in: 'query', description: 'Provide a city slug', required: false, schema: new OA\Schema(type: 'string')),
+
+            new OA\Parameter(name: 'year', in: 'query', description: 'Year filter', required: false, schema: new OA\Schema(type: 'integer')),
+            new OA\Parameter(name: 'month', in: 'query', description: 'Month filter (requires year)', required: false, schema: new OA\Schema(type: 'integer')),
+            new OA\Parameter(name: 'day', in: 'query', description: 'Day filter (requires year and month)', required: false, schema: new OA\Schema(type: 'integer')),
+
+            new OA\Parameter(name: 'orderBy', in: 'query', description: 'Property to sort by', required: false, schema: new OA\Schema(type: 'string')),
+            new OA\Parameter(name: 'orderDirection', in: 'query', description: 'asc or desc', required: false, schema: new OA\Schema(type: 'string', enum: ['asc', 'desc'])),
+            new OA\Parameter(name: 'startValue', in: 'query', description: 'Start value for ordered list', required: false, schema: new OA\Schema(type: 'string')),
+            new OA\Parameter(name: 'size', in: 'query', description: 'Length of resulting list (default 10)', required: false, schema: new OA\Schema(type: 'integer')),
+        ],
+        responses: [
+            new OA\Response(response: 200, description: 'Returned when successful'),
+        ]
+    )]
+    public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager, ?UserInterface $user = null): JsonResponse
     {
         $queryParameterList = RequestToListConverter::convert($request);
         $trackList = $dataQueryManager->query($queryParameterList, Track::class);
 
         $groups = ['api-public'];
-
         if ($user) {
             $groups[] = 'api-private';
         }
@@ -204,16 +120,34 @@ class TrackController extends BaseController
         return $this->createStandardResponse($trackList, $context);
     }
 
-    #[Route('/track/{id}', name: 'caldera_criticalmass_rest_track_delete', methods: ['DELETE'])]
-    #[IsGranted('edit', 'track')]
+    #[Route('/api/track/{id}', name: 'caldera_criticalmass_rest_track_delete', methods: ['DELETE'])]
+    #[IsGranted(attribute: 'edit', subject: 'track')]
+    #[OA\Delete(
+        path: '/api/track/{id}',
+        summary: 'Soft-delete a track (marks as deleted)',
+        parameters: [
+            new OA\Parameter(
+                name: 'id',
+                in: 'path',
+                description: 'Track ID',
+                required: true,
+                schema: new OA\Schema(type: 'integer')
+            ),
+        ],
+        responses: [
+            new OA\Response(response: 204, description: 'Deleted'),
+            new OA\Response(response: 403, description: 'Forbidden'),
+            new OA\Response(response: 404, description: 'Track not found'),
+        ]
+    )]
     public function deleteAction(Track $track, EventDispatcherInterface $eventDispatcher, ManagerRegistry $managerRegistry): Response
     {
         $track->setDeleted(true);
 
         $managerRegistry->getManager()->flush();
 
-        $eventDispatcher->dispatch(TrackDeletedEvent::NAME, new TrackDeletedEvent($track));
+        $eventDispatcher->dispatch(new TrackDeletedEvent($track), TrackDeletedEvent::NAME);
 
-        return $this->redirectToRoute('caldera_criticalmass_track_list');
+        return new JsonResponse(null, Response::HTTP_NO_CONTENT);
     }
 }
