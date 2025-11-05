@@ -74,10 +74,6 @@ caldera_criticalmass_static:
     resource: 'static.yml'
     prefix: /
 
-caldera_criticalmass_ridemanagement:
-    resource: 'ridemanagement.yml'
-    prefix: /
-
 caldera_criticalmass_ride:
     resource: 'ride.yml'
     prefix: /
