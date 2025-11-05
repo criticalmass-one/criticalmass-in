@@ -66,10 +66,6 @@ caldera_criticalmass_citymanagement:
     resource: 'citymanagement.yml'
     prefix: /
 
-caldera_criticalmass_citycycle:
-    resource: 'citycycle.yml'
-    prefix: /
-
 caldera_criticalmass_social_network:
     resource: 'social_network.yml'
     prefix: /
