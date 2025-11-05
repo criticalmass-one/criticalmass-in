@@ -85,8 +85,3 @@ caldera_criticalmass_ride:
 caldera_criticalmass_oauth:
     resource: 'oauth.yml'
     prefix: /
-
-
-#caldera_criticalmass_redirecting:
-#    resource: 'redirecting.yml'
-#    prefix: /
