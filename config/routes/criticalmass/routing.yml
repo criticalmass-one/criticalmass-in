@@ -6,10 +6,6 @@ caldera_criticalmass_post:
     resource: 'post.yml'
     prefix: /post
 
-caldera_criticalmass_track:
-    resource: 'track.yml'
-    prefix: /
-
 caldera_criticalmass_frontpage:
     resource: 'frontpage.yml'
     prefix: /
