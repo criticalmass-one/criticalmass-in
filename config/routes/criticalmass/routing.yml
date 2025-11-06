@@ -10,10 +10,6 @@ caldera_criticalmass_statistic:
     resource: 'statistic.yml'
     prefix: /
 
-caldera_criticalmass_timeline:
-    resource: 'timeline.yml'
-    prefix: /
-
 caldera_criticalmass_social_network:
     resource: 'social_network.yml'
     prefix: /
