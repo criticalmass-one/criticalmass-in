@@ -2,10 +2,6 @@ caldera_criticalmass_profile:
     resource: 'profile.xml'
     prefix: /
 
-caldera_criticalmass_photo_export:
-    resource: 'photoexport.yml'
-    prefix:   /
-
 caldera_criticalmass_photogallery:
     resource: 'photogallery.yml'
     prefix:   /
