@@ -10,10 +10,6 @@ caldera_criticalmass_photogallery:
     resource: 'photogallery.yml'
     prefix:   /
 
-caldera_criticalmass_photoupload:
-    resource: 'photoupload.yml'
-    prefix:   /
-
 caldera_criticalmass_photomanagement:
     resource: 'photomanagement.yml'
     prefix:   /
