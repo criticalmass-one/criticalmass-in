@@ -14,10 +14,6 @@ caldera_criticalmass_statistic:
     resource: 'statistic.yml'
     prefix: /
 
-caldera_criticalmass_participation:
-    resource: 'participation.yml'
-    prefix:   /
-
 caldera_criticalmass_timeline:
     resource: 'timeline.yml'
     prefix: /
