@@ -30,10 +30,6 @@ caldera_criticalmass_timeline:
     resource: 'timeline.yml'
     prefix: /
 
-caldera_criticalmass_citymanagement:
-    resource: 'citymanagement.yml'
-    prefix: /
-
 caldera_criticalmass_social_network:
     resource: 'social_network.yml'
     prefix: /
