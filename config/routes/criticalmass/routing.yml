@@ -22,10 +22,6 @@ caldera_criticalmass_photomanagement:
     resource: 'photomanagement.yml'
     prefix:   /
 
-caldera_criticalmass_region:
-    resource: 'region.yml'
-    prefix:   /
-
 caldera_criticalmass_statistic:
     resource: 'statistic.yml'
     prefix: /
