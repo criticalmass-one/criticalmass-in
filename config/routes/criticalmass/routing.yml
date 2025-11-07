@@ -13,7 +13,3 @@ caldera_criticalmass_static:
 caldera_criticalmass_ride:
     resource: 'ride.yml'
     prefix: /
-
-caldera_criticalmass_oauth:
-    resource: 'oauth.yml'
-    prefix: /
