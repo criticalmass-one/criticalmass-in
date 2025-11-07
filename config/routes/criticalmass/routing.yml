@@ -9,7 +9,3 @@ caldera_criticalmass_social_network:
 caldera_criticalmass_static:
     resource: 'static.yml'
     prefix: /
-
-caldera_criticalmass_ride:
-    resource: 'ride.yml'
-    prefix: /
