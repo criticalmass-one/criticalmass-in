@@ -1,7 +1,3 @@
 caldera_criticalmass_profile:
     resource: 'profile.xml'
     prefix: /
-
-caldera_criticalmass_static:
-    resource: 'static.yml'
-    prefix: /
