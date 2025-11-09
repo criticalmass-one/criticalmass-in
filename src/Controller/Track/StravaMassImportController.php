@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -29,6 +30,7 @@ class StravaMassImportController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
+    #[Route('/trackimport/stravaauth', name: 'caldera_criticalmass_trackmassimport_auth', priority: 310)]
     public function authAction(Request $request, RouterInterface $router): Response
     {
         $oauth = $this->initOauth($request, $router);
@@ -47,6 +49,7 @@ class StravaMassImportController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
+    #[Route('/trackimport/stravatoken', name: 'caldera_criticalmass_trackmassimport_token', priority: 310)]
     public function tokenAction(Request $request, SessionInterface $session, RouterInterface $router): Response
     {
         $error = $request->get('error');
@@ -74,6 +77,7 @@ class StravaMassImportController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
+    #[Route('/trackimport/stravamassimport', name: 'caldera_criticalmass_trackmassimport_massimport', priority: 310)]
     public function massImportAction(Request $request, MassTrackImporterInterface $massTrackImporter): Response
     {
         $year = $request->query->getInt('year', (new \DateTime())->format('Y'));
@@ -95,6 +99,7 @@ class StravaMassImportController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
+    #[Route('/trackimport/stravalist', name: 'caldera_criticalmass_trackmassimport_list', priority: 310)]
     public function listridesAction(ManagerRegistry $registry, UserInterface $user = null): Response
     {
         $list = $registry->getRepository(TrackImportCandidate::class)->findCandidatesForUser($user);
@@ -105,6 +110,7 @@ class StravaMassImportController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
+    #[Route('/trackimport/reject', name: 'caldera_criticalmass_trackmassimport_reject', priority: 310)]
     public function rejectAction(Request $request, UserInterface $user, ObjectRouterInterface $objectRouter, ManagerRegistry $registry): Response
     {
         $activityId = (int)$request->get('activityId');
@@ -124,6 +130,7 @@ class StravaMassImportController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
+    #[Route('/trackimport/stravaimport', name: 'caldera_criticalmass_trackmassimport_import', priority: 310)]
     public function importAction(Request $request, UserInterface $user, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, Ride $ride, TrackImporterInterface $trackImporter): Response
     {
         $activityId = (int)$request->get('activityId');

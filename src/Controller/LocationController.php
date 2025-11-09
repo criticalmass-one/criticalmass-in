@@ -9,6 +9,7 @@ use App\Repository\LocationRepository;
 use App\Repository\RideRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Attribute\Route;
 
 class LocationController extends AbstractController
 {
@@ -23,6 +24,11 @@ class LocationController extends AbstractController
         ]);
     }
 
+    #[Route(
+        '/{citySlug}/location/{slug}',
+        name: 'caldera_criticalmass_location_show',
+        priority: 160
+    )]
     public function showAction(
         LocationRepository $locationRepository,
         RideRepository $rideRepository,
@@ -40,6 +46,11 @@ class LocationController extends AbstractController
         ]);
     }
 
+    #[Route(
+        '/{citySlug}/{rideIdentifier}/location',
+        name: 'caldera_criticalmass_location_ride',
+        priority: 160
+    )]
     public function rideAction(
         LocationRepository $locationRepository,
         RideRepository $rideRepository,

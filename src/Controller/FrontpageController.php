@@ -7,9 +7,11 @@ use App\Criticalmass\Timeline\TimelineInterface;
 use App\Factory\FrontpageRideListFactory;
 use App\Repository\FrontpageTeaserRepository;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class FrontpageController extends AbstractController
 {
+    #[Route('/', name: 'caldera_criticalmass_frontpage', priority: 180)]
     public function indexAction(
         FrontpageTeaserRepository $frontpageTeaserRepository,
         SeoPageInterface $seoPage,
@@ -40,8 +42,7 @@ class FrontpageController extends AbstractController
         $monthList = $frontpageRideListFactory
             ->createList()
             ->sort()
-            ->getMonthList()
-        ;
+            ->getMonthList();
 
         return $this->render('Frontpage/_ride_list.html.twig', [
             'rideList' => $monthList,

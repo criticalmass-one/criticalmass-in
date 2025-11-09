@@ -11,6 +11,7 @@ use Flagception\Bundle\FlagceptionBundle\Attribute\Feature;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -18,6 +19,11 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class LegacyPhotoUploadController extends AbstractController
 {
     #[IsGranted('ROLE_USER')]
+    #[Route(
+        '/{citySlug}/{rideIdentifier}/addphoto-legacy',
+        name: 'caldera_criticalmass_gallery_legacy_photos_upload_ride',
+        priority: 170
+    )]
     public function uploadAction(Request $request, UserInterface $user = null, Ride $ride, PhotoUploaderInterface $photoUploader): Response
     {
         if (Request::METHOD_POST === $request->getMethod()) {
