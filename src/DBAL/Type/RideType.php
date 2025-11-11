@@ -17,7 +17,7 @@ final class RideType extends AbstractEnumType
     public const TOUR = 'TOUR';
     public const EVENT = 'EVENT';
 
-    public static $choices = [
+    public static array $choices = [
         self::CRITICAL_MASS => 'Critical Mass',
         self::KIDICAL_MASS => 'Kidical Mass',
         self::NIGHT_RIDE => 'Nightride',

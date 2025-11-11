@@ -10,13 +10,13 @@
     </li>
 
     <li>
-        <a href="{{ objectPath(location.city) }}">
+        <a href="{{ object_path(location.city) }}">
             {{ location.city.city }}
         </a>
     </li>
     {% if ride %}
         <li>
-            <a href="{{ objectPath(ride) }}">
+            <a href="{{ object_path(ride) }}">
                 {{ ride.title }}
             </a>
         </li>
@@ -50,22 +50,21 @@
                 {% if location.hasCoordinates() %}
                     <div class="row">
                         <div class="col-md-12">
-                            <div id="map" style="height: 250px;"
-                                 data-map-center-latitude="{{ location.latitude }}"
-                                 data-map-center-longitude="{{ location.longitude }}"
-                                 data-map-zoomlevel="15"
-                                 data-map-marker-latitude="{{ location.latitude }}"
-                                 data-map-marker-longitude="{{ location.longitude }}"
-                                 data-map-marker-color="red"
-                                 data-map-marker-icon="fa-dot-circle-o"
-                                 data-map-marker-shape="circle"
+                            <div
+                                id="map"
+                                class="map"
+                                style="height: 150px;"
+                                data-controller="map--map"
+                                data-map--map-center-latitude-value="{{ location.latitude }}"
+                                data-map--map-center-longitude-value="{{ location.longitude }}"
+                                data-map--map-zoom-value="13"
+                                data-map--map-lock-map-value="true"
+                                data-map--map-marker-latitude-value="{{ location.latitude }}"
+                                data-map--map-marker-longitude-value="{{ location.longitude }}"
+                                data-map--map-marker-type-value="location"
                             ></div>
                         </div>
                     </div>
-
-                    <script>
-                        CriticalMass.loadModule('AutoMap', 'map');
-                    </script>
                 {% endif %}
 
                 <div class="row">
@@ -87,7 +86,7 @@
                             <ul>
                                 {% for ride in rides %}
                                     <li>
-                                        <a href="{{ objectPath(ride) }}">
+                                        <a href="{{ object_path(ride) }}">
                                             {{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}
                                         </a>
                                     </li>
@@ -106,7 +105,7 @@
                         <ul>
                             {% for location in locations %}
                                 <li>
-                                    <a href="{{ objectPath(location) }}">
+                                    <a href="{{ object_path(location) }}">
                                         {{ location.title }}
                                     </a>
                                 </li>

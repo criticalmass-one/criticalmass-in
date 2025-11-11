@@ -1,6 +1,0 @@
-# All this won't work as Symfony uses a kind of autodiscovery to find it's way into the database:
-# https://symfony.com/doc/current/setup/symfony_server.html#docker-integration
-# As long as using a dockerized environment, the following data will be overwritten
-#doctrine:
-#    dbal:
-#        url: 'mysql://criticalmass:criticalmass@127.0.0.1:8002/criticalmass_test'

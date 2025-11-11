@@ -2,37 +2,31 @@
 
 namespace App\Criticalmass\Router\ParameterResolver;
 
-use App\Criticalmass\Router\Annotation\DefaultParameter;
+use App\Criticalmass\Router\Attribute\DefaultParameter;
 use App\EntityInterface\RouteableInterface;
-use Doctrine\Common\Annotations\Reader;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class ClassParameterResolver extends AbstractParameterResolver
+class ClassParameterResolver implements ParameterResolverInterface
 {
-    /** @var ParameterBagInterface $parameterBag */
-    protected $parameterBag;
-
-    public function __construct(Reader $annotationReader, ParameterBagInterface $parameterBag)
+    public function __construct(private readonly ParameterBagInterface $parameterBag)
     {
-        $this->parameterBag = $parameterBag;
 
-        parent::__construct($annotationReader);
     }
 
     public function resolve(RouteableInterface $routeable, string $variableName): ?string
     {
         $reflectionClass = new \ReflectionClass($routeable);
 
-        $classAnnotations = $this->annotationReader->getClassAnnotations($reflectionClass);
+        $classAttributes = $reflectionClass->getAttributes();
 
-        foreach ($classAnnotations as $classAnnotation) {
-            if ($classAnnotation instanceof DefaultParameter) {
-                if ($classAnnotation->getRouteParameterName() !== $variableName) {
+        foreach ($classAttributes as $classAttribute) {
+            if ($classAttribute instanceof DefaultParameter) {
+                if ($classAttribute->getRouteParameterName() !== $variableName) {
                     continue;
                 }
 
-                if ($this->parameterBag->has($classAnnotation->getParameterName())) {
-                    return $this->parameterBag->get($classAnnotation->getParameterName());
+                if ($this->parameterBag->has($classAttribute->getParameterName())) {
+                    return $this->parameterBag->get($classAttribute->getParameterName());
                 }
             }
         }

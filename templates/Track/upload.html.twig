@@ -9,12 +9,12 @@
         </a>
     </li>
     <li>
-        <a href="{{ objectPath(ride.city) }}">
+        <a href="{{ object_path(ride.city) }}">
             {{ ride.city.city }}
         </a>
     </li>
     <li>
-        <a href="{{ objectPath(ride) }}">
+        <a href="{{ object_path(ride) }}">
             {{ ride.title }}
         </a>
     </li>
@@ -82,10 +82,10 @@
         <div class="row">
             <div class="col-md-6 col-offset-md-3">
                 <div class="btn-group pull-right" role="group" aria-label="...">
-                    <button id="track-upload-button" type="submit" class="btn btn-success">
+                    <button type="submit" class="btn btn-success disable-after-submit" data-disabled-message="Bitte warten…">
                         Track hochladen
                     </button>
-                    <a href="{{ objectPath(ride) }}" class="btn btn-default">
+                    <a href="{{ object_path(ride) }}" class="btn btn-default">
                         Abbrechen
                     </a>
                 </div>
@@ -95,9 +95,4 @@
         {{ form_end(form) }}
 
     </div>
-
-
-    <script type="text/javascript">
-        CriticalMass.loadModule('TrackUploadPage');
-    </script>
 {% endblock %}

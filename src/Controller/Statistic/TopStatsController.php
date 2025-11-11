@@ -3,16 +3,18 @@
 namespace App\Controller\Statistic;
 
 use App\Controller\AbstractController;
+use App\Repository\RideRepository;
 use Symfony\Component\HttpFoundation\Response;
 
 class TopStatsController extends AbstractController
 {
-    public function topStatsAction(): Response
-    {
+    public function topStatsAction(
+        RideRepository $rideRepository
+    ): Response {
         return $this->render('Statistic/top.html.twig', [
-            'participationList' => $this->getRideRepository()->findMostPopularRides(),
-            'durationList' => $this->getRideRepository()->findLongestDurationRides(),
-            'distanceList' => $this->getRideRepository()->findLongestDistanceRides(),
+            'participationList' => $rideRepository->findMostPopularRides(),
+            'durationList' => $rideRepository->findLongestDurationRides(),
+            'distanceList' => $rideRepository->findLongestDistanceRides(),
         ]);
     }
 }

@@ -10,13 +10,13 @@
 
 {% block breadcrumb %}
     <li>
-        <a href="{{ objectPath(city) }}">
+        <a href="{{ object_path(city) }}">
             {{ city.city }}
         </a>
     </li>
 
     <li>
-        <a href="{{ objectPath(city, 'caldera_criticalmass_citycycle_list') }}">
+        <a href="{{ object_path(city, 'caldera_criticalmass_citycycle_list') }}">
             Turnusliste
         </a>
     </li>
@@ -48,14 +48,28 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="alert alert-info">
-                    Wenn du lediglich eine einzelne Tour für {{ city.city }} erstellen möchtest, nutze bitte <strong><a href="{{ objectPath(city, 'caldera_criticalmass_ride_add') }}">dieses Formular</a></strong>.
+                    Wenn du lediglich eine einzelne Tour für {{ city.city }} erstellen möchtest, nutze bitte <strong><a href="{{ object_path(city, 'caldera_criticalmass_ride_add') }}">dieses Formular</a></strong>.
                 </div>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-12">
-                <div id="map" style="height: 250px;"></div>
+                <div id="map"
+                     class="map"
+                     data-controller="map--form-map"
+                     style="height: 250px;"
+                     data-map--form-map-center-latitude-value="{{ city.latitude }}"
+                     data-map--form-map-center-longitude-value="{{ city.longitude }}"
+                     data-map--form-map-zoom-value="10"
+                     data-map--form-map-marker-latitude-target-value="city_cycle_latitude"
+                     data-map--form-map-marker-longitude-target-value="city_cycle_longitude"
+                     data-map--form-map-marker-icon-value="fa-map-marker-alt"
+                     data-map--form-map-marker-color-value="yellow"
+                     data-map--form-map-marker-shape-value="circle"
+                     data-map--form-map-marker-prefix-value="fas"
+                >
+                </div>
             </div>
         </div>
 
@@ -140,14 +154,14 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label class="control-label" for="">Gültig ab:</label>
-                    {{ form_widget(form.validFrom) }}
+                    {{ form_widget(form.validFrom, { 'attr' : { 'class': 'form-control'} }) }}
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-group">
                     <label class="control-label" for="">Gültig bis:</label>
-                    {{ form_widget(form.validUntil) }}
+                    {{ form_widget(form.validUntil, { 'attr' : { 'class': 'form-control'} }) }}
                 </div>
             </div>
         </div>
@@ -155,7 +169,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="btn-group pull-right">
-                    <a href="{{ objectPath(city) }}" class="btn btn-default">
+                    <a href="{{ object_path(city) }}" class="btn btn-default">
                         Abbrechen
                     </a>
                     <button type="submit" class="btn btn-success">
@@ -166,15 +180,4 @@
         </div>
         {{ form_end(form) }}
     </div>
-
-    <script type="text/javascript">
-        var options = {
-            cityCoords: {
-                latitude: {{ city.latitude }},
-                longitude: {{ city.longitude }}
-            }
-        };
-
-        CriticalMass.loadModule('EditCityCyclePage', null, options);
-    </script>
 {% endblock %}

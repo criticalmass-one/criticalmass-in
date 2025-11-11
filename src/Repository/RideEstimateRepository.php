@@ -4,10 +4,16 @@ namespace App\Repository;
 
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-class RideEstimateRepository extends EntityRepository
+class RideEstimateRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, RideEstimate::class);
+    }
+
     public function findForTimelineRideParticipationEstimateCollector(
         \DateTime $startDateTime = null,
         \DateTime $endDateTime = null,

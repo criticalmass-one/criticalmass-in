@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Router\Attribute as Routing;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -29,18 +29,14 @@ class CityCycle implements RouteableInterface
     const WEEK_FOURTH = 4;
     const WEEK_LAST = 0;
 
-    /**
-     * @Routing\RouteParameter(name="cityCycleId")
-     */
+    #[Routing\RouteParameter(name: 'id')]
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     #[JMS\Expose]
     protected ?int $id = null;
 
-    /**
-     * @Routing\RouteParameter(name="citySlug")
-     */
+    #[Routing\RouteParameter(name: 'citySlug')]
     #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'cycles')]
     #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
     #[JMS\Expose]
@@ -79,13 +75,13 @@ class CityCycle implements RouteableInterface
     #[ORM\Column(type: 'float', nullable: true)]
     #[JMS\Expose]
     #[JMS\Groups(['ride-list'])]
-    protected ?float $latitude = 0.0;
+    protected ?float $latitude = null;
 
     #[Assert\NotEqualTo(value: '0.0')]
     #[ORM\Column(type: 'float', nullable: true)]
     #[JMS\Expose]
     #[JMS\Groups(['ride-list'])]
-    protected ?float $longitude = 0.0;
+    protected ?float $longitude = null;
 
     #[ORM\Column(type: 'datetime', nullable: false)]
     #[JMS\Expose]

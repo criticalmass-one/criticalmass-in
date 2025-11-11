@@ -42,7 +42,9 @@ class NominatimCityBridge extends AbstractNominatimCityBridge
             ->withLatitude((float) $result['lat'])
             ->withLongitude((float) $result['lon'])
             ->withName($cityName)
-            ->withRegion($region);
+            ->withTitle(sprintf('Critical Mass %s', $cityName))
+            ->withRegion($region)
+        ;
 
         return $this->cityFactory->build();
     }

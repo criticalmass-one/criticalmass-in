@@ -11,19 +11,19 @@
     </li>
 
     <li>
-        <a href="{{ objectPath(city) }}">
+        <a href="{{ object_path(city) }}">
             {{ city.city }}
         </a>
     </li>
 
     <li>
-        <a href="{{ objectPath(ride) }}">
+        <a href="{{ object_path(ride) }}">
             {{ ride.title }}
         </a>
     </li>
 
     <li>
-        <a href="{{ objectPath(ride, 'caldera_criticalmass_photo_ride_list') }}">
+        <a href="{{ object_path(ride, 'caldera_criticalmass_photo_ride_list') }}">
             Fotos
         </a>
     </li>
@@ -39,7 +39,7 @@
             <ul class="pager">
                 {% if previous_photo %}
                     <li class="previous">
-                        <a href="{{ objectPath(previous_photo) }}">
+                        <a href="{{ object_path(previous_photo) }}">
                             &larr; Voriges Foto
                         </a>
                     </li>
@@ -53,7 +53,7 @@
 
                 {% if next_photo %}
                     <li class="next">
-                        <a href="{{ objectPath(next_photo) }}">
+                        <a href="{{ object_path(next_photo) }}">
                             Nächstes Foto &rarr;
                         </a>
                     </li>
@@ -136,23 +136,4 @@
         {{ block('navigation') }}
 </div>
 
-    <script>
-        CriticalMass.loadModule('ViewPhotoPage', null, null, function (page) {
-            {% if previous_photo %}
-            page.setPreviousPhotoUrl('{{ objectPath(previous_photo) }}');
-            {% endif %}
-
-            {% if next_photo %}
-            page.setNextPhotoUrl('{{ objectPath(next_photo) }}');
-            {% endif %}
-
-            {% if photo.hasCoordinates() %}
-            page.setPhoto('{{ photo|serialize|raw|e('js') }}', '{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}');
-            page.initMap();
-            {% endif %}
-        });
-
-        CriticalMass.loadModule('ScrollToPost');
-    </script>
-
-    {% endblock %}
+{% endblock %}
