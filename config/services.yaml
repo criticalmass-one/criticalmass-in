@@ -191,3 +191,21 @@ services:
       class: App\Criticalmass\Image\Filter\FastBlurFilter
       tags:
         - { name: 'liip_imagine.filter.loader', loader: 'fast_blur_filter' }
+
+    fos_user.doctrine_registry:
+      alias: doctrine
+
+    App\Menu\Builder:
+      arguments:
+        - '@knp_menu.factory'
+        - '@security.token_storage'
+        - '@Flagception\Manager\FeatureManagerInterface'
+      tags:
+        - { name: 'knp_menu.menu_builder', method: 'mainMenu', alias: 'main_menu' }
+
+    salavert.twig.time_ago:
+      class: Salavert\Twig\Extension\TimeAgoExtension
+      arguments:
+        - '@translator'
+      tags:
+        - { name: 'twig.extension' }
