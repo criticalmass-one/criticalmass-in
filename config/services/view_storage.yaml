@@ -1,0 +1,11 @@
+services:
+  App\Criticalmass\ViewStorage\Cache\RobustViewStorageCache:
+    arguments:
+      $producer: '@old_sound_rabbit_mq.criticalmass_view_producer'
+
+  App\Criticalmass\ViewStorage\Cache\ViewStorageCache:
+    arguments:
+      $producer: '@old_sound_rabbit_mq.criticalmass_view_producer'
+
+  App\Criticalmass\ViewStorage\Cache\ViewStorageCacheInterface:
+    alias: App\Criticalmass\ViewStorage\Cache\RobustViewStorageCache

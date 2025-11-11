@@ -1,0 +1,4 @@
+services:
+  App\Criticalmass\MassTrackImport\MassTrackImporter:
+    arguments:
+      $producer: '@old_sound_rabbit_mq.criticalmass_trackimportcandidate_producer'

@@ -1,0 +1,7 @@
+services:
+  App\Form\:
+    resource: '%kernel.project_dir%/src/App/Form/*'
+    autowire: true
+    autoconfigure: true
+    public: true
+    tags: ['form.type']

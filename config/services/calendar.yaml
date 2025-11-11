@@ -1,0 +1,17 @@
+services:
+  CalendR\Extension\Twig\CalendRExtension:
+    tags:
+      - { name: 'twig.extension' }
+
+  CalendR\Calendar:
+    calls:
+      - method: 'setEventManager'
+        arguments:
+          - '@CalendR\Event\Manager'
+
+  CalendR\Event\Manager:
+    calls:
+      - method: 'addProvider'
+        arguments:
+          - 'ride_provider'
+          - '@App\Criticalmass\Calendar\EventProvider\RideProvider'

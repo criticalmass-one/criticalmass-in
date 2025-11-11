@@ -1,211 +1,64 @@
+imports:
+  - { resource: 'services/*.yaml' }
+
 parameters:
-    locale: de
-    secret: '%env(APP_SECRET)%'
-    kernel.secret: '%env(APP_SECRET)%'
-    database_driver: pdo_mysql
-    database_host: 127.0.0.1
-    database_port: null
-    database_name: '%env(DATABASE_NAME)%'
-    database_user: '%env(DATABASE_USER)%'
-    database_password: '%env(DATABASE_PASSWORD)%'
-    track.gap_width: 10
-    strava.client_id: '%env(STRAVA_CLIENT_ID)%'
-    strava.secret: '%env(STRAVA_SECRET)%'
-    facebook.app_id: '%env(FACEBOOK_APP_ID)%'
-    facebook.app_secret: '%env(FACEBOOK_APP_SECRET)%'
-    facebook.default_token: '%env(FACEBOOK_DEFAULT_TOKEN)%'
-    timeline.ttl: 60
-    notification.mail.sender_address: malte@criticalmass.in
-    request_listener.http_port: 80
-    request_listener.https_port: 443
-    upload_destination.track: '%kernel.project_dir%/public/tracks'
-    upload_destination.photo: '%kernel.project_dir%/public/photos'
-    upload_destination.city_photo: '%kernel.project_dir%/public/cities'
-    upload_destination.ride_photo: '%kernel.project_dir%/public/rides'
-    upload_destination.frontpage_teaser: '%kernel.project_dir%/public/teaser'
-    upload_destination.user_photo: '%kernel.project_dir%/public/users'
-    assets_version: '%env(ASSETS_VERSION)%'
-    friendlycaptcha_api_key: '%env(FRIENDLYCAPTCHA_API_KEY)%'
-    friendlycaptcha_site_key: '%env(FRIENDLYCAPTCHA_SITE_KEY)%'
+  locale: de
+  secret: '%env(APP_SECRET)%'
+  kernel.secret: '%env(APP_SECRET)%'
+  database_driver: pdo_mysql
+  database_host: 127.0.0.1
+  database_port: null
+  database_name: '%env(DATABASE_NAME)%'
+  database_user: '%env(DATABASE_USER)%'
+  database_password: '%env(DATABASE_PASSWORD)%'
+  track.gap_width: 10
+  strava.client_id: '%env(STRAVA_CLIENT_ID)%'
+  strava.secret: '%env(STRAVA_SECRET)%'
+  facebook.app_id: '%env(FACEBOOK_APP_ID)%'
+  facebook.app_secret: '%env(FACEBOOK_APP_SECRET)%'
+  facebook.default_token: '%env(FACEBOOK_DEFAULT_TOKEN)%'
+  timeline.ttl: 60
+  notification.mail.sender_address: malte@criticalmass.in
+  request_listener.http_port: 80
+  request_listener.https_port: 443
+  upload_destination.track: '%kernel.project_dir%/public/tracks'
+  upload_destination.photo: '%kernel.project_dir%/public/photos'
+  upload_destination.city_photo: '%kernel.project_dir%/public/cities'
+  upload_destination.ride_photo: '%kernel.project_dir%/public/rides'
+  upload_destination.frontpage_teaser: '%kernel.project_dir%/public/teaser'
+  upload_destination.user_photo: '%kernel.project_dir%/public/users'
+  assets_version: '%env(ASSETS_VERSION)%'
+  friendlycaptcha_api_key: '%env(FRIENDLYCAPTCHA_API_KEY)%'
+  friendlycaptcha_site_key: '%env(FRIENDLYCAPTCHA_SITE_KEY)%'
 
 services:
-    _defaults:
-        autowire: true
-        autoconfigure: true
-        public: false
-        bind:
-            $rootDirectory: '%kernel.project_dir%'
-            $webRootDir: '%kernel.project_dir%/../public'
-            $gapWidth: '%track.gap_width%'
-            $facebookAppId: '%facebook.app_id%'
-            $facebookAppSecret: '%facebook.app_secret%'
-            $facebookDefaultToken: '%facebook.default_token%'
-            $uploadDestinationPhoto: '%upload_destination.photo%'
-            $uploadDestinationTrack: '%upload_destination.track%'
-            $uploadDestinationUserPhoto: '%upload_destination.user_photo%'
-            $stravaClientId: '%strava.client_id%'
-            $stravaSecret: '%strava.secret%'
-            $cachedTimelineTtl: '%timeline.ttl%'
-            $projectDirectory: '%kernel.project_dir%'
-            $redisUrl: '%env(REDIS_URL)%'
-            $criticalmassRideGeneratorUrl: '%env(CRITICALMASS_RIDE_GENERATOR_URL)%'
-            $cachePrefix: 'media/cache'
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+    bind:
+      $rootDirectory: '%kernel.project_dir%'
+      $webRootDir: '%kernel.project_dir%/../public'
+      $gapWidth: '%track.gap_width%'
+      $facebookAppId: '%facebook.app_id%'
+      $facebookAppSecret: '%facebook.app_secret%'
+      $facebookDefaultToken: '%facebook.default_token%'
+      $uploadDestinationPhoto: '%upload_destination.photo%'
+      $uploadDestinationTrack: '%upload_destination.track%'
+      $uploadDestinationUserPhoto: '%upload_destination.user_photo%'
+      $stravaClientId: '%strava.client_id%'
+      $stravaSecret: '%strava.secret%'
+      $cachedTimelineTtl: '%timeline.ttl%'
+      $projectDirectory: '%kernel.project_dir%'
+      $redisUrl: '%env(REDIS_URL)%'
+      $criticalmassRideGeneratorUrl: '%env(CRITICALMASS_RIDE_GENERATOR_URL)%'
+      $cachePrefix: 'media/cache'
 
-    App\:
-        resource: '../src/*'
-        exclude: '../src/{DQL,Entity,Manager,Menu,Migrations,Model,Tests,UserProvider,Criticalmass/UploadValidator/UploadValidatorException}'
+  App\:
+    resource: '../src/*'
+    exclude: '../src/{DQL,Entity,Manager,Menu,Migrations,Model,Tests,UserProvider,Criticalmass/UploadValidator/UploadValidatorException}'
 
-    App\Controller\:
-        resource: '../src/Controller'
-        public: true
-        tags: ['controller.service_arguments']
-
-    App\Form\:
-      resource: '%kernel.project_dir%/src/App/Form/*'
-      autowire: true
-      autoconfigure: true
-      public: true
-      tags: ['form.type']
-
-    Symfony\Component\Routing\RouteCollection: ~
-
-    Sonata\SeoBundle\Seo\SeoPageInterface:
-        alias: sonata.seo.page.default
-
-    App\Criticalmass\Image\ExifWrapper\ExifWrapper:
-        arguments:
-            $flysystemFilesystem: '@oneup_flysystem.flysystem_photo_photo_filesystem'
-
-    App\Criticalmass\Image\PhotoManipulator\Storage\PhotoStorage:
-        arguments:
-            $filesystem: '@oneup_flysystem.flysystem_photo_photo_filesystem'
-
-    App\Criticalmass\Geo\GpxReader\GpxReader:
-        arguments:
-            $filesystem: '@oneup_flysystem.flysystem_track_track_filesystem'
-
-    App\Criticalmass\Geo\GpxReader\TrackReader:
-        arguments:
-            $filesystem: '@oneup_flysystem.flysystem_track_track_filesystem'
-
-    App\Criticalmass\Geo\GpxWriter\GpxWriter:
-        arguments:
-            $filesystem: '@oneup_flysystem.flysystem_track_track_filesystem'
-
-    App\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGenerator:
-        arguments:
-            $filesystem: '@oneup_flysystem.flysystem_user_photo_filesystem'
-
-    App\Criticalmass\UploadableDataHandler\UploadableDataHandler:
-        arguments:
-            $filesystem: '@oneup_flysystem.flysystem_photo_photo_filesystem'
-
-    App\Criticalmass\UploadValidator\TrackValidator:
-        arguments:
-            $filesystem: '@oneup_flysystem.flysystem_track_track_filesystem'
-
-    App\Criticalmass\Geocoding\ReverseGeocoderInterface:
-        alias: App\Criticalmass\Geocoding\CachedReverseGeocoder
-
-    App\Criticalmass\Website\Obfuscator\ObfuscatorInterface:
-        alias: App\Criticalmass\Website\Obfuscator\CaseAwareObfuscator
-
-    App\Criticalmass\Timeline\TimelineInterface:
-        alias: App\Criticalmass\Timeline\CachedTimeline
-        #alias: App\Criticalmass\Timeline\Timeline
-
-    App\Criticalmass\Geo\Loop\LoopInterface:
-        alias: App\Criticalmass\Geo\Loop\TrackLoop
-
-    App\Criticalmass\Imagine\DataLoader\RemoteStreamLoader:
-        arguments: ['@liip_imagine']
-        tags:
-            - { name: liip_imagine.binary.loader, loader: App\Criticalmass\Imagine\DataLoader\RemoteStreamLoader }
-
-    App\Criticalmass\Imagine\CacheResolver\RemoteCacheResolver:
-        tags:
-            - { name: liip_imagine.cache.resolver, resolver: App\Criticalmass\Imagine\CacheResolver\RemoteCacheResolver }
-
-    App\Criticalmass\ViewStorage\Cache\RobustViewStorageCache:
-        arguments:
-            $producer: '@old_sound_rabbit_mq.criticalmass_view_producer'
-
-    App\Criticalmass\ViewStorage\Cache\ViewStorageCache:
-        arguments:
-            $producer: '@old_sound_rabbit_mq.criticalmass_view_producer'
-
-    App\Criticalmass\MassTrackImport\MassTrackImporter:
-        arguments:
-            $producer: '@old_sound_rabbit_mq.criticalmass_trackimportcandidate_producer'
-
-    App\Criticalmass\UploadableDataHandler\UploadableDataHandlerInterface:
-        alias: App\Criticalmass\UploadableDataHandler\UploadableDataHandler
-
-    App\Criticalmass\ViewStorage\Cache\ViewStorageCacheInterface:
-        alias: App\Criticalmass\ViewStorage\Cache\RobustViewStorageCache
-
-    App\Serializer\JMSSerializer\Handler\RelationHandler:
-        tags:
-            - { name: jms_serializer.handler, type: Relation, direction: serialization, format: json, method: serializeRelation}
-            - { name: jms_serializer.handler, type: Relation, direction: deserialization, format: json, method: deserializeRelation}
-            - { name: jms_serializer.handler, type: Relation<?>, direction: serialization, format: json, method: serializeRelation}
-            - { name: jms_serializer.handler, type: Relation<?>, direction: deserialization, format: json, method: deserializeRelation}
-
-    jms_serializer.naming_strategy:
-        alias: jms_serializer.camel_case_naming_strategy
-
-    App\Criticalmass\CriticalmassBlog\CriticalmassBlogInterface:
-        alias: App\Criticalmass\CriticalmassBlog\CachedCriticalmassBlog
-
-    App\Security\UserProvider\UserProvider:
-        arguments:
-            $properties:
-                'facebook': 'facebookId'
-                'strava': 'stravaId'
-
-    Sabre\VObject\Component\VCalendar: ~
-
-    CalendR\Extension\Twig\CalendRExtension:
-      tags:
-        - { name: 'twig.extension' }
-
-    CalendR\Calendar:
-      calls:
-        - method: 'setEventManager'
-          arguments:
-            - '@CalendR\Event\Manager'
-
-    CalendR\Event\Manager:
-      calls:
-        - method: 'addProvider'
-          arguments:
-            - 'ride_provider'
-            - '@App\Criticalmass\Calendar\EventProvider\RideProvider'
-
-    caldera.criticalmass.image.filter.blur:
-      class: App\Criticalmass\Image\Filter\BlurFilter
-      tags:
-        - { name: 'liip_imagine.filter.loader', loader: 'blur_filter' }
-
-    caldera.criticalmass.image.filter.fast_blur:
-      class: App\Criticalmass\Image\Filter\FastBlurFilter
-      tags:
-        - { name: 'liip_imagine.filter.loader', loader: 'fast_blur_filter' }
-
-    fos_user.doctrine_registry:
-      alias: doctrine
-
-    App\Menu\Builder:
-      arguments:
-        - '@knp_menu.factory'
-        - '@security.token_storage'
-        - '@Flagception\Manager\FeatureManagerInterface'
-      tags:
-        - { name: 'knp_menu.menu_builder', method: 'mainMenu', alias: 'main_menu' }
-
-    salavert.twig.time_ago:
-      class: Salavert\Twig\Extension\TimeAgoExtension
-      arguments:
-        - '@translator'
-      tags:
-        - { name: 'twig.extension' }
+  App\Controller\:
+    resource: '../src/Controller'
+    public: true
+    tags: ['controller.service_arguments']
