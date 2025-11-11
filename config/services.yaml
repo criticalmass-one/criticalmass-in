@@ -61,6 +61,13 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
+    App\Form\:
+      resource: '%kernel.project_dir%/src/App/Form/*'
+      autowire: true
+      autoconfigure: true
+      public: true
+      tags: ['form.type']
+
     Symfony\Component\Routing\RouteCollection: ~
 
     Sonata\SeoBundle\Seo\SeoPageInterface:
