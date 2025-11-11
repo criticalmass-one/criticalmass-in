@@ -247,3 +247,13 @@ services:
           arguments:
             - 'ride_provider'
             - '@App\Criticalmass\Calendar\EventProvider\RideProvider'
+
+    caldera.criticalmass.image.filter.blur:
+      class: App\Criticalmass\Image\Filter\BlurFilter
+      tags:
+        - { name: 'liip_imagine.filter.loader', loader: 'blur_filter' }
+
+    caldera.criticalmass.image.filter.fast_blur:
+      class: App\Criticalmass\Image\Filter\FastBlurFilter
+      tags:
+        - { name: 'liip_imagine.filter.loader', loader: 'fast_blur_filter' }
