@@ -77,13 +77,10 @@
                                 <div class="card-header">
                                     {{ city.title }}
                                 </div>
-                                <div class="card-body readmore">
+                                <div class="card-body">
                                     {{ city.longDescription|markdown }}
                                 </div>
                             </div>
-                            <script>
-                                CriticalMass.loadModule('ReadMore', '.readmore');
-                            </script>
                         {% else %}
                             <div class="alert alert-info">
                                 <strong>Huch?</strong>

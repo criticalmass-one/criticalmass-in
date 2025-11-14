@@ -40,13 +40,6 @@
                                         <i class="fab fa-strava" aria-hidden="true"></i>
                                         Strava
                                     </a>
-                                    <a class="btn btn-default"
-                                       style="background-color: rgb(29, 161, 242); color: white;"
-                                       href="{{ path('hwi_oauth_service_redirect', {'service': 'twitter' }) }}"
-                                       title="Sign in with Twitter">
-                                        <i class="fab fa-twitter" aria-hidden="true"></i>
-                                        Twitter
-                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -64,7 +57,10 @@
                             Bitte gib deine E-Mail-Adresse ein, wir senden dir einen Link zum Einloggen per Mail zu!
                         </p>
 
-                        {{ form(login_form) }}
+                        {{ form_start(login_form) }}
+                        {{ form_row(login_form.email) }}
+                        <div class="frc-captcha mb-3 mx-auto" data-sitekey="{{ app.request.server.get('FRIENDLYCAPTCHA_SITE_KEY') }}"></div>
+                        {{ form_end(login_form) }}
                     </div>
                 </div>
             </div>

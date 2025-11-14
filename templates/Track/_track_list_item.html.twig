@@ -8,9 +8,16 @@
         <div class="panel-body">
             <div class="row margin-bottom-medium">
                 <div class="col-md-12">
-                    <div id="map-{{ track.id }}" class="preview-map" style="height: 150px;"
-                         data-polyline-color="rgb({{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }})"
-                         data-lock-map="true" data-polyline="{{ track.polyline }}"></div>
+                    <div
+                        id="map-{{ track.id }}"
+                        class="map"
+                        style="height: 150px;"
+                        data-controller="map--map"
+                        data-map--map-lock-map-value="true"
+                        data-map--map-polyline-color-value="{{ track.user.color }}"
+                        data-map--map-polyline-value="{{ track.polyline }}"
+                    ></div>
+
                 </div>
             </div>
 

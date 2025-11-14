@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\EntityInterface\AutoParamConverterAble;
 use App\EntityInterface\BoardInterface;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,7 +11,7 @@ use App\Criticalmass\Router\Attribute as Routing;
 #[Routing\DefaultRoute(name: 'caldera_criticalmass_board_listthreads')]
 #[ORM\Table(name: 'board')]
 #[ORM\Entity(repositoryClass: 'App\Repository\BoardRepository')]
-class Board implements BoardInterface, RouteableInterface, AutoParamConverterAble
+class Board implements BoardInterface, RouteableInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]

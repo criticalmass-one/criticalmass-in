@@ -11,17 +11,15 @@ use App\Criticalmass\UploadableDataHandler\UploadableEntity;
 use App\Criticalmass\UploadFaker\FakeUploadable;
 use App\EntityInterface\RouteableInterface;
 use Caldera\GeoBasic\Track\TrackInterface as BaseTrackInterface;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @Vich\Uploadable
  * @OE\OrderedEntity()
  */
+#[Vich\Uploadable]
 #[Routing\DefaultRoute(name: 'caldera_criticalmass_track_view')]
 #[ORM\Table(name: 'track')]
 #[ORM\Entity(repositoryClass: 'App\Repository\TrackRepository')]
@@ -37,7 +35,7 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     const TRACK_SOURCE_CRITICALMAPS = 'TRACK_SOURCE_CRITICALMAPS';
     const TRACK_SOURCE_UNKNOWN = 'TRACK_SOURCE_UNKNOWN';
 
-    #[Routing\RouteParameter(name: 'trackId')]
+    #[Routing\RouteParameter(name: 'id')]
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
@@ -130,17 +128,15 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     #[JMS\Groups(['timelapse', 'api-public'])]
     #[JMS\Expose]
     #[JMS\SerializedName('polylineString')]
-    protected ?string $polyline = null;
+    protected ?string $polyline;
 
     #[ORM\Column(type: 'text', nullable: true)]
     #[JMS\Groups(['timelapse', 'api-public'])]
     #[JMS\Expose]
     #[JMS\SerializedName('reducedPolylineString')]
     protected ?string $reducedPolyline = null;
-
-    /**
-     * @Vich\UploadableField(mapping="track_file", fileNameProperty="trackFilename",  size="trackSize", mimeType="trackMimeType")
-     */
+    
+    #[Vich\UploadableField(mapping: 'track_file', fileNameProperty: 'trackFilename', size: 'trackSize', mimeType: 'trackMimeType')]
     protected ?File $trackFile = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
@@ -304,10 +300,6 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     {
         if ($this->getUser()) {
             return $this->getUser()->getColorRed();
-        } elseif ($this->getTicket()) {
-            return $this->getTicket()->getColorRed();
-        } elseif ($this->getCriticalmapsUser()) {
-            return $this->getCriticalmapsUser()->getColorRed();
         }
 
         return null;
@@ -320,10 +312,6 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     {
         if ($this->getUser()) {
             return $this->getUser()->getColorGreen();
-        } elseif ($this->getTicket()) {
-            return $this->getTicket()->getColorGreen();
-        } elseif ($this->getCriticalmapsUser()) {
-            return $this->getCriticalmapsUser()->getColorGreen();
         }
 
         return null;
@@ -336,10 +324,6 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     {
         if ($this->getUser()) {
             return $this->getUser()->getColorBlue();
-        } elseif ($this->getTicket()) {
-            return $this->getTicket()->getColorBlue();
-        } elseif ($this->getCriticalmapsUser()) {
-            return $this->getCriticalmapsUser()->getColorBlue();
         }
 
         return null;
@@ -403,22 +387,6 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
         }
 
         return 0;
-    }
-
-    public function getAverageVelocity(): ?float
-    {
-        if ($this->startDateTime && $this->endDateTime && $this->distance) {
-            $kilometres = $this->getDistance();
-            $seconds = $this->getEndDateTime()->getTimestamp() - $this->getStartDateTime()->getTimestamp();
-
-            $hours = (float)$seconds / 3600;
-
-            $velocity = $kilometres / ($hours + 0.0001);
-
-            return $velocity;
-        }
-
-        return null;
     }
 
     public function getStartTime(): \DateTime
@@ -493,10 +461,5 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
         $this->reviewed = $reviewed;
 
         return $this;
-    }
-
-    public function elasticable(): bool
-    {
-        return $this->enabled && !$this->deleted && $this->reviewed;
     }
 }

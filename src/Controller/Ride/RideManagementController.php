@@ -10,8 +10,6 @@ use App\Form\Type\RideDisableType;
 use App\Form\Type\RideSocialPreviewType;
 use App\Form\Type\RideType;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;
@@ -19,19 +17,20 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class RideManagementController extends AbstractController
 {
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("city", class="App:City")
-     */
+    #[IsGranted('ROLE_USER')]
     public function addAction(Request $request, UserInterface $user = null, EntityManagerInterface $entityManager, City $city, ObjectRouterInterface $objectRouter): Response
     {
         $ride = new Ride();
         $ride
             ->setCity($city)
-            ->setUser($user);
+            ->setUser($user)
+            ->setLatitude($city->getLatitude())
+            ->setLongitude($city->getLongitude())
+        ;
 
         $form = $this->createForm(RideType::class, $ride, [
             'action' => $objectRouter->generate($city,'caldera_criticalmass_ride_add'),
@@ -47,7 +46,7 @@ class RideManagementController extends AbstractController
     protected function addGetAction(Request $request, UserInterface $user = null, Ride $ride, EntityManagerInterface $entityManager, ObjectRouterInterface $objectRouter, City $city, FormInterface $form): Response
     {
         return $this->render('RideManagement/edit.html.twig', [
-            'ride' => null,
+            'ride' => $ride,
             'form' => $form->createView(),
             'city' => $city,
             'dateTime' => new \DateTime(),
@@ -90,10 +89,7 @@ class RideManagementController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("ride", class="App:Ride")
-     */
+    #[IsGranted('ROLE_USER')]
     public function editAction(Request $request, UserInterface $user = null, Ride $ride, ObjectRouterInterface $objectRouter): Response
     {
         $form = $this->createForm(RideType::class, $ride, [
@@ -157,10 +153,7 @@ class RideManagementController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("ride", class="App:Ride")
-     */
+    #[IsGranted('ROLE_USER')]
     public function socialPreviewAction(
         EntityManagerInterface $entityManager,
         Request $request,
@@ -214,10 +207,7 @@ class RideManagementController extends AbstractController
         return $this->socialPreviewGetAction($entityManager, $request, $user, $ride, $form);
     }
 
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("ride", class="App:Ride")
-     */
+    #[IsGranted('ROLE_USER')]
     public function disableAction(Request $request, ManagerRegistry $registry, UserInterface $user = null, Ride $ride, ObjectRouterInterface $objectRouter): RedirectResponse
     {
         if (Request::METHOD_POST === $request->getMethod()) {
@@ -234,10 +224,7 @@ class RideManagementController extends AbstractController
         return $this->redirect($objectRouter->generate($ride));
     }
 
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("ride", class="App:Ride")
-     */
+    #[IsGranted('ROLE_USER')]
     public function enableAction(ManagerRegistry $registry, UserInterface $user = null, Ride $ride, ObjectRouterInterface $objectRouter): RedirectResponse
     {
         $ride->setEnabled(true)

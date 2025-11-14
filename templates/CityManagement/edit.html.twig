@@ -9,7 +9,7 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block breadcrumb %}
-    {% if city %}
+    {% if city and city.mainSlug %}
         <li>
             <a href="{{ object_path(city) }}">
                 {{ city.city }}
@@ -78,7 +78,21 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div id="map" style="height: 250px;"></div>
+                <div
+                        id="map-city"
+                        class="map"
+                        style="height:250px;"
+                        data-controller="map--form-map"
+                        data-map--form-map-center-latitude-value="{{ city.latitude }}"
+                        data-map--form-map-center-longitude-value="{{ city.longitude }}"
+                        data-map--form-map-zoom-value="10"
+                        data-map--form-map-marker-latitude-target-value="{{ form.latitude.vars.id }}"
+                        data-map--form-map-marker-longitude-target-value="{{ form.longitude.vars.id }}"
+                        data-map--form-map-marker-icon-value="fa-university"
+                        data-map--form-map-marker-color-value="blue"
+                        data-map--form-map-marker-shape-value="circle"
+                        data-map--form-map-marker-prefix-value="fas"
+                ></div>
             </div>
         </div>
 
@@ -114,7 +128,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group{% if form_errors(form.city) %} has-error has-feedback{% endif %}">
-                            <button id="search-city-button" class="btn btn-default btn-xs pull-right" type="button">
+                            <button class="btn btn-default btn-xs pull-right geocode" type="button" data-geocoding-query-selector="#city_city" data-geocoding-query-part-selector="#city_region">
                                 <i class="far fa-map-marker"></i>
                             </button>
                             <label class="control-label" for="">Name:</label>
@@ -198,7 +212,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="btn-group pull-right">
-                    {% if city %}
+                    {% if city and city.mainSlug %}
                         <a href="{{ object_path(city) }}" class="btn btn-default">
                             Abbrechen
                         </a>
@@ -215,13 +229,4 @@
         </div>
         {{ form_end(form) }}
     </div>
-
-    <script type="text/javascript">
-        var options = {
-            country: '{{ country }}',
-            state: '{{ state }}'
-        };
-
-        CriticalMass.loadModule('EditCityPage', options, null);
-    </script>
 {% endblock %}

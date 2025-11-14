@@ -3,7 +3,7 @@
 namespace Tests\ViewStorage\BlackList;
 
 use App\Criticalmass\ViewStorage\BlackList\BlackList;
-use Nmure\CrawlerDetectBundle\CrawlerDetect\CrawlerDetect;
+use Jaybizzle\CrawlerDetect\CrawlerDetect;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\RequestStack;
 

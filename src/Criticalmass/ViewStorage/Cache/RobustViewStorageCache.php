@@ -36,7 +36,7 @@ class RobustViewStorageCache extends ViewStorageCache
 
             $this->viewStoragePersister->storeView($view);
 
-            $this->registry->getManager()->flush();
+            //$this->registry->getManager()->flush();
         }
     }
 }

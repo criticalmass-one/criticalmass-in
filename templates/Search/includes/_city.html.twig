@@ -1,16 +1,16 @@
 <div class="row margin-bottom-medium">
     <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
         <div id="map-{{ city.id }}"
-             data-map-center-latitude="{{ city.latitude }}"
-             data-map-center-longitude="{{ city.longitude }}"
-             data-map-zoomlevel="13"
-             data-lock-map="true"
-             data-map-marker-latitude="{{ city.latitude }}"
-             data-map-marker-longitude="{{ city.longitude }}"
-             data-map-marker-color="red"
-             data-map-marker-icon="fa-university"
-             data-map-marker-shape="circle"
-             style="height: 150px;">
+             class="map"
+             data-controller="map--map"
+             style="height: 150px;"
+             data-map--map-center-latitude-value="{{ city.latitude }}"
+             data-map--map-center-longitude-value="{{ city.longitude }}"
+             data-map--map-zoom-value="13"
+             data-map--map-lock-map-value="true"
+             data-map--map-marker-latitude-value="{{ city.latitude }}"
+             data-map--map-marker-longitude-value="{{ city.longitude }}"
+             data-map--map-marker-type-value="city">
         </div>
     </div>
 
@@ -43,7 +43,3 @@
         {% endif %}
     </div>
 </div>
-
-<script type="text/javascript">
-    CriticalMass.loadModule('AutoMap', 'map-{{ city.id }}');
-</script>
