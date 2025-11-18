@@ -61,10 +61,12 @@
 {% endblock %}
 
 {% block dividerElement %}
+    {# Bootstrap 5: horizontale Divider in Dropdowns, eigene Utility-Klassen für Top-Level #}
     {% if item.level == 1 %}
-        <li class="divider-vertical"></li>
+        {# vertikale Trennung im Top-Menü, per Utilities (Border + Margin) #}
+        <li class="border-start mx-2"></li>
     {% else %}
-        <li class="divider"></li>
+        <li><hr class="dropdown-divider" /></li>
     {% endif %}
 {% endblock %}
 
@@ -91,12 +93,12 @@
     {%- set classes = classes|merge(['dropdown-toggle']) %}
     {%- set attributes = item.linkAttributes %}
     {%- set attributes = attributes|merge({'class': classes|join(' ')}) %}
-    {%- set attributes = attributes|merge({'data-toggle': 'dropdown'}) %}
+    {%- set attributes = attributes|merge({'data-bs-toggle': 'dropdown', 'role': 'button', 'aria-expanded': 'false'}) %}
+
     <a href="#"{{ macros.attributes(attributes) }}>
         {%- if icon is not empty %}
             <i class="{{ icon }}"></i>
         {% endif %}
         {{- block('label') }}
-        <b class="caret"></b>
     </a>
 {% endblock %}
