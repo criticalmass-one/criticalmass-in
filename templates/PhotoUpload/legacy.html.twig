@@ -30,16 +30,17 @@
 
 {% block content %}
     <div class="container">
+
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-                <h1>
-                    Fotos hochladen
-                </h1>
+            <div class="col-md-6 offset-md-3">
+                <h1>Fotos hochladen</h1>
+
                 <p>
                     Hier kannst du einzelne Fotos zu einer Tour hochladen. Wenn du vorher einen GPX-Track deiner Tour
-                    hochlädst oder deine Fotos GPS-Koordinaten
-                    enthalten, werden deine Fotos automatisch auf der Karte verortet.
+                    hochlädst oder deine Fotos GPS-Koordinaten enthalten, werden deine Fotos automatisch auf der Karte
+                    verortet.
                 </p>
+
                 <p>
                     <strong>
                         Mit dem Hochladen von Foto-Dateien bestätigst du, dass du der Urheber dieser Fotos bist. Bitte
@@ -48,23 +49,27 @@
                 </p>
 
                 <p>
-                    Um mehrere Fotos auf einmal hochzuladen, probiere bitte <a
-                            href="{{ object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') }}">Multi-Uploader</a>
+                    Um mehrere Fotos auf einmal hochzuladen, probiere bitte
+                    <a href="{{ object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') }}">
+                        Multi-Uploader
+                    </a>
                     aus.
                 </p>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-                <div class="form-group">
-                    <form action="{{ object_path(ride, 'caldera_criticalmass_gallery_legacy_photos_upload_ride') }}"
-                          method="post" enctype="multipart/form-data">
-                        {{ form_widget(form.imageFile) }}
-                        <input type="submit" value="Datei hochladen" class="btn btn-success margin-top-medium">
-                    </form>
-                </div>
+            <div class="col-md-6 offset-md-3">
+                <form action="{{ object_path(ride, 'caldera_criticalmass_gallery_legacy_photos_upload_ride') }}"
+                      method="post" enctype="multipart/form-data">
+                    {{ form_widget(form.imageFile) }}
+
+                    <input type="submit"
+                           value="Datei hochladen"
+                           class="btn btn-success mt-4">
+                </form>
             </div>
         </div>
+
     </div>
 {% endblock %}

@@ -30,11 +30,10 @@
 
 {% block content %}
     <div class="container">
+
         <div class="row">
             <div class="col-md-12">
-                <h1>
-                    Fotos hochladen
-                </h1>
+                <h1>Fotos hochladen</h1>
             </div>
         </div>
 
@@ -47,10 +46,13 @@
                 </p>
 
                 <p>
-                    Falls dieser Uploader nicht funktionieren sollte, kannst du auch unseren <a
-                            href="{{ object_path(ride, 'caldera_criticalmass_gallery_legacy_photos_upload_ride') }}">alten
-                        Uploader</a> ausprobieren.
+                    Falls dieser Uploader nicht funktionieren sollte, kannst du auch unseren
+                    <a href="{{ object_path(ride, 'caldera_criticalmass_gallery_legacy_photos_upload_ride') }}">
+                        alten Uploader
+                    </a>
+                    ausprobieren.
                 </p>
+
                 <p>
                     <strong>
                         Mit dem Hochladen von Foto-Dateien bestätigst du, dass du der Urheber dieser Fotos bist. Bitte
@@ -60,13 +62,15 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row mt-3">
             <div class="col-md-12">
-                <div class="form-group">
-                    <form action="{{ object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') }}" class="dropzone" id="photo-dropzone">
-                    </form>
-                </div>
+                <form
+                        action="{{ object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') }}"
+                        class="dropzone"
+                        id="photo-dropzone">
+                </form>
             </div>
         </div>
+
     </div>
 {% endblock %}
