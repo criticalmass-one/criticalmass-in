@@ -47,7 +47,7 @@
             <div class="col-md-12">
                 {% if app.getUser() and region.isLevel(3) %}
                     <a href="{{ path('caldera_criticalmass_city_add', { slug1: region.parent.parent.slug, slug2: region.parent.slug, slug3: region.slug }) }}"
-                       class="btn btn-success margin-top-medium pull-right">
+                       class="btn btn-success mt-4 float-end">
                         <i class="far fa-plus"></i>
                         Stadt hinzufügen
                     </a>
@@ -91,7 +91,7 @@
 
             <div class="row">
                 {% for region2 in regions %}
-                    <div class="col-xs-6 col-sm-4 col-md-3">
+                    <div class="col-6 col-sm-4 col-md-3">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="text-center">
@@ -127,7 +127,7 @@
 
             <div class="row">
                 {% for city in cities %}
-                    <div class="col-xs-6 col-sm-4 col-md-3">
+                    <div class="col-6 col-sm-4 col-md-3">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="text-center">
