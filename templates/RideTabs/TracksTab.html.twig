@@ -3,42 +3,48 @@
         <div class="col-md-12">
             <div class="btn-group pull-right margin-top-medium">
                 {% if app.user %}
-                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                    <i class="far fa-map"></i>
-                    Track hinzufügen
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    {% if feature('strava_track_upload') %}
-                    <li>
-                        <a href="{{ object_path(ride, 'caldera_criticalmass_strava_auth') }}">
-                            <i class="fab fa-strava"></i>
-                            Track von Strava importieren
-                        </a>
-                    </li>
-                    {% endif %}
-                    <li>
-                        <a href="{{ object_path(ride, 'caldera_criticalmass_track_upload') }}"
-                           title="Track hochladen">
-                            <i class="far fa-upload"></i>
-                            GPX-Datei hochladen
-                        </a>
-                    </li>
-                    {#<li>
+                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        <i class="far fa-map"></i>
+                        Track hinzufügen
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        {% if feature('strava_track_upload') %}
+                            <li>
+                                <a href="{{ object_path(ride, 'caldera_criticalmass_strava_auth') }}">
+                                    <i class="fab fa-strava"></i>
+                                    Track von Strava importieren
+                                </a>
+                            </li>
+                        {% endif %}
+                        <li>
+                            <a href="{{ object_path(ride, 'caldera_criticalmass_track_upload') }}"
+                               title="Track hochladen">
+                                <i class="far fa-upload"></i>
+                                GPX-Datei hochladen
+                            </a>
+                        </li>
+                        {#<li>
                           <a href="{{ path('caldera_criticalmass_track_draw', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}"
                              title="Track manuell zeichnen">
                               <i class="far fa-map"></i>
                               Track manuell zeichnen
                           </a>
                       </li>#}
-                </ul>
+                    </ul>
                 {% else %}
-                    <span class="btn btn-success modal-hint" data-modal-hint-title="{{ 'hint_modal.ride.track_upload_button.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.ride.track_upload_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
+                    <button
+                            type="button"
+                            class="btn btn-success"
+                            data-controller="hint-modal"
+                            data-modal-hint-title="{{ 'hint_modal.ride.track_upload_button.title'|trans }}"
+                            data-modal-hint-text="{{ 'hint_modal.ride.track_upload_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
+                            data-modal-hint-size="md">
                         <i class="far fa-map"></i>
                         Track hinzufügen
                         <span class="caret"></span>
-                    </span>
+                    </button>
                 {% endif %}
             </div>
 

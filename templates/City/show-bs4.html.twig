@@ -10,28 +10,42 @@
 
 {% block optionsButton %}
     <div class="dropdown float-right">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="city-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="far fa-cogs"></i>
-            Optionen
-            <span class="caret"></span>
-        </button>
-
-        <div class="dropdown-menu" aria-labelledby="city-dropdown">
-            <a class="dropdown-item" href="{{ object_path(city, 'caldera_criticalmass_city_edit') }}">
+        {% if app.user %}
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="city-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="far fa-cogs"></i>
-                Stadt editieren
-            </a>
+                Optionen
+                <span class="caret"></span>
+            </button>
 
-            <a class="dropdown-item" href="{{ object_path(city, 'caldera_criticalmass_ride_add') }}">
-                <i class="far fa-plus"></i>
-                Tour hinzufügen
-            </a>
+            <div class="dropdown-menu" aria-labelledby="city-dropdown">
+                <a class="dropdown-item" href="{{ object_path(city, 'caldera_criticalmass_city_edit') }}">
+                    <i class="far fa-cogs"></i>
+                    Stadt editieren
+                </a>
 
-            <a class="dropdown-item" href="{{ object_path(city, 'caldera_criticalmass_citycycle_list') }}">
-                <i class="far fa-calendar"></i>
-                Turnus
-            </a>
-        </div>
+                <a class="dropdown-item" href="{{ object_path(city, 'caldera_criticalmass_ride_add') }}">
+                    <i class="far fa-plus"></i>
+                    Tour hinzufügen
+                </a>
+
+                <a class="dropdown-item" href="{{ object_path(city, 'caldera_criticalmass_citycycle_list') }}">
+                    <i class="far fa-calendar"></i>
+                    Turnus
+                </a>
+            </div>
+        {% else %}
+            <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-controller="hint-modal"
+                    data-modal-hint-title="{{ 'hint_modal.city.options_button.title'|trans }}"
+                    data-modal-hint-text="{{ 'hint_modal.city.options_button.text'|trans({'%city%': city.city}) }}"
+                    data-modal-hint-size="md">
+                <i class="far fa-cogs"></i>
+                Optionen
+                <span class="caret"></span>
+            </button>
+        {% endif %}
     </div>
 {% endblock %}
 
@@ -40,27 +54,23 @@
         <div class="row">
             <div class="col-12">
                 {% if city.imageName %}
-                <div class="profile-header" style="height: 250px; background-image: url({{ vich_uploader_asset(city, 'imageFile')|imagine_filter('city_image_wide') }});">
-                    <div class="container">
-                        {% if app.getUser() %}
+                    <div class="profile-header" style="height: 250px; background-image: url({{ vich_uploader_asset(city, 'imageFile')|imagine_filter('city_image_wide') }});">
+                        <div class="container">
                             <div class="float-right">
                                 {{ block('optionsButton') }}
                             </div>
-                        {% endif %}
-                        <div class="container-inner">
-                            <h3 class="profile-header-user">
-                                {{ city.title }}
-                            </h3>
-                            <p class="profile-header-bio">
-                                {{ city.punchline }}
-                            </p>
+                            <div class="container-inner">
+                                <h3 class="profile-header-user">
+                                    {{ city.title }}
+                                </h3>
+                                <p class="profile-header-bio">
+                                    {{ city.punchline }}
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
                 {% else %}
-                    {% if app.getUser() %}
-                        {{ block('optionsButton') }}
-                    {% endif %}
+                    {{ block('optionsButton') }}
                     <h1 class="no-margin-top">
                         {{ city.title }}
                     </h1>
@@ -132,9 +142,9 @@
                                         </div>
 
                                         {% if ride.description %}
-                                        <p>
-                                            {{ ride.description }}
-                                        </p>
+                                            <p>
+                                                {{ ride.description }}
+                                            </p>
                                         {% endif %}
 
                                         <div class="media-body-inline-grid" data-grid="images">

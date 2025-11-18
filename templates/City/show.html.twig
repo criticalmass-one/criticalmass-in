@@ -16,41 +16,54 @@
 
 {% block optionsButton %}
     <div class="btn-group pull-right">
-        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
-            <i class="far fa-cogs"></i>
-            Optionen
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu">
-            <li>
-                <a href="{{ object_path(city, 'caldera_criticalmass_city_edit') }}">
-                    <i class="far fa-cogs"></i>
-                    Stadt editieren
-                </a>
-            </li>
+        {% if app.user %}
+            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                <i class="far fa-cogs"></i>
+                Optionen
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="{{ object_path(city, 'caldera_criticalmass_city_edit') }}">
+                        <i class="far fa-cogs"></i>
+                        Stadt editieren
+                    </a>
+                </li>
 
-            <li>
-                <a href="{{ object_path(city, 'caldera_criticalmass_ride_add') }}">
-                    <i class="far fa-plus"></i>
-                    Tour hinzufügen
-                </a>
-            </li>
+                <li>
+                    <a href="{{ object_path(city, 'caldera_criticalmass_ride_add') }}">
+                        <i class="far fa-plus"></i>
+                        Tour hinzufügen
+                    </a>
+                </li>
 
-            <li>
-                <a href="{{ object_path(city, 'caldera_criticalmass_citycycle_list') }}">
-                    <i class="far fa-calendar"></i>
-                    Turnus verwalten
-                </a>
-            </li>
+                <li>
+                    <a href="{{ object_path(city, 'caldera_criticalmass_citycycle_list') }}">
+                        <i class="far fa-calendar"></i>
+                        Turnus verwalten
+                    </a>
+                </li>
 
-            <li>
-                <a href="{{ object_path(city, 'criticalmass_socialnetwork_city_list') }}">
-                    <i class="far fa-at"></i>
-                    soziale Netzwerke verwalten
-                </a>
-            </li>
-        </ul>
+                <li>
+                    <a href="{{ object_path(city, 'criticalmass_socialnetwork_city_list') }}">
+                        <i class="far fa-at"></i>
+                        soziale Netzwerke verwalten
+                    </a>
+                </li>
+            </ul>
+        {% else %}
+            <button
+                    type="button"
+                    class="btn btn-success"
+                    data-controller="hint-modal"
+                    data-modal-hint-title="{{ 'hint_modal.city.options_button.title'|trans }}"
+                    data-modal-hint-text="{{ 'hint_modal.city.options_button.text'|trans({'%city%': city.city}) }}"
+                    data-modal-hint-size="md">
+                <i class="far fa-cogs"></i>
+                Optionen
+            </button>
+        {% endif %}
     </div>
 {% endblock %}
 
@@ -83,18 +96,14 @@
                             </div>
                         {% endif %}
 
-                        {% if app.getUser() %}
-                            <div class="row">
-                                <div class="col-md-12">
-                                    {{ block('optionsButton') }}
-                                </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                {{ block('optionsButton') }}
                             </div>
-                        {% endif %}
+                        </div>
                     </div>
                 {% else %}
-                    {% if app.getUser() %}
-                        {{ block('optionsButton') }}
-                    {% endif %}
+                    {{ block('optionsButton') }}
                     <h1 class="no-margin-top">
                         {{ city.title }}
                     </h1>
@@ -192,11 +201,11 @@
                 </div>
 
                 {% if nearCities and nearCities|length > 0 %}
-                <div class="row">
-                    <div class="col-md-12">
-                        {% include 'City/Includes/_nearCities.html.twig' with { 'nearCities': nearCities } %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            {% include 'City/Includes/_nearCities.html.twig' with { 'nearCities': nearCities } %}
+                        </div>
                     </div>
-                </div>
                 {% endif %}
             </div>
         </div>

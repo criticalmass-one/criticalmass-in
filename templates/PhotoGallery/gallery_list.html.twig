@@ -30,19 +30,25 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
-                {% if app.user %}
-                    {% set uploadPath = object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') %}
+                    {% if app.user %}
+                        {% set uploadPath = object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') %}
 
-                    <a class="btn btn-success" href="{{ uploadPath }}" title="Fotos hochladen">
-                        <i class="far fa-camera"></i>
-                        Fotos hochladen
-                    </a>
-                {% else %}
-                    <span class="btn btn-success modal-hint" data-modal-hint-title="{{ 'hint_modal.gallery.photo_upload_button.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.gallery.photo_upload_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
-                        <i class="far fa-camera"></i>
-                        Fotos hochladen
-                    </span>
-                {% endif %}
+                        <a class="btn btn-success" href="{{ uploadPath }}" title="Fotos hochladen">
+                            <i class="far fa-camera"></i>
+                            Fotos hochladen
+                        </a>
+                    {% else %}
+                        <button
+                                type="button"
+                                class="btn btn-success"
+                                data-controller="hint-modal"
+                                data-modal-hint-title="{{ 'hint_modal.gallery.photo_upload_button.title'|trans }}"
+                                data-modal-hint-text="{{ 'hint_modal.gallery.photo_upload_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
+                                data-modal-hint-size="md">
+                            <i class="far fa-camera"></i>
+                            Fotos hochladen
+                        </button>
+                    {% endif %}
                 </div>
 
                 <h1>
