@@ -17,9 +17,9 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 {% if app.getUser() %}
-                    <a href="{{ newThreadUrl }}" class="btn btn-success pull-right margin-top-medium">
+                    <a href="{{ newThreadUrl }}" class="btn btn-primary float-end mt-3">
                         neues Thema eröffnen
                     </a>
                 {% endif %}
@@ -29,27 +29,17 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
+        <div class="row mt-3">
+            <div class="col-12">
                 {% if threads|length %}
-                    <table class="table">
+                    <table class="table align-middle">
                         <thead>
                         <tr>
-                            <th>
-                                Titel
-                            </th>
-                            <th>
-                                Autor
-                            </th>
-                            <th>
-                                Antworten
-                            </th>
-                            <th>
-                                Ansichten
-                            </th>
-                            <th>
-                                letzter Beitrag
-                            </th>
+                            <th>Titel</th>
+                            <th>Autor</th>
+                            <th>Antworten</th>
+                            <th>Ansichten</th>
+                            <th>letzter Beitrag</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -61,20 +51,18 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <img class="pull-left img-fluid" style="margin-right: 5px; height: 40px;" src="{{ vich_uploader_asset(thread.firstPost.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}" alt="..."/>
+                                    <img class="float-start img-fluid me-2" style="height: 40px;"
+                                         src="{{ vich_uploader_asset(thread.firstPost.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}" alt="..."/>
                                     von <strong>{{ thread.firstPost.user.username }}</strong>
                                 </td>
-                                <td>
-                                    {{ thread.postNumber }}
-                                </td>
-                                <td>
-                                    {{ thread.views }}
-                                </td>
+                                <td>{{ thread.postNumber }}</td>
+                                <td>{{ thread.views }}</td>
                                 <td>
                                     {% if thread.lastPost %}
-                                        <img class="pull-left img-fluid" style="margin-right: 5px; height: 40px;" src="{{ vich_uploader_asset(thread.lastPost.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}" alt="..."/>
+                                        <img class="float-start img-fluid me-2" style="height: 40px;"
+                                             src="{{ vich_uploader_asset(thread.lastPost.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}" alt="..."/>
                                         von <strong>{{ thread.lastPost.user.username }}</strong><br/>
-                                        {{ thread.lastPost.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }}&nbsp;Uhr
+                                        {{ thread.lastPost.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }} Uhr
                                     {% endif %}
                                 </td>
                             </tr>
@@ -83,9 +71,7 @@
                     </table>
                 {% else %}
                     <div class="alert alert-info" role="alert">
-                        <strong>
-                            Hier gibt es nichts zu sehen!
-                        </strong>
+                        <strong>Hier gibt es nichts zu sehen!</strong>
                         Bislang hat leider noch niemand einen Beitrag in diesem Forum geschrieben.
                     </div>
                 {% endif %}

@@ -24,7 +24,7 @@
     {{ form_errors(form) }}
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <h1>
                     Neues Thema beginnen
                 </h1>
@@ -34,31 +34,31 @@
         {{ form_start(form) }}
 
         <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label class="control-label" for="">Titel deines Themas:</label>
+            <div class="col-12">
+                <div class="mb-3">
+                    <label class="form-label" for="">Titel deines Themas:</label>
                     {{ form_widget(form.title, { 'attr' : { 'class': 'form-control'} }) }}
                 </div>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label class="control-label" for="">Dein Beitrag:</label>
+            <div class="col-12">
+                <div class="mb-3">
+                    <label class="form-label" for="">Dein Beitrag:</label>
                     {{ form_widget(form.message, { 'attr' : { 'class': 'form-control', 'rows': 10 } }) }}
                 </div>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-12">
-                <div class="btn-group pull-right">
-                    <a href="{{ object_path(board) }}" class="btn btn-default">
+            <div class="col-12 text-end">
+                <div class="btn-group">
+                    <a href="{{ object_path(board) }}" class="btn btn-outline-secondary">
                         Abbrechen
                     </a>
 
-                    <button type="submit" class="btn btn-success">
+                    <button type="submit" class="btn btn-primary">
                         Speichern
                     </button>
                 </div>
