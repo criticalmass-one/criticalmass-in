@@ -1,90 +1,59 @@
-<div class="panel panel-default margin-top-medium">
-    <div class="panel-heading">
-        <h3 class="panel-title">
+<div class="card margin-top-medium">
+    <div class="card-header">
+        <h3 class="card-title mb-0">
             Detaildaten
         </h3>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
         <dl>
-            <dt>
-                Fotografïn
-            </dt>
-            <dd>
-                {{ photo.user.username }}
-            </dd>
+            <dt>Fotografïn</dt>
+            <dd>{{ photo.user.username }}</dd>
 
             {% if photo.exifCreationDate %}
-            <dt>
-                Aufnahmedatum
-            </dt>
-            <dd>
-                {{ photo.exifCreationDate|date('d.m.y H:i:s', photo.ride.city.timezone) }} Uhr
-            </dd>
+                <dt>Aufnahmedatum</dt>
+                <dd>{{ photo.exifCreationDate|date('d.m.y H:i:s', photo.ride.city.timezone) }} Uhr</dd>
             {% endif %}
 
             {% if photo.location %}
-                <dt>
-                    Aufnahmeort
-                </dt>
-                <dd>
-                    {{ photo.location }}
-                </dd>
+                <dt>Aufnahmeort</dt>
+                <dd>{{ photo.location }}</dd>
             {% endif %}
 
             {% if photo.hasCoordinates() %}
-                <dt>
-                    Koordinaten
-                </dt>
+                <dt>Koordinaten</dt>
                 <dd>
-                    <a href="https://www.openstreetmap.org/#map=15/{{ photo.latitude }}/{{ photo.longitude }}" target="_blank">
+                    <a
+                            href="https://www.openstreetmap.org/#map=15/{{ photo.latitude }}/{{ photo.longitude }}"
+                            target="_blank"
+                    >
                         {{ photo.latitude }}, {{ photo.longitude }}
                     </a>
                 </dd>
             {% endif %}
 
             {% if photo.exifExposure %}
-                <dt>
-                    Verschlusszeit
-                </dt>
-                <dd>
-                    {{ photo.exifExposure }}"
-                </dd>
+                <dt>Verschlusszeit</dt>
+                <dd>{{ photo.exifExposure }}"</dd>
             {% endif %}
 
             {% if photo.exifAperture %}
-                <dt>
-                    Blende
-                </dt>
-                <dd>
-                    {{ photo.exifAperture }}
-                </dd>
+                <dt>Blende</dt>
+                <dd>{{ photo.exifAperture }}</dd>
             {% endif %}
 
             {% if photo.exifIso %}
-                <dt>
-                    ISO
-                </dt>
-                <dd>
-                    {{ photo.exifIso }}
-                </dd>
+                <dt>ISO</dt>
+                <dd>{{ photo.exifIso }}</dd>
             {% endif %}
 
             {% if photo.exifFocalLength %}
-                <dt>
-                    Brennweite
-                </dt>
-                <dd>
-                    {{ photo.exifFocalLength }} mm
-                </dd>
+                <dt>Brennweite</dt>
+                <dd>{{ photo.exifFocalLength }} mm</dd>
             {% endif %}
 
             {% if photo.exifCamera %}
-                <dt>
-                    Kamera
-                </dt>
-                <dd>
-                    {{ photo.exifCamera }}
-                </dd>
+                <dt>Kamera</dt>
+                <dd>{{ photo.exifCamera }}</dd>
             {% endif %}
         </dl>
     </div>
