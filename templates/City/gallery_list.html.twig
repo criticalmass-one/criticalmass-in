@@ -3,7 +3,6 @@
 {% block title %}Städte-Übersicht{% endblock %}
 
 {% block breadcrumb %}
-
     <li>
         <a href="{{ path('caldera_criticalmass_city_list') }}">
             Städteliste
@@ -18,11 +17,11 @@
         Foto-Galerien
     </li>
 {% endblock %}
-    
+
 {% block content %}
     <div class="container main-container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <h1>
                     Fotos aus {{ city.city }}
                 </h1>
@@ -35,19 +34,13 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
-                <table id="cityRideList" class="table">
+            <div class="col-12">
+                <table id="cityRideList" class="table align-middle">
                     <thead>
                     <tr>
-                        <th>
-                            Datum
-                        </th>
-                        <th>
-                            Titel
-                        </th>
-                        <th>
-                            Fotos
-                        </th>
+                        <th>Datum</th>
+                        <th>Titel</th>
+                        <th>Fotos</th>
                     </tr>
                     </thead>
                     <tbody>
