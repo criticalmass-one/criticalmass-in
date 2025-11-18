@@ -3,7 +3,7 @@
 {% block title %}Top-Ten-Statistiken{% endblock %}
 
 {% block breadcrumb %}
-    <li class="active">
+    <li class="breadcrumb-item active" aria-current="page">
         Top-Ten-Statistiken
     </li>
 {% endblock %}
@@ -22,33 +22,50 @@
             </div>
         </div>
 
-        <div role="tabpanel">
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active">
-                    <a href="#participants" aria-controls="home" role="tab" data-toggle="tab">
-                        <i class="far fa-users"></i>
-                        Teilnehmer
-                    </a>
-                </li>
+        <ul class="nav nav-tabs" id="topTenTabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active"
+                   id="participants-tab"
+                   data-bs-toggle="tab"
+                   href="#participants"
+                   role="tab"
+                   aria-controls="participants"
+                   aria-selected="true">
+                    <i class="far fa-users"></i>
+                    Teilnehmer
+                </a>
+            </li>
 
-                <li role="presentation">
-                    <a href="#distance" aria-controls="home" role="tab" data-toggle="tab">
-                        <i class="far fa-map"></i>
-                        Strecke
-                    </a>
-                </li>
+            <li class="nav-item">
+                <a class="nav-link"
+                   id="distance-tab"
+                   data-bs-toggle="tab"
+                   href="#distance"
+                   role="tab"
+                   aria-controls="distance"
+                   aria-selected="false">
+                    <i class="far fa-map"></i>
+                    Strecke
+                </a>
+            </li>
 
-                <li role="presentation">
-                    <a href="#duration" aria-controls="home" role="tab" data-toggle="tab">
-                        <i class="far fa-clock"></i>
-                        Länge
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="participants">
-                <div class="row">
+            <li class="nav-item">
+                <a class="nav-link"
+                   id="duration-tab"
+                   data-bs-toggle="tab"
+                   href="#duration"
+                   role="tab"
+                   aria-controls="duration"
+                   aria-selected="false">
+                    <i class="far fa-clock"></i>
+                    Länge
+                </a>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="topTenTabsContent">
+            <div class="tab-pane fade show active" id="participants" role="tabpanel" aria-labelledby="participants-tab">
+                <div class="row mt-3">
                     <div class="col-md-12">
                         <table class="table">
                             <thead>
@@ -93,8 +110,8 @@
                 </div>
             </div>
 
-            <div role="tabpanel" class="tab-pane" id="distance">
-                <div class="row">
+            <div class="tab-pane fade" id="distance" role="tabpanel" aria-labelledby="distance-tab">
+                <div class="row mt-3">
                     <div class="col-md-12">
                         <table class="table">
                             <thead>
@@ -139,8 +156,8 @@
                 </div>
             </div>
 
-            <div role="tabpanel" class="tab-pane" id="duration">
-                <div class="row">
+            <div class="tab-pane fade" id="duration" role="tabpanel" aria-labelledby="duration-tab">
+                <div class="row mt-3">
                     <div class="col-md-12">
                         <table class="table">
                             <thead>
@@ -185,8 +202,12 @@
                 </div>
             </div>
 
-            <p>
-                Hier fehlt noch was? Du kannst fehlende Teilnehmerzahlen auf der jeweiligen Tourenseite nachtragen oder Streckenlängen mit hochgeladenen GPX-Dateien ergänzen. Auf <a href="https://criticalmass.blog/criticalmass-one/haeufig-gestellte-fragen-zu-dieser-webseite/haeufig-gestellte-fragen-zur-statistik/">unserer Hilfeseite</a> findest du weitere Informationen.
+            <p class="mt-3">
+                Hier fehlt noch was? Du kannst fehlende Teilnehmerzahlen auf der jeweiligen Tourenseite nachtragen oder Streckenlängen mit hochgeladenen GPX-Dateien ergänzen. Auf
+                <a href="https://criticalmass.blog/criticalmass-one/haeufig-gestellte-fragen-zu-dieser-webseite/haeufig-gestellte-fragen-zur-statistik/">
+                    unserer Hilfeseite
+                </a>
+                findest du weitere Informationen.
             </p>
         </div>
     </div>
