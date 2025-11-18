@@ -9,16 +9,25 @@
 {% endblock %}
 
 {% block content %}
-    <div class="profile-header text-center" style="background-image: url(https://criticalmass.in/media/cache/frontpage_teaser_large/teaser/59db94db0270c.jpg);">
+    <div class="profile-header text-center"
+         style="background-image: url(https://criticalmass.in/media/cache/frontpage_teaser_large/teaser/59db94db0270c.jpg);">
+
         <div class="container-fluid">
             <div class="container-inner">
-                <img class="rounded-circle media-object" src="{{ gravatarUrl(userProfile) }}">
+                <img class="rounded-circle"
+                     src="{{ gravatarUrl(userProfile) }}"
+                     alt="{{ userProfile.usernameCanonical }}">
+
                 <h3 class="profile-header-user">
                     {{ userProfile.usernameCanonical }}
                 </h3>
-                <p class="profile-header-bio">I wish i was a little bit taller, wish i was a baller, wish i had a girl… also.</p>
+
+                <p class="profile-header-bio">
+                    I wish i was a little bit taller, wish i was a baller, wish i had a girl… also.
+                </p>
             </div>
         </div>
+
         <nav class="profile-header-nav">
             <ul class="nav nav-tabs justify-content-center">
                 <li class="nav-item">
@@ -32,5 +41,6 @@
                 </li>
             </ul>
         </nav>
+
     </div>
 {% endblock %}
