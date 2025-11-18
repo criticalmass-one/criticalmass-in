@@ -1,5 +1,5 @@
-<div class="row margin-bottom-medium">
-    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+<div class="row mb-4">
+    <div class="col-12 col-md-3 col-lg-3">
         <div id="map-{{ city.id }}"
              class="map"
              data-controller="map--map"
@@ -14,9 +14,9 @@
         </div>
     </div>
 
-    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+    <div class="col-12 col-md-7 col-lg-7">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <a href="{{ object_path(city) }}">
                     <h4>
                         {{ city.title }}
@@ -27,15 +27,15 @@
 
         {% if city.cycles|length > 0 %}
             <div class="row">
-                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                <div class="col-12 col-md-8 col-lg-8">
                     <ul>
                         {% for cycle in city.cycles %}
-                        <li>
-                            am {{ ('cycle.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ cycle.dayOfWeek)|trans }} um {{ cycle.time|date('H:i', city.timezone) }} Uhr
-                            {% if cycle.location %}
-                                <br />Treffpunkt: {{ cycle.location }}
-                            {% endif %}
-                        </li>
+                            <li>
+                                am {{ ('cycle.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ cycle.dayOfWeek)|trans }} um {{ cycle.time|date('H:i', city.timezone) }} Uhr
+                                {% if cycle.location %}
+                                    <br />Treffpunkt: {{ cycle.location }}
+                                {% endif %}
+                            </li>
                         {% endfor %}
                     </ul>
                 </div>
