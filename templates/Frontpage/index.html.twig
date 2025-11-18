@@ -4,22 +4,22 @@
 
 {% block masterContent %}
     <div class="navbar-wrapper">
-        {% include('Template/Navigation/_navigation.html.twig') %}
+        {% include 'Template/Navigation/_navigation.html.twig' %}
     </div>
 
-    <div class="container-fluid margin-bottom-medium">
+    <div class="container-fluid mb-4">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 {% include 'Frontpage/_carousel.html.twig' with { 'frontpageTeaserList': frontpageTeaserList } %}
             </div>
         </div>
     </div>
 
-    <div class="container margin-top-medium">
+    <div class="container mt-4">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-12 col-md-8">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <h1 class="no-margin-top">
                             Hej, wir fahren Fahrrad!
                         </h1>
@@ -38,18 +38,18 @@
                     </div>
                 </div>
 
-                <div class="row margin-top-medium">
-                    <div class="col-md-12">
+                <div class="row mt-4">
+                    <div class="col-12">
                         {{ include('Timeline/timeline.html.twig') }}
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-12 col-md-4">
                 {{ render(controller('App\\Controller\\FrontpageController::rideListAction')) }}
             </div>
         </div>
     </div>
 
-    {% include('Template/Includes/_footer.html.twig') %}
+    {% include 'Template/Includes/_footer.html.twig' %}
 {% endblock %}

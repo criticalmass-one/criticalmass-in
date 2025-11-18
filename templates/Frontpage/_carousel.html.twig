@@ -1,25 +1,20 @@
-<div id="frontpage-carousel" class="carousel slide" data-interval="4000" data-ride="carousel">
+<div id="frontpage-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
     <div class="carousel-inner">
         {% for frontpageTeaser in frontpageTeaserList %}
-            <div class="item{% if loop.first %} active{% endif %}"
-                 style="background-image: url({{ vich_uploader_asset(frontpageTeaser, 'imageFile')|imagine_filter('frontpage_teaser_large') }})">
-                <div class="carousel-caption">
+            <div class="carousel-item{% if loop.first %} active{% endif %}"
+                 style="background-image: url({{ vich_uploader_asset(frontpageTeaser, 'imageFile')|imagine_filter('frontpage_teaser_large') }}); background-size: cover; background-position: center;">
+                <div class="carousel-caption d-none d-md-block">
                     {% if frontpageTeaser.headline %}
-                        <h2>
-                            {{ frontpageTeaser.headline }}
-                        </h2>
+                        <h2>{{ frontpageTeaser.headline }}</h2>
                     {% endif %}
 
                     {% if frontpageTeaser.text %}
-                        <p class="lead">
-                            {{ frontpageTeaser.text }}
-                        </p>
+                        <p class="lead">{{ frontpageTeaser.text }}</p>
                     {% endif %}
 
                     <div class="btn-group" role="group">
                         {% for button in frontpageTeaser.buttons %}
-                            <a class="btn {{ button.class }}" role="button"
-                               href="{{ button.link }}">
+                            <a class="btn {{ button.class }}" role="button" href="{{ button.link }}">
                                 {% if button.icon %}
                                     <i class="fa {{ button.icon }}"></i>
                                 {% endif %}
@@ -34,6 +29,11 @@
         {% endfor %}
     </div>
 
-    <a class="left carousel-control" href="#frontpage-carousel" data-slide="prev"></a>
-    <a class="right carousel-control" href="#frontpage-carousel" data-slide="next"></a>
+    <button class="carousel-control-prev" type="button" data-bs-target="#frontpage-carousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    </button>
+
+    <button class="carousel-control-next" type="button" data-bs-target="#frontpage-carousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    </button>
 </div>
