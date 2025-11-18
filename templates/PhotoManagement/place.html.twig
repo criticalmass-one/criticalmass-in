@@ -43,7 +43,7 @@
 
         <div class="row">
             <div class="col-md-3 text-center">
-                <img class="img-responsive img-thumbnail"
+                <img class="img-fluid img-thumbnail"
                      src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
             </div>
 
@@ -69,14 +69,14 @@
             </div>
         </div>
 
-        <div class="row margin-top-medium">
+        <div class="row mt-4">
             <div class="col-md-12">
                 {{ form_start(form) }}
                 {{ form_widget(form.latitude) }}
                 {{ form_widget(form.longitude) }}
 
-                <div class="btn-group pull-right" role="group" aria-label="...">
-                    <a href="javascript:window.location=document.referrer;" class="btn btn-default">
+                <div class="btn-group float-end" role="group" aria-label="Foto speichern">
+                    <a href="javascript:window.location=document.referrer;" class="btn btn-secondary">
                         Abbrechen
                     </a>
                     <button type="submit" class="btn btn-success">
@@ -88,37 +88,39 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row mt-4">
             <div class="col-md-12">
-                <ul class="pager">
-                    {% if previous_photo %}
-                        <li class="previous">
-                            <a href="{{ object_path(previous_photo) }}">
-                                &larr; Voriges Foto
-                            </a>
-                        </li>
-                    {% else %}
-                        <li class="previous disabled">
-                            <a href="#">
-                                &larr; Voriges Foto
-                            </a>
-                        </li>
-                    {% endif %}
+                <nav aria-label="Foto-Navigation">
+                    <ul class="pagination justify-content-between mb-0">
+                        {% if previous_photo %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ object_path(previous_photo) }}">
+                                    &larr; Voriges Foto
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                                    &larr; Voriges Foto
+                                </a>
+                            </li>
+                        {% endif %}
 
-                    {% if next_photo %}
-                        <li class="next">
-                            <a href="{{ object_path(next_photo) }}">
-                                Nächstes Foto &rarr;
-                            </a>
-                        </li>
-                    {% else %}
-                        <li class="next disabled">
-                            <a href="#">
-                                Nächstes Foto &rarr;
-                            </a>
-                        </li>
-                    {% endif %}
-                </ul>
+                        {% if next_photo %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ object_path(next_photo) }}">
+                                    Nächstes Foto &rarr;
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                                    Nächstes Foto &rarr;
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>

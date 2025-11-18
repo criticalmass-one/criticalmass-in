@@ -28,8 +28,10 @@
         <div class="row">
             <div class="col-md-12">
                 {% if app.getUser() %}
-                    <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
-                        <a class="btn btn-success" href="{{ object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') }}" title="Fotos hochladen">
+                    <div class="btn-group float-end mt-3">
+                        <a class="btn btn-success"
+                           href="{{ object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') }}"
+                           title="Fotos hochladen">
                             <i class="far fa-camera"></i>
                             Fotos hochladen
                         </a>
@@ -44,20 +46,20 @@
 
         {% if pagination|length == 0 %}
             {% if not app.getUser() %}
-                <div class="row">
+                <div class="row mt-3">
                     <div class="col-md-12">
                         <div class="alert alert-info" role="alert">
                             <strong>
                                 Schade!
                             </strong>
-                            Bislang hat noch niemand Fotos von dieser Tour hochgeladen. Mit einem <a
-                                    href="{{ path('login') }}">criticalmass.in-Benutzerkonto</a>
+                            Bislang hat noch niemand Fotos von dieser Tour hochgeladen. Mit einem
+                            <a href="{{ path('login') }}">criticalmass.in-Benutzerkonto</a>
                             könntest du deine Fotos hochladen.
                         </div>
                     </div>
                 </div>
             {% else %}
-                <div class="row">
+                <div class="row mt-3">
                     <div class="col-md-12">
                         <div class="alert alert-info" role="alert">
                             <strong>
@@ -69,13 +71,16 @@
                 </div>
             {% endif %}
         {% else %}
-            <div class="row">
+            <div class="row mt-3">
                 <div class="photo-list">
                     {% for photo in pagination %}
-                        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-                            <div class="photo-thumb margin-bottom-medium text-center">
+                        <div class="col-6 col-sm-4 col-md-3 col-lg-3">
+                            <div class="photo-thumb mb-4 text-center">
                                 <a href="{{ object_path(photo) }}">
-                                    <img src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
+                                    <img
+                                            class="img-fluid"
+                                            src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"
+                                    />
                                 </a>
                             </div>
                         </div>
