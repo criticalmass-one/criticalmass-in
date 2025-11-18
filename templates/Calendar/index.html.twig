@@ -36,38 +36,22 @@
 
         <div class="row">
             <div class="col-md-12">
-                <table id="calendar" class="calendar">
+                <table id="calendar"
+                       class="calendar"
+                       data-controller="calendar">
+
                     <thead>
                     <tr>
-                        <th width="14%">
-                            Montag
-                        </th>
-
-                        <th width="14%">
-                            Dienstag
-                        </th>
-
-                        <th width="14%">
-                            Mittwoch
-                        </th>
-
-                        <th width="14%">
-                            Donnerstag
-                        </th>
-
-                        <th width="14%">
-                            Freitag
-                        </th>
-
-                        <th width="14%">
-                            Sonnabend
-                        </th>
-
-                        <th width="14%">
-                            Sonntag
-                        </th>
+                        <th width="14%">Montag</th>
+                        <th width="14%">Dienstag</th>
+                        <th width="14%">Mittwoch</th>
+                        <th width="14%">Donnerstag</th>
+                        <th width="14%">Freitag</th>
+                        <th width="14%">Sonnabend</th>
+                        <th width="14%">Sonntag</th>
                     </tr>
                     </thead>
+
                     <tbody>
                     {% for week in month %}
                         <tr>
@@ -78,10 +62,12 @@
                                             {{ day.format('d') }}
                                         </div>
 
-                                        <ul class="ride-list list-unstyled">
+                                        <ul class="ride-list list-unstyled"
+                                            data-calendar-target="rideList">
                                             {% for event in calendr_events(day).all %}
                                                 {% set ride = event.ride %}
-                                                {% include 'Common/Ride/simple_city_time_list_item.html.twig' with { ride: ride } %}
+                                                {% include 'Common/Ride/simple_city_time_list_item.html.twig'
+                                                    with { ride: ride } %}
                                             {% endfor %}
                                         </ul>
                                     </td>
@@ -92,6 +78,7 @@
                         </tr>
                     {% endfor %}
                     </tbody>
+
                 </table>
             </div>
         </div>
