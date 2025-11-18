@@ -9,7 +9,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <h1>
                     Die nächste Masse ist ganz nah
                 </h1>
@@ -28,8 +28,8 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
-                <table id="city-list-table" class="table tablesorter">
+            <div class="col-12">
+                <table id="city-list-table" class="table tablesorter align-middle">
                     <thead>
                     <tr>
                         <th>
@@ -63,7 +63,7 @@
                                 {% endif %}
                             </td>
                             <td>
-                                <ul class="list-unstyled">
+                                <ul class="list-unstyled mb-0">
                                     {% for cycle in city.cycles %}
                                         <li>
                                             am {{ ('cycle.event_date.month_week.' ~ cycle.weekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ cycle.dayOfWeek)|trans }}
