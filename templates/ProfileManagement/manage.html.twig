@@ -8,49 +8,48 @@
 
 {% block content %}
     <div class="container">
+
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
+            <div class="col-md-10 offset-md-1">
                 <h2>
                     Hej {{ app.getUser().getUsername() }}, schön, dass du da bist!
                 </h2>
 
                 <p class="lead">
                     Willkommen in deinem Benutzerkonto!
-                    Hier kannst du deine {% if feature('photos') %}Fotos, {% endif %}Tracks und Teilnahmen verwalten und deine Kontoeinstellungen ändern.
+                    Hier kannst du deine {% if feature('photos') %}Fotos, {% endif %}Tracks und Teilnahmen verwalten
+                    und deine Kontoeinstellungen ändern.
                 </p>
             </div>
         </div>
 
         {% for flashMessage in app.session.flashbag.get('success') %}
-
             <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <div class="alert alert-dismissable alert-success" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-
+                <div class="col-md-10 offset-md-1">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
                         {{ flashMessage }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 </div>
             </div>
         {% endfor %}
 
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
+            <div class="col-md-10 offset-md-1">
                 <div class="row">
+
                     <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
+                        <div class="card mb-3">
+                            <div class="card-header">
                                 Profilfoto ändern
                             </div>
-                            <div class="panel-body">
+                            <div class="card-body">
                                 <p>
                                     Lade ein Foto für dein Profil hoch.
                                 </p>
 
                                 <p class="text-center">
-                                    <a class="btn btn-default"
+                                    <a class="btn btn-secondary"
                                        href="{{ path('criticalmass_user_profile_photo') }}">
                                         Profilfoto ändern
                                     </a>
@@ -60,17 +59,17 @@
                     </div>
 
                     <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
+                        <div class="card mb-3">
+                            <div class="card-header">
                                 Profilfarbe wählen
                             </div>
-                            <div class="panel-body">
+                            <div class="card-body">
                                 <p>
                                     Ändere die Farbe deines Benutzerkontos.
                                 </p>
 
                                 <p class="text-center">
-                                    <a class="btn btn-default"
+                                    <a class="btn btn-secondary"
                                        href="{{ path('criticalmass_user_profile_color') }}">
                                         Profilfarbe wählen
                                     </a>
@@ -80,18 +79,18 @@
                     </div>
 
                     <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
+                        <div class="card mb-3">
+                            <div class="card-header">
                                 Deine Touren
                             </div>
 
-                            <div class="panel-body">
+                            <div class="card-body">
                                 {% if participationCounter == 0 %}
                                     <div class="alert alert-info" role="alert">
                                         <strong>Schade:</strong>
-                                        Du hast noch an keiner Critical Mass teilgenommen. Im <a
-                                                href="{{ path('caldera_criticalmass_calendar') }}">Kalender</a> findest
-                                        du Touren in deiner Nähe.
+                                        Du hast noch an keiner Critical Mass teilgenommen. Im
+                                        <a href="{{ path('caldera_criticalmass_calendar') }}">Kalender</a>
+                                        findest du Touren in deiner Nähe.
                                     </div>
                                 {% else %}
                                     <p>
@@ -100,7 +99,7 @@
                                     </p>
 
                                     <p class="text-center">
-                                        <a class="btn btn-default"
+                                        <a class="btn btn-secondary"
                                            href="{{ path('criticalmass_user_participation_list') }}">
                                             Tourenübersicht
                                         </a>
@@ -111,15 +110,15 @@
                     </div>
 
                     <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
+                        <div class="card mb-3">
+                            <div class="card-header">
                                 Deine Tracks
                             </div>
-                            <div class="panel-body">
+                            <div class="card-body">
                                 {% if trackCounter == 0 %}
                                     <div class="alert alert-info" role="alert">
-                                        Du hast bislang noch keine Tracks von Critical-Mass-Touren gespeichert. Schau in
-                                        die Hilfe, wenn du weitere Informationen zu diesem Thema benötigst.
+                                        Du hast bislang noch keine Tracks von Critical-Mass-Touren gespeichert. Schau
+                                        in die Hilfe, wenn du weitere Informationen zu diesem Thema benötigst.
                                     </div>
                                 {% else %}
                                     <p>
@@ -128,7 +127,8 @@
                                     </p>
 
                                     <p class="text-center">
-                                        <a class="btn btn-default" href="{{ path('caldera_criticalmass_track_list') }}">
+                                        <a class="btn btn-secondary"
+                                           href="{{ path('caldera_criticalmass_track_list') }}">
                                             Tracks verwalten
                                         </a>
                                     </p>
@@ -138,46 +138,46 @@
                     </div>
 
                     {% if feature('photos') %}
-                    <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                Deine Fotos
-                            </div>
-                            <div class="panel-body">
-                                {% if photoCounter == 0 %}
-                                    <div class="alert alert-info" role="alert">
-                                        Du hast bislang noch keine Fotos hochgeladen. In der Hilfe findest du mehr
-                                        Informationen zu diesem Thema.
-                                    </div>
-                                {% else %}
-                                    <p>
-                                        Du hast von deinen Touren {{ photoCounter }} Fotos hochgeladen.
-                                    </p>
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-header">
+                                    Deine Fotos
+                                </div>
+                                <div class="card-body">
+                                    {% if photoCounter == 0 %}
+                                        <div class="alert alert-info" role="alert">
+                                            Du hast bislang noch keine Fotos hochgeladen. In der Hilfe findest du mehr
+                                            Informationen zu diesem Thema.
+                                        </div>
+                                    {% else %}
+                                        <p>
+                                            Du hast von deinen Touren {{ photoCounter }} Fotos hochgeladen.
+                                        </p>
 
-                                    <p class="text-center">
-                                        <a class="btn btn-default"
-                                           href="{{ path('caldera_criticalmass_photo_user_list') }}">
-                                            Fotos verwalten
-                                        </a>
-                                    </p>
-                                {% endif %}
+                                        <p class="text-center">
+                                            <a class="btn btn-secondary"
+                                               href="{{ path('caldera_criticalmass_photo_user_list') }}">
+                                                Fotos verwalten
+                                            </a>
+                                        </p>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
-                    </div>
                     {% endif %}
 
                     <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
+                        <div class="card mb-3">
+                            <div class="card-header">
                                 Benutzername ändern
                             </div>
-                            <div class="panel-body">
+                            <div class="card-body">
                                 <p>
                                     Hier kannst du deinen Benutzernamen ändern.
                                 </p>
 
                                 <p class="text-center">
-                                    <a class="btn btn-default"
+                                    <a class="btn btn-secondary"
                                        href="{{ path('criticalmass_user_usermanagement_editusername') }}">
                                         Benutzername ändern
                                     </a>
@@ -187,18 +187,18 @@
                     </div>
 
                     <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
+                        <div class="card mb-3">
+                            <div class="card-header">
                                 E-Mail-Adresse ändern
                             </div>
-                            <div class="panel-body">
+                            <div class="card-body">
                                 <p>
                                     Hier kannst du deine E-Mail-Adresse ändern. Bedenke bitte, dass du dich künftig
                                     mit deinen neuen Benutzerdaten einloggen musst.
                                 </p>
 
                                 <p class="text-center">
-                                    <a class="btn btn-default"
+                                    <a class="btn btn-secondary"
                                        href="{{ path('criticalmass_user_usermanagement_editemail') }}">
                                         E-Mail-Adresse ändern
                                     </a>
@@ -206,7 +206,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
+
+                </div> {# inner row #}
             </div>
         </div>
     </div>
