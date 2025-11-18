@@ -19,7 +19,7 @@
         <div class="row">
             {% if list|length %}
                 {% for candidate in list %}
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-4">
                         <div class="row">
                             <div class="col-md-12">
                                 <h3>
@@ -30,19 +30,23 @@
 
                         <div class="row">
                             <div class="col-md-12">
-                                <div id="map-{{ candidate.activityId }}" class="preview-map" style="height: 150px;"
-                                     data-polyline="{{ candidate.polyline }}">
-
+                                <div
+                                        id="map-{{ candidate.activityId }}"
+                                        class="preview-map"
+                                        style="height: 150px;"
+                                        data-polyline="{{ candidate.polyline }}">
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row mt-2">
                             <div class="col-md-12">
                                 <dl>
                                     <dt>Tour:</dt>
                                     <dd>
-                                        <a href="{{ object_path(candidate.ride) }}">{{ candidate.ride.title }}</a>
+                                        <a href="{{ object_path(candidate.ride) }}">
+                                            {{ candidate.ride.title }}
+                                        </a>
                                     </dd>
                                 </dl>
                             </div>
@@ -67,7 +71,9 @@
                                 <dl>
                                     <dt>Stadt:</dt>
                                     <dd>
-                                        <a href="{{ object_path(candidate.ride.city) }}">{{ candidate.ride.city.city }}</a>
+                                        <a href="{{ object_path(candidate.ride.city) }}">
+                                            {{ candidate.ride.city.city }}
+                                        </a>
                                     </dd>
                                 </dl>
                             </div>
@@ -94,10 +100,10 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row mt-2">
                             <div class="col-md-12">
                                 <div class="text-center">
-                                    <div class="btn-group">
+                                    <div class="btn-group" role="group" aria-label="Aktivität importieren oder ablehnen">
                                         <a class="btn btn-success"
                                            href="{{ object_path(candidate.ride, 'caldera_criticalmass_strava_import') }}?activityId={{ candidate.activityId }}">
                                             <i class="far fa-check"></i>
@@ -117,6 +123,7 @@
                     </div>
                 {% endfor %}
             {% else %}
+                {# keine Aktivitäten verfügbar #}
             {% endif %}
         </div>
     </div>
