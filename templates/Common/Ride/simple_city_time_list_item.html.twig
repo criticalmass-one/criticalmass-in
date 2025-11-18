@@ -1,4 +1,6 @@
 <li>
-    {% if not ride.enabled %}<s>{% endif %}<a href="{{ object_path(ride) }}">{{ ride.city.city }}</a>
-        <small>({{ ride.dateTime|date('H:i', ride.city.timezone) }})</small>{% if not ride.enabled %}</s>{% endif %}
+    {% if not ride.enabled %}<s>{% endif %}
+        <a href="{{ object_path(ride) }}">{{ ride.city.city }}</a>
+        <small>({{ ride.dateTime|date('H:i', ride.city.timezone) }})</small>
+        {% if not ride.enabled %}</s>{% endif %}
 </li>
