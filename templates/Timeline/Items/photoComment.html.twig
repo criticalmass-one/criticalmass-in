@@ -1,9 +1,9 @@
 <div class="row margin-bottom-medium">
     {{ include('Timeline/_includes/user_column.html.twig') }}
 
-    <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
+    <div class="col-9 col-sm-9 col-md-10 col-lg-10">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <strong>
                     {{ item.user.username }}
                 </strong>
@@ -12,7 +12,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <a href="{{ object_path(item.ride) }}">
                     <h4>
                         {{ item.ride.title }}
@@ -22,19 +22,22 @@
         </div>
 
         {% for post in item.postList %}
-        <div class="row">
-            <div class="col-md-4">
-                <a href="{{ object_path(post.photo) }}#post-{{ post.id }}">
-                    <img src="{{ vich_uploader_asset(post.photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}" class="img-responsive img-thumbnail" />
-                </a>
-            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <a href="{{ object_path(post.photo) }}#post-{{ post.id }}">
+                        <img
+                                src="{{ vich_uploader_asset(post.photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"
+                                class="img-fluid img-thumbnail"
+                        />
+                    </a>
+                </div>
 
-            <div class="col-md-8">
-                <p>
-                    {{ post.message|markdown }}
-                </p>
+                <div class="col-md-8">
+                    <p>
+                        {{ post.message|markdown }}
+                    </p>
+                </div>
             </div>
-        </div>
         {% endfor %}
     </div>
 </div>

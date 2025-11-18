@@ -1,82 +1,36 @@
 <div class="row margin-bottom-medium timeline-item-ride{% if not item.rideEnabled %}--disabled{% endif %}">
     {{ include('Timeline/_includes/user_column.html.twig') }}
 
-    <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
+    <div class="col-9 col-sm-9 col-md-10 col-lg-10">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <strong>
                     {{ item.user.username }}
                 </strong>
-                hat einen Track hochgeladen:
+                hat
+                <a href="{{ object_path(item.ride, 'caldera_criticalmass_photo_ride_list') }}">
+                    {{ item.counter }} Fotos
+                </a> zur Tour
+                <strong class="ride-title">
+                    <a href="{{ object_path(item.ride) }}">
+                        {{ item.ride.title }}
+                    </a>
+                </strong>
+                hochgeladen
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-12">
-                <a href="{{ object_path(item.ride) }}">
-                    <h4>
-                        {{ item.rideTitle }}
-                    </h4>
-                </a>
-            </div>
-        </div>
-
-        {% if item.polyline %}
-        <div class="row">
-            <div class="col-md-12">
-                <div
-                    id="map-{{ item.uniqId }}"
-                    class="map timeline-item-ride-map"
-                    data-controller="map--map"
-                    style="height: 150px;"
-                    data-map--map-center-latitude-value="{{ item.ride.latitude }}"
-                    data-map--map-center-longitude-value="{{ item.ride.longitude }}"
-                    data-map--map-zoom-value="13"
-                    data-map--map-lock-map-value="true"
-                    data-map--map-polyline-color-value="{{ item.track.user.color }}"
-                    data-map--map-polyline-value="{{ item.track.polyline }}"
-                >
+            {% for previewPhoto in item.previewPhotoList %}
+                <div class="col-12 col-sm-6 col-md-4">
+                    <a href="{{ object_path(previewPhoto) }}">
+                        <img
+                                src="{{ vich_uploader_asset(previewPhoto, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"
+                                class="img-fluid img-thumbnail"
+                        />
+                    </a>
                 </div>
-            </div>
-        </div>
-        {% endif %}
-
-        <div class="row">
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                <dl>
-                    <dt>
-                        Datum:
-                    </dt>
-
-                    <dd>
-                        {{ item.ride.dateTime|date('d.m.Y') }}
-                    </dd>
-                </dl>
-            </div>
-
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                <dl>
-                    <dt>
-                        Länge:
-                    </dt>
-
-                    <dd>
-                        {{ item.distance|number_format(2, ',', '.') }}&nbsp;km
-                    </dd>
-                </dl>
-            </div>
-
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                <dl>
-                    <dt>
-                        Dauer:
-                    </dt>
-
-                    <dd>
-                        {{ human_duration(item.duration) }}
-                    </dd>
-                </dl>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </div>
