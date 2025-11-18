@@ -1,22 +1,29 @@
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Details</h3>
+<div class="card mb-3">
+    <div class="card-header">
+        <h3 class="card-title h5 mb-0">Details</h3>
     </div>
-    <div class="panel-body">
+
+    <div class="card-body">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <dl>
                     <dt>Datum</dt>
-                    <dd itemprop="startDate" content="{{ ride.dateTime|date('Y-m-dTH:i') }}">{{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}</dd>
-                    <meta itemprop="endDate" content="{{ date_time_add(ride.dateTime, 'PT2H')|date('Y-m-dTH:i') }}" />
+                    <dd itemprop="startDate" content="{{ ride.dateTime|date('Y-m-d\\TH:i') }}">
+                        {{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}
+                    </dd>
+                    <meta itemprop="endDate"
+                          content="{{ date_time_add(ride.dateTime, 'PT2H')|date('Y-m-d\\TH:i') }}" />
+
                     <dt>Uhrzeit</dt>
                     {% if ride.dateTime %}
                         <dd>{{ ride.dateTime|date('H:i', ride.city.timezone) }} Uhr</dd>
                     {% else %}
                         <dd>die Uhrzeit ist noch nicht bekannt</dd>
                     {% endif %}
+
                     <div itemprop="location" itemscope itemtype="http://schema.org/Place">
                         <dt>Treffpunkt</dt>
+
                         {% if ride.location and ride.latitude and ride.longitude %}
                             {% if location %}
                                 <dd itemprop="name">
@@ -27,10 +34,12 @@
                             {% else %}
                                 <dd itemprop="name">{{ ride.location }}</dd>
                             {% endif %}
+
                             <div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
                                 <meta itemprop="latitude" content="{{ ride.latitude }}" />
                                 <meta itemprop="longitude" content="{{ ride.longitude }}" />
                             </div>
+
                         {% else %}
                             <dd>
                                 {% if app.user %}
@@ -38,13 +47,18 @@
                                         noch nicht bekannt
                                     </a>
                                 {% else %}
-                                    <a href="#" class="modal-hint" data-modal-hint-title="{{ 'hint_modal.ride.location_edit_link.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.ride.location_edit_link.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
+                                    <a href="#"
+                                       class="modal-hint"
+                                       data-modal-hint-title="{{ 'hint_modal.ride.location_edit_link.title'|trans }}"
+                                       data-modal-hint-text="{{ 'hint_modal.ride.location_edit_link.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
+                                       data-hint-modal-size="md">
                                         noch nicht bekannt
                                     </a>
                                 {% endif %}
                             </dd>
                         {% endif %}
                     </div>
+
                     {% if weatherForecast %}
                         <dt>Wetter</dt>
                         <dd>{{ weatherForecast }}</dd>
@@ -53,7 +67,8 @@
 
                 {% if ride.dateTime %}
                     <p class="text-center">
-                        <a href="{{ object_path(ride, 'caldera_criticalmass_ride_ical') }}" class="btn btn-success">
+                        <a href="{{ object_path(ride, 'caldera_criticalmass_ride_ical') }}"
+                           class="btn btn-success">
                             <i class="far fa-calendar"></i>
                             Kalendereintrag merken
                         </a>

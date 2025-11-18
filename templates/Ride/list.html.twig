@@ -4,65 +4,72 @@
 
 {% block content %}
     <div class="container">
-        <ol class="breadcrumb">
-            <li><a href="{{ path('caldera_criticalmass_frontpage') }}">criticalmass.in</a></li>
-            <li><a href="{{ path('caldera_criticalmass_city_list') }}">Städteliste</a></li>
-            <li class="active">Kalender</li>
-        </ol>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('caldera_criticalmass_frontpage') }}">criticalmass.in</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('caldera_criticalmass_city_list') }}">Städteliste</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    Kalender
+                </li>
+            </ol>
+        </nav>
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <h1>hic sunt birotarii</h1>
 
                 <p class="lead">Irgendwo ist immer was los.</p>
             </div>
         </div>
 
-
         {% for dateString, rides in rides %}
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <h4>{{ dateString|date('l, d. F Y') }}</h4>
                 </div>
             </div>
 
             <table class="table">
                 <tr>
-                    <th class="col-xs-4 col-sm-3 col-md-2 col-lg-2">
+                    <th class="col-sm-3 col-md-2 col-lg-2">
                         Stadt
                     </th>
-                    <th class="hidden-xs col-sm-3 col-md-2 col-lg-2">
+                    <th class="d-none d-sm-table-cell col-sm-3 col-md-2 col-lg-2">
                         Uhrzeit
                     </th>
-                    <th class="col-xs-8 col-sm-6 col-md-4 col-lg-4">
+                    <th class="col-sm-6 col-md-4 col-lg-4">
                         Treffpunkt
                     </th>
-                    <th class="hidden-xs hidden-sm col-md-4 col-lg-4">
+                    <th class="d-none d-md-table-cell col-md-4 col-lg-4">
                         Titel
                     </th>
                 </tr>
 
                 {% for ride in rides %}
                     <tr>
-                        <td class="col-xs-4 col-sm-3 col-md-2 col-lg-2">
+                        <td class="col-sm-3 col-md-2 col-lg-2">
                             <a href="{{ object_path(ride.city) }}">
                                 {{ ride.city.city }}
                             </a>
                         </td>
 
-                        <td class="hidden-xs col-sm-3 col-md-2 col-lg-2">
+                        <td class="d-none d-sm-table-cell col-sm-3 col-md-2 col-lg-2">
                             <a href="{{ object_path(ride) }}">
                                 {{ ride.getTime().format('H:i') }} Uhr
                             </a>
                         </td>
 
-                        <td class="col-xs-8 col-sm-6 col-md-4 col-lg-4">
+                        <td class="col-sm-6 col-md-4 col-lg-4">
                             <a href="{{ object_path(ride) }}">
                                 {% if ride.location %}{{ ride.location }}{% endif %}
                             </a>
                         </td>
 
-                        <td class="hidden-xs hidden-sm col-md-4 col-lg-4">
+                        <td class="d-none d-md-table-cell col-md-4 col-lg-4">
                             <a href="{{ object_path(ride) }}">
                                 {{ ride.title }}
                             </a>

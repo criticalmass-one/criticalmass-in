@@ -1,32 +1,22 @@
 {% set previous_ride = previous_entity(ride) %}
 {% set next_ride = next_entity(ride) %}
 
-<ul class="pager">
-    {% if previous_ride %}
-        <li class="previous">
-            <a href="{{ object_path(previous_ride) }}">
-                &larr; Vorige Tour
-            </a>
-        </li>
-    {% else %}
-        <li class="previous disabled">
-            <a href="#">
-                &larr; Vorige Tour
-            </a>
-        </li>
-    {% endif %}
+<nav aria-label="Tour Navigation">
+    <ul class="pagination justify-content-between">
 
-    {% if next_ride %}
-        <li class="next">
-            <a href="{{ object_path(next_ride) }}">
+        {# Previous #}
+        <li class="page-item {% if not previous_ride %}disabled{% endif %}">
+            <a class="page-link" href="{{ previous_ride ? object_path(previous_ride) : '#' }}">
+                &larr; Vorige Tour
+            </a>
+        </li>
+
+        {# Next #}
+        <li class="page-item {% if not next_ride %}disabled{% endif %}">
+            <a class="page-link" href="{{ next_ride ? object_path(next_ride) : '#' }}">
                 Nächste Tour &rarr;
             </a>
         </li>
-    {% else %}
-        <li class="next disabled">
-            <a href="#">
-                Nächste Tour &rarr;
-            </a>
-        </li>
-    {% endif %}
-</ul>
+
+    </ul>
+</nav>

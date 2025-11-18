@@ -3,19 +3,19 @@
 {% block title %}{{ ride.title }}{% endblock %}
 
 {% block breadcrumb %}
-    <li>
+    <li class="breadcrumb-item">
         <a href="{{ path('caldera_criticalmass_city_list') }}">
             Städteliste
         </a>
     </li>
 
-    <li>
+    <li class="breadcrumb-item">
         <a href="{{ object_path(ride.city) }}">
             {{ ride.city.city }}
         </a>
     </li>
 
-    <li class="active">
+    <li class="breadcrumb-item active" aria-current="page">
         {{ ride.title }}
     </li>
 {% endblock %}
@@ -23,7 +23,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <h1>
                     {{ ride.title }}
                 </h1>
@@ -31,7 +31,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <div class="alert alert-danger">
                     {{ blocked.description }}
                 </div>
