@@ -25,14 +25,14 @@
         {{ include('Flash/_flash.html.twig') }}
 
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
+            <div class="col-12 col-md-10 offset-md-1">
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
+                    <div class="col-12 col-md-4">
+                        <div class="card mb-3">
+                            <div class="card-header">
                                 Turnus
                             </div>
-                            <div class="panel-body">
+                            <div class="card-body">
                                 <dl>
                                     <dt>
                                         Turnus
@@ -86,9 +86,9 @@
                         </div>
                     </div>
 
-                    <div class="col-md-8">
+                    <div class="col-12 col-md-8">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-12">
                                 <h2>
                                     Tourenübersicht
                                 </h2>
@@ -100,29 +100,15 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-12">
-                                <table class="table">
+                            <div class="col-12">
+                                <table class="table align-middle">
                                     <thead>
                                     <tr>
-                                        <th>
-                                            Titel
-                                        </th>
-
-                                        <th>
-                                            Datum
-                                        </th>
-
-                                        <th>
-                                            Uhrzeit
-                                        </th>
-
-                                        <th>
-                                            Treffpunkt
-                                        </th>
-
-                                        <th>
-
-                                        </th>
+                                        <th>Titel</th>
+                                        <th>Datum</th>
+                                        <th>Uhrzeit</th>
+                                        <th>Treffpunkt</th>
+                                        <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -147,7 +133,7 @@
                                             </td>
 
                                             <td>
-                                                <a class="btn btn-xs btn-default"
+                                                <a class="btn btn-outline-secondary btn-sm"
                                                    href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}"
                                                    title="Tour editieren">
                                                     <i class="fa fa-wrench"></i>
