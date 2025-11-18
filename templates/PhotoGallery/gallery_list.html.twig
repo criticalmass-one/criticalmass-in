@@ -28,21 +28,24 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
-                {% if app.user %}
-                    {% set uploadPath = object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') %}
+            <div class="col-12">
+                <div class="btn-group float-end mt-3">
+                    {% if app.user %}
+                        {% set uploadPath = object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') %}
 
-                    <a class="btn btn-success" href="{{ uploadPath }}" title="Fotos hochladen">
-                        <i class="far fa-camera"></i>
-                        Fotos hochladen
-                    </a>
-                {% else %}
-                    <span class="btn btn-success modal-hint" data-modal-hint-title="{{ 'hint_modal.gallery.photo_upload_button.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.gallery.photo_upload_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
-                        <i class="far fa-camera"></i>
-                        Fotos hochladen
-                    </span>
-                {% endif %}
+                        <a class="btn btn-success" href="{{ uploadPath }}" title="Fotos hochladen">
+                            <i class="far fa-camera"></i>
+                            Fotos hochladen
+                        </a>
+                    {% else %}
+                        <span class="btn btn-success modal-hint"
+                              data-modal-hint-title="{{ 'hint_modal.gallery.photo_upload_button.title'|trans }}"
+                              data-modal-hint-text="{{ 'hint_modal.gallery.photo_upload_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
+                              data-hint-modal-size="md">
+                            <i class="far fa-camera"></i>
+                            Fotos hochladen
+                        </span>
+                    {% endif %}
                 </div>
 
                 <h1>
@@ -54,20 +57,20 @@
         {% if pagination|length == 0 %}
             {% if not app.getUser() %}
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <div class="alert alert-info" role="alert">
                             <strong>
                                 Schade!
                             </strong>
-                            Bislang hat noch niemand Fotos von dieser Tour hochgeladen. Mit einem <a
-                                    href="{{ path('login') }}">criticalmass.in-Benutzerkonto</a>
+                            Bislang hat noch niemand Fotos von dieser Tour hochgeladen. Mit einem
+                            <a href="{{ path('login') }}">criticalmass.in-Benutzerkonto</a>
                             könntest du deine Fotos hochladen.
                         </div>
                     </div>
                 </div>
             {% else %}
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <div class="alert alert-info" role="alert">
                             <strong>
                                 Hej!
@@ -81,13 +84,16 @@
             <div class="row">
                 <div class="photo-list">
                     {% for photo in pagination %}
-                        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-                            <div class="margin-bottom-medium text-center">
+                        <div class="col-6 col-sm-4 col-md-3 col-lg-3">
+                            <div class="margin-bottom-medium text-center position-relative">
                                 <a href="{{ object_path(photo) }}">
                                     {% if photo.posts|length > 0 %}
-                                        <span class="badge" style="position: absolute; top: -10px; right: 10px; background-color: red; font-size: 1em;">{{ photo.posts|length }}</span>
+                                        <span class="badge"
+                                              style="position: absolute; top: -10px; right: 10px; background-color: red; font-size: 1em;">
+                                            {{ photo.posts|length }}
+                                        </span>
                                     {% endif %}
-                                    <img class="img-thumbnail"
+                                    <img class="img-thumbnail img-fluid"
                                          src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
                                 </a>
                             </div>
@@ -97,7 +103,7 @@
             </div>
 
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <div class="text-center">
                         {{ knp_pagination_render(pagination) }}
                     </div>

@@ -16,7 +16,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <h1>
                     Fotogalerie
                 </h1>
@@ -36,7 +36,7 @@
             {% endif %}
         {% endfor %}
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <p class="lead">
                     Neugierig geworden? Hier siehst du ein paar zufällig ausgewählte Fotos von früheren
                     Critical-Mass-Touren aus {{ cityString|raw }}. Viel Spaß beim Herumblättern!
@@ -47,7 +47,7 @@
         <div class="row">
             <div class="photo-list">
                 {% for photo in photos %}
-                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 text-center margin-bottom-medium">
+                    <div class="col-6 col-sm-4 col-md-3 col-lg-3 text-center margin-bottom-medium">
                         <a href="{{ object_path(photo) }}">
                             <img class="img-thumbnail img-fluid"
                                  src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
