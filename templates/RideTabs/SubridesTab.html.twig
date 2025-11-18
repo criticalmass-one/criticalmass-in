@@ -1,9 +1,11 @@
-<div role="tabpanel" class="tab-pane" id="minimass">
+<div class="tab-pane fade" id="minimass" role="tabpanel" aria-labelledby="minimass-tab">
     <div class="row">
         <div class="col-md-12">
             {% if app.getUser() %}
-                <div class="btn-group pull-right" style="margin-top: 16px;">
-                    <a class="btn btn-success" href="{{ object_path(ride, 'caldera_criticalmass_subride_add') }}" title="Mini-Mass anlegen">
+                <div class="btn-group float-end mt-3">
+                    <a class="btn btn-success"
+                       href="{{ object_path(ride, 'caldera_criticalmass_subride_add') }}"
+                       title="Mini-Mass anlegen">
                         <i class="far fa-map-marker"></i>
                         Mini-Mass eintragen
                     </a>
@@ -17,39 +19,57 @@
         <div class="col-md-12">
             {% if subrides|length > 0 %}
                 {% set subrideNumber = 0 %}
-                {% for subride in subrides %}
-                    <div class="media subride col-md-4 no-margin-top margin-bottom-medium">
-                        {% if app.getUser() %}
-                            <a href="{{ object_path(subride, 'caldera_criticalmass_subride_edit') }}" class="edit-subride pull-right btn btn-default btn-xs">
-                                <i class="far fa-wrench"></i>
-                            </a>
-                        {% endif %}
+                <div class="row">
+                    {% for subride in subrides %}
+                        <div class="col-12 col-md-4 no-margin-top margin-bottom-medium">
+                            <div class="media subride">
+                                {% if app.getUser() %}
+                                    <a href="{{ object_path(subride, 'caldera_criticalmass_subride_edit') }}"
+                                       class="edit-subride float-end btn btn-outline-secondary btn-sm">
+                                        <i class="far fa-wrench"></i>
+                                    </a>
+                                {% endif %}
 
-                        <a class="pull-left subride-link" href="#" data-subride-id="{{ subride.id }}">
-                            <img class="media-object"
-                                 src="/bundles/caldera/images/marker/marker-green.png" alt="...">
-                        </a>
+                                <a class="float-start subride-link" href="#"
+                                   data-subride-id="{{ subride.id }}">
+                                    <img class="media-object"
+                                         src="/bundles/caldera/images/marker/marker-green.png"
+                                         alt="Marker">
+                                </a>
 
-                        <div class="media-body">
-                            <h5 class="media-heading">{{ subride.getDateTime().format('H.i') }}
-                                Uhr: {{ subride.getTitle() }}</h5>
-                            <p>{{ subride.getDescription()|nl2br }}</p>
+                                <div class="media-body">
+                                    <h5 class="media-heading">
+                                        {{ subride.getDateTime().format('H.i') }} Uhr:
+                                        {{ subride.getTitle() }}
+                                    </h5>
+                                    <p>{{ subride.getDescription()|nl2br }}</p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    {% set subrideNumber = subrideNumber + 1 %}
-                {% endfor %}
+                        {% set subrideNumber = subrideNumber + 1 %}
+                    {% endfor %}
+                </div>
             {% else %}
                 <div class="row">
                     <div class="col-md-12">
                         {% if app.getUser() %}
                             <div class="alert alert-info" role="alert">
-                                <strong>Schade!</strong> Bislang hat noch niemand eine Mini-Mass für diese Tour erstellt &mdash; <a href="{{ object_path(ride, 'caldera_criticalmass_subride_add') }}" title="Mini-Mass anlegen">Du kannst noch immer der Erste sein</a> oder die <a href="{{ object_path(ride, 'caldera_criticalmass_subride_preparecopy') }}">Mini-Masses der letzten Tour kopieren</a>.
+                                <strong>Schade!</strong> Bislang hat noch niemand eine Mini-Mass für diese Tour erstellt &mdash;
+                                <a href="{{ object_path(ride, 'caldera_criticalmass_subride_add') }}"
+                                   title="Mini-Mass anlegen">
+                                    Du kannst noch immer der Erste sein
+                                </a>
+                                oder die
+                                <a href="{{ object_path(ride, 'caldera_criticalmass_subride_preparecopy') }}">
+                                    Mini-Masses der letzten Tour kopieren
+                                </a>.
                             </div>
                         {% else %}
-                            <div class="alert alert-info" role="alert"><strong>Schade!</strong> Bislang hat noch niemand
-                                eine Mini-Mass für diese Tour erstellt. Als <a
-                                        href="{{ path('login') }}">angemeldeter Nutzer</a> könntest du
-                                hier der Erste sein.
+                            <div class="alert alert-info" role="alert">
+                                <strong>Schade!</strong> Bislang hat noch niemand
+                                eine Mini-Mass für diese Tour erstellt. Als
+                                <a href="{{ path('login') }}">angemeldeter Nutzer</a>
+                                könntest du hier der Erste sein.
                             </div>
                         {% endif %}
                     </div>
