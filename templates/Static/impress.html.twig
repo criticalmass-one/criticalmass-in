@@ -10,94 +10,88 @@
 
 {% block content %}
     <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <h2>
-                    Impressum
-                </h2>
+
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-10">
+                <h2>Impressum</h2>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-5 col-md-offset-1">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            Impressum
-                        </h3>
+        <div class="row justify-content-center">
+
+            <div class="col-md-5 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-header">
+                        <h3 class="card-title h5 mb-0">Impressum</h3>
                     </div>
-                    <div class="panel-body">
-                        <p>
+                    <div class="card-body">
+
+                        <p class="mb-2">
                             Angaben nach § 5 TMG:
                         </p>
 
                         <p>
-                            {{ impress_property('firstName') }} {{ impress_property('lastName') }}
-                            <br />
-                            {{ impress_property('street') }} {{ impress_property('houseNumber') }}
-                            <br />
+                            {{ impress_property('firstName') }} {{ impress_property('lastName') }}<br>
+                            {{ impress_property('street') }} {{ impress_property('houseNumber') }}<br>
                             {{ impress_property('zipCode') }} {{ impress_property('city') }}
                         </p>
 
                         <p>
-                            Telefon: {{ impress_property('phoneNumber') }}
-                            <br/>
-                            E-Mail: <a href="mailto:malte@caldera.cc">malte@caldera.cc</a>
+                            Telefon: {{ impress_property('phoneNumber') }}<br>
+                            E-Mail:
+                            <a href="mailto:malte@caldera.cc">malte@caldera.cc</a>
                         </p>
 
-                        <p>
-                            <strong>
-                                Bitte beachte, dass diese Kontaktdaten nicht für Support- oder Presseanfragen vorgesehen sind.
-                            </strong>
-                        </p>
-                    </div>
-                </div>
-
-
-            </div>
-
-            <div class="col-md-5">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            Kontakt
-                        </h3>
-                    </div>
-                    <div class="panel-body">
-                        <h4>
-                            Supportanfragen
-                        </h4>
-
-                        <p>
-                            Wenn du Probleme bei der Bedienung dieser Internetseite oder einen Fehler gefunden hast, schreibe bitte eine Mail an <a href="mailto:criticalmass@caldera.cc">criticalmass@caldera.cc</a> oder, falls du mit Software-Entwicklung und GitHub vertraut bist, eröffne ein Ticket <a href="https://github.com/calderacc/criticalmass-in/issues">in unserem Repository</a>.
+                        <p class="fw-bold">
+                            Bitte beachte, dass diese Kontaktdaten nicht für Support- oder Presseanfragen vorgesehen sind.
                         </p>
 
-                        <h4>
-                            Korrektur von Städtedaten
-                        </h4>
-
-                        <p>
-                            criticalmass.in funktioniert so ähnlich wie Wikipedia: Fehler in den Daten von Städten oder Touren kannst du direkt selbst korrigieren und abändern, du brauchst dazu lediglich ein kostenloses Benutzerkonto auf unserer Webseite. Schicke uns bitte eine Mail an <a href="mailto:criticalmass@caldera.cc">criticalmass@caldera.cc</a>, wenn du Probleme mit der Bedienung der Seite hast.
-                        </p>
-
-                        <h4>
-                            Rückmeldungen und Kommentare zur Critical Mass
-                        </h4>
-
-                        <p>
-                            Wir bekommen häufig lange E-Mails mit Erfahrungsberichten und Verbesserungsvorschlägen zu allen möglichen Critical-Mass-Touren — leider können wir damit gar nichts anfangen, weil wir nicht dabei waren und überhaupt keinen Einfluss auf den Ablauf der Touren haben. Damit deine Berichte das entsprechende Publikum finden, suchst du am besten deine Stadt aus der <a href="{{ path('caldera_criticalmass_city_list') }}">Städteliste</a> heraus und schreibst deine Erfahrungen entweder als Kommentar unter die jeweilige Tour oder nutzt die Verlinkungen zu sozialen Netzwerken, um dort mit anderen Teilnehmern über die Tour zu diskutieren. Natürlich kannst du auch gerne das <a href="{{ path('caldera_criticalmass_board_overview') }}">Diskussionsforum auf criticalmass.in</a> nutzen.
-                        </p>
-
-                        <h4>
-                            Presseanfragen
-                        </h4>
-
-                        <p>
-                            Wir können leider nur allgemeine Fragen zur Critical Mass beantworten. Über Details zur Critical Mass in einzelnen Städten oder weiteren Fahrrad-Aktionen wie das Aufstellen von Ghostbikes, Fahrradreparaturwerkstätten oder Fahrradtouren können wir keine Auskunft geben. Bitte suche in der <a href="{{ path('caldera_criticalmass_city_list') }}">Städteliste</a> die jeweilige Stadt heraus und versuche über die Verlinkungen zu sozialen Netzwerken einen Ansprechpartner zu finden.
-                        </p>
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-5 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-header">
+                        <h3 class="card-title h5 mb-0">Kontakt</h3>
+                    </div>
+                    <div class="card-body">
+
+                        <h4 class="h6">Supportanfragen</h4>
+                        <p>
+                            Wenn du Probleme bei der Bedienung dieser Internetseite oder einen Fehler gefunden hast,
+                            schreibe bitte eine Mail an
+                            <a href="mailto:criticalmass@caldera.cc">criticalmass@caldera.cc</a>
+                            oder eröffne ein Ticket
+                            <a href="https://github.com/calderacc/criticalmass-in/issues">in unserem Repository</a>.
+                        </p>
+
+                        <h4 class="h6">Korrektur von Städtedaten</h4>
+                        <p>
+                            Fehler in Städten oder Touren kannst du mit einem kostenlosen Benutzerkonto selbst korrigieren.
+                            Wenn du Probleme hast, melde dich unter
+                            <a href="mailto:criticalmass@caldera.cc">criticalmass@caldera.cc</a>.
+                        </p>
+
+                        <h4 class="h6">Rückmeldungen & Kommentare zur Critical Mass</h4>
+                        <p>
+                            Deine Erfahrungen gehören am besten in die Kommentare unter der jeweiligen Tour oder in soziale
+                            Netzwerke. Alternativ kannst du auch das
+                            <a href="{{ path('caldera_criticalmass_board_overview') }}">Diskussionsforum</a> nutzen.
+                        </p>
+
+                        <h4 class="h6">Presseanfragen</h4>
+                        <p>
+                            Wir beantworten nur allgemeine Fragen zur Critical Mass.
+                            Für Details zu einzelnen Städten suche bitte in der
+                            <a href="{{ path('caldera_criticalmass_city_list') }}">Städteliste</a>
+                            nach Ansprechpartnern in sozialen Netzwerken.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 {% endblock %}

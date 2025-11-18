@@ -9,410 +9,411 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-8">
-            <h2>
-                Deine persönlichen Daten
-            </h2>
-
-            <p class="lead">
-                Hier erfährst du, was mit deinen persönlichen und allgemeinen Daten auf unserer Website passiert.
-            </p>
-
-            <p>
-                Seit Anfang an, als criticalmass.in noch ein Studentenprojekt an der <a href="https://fh-wedel.de/">Fachhochschule Wedel</a> war, galt der Grundsatz, keinen Unfug mit persönlichen Daten anzustellen. Daran hat sich bis heute nichts geändert: Wir nutzen so wenig persönliche Daten wie möglich und haben kein Interesse daran, mit deinen Daten Geld zu verdienen. Wenn du ein wenig von Programmierung verstehst, kannst du dich in unserem <a href="https://github.com/calderacc/criticalmass-in">GitHub-Repository</a> selbst davon überzeugen.
-            </p>
-
-            <a name="dein-profil"></a>
-            <h3>
-                Dein Profil
-            </h3>
-
-            <p>
-                Wenn du dich bei criticalmass.in registrierst, speichern wir folgende deiner Daten in unserer Datenbank:
-            </p>
-
-            <ul>
-                <li>
-                    deinen Benutzernamen
-                </li>
-
-                <li>
-                    deine E-Mail-Adresse, sofern du dich nicht über soziale Netzwerke einloggst
-                </li>
-
-                <li>
-                    ein verschlüsseltes Abbild deines Kennwortes, sofern du dich nicht über soziale Netzwerke einloggst
-                </li>
-
-                <li>
-                    den Zeitpunkt deines letzten Logins
-                </li>
-
-                <li>
-                    die Profilfarbe, mit der beispielsweise deine Tracks auf Karten dargestellt werden
-                </li>
-
-                <li>
-                    den Dateinamen deines Profilfotos
-                </li>
-
-                <li>
-                    Benutzer-Kennung und verschlüsseltes Login-Geheimnis, falls du dich über soziale Netzwerke einloggst
-                </li>
-            </ul>
-
-            <p>
-                Du kannst deinen Benutzernamen jederzeit in deinen Profileinstellungen ändern. Wir empfehlen dir die Verwendung eines Pseudonyms, das keine Rückschlüsse auf deine Persönlichkeit zulässt. Wir setzen allerdings die Verwendung eines Benutzernamens voraus, damit andere Nutzer auf criticalmass.in dich erkennen können.
-            </p>
-
-            <p>
-                Selbstverständlich kannst du auch deine E-Mail-Adresse in deinen Kontoeinstellungen ändern. Deine E-Mail-Adresse benötigen wir, um dir im Notfall ein neues Kennwort zusenden zu können.
-            </p>
-
-            <p>
-                Falls du dich nicht über soziale Netzwerke einloggst, kannst du in deinen Profileinstellungen außerdem dein Kennwort und deine E-Mail-Adresse ändern.
-            </p>
-
-            <a name="login-soziale-netzwerke"></a>
-            <h3>
-                Login über soziale Netzwerke
-            </h3>
-
-            <p>
-                Anstatt über Benutzernamen und Kennwort kannst du dich auf criticalmass.in auch über Facebook oder Strava anmelden. Eine solche Registrierung läuft grundsätzlich so ab, dass unter unserem Login-Formular auf den Knopf von einem dieser drei Anbieter klickst. Du wirst daraufhin zur Webseite dieses Anbieters weitergeleitet, wo du gefragt wirst, ob du criticalmass.in den Zugriff auf dein Benutzerkonto gestattest. Wenn du uns diese Genehmigung erteilst, wirst du anschließend auf criticalmass.in zurückgeleitet, wo du entweder in dein bestehendes Benutzerkonto eingeloggt wirst oder ein neues Benutzerkonto mit den Daten aus jenem sozialen Netzwerk erstellt wird.
-            </p>
-
-            <p>
-                Wenn du dein Benutzerkonto bei criticalmass.in löscht, werden selbstverständlich alle Verknüpfungen zu sozialen Netzwerken widerrufen.
-            </p>
-
-            <h4>
-                Login über Facebook
-            </h4>
-
-            <p>
-                Anbieter des Logins über <a href="https://facebook.com/">Facebook</a> ist die Facebook Ireland Limited, 4 Grand Canal Square, Dublin 2, Irland.
-            </p>
-
-            <p>
-                Wenn du dich zu einem Login über Facebook entscheidest, fragen wir die folgenden Daten von Facebook ab und speichern sie in unserer Datenbank:
-            </p>
-
-            <ul>
-                <li>
-                    numerische Kennung deines Benutzerkontos bei Facebook
-                </li>
-                <li>
-                    Vor- und Nachname deines Benutzerkontos bei Facebook
-                </li>
-                <li>
-                    bei Facebook hinterlegte E-Mail-Adresse
-                </li>
-            </ul>
-
-            <h4>
-                Login über Strava
-            </h4>
-
-            <p>
-                Anbieter des Logins über <a href="https://strava.com/">Strava</a> ist die Strava, Inc., 500 3rd Street, Suite 110 , San Francisco, CA 94107.
-            </p>
-
-            <ul>
-                <li>
-                    numerische Kennung deines Benutzerkontos bei Strava
-                </li>
-                <li>
-                    Vor- und Nachname deines Benutzerkontos bei Strava
-                </li>
-                <li>
-                    bei Strava hinterlegte E-Mail-Adresse
-                </li>
-            </ul>
-            <a name="fotos"></a>
-            <h3>
-                Fotos
-            </h3>
-
-            <p>
-                Als angemeldeter Nutzer kannst du Fotos zu Touren hochladen, die auch von nicht angemeldeten Nutzern betrachtet werden können.
-            </p>
-
-            <p>
-                Wenn deine hochgeladenen Fotos GPS-Daten enthalten oder du bereits einen Track zu dieser Tour hochgeladen oder importiert hast, versuchen wir deine Fotos zu verorten und auf der Karte der Tour deinen Aufnahmestandpunkt darzustellen.
-            </p>
-
-            <p>
-                Für Fotos von Critical-Mass-Touren ist <a href="https://www.gesetze-im-internet.de/kunsturhg/__23.html">§ 23 Abs. 1 Nr. 3 KunstUrhG</a> einschlägig, der die Veröffentlichung der „Bilder von Versammlungen, Aufzügen und ähnlichen Vorgängen, an denen die dargestellten Personen teilgenommen haben“ erlaubt.
-            </p>
-
-            <p>
-                Du hast selbstverständlich die Möglichkeit, <a href="{{ path('caldera_criticalmass_photo_user_list') }}">Fotos zu löschen oder zu deaktivieren</a>. Wenn du dein Benutzerkonto löschst, werden auch deine hochgeladenen Fotos entfernt.
-            </p>
-
-            <p>
-                Der Aufruf von Fotos wird zu statistischen Zwecken gespeichert. Wenn du als eingeloggter Nutzer Fotos betrachtest, wird dieser Aufruf mit deinem Benutzerkonto verknüpft, so dass wir dir Fotos vorschlagen können, die du noch nicht gesehen hast.
-            </p>
-
-            <a name="tracks"></a>
-            <h3>
-                Tracks
-            </h3>
-
-            <p>
-                Als Track bezeichnen wir die Aufzeichnung einer Strecke, die ein Teilnehmer während einer Critical-Mass-Tour zurückgelegt hat. Aus technischer Sicht besteht ein Track aus einer Liste von Coordinaten und Zeitstempeln, aus denen ersichtlich ist, zu welchem Zeitpunkt sich ein Nutzer an einem bestimmten Ort aufgehalten hat.
-            </p>
-
-            <p>
-                Wir nutzen Tracks zu statistischen Zwecken. Erfahrungsgemäß ist es für die Teilnehmer einer Tour im Nachhinein immer recht interessant, wohin die Reise ging, außerdem lassen sich aus Tracks einerseits Statistiken über die Länge und Dauer einer Tour generieren, andererseits so genannte Heatmaps erstellen.
-            </p>
-            
-            <p>
-                Du kannst Tracks entweder manuell als GPX-Datei hochladen oder über das soziale Fahrrad-Netzwerk Strava importieren. Wenn du dich für einen Importvorgang über Strava entscheidest, erteilst du uns die einmalige Erlaubnis, auf die von dir dort gespeicherten Touren zuzugreifen. Wir fragen über eine technische Schnittstelle zunächst jene Touren ab, die am Tag einer Critical Mass stattgefunden haben. Diese Touren präsentieren wir dir als Liste, von denen du eine einzelne Tour zum Importieren auswählen kannst. Wir laden anschließend von Strava nur die Positions- und Zeitdaten herunter, etwaige Gesundheitsdaten wie beispielsweise deine Herzfrequenz, oder zusätzliche Daten wie deine Trittfrequenz fragen wir nicht an.
-            </p>
-
-            <p>
-                <a href="{{ path('caldera_criticalmass_track_list') }}">Selbstverständlich kannst du deine Tracks anschließend verwalten</a>. Dir stehen verschiedene Werkzeuge zur Verfügung, mit denen du deinen Track unsichtbar schalten kannst, um ihn von anderen Nutzern und aus den Heatmaps zu verbergen, oder mit denen du deinen Track kürzen kannst, um etwa die An- und Abfahrt zu einer Critical Mass herauszuschneiden. Natürlich kannst du deine Track auch komplett aus unserer Webseite löschen. Die damit verknüpften statistischen Daten werden dann ebenfalls entfernt.
-            </p>
-
-            <a name="staedte-touren-zubringertouren"></a>
-            <h3>
-                Städte, Touren und Zubringertouren
-            </h3>
-
-            <p>
-                criticalmass.in funktioniert gewissermaßen wie Wikipedia: Jeder angemeldete Nutzer kann Städte, Touren und Zubringertouren erstellen und editieren.
-            </p>
-
-            <p>
-                Wenn du eine Stadt, eine Tour oder eine Zubringertour erstellst oder editierst, wird der Zeitpunkt dieser Aktion zusammen mit deinem aktuellen Benutzernamen in einer Historie gespeichert und außerdem auf der Startseite in der Zeitleiste dargestellt. Mit dieser Historie sind wir in der Lage, Änderungen aufgrund von Vandalismus nachzuvollziehen und zurückzudrehen.
-            </p>
-
-            <p>
-                Beachte bitte, dass dein Benutzername aus technischen Gründen in der Historie gespeichert bleibt, wenn du dein Benutzerkonto löscht oder dein Benutzernamen änderst.
-            </p>
-
-            <p>
-                Der Aufruf der Seite einer Stadt oder einer Tour wird zu statistischen Zwecken erhoben, um besonders beliebte oder wenig bekannte Städte und Touren ermitteln zu können. Falls du im eingeloggten Zustand diese Seiten aufrufst, wird der Zugriff mit deinem Benutzerkonto verknüpft, damit wir dir anzeigen können, ob du die Seite einer Stadt bereits aufgerufen oder eine neu erstellte Tour bereits kennst.
-            </p>
-
-            <a name="teilnahmen"></a>
-            <h3>
-                Teilnahmen an Touren
-            </h3>
-
-            <p>
-                Du hast die Möglichkeit, die Teilnahme an einer Critical-Mass-Tour auf criticalmass.in zu bestätigen, indem du auf der Seite der jeweiligen Tour auf „Teilnehmen“ klickst. Diese Funktion dient lediglich statistischen Zwecken: Einerseits können wir anzeigen, wie viele Radfahrer an einer Tour teilnehmen wollen, andererseits können wir dir <a href="{{ path('criticalmass_user_participation_list') }}">eine detaillierte Statistik anzeigen</a>, wie oft, in welchen Städten und in welchen Monaten du bei einer Critical Mass mitgefahren bist.
-            </p>
-
-            <p>
-                Hin und wieder werden wir dich aufgrund der Liste deiner Teilnahmen fragen, ob du fehlende Daten oder Beschreibungen zu Städten oder Touren, die du besucht hast, zu ergänzen.
-            </p>
-
-            <p>
-                Du kannst deine Teilnahmen <a href="{{ path('criticalmass_user_participation_list') }}">jederzeit wiederrufen oder den Datensatz komplett löschen</a>.
-            </p>
-
-            <a name="statistiken"></a>
-            <h3>
-                Statistiken
-            </h3>
-
-            <p>
-                Zu jeder Tour sammeln wir statistische Daten: Die Länge der zurückgelegten Strecke, die Dauer der Tour und die ungefähre Anzahl an Teilnehmern.
-            </p>
-
-            <p>
-                Jeder bei criticalmass.in angemeldete Nutzer kann Schätzungen zur Teilnehmerzahl abgeben. Diese Schätzungen werden zusammengerechnet und ein Mittelwert gebildet, der zu einer Tour abgespeichert wird. Beachte, dass deine Schätzungen erhalten bleiben, wenn du dein Benutzerkonto löschst, da es sich nicht um personenbezogene Daten handelt.
-            </p>
-
-            <p>
-                Es besteht außerdem die Möglichkeit, Schätzungen anonym über unsere Api-Schnittstelle von unserem <a href="https://wp-demo.criticalmass.in">Wordpress-Plguin</a> einzugeben.
-            </p>
-
-            <p>
-                Wenn du einen Track hochlädst oder importierst, wird automatisch die Länge der Strecke und die Dauer als statistischer Wert erhoben. Diese Werte werden jedoch wieder entfernt, wenn du deinen Track deaktivierst, löschst oder dein Benutzerkonto entfernst.
-            </p>
-
-            <a name="diskussionsforum"></a>
-            <h3>
-                Diskussionsforum und Kommentare
-            </h3>
-
-            <p>
-                Auf criticalmass.in kannst du Fotos und Touren kommentieren sowie im Diskussionsforum Beiträge schreiben.
-            </p>
-
-            <p>
-                Wenn du einen Kommentar oder Beitrag schreibst, wird deine Nachricht mit deinem Benutzerkonto verknüpft. Neben deinem Benutzernamen und deinem Profilfoto wird außerdem der Zeitpunkt dargestellt, zu dem du den Kommentar geschrieben hast.
-            </p>
-
-            <p>
-                Du hast zusätzlich die Möglichkeit, deinen Standort ermitteln und mit deinem Kommentar verknüpfen zu lassen. Dadurch kann dein Kommentar beispielsweise auf der Karte einer Tour dargestellt werden. Die Standortermittlung wird nur ausgeführt, wenn du die entsprechende Checkbox anklickst. Natürlich kannst du deinen Standort anschließend von deinem Kommentar entfernen lassen.
-            </p>
-
-            <p>
-                Beachte bitte, dass Kommentare und Forenbeiträge erhalten bleiben, wenn du dein Benutzerkonto löscht, da ansonsten die Diskussionen nicht mehr nachvollziehbar wären. Sie werden dann ohne deinen Benutzernamen und ohne dein Profilfoto als Kommentar eines anonymen Nutzers dargestellt.
-            </p>
-
-            <p>
-                Wenn du einen Kommentar oder Forenbeitrag schreibst, wird dieser Text außerdem zusammen mit deinem Benutzernamen und deinem Profilfoto auf der Zeitleiste auf unserer Startseite dargestellt.
-            </p>
-
-            <p>
-                Der Aufruf eines Diskussionsstranges wird zu statistischen Zwecken mitgezählt. Wenn du im eingeloggten Zustand einen Strang aufrufst, wird dieser Aufruf mit deinem Benutzerkonto verknüpft, damit wir dir anzeigen können, welche Stränge und Foren noch ungelesene Beiträge enthalten.
-            </p>
-
-            <a name="landkarten"></a>
-            <h3>
-                Landkarten
-            </h3>
-
-            <p>
-                Wir setzen das freie JavaScript-Framework <a href="https://leafletjs.com/">Leaflet</a> ein, um Landkarten auf unseren Webseiten anzuzeigen. Die grundlegenden Daten stammen vom Internetprojekt Open Street Map, das mit tausenden freiwilligen Helfern rund um den Globus freie Landkarten erstellt und dem Netz zur Verfügung stellt. Diese Kartendarten werden von verschiedenen Anbietern aufbereitet und unterscheiden sich vor allem hinsichtlich der Farbgebung und der abgebildeten Details. So gibt es Karten, auf denen Radwege besonders hervorgehoben sind, während sich andere Karten auf Eisenbahn- oder gar Stromtrassen konzentrieren.
-            </p>
-
-            <p>
-                Die Darstellung einer Karte in deinem Browser erfolgt mit quadratischen Bilddateien, auf denen jeweils ein Aussschnitt der Karte dargestellt wird. Nebeneinandergelegt ergeben diese einzelnen Kacheln eine Landkarte — wenn du in der Karte nach Osten navigierst, werden aus dem Internet weitere Kacheln nachgeladen und an der rechten Seite der Darstellung angehängt.
-            </p>
-
-            <p>
-                Wir nutzen bei criticalmass.in die Kacheldarstellung, die du beispielsweise von Wikipedia kennst. Sie wird von <a href="https://maps.wikimedia.org/">Wikimedia Maps</a> zur Verfügung gestellt.
-            </p>
-
-            <p>
-                Theoretisch kann der Anbieter dieser Kacheln, in unserem Fall Wikimedia Maps, deine Betrachtung der Karte verfolgen. Aus einer Statistik, welche Kacheln in welcher Zoom-Stufe an welchen Nutzer ausgeliefert werden, ließe sich beispielsweise ermitteln, für welche Städte oder Gebiete sich diese Nutzer interessieren, bis hin zu konkreten Mutmaßungen, wo sich beispielsweise die Wohnung eines Nutzers befindet.
-            </p>
-
-            <p>
-                Um deine Privatsphäre zu schützen, leiten wir alle Kacheldaten über unseren Kachel-Proxy-Server <code>tiles.caldera.cc</code> um. Weder Wikimedia Maps noch Open Street Map werden darüber informiert, welche Gebiete der Karte du dir angesehen hast. Selbstverständlich erhebt unser Kachel-Proxy-Server keine weiteren Logdateien über deine Zugriffe.
-            </p>
-
-            <a name="verschluesselung"></a>
-            <h3>
-                Verschlüsselung
-            </h3>
-
-            <p>
-                Selbstverständlich werden deine Daten zwischen deinem Browser und criticalmass.in ausschließlich verschlüsselt übertragen. Du kannst die Sicherheit dieser Verschlüsselung beispielsweise bei <a href="https://www.ssllabs.com/ssltest/analyze.html?d=criticalmass.in&latest">SSL Labs</a> überprüfen.
-            </p>
-
-            <p>
-                Wenn du dich mit deiner E-Mail-Adresse und einem Kennwort bei criticalmass.in registrierst, wird dein Kennwort nach dem <a href="https://de.wikipedia.org/wiki/Bcrypt">bcrypt</a>-Verfahren verschlüsselt in unserer Datenbank abgelegt. Wenn du dich anschließend einloggst, wird das eingegebene Kennwort ebenfalls nach diesem Verfahren verschlüsselt und mit dem Wert aus der Datenbank verglichen.
-            </p>
-
-            <p>
-                Technisch gesehen ist bcrypt keine Verschlüsselungs-, sondern eine Hashfunktion, was bedeutet, dass einmal gehashte Werte nie wieder in ihren Ursprungswert zurückgeführt werden können.
-            </p>
-
-            <a name="cookies"></a>
-            <h3>
-                Cookies
-            </h3>
-
-            <p>
-                Als Webseite mit Login-Funktionalität kommen wir leider um Cookies nicht drumherum. Du kennst den Spruch sicherlich: Wir setzen Cookies ein, um die Funktionalität unserer Webseite zu gewährleisten. In den Cookies werden keine persönlichen Informationen abgelegt, sie denen lediglich dazu, dich beim Besuch von criticalmass.in erkennen und einloggen zu können.
-            </p>
-
-            <a name="tracking"></a>
-            <h3>
-                Tracking
-            </h3>
-
-            <p>
-                Zugriffe auf criticalmass.in werden von der Software <a href="https://matomo.org">Matomo</a>, ehemals Piwik, gemessen. Wir setzen Matomo ein, um ein ungefähres Bild des Interesses der Nutzer an unserer Webseite zu bekommen. Die Zugriffe werden anonymisiert erhoben, unser Server <code>piwik.caldera.cc</code> führt darüberhinaus keine zusätzlichen Logfiles.
-            </p>
-
-            <p>
-                Du kannst dem Tracking entweder über die <a href="https://de.wikipedia.org/wiki/Do_Not_Track_(Software)">„Do not Track“-Einstellungen deines Browsers</a> oder über folgende Checkbox widersprechen:
-            </p>
-
-            <iframe style="border: 0; height: 200px; width: 100%;" src="https://piwik.caldera.cc/index.php?module=CoreAdminHome&action=optOut&language=de&backgroundColor=ffffff&fontColor=000000&fontSize=16px&fontFamily=%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans-serif"></iframe>
-        </div>
-
-        <div class="col-md-4">
-            <ul class="nav nav-pills nav-stacked">
-                <li role="presentation">
-                    <a href="#dein-profil">
-                        Dein Profil
-                    </a>
-                </li>
-
-                <li role="presentation">
-                    <a href="#login-soziale-netzwerke">
-                        Login über soziale Netzwerke
-                    </a>
-                </li>
-
-                <li role="presentation">
-                    <a href="#fotos">
-                        Fotos
-                    </a>
-                </li>
-
-                <li role="presentation">
-                    <a href="#tracks">
-                        Tracks
-                    </a>
-                </li>
-
-                <li role="presentation">
-                    <a href="#staedte-touren-zubringertouren">
-                        Städte, Touren und Zubringertouren
-                    </a>
-                </li>
-
-                <li role="presentation">
-                    <a href="#teilnahmen">
-                        Teilnahmen an Touren
-                    </a>
-                </li>
-
-                <li role="presentation">
-                    <a href="#statistiken">
-                        Statistiken
-                    </a>
-                </li>
-
-                <li role="presentation">
-                    <a href="#diskussionsforum">
-                        Diskussionsforum
-                    </a>
-                </li>
-
-                <li role="presentation">
-                    <a href="#landkarten">
-                        Landkarten
-                    </a>
-                </li>
-
-                <li role="presentation">
-                    <a href="#werbung">
-                        Werbung
-                    </a>
-                </li>
-
-                <li role="presentation">
-                    <a href="#verschluesselung">
-                        Verschlüsselung
-                    </a>
-                </li>
-
-                <li role="presentation">
-                    <a href="#cookies">
-                        Cookies
-                    </a>
-                </li>
-
-                <li role="presentation">
-                    <a href="#tracking">
-                        Tracking
-                    </a>
-                </li>
-            </ul>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h2>
+                    Deine persönlichen Daten
+                </h2>
+
+                <p class="lead">
+                    Hier erfährst du, was mit deinen persönlichen und allgemeinen Daten auf unserer Website passiert.
+                </p>
+
+                <p>
+                    Seit Anfang an, als criticalmass.in noch ein Studentenprojekt an der <a href="https://fh-wedel.de/">Fachhochschule Wedel</a> war, galt der Grundsatz, keinen Unfug mit persönlichen Daten anzustellen. Daran hat sich bis heute nichts geändert: Wir nutzen so wenig persönliche Daten wie möglich und haben kein Interesse daran, mit deinen Daten Geld zu verdienen. Wenn du ein wenig von Programmierung verstehst, kannst du dich in unserem <a href="https://github.com/calderacc/criticalmass-in">GitHub-Repository</a> selbst davon überzeugen.
+                </p>
+
+                <a name="dein-profil"></a>
+                <h3>
+                    Dein Profil
+                </h3>
+
+                <p>
+                    Wenn du dich bei criticalmass.in registrierst, speichern wir folgende deiner Daten in unserer Datenbank:
+                </p>
+
+                <ul>
+                    <li>
+                        deinen Benutzernamen
+                    </li>
+
+                    <li>
+                        deine E-Mail-Adresse, sofern du dich nicht über soziale Netzwerke einloggst
+                    </li>
+
+                    <li>
+                        ein verschlüsseltes Abbild deines Kennwortes, sofern du dich nicht über soziale Netzwerke einloggst
+                    </li>
+
+                    <li>
+                        den Zeitpunkt deines letzten Logins
+                    </li>
+
+                    <li>
+                        die Profilfarbe, mit der beispielsweise deine Tracks auf Karten dargestellt werden
+                    </li>
+
+                    <li>
+                        den Dateinamen deines Profilfotos
+                    </li>
+
+                    <li>
+                        Benutzer-Kennung und verschlüsseltes Login-Geheimnis, falls du dich über soziale Netzwerke einloggst
+                    </li>
+                </ul>
+
+                <p>
+                    Du kannst deinen Benutzernamen jederzeit in deinen Profileinstellungen ändern. Wir empfehlen dir die Verwendung eines Pseudonyms, das keine Rückschlüsse auf deine Persönlichkeit zulässt. Wir setzen allerdings die Verwendung eines Benutzernamens voraus, damit andere Nutzer auf criticalmass.in dich erkennen können.
+                </p>
+
+                <p>
+                    Selbstverständlich kannst du auch deine E-Mail-Adresse in deinen Kontoeinstellungen ändern. Deine E-Mail-Adresse benötigen wir, um dir im Notfall ein neues Kennwort zusenden zu können.
+                </p>
+
+                <p>
+                    Falls du dich nicht über soziale Netzwerke einloggst, kannst du in deinen Profileinstellungen außerdem dein Kennwort und deine E-Mail-Adresse ändern.
+                </p>
+
+                <a name="login-soziale-netzwerke"></a>
+                <h3>
+                    Login über soziale Netzwerke
+                </h3>
+
+                <p>
+                    Anstatt über Benutzernamen und Kennwort kannst du dich auf criticalmass.in auch über Facebook oder Strava anmelden. Eine solche Registrierung läuft grundsätzlich so ab, dass unter unserem Login-Formular auf den Knopf von einem dieser drei Anbieter klickst. Du wirst daraufhin zur Webseite dieses Anbieters weitergeleitet, wo du gefragt wirst, ob du criticalmass.in den Zugriff auf dein Benutzerkonto gestattest. Wenn du uns diese Genehmigung erteilst, wirst du anschließend auf criticalmass.in zurückgeleitet, wo du entweder in dein bestehendes Benutzerkonto eingeloggt wirst oder ein neues Benutzerkonto mit den Daten aus jenem sozialen Netzwerk erstellt wird.
+                </p>
+
+                <p>
+                    Wenn du dein Benutzerkonto bei criticalmass.in löscht, werden selbstverständlich alle Verknüpfungen zu sozialen Netzwerken widerrufen.
+                </p>
+
+                <h4>
+                    Login über Facebook
+                </h4>
+
+                <p>
+                    Anbieter des Logins über <a href="https://facebook.com/">Facebook</a> ist die Facebook Ireland Limited, 4 Grand Canal Square, Dublin 2, Irland.
+                </p>
+
+                <p>
+                    Wenn du dich zu einem Login über Facebook entscheidest, fragen wir die folgenden Daten von Facebook ab und speichern sie in unserer Datenbank:
+                </p>
+
+                <ul>
+                    <li>
+                        numerische Kennung deines Benutzerkontos bei Facebook
+                    </li>
+                    <li>
+                        Vor- und Nachname deines Benutzerkontos bei Facebook
+                    </li>
+                    <li>
+                        bei Facebook hinterlegte E-Mail-Adresse
+                    </li>
+                </ul>
+
+                <h4>
+                    Login über Strava
+                </h4>
+
+                <p>
+                    Anbieter des Logins über <a href="https://strava.com/">Strava</a> ist die Strava, Inc., 500 3rd Street, Suite 110 , San Francisco, CA 94107.
+                </p>
+
+                <ul>
+                    <li>
+                        numerische Kennung deines Benutzerkontos bei Strava
+                    </li>
+                    <li>
+                        Vor- und Nachname deines Benutzerkontos bei Strava
+                    </li>
+                    <li>
+                        bei Strava hinterlegte E-Mail-Adresse
+                    </li>
+                </ul>
+
+                <a name="fotos"></a>
+                <h3>
+                    Fotos
+                </h3>
+
+                <p>
+                    Als angemeldeter Nutzer kannst du Fotos zu Touren hochladen, die auch von nicht angemeldeten Nutzern betrachtet werden können.
+                </p>
+
+                <p>
+                    Wenn deine hochgeladenen Fotos GPS-Daten enthalten oder du bereits einen Track zu dieser Tour hochgeladen oder importiert hast, versuchen wir deine Fotos zu verorten und auf der Karte der Tour deinen Aufnahmestandpunkt darzustellen.
+                </p>
+
+                <p>
+                    Für Fotos von Critical-Mass-Touren ist <a href="https://www.gesetze-im-internet.de/kunsturhg/__23.html">§ 23 Abs. 1 Nr. 3 KunstUrhG</a> einschlägig, der die Veröffentlichung der „Bilder von Versammlungen, Aufzügen und ähnlichen Vorgängen, an denen die dargestellten Personen teilgenommen haben“ erlaubt.
+                </p>
+
+                <p>
+                    Du hast selbstverständlich die Möglichkeit, <a href="{{ path('caldera_criticalmass_photo_user_list') }}">Fotos zu löschen oder zu deaktivieren</a>. Wenn du dein Benutzerkonto löschst, werden auch deine hochgeladenen Fotos entfernt.
+                </p>
+
+                <p>
+                    Der Aufruf von Fotos wird zu statistischen Zwecken gespeichert. Wenn du als eingeloggter Nutzer Fotos betrachtest, wird dieser Aufruf mit deinem Benutzerkonto verknüpft, so dass wir dir Fotos vorschlagen können, die du noch nicht gesehen hast.
+                </p>
+
+                <a name="tracks"></a>
+                <h3>
+                    Tracks
+                </h3>
+
+                <p>
+                    Als Track bezeichnen wir die Aufzeichnung einer Strecke, die ein Teilnehmer während einer Critical-Mass-Tour zurückgelegt hat. Aus technischer Sicht besteht ein Track aus einer Liste von Coordinaten und Zeitstempeln, aus denen ersichtlich ist, zu welchem Zeitpunkt sich ein Nutzer an einem bestimmten Ort aufgehalten hat.
+                </p>
+
+                <p>
+                    Wir nutzen Tracks zu statistischen Zwecken. Erfahrungsgemäß ist es für die Teilnehmer einer Tour im Nachhinein immer recht interessant, wohin die Reise ging, außerdem lassen sich aus Tracks einerseits Statistiken über die Länge und Dauer einer Tour generieren, andererseits so genannte Heatmaps erstellen.
+                </p>
+
+                <p>
+                    Du kannst Tracks entweder manuell als GPX-Datei hochladen oder über das soziale Fahrrad-Netzwerk Strava importieren. Wenn du dich für einen Importvorgang über Strava entscheidest, erteilst du uns die einmalige Erlaubnis, auf die von dir dort gespeicherten Touren zuzugreifen. Wir fragen über eine technische Schnittstelle zunächst jene Touren ab, die am Tag einer Critical Mass stattgefunden haben. Diese Touren präsentieren wir dir als Liste, von denen du eine einzelne Tour zum Importieren auswählen kannst. Wir laden anschließend von Strava nur die Positions- und Zeitdaten herunter, etwaige Gesundheitsdaten wie beispielsweise deine Herzfrequenz, oder zusätzliche Daten wie deine Trittfrequenz fragen wir nicht an.
+                </p>
+
+                <p>
+                    <a href="{{ path('caldera_criticalmass_track_list') }}">Selbstverständlich kannst du deine Tracks anschließend verwalten</a>. Dir stehen verschiedene Werkzeuge zur Verfügung, mit denen du deinen Track unsichtbar schalten kannst, um ihn von anderen Nutzern und aus den Heatmaps zu verbergen, oder mit denen du deinen Track kürzen kannst, um etwa die An- und Abfahrt zu einer Critical Mass herauszuschneiden. Natürlich kannst du deine Track auch komplett aus unserer Webseite löschen. Die damit verknüpften statistischen Daten werden dann ebenfalls entfernt.
+                </p>
+
+                <a name="staedte-touren-zubringertouren"></a>
+                <h3>
+                    Städte, Touren und Zubringertouren
+                </h3>
+
+                <p>
+                    criticalmass.in funktioniert gewissermaßen wie Wikipedia: Jeder angemeldete Nutzer kann Städte, Touren und Zubringertouren erstellen und editieren.
+                </p>
+
+                <p>
+                    Wenn du eine Stadt, eine Tour oder eine Zubringertour erstellst oder editierst, wird der Zeitpunkt dieser Aktion zusammen mit deinem aktuellen Benutzernamen in einer Historie gespeichert und außerdem auf der Startseite in der Zeitleiste dargestellt. Mit dieser Historie sind wir in der Lage, Änderungen aufgrund von Vandalismus nachzuvollziehen und zurückzudrehen.
+                </p>
+
+                <p>
+                    Beachte bitte, dass dein Benutzername aus technischen Gründen in der Historie gespeichert bleibt, wenn du dein Benutzerkonto löscht oder dein Benutzernamen änderst.
+                </p>
+
+                <p>
+                    Der Aufruf der Seite einer Stadt oder einer Tour wird zu statistischen Zwecken erhoben, um besonders beliebte oder wenig bekannte Städte und Touren ermitteln zu können. Falls du im eingeloggten Zustand diese Seiten aufrufst, wird der Zugriff mit deinem Benutzerkonto verknüpft, damit wir dir anzeigen können, ob du die Seite einer Stadt bereits aufgerufen oder eine neu erstellte Tour bereits kennst.
+                </p>
+
+                <a name="teilnahmen"></a>
+                <h3>
+                    Teilnahmen an Touren
+                </h3>
+
+                <p>
+                    Du hast die Möglichkeit, die Teilnahme an einer Critical-Mass-Tour auf criticalmass.in zu bestätigen, indem du auf der Seite der jeweiligen Tour auf „Teilnehmen“ klickst. Diese Funktion dient lediglich statistischen Zwecken: Einerseits können wir anzeigen, wie viele Radfahrer an einer Tour teilnehmen wollen, andererseits können wir dir <a href="{{ path('criticalmass_user_participation_list') }}">eine detaillierte Statistik anzeigen</a>, wie oft, in welchen Städten und in welchen Monaten du bei einer Critical Mass mitgefahren bist.
+                </p>
+
+                <p>
+                    Hin und wieder werden wir dich aufgrund der Liste deiner Teilnahmen fragen, ob du fehlende Daten oder Beschreibungen zu Städten oder Touren, die du besucht hast, zu ergänzen.
+                </p>
+
+                <p>
+                    Du kannst deine Teilnahmen <a href="{{ path('criticalmass_user_participation_list') }}">jederzeit wiederrufen oder den Datensatz komplett löschen</a>.
+                </p>
+
+                <a name="statistiken"></a>
+                <h3>
+                    Statistiken
+                </h3>
+
+                <p>
+                    Zu jeder Tour sammeln wir statistische Daten: Die Länge der zurückgelegten Strecke, die Dauer der Tour und die ungefähre Anzahl an Teilnehmern.
+                </p>
+
+                <p>
+                    Jeder bei criticalmass.in angemeldete Nutzer kann Schätzungen zur Teilnehmerzahl abgeben. Diese Schätzungen werden zusammengerechnet und ein Mittelwert gebildet, der zu einer Tour abgespeichert wird. Beachte, dass deine Schätzungen erhalten bleiben, wenn du dein Benutzerkonto löschst, da es sich nicht um personenbezogene Daten handelt.
+                </p>
+
+                <p>
+                    Es besteht außerdem die Möglichkeit, Schätzungen anonym über unsere Api-Schnittstelle von unserem <a href="https://wp-demo.criticalmass.in">Wordpress-Plguin</a> einzugeben.
+                </p>
+
+                <p>
+                    Wenn du einen Track hochlädst oder importierst, wird automatisch die Länge der Strecke und die Dauer als statistischer Wert erhoben. Diese Werte werden jedoch wieder entfernt, wenn du deinen Track deaktivierst, löschst oder dein Benutzerkonto entfernst.
+                </p>
+
+                <a name="diskussionsforum"></a>
+                <h3>
+                    Diskussionsforum und Kommentare
+                </h3>
+
+                <p>
+                    Auf criticalmass.in kannst du Fotos und Touren kommentieren sowie im Diskussionsforum Beiträge schreiben.
+                </p>
+
+                <p>
+                    Wenn du einen Kommentar oder Beitrag schreibst, wird deine Nachricht mit deinem Benutzerkonto verknüpft. Neben deinem Benutzernamen und deinem Profilfoto wird außerdem der Zeitpunkt dargestellt, zu dem du den Kommentar geschrieben hast.
+                </p>
+
+                <p>
+                    Du hast zusätzlich die Möglichkeit, deinen Standort ermitteln und mit deinem Kommentar verknüpfen zu lassen. Dadurch kann dein Kommentar beispielsweise auf der Karte einer Tour dargestellt werden. Die Standortermittlung wird nur ausgeführt, wenn du die entsprechende Checkbox anklickst. Natürlich kannst du deinen Standort anschließend von deinem Kommentar entfernen lassen.
+                </p>
+
+                <p>
+                    Beachte bitte, dass Kommentare und Forenbeiträge erhalten bleiben, wenn du dein Benutzerkonto löscht, da ansonsten die Diskussionen nicht mehr nachvollziehbar wären. Sie werden dann ohne deinen Benutzernamen und ohne dein Profilfoto als Kommentar eines anonymen Nutzers dargestellt.
+                </p>
+
+                <p>
+                    Wenn du einen Kommentar oder Forenbeitrag schreibst, wird dieser Text außerdem zusammen mit deinem Benutzernamen und deinem Profilfoto auf der Zeitleiste auf unserer Startseite dargestellt.
+                </p>
+
+                <p>
+                    Der Aufruf eines Diskussionsstranges wird zu statistischen Zwecken mitgezählt. Wenn du im eingeloggten Zustand einen Strang aufrufst, wird dieser Aufruf mit deinem Benutzerkonto verknüpft, damit wir dir anzeigen können, welche Stränge und Foren noch ungelesene Beiträge enthalten.
+                </p>
+
+                <a name="landkarten"></a>
+                <h3>
+                    Landkarten
+                </h3>
+
+                <p>
+                    Wir setzen das freie JavaScript-Framework <a href="https://leafletjs.com/">Leaflet</a> ein, um Landkarten auf unseren Webseiten anzuzeigen. Die grundlegenden Daten stammen vom Internetprojekt Open Street Map, das mit tausenden freiwilligen Helfern rund um den Globus freie Landkarten erstellt und dem Netz zur Verfügung stellt. Diese Kartendarten werden von verschiedenen Anbietern aufbereitet und unterscheiden sich vor allem hinsichtlich der Farbgebung und der abgebildeten Details. So gibt es Karten, auf denen Radwege besonders hervorgehoben sind, während sich andere Karten auf Eisenbahn- oder gar Stromtrassen konzentrieren.
+                </p>
+
+                <p>
+                    Die Darstellung einer Karte in deinem Browser erfolgt mit quadratischen Bilddateien, auf denen jeweils ein Aussschnitt der Karte dargestellt wird. Nebeneinandergelegt ergeben diese einzelnen Kacheln eine Landkarte — wenn du in der Karte nach Osten navigierst, werden aus dem Internet weitere Kacheln nachgeladen und an der rechten Seite der Darstellung angehängt.
+                </p>
+
+                <p>
+                    Wir nutzen bei criticalmass.in die Kacheldarstellung, die du beispielsweise von Wikipedia kennst. Sie wird von <a href="https://maps.wikimedia.org/">Wikimedia Maps</a> zur Verfügung gestellt.
+                </p>
+
+                <p>
+                    Theoretisch kann der Anbieter dieser Kacheln, in unserem Fall Wikimedia Maps, deine Betrachtung der Karte verfolgen. Aus einer Statistik, welche Kacheln in welcher Zoom-Stufe an welchen Nutzer ausgeliefert werden, ließe sich beispielsweise ermitteln, für welche Städte oder Gebiete sich diese Nutzer interessieren, bis hin zu konkreten Mutmaßungen, wo sich beispielsweise die Wohnung eines Nutzers befindet.
+                </p>
+
+                <p>
+                    Um deine Privatsphäre zu schützen, leiten wir alle Kacheldaten über unseren Kachel-Proxy-Server <code>tiles.caldera.cc</code> um. Weder Wikimedia Maps noch Open Street Map werden darüber informiert, welche Gebiete der Karte du dir angesehen hast. Selbstverständlich erhebt unser Kachel-Proxy-Server keine weiteren Logdateien über deine Zugriffe.
+                </p>
+
+                <a name="verschluesselung"></a>
+                <h3>
+                    Verschlüsselung
+                </h3>
+
+                <p>
+                    Selbstverständlich werden deine Daten zwischen deinem Browser und criticalmass.in ausschließlich verschlüsselt übertragen. Du kannst die Sicherheit dieser Verschlüsselung beispielsweise bei <a href="https://www.ssllabs.com/ssltest/analyze.html?d=criticalmass.in&latest">SSL Labs</a> überprüfen.
+                </p>
+
+                <p>
+                    Wenn du dich mit deiner E-Mail-Adresse und einem Kennwort bei criticalmass.in registrierst, wird dein Kennwort nach dem <a href="https://de.wikipedia.org/wiki/Bcrypt">bcrypt</a>-Verfahren verschlüsselt in unserer Datenbank abgelegt. Wenn du dich anschließend einloggst, wird das eingegebene Kennwort ebenfalls nach diesem Verfahren verschlüsselt und mit dem Wert aus der Datenbank verglichen.
+                </p>
+
+                <p>
+                    Technisch gesehen ist bcrypt keine Verschlüsselungs-, sondern eine Hashfunktion, was bedeutet, dass einmal gehashte Werte nie wieder in ihren Ursprungswert zurückgeführt werden können.
+                </p>
+
+                <a name="cookies"></a>
+                <h3>
+                    Cookies
+                </h3>
+
+                <p>
+                    Als Webseite mit Login-Funktionalität kommen wir leider um Cookies nicht drumherum. Du kennst den Spruch sicherlich: Wir setzen Cookies ein, um die Funktionalität unserer Webseite zu gewährleisten. In den Cookies werden keine persönlichen Informationen abgelegt, sie denen lediglich dazu, dich beim Besuch von criticalmass.in erkennen und einloggen zu können.
+                </p>
+
+                <a name="tracking"></a>
+                <h3>
+                    Tracking
+                </h3>
+
+                <p>
+                    Zugriffe auf criticalmass.in werden von der Software <a href="https://matomo.org">Matomo</a>, ehemals Piwik, gemessen. Wir setzen Matomo ein, um ein ungefähres Bild des Interesses der Nutzer an unserer Webseite zu bekommen. Die Zugriffe werden anonymisiert erhoben, unser Server <code>piwik.caldera.cc</code> führt darüberhinaus keine zusätzlichen Logfiles.
+                </p>
+
+                <p>
+                    Du kannst dem Tracking entweder über die <a href="https://de.wikipedia.org/wiki/Do_Not_Track_(Software)">„Do not Track“-Einstellungen deines Browsers</a> oder über folgende Checkbox widersprechen:
+                </p>
+
+                <iframe style="border: 0; height: 200px; width: 100%;" src="https://piwik.caldera.cc/index.php?module=CoreAdminHome&action=optOut&language=de&backgroundColor=ffffff&fontColor=000000&fontSize=16px&fontFamily=%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans-serif"></iframe>
+            </div>
+
+            <div class="col-md-4">
+                <ul class="nav nav-pills flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#dein-profil">
+                            Dein Profil
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#login-soziale-netzwerke">
+                            Login über soziale Netzwerke
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#fotos">
+                            Fotos
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tracks">
+                            Tracks
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#staedte-touren-zubringertouren">
+                            Städte, Touren und Zubringertouren
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#teilnahmen">
+                            Teilnahmen an Touren
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#statistiken">
+                            Statistiken
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#diskussionsforum">
+                            Diskussionsforum
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#landkarten">
+                            Landkarten
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#werbung">
+                            Werbung
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#verschluesselung">
+                            Verschlüsselung
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#cookies">
+                            Cookies
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tracking">
+                            Tracking
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}
