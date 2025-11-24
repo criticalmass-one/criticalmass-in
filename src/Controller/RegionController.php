@@ -4,11 +4,15 @@ namespace App\Controller;
 
 use App\Repository\CityRepository;
 use App\Repository\RegionRepository;
-use App\Repository\RideRepository;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class RegionController extends AbstractController
 {
+    #[Route('/world', name: 'caldera_criticalmass_region_world', priority: 140)]
+    #[Route('/world/{slug1}', name: 'caldera_criticalmass_region_world_region_1', priority: 140)]
+    #[Route('/world/{slug1}/{slug2}', name: 'caldera_criticalmass_region_world_region_2', priority: 140)]
+    #[Route('/world/{slug1}/{slug2}/{slug3}', name: 'caldera_criticalmass_region_world_region_3', priority: 140)]
     public function indexAction(
         CityRepository $cityRepository,
         RegionRepository $regionRepository,
@@ -34,7 +38,6 @@ class RegionController extends AbstractController
 
         $cityCounter = [];
 
-        // do not name it $region as $region is already in use
         foreach ($regions as $region2) {
             $cityCounter[$region2->getId()] = $cityRepository->countChildrenCitiesOfRegion($region2);
         }

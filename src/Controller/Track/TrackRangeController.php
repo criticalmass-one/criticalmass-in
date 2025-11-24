@@ -11,6 +11,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class TrackRangeController extends AbstractController
@@ -21,6 +22,7 @@ class TrackRangeController extends AbstractController
     }
 
     #[IsGranted('edit', 'track')]
+    #[Route('/track/range/{id}', name: 'caldera_criticalmass_track_range', priority: 270)]
     public function rangeAction(Request $request, Track $track, SimpleLatLngListGenerator $latLngListGenerator, EventDispatcherInterface $eventDispatcher): Response
     {
         $form = $this->createForm(TrackRangeType::class, $track);
@@ -54,9 +56,9 @@ class TrackRangeController extends AbstractController
             $track = $form->getData();
 
             $track
-            // assure that end point does not exceed number of points due to round problems in javascript
+                // assure that end point does not exceed number of points due to round problems in javascript
                 ->setEndPoint(min($track->getEndPoint(), $track->getPoints()))
-            // this may not be done in TrackEventSubscriber as the events are sometimes triggered automatically
+                // this may not be done in TrackEventSubscriber as the events are sometimes triggered automatically
                 ->setReviewed(true)
             ;
 

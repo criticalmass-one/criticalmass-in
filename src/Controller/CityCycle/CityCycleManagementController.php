@@ -11,12 +11,14 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class CityCycleManagementController extends AbstractController
 {
     #[IsGranted('ROLE_USER')]
+    #[Route('/{citySlug}/cycles/add', name: 'caldera_criticalmass_citycycle_add', priority: 80)]
     public function addAction(Request $request, UserInterface $user = null, City $city, ObjectRouterInterface $objectRouter): Response
     {
         $cityCycle = new CityCycle();
@@ -68,6 +70,7 @@ class CityCycleManagementController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
+    #[Route('/{citySlug}/cycles/{id}/edit', name: 'caldera_criticalmass_citycycle_edit', priority: 80)]
     public function editAction(
         Request $request,
         UserInterface $user = null,
@@ -122,6 +125,7 @@ class CityCycleManagementController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
+    #[Route('/{citySlug}/cycles/{id}/disable', name: 'caldera_criticalmass_citycycle_disable', priority: 80)]
     public function disableAction(
         CityCycle $cityCycle,
         ManagerRegistry $managerRegistry,

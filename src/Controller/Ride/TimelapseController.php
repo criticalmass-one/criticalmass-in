@@ -8,9 +8,15 @@ use App\Entity\Ride;
 use App\Entity\Track;
 use App\Repository\TrackRepository;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class TimelapseController extends AbstractController
 {
+    #[Route(
+        '/{citySlug}/{rideIdentifier}/timelapse',
+        name: 'caldera_criticalmass_timelapse_homepage',
+        priority: 135
+    )]
     public function showAction(
         TrackRepository $trackRepository,
         Ride $ride
@@ -23,6 +29,12 @@ class TimelapseController extends AbstractController
         ]);
     }
 
+    #[Route(
+        '/{citySlug}/{rideIdentifier}/timelapse/load/{id}',
+        name: 'caldera_criticalmass_timelapse_load',
+        options: ['expose' => true],
+        priority: 135
+    )]
     public function loadtrackAction(TimeLatLngListGenerator $generator, Track $track): Response
     {
         $list = $generator

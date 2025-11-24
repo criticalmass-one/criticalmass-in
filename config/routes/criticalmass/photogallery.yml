@@ -1,7 +1,0 @@
-caldera_criticalmass_photo_ride_list:
-    path: /{citySlug}/{rideIdentifier}/listphotos
-    controller: App\Controller\Photo\PhotoGalleryController::galleryAction
-
-caldera_criticalmass_photo_examplegallery:
-    path: /city/gallery
-    controller: App\Controller\Photo\PhotoGalleryController::examplegalleryAction

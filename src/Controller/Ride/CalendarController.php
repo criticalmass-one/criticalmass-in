@@ -6,9 +6,15 @@ use App\Criticalmass\Ical\RideIcalGeneratorInterface;
 use App\Entity\Ride;
 use App\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class CalendarController extends AbstractController
 {
+    #[Route(
+        '/{citySlug}/{rideIdentifier}/ical',
+        name: 'caldera_criticalmass_ride_ical',
+        priority: 160
+    )]
     public function icalAction(
         RideIcalGeneratorInterface $rideIcalGenerator,
         Ride $ride

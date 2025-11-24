@@ -17,37 +17,46 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 
 class PostController extends AbstractController
 {
     #[IsGranted('ROLE_USER')]
+    #[Route('/post/write/city/{id}', name: 'caldera_criticalmass_timeline_post_write_city', priority: 120)]
     public function writeCityAction(Request $request, City $city, ObjectRouterInterface $objectRouter): Response
     {
         return $this->writeAction($request, $city, $objectRouter);
     }
 
     #[IsGranted('ROLE_USER')]
+    #[Route('/post/write/ride/{id}', name: 'caldera_criticalmass_timeline_post_write_ride', priority: 120)]
     public function writeRideAction(Request $request, Ride $ride, ObjectRouterInterface $objectRouter): Response
     {
         return $this->writeAction($request, $ride, $objectRouter);
     }
 
     #[IsGranted('ROLE_USER')]
+    #[Route('/post/write/photo/{id}', name: 'caldera_criticalmass_timeline_post_write_photo', priority: 120)]
     public function writePhotoAction(Request $request, Photo $photo, ObjectRouterInterface $objectRouter): Response
     {
         return $this->writeAction($request, $photo, $objectRouter);
     }
 
     #[IsGranted('ROLE_USER')]
-    public function writeThreadAction(Request $request, Thread $thread = null, ObjectRouterInterface $objectRouter): Response
-    {
+    #[Route('/post/write/thread/{threadSlug}', name: 'caldera_criticalmass_timeline_post_write_thread', priority: 120)]
+    public function writeThreadAction(
+        Request $request,
+        #[MapEntity(mapping: ['threadSlug' => 'slug'])] Thread $thread = null,
+        ObjectRouterInterface $objectRouter
+    ): Response {
         return $this->writeAction($request, $thread, $objectRouter);
     }
 
+    #[Route('/post/write', name: 'caldera_criticalmass_timeline_post_write', priority: 120)]
     public function writeAction(Request $request, PostableInterface $postable, ObjectRouterInterface $objectRouter): Response
     {
         $post = $this->createPostForPostable($postable);
-
         $form = $this->getPostForm($postable, $post);
 
         if ($request->isMethod(Request::METHOD_POST)) {
@@ -74,7 +83,7 @@ class PostController extends AbstractController
             $post->setUser($this->getUser());
             $em->persist($post);
 
-            /* if we have a thread we need some additional behaviour here after the post is persisted */
+            // Threads: zusätzliche Logik
             if ($postable instanceof Thread) {
                 $postable
                     ->setLastPost($post)
@@ -101,33 +110,18 @@ class PostController extends AbstractController
         ]);
     }
 
-    /**
-     * List all posts.
-     *
-     * This action handles different cases:
-     *
-     * If you provide a $cityId, it will just list posts for this city.
-     * If you provide a $rideId, it will list all posts for the specified ride.
-     * If you call this method without any parameters, it will list everything in a timeline style.
-     *
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     public function listAction(
         PostRepository $postRepository,
         int $cityId = null,
         int $rideId = null,
         int $photoId = null
     ): Response {
-        /* We do not want disabled posts. */
         $criteria = ['enabled' => true];
 
-        /* If a $cityId is provided, add the city to the criteria. */
         if ($cityId) {
             $criteria['city'] = $cityId;
         }
 
-        /* If a $rideId is provided, add the ride to the criteria. */
         if ($rideId) {
             $criteria['ride'] = $rideId;
         }
@@ -136,10 +130,8 @@ class PostController extends AbstractController
             $criteria['photo'] = $photoId;
         }
 
-        /* Now fetch all posts with matching criteria. */
         $posts = $postRepository->findBy($criteria, ['dateTime' => 'DESC']);
 
-        /* And render our shit. */
         return $this->render('Post/list.html.twig', ['posts' => $posts]);
     }
 
@@ -149,11 +141,9 @@ class PostController extends AbstractController
             $post = new Post();
         }
 
-        $form = $this->createForm(PostType::class, $post, [
+        return $this->createForm(PostType::class, $post, [
             'action' => $this->generateActionUrl($postable),
         ]);
-
-        return $form;
     }
 
     protected function generateActionUrl(PostableInterface $postable): string

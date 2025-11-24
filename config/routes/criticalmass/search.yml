@@ -1,7 +1,0 @@
-caldera_criticalmass_search_query:
-    path:  /search/query
-    controller: App\Controller\Search\SearchController::queryAction
-
-caldera_criticalmass_search_prefetch:
-    path:  /search/prefetch
-    controller: App\Controller\Search\PrefetchController::prefetchAction
