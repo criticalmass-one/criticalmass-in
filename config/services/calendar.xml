@@ -10,9 +10,6 @@
         </service>
 
         <service id="CalendR\Calendar">
-            <call method="setEventManager">
-                <argument type="service" id="CalendR\Event\Manager"/>
-            </call>
         </service>
 
         <service id="CalendR\Event\Manager">
