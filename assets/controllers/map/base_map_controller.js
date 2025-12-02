@@ -2,9 +2,14 @@ import { Controller } from '@hotwired/stimulus';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
+import maplibregl from 'maplibre-gl';
+import { MapLibreLayer } from '@maplibre/maplibre-gl-leaflet';
+import 'maplibre-gl/dist/maplibre-gl.css';
+
 import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
 import iconUrl from 'leaflet/dist/images/marker-icon.png';
 import shadowUrl from 'leaflet/dist/images/marker-shadow.png';
+
 L.Icon.Default.mergeOptions({ iconRetinaUrl, iconUrl, shadowUrl });
 
 export default class extends Controller {
@@ -12,7 +17,7 @@ export default class extends Controller {
         centerLatitude: Number,
         centerLongitude: Number,
         zoom: { type: Number, default: 12 },
-        maptilerKey: String
+        lockMap: String,
     };
 
     connect() {
@@ -31,17 +36,14 @@ export default class extends Controller {
         const zoom = this.zoomValue ?? 12;
         this.map.setView([lat, lng], zoom);
 
-        const key = this.hasMaptilerKeyValue ? this.maptilerKeyValue : '1jtZ0vdO3g9JKCOlepnM';
+        const glLayer = new MapLibreLayer({
+            style: 'https://tiles.openfreemap.org/styles/liberty',
+            maplibreOptions: {
+                attributionControl: false,
+            },
+        });
 
-        L.tileLayer(
-            `https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=${key}`,
-            {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors &copy; <a href="https://www.maptiler.com/">MapTiler</a>',
-                tileSize: 512,
-                zoomOffset: -1,
-                maxZoom: 19
-            }
-        ).addTo(this.map);
+        glLayer.addTo(this.map);
 
         setTimeout(() => this.map.invalidateSize(), 80);
     }
