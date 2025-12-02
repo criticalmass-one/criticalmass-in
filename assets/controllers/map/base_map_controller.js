@@ -2,9 +2,14 @@ import { Controller } from '@hotwired/stimulus';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
+import maplibregl from 'maplibre-gl';
+import 'maplibre-gl/dist/maplibre-gl.css';
+import '@maplibre/maplibre-gl-leaflet';
+
 import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
 import iconUrl from 'leaflet/dist/images/marker-icon.png';
 import shadowUrl from 'leaflet/dist/images/marker-shadow.png';
+
 L.Icon.Default.mergeOptions({ iconRetinaUrl, iconUrl, shadowUrl });
 
 export default class extends Controller {
@@ -12,7 +17,7 @@ export default class extends Controller {
         centerLatitude: Number,
         centerLongitude: Number,
         zoom: { type: Number, default: 12 },
-        maptilerKey: String
+        lockMap: String,
     };
 
     connect() {
@@ -24,6 +29,9 @@ export default class extends Controller {
 
         this.map = L.map(this.element, {
             zoomControl: !locked,
+            maxBounds: [[180, -Infinity], [-180, Infinity]],
+            maxBoundsViscosity: 1,
+            minZoom: 1,
         });
 
         const lat = this.hasCenterLatitudeValue ? this.centerLatitudeValue : 51.1657;
@@ -31,17 +39,9 @@ export default class extends Controller {
         const zoom = this.zoomValue ?? 12;
         this.map.setView([lat, lng], zoom);
 
-        const key = this.hasMaptilerKeyValue ? this.maptilerKeyValue : '1jtZ0vdO3g9JKCOlepnM';
-
-        L.tileLayer(
-            `https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=${key}`,
-            {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors &copy; <a href="https://www.maptiler.com/">MapTiler</a>',
-                tileSize: 512,
-                zoomOffset: -1,
-                maxZoom: 19
-            }
-        ).addTo(this.map);
+        L.maplibreGL({
+            style: 'https://tiles.openfreemap.org/styles/liberty',
+        }).addTo(this.map);
 
         setTimeout(() => this.map.invalidateSize(), 80);
     }
