@@ -22,7 +22,7 @@ class TrackImporter implements TrackImporterInterface
     private User $user;
     private Ride $ride;
     private StravaApi $api;
-    private \stdClass $activity;
+    private ?\stdClass $activity = null;
     private const string API_URI = 'https://www.strava.com/api/v3/';
     private const string RESOULUTION = 'high';
 
