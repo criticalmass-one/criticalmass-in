@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Criticalmass\SeoPage\SeoPageInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class CalendarController extends AbstractController
 {
+    #[Route('/calendar', name: 'caldera_criticalmass_calendar', priority: 280)]
     public function indexAction(Request $request, SeoPageInterface $seoPage): Response
     {
         $year = $request->query->getInt('year', (int) (new \DateTime())->format('Y'));

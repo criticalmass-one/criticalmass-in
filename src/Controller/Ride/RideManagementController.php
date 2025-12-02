@@ -16,12 +16,14 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class RideManagementController extends AbstractController
 {
     #[IsGranted('ROLE_USER')]
+    #[Route('/{citySlug}/add-ride', name: 'caldera_criticalmass_ride_add', priority: 70)]
     public function addAction(Request $request, UserInterface $user = null, EntityManagerInterface $entityManager, City $city, ObjectRouterInterface $objectRouter): Response
     {
         $ride = new Ride();
@@ -90,6 +92,7 @@ class RideManagementController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
+    #[Route('/{citySlug}/{rideIdentifier}/edit', name: 'caldera_criticalmass_ride_edit', priority: 70)]
     public function editAction(Request $request, UserInterface $user = null, Ride $ride, ObjectRouterInterface $objectRouter): Response
     {
         $form = $this->createForm(RideType::class, $ride, [
@@ -154,6 +157,7 @@ class RideManagementController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
+    #[Route('/{citySlug}/{rideIdentifier}/socialpreview', name: 'caldera_criticalmass_ride_socialpreview', priority: 70)]
     public function socialPreviewAction(
         EntityManagerInterface $entityManager,
         Request $request,
@@ -208,6 +212,7 @@ class RideManagementController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
+    #[Route('/{citySlug}/{rideIdentifier}/disable', name: 'caldera_criticalmass_ride_disable', priority: 70)]
     public function disableAction(Request $request, ManagerRegistry $registry, UserInterface $user = null, Ride $ride, ObjectRouterInterface $objectRouter): RedirectResponse
     {
         if (Request::METHOD_POST === $request->getMethod()) {
@@ -225,6 +230,7 @@ class RideManagementController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
+    #[Route('/{citySlug}/{rideIdentifier}/enable', name: 'caldera_criticalmass_ride_enable', priority: 70)]
     public function enableAction(ManagerRegistry $registry, UserInterface $user = null, Ride $ride, ObjectRouterInterface $objectRouter): RedirectResponse
     {
         $ride->setEnabled(true)
