@@ -3,8 +3,8 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 import maplibregl from 'maplibre-gl';
-import { MapLibreLayer } from '@maplibre/maplibre-gl-leaflet';
 import 'maplibre-gl/dist/maplibre-gl.css';
+import '@maplibre/maplibre-gl-leaflet';
 
 import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
 import iconUrl from 'leaflet/dist/images/marker-icon.png';
@@ -29,6 +29,9 @@ export default class extends Controller {
 
         this.map = L.map(this.element, {
             zoomControl: !locked,
+            maxBounds: [[180, -Infinity], [-180, Infinity]],
+            maxBoundsViscosity: 1,
+            minZoom: 1,
         });
 
         const lat = this.hasCenterLatitudeValue ? this.centerLatitudeValue : 51.1657;
@@ -36,14 +39,9 @@ export default class extends Controller {
         const zoom = this.zoomValue ?? 12;
         this.map.setView([lat, lng], zoom);
 
-        const glLayer = new MapLibreLayer({
+        L.maplibreGL({
             style: 'https://tiles.openfreemap.org/styles/liberty',
-            maplibreOptions: {
-                attributionControl: false,
-            },
-        });
-
-        glLayer.addTo(this.map);
+        }).addTo(this.map);
 
         setTimeout(() => this.map.invalidateSize(), 80);
     }
