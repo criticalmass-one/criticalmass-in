@@ -129,7 +129,7 @@ class TrackImporter implements TrackImporterInterface
         $track
             ->setStravaActivityId($this->activityId)
             ->setSource(Track::TRACK_SOURCE_STRAVA)
-            ->setApp($this->getActivity()['device_name'])
+            ->setApp($this->getActivity()->device_name ?? null)
             ->setUser($this->user)
             ->setRide($this->ride)
             ->setUsername($this->user->getUsername());
