@@ -1072,19 +1072,6 @@
   "resolved" "https://registry.npmjs.org/@maplibre/maplibre-gl-leaflet/-/maplibre-gl-leaflet-0.1.3.tgz"
   "version" "0.1.3"
 
-"@maplibre/maplibre-gl-style-spec@^23.3.0", "@maplibre/maplibre-gl-style-spec@~23.3.0":
-  "integrity" "sha512-IGJtuBbaGzOUgODdBRg66p8stnwj9iDXkgbYKoYcNiiQmaez5WVRfXm4b03MCDwmZyX93csbfHFWEJJYHnn5oA=="
-  "resolved" "https://registry.npmjs.org/@maplibre/maplibre-gl-style-spec/-/maplibre-gl-style-spec-23.3.0.tgz"
-  "version" "23.3.0"
-  dependencies:
-    "@mapbox/jsonlint-lines-primitives" "~2.0.2"
-    "@mapbox/unitbezier" "^0.0.1"
-    "json-stringify-pretty-compact" "^4.0.0"
-    "minimist" "^1.2.8"
-    "quickselect" "^3.0.0"
-    "rw" "^1.3.3"
-    "tinyqueue" "^3.0.0"
-
 "@maplibre/maplibre-gl-style-spec@^24.3.1":
   "integrity" "sha512-TUM5JD40H2mgtVXl5IwWz03BuQabw8oZQLJTmPpJA0YTYF+B+oZppy5lNMO6bMvHzB+/5mxqW9VLG3wFdeqtOw=="
   "resolved" "https://registry.npmjs.org/@maplibre/maplibre-gl-style-spec/-/maplibre-gl-style-spec-24.3.1.tgz"
@@ -1117,35 +1104,6 @@
     "geojson-vt" "^4.0.2"
     "pbf" "^4.0.1"
     "supercluster" "^8.0.1"
-
-"@maptiler/client@~2.5.1":
-  "integrity" "sha512-2rveqohOu3xv16EX65rFUQF8fpPppefrGkvUEtZOx50EDHFxrhEVjKM0p95TuT0RLygxF/sw4vAqUFCBOnPbiw=="
-  "resolved" "https://registry.npmjs.org/@maptiler/client/-/client-2.5.1.tgz"
-  "version" "2.5.1"
-  dependencies:
-    "quick-lru" "^7.0.0"
-
-"@maptiler/leaflet-maptilersdk@^4.1.1":
-  "integrity" "sha512-vCE0K9mlVRyAJkWYOngiA1ZEI42eoWvZd21HLYZE/IU1T+OQc4K1bPoap/z0myAXDLxIJ4wlz+vchr5tKgo0uA=="
-  "resolved" "https://registry.npmjs.org/@maptiler/leaflet-maptilersdk/-/leaflet-maptilersdk-4.1.1.tgz"
-  "version" "4.1.1"
-  dependencies:
-    "@maptiler/sdk" "^3.2.3"
-    "@types/leaflet" "^1.9.16"
-    "leaflet" "^1.9.4"
-
-"@maptiler/sdk@^3.2.3":
-  "integrity" "sha512-oXLlSyJhKADB1KTfxj5bhnRml3nrvBerhuuo1v+rDJKrUHqQpVPj6PS+z809D/+UB9ZwzzHOBeFZP3vYCK3U5g=="
-  "resolved" "https://registry.npmjs.org/@maptiler/sdk/-/sdk-3.8.0.tgz"
-  "version" "3.8.0"
-  dependencies:
-    "@maplibre/maplibre-gl-style-spec" "~23.3.0"
-    "@maptiler/client" "~2.5.1"
-    "events" "^3.3.0"
-    "gl-matrix" "^3.4.3"
-    "js-base64" "^3.7.7"
-    "maplibre-gl" "~5.6.0"
-    "uuid" "^11.0.5"
 
 "@npmcli/arborist@^5.6.2":
   "version" "5.6.2"
@@ -1524,7 +1482,7 @@
   "resolved" "https://registry.npmjs.org/@types/json-schema/-/json-schema-7.0.15.tgz"
   "version" "7.0.15"
 
-"@types/leaflet@^1.9.0", "@types/leaflet@^1.9.16":
+"@types/leaflet@^1.9.0":
   "integrity" "sha512-TbAd9DaPGSnzp6QvtYngntMZgcRk+igFELwR2N99XZn7RXUdKgsXMR+28bUO0rPsWp8MIu/f47luLIQuSLYv/w=="
   "resolved" "https://registry.npmjs.org/@types/leaflet/-/leaflet-1.9.21.tgz"
   "version" "1.9.21"
@@ -3034,7 +2992,7 @@
   "resolved" "https://registry.npmjs.org/eventemitter3/-/eventemitter3-4.0.7.tgz"
   "version" "4.0.7"
 
-"events@^3.2.0", "events@^3.3.0":
+"events@^3.2.0":
   "integrity" "sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q=="
   "resolved" "https://registry.npmjs.org/events/-/events-3.3.0.tgz"
   "version" "3.3.0"
@@ -3286,7 +3244,7 @@
   "resolved" "https://registry.npmjs.org/get-stream/-/get-stream-6.0.1.tgz"
   "version" "6.0.1"
 
-"gl-matrix@^3.4.3", "gl-matrix@^3.4.4":
+"gl-matrix@^3.4.4":
   "integrity" "sha512-latSnyDNt/8zYUB6VIJ6PCh2jBjJX6gnDsoCZ7LyW7GkqrD51EWwa9qCoGixj8YqBtETQK/xY7OmpTF8xz1DdQ=="
   "resolved" "https://registry.npmjs.org/gl-matrix/-/gl-matrix-3.4.4.tgz"
   "version" "3.4.4"
@@ -3808,11 +3766,6 @@
   "resolved" "https://registry.npmjs.org/jquery/-/jquery-3.7.1.tgz"
   "version" "3.7.1"
 
-"js-base64@^3.7.7":
-  "integrity" "sha512-hNngCeKxIUQiEUN3GPJOkz4wF/YvdUdbNL9hsBcMQTkKzboD7T/q3OYOuuPZLUE6dBxSGpwhk5mwuDud7JVAow=="
-  "resolved" "https://registry.npmjs.org/js-base64/-/js-base64-3.7.8.tgz"
-  "version" "3.7.8"
-
 "js-tokens@^3.0.0 || ^4.0.0", "js-tokens@^4.0.0":
   "integrity" "sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ=="
   "resolved" "https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz"
@@ -3922,7 +3875,7 @@
   "resolved" "https://registry.npmjs.org/leaflet.markercluster/-/leaflet.markercluster-1.4.1.tgz"
   "version" "1.4.1"
 
-"leaflet@^1.0.1", "leaflet@^1.7.1", "leaflet@^1.9.3", "leaflet@^1.9.4", "leaflet@>= 0.5 < 2", "leaflet@~1.3.1":
+"leaflet@^1.0.1", "leaflet@^1.7.1", "leaflet@^1.9.3", "leaflet@>= 0.5 < 2", "leaflet@~1.3.1":
   "integrity" "sha512-nxS1ynzJOmOlHp+iL3FyWqK89GtNL8U8rvlMOsQdTTssxZwCXh8N2NB3GDQOL+YR3XnWyZAxwQixURb+FA74PA=="
   "resolved" "https://registry.npmjs.org/leaflet/-/leaflet-1.9.4.tgz"
   "version" "1.9.4"
@@ -4152,34 +4105,6 @@
     "earcut" "^3.0.2"
     "geojson-vt" "^4.0.2"
     "gl-matrix" "^3.4.4"
-    "kdbush" "^4.0.2"
-    "murmurhash-js" "^1.0.0"
-    "pbf" "^4.0.1"
-    "potpack" "^2.1.0"
-    "quickselect" "^3.0.0"
-    "supercluster" "^8.0.1"
-    "tinyqueue" "^3.0.0"
-
-"maplibre-gl@~5.6.0":
-  "integrity" "sha512-SEqYThhUCFf6Lm0TckpgpKnto5u4JsdPYdFJb6g12VtuaFsm3nYdBO+fOmnUYddc8dXihgoGnuXvPPooUcRv5w=="
-  "resolved" "https://registry.npmjs.org/maplibre-gl/-/maplibre-gl-5.6.2.tgz"
-  "version" "5.6.2"
-  dependencies:
-    "@mapbox/geojson-rewind" "^0.5.2"
-    "@mapbox/jsonlint-lines-primitives" "^2.0.2"
-    "@mapbox/point-geometry" "^1.1.0"
-    "@mapbox/tiny-sdf" "^2.0.7"
-    "@mapbox/unitbezier" "^0.0.1"
-    "@mapbox/vector-tile" "^2.0.4"
-    "@mapbox/whoots-js" "^3.1.0"
-    "@maplibre/maplibre-gl-style-spec" "^23.3.0"
-    "@maplibre/vt-pbf" "^4.0.3"
-    "@types/geojson" "^7946.0.16"
-    "@types/geojson-vt" "3.2.5"
-    "@types/supercluster" "^7.1.3"
-    "earcut" "^3.0.2"
-    "geojson-vt" "^4.0.2"
-    "gl-matrix" "^3.4.3"
     "kdbush" "^4.0.2"
     "murmurhash-js" "^1.0.0"
     "pbf" "^4.0.1"
@@ -5243,11 +5168,6 @@
   dependencies:
     "side-channel" "^1.0.4"
 
-"quick-lru@^7.0.0":
-  "integrity" "sha512-k9lSsjl36EJdK7I06v7APZCbyGT2vMTsYSRX1Q2nbYmnkBqgUhRkAuzH08Ciotteu/PLJmIF2+tti7o3C/ts2g=="
-  "resolved" "https://registry.npmjs.org/quick-lru/-/quick-lru-7.3.0.tgz"
-  "version" "7.3.0"
-
 "quickselect@^3.0.0":
   "integrity" "sha512-XdjUArbK4Bm5fLLvlm5KpTFOiOThgfWWI4axAZDWg4E/0mKdZyI9tNEfds27qCi1ze/vwTR16kvmmGhRra3c2g=="
   "resolved" "https://registry.npmjs.org/quickselect/-/quickselect-3.0.0.tgz"
@@ -6180,11 +6100,6 @@
   "integrity" "sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA=="
   "resolved" "https://registry.npmjs.org/utils-merge/-/utils-merge-1.0.1.tgz"
   "version" "1.0.1"
-
-"uuid@^11.0.5":
-  "integrity" "sha512-0/A9rDy9P7cJ+8w1c9WD9V//9Wj15Ce2MPz8Ri6032usz+NfePxx5AcN3bN+r6ZL6jEo066/yNYB3tn4pQEx+A=="
-  "resolved" "https://registry.npmjs.org/uuid/-/uuid-11.1.0.tgz"
-  "version" "11.1.0"
 
 "uuid@^8.3.0", "uuid@^8.3.2":
   "integrity" "sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg=="
