@@ -18,10 +18,23 @@ export default class extends Controller {
         centerLongitude: Number,
         zoom: { type: Number, default: 12 },
         lockMap: String,
+        vector: { type: Boolean, default: true }
     };
 
     connect() {
         this.initMap();
+    }
+
+    disconnect() {
+        if (this._glLayer) {
+            this.map.removeLayer(this._glLayer);
+            this._glLayer = null;
+        }
+
+        if (this.map) {
+            this.map.remove();
+            this.map = null;
+        }
     }
 
     initMap() {
@@ -39,9 +52,16 @@ export default class extends Controller {
         const zoom = this.zoomValue ?? 12;
         this.map.setView([lat, lng], zoom);
 
-        L.maplibreGL({
-            style: 'https://tiles.openfreemap.org/styles/liberty',
-        }).addTo(this.map);
+        if (this.vectorValue) {
+            this._glLayer = L.maplibreGL({
+                style: 'https://tiles.openfreemap.org/styles/liberty',
+            }).addTo(this.map);
+        } else {
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(this.map);
+        }
 
         setTimeout(() => this.map.invalidateSize(), 80);
     }
