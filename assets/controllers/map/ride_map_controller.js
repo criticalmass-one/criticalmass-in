@@ -51,7 +51,6 @@ export default class extends BaseMapController {
         });
 
         const marker = this.createMarker(lat, lng, { icon, title: 'Treffpunkt' });
-        marker.bindPopup('Treffpunkt');
     }
 
     getTrackUrl() {
