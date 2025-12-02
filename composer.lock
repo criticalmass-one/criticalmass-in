@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0589d4e352406a5e08f8fd67e5e9356d",
+    "content-hash": "caeb214a00fdf12ff8391374f846fa3d",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -4505,16 +4505,16 @@
         },
         {
             "name": "maltehuebner/dataquery-bundle",
-            "version": "0.8.1",
+            "version": "0.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maltehuebner/dataquery-bundle.git",
-                "reference": "62fe0372addc89e5a66eed1135bca5bae073547a"
+                "reference": "0b4489e59c373305fd5a43cf17004e899f321c36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maltehuebner/dataquery-bundle/zipball/62fe0372addc89e5a66eed1135bca5bae073547a",
-                "reference": "62fe0372addc89e5a66eed1135bca5bae073547a",
+                "url": "https://api.github.com/repos/maltehuebner/dataquery-bundle/zipball/0b4489e59c373305fd5a43cf17004e899f321c36",
+                "reference": "0b4489e59c373305fd5a43cf17004e899f321c36",
                 "shasum": ""
             },
             "require": {
@@ -4547,9 +4547,9 @@
             ],
             "support": {
                 "issues": "https://github.com/maltehuebner/dataquery-bundle/issues",
-                "source": "https://github.com/maltehuebner/dataquery-bundle/tree/0.8.1"
+                "source": "https://github.com/maltehuebner/dataquery-bundle/tree/0.8.2"
             },
-            "time": "2025-09-18T16:30:02+00:00"
+            "time": "2025-12-02T12:28:40+00:00"
         },
         {
             "name": "maltehuebner/impress-bundle",
