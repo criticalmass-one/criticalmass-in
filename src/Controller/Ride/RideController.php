@@ -2,9 +2,12 @@
 
 namespace App\Controller\Ride;
 
+use App\Criticalmass\Activity\ActivityCalculatorInterface;
+use App\DBAL\Type\RideType;
 use App\Entity\Ride;
 use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Event\View\ViewEvent;
+use Carbon\Carbon;
 use App\Repository\BlockedCityRepository;
 use App\Repository\ParticipationRepository;
 use App\Repository\PhotoRepository;
@@ -43,9 +46,7 @@ class RideController extends AbstractController
         WeatherRepository $weatherRepository,
         TrackRepository $trackRepository,
         PhotoRepository $photoRepository,
-        SeoPageInterface $seoPage,
-        EventDispatcherInterface $eventDispatcher,
-        Ride $ride = null
+        SeoPageInterface $seoPage, EventDispatcherInterface $eventDispatcher, ActivityCalculatorInterface $activityCalculator, Ride $ride = null
     ): Response {
         if (!$ride) {
             $this->redirectToRoute('caldera_criticalmass_calendar');
@@ -99,12 +100,14 @@ class RideController extends AbstractController
         return $this->render('Ride/show.html.twig', [
             'city' => $ride->getCity(),
             'ride' => $ride,
+            'activity_index' => $activityCalculator->calculate($ride->getCity()),
             'tracks' => $trackRepository->findTracksByRide($ride),
             'photos' => $photoRepository->findPhotosByRide($ride),
             'subrides' => $subrideRepository->getSubridesForRide($ride),
             'dateTime' => new \DateTime(),
             'weatherForecast' => $weatherForecast,
             'participation' => $participation,
+            'is_current_criticalmass' => (!$ride->getRideType() || $ride->getRideType() === RideType::CRITICAL_MASS) && (new Carbon($ride->getDateTime()))->isCurrentMonth(),
         ]);
     }
 }
