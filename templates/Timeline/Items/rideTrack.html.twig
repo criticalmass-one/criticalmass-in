@@ -21,14 +21,20 @@
         </div>
 
         <div class="row">
-            {% for previewPhoto in item.previewPhotoList %}
-                <div class="col-12 col-sm-6 col-md-4">
-                    <a href="{{ object_path(previewPhoto) }}">
-                        <img
-                                src="{{ vich_uploader_asset(previewPhoto, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"
-                                class="img-fluid img-thumbnail"
-                        />
-                    </a>
+            <div class="col-12">
+                <div
+                    id="map-{{ item.uniqId }}"
+                    class="map timeline-item-ride-map"
+                    data-controller="map--map"
+                    style="height: 150px;"
+                    data-map--map-center-latitude-value="{{ item.ride.latitude }}"
+                    data-map--map-center-longitude-value="{{ item.ride.longitude }}"
+                    data-map--map-zoom-value="13"
+                    data-map--map-lock-map-value="true"
+                    data-map--map-polyline-color-value="{{ item.track.user.color }}"
+                    data-map--map-polyline-value="{{ item.track.polyline }}"
+                    data-map--map-vector-value="false"
+                >
                 </div>
             {% endfor %}
         </div>

@@ -4,17 +4,13 @@ namespace App\Criticalmass\Calendar\Event;
 
 use CalendR\Event\AbstractEvent;
 use App\Entity\Ride;
+use CalendR\Event\EventInterface;
 
 class RideEvent extends AbstractEvent
 {
-    /** @var \DateTime $begin */
-    protected $begin;
-
-    /** @var \DateTime $end */
-    protected $end;
-
-    /** @var Ride $ride */
-    protected $ride;
+    private \DateTime $begin;
+    private \DateTime $end;
+    private Ride $ride;
 
     public function __construct(Ride $ride)
     {
@@ -43,5 +39,19 @@ class RideEvent extends AbstractEvent
     public function getEnd(): \DateTime
     {
         return $this->end;
+    }
+
+    public function isEqualTo(EventInterface $event): bool
+    {
+        if (!$event instanceof self) {
+            return false;
+        }
+
+        if ($this->ride->getId() !== $event->getRide()->getId()) {
+            return false;
+        }
+
+        return $this->getBegin() == $event->getBegin()
+            && $this->getEnd() == $event->getEnd();
     }
 }

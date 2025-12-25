@@ -163,6 +163,9 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     #[ORM\Column(type: 'boolean')]
     private bool $reviewed = false;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $app = null;
+
     public function __construct()
     {
         parent::__construct();
@@ -459,6 +462,18 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     public function setReviewed(bool $reviewed): self
     {
         $this->reviewed = $reviewed;
+
+        return $this;
+    }
+
+    public function getApp(): ?string
+    {
+        return $this->app;
+    }
+
+    public function setApp(?string $app): static
+    {
+        $this->app = $app;
 
         return $this;
     }
