@@ -1,65 +1,114 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
-{% block title %}Deine Fotos{% endblock %}
+{% set city = ride.city %}
+
+{% block title %}Fotos{% endblock %}
 
 {% block breadcrumb %}
-    <li class="active">asdasd</li>
+    <li>
+        <a href="{{ path('caldera_criticalmass_city_list') }}">
+            Städteliste
+        </a>
+    </li>
+    <li>
+        <a href="{{ object_path(ride.city) }}">
+            {{ ride.city.city }}
+        </a>
+    </li>
+    <li>
+        <a href="{{ object_path(ride) }}">
+            {{ ride.title }}
+        </a>
+    </li>
+    <li class="active">
+        Fotos
+    </li>
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <h2>Fotos sortieren</h2>
-            </div>
-        </div>
+            <div class="col-12">
+                <div class="btn-group float-end mt-3">
+                    {% if app.user %}
+                        {% set uploadPath = object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') %}
 
-        <div class="row">
-            <div class="col-md-12">
-                <table class="table">
-                    <tr>
-                        <th>Datum</th>
-                        <th>Stadt</th>
-                        <th>Tour</th>
-                        <th>Anzahl</th>
-                        <th>Optionen</th>
-                    </tr>
-                    {% for key, ride in result['rides'] %}
-                        <tr>
-                            <td>
-                                {{ ride.dateTime.format('d. m. Y') }}
-                            </td>
-                            <td>
-                                <a href="{{ object_path(ride.city) }}">
-                                    {{ ride.city.getCity() }}
-                                </a>
-                            </td>
-                            <td>
-                                <a href="{{ object_path(ride) }}">
-                                    {{ ride.title }}
-                                </a>
-                            </td>
-                            <td>
-                                <a href="{{ object_path(ride, 'caldera_criticalmass_photo_manage') }}">
-                                    {{ result['counter'][key] }}
-                                </a>
-                            </td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="...">
-                                    <a class="btn btn-default btn-xs" title="Herunterladen"
-                                       href="{{ object_path(ride, 'caldera_criticalmass_photo_manage') }}">
-                                        <i class="far fa-images"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                    {% endfor %}
-
-                    {% if result['rides']|length == 0 %}
-                        <td colspan="7" style="text-align: center;">Du hast bislang keine Tracks hochgeladen :(</td>
+                        <a class="btn btn-success" href="{{ uploadPath }}" title="Fotos hochladen">
+                            <i class="far fa-camera"></i>
+                            Fotos hochladen
+                        </a>
+                    {% else %}
+                        <span class="btn btn-success modal-hint"
+                              data-modal-hint-title="{{ 'hint_modal.gallery.photo_upload_button.title'|trans }}"
+                              data-modal-hint-text="{{ 'hint_modal.gallery.photo_upload_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
+                              data-hint-modal-size="md">
+                            <i class="far fa-camera"></i>
+                            Fotos hochladen
+                        </span>
                     {% endif %}
-                </table>
+                </div>
+
+                <h1>
+                    Fotos von {{ ride.title }}
+                </h1>
             </div>
         </div>
+
+        {% if pagination|length == 0 %}
+            {% if not app.getUser() %}
+                <div class="row">
+                    <div class="col-12">
+                        <div class="alert alert-info" role="alert">
+                            <strong>
+                                Schade!
+                            </strong>
+                            Bislang hat noch niemand Fotos von dieser Tour hochgeladen. Mit einem
+                            <a href="{{ path('login') }}">criticalmass.in-Benutzerkonto</a>
+                            könntest du deine Fotos hochladen.
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="row">
+                    <div class="col-12">
+                        <div class="alert alert-info" role="alert">
+                            <strong>
+                                Hej!
+                            </strong>
+                            Du kannst der Erste sein, der hier seine Fotos hochlädt!
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="row">
+                <div class="photo-list">
+                    {% for photo in pagination %}
+                        <div class="col-6 col-sm-4 col-md-3 col-lg-3">
+                            <div class="margin-bottom-medium text-center position-relative">
+                                <a href="{{ object_path(photo) }}">
+                                    {% if photo.posts|length > 0 %}
+                                        <span class="badge"
+                                              style="position: absolute; top: -10px; right: 10px; background-color: red; font-size: 1em;">
+                                            {{ photo.posts|length }}
+                                        </span>
+                                    {% endif %}
+                                    <img class="img-thumbnail img-fluid"
+                                         src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="text-center">
+                        {{ knp_pagination_render(pagination) }}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

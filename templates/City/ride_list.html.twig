@@ -3,7 +3,6 @@
 {% block title %}Städte-Übersicht{% endblock %}
 
 {% block breadcrumb %}
-
     <li>
         <a href="{{ path('caldera_criticalmass_city_list') }}">
             Städteliste
@@ -20,14 +19,14 @@
         Tour-Übersicht
     </li>
 {% endblock %}
-    
+
 {% block content %}
     <div class="container">
 
         {{ include('City/Includes/_tabs.html.twig', { tab: 'ride_list' }) }}
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <h2>
                     Touren in dieser Stadt
                 </h2>
@@ -36,7 +35,7 @@
 
         {% for message in app.flashes('success') %}
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <div class="alert alert-success">
                         {{ message|raw }}
                     </div>
@@ -45,36 +44,22 @@
         {% endfor %}
 
         <div class="row">
-            <div class="col-md-12">
-                <table id="ride-list-table" class="table">
+            <div class="col-12">
+                <table id="ride-list-table" class="table align-middle">
                     <thead>
                     <tr>
-                        <th>
-                            Datum
-                        </th>
-                        <th>
-                            Uhrzeit
-                        </th>
-                        <th>
-                            Titel
-                        </th>
-                        <th>
-                            Treffpunkt
-                        </th>
-                        <th>
-                            Teilnehmer
-                        </th>
-                        <th>
-                            Distanz
-                        </th>
-                        <th>
-                            Dauer
-                        </th>
+                        <th>Datum</th>
+                        <th>Uhrzeit</th>
+                        <th>Titel</th>
+                        <th>Treffpunkt</th>
+                        <th>Teilnehmer</th>
+                        <th>Distanz</th>
+                        <th>Dauer</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for ride in rides %}
-                    {% include 'Common/Ride/standard_city_ride_table_row.html.twig' with { ride: ride } %}
+                        {% include 'Common/Ride/standard_city_ride_table_row.html.twig' with { ride: ride } %}
                     {% endfor %}
                     </tbody>
                 </table>

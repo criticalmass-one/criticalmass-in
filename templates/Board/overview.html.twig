@@ -11,30 +11,20 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <table class="table">
+            <div class="col-12">
+                <table class="table align-middle">
                     <thead>
                     <tr>
-                        <th>
-                            Beschreibung
-                        </th>
-                        <th>
-                            Themen
-                        </th>
-                        <th>
-                            Beiträge
-                        </th>
-                        <th>
-                            letzter Beitrag
-                        </th>
+                        <th>Beschreibung</th>
+                        <th>Themen</th>
+                        <th>Beiträge</th>
+                        <th>letzter Beitrag</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
                         <td colspan="4">
-                            <h4>
-                                Allgemeines
-                            </h4>
+                            <h4>Allgemeines</h4>
                         </td>
                     </tr>
                     {% for board in boards %}
@@ -45,27 +35,19 @@
                                         {{ board.title }}
                                     </h5>
                                 </a>
-
-                                <small>
-                                    {{ board.description }}
-                                </small>
+                                <small>{{ board.description }}</small>
                             </td>
-                            <td>
-                                {{ board.threadNumber }}
-                            </td>
-                            <td>
-                                {{ board.postNumber }}
-                            </td>
+                            <td>{{ board.threadNumber }}</td>
+                            <td>{{ board.postNumber }}</td>
                             <td>
                                 {% if board.lastThread %}
-                                    <img class="pull-left img-fluid" style="margin-right: 5px; height: 60px;"
+                                    <img class="float-start img-fluid me-2" style="height: 60px;"
                                          src="{{ vich_uploader_asset(board.lastThread.lastPost.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}" alt="..."/>
                                     <a href="{{ object_path(board.lastThread) }}">
                                         <strong>{{ board.lastThread.title }}</strong>
-                                    </a>
-                                    <br/>
+                                    </a><br/>
                                     von <strong>{{ board.lastThread.lastPost.user.username }}</strong><br/>
-                                    {{ board.lastThread.lastPost.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }}&nbsp;Uhr
+                                    {{ board.lastThread.lastPost.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }} Uhr
                                 {% endif %}
                             </td>
                         </tr>
@@ -73,11 +55,10 @@
 
                     <tr>
                         <td colspan="4">
-                            <h4>
-                                Städte
-                            </h4>
+                            <h4>Städte</h4>
                         </td>
                     </tr>
+
                     {% for city in cities %}
                         <tr>
                             <td>
@@ -86,27 +67,19 @@
                                         {{ city.title }}
                                     </h5>
                                 </a>
-
-                                <small>
-                                    {{ city.punchline }}
-                                </small>
+                                <small>{{ city.punchline }}</small>
                             </td>
-                            <td>
-                                {{ city.threadNumber }}
-                            </td>
-                            <td>
-                                {{ city.postNumber }}
-                            </td>
+                            <td>{{ city.threadNumber }}</td>
+                            <td>{{ city.postNumber }}</td>
                             <td>
                                 {% if city.lastThread %}
-                                    <img class="pull-left img-fluid" style="margin-right: 5px; height: 60px;"
+                                    <img class="float-start img-fluid me-2" style="height: 60px;"
                                          src="{{ vich_uploader_asset(city.lastThread.lastPost.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}" alt="..."/>
                                     <a href="{{ object_path(city.lastThread) }}">
                                         <strong>{{ city.lastThread.title }}</strong>
-                                    </a>
-                                    <br/>
+                                    </a><br/>
                                     von <strong>{{ city.lastThread.lastPost.user.username }}</strong><br/>
-                                    {{ city.lastThread.lastPost.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }}&nbsp;Uhr
+                                    {{ city.lastThread.lastPost.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }} Uhr
                                 {% endif %}
                             </td>
                         </tr>

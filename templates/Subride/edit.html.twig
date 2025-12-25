@@ -77,7 +77,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row margin-top-medium">
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-12">
@@ -92,9 +92,10 @@
                         <div class="form-group{% if form_errors(form.title) %} has-error has-feedback{% endif %}">
                             <label class="control-label" for="title">Titel:</label>
                             {{ form_widget(form.title, { 'attr' : { 'class': 'form-control' } }) }}
-                            <p class="help-block">Gib deiner Mini-Mass einen Namen. Er muss noch nicht einmal
-                                aussagekräftig
-                                sein — Hauptsache man weiß, worum es geht.</p>
+                            <p class="help-block">
+                                Gib deiner Mini-Mass einen Namen. Er muss noch nicht einmal aussagekräftig
+                                sein — Hauptsache man weiß, worum es geht.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -104,9 +105,10 @@
                         <div class="form-group">
                             <label class="control-label" for="description">Beschreibung:</label>
                             {{ form_widget(form.description, { 'attr' : { 'class': 'form-control' } }) }}
-                            <p class="help-block">Hier ist Platz für eine grobe Beschreibung der Mini-Mass. Lege hier
-                                zum
-                                Beispiel eine ungefähre Route fest.</p>
+                            <p class="help-block">
+                                Hier ist Platz für eine grobe Beschreibung der Mini-Mass. Lege hier zum
+                                Beispiel eine ungefähre Route fest.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -116,9 +118,10 @@
                         <div class="form-group{% if form_errors(form.location) %} has-error has-feedback{% endif %}">
                             <label class="control-label" for="description">Treffpunkt:</label>
                             {{ form_widget(form.location, { 'attr' : { 'class': 'form-control' } }) }}
-                            <p class="help-block">Wo trefft ihr euch? Vergiss nicht, den Treffpunkt oben auf der Karte
-                                zu
-                                markieren.</p>
+                            <p class="help-block">
+                                Wo trefft ihr euch? Vergiss nicht, den Treffpunkt oben auf der Karte
+                                zu markieren.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -153,7 +156,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row margin-top-medium">
             <div class="col-md-12">
                 <div class="form-group">
                     <div class="btn-group pull-right">
@@ -172,6 +175,6 @@
         {{ form_widget(form.longitude) }}
         {{ form_widget(form._token) }}
 
-        </form>
+        {{ form_end(form) }}
     </div>
 {% endblock %}

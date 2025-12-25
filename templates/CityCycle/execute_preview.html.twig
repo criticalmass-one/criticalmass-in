@@ -23,7 +23,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-12 col-md-8 offset-md-2">
                 <h2>
                     Vorschau
                 </h2>
@@ -39,25 +39,14 @@
         </div>
 
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <table class="table">
+            <div class="col-12 col-md-8 offset-md-2">
+                <table class="table align-middle">
                     <thead>
                     <tr>
-                        <th>
-                            Titel
-                        </th>
-
-                        <th>
-                            Datum
-                        </th>
-
-                        <th>
-                            Uhrzeit
-                        </th>
-
-                        <th>
-                            Treffpunkt
-                        </th>
+                        <th>Titel</th>
+                        <th>Datum</th>
+                        <th>Uhrzeit</th>
+                        <th>Treffpunkt</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -86,7 +75,7 @@
                     {% endfor %}
                     {% if rideList|length == 0 %}
                         <tr>
-                            <td colspan="5">
+                            <td colspan="4">
                                 <div class="alert alert-danger">
                                     Für deinen gewählten Zeitraum können keine Touren angelegt werden, weil entweder
                                     dieser Turnus für den gewählten Zeitraum noch nicht begonnen hat oder abgelaufen ist
@@ -96,7 +85,7 @@
                         </tr>
                     {% elseif rideList|length < dateTimeList|length %}
                         <tr>
-                            <td colspan="5">
+                            <td colspan="4">
                                 <div class="alert alert-info">
                                     <p>
                                         Du hast gerade Touren für einen Zeitraum von <strong>{{ dateTimeList|length }}
@@ -104,12 +93,14 @@
                                         <strong>{{ rideList|length }} Touren</strong> erstellt. Das liegt daran, dass
                                         <strong>{{ dateTimeList|length - rideList|length }} Touren</strong> entweder
                                         bereits in unserer Datenbank vorhanden sind oder aber außerhalb des
-                                        Gültigkeitszeitraumes des Turnus’ liegen.</p>
+                                        Gültigkeitszeitraumes des Turnus’ liegen.
+                                    </p>
 
                                     <p>
                                         Wir können dir leider momentan aus technischen Gründen nicht anzeigen, um welche
                                         Touren es sich handelt — wir arbeiten allerdings an einer entsprechenden
-                                        Funktion.</p>
+                                        Funktion.
+                                    </p>
                                 </div>
                             </td>
                         </tr>
@@ -120,7 +111,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-12 col-md-8 offset-md-2">
                 <p>
                     Du kannst nun entweder die in der obigen Tabelle dargestellten Touren abspeichern oder zurück gehen
                     und einen anderen Zeitraum auswählen:
@@ -129,21 +120,20 @@
         </div>
 
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-12 col-md-8 offset-md-2">
                 <form method="post"
-                      action="{{ object_path(cityCycle, 'caldera_criticalmass_citycycle_execute_persist') }}"
-                ">
-                <input type="hidden" name="fromDate" value="{{ executeable.fromDate|date('U') }}"/>
-                <input type="hidden" name="untilDate" value="{{ executeable.untilDate|date('U') }}"/>
+                      action="{{ object_path(cityCycle, 'caldera_criticalmass_citycycle_execute_persist') }}">
+                    <input type="hidden" name="fromDate" value="{{ executeable.fromDate|date('U') }}"/>
+                    <input type="hidden" name="untilDate" value="{{ executeable.untilDate|date('U') }}"/>
 
-                <div class="btn-group pull-right">
-                    <a href="" class="btn btn-default">
-                        Abbrechen
-                    </a>
-                    <button type="submit" class="btn btn-primary">
-                        Touren speichern
-                    </button>
-                </div>
+                    <div class="btn-group float-end">
+                        <a href="" class="btn btn-outline-secondary">
+                            Abbrechen
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            Touren speichern
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>

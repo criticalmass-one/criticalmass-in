@@ -1,0 +1,63 @@
+{# default Sliding pagination control implementation #}
+
+{% if pageCount > 1 %}
+    <nav aria-label="Seiten-Navigation">
+        <ul class="pagination justify-content-center">
+
+            {% if first is defined and current != first %}
+                <li class="page-item">
+                    <a class="page-link"
+                       href="{{ path(route, query|merge({(pageParameterName): first})) }}"
+                       aria-label="Erste Seite">
+                        &laquo;
+                    </a>
+                </li>
+            {% endif %}
+
+            {% if previous is defined %}
+                <li class="page-item">
+                    <a class="page-link"
+                       href="{{ path(route, query|merge({(pageParameterName): previous})) }}"
+                       aria-label="Vorherige Seite">
+                        &lsaquo;
+                    </a>
+                </li>
+            {% endif %}
+
+            {% for page in pagesInRange %}
+                {% if page != current %}
+                    <li class="page-item">
+                        <a class="page-link"
+                           href="{{ path(route, query|merge({(pageParameterName): page})) }}">
+                            {{ page }}
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item active" aria-current="page">
+                        <span class="page-link">{{ page }}</span>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+            {% if next is defined %}
+                <li class="page-item">
+                    <a class="page-link"
+                       href="{{ path(route, query|merge({(pageParameterName): next})) }}"
+                       aria-label="Nächste Seite">
+                        &rsaquo;
+                    </a>
+                </li>
+            {% endif %}
+
+            {% if last is defined and current != last %}
+                <li class="page-item">
+                    <a class="page-link"
+                       href="{{ path(route, query|merge({(pageParameterName): last})) }}"
+                       aria-label="Letzte Seite">
+                        &raquo;
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endif %}

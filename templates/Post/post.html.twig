@@ -1,39 +1,46 @@
-<div class="row post margin-bottom-medium">
+<div class="row post mb-4">
     <a name="post-{{ post.id }}"></a>
-    <div class="col-md-12">
-        <div class="media post">
-            <span class="pull-left">
-                {% if post.user.imageName %}
-                <img class="media-object round-media-object"
-                     src="{{ vich_uploader_asset(post.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}"/>
-                {% endif %}
-            </span>
 
-            <div class="media-body">
-                <h4 class="media-heading username">
+    <div class="col-md-12">
+        <div class="d-flex align-items-start post">
+
+            {% if post.user.imageName %}
+                <img
+                        class="rounded me-3"
+                        style="width: 64px; height: 64px; object-fit: cover;"
+                        src="{{ vich_uploader_asset(post.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}"
+                        alt="Profilbild"
+                />
+            {% endif %}
+
+            <div class="flex-grow-1">
+                <h4 class="username mb-1">
                     {% if post.getRide() %}
-                    {{ post.getUser().getUsername() }} schreibt zu
+                        {{ post.getUser().getUsername() }} schreibt zu
                         <a href="{{ object_path(post.ride) }}">
                             {{ post.ride.title }}
                         </a>:
                     {% elseif post.getCity() %}
-                    {{ post.getUser().getUsername() }} schreibt über
-                    <a href="{{ object_path(post.city) }}">
-                        {{ post.city.title }}
-                    </a>:
+                        {{ post.getUser().getUsername() }} schreibt über
+                        <a href="{{ object_path(post.city) }}">
+                            {{ post.city.title }}
+                        </a>:
                     {% else %}
                         {{ post.getUser().getUsername() }} schreibt:
                     {% endif %}
                 </h4>
 
-                <a href="#post-{{ post.id }}">
+                <a href="#post-{{ post.id }}" class="text-muted small">
                     <time>
-                        {{ post.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }}&nbsp;Uhr
+                        {{ post.dateTime|date('d.m.Y H:i', 'Europe/Berlin') }} Uhr
                     </time>
                 </a>
 
-                {{ post.message|markdown }}
+                <div class="mt-2">
+                    {{ post.message|markdown }}
+                </div>
             </div>
+
         </div>
     </div>
 </div>

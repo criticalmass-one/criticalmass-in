@@ -1,7 +1,10 @@
-<div class="btn-group pull-right margin-top-medium">
+<div class="btn-group float-end mt-3">
     {% if app.user %}
         {% if participation == null or (participation.goingMaybe and pastRide) %}
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+            <button type="button"
+                    class="btn btn-secondary dropdown-toggle"
+                    data-bs-toggle="dropdown"
+                    aria-haspopup="true"
                     aria-expanded="false">
                 <i class="far fa-bicycle"></i>
                 {% if pastRide %}
@@ -9,26 +12,25 @@
                 {% else %}
                     Bist du dabei?
                 {% endif %}
-                <span class="caret"></span>
+                <span class="ms-1">&#9662;</span>
             </button>
-            <ul class="dropdown-menu" style="z-index: 99999;">
-                {# TODO #}
+            <ul class="dropdown-menu dropdown-menu-end" style="z-index: 99999;">
                 <li>
-                    <a href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'yes' }) }}">
+                    <a class="dropdown-item" href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'yes' }) }}">
                         <i class="far fa-check"></i>
                         Ja
                     </a>
                 </li>
                 {% if pastRide %}
                     <li>
-                        <a href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'no' }) }}">
+                        <a class="dropdown-item" href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'no' }) }}">
                             <i class="far fa-times"></i>
                             Nein
                         </a>
                     </li>
                 {% else %}
                     <li>
-                        <a href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'maybe' }) }}">
+                        <a class="dropdown-item" href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'maybe' }) }}">
                             <i class="far fa-circle-o"></i>
                             Vielleicht
                         </a>
@@ -37,7 +39,10 @@
             </ul>
         {% else %}
             {% if participation.goingYes %}
-                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                <button type="button"
+                        class="btn btn-success dropdown-toggle"
+                        data-bs-toggle="dropdown"
+                        aria-haspopup="true"
                         aria-expanded="false">
                     <i class="far fa-check"></i>
                     {% if pastRide %}
@@ -45,19 +50,19 @@
                     {% else %}
                         Du nimmst teil
                     {% endif %}
-                    <span class="caret"></span>
+                    <span class="ms-1">&#9662;</span>
                 </button>
-                <ul class="dropdown-menu" style="z-index: 99999;">
+                <ul class="dropdown-menu dropdown-menu-end" style="z-index: 99999;">
                     {% if not pastRide %}
                         <li>
-                            <a href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'maybe' }) }}">
+                            <a class="dropdown-item" href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'maybe' }) }}">
                                 <i class="far fa-circle-o"></i>
                                 Vielleicht
                             </a>
                         </li>
                     {% endif %}
                     <li>
-                        <a href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'no' }) }}">
+                        <a class="dropdown-item" href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'no' }) }}">
                             <i class="far fa-times"></i>
                             {% if pastRide %}
                                 Nicht teilgenommen
@@ -70,22 +75,25 @@
             {% endif %}
 
             {% if participation.goingMaybe %}
-                <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                <button type="button"
+                        class="btn btn-warning dropdown-toggle"
+                        data-bs-toggle="dropdown"
+                        aria-haspopup="true"
                         aria-expanded="false">
                     <i class="far fa-circle"></i>
                     Du nimmst vielleicht teil
-                    <span class="caret"></span>
+                    <span class="ms-1">&#9662;</span>
                 </button>
-                <ul class="dropdown-menu" style="z-index: 99999;">
+                <ul class="dropdown-menu dropdown-menu-end" style="z-index: 99999;">
                     <li>
-                        <a href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'yes' }) }}">
+                        <a class="dropdown-item" href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'yes' }) }}">
                             <i class="far fa-check"></i>
                             Zusagen
                         </a>
                     </li>
 
                     <li>
-                        <a href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'no' }) }}">
+                        <a class="dropdown-item" href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'no' }) }}">
                             <i class="far fa-times"></i>
                             Absagen
                         </a>
@@ -94,7 +102,10 @@
             {% endif %}
 
             {% if participation.goingNo %}
-                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                <button type="button"
+                        class="btn btn-danger dropdown-toggle"
+                        data-bs-toggle="dropdown"
+                        aria-haspopup="true"
                         aria-expanded="false">
                     <i class="far fa-times"></i>
                     {% if pastRide %}
@@ -102,11 +113,11 @@
                     {% else %}
                         Du nimmst nicht teil
                     {% endif %}
-                    <span class="caret"></span>
+                    <span class="ms-1">&#9662;</span>
                 </button>
-                <ul class="dropdown-menu" style="z-index: 99999;">
+                <ul class="dropdown-menu dropdown-menu-end" style="z-index: 99999;">
                     <li>
-                        <a href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'yes' }) }}">
+                        <a class="dropdown-item" href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'yes' }) }}">
                             <i class="far fa-check"></i>
                             {% if pastRide %}
                                 Du hast teilgenommen
@@ -117,7 +128,7 @@
                     </li>
                     {% if not pastRide %}
                         <li>
-                            <a href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'maybe' }) }}">
+                            <a class="dropdown-item" href="{{ object_path(ride, 'caldera_criticalmass_participation_ride', { status: 'maybe' }) }}">
                                 <i class="far fa-circle-o"></i>
                                 Vielleicht
                             </a>
@@ -127,14 +138,17 @@
             {% endif %}
         {% endif %}
     {% else %}
-        <span class="btn btn-default modal-hint" data-modal-hint-title="{{ 'hint_modal.ride.participation_button.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.ride.participation_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
+        <span class="btn btn-secondary modal-hint"
+              data-modal-hint-title="{{ 'hint_modal.ride.participation_button.title'|trans }}"
+              data-modal-hint-text="{{ 'hint_modal.ride.participation_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
+              data-hint-modal-size="md">
             <i class="far fa-bicycle"></i>
             {% if pastRide %}
                 Hast du teilgenommen?
             {% else %}
                 Bist du dabei?
             {% endif %}
-            <span class="caret"></span>
+            <span class="ms-1">&#9662;</span>
         </span>
     {% endif %}
 </div>

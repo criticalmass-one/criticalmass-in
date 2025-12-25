@@ -3,7 +3,7 @@
 {% block title %}Statistiken{% endblock %}
 
 {% block breadcrumb %}
-    <li class="active">
+    <li class="breadcrumb-item active" aria-current="page">
         Statistiken
     </li>
 {% endblock %}
@@ -30,27 +30,45 @@
         </div>
 
         <div>
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active">
-                    <a href="#tab-participiants" aria-controls="" role="tab" data-toggle="tab">
+            <ul class="nav nav-tabs" id="statsTabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active"
+                       id="tab-participiants-tab"
+                       data-bs-toggle="tab"
+                       href="#tab-participiants"
+                       role="tab"
+                       aria-controls="tab-participiants"
+                       aria-selected="true">
                         Teilnehmerzahl
                     </a>
                 </li>
-                <li role="presentation">
-                    <a href="#tab-duration" aria-controls="" role="tab" data-toggle="tab">
+                <li class="nav-item">
+                    <a class="nav-link"
+                       id="tab-duration-tab"
+                       data-bs-toggle="tab"
+                       href="#tab-duration"
+                       role="tab"
+                       aria-controls="tab-duration"
+                       aria-selected="false">
                         Fahrtdauer
                     </a>
                 </li>
-                <li role="presentation">
-                    <a href="#tab-distance" aria-controls="" role="tab" data-toggle="tab">
+                <li class="nav-item">
+                    <a class="nav-link"
+                       id="tab-distance-tab"
+                       data-bs-toggle="tab"
+                       href="#tab-distance"
+                       role="tab"
+                       aria-controls="tab-distance"
+                       aria-selected="false">
                         Fahrtlänge
                     </a>
                 </li>
             </ul>
 
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="tab-participiants">
-                    <div class="row margin-top-small">
+            <div class="tab-content" id="statsTabsContent">
+                <div class="tab-pane fade show active" id="tab-participiants" role="tabpanel" aria-labelledby="tab-participiants-tab">
+                    <div class="row mt-3">
                         <div class="col-md-12">
                             <p>
                                 Bei der angezeigten Teilnehmerzahl handelt es sich um den Durchschnitt der Werte, die
@@ -67,8 +85,8 @@
                     </div>
                 </div>
 
-                <div role="tabpanel" class="tab-pane" id="tab-duration">
-                    <div class="row margin-top-small">
+                <div class="tab-pane fade" id="tab-duration" role="tabpanel" aria-labelledby="tab-duration-tab">
+                    <div class="row mt-3">
                         <div class="col-md-12">
                             <p>
                                 Die Fahrtdauer wird anhand der importierten GPX-Tracks ermittelt und in Stunden
@@ -84,8 +102,8 @@
                     </div>
                 </div>
 
-                <div role="tabpanel" class="tab-pane" id="tab-distance">
-                    <div class="row margin-top-small">
+                <div class="tab-pane fade" id="tab-distance" role="tabpanel" aria-labelledby="tab-distance-tab">
+                    <div class="row mt-3">
                         <div class="col-md-12">
                             <p>
                                 Die Fahrtlänge wird anhand der importierten GPX-Tracks ermittelt und in Kilometern
@@ -109,10 +127,22 @@
     {% endfor %}
 
     {% for city in cities %}
-        <div class="city" data-city-name="{{ city.city }}" data-city-slug="{{ city.slug }}" data-color-red="{{ city.colorRed }}" data-color-green="{{ city.colorGreen }}" data-color-blue="{{ city.colorBlue }}"></div>
+        <div class="city"
+             data-city-name="{{ city.city }}"
+             data-city-slug="{{ city.slug }}"
+             data-color-red="{{ city.colorRed }}"
+             data-color-green="{{ city.colorGreen }}"
+             data-color-blue="{{ city.colorBlue }}">
+        </div>
     {% endfor %}
 
     {% for ride in rides %}
-        <div class="ride-data" data-city-slug="{{ ride.city.slug }}" data-ride-month="{{ ride.dateTime|date('Y-m') }}" data-estimated-participants="{{ ride.estimatedParticipants|default(0) }}" data-estimated-duration="{{ ride.estimatedDuration|default(0) }}" data-estimated-distance="{{ ride.estimatedDistance|default(0) }}"></div>
+        <div class="ride-data"
+             data-city-slug="{{ ride.city.slug }}"
+             data-ride-month="{{ ride.dateTime|date('Y-m') }}"
+             data-estimated-participants="{{ ride.estimatedParticipants|default(0) }}"
+             data-estimated-duration="{{ ride.estimatedDuration|default(0) }}"
+             data-estimated-distance="{{ ride.estimatedDistance|default(0) }}">
+        </div>
     {% endfor %}
 {% endblock %}

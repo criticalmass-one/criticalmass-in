@@ -25,36 +25,36 @@
 
 {% block content %}
     <div class="container">
+
         <div class="row">
-            <div class="col-md-6 col-offset-md-3">
+            <div class="col-md-6 offset-md-3">
                 <h2>
                     Gpx-Datei hochladen
                 </h2>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-6 col-offset-md-3">
+        <div class="row mt-2">
+            <div class="col-md-6 offset-md-3">
                 <p>
                     Wenn du deine Fahrt bei der <strong>{{ ride.city.title }}</strong> am
                     <strong>{{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}</strong> aufgezeichnet hast, kannst du
-                    hier
-                    deinen Track als GPX-Datei hochladen.
+                    hier deinen Track als GPX-Datei hochladen.
                 </p>
             </div>
         </div>
 
         {{ form_start(form, {'attr': {'role': 'form', 'id': 'track-upload-form'}}) }}
 
-        <div class="row">
-            <div class="col-md-6 col-offset-md-3">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
+        <div class="row mt-3">
+            <div class="col-md-6 offset-md-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="h5 mb-0">
                             Gpx-Datei hochladen
                         </h3>
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
                         {% if errorMessage %}
                             <div class="row">
                                 <div class="col-md-12">
@@ -66,26 +66,24 @@
                             </div>
                         {% endif %}
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="">Datei:</label>
-                                    {{ form_widget(form.trackFile, {'attr': {'class': 'form-control' }}) }}
-                                </div>
-                            </div>
+                        <div class="mb-3">
+                            <label class="form-label">Datei:</label>
+                            {{ form_widget(form.trackFile, {'attr': {'class': 'form-control' }}) }}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-6 col-offset-md-3">
-                <div class="btn-group pull-right" role="group" aria-label="...">
-                    <button type="submit" class="btn btn-success disable-after-submit" data-disabled-message="Bitte warten…">
+        <div class="row mt-3">
+            <div class="col-md-6 offset-md-3">
+                <div class="btn-group float-end" role="group" aria-label="Track-Aktionen">
+                    <button type="submit"
+                            class="btn btn-success disable-after-submit"
+                            data-disabled-message="Bitte warten…">
                         Track hochladen
                     </button>
-                    <a href="{{ object_path(ride) }}" class="btn btn-default">
+                    <a href="{{ object_path(ride) }}" class="btn btn-secondary">
                         Abbrechen
                     </a>
                 </div>

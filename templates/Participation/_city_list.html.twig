@@ -1,34 +1,29 @@
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-12">
         {% if participationCityList|length > 0 %}
-        <table class="table">
-            <thead>
-            <tr>
-                <th>
-                    Stadt
-                </th>
-
-                <th>
-                    Anzahl
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for participationCity in participationCityList %}
+            <table class="table">
+                <thead>
                 <tr>
-                    <td>
-                        <a href="{{ object_path(participationCity.city) }}">
-                            {{ participationCity.city.city }}
-                        </a>
-                    </td>
-
-                    <td>
-                        {{ participationCity.counter }}
-                    </td>
+                    <th>Stadt</th>
+                    <th>Anzahl</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+
+                <tbody>
+                {% for participationCity in participationCityList %}
+                    <tr>
+                        <td>
+                            <a href="{{ object_path(participationCity.city) }}">
+                                {{ participationCity.city.city }}
+                            </a>
+                        </td>
+                        <td>
+                            {{ participationCity.counter }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         {% else %}
             <div class="alert alert-info">
                 Für diese Liste wurden keine Datensätze gefunden.

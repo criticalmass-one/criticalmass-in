@@ -40,12 +40,12 @@
 
         <div class="row">
             {% for track in pagination %}
-                {% include('Track/_track_list_item.html.twig') with { 'track': track, 'show_user': false } %}
+                {% include 'Track/_track_list_item.html.twig' with { 'track': track, 'show_user': false } %}
             {% endfor %}
         </div>
     </div>
 
-    <div class="row">
+    <div class="row mt-4">
         <div class="col-md-12">
             <div class="text-center">
                 {{ knp_pagination_render(pagination) }}
@@ -53,23 +53,29 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog">
+    <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
+
                 <div class="modal-header">
-                    <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Track löschen</h4>
+                    <h5 class="modal-title" id="modalDeleteLabel">Track löschen</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
                 </div>
+
                 <div class="modal-body">
                     <span id="trackIdLabel"></span>
                     <p>Willst Du diesen Track wirklich löschen?</p>
                 </div>
+
                 <div class="modal-footer">
-                    <div class="btn-group" role="group" aria-label="...">
+                    <div class="btn-group" role="group" aria-label="Track löschen bestätigen oder abbrechen">
                         <a id="deleteButton" href="#" class="btn btn-success">Ja, löschen</a>
-                        <button id="cancelButton" class="btn btn-default">Nein, abbrechen</button>
+                        <button id="cancelButton" type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Nein, abbrechen
+                        </button>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

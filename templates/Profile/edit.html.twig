@@ -27,16 +27,22 @@
                 {{ form_start(phoneNumberForm) }}
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group{% if form_errors(phoneNumberForm.phoneNumber) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="">Deine Handy-Nummer:</label>
+                        <div class="mb-3{% if form_errors(phoneNumberForm.phoneNumber) %} has-error has-feedback{% endif %}">
+                            <label class="form-label" for="">Deine Handy-Nummer:</label>
                             {{ form_widget(phoneNumberForm.phoneNumber, { 'attr' : { 'class': 'form-control' } }) }}
+
+                            {% if form_errors(phoneNumberForm.phoneNumber) %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form_errors(phoneNumberForm.phoneNumber) }}
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
-                        <button type="submit" class="btn btn-success pull-right">
+                        <button type="submit" class="btn btn-success float-end">
                             Speichern
                         </button>
                     </div>
@@ -49,21 +55,27 @@
                     {{ form_start(verificationForm) }}
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="form-group{% if form_errors(verificationForm.verificationNumber) %} has-error has-feedback{% endif %}">
-                                <label class="control-label" for="">Dein Verifikationscode:</label>
+                            <div class="mb-3{% if form_errors(verificationForm.verificationNumber) %} has-error has-feedback{% endif %}">
+                                <label class="form-label" for="">Dein Verifikationscode:</label>
                                 {{ form_widget(verificationForm.verificationNumber, { 'attr' : { 'class': 'form-control', 'maxlength': 6 } }) }}
+
+                                {% if form_errors(verificationForm.verificationNumber) %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form_errors(verificationForm.verificationNumber) }}
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-12">
-                            <button type="submit" class="btn btn-success pull-right">
+                            <button type="submit" class="btn btn-success float-end">
                                 Überprüfen
                             </button>
                         </div>
                     </div>
-                    {{ form_end(phoneNumberForm) }}
+                    {{ form_end(verificationForm) }}
                 </div>
             {% endif %}
         </div>

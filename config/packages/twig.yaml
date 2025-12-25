@@ -12,4 +12,4 @@ twig:
         timezone: Europe/Paris
         format: d.m.Y, H:i:s
         interval_format: '%%d days'
-    form_themes: ['bootstrap_3_layout.html.twig']
+    form_themes: ['bootstrap_5_layout.html.twig']

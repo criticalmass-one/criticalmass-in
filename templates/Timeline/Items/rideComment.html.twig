@@ -1,9 +1,9 @@
 <div class="row margin-bottom-medium timeline-item-ride{% if not item.rideEnabled %}--disabled{% endif %}">
     {{ include('Timeline/_includes/user_column.html.twig') }}
 
-    <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
+    <div class="col-9 col-sm-9 col-md-10 col-lg-10">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <strong>
                     {{ item.user.username }}
                 </strong>
@@ -12,7 +12,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <a href="{{ object_path(item.ride) }}#post-{{ item.post.id }}">
                     <h4>
                         {{ item.rideTitle }}
@@ -22,7 +22,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <p>
                     {{ parse_urls(item.post)|raw }}
                 </p>

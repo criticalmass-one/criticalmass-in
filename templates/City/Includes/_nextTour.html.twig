@@ -1,11 +1,12 @@
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Nächste Tour</h3>
+<div class="card mb-3">
+    <div class="card-header">
+        <h3 class="card-title mb-0">Nächste Tour</h3>
     </div>
-    <div class="panel-body">
+
+    <div class="card-body">
         {% if currentRide %}
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <div class="text-center">
                         <a href="{{ object_path(currentRide) }}">
                             <h3 class="no-margin-top">
@@ -17,14 +18,14 @@
             </div>
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-12 col-md-6">
                     <dl>
                         <dt>Datum</dt>
                         <dd>{{ currentRide.dateTime|date('d.m.Y', currentRide.city.timezone) }}</dd>
                     </dl>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-12 col-md-6">
                     <dl>
                         <dt>Uhrzeit</dt>
                         <dd>{{ currentRide.dateTime|date('H:i', currentRide.city.timezone) }} Uhr</dd>
@@ -33,22 +34,24 @@
             </div>
 
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <dl>
                         <dt>Treffpunkt</dt>
                         {% if currentRide.location and currentRide.latitude and currentRide.longitude %}
                             <dd>{{ currentRide.location }}</dd>
                         {% else %}
-                            <a href="{{ object_path(currentRide, 'caldera_criticalmass_ride_edit') }}">
-                                noch nicht bekannt
-                            </a>
+                            <dd>
+                                <a href="{{ object_path(currentRide, 'caldera_criticalmass_ride_edit') }}">
+                                    noch nicht bekannt
+                                </a>
+                            </dd>
                         {% endif %}
                     </dl>
                 </div>
             </div>
         {% else %}
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <div class="text-center">
                         Über eine Radtour ist momentan nichts bekannt.
                     </div>
@@ -56,10 +59,10 @@
             </div>
         {% endif %}
 
-        <div class="row margin-top-medium">
-            <div class="col-md-12">
+        <div class="row mt-4">
+            <div class="col-12">
                 <div class="text-center">
-                    <a href="{{ object_path(city, 'caldera_criticalmass_city_listrides') }}" class="btn btn-success">
+                    <a href="{{ object_path(city, 'caldera_criticalmass_city_listrides') }}" class="btn btn-primary">
                         <i class="far fa-list"></i>
                         weitere Touren anzeigen
                     </a>

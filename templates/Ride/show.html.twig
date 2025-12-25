@@ -3,19 +3,19 @@
 {% block title %}{{ ride.title }}{% endblock %}
 
 {% block breadcrumb %}
-    <li>
+    <li class="breadcrumb-item">
         <a href="{{ path('caldera_criticalmass_city_list') }}">
             Städteliste
         </a>
     </li>
 
-    <li>
+    <li class="breadcrumb-item">
         <a href="{{ object_path(city) }}">
             {{ city.city }}
         </a>
     </li>
 
-    <li class="active">
+    <li class="breadcrumb-item active" aria-current="page">
         {{ ride.title }}
     </li>
 {% endblock %}
@@ -26,10 +26,10 @@
     <div class="container ride" itemscope itemtype="http://schema.org/Event">
         {{ include('Flash/_flash.html.twig') }}
 
-        {% include('Ride/Includes/_registrationHint.html.twig') %}
+        {% include 'Ride/Includes/_registrationHint.html.twig' %}
 
-        {% include('Ride/Ride.html.twig') with { 'ride': ride, 'tracks': tracks, 'participation': participation } %}
+        {% include 'Ride/Ride.html.twig' with { 'ride': ride, 'tracks': tracks, 'participation': participation } %}
 
-        {% include('Ride/Includes/_pagination.html.twig') with { 'ride': ride } %}
+        {% include 'Ride/Includes/_pagination.html.twig' with { 'ride': ride } %}
     </div>
 {% endblock %}

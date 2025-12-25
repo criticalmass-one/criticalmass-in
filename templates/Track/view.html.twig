@@ -36,12 +36,12 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="alert alert-danger">
-                        <div class="btn-group pull-right">
+                        <div class="btn-group float-end" role="group" aria-label="Track-Aktionen">
                             <a class="btn btn-success"
                                href="{{ object_path(track, 'caldera_criticalmass_track_range') }}">
                                 <i class="far fa-cut"></i>&nbsp;Track beschneiden
                             </a>
-                            <a class="btn btn-default"
+                            <a class="btn btn-secondary"
                                href="{{ object_path(track, 'caldera_criticalmass_track_approve') }}">
                                 <i class="far fa-check"></i>&nbsp;Track bestätigen
                             </a>
@@ -52,8 +52,8 @@
                         </strong>
                         <br/>
                         Bitte bestägtige, dass dein Track nur den tatsächlichen Routenverlauf der Critical Mass abbildet
-                        und etwaige An- und Abfahrten nicht enthalten sind. Du kannst deinen Track <a
-                                href="{{ object_path(track, 'caldera_criticalmass_track_range') }}">ganz einfach online
+                        und etwaige An- und Abfahrten nicht enthalten sind. Du kannst deinen Track
+                        <a href="{{ object_path(track, 'caldera_criticalmass_track_range') }}">ganz einfach online
                             beschneiden</a>.
                     </div>
                 </div>
@@ -73,7 +73,7 @@
             </div>
         </div>
 
-        <div class="row margin-top-medium">
+        <div class="row mt-4">
             <div class="col-md-3">
                 <dl>
                     <dt>
@@ -138,33 +138,39 @@
 
         {% set previous_track = previous_entity(track) %}
         {% set next_track = next_entity(track) %}
-        <div class="row">
+        <div class="row mt-4">
             <div class="col-md-12">
-                <ul class="pager">
-                    {% if previous_track %}
-                        <li class="previous">
-                            <a href="{{ object_path(previous_track) }}">
-                                &larr; Voriger Track
-                            </a>
-                        </li>
-                    {% else %}
-                        <li class="previous disabled">
-                            <a href="#">&larr; Voriger Track</a>
-                        </li>
-                    {% endif %}
+                <nav aria-label="Track-Navigation">
+                    <ul class="pagination justify-content-between mb-0">
+                        {% if previous_track %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ object_path(previous_track) }}">
+                                    &larr; Voriger Track
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                                    &larr; Voriger Track
+                                </a>
+                            </li>
+                        {% endif %}
 
-                    {% if next_track %}
-                        <li class="next">
-                            <a href="{{ object_path(next_track) }}">
-                                Nächster Track &rarr;
-                            </a>
-                        </li>
-                    {% else %}
-                        <li class="next disabled">
-                            <a href="#">Nächster Track &rarr;</a>
-                        </li>
-                    {% endif %}
-                </ul>
+                        {% if next_track %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ object_path(next_track) }}">
+                                    Nächster Track &rarr;
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                                    Nächster Track &rarr;
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>

@@ -1,60 +1,64 @@
-<div class="modal fade" id="cityInfoModal" tabindex="-1" role="dialog">
+<div class="modal fade" id="cityInfoModal" tabindex="-1" aria-labelledby="cityModalTitle" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="cityModalTitle"></h4>
+                <h5 class="modal-title" id="cityModalTitle"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
             </div>
             <div class="modal-body" id="cityModalBody">
                 <div id="cityModalTabNextRideKnown">
                     <div class="jumbotron" id="cityModalTabNextRideJumbotron">
                         <h2 id="cityModalTabNextRideJumbotronTitle" style="color: white; text-shadow: black 0 0 3px;">
-                            Hello, world!</h2>
+                            Hello, world!
+                        </h2>
                     </div>
 
                     <h2 id="cityModalTabNextRideTitle"></h2>
                     <p id="cityModalTabNextRideDescription"></p>
 
                     <div class="row">
-                        <div class="col-md-6"><strong>Datum:</strong></div>
-                        <div class="col-md-6" id="cityModalTabNextRideDate"></div>
+                        <div class="col-12 col-md-6"><strong>Datum:</strong></div>
+                        <div class="col-12 col-md-6" id="cityModalTabNextRideDate"></div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6"><strong>Uhrzeit:</strong></div>
-                        <div class="col-md-6" id="cityModalTabNextRideTime"></div>
+                        <div class="col-12 col-md-6"><strong>Uhrzeit:</strong></div>
+                        <div class="col-12 col-md-6" id="cityModalTabNextRideTime"></div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6"><strong>Treffpunkt:</strong></div>
-                        <div class="col-md-6" id="cityModalTabNextRideLocation"></div>
+                        <div class="col-12 col-md-6"><strong>Treffpunkt:</strong></div>
+                        <div class="col-12 col-md-6" id="cityModalTabNextRideLocation"></div>
                     </div>
 
                     <div class="row" id="cityModalTabNextRideWeatherForecastRow">
-                        <div class="col-md-6"><strong>Wettervorhersage:</strong></div>
-                        <div class="col-md-6" id="cityModalTabNextRideWeatherForecast"></div>
+                        <div class="col-12 col-md-6"><strong>Wettervorhersage:</strong></div>
+                        <div class="col-12 col-md-6" id="cityModalTabNextRideWeatherForecast"></div>
                     </div>
+
                     <div class="row">
-                        <div class="col-md-6"><strong>E-Mail für Glympse-Einladungen:</strong></div>
-                        <div class="col-md-6" id="cityModalTabNextRideGlympse"></div>
+                        <div class="col-12 col-md-6"><strong>E-Mail für Glympse-Einladungen:</strong></div>
+                        <div class="col-12 col-md-6" id="cityModalTabNextRideGlympse"></div>
                     </div>
 
                     <div id="cityModalTabNextRideSocialMedia" class="btn-group"></div>
                 </div>
+
                 <div id="cityModalTabNextRideUnknown">
-                    <div class="alert alert-info" role="alert">Schade — zu dieser Stadt sind uns keine Fahrten bekannt
-                        :( Aber wenn du mehr weißt als wir: Schreib uns bitte unter <a
-                                href="mailto:criticalmass@caldera.cc">criticalmass@caldera.cc</a>!
+                    <div class="alert alert-info" role="alert">
+                        Schade — zu dieser Stadt sind uns keine Fahrten bekannt :( Aber wenn du mehr weißt als wir:
+                        Schreib uns bitte unter
+                        <a href="mailto:criticalmass@caldera.cc">criticalmass@caldera.cc</a>!
                     </div>
                 </div>
 
-                <div id="cityModalTabNextButtons" class="btn-group">
-                    <button class="btn btn-default" id="cityModalTabNextButtonsCity">Zur Stadt</button>
-                    <button class="btn btn-default" id="cityModalTabNextButtonsLocation" style="display: none;">Zum
-                        Treffpunkt
+                <div id="cityModalTabNextButtons" class="btn-group mt-3">
+                    <button class="btn btn-outline-secondary" id="cityModalTabNextButtonsCity">Zur Stadt</button>
+                    <button class="btn btn-outline-secondary" id="cityModalTabNextButtonsLocation" style="display: none;">
+                        Zum Treffpunkt
                     </button>
-                    <button class="btn btn-default" id="cityModalTabNextButtonsPosition" style="display: none;">Zur
-                        neusten Position
+                    <button class="btn btn-outline-secondary" id="cityModalTabNextButtonsPosition" style="display: none;">
+                        Zur neusten Position
                     </button>
                 </div>
             </div>

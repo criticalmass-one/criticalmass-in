@@ -6,54 +6,70 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>
-                    Deine Suchergebnisse
-                </h1>
+                <h1>Deine Suchergebnisse</h1>
             </div>
         </div>
 
         <div class="row">
-            <form action="{{ path('caldera_criticalmass_search_query') }}" method="get">
-                <div class="col-md-3">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
+            <div class="col-md-3">
+                <form action="{{ path('caldera_criticalmass_search_query') }}" method="get">
+                    <div class="card">
+                        <div class="card-header">
                             Suche
                         </div>
-                        <div class="panel-body form-group">
-                            <label for="query-input">
-                                Deine Suchanfrage
-                            </label>
-                            <input type="text" class="form-control" name="query" value="{{ query }}" id="query-input" placeholder="Deine Suchanfrage"/>
 
-                            <button type="submit" class="btn btn-success pull-right margin-top-small">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="query-input" class="form-label">Deine Suchanfrage</label>
+                                <input type="text"
+                                       class="form-control"
+                                       name="query"
+                                       value="{{ query }}"
+                                       id="query-input"
+                                       placeholder="Deine Suchanfrage" />
+                            </div>
+
+                            <button type="submit" class="btn btn-success float-end mt-2">
                                 Finden
                             </button>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
 
             <div class="col-md-9">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active">
-                        <a href="#city-results" aria-controls="home" role="tab" data-toggle="tab">
+                <ul class="nav nav-tabs" id="searchTabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active"
+                           id="city-results-tab"
+                           data-bs-toggle="tab"
+                           href="#city-results"
+                           role="tab"
+                           aria-controls="city-results"
+                           aria-selected="true">
                             <i class="far fa-university"></i>
                             Städte
                         </a>
                     </li>
 
-                    <li role="presentation">
-                        <a href="#ride-results" aria-controls="profile" role="tab" data-toggle="tab">
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           id="ride-results-tab"
+                           data-bs-toggle="tab"
+                           href="#ride-results"
+                           role="tab"
+                           aria-controls="ride-results"
+                           aria-selected="false">
                             <i class="far fa-bicycle"></i>
                             Touren
                         </a>
                     </li>
                 </ul>
 
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active padding-top-small" id="city-results">
+                <div class="tab-content pt-3" id="searchTabsContent">
+                    <div class="tab-pane fade show active" id="city-results" role="tabpanel">
                         {% for cityResult in cityResults %}
-                        {% include 'Search/includes/_city.html.twig' with { city: cityResult } %}
+                            {% include 'Search/includes/_city.html.twig' with { city: cityResult } %}
                         {% endfor %}
 
                         {% if cityResults|length == 0 %}
@@ -63,9 +79,9 @@
                         {% endif %}
                     </div>
 
-                    <div role="tabpanel" class="tab-pane padding-top-small" id="ride-results">
+                    <div class="tab-pane fade" id="ride-results" role="tabpanel">
                         {% for rideResult in rideResults %}
-                        {% include 'Search/includes/_ride.html.twig' with { ride: rideResult } %}
+                            {% include 'Search/includes/_ride.html.twig' with { ride: rideResult } %}
                         {% endfor %}
 
                         {% if rideResults|length == 0 %}

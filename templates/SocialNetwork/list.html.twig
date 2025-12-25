@@ -51,7 +51,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <button class="btn btn-success pull-right" data-toggle="modal" data-target="#profile-add-modal">
+                <button class="btn btn-success float-end" data-bs-toggle="modal" data-bs-target="#profile-add-modal">
                     <i class="far fa-plus"></i>
                     Profil ergänzen
                 </button>
@@ -62,13 +62,15 @@
 
                 {% if profileAbleType == 'city' %}
                     <p class="lead">
-                        Die folgende Liste enthält Konten in sozialen Netzwerken und Links zu Webseiten, die mit der Critical Mass in <strong>{{ profileAble.city }}</strong> in Verbindung stehen.
+                        Die folgende Liste enthält Konten in sozialen Netzwerken und Links zu Webseiten, die mit der
+                        Critical Mass in <strong>{{ profileAble.city }}</strong> in Verbindung stehen.
                     </p>
                 {% endif %}
 
                 {% if profileAbleType == 'ride' %}
                     <p class="lead">
-                        Die folgende Liste enthält Konten in sozialen Netzwerken und Links zu Webseiten, die zu der Tour am <strong>{{ profileAble.dateTime|date('d.m.Y') }}</strong> in Verbindung stehen.
+                        Die folgende Liste enthält Konten in sozialen Netzwerken und Links zu Webseiten, die zu der Tour
+                        am <strong>{{ profileAble.dateTime|date('d.m.Y') }}</strong> in Verbindung stehen.
                     </p>
                 {% endif %}
             </div>
@@ -78,25 +80,26 @@
             <div class="col-md-12">
                 <table class="table">
                     <thead>
-                        <tr>
-                            <th colspan="2">
-                                Netzwerk
-                            </th>
-                            <th>
-                                Benutzername
-                            </th>
-                            <th>
-                                Verwaltung
-                            </th>
-                        </tr>
+                    <tr>
+                        <th colspan="2">
+                            Netzwerk
+                        </th>
+                        <th>
+                            Benutzername
+                        </th>
+                        <th>
+                            Verwaltung
+                        </th>
+                    </tr>
                     </thead>
 
                     <tbody>
-                        {% for profile in list %}
+                    {% for profile in list %}
                         {% set network = getNetwork(profile.network) %}
 
                         <tr>
-                            <td class="text-center" style="background-color: {{ network.backgroundColor }}; color: {{ network.textColor }};">
+                            <td class="text-center"
+                                style="background-color: {{ network.backgroundColor }}; color: {{ network.textColor }};">
                                 <i class="{{ network.icon }}"></i>
                             </td>
                             <td>
@@ -108,87 +111,98 @@
                                 </a>
                             </td>
                             <td>
-                                <div class="btn-group">
-                                    <a href="{{ path('criticalmass_socialnetwork_edit', { id: profile.id }) }}" class="btn btn-default btn-xs">
+                                <div class="btn-group" role="group" aria-label="Profil verwalten">
+                                    <a href="{{ path('criticalmass_socialnetwork_edit', { id: profile.id }) }}"
+                                       class="btn btn-secondary btn-sm">
                                         <i class="far fa-pencil"></i>
                                     </a>
-                                    <a href="{{ path('criticalmass_socialnetwork_disable', { id: profile.id }) }}" class="btn btn-default btn-xs">
+                                    <a href="{{ path('criticalmass_socialnetwork_disable', { id: profile.id }) }}"
+                                       class="btn btn-secondary btn-sm">
                                         <i class="far fa-trash-alt"></i>
                                     </a>
                                 </div>
                             </td>
                         </tr>
-                        {% endfor %}
+                    {% endfor %}
 
-                        {% if list|length == 0 %}
-                            <tr>
-                                <td colspan="4">
-                                    <div class="alert alert-info">
-                                        {% if profileAbleType == 'ride' %}
+                    {% if list|length == 0 %}
+                        <tr>
+                            <td colspan="4">
+                                <div class="alert alert-info mb-0">
+                                    {% if profileAbleType == 'ride' %}
                                         Schade, zu dieser Tour wurden noch keine sozialen Netzwerke gespeichert.
-                                        {% else %}
+                                    {% else %}
                                         Schade, zu dieser Stadt wurden noch keine sozialen Netzwerke gespeichert.
-                                        {% endif %}
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endif %}
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                    {% endif %}
                     </tbody>
                 </table>
             </div>
         </div>
 
         {% if profileAbleType == 'ride' %}
-        <div class="row">
-            <div class="col-md-12">
-                <p class="text-center">
-                    Die Profile der übergeordneten Stadt {{ profileAble.city.city }} werden getrennt von dieser Liste verwaltet:<br />
-                    <a class="btn btn-default margin-top-small" href="{{ object_path(profileAble.city, 'criticalmass_socialnetwork_city_list') }}">Profile der Stadt verwalten</a>
-                </p>
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="text-center">
+                        Die Profile der übergeordneten Stadt {{ profileAble.city.city }} werden getrennt von dieser
+                        Liste verwaltet:<br/>
+                        <a class="btn btn-secondary margin-top-small"
+                           href="{{ object_path(profileAble.city, 'criticalmass_socialnetwork_city_list') }}">
+                            Profile der Stadt verwalten
+                        </a>
+                    </p>
+                </div>
             </div>
-        </div>
         {% endif %}
     </div>
 
-    <div class="modal fade" id="profile-add-modal" tabindex="-1" role="dialog" aria-labelledby="profile-add-modal-label">
+    <div class="modal fade" id="profile-add-modal" tabindex="-1"
+         aria-labelledby="profile-add-modal-label" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
                 {{ form_start(addProfileForm) }}
+
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="profile-add-modal-label">
+                    <h5 class="modal-title" id="profile-add-modal-label">
                         Profil ergänzen
-                    </h4>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Schließen"></button>
                 </div>
+
                 <div class="modal-body">
                     <p>
                         Kopiere einfach den Link zu einem Profil aus einem sozialen Netzwerk hier hinein!
                     </p>
-                    <div class="form-group">
-                        <label class="control-label" for="identifier">
+
+                    <div class="mb-3">
+                        <label class="form-label" for="identifier">
                             Link zum Profil:
                         </label>
-                        {{ form_widget(addProfileForm.identifier, { 'attr' : { 'class': 'form-control' } }) }}
+                        {{ form_widget(addProfileForm.identifier, { attr : { class: 'form-control' } }) }}
                     </div>
 
-                    <div class="form-group">
-                        <label class="control-label" for="identifier">
+                    <div class="mb-3">
+                        <label class="form-label" for="network">
                             Netzwerk:
                         </label>
-                        {{ form_widget(addProfileForm.network, { 'attr' : { 'class': 'form-control' } }) }}
+                        {{ form_widget(addProfileForm.network, { attr : { class: 'form-control' } }) }}
                     </div>
 
-                    <div class="form-group">
-                        <label class="control-label" for="mainNetwork">
+                    <div class="mb-3">
+                        <label class="form-label" for="mainNetwork">
                             Hauptprofil:
                         </label>
-                        {{ form_widget(addProfileForm.mainNetwork, { 'attr' : { 'class': 'form-control' } }) }}
+                        {{ form_widget(addProfileForm.mainNetwork, { attr : { class: 'form-control' } }) }}
                     </div>
                 </div>
+
                 <div class="modal-footer">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <div class="btn-group" role="group" aria-label="Profil speichern oder abbrechen">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                             Abbrechen
                         </button>
                         <button type="submit" class="btn btn-success">
@@ -196,6 +210,7 @@
                         </button>
                     </div>
                 </div>
+
                 {{ form_end(addProfileForm) }}
             </div>
         </div>

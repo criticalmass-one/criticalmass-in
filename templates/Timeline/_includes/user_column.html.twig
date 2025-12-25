@@ -1,10 +1,10 @@
-<div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 text-center">
+<div class="col-3 col-sm-3 col-md-2 col-lg-2 text-center">
     {% if item.user.imageName %}
-        <img class="media-object round-media-object img-responsive img-fluid"
-             src="{{ vich_uploader_asset(item.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}"/>
+        <img class="media-object round-media-object img-fluid"
+             src="{{ vich_uploader_asset(item.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}" />
     {% endif %}
 
-    <p class="hidden-xs">
+    <p class="d-none d-sm-block">
         <strong>
             {{ item.user.username }}
         </strong>

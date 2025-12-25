@@ -3,36 +3,38 @@
 {% block title %}Foto zensieren{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h2>
-                Foto zensieren
-            </h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Foto zensieren</h2>
 
-            <p class="lead">
-                Markiere mit der Maus auf dem Foto jene Bereiche, die du unkenntlich machen möchtest.
-            </p>
+                <p class="lead">
+                    Markiere mit der Maus auf dem Foto jene Bereiche, die du unkenntlich machen möchtest.
+                </p>
+            </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <img id="photo" class="img-responsive" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}"/>
+        <div class="row">
+            <div class="col-md-12">
+                <img
+                        id="photo"
+                        class="img-fluid"
+                        src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}"
+                />
+            </div>
         </div>
-    </div>
 
-    <div class="row margin-top-medium">
-        <div class="col-md-12">
-            <div class="btn-group pull-right" role="group">
-                <a href="javascript:window.location=document.referrer;" class="btn btn-default">
-                    Abbrechen
-                </a>
-                <button id="save" class="btn btn-primary">
-                    Speichern
-                </button>
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="btn-group float-end" role="group">
+                    <a href="javascript:window.location=document.referrer;" class="btn btn-secondary">
+                        Abbrechen
+                    </a>
+                    <button id="save" class="btn btn-primary">
+                        Speichern
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}

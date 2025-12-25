@@ -32,8 +32,10 @@
 
         <div class="row">
             <div class="col-md-12">
-                <p>Weniger ist manchmal mehr. Hier kannst du Anfang und Ende deiner Tour festlegen, falls du
-                    versehentlich zu viel aufgezeichnet hast und nicht möchtest, dass dir jemand nach Hause folgt.</p>
+                <p>
+                    Weniger ist manchmal mehr. Hier kannst du Anfang und Ende deiner Tour festlegen, falls du
+                    versehentlich zu viel aufgezeichnet hast und nicht möchtest, dass dir jemand nach Hause folgt.
+                </p>
 
                 <p>
                     Das Beschneiden beschädigt deinen Track nicht, du kannst den für andere Nutzer sichtbaren Bereich
@@ -53,21 +55,21 @@
             </div>
         </div>
 
-        <div class="row margin-top-medium">
+        <div class="row mt-4">
             <div class="col-md-12">
                 <input id="slider" type="text" value="" style="width: 100%;"/>
             </div>
         </div>
 
-        <div class="row margin-top-medium">
+        <div class="row mt-4">
             <div class="col-md-12">
                 <input type="hidden" id="track_range_latLngList" value="{{ latLngList }}" />
                 {{ form_start(form) }}
-                <div class="btn-group pull-right" role="group" aria-label="...">
+                <div class="btn-group float-end" role="group" aria-label="Track-Bereich speichern oder abbrechen">
                     <button class="btn btn-success" type="submit">
                         Speichern
                     </button>
-                    <a class="btn btn-default" href="{{ path('caldera_criticalmass_track_list') }}">
+                    <a class="btn btn-secondary" href="{{ path('caldera_criticalmass_track_list') }}">
                         Abbrechen
                     </a>
                 </div>

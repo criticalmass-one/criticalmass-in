@@ -23,26 +23,31 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 {% if app.getUser() %}
-                    <button type="button" class="btn btn-success pull-right margin-top-medium" data-toggle="modal"
-                            data-target="#modal-add-post">
+                    <button type="button" class="btn btn-primary float-end mt-3"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modal-add-post">
                         <i class="far fa-comment"></i>
                         Antwort hinzufügen
                     </button>
-                    {{ render(controller('App\\Controller\\PostController::writeThreadAction', { 'threadSlug': thread.slug, 'noButton': true })) }}
+
+                    {{ render(controller('App\\Controller\\PostController::writeThreadAction', {
+                        'threadSlug': thread.slug,
+                        'noButton': true
+                    })) }}
                 {% endif %}
-                <h2>
+                <h2 class="mt-4">
                     {{ thread.title }}
                 </h2>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <div class="post-list">
                     {% for post in posts %}
-                        {% include('Post/post.html.twig') with { 'post':  post } %}
+                        {% include 'Post/post.html.twig' with { 'post': post } %}
                     {% endfor %}
                 </div>
             </div>

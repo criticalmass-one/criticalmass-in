@@ -45,52 +45,62 @@
                 </h2>
 
                 <p class="lead">
-                    Hier kannst du festlegen, wie diese Tour in öffentlichen Netzwerken oder in Suchmaschinen dargestellt werden soll. Du kannst dazu ein kleines Vorschaufoto hochalden, das gemeinsam mit Verlinkungen dargestellt wird, sowie einen kurzen Vorankündigungstext eingeben.
+                    Hier kannst du festlegen, wie diese Tour in öffentlichen Netzwerken oder in Suchmaschinen
+                    dargestellt werden soll. Du kannst dazu ein kleines Vorschaufoto hochalden, das gemeinsam mit
+                    Verlinkungen dargestellt wird, sowie einen kurzen Vorankündigungstext eingeben.
                 </p>
             </div>
         </div>
 
         {{ form_start(form) }}
 
-        <div class="row margin-top-medium">
+        <div class="row mt-4">
             <div class="col-md-6">
                 {% if ride.imageName %}
-                <div class="row margin-bottom-medium">
-                    <div class="col-md-12">
-                        <img id="photo" class="img-thumbnail img-responsive" src="{{ vich_uploader_asset(ride, 'imageFile')|imagine_filter('ride_photo_preview') }}"/>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <img
+                                    id="photo"
+                                    class="img-fluid img-thumbnail"
+                                    src="{{ vich_uploader_asset(ride, 'imageFile')|imagine_filter('ride_photo_preview') }}"
+                                    alt="Vorschaubild der Tour"
+                            />
+                        </div>
                     </div>
-                </div>
                 {% endif %}
 
                 <div class="row">
-                    <div class="col-md-12 form-group">
-                        <label class="control-label" for="">
+                    <div class="col-md-12 mb-3">
+                        <label class="form-label">
                             Datei:
                         </label>
                         {{ form_widget(form.imageFile) }}
-                        <p class="help-block">
-                            Hier kannst du eine Grafik hochladen, die bei Verlinkungen der Tour im Netz angezeigt wird. Die Grafik sollte mindestens 1.200 mal 630 Pixel messen.
+                        <p class="form-text">
+                            Hier kannst du eine Grafik hochladen, die bei Verlinkungen der Tour im Netz angezeigt wird.
+                            Die Grafik sollte mindestens 1.200 mal 630 Pixel messen.
                             <strong>Bitte lade nur Fotos hoch, an denen du das Urheber- oder Nutzungsrecht besitzt.</strong>
                         </p>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-6 form-group">
-                <label class="control-label" for="socialDescription">
+            <div class="col-md-6 mb-3">
+                <label class="form-label" for="socialDescription">
                     Social-Beschreibung:
                 </label>
                 {{ form_widget(form.socialDescription, { 'attr' : { 'class': 'form-control', 'rows': 4 } }) }}
-                <p class="help-block">
-                    Hier kannst du eine kurze Beschreibung eingeben, die in sozialen Netzwerken angezeigt wird. Bedenke, dass dort meistens nur 140 bis 160 Zeichen angezeigt und der Rest des Textes abgeschnitten werden.
+                <p class="form-text">
+                    Hier kannst du eine kurze Beschreibung eingeben, die in sozialen Netzwerken angezeigt wird.
+                    Bedenke, dass dort meistens nur 140 bis 160 Zeichen angezeigt und der Rest des Textes abgeschnitten
+                    werden.
                 </p>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12 form-group">
-                <div class="btn-group pull-right" role="group" aria-label="...">
-                    <a href="{{ object_path(ride) }}" class="btn btn-default">
+        <div class="row mt-3">
+            <div class="col-md-12 mb-3">
+                <div class="btn-group float-end" role="group" aria-label="Social-Details speichern oder abbrechen">
+                    <a href="{{ object_path(ride) }}" class="btn btn-secondary">
                         Abbrechen
                     </a>
                     <button type="submit" class="btn btn-success" id="rideSubmitButton">
@@ -99,6 +109,7 @@
                 </div>
             </div>
         </div>
+
         {{ form_end(form) }}
     </div>
 {% endblock %}

@@ -4,13 +4,19 @@
     {% set pastRide = false %}
 {% endif %}
 
-<div role="tabpanel" class="tab-pane" id="stats">
+<div class="tab-pane fade" id="stats" role="tabpanel" aria-labelledby="stats-tab">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-12">
             {% if pastRide and app.getUser() %}
-                <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
-                    <a class="btn btn-success" href="#" data-toggle="modal" data-target="#modalEstimate"
-                       title="Tour schätzen"><i class="halflings signal"></i> Tour schätzen</a>
+                <div class="btn-group float-end mt-3">
+                    <a class="btn btn-success"
+                       href="#"
+                       data-bs-toggle="modal"
+                       data-bs-target="#modalEstimate"
+                       title="Tour schätzen">
+                        <i class="halflings signal"></i>
+                        Tour schätzen
+                    </a>
                 </div>
             {% endif %}
 
@@ -37,8 +43,16 @@
             <td>
                 {% include('AppBundle:Common/Ride:RideParticipants.html.twig') with { 'ride': ride } %}
             </td>
-            <td>{% if app.getUser() %}<a href="#" data-toggle="modal" data-target="#modalEstimate"
-                                         title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>
+            <td>
+                {% if app.getUser() %}
+                    <a href="#"
+                       data-bs-toggle="modal"
+                       data-bs-target="#modalEstimate"
+                       title="Tour schätzen">
+                        Werte schätzen?
+                    </a>
+                {% endif %}
+            </td>
         </tr>
         <tr>
             <th>Distanz</th>
@@ -46,8 +60,16 @@
             <td>
                 {% include('AppBundle:Common/Ride:RideDistance.html.twig') with { 'ride': ride } %}
             </td>
-            <td>{% if app.getUser() %}<a href="#" data-toggle="modal" data-target="#modalEstimate"
-                                         title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>
+            <td>
+                {% if app.getUser() %}
+                    <a href="#"
+                       data-bs-toggle="modal"
+                       data-bs-target="#modalEstimate"
+                       title="Tour schätzen">
+                        Werte schätzen?
+                    </a>
+                {% endif %}
+            </td>
         </tr>
         <tr>
             <th>Dauer</th>
@@ -55,8 +77,16 @@
             <td>
                 {% include('AppBundle:Common/Ride:RideDuration.html.twig') with { 'ride': ride } %}
             </td>
-            <td>{% if app.getUser() %}<a href="#" data-toggle="modal" data-target="#modalEstimate"
-                                         title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>
+            <td>
+                {% if app.getUser() %}
+                    <a href="#"
+                       data-bs-toggle="modal"
+                       data-bs-target="#modalEstimate"
+                       title="Tour schätzen">
+                        Werte schätzen?
+                    </a>
+                {% endif %}
+            </td>
         </tr>
         <tr>
             <th>Durchschnittsgeschwindigkeit</th>

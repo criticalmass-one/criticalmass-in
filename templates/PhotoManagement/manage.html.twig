@@ -22,7 +22,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="btn-group pull-right" role="group" aria-label="...">
+                <div class="btn-group float-end" role="group" aria-label="Fotoaktionen">
                     <a href="{{ object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') }}"
                        class="btn btn-success">
                         <i class="far fa-camera"></i>
@@ -35,7 +35,6 @@
                         Fotos verschieben
                     </a>#}
                 </div>
-
 
                 <h2>
                     Fotos bearbeiten
@@ -50,37 +49,43 @@
                         <div class="col-md-3">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <img class="img-responsive img-thumbnail{% if not photo.enabled %} bg-danger{% endif %}"
-                                         src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
+                                    <img
+                                            class="img-fluid img-thumbnail{% if not photo.enabled %} bg-danger{% endif %}"
+                                            src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"
+                                    />
                                 </div>
                             </div>
 
-                            <div class="row margin-top-10">
+                            <div class="row mt-3">
                                 <div class="col-md-12">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-default btn-xs dropdown-toggle"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <button type="button"
+                                                class="btn btn-secondary btn-sm dropdown-toggle"
+                                                data-bs-toggle="dropdown"
+                                                aria-expanded="false">
                                             Bearbeiten <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li class="disabled">
-                                                <a href="#">
+                                            <li>
+                                                <span class="dropdown-item-text small">
                                                     Aufnahmedatum: <br/>
                                                     {{ photo.exifCreationDate.format('d.m.Y H:i:s') }}
-                                                </a>
+                                                </span>
                                             </li>
 
-                                            <li role="separator" class="divider"></li>
+                                            <li><hr class="dropdown-divider"></li>
 
                                             <li>
-                                                <a href="{{ object_path(photo, 'caldera_criticalmass_photo_delete') }}">
+                                                <a class="dropdown-item"
+                                                   href="{{ object_path(photo, 'caldera_criticalmass_photo_delete') }}">
                                                     <i class="far fa-trash-alt"></i>
                                                     Löschen
                                                 </a>
                                             </li>
 
                                             {#<li>
-                                                <a href="{{ object_path(photo, 'caldera_criticalmass_photo_censor') }}">
+                                                <a class="dropdown-item"
+                                                   href="{{ object_path(photo, 'caldera_criticalmass_photo_censor') }}">
                                                     <i class="far fa-eraser"></i>
                                                     Zensieren
                                                 </a>
@@ -88,56 +93,63 @@
 
                                             {% if photo.enabled %}
                                                 <li>
-                                                    <a href="{{ object_path(photo, 'caldera_criticalmass_photo_toggle') }}">
+                                                    <a class="dropdown-item"
+                                                       href="{{ object_path(photo, 'caldera_criticalmass_photo_toggle') }}">
                                                         <i class="far fa-eye-slash"></i>
                                                         Deaktivieren
                                                     </a>
                                                 </li>
                                             {% else %}
                                                 <li>
-                                                    <a href="{{ object_path(photo, 'caldera_criticalmass_photo_toggle') }}">
+                                                    <a class="dropdown-item"
+                                                       href="{{ object_path(photo, 'caldera_criticalmass_photo_toggle') }}">
                                                         <i class="far fa-eye"></i>
                                                         Aktivieren
                                                     </a>
                                                 </li>
                                             {% endif %}
 
-                                            <li role="separator" class="divider"></li>
+                                            <li><hr class="dropdown-divider"></li>
 
                                             {#<li>
-                                                <a href="{{ object_path(photo, 'caldera_criticalmass_photo_place_single') }}">
+                                                <a class="dropdown-item"
+                                                   href="{{ object_path(photo, 'caldera_criticalmass_photo_place_single') }}">
                                                     <i class="far fa-location-arrow"></i>
                                                     verorten
                                                 </a>
                                             </li>#}
 
-                                            <li role="separator" class="divider"></li>
+                                            <li><hr class="dropdown-divider"></li>
 
                                             <li>
-                                                <a href="{{ object_path(photo, 'caldera_criticalmass_photo_rotate') }}?direction=left">
+                                                <a class="dropdown-item"
+                                                   href="{{ object_path(photo, 'caldera_criticalmass_photo_rotate') }}?direction=left">
                                                     <i class="far fa-undo"></i>
                                                     links rotieren
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="{{ object_path(photo, 'caldera_criticalmass_photo_rotate') }}?direction=right">
+                                                <a class="dropdown-item"
+                                                   href="{{ object_path(photo, 'caldera_criticalmass_photo_rotate') }}?direction=right">
                                                     <i class="far fa-redo"></i>
                                                     rechts rotieren
                                                 </a>
                                             </li>
 
-                                            <li role="separator" class="divider"></li>
+                                            <li><hr class="dropdown-divider"></li>
 
                                             {% if photo.ride.featuredPhoto == photo %}
                                                 <li>
-                                                    <a href="{{ object_path(photo, 'caldera_criticalmass_photo_featured') }}">
+                                                    <a class="dropdown-item"
+                                                       href="{{ object_path(photo, 'caldera_criticalmass_photo_featured') }}">
                                                         <i class="far fa-flag"></i>
                                                         Hauptbild lösen
                                                     </a>
                                                 </li>
                                             {% else %}
                                                 <li>
-                                                    <a href="{{ object_path(photo, 'caldera_criticalmass_photo_featured') }}">
+                                                    <a class="dropdown-item"
+                                                       href="{{ object_path(photo, 'caldera_criticalmass_photo_featured') }}">
                                                         <i class="far fa-flag"></i>
                                                         Hauptbild festlegen
                                                     </a>

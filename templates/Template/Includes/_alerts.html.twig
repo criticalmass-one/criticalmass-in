@@ -1,9 +1,9 @@
 {% if alertList|length > 0 %}
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 {% for alert in alertList %}
-                    <div class="alert alert-{{ alert.type }}">
+                    <div class="alert alert-{{ alert.type }}" role="alert">
                         <strong>{{ alert.title }}</strong>
                         {{ alert.message|raw|nl2br }}
                     </div>

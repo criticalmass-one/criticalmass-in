@@ -32,21 +32,20 @@
         </div>
 
         {% if track %}
-        <div class="row">
-            <div class="col-md-12">
-                <div id="map" style="height: 350px;">
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <div id="map" style="height: 350px;"></div>
                 </div>
             </div>
-            {% else %}
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="alert alert-danger" role="alert">
-                            <strong>Kein Track gefunden!</strong> Bitte lade erst einen GPX-Track deiner Tour hoch, um
-                            anschließend Fotos zu verorten.
-                        </div>
+        {% else %}
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Kein Track gefunden!</strong>
+                        Bitte lade erst einen GPX-Track deiner Tour hoch, um anschließend Fotos zu verorten.
                     </div>
                 </div>
-            {% endif %}
-        </div>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

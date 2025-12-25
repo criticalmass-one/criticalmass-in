@@ -25,14 +25,14 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row mt-3">
             <div class="col-md-12">
                 <form method="post"
                       action="{{ object_path(track, 'caldera_criticalmass_track_draw') }}">
                     <input type="hidden" id="polyline" name="polyline"/>
                     <input type="hidden" id="geojson" name="geojson"/>
 
-                    <button type="submit" id="save-track" class="btn btn-default">
+                    <button type="submit" id="save-track" class="btn btn-secondary">
                         Speichern
                     </button>
                 </form>

@@ -8,13 +8,13 @@
             <div class="row">
                 <div class="col-md-12">
                     <div
-                        class="map"
-                        id="promotion-map"
-                        data-controller="map--query-map"
-                        data-map--popup-template-id-value="ride-popup"
-                        data-map--api-type-value="ride"
-                        data-map--api-query-value="{{ path('caldera_criticalmass_rest_ride_list') ~ '?' ~ promotion.query|raw }}&extended=true"
-                        style="height: 350px;"
+                            class="map"
+                            id="promotion-map"
+                            data-controller="map--query-map"
+                            data-map--popup-template-id-value="ride-popup"
+                            data-map--api-type-value="ride"
+                            data-map--api-query-value="{{ path('caldera_criticalmass_rest_ride_list') ~ '?' ~ promotion.query|raw }}&extended=true"
+                            style="height: 350px;"
                     ></div>
                 </div>
             </div>
@@ -38,46 +38,48 @@
 
         <div class="row">
             <div class="col-md-12">
-                <table class="table data-table" id="ride-table">
-                    <thead>
-                    <tr>
-                        <th>Datum</th>
-                        <th>Uhrzeit</th>
-                        <th>Stadt</th>
-                        <th>Titel</th>
-                        <th>Treffpunkt</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for ride in rideList %}
+                <div class="table-responsive">
+                    <table class="table data-table" id="ride-table">
+                        <thead>
                         <tr>
-                            <td>
-                                {{ ride.dateTime|date('d.m.Y') }}
-                            </td>
-
-                            <td>
-                                {{ ride.dateTime|date('H:i') }}&nbsp;Uhr
-                            </td>
-
-                            <td>
-                                <a href="{{ object_path(ride.city) }}" title="zur Seite der Stadt {{ ride.city.city }}">
-                                    {{ ride.city.city }}
-                                </a>
-                            </td>
-
-                            <td>
-                                <a href="{{ object_path(ride) }}" title="zur Seite der Tour">
-                                    {{ ride.title }}
-                                </a>
-                            </td>
-
-                            <td>
-                                {{ ride.location }}
-                            </td>
+                            <th>Datum</th>
+                            <th>Uhrzeit</th>
+                            <th>Stadt</th>
+                            <th>Titel</th>
+                            <th>Treffpunkt</th>
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        {% for ride in rideList %}
+                            <tr>
+                                <td>
+                                    {{ ride.dateTime|date('d.m.Y') }}
+                                </td>
+
+                                <td>
+                                    {{ ride.dateTime|date('H:i') }}&nbsp;Uhr
+                                </td>
+
+                                <td>
+                                    <a href="{{ object_path(ride.city) }}" title="zur Seite der Stadt {{ ride.city.city }}">
+                                        {{ ride.city.city }}
+                                    </a>
+                                </td>
+
+                                <td>
+                                    <a href="{{ object_path(ride) }}" title="zur Seite der Tour">
+                                        {{ ride.title }}
+                                    </a>
+                                </td>
+
+                                <td>
+                                    {{ ride.location }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -102,4 +104,3 @@
 </template>
 {% endverbatim %}
 {% endblock %}
-
