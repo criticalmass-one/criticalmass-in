@@ -21,7 +21,14 @@
 
 <div class="row">
     <div class="col-md-12">
-        <div id="map" style="height: 350px;" class="map" data-city-slug="{{ ride.city.mainSlugString }}" data-ride-identifier="{{ ride.slug|default(ride.dateTime|date('Y-m-d')) }}"></div>
+        <div
+            data-controller="map--ride-map"
+            style="height: 350px;"
+            data-map--ride-map-city-slug-value="{{ ride.city.mainSlugString }}"
+            data-map--ride-map-ride-identifier-value="{{ ride.slug|default(ride.dateTime|date('Y-m-d')) }}"
+            data-map--ride-map-latitude-value="{{ ride.latitude }}"
+            data-map--ride-map-longitude-value="{{ ride.longitude }}"
+        ></div>
     </div>
 </div>
 

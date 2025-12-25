@@ -7,6 +7,7 @@ use App\Criticalmass\SocialNetwork\NetworkDetector\NetworkDetectorInterface;
 use App\Criticalmass\SocialNetwork\NetworkManager\NetworkManagerInterface;
 use App\Entity\SocialNetworkProfile;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
@@ -14,18 +15,25 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 
+#[AsCommand(
+    name: 'criticalmass:social-network:auto-assign',
+    description: 'Auto-assign networks to social network profiles')
+]
 class AutoAssignNetworkCommand extends Command
 {
-    protected static $defaultName = 'criticalmass:social-network:auto-assign';
-    public function __construct(protected ManagerRegistry $doctrine, protected NetworkManagerInterface $networkManager, protected NetworkDetectorInterface $networkDetector)
+    public function __construct(
+        private readonly ManagerRegistry $doctrine,
+        private readonly NetworkManagerInterface $networkManager,
+        private readonly NetworkDetectorInterface $networkDetector
+    )
     {
-        parent::__construct(null);
+        parent::__construct();
 
     }
 
     protected function configure(): void
     {
-        $this->setDescription('Auto-assign networks')
+        $this
             ->addOption('only-diffs', null, InputOption::VALUE_NONE)
             ->addOption('auto-assign', null, InputOption::VALUE_NONE)
             ->addOption('interactive-assign', null, InputOption::VALUE_NONE)
@@ -86,8 +94,13 @@ class AutoAssignNetworkCommand extends Command
         $table->render();
     }
 
-    protected function queryForNewNetwork(InputInterface $input, OutputInterface $output, SocialNetworkProfile $socialNetworkProfile, array $networkList, NetworkInterface $detectedNetwork): void
-    {
+    private function queryForNewNetwork(
+        InputInterface $input,
+        OutputInterface $output,
+        SocialNetworkProfile $socialNetworkProfile,
+        array $networkList,
+        NetworkInterface $detectedNetwork
+    ): void {
         $helper = $this->getHelper('question');
 
         $question = new ChoiceQuestion(
@@ -109,7 +122,7 @@ class AutoAssignNetworkCommand extends Command
         $socialNetworkProfile->setNetwork($networkIdentifier);
     }
 
-    protected function createNetworkList(): array
+    private function createNetworkList(): array
     {
         /** @var NetworkInterface $network */
         foreach ($this->networkManager->getNetworkList() as $network) {
