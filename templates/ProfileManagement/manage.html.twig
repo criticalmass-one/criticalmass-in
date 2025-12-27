@@ -17,207 +17,173 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <div class="row g-3">
 
-        <div class="row">
-            <div class="col-md-10 offset-md-1">
-                <h2>
-                    Hej {{ app.getUser().getUsername() }}, schön, dass du da bist!
-                </h2>
-
-                <p class="lead">
-                    Willkommen in deinem Benutzerkonto!
-                    Hier kannst du deine {% if feature('photos') %}Fotos, {% endif %}Tracks und Teilnahmen verwalten
-                    und deine Kontoeinstellungen ändern.
-                </p>
-            </div>
-        </div>
-
-        {% for flashMessage in app.session.flashbag.get('success') %}
-            <div class="row">
-                <div class="col-md-10 offset-md-1">
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        {{ flashMessage }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <div class="col-md-6">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header bg-body-tertiary py-2">
+                            <span class="fw-semibold">👤 Profilfoto</span>
+                        </div>
+                        <div class="card-body text-muted">
+                            Lade ein Foto für dein Profil hoch.
+                        </div>
+                        <div class="card-footer bg-transparent border-0 pt-0">
+                            <a class="btn btn-outline-secondary w-100"
+                               href="{{ path('criticalmass_user_profile_photo') }}">
+                                Profilfoto ändern
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
 
-        <div class="row">
-            <div class="col-md-10 offset-md-1">
-                <div class="row">
-
-                    <div class="col-md-6">
-                        <div class="card mb-3">
-                            <div class="card-header">
-                                Profilfoto ändern
-                            </div>
-                            <div class="card-body">
-                                <p>
-                                    Lade ein Foto für dein Profil hoch.
-                                </p>
-
-                                <p class="text-center">
-                                    <a class="btn btn-secondary"
-                                       href="{{ path('criticalmass_user_profile_photo') }}">
-                                        Profilfoto ändern
-                                    </a>
-                                </p>
-                            </div>
+                <div class="col-md-6">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header bg-body-tertiary py-2">
+                            <span class="fw-semibold">🎨 Profilfarbe</span>
                         </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="card mb-3">
-                            <div class="card-header">
+                        <div class="card-body text-muted">
+                            Ändere die Farbe deines Benutzerkontos.
+                        </div>
+                        <div class="card-footer bg-transparent border-0 pt-0">
+                            <a class="btn btn-outline-secondary w-100"
+                               href="{{ path('criticalmass_user_profile_color') }}">
                                 Profilfarbe wählen
-                            </div>
-                            <div class="card-body">
-                                <p>
-                                    Ändere die Farbe deines Benutzerkontos.
-                                </p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
-                                <p class="text-center">
-                                    <a class="btn btn-secondary"
-                                       href="{{ path('criticalmass_user_profile_color') }}">
-                                        Profilfarbe wählen
+                <div class="col-md-6">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header bg-body-tertiary py-2">
+                            <span class="fw-semibold">🚲 Deine Touren</span>
+                        </div>
+                        <div class="card-body">
+                            {% if participationCounter == 0 %}
+                                <div class="alert alert-info mb-0">
+                                    Noch keine Teilnahme – im
+                                    <a href="{{ path('caldera_criticalmass_calendar') }}" class="alert-link">
+                                        Kalender
                                     </a>
+                                    findest du Touren in deiner Nähe.
+                                </div>
+                            {% else %}
+                                <p class="mb-1">
+                                    Du warst bei <strong>{{ participationCounter }}</strong> Critical-Mass-Touren dabei.
                                 </p>
-                            </div>
+                                <p class="text-muted mb-0">
+                                    Deine persönliche Touren-Historie.
+                                </p>
+                            {% endif %}
                         </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="card mb-3">
-                            <div class="card-header">
-                                Deine Touren
+                        {% if participationCounter != 0 %}
+                            <div class="card-footer bg-transparent border-0 pt-0">
+                                <a class="btn btn-outline-secondary w-100"
+                                   href="{{ path('criticalmass_user_participation_list') }}">
+                                    Tourenübersicht
+                                </a>
                             </div>
+                        {% endif %}
+                    </div>
+                </div>
 
+                <div class="col-md-6">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header bg-body-tertiary py-2">
+                            <span class="fw-semibold">📍 Deine Tracks</span>
+                        </div>
+                        <div class="card-body">
+                            {% if trackCounter == 0 %}
+                                <div class="alert alert-info mb-0">
+                                    Noch keine Tracks gespeichert.
+                                </div>
+                            {% else %}
+                                <p class="mb-1">
+                                    <strong>{{ trackCounter }}</strong> hochgeladene Tracks.
+                                </p>
+                                <p class="text-muted mb-0">
+                                    Verwalte und ergänze deine Touren.
+                                </p>
+                            {% endif %}
+                        </div>
+                        {% if trackCounter != 0 %}
+                            <div class="card-footer bg-transparent border-0 pt-0">
+                                <a class="btn btn-outline-secondary w-100"
+                                   href="{{ path('caldera_criticalmass_track_list') }}">
+                                    Tracks verwalten
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if feature('photos') %}
+                    <div class="col-md-6">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-header bg-body-tertiary py-2">
+                                <span class="fw-semibold">📸 Deine Fotos</span>
+                            </div>
                             <div class="card-body">
-                                {% if participationCounter == 0 %}
-                                    <div class="alert alert-info" role="alert">
-                                        <strong>Schade:</strong>
-                                        Du hast noch an keiner Critical Mass teilgenommen. Im
-                                        <a href="{{ path('caldera_criticalmass_calendar') }}">Kalender</a>
-                                        findest du Touren in deiner Nähe.
+                                {% if photoCounter == 0 %}
+                                    <div class="alert alert-info mb-0">
+                                        Noch keine Fotos hochgeladen.
                                     </div>
                                 {% else %}
-                                    <p>
-                                        Super: Du hast bislang an {{ participationCounter }} Critical-Mass-Touren
-                                        teilgenommen.
+                                    <p class="mb-1">
+                                        <strong>{{ photoCounter }}</strong> Fotos gespeichert.
                                     </p>
-
-                                    <p class="text-center">
-                                        <a class="btn btn-secondary"
-                                           href="{{ path('criticalmass_user_participation_list') }}">
-                                            Tourenübersicht
-                                        </a>
+                                    <p class="text-muted mb-0">
+                                        Deine Bilder von vergangenen Touren.
                                     </p>
                                 {% endif %}
                             </div>
+                            {% if photoCounter != 0 %}
+                                <div class="card-footer bg-transparent border-0 pt-0">
+                                    <a class="btn btn-outline-secondary w-100"
+                                       href="{{ path('caldera_criticalmass_photo_user_list') }}">
+                                        Fotos verwalten
+                                    </a>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
+                {% endif %}
 
-                    <div class="col-md-6">
-                        <div class="card mb-3">
-                            <div class="card-header">
-                                Deine Tracks
-                            </div>
-                            <div class="card-body">
-                                {% if trackCounter == 0 %}
-                                    <div class="alert alert-info" role="alert">
-                                        Du hast bislang noch keine Tracks von Critical-Mass-Touren gespeichert. Schau
-                                        in die Hilfe, wenn du weitere Informationen zu diesem Thema benötigst.
-                                    </div>
-                                {% else %}
-                                    <p>
-                                        Von deinen Critical-Mass-Touren hast du insgesamt {{ trackCounter }} Tracks
-                                        hochgeladen.
-                                    </p>
-
-                                    <p class="text-center">
-                                        <a class="btn btn-secondary"
-                                           href="{{ path('caldera_criticalmass_track_list') }}">
-                                            Tracks verwalten
-                                        </a>
-                                    </p>
-                                {% endif %}
-                            </div>
+                <div class="col-md-6">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header bg-body-tertiary py-2">
+                            <span class="fw-semibold">✏️ Benutzername</span>
                         </div>
-                    </div>
-
-                    {% if feature('photos') %}
-                        <div class="col-md-6">
-                            <div class="card mb-3">
-                                <div class="card-header">
-                                    Deine Fotos
-                                </div>
-                                <div class="card-body">
-                                    {% if photoCounter == 0 %}
-                                        <div class="alert alert-info" role="alert">
-                                            Du hast bislang noch keine Fotos hochgeladen. In der Hilfe findest du mehr
-                                            Informationen zu diesem Thema.
-                                        </div>
-                                    {% else %}
-                                        <p>
-                                            Du hast von deinen Touren {{ photoCounter }} Fotos hochgeladen.
-                                        </p>
-
-                                        <p class="text-center">
-                                            <a class="btn btn-secondary"
-                                               href="{{ path('caldera_criticalmass_photo_user_list') }}">
-                                                Fotos verwalten
-                                            </a>
-                                        </p>
-                                    {% endif %}
-                                </div>
-                            </div>
+                        <div class="card-body text-muted">
+                            Ändere deinen angezeigten Benutzernamen.
                         </div>
-                    {% endif %}
-
-                    <div class="col-md-6">
-                        <div class="card mb-3">
-                            <div class="card-header">
+                        <div class="card-footer bg-transparent border-0 pt-0">
+                            <a class="btn btn-outline-secondary w-100"
+                               href="{{ path('criticalmass_user_usermanagement_editusername') }}">
                                 Benutzername ändern
-                            </div>
-                            <div class="card-body">
-                                <p>
-                                    Hier kannst du deinen Benutzernamen ändern.
-                                </p>
-
-                                <p class="text-center">
-                                    <a class="btn btn-secondary"
-                                       href="{{ path('criticalmass_user_usermanagement_editusername') }}">
-                                        Benutzername ändern
-                                    </a>
-                                </p>
-                            </div>
+                            </a>
                         </div>
                     </div>
+                </div>
 
-                    <div class="col-md-6">
-                        <div class="card mb-3">
-                            <div class="card-header">
+                <div class="col-md-6">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header bg-body-tertiary py-2">
+                            <span class="fw-semibold">📧 E-Mail-Adresse</span>
+                        </div>
+                        <div class="card-body text-muted">
+                            Ändere deine E-Mail-Adresse für den Login.
+                        </div>
+                        <div class="card-footer bg-transparent border-0 pt-0">
+                            <a class="btn btn-outline-secondary w-100"
+                               href="{{ path('criticalmass_user_usermanagement_editemail') }}">
                                 E-Mail-Adresse ändern
-                            </div>
-                            <div class="card-body">
-                                <p>
-                                    Hier kannst du deine E-Mail-Adresse ändern. Bedenke bitte, dass du dich künftig
-                                    mit deinen neuen Benutzerdaten einloggen musst.
-                                </p>
-
-                                <p class="text-center">
-                                    <a class="btn btn-secondary"
-                                       href="{{ path('criticalmass_user_usermanagement_editemail') }}">
-                                        E-Mail-Adresse ändern
-                                    </a>
-                                </p>
-                            </div>
+                            </a>
                         </div>
                     </div>
-
-                </div> {# inner row #}
+                </div>
             </div>
         </div>
     </div>
