@@ -1,30 +1,28 @@
 <div class="row d-none d-md-block">
     <div class="col-12">
-        <div class="card mb-3">
-            <div class="card-header">
-                <h3 class="card-title mb-0">
+        <div class="card mb-3 shadow-sm">
+            <div class="card-header bg-body-tertiary py-2">
+                <h6 class="mb-0 fw-semibold">
                     Bald unterwegs
-                </h3>
+                </h6>
             </div>
 
             <div class="card-body">
-                <ul class="list-unstyled">
-                    {% for month in rideList %}
-                        {% for day in month %}
-                            <li class="mb-3">
-                                <h5 class="mb-2">
-                                    {{ day.dateTime|format_date('eeee, dd. MMMM YYYY') }}
-                                </h5>
+                {% for month in rideList %}
+                    {% for day in month %}
+                        <div class="mb-4">
+                            <div class="fw-semibold mb-2">
+                                {{ day.dateTime|format_date('eeee, dd. MMMM YYYY') }}
+                            </div>
 
-                                <ul class="list-unstyled ms-3">
-                                    {% for ride in day %}
-                                        {% include 'Common/Ride/simple_city_time_list_item.html.twig' with { ride: ride } %}
-                                    {% endfor %}
-                                </ul>
-                            </li>
-                        {% endfor %}
+                            <ul class="list-unstyled ps-3 mb-0">
+                                {% for ride in day %}
+                                    {% include 'Common/Ride/simple_city_time_list_item.html.twig' with { ride: ride } %}
+                                {% endfor %}
+                            </ul>
+                        </div>
                     {% endfor %}
-                </ul>
+                {% endfor %}
             </div>
         </div>
     </div>
