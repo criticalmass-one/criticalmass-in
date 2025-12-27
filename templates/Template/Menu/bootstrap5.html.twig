@@ -1,47 +1,50 @@
 {% extends '@KnpMenu/menu.html.twig' %}
 {% import 'knp_menu.html.twig' as macros %}
 
+{# Top-Level UL: navbar-nav (optional me-auto über childrenAttributes oder Wrapper) #}
+{% block list %}
+    {%- if item.hasChildren and options.depth is not same as(0) and item.displayChildren %}
+        {%- set listAttributes = item.childrenAttributes %}
+
+        {# wenn kein class gesetzt ist, setzen wir für level 0 (root) navbar-nav #}
+        {%- set existing = listAttributes.class|default('') %}
+        {%- set classes = existing ? existing|split(' ') : [] %}
+
+        {%- if item.level == 0 %}
+            {%- set classes = classes|merge(['navbar-nav']) %}
+        {%- endif %}
+
+        {%- set listAttributes = listAttributes|merge({'class': classes|join(' ')}) %}
+
+        <ul{{ macros.attributes(listAttributes) }}>
+            {{ block('children') }}
+        </ul>
+    {%- endif %}
+{% endblock %}
+
 {% block item %}
     {% if item.displayed %}
-        {%- set attributes = item.attributes %}
         {%- set is_dropdown = item.getExtra('dropdown', false) %}
         {%- set icon = item.getExtra('icon') %}
 
-        {%- if item.getExtra('divider_prepend') %}
-            {{ block('dividerElement') }}
-        {%- endif %}
+        {# LI classes #}
+        {%- set liClasses = item.attribute('class') is not empty ? [item.attribute('class')] : [] %}
 
-        {# building the class of the item #}
-        {%- set classes = item.attribute('class') is not empty ? [item.attribute('class')] : [] %}
-        {%- if matcher.isCurrent(item) %}
-            {%- set classes = classes|merge([options.currentClass]) %}
-        {%- elseif matcher.isAncestor(item, options.depth) %}
-            {%- set classes = classes|merge([options.ancestorClass]) %}
-        {%- endif %}
-        {%- if item.actsLikeFirst %}
-            {%- set classes = classes|merge([options.firstClass]) %}
-        {%- endif %}
-        {%- if item.actsLikeLast %}
-            {%- set classes = classes|merge([options.lastClass]) %}
-        {%- endif %}
-
-        {# building the class of the children #}
-        {%- set childrenClasses = item.childrenAttribute('class') is not empty ? [item.childrenAttribute('class')] : [] %}
-        {%- set childrenClasses = childrenClasses|merge(['menu_level_' ~ item.level]) %}
-
-        {# adding classes for dropdown #}
+        {# Navbar: jedes LI ist nav-item; Dropdown zusätzlich dropdown #}
+        {%- set liClasses = liClasses|merge(['nav-item']) %}
         {%- if is_dropdown %}
-            {%- set classes = classes|merge(['dropdown']) %}
+            {%- set liClasses = liClasses|merge(['dropdown']) %}
+        {%- endif %}
+
+        {%- set attributes = item.attributes|merge({'class': liClasses|join(' ')}) %}
+
+        {# Children UL classes (Dropdown) #}
+        {%- set childrenClasses = item.childrenAttribute('class') is not empty ? [item.childrenAttribute('class')] : [] %}
+        {%- if is_dropdown %}
             {%- set childrenClasses = childrenClasses|merge(['dropdown-menu']) %}
         {%- endif %}
+        {%- set item = item.setChildrenAttribute('class', childrenClasses|join(' ')) %}
 
-        {# putting classes together #}
-        {%- if classes is not empty %}
-            {%- set attributes = attributes|merge({'class': classes|join(' ')}) %}
-        {%- endif %}
-        {%- set listAttributes = item.childrenAttributes|merge({'class': childrenClasses|join(' ') }) %}
-
-        {# displaying the item #}
         <li{{ macros.attributes(attributes) }}>
             {%- if is_dropdown %}
                 {{- block('dropdownElement') }}
@@ -50,55 +53,93 @@
             {%- else %}
                 {{- block('spanElement') }}
             {%- endif %}
-            {# render the list of children#}
+
             {{ block('list') }}
         </li>
-
-        {%- if item.getExtra('divider_append') %}
-            {{ block('dividerElement') }}
-        {%- endif %}
-    {% endif %}
-{% endblock %}
-
-{% block dividerElement %}
-    {# Bootstrap 5: horizontale Divider in Dropdowns, eigene Utility-Klassen für Top-Level #}
-    {% if item.level == 1 %}
-        {# vertikale Trennung im Top-Menü, per Utilities (Border + Margin) #}
-        <li class="border-start mx-2"></li>
-    {% else %}
-        <li><hr class="dropdown-divider" /></li>
     {% endif %}
 {% endblock %}
 
 {% block linkElement %}
-    <a href="{{ item.uri }}"{{ macros.attributes(item.linkAttributes) }}>
-        {%- if icon is not empty %}
-            <i class="{{ icon }}"></i>
-        {% endif %}
+    {# Top-Level Link in Navbar: nav-link #}
+    {%- set linkClasses = item.linkAttribute('class') is not empty ? [item.linkAttribute('class')] : [] %}
+    {%- set linkClasses = linkClasses|merge(['nav-link']) %}
+
+    {# active auf dem Link #}
+    {%- if matcher.isCurrent(item) %}
+        {%- set linkClasses = linkClasses|merge(['active']) %}
+        {%- set linkAttrs = item.linkAttributes|merge({'aria-current': 'page'}) %}
+    {%- else %}
+        {%- set linkAttrs = item.linkAttributes %}
+    {%- endif %}
+
+    {%- set linkAttrs = linkAttrs|merge({'class': linkClasses|join(' ')}) %}
+
+    <a href="{{ item.uri }}"{{ macros.attributes(linkAttrs) }}>
+        {%- if icon is not empty %}<i class="{{ icon }}"></i>{% endif %}
         {{- block('label') -}}
     </a>
 {% endblock %}
 
 {% block spanElement %}
-    <span{{ macros.attributes(item.labelAttributes) }}>
-        {%- if icon is not empty %}
-            <i class="{{ icon }}"></i>
-        {% endif %}
+    {# Wenn currentAsLink=false: trotzdem wie nav-link aussehen #}
+    {%- set labelClasses = item.labelAttribute('class') is not empty ? [item.labelAttribute('class')] : [] %}
+    {%- set labelClasses = labelClasses|merge(['nav-link', 'active']) %}
+    {%- set labelAttrs = item.labelAttributes|merge({'class': labelClasses|join(' '), 'aria-current': 'page'}) %}
+
+    <span{{ macros.attributes(labelAttrs) }}>
+        {%- if icon is not empty %}<i class="{{ icon }}"></i>{% endif %}
         {{- block('label') -}}
-	</span>
+    </span>
 {% endblock %}
 
 {% block dropdownElement %}
-    {%- set classes = item.linkAttribute('class') is not empty ? [item.linkAttribute('class')] : [] %}
-    {%- set classes = classes|merge(['dropdown-toggle']) %}
-    {%- set attributes = item.linkAttributes %}
-    {%- set attributes = attributes|merge({'class': classes|join(' ')}) %}
-    {%- set attributes = attributes|merge({'data-bs-toggle': 'dropdown', 'role': 'button', 'aria-expanded': 'false'}) %}
+    {# Dropdown Toggle in Navbar: nav-link dropdown-toggle #}
+    {%- set linkClasses = item.linkAttribute('class') is not empty ? [item.linkAttribute('class')] : [] %}
+    {%- set linkClasses = linkClasses|merge(['nav-link', 'dropdown-toggle']) %}
 
-    <a href="#"{{ macros.attributes(attributes) }}>
-        {%- if icon is not empty %}
-            <i class="{{ icon }}"></i>
-        {% endif %}
-        {{- block('label') }}
+    {# optional: id für aria-labelledby #}
+    {%- set toggleId = item.getExtra('bs5_toggle_id') ?: ('navDrop' ~ item.name|default(item.label)|lower|replace({' ':'','/':'','_':''})) %}
+
+    {%- set attrs = item.linkAttributes
+        |merge({
+        'class': linkClasses|join(' '),
+        'id': toggleId,
+        'href': '#',
+        'role': 'button',
+        'data-bs-toggle': 'dropdown',
+        'aria-expanded': 'false'
+    })
+    %}
+
+    <a{{ macros.attributes(attrs) }}>
+        {%- if icon is not empty %}<i class="{{ icon }}"></i>{% endif %}
+        {{- block('label') -}}
     </a>
+
+    {# Dropdown-Menü sollte aria-labelledby bekommen #}
+    {%- set menuAttrs = item.childrenAttributes|merge({'aria-labelledby': toggleId}) %}
+    {%- set item = item.setChildrenAttributes(menuAttrs) %}
+{% endblock %}
+
+{# Dropdown Items: dropdown-item statt nav-link #}
+{% block children %}
+    {%- for child in item.children %}
+        {%- set childIsDropdown = child.getExtra('dropdown', false) %}
+
+        {# Wenn wir in einem Dropdown sind (level >= 1) und child kein weiteres Dropdown ist: dropdown-item auf Link #}
+        {%- if item.level >= 1 and not childIsDropdown %}
+            {%- set childLinkClasses = child.linkAttribute('class') is not empty ? [child.linkAttribute('class')] : [] %}
+            {%- set childLinkClasses = childLinkClasses|merge(['dropdown-item']) %}
+
+            {%- if matcher.isCurrent(child) %}
+                {%- set childLinkClasses = childLinkClasses|merge(['active']) %}
+                {%- set child = child.setLinkAttributes(child.linkAttributes|merge({'class': childLinkClasses|join(' '), 'aria-current': 'page'})) %}
+            {%- else %}
+                {%- set child = child.setLinkAttributes(child.linkAttributes|merge({'class': childLinkClasses|join(' ')})) %}
+            {%- endif %}
+        {%- endif %}
+
+        {% set item = child %}
+        {{ block('item') }}
+    {%- endfor %}
 {% endblock %}

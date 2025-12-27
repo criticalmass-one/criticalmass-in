@@ -1,10 +1,10 @@
-<form class="d-flex ms-auto" role="search"
+<form class="d-flex" role="search"
       action="{{ path('caldera_criticalmass_search_query') }}">
     <input id="search-input"
-           type="text"
+           name="query"
+           type="search"
            class="form-control me-2"
-           placeholder="{% trans %}criticalmass.navigation.search.search{% endtrans %}"
-           name="query" />
+           placeholder="{% trans %}criticalmass.navigation.search.search{% endtrans %}">
 
     <button type="submit" class="btn btn-success">
         {% trans %}criticalmass.navigation.search.search{% endtrans %}
