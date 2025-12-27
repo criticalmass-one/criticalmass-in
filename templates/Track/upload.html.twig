@@ -44,27 +44,27 @@
 
         <div class="row mt-3">
             <div class="col-md-6 offset-md-3">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="h5 mb-0">
-                            Gpx-Datei hochladen
-                        </h3>
+                <div class="card mb-3 shadow-sm">
+                    <div class="card-header bg-body-tertiary py-2">
+                        <h6 class="mb-0 fw-semibold">
+                            📎 GPX-Datei hochladen
+                        </h6>
                     </div>
+
                     <div class="card-body">
                         {% if errorMessage %}
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="alert alert-danger" role="alert">
-                                        <strong>Hochladen fehlgeschlagen :(</strong>
-                                        {{ errorMessage }}
-                                    </div>
-                                </div>
+                            <div class="alert alert-danger mb-3" role="alert">
+                                <strong>Hochladen fehlgeschlagen :(</strong>
+                                {{ errorMessage }}
                             </div>
                         {% endif %}
 
-                        <div class="mb-3">
-                            <label class="form-label">Datei:</label>
-                            {{ form_widget(form.trackFile, {'attr': {'class': 'form-control' }}) }}
+                        <div class="mb-0">
+                            <label class="form-label">
+                                Datei
+                            </label>
+
+                            {{ form_widget(form.trackFile, { 'attr': { 'class': 'form-control' } }) }}
                         </div>
                     </div>
                 </div>

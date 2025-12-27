@@ -1,32 +1,32 @@
 <div class="col-md-4 mb-4">
-    <div class="card{% if not track.enabled %} border-warning{% elseif not track.reviewed %} border-danger{% endif %}">
-        <div class="card-header">
-            <a href="{{ object_path(track.ride) }}">
-                {{ track.ride.title }}
-            </a>
+    <div class="card mb-3 shadow-sm{% if not track.enabled %} border-warning{% elseif not track.reviewed %} border-danger{% endif %}">
+        <div class="card-header bg-body-tertiary py-2">
+            <h6 class="mb-0 fw-semibold">
+                🧭
+                <a href="{{ object_path(track.ride) }}" class="text-decoration-none">
+                    {{ track.ride.title }}
+                </a>
+            </h6>
         </div>
 
         <div class="card-body">
-            <div class="row mb-3">
-                <div class="col-md-12">
-                    <div
-                            id="map-{{ track.id }}"
-                            class="map"
-                            style="height: 150px;"
-                            data-controller="map--map"
-                            data-map--map-lock-map-value="true"
-                            data-map--map-polyline-color-value="{{ track.user.color }}"
-                            data-map--map-polyline-value="{{ track.polyline }}"
-                    ></div>
-                </div>
+            <div class="mb-3 overflow-hidden rounded">
+                <div id="map-{{ track.id }}"
+                     class="map"
+                     style="height: 150px;"
+                     data-controller="map--map"
+                     data-map--map-lock-map-value="true"
+                     data-map--map-polyline-color-value="{{ track.user.color }}"
+                     data-map--map-polyline-value="{{ track.polyline }}"
+                ></div>
             </div>
 
             <div class="row">
                 {% if show_city is not defined or show_city == true %}
                     <div class="col-md-6">
-                        <dl>
+                        <dl class="mb-2">
                             <dt>Stadt</dt>
-                            <dd>
+                            <dd class="mb-0">
                                 <a href="{{ object_path(track.ride.city) }}">
                                     {{ track.ride.city.city }}
                                 </a>
@@ -37,9 +37,9 @@
 
                 {% if show_user is not defined or show_user == true %}
                     <div class="col-md-6">
-                        <dl>
+                        <dl class="mb-2">
                             <dt>Teilnehmer</dt>
-                            <dd>
+                            <dd class="mb-0">
                                 {{ track.user.username }}
                             </dd>
                         </dl>
@@ -47,9 +47,9 @@
                 {% endif %}
 
                 <div class="col-md-6">
-                    <dl>
+                    <dl class="mb-2">
                         <dt>Datum</dt>
-                        <dd>
+                        <dd class="mb-0">
                             <a href="{{ object_path(track) }}">
                                 {{ track.ride.dateTime|date('d.m.Y') }}
                             </a>
@@ -60,27 +60,27 @@
 
             <div class="row">
                 <div class="col-md-4">
-                    <dl>
+                    <dl class="mb-2">
                         <dt>Länge</dt>
-                        <dd>
+                        <dd class="mb-0">
                             {{ track.distance|number_format(2) }}&nbsp;km
                         </dd>
                     </dl>
                 </div>
 
                 <div class="col-md-4">
-                    <dl>
+                    <dl class="mb-2">
                         <dt>Beginn</dt>
-                        <dd>
+                        <dd class="mb-0">
                             {{ track.startDateTime|date('H:i', track.ride.city.timezone) }}&nbsp;Uhr
                         </dd>
                     </dl>
                 </div>
 
                 <div class="col-md-4">
-                    <dl>
+                    <dl class="mb-2">
                         <dt>Ende</dt>
-                        <dd>
+                        <dd class="mb-0">
                             {{ track.endDateTime|date('H:i', track.ride.city.timezone) }}&nbsp;Uhr
                         </dd>
                     </dl>
@@ -88,10 +88,8 @@
             </div>
 
             {% if is_granted('edit', track) %}
-                <div class="row mt-3">
-                    <div class="col-md-12">
-                        {% include 'Track/_track_options_menu.html.twig' with { 'track': track } %}
-                    </div>
+                <div class="mt-3">
+                    {% include 'Track/_track_options_menu.html.twig' with { 'track': track } %}
                 </div>
             {% endif %}
         </div>

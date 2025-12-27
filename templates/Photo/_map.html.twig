@@ -1,13 +1,14 @@
 {% if photo.hasCoordinates() %}
-    <div class="card">
-        <div class="card-header">
-            <h3 class="card-title mb-0">
-                Karte
-            </h3>
+    <div class="card mb-3 shadow-sm">
+        <div class="card-header bg-body-tertiary py-2">
+            <h6 class="mb-0 fw-semibold">
+                🗺️ Karte
+            </h6>
         </div>
-        <div class="card-body">
+
+        <div class="card-body p-0">
             <div id="map-{{ photo.id }}"
-                 class="map"
+                 class="map rounded-bottom"
                  data-controller="map--map"
                  style="height: 150px;"
                  data-map--map-center-latitude-value="{{ photo.latitude }}"

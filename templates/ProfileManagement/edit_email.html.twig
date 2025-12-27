@@ -37,14 +37,15 @@
 
         <div class="row">
             <div class="col-md-6 offset-md-3">
-
-                <div class="card">
-                    <div class="card-header">
-                        Deine E-Mail-Adresse
+                <div class="card mb-3 shadow-sm">
+                    <div class="card-header bg-body-tertiary py-2">
+                        <h6 class="mb-0 fw-semibold">
+                            📧 Deine E-Mail-Adresse
+                        </h6>
                     </div>
 
                     <div class="card-body">
-                        <p>
+                        <p class="text-muted">
                             Deine E-Mail-Adresse wird selbstverständlich nirgendwo öffentlich angezeigt.
                         </p>
 
@@ -55,12 +56,14 @@
                         {% endif %}
 
                         <div class="mb-3">
-                            <label class="form-label">E-Mail-Adresse:</label>
+                            <label class="form-label">
+                                E-Mail-Adresse
+                            </label>
+
                             {{ form_widget(userEmailForm.email, { 'attr' : { 'class': 'form-control' } }) }}
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 

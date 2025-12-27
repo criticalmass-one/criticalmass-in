@@ -1,20 +1,22 @@
 {% if socialNetworkProfiles|length > 0 %}
-    <div class="card mb-3">
-        <div class="card-header">
-            <h3 class="card-title h5 mb-0">
-                Soziale Netze
-            </h3>
+    <div class="card mb-3 shadow-sm">
+        <div class="card-header bg-body-tertiary py-2">
+            <h6 class="mb-0 fw-semibold">
+                🌐 Soziale Netze
+            </h6>
         </div>
 
-        <div class="card-body text-center">
-            <div class="btn-group-vertical w-100">
+        <div class="card-body">
+            <div class="d-grid gap-2">
                 {% for profile in socialNetworkProfiles %}
                     {% set network = getNetwork(profile.network) %}
 
                     <a href="{{ profile.identifier }}"
-                       class="btn"
-                       style="background-color: {{ network.backgroundColor }}; color: {{ network.textColor }};">
-                        <i class="{{ network.icon }}"></i>
+                       class="btn w-100 text-start"
+                       style="background-color: {{ network.backgroundColor }}; color: {{ network.textColor }};"
+                       target="_blank"
+                       rel="me noopener">
+                        <i class="{{ network.icon }} me-2"></i>
                         {{ network.name }}
                     </a>
                 {% endfor %}

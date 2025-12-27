@@ -7,59 +7,60 @@
 {% endif %}
 
 {% if pastRide %}
-    <div class="card mb-3">
-        <div class="card-header">
-            <h3 class="card-title h5 mb-0">Statistik</h3>
+    <div class="card mb-3 shadow-sm">
+        <div class="card-header bg-body-tertiary py-2">
+            <h6 class="mb-0 fw-semibold">
+                📊 Statistik
+            </h6>
         </div>
+
         <div class="card-body">
             {% if hasEstimations %}
-                <div class="row">
-                    <div class="col-12">
-                        <dl>
-                            {% if ride.estimatedParticipants and ride.estimatedParticipants > 0 %}
-                                <dt>Teilnehmer</dt>
-                                <dd>{{ ride.estimatedParticipants|number_format(0) }}</dd>
-                            {% endif %}
-
-                            {% if ride.estimatedDistance and ride.estimatedDistance > 0 %}
-                                <dt>Distanz</dt>
-                                <dd>{{ ride.estimatedDistance|number_format(2) }}&nbsp;km</dd>
-                            {% endif %}
-
-                            {% if ride.getDurationInterval() and ride.getDurationInterval().format('%h:%i') != '0:0' %}
-                                <dt>Dauer</dt>
-                                <dd>{{ human_duration(ride.getEstimatedDurationInSeconds()) }}</dd>
-                            {% endif %}
-
-                            {% if ride.getAverageVelocity and ride.getAverageVelocity > 0 %}
-                                <dt>Durchschnittsgeschwindigkeit</dt>
-                                <dd>{{ ride.getAverageVelocity()|number_format(2) }}&nbsp;km/h</dd>
-                            {% endif %}
-                        </dl>
-                    </div>
-                </div>
-            {% endif %}
-
-            <div class="row">
-                <div class="col-12 text-center">
-                    {% if app.user %}
-                        <button class="btn btn-success"
-                                data-bs-toggle="modal"
-                                data-bs-target="#estimate-modal">
-                            <i class="far fa-users"></i>
-                            Teilnehmerzahl schätzen
-                        </button>
-                    {% else %}
-                        <span class="btn btn-success modal-hint"
-                              data-modal-hint-title="{{ 'hint_modal.ride.estimate_add_button.title'|trans }}"
-                              data-modal-hint-text="{{ 'hint_modal.ride.estimate_add_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
-                              data-hint-modal-size="md">
-                            <i class="far fa-users"></i>
-                            Teilnehmerzahl schätzen
-                        </span>
+                <dl class="mb-0">
+                    {% if ride.estimatedParticipants and ride.estimatedParticipants > 0 %}
+                        <dt>Teilnehmer</dt>
+                        <dd>{{ ride.estimatedParticipants|number_format(0) }}</dd>
                     {% endif %}
-                </div>
-            </div>
+
+                    {% if ride.estimatedDistance and ride.estimatedDistance > 0 %}
+                        <dt>Distanz</dt>
+                        <dd>{{ ride.estimatedDistance|number_format(2) }}&nbsp;km</dd>
+                    {% endif %}
+
+                    {% if ride.getDurationInterval() and ride.getDurationInterval().format('%h:%i') != '0:0' %}
+                        <dt>Dauer</dt>
+                        <dd>{{ human_duration(ride.getEstimatedDurationInSeconds()) }}</dd>
+                    {% endif %}
+
+                    {% if ride.getAverageVelocity and ride.getAverageVelocity > 0 %}
+                        <dt>Durchschnittsgeschwindigkeit</dt>
+                        <dd>{{ ride.getAverageVelocity()|number_format(2) }}&nbsp;km/h</dd>
+                    {% endif %}
+                </dl>
+            {% else %}
+                <p class="mb-0 text-muted">
+                    Noch keine Schätzwerte vorhanden.
+                </p>
+            {% endif %}
+        </div>
+
+        <div class="card-footer bg-transparent border-0 pt-0">
+            {% if app.user %}
+                <button class="btn btn-success w-100"
+                        data-bs-toggle="modal"
+                        data-bs-target="#estimate-modal">
+                    <i class="far fa-users"></i>
+                    Teilnehmerzahl schätzen
+                </button>
+            {% else %}
+                <span class="btn btn-success w-100 modal-hint"
+                      data-modal-hint-title="{{ 'hint_modal.ride.estimate_add_button.title'|trans }}"
+                      data-modal-hint-text="{{ 'hint_modal.ride.estimate_add_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
+                      data-hint-modal-size="md">
+                    <i class="far fa-users"></i>
+                    Teilnehmerzahl schätzen
+                </span>
+            {% endif %}
         </div>
     </div>
 

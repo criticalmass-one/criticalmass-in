@@ -26,30 +26,28 @@
             <div class="col-12 col-md-10 offset-md-1">
                 <div class="row">
                     <div class="col-12 col-md-4">
-                        <div class="card mb-3">
-                            <div class="card-header">
-                                Turnus
+                        <div class="card mb-3 shadow-sm">
+                            <div class="card-header bg-body-tertiary py-2">
+                                <h6 class="mb-0 fw-semibold">
+                                    🔁 Turnus
+                                </h6>
                             </div>
+
                             <div class="card-body">
-                                <dl>
-                                    <dt>
-                                        Turnus
-                                    </dt>
+                                <dl class="mb-0">
+                                    <dt>Turnus</dt>
                                     <dd>
-                                        {{ ('cycle.event_date.month_week.' ~ cityCycle.weekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ cityCycle.dayOfWeek)|trans }}
+                                        {{ ('cycle.event_date.month_week.' ~ cityCycle.weekOfMonth)|trans }}
+                                        {{ ('cycle.event_date.day.' ~ cityCycle.dayOfWeek)|trans }}
                                         im Monat
                                     </dd>
 
-                                    <dt>
-                                        Uhrzeit
-                                    </dt>
+                                    <dt>Uhrzeit</dt>
                                     <dd>
                                         {{ cityCycle.time|date('H:i', 'UTC') }} Uhr
                                     </dd>
 
-                                    <dt>
-                                        Treffpunkt
-                                    </dt>
+                                    <dt>Treffpunkt</dt>
                                     <dd>
                                         {% if cityCycle.location %}
                                             {{ cityCycle.location }}
@@ -58,9 +56,7 @@
                                         {% endif %}
                                     </dd>
 
-                                    <dt>
-                                        Gültigkeitsbeginn
-                                    </dt>
+                                    <dt>Gültigkeitsbeginn</dt>
                                     <dd>
                                         {% if cityCycle.validFrom %}
                                             {{ cityCycle.validFrom|date('d.m.Y') }}
@@ -69,9 +65,7 @@
                                         {% endif %}
                                     </dd>
 
-                                    <dt>
-                                        Gültigkeitsende
-                                    </dt>
+                                    <dt>Gültigkeitsende</dt>
                                     <dd>
                                         {% if cityCycle.validUntil %}
                                             {{ cityCycle.validUntil|date('d.m.Y') }}

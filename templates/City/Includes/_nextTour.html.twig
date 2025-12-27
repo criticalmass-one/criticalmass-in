@@ -1,73 +1,58 @@
-<div class="card mb-3">
-    <div class="card-header">
-        <h3 class="card-title mb-0">Nächste Tour</h3>
+<div class="card mb-3 shadow-sm">
+    <div class="card-header bg-body-tertiary py-2">
+        <h6 class="mb-0 fw-semibold">
+            🚲 Nächste Tour
+        </h6>
     </div>
 
     <div class="card-body">
         {% if currentRide %}
-            <div class="row">
-                <div class="col-12">
-                    <div class="text-center">
-                        <a href="{{ object_path(currentRide) }}">
-                            <h3 class="no-margin-top">
-                                {{ currentRide.title }}
-                            </h3>
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <h5 class="text-center mb-3">
+                <a href="{{ object_path(currentRide) }}" class="text-decoration-none">
+                    {{ currentRide.title }}
+                </a>
+            </h5>
 
             <div class="row">
                 <div class="col-12 col-md-6">
-                    <dl>
+                    <dl class="mb-2">
                         <dt>Datum</dt>
                         <dd>{{ currentRide.dateTime|date('d.m.Y', currentRide.city.timezone) }}</dd>
                     </dl>
                 </div>
 
                 <div class="col-12 col-md-6">
-                    <dl>
+                    <dl class="mb-2">
                         <dt>Uhrzeit</dt>
                         <dd>{{ currentRide.dateTime|date('H:i', currentRide.city.timezone) }} Uhr</dd>
                     </dl>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-12">
-                    <dl>
-                        <dt>Treffpunkt</dt>
-                        {% if currentRide.location and currentRide.latitude and currentRide.longitude %}
-                            <dd>{{ currentRide.location }}</dd>
-                        {% else %}
-                            <dd>
-                                <a href="{{ object_path(currentRide, 'caldera_criticalmass_ride_edit') }}">
-                                    noch nicht bekannt
-                                </a>
-                            </dd>
-                        {% endif %}
-                    </dl>
-                </div>
-            </div>
+            <dl class="mb-0">
+                <dt>Treffpunkt</dt>
+                {% if currentRide.location and currentRide.latitude and currentRide.longitude %}
+                    <dd>{{ currentRide.location }}</dd>
+                {% else %}
+                    <dd>
+                        <a href="{{ object_path(currentRide, 'caldera_criticalmass_ride_edit') }}">
+                            noch nicht bekannt
+                        </a>
+                    </dd>
+                {% endif %}
+            </dl>
         {% else %}
-            <div class="row">
-                <div class="col-12">
-                    <div class="text-center">
-                        Über eine Radtour ist momentan nichts bekannt.
-                    </div>
-                </div>
-            </div>
+            <p class="mb-0 text-muted">
+                Über eine kommende Radtour ist momentan nichts bekannt.
+            </p>
         {% endif %}
+    </div>
 
-        <div class="row mt-4">
-            <div class="col-12">
-                <div class="text-center">
-                    <a href="{{ object_path(city, 'caldera_criticalmass_city_listrides') }}" class="btn btn-primary">
-                        <i class="far fa-list"></i>
-                        weitere Touren anzeigen
-                    </a>
-                </div>
-            </div>
-        </div>
+    <div class="card-footer bg-transparent border-0 pt-0">
+        <a href="{{ object_path(city, 'caldera_criticalmass_city_listrides') }}"
+           class="btn btn-primary w-100">
+            <i class="far fa-list"></i>
+            weitere Touren anzeigen
+        </a>
     </div>
 </div>

@@ -58,23 +58,24 @@
 
     <div class="row">
         <div class="col-12 col-md-4">
-            <div class="card mb-3">
-                <div class="card-header">
-                    Current Streak
+            <div class="card mb-3 shadow-sm">
+                <div class="card-header bg-body-tertiary py-2">
+                    <h6 class="mb-0 fw-semibold">
+                        🔥 Current Streak
+                    </h6>
                 </div>
+
                 <div class="card-body text-center">
                     {% if currentStreak.rideList|length > 0 %}
-                        <p>
+                        <p class="mb-1 text-muted">
                             {{ currentStreak.startDateTime|date('d.m.Y') }} bis heute
                         </p>
 
-                        <p>
-                            <strong>
-                                {{ currentStreak.rideList|length }} Touren
-                            </strong>
+                        <p class="mb-0 fs-4 fw-semibold">
+                            {{ currentStreak.rideList|length }} Touren
                         </p>
                     {% else %}
-                        <p>
+                        <p class="mb-0 text-muted">
                             Schade: Du hast in der jüngeren Vergangenheit an keinen Touren teilgenommen.
                         </p>
                     {% endif %}
@@ -83,29 +84,30 @@
         </div>
 
         <div class="col-12 col-md-4">
-            <div class="card mb-3">
-                <div class="card-header">
-                    Gesamtzahl
+            <div class="card mb-3 shadow-sm">
+                <div class="card-header bg-body-tertiary py-2">
+                    <h6 class="mb-0 fw-semibold">
+                        📊 Gesamtzahl
+                    </h6>
                 </div>
+
                 <div class="card-body text-center">
                     {% set firstRide = participationYesList|last %}
 
                     {% if firstRide %}
-                        <p>
-                            seit {{ participationYesList|last.ride.dateTime|date('d.m.Y') }} hast du an
+                        <p class="mb-1 text-muted">
+                            seit {{ participationYesList|last.ride.dateTime|date('d.m.Y') }}
                         </p>
 
-                        <p>
-                            <strong>
-                                {{ participationYesList|length }} Touren
-                            </strong>
+                        <p class="mb-1 fs-4 fw-semibold">
+                            {{ participationYesList|length }} Touren
                         </p>
 
-                        <p>
+                        <p class="mb-0 text-muted">
                             teilgenommen. Super!
                         </p>
                     {% else %}
-                        <p>
+                        <p class="mb-0 text-muted">
                             Schade, du hast bislang an keinen Touren teilgenommen.
                         </p>
                     {% endif %}
@@ -114,24 +116,25 @@
         </div>
 
         <div class="col-12 col-md-4">
-            <div class="card mb-3">
-                <div class="card-header">
-                    Longest Streak
+            <div class="card mb-3 shadow-sm">
+                <div class="card-header bg-body-tertiary py-2">
+                    <h6 class="mb-0 fw-semibold">
+                        🏆 Longest Streak
+                    </h6>
                 </div>
+
                 <div class="card-body text-center">
                     {% if longestStreak %}
-                        <p>
+                        <p class="mb-1 text-muted">
                             {{ longestStreak.startDateTime|date('d.m.Y') }}
                             bis {{ longestStreak.endDateTime|date('d.m.Y') }}
                         </p>
 
-                        <p>
-                            <strong>
-                                {{ longestStreak.rideList|length }} Touren
-                            </strong>
+                        <p class="mb-0 fs-4 fw-semibold">
+                            {{ longestStreak.rideList|length }} Touren
                         </p>
                     {% else %}
-                        <p>
+                        <p class="mb-0 text-muted">
                             Schade, du hast bislang an keinen Touren teilgenommen.
                         </p>
                     {% endif %}

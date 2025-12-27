@@ -62,16 +62,17 @@
 
             <div class="col-12 col-md-4 mt-4 mt-md-0">
                 {% if rides|length > 0 %}
-                    <div class="card mb-3">
-                        <div class="card-header">
-                            <h3 class="card-title mb-0">
-                                Touren von diesem Treffpunkt
-                            </h3>
+                    <div class="card mb-3 shadow-sm">
+                        <div class="card-header bg-body-tertiary py-2">
+                            <h6 class="mb-0 fw-semibold">
+                                📍 Touren von diesem Treffpunkt
+                            </h6>
                         </div>
+
                         <div class="card-body">
-                            <ul class="mb-0">
+                            <ul class="list-unstyled mb-0">
                                 {% for ride in rides %}
-                                    <li>
+                                    <li class="mb-1">
                                         <a href="{{ object_path(ride) }}">
                                             {{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}
                                         </a>
@@ -82,16 +83,17 @@
                     </div>
                 {% endif %}
 
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title mb-0">
-                            Andere Treffpunkte dieser Stadt
-                        </h3>
+                <div class="card mb-3 shadow-sm">
+                    <div class="card-header bg-body-tertiary py-2">
+                        <h6 class="mb-0 fw-semibold">
+                            📍 Andere Treffpunkte dieser Stadt
+                        </h6>
                     </div>
+
                     <div class="card-body">
-                        <ul class="mb-0">
+                        <ul class="list-unstyled mb-0">
                             {% for location in locations %}
-                                <li>
+                                <li class="mb-1">
                                     <a href="{{ object_path(location) }}">
                                         {{ location.title }}
                                     </a>

@@ -1,14 +1,15 @@
 {% if locations|length > 0 %}
-    <div class="card mb-3">
-        <div class="card-header">
-            <h3 class="card-title mb-0">
-                Treffpunkte
-            </h3>
+    <div class="card mb-3 shadow-sm">
+        <div class="card-header bg-body-tertiary py-2">
+            <h6 class="mb-0 fw-semibold">
+                📍 Treffpunkte
+            </h6>
         </div>
+
         <div class="card-body">
-            <ul class="mb-0">
+            <ul class="list-unstyled mb-0">
                 {% for location in locations %}
-                    <li>
+                    <li class="mb-1">
                         <a href="{{ object_path(location) }}">
                             {{ location.title }}
                         </a>

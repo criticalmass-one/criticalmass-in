@@ -39,14 +39,15 @@
 
         <div class="row">
             <div class="col-md-6 offset-md-3">
-
-                <div class="card">
-                    <div class="card-header">
-                        Dein Benutzername
+                <div class="card mb-3 shadow-sm">
+                    <div class="card-header bg-body-tertiary py-2">
+                        <h6 class="mb-0 fw-semibold">
+                            ✏️ Dein Benutzername
+                        </h6>
                     </div>
 
                     <div class="card-body">
-                        <p>
+                        <p class="text-muted">
                             Dein Benutzername wird öffentlich angezeigt &mdash; außerdem brauchst du ihn zum Einloggen,
                             wenn du dich nicht über ein soziales Netzwerk anmeldest.
                         </p>
@@ -59,13 +60,13 @@
 
                         <div class="mb-3">
                             <label class="form-label">
-                                Benutzername:
+                                Benutzername
                             </label>
+
                             {{ form_widget(usernameForm.username, { 'attr' : { 'class': 'form-control' } }) }}
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 

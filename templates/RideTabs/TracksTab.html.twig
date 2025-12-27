@@ -123,76 +123,67 @@
         </div>
 
         <div class="col-md-3">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title h5 mb-0">Timelapse</h3>
+            <div class="card mb-3 shadow-sm">
+                <div class="card-header bg-body-tertiary py-2">
+                    <h6 class="mb-0 fw-semibold">
+                        🎞️ Timelapse
+                    </h6>
                 </div>
+
                 <div class="card-body">
                     <div id="timelapse-control" style="display: none;">
                         <div class="row">
                             <div class="col-md-6">
-                                <dl>
-                                    <dt>Uhrzeit:</dt>
-                                    <dd>
+                                <dl class="mb-2">
+                                    <dt>Uhrzeit</dt>
+                                    <dd class="mb-0">
                                         <span id="timelapse-time-clock">{{ ride.dateTime.format('H:i') }}</span> Uhr
                                     </dd>
                                 </dl>
                             </div>
 
                             <div class="col-md-6">
-                                <dl>
-                                    <dt>Verstrichene Zeit:</dt>
-                                    <dd><span id="timelapse-time-elapsed">0</span> Minuten</dd>
+                                <dl class="mb-2">
+                                    <dt>Verstrichene Zeit</dt>
+                                    <dd class="mb-0">
+                                        <span id="timelapse-time-elapsed">0</span> Minuten
+                                    </dd>
                                 </dl>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="text-center">
-                                    <div class="btn-group" id="control-buttons" role="group" aria-label="Timelapse controls">
-                                        <button type="button" id="step-backward-button" class="btn btn-outline-secondary">
-                                            <i class="far fa-backward"></i>
-                                        </button>
-                                        <button type="button" id="pause-button" class="btn btn-outline-secondary">
-                                            <i class="far fa-pause"></i>
-                                        </button>
-                                        <button type="button" id="stop-button" class="btn btn-outline-secondary">
-                                            <i class="far fa-stop"></i>
-                                        </button>
-                                        <button type="button" id="play-button" class="btn btn-outline-secondary">
-                                            <i class="far fa-play"></i>
-                                        </button>
-                                        <button type="button" id="step-forward-button" class="btn btn-outline-secondary">
-                                            <i class="far fa-forward"></i>
-                                        </button>
-                                    </div>
-                                </div>
+                        <div class="d-flex justify-content-center my-3">
+                            <div class="btn-group" id="control-buttons" role="group" aria-label="Timelapse controls">
+                                <button type="button" id="step-backward-button" class="btn btn-outline-secondary">
+                                    <i class="far fa-backward"></i>
+                                </button>
+                                <button type="button" id="pause-button" class="btn btn-outline-secondary">
+                                    <i class="far fa-pause"></i>
+                                </button>
+                                <button type="button" id="stop-button" class="btn btn-outline-secondary">
+                                    <i class="far fa-stop"></i>
+                                </button>
+                                <button type="button" id="play-button" class="btn btn-outline-secondary">
+                                    <i class="far fa-play"></i>
+                                </button>
+                                <button type="button" id="step-forward-button" class="btn btn-outline-secondary">
+                                    <i class="far fa-forward"></i>
+                                </button>
                             </div>
                         </div>
 
-                        <div class="row margin-top-medium">
-                            <div class="col-md-12">
-                                Geschwindigkeit:
+                        <div class="mb-3">
+                            <div class="form-label mb-1">
+                                Geschwindigkeit
                             </div>
+                            <input id="speed-slider-input" type="text" class="w-100"/>
                         </div>
 
-                        <div class="row margin-top-medium">
-                            <div class="col-md-12">
-                                <input id="speed-slider-input" type="text" style="width: 100%;"/>
+                        <div class="mb-0">
+                            <div class="form-label mb-1">
+                                Zeitpunkt
                             </div>
-                        </div>
-
-                        <div class="row margin-top-medium">
-                            <div class="col-md-12">
-                                Zeitpunkt:
-                            </div>
-                        </div>
-
-                        <div class="row margin-top-medium">
-                            <div class="col-md-12">
-                                <input id="time-slider-input" type="text" style="width: 100%;"/>
-                            </div>
+                            <input id="time-slider-input" type="text" class="w-100"/>
                         </div>
                     </div>
 
@@ -204,16 +195,18 @@
                                     Timelapse starten
                                 </button>
                             {% else %}
-                                Die Timelapse-Funktion funktioniert nur, wenn vorher mindestens ein GPX-Track hinzugefügt wurde.
+                                <p class="mb-0 text-muted">
+                                    Die Timelapse-Funktion funktioniert nur, wenn vorher mindestens ein GPX-Track hinzugefügt wurde.
+                                </p>
                             {% endif %}
                         </div>
                     </div>
 
                     <div id="timelapse-loader" style="display: none;">
-                        <div class="text-center">
+                        <p class="text-center mb-0 text-muted">
                             Lade Track <span id="timelapse-track-number">0</span> von
                             <span id="timelapse-track-total">0</span>
-                        </div>
+                        </p>
                     </div>
                 </div>
             </div>

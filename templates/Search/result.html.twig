@@ -13,14 +13,19 @@
         <div class="row">
             <div class="col-md-3">
                 <form action="{{ path('caldera_criticalmass_search_query') }}" method="get">
-                    <div class="card">
-                        <div class="card-header">
-                            Suche
+                    <div class="card mb-3 shadow-sm">
+                        <div class="card-header bg-body-tertiary py-2">
+                            <h6 class="mb-0 fw-semibold">
+                                🔍 Suche
+                            </h6>
                         </div>
 
                         <div class="card-body">
                             <div class="mb-3">
-                                <label for="query-input" class="form-label">Deine Suchanfrage</label>
+                                <label for="query-input" class="form-label">
+                                    Deine Suchanfrage
+                                </label>
+
                                 <input type="text"
                                        class="form-control"
                                        name="query"
@@ -28,8 +33,10 @@
                                        id="query-input"
                                        placeholder="Deine Suchanfrage" />
                             </div>
+                        </div>
 
-                            <button type="submit" class="btn btn-success float-end mt-2">
+                        <div class="card-footer bg-transparent border-0 pt-0">
+                            <button type="submit" class="btn btn-success w-100">
                                 Finden
                             </button>
                         </div>

@@ -36,27 +36,30 @@
 
         {{ form_start(form) }}
 
-        <div class="row">
+        <div class="row g-4">
             <div class="col-md-5 offset-md-1">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        Alte Uhrzeit
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header bg-body-tertiary py-2">
+                        <h6 class="mb-0 fw-semibold">
+                            🕰️ Alte Uhrzeit
+                        </h6>
                     </div>
+
                     <div class="card-body">
                         <div class="mb-3">
-                            <label class="form-label">Datum:</label>
+                            <label class="form-label">Datum</label>
                             <input class="form-control" type="text" disabled="disabled"
                                    value="{{ track.startDate.format('d.m.Y') }}"/>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Uhrzeit:</label>
+                            <label class="form-label">Uhrzeit</label>
                             <input class="form-control" type="text" disabled="disabled"
                                    value="{{ track.startDate.format('H:i') }}"/>
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Zeitzone:</label>
+                        <div class="mb-0">
+                            <label class="form-label">Zeitzone</label>
                             <input class="form-control" type="text" disabled="disabled"
                                    value="{{ track.ride.city.timezone }}"/>
                         </div>
@@ -65,14 +68,21 @@
             </div>
 
             <div class="col-md-5">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        Neue Uhrzeit
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header bg-body-tertiary py-2">
+                        <h6 class="mb-0 fw-semibold">
+                            ⏱️ Neue Uhrzeit
+                        </h6>
                     </div>
+
                     <div class="card-body">
-                        <div class="mb-3{% if form_errors(form.startDate) %} has-error has-feedback{% endif %}">
-                            <label class="form-label">Datum:</label>
-                            {{ form_widget(form.startDate, { 'attr' : { 'class': 'form-control'} }) }}
+                        <div class="mb-3">
+                            <label class="form-label">Datum</label>
+                            {{ form_widget(form.startDate, {
+                                'attr' : {
+                                    'class': 'form-control' ~ (form_errors(form.startDate) ? ' is-invalid' : '')
+                                }
+                            }) }}
 
                             {% if form_errors(form.startDate) %}
                                 <div class="invalid-feedback d-block">
@@ -81,9 +91,13 @@
                             {% endif %}
                         </div>
 
-                        <div class="mb-3{% if form_errors(form.startTime) %} has-error has-feedback{% endif %}">
-                            <label class="form-label">Uhrzeit:</label>
-                            {{ form_widget(form.startTime, { 'attr' : { 'class': 'form-control'} }) }}
+                        <div class="mb-3">
+                            <label class="form-label">Uhrzeit</label>
+                            {{ form_widget(form.startTime, {
+                                'attr' : {
+                                    'class': 'form-control' ~ (form_errors(form.startTime) ? ' is-invalid' : '')
+                                }
+                            }) }}
 
                             {% if form_errors(form.startTime) %}
                                 <div class="invalid-feedback d-block">
@@ -92,8 +106,8 @@
                             {% endif %}
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Zeitzone:</label>
+                        <div class="mb-0">
+                            <label class="form-label">Zeitzone</label>
                             <input class="form-control" type="text" disabled="disabled"
                                    value="{{ track.ride.city.timezone }}"/>
                         </div>

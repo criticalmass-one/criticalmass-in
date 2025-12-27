@@ -1,17 +1,20 @@
-<div class="card margin-top-medium">
-    <div class="card-header">
-        <h3 class="card-title mb-0">
-            Detaildaten
-        </h3>
+<div class="card mb-3 shadow-sm">
+    <div class="card-header bg-body-tertiary py-2">
+        <h6 class="mb-0 fw-semibold">
+            📷 Detaildaten
+        </h6>
     </div>
+
     <div class="card-body">
-        <dl>
+        <dl class="mb-0">
             <dt>Fotografïn</dt>
             <dd>{{ photo.user.username }}</dd>
 
             {% if photo.exifCreationDate %}
                 <dt>Aufnahmedatum</dt>
-                <dd>{{ photo.exifCreationDate|date('d.m.y H:i:s', photo.ride.city.timezone) }} Uhr</dd>
+                <dd>
+                    {{ photo.exifCreationDate|date('d.m.y H:i:s', photo.ride.city.timezone) }} Uhr
+                </dd>
             {% endif %}
 
             {% if photo.location %}
@@ -22,10 +25,8 @@
             {% if photo.hasCoordinates() %}
                 <dt>Koordinaten</dt>
                 <dd>
-                    <a
-                            href="https://www.openstreetmap.org/#map=15/{{ photo.latitude }}/{{ photo.longitude }}"
-                            target="_blank"
-                    >
+                    <a href="https://www.openstreetmap.org/#map=15/{{ photo.latitude }}/{{ photo.longitude }}"
+                       target="_blank" rel="noopener">
                         {{ photo.latitude }}, {{ photo.longitude }}
                     </a>
                 </dd>
