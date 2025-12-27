@@ -10,34 +10,22 @@
 
 {% block title %}{{ title }}{% endblock %}
 
-{% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
+{% import '_macros/breadcrumb.html.twig' as bc %}
 
-    <li>
-        <a href="{{ object_path(city) }}">
-            {{ city.city }}
-        </a>
-    </li>
-
-    {% if ride %}
-        <li>
-            <a href="{{ object_path(ride) }}">
-                {{ ride.title }}
-            </a>
-        </li>
-
-        <li class="active">
-            Tour editieren
-        </li>
-    {% else %}
-        <li class="active">
-            Tour hinzufügen
-        </li>
-    {% endif %}
+{% block breadcrumbs %}
+    {{ bc.render(
+        [
+            { label: 'Städteliste', url: path('caldera_criticalmass_city_list') },
+            { label: city.city, url: object_path(city) },
+            { label: ride.title, url: object_path(ride) },
+            { label: 'Tour editieren' },
+            { label: 'Tour hinzufügen' },
+        ],
+        {
+            homeLabel: 'Critical Mass',
+            homeUrl: path('caldera_criticalmass_frontpage')
+        }
+    ) }}
 {% endblock %}
 
 {% block content %}

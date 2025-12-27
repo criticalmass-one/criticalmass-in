@@ -2,22 +2,20 @@
 
 {% block title %}Zeit anpassen{% endblock %}
 
-{% block breadcrumb %}
-    <li>
-        <a href="{{ path('criticalmass_user_usermanagement') }}">
-            Dein Benutzerkonto
-        </a>
-    </li>
+{% import '_macros/breadcrumb.html.twig' as bc %}
 
-    <li>
-        <a href="{{ path('caldera_criticalmass_track_list') }}">
-            Deine Tracks
-        </a>
-    </li>
-
-    <li class="active">
-        Zeit anpassen
-    </li>
+{% block breadcrumbs %}
+    {{ bc.render(
+        [
+            { label: 'Dein Benutzerkonto', url: path('criticalmass_user_usermanagement') },
+            { label: 'Deine Tracks', url: path('caldera_criticalmass_track_list') },
+            { label: 'Zeit anpassen' },
+        ],
+        {
+            homeLabel: 'Critical Mass',
+            homeUrl: path('caldera_criticalmass_frontpage')
+        }
+    ) }}
 {% endblock %}
 
 {% block content %}

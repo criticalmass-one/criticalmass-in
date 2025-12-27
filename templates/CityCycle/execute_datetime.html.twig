@@ -4,22 +4,20 @@
 
 {% form_theme form 'Form/theme.html.twig' %}
 
-{% block breadcrumb %}
-    <li>
-        <a href="{{ object_path(cityCycle.city) }}">
-            {{ cityCycle.city.city }}
-        </a>
-    </li>
+{% import '_macros/breadcrumb.html.twig' as bc %}
 
-    <li>
-        <a href="{{ object_path(cityCycle.city, 'caldera_criticalmass_citycycle_list') }}">
-            Turnusliste
-        </a>
-    </li>
-
-    <li class="active">
-        Turnus auslösen
-    </li>
+{% block breadcrumbs %}
+    {{ bc.render(
+        [
+            { label: cityCycle.city.city, url: object_path(cityCycle.city) },
+            { label: 'Turnusliste', url: object_path(cityCycle.city, 'caldera_criticalmass_citycycle_list') },
+            { label: 'Turnus auslösen' },
+        ],
+        {
+            homeLabel: 'Critical Mass',
+            homeUrl: path('caldera_criticalmass_frontpage')
+        }
+    ) }}
 {% endblock %}
 
 {% block content %}

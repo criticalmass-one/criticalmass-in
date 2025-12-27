@@ -2,16 +2,19 @@
 
 {% block title %}Critical Mass im {{ startDateTime|format_date('MMMM YYYY') }}{% endblock %}
 
-{% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_timeline_index') }}">
-            Timeline
-        </a>
-    </li>
+{% import '_macros/breadcrumb.html.twig' as bc %}
 
-    <li class="active">
-        {{ startDateTime|format_date('MMMM YYYY') }}
-    </li>
+{% block breadcrumbs %}
+    {{ bc.render(
+        [
+            { label: 'Timeline', url: path('caldera_criticalmass_timeline_index') },
+            { label: startDateTime|format_date('MMMM YYYY') },
+        ],
+        {
+            homeLabel: 'Critical Mass',
+            homeUrl: path('caldera_criticalmass_frontpage')
+        }
+    ) }}
 {% endblock %}
 
 {% block content %}

@@ -1,0 +1,29 @@
+{% macro render(items, options) %}
+    {% set homeLabel = options.homeLabel|default('Critical Mass') %}
+    {% set homeUrl   = options.homeUrl|default('/') %}
+    {% set containerClass = options.containerClass|default('container pt-4') %}
+
+    {% if items|length %}
+        <div class="{{ containerClass }}">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{{ homeUrl }}">{{ homeLabel }}</a>
+                    </li>
+
+                    {% for item in items %}
+                        {% if item.active|default(false) or loop.last %}
+                            <li class="breadcrumb-item active" aria-current="page">
+                                {{ item.label }}
+                            </li>
+                        {% else %}
+                            <li class="breadcrumb-item">
+                                <a href="{{ item.url }}">{{ item.label }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ol>
+            </nav>
+        </div>
+    {% endif %}
+{% endmacro %}

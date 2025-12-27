@@ -1,47 +1,23 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
-{% block breadcrumb %}
-    {% if profileAbleType == 'city' %}
-        <li>
-            <a href="{{ path('caldera_criticalmass_city_list') }}">
-                Städteliste
-            </a>
-        </li>
+{% import '_macros/breadcrumb.html.twig' as bc %}
 
-        <li>
-            <a href="{{ object_path(profileAble) }}">
-                {{ profileAble.city }}
-            </a>
-        </li>
-
-        <li class="active">
-            Soziale Netzwerke
-        </li>
-    {% endif %}
-
-    {% if profileAbleType == 'ride' %}
-        <li>
-            <a href="{{ path('caldera_criticalmass_city_list') }}">
-                Städteliste
-            </a>
-        </li>
-
-        <li>
-            <a href="{{ object_path(profileAble.city) }}">
-                {{ profileAble.city.city }}
-            </a>
-        </li>
-
-        <li>
-            <a href="{{ object_path(profileAble) }}">
-                {{ profileAble.title }}
-            </a>
-        </li>
-
-        <li class="active">
-            Soziale Netzwerke
-        </li>
-    {% endif %}
+{% block breadcrumbs %}
+    {{ bc.render(
+        [
+            { label: 'Städteliste', url: path('caldera_criticalmass_city_list') },
+            { label: profileAble.city, url: object_path(profileAble) },
+            { label: 'Soziale Netzwerke' },
+            { label: 'Städteliste', url: path('caldera_criticalmass_city_list') },
+            { label: profileAble.city.city, url: object_path(profileAble.city) },
+            { label: profileAble.title, url: object_path(profileAble) },
+            { label: 'Soziale Netzwerke' },
+        ],
+        {
+            homeLabel: 'Critical Mass',
+            homeUrl: path('caldera_criticalmass_frontpage')
+        }
+    ) }}
 {% endblock %}
 
 {% block content %}

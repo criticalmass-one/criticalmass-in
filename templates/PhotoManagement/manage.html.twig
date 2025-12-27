@@ -2,20 +2,20 @@
 
 {% block title %}Fotos bearbeiten{% endblock %}
 
-{% block breadcrumb %}
-    <li>
-        <a href="{{ object_path(ride.city) }}">
-            {{ ride.city.title }}
-        </a>
-    </li>
-    <li>
-        <a href="{{ object_path(ride) }}">
-            {{ ride.title }}
-        </a>
-    </li>
-    <li class="active">
-        Fotos bearbeiten
-    </li>
+{% import '_macros/breadcrumb.html.twig' as bc %}
+
+{% block breadcrumbs %}
+    {{ bc.render(
+        [
+            { label: ride.city.title, url: object_path(ride.city) },
+            { label: ride.title, url: object_path(ride) },
+            { label: 'Fotos bearbeiten' },
+        ],
+        {
+            homeLabel: 'Critical Mass',
+            homeUrl: path('caldera_criticalmass_frontpage')
+        }
+    ) }}
 {% endblock %}
 
 {% block content %}

@@ -2,23 +2,22 @@
 
 {% block title %}Neues Thema beginnen{% endblock %}
 
-{% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_board_overview') }}">
-            Diskussionen
-        </a>
-    </li>
+{% import '_macros/breadcrumb.html.twig' as bc %}
 
-    <li>
-        <a href="{{ object_path(board) }}">
-            {{ board.title }}
-        </a>
-    </li>
-
-    <li>
-        neues Thema beginnen
-    </li>
+{% block breadcrumbs %}
+    {{ bc.render(
+        [
+            { label: 'Diskussionen', url: path('caldera_criticalmass_board_overview') },
+            { label: board.title, url: object_path(board) },
+            { label: 'neues Thema beginnen', active: true }
+        ],
+        {
+            homeLabel: 'Critical Mass',
+            homeUrl: path('caldera_criticalmass_frontpage')
+        }
+    ) }}
 {% endblock %}
+
 
 {% block content %}
     {{ form_errors(form) }}

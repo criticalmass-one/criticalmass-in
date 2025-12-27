@@ -2,16 +2,19 @@
 
 {% block title %}Deine Touren{% endblock %}
 
-{% block breadcrumb %}
-    <li>
-        <a href="{{ path('criticalmass_user_usermanagement') }}">
-            Dein Benutzerkonto
-        </a>
-    </li>
+{% import '_macros/breadcrumb.html.twig' as bc %}
 
-    <li class="active">
-        Deine Touren
-    </li>
+{% block breadcrumbs %}
+    {{ bc.render(
+        [
+            { label: 'Dein Benutzerkonto', url: path('criticalmass_user_usermanagement') },
+            { label: 'Deine Touren' },
+        ],
+        {
+            homeLabel: 'Critical Mass',
+            homeUrl: path('caldera_criticalmass_frontpage')
+        }
+    ) }}
 {% endblock %}
 
 {% block content %}

@@ -2,16 +2,19 @@
 
 {% block title %}Critical-Mass-Teilnehmerzahlen im {{ dateTime|format_date('MMMM YYYY') }}{% endblock %}
 
-{% block breadcrumb %}
-    <li>
-        Statistik
-    </li>
+{% import '_macros/breadcrumb.html.twig' as bc %}
 
-    <li>
-        <a href="{{ path('caldera_criticalmass_statistic_ride_month', { year: dateTime|date('Y'), month: dateTime|date('m') }) }}">
-            Critical-Mass-Teilnehmerzahlen im {{ dateTime|format_date('MMMM YYYY') }}
-        </a>
-    </li>
+{% block breadcrumbs %}
+    {{ bc.render(
+        [
+            { label: 'Statistik' },
+            { label: 'Critical-Mass-Teilnehmerzahlen im {{ dateTime|format_date(\'MMMM YYYY\') }}', url: path('caldera_criticalmass_statistic_ride_month', { year: dateTime|date('Y'), month: dateTime|date('m') }) },
+        ],
+        {
+            homeLabel: 'Critical Mass',
+            homeUrl: path('caldera_criticalmass_frontpage')
+        }
+    ) }}
 {% endblock %}
 
 {% block content %}

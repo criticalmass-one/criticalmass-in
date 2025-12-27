@@ -2,22 +2,20 @@
 
 {% block title %}Automatisch generierte Touren von {{ city.city }} anzeigen{% endblock %}
 
-{% block breadcrumb %}
-    <li>
-        <a href="{{ object_path(city) }}">
-            {{ city.city }}
-        </a>
-    </li>
+{% import '_macros/breadcrumb.html.twig' as bc %}
 
-    <li>
-        <a href="{{ object_path(cityCycle.city, 'caldera_criticalmass_citycycle_list') }}">
-            Turnusliste
-        </a>
-    </li>
-
-    <li class="active">
-        Generierte Touren anzeigen
-    </li>
+{% block breadcrumbs %}
+    {{ bc.render(
+        [
+            { label: city.city, url: object_path(city) },
+            { label: 'Turnusliste', url: object_path(cityCycle.city, 'caldera_criticalmass_citycycle_list') },
+            { label: 'Generierte Touren anzeigen' },
+        ],
+        {
+            homeLabel: 'Critical Mass',
+            homeUrl: path('caldera_criticalmass_frontpage')
+        }
+    ) }}
 {% endblock %}
     
 {% block content %}

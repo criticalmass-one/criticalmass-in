@@ -5,25 +5,21 @@
 
 {% block title %}Foto platzieren{% endblock %}
 
-{% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
-    <li>
-        <a href="{{ object_path(photo.ride.city) }}">
-            {{ photo.ride.city.title }}
-        </a>
-    </li>
-    <li>
-        <a href="{{ object_path(photo.ride) }}">
-            {{ photo.ride.title }}
-        </a>
-    </li>
-    <li class="active">
-        Foto platzieren
-    </li>
+{% import '_macros/breadcrumb.html.twig' as bc %}
+
+{% block breadcrumbs %}
+    {{ bc.render(
+        [
+            { label: 'Städteliste', url: path('caldera_criticalmass_city_list') },
+            { label: photo.ride.city.title, url: object_path(photo.ride.city) },
+            { label: photo.ride.title, url: object_path(photo.ride) },
+            { label: 'Foto platzieren' },
+        ],
+        {
+            homeLabel: 'Critical Mass',
+            homeUrl: path('caldera_criticalmass_frontpage')
+        }
+    ) }}
 {% endblock %}
 
 {% block content %}

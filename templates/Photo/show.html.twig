@@ -3,34 +3,22 @@
 {% set previous_photo = previous_entity(photo) %}
 {% set next_photo = next_entity(photo) %}
 
-{% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
+{% import '_macros/breadcrumb.html.twig' as bc %}
 
-    <li>
-        <a href="{{ object_path(city) }}">
-            {{ city.city }}
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ object_path(ride) }}">
-            {{ ride.title }}
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ object_path(ride, 'caldera_criticalmass_photo_ride_list') }}">
-            Fotos
-        </a>
-    </li>
-
-    <li class="active">
-        Foto {{ photo.id }} aus {{ city.city }}
-    </li>
+{% block breadcrumbs %}
+    {{ bc.render(
+        [
+            { label: 'Städteliste', url: path('caldera_criticalmass_city_list') },
+            { label: city.city, url: object_path(city) },
+            { label: ride.title, url: object_path(ride) },
+            { label: 'Fotos', url: object_path(ride, 'caldera_criticalmass_photo_ride_list') },
+            { label: 'Foto {{ photo.id }} aus {{ city.city }}' },
+        ],
+        {
+            homeLabel: 'Critical Mass',
+            homeUrl: path('caldera_criticalmass_frontpage')
+        }
+    ) }}
 {% endblock %}
 
 {% block navigation %}

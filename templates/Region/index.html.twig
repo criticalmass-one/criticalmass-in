@@ -2,43 +2,22 @@
 
 {% block title %}Critical Mass in {{ region.name }}{% endblock %}
 
-{% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_region_world') }}">
-            Verzeichnis
-        </a>
-    </li>
+{% import '_macros/breadcrumb.html.twig' as bc %}
 
-    {% if (region.parent and region.parent.parent and region.parent.parent.parent and not region.parent.parent.parent.isWorld()) %}
-        <li>
-            <a href="{{ object_path(region.parent.parent.parent) }}">
-                {{ region.parent.parent.parent.name }}
-            </a>
-        </li>
-    {% endif %}
-
-    {% if (region.parent and region.parent.parent and not region.parent.parent.isWorld()) %}
-        <li>
-            <a href="{{ object_path(region.parent.parent) }}">
-                {{ region.parent.parent.name }}
-            </a>
-        </li>
-    {% endif %}
-
-
-    {% if (region.parent and not region.parent.isWorld()) %}
-        <li>
-            <a href="{{ object_path(region.parent) }}">
-                {{ region.parent.name }}
-            </a>
-        </li>
-    {% endif %}
-
-    <li>
-        <a href="{{ object_path(region) }}">
-            {{ region.name }}
-        </a>
-    </li>
+{% block breadcrumbs %}
+    {{ bc.render(
+        [
+            { label: 'Verzeichnis', url: path('caldera_criticalmass_region_world') },
+            { label: region.parent.parent.parent.name, url: object_path(region.parent.parent.parent) },
+            { label: region.parent.parent.name, url: object_path(region.parent.parent) },
+            { label: region.parent.name, url: object_path(region.parent) },
+            { label: region.name, url: object_path(region) },
+        ],
+        {
+            homeLabel: 'Critical Mass',
+            homeUrl: path('caldera_criticalmass_frontpage')
+        }
+    ) }}
 {% endblock %}
 
 {% block content %}

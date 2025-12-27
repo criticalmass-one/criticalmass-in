@@ -2,10 +2,18 @@
 
 {% block title %}Top-Ten-Statistiken{% endblock %}
 
-{% block breadcrumb %}
-    <li class="breadcrumb-item active" aria-current="page">
-        Top-Ten-Statistiken
-    </li>
+{% import '_macros/breadcrumb.html.twig' as bc %}
+
+{% block breadcrumbs %}
+    {{ bc.render(
+        [
+            { label: 'Top-Ten-Statistiken' },
+        ],
+        {
+            homeLabel: 'Critical Mass',
+            homeUrl: path('caldera_criticalmass_frontpage')
+        }
+    ) }}
 {% endblock %}
 
 {% block content %}

@@ -1,49 +1,23 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
-{% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
+{% import '_macros/breadcrumb.html.twig' as bc %}
 
-    {% if profileAbleType == 'city' %}
-        <li>
-            <a href="{{ object_path(profileAble) }}">
-                {{ profileAble.city }}
-            </a>
-        </li>
-
-        <li>
-            <a href="{{ object_path(profileAble, 'criticalmass_socialnetwork_city_list') }}">
-                Soziale Netzwerke
-            </a>
-        </li>
-    {% endif %}
-
-    {% if profileAbleType == 'ride' %}
-        <li>
-            <a href="{{ object_path(profileAble.city) }}">
-                {{ profileAble.city.city }}
-            </a>
-        </li>
-
-        <li>
-            <a href="{{ object_path(profileAble) }}">
-                {{ profileAble.title }}
-            </a>
-        </li>
-
-        <li>
-            <a href="{{ object_path(profileAble, 'criticalmass_socialnetwork_ride_list') }}">
-                Soziale Netzwerke
-            </a>
-        </li>
-    {% endif %}
-
-    <li class="active">
-        Soziales Netzwerk editieren
-    </li>
+{% block breadcrumbs %}
+    {{ bc.render(
+        [
+            { label: 'Städteliste', url: path('caldera_criticalmass_city_list') },
+            { label: profileAble.city, url: object_path(profileAble) },
+            { label: 'Soziale Netzwerke', url: object_path(profileAble, 'criticalmass_socialnetwork_city_list') },
+            { label: profileAble.city.city, url: object_path(profileAble.city) },
+            { label: profileAble.title, url: object_path(profileAble) },
+            { label: 'Soziale Netzwerke', url: object_path(profileAble, 'criticalmass_socialnetwork_ride_list') },
+            { label: 'Soziales Netzwerk editieren' },
+        ],
+        {
+            homeLabel: 'Critical Mass',
+            homeUrl: path('caldera_criticalmass_frontpage')
+        }
+    ) }}
 {% endblock %}
 
 {% block content %}

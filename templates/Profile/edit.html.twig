@@ -2,10 +2,18 @@
 
 {% block title %}Handy-Nummer editieren{% endblock %}
 
-{% block breadcrumb %}
-    <li class="active">
-        Handy-Nummer editieren
-    </li>
+{% import '_macros/breadcrumb.html.twig' as bc %}
+
+{% block breadcrumbs %}
+    {{ bc.render(
+        [
+            { label: 'Handy-Nummer editieren' },
+        ],
+        {
+            homeLabel: 'Critical Mass',
+            homeUrl: path('caldera_criticalmass_frontpage')
+        }
+    ) }}
 {% endblock %}
 
 {% block content %}

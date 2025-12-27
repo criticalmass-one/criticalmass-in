@@ -2,10 +2,18 @@
 
 {% block title %}Verbinde dich mit Strava{% endblock %}
 
-{% block breadcrumb %}
-    <li class="active">
-        Tracks importieren
-    </li>
+{% import '_macros/breadcrumb.html.twig' as bc %}
+
+{% block breadcrumbs %}
+    {{ bc.render(
+        [
+            { label: 'Tracks importieren' },
+        ],
+        {
+            homeLabel: 'Critical Mass',
+            homeUrl: path('caldera_criticalmass_frontpage')
+        }
+    ) }}
 {% endblock %}
 
 {% block content %}

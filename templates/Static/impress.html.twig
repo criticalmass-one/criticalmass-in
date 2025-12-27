@@ -2,10 +2,18 @@
 
 {% block title %}Impressum{% endblock %}
 
-{% block breadcrumb %}
-    <li class="active">
-        Impressum
-    </li>
+{% import '_macros/breadcrumb.html.twig' as bc %}
+
+{% block breadcrumbs %}
+    {{ bc.render(
+        [
+            { label: 'Impressum' },
+        ],
+        {
+            homeLabel: 'Critical Mass',
+            homeUrl: path('caldera_criticalmass_frontpage')
+        }
+    ) }}
 {% endblock %}
 
 {% block content %}

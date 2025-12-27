@@ -2,10 +2,18 @@
 
 {% block title %}Deine persönlichen Daten{% endblock %}
 
-{% block breadcrumb %}
-    <li class="active">
-        Deine persönlichen Daten
-    </li>
+{% import '_macros/breadcrumb.html.twig' as bc %}
+
+{% block breadcrumbs %}
+    {{ bc.render(
+        [
+            { label: 'Deine persönlichen Daten' },
+        ],
+        {
+            homeLabel: 'Critical Mass',
+            homeUrl: path('caldera_criticalmass_frontpage')
+        }
+    ) }}
 {% endblock %}
 
 {% block content %}
