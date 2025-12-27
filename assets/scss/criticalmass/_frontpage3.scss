@@ -19,7 +19,7 @@
   }
 }
 
-@media (max-width: $grid-float-breakpoint) {
+@media (max-width: 991.98px) {
   .navbar-wrapper {
     .container {
       width: 100%;
@@ -29,7 +29,7 @@
   }
 }
 
-@media (min-width: $grid-float-breakpoint) {
+@media (min-width: 992px) {
   .navbar-wrapper {
     position: absolute;
     top: 0;

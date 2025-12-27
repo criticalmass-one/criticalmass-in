@@ -4,7 +4,7 @@ body.ride.ride-disabled {
   }
 
   div.container.ride {
-    color: $gray;
+    color: #ccc;
   }
 
   div#map {
@@ -17,7 +17,7 @@ body.ride.ride-disabled {
   &,
   a {
     text-decoration: line-through;
-    color: $gray;
+    color: #ccc;
   }
 }
 
@@ -25,7 +25,7 @@ body.ride.ride-disabled {
   &--disabled {
     h4,
     .ride-title a {
-      color: $gray;
+      color: #ccc;
       text-decoration: line-through;
     }
 

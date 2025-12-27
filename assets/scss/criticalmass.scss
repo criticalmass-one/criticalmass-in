@@ -1,4 +1,4 @@
-@import "bootstrap3";
+@import "bootstrap";
 @import "../../node_modules/leaflet/dist/leaflet.css";
 @import "../../node_modules/leaflet-extra-markers/dist/css/leaflet.extra-markers.min.css";
 @import "criticalmass/criticalmass";
@@ -8,10 +8,11 @@
   text-align: left !important;
 }
 
-.breadcrumb > li + li:before {
-  content: "/\00a0";
-  color: $breadcrumb-color;
+.breadcrumb-item + .breadcrumb-item::before {
+  content: "/";
+  color: var(--bs-breadcrumb-divider-color);
 }
+
 
 input[type="file"] {
   display: inline !important;
