@@ -1,32 +1,28 @@
-<div class="row margin-bottom-medium timeline-item-ride{% if not item.rideEnabled %}--disabled{% endif %}">
+{% set titleHtml %}
+    <div class="d-flex flex-wrap align-items-center gap-2">
+        <span><strong>{{ item.user.username }}</strong> hat eine Tour kommentiert</span>
+    </div>
+{% endset %}
+
+{% set bodyHtml %}
+    <a class="text-decoration-none" href="{{ object_path(item.ride) }}#post-{{ item.post.id }}">
+        <h4 class="h5 mb-2 mt-2">{{ item.rideTitle }}</h4>
+    </a>
+
+    <div class="timeline-card__comment">
+        {{ parse_urls(item.post)|raw }}
+    </div>
+{% endset %}
+
+<div class="row mb-4 timeline-item-ride{% if not item.rideEnabled %}--disabled{% endif %}">
     {{ include('Timeline/_includes/user_column.html.twig') }}
 
     <div class="col-9 col-sm-9 col-md-10 col-lg-10">
-        <div class="row">
-            <div class="col-12">
-                <strong>
-                    {{ item.user.username }}
-                </strong>
-                hat eine Tour kommentiert:
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-12">
-                <a href="{{ object_path(item.ride) }}#post-{{ item.post.id }}">
-                    <h4>
-                        {{ item.rideTitle }}
-                    </h4>
-                </a>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-12">
-                <p>
-                    {{ parse_urls(item.post)|raw }}
-                </p>
-            </div>
-        </div>
+        {{ include('Timeline/_includes/timeline_card.html.twig', {
+            type: 'ride-comment',
+            icon: 'far fa-comment-dots',
+            titleHtml: titleHtml,
+            bodyHtml: bodyHtml
+        }) }}
     </div>
 </div>

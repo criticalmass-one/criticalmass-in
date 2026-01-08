@@ -1,17 +1,21 @@
 <div class="col-3 col-sm-3 col-md-2 col-lg-2 text-center">
     {% if item.user.imageName %}
-        <img class="media-object round-media-object img-fluid"
-             src="{{ vich_uploader_asset(item.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}" />
+        <img
+                class="img-fluid rounded-circle shadow-sm timeline-avatar"
+                alt="{{ item.user.username }}"
+                loading="lazy"
+                src="{{ vich_uploader_asset(item.user, 'imageFile')|imagine_filter('user_profile_photo_small') }}"
+        />
     {% endif %}
 
-    <p class="d-none d-sm-block">
+    <p class="d-none d-sm-block mt-2 mb-1">
         <strong>
             {{ item.user.username }}
         </strong>
     </p>
 
-    <p>
-        <small>
+    <p class="mb-0">
+        <small class="text-body-secondary">
             <time title="{{ item.dateTime|date('d.m.Y H:i') }} Uhr">
                 {{ item.dateTime|time_ago_in_words }}
             </time>

@@ -1,80 +1,67 @@
+{% set titleHtml %}
+    <div class="d-flex flex-wrap align-items-center gap-2">
+        <span><strong>{{ item.user.username }}</strong> hat einen Track hochgeladen</span>
+    </div>
+{% endset %}
+
+{% set bodyHtml %}
+    <a class="text-decoration-none" href="{{ object_path(item.ride) }}">
+        <h4 class="h5 mb-0 mt-2">{{ item.rideTitle }}</h4>
+    </a>
+{% endset %}
+
+{% if item.polyline %}
+    {% set mapHtml %}
+        <div
+                id="map-{{ item.uniqId }}"
+                class="map timeline-item-ride-map rounded-3 overflow-hidden"
+                data-controller="map--map"
+                style="height: 150px;"
+                data-map--map-center-latitude-value="{{ item.ride.latitude }}"
+                data-map--map-center-longitude-value="{{ item.ride.longitude }}"
+                data-map--map-zoom-value="13"
+                data-map--map-lock-map-value="true"
+                data-map--map-polyline-color-value="{{ item.track.user.color }}"
+                data-map--map-polyline-value="{{ item.track.polyline }}"
+                data-map--map-vector-value="false"
+        ></div>
+    {% endset %}
+{% endif %}
+
+{% set footerHtml %}
+    <div class="row g-2">
+        <div class="col-12 col-md-4">
+            <div class="bg-body-tertiary border rounded-3 p-3 h-100">
+                <div class="small text-body-secondary">Datum</div>
+                <div class="fw-semibold">{{ item.ride.dateTime|date('d.m.Y') }}</div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="bg-body-tertiary border rounded-3 p-3 h-100">
+                <div class="small text-body-secondary">Länge</div>
+                <div class="fw-semibold">{{ item.distance|number_format(2, ',', '.') }}&nbsp;km</div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="bg-body-tertiary border rounded-3 p-3 h-100">
+                <div class="small text-body-secondary">Dauer</div>
+                <div class="fw-semibold">{{ human_duration(item.duration) }}</div>
+            </div>
+        </div>
+    </div>
+{% endset %}
+
 <div class="row mb-4 timeline-item-ride{% if not item.rideEnabled %}--disabled{% endif %}">
     {{ include('Timeline/_includes/user_column.html.twig') }}
 
     <div class="col-9 col-md-10">
-        <div class="row">
-            <div class="col-12">
-                <strong>
-                    {{ item.user.username }}
-                </strong>
-                hat einen Track hochgeladen:
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-12">
-                <a href="{{ object_path(item.ride) }}">
-                    <h4>
-                        {{ item.rideTitle }}
-                    </h4>
-                </a>
-            </div>
-        </div>
-
-        {% if item.polyline %}
-            <div class="row">
-                <div class="col-12">
-                    <div
-                            id="map-{{ item.uniqId }}"
-                            class="map timeline-item-ride-map"
-                            data-controller="map--map"
-                            style="height: 150px;"
-                            data-map--map-center-latitude-value="{{ item.ride.latitude }}"
-                            data-map--map-center-longitude-value="{{ item.ride.longitude }}"
-                            data-map--map-zoom-value="13"
-                            data-map--map-lock-map-value="true"
-                            data-map--map-polyline-color-value="{{ item.track.user.color }}"
-                            data-map--map-polyline-value="{{ item.track.polyline }}"
-                            data-map--map-vector-value="false"
-                    >
-                    </div>
-                </div>
-            </div>
-        {% endif %}
-
-        <div class="row">
-            <div class="col-4">
-                <dl>
-                    <dt>
-                        Datum:
-                    </dt>
-                    <dd>
-                        {{ item.ride.dateTime|date('d.m.Y') }}
-                    </dd>
-                </dl>
-            </div>
-
-            <div class="col-4">
-                <dl>
-                    <dt>
-                        Länge:
-                    </dt>
-                    <dd>
-                        {{ item.distance|number_format(2, ',', '.') }}&nbsp;km
-                    </dd>
-                </dl>
-            </div>
-
-            <div class="col-4">
-                <dl>
-                    <dt>
-                        Dauer:
-                    </dt>
-                    <dd>
-                        {{ human_duration(item.duration) }}
-                    </dd>
-                </dl>
-            </div>
-        </div>
+        {{ include('Timeline/_includes/timeline_card.html.twig', {
+            type: 'ride-track',
+            icon: 'far fa-route',
+            titleHtml: titleHtml,
+            bodyHtml: bodyHtml,
+            mediaHtml: mapHtml|default(null),
+            footerHtml: footerHtml
+        }) }}
     </div>
 </div>

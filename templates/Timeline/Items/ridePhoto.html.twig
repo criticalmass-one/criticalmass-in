@@ -1,36 +1,41 @@
-<div class="row margin-bottom-medium timeline-item-ride{% if not item.rideEnabled %}--disabled{% endif %}">
+{% set titleHtml %}
+    <div class="d-flex flex-wrap align-items-center gap-2">
+        <span>
+            <strong>{{ item.user.username }}</strong> hat
+            <a class="link-primary" href="{{ object_path(item.ride, 'caldera_criticalmass_photo_ride_list') }}">{{ item.counter }} Fotos</a>
+            zur Tour
+            <a class="link-primary" href="{{ object_path(item.ride) }}">{{ item.ride.title }}</a>
+            hochgeladen
+        </span>
+    </div>
+{% endset %}
+
+{% set mediaHtml %}
+    <div class="row g-2">
+        {% for previewPhoto in item.previewPhotoList %}
+            <div class="col-12 col-sm-6 col-md-4">
+                <a class="d-block" href="{{ object_path(previewPhoto) }}">
+                    <img
+                            src="{{ vich_uploader_asset(previewPhoto, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"
+                            class="img-fluid rounded-3 border"
+                            loading="lazy"
+                            alt="Foto"
+                    />
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endset %}
+
+<div class="row mb-4 timeline-item-ride{% if not item.rideEnabled %}--disabled{% endif %}">
     {{ include('Timeline/_includes/user_column.html.twig') }}
 
     <div class="col-9 col-sm-9 col-md-10 col-lg-10">
-        <div class="row">
-            <div class="col-12">
-                <strong>
-                    {{ item.user.username }}
-                </strong>
-                hat
-                <a href="{{ object_path(item.ride, 'caldera_criticalmass_photo_ride_list') }}">
-                    {{ item.counter }} Fotos
-                </a> zur Tour
-                <strong class="ride-title">
-                    <a href="{{ object_path(item.ride) }}">
-                        {{ item.ride.title }}
-                    </a>
-                </strong>
-                hochgeladen
-            </div>
-        </div>
-
-        <div class="row">
-            {% for previewPhoto in item.previewPhotoList %}
-                <div class="col-12 col-sm-6 col-md-4">
-                    <a href="{{ object_path(previewPhoto) }}">
-                        <img
-                                src="{{ vich_uploader_asset(previewPhoto, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"
-                                class="img-fluid img-thumbnail"
-                        />
-                    </a>
-                </div>
-            {% endfor %}
-        </div>
+        {{ include('Timeline/_includes/timeline_card.html.twig', {
+            type: 'ride-photo',
+            icon: 'far fa-images',
+            titleHtml: titleHtml,
+            mediaHtml: mediaHtml
+        }) }}
     </div>
 </div>

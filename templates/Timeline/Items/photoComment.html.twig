@@ -1,43 +1,50 @@
-<div class="row margin-bottom-medium">
-    {{ include('Timeline/_includes/user_column.html.twig') }}
+{% set titleHtml %}
+    <div class="d-flex flex-wrap align-items-center gap-2">
+        <span><strong>{{ item.user.username }}</strong> hat {{ item.postList|length }} Fotos kommentiert</span>
+    </div>
+{% endset %}
 
-    <div class="col-9 col-sm-9 col-md-10 col-lg-10">
-        <div class="row">
-            <div class="col-12">
-                <strong>
-                    {{ item.user.username }}
-                </strong>
-                hat {{ item.postList|length }} Fotos kommentiert:
-            </div>
-        </div>
+{% set bodyHtml %}
+    <a class="text-decoration-none" href="{{ object_path(item.ride) }}">
+        <h4 class="h5 mb-0 mt-2">{{ item.ride.title }}</h4>
+    </a>
+{% endset %}
 
-        <div class="row">
-            <div class="col-12">
-                <a href="{{ object_path(item.ride) }}">
-                    <h4>
-                        {{ item.ride.title }}
-                    </h4>
-                </a>
-            </div>
-        </div>
-
+{% set mediaHtml %}
+    <div class="vstack gap-3 mt-1">
         {% for post in item.postList %}
-            <div class="row">
-                <div class="col-md-4">
-                    <a href="{{ object_path(post.photo) }}#post-{{ post.id }}">
+            <div class="row g-3 align-items-start">
+                <div class="col-12 col-md-4">
+                    <a class="d-block" href="{{ object_path(post.photo) }}#post-{{ post.id }}">
                         <img
                                 src="{{ vich_uploader_asset(post.photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"
-                                class="img-fluid img-thumbnail"
+                                class="img-fluid rounded-3 border"
+                                loading="lazy"
+                                alt="Kommentiertes Foto"
                         />
                     </a>
                 </div>
 
-                <div class="col-md-8">
-                    <p>
+                <div class="col-12 col-md-8">
+                    <div class="bg-body-tertiary border rounded-3 p-3">
                         {{ post.message|markdown }}
-                    </p>
+                    </div>
                 </div>
             </div>
         {% endfor %}
+    </div>
+{% endset %}
+
+<div class="row mb-4">
+    {{ include('Timeline/_includes/user_column.html.twig') }}
+
+    <div class="col-9 col-sm-9 col-md-10 col-lg-10">
+        {{ include('Timeline/_includes/timeline_card.html.twig', {
+            type: 'photo-comment',
+            icon: 'far fa-comments',
+            titleHtml: titleHtml,
+            bodyHtml: bodyHtml,
+            mediaHtml: mediaHtml
+        }) }}
     </div>
 </div>

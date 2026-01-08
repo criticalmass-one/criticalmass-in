@@ -1,0 +1,72 @@
+{#
+  Timeline Card (Bootstrap 5)
+
+  Expects variables:
+  - type: string (optional)  -> modifier class suffix
+  - icon: string (optional)  -> FontAwesome classes, e.g. 'far fa-clock'
+  - badge: { text: string, class?: string } (optional) -> e.g. { text: 'Tour', class: 'text-bg-primary' }
+  - titleHtml: string|Markup (optional)
+  - metaHtml: string|Markup (optional)
+  - bodyHtml: string|Markup (optional)
+  - mediaHtml: string|Markup (optional)
+  - footerHtml: string|Markup (optional)
+
+  Layout contract:
+  - left column: user/time include
+  - right column: a card-like container with consistent spacing and typography
+#}
+
+{% set cardClass = cardClass|default('') %}
+{% set type = type|default('') %}
+
+<div class="timeline-card {{ cardClass }}{% if type %} timeline-card--{{ type }}{% endif %}">
+    <div class="d-flex align-items-start gap-3">
+        {% if icon or badge is defined %}
+            <div class="timeline-card__marker flex-shrink-0">
+                {% if icon %}
+                    <span class="timeline-card__icon" aria-hidden="true">
+                        <i class="{{ icon }}"></i>
+                    </span>
+                {% endif %}
+
+                {% if badge is defined and badge and badge.text is defined %}
+                    <span class="badge rounded-pill {{ badge.class|default('text-bg-secondary') }}">
+                        {{ badge.text }}
+                    </span>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <div class="flex-grow-1 min-w-0">
+            {% if titleHtml is defined and titleHtml %}
+                <div class="timeline-card__title">
+                    {{ titleHtml|raw }}
+                </div>
+            {% endif %}
+
+            {% if metaHtml is defined and metaHtml %}
+                <div class="timeline-card__meta text-body-secondary small">
+                    {{ metaHtml|raw }}
+                </div>
+            {% endif %}
+
+            {% if bodyHtml is defined and bodyHtml %}
+                <div class="timeline-card__body mt-2">
+                    {{ bodyHtml|raw }}
+                </div>
+            {% endif %}
+
+            {% if mediaHtml is defined and mediaHtml %}
+                <div class="timeline-card__media mt-3">
+                    {{ mediaHtml|raw }}
+                </div>
+            {% endif %}
+
+            {% if footerHtml is defined and footerHtml %}
+                <div class="timeline-card__footer mt-3">
+                    {{ footerHtml|raw }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

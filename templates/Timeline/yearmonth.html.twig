@@ -35,7 +35,7 @@
         <div>
             {# Tabs-Navigation #}
             {% set navHasActive = false %}
-            <ul class="nav nav-tabs" role="tablist">
+            <ul class="nav nav-tabs timeline-tabs" role="tablist">
                 {% if timelineContentList.standard is defined %}
                     {% set isActive = not navHasActive %}
                     <li class="nav-item" role="presentation">
@@ -133,7 +133,7 @@
             </ul>
 
             {# Tab-Inhalte #}
-            <div class="tab-content margin-top-medium">
+            <div class="tab-content timeline-pane mt-3">
                 {% set hasActive = false %}
 
                 {% if timelineContentList.standard is defined %}

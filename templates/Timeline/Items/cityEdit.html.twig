@@ -1,45 +1,44 @@
-<div class="row margin-bottom-medium">
+{% set titleHtml %}
+    <div class="d-flex flex-wrap align-items-center gap-2">
+        <span><strong>{{ item.user.username }}</strong> hat eine Stadt editiert</span>
+    </div>
+{% endset %}
+
+{% set bodyHtml %}
+    <a class="text-decoration-none" href="{{ object_path(item.city) }}">
+        <h4 class="h5 mb-0 mt-2">{{ item.cityName }}</h4>
+    </a>
+{% endset %}
+
+{% if item.city.latitude and item.city.longitude %}
+    {% set mediaHtml %}
+        <div
+                id="map-{{ item.uniqId }}"
+                class="map rounded-3 overflow-hidden"
+                data-controller="map--map"
+                style="height: 150px;"
+                data-map--map-center-latitude-value="{{ item.city.latitude }}"
+                data-map--map-center-longitude-value="{{ item.city.longitude }}"
+                data-map--map-zoom-value="13"
+                data-map--map-lock-map-value="true"
+                data-map--map-marker-latitude-value="{{ item.city.latitude }}"
+                data-map--map-marker-longitude-value="{{ item.city.longitude }}"
+                data-map--map-marker-type-value="city"
+                data-map--map-vector-value="false"
+        ></div>
+    {% endset %}
+{% endif %}
+
+<div class="row mb-4">
     {{ include('Timeline/_includes/user_column.html.twig') }}
 
     <div class="col-9 col-sm-9 col-md-10 col-lg-10">
-        <div class="row">
-            <div class="col-12">
-                <strong>
-                    {{ item.user.username }}
-                </strong>
-                hat eine Stadt editiert:
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-12">
-                <a href="{{ object_path(item.city) }}">
-                    <h4>
-                        {{ item.cityName }}
-                    </h4>
-                </a>
-            </div>
-        </div>
-
-        {% if item.city.latitude and item.city.longitude %}
-            <div class="row">
-                <div class="col-12">
-                    <div
-                            id="map-{{ item.uniqId }}"
-                            class="map"
-                            data-controller="map--map"
-                            style="height: 150px;"
-                            data-map--map-center-latitude-value="{{ item.city.latitude }}"
-                            data-map--map-center-longitude-value="{{ item.city.longitude }}"
-                            data-map--map-zoom-value="13"
-                            data-map--map-lock-map-value="true"
-                            data-map--map-marker-latitude-value="{{ item.city.latitude }}"
-                            data-map--map-marker-longitude-value="{{ item.city.longitude }}"
-                            data-map--map-marker-type-value="city"
-                    data-map--map-vector-value="false"
-                ></div>
-                </div>
-            </div>
-        {% endif %}
+        {{ include('Timeline/_includes/timeline_card.html.twig', {
+            type: 'city',
+            icon: 'far fa-pen-to-square',
+            titleHtml: titleHtml,
+            bodyHtml: bodyHtml,
+            mediaHtml: mediaHtml|default(null)
+        }) }}
     </div>
 </div>

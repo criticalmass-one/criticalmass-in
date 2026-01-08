@@ -1,7 +1,7 @@
 <div>
     {# Tabs #}
     {% set hasActive = false %}
-    <ul class="nav nav-tabs" id="timelineTabs" role="tablist">
+    <ul class="nav nav-tabs timeline-tabs" id="timelineTabs" role="tablist">
         {% if timelineContentList.standard is defined %}
             <li class="nav-item" role="presentation">
                 <a class="nav-link{% if hasActive == false %} active{% endif %}"
@@ -100,7 +100,7 @@
     </ul>
 
     {# Tab panes #}
-    <div class="tab-content margin-top-medium" id="timelineTabsContent">
+    <div class="tab-content timeline-pane mt-3" id="timelineTabsContent">
         {% set hasActiveContent = false %}
 
         {% if timelineContentList.standard is defined %}
