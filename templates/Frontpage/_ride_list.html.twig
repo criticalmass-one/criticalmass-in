@@ -10,7 +10,7 @@
             <div class="card-body">
                 {% for month in rideList %}
                     {% for day in month %}
-                        <div class="{% if not loop.last %}mb-4{% else %}mb-0{% endif %}">
+                        <div class="{{ not loop.first ? 'mb-4' : 'mb-0' }}">
                             <div class="fw-semibold mb-2">
                                 {{ day.dateTime|format_date('eeee, dd. MMMM YYYY') }}
                             </div>

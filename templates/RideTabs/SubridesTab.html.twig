@@ -22,7 +22,7 @@
                 <div class="row">
                     {% for subride in subrides %}
                         <div class="col-12 col-md-4 no-margin-top margin-bottom-medium">
-                            <div class="media subride">
+                            <div class="d-flex align-items-start gap-3 subride">
                                 {% if app.getUser() %}
                                     <a href="{{ object_path(subride, 'caldera_criticalmass_subride_edit') }}"
                                        class="edit-subride float-end btn btn-outline-secondary btn-sm">
@@ -32,17 +32,17 @@
 
                                 <a class="float-start subride-link" href="#"
                                    data-subride-id="{{ subride.id }}">
-                                    <img class="media-object"
+                                    <img class="flex-shrink-0"
                                          src="/bundles/caldera/images/marker/marker-green.png"
                                          alt="Marker">
                                 </a>
 
-                                <div class="media-body">
-                                    <h5 class="media-heading">
+                                <div class="flex-grow-1">
+                                    <h5 class="mb-1">
                                         {{ subride.getDateTime().format('H.i') }} Uhr:
                                         {{ subride.getTitle() }}
                                     </h5>
-                                    <p>{{ subride.getDescription()|nl2br }}</p>
+                                    <p class="mb-0">{{ subride.getDescription()|nl2br }}</p>
                                 </div>
                             </div>
                         </div>
