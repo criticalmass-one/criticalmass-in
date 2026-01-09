@@ -1,44 +1,55 @@
-<div class="btn-group pull-right">
-    <button type="button" class="btn btn-default btn-xs dropdown-toggle"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Bearbeiten <span class="caret"></span>
+<div class="btn-group float-end">
+    <button type="button"
+            class="btn btn-secondary btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown"
+            aria-expanded="false">
+        Bearbeiten
     </button>
+
     <ul class="dropdown-menu">
+
         {% if track.source == constant('TRACK_SOURCE_DRAW', track) %}
             <li>
-                <a href="{{ object_path(track, 'caldera_criticalmass_track_edit') }}">
+                <a class="dropdown-item"
+                   href="{{ object_path(track, 'caldera_criticalmass_track_edit') }}">
                     <i class="far fa-pencil"></i>
                     Track editieren
                 </a>
             </li>
         {% else %}
+
             <li>
-                <a href="{{ object_path(track, 'caldera_criticalmass_track_download') }}">
+                <a class="dropdown-item"
+                   href="{{ object_path(track, 'caldera_criticalmass_track_download') }}">
                     <i class="far fa-download"></i>
                     Herunterladen
                 </a>
             </li>
+
             {% if track.enabled %}
                 <li>
-                    <a href="{{ object_path(track, 'caldera_criticalmass_track_toggle') }}">
+                    <a class="dropdown-item"
+                       href="{{ object_path(track, 'caldera_criticalmass_track_toggle') }}">
                         <i class="far fa-eye-slash"></i>
                         Deaktivieren
                     </a>
                 </li>
             {% else %}
                 <li>
-                    <a href="{{ object_path(track, 'caldera_criticalmass_track_toggle') }}">
+                    <a class="dropdown-item"
+                       href="{{ object_path(track, 'caldera_criticalmass_track_toggle') }}">
                         <i class="far fa-eye"></i>
                         Aktivieren
                     </a>
                 </li>
             {% endif %}
 
-            <li role="separator" class="divider"></li>
+            <li><hr class="dropdown-divider"></li>
 
             {% if not track.isReviewed %}
                 <li>
-                    <a href="{{ object_path(track, 'caldera_criticalmass_track_approve') }}">
+                    <a class="dropdown-item"
+                       href="{{ object_path(track, 'caldera_criticalmass_track_approve') }}">
                         <i class="far fa-check"></i>
                         Bestätigen
                     </a>
@@ -46,25 +57,34 @@
             {% endif %}
 
             <li>
-                <a href="{{ object_path(track, 'caldera_criticalmass_track_range') }}">
+                <a class="dropdown-item"
+                   href="{{ object_path(track, 'caldera_criticalmass_track_range') }}">
                     <i class="far fa-cut"></i>
                     Beschneiden
                 </a>
             </li>
 
             <li>
-                <a href="{{ object_path(track, 'caldera_criticalmass_track_time') }}">
+                <a class="dropdown-item"
+                   href="{{ object_path(track, 'caldera_criticalmass_track_time') }}">
                     <i class="far fa-clock"></i>
                     Zeit anpassen
                 </a>
             </li>
 
         {% endif %}
+
+        <li><hr class="dropdown-divider"></li>
+
         <li>
-            <a href="{{ path('caldera_criticalmass_rest_track_delete', { id: track.id }) }}" class="delete-protection" data-delete-modal-title="Track löschen" data-delete-modal-text="Möchtest du diesen Track von der <strong>{{ track.ride.city.title }}</strong> vom <strong>{{ track.ride.dateTime|date('d.m.Y') }}</strong> wirklich löschen?">
+            <a class="dropdown-item delete-protection"
+               href="{{ path('caldera_criticalmass_rest_track_delete', { id: track.id }) }}"
+               data-delete-modal-title="Track löschen"
+               data-delete-modal-text="Möchtest du diesen Track von der <strong>{{ track.ride.city.title }}</strong> vom <strong>{{ track.ride.dateTime|date('d.m.Y') }}</strong> wirklich löschen?">
                 <i class="far fa-trash-alt"></i>
                 Löschen
             </a>
         </li>
+
     </ul>
 </div>

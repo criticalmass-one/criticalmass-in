@@ -2,28 +2,26 @@
 
 {% block title %}Touren mit fehlenden Statistiken aus {{ city.city }}{% endblock %}
 
-{% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
+{% import '_macros/breadcrumb.html.twig' as bc %}
 
-    <li>
-        <a href="{{ object_path(city) }}">
-            {{ city.city }}
-        </a>
-    </li>
-
-    <li class="active">
-        Touren mit fehlenden Statistiken
-    </li>
+{% block breadcrumbs %}
+    {{ bc.render(
+        [
+            { label: 'Städteliste', url: path('caldera_criticalmass_city_list') },
+            { label: city.city, url: object_path(city) },
+            { label: 'Touren mit fehlenden Statistiken' },
+        ],
+        {
+            homeLabel: 'Critical Mass',
+            homeUrl: path('caldera_criticalmass_frontpage')
+        }
+    ) }}
 {% endblock %}
     
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <h1>
                     Touren aus {{ city.city }} mit fehlenden Statistiken
                 </h1>
@@ -36,29 +34,15 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
-                <table class="table">
+            <div class="col-12">
+                <table class="table align-middle">
                     <thead>
                     <tr>
-                        <th>
-                            Datum
-                        </th>
-
-                        <th>
-                            Titel
-                        </th>
-
-                        <th>
-                            Teilnehmer
-                        </th>
-
-                        <th>
-                            Dauer
-                        </th>
-
-                        <th>
-                            Distanz
-                        </th>
+                        <th>Datum</th>
+                        <th>Titel</th>
+                        <th>Teilnehmer</th>
+                        <th>Dauer</th>
+                        <th>Distanz</th>
                     </tr>
                     </thead>
                     <tbody>

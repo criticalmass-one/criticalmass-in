@@ -2,22 +2,20 @@
 
 {% block title %}Statistiken aus {{ city.city }}{% endblock %}
 
-{% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
+{% import '_macros/breadcrumb.html.twig' as bc %}
 
-    <li>
-        <a href="{{ object_path(city) }}">
-            {{ city.city }}
-        </a>
-    </li>
-
-    <li class="active">
-        Statistiken
-    </li>
+{% block breadcrumbs %}
+    {{ bc.render(
+        [
+            { label: 'Städteliste', url: path('caldera_criticalmass_city_list') },
+            { label: city.city, url: object_path(city) },
+            { label: 'Statistiken' },
+        ],
+        {
+            homeLabel: 'Critical Mass',
+            homeUrl: path('caldera_criticalmass_frontpage')
+        }
+    ) }}
 {% endblock %}
 
 {% block content %}
@@ -115,16 +113,16 @@
                                 </td>
                                 <td>
                                     {% if ride.estimatedParticipants %}
-                                    {{ ride.estimatedParticipants|number_format(0) }}
+                                        {{ ride.estimatedParticipants|number_format(0) }}
                                     {% else %}
-                                    unbekannt
+                                        unbekannt
                                     {% endif %}
                                 </td>
                                 <td>
                                     {% if ride.estimatedDistance %}
-                                    {{ ride.estimatedDistance|number_format(2) }}&nbsp;km
+                                        {{ ride.estimatedDistance|number_format(2) }}&nbsp;km
                                     {% else %}
-                                    unbekannt
+                                        unbekannt
                                     {% endif %}
                                 </td>
                             </tr>
@@ -137,6 +135,11 @@
     </div>
 
     {% for ride in rides %}
-        <div class="ride-data" data-ride-datetime="{{ ride.dateTime|date('Y-m-d') }}" data-estimated-participants="{{ ride.estimatedParticipants|default(0) }}" data-estimated-duration="{{ ride.estimatedDuration|default(0) }}" data-estimated-distance="{{ ride.estimatedDistance|default(0) }}"></div>
+        <div class="ride-data"
+             data-ride-datetime="{{ ride.dateTime|date('Y-m-d') }}"
+             data-estimated-participants="{{ ride.estimatedParticipants|default(0) }}"
+             data-estimated-duration="{{ ride.estimatedDuration|default(0) }}"
+             data-estimated-distance="{{ ride.estimatedDistance|default(0) }}">
+        </div>
     {% endfor %}
 {% endblock %}

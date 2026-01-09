@@ -1,21 +1,19 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
-{% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
+{% import '_macros/breadcrumb.html.twig' as bc %}
 
-    <li>
-        <a href="{{ object_path(city) }}">
-            {{ city.city }}
-        </a>
-    </li>
-
-    <li class="active">
-        Soziale Netzwerke
-    </li>
+{% block breadcrumbs %}
+    {{ bc.render(
+        [
+            { label: 'Städteliste', url: path('caldera_criticalmass_city_list') },
+            { label: city.city, url: object_path(city) },
+            { label: 'Soziale Netzwerke' },
+        ],
+        {
+            homeLabel: 'Critical Mass',
+            homeUrl: path('caldera_criticalmass_frontpage')
+        }
+    ) }}
 {% endblock %}
 
 {% block content %}
@@ -40,7 +38,7 @@
                 {% endif %}
 
                 {% for item in itemList %}
-                    <div class="row margin-bottom-medium">
+                    <div class="row mb-4">
                         <div class="col-md-3 text-center">
                             <p>
                                 <i class="fab fa-3x {{ network_icon(item.socialNetworkProfile.network) }}"></i>
@@ -53,7 +51,7 @@
                             </a>
                         </div>
                         <div class="col-md-9">
-                            <h3 class="no-margin-top">
+                            <h3 class="mt-0">
                                 <a href="{{ item.permalink }}">
                                     {{ item.title }}
                                 </a>
@@ -63,7 +61,7 @@
                                 {{ item.text|trim_intro|raw }}
                             </p>
 
-                            <p class="text-right">
+                            <p class="text-end">
                                 <a href="{{ item.permalink }}" title="zum Beitrag" class="btn btn-primary">
                                     <i class="far fa-hand-point-right"></i>
                                     Weiterlesen

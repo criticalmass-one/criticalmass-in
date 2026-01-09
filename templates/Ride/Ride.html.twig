@@ -1,92 +1,134 @@
-{% if dateTime > ride.getDateTime() %}
-    {% set pastRide = true %}
-{% else %}
-    {% set pastRide = false %}
-{% endif %}
+{% extends 'Template/StandardTemplate.html.twig' %}
 
-<div class="row">
-    <div class="col-md-12">
-        {% include('Ride/Includes/_participation.html.twig') with { 'pastRide': pastRide, 'participation': participation } %}
-        <h1 itemprop="name">
-            {{ ride.title }}
-        </h1>
+{% block title %}{{ ride.title }}{% endblock %}
+
+{% block content %}
+    {% if dateTime > ride.getDateTime() %}
+        {% set pastRide = true %}
+    {% else %}
+        {% set pastRide = false %}
+    {% endif %}
+
+    <div class="row">
+        <div class="col-12">
+            {% include 'Ride/Includes/_participation.html.twig' with { 'pastRide': pastRide, 'participation': participation } %}
+            <h1 itemprop="name">
+                {{ ride.title }}
+            </h1>
+        </div>
     </div>
-</div>
 
-<div class="row">
-    <div class="col-md-12">
-        <div
-            data-controller="map--ride-map"
-            style="height: 350px;"
-            data-map--ride-map-city-slug-value="{{ ride.city.mainSlugString }}"
-            data-map--ride-map-ride-identifier-value="{{ ride.slug|default(ride.dateTime|date('Y-m-d')) }}"
-            data-map--ride-map-latitude-value="{{ ride.latitude }}"
-            data-map--ride-map-longitude-value="{{ ride.longitude }}"
-        ></div>
+    <div class="row">
+        <div class="col-12">
+            <div
+                    data-controller="map--ride-map"
+                    style="height: 350px;"
+                    data-map--ride-map-city-slug-value="{{ ride.city.mainSlugString }}"
+                    data-map--ride-map-ride-identifier-value="{{ ride.slug|default(ride.dateTime|date('Y-m-d')) }}"
+                    data-map--ride-map-latitude-value="{{ ride.latitude }}"
+                    data-map--ride-map-longitude-value="{{ ride.longitude }}"
+            ></div>
+        </div>
     </div>
-</div>
 
-<div class="row" style="margin-top: 1em;">
-    <div class="col-md-12">
-        <div role="tabpanel">
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active">
-                    <a href="#details" aria-controls="home" role="tab" data-toggle="tab">
-                        <i class="far fa-flag"></i>
-                        Details
-                    </a>
-                </li>
-                <li role="presentation">
-                    <a href="#minimass" aria-controls="settings" role="tab" data-toggle="tab">
-                        <i class="far fa-map-marker"></i>
-                        Mini-Masses
-                        <span class="badge">
-                            {{ ride.getSubrides|length }}
-                        </span>
-                    </a>
-                </li>
-                <li role="presentation">
-                    <a href="#comments" aria-controls="messages" role="tab" data-toggle="tab">
-                        <i class="far fa-pencil"></i>
-                        Kommentare
-                        <span class="badge">
-                            {{ ride.getPosts|length }}
-                        </span>
-                    </a>
-                </li>
-                {% if pastRide and ride.enabled %}
-                    {% if feature('photos') %}
-                        <li role="presentation">
-                            <a href="{{ object_path(ride, 'caldera_criticalmass_photo_ride_list') }}">
-                                <i class="far fa-camera"></i>
-                                Galerie
-                                <span class="badge">
-                            {{ photos|length }}
-                        </span>
+    <div class="row mt-3">
+        <div class="col-12">
+            <div>
+                <ul class="nav nav-tabs" id="ride-tabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a
+                                class="nav-link active"
+                                id="details-tab"
+                                href="#details"
+                                aria-controls="details"
+                                role="tab"
+                                data-bs-toggle="tab"
+                                aria-selected="true"
+                        >
+                            <i class="far fa-flag"></i>
+                            Details
+                        </a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a
+                                class="nav-link"
+                                id="minimass-tab"
+                                href="#minimass"
+                                aria-controls="minimass"
+                                role="tab"
+                                data-bs-toggle="tab"
+                                aria-selected="false"
+                        >
+                            <i class="far fa-map-marker"></i>
+                            Mini-Masses
+                            <span class="badge bg-secondary">
+                                {{ ride.getSubrides|length }}
+                            </span>
+                        </a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a
+                                class="nav-link"
+                                id="comments-tab"
+                                href="#comments"
+                                aria-controls="comments"
+                                role="tab"
+                                data-bs-toggle="tab"
+                                aria-selected="false"
+                        >
+                            <i class="far fa-pencil"></i>
+                            Kommentare
+                            <span class="badge bg-secondary">
+                                {{ ride.getPosts|length }}
+                            </span>
+                        </a>
+                    </li>
+
+                    {% if pastRide and ride.enabled %}
+                        {% if feature('photos') %}
+                            <li class="nav-item" role="presentation">
+                                <a
+                                        class="nav-link"
+                                        href="{{ object_path(ride, 'caldera_criticalmass_photo_ride_list') }}"
+                                >
+                                    <i class="far fa-camera"></i>
+                                    Galerie
+                                    <span class="badge bg-secondary">
+                                        {{ photos|length }}
+                                    </span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        <li class="nav-item" role="presentation">
+                            <a
+                                    class="nav-link"
+                                    id="tracks-tab"
+                                    href="#tracks"
+                                    aria-controls="tracks"
+                                    role="tab"
+                                    data-bs-toggle="tab"
+                                    aria-selected="false"
+                            >
+                                <i class="far fa-bicycle"></i>
+                                Tracks
+                                <span class="badge bg-secondary">
+                                    {{ tracks|length }}
+                                </span>
                             </a>
                         </li>
                     {% endif %}
-                    <li role="presentation">
-                        <a href="#tracks" aria-controls="profile" role="tab" data-toggle="tab">
-                            <i class="far fa-bicycle"></i>
-                            Tracks
-                            <span class="badge">
-                            {{ tracks|length }}
-                        </span>
-                        </a>
-                    </li>
-                {% endif %}
-            </ul>
+                </ul>
 
-            <div class="tab-content">
-                {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderDetailsTabAction', { 'ride': ride } )) }}
-                {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderSubridesTabAction', { 'ride': ride } )) }}
-                {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderPostsTabAction', { 'ride': ride } )) }}
+                <div class="tab-content">
+                    {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderDetailsTabAction', { 'ride': ride } )) }}
+                    {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderSubridesTabAction', { 'ride': ride } )) }}
+                    {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderPostsTabAction', { 'ride': ride } )) }}
 
-                {% if pastRide and ride.enabled %}
-                    {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderTracksTabAction', { 'ride': ride } )) }}
-                {% endif %}
+                    {% if pastRide and ride.enabled %}
+                        {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderTracksTabAction', { 'ride': ride } )) }}
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
-</div>
+{% endblock %}

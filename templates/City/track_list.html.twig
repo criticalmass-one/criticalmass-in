@@ -2,29 +2,26 @@
 
 {% block title %}Track-Übersicht{% endblock %}
 
-{% block breadcrumb %}
+{% import '_macros/breadcrumb.html.twig' as bc %}
 
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ object_path(city) }}">
-            {{ city.city }}
-        </a>
-    </li>
-
-    <li class="active">
-        Track-Übersicht
-    </li>
+{% block breadcrumbs %}
+    {{ bc.render(
+        [
+            { label: 'Städteliste', url: path('caldera_criticalmass_city_list') },
+            { label: city.city, url: object_path(city) },
+            { label: 'Track-Übersicht' },
+        ],
+        {
+            homeLabel: 'Critical Mass',
+            homeUrl: path('caldera_criticalmass_frontpage')
+        }
+    ) }}
 {% endblock %}
 
 {% block content %}
     <div class="container main-container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <h2>
                     Track-Übersicht
                 </h2>
@@ -32,36 +29,36 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 {% for track in pagination %}
-                    {% include('Track/_track_list_item.html.twig') with { 'track': track, 'show_city': false } %}
+                    {% include 'Track/_track_list_item.html.twig' with { 'track': track, 'show_city': false } %}
                 {% endfor %}
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <div class="text-center">
                     {{ knp_pagination_render(pagination) }}
                 </div>
             </div>
         </div>
 
-        <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog">
+        <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Track löschen</h4>
+                        <h5 class="modal-title" id="modalDeleteLabel">Track löschen</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
                     </div>
                     <div class="modal-body">
                         <span id="trackIdLabel"></span>
                         <p>Willst Du diesen Track wirklich löschen?</p>
                     </div>
                     <div class="modal-footer">
-                        <div class="btn-group" role="group" aria-label="...">
-                            <a id="deleteButton" href="#" class="btn btn-success">Ja, löschen</a>
-                            <button id="cancelButton" class="btn btn-default">Nein, abbrechen</button>
+                        <div class="btn-group" role="group" aria-label="Track löschen">
+                            <a id="deleteButton" href="#" class="btn btn-danger">Ja, löschen</a>
+                            <button id="cancelButton" type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Nein, abbrechen</button>
                         </div>
                     </div>
                 </div>

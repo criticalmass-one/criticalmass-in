@@ -4,54 +4,50 @@
 
 {% form_theme form 'Form/theme.html.twig' %}
 
-{% block breadcrumb %}
-    <li>
-        <a href="{{ object_path(cityCycle.city) }}">
-            {{ cityCycle.city.city }}
-        </a>
-    </li>
+{% import '_macros/breadcrumb.html.twig' as bc %}
 
-    <li>
-        <a href="{{ object_path(cityCycle.city, 'caldera_criticalmass_citycycle_list') }}">
-            Turnusliste
-        </a>
-    </li>
-
-    <li class="active">
-        Turnus auslösen
-    </li>
+{% block breadcrumbs %}
+    {{ bc.render(
+        [
+            { label: cityCycle.city.city, url: object_path(cityCycle.city) },
+            { label: 'Turnusliste', url: object_path(cityCycle.city, 'caldera_criticalmass_citycycle_list') },
+            { label: 'Turnus auslösen' },
+        ],
+        {
+            homeLabel: 'Critical Mass',
+            homeUrl: path('caldera_criticalmass_frontpage')
+        }
+    ) }}
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
+            <div class="col-12 col-md-10 offset-md-1">
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                Turnus
+                    <div class="col-12 col-md-4">
+                        <div class="card mb-3 shadow-sm">
+                            <div class="card-header bg-body-tertiary py-2">
+                                <h6 class="mb-0 fw-semibold">
+                                    🔁 Turnus
+                                </h6>
                             </div>
-                            <div class="panel-body">
-                                <dl>
-                                    <dt>
-                                        Turnus
-                                    </dt>
+
+                            <div class="card-body">
+                                <dl class="mb-0">
+                                    <dt>Turnus</dt>
                                     <dd>
-                                        {{ ('cycle.event_date.month_week.' ~ cityCycle.weekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ cityCycle.dayOfWeek)|trans }}
+                                        {{ ('cycle.event_date.month_week.' ~ cityCycle.weekOfMonth)|trans }}
+                                        {{ ('cycle.event_date.day.' ~ cityCycle.dayOfWeek)|trans }}
                                         im Monat
                                     </dd>
 
-                                    <dt>
-                                        Uhrzeit
-                                    </dt>
+                                    <dt>Uhrzeit</dt>
                                     <dd>
                                         {{ cityCycle.time|date('H:i', 'UTC') }} Uhr
                                     </dd>
 
-                                    <dt>
-                                        Treffpunkt
-                                    </dt>
+                                    <dt>Treffpunkt</dt>
                                     <dd>
                                         {% if cityCycle.location %}
                                             {{ cityCycle.location }}
@@ -60,9 +56,7 @@
                                         {% endif %}
                                     </dd>
 
-                                    <dt>
-                                        Gültigkeitsbeginn
-                                    </dt>
+                                    <dt>Gültigkeitsbeginn</dt>
                                     <dd>
                                         {% if cityCycle.validFrom %}
                                             {{ cityCycle.validFrom|date('d.m.Y') }}
@@ -71,9 +65,7 @@
                                         {% endif %}
                                     </dd>
 
-                                    <dt>
-                                        Gültigkeitsende
-                                    </dt>
+                                    <dt>Gültigkeitsende</dt>
                                     <dd>
                                         {% if cityCycle.validUntil %}
                                             {{ cityCycle.validUntil|date('d.m.Y') }}
@@ -86,21 +78,23 @@
                         </div>
                     </div>
 
-                    <div class="col-md-8">
+                    <div class="col-12 col-md-8">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-12">
                                 <h2>
                                     Touren automatisch generieren
                                 </h2>
 
                                 <p class="lead">
                                     Du kannst anhand des ausgewählten Turnus’ die Touren in deiner Stadt generieren
-                                    lassen.</p>
+                                    lassen.
+                                </p>
 
                                 <div class="alert alert-info">
                                     <p>
                                         Normalerweise wird diese Generierung in regelmäßigen Abständen serverseitig
-                                        ausgeführt und du musst überhaupt nichts weiter dafür tun.</p>
+                                        ausgeführt und du musst überhaupt nichts weiter dafür tun.
+                                    </p>
 
                                     <p>
                                         Diese „manuelle Generierung“ ist für dich in der Regel nur dann interessant,
@@ -130,14 +124,15 @@
                                 </p>
                             </div>
                         </div>
+
                         {{ form_start(form) }}
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group{% if form_errors(form.fromDate) %} has-error has-feedback{% endif %}">
-                                    <label class="control-label" for="">Startdatum:</label>
+                            <div class="col-12">
+                                <div class="mb-3{% if form_errors(form.fromDate) %} has-error has-feedback{% endif %}">
+                                    <label class="form-label" for="">Startdatum:</label>
                                     {{ form_errors(form.fromDate) }}
                                     {{ form_widget(form.fromDate) }}
-                                    <p class="help-block">
+                                    <p class="form-text">
                                         Bitte im Format <code>dd.mm.jjjj</code> angeben.
                                     </p>
                                 </div>
@@ -145,12 +140,12 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group{% if form_errors(form.untilDate) %} has-error has-feedback{% endif %}">
-                                    <label class="control-label" for="">Enddatum:</label>
+                            <div class="col-12">
+                                <div class="mb-3{% if form_errors(form.untilDate) %} has-error has-feedback{% endif %}">
+                                    <label class="form-label" for="">Enddatum:</label>
                                     {{ form_errors(form.untilDate) }}
                                     {{ form_widget(form.untilDate) }}
-                                    <p class="help-block">
+                                    <p class="form-text">
                                         Bitte im Format <code>dd.mm.jjjj</code> angeben.
                                     </p>
                                 </div>
@@ -158,9 +153,12 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    {{ form_widget(form.submit, { 'label': 'Weiter zur Vorschau', 'attr' : { 'class': 'btn btn-success pull-right'} }) }}
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    {{ form_widget(form.submit, {
+                                        'label': 'Weiter zur Vorschau',
+                                        'attr' : { 'class': 'btn btn-primary float-end' }
+                                    }) }}
                                 </div>
                             </div>
                         </div>

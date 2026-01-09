@@ -1,43 +1,48 @@
-<div role="tabpanel" class="tab-pane" id="tracks">
+<div class="tab-pane fade" id="tracks" role="tabpanel" aria-labelledby="tracks-tab">
     <div class="row">
         <div class="col-md-12">
-            <div class="btn-group pull-right margin-top-medium">
+            <div class="btn-group float-end margin-top-medium">
                 {% if app.user %}
-                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                    <i class="far fa-map"></i>
-                    Track hinzufügen
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    {% if feature('strava_track_upload') %}
-                    <li>
-                        <a href="{{ object_path(ride, 'caldera_criticalmass_strava_auth') }}">
-                            <i class="fab fa-strava"></i>
-                            Track von Strava importieren
-                        </a>
-                    </li>
-                    {% endif %}
-                    <li>
-                        <a href="{{ object_path(ride, 'caldera_criticalmass_track_upload') }}"
-                           title="Track hochladen">
-                            <i class="far fa-upload"></i>
-                            GPX-Datei hochladen
-                        </a>
-                    </li>
-                    {#<li>
-                          <a href="{{ path('caldera_criticalmass_track_draw', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}"
-                             title="Track manuell zeichnen">
-                              <i class="far fa-map"></i>
-                              Track manuell zeichnen
-                          </a>
-                      </li>#}
-                </ul>
-                {% else %}
-                    <span class="btn btn-success modal-hint" data-modal-hint-title="{{ 'hint_modal.ride.track_upload_button.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.ride.track_upload_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
+                    <button type="button"
+                            class="btn btn-success dropdown-toggle"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false">
                         <i class="far fa-map"></i>
                         Track hinzufügen
-                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        {% if feature('strava_track_upload') %}
+                            <li>
+                                <a class="dropdown-item"
+                                   href="{{ object_path(ride, 'caldera_criticalmass_strava_auth') }}">
+                                    <i class="fab fa-strava"></i>
+                                    Track von Strava importieren
+                                </a>
+                            </li>
+                        {% endif %}
+                        <li>
+                            <a class="dropdown-item"
+                               href="{{ object_path(ride, 'caldera_criticalmass_track_upload') }}"
+                               title="Track hochladen">
+                                <i class="far fa-upload"></i>
+                                GPX-Datei hochladen
+                            </a>
+                        </li>
+                        {#<li>
+                              <a href="{{ path('caldera_criticalmass_track_draw', { 'citySlug': ride.city.getMainSlugString(), 'rideDate': ride.getFormattedDate() }) }}"
+                                 title="Track manuell zeichnen">
+                                  <i class="far fa-map"></i>
+                                  Track manuell zeichnen
+                              </a>
+                          </li>#}
+                    </ul>
+                {% else %}
+                    <span class="btn btn-success modal-hint"
+                          data-modal-hint-title="{{ 'hint_modal.ride.track_upload_button.title'|trans }}"
+                          data-modal-hint-text="{{ 'hint_modal.ride.track_upload_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
+                          data-hint-modal-size="md">
+                        <i class="far fa-map"></i>
+                        Track hinzufügen
                     </span>
                 {% endif %}
             </div>
@@ -64,7 +69,9 @@
                     {% for track in tracks %}
                         <tr>
                             <td style="background-color: rgb({{ track.getColorRed() }}, {{ track.getColorGreen() }}, {{ track.getColorBlue() }});">
-                                <input type="checkbox" class="track-visibility-toggle" data-track-id="{{ track.id }}"
+                                <input type="checkbox"
+                                       class="track-visibility-toggle"
+                                       data-track-id="{{ track.id }}"
                                        checked="checked"/>
                             </td>
                             <td>
@@ -92,88 +99,91 @@
                 </table>
             {% else %}
                 {% if app.getUser() %}
-                    <div class="alert alert-info" role="alert"><strong>Schade!</strong> Bislang hat noch niemand eine
-                        GPX-Datei hochgeladen &mdash; <a href="#" data-toggle="modal" data-target="#modalTrackUpload"
-                                                         title="Track hochladen">Du kannst noch immer der Erste sein</a>.
+                    <div class="alert alert-info" role="alert">
+                        <strong>Schade!</strong> Bislang hat noch niemand eine
+                        GPX-Datei hochgeladen &mdash;
+                        <a href="#"
+                           data-bs-toggle="modal"
+                           data-bs-target="#modalTrackUpload"
+                           title="Track hochladen">
+                            Du kannst noch immer der Erste sein
+                        </a>.
                     </div>
                 {% else %}
-                    <div class="alert alert-info" role="alert"><strong>Schade!</strong> Bislang hat noch niemand eine
-                        GPX-Datei hochgeladen. Als <a href="{{ path('login') }}">angemeldeter
-                            Nutzer</a> könntest du hier der Erste sein.
+                    <div class="alert alert-info" role="alert">
+                        <strong>Schade!</strong> Bislang hat noch niemand eine
+                        GPX-Datei hochgeladen. Als
+                        <a href="{{ path('login') }}">
+                            angemeldeter Nutzer
+                        </a>
+                        könntest du hier der Erste sein.
                     </div>
                 {% endif %}
             {% endif %}
         </div>
+
         <div class="col-md-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Timelapse</h3>
+            <div class="card mb-3 shadow-sm">
+                <div class="card-header bg-body-tertiary py-2">
+                    <h6 class="mb-0 fw-semibold">
+                        🎞️ Timelapse
+                    </h6>
                 </div>
-                <div class="panel-body">
+
+                <div class="card-body">
                     <div id="timelapse-control" style="display: none;">
                         <div class="row">
                             <div class="col-md-6">
-                                <dl>
-                                    <dt>Uhrzeit:</dt>
-                                    <dd><span id="timelapse-time-clock">{{ ride.dateTime.format('H:i') }}</span> Uhr
+                                <dl class="mb-2">
+                                    <dt>Uhrzeit</dt>
+                                    <dd class="mb-0">
+                                        <span id="timelapse-time-clock">{{ ride.dateTime.format('H:i') }}</span> Uhr
                                     </dd>
                                 </dl>
                             </div>
 
                             <div class="col-md-6">
-                                <dl>
-                                    <dt>Verstrichene Zeit:</dt>
-                                    <dd><span id="timelapse-time-elapsed">0</span> Minuten</dd>
+                                <dl class="mb-2">
+                                    <dt>Verstrichene Zeit</dt>
+                                    <dd class="mb-0">
+                                        <span id="timelapse-time-elapsed">0</span> Minuten
+                                    </dd>
                                 </dl>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="text-center">
-                                    <div class="btn-group" id="control-buttons" role="group" aria-label="...">
-                                        <button type="button" id="step-backward-button" class="btn btn-default">
-                                            <i class="far fa-backward"></i>
-                                        </button>
-                                        <button type="button" id="pause-button" class="btn btn-default">
-                                            <i class="far fa-pause"></i>
-                                        </button>
-                                        <button type="button" id="stop-button" class="btn btn-default">
-                                            <i class="far fa-stop"></i>
-                                        </button>
-                                        <button type="button" id="play-button" class="btn btn-default">
-                                            <i class="far fa-play"></i>
-                                        </button>
-                                        <button type="button" id="step-forward-button" class="btn btn-default">
-                                            <i class="far fa-forward"></i>
-                                        </button>
-                                    </div>
-                                </div>
+                        <div class="d-flex justify-content-center my-3">
+                            <div class="btn-group" id="control-buttons" role="group" aria-label="Timelapse controls">
+                                <button type="button" id="step-backward-button" class="btn btn-outline-secondary">
+                                    <i class="far fa-backward"></i>
+                                </button>
+                                <button type="button" id="pause-button" class="btn btn-outline-secondary">
+                                    <i class="far fa-pause"></i>
+                                </button>
+                                <button type="button" id="stop-button" class="btn btn-outline-secondary">
+                                    <i class="far fa-stop"></i>
+                                </button>
+                                <button type="button" id="play-button" class="btn btn-outline-secondary">
+                                    <i class="far fa-play"></i>
+                                </button>
+                                <button type="button" id="step-forward-button" class="btn btn-outline-secondary">
+                                    <i class="far fa-forward"></i>
+                                </button>
                             </div>
                         </div>
 
-                        <div class="row margin-top-medium">
-                            <div class="col-md-12">
-                                Geschwindigkeit:
+                        <div class="mb-3">
+                            <div class="form-label mb-1">
+                                Geschwindigkeit
                             </div>
+                            <input id="speed-slider-input" type="text" class="w-100"/>
                         </div>
 
-                        <div class="row margin-top-medium">
-                            <div class="col-md-12">
-                                <input id="speed-slider-input" type="text" style="width: 100%;"/>
+                        <div class="mb-0">
+                            <div class="form-label mb-1">
+                                Zeitpunkt
                             </div>
-                        </div>
-
-                        <div class="row margin-top-medium">
-                            <div class="col-md-12">
-                                Zeitpunkt:
-                            </div>
-                        </div>
-
-                        <div class="row margin-top-medium">
-                            <div class="col-md-12">
-                                <input id="time-slider-input" type="text" style="width: 100%;"/>
-                            </div>
+                            <input id="time-slider-input" type="text" class="w-100"/>
                         </div>
                     </div>
 
@@ -185,16 +195,18 @@
                                     Timelapse starten
                                 </button>
                             {% else %}
-                                Die Timelapse-Funktion funktioniert nur, wenn vorher mindestens ein GPX-Track hinzugefügt wurde.
+                                <p class="mb-0 text-muted">
+                                    Die Timelapse-Funktion funktioniert nur, wenn vorher mindestens ein GPX-Track hinzugefügt wurde.
+                                </p>
                             {% endif %}
                         </div>
                     </div>
 
                     <div id="timelapse-loader" style="display: none;">
-                        <div class="text-center">
-                            Lade Track <span id="timelapse-track-number">0</span> von <span
-                                    id="timelapse-track-total">0</span>
-                        </div>
+                        <p class="text-center mb-0 text-muted">
+                            Lade Track <span id="timelapse-track-number">0</span> von
+                            <span id="timelapse-track-total">0</span>
+                        </p>
                     </div>
                 </div>
             </div>

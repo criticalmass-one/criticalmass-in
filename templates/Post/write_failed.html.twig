@@ -5,7 +5,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-md-6 offset-md-3">
                 <h1>
                     Hoppla: Vertippt?
                 </h1>
@@ -18,47 +18,54 @@
 
         {% if app.user %}
 
-        {{ form_start(form, {'attr': {'id': 'form-post', 'role': 'form'}}) }}
+            {{ form_start(form, {'attr': {'id': 'form-post', 'role': 'form'}}) }}
 
-        <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-                <div class="form-group{% if form_errors(form.message) %} has-error has-feedback{% endif %}">
-                    <label for="" class="control-label">Dein Kommentar:</label>
-                    {{ form_widget(form.message, {'attr': {'class': 'form-control', 'rows': 10}}) }}
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <div class="mb-3{% if form_errors(form.message) %} has-error has-feedback{% endif %}">
+                        <label class="form-label">Dein Kommentar:</label>
+                        {{ form_widget(form.message, {'attr': {'class': 'form-control', 'rows': 10}}) }}
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-                <div class="form-group">
-                    <input type="checkbox" id="form-post-share-location" checked="checked"/> Wenn du diese Checkbox
-                    aktivierst, speichern wir deinen Aufenthaltsort zu deinem Kommentar, um ihn später auf einer
-                    Karte verorten zu können. Natürlich kannst du später die Koordinaten deines Kommentares
-                    entfernen.
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <div class="form-check mb-3">
+                        <input
+                                type="checkbox"
+                                id="form-post-share-location"
+                                class="form-check-input"
+                                checked="checked"
+                        />
+                        <label class="form-check-label" for="form-post-share-location">
+                            Wenn du diese Checkbox aktivierst, speichern wir deinen Aufenthaltsort zu deinem Kommentar,
+                            um ihn später auf einer Karte verorten zu können. Natürlich kannst du später die Koordinaten
+                            deines Kommentares entfernen.
+                        </label>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        {{ form_widget(form._token) }}
-        {{ form_widget(form.latitude) }}
-        {{ form_widget(form.longitude) }}
+            {{ form_widget(form._token) }}
+            {{ form_widget(form.latitude) }}
+            {{ form_widget(form.longitude) }}
 
-        <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-                <div class="btn-group" role="group" aria-label="...">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                        Abbrechen
-                    </button>
-                    <button type="submit" id="button-submit-post" class="btn btn-success">
-                        <i class="far fa-pencil"></i>
-                        Speichern
-                    </button>
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <div class="btn-group" role="group" aria-label="Kommentar-Aktionen">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Abbrechen
+                        </button>
+                        <button type="submit" id="button-submit-post" class="btn btn-success">
+                            <i class="far fa-pencil"></i>
+                            Speichern
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        {{ form_end(form) }}
+            {{ form_end(form) }}
         {% endif %}
     </div>
 {% endblock %}

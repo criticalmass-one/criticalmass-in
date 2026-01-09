@@ -2,25 +2,21 @@
 
 {% block title %}Fotos ausrichten{% endblock %}
 
-{% block breadcrumb %}
-    <li>
-        <a href="{{ object_path(ride.city) }}">
-            {{ ride.city.title }}
-        </a>
-    </li>
-    <li>
-        <a href="{{ object_path(ride) }}">
-            {{ ride.title }}
-        </a>
-    </li>
-    <li>
-        <a href="{{ object_path(ride, 'caldera_criticalmass_photo_manage') }}">
-            Fotos verwalten
-        </a>
-    </li>
-    <li class="active">
-        Fotos ausrichten
-    </li>
+{% import '_macros/breadcrumb.html.twig' as bc %}
+
+{% block breadcrumbs %}
+    {{ bc.render(
+        [
+            { label: ride.city.title, url: object_path(ride.city) },
+            { label: ride.title, url: object_path(ride) },
+            { label: 'Fotos verwalten', url: object_path(ride, 'caldera_criticalmass_photo_manage') },
+            { label: 'Fotos ausrichten' },
+        ],
+        {
+            homeLabel: 'Critical Mass',
+            homeUrl: path('caldera_criticalmass_frontpage')
+        }
+    ) }}
 {% endblock %}
 
 {% block content %}
@@ -32,21 +28,20 @@
         </div>
 
         {% if track %}
-        <div class="row">
-            <div class="col-md-12">
-                <div id="map" style="height: 350px;">
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <div id="map" style="height: 350px;"></div>
                 </div>
             </div>
-            {% else %}
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="alert alert-danger" role="alert">
-                            <strong>Kein Track gefunden!</strong> Bitte lade erst einen GPX-Track deiner Tour hoch, um
-                            anschließend Fotos zu verorten.
-                        </div>
+        {% else %}
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Kein Track gefunden!</strong>
+                        Bitte lade erst einen GPX-Track deiner Tour hoch, um anschließend Fotos zu verorten.
                     </div>
                 </div>
-            {% endif %}
-        </div>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

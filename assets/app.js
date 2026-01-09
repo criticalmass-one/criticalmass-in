@@ -3,8 +3,7 @@ import './scss/criticalmass.scss';
 import 'dropzone/dist/dropzone.css';
 import 'friendly-challenge/widget';
 
-//window.bootstrap = bootstrap;
-require('bootstrap');
+import 'bootstrap/dist/js/bootstrap.bundle';
 
 import GeocodingButton from './js/GeocodingButton';
 import DataTable from './js/DataTable';
@@ -23,4 +22,17 @@ import '@fortawesome/fontawesome-pro/js/fontawesome';
 import '@fortawesome/fontawesome-pro/js/solid';
 import '@fortawesome/fontawesome-pro/js/regular';
 
-export {Sharing, ScrollToPost, SubmitButtonDisabler, DeleteModal, PhotoUpload, RideDateChecker, GeocodingButton, DataTable, Search, HintModal, StatisticPage, StatisticCityPage};
+export {
+    Sharing,
+    ScrollToPost,
+    SubmitButtonDisabler,
+    DeleteModal,
+    PhotoUpload,
+    RideDateChecker,
+    GeocodingButton,
+    DataTable,
+    Search,
+    HintModal,
+    StatisticPage,
+    StatisticCityPage
+};
