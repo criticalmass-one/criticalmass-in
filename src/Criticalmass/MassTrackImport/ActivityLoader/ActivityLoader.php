@@ -5,26 +5,23 @@ namespace App\Criticalmass\MassTrackImport\ActivityLoader;
 use Strava\API\Client;
 use Strava\API\Service\REST;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Component\HttpClient\Psr18Client;
 
 class ActivityLoader implements ActivityLoaderInterface
 {
     const PER_PAGE = 100;
 
-    /** @var SessionInterface $session */
-    protected $session;
+    protected \DateTime $startDateTime;
+    protected \DateTime $endDateTime;
+    protected Client $client;
 
-    /** @var \DateTime $startDateTime */
-    protected $startDateTime;
-
-    /** @var \DateTime $endDateTime */
-    protected $endDateTime;
-
-    /** @var Client $client */
-    protected $client;
-
-    public function __construct(SessionInterface $session)
+    public function __construct(
+        private readonly SessionInterface $session,
+        private readonly HttpClientInterface $httpClient
+    )
     {
-        $this->session = $session;
+
     }
 
     public function setStartDateTime(\DateTime $startDateTime): ActivityLoaderInterface
@@ -44,23 +41,29 @@ class ActivityLoader implements ActivityLoaderInterface
     public function load(): array
     {
         $token = $this->session->get('strava_token');
-        $adapter = new \GuzzleHttp\Client(['base_uri' => 'https://www.strava.com/api/v3/']);
-        $service = new REST($token, $adapter);
+
+        $psr18Client = new Psr18Client($this->httpClient);
+
+        $service = new REST($token, $psr18Client);
         $this->client = new Client($service);
 
         $activityList = [];
         $pageNumber = 1;
 
         do {
-            $results = $this->client->getAthleteActivities($this->endDateTime->getTimestamp(), $this->startDateTime->getTimestamp(), $pageNumber, 100);
+            $results = $this->client->getAthleteActivities(
+                $this->endDateTime->getTimestamp(),
+                $this->startDateTime->getTimestamp(),
+                $pageNumber,
+                self::PER_PAGE
+            );
 
             if (is_array($results)) {
                 $activityList = array_merge($activityList, $results);
-
                 ++$pageNumber;
             }
         } while (is_array($results) && count($results) !== 0);
-        
+
         return $activityList;
     }
 }

@@ -3,18 +3,25 @@
 namespace App\Criticalmass\Website\Parser;
 
 use App\Entity\CrawledWebsite;
-use GuzzleHttp\Psr7\Request;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use \simplehtmldom_1_5\simple_html_dom as HtmlDomElement;
-use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
+use Sunra\PhpSimple\HtmlDomParser;
 
 class Parser implements ParserInterface
 {
+    public function __construct(private readonly HttpClientInterface $httpClient)
+    {
+
+    }
+
     public function parse(string $url): ?CrawledWebsite
     {
         if ($html = $this->fetchHtml($url)) {
-            $crawledWebsite = $this->parseHtml($html, $url);
-
-            return $crawledWebsite;
+            return $this->parseHtml($html, $url);
         }
 
         return null;
@@ -22,34 +29,28 @@ class Parser implements ParserInterface
 
     protected function fetchHtml(string $url): ?HtmlDomElement
     {
-        $config = [
-            'timeout' => 10,
-        ];
-
-        $adapter = GuzzleAdapter::createWithConfig($config);
-
-        $request = new Request('GET', $url);
-
         try {
-            $response = $adapter->sendRequest($request);
-        } catch (\Exception $exception) {
+            $response = $this->httpClient->request('GET', $url, [
+                'timeout' => 10,
+            ]);
+
+            if (200 === $response->getStatusCode()) {
+                $htmlString = $response->getContent(false);
+
+                $htmlDomElement = HtmlDomParser::str_get_html($htmlString);
+
+                if ($htmlDomElement === false) {
+                    return null;
+                }
+
+                return $htmlDomElement;
+            }
+        } catch (TransportExceptionInterface |
+        ClientExceptionInterface |
+        RedirectionExceptionInterface |
+        ServerExceptionInterface |
+        \Exception $e) {
             return null;
-        }
-
-        if (200 === $response->getStatusCode()) {
-            $htmlString = $response->getBody()->getContents();
-
-            try {
-                $htmlDomElement = \Sunra\PhpSimple\HtmlDomParser::str_get_html($htmlString);
-            } catch (\Exception $exception) {
-                return null;
-            }
-
-            if ($htmlDomElement === false) {
-                return null;
-            }
-
-            return $htmlDomElement;
         }
 
         return null;
@@ -58,7 +59,6 @@ class Parser implements ParserInterface
     protected function parseHtml(HtmlDomElement $element, string $url): CrawledWebsite
     {
         $cw = new CrawledWebsite();
-
         $cw->setUrl($url);
 
         $this->findFirstMatchingElement($element, $cw, 'title', 'title', 'innertext');
@@ -71,12 +71,10 @@ class Parser implements ParserInterface
     protected function findFirstMatchingElement(HtmlDomElement $element, CrawledWebsite $crawledWebsite, string $propertyName, string $selector, string $accessMethod): CrawledWebsite
     {
         $list = $element->find($selector);
-
         $item = array_pop($list);
 
         if ($item) {
             $setMethodName = sprintf('set%s', ucfirst($propertyName));
-
             $crawledWebsite->$setMethodName($item->$accessMethod);
         }
 
