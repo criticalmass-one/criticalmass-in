@@ -12,7 +12,7 @@ class TopStatsController extends AbstractController
     #[Route(
         '/statistic/top',
         name: 'caldera_criticalmass_statistic_topten',
-        priority: 140
+        priority: 170
     )]
     public function topStatsAction(RideRepository $rideRepository): Response
     {

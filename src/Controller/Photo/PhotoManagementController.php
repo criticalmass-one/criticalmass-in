@@ -23,7 +23,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class PhotoManagementController extends AbstractController
 {
     #[IsGranted('ROLE_USER')]
-    #[Route('/photos/list', name: 'caldera_criticalmass_photo_user_list', priority: 170)]
+    #[Route('/photos/list', name: 'caldera_criticalmass_photo_user_list', priority: 180)]
     public function listAction(
         PhotoRepository $photoRepository,
         UserInterface $user = null
