@@ -67,7 +67,7 @@ class RideController extends AbstractController
             ]);
         }
 
-        $eventDispatcher->dispatch(new ViewEvent($ride), ViewEvent::NAME);
+        //$eventDispatcher->dispatch(new ViewEvent($ride), ViewEvent::NAME);
 
         $seoPage
             ->setDescription('Informationen, Strecken und Fotos von der Critical Mass in ' . $ride->getCity()->getCity() . ' am ' . $ride->getDateTime()->format('d.m.Y'))
