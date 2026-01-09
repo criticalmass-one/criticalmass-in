@@ -22,9 +22,11 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Routing\Attribute\Route;
 
 class BoardController extends AbstractController
 {
+    #[Route('/boards/overview', name: 'caldera_criticalmass_board_overview', priority: 240)]
     public function overviewAction(
         CityRepository $cityRepository,
         BoardRepository $boardRepository
@@ -36,6 +38,8 @@ class BoardController extends AbstractController
         ]);
     }
 
+    #[Route('/boards/{boardSlug}', name: 'caldera_criticalmass_board_listthreads', priority: 240)]
+    #[Route('/{citySlug}/listthreads', name: 'caldera_criticalmass_board_listcitythreads', priority: 240)]
     public function listThreadsAction(
         ThreadRepository $threadRepository,
         ObjectRouterInterface $objectRouter,
@@ -47,13 +51,11 @@ class BoardController extends AbstractController
 
         if ($board) {
             $threads = $threadRepository->findThreadsForBoard($board);
-
             $newThreadUrl = $objectRouter->generate($board, 'caldera_criticalmass_board_addthread');
         }
 
         if ($city) {
             $threads = $threadRepository->findThreadsForCity($city);
-
             $newThreadUrl = $objectRouter->generate($city, 'caldera_criticalmass_board_addcitythread');
         }
 
@@ -64,6 +66,8 @@ class BoardController extends AbstractController
         ]);
     }
 
+    #[Route('/boards/{boardSlug}/thread/{threadSlug}', name: 'caldera_criticalmass_board_viewthread', priority: 240)]
+    #[Route('/{citySlug}/thread/{threadSlug}', name: 'caldera_criticalmass_board_viewcitythread', priority: 240)]
     public function viewThreadAction(
         PostRepository $postRepository,
         EventDispatcherInterface $eventDispatcher,
@@ -81,8 +85,9 @@ class BoardController extends AbstractController
         ]);
     }
 
-
     #[IsGranted('ROLE_USER')]
+    #[Route('/boards/{boardSlug}/addthread', name: 'caldera_criticalmass_board_addthread', priority: 240)]
+    #[Route('/{citySlug}/addthread', name: 'caldera_criticalmass_board_addcitythread', priority: 240)]
     public function addThreadAction(
         Request $request,
         ObjectRouterInterface $objectRouter,
