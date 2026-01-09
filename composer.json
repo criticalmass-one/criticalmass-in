@@ -78,7 +78,7 @@
         "jaybizzle/crawler-detect": "^1.2",
         "nelmio/api-doc-bundle": "^4.10",
         "symfony/asset": "^6.0",
-        "yohang/calendr": "dev-master",
+        "yohang/calendr": "^4.0",
         "presta/sitemap-bundle": "^3.3",
         "symfony/http-client": "^6.0",
         "symfony/twig-bridge": "^6.0",
