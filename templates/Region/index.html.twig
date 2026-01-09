@@ -6,13 +6,11 @@
 
 {% block breadcrumbs %}
     {{ bc.render(
-        [
-            { label: 'Verzeichnis', url: path('caldera_criticalmass_region_world') },
-            { label: region.parent.parent.parent.name, url: object_path(region.parent.parent.parent) },
-            { label: region.parent.parent.name, url: object_path(region.parent.parent) },
-            { label: region.parent.name, url: object_path(region.parent) },
-            { label: region.name, url: object_path(region) },
-        ],
+        breadcrumbRegions
+            |map(regionObj => {
+                'label': regionObj.name,
+                'url': object_path(regionObj)
+            }),
         {
             homeLabel: 'Critical Mass',
             homeUrl: path('caldera_criticalmass_frontpage')
