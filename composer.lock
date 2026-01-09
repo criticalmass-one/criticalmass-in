@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "caeb214a00fdf12ff8391374f846fa3d",
+    "content-hash": "c87d0b50feb893d28a6230506f3405d4",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -16453,23 +16453,23 @@
         },
         {
             "name": "yohang/calendr",
-            "version": "dev-master",
+            "version": "4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yohang/CalendR.git",
-                "reference": "908e608394efea4900a07eebe65e350720e6f062"
+                "reference": "80886a91b4f1c02583e7a6bf93ee0f1675b3ae82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yohang/CalendR/zipball/908e608394efea4900a07eebe65e350720e6f062",
-                "reference": "908e608394efea4900a07eebe65e350720e6f062",
+                "url": "https://api.github.com/repos/yohang/CalendR/zipball/80886a91b4f1c02583e7a6bf93ee0f1675b3ae82",
+                "reference": "80886a91b4f1c02583e7a6bf93ee0f1675b3ae82",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.2"
             },
             "require-dev": {
-                "doctrine/common": "^3.1.2",
+                "doctrine/doctrine-bundle": ">=2.7.2,<4.0",
                 "doctrine/orm": "^2.9.3|^3.0.0",
                 "friendsofphp/php-cs-fixer": "^3.90",
                 "infection/infection": "^0.31.9",
@@ -16477,16 +16477,17 @@
                 "phpunit/phpunit": "^11.5.44",
                 "psr/simple-cache": ">=0.2.0,<4",
                 "rector/rector": "^2.2",
-                "symfony/cache": ">=5.3,<9.0",
+                "symfony/browser-kit": ">=6.4,<9.0",
                 "symfony/config": ">=4.4,<9.0",
+                "symfony/css-selector": ">=6.4,<9.0",
                 "symfony/dependency-injection": ">=4.4,<9.0",
-                "symfony/http-kernel": ">=5.3,<9.0",
+                "symfony/framework-bundle": ">=6.4,<9.0",
+                "symfony/http-kernel": ">=5.4,<9.0",
+                "symfony/twig-bundle": ">=4.4,<9.0",
                 "symfony/var-dumper": ">=4.4,<9.0",
-                "symfony/yaml": ">=4.4,<9.0",
                 "twig/twig": "^3.3.2",
                 "vimeo/psalm": "^6.13@dev"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -16518,9 +16519,9 @@
             ],
             "support": {
                 "issues": "https://github.com/yohang/CalendR/issues",
-                "source": "https://github.com/yohang/CalendR/tree/master"
+                "source": "https://github.com/yohang/CalendR/tree/4.0.0"
             },
-            "time": "2025-12-01T20:09:51+00:00"
+            "time": "2025-12-02T20:07:12+00:00"
         },
         {
             "name": "zircote/swagger-php",
@@ -17206,8 +17207,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "composer/package-versions-deprecated": 20,
-        "yohang/calendr": 20
+        "composer/package-versions-deprecated": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
@@ -17220,6 +17220,6 @@
         "ext-json": "*",
         "ext-zip": "*"
     },
-    "platform-dev": [],
-    "plugin-api-version": "2.6.0"
+    "platform-dev": {},
+    "plugin-api-version": "2.9.0"
 }

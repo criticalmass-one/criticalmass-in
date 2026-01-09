@@ -30,7 +30,7 @@ class CityController extends AbstractController
         ]);
     }
 
-    #[Route('/{citySlug}/list', name: 'caldera_criticalmass_city_listrides', priority: 100)]
+    #[Route('/{citySlug}/list', name: 'caldera_criticalmass_city_listrides', priority: 170)]
     public function listRidesAction(
         RideRepository $rideRepository,
         City $city

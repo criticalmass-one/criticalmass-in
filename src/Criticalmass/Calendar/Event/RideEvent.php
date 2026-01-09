@@ -2,12 +2,14 @@
 
 namespace App\Criticalmass\Calendar\Event;
 
-use CalendR\Event\AbstractEvent;
 use App\Entity\Ride;
 use CalendR\Event\EventInterface;
+use CalendR\Event\EventTrait;
 
-class RideEvent extends AbstractEvent
+class RideEvent implements EventInterface
 {
+    use EventTrait;
+
     private \DateTime $begin;
     private \DateTime $end;
     private Ride $ride;
