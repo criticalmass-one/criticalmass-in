@@ -1,7 +1,3 @@
-{% extends 'Template/StandardTemplate.html.twig' %}
-
-{% block title %}{{ ride.title }}{% endblock %}
-
 {% block content %}
     {% if dateTime > ride.getDateTime() %}
         {% set pastRide = true %}
