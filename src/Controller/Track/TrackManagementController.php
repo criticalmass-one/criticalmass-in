@@ -20,7 +20,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class TrackManagementController extends AbstractController
 {
     #[IsGranted('ROLE_USER')]
-    #[Route('/list', name: 'list', methods: ['GET'], priority: 150)]
+    #[Route('/list', name: 'list', methods: ['GET'], priority: 180)]
     public function listAction(
         Request $request,
         TrackRepository $trackRepository,
