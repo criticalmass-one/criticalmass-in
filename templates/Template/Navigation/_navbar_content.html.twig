@@ -1,7 +1,14 @@
 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    {{ knp_menu_render('main_menu', {
-        'childrenAttributes': { 'class': 'navbar-nav me-auto' }
-    }) }}
+    <div class="cm-navbar__primary">
+        {{ knp_menu_render('main_menu', {
+            'childrenAttributes': { 'class': 'cm-navbar__menu navbar-nav' }
+        }) }}
+    </div>
 
-    {{ include('Template/Navigation/_navbar_search.html.twig') }}
+    <div class="cm-navbar__utilities">
+        {{ include('Template/Navigation/_navbar_search.html.twig') }}
+        <a class="btn btn-outline-light cm-navbar__cta" href="{{ path('caldera_criticalmass_ride_list') }}">
+            {% trans %}criticalmass.navigation.rides{% endtrans %}
+        </a>
+    </div>
 </div>

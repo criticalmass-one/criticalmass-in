@@ -1,12 +1,16 @@
-<form class="d-flex" role="search"
+<form class="cm-navbar__search" role="search"
       action="{{ path('caldera_criticalmass_search_query') }}">
+    <label class="visually-hidden" for="search-input">
+        {% trans %}criticalmass.navigation.search.search{% endtrans %}
+    </label>
     <input id="search-input"
            name="query"
            type="search"
-           class="form-control me-2"
+           class="form-control cm-navbar__search-input"
            placeholder="{% trans %}criticalmass.navigation.search.search{% endtrans %}">
 
-    <button type="submit" class="btn btn-success">
-        {% trans %}criticalmass.navigation.search.search{% endtrans %}
+    <button type="submit" class="btn btn-primary cm-navbar__search-button">
+        <span class="cm-navbar__search-label d-none d-md-inline">{% trans %}criticalmass.navigation.search.search{% endtrans %}</span>
+        <span class="cm-navbar__search-icon" aria-hidden="true"></span>
     </button>
 </form>

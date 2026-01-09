@@ -1,13 +1,16 @@
-<a class="navbar-brand" href="{{ path('caldera_criticalmass_frontpage') }}">
-    {% trans %}criticalmass.logoname{% endtrans %}
-</a>
+<div class="cm-navbar__brand">
+    <a class="navbar-brand" href="{{ path('caldera_criticalmass_frontpage') }}">
+        <span class="cm-navbar__logo" aria-hidden="true"></span>
+        <span class="cm-navbar__title">{% trans %}criticalmass.logoname{% endtrans %}</span>
+    </a>
+</div>
 
-<button class="navbar-toggler"
+<button class="cm-navbar__toggler navbar-toggler"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent"
         aria-expanded="false"
         aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+    <span class="cm-navbar__toggler-icon"></span>
 </button>
