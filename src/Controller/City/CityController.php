@@ -15,9 +15,11 @@ use App\Repository\SocialNetworkProfileRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class CityController extends AbstractController
 {
+    #[Route('/{citySlug}/missingstats', name: 'caldera_criticalmass_city_missingstats', priority: 100)]
     public function missingStatsAction(
         RideRepository $rideRepository,
         City $city
@@ -28,6 +30,7 @@ class CityController extends AbstractController
         ]);
     }
 
+    #[Route('/{citySlug}/list', name: 'caldera_criticalmass_city_listrides', priority: 170)]
     public function listRidesAction(
         RideRepository $rideRepository,
         City $city
@@ -38,6 +41,7 @@ class CityController extends AbstractController
         ]);
     }
 
+    #[Route('/{citySlug}/galleries', name: 'caldera_criticalmass_city_listgalleries', priority: 100)]
     public function listGalleriesAction(
         PhotoRepository $photoRepository,
         SeoPageInterface $seoPage,
@@ -53,6 +57,12 @@ class CityController extends AbstractController
         ]);
     }
 
+    #[Route(
+        '/{citySlug}',
+        name: 'caldera_criticalmass_city_show',
+        options: ['expose' => true],
+        priority: 100
+    )]
     public function showAction(
         Request $request,
         RideRepository $rideRepository,
@@ -87,7 +97,7 @@ class CityController extends AbstractController
                 'blocked' => $blocked
             ]);
         }
-        
+
         $seoPage
             ->setDescription('Informationen, Tourendaten, Tracks und Fotos von der Critical Mass in ' . $city->getCity())
             ->setCanonicalForObject($city)
@@ -108,6 +118,7 @@ class CityController extends AbstractController
         ]);
     }
 
+    #[Route('/{citySlug}/locations', name: 'caldera_criticalmass_city_locations', priority: 100)]
     public function getlocationsAction(
         RideRepository $rideRepository,
         City $city

@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -30,6 +31,7 @@ class CityCycleExecuteController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
+    #[Route('/{citySlug}/cycles/{id}/execute', name: 'caldera_criticalmass_citycycle_execute', priority: 80)]
     public function executeAction(
         Request $request,
         CityCycle $cityCycle,
@@ -74,6 +76,7 @@ class CityCycleExecuteController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
+    #[Route('/{citySlug}/cycles/{id}/execute-persist', name: 'caldera_criticalmass_citycycle_execute_persist', priority: 80)]
     public function executePersistAction(
         Request $request,
         CityCycle $cityCycle,

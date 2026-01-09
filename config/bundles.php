@@ -28,4 +28,5 @@ return [
     MalteHuebner\OrderedEntitiesBundle\MalteHuebnerOrderedEntitiesBundle::class => ['all' => true],
     MalteHuebner\ImpressBundle\MalteHuebnerImpressBundle::class => ['all' => true],
     MalteHuebner\DataQueryBundle\MalteHuebnerDataQueryBundle::class => ['all' => true],
+    CalendR\Bridge\Symfony\Bundle\CalendRBundle::class => ['all' => true],
 ];

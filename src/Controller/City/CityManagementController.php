@@ -18,12 +18,15 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class CityManagementController extends AbstractController
 {
     #[IsGranted('ROLE_USER')]
+    #[Route('/world/{slug1}/{slug2}/{slug3}/addcity', name: 'caldera_criticalmass_city_add', priority: 95)]
+    #[Route('/{citySlug}/add', name: 'caldera_criticalmass_city_add_slug', priority: 95)]
     public function addAction(
         Request $request,
         ManagerRegistry $managerRegistry,
@@ -51,8 +54,7 @@ class CityManagementController extends AbstractController
         }
 
         $form = $this->createForm(CityType::class, $city, [
-            'action' => $this->generateUrl('caldera_criticalmass_city_add',
-                $this->getRegionSlugParameterArray($region)),
+            'action' => $this->generateUrl('caldera_criticalmass_city_add', $this->getRegionSlugParameterArray($region)),
         ]);
 
         if (Request::METHOD_POST == $request->getMethod()) {
@@ -70,7 +72,7 @@ class CityManagementController extends AbstractController
         City $city,
         Region $region,
         FormInterface $form
-    ) {
+    ): Response {
         return $this->render('CityManagement/edit.html.twig', [
             'city' => $city,
             'form' => $form->createView(),
@@ -103,7 +105,6 @@ class CityManagementController extends AbstractController
             }
 
             $em->persist($city);
-
             $em->flush();
 
             $form = $this->createForm(CityType::class, $city, [
@@ -125,6 +126,7 @@ class CityManagementController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
+    #[Route('/{citySlug}/edit', name: 'caldera_criticalmass_city_edit', priority: 95)]
     public function editAction(
         Request $request,
         UserInterface $user = null,
@@ -173,8 +175,7 @@ class CityManagementController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $city
                 ->setUpdatedAt(new \DateTime())
-                ->setUser($user)
-            ;
+                ->setUser($user);
 
             $this->managerRegistry->getManager()->flush();
 

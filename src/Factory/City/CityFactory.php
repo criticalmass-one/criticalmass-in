@@ -9,10 +9,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class CityFactory implements CityFactoryInterface
 {
-    /**
-     * @var City $city
-     */
-    protected $city;
+    private readonly City $city;
 
     public function __construct()
     {
@@ -116,6 +113,13 @@ class CityFactory implements CityFactoryInterface
     {
         $this->city->setCity($cityName);
         
+        return $this;
+    }
+
+    public function withTitle(string $title): CityFactoryInterface
+    {
+        $this->city->setTitle($title);
+
         return $this;
     }
 
