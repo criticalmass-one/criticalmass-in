@@ -28,7 +28,7 @@ class LocationController extends BaseController
      *     )
      * )
      */
-    #[Route(path: '/{citySlug}/location', name: 'caldera_criticalmass_rest_location_list', methods: ['GET'])]
+    #[Route(path: '/api/{citySlug}/location', name: 'caldera_criticalmass_rest_location_list', methods: ['GET'])]
     public function listLocationAction(City $city): JsonResponse
     {
         $locationList = $this->managerRegistry->getRepository(Location::class)->findLocationsByCity($city);
@@ -62,7 +62,7 @@ class LocationController extends BaseController
      *     )
      * )
      */
-    #[Route(path: '/{citySlug}/location/{slug}', name: 'caldera_criticalmass_rest_location_show', methods: ['GET'])]
+    #[Route(path: '/api/{citySlug}/location/{slug}', name: 'caldera_criticalmass_rest_location_show', methods: ['GET'])]
     public function showLocationAction(Location $location): JsonResponse
     {
         return $this->createStandardResponse($location);

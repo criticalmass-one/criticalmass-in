@@ -12,16 +12,34 @@ use Symfony\Component\Routing\Annotation\Route;
 class SubrideController extends BaseController
 {
     /**
+     * Retrieve a list of subrides of a ride.
+     *
+     * Subrides are smaller events that happen within the context of a main ride.
+     *
      * @Operation(
      *     tags={"Subride"},
      *     summary="Retrieve a list of subrides of a ride",
+     *     @OA\Parameter(
+     *         name="citySlug",
+     *         in="path",
+     *         description="Slug of the city",
+     *         required=true,
+     *         @OA\Schema(type="string"),
+     *     ),
+     *     @OA\Parameter(
+     *         name="rideIdentifier",
+     *         in="path",
+     *         description="Identifier of the ride (date or slug)",
+     *         required=true,
+     *         @OA\Schema(type="string"),
+     *     ),
      *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )
      * )
      */
-    #[Route(path: '/{citySlug}/{rideIdentifier}/subride', name: 'caldera_criticalmass_rest_subride_list', methods: ['GET'])]
+    #[Route(path: '/api/{citySlug}/{rideIdentifier}/subride', name: 'caldera_criticalmass_rest_subride_list', methods: ['GET'])]
     public function listSubrideAction(Ride $ride): JsonResponse
     {
         $subrideList = $this->managerRegistry->getRepository(Subride::class)->findByRide($ride);
@@ -35,13 +53,34 @@ class SubrideController extends BaseController
      * @Operation(
      *     tags={"Subride"},
      *     summary="Show details of a subride",
+     *     @OA\Parameter(
+     *         name="citySlug",
+     *         in="path",
+     *         description="Slug of the city",
+     *         required=true,
+     *         @OA\Schema(type="string"),
+     *     ),
+     *     @OA\Parameter(
+     *         name="rideIdentifier",
+     *         in="path",
+     *         description="Identifier of the ride (date or slug)",
+     *         required=true,
+     *         @OA\Schema(type="string"),
+     *     ),
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="Id of the subride",
+     *         required=true,
+     *         @OA\Schema(type="integer"),
+     *     ),
      *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )
      * )
      */
-    #[Route(path: '/{citySlug}/{rideIdentifier}/{id}', name: 'caldera_criticalmass_rest_subride_show', requirements: ['id' => '\d+'], methods: ['GET'])]
+    #[Route(path: '/api/{citySlug}/{rideIdentifier}/{id}', name: 'caldera_criticalmass_rest_subride_show', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function showSubrideAction(Subride $subride): JsonResponse
     {
         return $this->createStandardResponse($subride);

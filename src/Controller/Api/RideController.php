@@ -46,7 +46,7 @@ class RideController extends BaseController
      *     )
      * )
      */
-    #[Route(path: '/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_show', methods: ['GET'])]
+    #[Route(path: '/api/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_show', methods: ['GET'])]
     public function showAction(Ride $ride): JsonResponse
     {
         return $this->createStandardResponse($ride);
@@ -71,7 +71,7 @@ class RideController extends BaseController
      *     )
      * )
      */
-    #[Route(path: '/{citySlug}/current', name: 'caldera_criticalmass_rest_ride_show_current', methods: ['GET'])]
+    #[Route(path: '/api/{citySlug}/current', name: 'caldera_criticalmass_rest_ride_show_current', methods: ['GET'])]
     public function showCurrentAction(Request $request, City $city): JsonResponse
     {
         $cycleMandatory = $request->query->getBoolean('cycleMandatory', false);
@@ -304,7 +304,7 @@ class RideController extends BaseController
      *     )
      * )
      */
-    #[Route(path: '/ride', name: 'caldera_criticalmass_rest_ride_list', methods: ['GET'])]
+    #[Route(path: '/api/ride', name: 'caldera_criticalmass_rest_ride_list', methods: ['GET'])]
     public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager): JsonResponse
     {
         $queryParameterList = RequestToListConverter::convert($request);
@@ -351,7 +351,7 @@ class RideController extends BaseController
      *     )
      * )
      */
-    #[Route(path: '/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_create', methods: ['PUT'])]
+    #[Route(path: '/api/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_create', methods: ['PUT'])]
     public function createRideAction(Request $request, City $city, ValidatorInterface $validator): JsonResponse
     {
         /** @var Ride $ride */
@@ -424,7 +424,7 @@ class RideController extends BaseController
      * )
      *
      */
-    #[Route(path: '/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_update', methods: ['POST'])]
+    #[Route(path: '/api/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_update', methods: ['POST'])]
     public function updateRideAction(Request $request, Ride $ride, ValidatorInterface $validator, EntityMergerInterface $entityMerger): JsonResponse
     {
         /** @var Ride $ride */

@@ -135,7 +135,7 @@ class EstimateController extends BaseController
      *     )
      * )
      */
-    #[Route(path: '/estimate', name: 'caldera_criticalmass_rest_estimate_create', methods: ['POST'])]
+    #[Route(path: '/api/estimate', name: 'caldera_criticalmass_rest_estimate_create', methods: ['POST'])]
     public function createRideEstimateAction(Request $request, Ride $ride, SerializerInterface $serializer): JsonResponse
     {
         /** @var CreateEstimateModel $estimateModel */

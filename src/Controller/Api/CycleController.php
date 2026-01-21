@@ -72,7 +72,7 @@ class CycleController extends BaseController
      *     )
      * )
      */
-    #[Route(path: '/cycles', name: 'caldera_criticalmass_rest_cycles_list', methods: ['GET'])]
+    #[Route(path: '/api/cycles', name: 'caldera_criticalmass_rest_cycles_list', methods: ['GET'])]
     public function listAction(
         Request $request,
         City $city = null,

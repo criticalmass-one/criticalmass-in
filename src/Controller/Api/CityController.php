@@ -174,7 +174,7 @@ class CityController extends BaseController
      *     )
      * )
      */
-    #[Route(path: '/city', name: 'caldera_criticalmass_rest_city_list', methods: ['GET'])]
+    #[Route(path: '/api/city', name: 'caldera_criticalmass_rest_city_list', methods: ['GET'])]
     public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager): JsonResponse
     {
         $queryParameterList = RequestToListConverter::convert($request);
@@ -211,7 +211,7 @@ class CityController extends BaseController
      *     )
      * )
      */
-    #[Route(path: '/{citySlug}', name: 'caldera_criticalmass_rest_city_show', methods: ['GET'])]
+    #[Route(path: '/api/{citySlug}', name: 'caldera_criticalmass_rest_city_show', methods: ['GET'])]
     public function showAction(City $city): JsonResponse
     {
         return $this->createStandardResponse($city);

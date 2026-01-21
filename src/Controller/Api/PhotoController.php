@@ -42,7 +42,7 @@ class PhotoController extends BaseController
      * )
      *
      */
-    #[Route(path: '/{citySlug}/{rideIdentifier}/listPhotos', name: 'caldera_criticalmass_rest_photo_ridelist', methods: ['GET'])]
+    #[Route(path: '/api/{citySlug}/{rideIdentifier}/listPhotos', name: 'caldera_criticalmass_rest_photo_ridelist', methods: ['GET'])]
     public function listRidePhotosAction(Ride $ride): JsonResponse
     {
         $photoList = $this->managerRegistry->getRepository(Photo::class)->findPhotosByRide($ride);
@@ -245,7 +245,7 @@ class PhotoController extends BaseController
      *     )
      * )
      */
-    #[Route(path: '/photo', name: 'caldera_criticalmass_rest_photo_list', methods: ['GET'])]
+    #[Route(path: '/api/photo', name: 'caldera_criticalmass_rest_photo_list', methods: ['GET'])]
     public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager): JsonResponse
     {
         $queryParameterList = RequestToListConverter::convert($request);
@@ -255,7 +255,31 @@ class PhotoController extends BaseController
         return $this->createStandardResponse($photoList);
     }
 
-    #[Route(path: '/photo/{id}', name: 'caldera_criticalmass_rest_photo_post', methods: ['POST'])]
+    /**
+     * Update properties of a photo.
+     *
+     * @Operation(
+     *     tags={"Photo"},
+     *     summary="Update a photo",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="Id of the photo to update",
+     *         required=true,
+     *         @OA\Schema(type="integer"),
+     *     ),
+     *     @OA\RequestBody(
+     *         description="JSON representation of the photo data",
+     *         required=true,
+     *         @OA\JsonContent(type="object")
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Returned when successful"
+     *     )
+     * )
+     */
+    #[Route(path: '/api/photo/{id}', name: 'caldera_criticalmass_rest_photo_post', methods: ['POST'])]
     public function updatePhotoAction(Request $request, SerializerInterface $serializer): JsonResponse
     {
         $json = $request->getContent();

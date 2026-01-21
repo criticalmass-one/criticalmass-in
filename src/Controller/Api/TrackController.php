@@ -26,13 +26,27 @@ class TrackController extends BaseController
      * @Operation(
      *     tags={"Track"},
      *     summary="Retrieve a list of tracks of a ride",
+     *     @OA\Parameter(
+     *         name="citySlug",
+     *         in="path",
+     *         description="Slug of the city",
+     *         required=true,
+     *         @OA\Schema(type="string"),
+     *     ),
+     *     @OA\Parameter(
+     *         name="rideIdentifier",
+     *         in="path",
+     *         description="Identifier of the ride (date or slug)",
+     *         required=true,
+     *         @OA\Schema(type="string"),
+     *     ),
      *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )
      * )
      */
-    #[Route(path: '/{citySlug}/{rideIdentifier}/listTracks', name: 'caldera_criticalmass_rest_track_ridelist', methods: ['GET'])]
+    #[Route(path: '/api/{citySlug}/{rideIdentifier}/listTracks', name: 'caldera_criticalmass_rest_track_ridelist', methods: ['GET'])]
     public function listRideTrackAction(Ride $ride): JsonResponse
     {
         $trackList = $this->managerRegistry->getRepository(Track::class)->findByRide($ride);
@@ -46,13 +60,20 @@ class TrackController extends BaseController
      * @Operation(
      *     tags={"Track"},
      *     summary="Show details of a track",
+     *     @OA\Parameter(
+     *         name="trackId",
+     *         in="path",
+     *         description="Id of the track",
+     *         required=true,
+     *         @OA\Schema(type="integer"),
+     *     ),
      *     @OA\Response(
      *         response="200",
      *         description="Returned when successful"
      *     )
      * )
      */
-    #[Route(path: '/track/{trackId}', name: 'caldera_criticalmass_rest_track_view', methods: ['GET'])]
+    #[Route(path: '/api/track/{trackId}', name: 'caldera_criticalmass_rest_track_view', methods: ['GET'])]
     public function viewAction(Track $track, UserInterface $user = null): JsonResponse
     {
         $groups = ['api-public'];
@@ -186,7 +207,7 @@ class TrackController extends BaseController
      *     )
      * )
      */
-    #[Route(path: '/track', name: 'caldera_criticalmass_rest_track_list', methods: ['GET'])]
+    #[Route(path: '/api/track', name: 'caldera_criticalmass_rest_track_list', methods: ['GET'])]
     public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager,UserInterface $user = null): JsonResponse
     {
         $queryParameterList = RequestToListConverter::convert($request);
@@ -204,6 +225,31 @@ class TrackController extends BaseController
         return $this->createStandardResponse($trackList, $context);
     }
 
+    /**
+     * Delete a track.
+     *
+     * Marks the track as deleted. Requires edit permissions on the track.
+     *
+     * @Operation(
+     *     tags={"Track"},
+     *     summary="Delete a track",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="Id of the track to delete",
+     *         required=true,
+     *         @OA\Schema(type="integer"),
+     *     ),
+     *     @OA\Response(
+     *         response="302",
+     *         description="Redirects to track list on success"
+     *     ),
+     *     @OA\Response(
+     *         response="403",
+     *         description="Returned when user lacks edit permissions"
+     *     )
+     * )
+     */
     #[Route('/track/{id}', name: 'caldera_criticalmass_rest_track_delete', methods: ['DELETE'])]
     #[IsGranted('edit', 'track')]
     public function deleteAction(Track $track, EventDispatcherInterface $eventDispatcher, ManagerRegistry $managerRegistry): Response
