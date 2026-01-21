@@ -2,12 +2,12 @@
 
 namespace Tests\Controller\Api\Parameter;
 
+use App\Criticalmass\Geo\Coord\CoordInterface;
 use App\Criticalmass\Geo\DistanceCalculator\DistanceCalculator;
 use App\Entity\City;
 use App\Entity\Photo;
 use App\Entity\Ride;
 use App\EntityInterface\CoordinateInterface;
-use Caldera\GeoBasic\Coord\CoordInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\Controller\Api\AbstractApiControllerTest;
 use Tests\Coords;

@@ -36,7 +36,6 @@
         "sonata-project/intl-bundle": "^2.3",
         "miljar/php-exif": "^0.6.5",
         "sonata-project/seo-bundle": "^3.0",
-        "calderacc/geobasic": "^0.5",
         "salavert/time-ago-in-words": "^1.8",
         "emcconville/point-reduction-algorithms": "^1.2",
         "php-http/message": "^1.6",

@@ -2,10 +2,10 @@
 
 namespace Tests\Controller\Api\Query;
 
+use App\Criticalmass\Geo\Coord\Coord;
+use App\Criticalmass\Geo\Coord\CoordInterface;
 use App\Entity\Ride;
 use App\EntityInterface\CoordinateInterface;
-use Caldera\GeoBasic\Coord\Coord;
-use Caldera\GeoBasic\Coord\CoordInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\TestDox;
 use Tests\Controller\Api\AbstractApiControllerTest;
