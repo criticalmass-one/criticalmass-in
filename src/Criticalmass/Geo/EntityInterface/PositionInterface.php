@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\Geo\EntityInterface;
 
-use App\Geo\Coord\CoordInterface;
+use App\Criticalmass\Geo\Coord\CoordInterface;
 
 interface PositionInterface extends CoordInterface
 {

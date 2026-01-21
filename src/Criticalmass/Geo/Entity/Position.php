@@ -2,8 +2,8 @@
 
 namespace App\Criticalmass\Geo\Entity;
 
+use App\Criticalmass\Geo\Coordinate\Coordinate;
 use App\Criticalmass\Geo\EntityInterface\PositionInterface;
-use App\Geo\Coordinate\Coordinate;
 use JMS\Serializer\Annotation as JMS;
 
 /**

@@ -2,9 +2,9 @@
 
 namespace App\Factory\City;
 
+use App\Criticalmass\Geo\Coord\CoordInterface;
 use App\Entity\City;
 use App\Entity\Region;
-use App\Geo\Coord\CoordInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 interface CityFactoryInterface

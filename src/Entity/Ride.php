@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\Geo\Coord\Coord;
+use App\Criticalmass\Geo\Coord\CoordInterface;
 use App\Criticalmass\Router\Attribute as Routing;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\EntityInterface\AuditableInterface;
@@ -12,8 +14,6 @@ use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
 use App\EntityInterface\SocialNetworkProfileAble;
 use App\Validator\Constraint as CriticalAssert;
-use App\Geo\Coord\Coord;
-use App\Geo\Coord\CoordInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;

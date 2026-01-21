@@ -2,10 +2,10 @@
 
 namespace Tests\Controller\Api\Query;
 
+use App\Criticalmass\Geo\Coord\CoordInterface;
 use App\Entity\City;
 use App\Entity\Photo;
 use App\Entity\Ride;
-use App\Geo\Coord\CoordInterface;
 use Tests\Controller\Api\AbstractApiControllerTest;
 use Tests\Coords;
 

@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace App\Geo\Coordinate;
+namespace App\Criticalmass\Geo\Coordinate;
 
-use App\Geo\Coord\Coord;
-use App\Geo\Coord\CoordInterface;
+use App\Criticalmass\Geo\Coord\Coord;
+use App\Criticalmass\Geo\Coord\CoordInterface;
 
 class Coordinate extends Coord implements CoordinateInterface
 {

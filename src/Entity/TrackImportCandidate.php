@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use App\Geo\Coord\Coord;
-use App\Geo\Coord\CoordInterface;
+use App\Criticalmass\Geo\Coord\Coord;
+use App\Criticalmass\Geo\Coord\CoordInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 

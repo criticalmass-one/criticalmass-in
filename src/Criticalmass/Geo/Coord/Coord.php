@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Geo\Coord;
+namespace App\Criticalmass\Geo\Coord;
 
 class Coord implements CoordInterface
 {
