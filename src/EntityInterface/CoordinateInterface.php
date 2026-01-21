@@ -2,7 +2,7 @@
 
 namespace App\EntityInterface;
 
-use Caldera\GeoBasic\Coord\CoordInterface;
+use App\Criticalmass\Geo\Coord\CoordInterface;
 
 interface CoordinateInterface
 {
