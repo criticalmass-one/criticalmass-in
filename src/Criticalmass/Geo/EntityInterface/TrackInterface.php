@@ -2,10 +2,10 @@
 
 namespace App\Criticalmass\Geo\EntityInterface;
 
-use App\Geo\Track\TrackInterface as BaseTrackInterface;
-
-interface TrackInterface extends BaseTrackInterface
+interface TrackInterface
 {
+    public function getPolyline(): ?string;
+    public function setPolyline(?string $polyline): static;
     public function setReducedPolyline(string $reducedPolyline = null): TrackInterface;
     public function getReducedPolyline(): ?string;
 }

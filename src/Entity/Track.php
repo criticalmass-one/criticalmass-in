@@ -10,7 +10,6 @@ use App\Criticalmass\Router\Attribute as Routing;
 use App\Criticalmass\UploadableDataHandler\UploadableEntity;
 use App\Criticalmass\UploadFaker\FakeUploadable;
 use App\EntityInterface\RouteableInterface;
-use App\Geo\Track\TrackInterface as BaseTrackInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
@@ -272,14 +271,14 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
         return $this->latLngList;
     }
 
-    public function setPolyline(string $polyline): BaseTrackInterface
+    public function setPolyline(?string $polyline): static
     {
         $this->polyline = $polyline;
 
         return $this;
     }
 
-    public function getPolyline(): string
+    public function getPolyline(): ?string
     {
         return $this->polyline;
     }
