@@ -96,7 +96,7 @@
     "require-dev": {
         "symfony/browser-kit": "^6.0",
         "symfony/phpunit-bridge": "*",
-        "phpunit/phpunit": "^9",
+        "phpunit/phpunit": "^11.0",
         "symfony/maker-bundle": "^1.11",
         "symfony/stopwatch": "^6.0",
         "symfony/web-profiler-bundle": "^6.0",
