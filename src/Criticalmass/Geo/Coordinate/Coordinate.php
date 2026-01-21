@@ -9,9 +9,6 @@ class Coordinate extends Coord implements CoordinateInterface
 {
     public function __construct(?float $latitude = null, ?float $longitude = null)
     {
-        $this->latitude = $latitude;
-        $this->longitude = $longitude;
-
         parent::__construct($latitude, $longitude);
     }
 
