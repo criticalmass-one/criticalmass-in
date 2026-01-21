@@ -2,10 +2,10 @@
 
 namespace Tests\Controller\Api\Query;
 
+use App\Criticalmass\Geo\Coord\Coord;
+use App\Criticalmass\Geo\Coord\CoordInterface;
 use App\Entity\Ride;
 use App\EntityInterface\CoordinateInterface;
-use Caldera\GeoBasic\Coord\Coord;
-use Caldera\GeoBasic\Coord\CoordInterface;
 use Tests\Controller\Api\AbstractApiControllerTest;
 
 class BoundingBoxQueryTest extends AbstractApiControllerTest

@@ -16,12 +16,14 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class PhotoManagementController extends AbstractController
 {
     #[IsGranted('ROLE_USER')]
+    #[Route('/photos/list', name: 'caldera_criticalmass_photo_user_list', priority: 180)]
     public function listAction(
         PhotoRepository $photoRepository,
         UserInterface $user = null
@@ -52,6 +54,7 @@ class PhotoManagementController extends AbstractController
     }
 
     #[IsGranted('edit', 'photo')]
+    #[Route('/managephotos/{id}/delete', name: 'caldera_criticalmass_photo_delete', priority: 170)]
     public function deleteAction(Request $request, Photo $photo, ManagerRegistry $registry): Response
     {
         $this->saveReferer($request);
@@ -64,13 +67,13 @@ class PhotoManagementController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
+    #[Route('/{citySlug}/{rideIdentifier}/managephotos', name: 'caldera_criticalmass_photo_manage', priority: 170)]
     public function manageAction(
         Request $request,
         PaginatorInterface $paginator,
         Ride $ride,
         PhotoRepository $photoRepository
-    ): Response
-    {
+    ): Response {
         $query = $photoRepository->buildQueryPhotosByUserAndRide($this->getUser(), $ride);
 
         $pagination = $paginator->paginate(
@@ -86,6 +89,7 @@ class PhotoManagementController extends AbstractController
     }
 
     #[IsGranted('edit', 'photo')]
+    #[Route('/photo/{id}/toggle', name: 'caldera_criticalmass_photo_toggle', priority: 170)]
     public function toggleAction(Request $request, Photo $photo, ManagerRegistry $registry): Response
     {
         $this->saveReferer($request);
@@ -98,6 +102,7 @@ class PhotoManagementController extends AbstractController
     }
 
     #[IsGranted('edit', 'photo')]
+    #[Route('/photo/{id}/featured', name: 'caldera_criticalmass_photo_featured', priority: 170)]
     public function featuredPhotoAction(Request $request, Photo $photo, ManagerRegistry $registry): Response
     {
         $this->saveReferer($request);
@@ -110,17 +115,22 @@ class PhotoManagementController extends AbstractController
     }
 
     #[IsGranted('edit', 'photo')]
-    public function placeSingleAction(Request $request, Photo $photo, ObjectRouterInterface $objectRouter, ManagerRegistry $registry): Response
-    {
+    #[Route('/photo/{id}/place', name: 'caldera_criticalmass_photo_place_single', priority: 170)]
+    public function placeSingleAction(
+        Request $request,
+        Photo $photo,
+        ObjectRouterInterface $objectRouter,
+        ManagerRegistry $registry
+    ): Response {
         $form = $this->createForm(PhotoCoordType::class, $photo, [
             'action' => $objectRouter->generate($photo, 'caldera_criticalmass_photo_place_single')
         ]);
 
         if (Request::METHOD_POST === $request->getMethod()) {
             return $this->placeSinglePostAction($request, $photo, $form, $registry);
-        } else {
-            return $this->placeSingleGetAction($request, $photo, $form, $registry);
         }
+
+        return $this->placeSingleGetAction($request, $photo, $form, $registry);
     }
 
     protected function placeSingleGetAction(
@@ -140,8 +150,12 @@ class PhotoManagementController extends AbstractController
         ]);
     }
 
-    protected function placeSinglePostAction(Request $request, Photo $photo, FormInterface $form, ManagerRegistry $registry): Response
-    {
+    protected function placeSinglePostAction(
+        Request $request,
+        Photo $photo,
+        FormInterface $form,
+        ManagerRegistry $registry
+    ): Response {
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -154,6 +168,7 @@ class PhotoManagementController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
+    #[Route('/{citySlug}/{rideIdentifier}/relocatephotos', name: 'caldera_criticalmass_photo_relocate', priority: 170)]
     public function relocateAction(
         TrackRepository $trackRepository,
         PhotoRepository $photoRepository,
@@ -171,13 +186,14 @@ class PhotoManagementController extends AbstractController
     }
 
     #[IsGranted('edit', 'photo')]
+    #[Route('/photo/{id}/rotate', name: 'caldera_criticalmass_photo_rotate', priority: 170)]
     public function rotateAction(Request $request, Photo $photo, PhotoManipulatorInterface $photoManipulator): Response
     {
         $this->saveReferer($request);
 
         $angle = 90;
 
-        if ($request->query->get('rotate') && $request->query->get('rotate') == 'right') {
+        if ($request->query->get('rotate') && $request->query->get('rotate') === 'right') {
             $angle = -90;
         }
 
@@ -190,24 +206,37 @@ class PhotoManagementController extends AbstractController
     }
 
     #[IsGranted('edit', 'photo')]
-    public function censorAction(Request $request, UserInterface $user = null, Photo $photo, PhotoManipulatorInterface $photoManipulator): Response
-    {
+    #[Route('/photo/{id}/censor', name: 'caldera_criticalmass_photo_censor', priority: 170)]
+    #[Route('/photo/{id}/censor', name: 'caldera_criticalmass_photo_censor_short', options: ['expose' => true], priority: 170)]
+    public function censorAction(
+        Request $request,
+        UserInterface $user = null,
+        Photo $photo,
+        PhotoManipulatorInterface $photoManipulator
+    ): Response {
         if (Request::METHOD_POST === $request->getMethod()) {
             return $this->censorPostAction($request, $user, $photo, $photoManipulator);
         }
 
-        return $this->censorGetAction($request, $user, $photo, $photoManipulator);
+        return $this->censorGetAction($photo, $photoManipulator, $user);
     }
 
-    public function censorGetAction(Photo $photo, PhotoManipulatorInterface $photoManipulator, UserInterface $user = null): Response
-    {
+    public function censorGetAction(
+        Photo $photo,
+        PhotoManipulatorInterface $photoManipulator,
+        UserInterface $user = null
+    ): Response {
         return $this->render('PhotoManagement/censor.html.twig', [
             'photo' => $photo,
         ]);
     }
 
-    public function censorPostAction(Request $request, UserInterface $user = null, Photo $photo, PhotoManipulatorInterface $photoManipulator): Response
-    {
+    public function censorPostAction(
+        Request $request,
+        UserInterface $user = null,
+        Photo $photo,
+        PhotoManipulatorInterface $photoManipulator
+    ): Response {
         $areaDataList = json_decode($request->getContent());
 
         if (0 === count($areaDataList)) {
@@ -216,7 +245,7 @@ class PhotoManagementController extends AbstractController
 
         $newFilename = $photoManipulator
             ->open($photo)
-            ->censor($areaDataList, intval($request->query->get('width')))
+            ->censor($areaDataList, (int) $request->query->get('width'))
             ->save();
 
         return new Response($newFilename);

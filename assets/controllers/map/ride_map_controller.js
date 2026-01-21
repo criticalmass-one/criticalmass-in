@@ -44,14 +44,13 @@ export default class extends BaseMapController {
         const lng = this.longitudeValue;
 
         const icon = L.ExtraMarkers.icon({
-            icon: 'fa-university',
+            icon: 'fa-bicycle',
             markerColor: 'blue',
             shape: 'circle',
             prefix: 'fas'
         });
 
         const marker = this.createMarker(lat, lng, { icon, title: 'Treffpunkt' });
-        marker.bindPopup('Treffpunkt');
     }
 
     getTrackUrl() {

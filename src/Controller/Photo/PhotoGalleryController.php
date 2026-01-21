@@ -11,12 +11,18 @@ use Flagception\Bundle\FlagceptionBundle\Attribute\Feature;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Feature('photos')]
 class PhotoGalleryController extends AbstractController
 {
+    #[Route(
+        '/{citySlug}/{rideIdentifier}/listphotos',
+        name: 'caldera_criticalmass_photo_ride_list',
+        priority: 170
+    )]
     public function galleryAction(
         Request $request,
         PaginatorInterface $paginator,
@@ -54,7 +60,11 @@ class PhotoGalleryController extends AbstractController
         ]);
     }
 
-    #[Feature('photos')]
+    #[Route(
+        '/city/gallery',
+        name: 'caldera_criticalmass_photo_examplegallery',
+        priority: 170
+    )]
     public function examplegalleryAction(
         PhotoRepository $photoRepository
     ): Response {
