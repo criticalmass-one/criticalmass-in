@@ -4,19 +4,24 @@ namespace App\Criticalmass\OpenStreetMap\NominatimCityBridge;
 
 use App\Entity\City;
 use App\Entity\Region;
-use maxh\Nominatim\Nominatim;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class NominatimCityBridge extends AbstractNominatimCityBridge
 {
     public function lookupCity(string $citySlug): ?City
     {
-        $nominatim = new Nominatim(self::NOMINATIM_URL);
+        $response = $this->httpClient->request('GET', self::NOMINATIM_URL . 'search', [
+            'query' => [
+                'city' => $citySlug,
+                'format' => 'json',
+                'addressdetails' => 1,
+            ],
+            'headers' => [
+                'User-Agent' => 'criticalmass.in/1.0',
+            ],
+        ]);
 
-        $search = $nominatim->newSearch()
-            ->city($citySlug)
-            ->addressDetails();
-
-        $result = $nominatim->find($search);
+        $result = $response->toArray();
         $firstResult = array_shift($result);
 
         if ($firstResult) {
