@@ -5,13 +5,12 @@ namespace Tests\Controller\Api\Parameter;
 use App\Entity\City;
 use App\Entity\Photo;
 use App\Entity\Ride;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\Controller\Api\AbstractApiControllerTest;
 
 class OrderByParameterTest extends AbstractApiControllerTest
 {
-    /**
-     * @dataProvider apiClassProvider
-     */
+    #[DataProvider('apiClassProvider')]
     public function testResultListOrderByAscending(string $fqcn, string $propertyName): void
     {
         $client = static::createClient();
@@ -37,9 +36,7 @@ class OrderByParameterTest extends AbstractApiControllerTest
         }
     }
 
-    /**
-     * @dataProvider apiClassProvider
-     */
+    #[DataProvider('apiClassProvider')]
     public function testResultListOrderByDescending(string $fqcn, string $propertyName): void
     {
         $client = static::createClient();
@@ -65,9 +62,7 @@ class OrderByParameterTest extends AbstractApiControllerTest
         }
     }
 
-    /**
-     * @dataProvider apiClassProvider
-     */
+    #[DataProvider('apiClassProvider')]
     public function testResultListOrderByInvalidDirection(string $fqcn, string $propertyName): void
     {
         $client = static::createClient();
@@ -81,9 +76,7 @@ class OrderByParameterTest extends AbstractApiControllerTest
         $this->assertCount(10, $resultList);
     }
 
-    /**
-     * @dataProvider apiClassProvider
-     */
+    #[DataProvider('apiClassProvider')]
     public function testResultListOrderByInvalidProperty(string $fqcn, string $propertyName): void
     {
         $client = static::createClient();
@@ -97,7 +90,7 @@ class OrderByParameterTest extends AbstractApiControllerTest
         $this->assertCount(10, $resultList);
     }
 
-    public function apiClassProvider(): array
+    public static function apiClassProvider(): array
     {
         return [
             [City::class, 'title'],

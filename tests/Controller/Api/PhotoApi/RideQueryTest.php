@@ -3,13 +3,12 @@
 namespace Tests\Controller\Api\PhotoApi;
 
 use App\Entity\Photo;
+use PHPUnit\Framework\Attributes\TestDox;
 use Tests\Controller\Api\AbstractApiControllerTest;
 
 class RideQueryTest extends AbstractApiControllerTest
 {
-    /**
-     * @testdox Querying for Hamburg 2011-06-24 will only return Hamburg photos.
-     */
+    #[TestDox('Querying for Hamburg 2011-06-24 will only return Hamburg photos.')]
     public function testPhotoListWithRideQueryForHamburg(): void
     {
         $client = static::createClient();
@@ -27,9 +26,7 @@ class RideQueryTest extends AbstractApiControllerTest
         }
     }
 
-    /**
-     * @testdox Querying for London 2019-04-01 will only return London photos.
-     */
+    #[TestDox('Querying for London 2019-04-01 will only return London photos.')]
     public function testPhotoListWithRideQueryForLondon(): void
     {
         $client = static::createClient();
@@ -47,9 +44,7 @@ class RideQueryTest extends AbstractApiControllerTest
         }
     }
 
-    /**
-     * @testdox Expect 10 random photos when providing an non existent slug for city and ride.
-     */
+    #[TestDox('Expect 10 random photos when providing an non existent slug for city and ride.')]
     public function testPhotoListWithCityQueryForNonExistentCity(): void
     {
         $client = static::createClient();

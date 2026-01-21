@@ -5,13 +5,12 @@ namespace Tests\Controller\Api\Parameter;
 use App\Entity\City;
 use App\Entity\Photo;
 use App\Entity\Ride;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\Controller\Api\AbstractApiControllerTest;
 
 class StartValueParameterTest extends AbstractApiControllerTest
 {
-    /**
-     * @dataProvider apiClassProvider
-     */
+    #[DataProvider('apiClassProvider')]
     public function testResultListWithStartValueParameterOnly(string $fqcn, string $propertyUnterTest, $start): void
     {
         $client = static::createClient();
@@ -21,9 +20,7 @@ class StartValueParameterTest extends AbstractApiControllerTest
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
-    /**
-     * @dataProvider apiClassProvider
-     */
+    #[DataProvider('apiClassProvider')]
     public function testResultListWithStartValueAndOrderByParameterAscending(string $fqcn, string $propertyUnterTest, string $direction, int $expectedResults, $startValue): void
     {
         $client = static::createClient();
@@ -53,7 +50,7 @@ class StartValueParameterTest extends AbstractApiControllerTest
         }
     }
 
-    public function apiClassProvider(): array
+    public static function apiClassProvider(): array
     {
         return [
             [City::class, 'city', 'ASC', 10, 'Hamburg'],

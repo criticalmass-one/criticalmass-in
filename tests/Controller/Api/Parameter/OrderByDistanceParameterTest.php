@@ -8,14 +8,13 @@ use App\Entity\City;
 use App\Entity\Photo;
 use App\Entity\Ride;
 use App\EntityInterface\CoordinateInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\Controller\Api\AbstractApiControllerTest;
 use Tests\Coords;
 
 class OrderByDistanceParameterTest extends AbstractApiControllerTest
 {
-    /**
-     * @dataProvider apiClassProvider
-     */
+    #[DataProvider('apiClassProvider')]
     public function testResultListOrderByAscending(string $fqcn, CoordInterface $centerCoord): void
     {
         $client = static::createClient();
@@ -43,9 +42,7 @@ class OrderByDistanceParameterTest extends AbstractApiControllerTest
         }
     }
 
-    /**
-     * @dataProvider apiClassProvider
-     */
+    #[DataProvider('apiClassProvider')]
     public function testResultListOrderByDescending(string $fqcn, CoordInterface $centerCoord): void
     {
         $client = static::createClient();
@@ -73,7 +70,7 @@ class OrderByDistanceParameterTest extends AbstractApiControllerTest
         }
     }
 
-    public function apiClassProvider(): array
+    public static function apiClassProvider(): array
     {
         return [
             [City::class, Coords::esslingen()],

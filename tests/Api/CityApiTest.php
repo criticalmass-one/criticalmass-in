@@ -2,6 +2,7 @@
 
 namespace Tests\Api;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class CityApiTest extends WebTestCase
@@ -70,9 +71,7 @@ class CityApiTest extends WebTestCase
         }
     }
 
-    /**
-     * @dataProvider provideCenterCoordinatesAndOptions
-     */
+    #[DataProvider('provideCenterCoordinatesAndOptions')]
     public function testDistanceOrderDirection(
         float $centerLat,
         float $centerLon,
@@ -151,9 +150,7 @@ class CityApiTest extends WebTestCase
         ];
     }
 
-    /**
-     * @dataProvider startValueProvider
-     */
+    #[DataProvider('startValueProvider')]
     public function testStartValue(
         string $orderBy,
         string $orderDirection,
@@ -218,9 +215,7 @@ class CityApiTest extends WebTestCase
         ];
     }
 
-    /**
-     * @dataProvider cityOrderProvider
-     */
+    #[DataProvider('cityOrderProvider')]
     public function testOrderByParameter(string $orderBy, string $direction, ?string $propertyName = null): void
     {
         $requestUri = sprintf('/api/city?orderBy=%s&orderDirection=%s', $orderBy, $direction);
@@ -267,7 +262,7 @@ class CityApiTest extends WebTestCase
 
     }
 
-    public function cityOrderProvider(): array
+    public static function cityOrderProvider(): array
     {
         return [
             ['id', 'asc'],

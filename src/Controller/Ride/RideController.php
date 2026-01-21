@@ -40,8 +40,9 @@ class RideController extends AbstractController
     #[Route(
         '/{citySlug}/{rideIdentifier}',
         name: 'caldera_criticalmass_ride_show',
+        requirements: ['citySlug' => '(?!api$)[^/]+'],
         options: ['expose' => true],
-        priority: 160
+        priority: -100
     )]
     public function showAction(
         BlockedCityRepository $blockedCityRepository,

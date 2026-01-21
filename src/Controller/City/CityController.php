@@ -87,7 +87,7 @@ class CityController extends AbstractController
             ]);
         }
 
-        $eventDispatcher->dispatch(new ViewEvent($city), ViewEvent::NAME);
+        //$eventDispatcher->dispatch(new ViewEvent($city), ViewEvent::NAME);
 
         $blocked = $blockedCityRepository->findCurrentCityBlock($city);
 
