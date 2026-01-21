@@ -32,7 +32,7 @@
     <div class="container">
         {% if city.cycles|length > 0 and mode == 'create' %}
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <div class="alert alert-warning" role="alert">
                         <strong>Vorsicht!</strong>
                         Die Touren für diese Stadt werden jeden Monat anhand vorgegebener Standard-Werte automatisch
@@ -44,13 +44,13 @@
         {% endif %}
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <h1>{{ title }}</h1>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <p>Hier kannst du die Details einer Tour editieren.</p>
             </div>
         </div>
@@ -60,7 +60,7 @@
         {{ form_start(form) }}
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <div id="map"
                      class="map"
                      data-controller="map--form-map"
@@ -81,13 +81,13 @@
         <div class="row mt-4">
             <div class="col-md-6">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <h3>Tourdaten</h3>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <div class="mb-3">
                             <label class="form-label" for="title">
                                 Titel:
@@ -101,7 +101,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <div class="mb-3">
                             <label class="form-label" for="description">
                                 Beschreibung:
@@ -119,13 +119,13 @@
 
             <div class="col-md-6">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <h3>Datum und Treffpunkt</h3>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <div class="alert alert-warning d-none hidden" role="alert" id="doubleMonthRide">
                             <strong>
                                 Vorsicht!
@@ -142,17 +142,17 @@
                             keine zwei Touren an einem Tag verwaltet werden.
                         </div>
 
-                        <div class="mb-3{% if form_errors(form.dateTime) %} has-error has-feedback{% endif %}">
+                        <div class="mb-3">
                             <label class="form-label" for="dateTime">
                                 Datum und Uhrzeit:
                             </label>
                             <div class="row">
                                 <div class="col-md-6">
-                                    {{ form_widget(form.dateTime.date, { attr: { class: 'form-control check-ride-date' } }) }}
+                                    {{ form_widget(form.dateTime.date, { attr: { class: 'form-control check-ride-date' ~ (form_errors(form.dateTime) ? ' is-invalid' : '') } }) }}
                                 </div>
 
                                 <div class="col-md-6">
-                                    {{ form_widget(form.dateTime.time, { attr: { class: 'form-control check-ride-date' } }) }}
+                                    {{ form_widget(form.dateTime.time, { attr: { class: 'form-control check-ride-date' ~ (form_errors(form.dateTime) ? ' is-invalid' : '') } }) }}
                                 </div>
                             </div>
                             {% if form_errors(form.dateTime) %}
@@ -165,7 +165,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <div class="mb-3">
                             <label class="form-label" for="location">
                                 Treffpunkt:
@@ -188,7 +188,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <div class="mb-3">
                             <label class="form-label" for="rideType">
                                 Art der Tour:
@@ -203,7 +203,7 @@
 
                 {% if form.slug is defined %}
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-12">
                             <div class="mb-3">
                                 <label class="form-label" for="slug">
                                     Slug:
@@ -217,7 +217,7 @@
 
                 {% if form.enabled is defined %}
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-12">
                             <div class="mb-3">
                                 <label class="form-label" for="location">
                                     Tour aktivieren:
@@ -233,7 +233,7 @@
                 {% endif %}
 
                 <div class="row mt-3">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <div class="mb-3">
                             <div class="btn-group float-end" role="group" aria-label="Tour speichern oder abbrechen">
                                 {% if ride %}

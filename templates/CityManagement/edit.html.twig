@@ -72,7 +72,7 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <div class="mb-3{% if form_errors(form.region) %} has-error has-feedback{% endif %}">
+                        <div class="mb-3{% if form_errors(form.region) %} {% endif %}">
                             <label class="form-label" for="">Region:</label>
                             {{ form_widget(form.region, { 'attr' : { 'class': 'form-control'} }) }}
                             <p class="form-text">Wähle das Bundesland, den Kanton oder das County dieser Stadt aus.</p>
@@ -82,7 +82,7 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <div class="mb-3{% if form_errors(form.title) %} has-error has-feedback{% endif %}">
+                        <div class="mb-3{% if form_errors(form.title) %} {% endif %}">
                             <label class="form-label" for="">Titel:</label>
                             {{ form_widget(form.title, { 'attr' : { 'class': 'form-control'} }) }}
                             <p class="form-text">
@@ -95,7 +95,7 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <div class="mb-3{% if form_errors(form.city) %} has-error has-feedback{% endif %}">
+                        <div class="mb-3{% if form_errors(form.city) %} {% endif %}">
                             <button
                                     class="btn btn-outline-secondary btn-sm float-end geocode"
                                     type="button"
@@ -113,7 +113,7 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <div class="mb-3{% if form_errors(form.description) %} has-error has-feedback{% endif %}">
+                        <div class="mb-3{% if form_errors(form.description) %} {% endif %}">
                             <label class="form-label" for="">Beschreibung:</label>
                             {{ form_widget(form.description, { 'attr' : { 'class': 'form-control', 'rows': '10' } }) }}
                             <p class="form-text">Eine kurze, aufs Wesentliche reduzierte Beschreibung der Stadt.</p>
@@ -123,7 +123,7 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <div class="mb-3{% if form_errors(form.punchLine) %} has-error has-feedback{% endif %}">
+                        <div class="mb-3{% if form_errors(form.punchLine) %} {% endif %}">
                             <label class="form-label" for="">Punchline:</label>
                             {{ form_widget(form.punchLine, { 'attr' : { 'class': 'form-control'} }) }}
                             <p class="form-text">
@@ -136,7 +136,7 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <div class="mb-3{% if form_errors(form.longDescription) %} has-error has-feedback{% endif %}">
+                        <div class="mb-3{% if form_errors(form.longDescription) %} {% endif %}">
                             <label class="form-label" for="">Lange Beschreibung:</label>
                             {{ form_widget(form.longDescription, { 'attr' : { 'class': 'form-control', 'rows': '10' } }) }}
                             <p class="form-text">Hier ist Platz für eine längere und ausführlichere Beschreibung.</p>

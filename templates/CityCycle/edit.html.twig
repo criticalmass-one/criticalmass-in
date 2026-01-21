@@ -78,7 +78,7 @@
             <div class="col-12 col-md-6">
                 <div class="row">
                     <div class="col-12">
-                        <div class="mb-3{% if form_errors(form.dayOfWeek) %} has-error has-feedback{% endif %}">
+                        <div class="mb-3{% if form_errors(form.dayOfWeek) %} {% endif %}">
                             <label class="form-label" for="">Wochentag der Touren:</label>
                             {{ form_widget(form.dayOfWeek, { 'attr' : { 'class': 'form-control'} }) }}
                             {% if not cityCycle.hasSpecialCalculator() %}
@@ -97,7 +97,7 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <div class="mb-3{% if form_errors(form.weekOfMonth) %} has-error has-feedback{% endif %}">
+                        <div class="mb-3{% if form_errors(form.weekOfMonth) %} {% endif %}">
                             <label class="form-label" for="">Woche der Touren:</label>
                             {{ form_widget(form.weekOfMonth, { 'attr' : { 'class': 'form-control'} }) }}
                             {% if not cityCycle.hasSpecialCalculator() %}
@@ -118,7 +118,7 @@
             <div class="col-12 col-md-6">
                 <div class="row">
                     <div class="col-12">
-                        <div class="mb-3{% if form_errors(form.time) %} has-error has-feedback{% endif %}">
+                        <div class="mb-3{% if form_errors(form.time) %} {% endif %}">
                             <label class="form-label" for="">Uhrzeit der Touren:</label>
                             {{ form_widget(form.time, { 'attr' : { 'class': 'form-control' } }) }}
                             <p class="form-text">
@@ -130,7 +130,7 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <div class="mb-3{% if form_errors(form.location) %} has-error has-feedback{% endif %}">
+                        <div class="mb-3{% if form_errors(form.location) %} {% endif %}">
                             <label class="form-label" for="">Treffpunkt der Touren:</label>
                             {{ form_widget(form.location, { 'attr' : { 'class': 'form-control' } }) }}
                             <p class="form-text">

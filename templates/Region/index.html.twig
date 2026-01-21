@@ -21,7 +21,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 {% if app.getUser() and region.isLevel(3) %}
                     <a href="{{ path('caldera_criticalmass_city_add', { slug1: region.parent.parent.slug, slug2: region.parent.slug, slug3: region.slug }) }}"
                        class="btn btn-success mt-4 float-end">
@@ -41,7 +41,7 @@
 
         {% if allCities|length > 0 %}
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <div class="map"
                          id="region-map"
                          data-controller="map--query-map"
@@ -55,7 +55,7 @@
 
         {% if regions|length > 0 %}
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <h2>
                         {% if region.isWorld() %}
                             Kontinente
@@ -70,7 +70,7 @@
                 {% for region2 in regions %}
                     <div class="col-6 col-sm-4 col-md-3">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-12">
                                 <div class="text-center">
                                     <h4>
                                         <a href="{{ object_path(region2) }}">
@@ -82,7 +82,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-12">
                                 <div class="text-center">
                                     <small>{{ cityCounter[region2.id] }} Städte in dieser Region</small>
                                 </div>
@@ -95,7 +95,7 @@
 
         {% if cities|length > 0 %}
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <h2>
                         Städte in {{ region.name }}
                     </h2>
@@ -106,7 +106,7 @@
                 {% for city in cities %}
                     <div class="col-6 col-sm-4 col-md-3">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-12">
                                 <div class="text-center">
                                     <h4>
                                         <a href="{{ object_path(city) }}">

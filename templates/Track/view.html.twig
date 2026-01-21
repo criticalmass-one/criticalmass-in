@@ -21,7 +21,7 @@
 {% block content %}
     <div class="container main-container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 {% if track.getRide().getTitle() %}
                     <h1>{{ track.getRide().getTitle() }}</h1>
                 {% else %}
@@ -32,7 +32,7 @@
 
         {% if not track.reviewed %}
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <div class="alert alert-danger">
                         <div class="btn-group float-end" role="group" aria-label="Track-Aktionen">
                             <a class="btn btn-success"
@@ -59,7 +59,7 @@
         {% endif %}
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <div
                         id="map"
                         class="map"
@@ -137,7 +137,7 @@
         {% set previous_track = previous_entity(track) %}
         {% set next_track = next_entity(track) %}
         <div class="row mt-4">
-            <div class="col-md-12">
+            <div class="col-12">
                 <nav aria-label="Track-Navigation">
                     <ul class="pagination justify-content-between mb-0">
                         {% if previous_track %}

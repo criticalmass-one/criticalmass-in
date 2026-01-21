@@ -19,7 +19,7 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-12">
             <h1>
                 Handy-Nummer editieren
             </h1>
@@ -28,16 +28,16 @@
 
     <div class="row">
         {% if app.getUser().phoneNumberVerified %}
-        <div class="col-md-12">
+        <div class="col-12">
             {% else %}
             <div class="col-md-8">
                 {% endif %}
                 {{ form_start(phoneNumberForm) }}
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="mb-3{% if form_errors(phoneNumberForm.phoneNumber) %} has-error has-feedback{% endif %}">
+                    <div class="col-12">
+                        <div class="mb-3">
                             <label class="form-label" for="">Deine Handy-Nummer:</label>
-                            {{ form_widget(phoneNumberForm.phoneNumber, { 'attr' : { 'class': 'form-control' } }) }}
+                            {{ form_widget(phoneNumberForm.phoneNumber, { 'attr' : { 'class': 'form-control' ~ (form_errors(phoneNumberForm.phoneNumber) ? ' is-invalid' : '') } }) }}
 
                             {% if form_errors(phoneNumberForm.phoneNumber) %}
                                 <div class="invalid-feedback d-block">
@@ -49,7 +49,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <button type="submit" class="btn btn-success float-end">
                             Speichern
                         </button>
@@ -62,10 +62,10 @@
                 <div class="col-md-4">
                     {{ form_start(verificationForm) }}
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="mb-3{% if form_errors(verificationForm.verificationNumber) %} has-error has-feedback{% endif %}">
+                        <div class="col-12">
+                            <div class="mb-3">
                                 <label class="form-label" for="">Dein Verifikationscode:</label>
-                                {{ form_widget(verificationForm.verificationNumber, { 'attr' : { 'class': 'form-control', 'maxlength': 6 } }) }}
+                                {{ form_widget(verificationForm.verificationNumber, { 'attr' : { 'class': 'form-control' ~ (form_errors(verificationForm.verificationNumber) ? ' is-invalid' : ''), 'maxlength': 6 } }) }}
 
                                 {% if form_errors(verificationForm.verificationNumber) %}
                                     <div class="invalid-feedback d-block">
@@ -77,7 +77,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-12">
                             <button type="submit" class="btn btn-success float-end">
                                 Überprüfen
                             </button>

@@ -11,25 +11,23 @@
             }
         </script>
 
-        <div class="input-group captcha-input-group">
-            <span class="input-group-addon">
+        <div class="input-group input-group-lg captcha-input-group">
+            <span class="input-group-text">
                 <img class="captcha_image" id="{{ image_id }}" src="{{ captcha_code }}" alt="" title="captcha"
                      width="{{ captcha_width }}" height="{{ captcha_height }}"/>
             </span>
-            {{ form_widget(form, { attr: { class: 'form-control input-lg' } }) }}
-            <span class="input-group-btn">
-                <button class="btn btn-default btn-lg captcha_reload" type="button" onclick="reload_{{ image_id }}();">
-                    <i class="fas fa-sync"></i>
-                </button>
-            </span>
+            {{ form_widget(form, { attr: { class: 'form-control' } }) }}
+            <button class="btn btn-secondary captcha_reload" type="button" onclick="reload_{{ image_id }}();">
+                <i class="fas fa-sync"></i>
+            </button>
         </div>
     {% else %}
-        <div class="input-group captcha-input-group">
-            <span class="input-group-addon">
+        <div class="input-group input-group-lg captcha-input-group">
+            <span class="input-group-text">
                 <img class="captcha_image" id="{{ image_id }}" src="{{ captcha_code }}" alt="" title="captcha"
                      width="{{ captcha_width }}" height="{{ captcha_height }}"/>
             </span>
-            {{ form_widget(form, { attr: { class: 'form-control input-lg' } }) }}
+            {{ form_widget(form, { attr: { class: 'form-control' } }) }}
         </div>
     {% endif %}
 {% endapply %}

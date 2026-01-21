@@ -23,7 +23,7 @@
     <div class="container">
         {% for message in app.flashes('success') %}
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <div class="alert alert-success">
                         {{ message }}
                     </div>
@@ -32,7 +32,7 @@
         {% endfor %}
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <h2>
                     Details für soziale Netzwerke
                 </h2>
@@ -51,7 +51,7 @@
             <div class="col-md-6">
                 {% if ride.imageName %}
                     <div class="row mb-3">
-                        <div class="col-md-12">
+                        <div class="col-12">
                             <img
                                     id="photo"
                                     class="img-fluid img-thumbnail"
@@ -63,7 +63,7 @@
                 {% endif %}
 
                 <div class="row">
-                    <div class="col-md-12 mb-3">
+                    <div class="col-12 mb-3">
                         <label class="form-label">
                             Datei:
                         </label>
@@ -91,7 +91,7 @@
         </div>
 
         <div class="row mt-3">
-            <div class="col-md-12 mb-3">
+            <div class="col-12 mb-3">
                 <div class="btn-group float-end" role="group" aria-label="Social-Details speichern oder abbrechen">
                     <a href="{{ object_path(ride) }}" class="btn btn-secondary">
                         Abbrechen

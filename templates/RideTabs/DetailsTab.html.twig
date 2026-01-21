@@ -1,6 +1,6 @@
 <div class="tab-pane fade show active" id="details" role="tabpanel" aria-labelledby="details-tab">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-12">
             <div class="btn-group float-end" style="margin-top: 16px;">
                 {% if app.user %}
                     {% if not ride.enabled %}
@@ -74,7 +74,7 @@
         {# rechte Spalte (Details), auf sm+ rechts, auf xs oben #}
         <div class="col-12 col-sm-4 order-sm-2">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     {% include 'Ride/Includes/_rideDetails.html.twig' with {
                         'ride': ride,
                         'weatherForecast': weatherForecast,
@@ -84,13 +84,13 @@
             </div>
 
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     {% include 'Ride/Includes/_socialMedia.html.twig' with { 'ride': ride } %}
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     {% include 'Ride/Includes/_statistic.html.twig' with { 'ride': ride } %}
                 </div>
             </div>

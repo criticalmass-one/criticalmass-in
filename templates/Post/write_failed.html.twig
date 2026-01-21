@@ -22,9 +22,14 @@
 
             <div class="row">
                 <div class="col-md-6 offset-md-3">
-                    <div class="mb-3{% if form_errors(form.message) %} has-error has-feedback{% endif %}">
+                    <div class="mb-3">
                         <label class="form-label">Dein Kommentar:</label>
-                        {{ form_widget(form.message, {'attr': {'class': 'form-control', 'rows': 10}}) }}
+                        {{ form_widget(form.message, {'attr': {'class': 'form-control' ~ (form_errors(form.message) ? ' is-invalid' : ''), 'rows': 10}}) }}
+                        {% if form_errors(form.message) %}
+                            <div class="invalid-feedback d-block">
+                                {{ form_errors(form.message) }}
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

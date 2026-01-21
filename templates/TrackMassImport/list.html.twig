@@ -5,7 +5,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <h1>
                     Wähle eine Aktivität
                 </h1>
@@ -17,7 +17,7 @@
                 {% for candidate in list %}
                     <div class="col-md-4 mb-4">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-12">
                                 <h3>
                                     {{ candidate.name }}
                                 </h3>
@@ -25,7 +25,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-12">
                                 <div
                                         id="map-{{ candidate.activityId }}"
                                         class="preview-map"
@@ -36,7 +36,7 @@
                         </div>
 
                         <div class="row mt-2">
-                            <div class="col-md-12">
+                            <div class="col-12">
                                 <dl>
                                     <dt>Tour:</dt>
                                     <dd>
@@ -97,7 +97,7 @@
                         </div>
 
                         <div class="row mt-2">
-                            <div class="col-md-12">
+                            <div class="col-12">
                                 <div class="text-center">
                                     <div class="btn-group" role="group" aria-label="Aktivität importieren oder ablehnen">
                                         <a class="btn btn-success"

@@ -21,7 +21,7 @@
 {% block content %}
     <div class="container" id="track-range-page">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <h2>
                     Track beschneiden
                 </h2>
@@ -29,7 +29,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <p>
                     Weniger ist manchmal mehr. Hier kannst du Anfang und Ende deiner Tour festlegen, falls du
                     versehentlich zu viel aufgezeichnet hast und nicht möchtest, dass dir jemand nach Hause folgt.
@@ -43,7 +43,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <div id="map-range"
                      class="map"
                      data-controller="map--track-range-map"
@@ -54,13 +54,13 @@
         </div>
 
         <div class="row mt-4">
-            <div class="col-md-12">
+            <div class="col-12">
                 <input id="slider" type="text" value="" style="width: 100%;"/>
             </div>
         </div>
 
         <div class="row mt-4">
-            <div class="col-md-12">
+            <div class="col-12">
                 <input type="hidden" id="track_range_latLngList" value="{{ latLngList }}" />
                 {{ form_start(form) }}
                 <div class="btn-group float-end" role="group" aria-label="Track-Bereich speichern oder abbrechen">

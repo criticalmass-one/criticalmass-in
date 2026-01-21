@@ -128,7 +128,7 @@
                         {{ form_start(form) }}
                         <div class="row">
                             <div class="col-12">
-                                <div class="mb-3{% if form_errors(form.fromDate) %} has-error has-feedback{% endif %}">
+                                <div class="mb-3{% if form_errors(form.fromDate) %} {% endif %}">
                                     <label class="form-label" for="">Startdatum:</label>
                                     {{ form_errors(form.fromDate) }}
                                     {{ form_widget(form.fromDate) }}
@@ -141,7 +141,7 @@
 
                         <div class="row">
                             <div class="col-12">
-                                <div class="mb-3{% if form_errors(form.untilDate) %} has-error has-feedback{% endif %}">
+                                <div class="mb-3{% if form_errors(form.untilDate) %} {% endif %}">
                                     <label class="form-label" for="">Enddatum:</label>
                                     {{ form_errors(form.untilDate) }}
                                     {{ form_widget(form.untilDate) }}

@@ -1,6 +1,6 @@
 <div class="tab-pane fade" id="minimass" role="tabpanel" aria-labelledby="minimass-tab">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-12">
             {% if app.getUser() %}
                 <div class="btn-group float-end mt-3">
                     <a class="btn btn-success"
@@ -16,7 +16,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-12">
             {% if subrides|length > 0 %}
                 {% set subrideNumber = 0 %}
                 <div class="row">
@@ -51,7 +51,7 @@
                 </div>
             {% else %}
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         {% if app.getUser() %}
                             <div class="alert alert-info" role="alert">
                                 <strong>Schade!</strong> Bislang hat noch niemand eine Mini-Mass für diese Tour erstellt &mdash;

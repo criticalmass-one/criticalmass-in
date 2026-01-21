@@ -29,7 +29,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <h1>
                     {{ title }}
                 </h1>
@@ -37,11 +37,11 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <p>
                     Eine Mini Mass ist eine gemeinsame Radtour zur eigentlichen Critical Mass. Das Prinzip der Mini Mass
                     stammt aus größeren Städten, in denen sich Radfahrer der einzelnen Stadtteile zu einer gemeinsamen
-                    Radtour verabredet haben, um nicht alleine zur „großen Masse“ fahren zu müssen.
+                    Radtour verabredet haben, um nicht alleine zur „großen Masse" fahren zu müssen.
                 </p>
             </div>
         </div>
@@ -50,7 +50,7 @@
 
         {{ form_start(form) }}
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <div id="map"
                      class="map"
                      data-controller="map--map"
@@ -69,7 +69,7 @@
         <div class="row margin-top-medium">
             <div class="col-md-6">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <h3>
                             Daten der Mini-Mass
                         </h3>
@@ -77,40 +77,46 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group{% if form_errors(form.title) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="title">Titel:</label>
-                            {{ form_widget(form.title, { 'attr' : { 'class': 'form-control' } }) }}
-                            <p class="help-block">
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label class="form-label" for="title">Titel:</label>
+                            {{ form_widget(form.title, { 'attr' : { 'class': 'form-control' ~ (form_errors(form.title) ? ' is-invalid' : '') } }) }}
+                            {% if form_errors(form.title) %}
+                                <div class="invalid-feedback d-block">{{ form_errors(form.title) }}</div>
+                            {% endif %}
+                            <div class="form-text">
                                 Gib deiner Mini-Mass einen Namen. Er muss noch nicht einmal aussagekräftig
                                 sein — Hauptsache man weiß, worum es geht.
-                            </p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label class="control-label" for="description">Beschreibung:</label>
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label class="form-label" for="description">Beschreibung:</label>
                             {{ form_widget(form.description, { 'attr' : { 'class': 'form-control' } }) }}
-                            <p class="help-block">
+                            <div class="form-text">
                                 Hier ist Platz für eine grobe Beschreibung der Mini-Mass. Lege hier zum
                                 Beispiel eine ungefähre Route fest.
-                            </p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group{% if form_errors(form.location) %} has-error has-feedback{% endif %}">
-                            <label class="control-label" for="description">Treffpunkt:</label>
-                            {{ form_widget(form.location, { 'attr' : { 'class': 'form-control' } }) }}
-                            <p class="help-block">
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label class="form-label" for="description">Treffpunkt:</label>
+                            {{ form_widget(form.location, { 'attr' : { 'class': 'form-control' ~ (form_errors(form.location) ? ' is-invalid' : '') } }) }}
+                            {% if form_errors(form.location) %}
+                                <div class="invalid-feedback d-block">{{ form_errors(form.location) }}</div>
+                            {% endif %}
+                            <div class="form-text">
                                 Wo trefft ihr euch? Vergiss nicht, den Treffpunkt oben auf der Karte
                                 zu markieren.
-                            </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -118,7 +124,7 @@
 
             <div class="col-md-6">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <h3>
                             Datum und Uhrzeit
                         </h3>
@@ -126,18 +132,18 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label class="control-label" for="description">Datum:</label>
-                            <div class="form-control">{{ ride.getDateTime().format('d. F Y') }}</div>
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label class="form-label" for="description">Datum:</label>
+                            <div class="form-control-plaintext">{{ ride.getDateTime().format('d. F Y') }}</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label class="control-label" for="description">Uhrzeit:</label>
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label class="form-label" for="description">Uhrzeit:</label>
                             {{ form_widget(form.time, { 'attr' : { 'class': 'form-control' } }) }}
                         </div>
                     </div>
@@ -145,17 +151,15 @@
             </div>
         </div>
 
-        <div class="row margin-top-medium">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <div class="btn-group pull-right">
-                        <a href="{{ object_path(ride) }}" class="btn btn-default">
-                            Abbrechen
-                        </a>
-                        <button type="submit" class="btn btn-success">
-                            Speichern
-                        </button>
-                    </div>
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="d-flex justify-content-end gap-2">
+                    <a href="{{ object_path(ride) }}" class="btn btn-secondary">
+                        Abbrechen
+                    </a>
+                    <button type="submit" class="btn btn-success">
+                        Speichern
+                    </button>
                 </div>
             </div>
         </div>
