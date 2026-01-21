@@ -1224,26 +1224,6 @@
     "@parcel/watcher-win32-ia32" "2.5.1"
     "@parcel/watcher-win32-x64" "2.5.1"
 
-"@stimulus/core@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.npmjs.org/@stimulus/core/-/core-2.0.0.tgz"
-  dependencies:
-    "@stimulus/mutation-observers" "^2.0.0"
-
-"@stimulus/multimap@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.npmjs.org/@stimulus/multimap/-/multimap-2.0.0.tgz"
-
-"@stimulus/mutation-observers@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.npmjs.org/@stimulus/mutation-observers/-/mutation-observers-2.0.0.tgz"
-  dependencies:
-    "@stimulus/multimap" "^2.0.0"
-
-"@stimulus/webpack-helpers@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.npmjs.org/@stimulus/webpack-helpers/-/webpack-helpers-2.0.0.tgz"
-
 "@symfony/stimulus-bridge@^4.0.1":
   version "4.0.1"
   resolved "https://registry.npmjs.org/@symfony/stimulus-bridge/-/stimulus-bridge-4.0.1.tgz"
@@ -2497,8 +2477,8 @@ dezalgo@^1.0.0:
     wrappy "1"
 
 diff@^5.1.0:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/diff/-/diff-5.2.0.tgz#26ded047cd1179b78b9537d5ef725503ce1ae531"
+  version "5.2.2"
+  resolved "https://registry.yarnpkg.com/diff/-/diff-5.2.2.tgz#0a4742797281d09cfa699b79ea32d27723623bad"
 
 dns-packet@^5.2.2:
   version "5.6.1"
@@ -3425,13 +3405,13 @@ leaflet.locatecontrol@^0.68.0:
   version "0.68.0"
   resolved "https://registry.npmjs.org/leaflet.locatecontrol/-/leaflet.locatecontrol-0.68.0.tgz"
 
-leaflet.markercluster@^1.4.1:
-  version "1.4.1"
-  resolved "https://registry.npmjs.org/leaflet.markercluster/-/leaflet.markercluster-1.4.1.tgz"
+leaflet.markercluster@1.5.3:
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/leaflet.markercluster/-/leaflet.markercluster-1.5.3.tgz#9cdb52a4eab92671832e1ef9899669e80efc4056"
 
-leaflet@^1.0.1, leaflet@^1.7.1:
+leaflet@1.9.4, leaflet@^1.0.1:
   version "1.9.4"
-  resolved "https://registry.npmjs.org/leaflet/-/leaflet-1.9.4.tgz"
+  resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.9.4.tgz#23fae724e282fa25745aff82ca4d394748db7d8d"
 
 libnpmaccess@^6.0.4:
   version "6.0.4"
@@ -5099,13 +5079,6 @@ statuses@2.0.1:
 "statuses@>= 1.4.0 < 2":
   version "1.5.0"
   resolved "https://registry.npmjs.org/statuses/-/statuses-1.5.0.tgz"
-
-stimulus@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.npmjs.org/stimulus/-/stimulus-2.0.0.tgz"
-  dependencies:
-    "@stimulus/core" "^2.0.0"
-    "@stimulus/webpack-helpers" "^2.0.0"
 
 "string-width@^1.0.2 || 2 || 3 || 4", string-width@^4.2.0, string-width@^4.2.3:
   version "4.2.3"
