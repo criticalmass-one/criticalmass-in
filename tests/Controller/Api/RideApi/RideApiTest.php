@@ -4,16 +4,15 @@ namespace Tests\Controller\Api\RideApi;
 
 use App\Entity\Ride;
 use App\Repository\RideRepository;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\TestDox;
 use Symfony\Bridge\PhpUnit\ClockMock;
 use Tests\Controller\Api\AbstractApiControllerTest;
 
 class RideApiTest extends AbstractApiControllerTest
 {
-    /**
-     * @testdox Pretend to have mid 2011 and retrieve the current ride.
-     * @group time-sensitive
-     * @testdox Return
-     */
+    #[TestDox('Pretend to have mid 2011 and retrieve the current ride.')]
+    #[Group('time-sensitive')]
     public function testCurrentRide(): void
     {
         ClockMock::register(RideRepository::class);
@@ -32,9 +31,7 @@ class RideApiTest extends AbstractApiControllerTest
         $this->assertEquals('Hamburg', $actualRide->getCity()->getCity());
     }
 
-    /**
-     * @testdox Return a ride by a date-driven ride identifier and a city slug.
-     */
+    #[TestDox('Return a ride by a date-driven ride identifier and a city slug.')]
     public function testFirstRide(): void
     {
         $client = static::createClient();
@@ -50,9 +47,7 @@ class RideApiTest extends AbstractApiControllerTest
         $this->assertEquals('Hamburg', $actualRide->getCity()->getCity());
     }
 
-    /**
-     * @testdox Providing a wrong date but a valid city slug will return 404.
-     */
+    #[TestDox('Providing a wrong date but a valid city slug will return 404.')]
     public function testRideWithWrongDate(): void
     {
         $client = static::createClient();
@@ -62,10 +57,8 @@ class RideApiTest extends AbstractApiControllerTest
         $this->assertEquals(404, $client->getResponse()->getStatusCode());
     }
 
-    /**
-     * @group time-sensitive
-     * @testdox Providing a non existant city slug with a valid date will return 404.
-     */
+    #[Group('time-sensitive')]
+    #[TestDox('Providing a non existant city slug with a valid date will return 404.')]
     public function testRideWithWrongCitySlug(): void
     {
         $client = static::createClient();
@@ -75,10 +68,8 @@ class RideApiTest extends AbstractApiControllerTest
         $this->assertEquals(404, $client->getResponse()->getStatusCode());
     }
 
-    /**
-     * @group time-sensitive
-     * @testdox Querying for rides without slugs from mid 2035 should return our prepared ride from 2050.
-     */
+    #[Group('time-sensitive')]
+    #[TestDox('Querying for rides without slugs from mid 2035 should return our prepared ride from 2050.')]
     public function testCurrentRideWithoutSlugs(): void
     {
         ClockMock::register(RideRepository::class);
@@ -98,10 +89,8 @@ class RideApiTest extends AbstractApiControllerTest
         $this->assertNull($actualRide->getSlug());
     }
 
-    /**
-     * @group time-sensitive
-     * @testdox When we request a cycle-generated ride we get an empty result as the test data does not contain any generated rides :(
-     */
+    #[Group('time-sensitive')]
+    #[TestDox('When we request a cycle-generated ride we get an empty result as the test data does not contain any generated rides :(')]
     public function testCurrentRideWithMandatoryCycles(): void
     {
         ClockMock::register(RideRepository::class);
@@ -122,10 +111,8 @@ class RideApiTest extends AbstractApiControllerTest
         $this->assertNull($actualRide->getTitle());
     }
 
-    /**
-     * @group time-sensitive
-     * @testdox When we do not need cycled rides we get the kidical mass ride.
-     */
+    #[Group('time-sensitive')]
+    #[TestDox('When we do not need cycled rides we get the kidical mass ride.')]
     public function testCurrentRideWithoutMandatoryCycles(): void
     {
         ClockMock::register(RideRepository::class);
@@ -145,9 +132,7 @@ class RideApiTest extends AbstractApiControllerTest
         $this->assertEquals('kidical-mass-hamburg-2035', $actualRide->getSlug());
     }
 
-    /**
-     * @testdox Allowing the ride result list to contain slugged rides will return the kidical mass 2035.
-     */
+    #[TestDox('Allowing the ride result list to contain slugged rides will return the kidical mass 2035.')]
     public function testCurrentRideWithSlugs(): void
     {
         ClockMock::register(RideRepository::class);
@@ -167,9 +152,7 @@ class RideApiTest extends AbstractApiControllerTest
         $this->assertEquals('kidical-mass-hamburg-2035', $actualRide->getSlug());
     }
 
-    /**
-     * @testdox Query a ride by its ride identifier.
-     */
+    #[TestDox('Query a ride by its ride identifier.')]
     public function testCurrentRideBySlug(): void
     {
         $client = static::createClient();
@@ -186,9 +169,7 @@ class RideApiTest extends AbstractApiControllerTest
         $this->assertEquals('Hamburg', $actualRide->getCity()->getCity());
     }
 
-    /**
-     * @testdox Expect 404 for unknown ride identifiers.
-     */
+    #[TestDox('Expect 404 for unknown ride identifiers.')]
     public function testCurrentRideByMisspelledSlug(): void
     {
         $client = static::createClient();
@@ -198,9 +179,7 @@ class RideApiTest extends AbstractApiControllerTest
         $this->assertEquals(404, $client->getResponse()->getStatusCode());
     }
 
-    /**
-     * @testdox This call should return a list of ten random rides.
-     */
+    #[TestDox('This call should return a list of ten random rides.')]
     public function testRideListWithoutParameters(): void
     {
         $client = static::createClient();

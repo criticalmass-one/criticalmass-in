@@ -19,7 +19,7 @@ abstract class AbstractApiControllerTest extends WebTestCase
 
     protected function getSerializer(): SerializerInterface
     {
-        return static::$container->get('jms_serializer');
+        return static::getContainer()->get('jms_serializer');
     }
 
     protected function deserializeEntityList(string $data, string $entityFqcn): array

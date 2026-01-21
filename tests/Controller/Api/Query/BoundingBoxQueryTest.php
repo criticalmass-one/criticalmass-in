@@ -6,13 +6,13 @@ use App\Entity\Ride;
 use App\EntityInterface\CoordinateInterface;
 use Caldera\GeoBasic\Coord\Coord;
 use Caldera\GeoBasic\Coord\CoordInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\TestDox;
 use Tests\Controller\Api\AbstractApiControllerTest;
 
 class BoundingBoxQueryTest extends AbstractApiControllerTest
 {
-    /**
-     * @dataProvider apiClassProvider
-     */
+    #[DataProvider('apiClassProvider')]
     public function testRideListWithBoundingBoxQueryForHamburg(string $fqcn, array $query, CoordInterface $expectedCoord): void
     {
         $client = static::createClient();
@@ -32,9 +32,7 @@ class BoundingBoxQueryTest extends AbstractApiControllerTest
         }
     }
 
-    /**
-     * @testdox Invalid coords for bounding box query will be ignored and result in 10 random rides.
-     */
+    #[TestDox('Invalid coords for bounding box query will be ignored and result in 10 random rides.')]
     public function testRideListWithInvalidBoundingBoxQuery(): void
     {
         $client = static::createClient();
@@ -48,7 +46,7 @@ class BoundingBoxQueryTest extends AbstractApiControllerTest
         $this->assertCount(10, $actualRideList);
     }
 
-    public function apiClassProvider(): array
+    public static function apiClassProvider(): array
     {
         return [
             [

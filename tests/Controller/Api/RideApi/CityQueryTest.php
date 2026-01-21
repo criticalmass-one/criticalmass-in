@@ -3,13 +3,12 @@
 namespace Tests\Controller\Api\RideApi;
 
 use App\Entity\Ride;
+use PHPUnit\Framework\Attributes\TestDox;
 use Tests\Controller\Api\AbstractApiControllerTest;
 
 class CityQueryTest extends AbstractApiControllerTest
 {
-    /**
-     * @testdox Querying for Hamburg will only return Hamburg rides.
-     */
+    #[TestDox('Querying for Hamburg will only return Hamburg rides.')]
     public function testRideListWithCityQueryForHamburg(): void
     {
         $client = static::createClient();
@@ -27,9 +26,7 @@ class CityQueryTest extends AbstractApiControllerTest
         }
     }
 
-    /**
-     * @testdox Querying for London will only return London rides.
-     */
+    #[TestDox('Querying for London will only return London rides.')]
     public function testRideListWithCityQueryForLondon(): void
     {
         $client = static::createClient();
@@ -47,9 +44,7 @@ class CityQueryTest extends AbstractApiControllerTest
         }
     }
 
-    /**
-     * @testdox Expect 10 random cities when providing an non existent slug.
-     */
+    #[TestDox('Expect 10 random cities when providing an non existent slug.')]
     public function testRideListWithCityQueryForNonExistentCity(): void
     {
         $client = static::createClient();

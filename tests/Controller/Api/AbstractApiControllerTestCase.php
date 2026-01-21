@@ -39,9 +39,17 @@ abstract class AbstractApiControllerTestCase extends WebTestCase
             $loader->addFixture(new $fixtureClass());
         }
 
+        $connection = $this->entityManager->getConnection();
+
+        // Disable foreign key checks for MySQL
+        $connection->executeStatement('SET FOREIGN_KEY_CHECKS=0');
+
         $purger = new ORMPurger($this->entityManager);
         $executor = new ORMExecutor($this->entityManager, $purger);
         $executor->execute($loader->getFixtures());
+
+        // Re-enable foreign key checks
+        $connection->executeStatement('SET FOREIGN_KEY_CHECKS=1');
     }
 
     protected function getFixtureClasses(): array
@@ -81,17 +89,6 @@ abstract class AbstractApiControllerTestCase extends WebTestCase
     protected function getJsonResponse(): array
     {
         return json_decode($this->client->getResponse()->getContent(), true);
-    }
-
-    protected function assertResponseIsSuccessful(): void
-    {
-        $this->assertTrue(
-            $this->client->getResponse()->isSuccessful(),
-            sprintf('Response was not successful. Status: %d, Content: %s',
-                $this->client->getResponse()->getStatusCode(),
-                $this->client->getResponse()->getContent()
-            )
-        );
     }
 
     protected function assertResponseStatusCode(int $expectedStatusCode): void
