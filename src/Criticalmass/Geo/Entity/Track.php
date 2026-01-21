@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\Geo\Entity;
 
-use Caldera\GeoBasic\Track\Track as BaseTrack;
+use App\Geo\Track\Track as BaseTrack;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;

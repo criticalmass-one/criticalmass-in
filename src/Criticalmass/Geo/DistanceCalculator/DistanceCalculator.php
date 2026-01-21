@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\Geo\DistanceCalculator;
 
-use Caldera\GeoBasic\Coord\CoordInterface;
+use App\Geo\Coord\CoordInterface;
 
 class DistanceCalculator extends AbstractDistanceCalculator
 {

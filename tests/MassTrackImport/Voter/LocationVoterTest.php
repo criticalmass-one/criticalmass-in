@@ -6,7 +6,7 @@ use App\Criticalmass\MassTrackImport\Model\StravaActivityModel;
 use App\Criticalmass\MassTrackImport\Voter\LocationVoter;
 use App\Entity\City;
 use App\Entity\Ride;
-use Caldera\GeoBasic\Coord\Coord;
+use App\Geo\Coord\Coord;
 use PHPUnit\Framework\TestCase;
 
 class LocationVoterTest extends TestCase

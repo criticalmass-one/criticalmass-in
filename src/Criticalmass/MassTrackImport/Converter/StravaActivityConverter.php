@@ -3,7 +3,7 @@
 namespace App\Criticalmass\MassTrackImport\Converter;
 
 use App\Entity\TrackImportCandidate;
-use Caldera\GeoBasic\Coord\Coord;
+use App\Geo\Coord\Coord;
 
 class StravaActivityConverter
 {

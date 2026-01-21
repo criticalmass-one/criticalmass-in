@@ -3,7 +3,7 @@
 namespace App\Criticalmass\Geo\Entity;
 
 use App\Criticalmass\Geo\EntityInterface\PositionInterface;
-use Caldera\GeoBasic\Coordinate\Coordinate;
+use App\Geo\Coordinate\Coordinate;
 use JMS\Serializer\Annotation as JMS;
 
 /**

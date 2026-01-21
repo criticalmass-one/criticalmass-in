@@ -2,7 +2,7 @@
 
 namespace App\Criticalmass\Geo\EntityInterface;
 
-use Caldera\GeoBasic\Track\TrackInterface as BaseTrackInterface;
+use App\Geo\Track\TrackInterface as BaseTrackInterface;
 
 interface TrackInterface extends BaseTrackInterface
 {

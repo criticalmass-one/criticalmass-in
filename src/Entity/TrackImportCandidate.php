@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use Caldera\GeoBasic\Coord\Coord;
-use Caldera\GeoBasic\Coord\CoordInterface;
+use App\Geo\Coord\Coord;
+use App\Geo\Coord\CoordInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 

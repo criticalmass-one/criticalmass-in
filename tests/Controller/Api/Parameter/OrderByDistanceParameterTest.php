@@ -7,7 +7,7 @@ use App\Entity\City;
 use App\Entity\Photo;
 use App\Entity\Ride;
 use App\EntityInterface\CoordinateInterface;
-use Caldera\GeoBasic\Coord\CoordInterface;
+use App\Geo\Coord\CoordInterface;
 use Tests\Controller\Api\AbstractApiControllerTest;
 use Tests\Coords;
 

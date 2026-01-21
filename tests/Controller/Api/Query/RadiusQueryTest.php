@@ -5,7 +5,7 @@ namespace Tests\Controller\Api\Query;
 use App\Entity\City;
 use App\Entity\Photo;
 use App\Entity\Ride;
-use Caldera\GeoBasic\Coord\CoordInterface;
+use App\Geo\Coord\CoordInterface;
 use Tests\Controller\Api\AbstractApiControllerTest;
 use Tests\Coords;
 

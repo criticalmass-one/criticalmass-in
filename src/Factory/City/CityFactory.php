@@ -4,7 +4,7 @@ namespace App\Factory\City;
 
 use App\Entity\City;
 use App\Entity\Region;
-use Caldera\GeoBasic\Coord\CoordInterface;
+use App\Geo\Coord\CoordInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class CityFactory implements CityFactoryInterface

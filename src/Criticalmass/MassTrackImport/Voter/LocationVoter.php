@@ -5,7 +5,7 @@ namespace App\Criticalmass\MassTrackImport\Voter;
 use App\Criticalmass\Geo\DistanceCalculator\DistanceCalculator;
 use App\Entity\Ride;
 use App\Entity\TrackImportCandidate;
-use Caldera\GeoBasic\Coord\Coord;
+use App\Geo\Coord\Coord;
 
 class LocationVoter implements VoterInterface
 {
