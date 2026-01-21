@@ -4,11 +4,10 @@ namespace App\Controller\Api;
 
 use App\Entity\Ride;
 use App\Entity\Weather;
-use Nelmio\ApiDocBundle\Annotation\Operation;
+use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
-use OpenApi\Annotations as OA;
+use Symfony\Component\Routing\Attribute\Route;
 
 class WeatherController extends BaseController
 {
@@ -34,36 +33,13 @@ class WeatherController extends BaseController
      *   "clouds": 10,
      *   "rain": 0.0
      * }</pre>
-     *
-     * @Operation(
-     *     tags={"Weather"},
-     *     summary="Add weather data for a ride",
-     *     @OA\Parameter(
-     *         name="citySlug",
-     *         in="path",
-     *         description="Slug of the city",
-     *         required=true,
-     *         @OA\Schema(type="string"),
-     *     ),
-     *     @OA\Parameter(
-     *         name="rideIdentifier",
-     *         in="path",
-     *         description="Identifier of the ride (date or slug)",
-     *         required=true,
-     *         @OA\Schema(type="string"),
-     *     ),
-     *     @OA\RequestBody(
-     *         description="JSON representation of the weather data",
-     *         required=true,
-     *         @OA\JsonContent(type="object")
-     *     ),
-     *     @OA\Response(
-     *         response="201",
-     *         description="Returned when weather data was successfully created"
-     *     )
-     * )
      */
     #[Route(path: '/api/{citySlug}/{rideIdentifier}/weather', name: 'caldera_criticalmass_rest_weather_add', methods: ['PUT'])]
+    #[OA\Tag(name: 'Weather')]
+    #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'rideIdentifier', in: 'path', description: 'Identifier of the ride (date or slug)', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\RequestBody(description: 'JSON representation of the weather data', required: true, content: new OA\JsonContent(type: 'object'))]
+    #[OA\Response(response: 201, description: 'Returned when weather data was successfully created')]
     public function addWeatherAction(Request $request, Ride $ride): JsonResponse
     {
         /** @var Weather $weather */
