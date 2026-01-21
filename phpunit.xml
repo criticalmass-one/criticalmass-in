@@ -33,37 +33,50 @@
     <env name="REDIS_HOST" value="localhost"/>
     <env name="MEMCACHED_HOST" value="localhost"/>
     <env name="KERNEL_CLASS" value="App\Kernel"/>
-    <env name="DATABASE_URL" value="mysql://criticalmass:criticalmass@127.0.0.1:8002/criticalmass"/>
-    <env name="APP_SECRET" value="fwfu3pr9"/>
-    <env name="APP_ENV" value="test"/>
-    <env name="RABBITMQ_URL" value=""/>
-    <env name="ASSETS_VERSION" value="v2019-11-30"/>
-    <env name="REDIS_URL" value="redis://localhost"/>
-    <env name="SYMFONY_DEPRECATIONS_HELPER" value="verbose=0"/>
-    <!-- ###+ symfony/framework-bundle ### -->
-    <env name="APP_ENV" value="dev"/>
-    <env name="APP_SECRET" value="df8d381811406884419490af74b35ce9"/>
-    <!-- ###- symfony/framework-bundle ### -->
-    <!-- ###+ symfony/mailer ### -->
-    <!-- MAILER_DSN=null://null -->
-    <!-- ###- symfony/mailer ### -->
-  </php>
-  <testsuites>
-    <testsuite name="Symfony Test Suite">
-      <directory>./src/Symfony/Bridge/*/Tests/</directory>
-      <directory>./src/Symfony/Component/*/Tests/</directory>
-      <directory>./src/Symfony/Component/*/*/Tests/</directory>
-      <directory>./src/Symfony/Contract/*/Tests/</directory>
-      <directory>./src/Symfony/Bundle/*/Tests/</directory>
-    </testsuite>
-  </testsuites>
-  <groups>
-    <exclude>
-      <group>benchmark</group>
-      <group>intl-data</group>
-    </exclude>
-  </groups>
-  <listeners>
-    <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener"/>
-  </listeners>
+    <env name="DATABASE_URL" value="mysql://criticalmass:criticalmass@127.0.0.1:8002/criticalmass" />
+        <env name="APP_SECRET" value="fwfu3pr9" />
+        <env name="APP_ENV" value="test"/>
+        <env name="RABBITMQ_URL" value="" />
+        <env name="ASSETS_VERSION" value="v2019-11-30" />
+        <env name="REDIS_URL" value="redis://localhost"/>
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="verbose=0"/>
+        <!-- ###+ symfony/framework-bundle ### -->
+        <env name="APP_ENV" value="dev"/>
+        <env name="APP_SECRET" value="df8d381811406884419490af74b35ce9"/>
+        <!-- ###- symfony/framework-bundle ### -->
+
+        <!-- ###+ symfony/mailer ### -->
+        <!-- MAILER_DSN=null://null -->
+        <!-- ###- symfony/mailer ### -->
+
+        <!-- ###+ symfony/messenger ### -->
+        <!-- Choose one of the transports below -->
+        <!-- MESSENGER_TRANSPORT_DSN=amqp://guest:guest@localhost:5672/%2f/messages -->
+        <!-- MESSENGER_TRANSPORT_DSN=redis://localhost:6379/messages -->
+        <env name="MESSENGER_TRANSPORT_DSN" value="doctrine://default?auto_setup=0"/>
+        <!-- ###- symfony/messenger ### -->
+    </php>
+
+    <testsuites>
+        <testsuite name="Symfony Test Suite">
+            <directory>./src/Symfony/Bridge/*/Tests/</directory>
+            <directory>./src/Symfony/Component/*/Tests/</directory>
+            <directory>./src/Symfony/Component/*/*/Tests/</directory>
+            <directory>./src/Symfony/Contract/*/Tests/</directory>
+            <directory>./src/Symfony/Bundle/*/Tests/</directory>
+        </testsuite>
+    </testsuites>
+
+    <groups>
+        <exclude>
+            <group>benchmark</group>
+            <group>intl-data</group>
+        </exclude>
+    </groups>
+
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener"/>
+    </listeners>
+
+
 </phpunit>
