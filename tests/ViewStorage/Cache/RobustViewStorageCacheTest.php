@@ -3,72 +3,22 @@
 namespace Tests\ViewStorage\Cache;
 
 use App\Criticalmass\ViewStorage\Cache\RobustViewStorageCache;
-use App\Criticalmass\ViewStorage\Persister\ViewStoragePersister;
-use App\Criticalmass\ViewStorage\ViewEntityFactory\ViewEntityFactory;
+use App\Criticalmass\ViewStorage\Persister\ViewStoragePersisterInterface;
+use App\Criticalmass\ViewStorage\ViewModel\View;
 use App\Entity\User;
-use Doctrine\Common\Persistence\ObjectRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use JMS\Serializer\SerializerBuilder;
-use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
-use PhpAmqpLib\Exception\AMQPIOException;
 use PHPUnit\Framework\TestCase;
-use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Messenger\Envelope;
+use Symfony\Component\Messenger\Exception\TransportException;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Tests\ViewStorage\TestClass;
-use Tests\ViewStorage\TestClassView;
 
 class RobustViewStorageCacheTest extends TestCase
 {
-    public function testWithoutUser(): void
+    public function testFallbackWithoutUser(): void
     {
-        $testClass = new TestClass;
-
-        $expectedPersistedClass = new TestClassView();
-        $expectedPersistedClass
-            ->setId(1)
-            ->setDateTime(new \DateTime())
-            ->setTestClass($testClass);
-
-        $viewStoragePersisterRepository = $this->createMock(ObjectRepository::class);
-        $viewStoragePersisterRepository
-            ->expects($this->once())
-            ->method('find')
-            ->with($this->equalTo(1))
-            ->will($this->returnValue($testClass));
-
-        $viewStoragePersisterManager = $this->createMock(EntityManagerInterface::class);
-        $viewStoragePersisterManager
-            ->expects($this->once())
-            ->method('persist')
-            ->with($this->equalTo($expectedPersistedClass, 0.5));
-
-        $viewStoragePersisterRegistry = $this->createMock(ManagerRegistry::class);
-        $viewStoragePersisterRegistry
-            ->expects($this->once())
-            ->method('getRepository')
-            ->with($this->equalTo('App:TestClass'))
-            ->will($this->returnValue($viewStoragePersisterRepository));
-
-        $viewStoragePersisterRegistry
-            ->expects($this->once())
-            ->method('getManager')
-            ->will($this->returnValue($viewStoragePersisterManager));
-
-        $viewStorageCacheManager = $this->createMock(EntityManagerInterface::class);
-        $viewStorageCacheManager
-            ->expects($this->once())
-            ->method('flush');
-
-        $viewStorageCacheRegistry = $this->createMock(ManagerRegistry::class);
-        $viewStorageCacheRegistry
-            ->expects($this->once())
-            ->method('getManager')
-            ->will($this->returnValue($viewStorageCacheManager));
-
-        $viewEntityFactoryRegistry = $this->createMock(ManagerRegistry::class);
-
-        $serializer = SerializerBuilder::create()->build();
+        $testClass = new TestClass();
 
         $token = $this->createMock(UsernamePasswordToken::class);
 
@@ -78,88 +28,37 @@ class RobustViewStorageCacheTest extends TestCase
             ->method('getToken')
             ->will($this->returnValue($token));
 
-        $producer = $this->createMock(ProducerInterface::class);
-        $producer
+        $messageBus = $this->createMock(MessageBusInterface::class);
+        $messageBus
             ->expects($this->once())
-            ->method('publish')
-            ->will($this->throwException(new AMQPIOException()));
+            ->method('dispatch')
+            ->will($this->throwException(new TransportException('Connection refused')));
 
-        $viewEntityFactory = new ViewEntityFactory($viewEntityFactoryRegistry);
-        $viewEntityFactory->setEntityNamespace('Tests\\ViewStorage\\');
+        $viewStoragePersister = $this->createMock(ViewStoragePersisterInterface::class);
+        $viewStoragePersister
+            ->expects($this->once())
+            ->method('storeView')
+            ->with($this->callback(function (View $view) {
+                return $view->getEntityId() === 1
+                    && $view->getEntityClassName() === 'TestClass'
+                    && $view->getUserId() === null;
+            }));
 
-        $viewStoragePersister = new ViewStoragePersister($viewStoragePersisterRegistry, $serializer, $viewEntityFactory);
-        $viewStoragePersister->setEntityNamespace('Tests\\ViewStorage\\');
-
-        $robustViewStorageCache = new RobustViewStorageCache($viewStorageCacheRegistry, $viewStoragePersister, $tokenStorage, $producer, $serializer);
+        $robustViewStorageCache = new RobustViewStorageCache(
+            $viewStoragePersister,
+            $tokenStorage,
+            $messageBus
+        );
 
         $robustViewStorageCache->countView($testClass);
     }
 
-    public function testWithUser(): void
+    public function testFallbackWithUser(): void
     {
-        $testClass = new TestClass;
+        $testClass = new TestClass();
 
         $user = new User();
         $user->setId(42);
-
-        $expectedPersistedClass = new TestClassView();
-        $expectedPersistedClass
-            ->setId(1)
-            ->setUser($user)
-            ->setDateTime(new \DateTime())
-            ->setTestClass($testClass);
-
-        $viewStoragePersisterRepository = $this->createMock(ObjectRepository::class);
-        $viewStoragePersisterRepository
-            ->expects($this->once())
-            ->method('find')
-            ->with($this->equalTo(1))
-            ->will($this->returnValue($testClass));
-
-        $viewStoragePersisterManager = $this->createMock(EntityManagerInterface::class);
-        $viewStoragePersisterManager
-            ->expects($this->once())
-            ->method('persist')
-            ->with($this->equalTo($expectedPersistedClass, 0.5));
-
-        $viewStoragePersisterRegistry = $this->createMock(ManagerRegistry::class);
-        $viewStoragePersisterRegistry
-            ->expects($this->once())
-            ->method('getRepository')
-            ->with($this->equalTo('App:TestClass'))
-            ->will($this->returnValue($viewStoragePersisterRepository));
-
-        $viewStoragePersisterRegistry
-            ->expects($this->once())
-            ->method('getManager')
-            ->will($this->returnValue($viewStoragePersisterManager));
-
-        $viewStorageCacheManager = $this->createMock(EntityManagerInterface::class);
-        $viewStorageCacheManager
-            ->expects($this->once())
-            ->method('flush');
-
-        $viewStorageCacheRegistry = $this->createMock(ManagerRegistry::class);
-        $viewStorageCacheRegistry
-            ->expects($this->once())
-            ->method('getManager')
-            ->will($this->returnValue($viewStorageCacheManager));
-
-        $viewEntityFactoryRepository = $this->createMock(ObjectRepository::class);
-        $viewEntityFactoryRepository
-            ->expects($this->once())
-            ->method('find')
-            ->with($this->equalTo(42))
-            ->will($this->returnValue($user));
-
-        $viewEntityFactoryRegistry = $this->createMock(ManagerRegistry::class);
-        $viewEntityFactoryRegistry
-            ->expects($this->once())
-            ->method('getRepository')
-            ->with($this->equalTo(User::class))
-            ->will($this->returnValue($viewEntityFactoryRepository));
-
-        $serializer = SerializerBuilder::create()->build();
 
         $token = $this->createMock(UsernamePasswordToken::class);
         $token
@@ -173,19 +72,59 @@ class RobustViewStorageCacheTest extends TestCase
             ->method('getToken')
             ->will($this->returnValue($token));
 
-        $producer = $this->createMock(ProducerInterface::class);
-        $producer
+        $messageBus = $this->createMock(MessageBusInterface::class);
+        $messageBus
             ->expects($this->once())
-            ->method('publish')
-            ->will($this->throwException(new AMQPIOException()));
+            ->method('dispatch')
+            ->will($this->throwException(new TransportException('Connection refused')));
 
-        $viewEntityFactory = new ViewEntityFactory($viewEntityFactoryRegistry);
-        $viewEntityFactory->setEntityNamespace('Tests\\ViewStorage\\');
+        $viewStoragePersister = $this->createMock(ViewStoragePersisterInterface::class);
+        $viewStoragePersister
+            ->expects($this->once())
+            ->method('storeView')
+            ->with($this->callback(function (View $view) {
+                return $view->getEntityId() === 1
+                    && $view->getEntityClassName() === 'TestClass'
+                    && $view->getUserId() === 42;
+            }));
 
-        $viewStoragePersister = new ViewStoragePersister($viewStoragePersisterRegistry, $serializer, $viewEntityFactory);
-        $viewStoragePersister->setEntityNamespace('Tests\\ViewStorage\\');
+        $robustViewStorageCache = new RobustViewStorageCache(
+            $viewStoragePersister,
+            $tokenStorage,
+            $messageBus
+        );
 
-        $robustViewStorageCache = new RobustViewStorageCache($viewStorageCacheRegistry, $viewStoragePersister, $tokenStorage, $producer, $serializer);
+        $robustViewStorageCache->countView($testClass);
+    }
+
+    public function testSuccessfulDispatch(): void
+    {
+        $testClass = new TestClass();
+
+        $token = $this->createMock(UsernamePasswordToken::class);
+
+        $tokenStorage = $this->createMock(TokenStorageInterface::class);
+        $tokenStorage
+            ->expects($this->once())
+            ->method('getToken')
+            ->will($this->returnValue($token));
+
+        $messageBus = $this->createMock(MessageBusInterface::class);
+        $messageBus
+            ->expects($this->once())
+            ->method('dispatch')
+            ->willReturn(new Envelope(new \stdClass()));
+
+        $viewStoragePersister = $this->createMock(ViewStoragePersisterInterface::class);
+        $viewStoragePersister
+            ->expects($this->never())
+            ->method('storeView');
+
+        $robustViewStorageCache = new RobustViewStorageCache(
+            $viewStoragePersister,
+            $tokenStorage,
+            $messageBus
+        );
 
         $robustViewStorageCache->countView($testClass);
     }
