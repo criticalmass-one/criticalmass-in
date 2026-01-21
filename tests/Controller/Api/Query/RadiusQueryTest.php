@@ -6,14 +6,13 @@ use App\Criticalmass\Geo\Coord\CoordInterface;
 use App\Entity\City;
 use App\Entity\Photo;
 use App\Entity\Ride;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\Controller\Api\AbstractApiControllerTest;
 use Tests\Coords;
 
 class RadiusQueryTest extends AbstractApiControllerTest
 {
-    /**
-     * @dataProvider apiClassProvider
-     */
+    #[DataProvider('apiClassProvider')]
     public function testResultListForParameterizedDistance(string $fqcn, CoordInterface $centerCoord, float $radius, int $expectedResults): void
     {
         $client = static::createClient();
@@ -27,7 +26,7 @@ class RadiusQueryTest extends AbstractApiControllerTest
         $this->assertCount($expectedResults, $resultList);
     }
 
-    public function apiClassProvider(): array
+    public static function apiClassProvider(): array
     {
         return [
             [City::class, Coords::buedelsdorf(), 10, 0],

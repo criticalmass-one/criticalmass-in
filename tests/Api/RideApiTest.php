@@ -2,6 +2,7 @@
 
 namespace Tests\Api;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class RideApiTest extends WebTestCase
@@ -139,9 +140,7 @@ class RideApiTest extends WebTestCase
         $this->assertEmpty($data);
     }
 
-    /**
-     * @dataProvider rideTypeProvider
-     */
+    #[DataProvider('rideTypeProvider')]
     public function testFilterByRideType(string $rideType): void
     {
         $apiUri = sprintf('/api/ride?rideType=%s', $rideType);
@@ -159,7 +158,7 @@ class RideApiTest extends WebTestCase
         }
     }
 
-    public function rideTypeProvider(): array
+    public static function rideTypeProvider(): array
     {
         return [
             ['critical_mass'],
@@ -175,9 +174,7 @@ class RideApiTest extends WebTestCase
         ];
     }
 
-    /**
-     * @dataProvider orderParameterProvider
-     */
+    #[DataProvider('orderParameterProvider')]
     public function testSortByOrderParameter(string $orderBy, string $direction, ?string $propertyName = null): void
     {
         $apiUri = sprintf('/api/ride?orderBy=%s&orderDirection=%s', $orderBy, $direction);
@@ -223,7 +220,7 @@ class RideApiTest extends WebTestCase
         $this->assertSame($sorted, $values);
     }
 
-    public function orderParameterProvider(): array
+    public static function orderParameterProvider(): array
     {
         return [
             ['id', 'asc'],

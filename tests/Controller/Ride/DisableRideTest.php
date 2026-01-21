@@ -2,6 +2,7 @@
 
 namespace Tests\Controller\Ride;
 
+use PHPUnit\Framework\Attributes\Depends;
 use Tests\Controller\AbstractControllerTest;
 
 class DisableRideTest extends AbstractControllerTest
@@ -35,10 +36,8 @@ class DisableRideTest extends AbstractControllerTest
         $this->assertSelectorExists('#disable-modal');
     }
 
-    /**
-     * @depends testEnabledRide
-     * @depends testDisableRideFormVisibility
-     */
+    #[Depends('testEnabledRide')]
+    #[Depends('testDisableRideFormVisibility')]
     public function testDisableRide(): void
     {
         $client = static::createClient();
@@ -65,9 +64,7 @@ class DisableRideTest extends AbstractControllerTest
         $this->assertSelectorExists('body.ride-disabled');
     }
 
-    /**
-     * @depends testDisableRide
-     */
+    #[Depends('testDisableRide')]
     public function testNavigationWithoutDisabledRide(): void
     {
         $client = static::createClient();
@@ -85,9 +82,7 @@ class DisableRideTest extends AbstractControllerTest
         $this->assertEquals('http://localhost/hamburg/2011-03-25', $prevLink->getUri());
     }
 
-    /**
-     * @depends testDisableRide
-     */
+    #[Depends('testDisableRide')]
     public function testEnableRide(): void
     {
         $client = static::createClient();

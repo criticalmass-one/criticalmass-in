@@ -3,13 +3,12 @@
 namespace Tests\Controller\Api\CityApi;
 
 use App\Entity\City;
+use PHPUnit\Framework\Attributes\TestDox;
 use Tests\Controller\Api\AbstractApiControllerTest;
 
 class CityApiTest extends AbstractApiControllerTest
 {
-    /**
-     * @testdox Request Hamburg and check the result.
-     */
+    #[TestDox('Request Hamburg and check the result.')]
     public function testCityHamburg(): void
     {
         $client = static::createClient();
@@ -24,9 +23,7 @@ class CityApiTest extends AbstractApiControllerTest
         $this->assertEquals('Hamburg', $actualCity->getCity());
     }
 
-    /**
-     * @testdox Ask for a unknown city and retrieve 404.
-     */
+    #[TestDox('Ask for a unknown city and retrieve 404.')]
     public function testUnkownCity(): void
     {
         $client = static::createClient();
