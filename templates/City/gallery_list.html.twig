@@ -2,27 +2,26 @@
 
 {% block title %}Städte-Übersicht{% endblock %}
 
-{% block breadcrumb %}
+{% import '_macros/breadcrumb.html.twig' as bc %}
 
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
-    <li>
-        <a href="{{ object_path(city) }}">
-            {{ city.city }}
-        </a>
-    </li>
-    <li class="active">
-        Foto-Galerien
-    </li>
+{% block breadcrumbs %}
+    {{ bc.render(
+        [
+            { label: 'Städteliste', url: path('caldera_criticalmass_city_list') },
+            { label: city.city, url: object_path(city) },
+            { label: 'Foto-Galerien' },
+        ],
+        {
+            homeLabel: 'Critical Mass',
+            homeUrl: path('caldera_criticalmass_frontpage')
+        }
+    ) }}
 {% endblock %}
-    
+
 {% block content %}
     <div class="container main-container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <h1>
                     Fotos aus {{ city.city }}
                 </h1>
@@ -35,19 +34,13 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
-                <table id="cityRideList" class="table">
+            <div class="col-12">
+                <table id="cityRideList" class="table align-middle">
                     <thead>
                     <tr>
-                        <th>
-                            Datum
-                        </th>
-                        <th>
-                            Titel
-                        </th>
-                        <th>
-                            Fotos
-                        </th>
+                        <th>Datum</th>
+                        <th>Titel</th>
+                        <th>Fotos</th>
                     </tr>
                     </thead>
                     <tbody>

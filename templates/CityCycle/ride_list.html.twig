@@ -2,22 +2,20 @@
 
 {% block title %}Automatisch generierte Touren von {{ city.city }} anzeigen{% endblock %}
 
-{% block breadcrumb %}
-    <li>
-        <a href="{{ object_path(city) }}">
-            {{ city.city }}
-        </a>
-    </li>
+{% import '_macros/breadcrumb.html.twig' as bc %}
 
-    <li>
-        <a href="{{ object_path(cityCycle.city, 'caldera_criticalmass_citycycle_list') }}">
-            Turnusliste
-        </a>
-    </li>
-
-    <li class="active">
-        Generierte Touren anzeigen
-    </li>
+{% block breadcrumbs %}
+    {{ bc.render(
+        [
+            { label: city.city, url: object_path(city) },
+            { label: 'Turnusliste', url: object_path(cityCycle.city, 'caldera_criticalmass_citycycle_list') },
+            { label: 'Generierte Touren anzeigen' },
+        ],
+        {
+            homeLabel: 'Critical Mass',
+            homeUrl: path('caldera_criticalmass_frontpage')
+        }
+    ) }}
 {% endblock %}
     
 {% block content %}
@@ -25,33 +23,31 @@
         {{ include('Flash/_flash.html.twig') }}
 
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
+            <div class="col-12 col-md-10 offset-md-1">
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                Turnus
+                    <div class="col-12 col-md-4">
+                        <div class="card mb-3 shadow-sm">
+                            <div class="card-header bg-body-tertiary py-2">
+                                <h6 class="mb-0 fw-semibold">
+                                    🔁 Turnus
+                                </h6>
                             </div>
-                            <div class="panel-body">
-                                <dl>
-                                    <dt>
-                                        Turnus
-                                    </dt>
+
+                            <div class="card-body">
+                                <dl class="mb-0">
+                                    <dt>Turnus</dt>
                                     <dd>
-                                        {{ ('cycle.event_date.month_week.' ~ cityCycle.weekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ cityCycle.dayOfWeek)|trans }}
+                                        {{ ('cycle.event_date.month_week.' ~ cityCycle.weekOfMonth)|trans }}
+                                        {{ ('cycle.event_date.day.' ~ cityCycle.dayOfWeek)|trans }}
                                         im Monat
                                     </dd>
 
-                                    <dt>
-                                        Uhrzeit
-                                    </dt>
+                                    <dt>Uhrzeit</dt>
                                     <dd>
                                         {{ cityCycle.time|date('H:i', 'UTC') }} Uhr
                                     </dd>
 
-                                    <dt>
-                                        Treffpunkt
-                                    </dt>
+                                    <dt>Treffpunkt</dt>
                                     <dd>
                                         {% if cityCycle.location %}
                                             {{ cityCycle.location }}
@@ -60,9 +56,7 @@
                                         {% endif %}
                                     </dd>
 
-                                    <dt>
-                                        Gültigkeitsbeginn
-                                    </dt>
+                                    <dt>Gültigkeitsbeginn</dt>
                                     <dd>
                                         {% if cityCycle.validFrom %}
                                             {{ cityCycle.validFrom|date('d.m.Y') }}
@@ -71,9 +65,7 @@
                                         {% endif %}
                                     </dd>
 
-                                    <dt>
-                                        Gültigkeitsende
-                                    </dt>
+                                    <dt>Gültigkeitsende</dt>
                                     <dd>
                                         {% if cityCycle.validUntil %}
                                             {{ cityCycle.validUntil|date('d.m.Y') }}
@@ -86,9 +78,9 @@
                         </div>
                     </div>
 
-                    <div class="col-md-8">
+                    <div class="col-12 col-md-8">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-12">
                                 <h2>
                                     Tourenübersicht
                                 </h2>
@@ -100,29 +92,15 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-12">
-                                <table class="table">
+                            <div class="col-12">
+                                <table class="table align-middle">
                                     <thead>
                                     <tr>
-                                        <th>
-                                            Titel
-                                        </th>
-
-                                        <th>
-                                            Datum
-                                        </th>
-
-                                        <th>
-                                            Uhrzeit
-                                        </th>
-
-                                        <th>
-                                            Treffpunkt
-                                        </th>
-
-                                        <th>
-
-                                        </th>
+                                        <th>Titel</th>
+                                        <th>Datum</th>
+                                        <th>Uhrzeit</th>
+                                        <th>Treffpunkt</th>
+                                        <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -147,7 +125,7 @@
                                             </td>
 
                                             <td>
-                                                <a class="btn btn-xs btn-default"
+                                                <a class="btn btn-outline-secondary btn-sm"
                                                    href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}"
                                                    title="Tour editieren">
                                                     <i class="fa fa-wrench"></i>

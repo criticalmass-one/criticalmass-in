@@ -2,43 +2,20 @@
 
 {% block title %}Critical Mass in {{ region.name }}{% endblock %}
 
-{% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_region_world') }}">
-            Verzeichnis
-        </a>
-    </li>
+{% import '_macros/breadcrumb.html.twig' as bc %}
 
-    {% if (region.parent and region.parent.parent and region.parent.parent.parent and not region.parent.parent.parent.isWorld()) %}
-        <li>
-            <a href="{{ object_path(region.parent.parent.parent) }}">
-                {{ region.parent.parent.parent.name }}
-            </a>
-        </li>
-    {% endif %}
-
-    {% if (region.parent and region.parent.parent and not region.parent.parent.isWorld()) %}
-        <li>
-            <a href="{{ object_path(region.parent.parent) }}">
-                {{ region.parent.parent.name }}
-            </a>
-        </li>
-    {% endif %}
-
-
-    {% if (region.parent and not region.parent.isWorld()) %}
-        <li>
-            <a href="{{ object_path(region.parent) }}">
-                {{ region.parent.name }}
-            </a>
-        </li>
-    {% endif %}
-
-    <li>
-        <a href="{{ object_path(region) }}">
-            {{ region.name }}
-        </a>
-    </li>
+{% block breadcrumbs %}
+    {{ bc.render(
+        breadcrumbRegions
+            |map(regionObj => {
+                'label': regionObj.name,
+                'url': object_path(regionObj)
+            }),
+        {
+            homeLabel: 'Critical Mass',
+            homeUrl: path('caldera_criticalmass_frontpage')
+        }
+    ) }}
 {% endblock %}
 
 {% block content %}
@@ -47,7 +24,7 @@
             <div class="col-md-12">
                 {% if app.getUser() and region.isLevel(3) %}
                     <a href="{{ path('caldera_criticalmass_city_add', { slug1: region.parent.parent.slug, slug2: region.parent.slug, slug3: region.slug }) }}"
-                       class="btn btn-success margin-top-medium pull-right">
+                       class="btn btn-success mt-4 float-end">
                         <i class="far fa-plus"></i>
                         Stadt hinzufügen
                     </a>
@@ -91,7 +68,7 @@
 
             <div class="row">
                 {% for region2 in regions %}
-                    <div class="col-xs-6 col-sm-4 col-md-3">
+                    <div class="col-6 col-sm-4 col-md-3">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="text-center">
@@ -127,7 +104,7 @@
 
             <div class="row">
                 {% for city in cities %}
-                    <div class="col-xs-6 col-sm-4 col-md-3">
+                    <div class="col-6 col-sm-4 col-md-3">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="text-center">

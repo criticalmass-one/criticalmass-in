@@ -2,16 +2,19 @@
 
 {% block title %}Deine Tracks{% endblock %}
 
-{% block breadcrumb %}
-    <li>
-        <a href="{{ path('criticalmass_user_usermanagement') }}">
-            Dein Benutzerkonto
-        </a>
-    </li>
+{% import '_macros/breadcrumb.html.twig' as bc %}
 
-    <li class="active">
-        Deine Tracks
-    </li>
+{% block breadcrumbs %}
+    {{ bc.render(
+        [
+            { label: 'Dein Benutzerkonto', url: path('criticalmass_user_usermanagement') },
+            { label: 'Deine Tracks' },
+        ],
+        {
+            homeLabel: 'Critical Mass',
+            homeUrl: path('caldera_criticalmass_frontpage')
+        }
+    ) }}
 {% endblock %}
 
 {% block content %}
@@ -25,14 +28,14 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row mt-3">
             <div class="col-md-12">
                 <form method="post"
                       action="{{ object_path(track, 'caldera_criticalmass_track_draw') }}">
                     <input type="hidden" id="polyline" name="polyline"/>
                     <input type="hidden" id="geojson" name="geojson"/>
 
-                    <button type="submit" id="save-track" class="btn btn-default">
+                    <button type="submit" id="save-track" class="btn btn-secondary">
                         Speichern
                     </button>
                 </form>

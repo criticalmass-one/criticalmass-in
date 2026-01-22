@@ -36,6 +36,16 @@ class RegionController extends AbstractController
         $allCities = $cityRepository->findChildrenCitiesOfRegion($region);
         $regions = $regionRepository->findByParentRegion($region);
 
+        $breadcrumbRegions = [];
+        $currentRegion = $region;
+
+        while ($currentRegion) {
+            $breadcrumbRegions[] = $currentRegion;
+            $currentRegion = $currentRegion->getParent();
+        }
+
+        $breadcrumbRegions = array_reverse($breadcrumbRegions);
+
         $cityCounter = [];
 
         foreach ($regions as $region2) {
@@ -48,6 +58,7 @@ class RegionController extends AbstractController
             'cities' => $cities,
             'cityCounter' => $cityCounter,
             'allCities' => $allCities,
+            'breadcrumbRegions' => $breadcrumbRegions,
         ]);
     }
 }

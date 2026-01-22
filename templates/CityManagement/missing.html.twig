@@ -4,59 +4,59 @@
 
 {% block content %}
     {% if city %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <h2>
-                    Critical Mass {{ city.city }}
-                </h2>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-8 offset-md-2">
+                    <h2>
+                        Critical Mass {{ city.city }}
+                    </h2>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-md-8 offset-md-2">
+                    <div id="map" class="map" style="height: 150px;"
+                         data-map-center-latitude="{{ city.latitude }}"
+                         data-map-center-longitude="{{ city.longitude }}"
+                         data-map-zoomlevel="13"
+                         data-lock-map="true"
+                         data-marker-latitude="{{ city.latitude }}"
+                         data-marker-longitude="{{ city.longitude }}"
+                         data-marker-type="city"
+                    ></div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-12 col-md-8 offset-md-2">
+                    <p>
+                        Es tut uns leid, aber wir haben keine Informationen zu einer Critical Mass in {{ city.city }} in unserer Datenbank.
+                    </p>
+
+                    <p>
+                        Du kannst aber jetzt eine Critical Mass für {{ city.city }} hinzufügen:
+                    </p>
+
+                    <p class="text-center">
+                        <a href="{{ path('caldera_criticalmass_city_add_slug', { citySlug: citySlug }) }}" class="btn btn-primary">
+                            {{ city.city }} hinzufügen
+                        </a>
+                    </p>
+                </div>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div id="map" class="map" style="height: 150px;"
-                     data-map-center-latitude="{{ city.latitude }}"
-                     data-map-center-longitude="{{ city.longitude }}"
-                     data-map-zoomlevel="13"
-                     data-lock-map="true"
-                     data-marker-latitude="{{ city.latitude }}"
-                     data-marker-longitude="{{ city.longitude }}"
-                     data-marker-type="city"
-                ></div>
-            </div>
-        </div>
-
-        <div class="row margin-top-medium">
-            <div class="col-md-8 col-md-offset-2">
-                <p>
-                    Es tut uns leid, aber wir haben keine Informationen zu einer Critical Mass in {{ city.city }} in unserer Datenbank.
-                </p>
-
-                <p>
-                    Du kannst aber jetzt eine Critical Mass für {{ city.city }} hinzufügen:
-                </p>
-
-                <p class="text-center">
-                    <a href="{{ path('caldera_criticalmass_city_add_slug', { citySlug: citySlug }) }}" class="btn btn-primary">
-                        {{ city.city }} hinzufügen
-                    </a>
-                </p>
-            </div>
-        </div>
-    </div>
     {% else %}
         <div class="container">
             <div class="row">
-                <div class="col-md-8 col-md-offset-2">
+                <div class="col-12 col-md-8 offset-md-2">
                     <h2>
                         Keine Masse gefunden
                     </h2>
                 </div>
             </div>
 
-            <div class="row margin-top-medium">
-                <div class="col-md-8 col-md-offset-2">
+            <div class="row mt-4">
+                <div class="col-12 col-md-8 offset-md-2">
                     <p>
                         Es tut uns leid, aber wir konnten keine Stadt zu deiner Suche nach <code>{{ citySlug }}</code>
                         finden.

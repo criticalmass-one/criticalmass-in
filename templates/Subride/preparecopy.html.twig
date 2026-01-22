@@ -5,7 +5,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <h1>
                     Mini-Masses kopieren
                 </h1>
@@ -13,8 +13,10 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
-                <p>Von der Tour <a href="{{ object_path(oldRide) }}">{{ oldRide.title }}</a>
+            <div class="col-12">
+                <p>
+                    Von der Tour
+                    <a href="{{ object_path(oldRide) }}">{{ oldRide.title }}</a>
                     ({{ oldRide.dateTime.format('d.m.Y H:i') }} Uhr) können die folgenden Mini-Masses kopiert werden:
                 </p>
             </div>
@@ -22,27 +24,34 @@
 
         <div class="row">
             {% for subride in oldRide.getSubrides() %}
-                <div class="media subride col-md-4 no-margin-top margin-bottom-medium">
-                    <a class="pull-left subride" href="#">
-                        <img class="media-object" src="{{ asset('/images/marker/marker-green.png') }}" alt="...">
-                    </a>
-                    <div class="media-body">
-                        <h5 class="media-heading">{{ subride.dateTime.format('H.i') }} Uhr: {{ subride.title }}</h5>
-                        <p>{{ subride.description|nl2br }}</p>
+                <div class="col-12 col-md-4 no-margin-top margin-bottom-medium">
+                    <div class="d-flex subride">
+                        <a class="me-3 subride" href="#">
+                            <img class="media-object img-fluid"
+                                 src="{{ asset('/images/marker/marker-green.png') }}"
+                                 alt="Marker">
+                        </a>
+                        <div class="media-body">
+                            <h5 class="media-heading">
+                                {{ subride.dateTime.format('H.i') }} Uhr: {{ subride.title }}
+                            </h5>
+                            <p>{{ subride.description|nl2br }}</p>
+                        </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
 
         <div class="row">
-            <div class="col-md-12">
-                <div class="btn-group pull-right" role="group" aria-label="...">
-                    <a href="{{ object_path(newRide) }}" class="btn btn-default">
+            <div class="col-12">
+                <div class="btn-group float-end" role="group" aria-label="Mini-Masses kopieren">
+                    <a href="{{ object_path(newRide) }}" class="btn btn-secondary">
                         Abbrechen
                     </a>
                     <a href="{{ object_path(oldRide, 'caldera_criticalmass_subride_copy', { newDate: newRide.dateTime|date('Y-m-d') }) }}"
                        class="btn btn-success">
-                        Kopieren</a>
+                        Kopieren
+                    </a>
                 </div>
             </div>
         </div>

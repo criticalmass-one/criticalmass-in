@@ -1,121 +1,178 @@
 <div>
-    <ul class="nav nav-tabs" role="tablist">
+    {# Tabs #}
+    {% set hasActive = false %}
+    <ul class="nav nav-tabs timeline-tabs" id="timelineTabs" role="tablist">
         {% if timelineContentList.standard is defined %}
-            <li role="presentation" class="active">
-                <a href="#standard" aria-controls="standard" role="tab" data-toggle="tab">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link{% if hasActive == false %} active{% endif %}"
+                   id="standard-tab"
+                   data-bs-toggle="tab"
+                   href="#standard"
+                   role="tab"
+                   aria-controls="standard"
+                   aria-selected="{{ hasActive == false ? 'true' : 'false' }}">
                     <i class="far fa-clock"></i>
                     Neuigkeiten
                 </a>
             </li>
+            {% set hasActive = true %}
         {% endif %}
 
         {% if timelineContentList.facebook is defined %}
-            <li role="presentation">
-                <a href="#facebook" aria-controls="facebook" role="tab" data-toggle="tab">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link{% if hasActive == false %} active{% endif %}"
+                   id="facebook-tab"
+                   data-bs-toggle="tab"
+                   href="#facebook"
+                   role="tab"
+                   aria-controls="facebook"
+                   aria-selected="{{ hasActive == false ? 'true' : 'false' }}">
                     <i class="fab fa-facebook"></i>
                     Facebook-Beiträge
                 </a>
             </li>
+            {% set hasActive = true %}
         {% endif %}
 
         {% if timelineContentList.twitter is defined %}
-            <li role="presentation">
-                <a href="#twitter" aria-controls="twitter" role="tab" data-toggle="tab">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link{% if hasActive == false %} active{% endif %}"
+                   id="twitter-tab"
+                   data-bs-toggle="tab"
+                   href="#twitter"
+                   role="tab"
+                   aria-controls="twitter"
+                   aria-selected="{{ hasActive == false ? 'true' : 'false' }}">
                     <i class="fab fa-twitter"></i>
                     Tweets
                 </a>
             </li>
+            {% set hasActive = true %}
         {% endif %}
 
         {% if timelineContentList.instagram_profile is defined %}
-            <li role="presentation">
-                <a href="#instagram_profile" aria-controls="twitter" role="tab" data-toggle="tab">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link{% if hasActive == false %} active{% endif %}"
+                   id="instagram_profile-tab"
+                   data-bs-toggle="tab"
+                   href="#instagram_profile"
+                   role="tab"
+                   aria-controls="instagram_profile"
+                   aria-selected="{{ hasActive == false ? 'true' : 'false' }}">
                     <i class="fab fa-instagram"></i>
                     Instagram-Fotos
                 </a>
             </li>
+            {% set hasActive = true %}
         {% endif %}
 
         {% if timelineContentList.homepage is defined %}
-            <li role="presentation">
-                <a href="#www" aria-controls="www" role="tab" data-toggle="tab">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link{% if hasActive == false %} active{% endif %}"
+                   id="www-tab"
+                   data-bs-toggle="tab"
+                   href="#www"
+                   role="tab"
+                   aria-controls="www"
+                   aria-selected="{{ hasActive == false ? 'true' : 'false' }}">
                     <i class="far fa-globe"></i>
                     Blog-Beiträge
                 </a>
             </li>
+            {% set hasActive = true %}
         {% endif %}
 
         {% if timelineContentList.mastodon is defined %}
-            <li role="presentation">
-                <a href="#mastodon" aria-controls="mastodon" role="tab" data-toggle="tab">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link{% if hasActive == false %} active{% endif %}"
+                   id="mastodon-tab"
+                   data-bs-toggle="tab"
+                   href="#mastodon"
+                   role="tab"
+                   aria-controls="mastodon"
+                   aria-selected="{{ hasActive == false ? 'true' : 'false' }}">
                     <i class="far fa-mastodon"></i>
                     Mastodon-Beiträge
                 </a>
             </li>
+            {% set hasActive = true %}
         {% endif %}
     </ul>
 
-    <div class="tab-content margin-top-medium">
-        {% set hasActive = false %}
+    {# Tab panes #}
+    <div class="tab-content timeline-pane mt-3" id="timelineTabsContent">
+        {% set hasActiveContent = false %}
 
         {% if timelineContentList.standard is defined %}
-            <div role="tabpanel" class="tab-pane{% if hasActive == false %} active{% endif %}" id="standard">
+            <div class="tab-pane fade{% if hasActiveContent == false %} show active{% endif %}"
+                 id="standard"
+                 role="tabpanel"
+                 aria-labelledby="standard-tab">
                 {% for content in timelineContentList.standard %}
                     {{ content|raw }}
                 {% endfor %}
             </div>
-
-            {% set hasActive = true %}
+            {% set hasActiveContent = true %}
         {% endif %}
 
         {% if timelineContentList.facebook is defined %}
-            <div role="tabpanel" class="tab-pane{% if hasActive == false %} active{% endif %}" id="facebook">
+            <div class="tab-pane fade{% if hasActiveContent == false %} show active{% endif %}"
+                 id="facebook"
+                 role="tabpanel"
+                 aria-labelledby="facebook-tab">
                 {% for content in timelineContentList.facebook %}
                     {{ content|raw }}
                 {% endfor %}
             </div>
-
-            {% set hasActive = true %}
+            {% set hasActiveContent = true %}
         {% endif %}
 
         {% if timelineContentList.twitter is defined %}
-            <div role="tabpanel" class="tab-pane{% if hasActive == false %} active{% endif %}" id="twitter">
+            <div class="tab-pane fade{% if hasActiveContent == false %} show active{% endif %}"
+                 id="twitter"
+                 role="tabpanel"
+                 aria-labelledby="twitter-tab">
                 {% for content in timelineContentList.twitter %}
                     {{ content|raw }}
                 {% endfor %}
             </div>
-
-            {% set hasActive = true %}
+            {% set hasActiveContent = true %}
         {% endif %}
 
         {% if timelineContentList.instagram_profile is defined %}
-            <div role="tabpanel" class="tab-pane{% if hasActive == false %} active{% endif %}" id="instagram_profile">
+            <div class="tab-pane fade{% if hasActiveContent == false %} show active{% endif %}"
+                 id="instagram_profile"
+                 role="tabpanel"
+                 aria-labelledby="instagram_profile-tab">
                 {% for content in timelineContentList.instagram_profile %}
                     {{ content|raw }}
                 {% endfor %}
             </div>
-
-            {% set hasActive = true %}
+            {% set hasActiveContent = true %}
         {% endif %}
 
         {% if timelineContentList.homepage is defined %}
-            <div role="tabpanel" class="tab-pane{% if hasActive == false %} active{% endif %}" id="www">
+            <div class="tab-pane fade{% if hasActiveContent == false %} show active{% endif %}"
+                 id="www"
+                 role="tabpanel"
+                 aria-labelledby="www-tab">
                 {% for content in timelineContentList.homepage %}
                     {{ content|raw }}
                 {% endfor %}
             </div>
-
-            {% set hasActive = true %}
+            {% set hasActiveContent = true %}
         {% endif %}
 
         {% if timelineContentList.mastodon is defined %}
-            <div role="tabpanel" class="tab-pane{% if hasActive == false %} active{% endif %}" id="mastodon">
+            <div class="tab-pane fade{% if hasActiveContent == false %} show active{% endif %}"
+                 id="mastodon"
+                 role="tabpanel"
+                 aria-labelledby="mastodon-tab">
                 {% for content in timelineContentList.mastodon %}
                     {{ content|raw }}
                 {% endfor %}
             </div>
-
-            {% set hasActive = true %}
+            {% set hasActiveContent = true %}
         {% endif %}
     </div>
 </div>

@@ -1,5 +1,7 @@
-<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-    {{ knp_menu_render('main_menu') }}
-
-    {{ include('Template/Navigation/_navbar_search.html.twig') }}
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="cm-navbar__primary">
+        {{ knp_menu_render('main_menu', {
+            'childrenAttributes': { 'class': 'cm-navbar__menu navbar-nav' }
+        }) }}
+    </div>
 </div>

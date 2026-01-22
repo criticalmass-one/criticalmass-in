@@ -2,15 +2,19 @@
 
 {% block title %}Fotogalerie{% endblock %}
 
-{% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
-    <li class="active">
-        Fotogalerie
-    </li>
+{% import '_macros/breadcrumb.html.twig' as bc %}
+
+{% block breadcrumbs %}
+    {{ bc.render(
+        [
+            { label: 'Städteliste', url: path('caldera_criticalmass_city_list') },
+            { label: 'Fotogalerie' },
+        ],
+        {
+            homeLabel: 'Critical Mass',
+            homeUrl: path('caldera_criticalmass_frontpage')
+        }
+    ) }}
 {% endblock %}
 
 {% block content %}
@@ -47,10 +51,13 @@
         <div class="row">
             <div class="photo-list">
                 {% for photo in photos %}
-                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-                        <div class="photo-thumb margin-bottom-medium text-center">
+                    <div class="col-6 col-sm-4 col-md-3 col-lg-3">
+                        <div class="photo-thumb mb-4 text-center">
                             <a href="{{ object_path(photo) }}">
-                                <img src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
+                                <img
+                                        class="img-fluid"
+                                        src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"
+                                />
                             </a>
                         </div>
                     </div>

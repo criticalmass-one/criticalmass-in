@@ -1,30 +1,446 @@
-@import "bootstrap3";
+@import "bootstrap";
 @import "../../node_modules/leaflet/dist/leaflet.css";
 @import "../../node_modules/leaflet-extra-markers/dist/css/leaflet.extra-markers.min.css";
-@import "criticalmass/criticalmass";
-@import "criticalmass/frontpage3";
 
-.input-daterange input {
-  text-align: left !important;
+.timeline-tabs.nav-tabs {
+  border-bottom: 0;
+  gap: 0.35rem;
 }
 
-.breadcrumb > li + li:before {
-  content: "/\00a0";
-  color: $breadcrumb-color;
+.timeline-tabs .nav-link {
+  border: 1px solid var(--bs-border-color-translucent);
+  border-bottom: 0;
+  border-top-left-radius: 0.9rem;
+  border-top-right-radius: 0.9rem;
+  background: rgba(var(--bs-body-color-rgb), 0.02);
+  padding: 0.65rem 0.9rem;
+  color: var(--bs-body-color);
 }
 
-input[type="file"] {
-  display: inline !important;
+.timeline-tabs .nav-link:hover {
+  background: rgba(var(--bs-body-color-rgb), 0.035);
+  color: var(--bs-body-color);
 }
 
-#github-ribbon {
+.timeline-tabs .nav-link.active {
+  background: var(--bs-body-bg);
+  color: var(--bs-body-color);
+  border-color: var(--bs-border-color-translucent);
+  box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.06);
+}
+
+.timeline-pane {
+  background: var(--bs-body-bg);
+  border: 1px solid var(--bs-border-color-translucent);
+  border-radius: 1rem;
+  border-top-left-radius: 0.4rem;
+  padding: 1rem;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.06);
+
+  // Bootstrap rows have negative horizontal margins.
+  // Inside a padded container (timeline-pane) this makes content look misaligned.
+  // Use a simple container-style compensation so item rows align with the pane padding.
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  // Re-introduce spacing between columns without relying on the row gutter system.
+  > .row > [class^="col"],
+  > .row > [class*=" col"] {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+// Timeline content cards (right column)
+.timeline-card {
+  width: 100%;
+  padding: 0.25rem 0;
+}
+
+// A subtle divider between items instead of visible cards
+.timeline-pane > .row {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.timeline-pane > .row + .row {
+  border-top: 1px solid var(--bs-border-color-translucent);
+}
+
+// Avatar: always crop nicely into a circle and keep a stable size
+.timeline-avatar {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  object-position: center;
+}
+
+@media (min-width: 576px) {
+  .timeline-avatar {
+    width: 64px;
+    height: 64px;
+  }
+}
+
+.timeline-card__marker {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.timeline-card__icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(var(--bs-body-color-rgb), 0.06);
+  color: var(--bs-body-color);
+}
+
+.timeline-card__title {
+  font-weight: 600;
+}
+
+.timeline-card__body p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 575.98px) {
+  .timeline-pane {
+    padding: 0.75rem;
+  }
+}
+
+.flipcounter {
+  --flipcounter-bg: linear-gradient(to bottom, #050505, #161616 65%, #050505);
+  --flipcounter-border: #1d1d1d;
+  --flipcounter-digit-bg: linear-gradient(180deg, #3e3e3e 0%, #2a2a2a 48%, #1b1b1b 100%);
+  --flipcounter-digit-width: min(3.2rem, 18vw);
+  --flipcounter-digit-height: calc(var(--flipcounter-digit-width) * 1.65);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(0.1rem, 0.8vw, 0.25rem);
+  padding: 0.4rem 0.75rem;
+  background: var(--flipcounter-bg);
+  border: 0.4rem solid var(--flipcounter-border);
+  border-radius: 0.65rem;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.55), inset 0 2px 18px rgba(255, 255, 255, 0.05);
+  min-height: calc(var(--flipcounter-digit-height) + 0.8rem);
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.flipcounter .digit {
+  width: var(--flipcounter-digit-width);
+  height: var(--flipcounter-digit-height);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--flipcounter-digit-bg);
+  border-radius: 0.4rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), inset 0 -2px 6px rgba(0, 0, 0, 0.8);
+  font-weight: 600;
+  font-size: clamp(1.9rem, 8vw, 2.75rem);
+  letter-spacing: -0.1em;
+  color: #f4f4f4;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.flipcounter .flipbreak {
   position: absolute;
-  top: 42px;
-  right: 0;
-  border: 0;
-  z-index: 1000;
+  inset: auto 0 0;
+  height: 50%;
+  margin: 0 auto;
+  width: min(90%, 9rem);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(15, 15, 15, 0.75) 85%);
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit;
+  box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.08), 0 8px 25px rgba(0, 0, 0, 0.65);
+  pointer-events: none;
 }
 
-.captcha-input-group .input-group-addon {
-  padding: 0;
+.flipcounter .digit + .digit {
+  margin-left: 0;
+}
+
+@media (max-width: 480px) {
+  .flipcounter {
+    padding: 0.35rem 0.5rem;
+    border-width: 0.3rem;
+  }
+}
+
+.cm-navbar {
+  // Lighter palette via custom props keeps future tweaks centralized.
+  --cm-nav-bg-start: #f8fbff;
+  --cm-nav-bg-end: #e2ecf9;
+  --cm-nav-text: #1b2340;
+  --cm-nav-muted: #53607a;
+  --cm-nav-accent: #4f6de6;
+  --cm-nav-accent-strong: #2b47c7;
+  --cm-nav-border: rgba(30, 42, 60, 0.08);
+  --cm-nav-elevated: rgba(79, 109, 230, 0.12);
+  background: linear-gradient(135deg, var(--cm-nav-bg-start), var(--cm-nav-bg-end));
+  color: var(--cm-nav-text);
+  border-bottom: 1px solid var(--cm-nav-border);
+  box-shadow: 0 14px 35px rgba(30, 42, 60, 0.12);
+  padding: 0.65rem 0;
+  position: relative;
+  z-index: 1500;
+
+  .navbar-brand {
+    color: var(--cm-nav-text);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: none;
+  }
+
+  .navbar-brand:hover,
+  .navbar-brand:focus {
+    color: var(--cm-nav-accent);
+  }
+}
+
+.cm-navbar__container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cm-navbar__brand {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.cm-navbar__logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: radial-gradient(circle at 30% 30%, #ffffff, #cfd9ff 55%, transparent 75%),
+    linear-gradient(135deg, #d7e2ff, #9bb1ff);
+  border: 1px solid rgba(79, 109, 230, 0.25);
+  margin-right: 0.65rem;
+  box-shadow: 0 10px 24px rgba(53, 84, 209, 0.25);
+}
+
+.cm-navbar__title {
+  font-size: 1.05rem;
+  display: inline-flex;
+  align-items: center;
+  color: var(--cm-nav-text);
+}
+
+.cm-navbar__toggler {
+  border-color: var(--cm-nav-border);
+  color: var(--cm-nav-text);
+  padding: 0.35rem 0.5rem;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.cm-navbar__toggler-icon,
+.cm-navbar__toggler-icon::before,
+.cm-navbar__toggler-icon::after {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 999px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  content: "";
+}
+
+.cm-navbar__toggler-icon {
+  position: relative;
+}
+
+.cm-navbar__toggler-icon::before {
+  position: absolute;
+  top: -6px;
+}
+
+.cm-navbar__toggler-icon::after {
+  position: absolute;
+  top: 6px;
+}
+
+.cm-navbar__primary {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cm-navbar__menu {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.cm-navbar .nav-link,
+.cm-navbar__menu .nav-link {
+  color: var(--cm-nav-muted);
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  font-weight: 500;
+  transition: color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cm-navbar .nav-link:hover,
+.cm-navbar .nav-link:focus,
+.cm-navbar .nav-link.active,
+.cm-navbar__menu .nav-link:hover,
+.cm-navbar__menu .nav-link:focus,
+.cm-navbar__menu .nav-link.active {
+  color: var(--cm-nav-text);
+  background: var(--cm-nav-elevated);
+  box-shadow: inset 0 0 0 1px rgba(79, 109, 230, 0.12);
+}
+
+.cm-navbar__utilities {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+  color: var(--cm-nav-muted);
+}
+
+.cm-navbar__search {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: #fff;
+  padding: 0.25rem 0.35rem 0.25rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--cm-nav-border);
+  box-shadow: 0 8px 18px rgba(30, 42, 60, 0.08);
+}
+
+.cm-navbar__search-input {
+  border: 0;
+  background: transparent;
+  color: var(--cm-nav-text);
+  padding-left: 0;
+  padding-right: 0;
+  min-width: 12rem;
+}
+
+.cm-navbar__search-input::placeholder {
+  color: rgba(24, 35, 64, 0.55);
+}
+
+.cm-navbar__search-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  border-radius: 999px;
+  padding: 0.4rem 0.95rem;
+  background: linear-gradient(135deg, #5f82ff, #7abaff);
+  color: #fff;
+  border: 0;
+  box-shadow: 0 10px 20px rgba(95, 130, 255, 0.35);
+}
+
+.cm-navbar__search-icon {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  color: var(--cm-nav-accent);
+}
+
+.cm-navbar__search-icon::before,
+.cm-navbar__search-icon::after {
+  border-color: currentColor;
+}
+
+.cm-navbar__search-icon::after {
+  background: currentColor;
+}
+
+.cm-navbar__cta {
+  border-width: 1px;
+  border-color: transparent;
+  color: #fff;
+  font-weight: 600;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background: linear-gradient(120deg, var(--cm-nav-accent), #7d9bff);
+  box-shadow: 0 14px 24px rgba(47, 71, 199, 0.35);
+}
+
+.cm-navbar__cta:hover,
+.cm-navbar__cta:focus {
+  border-color: transparent;
+  color: #fff;
+  background: linear-gradient(120deg, var(--cm-nav-accent-strong), #5f82ff);
+}
+
+@media (max-width: 1199.98px) {
+  .cm-navbar__search-input {
+    min-width: 10rem;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .cm-navbar__container {
+    flex-wrap: wrap;
+  }
+
+  .cm-navbar__primary {
+    width: 100%;
+    justify-content: flex-start;
+    margin-top: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .cm-navbar__menu {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .cm-navbar__utilities {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cm-navbar__search {
+    width: 100%;
+    border-radius: 1rem;
+  }
+
+  .cm-navbar__search-button {
+    width: auto;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .cm-navbar__logo {
+    width: 38px;
+    height: 38px;
+  }
+
+  .cm-navbar__title {
+    font-size: 0.95rem;
+  }
+
+  .cm-navbar__search {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    border-radius: 1.25rem;
+    box-shadow: 0 10px 25px rgba(30, 42, 60, 0.12);
+  }
+
+  .cm-navbar__search-button {
+    width: 100%;
+  }
 }
