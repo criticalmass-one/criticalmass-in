@@ -8,9 +8,7 @@
                     Hast du teilgenommen?
                 {% else %}
                     Bist du dabei?
-                {% endif %}
-                <span class="caret"></span>
-            </button>
+                {% endif %}            </button>
             <ul class="dropdown-menu" style="z-index: 99999;">
                 {# TODO #}
                 <li>
@@ -45,7 +43,6 @@
                     {% else %}
                         Du nimmst teil
                     {% endif %}
-                    <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" style="z-index: 99999;">
                     {% if not pastRide %}
@@ -74,7 +71,6 @@
                         aria-expanded="false">
                     <i class="far fa-circle"></i>
                     Du nimmst vielleicht teil
-                    <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" style="z-index: 99999;">
                     <li>
@@ -102,7 +98,6 @@
                     {% else %}
                         Du nimmst nicht teil
                     {% endif %}
-                    <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" style="z-index: 99999;">
                     <li>
@@ -134,7 +129,6 @@
             {% else %}
                 Bist du dabei?
             {% endif %}
-            <span class="caret"></span>
         </span>
     {% endif %}
 </div>
