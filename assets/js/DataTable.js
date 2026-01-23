@@ -1,4 +1,4 @@
-import dataTables from 'datatables.net-bs';
+import dataTables from 'datatables.net-bs5';
 
 export default class DataTable {
     constructor(element, options) {
