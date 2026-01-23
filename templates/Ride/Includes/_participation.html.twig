@@ -1,7 +1,7 @@
-<div class="btn-group pull-right margin-top-medium">
+<div class="btn-group float-end margin-top-medium">
     {% if app.user %}
         {% if participation == null or (participation.goingMaybe and pastRide) %}
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">
                 <i class="far fa-bicycle"></i>
                 {% if pastRide %}
@@ -37,7 +37,7 @@
             </ul>
         {% else %}
             {% if participation.goingYes %}
-                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false">
                     <i class="far fa-check"></i>
                     {% if pastRide %}
@@ -70,7 +70,7 @@
             {% endif %}
 
             {% if participation.goingMaybe %}
-                <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                <button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false">
                     <i class="far fa-circle"></i>
                     Du nimmst vielleicht teil
@@ -94,7 +94,7 @@
             {% endif %}
 
             {% if participation.goingNo %}
-                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false">
                     <i class="far fa-times"></i>
                     {% if pastRide %}
@@ -127,7 +127,7 @@
             {% endif %}
         {% endif %}
     {% else %}
-        <span class="btn btn-default modal-hint" data-modal-hint-title="{{ 'hint_modal.ride.participation_button.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.ride.participation_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
+        <span class="btn btn-secondary modal-hint" data-modal-hint-title="{{ 'hint_modal.ride.participation_button.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.ride.participation_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
             <i class="far fa-bicycle"></i>
             {% if pastRide %}
                 Hast du teilgenommen?

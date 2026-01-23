@@ -1,25 +1,24 @@
-<div role="tabpanel" class="tab-pane" id="tracks">
+<div role="tabpanel" class="tab-pane fade" id="tracks" aria-labelledby="tracks-tab">
     <div class="row">
         <div class="col-md-12">
-            <div class="btn-group pull-right margin-top-medium">
+            <div class="btn-group float-end margin-top-medium">
                 {% if app.user %}
-                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
+                <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                     <i class="far fa-map"></i>
                     Track hinzufügen
-                    <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
                     {% if feature('strava_track_upload') %}
                     <li>
-                        <a href="{{ object_path(ride, 'caldera_criticalmass_strava_auth') }}">
+                        <a class="dropdown-item" href="{{ object_path(ride, 'caldera_criticalmass_strava_auth') }}">
                             <i class="fab fa-strava"></i>
                             Track von Strava importieren
                         </a>
                     </li>
                     {% endif %}
                     <li>
-                        <a href="{{ object_path(ride, 'caldera_criticalmass_track_upload') }}"
+                        <a class="dropdown-item" href="{{ object_path(ride, 'caldera_criticalmass_track_upload') }}"
                            title="Track hochladen">
                             <i class="far fa-upload"></i>
                             GPX-Datei hochladen
@@ -93,7 +92,7 @@
             {% else %}
                 {% if app.getUser() %}
                     <div class="alert alert-info" role="alert"><strong>Schade!</strong> Bislang hat noch niemand eine
-                        GPX-Datei hochgeladen &mdash; <a href="#" data-toggle="modal" data-target="#modalTrackUpload"
+                        GPX-Datei hochgeladen &mdash; <a href="#" data-bs-toggle="modal" data-bs-target="#modalTrackUpload"
                                                          title="Track hochladen">Du kannst noch immer der Erste sein</a>.
                     </div>
                 {% else %}
@@ -105,11 +104,11 @@
             {% endif %}
         </div>
         <div class="col-md-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Timelapse</h3>
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Timelapse</h5>
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
                     <div id="timelapse-control" style="display: none;">
                         <div class="row">
                             <div class="col-md-6">
@@ -132,19 +131,19 @@
                             <div class="col-md-12">
                                 <div class="text-center">
                                     <div class="btn-group" id="control-buttons" role="group" aria-label="...">
-                                        <button type="button" id="step-backward-button" class="btn btn-default">
+                                        <button type="button" id="step-backward-button" class="btn btn-secondary">
                                             <i class="far fa-backward"></i>
                                         </button>
-                                        <button type="button" id="pause-button" class="btn btn-default">
+                                        <button type="button" id="pause-button" class="btn btn-secondary">
                                             <i class="far fa-pause"></i>
                                         </button>
-                                        <button type="button" id="stop-button" class="btn btn-default">
+                                        <button type="button" id="stop-button" class="btn btn-secondary">
                                             <i class="far fa-stop"></i>
                                         </button>
-                                        <button type="button" id="play-button" class="btn btn-default">
+                                        <button type="button" id="play-button" class="btn btn-secondary">
                                             <i class="far fa-play"></i>
                                         </button>
-                                        <button type="button" id="step-forward-button" class="btn btn-default">
+                                        <button type="button" id="step-forward-button" class="btn btn-secondary">
                                             <i class="far fa-forward"></i>
                                         </button>
                                     </div>

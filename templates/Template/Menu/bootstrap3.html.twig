@@ -29,6 +29,9 @@
         {%- set childrenClasses = item.childrenAttribute('class') is not empty ? [item.childrenAttribute('class')] : [] %}
         {%- set childrenClasses = childrenClasses|merge(['menu_level_' ~ item.level]) %}
 
+        {# adding nav-item class for Bootstrap 5 #}
+        {%- set classes = classes|merge(['nav-item']) %}
+
         {# adding classes for dropdown #}
         {%- if is_dropdown %}
             {%- set classes = classes|merge(['dropdown']) %}
@@ -69,7 +72,10 @@
 {% endblock %}
 
 {% block linkElement %}
-    <a href="{{ item.uri }}"{{ macros.attributes(item.linkAttributes) }}>
+    {%- set linkClasses = item.linkAttribute('class') is not empty ? [item.linkAttribute('class')] : [] %}
+    {%- set linkClasses = linkClasses|merge(['nav-link']) %}
+    {%- set linkAttributes = item.linkAttributes|merge({'class': linkClasses|join(' ')}) %}
+    <a href="{{ item.uri }}"{{ macros.attributes(linkAttributes) }}>
         {%- if icon is not empty %}
             <i class="{{ icon }}"></i>
         {% endif %}
@@ -88,15 +94,16 @@
 
 {% block dropdownElement %}
     {%- set classes = item.linkAttribute('class') is not empty ? [item.linkAttribute('class')] : [] %}
-    {%- set classes = classes|merge(['dropdown-toggle']) %}
+    {%- set classes = classes|merge(['dropdown-toggle', 'nav-link']) %}
     {%- set attributes = item.linkAttributes %}
     {%- set attributes = attributes|merge({'class': classes|join(' ')}) %}
-    {%- set attributes = attributes|merge({'data-toggle': 'dropdown'}) %}
+    {%- set attributes = attributes|merge({'data-bs-toggle': 'dropdown'}) %}
+    {%- set attributes = attributes|merge({'role': 'button'}) %}
+    {%- set attributes = attributes|merge({'aria-expanded': 'false'}) %}
     <a href="#"{{ macros.attributes(attributes) }}>
         {%- if icon is not empty %}
             <i class="{{ icon }}"></i>
         {% endif %}
         {{- block('label') }}
-        <b class="caret"></b>
     </a>
 {% endblock %}

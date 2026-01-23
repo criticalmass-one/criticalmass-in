@@ -47,8 +47,8 @@
                     <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a>
                 </li>
             {% else %}
-                <li class="active">
-                    <a class="page-link">{{ page }}</a>
+                <li class="page-item active" aria-current="page">
+                    <span class="page-link">{{ page }}</span>
                 </li>
             {% endif %}
 
