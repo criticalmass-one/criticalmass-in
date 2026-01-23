@@ -7,6 +7,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
 use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
+use Symfony\Component\Serializer\NameConverter\MetadataAwareNameConverter;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
@@ -49,6 +50,13 @@ class CriticalSerializer implements CriticalSerializerInterface
     {
         $classMetadataFactory = new ClassMetadataFactory(new AttributeLoader());
 
+        // MetadataAwareNameConverter respects #[SerializedName] attributes
+        // and falls back to CamelCaseToSnakeCaseNameConverter for other properties
+        $nameConverter = new MetadataAwareNameConverter(
+            $classMetadataFactory,
+            new CamelCaseToSnakeCaseNameConverter()
+        );
+
         $defaultContext = [
             AbstractObjectNormalizer::SKIP_NULL_VALUES => true,
             AbstractObjectNormalizer::ENABLE_MAX_DEPTH => true,
@@ -60,7 +68,7 @@ class CriticalSerializer implements CriticalSerializerInterface
             ]),
             new ObjectNormalizer(
                 classMetadataFactory: $classMetadataFactory,
-                nameConverter: new CamelCaseToSnakeCaseNameConverter(),
+                nameConverter: $nameConverter,
                 propertyTypeExtractor: new ReflectionExtractor(),
                 defaultContext: $defaultContext,
             ),

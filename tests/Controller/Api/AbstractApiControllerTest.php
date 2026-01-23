@@ -3,7 +3,7 @@
 namespace Tests\Controller\Api;
 
 use App\Criticalmass\Util\ClassUtil;
-use JMS\Serializer\SerializerInterface;
+use App\Serializer\CriticalSerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Tests\Controller\Api\Util\IdKiller;
 
@@ -17,14 +17,14 @@ abstract class AbstractApiControllerTest extends WebTestCase
         $this->assertEquals(IdKiller::removeIds($expected), IdKiller::removeIds($actual));
     }
 
-    protected function getSerializer(): SerializerInterface
+    protected function getSerializer(): CriticalSerializerInterface
     {
-        return static::getContainer()->get('jms_serializer');
+        return static::getContainer()->get(CriticalSerializerInterface::class);
     }
 
     protected function deserializeEntityList(string $data, string $entityFqcn): array
     {
-        $type = sprintf('array<%s>', $entityFqcn);
+        $type = sprintf('%s[]', $entityFqcn);
 
         return $this->getSerializer()->deserialize($data, $type, 'json');
     }

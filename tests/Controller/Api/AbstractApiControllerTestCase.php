@@ -6,7 +6,7 @@ use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManagerInterface;
-use JMS\Serializer\SerializerInterface;
+use App\Serializer\CriticalSerializerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -69,18 +69,24 @@ abstract class AbstractApiControllerTestCase extends WebTestCase
         ];
     }
 
-    protected function getSerializer(): SerializerInterface
+    protected function getSerializer(): CriticalSerializerInterface
     {
-        return static::getContainer()->get('jms_serializer');
+        return static::getContainer()->get(CriticalSerializerInterface::class);
     }
 
+    /**
+     * @deprecated Use getJsonResponseList() instead for testing API responses
+     */
     protected function deserializeEntityList(string $data, string $entityFqcn): array
     {
-        $type = sprintf('array<%s>', $entityFqcn);
+        $type = sprintf('%s[]', $entityFqcn);
 
         return $this->getSerializer()->deserialize($data, $type, 'json');
     }
 
+    /**
+     * @deprecated Use getJsonResponse() instead for testing API responses
+     */
     protected function deserializeEntity(string $data, string $entityFqcn): object
     {
         return $this->getSerializer()->deserialize($data, $entityFqcn, 'json');
@@ -89,6 +95,13 @@ abstract class AbstractApiControllerTestCase extends WebTestCase
     protected function getJsonResponse(): array
     {
         return json_decode($this->client->getResponse()->getContent(), true);
+    }
+
+    protected function getJsonResponseList(): array
+    {
+        $response = $this->getJsonResponse();
+        $this->assertIsArray($response);
+        return $response;
     }
 
     protected function assertResponseStatusCode(int $expectedStatusCode): void

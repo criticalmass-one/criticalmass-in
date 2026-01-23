@@ -2,7 +2,6 @@
 
 namespace Tests\Controller\Api\CityApi;
 
-use App\Entity\City;
 use Tests\Controller\Api\AbstractApiControllerTestCase;
 
 class CityApiFullTest extends AbstractApiControllerTestCase
@@ -13,10 +12,10 @@ class CityApiFullTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $cities = $this->deserializeEntityList($this->client->getResponse()->getContent(), City::class);
+        $cities = $this->getJsonResponseList();
 
         $this->assertNotEmpty($cities);
-        $this->assertContainsOnlyInstancesOf(City::class, $cities);
+        $this->assertArrayHasKey('name', $cities[0]);
     }
 
     public function testListCitiesWithSize(): void
@@ -25,7 +24,7 @@ class CityApiFullTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $cities = $this->deserializeEntityList($this->client->getResponse()->getContent(), City::class);
+        $cities = $this->getJsonResponseList();
 
         $this->assertCount(2, $cities);
     }
@@ -36,13 +35,12 @@ class CityApiFullTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        /** @var City $city */
-        $city = $this->deserializeEntity($this->client->getResponse()->getContent(), City::class);
+        $city = $this->getJsonResponse();
 
-        $this->assertEquals('Hamburg', $city->getCity());
-        $this->assertEquals('Critical Mass Hamburg', $city->getTitle());
-        $this->assertEqualsWithDelta(53.5511, $city->getLatitude(), 0.01);
-        $this->assertEqualsWithDelta(9.9937, $city->getLongitude(), 0.01);
+        $this->assertEquals('Hamburg', $city['name']);
+        $this->assertEquals('Critical Mass Hamburg', $city['title']);
+        $this->assertEqualsWithDelta(53.5511, $city['latitude'], 0.01);
+        $this->assertEqualsWithDelta(9.9937, $city['longitude'], 0.01);
     }
 
     public function testShowCityBerlin(): void
@@ -51,10 +49,9 @@ class CityApiFullTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        /** @var City $city */
-        $city = $this->deserializeEntity($this->client->getResponse()->getContent(), City::class);
+        $city = $this->getJsonResponse();
 
-        $this->assertEquals('Berlin', $city->getCity());
+        $this->assertEquals('Berlin', $city['name']);
     }
 
     public function testShowCityMunich(): void
@@ -63,10 +60,9 @@ class CityApiFullTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        /** @var City $city */
-        $city = $this->deserializeEntity($this->client->getResponse()->getContent(), City::class);
+        $city = $this->getJsonResponse();
 
-        $this->assertEquals('Munich', $city->getCity());
+        $this->assertEquals('Munich', $city['name']);
     }
 
     public function testShowCityKiel(): void
@@ -75,10 +71,9 @@ class CityApiFullTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        /** @var City $city */
-        $city = $this->deserializeEntity($this->client->getResponse()->getContent(), City::class);
+        $city = $this->getJsonResponse();
 
-        $this->assertEquals('Kiel', $city->getCity());
+        $this->assertEquals('Kiel', $city['name']);
     }
 
     public function testShowUnknownCityReturns404(): void
@@ -98,11 +93,11 @@ class CityApiFullTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $cities = $this->deserializeEntityList($this->client->getResponse()->getContent(), City::class);
+        $cities = $this->getJsonResponseList();
 
         $this->assertNotEmpty($cities);
 
-        $populations = array_map(fn(City $city) => $city->getCityPopulation(), $cities);
+        $populations = array_map(fn(array $city) => $city['city_population'], $cities);
         $sortedPopulations = $populations;
         rsort($sortedPopulations);
 
@@ -119,11 +114,11 @@ class CityApiFullTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $cities = $this->deserializeEntityList($this->client->getResponse()->getContent(), City::class);
+        $cities = $this->getJsonResponseList();
 
         $this->assertNotEmpty($cities);
 
-        $cityNames = array_map(fn(City $city) => $city->getCity(), $cities);
+        $cityNames = array_map(fn(array $city) => $city['name'], $cities);
         $this->assertContains('Hamburg', $cityNames);
     }
 
