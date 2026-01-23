@@ -1,7 +1,7 @@
 twig:
     paths:
-        - '%kernel.project_dir%/templates'
-        - '%kernel.project_dir%/templates/bundles'
+        '%kernel.project_dir%/templates': ~
+        '%kernel.project_dir%/templates/bundles': ~
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     number_format:
