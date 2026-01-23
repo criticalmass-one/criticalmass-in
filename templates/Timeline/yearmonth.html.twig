@@ -23,59 +23,65 @@
             </div>
         </div>
 
+        {% set hasActiveTab = false %}
         <div>
             <ul class="nav nav-tabs" role="tablist">
                 {% if timelineContentList.standard is defined %}
-                    <li role="presentation" class="active">
-                        <a href="#standard" aria-controls="standard" role="tab" data-bs-toggle="tab">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link{% if not hasActiveTab %} active{% endif %}" id="standard-tab" data-bs-toggle="tab" data-bs-target="#standard" type="button" role="tab" aria-controls="standard" aria-selected="{{ not hasActiveTab ? 'true' : 'false' }}">
                             <i class="far fa-clock"></i>
                             Neuigkeiten
-                        </a>
+                        </button>
                     </li>
+                    {% set hasActiveTab = true %}
                 {% endif %}
 
                 {% if timelineContentList.facebook is defined %}
-                    <li role="presentation">
-                        <a href="#facebook" aria-controls="facebook" role="tab" data-bs-toggle="tab">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link{% if not hasActiveTab %} active{% endif %}" id="facebook-tab" data-bs-toggle="tab" data-bs-target="#facebook" type="button" role="tab" aria-controls="facebook" aria-selected="{{ not hasActiveTab ? 'true' : 'false' }}">
                             <i class="fab fa-facebook"></i>
                             Facebook-Beiträge
-                        </a>
+                        </button>
                     </li>
+                    {% set hasActiveTab = true %}
                 {% endif %}
 
                 {% if timelineContentList.twitter is defined %}
-                    <li role="presentation">
-                        <a href="#twitter" aria-controls="twitter" role="tab" data-bs-toggle="tab">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link{% if not hasActiveTab %} active{% endif %}" id="twitter-tab" data-bs-toggle="tab" data-bs-target="#twitter" type="button" role="tab" aria-controls="twitter" aria-selected="{{ not hasActiveTab ? 'true' : 'false' }}">
                             <i class="fab fa-twitter"></i>
                             Tweets
-                        </a>
+                        </button>
                     </li>
+                    {% set hasActiveTab = true %}
                 {% endif %}
 
                 {% if timelineContentList.instagram_profile is defined %}
-                    <li role="presentation">
-                        <a href="#instagram_profile" aria-controls="twitter" role="tab" data-bs-toggle="tab">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link{% if not hasActiveTab %} active{% endif %}" id="instagram-tab" data-bs-toggle="tab" data-bs-target="#instagram_profile" type="button" role="tab" aria-controls="instagram_profile" aria-selected="{{ not hasActiveTab ? 'true' : 'false' }}">
                             <i class="fab fa-instagram"></i>
                             Instagram-Fotos
-                        </a>
+                        </button>
                     </li>
+                    {% set hasActiveTab = true %}
                 {% endif %}
 
                 {% if timelineContentList.homepage is defined %}
-                    <li role="presentation">
-                        <a href="#www" aria-controls="www" role="tab" data-bs-toggle="tab">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link{% if not hasActiveTab %} active{% endif %}" id="www-tab" data-bs-toggle="tab" data-bs-target="#www" type="button" role="tab" aria-controls="www" aria-selected="{{ not hasActiveTab ? 'true' : 'false' }}">
                             <i class="far fa-globe"></i>
                             Blog-Beiträge
-                        </a>
+                        </button>
                     </li>
+                    {% set hasActiveTab = true %}
                 {% endif %}
             </ul>
 
-            <div class="tab-content margin-top-medium">
+            <div class="tab-content mt-3">
                 {% set hasActive = false %}
 
                 {% if timelineContentList.standard is defined %}
-                    <div role="tabpanel" class="tab-pane{% if hasActive == false %} active{% endif %}" id="standard">
+                    <div role="tabpanel" class="tab-pane fade{% if hasActive == false %} show active{% endif %}" id="standard" aria-labelledby="standard-tab">
                         {% for content in timelineContentList.standard %}
                             {{ content|raw }}
                         {% endfor %}
@@ -85,7 +91,7 @@
                 {% endif %}
 
                 {% if timelineContentList.facebook is defined %}
-                    <div role="tabpanel" class="tab-pane{% if hasActive == false %} active{% endif %}" id="facebook">
+                    <div role="tabpanel" class="tab-pane fade{% if hasActive == false %} show active{% endif %}" id="facebook" aria-labelledby="facebook-tab">
                         {% for content in timelineContentList.facebook %}
                             {{ content|raw }}
                         {% endfor %}
@@ -95,7 +101,7 @@
                 {% endif %}
 
                 {% if timelineContentList.twitter is defined %}
-                    <div role="tabpanel" class="tab-pane{% if hasActive == false %} active{% endif %}" id="twitter">
+                    <div role="tabpanel" class="tab-pane fade{% if hasActive == false %} show active{% endif %}" id="twitter" aria-labelledby="twitter-tab">
                         {% for content in timelineContentList.twitter %}
                             {{ content|raw }}
                         {% endfor %}
@@ -105,7 +111,7 @@
                 {% endif %}
 
                 {% if timelineContentList.instagram_profile is defined %}
-                    <div role="tabpanel" class="tab-pane{% if hasActive == false %} active{% endif %}" id="instagram_profile">
+                    <div role="tabpanel" class="tab-pane fade{% if hasActive == false %} show active{% endif %}" id="instagram_profile" aria-labelledby="instagram-tab">
                         {% for content in timelineContentList.instagram_profile %}
                             {{ content|raw }}
                         {% endfor %}
@@ -115,7 +121,7 @@
                 {% endif %}
 
                 {% if timelineContentList.homepage is defined %}
-                    <div role="tabpanel" class="tab-pane{% if hasActive == false %} active{% endif %}" id="www">
+                    <div role="tabpanel" class="tab-pane fade{% if hasActive == false %} show active{% endif %}" id="www" aria-labelledby="www-tab">
                         {% for content in timelineContentList.homepage %}
                             {{ content|raw }}
                         {% endfor %}
@@ -126,20 +132,19 @@
             </div>
         </div>
 
-
         <div class="row">
             <div class="col-md-12">
-                <nav>
-                    <ul class="pager">
-                        <li class="previous{% if not previousDateTime %} disabled{% endif %}">
-                            <a href="{% if previousDateTime %}{{ path('caldera_criticalmass_timeline_yearmonth', { year: previousDateTime|date('Y'), month: previousDateTime|date('m') }) }}{% else %}#{% endif %}">
-                                Voriger Monat
+                <nav aria-label="Monat Navigation">
+                    <ul class="pagination justify-content-between">
+                        <li class="page-item{% if not previousDateTime %} disabled{% endif %}">
+                            <a class="page-link" href="{% if previousDateTime %}{{ path('caldera_criticalmass_timeline_yearmonth', { year: previousDateTime|date('Y'), month: previousDateTime|date('m') }) }}{% else %}#{% endif %}">
+                                &larr; Voriger Monat
                             </a>
                         </li>
 
-                        <li class="next{% if not nextDateTime %} disabled{% endif %}">
-                            <a href="{% if nextDateTime %}{{ path('caldera_criticalmass_timeline_yearmonth', { year: nextDateTime|date('Y'), month: nextDateTime|date('m') }) }}{% else %}#{% endif %}">
-                                Nächster Monat
+                        <li class="page-item{% if not nextDateTime %} disabled{% endif %}">
+                            <a class="page-link" href="{% if nextDateTime %}{{ path('caldera_criticalmass_timeline_yearmonth', { year: nextDateTime|date('Y'), month: nextDateTime|date('m') }) }}{% else %}#{% endif %}">
+                                Nächster Monat &rarr;
                             </a>
                         </li>
                     </ul>
