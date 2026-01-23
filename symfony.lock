@@ -129,9 +129,6 @@
     "maltehuebner/dataquery-bundle": {
         "version": "dev-main"
     },
-    "maltehuebner/impress-bundle": {
-        "version": "0.1"
-    },
     "maltehuebner/ordered-entities-bundle": {
         "version": "0.1"
     },

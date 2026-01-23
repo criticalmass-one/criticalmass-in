@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "51e6612f5d5c45878184d7afe97e97e9",
+    "content-hash": "a76d5e1c87565a9a7d661e727d557803",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -3811,16 +3811,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "3.30.2",
+            "version": "3.31.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "5966a8ba23e62bdb518dd9e0e665c2dbd4b5b277"
+                "reference": "1717e0b3642b0df65ecb0cc89cdd99fa840672ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/5966a8ba23e62bdb518dd9e0e665c2dbd4b5b277",
-                "reference": "5966a8ba23e62bdb518dd9e0e665c2dbd4b5b277",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/1717e0b3642b0df65ecb0cc89cdd99fa840672ff",
+                "reference": "1717e0b3642b0df65ecb0cc89cdd99fa840672ff",
                 "shasum": ""
             },
             "require": {
@@ -3888,22 +3888,22 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/3.30.2"
+                "source": "https://github.com/thephpleague/flysystem/tree/3.31.0"
             },
-            "time": "2025-11-10T17:13:11+00:00"
+            "time": "2026-01-23T15:38:47+00:00"
         },
         {
             "name": "league/flysystem-local",
-            "version": "3.30.2",
+            "version": "3.31.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem-local.git",
-                "reference": "ab4f9d0d672f601b102936aa728801dd1a11968d"
+                "reference": "2f669db18a4c20c755c2bb7d3a7b0b2340488079"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem-local/zipball/ab4f9d0d672f601b102936aa728801dd1a11968d",
-                "reference": "ab4f9d0d672f601b102936aa728801dd1a11968d",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-local/zipball/2f669db18a4c20c755c2bb7d3a7b0b2340488079",
+                "reference": "2f669db18a4c20c755c2bb7d3a7b0b2340488079",
                 "shasum": ""
             },
             "require": {
@@ -3937,9 +3937,9 @@
                 "local"
             ],
             "support": {
-                "source": "https://github.com/thephpleague/flysystem-local/tree/3.30.2"
+                "source": "https://github.com/thephpleague/flysystem-local/tree/3.31.0"
             },
-            "time": "2025-11-10T11:23:37+00:00"
+            "time": "2026-01-23T15:30:45+00:00"
         },
         {
             "name": "league/mime-type-detection",
@@ -4256,61 +4256,6 @@
                 "source": "https://github.com/maltehuebner/dataquery-bundle/tree/0.8.2"
             },
             "time": "2025-12-02T12:28:40+00:00"
-        },
-        {
-            "name": "maltehuebner/impress-bundle",
-            "version": "0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/maltehuebner/impress-bundle.git",
-                "reference": "3862a9d28a6154b9eec60bd941fa8ec0e2261c12"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/maltehuebner/impress-bundle/zipball/3862a9d28a6154b9eec60bd941fa8ec0e2261c12",
-                "reference": "3862a9d28a6154b9eec60bd941fa8ec0e2261c12",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.3",
-                "symfony/cache": "^5.4|^6.4|^7.0|^8.0",
-                "symfony/config": "^5.4|^6.4|^7.0|^8.0",
-                "symfony/dependency-injection": "^5.4|^6.4|^7.0|^8.0",
-                "symfony/property-access": "^5.4|^6.4|^7.0|^8.0",
-                "symfony/serializer": "^5.4|^6.4|^7.0|^8.0",
-                "twig/twig": "^3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^11.0"
-            },
-            "type": "library",
-            "extra": {
-                "symfony": {
-                    "require": ">=5.4"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "MalteHuebner\\ImpressBundle\\": "src",
-                    "MalteHuebner\\ImpressBundle\\Tests\\": "tests"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Malte Huebner",
-                    "email": "malte@caldera.cc"
-                }
-            ],
-            "description": "Keep your impress up to date",
-            "support": {
-                "issues": "https://github.com/maltehuebner/impress-bundle/issues",
-                "source": "https://github.com/maltehuebner/impress-bundle/tree/0.3"
-            },
-            "time": "2026-01-09T23:42:57+00:00"
         },
         {
             "name": "maltehuebner/ordered-entities-bundle",
