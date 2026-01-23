@@ -163,7 +163,7 @@
                             <label class="control-label" for="location">
                                 Treffpunkt:
                             </label>
-                            <button class="btn btn-default btn-xs pull-right geocode"
+                            <button class="btn btn-secondary btn-xs pull-right geocode"
                                     data-geocoding-query-suffix="{{ city.city }},{{ city.region }},{{ city.region.parent }}"
                                     data-geocoding-query-selector="#ride_location"
                                     type="button">
@@ -231,11 +231,11 @@
                         <div class="form-group">
                             <div class="btn-group pull-right" role="group" aria-label="...">
                                 {% if ride %}
-                                    <a href="{{ object_path(ride) }}" class="btn btn-default">
+                                    <a href="{{ object_path(ride) }}" class="btn btn-secondary">
                                         Abbrechen
                                     </a>
                                 {% else %}
-                                    <a href="{{ object_path(city) }}" class="btn btn-default">
+                                    <a href="{{ object_path(city) }}" class="btn btn-secondary">
                                         Abbrechen
                                     </a>
                                 {% endif %}

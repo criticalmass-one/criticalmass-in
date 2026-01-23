@@ -30,25 +30,25 @@
 
         <div>
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active">
-                    <a href="#tab-participiants" aria-controls="" role="tab" data-toggle="tab">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="participiants-tab" data-bs-toggle="tab" data-bs-target="#tab-participiants" type="button" role="tab" aria-controls="tab-participiants" aria-selected="true">
                         Teilnehmerzahl
-                    </a>
+                    </button>
                 </li>
-                <li role="presentation">
-                    <a href="#tab-duration" aria-controls="" role="tab" data-toggle="tab">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="duration-tab" data-bs-toggle="tab" data-bs-target="#tab-duration" type="button" role="tab" aria-controls="tab-duration" aria-selected="false">
                         Fahrtdauer
-                    </a>
+                    </button>
                 </li>
-                <li role="presentation">
-                    <a href="#tab-distance" aria-controls="" role="tab" data-toggle="tab">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="distance-tab" data-bs-toggle="tab" data-bs-target="#tab-distance" type="button" role="tab" aria-controls="tab-distance" aria-selected="false">
                         Fahrtlänge
-                    </a>
+                    </button>
                 </li>
             </ul>
 
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="tab-participiants">
+                <div role="tabpanel" class="tab-pane fade show active" id="tab-participiants" aria-labelledby="participiants-tab">
                     <div class="row margin-top-small">
                         <div class="col-md-12">
                             <p>
@@ -66,7 +66,7 @@
                     </div>
                 </div>
 
-                <div role="tabpanel" class="tab-pane" id="tab-duration">
+                <div role="tabpanel" class="tab-pane fade" id="tab-duration" aria-labelledby="duration-tab">
                     <div class="row margin-top-small">
                         <div class="col-md-12">
                             <p>
@@ -83,7 +83,7 @@
                     </div>
                 </div>
 
-                <div role="tabpanel" class="tab-pane" id="tab-distance">
+                <div role="tabpanel" class="tab-pane fade" id="tab-distance" aria-labelledby="distance-tab">
                     <div class="row margin-top-small">
                         <div class="col-md-12">
                             <p>

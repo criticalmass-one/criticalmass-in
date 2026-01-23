@@ -1,60 +1,47 @@
 {% if app.user %}
-<div class="modal fade" id="disable-modal" tabindex="-1" role="dialog" aria-labelledby="disable-modal-label">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" id="disable-modal" tabindex="-1" aria-labelledby="disable-modal-label" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             {{ form_start(disableForm) }}
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="disable-modal-label">
+                <h5 class="modal-title" id="disable-modal-label">
                     Tour deaktivieren
-                </h4>
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <p>
                     Grund für die Deaktivierung:
                 </p>
 
-                <div class="radio">
-                    <label>
-                        {{ form_widget(disableForm.disabledReason[0]) }}
-                        {{ form_label(disableForm.disabledReason[0]) }}
-                    </label>
+                <div class="form-check">
+                    {{ form_widget(disableForm.disabledReason[0], { 'attr': { 'class': 'form-check-input' }}) }}
+                    <label class="form-check-label">{{ form_label(disableForm.disabledReason[0]) }}</label>
                 </div>
 
-                <div class="radio">
-                    <label>
-                        {{ form_widget(disableForm.disabledReason[1]) }}
-                        {{ form_label(disableForm.disabledReason[1]) }}
-                    </label>
+                <div class="form-check">
+                    {{ form_widget(disableForm.disabledReason[1], { 'attr': { 'class': 'form-check-input' }}) }}
+                    <label class="form-check-label">{{ form_label(disableForm.disabledReason[1]) }}</label>
                 </div>
 
-                <div class="radio">
-                    <label>
-                        {{ form_widget(disableForm.disabledReason[2]) }}
-                        {{ form_label(disableForm.disabledReason[2]) }}
-                    </label>
+                <div class="form-check">
+                    {{ form_widget(disableForm.disabledReason[2], { 'attr': { 'class': 'form-check-input' }}) }}
+                    <label class="form-check-label">{{ form_label(disableForm.disabledReason[2]) }}</label>
                 </div>
 
-                <div class="radio">
-                    <label>
-                        {{ form_widget(disableForm.disabledReason[3]) }}
-                        {{ form_label(disableForm.disabledReason[3]) }}
-                    </label>
+                <div class="form-check">
+                    {{ form_widget(disableForm.disabledReason[3], { 'attr': { 'class': 'form-check-input' }}) }}
+                    <label class="form-check-label">{{ form_label(disableForm.disabledReason[3]) }}</label>
                 </div>
 
-                <div class="radio">
-                    <label>
-                        {{ form_widget(disableForm.disabledReason[4]) }}
-                        {{ form_label(disableForm.disabledReason[4]) }}
-                    </label>
+                <div class="form-check">
+                    {{ form_widget(disableForm.disabledReason[4], { 'attr': { 'class': 'form-check-input' }}) }}
+                    <label class="form-check-label">{{ form_label(disableForm.disabledReason[4]) }}</label>
                 </div>
 
-                <div class="radio">
-                    <label>
-                        {{ form_widget(disableForm.disabledReason[5]) }}
-                        {{ form_label(disableForm.disabledReason[5]) }}
-                    </label>
+                <div class="form-check">
+                    {{ form_widget(disableForm.disabledReason[5], { 'attr': { 'class': 'form-check-input' }}) }}
+                    <label class="form-check-label">{{ form_label(disableForm.disabledReason[5]) }}</label>
                 </div>
             </div>
 
@@ -68,7 +55,7 @@
 
             <div class="modal-footer">
                 <div class="btn-group">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         Abbrechen
                     </button>
                     <button type="submit" class="btn btn-danger">
