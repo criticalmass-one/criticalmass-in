@@ -76,10 +76,17 @@ $navbar-light-active-color: rgba(0, 0, 0, 0.9);
 // Panel to Card migration
 .panel {
   @extend .card;
+  margin-bottom: 1rem;
 }
 
 .panel-default {
   @extend .card;
+  margin-bottom: 1rem;
+}
+
+// Ensure cards also have vertical spacing
+.card {
+  margin-bottom: 1rem;
 }
 
 .panel-heading {
