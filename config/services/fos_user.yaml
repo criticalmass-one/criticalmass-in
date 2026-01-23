@@ -1,0 +1,9 @@
+services:
+  fos_user.doctrine_registry:
+    alias: doctrine
+
+  App\Security\UserProvider\UserProvider:
+    arguments:
+      $properties:
+        facebook: facebookId
+        strava: stravaId

@@ -1,0 +1,35 @@
+services:
+  App\Criticalmass\Image\ExifWrapper\ExifWrapper:
+    arguments:
+      $flysystemFilesystem: '@flysystem_photo_photoFilesystem'
+
+  App\Criticalmass\Image\PhotoManipulator\Storage\PhotoStorage:
+    arguments:
+      $filesystem: '@flysystem_photo_photoFilesystem'
+
+  App\Criticalmass\Geo\GpxReader\GpxReader:
+    arguments:
+      $filesystem: '@flysystem_track_trackFilesystem'
+
+  App\Criticalmass\Geo\GpxReader\TrackReader:
+    arguments:
+      $filesystem: '@flysystem_track_trackFilesystem'
+
+  App\Criticalmass\Geo\GpxWriter\GpxWriter:
+    arguments:
+      $filesystem: '@flysystem_track_trackFilesystem'
+
+  App\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGenerator:
+    arguments:
+      $filesystem: '@flysystem_user_photoFilesystem'
+
+  App\Criticalmass\UploadableDataHandler\UploadableDataHandler:
+    arguments:
+      $filesystem: '@flysystem_photo_photoFilesystem'
+
+  App\Criticalmass\UploadableDataHandler\UploadableDataHandlerInterface:
+    alias: App\Criticalmass\UploadableDataHandler\UploadableDataHandler
+
+  App\Criticalmass\UploadValidator\TrackValidator:
+    arguments:
+      $filesystem: '@flysystem_track_trackFilesystem'

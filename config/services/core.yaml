@@ -1,0 +1,23 @@
+services:
+  Symfony\Component\Routing\RouteCollection: ~
+
+  Sonata\SeoBundle\Seo\SeoPageInterface:
+    alias: sonata.seo.page.default
+
+  Sabre\VObject\Component\VCalendar: ~
+
+  App\Criticalmass\Geocoding\ReverseGeocoderInterface:
+    alias: App\Criticalmass\Geocoding\CachedReverseGeocoder
+
+  App\Criticalmass\Website\Obfuscator\ObfuscatorInterface:
+    alias: App\Criticalmass\Website\Obfuscator\CaseAwareObfuscator
+
+  App\Criticalmass\Timeline\TimelineInterface:
+    alias: App\Criticalmass\Timeline\CachedTimeline
+    #alias: App\Criticalmass\Timeline\Timeline
+
+  App\Criticalmass\Geo\Loop\LoopInterface:
+    alias: App\Criticalmass\Geo\Loop\TrackLoop
+
+  App\Criticalmass\CriticalmassBlog\CriticalmassBlogInterface:
+    alias: App\Criticalmass\CriticalmassBlog\CachedCriticalmassBlog
