@@ -77,35 +77,21 @@
 
         <div class="row">
             <div class="col-md-12">
-                <ul class="pager">
-                    {% if previous_photo %}
-                        <li class="previous">
-                            <a href="{{ object_path(previous_photo) }}">
+                <nav aria-label="Foto Navigation">
+                    <ul class="pagination justify-content-between">
+                        <li class="page-item{% if not previous_photo %} disabled{% endif %}">
+                            <a class="page-link" href="{% if previous_photo %}{{ object_path(previous_photo) }}{% else %}#{% endif %}">
                                 &larr; Voriges Foto
                             </a>
                         </li>
-                    {% else %}
-                        <li class="previous disabled">
-                            <a href="#">
-                                &larr; Voriges Foto
-                            </a>
-                        </li>
-                    {% endif %}
 
-                    {% if next_photo %}
-                        <li class="next">
-                            <a href="{{ object_path(next_photo) }}">
+                        <li class="page-item{% if not next_photo %} disabled{% endif %}">
+                            <a class="page-link" href="{% if next_photo %}{{ object_path(next_photo) }}{% else %}#{% endif %}">
                                 Nächstes Foto &rarr;
                             </a>
                         </li>
-                    {% else %}
-                        <li class="next disabled">
-                            <a href="#">
-                                Nächstes Foto &rarr;
-                            </a>
-                        </li>
-                    {% endif %}
-                </ul>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
