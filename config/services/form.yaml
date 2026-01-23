@@ -1,6 +1,6 @@
 services:
   App\Form\:
-    resource: '%kernel.project_dir%/src/App/Form/*'
+    resource: '%kernel.project_dir%/src/Form/*'
     autowire: true
     autoconfigure: true
     public: true
