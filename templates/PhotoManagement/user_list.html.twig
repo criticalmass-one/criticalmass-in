@@ -1,11 +1,10 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Fotos sortieren{% endblock %}
 
 {% block breadcrumb %}
-    <li class="active">
-        Fotos sortieren
-    </li>
+    {{ breadcrumb.active('Fotos sortieren') }}
 {% endblock %}
 
 {% block content %}

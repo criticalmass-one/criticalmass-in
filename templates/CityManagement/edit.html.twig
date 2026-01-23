@@ -1,4 +1,5 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% if city != null %}
     {% set title = 'Stadt editieren' %}
@@ -10,56 +11,21 @@
 
 {% block breadcrumb %}
     {% if city and city.mainSlug %}
-        <li>
-            <a href="{{ object_path(city) }}">
-                {{ city.city }}
-            </a>
-        </li>
-
-        <li class="active">
-            {{ title }}
-        </li>
+        {{ breadcrumb.item(city.city, object_path(city)) }}
+        {{ breadcrumb.active(title) }}
     {% else %}
-        <li>
-            <a href="{{ path('caldera_criticalmass_region_world') }}">
-                Verzeichnis
-            </a>
-        </li>
-
+        {{ breadcrumb.item('Verzeichnis', path('caldera_criticalmass_region_world')) }}
         {% if (region.parent and region.parent.parent and region.parent.parent.parent and not region.parent.parent.parent.isWorld()) %}
-            <li>
-                <a href="{{ object_path(region.parent.parent.parent) }}">
-                    {{ region.parent.parent.parent.name }}
-                </a>
-            </li>
+            {{ breadcrumb.item(region.parent.parent.parent.name, object_path(region.parent.parent.parent)) }}
         {% endif %}
-
         {% if (region.parent and region.parent.parent and not region.parent.parent.isWorld()) %}
-            <li>
-                <a href="{{ object_path(region.parent.parent) }}">
-                    {{ region.parent.parent.name }}
-                </a>
-            </li>
+            {{ breadcrumb.item(region.parent.parent.name, object_path(region.parent.parent)) }}
         {% endif %}
-
-
         {% if (region.parent and not region.parent.isWorld()) %}
-            <li>
-                <a href="{{ object_path(region.parent) }}">
-                    {{ region.parent.name }}
-                </a>
-            </li>
+            {{ breadcrumb.item(region.parent.name, object_path(region.parent)) }}
         {% endif %}
-
-        <li>
-            <a href="{{ object_path(region) }}">
-                {{ region.name }}
-            </a>
-        </li>
-
-        <li class="active">
-            Stadt hinzufügen
-        </li>
+        {{ breadcrumb.item(region.name, object_path(region)) }}
+        {{ breadcrumb.active('Stadt hinzufügen') }}
     {% endif %}
 {% endblock %}
 

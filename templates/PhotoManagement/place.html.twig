@@ -1,4 +1,5 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% set previous_photo = previous_entity(photo) %}
 {% set next_photo = next_entity(photo) %}
@@ -6,24 +7,10 @@
 {% block title %}Foto platzieren{% endblock %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
-    <li>
-        <a href="{{ object_path(photo.ride.city) }}">
-            {{ photo.ride.city.title }}
-        </a>
-    </li>
-    <li>
-        <a href="{{ object_path(photo.ride) }}">
-            {{ photo.ride.title }}
-        </a>
-    </li>
-    <li class="active">
-        Foto platzieren
-    </li>
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item(photo.ride.city.title, object_path(photo.ride.city)) }}
+    {{ breadcrumb.item(photo.ride.title, object_path(photo.ride)) }}
+    {{ breadcrumb.active('Foto platzieren') }}
 {% endblock %}
 
 {% block content %}

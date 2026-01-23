@@ -1,51 +1,18 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
-
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
     {% if profileAbleType == 'city' %}
-        <li>
-            <a href="{{ object_path(profileAble) }}">
-                {{ profileAble.city }}
-            </a>
-        </li>
-
-        <li>
-            <a href="{{ object_path(profileAble, 'criticalmass_socialnetwork_city_list') }}">
-                Soziale Netzwerke
-            </a>
-        </li>
+        {{ breadcrumb.item(profileAble.city, object_path(profileAble)) }}
+        {{ breadcrumb.item('Soziale Netzwerke', object_path(profileAble, 'criticalmass_socialnetwork_city_list')) }}
     {% endif %}
-
     {% if profileAbleType == 'ride' %}
-
-
-        <li>
-            <a href="{{ object_path(profileAble.city) }}">
-                {{ profileAble.city.city }}
-            </a>
-        </li>
-
-        <li>
-            <a href="{{ object_path(profileAble) }}">
-                {{ profileAble.title }}
-            </a>
-        </li>
-
-        <li>
-            <a href="{{ object_path(profileAble, 'criticalmass_socialnetwork_ride_list') }}">
-                Soziale Netzwerke
-            </a>
-        </li>
+        {{ breadcrumb.item(profileAble.city.city, object_path(profileAble.city)) }}
+        {{ breadcrumb.item(profileAble.title, object_path(profileAble)) }}
+        {{ breadcrumb.item('Soziale Netzwerke', object_path(profileAble, 'criticalmass_socialnetwork_ride_list')) }}
     {% endif %}
-
-    <li class="active">
-        Soziales Netzwerk editieren
-    </li>
+    {{ breadcrumb.active('Soziales Netzwerk editieren') }}
 {% endblock %}
 
 {% block content %}

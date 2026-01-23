@@ -1,9 +1,10 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Dein Benutzerprofil{% endblock %}
 
 {% block breadcrumb %}
-    <li class="active">Dein Benutzerkonto</li>
+    {{ breadcrumb.active('Dein Benutzerkonto') }}
 {% endblock %}
 
 {% block content %}

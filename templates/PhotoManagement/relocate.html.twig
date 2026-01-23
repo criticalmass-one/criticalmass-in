@@ -1,26 +1,13 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Fotos ausrichten{% endblock %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ object_path(ride.city) }}">
-            {{ ride.city.title }}
-        </a>
-    </li>
-    <li>
-        <a href="{{ object_path(ride) }}">
-            {{ ride.title }}
-        </a>
-    </li>
-    <li>
-        <a href="{{ object_path(ride, 'caldera_criticalmass_photo_manage') }}">
-            Fotos verwalten
-        </a>
-    </li>
-    <li class="active">
-        Fotos ausrichten
-    </li>
+    {{ breadcrumb.item(ride.city.title, object_path(ride.city)) }}
+    {{ breadcrumb.item(ride.title, object_path(ride)) }}
+    {{ breadcrumb.item('Fotos verwalten', object_path(ride, 'caldera_criticalmass_photo_manage')) }}
+    {{ breadcrumb.active('Fotos ausrichten') }}
 {% endblock %}
 
 {% block content %}

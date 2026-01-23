@@ -1,11 +1,10 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Handy-Nummer editieren{% endblock %}
 
 {% block breadcrumb %}
-    <li class="active">
-        Handy-Nummer editieren
-    </li>
+    {{ breadcrumb.active('Handy-Nummer editieren') }}
 {% endblock %}
 
 {% block content %}
