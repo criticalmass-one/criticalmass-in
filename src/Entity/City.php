@@ -55,7 +55,6 @@ class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableI
     #[ORM\ManyToOne(targetEntity: 'CitySlug', inversedBy: 'city')]
     #[ORM\JoinColumn(name: 'main_slug_id', referencedColumnName: 'id')]
     #[Groups(['ride-list', 'ride-details'])]
-    #[Ignore]
     protected ?CitySlug $mainSlug = null;
 
     #[DataQuery\Sortable]

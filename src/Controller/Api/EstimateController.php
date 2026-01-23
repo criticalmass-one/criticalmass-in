@@ -2,7 +2,6 @@
 
 namespace App\Controller\Api;
 
-use App\Serializer\CriticalCriticalSerializer;
 use App\Serializer\CriticalSerializerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
@@ -17,8 +16,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 
 class EstimateController extends BaseController
 {
@@ -27,10 +24,9 @@ class EstimateController extends BaseController
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly DataQueryManagerInterface $dataQueryManager,
         protected readonly ManagerRegistry $managerRegistry,
-        AuthorizationCheckerInterface $authorizationChecker
     )
     {
-         parent::__construct($this->managerRegistry, $this->serializer, $authorizationChecker);
+        parent::__construct($this->managerRegistry, $this->serializer);
     }
 
     /**
@@ -104,7 +100,7 @@ class EstimateController extends BaseController
     #[OA\Parameter(name: 'rideIdentifier', in: 'path', description: 'Identifier of the ride', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\RequestBody(description: 'JSON representation of the estimate data', required: true, content: new OA\JsonContent(type: 'object'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
-    public function createRideEstimateAction(Request $request, Ride $ride, SerializerInterface $serializer): JsonResponse
+    public function createRideEstimateAction(Request $request, Ride $ride): JsonResponse
     {
         /** @var CreateEstimateModel $estimateModel */
         $estimateModel = $this->deserializeRequest($request, CreateEstimateModel::class);
