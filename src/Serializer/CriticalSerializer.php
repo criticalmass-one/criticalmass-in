@@ -2,76 +2,71 @@
 
 namespace App\Serializer;
 
-use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
-use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
-use Symfony\Component\Serializer\Mapping\Loader\LoaderChain;
 use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
-use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
 
-class CriticalCriticalSerializer implements CriticalSerializerInterface
+class CriticalSerializer implements CriticalSerializerInterface
 {
     private SerializerInterface $serializer;
 
     public function __construct()
     {
-        $this->createSerializer();
+        $this->serializer = $this->createSerializer();
     }
 
     public function serialize(mixed $data, string $format = self::FORMAT, array $context = []): string
     {
-        $context[AbstractObjectNormalizer::SKIP_NULL_VALUES] = true;
-
-        return $this->serializer->serialize($data, $format, $context);
+        return $this->serializer->serialize($data, $format, $this->buildContext($context));
     }
 
     public function deserialize(mixed $data, string $type, string $format = self::FORMAT, array $context = []): mixed
     {
-        $context[AbstractObjectNormalizer::SKIP_NULL_VALUES] = true;
-
-        return $this->serializer->deserialize($data, $type, $format, $context);
+        return $this->serializer->deserialize($data, $type, $format, $this->buildContext($context));
     }
 
-    private function createSerializer(): void
+    private function buildContext(array $context): array
     {
-        $dateTimeNormalizerOptions = [
-            DateTimeNormalizer::FORMAT_KEY => 'Y-m-d\TH:i:sP',
+        $defaultContext = [
+            AbstractObjectNormalizer::SKIP_NULL_VALUES => true,
+            AbstractObjectNormalizer::ENABLE_MAX_DEPTH => true,
+            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => fn (object $object): ?int => method_exists($object, 'getId') ? $object->getId() : null,
         ];
 
-        $classMetadataFactory = new ClassMetadataFactory(
-            new LoaderChain([
-                new AttributeLoader(),
-                new AnnotationLoader(new AnnotationReader()),
-            ])
-        );
+        return array_merge($defaultContext, $context);
+    }
+
+    private function createSerializer(): Serializer
+    {
+        $classMetadataFactory = new ClassMetadataFactory(new AttributeLoader());
+
+        $defaultContext = [
+            AbstractObjectNormalizer::SKIP_NULL_VALUES => true,
+            AbstractObjectNormalizer::ENABLE_MAX_DEPTH => true,
+        ];
 
         $normalizers = [
-            new DateTimeNormalizer($dateTimeNormalizerOptions),
+            new DateTimeNormalizer([
+                DateTimeNormalizer::FORMAT_KEY => 'Y-m-d\TH:i:sP',
+            ]),
             new ObjectNormalizer(
                 classMetadataFactory: $classMetadataFactory,
                 nameConverter: new CamelCaseToSnakeCaseNameConverter(),
                 propertyTypeExtractor: new ReflectionExtractor(),
-            ),
-            new GetSetMethodNormalizer(
-                classMetadataFactory: $classMetadataFactory,
-                nameConverter: new CamelCaseToSnakeCaseNameConverter(),
+                defaultContext: $defaultContext,
             ),
             new ArrayDenormalizer(),
         ];
 
-        $encoders = [
-            new JsonEncoder()
-        ];
-
-        $this->serializer = new Serializer($normalizers, $encoders);
+        return new Serializer($normalizers, [new JsonEncoder()]);
     }
 }

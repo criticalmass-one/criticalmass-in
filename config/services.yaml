@@ -149,6 +149,9 @@ services:
     App\Criticalmass\CriticalmassBlog\CriticalmassBlogInterface:
         alias: App\Criticalmass\CriticalmassBlog\CachedCriticalmassBlog
 
+    App\Serializer\CriticalSerializerInterface:
+        alias: App\Serializer\CriticalSerializer
+
     App\Security\UserProvider\UserProvider:
         arguments:
             $properties:
