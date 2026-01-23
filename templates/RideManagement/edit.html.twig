@@ -1,4 +1,5 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% if ride %}
     {% set title = 'Tour editieren' %}
@@ -11,32 +12,13 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ object_path(city) }}">
-            {{ city.city }}
-        </a>
-    </li>
-
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item(city.city, object_path(city)) }}
     {% if ride %}
-        <li>
-            <a href="{{ object_path(ride) }}">
-                {{ ride.title }}
-            </a>
-        </li>
-
-        <li class="active">
-            Tour editieren
-        </li>
+        {{ breadcrumb.item(ride.title, object_path(ride)) }}
+        {{ breadcrumb.active('Tour editieren') }}
     {% else %}
-        <li class="active">
-            Tour hinzufügen
-        </li>
+        {{ breadcrumb.active('Tour hinzufügen') }}
     {% endif %}
 {% endblock %}
 

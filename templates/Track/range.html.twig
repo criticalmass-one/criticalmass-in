@@ -1,23 +1,12 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Track beschneiden{% endblock %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ path('criticalmass_user_usermanagement') }}">
-            Dein Benutzerkonto
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ path('caldera_criticalmass_track_list') }}">
-            Deine Tracks
-        </a>
-    </li>
-
-    <li class="active">
-        Track beschneiden
-    </li>
+    {{ breadcrumb.item('Dein Benutzerkonto', path('criticalmass_user_usermanagement')) }}
+    {{ breadcrumb.item('Deine Tracks', path('caldera_criticalmass_track_list')) }}
+    {{ breadcrumb.active('Track beschneiden') }}
 {% endblock %}
 
 {% block content %}

@@ -1,11 +1,10 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Top-Ten-Statistiken{% endblock %}
 
 {% block breadcrumb %}
-    <li class="active">
-        Top-Ten-Statistiken
-    </li>
+    {{ breadcrumb.active('Top-Ten-Statistiken') }}
 {% endblock %}
 
 {% block content %}

@@ -1,4 +1,5 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% if city != null %}
     {% set title = 'Turnus editieren' %}
@@ -9,21 +10,9 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ object_path(city) }}">
-            {{ city.city }}
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ object_path(city, 'caldera_criticalmass_citycycle_list') }}">
-            Turnusliste
-        </a>
-    </li>
-
-    <li class="active">
-        {{ title }}
-    </li>
+    {{ breadcrumb.item(city.city, object_path(city)) }}
+    {{ breadcrumb.item('Turnusliste', object_path(city, 'caldera_criticalmass_citycycle_list')) }}
+    {{ breadcrumb.active(title) }}
 {% endblock %}
 
 {% block content %}
