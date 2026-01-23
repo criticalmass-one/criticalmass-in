@@ -1,17 +1,11 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Profilfoto hochladen{% endblock %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ path('criticalmass_user_usermanagement') }}">
-            Dein Benutzerkonto
-        </a>
-    </li>
-
-    <li class="active">
-        Profilfoto hochladen
-    </li>
+    {{ breadcrumb.item('Dein Benutzerkonto', path('criticalmass_user_usermanagement')) }}
+    {{ breadcrumb.active('Profilfoto hochladen') }}
 {% endblock %}
 
 {% block content %}
@@ -51,7 +45,7 @@
                 <div class="btn-group">
                     {{ form_widget(profilePhotoForm.submit, { label: 'Speichern', attr: { class: 'btn btn-primary'}}) }}
 
-                    <a href="{{ path('criticalmass_user_usermanagement') }}" class="btn btn-default">
+                    <a href="{{ path('criticalmass_user_usermanagement') }}" class="btn btn-secondary">
                         Abbrechen
                     </a>
                 </div>

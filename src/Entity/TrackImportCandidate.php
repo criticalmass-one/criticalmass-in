@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use Caldera\GeoBasic\Coord\Coord;
-use Caldera\GeoBasic\Coord\CoordInterface;
+use App\Criticalmass\Geo\Coord\Coord;
+use App\Criticalmass\Geo\Coord\CoordInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'track_candidate')]

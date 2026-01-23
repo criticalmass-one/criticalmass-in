@@ -9,28 +9,30 @@ use App\Form\Type\ExecuteCityCycleType;
 use App\Model\RideGenerator\CycleExecutable;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
-use GuzzleHttp\Client;
+use JMS\Serializer\SerializerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class CityCycleExecuteController extends AbstractController
 {
-    protected Client $rideGeneratorClient;
+    private HttpClientInterface $httpClient;
+    private string $rideGeneratorBaseUrl;
 
-    public function __construct(string $criticalmassRideGeneratorUrl)
+    public function __construct(HttpClientInterface $httpClient, string $criticalmassRideGeneratorUrl)
     {
-        $this->rideGeneratorClient = new Client([
-            'verify' => false,
-            'base_uri' => $criticalmassRideGeneratorUrl,
-        ]);
+        $this->httpClient = $httpClient;
+        $this->rideGeneratorBaseUrl = rtrim($criticalmassRideGeneratorUrl, '/');
     }
 
     #[IsGranted('ROLE_USER')]
+    #[Route('/{citySlug}/cycles/{id}/execute', name: 'caldera_criticalmass_citycycle_execute', priority: 80)]
     public function executeAction(
         Request $request,
         CityCycle $cityCycle,
@@ -47,13 +49,17 @@ class CityCycleExecuteController extends AbstractController
 
         $form = $this->createForm(ExecuteCityCycleType::class, $executeable);
         $form->add('submit', SubmitType::class);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $result = $this->rideGeneratorClient->post('/api/preview', ['content-type' => 'text/json', 'body' => $serializer->serialize($executeable, 'json'),]);
+            $json = $serializer->serialize($executeable, 'json');
 
-            $rideList = $serializer->deserialize($result->getBody()->getContents(), 'array<App\Entity\Ride>', 'json');
+            $response = $this->httpClient->request('POST', $this->rideGeneratorBaseUrl . '/api/preview', [
+                'headers' => ['Content-Type' => 'application/json'],
+                'body' => $json,
+            ]);
+
+            $rideList = $serializer->deserialize($response->getContent(), 'array<App\Entity\Ride>', 'json');
 
             return $this->render('CityCycle/execute_preview.html.twig', [
                 'cityCycle' => $cityCycle,
@@ -71,6 +77,7 @@ class CityCycleExecuteController extends AbstractController
     }
 
     #[IsGranted('ROLE_USER')]
+    #[Route('/{citySlug}/cycles/{id}/execute-persist', name: 'caldera_criticalmass_citycycle_execute_persist', priority: 80)]
     public function executePersistAction(
         Request $request,
         CityCycle $cityCycle,
@@ -78,16 +85,25 @@ class CityCycleExecuteController extends AbstractController
         ManagerRegistry $registry,
         SerializerInterface $serializer
     ): Response {
-        if (Request::METHOD_POST === $request->getMethod() && $request->request->getInt('fromDate') && $request->request->get('untilDate')) {
+        if (
+            $request->isMethod('POST') &&
+            $request->request->getInt('fromDate') &&
+            $request->request->get('untilDate')
+        ) {
             $executeable = new CycleExecutable();
             $executeable
-                ->setFromDate(new \DateTime(sprintf('@%d', $request->request->getInt('fromDate'))))
-                ->setUntilDate(new \DateTime(sprintf('@%d', $request->request->getInt('untilDate'))))
+                ->setFromDate((new \DateTime())->setTimestamp($request->request->getInt('fromDate')))
+                ->setUntilDate((new \DateTime())->setTimestamp((int) $request->request->get('untilDate')))
                 ->setCityCycle($cityCycle);
 
-            $result = $this->rideGeneratorClient->post('/api/preview', ['content-type' => 'text/json', 'body' => $serializer->serialize($executeable, 'json'),]);
+            $json = $serializer->serialize($executeable, 'json');
 
-            $rideList = $serializer->deserialize($result->getBody()->getContents(), 'array<App\Entity\Ride>', 'json');
+            $response = $this->httpClient->request('POST', $this->rideGeneratorBaseUrl . '/api/preview', [
+                'headers' => ['Content-Type' => 'application/json'],
+                'body' => $json,
+            ]);
+
+            $rideList = $serializer->deserialize($response->getContent(), 'array<App\Entity\Ride>', 'json');
 
             $em = $registry->getManager();
 
@@ -98,9 +114,7 @@ class CityCycleExecuteController extends AbstractController
 
             $em->flush();
 
-            $flashMessage = sprintf('Es wurden <strong>%d Touren</strong> automatisch angelegt.', count($rideList));
-
-            $session->getFlashBag()->add('success', $flashMessage);
+            $session->getFlashBag()->add('success', sprintf('Es wurden <strong>%d Touren</strong> automatisch angelegt.', count($rideList)));
 
             return $this->redirectToRoute('caldera_criticalmass_city_listrides', [
                 'citySlug' => $cityCycle->getCity()->getMainSlug()->getSlug(),

@@ -1,4 +1,5 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% if city != null %}
     {% set title = 'Stadt editieren' %}
@@ -10,56 +11,21 @@
 
 {% block breadcrumb %}
     {% if city and city.mainSlug %}
-        <li>
-            <a href="{{ object_path(city) }}">
-                {{ city.city }}
-            </a>
-        </li>
-
-        <li class="active">
-            {{ title }}
-        </li>
+        {{ breadcrumb.item(city.city, object_path(city)) }}
+        {{ breadcrumb.active(title) }}
     {% else %}
-        <li>
-            <a href="{{ path('caldera_criticalmass_region_world') }}">
-                Verzeichnis
-            </a>
-        </li>
-
+        {{ breadcrumb.item('Verzeichnis', path('caldera_criticalmass_region_world')) }}
         {% if (region.parent and region.parent.parent and region.parent.parent.parent and not region.parent.parent.parent.isWorld()) %}
-            <li>
-                <a href="{{ object_path(region.parent.parent.parent) }}">
-                    {{ region.parent.parent.parent.name }}
-                </a>
-            </li>
+            {{ breadcrumb.item(region.parent.parent.parent.name, object_path(region.parent.parent.parent)) }}
         {% endif %}
-
         {% if (region.parent and region.parent.parent and not region.parent.parent.isWorld()) %}
-            <li>
-                <a href="{{ object_path(region.parent.parent) }}">
-                    {{ region.parent.parent.name }}
-                </a>
-            </li>
+            {{ breadcrumb.item(region.parent.parent.name, object_path(region.parent.parent)) }}
         {% endif %}
-
-
         {% if (region.parent and not region.parent.isWorld()) %}
-            <li>
-                <a href="{{ object_path(region.parent) }}">
-                    {{ region.parent.name }}
-                </a>
-            </li>
+            {{ breadcrumb.item(region.parent.name, object_path(region.parent)) }}
         {% endif %}
-
-        <li>
-            <a href="{{ object_path(region) }}">
-                {{ region.name }}
-            </a>
-        </li>
-
-        <li class="active">
-            Stadt hinzufügen
-        </li>
+        {{ breadcrumb.item(region.name, object_path(region)) }}
+        {{ breadcrumb.active('Stadt hinzufügen') }}
     {% endif %}
 {% endblock %}
 
@@ -78,17 +44,21 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div id="map" class="map" style="height: 250px;"
-                     data-map-marker-draggable="true"
-                     data-map-center-latitude="{{ city.latitude }}"
-                     data-map-center-longitude="{{ city.longitude }}"
-                     data-map-zoomlevel="10"
-                     data-map-marker-type="city"
-                     data-map-marker-latitude-target="city_latitude"
-                     data-map-marker-longitude-target="city_longitude"
-                >
-
-                </div>
+                <div
+                        id="map-city"
+                        class="map"
+                        style="height:250px;"
+                        data-controller="map--form-map"
+                        data-map--form-map-center-latitude-value="{{ city.latitude }}"
+                        data-map--form-map-center-longitude-value="{{ city.longitude }}"
+                        data-map--form-map-zoom-value="10"
+                        data-map--form-map-marker-latitude-target-value="{{ form.latitude.vars.id }}"
+                        data-map--form-map-marker-longitude-target-value="{{ form.longitude.vars.id }}"
+                        data-map--form-map-marker-icon-value="fa-university"
+                        data-map--form-map-marker-color-value="blue"
+                        data-map--form-map-marker-shape-value="circle"
+                        data-map--form-map-marker-prefix-value="fas"
+                ></div>
             </div>
         </div>
 
@@ -124,7 +94,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group{% if form_errors(form.city) %} has-error has-feedback{% endif %}">
-                            <button class="btn btn-default btn-xs pull-right geocode" type="button" data-geocoding-query-selector="#city_city" data-geocoding-query-part-selector="#city_region">
+                            <button class="btn btn-secondary btn-xs pull-right geocode" type="button" data-geocoding-query-selector="#city_city" data-geocoding-query-part-selector="#city_region">
                                 <i class="far fa-map-marker"></i>
                             </button>
                             <label class="control-label" for="">Name:</label>
@@ -209,11 +179,11 @@
             <div class="col-md-12">
                 <div class="btn-group pull-right">
                     {% if city and city.mainSlug %}
-                        <a href="{{ object_path(city) }}" class="btn btn-default">
+                        <a href="{{ object_path(city) }}" class="btn btn-secondary">
                             Abbrechen
                         </a>
                     {% else %}
-                        <a href="{{ object_path(region) }}" class="btn btn-default">
+                        <a href="{{ object_path(region) }}" class="btn btn-secondary">
                             Abbrechen
                         </a>
                     {% endif %}

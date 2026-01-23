@@ -1,4 +1,5 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% if ride %}
     {% set title = 'Tour editieren' %}
@@ -11,32 +12,13 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ object_path(city) }}">
-            {{ city.city }}
-        </a>
-    </li>
-
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item(city.city, object_path(city)) }}
     {% if ride %}
-        <li>
-            <a href="{{ object_path(ride) }}">
-                {{ ride.title }}
-            </a>
-        </li>
-
-        <li class="active">
-            Tour editieren
-        </li>
+        {{ breadcrumb.item(ride.title, object_path(ride)) }}
+        {{ breadcrumb.active('Tour editieren') }}
     {% else %}
-        <li class="active">
-            Tour hinzufügen
-        </li>
+        {{ breadcrumb.active('Tour hinzufügen') }}
     {% endif %}
 {% endblock %}
 
@@ -73,16 +55,19 @@
         {{ form_start(form) }}
         <div class="row">
             <div class="col-md-12">
-                <div id="map" class="map" style="height: 250px;"
-                     data-map-marker-draggable="true"
-                     data-map-center-latitude="{{ ride.latitude }}"
-                     data-map-center-longitude="{{ ride.longitude }}"
-                     data-map-zoomlevel="10"
-                     data-map-marker-type="ride"
-                     data-map-marker-latitude-target="{{ form.latitude.vars.id }}"
-                     data-map-marker-longitude-target="{{ form.longitude.vars.id }}"
-                >
-
+                <div id="map"
+                     class="map"
+                     data-controller="map--form-map"
+                     style="height: 250px;"
+                     data-map--form-map-center-latitude-value="{{ ride.latitude }}"
+                     data-map--form-map-center-longitude-value="{{ ride.longitude }}"
+                     data-map--form-map-zoom-value="10"
+                     data-map--form-map-marker-latitude-target-value="{{ form.latitude.vars.id }}"
+                     data-map--form-map-marker-longitude-target-value="{{ form.longitude.vars.id }}"
+                     data-map--form-map-marker-icon-value="fa-bicycle"
+                     data-map--form-map-marker-color-value="red"
+                     data-map--form-map-marker-shape-value="circle"
+                     data-map--form-map-marker-prefix-value="fas">
                 </div>
             </div>
         </div>
@@ -178,7 +163,7 @@
                             <label class="control-label" for="location">
                                 Treffpunkt:
                             </label>
-                            <button class="btn btn-default btn-xs pull-right geocode"
+                            <button class="btn btn-secondary btn-xs pull-right geocode"
                                     data-geocoding-query-suffix="{{ city.city }},{{ city.region }},{{ city.region.parent }}"
                                     data-geocoding-query-selector="#ride_location"
                                     type="button">
@@ -246,11 +231,11 @@
                         <div class="form-group">
                             <div class="btn-group pull-right" role="group" aria-label="...">
                                 {% if ride %}
-                                    <a href="{{ object_path(ride) }}" class="btn btn-default">
+                                    <a href="{{ object_path(ride) }}" class="btn btn-secondary">
                                         Abbrechen
                                     </a>
                                 {% else %}
-                                    <a href="{{ object_path(city) }}" class="btn btn-default">
+                                    <a href="{{ object_path(city) }}" class="btn btn-secondary">
                                         Abbrechen
                                     </a>
                                 {% endif %}

@@ -4,13 +4,12 @@ namespace Tests\Controller\Api\Query;
 
 use App\Entity\Photo;
 use App\Entity\Ride;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\Controller\Api\AbstractApiControllerTest;
 
 class DateTimeQueryTest extends AbstractApiControllerTest
 {
-    /**
-     * @dataProvider apiClassProvider
-     */
+    #[DataProvider('apiClassProvider')]
     public function testRideListWithParameter(string $fqcn, string $propertyName, array $query, string $dateTimePattern, string $expectedDateTimeString): void
     {
         $client = static::createClient();
@@ -30,7 +29,7 @@ class DateTimeQueryTest extends AbstractApiControllerTest
         }
     }
 
-    public function apiClassProvider(): array
+    public static function apiClassProvider(): array
     {
         return [
             [Ride::class, 'dateTime', ['year' => 2050], 'Y', '2050'],

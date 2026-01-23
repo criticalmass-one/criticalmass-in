@@ -10,7 +10,6 @@ use App\Criticalmass\Router\Attribute as Routing;
 use App\Criticalmass\UploadableDataHandler\UploadableEntity;
 use App\Criticalmass\UploadFaker\FakeUploadable;
 use App\EntityInterface\RouteableInterface;
-use Caldera\GeoBasic\Track\TrackInterface as BaseTrackInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -166,6 +165,9 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     #[Ignore]
     private bool $reviewed = false;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $app = null;
+
     public function __construct()
     {
         parent::__construct();
@@ -272,14 +274,14 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
         return $this->latLngList;
     }
 
-    public function setPolyline(string $polyline): BaseTrackInterface
+    public function setPolyline(?string $polyline): static
     {
         $this->polyline = $polyline;
 
         return $this;
     }
 
-    public function getPolyline(): string
+    public function getPolyline(): ?string
     {
         return $this->polyline;
     }
@@ -459,6 +461,18 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
     public function setReviewed(bool $reviewed): self
     {
         $this->reviewed = $reviewed;
+
+        return $this;
+    }
+
+    public function getApp(): ?string
+    {
+        return $this->app;
+    }
+
+    public function setApp(?string $app): static
+    {
+        $this->app = $app;
 
         return $this;
     }

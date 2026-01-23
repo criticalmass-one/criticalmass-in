@@ -1,24 +1,12 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Track-Übersicht{% endblock %}
 
 {% block breadcrumb %}
-
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ object_path(city) }}">
-            {{ city.city }}
-        </a>
-    </li>
-
-    <li class="active">
-        Track-Übersicht
-    </li>
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item(city.city, object_path(city)) }}
+    {{ breadcrumb.active('Track-Übersicht') }}
 {% endblock %}
 
 {% block content %}
@@ -51,8 +39,8 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Track löschen</h4>
+                        <h5 class="modal-title">Track löschen</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <span id="trackIdLabel"></span>
@@ -61,7 +49,7 @@
                     <div class="modal-footer">
                         <div class="btn-group" role="group" aria-label="...">
                             <a id="deleteButton" href="#" class="btn btn-success">Ja, löschen</a>
-                            <button id="cancelButton" class="btn btn-default">Nein, abbrechen</button>
+                            <button id="cancelButton" class="btn btn-secondary">Nein, abbrechen</button>
                         </div>
                     </div>
                 </div>

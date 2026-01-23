@@ -1,11 +1,10 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Fotos sortieren{% endblock %}
 
 {% block breadcrumb %}
-    <li class="active">
-        Fotos sortieren
-    </li>
+    {{ breadcrumb.active('Fotos sortieren') }}
 {% endblock %}
 
 {% block content %}
@@ -53,7 +52,7 @@
                             </td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="...">
-                                    <a class="btn btn-default btn-xs" title="Herunterladen"
+                                    <a class="btn btn-secondary btn-xs" title="Herunterladen"
                                        href="{{ object_path(photo.ride, 'caldera_criticalmass_photo_manage') }}">
                                         <i class="far fa-images"></i>
                                     </a>

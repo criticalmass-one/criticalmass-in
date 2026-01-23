@@ -1,19 +1,13 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% form_theme usernameForm 'Form/theme.html.twig' %}
 
 {% block title %}Benutzername ändern{% endblock %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ path('criticalmass_user_usermanagement') }}">
-            Dein Benutzerkonto
-        </a>
-    </li>
-
-    <li class="active">
-        Benutzername ändern
-    </li>
+    {{ breadcrumb.item('Dein Benutzerkonto', path('criticalmass_user_usermanagement')) }}
+    {{ breadcrumb.active('Benutzername ändern') }}
 {% endblock %}
 
 {% block content %}
@@ -59,7 +53,7 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3 text-center">
                 <div class="btn-group" role="group">
-                    <a href="{{ path('criticalmass_user_usermanagement') }}" class="btn btn-default">
+                    <a href="{{ path('criticalmass_user_usermanagement') }}" class="btn btn-secondary">
                         Abbrechen
                     </a>
 

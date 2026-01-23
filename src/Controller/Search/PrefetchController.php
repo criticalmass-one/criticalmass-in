@@ -9,9 +9,11 @@ use App\Entity\Ride;
 use App\Repository\CityRepository;
 use App\Repository\RideRepository;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class PrefetchController extends AbstractController
 {
+    #[Route('/search/prefetch', name: 'caldera_criticalmass_search_prefetch', priority: 260)]
     public function prefetchAction(
         RideRepository $rideRepository,
         CityRepository $cityRepository,

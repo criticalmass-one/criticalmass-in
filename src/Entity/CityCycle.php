@@ -71,12 +71,12 @@ class CityCycle implements RouteableInterface
     #[Assert\NotEqualTo(value: '0.0')]
     #[ORM\Column(type: 'float', nullable: true)]
     #[Groups(['ride-list'])]
-    protected ?float $latitude = 0.0;
+    protected ?float $latitude = null;
 
     #[Assert\NotEqualTo(value: '0.0')]
     #[ORM\Column(type: 'float', nullable: true)]
     #[Groups(['ride-list'])]
-    protected ?float $longitude = 0.0;
+    protected ?float $longitude = null;
 
     #[ORM\Column(type: 'datetime', nullable: false)]
     protected \DateTime $createdAt;
