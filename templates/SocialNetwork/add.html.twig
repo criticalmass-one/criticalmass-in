@@ -1,59 +1,18 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
-
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block breadcrumb %}
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
     {% if profileAbleType == 'city' %}
-        <li>
-            <a href="{{ path('caldera_criticalmass_city_list') }}">
-                Städteliste
-            </a>
-        </li>
-
-        <li>
-            <a href="{{ object_path(profileAble) }}">
-                {{ profileAble.city }}
-            </a>
-        </li>
-
-        <li>
-            <a href="{{ object_path(profileAble, 'criticalmass_socialnetwork_city_list') }}">
-                Soziale Netzwerke
-            </a>
-        </li>
-
-        <li class="active">
-            Soziales Netzwerk editieren
-        </li>
+        {{ breadcrumb.item(profileAble.city, object_path(profileAble)) }}
+        {{ breadcrumb.item('Soziale Netzwerke', object_path(profileAble, 'criticalmass_socialnetwork_city_list')) }}
+        {{ breadcrumb.active('Soziales Netzwerk editieren') }}
     {% endif %}
-
     {% if profileAbleType == 'ride' %}
-        <li>
-            <a href="{{ path('caldera_criticalmass_city_list') }}">
-                Städteliste
-            </a>
-        </li>
-
-        <li>
-            <a href="{{ object_path(profileAble.city) }}">
-                {{ profileAble.city.city }}
-            </a>
-        </li>
-
-        <li>
-            <a href="{{ object_path(profileAble) }}">
-                {{ profileAble.title }}
-            </a>
-        </li>
-
-        <li>
-            <a href="{{ object_path(profileAble, 'criticalmass_socialnetwork_ride_list') }}">
-                Soziale Netzwerke
-            </a>
-        </li>
-
-        <li class="active">
-            Soziales Netzwerk editieren
-        </li>
+        {{ breadcrumb.item(profileAble.city.city, object_path(profileAble.city)) }}
+        {{ breadcrumb.item(profileAble.title, object_path(profileAble)) }}
+        {{ breadcrumb.item('Soziale Netzwerke', object_path(profileAble, 'criticalmass_socialnetwork_ride_list')) }}
+        {{ breadcrumb.active('Soziales Netzwerk editieren') }}
     {% endif %}
 {% endblock %}
 
@@ -93,7 +52,7 @@
                 <div class="row">
                      <div class="col-md-12 form-group">
                          <div class="btn-group pull-right">
-                             <a href="" class="btn btn-default">
+                             <a href="" class="btn btn-secondary">
                                  Abbrechen
                              </a>
 

@@ -1,11 +1,10 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Verbinde dich mit Strava{% endblock %}
 
 {% block breadcrumb %}
-    <li class="active">
-        Tracks importieren
-    </li>
+    {{ breadcrumb.active('Tracks importieren') }}
 {% endblock %}
 
 {% block content %}

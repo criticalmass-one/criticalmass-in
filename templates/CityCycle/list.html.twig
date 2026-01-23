@@ -1,16 +1,11 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Turnusse von {{ city.city }} anzeigen{% endblock %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ object_path(city) }}">
-            {{ city.city }}
-        </a>
-    </li>
-    <li class="active">
-        Turnusse anzeigen
-    </li>
+    {{ breadcrumb.item(city.city, object_path(city)) }}
+    {{ breadcrumb.active('Turnusse anzeigen') }}
 {% endblock %}
     
 {% block content %}
@@ -108,22 +103,22 @@
                             <td>
                                 {% if not cycle.disabledAt %}
                                     <div class="btn-group">
-                                        <a class="btn btn-default btn-xs" title="Turnus editieren"
+                                        <a class="btn btn-secondary btn-xs" title="Turnus editieren"
                                            href="{{ object_path(cycle, 'caldera_criticalmass_citycycle_edit') }}">
                                             <i class="far fa-wrench"></i>
                                         </a>
 
-                                        <a class="btn btn-default btn-xs" title="zugehörige Touren anzeigen"
+                                        <a class="btn btn-secondary btn-xs" title="zugehörige Touren anzeigen"
                                            href="{{ object_path(cycle, 'caldera_criticalmass_citycycle_ride_list') }}">
                                             <i class="far fa-bicycle"></i>
                                         </a>
 
-                                        <a class="btn btn-default btn-xs" title="Turnus manuell auslösen"
+                                        <a class="btn btn-secondary btn-xs" title="Turnus manuell auslösen"
                                            href="{{ object_path(cycle, 'caldera_criticalmass_citycycle_execute') }}">
                                             <i class="far fa-play"></i>
                                         </a>
 
-                                        <a class="btn btn-default btn-xs" title="Turnus deaktivieren"
+                                        <a class="btn btn-secondary btn-xs" title="Turnus deaktivieren"
                                            href="{{ object_path(cycle, 'caldera_criticalmass_citycycle_disable') }}">
                                             <i class="far fa-trash-alt"></i>
                                         </a>

@@ -4,6 +4,7 @@ namespace Tests\Controller\Security;
 
 use App\Controller\AbstractController;
 use App\Entity\User;
+use PHPUnit\Framework\Attributes\Depends;
 
 class RegistrationControllerTest extends AbstractController
 {
@@ -30,9 +31,7 @@ class RegistrationControllerTest extends AbstractController
         $this->assertEquals(5, $crawler->filter('.fos_user_registration_register input')->count());
     }
 
-    /**
-     * @depends testRegistrationFormVisible
-     */
+    #[Depends('testRegistrationFormVisible')]
     public function testRegistrationForm(): void
     {
         $testUser = $this->createTestUser();
@@ -59,9 +58,7 @@ class RegistrationControllerTest extends AbstractController
         $this->assertSelectorTextContains('html h2', sprintf('Hej %s!', $testUser->getUsername()));
     }
 
-    /**
-     * @depends testRegistrationForm
-     */
+    #[Depends('testRegistrationForm')]
     public function testConfirmationMail(): void
     {
         $testUser = $this->createTestUser();
@@ -110,9 +107,7 @@ das Team.', $testUser->getUsername(), $user->getConfirmationToken()),
         );
     }
 
-    /**
-     * @depends testConfirmationMail
-     */
+    #[Depends('testConfirmationMail')]
     public function testConfirmation(): void
     {
         $testUser = $this->createTestUser();

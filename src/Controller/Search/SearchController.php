@@ -7,6 +7,7 @@ use App\Repository\CityRepository;
 use App\Repository\RideRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class SearchController extends AbstractController
 {
@@ -18,6 +19,7 @@ class SearchController extends AbstractController
 
     }
 
+    #[Route('/search/query', name: 'caldera_criticalmass_search_query', priority: 260)]
     public function queryAction(Request $request): Response
     {
         $queryPhrase = $request->get('query', '');

@@ -3,6 +3,7 @@
 namespace Tests\Controller\Security;
 
 use App\Entity\User;
+use PHPUnit\Framework\Attributes\Depends;
 use Tests\Controller\AbstractControllerTest;
 
 class SecurityControllerTest extends AbstractControllerTest
@@ -25,9 +26,7 @@ class SecurityControllerTest extends AbstractControllerTest
         $this->assertSelectorExists('input[name=_password]');
     }
 
-    /**
-     * @depends testLoginPage
-     */
+    #[Depends('testLoginPage')]
     public function testLoginWithRightCredentials(): void
     {
         $testUser = $this->createTestUser();
@@ -58,9 +57,7 @@ class SecurityControllerTest extends AbstractControllerTest
         $this->assertSelectorExists('body.logged-in');
     }
 
-    /**
-     * @depends testLoginPage
-     */
+    #[Depends('testLoginPage')]
     public function testLoginWithWrongUsername(): void
     {
         $testUser = $this->createTestUser();
@@ -91,9 +88,7 @@ class SecurityControllerTest extends AbstractControllerTest
         $this->assertSelectorExists('body.not-logged-in');
     }
 
-    /**
-     * @depends testLoginPage
-     */
+    #[Depends('testLoginPage')]
     public function testLoginWithWrongPassword(): void
     {
         $testUser = $this->createTestUser();
@@ -124,9 +119,7 @@ class SecurityControllerTest extends AbstractControllerTest
         $this->assertSelectorExists('body.not-logged-in');
     }
 
-    /**
-     * @depends testLoginPage
-     */
+    #[Depends('testLoginPage')]
     public function testLoginWithWrongCredentials(): void
     {
         $testUser = $this->createTestUser();
@@ -157,9 +150,7 @@ class SecurityControllerTest extends AbstractControllerTest
         $this->assertSelectorExists('body.not-logged-in');
     }
 
-    /**
-     * @depends testLoginPage
-     */
+    #[Depends('testLoginPage')]
     public function testLoginWithDisabledUser(): void
     {
         $testUser = $this->createTestUser(false);
@@ -190,9 +181,7 @@ class SecurityControllerTest extends AbstractControllerTest
         $this->assertSelectorExists('body.not-logged-in');
     }
 
-    /**
-     * @depends testLoginWithRightCredentials
-     */
+    #[Depends('testLoginWithRightCredentials')]
     public function testLastLoginDateTime(): void
     {
         $testUser = $this->createTestUser();
@@ -220,9 +209,7 @@ class SecurityControllerTest extends AbstractControllerTest
         $this->assertEqualsWithDelta(new \DateTime(), $testUser->getLastLogin(), 1.5);
     }
 
-    /**
-     * @depends testLastLoginDateTime
-     */
+    #[Depends('testLastLoginDateTime')]
     public function testLastLoginDateTimeTwice(): void
     {
         $testUser = $this->createTestUser();
@@ -275,9 +262,7 @@ class SecurityControllerTest extends AbstractControllerTest
         $this->assertNotEquals($firstLoginDateTime, $secondLoginDateTime);
     }
 
-    /**
-     * @depends testLoginWithRightCredentials
-     */
+    #[Depends('testLoginWithRightCredentials')]
     public function testLogout(): void
     {
         $testUser = $this->createTestUser();
