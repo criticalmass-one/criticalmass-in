@@ -1,0 +1,64 @@
+{# Bottom Navigation - Mobile Only #}
+{# Wird auf Desktop (>768px) automatisch ausgeblendet via CSS #}
+
+<nav class="cm-bottom-nav" aria-label="Mobile Navigation">
+    <div class="cm-bottom-nav__inner">
+        {# Home #}
+        <a href="{{ path('caldera_criticalmass_frontpage') }}"
+           class="cm-bottom-nav__item {{ app.request.get('_route') == 'caldera_criticalmass_frontpage' ? 'active' : '' }}"
+           aria-label="Startseite">
+            <i class="fas fa-home"></i>
+            <span>Start</span>
+        </a>
+
+        {# Cities / Rides #}
+        <a href="{{ path('caldera_criticalmass_city_list') }}"
+           class="cm-bottom-nav__item {{ app.request.get('_route') starts with 'caldera_criticalmass_city' ? 'active' : '' }}"
+           aria-label="Städte">
+            <i class="fas fa-city"></i>
+            <span>Städte</span>
+        </a>
+
+        {# Central Action Button - Map or Add depending on login status #}
+        {% if app.user %}
+            <a href="{{ path('caldera_criticalmass_world') }}"
+               class="cm-bottom-nav__item cm-bottom-nav__item--primary"
+               aria-label="Karte anzeigen">
+                <i class="fas fa-map-marked-alt"></i>
+                <span>Karte</span>
+            </a>
+        {% else %}
+            <a href="{{ path('caldera_criticalmass_world') }}"
+               class="cm-bottom-nav__item cm-bottom-nav__item--primary"
+               aria-label="Karte anzeigen">
+                <i class="fas fa-map-marked-alt"></i>
+                <span>Karte</span>
+            </a>
+        {% endif %}
+
+        {# Calendar / Rides #}
+        <a href="{{ path('caldera_criticalmass_calendar') }}"
+           class="cm-bottom-nav__item {{ app.request.get('_route') starts with 'caldera_criticalmass_calendar' ? 'active' : '' }}"
+           aria-label="Kalender">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Kalender</span>
+        </a>
+
+        {# Profile / Login #}
+        {% if app.user %}
+            <a href="{{ path('criticalmass_user_usermanagement') }}"
+               class="cm-bottom-nav__item {{ app.request.get('_route') starts with 'criticalmass_user' ? 'active' : '' }}"
+               aria-label="Profil">
+                <i class="fas fa-user-circle"></i>
+                <span>Profil</span>
+            </a>
+        {% else %}
+            <a href="{{ path('login') }}"
+               class="cm-bottom-nav__item"
+               aria-label="Anmelden">
+                <i class="fas fa-sign-in-alt"></i>
+                <span>Login</span>
+            </a>
+        {% endif %}
+    </div>
+</nav>

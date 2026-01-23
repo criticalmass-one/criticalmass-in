@@ -1,69 +1,58 @@
-<footer id="footer" style="margin-top: 50px;">
+{# Footer - Mobile-optimiert mit Accordion #}
+<footer class="cm-footer">
     <div class="container">
-        <div class="row">
-            <div class="col-md-3">
-                <h5>
+        {# Mobile: Accordion-Struktur für platzsparende Darstellung #}
+        <div class="cm-footer__grid">
+            {# Spalte 1: Über uns #}
+            <div class="cm-footer__section">
+                <h5 class="cm-footer__title">
                     <a href="{{ path('caldera_criticalmass_frontpage') }}" title="zur Startseite von criticalmass.in">
                         Seit {{ daysSince('2011-06-24 19:00:00') }} Tagen im Sattel
                     </a>
                 </h5>
 
-                <ul class="list-unstyled">
+                <ul class="cm-footer__list">
                     <li>
-                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'impress' }) }}"
-                           id="footer-impress-link">
+                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'impress' }) }}">
                             Impressum
                         </a>
                     </li>
-
                     <li>
-                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'privacy' }) }}"
-                           id="footer-privacy-link">
+                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'privacy' }) }}">
                             Datenschutz
                         </a>
                     </li>
-
                     <li>
-                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'gdpr' }) }}"
-                           id="footer-gdpr-link">
+                        <a href="{{ path('caldera_criticalmass_static_display', { slug: 'gdpr' }) }}">
                             Deine privaten Daten
                         </a>
                     </li>
-
-                    <li>
-                        <a href="https://criticalmass.blog/criticalmass-one/ueber-criticalmass-in/" id="footer-about-link">
+                    <li class="hide-mobile">
+                        <a href="https://criticalmass.blog/criticalmass-one/ueber-criticalmass-in/">
                             {% trans %}criticalmass.navigation.criticalmass.about{% endtrans %}
                         </a>
                     </li>
-
-                    <li>
-                        <a href="https://critical-mass.blog/critical-mass/haeufig-gestellte-fragen-zur-critical-mass/" id="footer-faq-link">
+                    <li class="hide-mobile">
+                        <a href="https://critical-mass.blog/critical-mass/haeufig-gestellte-fragen-zur-critical-mass/">
                             {% trans %}criticalmass.navigation.criticalmass.faq{% endtrans %}
                         </a>
                     </li>
-
-                    <li>
-                        <a href="{{ path('app.swagger_ui') }}" id="footer-apidoc-link">
+                    <li class="hide-mobile">
+                        <a href="{{ path('app.swagger_ui') }}">
                             {% trans %}criticalmass.navigation.criticalmass.apidoc{% endtrans %}
                         </a>
                     </li>
-
-                    <li>
-                        <a href="https://status.caldera.cc/" id="footer-status-link">
-                            Status
-                        </a>
-                    </li>
-
                     <li>
                         <a href="https://github.com/criticalmass-one/criticalmass-in">
-                            GitHub-Repository
+                            <i class="fab fa-github me-1"></i>GitHub
                         </a>
                     </li>
                 </ul>
             </div>
 
-            <div class="col-md-3">
-                <h5>
+            {# Spalte 2: Blog - nur Desktop #}
+            <div class="cm-footer__section hide-mobile">
+                <h5 class="cm-footer__title">
                     <a href="https://criticalmass.blog/" title="zum Critical-Mass-Weblog">
                         Aus dem Blog
                     </a>
@@ -71,108 +60,69 @@
 
                 {% set blog_article_list = blog_articles() %}
 
-                <ul class="list-unstyled">
+                <ul class="cm-footer__list">
                     {% for blog_article in blog_article_list %}
                         <li>
                             <a href="{{ blog_article.permalink }}" title="zum Blog-Beitrag">
                                 {{ blog_article.title }}
                             </a>
-
-                            <time class="text-muted">{{ blog_article.dateTime|date('d.m.Y') }}</time>
+                            <time class="cm-footer__date">{{ blog_article.dateTime|date('d.m.Y') }}</time>
                         </li>
                     {% endfor %}
                 </ul>
             </div>
 
-            <div class="col-md-3">
-                <h5>
+            {# Spalte 3: Aktionen - nur Desktop #}
+            <div class="cm-footer__section hide-mobile">
+                <h5 class="cm-footer__title">
                     Critical-Mass-Aktionen
                 </h5>
 
-                <ul class="list-unstyled">
+                <ul class="cm-footer__list">
                     {{ render(controller('App\\Controller\\Template\\FooterController::promotionListAction')) }}
                 </ul>
             </div>
 
-            <div class="col-md-3">
-                <h5>
+            {# Spalte 4: Städte #}
+            <div class="cm-footer__section">
+                <h5 class="cm-footer__title">
                     <a href="{{ path('caldera_criticalmass_city_list') }}"
                        title="zur Liste der Städte mit einer Critical-Mass-Radtour">
                         Critical-Mass-Städte
                     </a>
                 </h5>
 
-                <ul class="list-unstyled">
+                <ul class="cm-footer__list">
                     {{ render(controller('App\\Controller\\Template\\FooterController::cityListAction' )) }}
-
                     <li>
-                        <a href="{{ path('caldera_criticalmass_city_list') }}" id="footer-citylist-link">
-                            Städteliste
+                        <a href="{{ path('caldera_criticalmass_city_list') }}" class="cm-footer__more">
+                            Alle Städte anzeigen <i class="fas fa-arrow-right ms-1"></i>
                         </a>
                     </li>
                 </ul>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-12 text-center">
-                <ul class="list-unstyled mb-2">
-                    <li>
-                        Kartendaten und Geocoding von <a href="https://www.openstreetmap.org/">OpenStreetMap</a>,
-                        <span class="text-nowrap">&copy; OpenStreetMap-Mitwirkende</span>,
-                        <a href="https://www.openstreetmap.org/copyright">lizensiert unter <span class="text-nowrap">CC BY-SA 2.0</span></a>
-                    </li>
-                    <li>
-                        Wetterdaten von <a href="https://openweathermap.org">OpenWeatherMap</a>,
-                        <a href="https://creativecommons.org/licenses/by-sa/4.0/">lizensiert unter <span class="text-nowrap">CC BY-SA 4.0</span></a>
-                    </li>
-                </ul>
-            </div>
+        {# Credits - immer sichtbar, kompakter auf Mobile #}
+        <div class="cm-footer__credits">
+            <p>
+                Kartendaten von <a href="https://www.openstreetmap.org/">OpenStreetMap</a> &middot;
+                Wetter von <a href="https://openweathermap.org">OpenWeatherMap</a>
+            </p>
         </div>
 
-        <div class="row">
-            <div class="col-12 text-muted text-center">
-                <ul class="list-inline mb-0">
-                    <li class="list-inline-item">
-                        <a href="https://luft.jetzt/"
-                           title="Aktuelle Luftmesswerte aus deiner Umgebung: Feinstaub, Stickoxide und Ozon">
-                            Luft<sup>jetzt</sup>
-                        </a>
-                    </li>
-
-                    <li class="list-inline-item">
-                        <a href="https://radverkehrsforum.de/"
-                           title="Diskussionen und Informationen rund um den Radverkehr in Deutschland">
-                            Radverkehrsforum
-                        </a>
-                    </li>
-
-                    <li class="list-inline-item">
-                        <a href="https://fahrradsternfahrt.hamburg/"
-                           title="Fahrradsternfahrt Hamburg — die größte Fahrrad-Demonstaton in Norddeutschland">
-                            Fahrradsternfahrt Hamburg
-                        </a>
-                    </li>
-
-                    <li class="list-inline-item">
-                        <a href="https://luenedrohne.de/"
-                           title="LüneDrohne — Drohnenfotos aus Lüneburg">
-                            Lünedrohne
-                        </a>
-                    </li>
-
-                    <li class="list-inline-item">
-                        <a href="https://luenedrohne.de/"
-                           title="Lünedrohne — Drohnenfotos aus Lüneburg">
-                            Lünedrohne
-                        </a>
-                    </li>
-                </ul>
-            </div>
+        {# Partner Links - nur Desktop #}
+        <div class="cm-footer__partners hide-mobile">
+            <a href="https://luft.jetzt/" title="Aktuelle Luftmesswerte">Luft<sup>jetzt</sup></a>
+            <span class="cm-footer__dot">&middot;</span>
+            <a href="https://radverkehrsforum.de/" title="Radverkehrsforum">Radverkehrsforum</a>
+            <span class="cm-footer__dot">&middot;</span>
+            <a href="https://fahrradsternfahrt.hamburg/" title="Fahrradsternfahrt Hamburg">Fahrradsternfahrt Hamburg</a>
         </div>
     </div>
 </footer>
 
-<div id="warming-stripes" class="text-center">
-    Keep it in the ground.
+{# Warming Stripes - minimalistisch #}
+<div class="cm-warming-stripes">
+    <span class="hide-mobile">Keep it in the ground.</span>
 </div>

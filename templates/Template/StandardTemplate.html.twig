@@ -3,15 +3,32 @@
 {% block breadcrumbs_json %}{% endblock %}
 
 {% block masterContent %}
-    {% include 'Template/Navigation/_full_navigation.html.twig' %}
+    {# Mobile Header - nur auf Mobile sichtbar #}
+    {% include 'Template/Navigation/_mobile_header.html.twig' %}
 
-    {% include 'Template/Includes/_github.html.twig' %}
+    {# Desktop Header - nur auf Desktop sichtbar #}
+    {% include 'Template/Navigation/_desktop_header.html.twig' %}
 
-    {% block breadcrumbs %}{% endblock %}
+    {# GitHub Banner - nur auf Desktop #}
+    <div class="hide-mobile">
+        {% include 'Template/Includes/_github.html.twig' %}
+    </div>
 
+    {# Alerts #}
     {{ render(controller('App\\Controller\\Template\\AlertController::showCurrentAlertsAction')) }}
 
-    {% block content %}{% endblock %}
+    {# Main Content Area #}
+    <main class="cm-main">
+        {# Breadcrumbs - optional, nur wenn definiert #}
+        {% block breadcrumbs %}{% endblock %}
 
+        {# Page Content #}
+        {% block content %}{% endblock %}
+    </main>
+
+    {# Footer - auf Mobile vereinfacht #}
     {% include 'Template/Includes/_footer.html.twig' %}
+
+    {# Bottom Navigation - nur auf Mobile sichtbar #}
+    {% include 'Template/Navigation/_bottom_navigation.html.twig' %}
 {% endblock %}

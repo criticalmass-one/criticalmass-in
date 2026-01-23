@@ -1,0 +1,66 @@
+{# Mobile Header - Kompakter Header für Touch-Geräte #}
+<header class="cm-header hide-desktop">
+    <div class="cm-header__inner">
+        {# Brand / Logo #}
+        <a href="{{ path('caldera_criticalmass_frontpage') }}" class="cm-header__brand">
+            <span class="cm-header__logo"></span>
+            <span class="cm-header__title">Critical Mass</span>
+        </a>
+
+        {# Action Buttons #}
+        <div class="cm-header__actions">
+            {# Search Button #}
+            <button type="button"
+                    class="cm-header__btn"
+                    data-bs-toggle="modal"
+                    data-bs-target="#searchModal"
+                    aria-label="Suche öffnen">
+                <i class="fas fa-search"></i>
+            </button>
+
+            {# User Menu #}
+            {% if app.user %}
+                <a href="{{ path('criticalmass_user_usermanagement') }}"
+                   class="cm-header__btn"
+                   aria-label="Benutzerkonto">
+                    <i class="fas fa-user"></i>
+                </a>
+            {% else %}
+                <a href="{{ path('login') }}"
+                   class="cm-header__btn"
+                   aria-label="Anmelden">
+                    <i class="fas fa-sign-in-alt"></i>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</header>
+
+{# Search Modal für Mobile #}
+<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="searchModalLabel">Stadt suchen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ path('caldera_criticalmass_search_query') }}" method="get">
+                    <div class="cm-search">
+                        <i class="fas fa-search cm-search__icon"></i>
+                        <input type="search"
+                               name="query"
+                               class="cm-search__input"
+                               placeholder="Hamburg, Berlin, München..."
+                               autocomplete="off"
+                               autofocus>
+                    </div>
+                    <button type="submit" class="cm-btn cm-btn--primary cm-btn--block mt-3">
+                        <i class="fas fa-search"></i>
+                        Suchen
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

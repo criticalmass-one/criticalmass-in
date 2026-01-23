@@ -1,29 +1,54 @@
-<div class="row d-none d-md-block">
-    <div class="col-12">
-        <div class="card mb-3 shadow-sm">
-            <div class="card-header bg-body-tertiary py-2">
-                <h6 class="mb-0 fw-semibold">
-                    🗓️ Bald unterwegs
-                </h6>
-            </div>
-
-            <div class="card-body">
-                {% for month in rideList %}
-                    {% for day in month %}
-                        <div class="{{ not loop.first ? 'mb-4' : 'mb-0' }}">
-                            <div class="fw-semibold mb-2">
-                                {{ day.dateTime|format_date('eeee, dd. MMMM YYYY') }}
-                            </div>
-
-                            <ul class="list-unstyled ps-3 mb-0">
-                                {% for ride in day %}
-                                    {% include 'Common/Ride/simple_city_time_list_item.html.twig' with { ride: ride } %}
-                                {% endfor %}
-                            </ul>
+{# Ride List - Mobile-first mit horizontalem Scroll auf Mobile #}
+<div class="cm-rides-scroll">
+    {% for month in rideList %}
+        {% for day in month %}
+            {% for ride in day %}
+                <a href="{{ object_path(ride) }}" class="cm-ride-card">
+                    <div class="cm-ride-card__header">
+                        <div class="cm-ride-card__date">
+                            <span class="day">{{ ride.dateTime|date('d') }}</span>
+                            <span class="month">{{ ride.dateTime|format_date('MMM') }}</span>
                         </div>
-                    {% endfor %}
-                {% endfor %}
+                        <div class="cm-ride-card__info">
+                            <div class="cm-ride-card__city">
+                                {% if ride.title %}
+                                    {{ ride.title }}
+                                {% else %}
+                                    {{ ride.city.city }}
+                                {% endif %}
+                            </div>
+                            <div class="cm-ride-card__time">
+                                <i class="far fa-clock me-1"></i>
+                                {{ ride.dateTime|date('H:i', ride.city.timezone) }} Uhr
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cm-ride-card__details">
+                        {% if ride.location %}
+                            <span class="cm-ride-card__detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                {{ ride.location|length > 25 ? ride.location|slice(0, 25) ~ '...' : ride.location }}
+                            </span>
+                        {% endif %}
+                        {% if ride.estimatedParticipants %}
+                            <span class="cm-ride-card__detail">
+                                <i class="fas fa-users"></i>
+                                ~{{ ride.estimatedParticipants }}
+                            </span>
+                        {% endif %}
+                    </div>
+                </a>
+            {% endfor %}
+        {% endfor %}
+    {% else %}
+        <div class="cm-empty">
+            <div class="cm-empty__icon">
+                <i class="fas fa-calendar-xmark"></i>
+            </div>
+            <div class="cm-empty__title">Keine Touren gefunden</div>
+            <div class="cm-empty__text">
+                Aktuell sind keine bevorstehenden Touren eingetragen.
             </div>
         </div>
-    </div>
+    {% endfor %}
 </div>

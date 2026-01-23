@@ -1,0 +1,106 @@
+{# Desktop Header - Nur auf Desktop sichtbar (ab 768px) #}
+<header class="cm-desktop-header hide-mobile">
+    <div class="cm-desktop-header__inner">
+        {# Brand / Logo #}
+        <a href="{{ path('caldera_criticalmass_frontpage') }}" class="cm-desktop-header__brand">
+            <span class="cm-desktop-header__logo"></span>
+            <span class="cm-desktop-header__title">
+                <span class="cm-desktop-header__title-main">Critical Mass</span>
+            </span>
+        </a>
+
+        {# Main Navigation #}
+        <nav class="cm-desktop-header__nav" aria-label="Hauptnavigation">
+            <a href="{{ path('caldera_criticalmass_frontpage') }}"
+               class="cm-desktop-header__link {{ app.request.get('_route') == 'caldera_criticalmass_frontpage' ? 'active' : '' }}">
+                <i class="fas fa-home"></i>
+                <span>Start</span>
+            </a>
+
+            <a href="{{ path('caldera_criticalmass_city_list') }}"
+               class="cm-desktop-header__link {{ app.request.get('_route') starts with 'caldera_criticalmass_city' ? 'active' : '' }}">
+                <i class="fas fa-city"></i>
+                <span>Städte</span>
+            </a>
+
+            <a href="{{ path('caldera_criticalmass_world') }}"
+               class="cm-desktop-header__link {{ app.request.get('_route') == 'caldera_criticalmass_world' ? 'active' : '' }}">
+                <i class="fas fa-map-marked-alt"></i>
+                <span>Karte</span>
+            </a>
+
+            <a href="{{ path('caldera_criticalmass_calendar') }}"
+               class="cm-desktop-header__link {{ app.request.get('_route') starts with 'caldera_criticalmass_calendar' ? 'active' : '' }}">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Kalender</span>
+            </a>
+
+            <a href="{{ path('caldera_criticalmass_photo_gallery_list') }}"
+               class="cm-desktop-header__link {{ app.request.get('_route') starts with 'caldera_criticalmass_photo' ? 'active' : '' }}">
+                <i class="fas fa-images"></i>
+                <span>Fotos</span>
+            </a>
+        </nav>
+
+        {# Search & User Actions #}
+        <div class="cm-desktop-header__actions">
+            {# Search Form #}
+            <form action="{{ path('caldera_criticalmass_search_query') }}" method="get" class="cm-desktop-header__search">
+                <i class="fas fa-search cm-desktop-header__search-icon"></i>
+                <input type="search"
+                       name="query"
+                       class="cm-desktop-header__search-input"
+                       placeholder="Stadt suchen..."
+                       autocomplete="off">
+            </form>
+
+            {# User Menu #}
+            {% if app.user %}
+                <div class="dropdown">
+                    <button class="cm-desktop-header__user dropdown-toggle"
+                            type="button"
+                            id="userDropdown"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        <span class="cm-avatar cm-avatar--sm">
+                            {{ app.user.username|first|upper }}
+                        </span>
+                        <span class="cm-desktop-header__username">{{ app.user.username }}</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li>
+                            <a class="dropdown-item" href="{{ path('criticalmass_user_usermanagement') }}">
+                                <i class="fas fa-user me-2"></i>
+                                Mein Konto
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ path('caldera_criticalmass_track_list') }}">
+                                <i class="fas fa-route me-2"></i>
+                                Meine Tracks
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ path('caldera_criticalmass_photo_user_upload') }}">
+                                <i class="fas fa-camera me-2"></i>
+                                Fotos hochladen
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item" href="{{ path('fos_user_security_logout') }}">
+                                <i class="fas fa-sign-out-alt me-2"></i>
+                                Abmelden
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            {% else %}
+                <a href="{{ path('login') }}" class="cm-btn cm-btn--primary">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Anmelden</span>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</header>

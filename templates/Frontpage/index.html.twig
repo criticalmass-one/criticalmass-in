@@ -3,53 +3,112 @@
 {% block title %}criticalmass.in{% endblock %}
 
 {% block masterContent %}
-    <div class="navbar-wrapper">
-        {% include 'Template/Navigation/_navigation.html.twig' %}
-    </div>
+    {# Mobile Header #}
+    {% include 'Template/Navigation/_mobile_header.html.twig' %}
 
-    <div class="container-fluid mb-4">
-        <div class="row">
-            <div class="col-12">
+    {# Desktop Header #}
+    {% include 'Template/Navigation/_desktop_header.html.twig' %}
+
+    <main class="cm-main">
+        {# Hero Section - Mobile-optimiert #}
+        <section class="cm-hero">
+            <div class="cm-hero__content">
+                <h1 class="cm-hero__title">
+                    <span class="cm-hero__title-main">Critical Mass</span>
+                    <span class="cm-hero__title-sub">Wir fahren Fahrrad!</span>
+                </h1>
+                <p class="cm-hero__text">
+                    In fast jeder großen Stadt treffen sich am letzten Freitag im Monat Radfahrer zu einer gemeinsamen Ausfahrt.
+                </p>
+                <div class="cm-hero__actions">
+                    <a href="{{ path('caldera_criticalmass_city_list') }}" class="cm-btn cm-btn--primary">
+                        <i class="fas fa-city"></i>
+                        Städte entdecken
+                    </a>
+                    <a href="{{ path('caldera_criticalmass_world') }}" class="cm-btn cm-btn--outline hide-mobile">
+                        <i class="fas fa-map-marked-alt"></i>
+                        Karte anzeigen
+                    </a>
+                </div>
+            </div>
+
+            {# Carousel als Hintergrund auf Desktop #}
+            <div class="cm-hero__bg hide-mobile">
                 {% include 'Frontpage/_carousel.html.twig' with { 'frontpageTeaserList': frontpageTeaserList } %}
             </div>
-        </div>
-    </div>
+        </section>
 
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-12 col-md-8">
-                <div class="row">
-                    <div class="col-12">
-                        <h1 class="no-margin-top">
-                            Hej, wir fahren Fahrrad!
-                        </h1>
-
-                        <p class="lead">
-                            In fast jeder großen Stadt treffen sich am letzten Freitag im Monat Radfahrer zu einer
-                            gemeinsamen Ausfahrt. Sei mit dabei und schau dir an, was es alles zu entdecken gibt.
-                        </p>
-
-                        <p class="text-center">
-                            <a href="https://criticalmass.blog/criticalmass-one/ueber-criticalmass-in/" class="btn btn-primary">
-                                <i class="far fa-bicycle"></i>
-                                Erfahre mehr über criticalmass.in
-                            </a>
-                        </p>
+        {# Stats Section #}
+        <section class="cm-section">
+            <div class="cm-container">
+                <div class="cm-stats">
+                    <div class="cm-stat">
+                        <div class="cm-stat__value">{{ stats.cities|default(600) }}+</div>
+                        <div class="cm-stat__label">Städte</div>
                     </div>
-                </div>
-
-                <div class="row mt-4">
-                    <div class="col-12">
-                        {{ include('Timeline/timeline.html.twig') }}
+                    <div class="cm-stat">
+                        <div class="cm-stat__value">{{ stats.rides|default(25000) }}+</div>
+                        <div class="cm-stat__label">Touren</div>
+                    </div>
+                    <div class="cm-stat">
+                        <div class="cm-stat__value">{{ stats.photos|default(50000) }}+</div>
+                        <div class="cm-stat__label">Fotos</div>
+                    </div>
+                    <div class="cm-stat">
+                        <div class="cm-stat__value">{{ daysSince('2011-06-24 19:00:00') }}</div>
+                        <div class="cm-stat__label">Tage im Sattel</div>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <div class="col-12 col-md-4">
+        {# Upcoming Rides Section #}
+        <section class="cm-section">
+            <div class="cm-section__header">
+                <h2 class="cm-section__title">Bald unterwegs</h2>
+                <a href="{{ path('caldera_criticalmass_calendar') }}" class="cm-section__action">
+                    Alle anzeigen <i class="fas fa-arrow-right ms-1"></i>
+                </a>
+            </div>
+
+            <div class="cm-container">
                 {{ render(controller('App\\Controller\\FrontpageController::rideListAction')) }}
             </div>
-        </div>
-    </div>
+        </section>
 
+        {# Timeline/Activity Section #}
+        <section class="cm-section">
+            <div class="cm-section__header">
+                <h2 class="cm-section__title">Neueste Aktivitäten</h2>
+            </div>
+
+            <div class="cm-container">
+                {{ include('Timeline/timeline.html.twig') }}
+            </div>
+        </section>
+
+        {# CTA Section #}
+        <section class="cm-cta">
+            <div class="cm-container">
+                <div class="cm-cta__content">
+                    <h2 class="cm-cta__title">Mach mit!</h2>
+                    <p class="cm-cta__text">
+                        Registriere dich kostenlos und teile deine Tracks, Fotos und Erlebnisse mit der Community.
+                    </p>
+                    {% if not app.user %}
+                        <a href="{{ path('fos_user_registration_register') }}" class="cm-btn cm-btn--primary cm-btn--block">
+                            <i class="fas fa-user-plus"></i>
+                            Jetzt registrieren
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+    </main>
+
+    {# Footer #}
     {% include 'Template/Includes/_footer.html.twig' %}
+
+    {# Bottom Navigation - Mobile #}
+    {% include 'Template/Navigation/_bottom_navigation.html.twig' %}
 {% endblock %}
