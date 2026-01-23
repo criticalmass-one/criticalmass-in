@@ -96,6 +96,24 @@ $navbar-light-active-color: rgba(0, 0, 0, 0.9);
 
 .panel-title {
   @extend .card-title;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0;
+}
+
+// Consistent styling for card headers
+.card-header,
+.panel-heading {
+  font-size: 1rem;
+  font-weight: 500;
+
+  .card-title,
+  .panel-title,
+  h3, h4, h5, h6 {
+    font-size: inherit;
+    font-weight: inherit;
+    margin-bottom: 0;
+  }
 }
 
 // Label to Badge migration
