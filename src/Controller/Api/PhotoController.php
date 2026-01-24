@@ -17,7 +17,7 @@ class PhotoController extends BaseController
     /**
      * Get a list of photos which were uploaded to a specified ride.
      */
-    #[Route(path: '/api/{citySlug}/{rideIdentifier}/listPhotos', name: 'caldera_criticalmass_rest_photo_ridelist', methods: ['GET'])]
+    #[Route(path: '/api/{citySlug}/{rideIdentifier}/listPhotos', name: 'caldera_criticalmass_rest_photo_ridelist', methods: ['GET'], priority: 190)]
     #[OA\Tag(name: 'Photo')]
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Provide a city slug', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Parameter(name: 'rideIdentifier', in: 'path', description: 'Provide a ride identifier', required: true, schema: new OA\Schema(type: 'string'))]
@@ -89,7 +89,7 @@ class PhotoController extends BaseController
      *
      * Apply <code>startValue</code> to deliver a value to start your ordered list with.
      */
-    #[Route(path: '/api/photo', name: 'caldera_criticalmass_rest_photo_list', methods: ['GET'])]
+    #[Route(path: '/api/photo', name: 'caldera_criticalmass_rest_photo_list', methods: ['GET'], priority: 200)]
     #[OA\Tag(name: 'Photo')]
     #[OA\Parameter(name: 'regionSlug', in: 'query', description: 'Provide a region slug', schema: new OA\Schema(type: 'string'))]
     #[OA\Parameter(name: 'citySlug', in: 'query', description: 'Provide a city slug', schema: new OA\Schema(type: 'string'))]
@@ -122,7 +122,7 @@ class PhotoController extends BaseController
     /**
      * Update properties of a photo.
      */
-    #[Route(path: '/api/photo/{id}', name: 'caldera_criticalmass_rest_photo_post', methods: ['POST'])]
+    #[Route(path: '/api/photo/{id}', name: 'caldera_criticalmass_rest_photo_post', methods: ['POST'], priority: 200)]
     #[OA\Tag(name: 'Photo')]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Id of the photo to update', required: true, schema: new OA\Schema(type: 'integer'))]
     #[OA\RequestBody(description: 'JSON representation of the photo data', required: true, content: new OA\JsonContent(type: 'object'))]

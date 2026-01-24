@@ -13,7 +13,7 @@ class LocationController extends BaseController
     /**
      * Retrieve a list of locations of a city.
      */
-    #[Route(path: '/api/{citySlug}/location', name: 'caldera_criticalmass_rest_location_list', methods: ['GET'])]
+    #[Route(path: '/api/{citySlug}/location', name: 'caldera_criticalmass_rest_location_list', methods: ['GET'], priority: 190)]
     #[OA\Tag(name: 'Location')]
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
@@ -27,7 +27,7 @@ class LocationController extends BaseController
     /**
      * Show details of a specified location.
      */
-    #[Route(path: '/api/{citySlug}/location/{slug}', name: 'caldera_criticalmass_rest_location_show', methods: ['GET'])]
+    #[Route(path: '/api/{citySlug}/location/{slug}', name: 'caldera_criticalmass_rest_location_show', methods: ['GET'], priority: 190)]
     #[OA\Tag(name: 'Location')]
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Parameter(name: 'locationSlug', in: 'path', description: 'Slug of the location', required: true, schema: new OA\Schema(type: 'string'))]
