@@ -109,8 +109,8 @@ class SocialNetworkProfileApiSchemaTest extends AbstractApiControllerTestCase
         $response = $this->getJsonResponse();
 
         foreach ($response as $profile) {
-            $this->assertIsBool($profile['autofetch']);
-            $this->assertIsBool($profile['autopublish']);
+            $this->assertIsBool($profile['auto_fetch']);
+            $this->assertIsBool($profile['auto_publish']);
         }
     }
 
@@ -123,14 +123,14 @@ class SocialNetworkProfileApiSchemaTest extends AbstractApiControllerTestCase
         $response = $this->getJsonResponse();
 
         foreach ($response as $profile) {
-            if (isset($profile['createdat']) && $profile['createdat'] !== null) {
-                $this->assertIsInt($profile['createdat']);
+            if (isset($profile['created_at']) && $profile['created_at'] !== null) {
+                $this->assertIsInt($profile['created_at']);
             }
-            if (isset($profile['lastfetchsuccessdatetime']) && $profile['lastfetchsuccessdatetime'] !== null) {
-                $this->assertIsInt($profile['lastfetchsuccessdatetime']);
+            if (isset($profile['last_fetch_success_date_time']) && $profile['last_fetch_success_date_time'] !== null) {
+                $this->assertIsInt($profile['last_fetch_success_date_time']);
             }
-            if (isset($profile['lastfetchfailuredatetime']) && $profile['lastfetchfailuredatetime'] !== null) {
-                $this->assertIsInt($profile['lastfetchfailuredatetime']);
+            if (isset($profile['last_fetch_failure_date_time']) && $profile['last_fetch_failure_date_time'] !== null) {
+                $this->assertIsInt($profile['last_fetch_failure_date_time']);
             }
         }
     }
@@ -148,8 +148,8 @@ class SocialNetworkProfileApiSchemaTest extends AbstractApiControllerTestCase
         $newProfileData = [
             'identifier' => 'test_profile_' . uniqid(),
             'network' => 'twitter',
-            'autofetch' => false,
-            'autopublish' => false,
+            'auto_fetch' => false,
+            'auto_publish' => false,
         ];
 
         $this->client->request(
@@ -182,7 +182,7 @@ class SocialNetworkProfileApiSchemaTest extends AbstractApiControllerTestCase
         $citySlug = $city->getMainSlugString();
 
         $updateData = [
-            'autofetch' => true,
+            'auto_fetch' => true,
         ];
 
         $this->client->request(

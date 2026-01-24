@@ -40,9 +40,9 @@ class CycleApiSchemaTest extends AbstractApiControllerTestCase
         $response = $this->getJsonResponse();
 
         foreach ($response as $cycle) {
-            $this->assertIsInt($cycle['dayofweek']);
-            $this->assertGreaterThanOrEqual(0, $cycle['dayofweek']);
-            $this->assertLessThanOrEqual(6, $cycle['dayofweek']);
+            $this->assertIsInt($cycle['day_of_week']);
+            $this->assertGreaterThanOrEqual(0, $cycle['day_of_week']);
+            $this->assertLessThanOrEqual(6, $cycle['day_of_week']);
         }
     }
 
@@ -55,10 +55,10 @@ class CycleApiSchemaTest extends AbstractApiControllerTestCase
         $response = $this->getJsonResponse();
 
         foreach ($response as $cycle) {
-            if (isset($cycle['weekofmonth']) && $cycle['weekofmonth'] !== null) {
-                $this->assertIsInt($cycle['weekofmonth']);
-                $this->assertGreaterThanOrEqual(0, $cycle['weekofmonth']);
-                $this->assertLessThanOrEqual(4, $cycle['weekofmonth']);
+            if (isset($cycle['week_of_month']) && $cycle['week_of_month'] !== null) {
+                $this->assertIsInt($cycle['week_of_month']);
+                $this->assertGreaterThanOrEqual(0, $cycle['week_of_month']);
+                $this->assertLessThanOrEqual(4, $cycle['week_of_month']);
             }
         }
     }
@@ -107,8 +107,8 @@ class CycleApiSchemaTest extends AbstractApiControllerTestCase
         $response = $this->getJsonResponse();
 
         foreach ($response as $cycle) {
-            $this->assertArrayHasKey('createdat', $cycle);
-            $this->assertIsInt($cycle['createdat']);
+            $this->assertArrayHasKey('created_at', $cycle);
+            $this->assertIsInt($cycle['created_at']);
         }
     }
 
@@ -135,11 +135,11 @@ class CycleApiSchemaTest extends AbstractApiControllerTestCase
         $response = $this->getJsonResponse();
 
         foreach ($response as $cycle) {
-            if (isset($cycle['validfrom']) && $cycle['validfrom'] !== null) {
-                $this->assertIsInt($cycle['validfrom']);
+            if (isset($cycle['valid_from']) && $cycle['valid_from'] !== null) {
+                $this->assertIsInt($cycle['valid_from']);
             }
-            if (isset($cycle['validuntil']) && $cycle['validuntil'] !== null) {
-                $this->assertIsInt($cycle['validuntil']);
+            if (isset($cycle['valid_until']) && $cycle['valid_until'] !== null) {
+                $this->assertIsInt($cycle['valid_until']);
             }
         }
     }

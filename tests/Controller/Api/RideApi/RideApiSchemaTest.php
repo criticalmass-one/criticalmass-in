@@ -65,12 +65,12 @@ class RideApiSchemaTest extends AbstractApiControllerTestCase
         $this->assertNotEmpty($response);
 
         $ride = $response[0];
-        $this->assertArrayHasKey('datetime', $ride);
-        $this->assertIsInt($ride['datetime'], 'dateTime should be a Unix timestamp (integer)');
+        $this->assertArrayHasKey('date_time', $ride);
+        $this->assertIsInt($ride['date_time'], 'date_time should be a Unix timestamp (integer)');
 
         // Verify it's a reasonable timestamp (after year 2000, before year 2100)
-        $this->assertGreaterThan(946684800, $ride['datetime'], 'Timestamp should be after year 2000');
-        $this->assertLessThan(4102444800, $ride['datetime'], 'Timestamp should be before year 2100');
+        $this->assertGreaterThan(946684800, $ride['date_time'], 'Timestamp should be after year 2000');
+        $this->assertLessThan(4102444800, $ride['date_time'], 'Timestamp should be before year 2100');
     }
 
     #[TestDox('Ride coordinates are valid when present')]
@@ -142,11 +142,11 @@ class RideApiSchemaTest extends AbstractApiControllerTestCase
         $validRideTypes = ['critical_mass', 'kidical_mass', 'night_ride', 'demonstration', null];
 
         foreach ($response as $ride) {
-            if (isset($ride['ridetype'])) {
+            if (isset($ride['ride_type'])) {
                 $this->assertContains(
-                    $ride['ridetype'],
+                    $ride['ride_type'],
                     $validRideTypes,
-                    sprintf("Invalid rideType: %s", $ride['ridetype'])
+                    sprintf("Invalid ride_type: %s", $ride['ride_type'])
                 );
             }
         }
@@ -164,24 +164,30 @@ class RideApiSchemaTest extends AbstractApiControllerTestCase
         $this->assertIsBool($response[0]['enabled']);
     }
 
-    #[TestDox('Ride participations numbers are non-negative integers')]
+    #[TestDox('Ride detail participations numbers are non-negative integers')]
     public function testRideParticipationsAreNonNegativeIntegers(): void
     {
-        $this->client->request('GET', '/api/ride?size=10');
+        // Participation numbers are only included in the detail view, not the list view
+        $rides = $this->entityManager->getRepository(Ride::class)->findAll();
+        $this->assertNotEmpty($rides);
+
+        $ride = $rides[0];
+        $citySlug = $ride->getCity()->getMainSlugString();
+        $dateString = $ride->getDateTime()->format('Y-m-d');
+
+        $this->client->request('GET', sprintf('/api/%s/%s', $citySlug, $dateString));
         $this->assertResponseIsSuccessful();
 
         $response = $this->getJsonResponse();
 
-        foreach ($response as $ride) {
-            $this->assertIsInt($ride['participationsnumberyes']);
-            $this->assertGreaterThanOrEqual(0, $ride['participationsnumberyes']);
+        $this->assertIsInt($response['participations_number_yes']);
+        $this->assertGreaterThanOrEqual(0, $response['participations_number_yes']);
 
-            $this->assertIsInt($ride['participationsnumbermaybe']);
-            $this->assertGreaterThanOrEqual(0, $ride['participationsnumbermaybe']);
+        $this->assertIsInt($response['participations_number_maybe']);
+        $this->assertGreaterThanOrEqual(0, $response['participations_number_maybe']);
 
-            $this->assertIsInt($ride['participationsnumberno']);
-            $this->assertGreaterThanOrEqual(0, $ride['participationsnumberno']);
-        }
+        $this->assertIsInt($response['participations_number_no']);
+        $this->assertGreaterThanOrEqual(0, $response['participations_number_no']);
     }
 
     #[TestDox('GET /api/ride supports size parameter')]

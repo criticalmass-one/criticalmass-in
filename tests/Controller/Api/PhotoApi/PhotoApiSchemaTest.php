@@ -42,8 +42,8 @@ class PhotoApiSchemaTest extends AbstractApiControllerTestCase
         $this->assertNotEmpty($response);
 
         $photo = $response[0];
-        $this->assertArrayHasKey('creationdatetime', $photo);
-        $this->assertIsInt($photo['creationdatetime'], 'creationDateTime should be a Unix timestamp (integer)');
+        $this->assertArrayHasKey('creation_date_time', $photo);
+        $this->assertIsInt($photo['creation_date_time'], 'creationDateTime should be a Unix timestamp (integer)');
     }
 
     #[TestDox('Photo coordinates are valid when present')]
@@ -89,8 +89,8 @@ class PhotoApiSchemaTest extends AbstractApiControllerTestCase
         $response = $this->getJsonResponse();
 
         foreach ($response as $photo) {
-            $this->assertIsString($photo['imagename']);
-            $this->assertNotEmpty($photo['imagename']);
+            $this->assertIsString($photo['image_name']);
+            $this->assertNotEmpty($photo['image_name']);
         }
     }
 
@@ -103,9 +103,9 @@ class PhotoApiSchemaTest extends AbstractApiControllerTestCase
         $response = $this->getJsonResponse();
 
         foreach ($response as $photo) {
-            if (isset($photo['exifiso']) && $photo['exifiso'] !== null) {
-                $this->assertIsInt($photo['exifiso']);
-                $this->assertGreaterThan(0, $photo['exifiso'], 'ISO should be a positive integer');
+            if (isset($photo['exif_iso']) && $photo['exif_iso'] !== null) {
+                $this->assertIsInt($photo['exif_iso']);
+                $this->assertGreaterThan(0, $photo['exif_iso'], 'ISO should be a positive integer');
             }
         }
     }
@@ -129,9 +129,9 @@ class PhotoApiSchemaTest extends AbstractApiControllerTestCase
         $response = $this->getJsonResponse();
 
         foreach ($response as $photo) {
-            if (isset($photo['imagesize']) && $photo['imagesize'] !== null) {
-                $this->assertIsInt($photo['imagesize']);
-                $this->assertGreaterThan(0, $photo['imagesize']);
+            if (isset($photo['image_size']) && $photo['image_size'] !== null) {
+                $this->assertIsInt($photo['image_size']);
+                $this->assertGreaterThan(0, $photo['image_size']);
             }
         }
     }

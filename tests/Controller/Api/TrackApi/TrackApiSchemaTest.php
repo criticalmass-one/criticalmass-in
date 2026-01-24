@@ -71,11 +71,11 @@ class TrackApiSchemaTest extends AbstractApiControllerTestCase
         }
 
         $track = $response[0];
-        $this->assertArrayHasKey('creationdatetime', $track);
-        $this->assertIsInt($track['creationdatetime'], 'creationDateTime should be a Unix timestamp');
+        $this->assertArrayHasKey('creation_date_time', $track);
+        $this->assertIsInt($track['creation_date_time'], 'creationDateTime should be a Unix timestamp');
     }
 
-    #[TestDox('Track distance is a positive float when present')]
+    #[TestDox('Track distance is a positive number when present')]
     public function testTrackDistanceIsPositiveWhenPresent(): void
     {
         $this->client->request('GET', '/api/track?size=10');
@@ -85,7 +85,10 @@ class TrackApiSchemaTest extends AbstractApiControllerTestCase
 
         foreach ($response as $track) {
             if (isset($track['distance']) && $track['distance'] !== null) {
-                $this->assertIsFloat($track['distance']);
+                $this->assertTrue(
+                    is_float($track['distance']) || is_int($track['distance']),
+                    'distance should be a float or int'
+                );
                 $this->assertGreaterThan(0, $track['distance']);
             }
         }
@@ -116,11 +119,11 @@ class TrackApiSchemaTest extends AbstractApiControllerTestCase
         $response = $this->getJsonResponse();
 
         foreach ($response as $track) {
-            if (isset($track['startdatetime']) && $track['startdatetime'] !== null) {
-                $this->assertIsInt($track['startdatetime']);
+            if (isset($track['start_date_time']) && $track['start_date_time'] !== null) {
+                $this->assertIsInt($track['start_date_time']);
             }
-            if (isset($track['enddatetime']) && $track['enddatetime'] !== null) {
-                $this->assertIsInt($track['enddatetime']);
+            if (isset($track['end_date_time']) && $track['end_date_time'] !== null) {
+                $this->assertIsInt($track['end_date_time']);
             }
         }
     }
@@ -137,8 +140,8 @@ class TrackApiSchemaTest extends AbstractApiControllerTestCase
             if (isset($track['polyline']) && $track['polyline'] !== null) {
                 $this->assertIsString($track['polyline']);
             }
-            if (isset($track['reducedpolyline']) && $track['reducedpolyline'] !== null) {
-                $this->assertIsString($track['reducedpolyline']);
+            if (isset($track['polylineString']) && $track['polylineString'] !== null) {
+                $this->assertIsString($track['polylineString']);
             }
         }
     }

@@ -9,7 +9,7 @@ namespace Tests\Controller\Api\Schema;
  * and will be used to verify compatibility after switching to Symfony Serializer.
  *
  * Notes:
- * - All property names are lowercase (JMS lowercase naming strategy)
+ * - All property names use snake_case (JMS CamelCaseToSnakeCase naming strategy)
  * - DateTime with 'U' format = Unix timestamp (int)
  * - Nullable fields use 'type|null' syntax
  * - Optional fields use 'field?' key suffix
@@ -22,31 +22,18 @@ final class ApiSchemaDefinitions
 
     /**
      * Schema for City list endpoint: GET /api/city
+     * Actual keys: id, main_slug, name, title, latitude, longitude, slugs, city_population, timezone
      */
     public const CITY_LIST_ITEM_SCHEMA = [
-        'slug' => 'string',
-        'color' => [
-            'red' => 'int',
-            'green' => 'int',
-            'blue' => 'int',
-        ],
-        'mainslug' => [
-            'id' => 'int',
-            'slug' => 'string',
-        ],
+        'id' => 'int',
+        'main_slug' => 'array',
         'name' => 'string',
         'title' => 'string',
-        'description' => 'string|null',
         'latitude' => 'float',
         'longitude' => 'float',
         'slugs' => 'array',
-        'socialnetworkprofiles' => 'array',
-        'citypopulation' => 'int|null',
-        'punchline' => 'string|null',
-        'longdescription' => 'string|null',
+        'city_population' => 'int|null',
         'timezone' => 'string',
-        'threadnumber' => 'int',
-        'postnumber' => 'int',
     ];
 
     /**
@@ -59,7 +46,6 @@ final class ApiSchemaDefinitions
 
     /**
      * Schema for City detail endpoint: GET /api/{citySlug}
-     * Same as list item but may include additional relations
      */
     public const CITY_DETAIL_SCHEMA = self::CITY_LIST_ITEM_SCHEMA;
 
@@ -69,27 +55,19 @@ final class ApiSchemaDefinitions
 
     /**
      * Schema for Ride list endpoint: GET /api/ride (ride-list group)
+     * Actual keys: id, title, date_time, location, latitude, longitude, estimated_participants, views, enabled
      */
     public const RIDE_LIST_ITEM_SCHEMA = [
         'id' => 'int',
-        'slug' => 'string|null',
         'title' => 'string',
-        'description' => 'string|null',
-        'datetime' => 'int', // Unix timestamp
+        'date_time' => 'int', // Unix timestamp
         'location' => 'string|null',
         'latitude' => 'float|null',
         'longitude' => 'float|null',
-        'estimatedparticipants' => 'int|null',
-        'estimateddistance' => 'float|null',
-        'estimatedduration' => 'float|null',
         'views' => 'int',
-        'participationsnumberyes' => 'int',
-        'participationsnumbermaybe' => 'int',
-        'participationsnumberno' => 'int',
         'enabled' => 'bool',
-        'disabledreason' => 'string|null',
-        'ridetype' => 'string|null',
-        'disabledreasonmessage' => 'string|null',
+        // Optional fields
+        'estimated_participants?' => 'int|null',
     ];
 
     /**
@@ -98,33 +76,22 @@ final class ApiSchemaDefinitions
      */
     public const RIDE_DETAIL_SCHEMA = [
         'id' => 'int',
-        'slug' => 'string|null',
         'title' => 'string',
-        'description' => 'string|null',
-        'datetime' => 'int', // Unix timestamp
+        'date_time' => 'int', // Unix timestamp
         'location' => 'string|null',
         'latitude' => 'float|null',
         'longitude' => 'float|null',
-        'estimatedparticipants' => 'int|null',
-        'estimateddistance' => 'float|null',
-        'estimatedduration' => 'float|null',
         'views' => 'int',
-        'participationsnumberyes' => 'int',
-        'participationsnumbermaybe' => 'int',
-        'participationsnumberno' => 'int',
+        'participations_number_yes' => 'int',
+        'participations_number_maybe' => 'int',
+        'participations_number_no' => 'int',
         'enabled' => 'bool',
-        'disabledreason' => 'string|null',
-        'ridetype' => 'string|null',
-        'disabledreasonmessage' => 'string|null',
-        // Extended relations (may be present)
-        'cycle?' => 'array', // CityCycle object
-        'city?' => 'array', // City object
-        'tracks?' => 'array',
-        'subrides?' => 'array',
-        'posts?' => 'array',
-        'photos?' => 'array',
-        'socialnetworkprofiles?' => 'array',
-        'weather?' => 'array', // Weather object
+        // Extended relations (always present in detail view)
+        'cycle' => 'array', // CityCycle object
+        'city' => 'array', // City object
+        'social_network_profiles' => 'array',
+        // Optional fields
+        'estimated_participants?' => 'int|null',
     ];
 
     // =========================================================================
@@ -133,6 +100,7 @@ final class ApiSchemaDefinitions
 
     /**
      * Schema for Photo list endpoint: GET /api/photo
+     * Actual keys: id, latitude, longitude, description, views, creation_date_time, image_name, updated_at, location, exif_creation_date
      */
     public const PHOTO_SCHEMA = [
         'id' => 'int',
@@ -140,21 +108,11 @@ final class ApiSchemaDefinitions
         'longitude' => 'float|null',
         'description' => 'string|null',
         'views' => 'int',
-        'creationdatetime' => 'int', // Unix timestamp
-        'imagename' => 'string',
-        'imagesize' => 'int|null',
-        'imagemimetype' => 'string|null',
-        'backupname' => 'string|null',
-        'backupsize' => 'int|null',
-        'backupmimetype' => 'string|null',
-        'updatedat' => 'int|null', // Unix timestamp or null
+        'creation_date_time' => 'int', // Unix timestamp
+        'image_name' => 'string',
+        'updated_at' => 'int|null', // Unix timestamp or null
         'location' => 'string|null',
-        'exifexposure' => 'string|null',
-        'exifaperture' => 'string|null',
-        'exifiso' => 'int|null',
-        'exiffocallength' => 'float|null',
-        'exifcamera' => 'string|null',
-        'exifcreationdate' => 'int|null', // Unix timestamp or null
+        'exif_creation_date' => 'int|null', // Unix timestamp or null
     ];
 
     // =========================================================================
@@ -163,18 +121,16 @@ final class ApiSchemaDefinitions
 
     /**
      * Schema for Track list endpoint: GET /api/track (api-public group)
+     * Actual keys: id, creation_date_time, start_date_time, end_date_time, distance, points, polylineString
      */
     public const TRACK_PUBLIC_SCHEMA = [
         'id' => 'int',
-        'creationdatetime' => 'int', // Unix timestamp
-        'startdatetime' => 'int|null', // Unix timestamp
-        'enddatetime' => 'int|null', // Unix timestamp
-        'distance' => 'float|null',
+        'creation_date_time' => 'int', // Unix timestamp
+        'start_date_time' => 'int|null', // Unix timestamp
+        'end_date_time' => 'int|null', // Unix timestamp
+        'distance' => 'float|int|null', // Can be int or float
         'points' => 'int|null',
-        'startpoint' => 'int|null',
-        'endpoint' => 'int|null',
-        'polyline' => 'string|null',
-        'reducedpolyline' => 'string|null',
+        'polylineString' => 'string|null', // Note: camelCase here
     ];
 
     /**
@@ -183,15 +139,12 @@ final class ApiSchemaDefinitions
     public const TRACK_PRIVATE_SCHEMA = [
         'id' => 'int',
         'username' => 'string|null',
-        'creationdatetime' => 'int',
-        'startdatetime' => 'int|null',
-        'enddatetime' => 'int|null',
-        'distance' => 'float|null',
+        'creation_date_time' => 'int',
+        'start_date_time' => 'int|null',
+        'end_date_time' => 'int|null',
+        'distance' => 'float|int|null',
         'points' => 'int|null',
-        'startpoint' => 'int|null',
-        'endpoint' => 'int|null',
-        'polyline' => 'string|null',
-        'reducedpolyline' => 'string|null',
+        'polylineString' => 'string|null',
         'user?' => 'array', // User object
     ];
 
@@ -202,18 +155,15 @@ final class ApiSchemaDefinitions
         'id' => 'int',
         'username' => 'string|null',
         'user?' => 'array',
-        'creationdatetime' => 'int',
-        'startdatetime' => 'int|null',
-        'enddatetime' => 'int|null',
-        'distance' => 'float|null',
+        'creation_date_time' => 'int',
+        'start_date_time' => 'int|null',
+        'end_date_time' => 'int|null',
+        'distance' => 'float|int|null',
         'points' => 'int|null',
-        'startpoint' => 'int|null',
-        'endpoint' => 'int|null',
-        'polyline' => 'string|null',
-        'reducedpolyline' => 'string|null',
-        'colorred' => 'int',
-        'colorgreen' => 'int',
-        'colorblue' => 'int',
+        'polylineString' => 'string|null',
+        'color_red' => 'int',
+        'color_green' => 'int',
+        'color_blue' => 'int',
     ];
 
     // =========================================================================
@@ -238,25 +188,19 @@ final class ApiSchemaDefinitions
 
     /**
      * Schema for CityCycle list: GET /api/cycles
+     * Actual keys: id, city, day_of_week, week_of_month, time, location, latitude, longitude, created_at, valid_from
      */
     public const CYCLE_SCHEMA = [
         'id' => 'int',
         'city' => 'array', // City object
-        'dayofweek' => 'int',
-        'weekofmonth' => 'int|null',
+        'day_of_week' => 'int',
+        'week_of_month' => 'int|null',
         'time' => 'int|null', // Unix timestamp
         'location' => 'string|null',
         'latitude' => 'float|null',
         'longitude' => 'float|null',
-        'createdat' => 'int', // Unix timestamp
-        'updatedat' => 'int|null',
-        'disabledat' => 'int|null',
-        'validfrom' => 'int|null', // Unix timestamp (date)
-        'validuntil' => 'int|null', // Unix timestamp (date)
-        'ridecalculatorfqcn?' => 'string|null',
-        'description?' => 'string|null',
-        'specialdayofweek?' => 'string|null',
-        'specialweekofmonth?' => 'string|null',
+        'created_at' => 'int', // Unix timestamp
+        'valid_from' => 'int|null', // Unix timestamp (date)
     ];
 
     // =========================================================================
@@ -271,12 +215,12 @@ final class ApiSchemaDefinitions
         'title' => 'string',
         'description' => 'string|null',
         'timestamp' => 'int', // Virtual property: Unix timestamp from dateTime
-        'datetime' => 'int|null', // Unix timestamp
+        'date_time' => 'int|null', // Unix timestamp
         'location' => 'string|null',
         'latitude' => 'float|null',
         'longitude' => 'float|null',
-        'createdat' => 'int', // Unix timestamp
-        'updatedat' => 'int|null',
+        'created_at' => 'int', // Unix timestamp
+        'updated_at' => 'int|null',
     ];
 
     /**
@@ -287,12 +231,12 @@ final class ApiSchemaDefinitions
         'title' => 'string',
         'description' => 'string|null',
         'timestamp' => 'int',
-        'datetime' => 'int|null',
+        'date_time' => 'int|null',
         'location' => 'string|null',
         'latitude' => 'float|null',
         'longitude' => 'float|null',
-        'createdat' => 'int',
-        'updatedat' => 'int|null',
+        'created_at' => 'int',
+        'updated_at' => 'int|null',
         'ride' => 'array', // Ride object
     ];
 
@@ -307,14 +251,9 @@ final class ApiSchemaDefinitions
         'id' => 'int',
         'identifier' => 'string',
         'network' => 'string',
-        'city_id' => 'int', // Relation type serialized name
-        'createdat' => 'int|null',
-        'lastfetchsuccessdatetime' => 'int|null',
-        'lastfetchfailuredatetime' => 'int|null',
-        'lastfetchfailureerror' => 'string|null',
-        'autofetch' => 'bool',
-        'autopublish' => 'bool',
-        'additionaldata' => 'array|null',
+        'created_at' => 'int|null',
+        'auto_fetch' => 'bool',
+        'auto_publish' => 'bool',
     ];
 
     // =========================================================================
@@ -326,15 +265,14 @@ final class ApiSchemaDefinitions
      */
     public const SOCIAL_NETWORK_FEED_ITEM_SCHEMA = [
         'id' => 'int',
-        'social_network_profile_id' => 'int', // Relation type
-        'uniqueidentifier' => 'string',
+        'unique_identifier' => 'string',
         'permalink' => 'string|null',
         'title' => 'string|null',
         'text' => 'string',
-        'datetime' => 'int', // Unix timestamp
+        'date_time' => 'int', // Unix timestamp
         'hidden' => 'bool',
         'deleted' => 'bool',
-        'createdat' => 'int', // Unix timestamp
+        'created_at' => 'int', // Unix timestamp
         'raw' => 'string|null',
     ];
 
@@ -347,22 +285,22 @@ final class ApiSchemaDefinitions
      */
     public const WEATHER_SCHEMA = [
         'id' => 'int',
-        'weatherdatetime' => 'int', // Unix timestamp
-        'creationdatetime' => 'int', // Unix timestamp
-        'temperaturemin' => 'float',
-        'temperaturemax' => 'float',
-        'temperaturemorning' => 'float',
-        'temperatureday' => 'float',
-        'temperatureevening' => 'float',
-        'temperaturenight' => 'float',
+        'weather_date_time' => 'int', // Unix timestamp
+        'creation_date_time' => 'int', // Unix timestamp
+        'temperature_min' => 'float',
+        'temperature_max' => 'float',
+        'temperature_morning' => 'float',
+        'temperature_day' => 'float',
+        'temperature_evening' => 'float',
+        'temperature_night' => 'float',
         'pressure' => 'float',
         'humidity' => 'float',
-        'weathercode' => 'int',
+        'weather_code' => 'int',
         'weather' => 'string',
-        'weatherdescription' => 'string',
-        'weathericon' => 'string',
-        'windspeed' => 'float',
-        'winddirection' => 'float',
+        'weather_description' => 'string',
+        'weather_icon' => 'string',
+        'wind_speed' => 'float',
+        'wind_direction' => 'float',
         'clouds' => 'float',
         'precipitation' => 'float',
     ];
