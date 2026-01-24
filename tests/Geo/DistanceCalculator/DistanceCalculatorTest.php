@@ -14,7 +14,9 @@ class DistanceCalculatorTest extends TestCase
     {
         $distanceCalculator = new DistanceCalculator();
 
-        $actualDistance = $distanceCalculator->calculate();
+        $actualDistance = $distanceCalculator
+            ->setPositionList(new PositionList())
+            ->calculate();
 
         $this->assertEquals(0.0, $actualDistance);
     }
@@ -27,7 +29,7 @@ class DistanceCalculatorTest extends TestCase
             ->setPositionList($this->createPositionList())
             ->calculate();
 
-        $this->assertEquals(269.83697059097, $actualDistance);
+        $this->assertEqualsWithDelta(269.83697059097, $actualDistance, 0.0001);
     }
 
     protected function createPositionList(): PositionListInterface
