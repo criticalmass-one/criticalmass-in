@@ -18,7 +18,7 @@ class PolylineStrategyTest extends TestCase
             ->setStrategy(new FullPolylineStrategy())
             ->execute($this->createTestPositionList());
 
-        $this->assertEquals('oizeIaca|@?H@H@HBF@HBDBHDHBRAT?L@N?LAPAJ?N?P@P?N@R@R@R@RBV@R@TBRBV@TBV@TBTDP@TBR@TDV@P@RDRDRFNBRBT@P@P@R?V@RBP?R@N@RF\FVFTDP@R@NAJBF?LBH?JBLDJ?JCJ?FAJ@V?X@T@T@T@R?VB\?P?J@RBJ@L@LHNJDDBDHFJJDHBF?D@NCJ@J@JDHBH?HKBCDABI@MBG?KBG?I@K', $polyline);
+        $this->assertEquals('oizeIaca|@?H@H@HBF@HBDBHDHBRAT?L@N?LAPAJ?N?P@P?N@R@T@P@RBV@R@TBRBV@TBV@TBTDP@TBR@TDV@P@RDRDRFNBRBT@P@P@R?V@RBP?R@N@RF\FVFTDP@R@NAJBF?LBH?JBLDJ?JCJ?FAJ@V?X@T@T@T@R?VB\?P?J@RBJ@L@LHNJDDBDHFJJDHBF?D@NCJ@J@JDHBH?HKBCDABI@MBG?KBG?I@K', $polyline);
     }
 
     public function testPolylineGeneratorWithReducedStrategy(): void
