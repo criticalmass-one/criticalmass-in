@@ -15,7 +15,7 @@ class CycleController extends BaseController
     /**
      * Returns a list of city cycles.
      */
-    #[Route(path: '/api/cycles', name: 'caldera_criticalmass_rest_cycles_list', methods: ['GET'])]
+    #[Route(path: '/api/cycles', name: 'caldera_criticalmass_rest_cycles_list', methods: ['GET'], priority: 200)]
     #[OA\Tag(name: 'Cycles')]
     #[OA\Parameter(name: 'citySlug', in: 'query', description: 'Provide a city slug', schema: new OA\Schema(type: 'string'))]
     #[OA\Parameter(name: 'regionSlug', in: 'query', description: 'Provide a region slug', schema: new OA\Schema(type: 'string'))]

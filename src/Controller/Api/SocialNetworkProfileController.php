@@ -18,7 +18,7 @@ class SocialNetworkProfileController extends BaseController
      *
      * You can filter the results by providing optional query parameters.
      */
-    #[Route(path: '/api/socialnetwork-profiles', name: 'caldera_criticalmass_rest_socialnetwork_profiles_list', methods: ['GET'])]
+    #[Route(path: '/api/socialnetwork-profiles', name: 'caldera_criticalmass_rest_socialnetwork_profiles_list', methods: ['GET'], priority: 200)]
     #[OA\Tag(name: 'Social Network Profile')]
     #[OA\Parameter(name: 'networkIdentifier', in: 'query', description: 'Filter by social network identifier (e.g. twitter, facebook, instagram)', schema: new OA\Schema(type: 'string'))]
     #[OA\Parameter(name: 'autoFetch', in: 'query', description: 'Filter by auto-fetch setting', schema: new OA\Schema(type: 'boolean'))]
@@ -43,7 +43,7 @@ class SocialNetworkProfileController extends BaseController
     /**
      * Retrieve a list of social network profiles assigned to a city.
      */
-    #[Route(path: '/api/{citySlug}/socialnetwork-profiles', name: 'caldera_criticalmass_rest_socialnetwork_profiles_citylist', methods: ['GET'])]
+    #[Route(path: '/api/{citySlug}/socialnetwork-profiles', name: 'caldera_criticalmass_rest_socialnetwork_profiles_citylist', methods: ['GET'], priority: 190)]
     #[OA\Tag(name: 'Social Network Profile')]
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
@@ -57,7 +57,7 @@ class SocialNetworkProfileController extends BaseController
     /**
      * Update properties of a social network profile.
      */
-    #[Route(path: '/api/{citySlug}/socialnetwork-profiles/{id}', name: 'caldera_criticalmass_rest_socialnetwork_profiles_update', methods: ['POST'])]
+    #[Route(path: '/api/{citySlug}/socialnetwork-profiles/{id}', name: 'caldera_criticalmass_rest_socialnetwork_profiles_update', methods: ['POST'], priority: 190)]
     #[OA\Tag(name: 'Social Network Profile')]
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Id of the social network profile to update', required: true, schema: new OA\Schema(type: 'integer'))]
@@ -80,7 +80,7 @@ class SocialNetworkProfileController extends BaseController
     /**
      * Create a new social network profile and assign it to the provided city.
      */
-    #[Route(path: '/api/{citySlug}/socialnetwork-profiles', name: 'caldera_criticalmass_rest_socialnetwork_profiles_create', methods: ['PUT'])]
+    #[Route(path: '/api/{citySlug}/socialnetwork-profiles', name: 'caldera_criticalmass_rest_socialnetwork_profiles_create', methods: ['PUT'], priority: 190)]
     #[OA\Tag(name: 'Social Network Profile')]
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\RequestBody(description: 'JSON representation of the social network profile to create', required: true, content: new OA\JsonContent(type: 'object'))]
