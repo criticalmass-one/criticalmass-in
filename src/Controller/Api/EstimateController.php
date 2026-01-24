@@ -93,7 +93,7 @@ class EstimateController extends BaseController
      * If you like you can provide details about your app or homepage in the <code>source</code> property or just
      * default to null.
      */
-    #[Route(path: '/api/estimate', name: 'caldera_criticalmass_rest_estimate_create', methods: ['POST'])]
+    #[Route(path: '/api/estimate', name: 'caldera_criticalmass_rest_estimate_create', methods: ['POST'], priority: 200)]
     #[OA\Tag(name: 'Estimate')]
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the ride\'s city', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Parameter(name: 'rideIdentifier', in: 'path', description: 'Identifier of the ride', required: true, schema: new OA\Schema(type: 'string'))]

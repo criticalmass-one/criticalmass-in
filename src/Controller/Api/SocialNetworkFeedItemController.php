@@ -18,7 +18,7 @@ class SocialNetworkFeedItemController extends BaseController
      *
      * You can filter the results by providing optional query parameters.
      */
-    #[Route(path: '/api/{citySlug}/socialnetwork-feeditems', name: 'caldera_criticalmass_rest_socialnetwork_feeditems_citylist', methods: ['GET'])]
+    #[Route(path: '/api/{citySlug}/socialnetwork-feeditems', name: 'caldera_criticalmass_rest_socialnetwork_feeditems_citylist', methods: ['GET'], priority: 190)]
     #[OA\Tag(name: 'Social Network Feed Item')]
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Parameter(name: 'uniqueIdentifier', in: 'query', description: 'Filter by unique identifier of the feed item', schema: new OA\Schema(type: 'string'))]
@@ -37,7 +37,7 @@ class SocialNetworkFeedItemController extends BaseController
     /**
      * Update properties of a social network feed item.
      */
-    #[Route(path: '/api/{citySlug}/socialnetwork-feeditems/{feedItemId}', name: 'caldera_criticalmass_rest_socialnetwork_feeditems_update', methods: ['POST'])]
+    #[Route(path: '/api/{citySlug}/socialnetwork-feeditems/{feedItemId}', name: 'caldera_criticalmass_rest_socialnetwork_feeditems_update', methods: ['POST'], priority: 190)]
     #[OA\Tag(name: 'Social Network Feed Item')]
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Parameter(name: 'feedItemId', in: 'path', description: 'Id of the feed item to update', required: true, schema: new OA\Schema(type: 'integer'))]
@@ -57,7 +57,7 @@ class SocialNetworkFeedItemController extends BaseController
     /**
      * Create a new social network feed item and assign it to the provided profile.
      */
-    #[Route(path: '/api/{citySlug}/socialnetwork-feeditems', name: 'caldera_criticalmass_rest_socialnetwork_feeditems_create', methods: ['PUT'])]
+    #[Route(path: '/api/{citySlug}/socialnetwork-feeditems', name: 'caldera_criticalmass_rest_socialnetwork_feeditems_create', methods: ['PUT'], priority: 190)]
     #[OA\Tag(name: 'Social Network Feed Item')]
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\RequestBody(description: 'JSON representation of the feed item to create', required: true, content: new OA\JsonContent(type: 'object'))]
