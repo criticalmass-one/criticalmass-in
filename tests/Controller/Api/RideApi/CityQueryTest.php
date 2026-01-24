@@ -19,9 +19,16 @@ class CityQueryTest extends AbstractApiControllerTest
 
         $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
+        $this->assertNotEmpty($actualRideList, 'Should return Hamburg rides');
+
+        // Verify rides are in Hamburg area by coordinates (around 53.55, 10.0)
         /** @var Ride $actualRide */
         foreach ($actualRideList as $actualRide) {
-            $this->assertStringContainsString('Hamburg', $actualRide->getTitle());
+            // Hamburg coordinates: approx 53.55 N, 10.0 E
+            $this->assertGreaterThan(53.4, $actualRide->getLatitude());
+            $this->assertLessThan(53.7, $actualRide->getLatitude());
+            $this->assertGreaterThan(9.8, $actualRide->getLongitude());
+            $this->assertLessThan(10.2, $actualRide->getLongitude());
         }
     }
 
@@ -36,9 +43,16 @@ class CityQueryTest extends AbstractApiControllerTest
 
         $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
 
+        $this->assertNotEmpty($actualRideList, 'Should return Berlin rides');
+
+        // Verify rides are in Berlin area by coordinates (around 52.5, 13.4)
         /** @var Ride $actualRide */
         foreach ($actualRideList as $actualRide) {
-            $this->assertStringContainsString('Berlin', $actualRide->getTitle());
+            // Berlin coordinates: approx 52.5 N, 13.4 E
+            $this->assertGreaterThan(52.3, $actualRide->getLatitude());
+            $this->assertLessThan(52.7, $actualRide->getLatitude());
+            $this->assertGreaterThan(13.2, $actualRide->getLongitude());
+            $this->assertLessThan(13.6, $actualRide->getLongitude());
         }
     }
 

@@ -31,13 +31,16 @@ class DateTimeQueryTest extends AbstractApiControllerTest
 
     public static function apiClassProvider(): array
     {
+        // Use dates that exist in fixtures:
+        // Rides: Nov 2025 - Mar 2026 (2025-11-23, 2025-12-23, 2026-02-23, 2026-03-23)
+        // Photos: Nov-Dec 2025 (2025-11-23, 2025-12-23)
         return [
-            [Ride::class, 'dateTime', ['year' => 2050], 'Y', '2050'],
-            [Ride::class, 'dateTime', ['year' => 2016, 'month' => 2], 'Y-m', '2016-02'],
-            [Ride::class, 'dateTime', ['year' => 2015, 'month' => 6, 'day' => 1], 'Y-m-d', '2015-06-01'],
-            [Photo::class, 'exifCreationDate', ['year' => 2019], 'Y', '2019'],
-            [Photo::class, 'exifCreationDate', ['year' => 2022, 'month' => 9], 'Y-m', '2022-09'],
-            [Photo::class, 'exifCreationDate', ['year' => 2011, 'month' => 6, 'day' => 24], 'Y-m-d', '2011-06-24'],
+            [Ride::class, 'dateTime', ['year' => 2025], 'Y', '2025'],
+            [Ride::class, 'dateTime', ['year' => 2026, 'month' => 2], 'Y-m', '2026-02'],
+            [Ride::class, 'dateTime', ['year' => 2025, 'month' => 12, 'day' => 23], 'Y-m-d', '2025-12-23'],
+            [Photo::class, 'exifCreationDate', ['year' => 2025], 'Y', '2025'],
+            [Photo::class, 'exifCreationDate', ['year' => 2025, 'month' => 12], 'Y-m', '2025-12'],
+            [Photo::class, 'exifCreationDate', ['year' => 2025, 'month' => 12, 'day' => 23], 'Y-m-d', '2025-12-23'],
         ];
     }
 }

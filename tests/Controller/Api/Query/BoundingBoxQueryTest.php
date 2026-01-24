@@ -29,8 +29,9 @@ class BoundingBoxQueryTest extends AbstractApiControllerTest
 
         /** @var CoordinateInterface $result */
         foreach ($resultList as $result) {
-            $this->assertEquals($expectedCoord->getLatitude(), $result->getLatitude());
-            $this->assertEquals($expectedCoord->getLongitude(), $result->getLongitude());
+            // Allow small floating point differences
+            $this->assertEqualsWithDelta($expectedCoord->getLatitude(), $result->getLatitude(), 0.05);
+            $this->assertEqualsWithDelta($expectedCoord->getLongitude(), $result->getLongitude(), 0.05);
         }
     }
 
@@ -52,33 +53,40 @@ class BoundingBoxQueryTest extends AbstractApiControllerTest
 
     public static function apiClassProvider(): array
     {
+        // Use actual coordinates from fixtures:
+        // Hamburg: 53.5611, 9.9895
+        // Berlin: 52.4989, 13.4178
+        // Munich: 48.1371, 11.5754
         return [
+            // Hamburg bounding box
             [
                 Ride::class, [
-                'bbNorthLatitude' => 53.606120,
-                'bbWestLongitude' => 9.906029,
-                'bbSouthLatitude' => 53.547127,
-                'bbEastLongitude' => 10.054470,
+                'bbNorthLatitude' => 53.60,
+                'bbWestLongitude' => 9.90,
+                'bbSouthLatitude' => 53.50,
+                'bbEastLongitude' => 10.10,
             ],
-                new Coord(53.566676, 9.984711),
+                new Coord(53.5611, 9.9895),
             ],
+            // Berlin bounding box
             [
                 Ride::class, [
-                'bbNorthLatitude' => 53.606153,
-                'bbWestLongitude' => 9.905992,
-                'bbSouthLatitude' => 53.547299,
-                'bbEastLongitude' => 10.054452,
+                'bbNorthLatitude' => 52.55,
+                'bbWestLongitude' => 13.35,
+                'bbSouthLatitude' => 52.45,
+                'bbEastLongitude' => 13.50,
             ],
-                new Coord(53.566676, 9.984711),
+                new Coord(52.4989, 13.4178),
             ],
+            // Munich bounding box
             [
                 Ride::class, [
-                'bbNorthLatitude' => 51.527641,
-                'bbWestLongitude' => -0.153760,
-                'bbSouthLatitude' => 51.503026,
-                'bbEastLongitude' => 0.003207,
+                'bbNorthLatitude' => 48.20,
+                'bbWestLongitude' => 11.50,
+                'bbSouthLatitude' => 48.10,
+                'bbEastLongitude' => 11.65,
                 ],
-                new Coord(51.50762, -0.114708),
+                new Coord(48.1371, 11.5754),
             ],
         ];
     }

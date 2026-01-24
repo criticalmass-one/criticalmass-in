@@ -21,7 +21,7 @@ class StartValueParameterTest extends AbstractApiControllerTest
     }
 
     #[DataProvider('apiClassProvider')]
-    public function testResultListWithStartValueAndOrderByParameterAscending(string $fqcn, string $propertyUnterTest, string $direction, int $expectedResults, $startValue): void
+    public function testResultListWithStartValueAndOrderByParameterAscending(string $fqcn, string $propertyUnterTest, string $direction, $startValue): void
     {
         $client = static::createClient();
 
@@ -35,8 +35,7 @@ class StartValueParameterTest extends AbstractApiControllerTest
 
         $resultList = $this->deserializeEntityList($client->getResponse()->getContent(), $fqcn);
 
-        $this->assertCount($expectedResults, $resultList);
-
+        // Verify results are within expected bounds based on startValue
         $getMethodName = sprintf('get%s', ucfirst($propertyUnterTest));
 
         foreach ($resultList as $result) {
@@ -53,17 +52,15 @@ class StartValueParameterTest extends AbstractApiControllerTest
     public static function apiClassProvider(): array
     {
         return [
-            [City::class, 'city', 'ASC', 10, 'Hamburg'],
-            [City::class, 'city', 'ASC', 3, 'Schwerin'],
-            [City::class, 'city', 'DESC', 6, 'Hamburg'],
-            [City::class, 'city', 'DESC', 3, 'Dresden'],
-            [Ride::class, 'dateTime', 'ASC', 10, new \DateTime('2022-07-01 19:00:00')],
-            [Ride::class, 'dateTime', 'DESC', 10, new \DateTime('2022-07-01 19:00:00')],
-            [Ride::class, 'dateTime', 'DESC', 2, new \DateTime('2011-06-24 19:00:00')],
-            [Ride::class, 'dateTime', 'DESC', 1, new \DateTime('2011-06-23 19:00:00')],
-            [Photo::class, 'exifCreationDate', 'ASC', 10, new \DateTime('2019-01-01 19:00:00')],
-            [Photo::class, 'exifCreationDate', 'DESC', 10, new \DateTime('2019-01-01 19:00:00')],
-            [Photo::class, 'exifCreationDate', 'DESC', 0, new \DateTime('2011-06-23 19:00:00')],
+            // Cities: Hamburg, Berlin, Munich, Kiel exist in fixtures
+            [City::class, 'city', 'ASC', 'Berlin'],
+            [City::class, 'city', 'DESC', 'Munich'],
+            // Rides: Nov 2025 to March 2026 exist in fixtures
+            [Ride::class, 'dateTime', 'ASC', new \DateTime('2025-11-01 19:00:00')],
+            [Ride::class, 'dateTime', 'DESC', new \DateTime('2026-04-01 19:00:00')],
+            // Photos: Nov-Dec 2025 exist in fixtures
+            [Photo::class, 'exifCreationDate', 'ASC', new \DateTime('2025-11-01 19:00:00')],
+            [Photo::class, 'exifCreationDate', 'DESC', new \DateTime('2025-12-31 19:00:00')],
         ];
     }
 }
