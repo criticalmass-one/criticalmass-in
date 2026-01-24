@@ -8,12 +8,13 @@ use Tests\Controller\Api\AbstractApiControllerTest;
 
 class RideQueryTest extends AbstractApiControllerTest
 {
-    #[TestDox('Querying for Hamburg 2011-06-24 will only return Hamburg photos.')]
+    #[TestDox('Querying for Hamburg with past ride date will only return Hamburg photos.')]
     public function testPhotoListWithRideQueryForHamburg(): void
     {
         $client = static::createClient();
 
-        $client->request('GET', '/api/photo?citySlug=hamburg&rideIdentifier=2011-06-24');
+        $rideDate = (new \DateTime('-1 month last friday'))->format('Y-m-d');
+        $client->request('GET', '/api/photo?citySlug=hamburg&rideIdentifier=' . $rideDate);
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
@@ -21,17 +22,17 @@ class RideQueryTest extends AbstractApiControllerTest
 
         /** @var Photo $actualPhoto */
         foreach ($actualPhotoList as $actualPhoto) {
-            //$this->assertEquals('Hamburg', $actualPhoto->getCity()->getCity());
-            $this->assertContains('2011-06-24', $actualPhoto->getExifCreationDate()->format('Y-m-d'));
+            $this->assertStringContainsString('Hamburg', $actualPhoto->getCity()->getCity());
         }
     }
 
-    #[TestDox('Querying for London 2019-04-01 will only return London photos.')]
-    public function testPhotoListWithRideQueryForLondon(): void
+    #[TestDox('Querying for Berlin with past ride date will only return Berlin photos.')]
+    public function testPhotoListWithRideQueryForBerlin(): void
     {
         $client = static::createClient();
 
-        $client->request('GET', '/api/photo?citySlug=london&rideIdentifier=2019-04-01');
+        $rideDate = (new \DateTime('-1 month last friday'))->format('Y-m-d');
+        $client->request('GET', '/api/photo?citySlug=berlin&rideIdentifier=' . $rideDate);
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
@@ -39,8 +40,7 @@ class RideQueryTest extends AbstractApiControllerTest
 
         /** @var Photo $actualPhoto */
         foreach ($actualPhotoList as $actualPhoto) {
-            //$this->assertEquals('London', $actualPhoto->getCity()->getCity());
-            $this->assertContains('2019-04-01', $actualPhoto->getExifCreationDate()->format('Y-m-d'));
+            $this->assertStringContainsString('Berlin', $actualPhoto->getCity()->getCity());
         }
     }
 

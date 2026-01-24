@@ -21,17 +21,16 @@ class CityQueryTest extends AbstractApiControllerTest
 
         /** @var Ride $actualRide */
         foreach ($actualRideList as $actualRide) {
-            //$this->assertEquals('Hamburg', $actualRide->getCity()->getCity());
-            $this->assertContains('Hamburg', $actualRide->getTitle());
+            $this->assertStringContainsString('Hamburg', $actualRide->getTitle());
         }
     }
 
-    #[TestDox('Querying for London will only return London rides.')]
-    public function testRideListWithCityQueryForLondon(): void
+    #[TestDox('Querying for Berlin will only return Berlin rides.')]
+    public function testRideListWithCityQueryForBerlin(): void
     {
         $client = static::createClient();
 
-        $client->request('GET', '/api/ride?citySlug=london');
+        $client->request('GET', '/api/ride?citySlug=berlin');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
@@ -39,8 +38,7 @@ class CityQueryTest extends AbstractApiControllerTest
 
         /** @var Ride $actualRide */
         foreach ($actualRideList as $actualRide) {
-            //$this->assertEquals('London', $actualRide->getCity()->getCity());
-            $this->assertContains('London', $actualRide->getTitle());
+            $this->assertStringContainsString('Berlin', $actualRide->getTitle());
         }
     }
 

@@ -21,17 +21,16 @@ class CityQueryTest extends AbstractApiControllerTest
 
         /** @var Photo $actualPhoto */
         foreach ($actualPhotoList as $actualPhoto) {
-            //$this->assertEquals('Hamburg', $actualPhoto->getCity()->getCity());
-            $this->assertContains('Hamburg', $actualPhoto->getCity()->getCity());
+            $this->assertStringContainsString('Hamburg', $actualPhoto->getCity()->getCity());
         }
     }
 
-    #[TestDox('Querying for London will only return London photos.')]
-    public function testPhotoListWithCityQueryForLondon(): void
+    #[TestDox('Querying for Berlin will only return Berlin photos.')]
+    public function testPhotoListWithCityQueryForBerlin(): void
     {
         $client = static::createClient();
 
-        $client->request('GET', '/api/photo?citySlug=london');
+        $client->request('GET', '/api/photo?citySlug=berlin');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
@@ -39,8 +38,7 @@ class CityQueryTest extends AbstractApiControllerTest
 
         /** @var Photo $actualPhoto */
         foreach ($actualPhotoList as $actualPhoto) {
-            //$this->assertEquals('London', $actualPhoto->getCity()->getCity());
-            $this->assertContains('London', $actualPhoto->getCity()->getCity());
+            $this->assertStringContainsString('Berlin', $actualPhoto->getCity()->getCity());
         }
     }
 
