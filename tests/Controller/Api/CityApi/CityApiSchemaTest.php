@@ -2,8 +2,8 @@
 
 namespace Tests\Controller\Api\CityApi;
 
-use App\Tests\Controller\Api\Schema\ApiSchemaDefinitions;
-use App\Tests\Controller\Api\Schema\JsonStructureValidator;
+use Tests\Controller\Api\Schema\ApiSchemaDefinitions;
+use Tests\Controller\Api\Schema\JsonStructureValidator;
 use PHPUnit\Framework\Attributes\TestDox;
 use Tests\Controller\Api\AbstractApiControllerTestCase;
 

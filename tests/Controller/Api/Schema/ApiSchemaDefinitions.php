@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Tests\Controller\Api\Schema;
+namespace Tests\Controller\Api\Schema;
 
 /**
  * Central definitions of expected API response schemas.
