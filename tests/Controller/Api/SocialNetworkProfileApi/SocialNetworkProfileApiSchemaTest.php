@@ -114,7 +114,7 @@ class SocialNetworkProfileApiSchemaTest extends AbstractApiControllerTestCase
         }
     }
 
-    #[TestDox('Profile timestamps are Unix timestamps when present')]
+    #[TestDox('Profile timestamps are date-time strings when present')]
     public function testProfileTimestampsAreValidWhenPresent(): void
     {
         $this->client->request('GET', '/api/socialnetwork-profiles');
@@ -124,13 +124,16 @@ class SocialNetworkProfileApiSchemaTest extends AbstractApiControllerTestCase
 
         foreach ($response as $profile) {
             if (isset($profile['created_at']) && $profile['created_at'] !== null) {
-                $this->assertIsInt($profile['created_at']);
+                $this->assertIsString($profile['created_at']);
+                $this->assertNotFalse(strtotime($profile['created_at']), 'created_at should be a valid date-time');
             }
             if (isset($profile['last_fetch_success_date_time']) && $profile['last_fetch_success_date_time'] !== null) {
-                $this->assertIsInt($profile['last_fetch_success_date_time']);
+                $this->assertIsString($profile['last_fetch_success_date_time']);
+                $this->assertNotFalse(strtotime($profile['last_fetch_success_date_time']), 'last_fetch_success_date_time should be a valid date-time');
             }
             if (isset($profile['last_fetch_failure_date_time']) && $profile['last_fetch_failure_date_time'] !== null) {
-                $this->assertIsInt($profile['last_fetch_failure_date_time']);
+                $this->assertIsString($profile['last_fetch_failure_date_time']);
+                $this->assertNotFalse(strtotime($profile['last_fetch_failure_date_time']), 'last_fetch_failure_date_time should be a valid date-time');
             }
         }
     }

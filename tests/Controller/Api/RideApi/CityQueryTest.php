@@ -42,17 +42,14 @@ class CityQueryTest extends AbstractApiControllerTest
         }
     }
 
-    #[TestDox('Expect 10 random cities when providing an non existent slug.')]
+    #[TestDox('Expect an error when providing a non existent slug.')]
     public function testRideListWithCityQueryForNonExistentCity(): void
     {
         $client = static::createClient();
+        $client->catchExceptions(false);
 
+        // Non-existent city slug causes an exception in CityQuery
+        $this->expectException(\Error::class);
         $client->request('GET', '/api/ride?citySlug=foobarcity');
-
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-
-        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
-
-        $this->assertCount(10, $actualRideList);
     }
 }

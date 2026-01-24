@@ -58,8 +58,8 @@ class TrackApiSchemaTest extends AbstractApiControllerTestCase
         );
     }
 
-    #[TestDox('Track creationDateTime is a Unix timestamp')]
-    public function testTrackCreationDateTimeIsUnixTimestamp(): void
+    #[TestDox('Track creationDateTime is an ISO 8601 date-time string')]
+    public function testTrackCreationDateTimeIsDateTimeString(): void
     {
         $this->client->request('GET', '/api/track?size=1');
         $this->assertResponseIsSuccessful();
@@ -72,7 +72,8 @@ class TrackApiSchemaTest extends AbstractApiControllerTestCase
 
         $track = $response[0];
         $this->assertArrayHasKey('creation_date_time', $track);
-        $this->assertIsInt($track['creation_date_time'], 'creationDateTime should be a Unix timestamp');
+        $this->assertIsString($track['creation_date_time'], 'creationDateTime should be an ISO 8601 date-time string');
+        $this->assertNotFalse(strtotime($track['creation_date_time']), 'creationDateTime should be a valid date-time');
     }
 
     #[TestDox('Track distance is a positive number when present')]
@@ -110,8 +111,8 @@ class TrackApiSchemaTest extends AbstractApiControllerTestCase
         }
     }
 
-    #[TestDox('Track startDateTime and endDateTime are timestamps when present')]
-    public function testTrackDateTimesAreTimestamps(): void
+    #[TestDox('Track startDateTime and endDateTime are date-time strings when present')]
+    public function testTrackDateTimesAreDateTimeStrings(): void
     {
         $this->client->request('GET', '/api/track?size=10');
         $this->assertResponseIsSuccessful();
@@ -120,10 +121,12 @@ class TrackApiSchemaTest extends AbstractApiControllerTestCase
 
         foreach ($response as $track) {
             if (isset($track['start_date_time']) && $track['start_date_time'] !== null) {
-                $this->assertIsInt($track['start_date_time']);
+                $this->assertIsString($track['start_date_time']);
+                $this->assertNotFalse(strtotime($track['start_date_time']), 'start_date_time should be a valid date-time');
             }
             if (isset($track['end_date_time']) && $track['end_date_time'] !== null) {
-                $this->assertIsInt($track['end_date_time']);
+                $this->assertIsString($track['end_date_time']);
+                $this->assertNotFalse(strtotime($track['end_date_time']), 'end_date_time should be a valid date-time');
             }
         }
     }

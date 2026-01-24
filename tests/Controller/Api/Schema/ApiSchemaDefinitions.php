@@ -60,7 +60,7 @@ final class ApiSchemaDefinitions
     public const RIDE_LIST_ITEM_SCHEMA = [
         'id' => 'int',
         'title' => 'string',
-        'date_time' => 'int', // Unix timestamp
+        'date_time' => 'int', // Unix timestamp (Ride uses DateTime<'U'>)
         'location' => 'string|null',
         'latitude' => 'float|null',
         'longitude' => 'float|null',
@@ -77,7 +77,7 @@ final class ApiSchemaDefinitions
     public const RIDE_DETAIL_SCHEMA = [
         'id' => 'int',
         'title' => 'string',
-        'date_time' => 'int', // Unix timestamp
+        'date_time' => 'int', // Unix timestamp (Ride uses DateTime<'U'>)
         'location' => 'string|null',
         'latitude' => 'float|null',
         'longitude' => 'float|null',
@@ -108,11 +108,11 @@ final class ApiSchemaDefinitions
         'longitude' => 'float|null',
         'description' => 'string|null',
         'views' => 'int',
-        'creation_date_time' => 'int', // Unix timestamp
+        'creation_date_time' => 'string', // ISO 8601 date-time string
         'image_name' => 'string',
-        'updated_at' => 'int|null', // Unix timestamp or null
+        'updated_at' => 'string|null', // ISO 8601 date-time string or null
         'location' => 'string|null',
-        'exif_creation_date' => 'int|null', // Unix timestamp or null
+        'exif_creation_date' => 'string|null', // ISO 8601 date-time string or null
     ];
 
     // =========================================================================
@@ -125,9 +125,9 @@ final class ApiSchemaDefinitions
      */
     public const TRACK_PUBLIC_SCHEMA = [
         'id' => 'int',
-        'creation_date_time' => 'int', // Unix timestamp
-        'start_date_time' => 'int|null', // Unix timestamp
-        'end_date_time' => 'int|null', // Unix timestamp
+        'creation_date_time' => 'string', // ISO 8601 date-time string
+        'start_date_time' => 'string|null', // ISO 8601 date-time string
+        'end_date_time' => 'string|null', // ISO 8601 date-time string
         'distance' => 'float|int|null', // Can be int or float
         'points' => 'int|null',
         'polylineString' => 'string|null', // Note: camelCase here
@@ -139,9 +139,9 @@ final class ApiSchemaDefinitions
     public const TRACK_PRIVATE_SCHEMA = [
         'id' => 'int',
         'username' => 'string|null',
-        'creation_date_time' => 'int',
-        'start_date_time' => 'int|null',
-        'end_date_time' => 'int|null',
+        'creation_date_time' => 'string', // ISO 8601 date-time string
+        'start_date_time' => 'string|null',
+        'end_date_time' => 'string|null',
         'distance' => 'float|int|null',
         'points' => 'int|null',
         'polylineString' => 'string|null',
@@ -155,9 +155,9 @@ final class ApiSchemaDefinitions
         'id' => 'int',
         'username' => 'string|null',
         'user?' => 'array',
-        'creation_date_time' => 'int',
-        'start_date_time' => 'int|null',
-        'end_date_time' => 'int|null',
+        'creation_date_time' => 'string', // ISO 8601 date-time string
+        'start_date_time' => 'string|null',
+        'end_date_time' => 'string|null',
         'distance' => 'float|int|null',
         'points' => 'int|null',
         'polylineString' => 'string|null',
@@ -195,12 +195,12 @@ final class ApiSchemaDefinitions
         'city' => 'array', // City object
         'day_of_week' => 'int',
         'week_of_month' => 'int|null',
-        'time' => 'int|null', // Unix timestamp
+        'time' => 'string|null', // ISO 8601 date-time string
         'location' => 'string|null',
         'latitude' => 'float|null',
         'longitude' => 'float|null',
-        'created_at' => 'int', // Unix timestamp
-        'valid_from' => 'int|null', // Unix timestamp (date)
+        'created_at' => 'string', // ISO 8601 date-time string
+        'valid_from' => 'string|null', // ISO 8601 date-time string
     ];
 
     // =========================================================================
@@ -215,12 +215,12 @@ final class ApiSchemaDefinitions
         'title' => 'string',
         'description' => 'string|null',
         'timestamp' => 'int', // Virtual property: Unix timestamp from dateTime
-        'date_time' => 'int|null', // Unix timestamp
+        'date_time' => 'string|null', // ISO 8601 date-time string
         'location' => 'string|null',
         'latitude' => 'float|null',
         'longitude' => 'float|null',
-        'created_at' => 'int', // Unix timestamp
-        'updated_at' => 'int|null',
+        'created_at' => 'string', // ISO 8601 date-time string
+        'updated_at' => 'string|null',
     ];
 
     /**
@@ -231,12 +231,12 @@ final class ApiSchemaDefinitions
         'title' => 'string',
         'description' => 'string|null',
         'timestamp' => 'int',
-        'date_time' => 'int|null',
+        'date_time' => 'string|null', // ISO 8601 date-time string
         'location' => 'string|null',
         'latitude' => 'float|null',
         'longitude' => 'float|null',
-        'created_at' => 'int',
-        'updated_at' => 'int|null',
+        'created_at' => 'string', // ISO 8601 date-time string
+        'updated_at' => 'string|null',
         'ride' => 'array', // Ride object
     ];
 
@@ -251,7 +251,7 @@ final class ApiSchemaDefinitions
         'id' => 'int',
         'identifier' => 'string',
         'network' => 'string',
-        'created_at' => 'int|null',
+        'created_at' => 'string|null', // ISO 8601 date-time string
         'auto_fetch' => 'bool',
         'auto_publish' => 'bool',
     ];
@@ -269,10 +269,10 @@ final class ApiSchemaDefinitions
         'permalink' => 'string|null',
         'title' => 'string|null',
         'text' => 'string',
-        'date_time' => 'int', // Unix timestamp
+        'date_time' => 'string', // ISO 8601 date-time string
         'hidden' => 'bool',
         'deleted' => 'bool',
-        'created_at' => 'int', // Unix timestamp
+        'created_at' => 'string', // ISO 8601 date-time string
         'raw' => 'string|null',
     ];
 
@@ -285,8 +285,8 @@ final class ApiSchemaDefinitions
      */
     public const WEATHER_SCHEMA = [
         'id' => 'int',
-        'weather_date_time' => 'int', // Unix timestamp
-        'creation_date_time' => 'int', // Unix timestamp
+        'weather_date_time' => 'string', // ISO 8601 date-time string
+        'creation_date_time' => 'string', // ISO 8601 date-time string
         'temperature_min' => 'float',
         'temperature_max' => 'float',
         'temperature_morning' => 'float',

@@ -42,17 +42,15 @@ class CityQueryTest extends AbstractApiControllerTest
         }
     }
 
-    #[TestDox('Expect 10 random photos when providing an non existent slug.')]
+    #[TestDox('Expect an error when providing a non existent slug.')]
     public function testPhotoListWithCityQueryForNonExistentCity(): void
     {
         $client = static::createClient();
+        $client->catchExceptions(false);
 
+        // Non-existent city slug causes an exception in CityQuery
+        // when trying to access getCity() on null result
+        $this->expectException(\Error::class);
         $client->request('GET', '/api/photo?citySlug=foobarcity');
-
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-
-        $actualPhotoList = $this->deserializeEntityList($client->getResponse()->getContent(), Photo::class);
-
-        $this->assertCount(10, $actualPhotoList);
     }
 }

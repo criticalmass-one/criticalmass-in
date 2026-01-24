@@ -76,11 +76,11 @@ class CityApiSchemaTest extends AbstractApiControllerTestCase
 
         $response = $this->getJsonResponse();
 
-        $this->assertArrayHasKey('mainslug', $response);
+        $this->assertArrayHasKey('main_slug', $response);
         JsonStructureValidator::assertMatchesSchema(
             ApiSchemaDefinitions::CITY_SLUG_SCHEMA,
-            $response['mainslug'],
-            'mainslug'
+            $response['main_slug'],
+            'main_slug'
         );
     }
 
@@ -137,8 +137,8 @@ class CityApiSchemaTest extends AbstractApiControllerTestCase
 
         $response = $this->getJsonResponse();
 
-        $this->assertArrayHasKey('socialnetworkprofiles', $response);
-        $this->assertIsArray($response['socialnetworkprofiles']);
+        $this->assertArrayHasKey('social_network_profiles', $response);
+        $this->assertIsArray($response['social_network_profiles']);
     }
 
     #[TestDox('City timezone is a valid timezone string')]
