@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace Tests\Api;
+namespace Tests\Controller\Api\CityApi;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class CityApiTest extends WebTestCase
+class CityApiQueryTest extends WebTestCase
 {
     public function testFindByName(): void
     {
@@ -283,4 +283,3 @@ class CityApiTest extends WebTestCase
         ];
     }
 }
-

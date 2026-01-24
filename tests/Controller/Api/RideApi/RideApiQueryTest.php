@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace Tests\Api;
+namespace Tests\Controller\Api\RideApi;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class RideApiTest extends WebTestCase
+class RideApiQueryTest extends WebTestCase
 {
     public function testDefaultListLength(): void
     {
