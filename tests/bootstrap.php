@@ -10,13 +10,8 @@ if (file_exists(dirname(__DIR__).'/config/bootstrap.php')) {
     (new Dotenv())->bootEnv(dirname(__DIR__).'/.env');
 }
 
-// Load fixtures once before all tests run
-// This ensures data is in the database before any test starts
-if ($_SERVER['APP_ENV'] === 'test' && !isset($_SERVER['SKIP_FIXTURES'])) {
-    // Use custom script that handles foreign key constraints properly
-    passthru('php ' . __DIR__ . '/load_fixtures.php 2>&1', $returnCode);
-
-    if ($returnCode !== 0) {
-        echo "Warning: Failed to load fixtures. API tests may fail.\n";
-    }
-}
+// Note: Fixtures should be loaded manually before running tests if needed:
+// php bin/console doctrine:database:drop --env=test --force
+// php bin/console doctrine:database:create --env=test
+// php bin/console doctrine:schema:create --env=test
+// php bin/console doctrine:fixtures:load --env=test --no-interaction
