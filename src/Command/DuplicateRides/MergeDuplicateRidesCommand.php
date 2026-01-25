@@ -6,7 +6,8 @@ use App\Criticalmass\RideDuplicates\DuplicateFinder\DuplicateFinderInterface;
 use App\Criticalmass\RideDuplicates\RideMerger\RideMergerInterface;
 use App\Entity\City;
 use App\Entity\Ride;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
@@ -15,28 +16,20 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
 
+#[AsCommand(
+    name: 'criticalmass:ride-duplicates:merge',
+    description: 'Merge duplicate rides',
+)]
 class MergeDuplicateRidesCommand extends ListDuplicateRidesCommand
 {
-    /** @var RideMergerInterface $rideMerger */
-    protected $rideMerger;
-
-    public function __construct($name = null, RegistryInterface $registry, DuplicateFinderInterface $duplicateFinder, RideMergerInterface $rideMerger)
+    public function __construct(protected ManagerRegistry $registry, protected DuplicateFinderInterface $duplicateFinder, protected RideMergerInterface $rideMerger)
     {
-        $this->rideMerger = $rideMerger;
-
-        parent::__construct($name, $registry, $duplicateFinder);
+         parent::__construct($registry, $duplicateFinder);
     }
 
     protected function configure(): void
     {
-        $this
-            ->setName('criticalmass:ride-duplicates:merge')
-            ->setDescription('Merge duplicate rides')
-            ->addArgument(
-                'citySlug',
-                InputArgument::OPTIONAL,
-                'City slug'
-            );
+        $this->addArgument('citySlug',InputArgument::OPTIONAL,'City slug');
     }
 
     protected function handleDuplicates(InputInterface $input, OutputInterface $output, array $duplicateRides): void

@@ -1,0 +1,154 @@
+<?php declare(strict_types=1);
+
+namespace App\Controller\CityCycle;
+
+use App\Controller\AbstractController;
+use App\Criticalmass\Router\ObjectRouterInterface;
+use App\Entity\City;
+use App\Entity\CityCycle;
+use App\Form\Type\CityCycleType;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+
+class CityCycleManagementController extends AbstractController
+{
+    #[IsGranted('ROLE_USER')]
+    #[Route('/{citySlug}/cycles/add', name: 'caldera_criticalmass_citycycle_add', priority: 80)]
+    public function addAction(Request $request, City $city, ObjectRouterInterface $objectRouter, ?UserInterface $user = null): Response
+    {
+        $cityCycle = new CityCycle();
+        $cityCycle
+            ->setCity($city)
+            ->setUser($user);
+
+        $form = $this->createForm(CityCycleType::class, $cityCycle, [
+            'action' => $objectRouter->generate($city, 'caldera_criticalmass_citycycle_add'),
+        ]);
+
+        if (Request::METHOD_POST === $request->getMethod()) {
+            return $this->addPostAction($request, $cityCycle, $form, $objectRouter);
+        } else {
+            return $this->addGetAction($request, $cityCycle, $form, $objectRouter);
+        }
+    }
+
+    protected function addGetAction(Request $request, CityCycle $cityCycle, FormInterface $form, ObjectRouterInterface $objectRouter): Response
+    {
+        return $this->render('CityCycle/edit.html.twig', [
+            'city' => $cityCycle->getCity(),
+            'cityCycle' => $cityCycle,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    protected function addPostAction(Request $request, CityCycle $cityCycle, FormInterface $form, ObjectRouterInterface $objectRouter): Response
+    {
+        $city = $cityCycle->getCity();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->managerRegistry->getManager();
+            $em->persist($cityCycle);
+            $em->flush();
+
+            $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
+
+            return $this->redirect($objectRouter->generate($city, 'caldera_criticalmass_citycycle_list'));
+        }
+
+        return $this->render('CityCycle/edit.html.twig', [
+            'city' => $city,
+            'cityCycle' => $cityCycle,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[IsGranted('ROLE_USER')]
+    #[Route('/{citySlug}/cycles/{id}/edit', name: 'caldera_criticalmass_citycycle_edit', priority: 80)]
+    public function editAction(
+        Request $request,
+        CityCycle $cityCycle,
+        ObjectRouterInterface $objectRouter,
+        ?UserInterface $user = null
+    ): Response {
+        $cityCycle->setUser($user);
+
+        $form = $this->createForm(CityCycleType::class, $cityCycle, [
+            'action' => $objectRouter->generate($cityCycle, 'caldera_criticalmass_citycycle_edit'),
+        ]);
+
+        if (Request::METHOD_POST == $request->getMethod()) {
+            return $this->editPostAction($request, $cityCycle, $form, $objectRouter, $user);
+        } else {
+            return $this->editGetAction($request, $cityCycle, $form, $objectRouter, $user);
+        }
+    }
+
+    protected function editGetAction(Request $request, CityCycle $cityCycle, FormInterface $form, ObjectRouterInterface $objectRouter, ?UserInterface $user = null): Response
+    {
+        return $this->render('CityCycle/edit.html.twig', [
+            'city' => $cityCycle->getCity(),
+            'cityCycle' => $cityCycle,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    protected function editPostAction(Request $request, CityCycle $cityCycle, FormInterface $form, ObjectRouterInterface $objectRouter, ?UserInterface $user = null): Response
+    {
+        $city = $cityCycle->getCity();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->managerRegistry->getManager();
+            $em->persist($cityCycle);
+            $em->flush();
+
+            $form = $this->createForm(CityCycleType::class, $cityCycle, [
+                'action' => $objectRouter->generate($cityCycle, 'caldera_criticalmass_citycycle_edit'),
+            ]);
+
+            $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
+        }
+
+        return $this->render('CityCycle/edit.html.twig', [
+            'city' => $city,
+            'cityCycle' => $cityCycle,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[IsGranted('ROLE_USER')]
+    #[Route('/{citySlug}/cycles/{id}/disable', name: 'caldera_criticalmass_citycycle_disable', priority: 80)]
+    public function disableAction(
+        CityCycle $cityCycle,
+        ManagerRegistry $managerRegistry,
+        ObjectRouterInterface $objectRouter
+    ): Response {
+        $manager = $managerRegistry->getManager();
+
+        if ($cityCycle->getRides()->count() > 0) {
+            if (!$cityCycle->getValidFrom()) {
+                $cityCycle->setValidFrom($cityCycle->getCreatedAt());
+            }
+
+            if (!$cityCycle->getValidUntil()) {
+                $cityCycle->setValidUntil(new \DateTime());
+            }
+
+            $cityCycle->setDisabledAt(new \DateTime());
+        } elseif (0 === $cityCycle->getRides()->count()) {
+            $manager->remove($cityCycle);
+        }
+
+        $manager->flush();
+
+        return $this->redirect($objectRouter->generate($cityCycle->getCity(), 'caldera_criticalmass_citycycle_list'));
+    }
+}

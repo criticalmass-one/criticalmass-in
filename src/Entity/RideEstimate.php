@@ -5,73 +5,59 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\RideEstimateRepository")
- * @ORM\Table(name="ride_estimate")
- */
+#[ORM\Table(name: 'ride_estimate')]
+#[ORM\Entity(repositoryClass: 'App\Repository\RideEstimateRepository')]
+#[ORM\Index(fields: ['dateTime'], name: 'ride_estimate_date_time_index')]
 class RideEstimate
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    protected ?int $id = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="estimates", fetch="LAZY")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
-    protected $user;
+    #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'estimates', fetch: 'LAZY')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    protected ?User $user = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="estimates", fetch="LAZY")
-     * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
-     */
-    protected $ride;
+    #[ORM\ManyToOne(targetEntity: 'Ride', inversedBy: 'estimates', fetch: 'LAZY')]
+    #[ORM\JoinColumn(name: 'ride_id', referencedColumnName: 'id')]
+    protected ?Ride $ride = null;
 
-    /**
-     * @ORM\OneToOne(targetEntity="Track", mappedBy="rideEstimate", cascade={"persist"}, fetch="LAZY")
-     * @ORM\JoinColumn(name="track_id", referencedColumnName="id")
-     */
-    protected $track;
+    #[ORM\OneToOne(targetEntity: 'Track', mappedBy: 'rideEstimate', cascade: ['persist'], fetch: 'LAZY')]
+    #[ORM\JoinColumn(name: 'track_id', referencedColumnName: 'id')]
+    protected ?Track $track = null;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    protected $latitude;
+    #[ORM\Column(type: 'float', nullable: true)]
+    protected ?float $latitude = null;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    protected $longitude;
+    #[ORM\Column(type: 'float', nullable: true)]
+    protected ?float $longitude = null;
 
-    /**
-     * @ORM\Column(type="smallint", nullable=true)
-     * @Assert\Regex("/^([0-9]{1,6})$/")
-     */
-    protected $estimatedParticipants;
+    #[Assert\Regex('/^([0-9]{1,6})$/')]
+    #[ORM\Column(type: 'smallint', nullable: true)]
+    protected ?int $estimatedParticipants = null;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     * @Assert\Regex("/^([0-9]{1,2})([\.,]*)([0-9]{0,5})$/")
-     */
-    protected $estimatedDistance;
+    #[Assert\Regex('/^([0-9]{1,2})([\.,]*)([0-9]{0,5})$/')]
+    #[ORM\Column(type: 'float', nullable: true)]
+    protected ?float $estimatedDistance = null;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     * @Assert\Regex("/^([0-9]{1,2})([\.,]*)([0-9]{0,4})$/")
-     */
-    protected $estimatedDuration;
+    #[Assert\Regex('/^([0-9]{1,2})([\.,]*)([0-9]{0,4})$/')]
+    #[ORM\Column(type: 'float', nullable: true)]
+    protected ?float $estimatedDuration = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $dateTime;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected \DateTime $dateTime;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected \DateTime $createdAt;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    protected ?string $source = null;
 
     public function __construct()
     {
         $this->dateTime = new \DateTime();
+        $this->createdAt = new \DateTime();
     }
 
     public function getId(): ?int
@@ -84,7 +70,7 @@ class RideEstimate
         return $this->estimatedParticipants;
     }
 
-    public function setEstimatedParticipants(int $estimatedParticipants = null): RideEstimate
+    public function setEstimatedParticipants(?int $estimatedParticipants = null): RideEstimate
     {
         $this->estimatedParticipants = $estimatedParticipants;
 
@@ -96,7 +82,7 @@ class RideEstimate
         return $this->estimatedDistance;
     }
 
-    public function setEstimatedDistance(float $estimatedDistance = null): RideEstimate
+    public function setEstimatedDistance(?float $estimatedDistance = null): RideEstimate
     {
         $this->estimatedDistance = $estimatedDistance;
 
@@ -108,7 +94,7 @@ class RideEstimate
         return $this->estimatedDuration;
     }
 
-    public function setEstimatedDuration(float $estimatedDuration = null): RideEstimate
+    public function setEstimatedDuration(?float $estimatedDuration = null): RideEstimate
     {
         $this->estimatedDuration = $estimatedDuration;
 
@@ -132,7 +118,7 @@ class RideEstimate
         return $this->user;
     }
 
-    public function setUser(User $user = null): RideEstimate
+    public function setUser(?User $user = null): RideEstimate
     {
         $this->user = $user;
 
@@ -144,7 +130,7 @@ class RideEstimate
         return $this->ride;
     }
 
-    public function setRide(Ride $ride = null): RideEstimate
+    public function setRide(?Ride $ride = null): RideEstimate
     {
         $this->ride = $ride;
 
@@ -156,14 +142,14 @@ class RideEstimate
         return $this->track;
     }
 
-    public function setTrack(Track $track = null): RideEstimate
+    public function setTrack(?Track $track = null): RideEstimate
     {
         $this->track = $track;
 
         return $this;
     }
 
-    public function setLatitude(float $latitude = null): RideEstimate
+    public function setLatitude(?float $latitude = null): RideEstimate
     {
         $this->latitude = $latitude;
 
@@ -175,7 +161,7 @@ class RideEstimate
         return $this->latitude;
     }
 
-    public function setLongitude(float $longitude = null): RideEstimate
+    public function setLongitude(?float $longitude = null): RideEstimate
     {
         $this->longitude = $longitude;
 
@@ -185,5 +171,29 @@ class RideEstimate
     public function getLongitude(): ?float
     {
         return $this->longitude;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTime $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getSource(): ?string
+    {
+        return $this->source;
+    }
+
+    public function setSource(?string $source): self
+    {
+        $this->source = $source;
+
+        return $this;
     }
 }

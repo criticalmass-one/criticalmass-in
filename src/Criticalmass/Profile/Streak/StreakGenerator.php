@@ -4,20 +4,20 @@ namespace App\Criticalmass\Profile\Streak;
 
 use App\Entity\Participation;
 use App\Entity\User;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 class StreakGenerator implements StreakGeneratorInterface
 {
     /** @var User $user */
     protected $user;
 
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var StreakCalculator $calculator */
     protected $calculator;
 
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         $this->registry = $registry;
 
@@ -45,7 +45,7 @@ class StreakGenerator implements StreakGeneratorInterface
         return $this;
     }
 
-    public function calculateCurrentStreak(\DateTime $currentDateTime = null, bool $includeCurrentMonth = false): ?Streak
+    public function calculateCurrentStreak(?\DateTime $currentDateTime = null, bool $includeCurrentMonth = false): ?Streak
     {
         $this->loadParticipations();
 

@@ -6,17 +6,17 @@ use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewEntity;
 use App\Criticalmass\ViewStorage\ViewModel\View;
 use App\Entity\User;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 class ViewEntityFactory implements ViewEntityFactoryInterface
 {
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var string $entityNamespace */
     protected $entityNamespace = 'App\\Entity\\';
 
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         $this->registry = $registry;
     }
@@ -50,7 +50,7 @@ class ViewEntityFactory implements ViewEntityFactoryInterface
         return new $viewClassName;
     }
 
-    protected function getUser(int $userId = null): ?User
+    protected function getUser(?int $userId = null): ?User
     {
         if (!$userId) {
             return null;

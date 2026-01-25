@@ -4,7 +4,8 @@ namespace App\Command;
 
 use App\Criticalmass\UploadableDataHandler\UploadableDataHandlerInterface;
 use Doctrine\Common\Collections\Criteria;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
@@ -12,34 +13,28 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'criticalmass:calculate-uploadable-meta',
+    description: 'Calculate meta for uploadable entities',
+)]
 class CalculateUploadableEntityDataCommand extends Command
 {
-    /** @var RegistryInterface $registry */
-    protected $registry;
-
-    /** @var UploadableDataHandlerInterface $uploadableDataHandler */
-    protected $uploadableDataHandler;
-
-    public function __construct(RegistryInterface $registry, UploadableDataHandlerInterface $uploadableDataHandler)
+    public function __construct(protected ManagerRegistry $registry, protected UploadableDataHandlerInterface $uploadableDataHandler)
     {
-        $this->registry = $registry;
-        $this->uploadableDataHandler = $uploadableDataHandler;
-
         parent::__construct();
     }
 
     protected function configure(): void
     {
         $this
-            ->setName('criticalmass:calculate-uploadable-meta')
-            ->setDescription('Calculate meta for uploadable entities')
             ->addOption('limit', 'l', InputOption::VALUE_REQUIRED, 'Number of photos to process at once')
             ->addOption('offset', 'o', InputOption::VALUE_REQUIRED, 'Offset to start processing')
             ->addOption('overwrite', 'ow', InputOption::VALUE_NONE, 'Overwrite existing values')
-            ->addArgument('entityClassname', InputArgument::REQUIRED, 'Classname of entity');
+            ->addArgument('entityClassname', InputArgument::REQUIRED, 'Classname of entity')
+        ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $limit = $input->getOption('limit') ? (int)$input->getOption('limit') : null;
         $offset = $input->getOption('offset') ? (int)$input->getOption('offset') : null;
@@ -65,6 +60,8 @@ class CalculateUploadableEntityDataCommand extends Command
 
         $this->registry->getManager()->flush();
         $progressBar->finish();
+
+        return Command::SUCCESS;
     }
 
     protected function calculateCriteria(Criteria $criteria, string $fqcn): Criteria

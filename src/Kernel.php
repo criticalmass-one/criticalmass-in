@@ -5,11 +5,11 @@ namespace App;
 use App\Criticalmass\MassTrackImport\Voter\VoterInterface;
 use App\Criticalmass\RideNamer\RideNamerInterface;
 use App\Criticalmass\Router\DelegatedRouter\DelegatedRouterInterface;
-use App\Criticalmass\Sharing\Network\ShareNetworkInterface;
+use App\Criticalmass\SocialNetwork\Network\NetworkInterface;
 use App\Criticalmass\Timeline\Collector\TimelineCollectorInterface;
 use App\DependencyInjection\Compiler\ObjectRouterPass;
 use App\DependencyInjection\Compiler\RideNamerPass;
-use App\DependencyInjection\Compiler\ShareNetworkPass;
+use App\DependencyInjection\Compiler\SocialNetworkPass;
 use App\DependencyInjection\Compiler\TimelineCollectorPass;
 use App\DependencyInjection\Compiler\TrackVoterPass;
 use App\DependencyInjection\Compiler\TwigSeoExtensionPass;
@@ -18,7 +18,7 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
-use Symfony\Component\Routing\RouteCollectionBuilder;
+use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
 class Kernel extends BaseKernel
 {
@@ -36,7 +36,7 @@ class Kernel extends BaseKernel
         return $this->getProjectDir().'/var/log';
     }
 
-    public function registerBundles()
+    public function registerBundles(): iterable
     {
         $contents = require $this->getProjectDir().'/config/bundles.php';
         foreach ($contents as $class => $envs) {
@@ -63,11 +63,11 @@ class Kernel extends BaseKernel
         $container->registerForAutoconfiguration(TimelineCollectorInterface::class)->addTag('timeline.collector');
         $container->addCompilerPass(new TimelineCollectorPass());
 
+        $container->registerForAutoconfiguration(NetworkInterface::class)->addTag('social_network.network');
+        $container->addCompilerPass(new SocialNetworkPass());
+
         $container->registerForAutoconfiguration(DelegatedRouterInterface::class)->addTag('object_router.delegated_router');
         $container->addCompilerPass(new ObjectRouterPass());
-
-        $container->addCompilerPass(new ShareNetworkPass());
-        $container->registerForAutoconfiguration(ShareNetworkInterface::class)->addTag('share.network');
 
         $container->addCompilerPass(new RideNamerPass());
         $container->registerForAutoconfiguration(RideNamerInterface::class)->addTag('ride_namer');
@@ -76,14 +76,20 @@ class Kernel extends BaseKernel
 
         $container->addCompilerPass(new TrackVoterPass());
         $container->registerForAutoconfiguration(VoterInterface::class)->addTag('mass_track_import.voter');
+
+        $container->addCompilerPass(new SocialNetworkPass());
+        $container->registerForAutoconfiguration(NetworkInterface::class)->addTag('social_network.network');
     }
 
-    protected function configureRoutes(RouteCollectionBuilder $routes): void
+    protected function configureRoutes(RoutingConfigurator $routes): void
     {
-        $confDir = $this->getProjectDir().'/config';
+        $routes->import('../config/{routes}/'.$this->environment.'/*.yaml');
+        $routes->import('../config/{routes}/*.yaml');
 
-        $routes->import($confDir.'/{routes}/*'.self::CONFIG_EXTS, '/', 'glob');
-        $routes->import($confDir.'/{routes}/'.$this->environment.'/**/*'.self::CONFIG_EXTS, '/', 'glob');
-        $routes->import($confDir.'/{routes}'.self::CONFIG_EXTS, '/', 'glob');
+        if (is_file(\dirname(__DIR__).'/config/routes.yaml')) {
+            $routes->import('../config/routes.yaml');
+        } else {
+            $routes->import('../config/{routes}.php');
+        }
     }
 }

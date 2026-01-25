@@ -4,64 +4,33 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\BlockedCityRepository")
- * @ORM\Table(name="city_blocked")
- */
+#[ORM\Table(name: 'city_blocked')]
+#[ORM\Entity(repositoryClass: 'App\Repository\BlockedCityRepository')]
 class BlockedCity
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    protected ?int $id = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="blocked_cities", fetch="LAZY")
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
-     */
-    protected $city;
+    #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'blocked_cities', fetch: 'LAZY')]
+    #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
+    protected ?City $city = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $blockStart;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected ?\DateTime $blockStart = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $blockEnd;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected ?\DateTime $blockEnd = null;
 
-    /**
-     * @ORM\Column(type="text")
-     */
-    protected $description;
+    #[ORM\Column(type: 'text', nullable: true)]
+    protected ?string $description = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $url;
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    protected bool $photosLink = false;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $facebook;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $twitter;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $photosLink;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $rideListLink;
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    protected bool $rideListLink = false;
 
     public function getId(): ?int
     {
@@ -104,42 +73,6 @@ class BlockedCity
         return $this->description;
     }
 
-    public function setUrl(string $url): BlockedCity
-    {
-        $this->url = $url;
-
-        return $this;
-    }
-
-    public function getUrl(): ?string
-    {
-        return $this->url;
-    }
-
-    public function setFacebook(string $facebook): BlockedCity
-    {
-        $this->facebook = $facebook;
-
-        return $this;
-    }
-
-    public function getFacebook(): ?string
-    {
-        return $this->facebook;
-    }
-
-    public function setTwitter(string $twitter): BlockedCity
-    {
-        $this->twitter = $twitter;
-
-        return $this;
-    }
-
-    public function getTwitter(): ?string
-    {
-        return $this->twitter;
-    }
-
     public function setPhotosLink(bool $photosLink): BlockedCity
     {
         $this->photosLink = $photosLink;
@@ -164,7 +97,7 @@ class BlockedCity
         return $this->rideListLink;
     }
 
-    public function setCity(City $city = null): BlockedCity
+    public function setCity(?City $city = null): BlockedCity
     {
         $this->city = $city;
 

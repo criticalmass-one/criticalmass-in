@@ -8,19 +8,16 @@ use App\Event\User\UserColorChangedEvent;
 use FOS\UserBundle\Event\FormEvent as FosFormEvent;
 use FOS\UserBundle\FOSUserEvents;
 use HWI\Bundle\OAuthBundle\HWIOAuthEvents;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use HWI\Bundle\OAuthBundle\Event\FormEvent as HwiFormEvent;
 
 class ProfilePhotoEventSubscriber implements EventSubscriberInterface
 {
-    /** @var ProfilePhotoGenerator $profilePhotoGenerator */
-    protected $profilePhotoGenerator;
+    protected ProfilePhotoGenerator $profilePhotoGenerator;
+    protected ManagerRegistry $registry;
 
-    /** @var RegistryInterface $registry */
-    protected $registry;
-
-    public function __construct(ProfilePhotoGenerator $profilePhotoGenerator, RegistryInterface $registry)
+    public function __construct(ProfilePhotoGenerator $profilePhotoGenerator, ManagerRegistry $registry)
     {
         $this->profilePhotoGenerator = $profilePhotoGenerator;
         $this->registry = $registry;
@@ -29,7 +26,7 @@ class ProfilePhotoEventSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            FOSUserEvents::REGISTRATION_SUCCESS => 'onFosRegistrationSuccess',
+            //FOSUserEvents::REGISTRATION_SUCCESS => 'onFosRegistrationSuccess',
             HWIOAuthEvents::CONNECT_INITIALIZE => 'onHwiRegistrationSuccess',
             UserColorChangedEvent::NAME => 'onUserColorChange',
         ];

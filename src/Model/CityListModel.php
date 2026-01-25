@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Model;
 
@@ -19,7 +19,7 @@ class CityListModel
     /** @var array $cycles */
     protected $cycles;
 
-    public function __construct(City $city, Ride $currentRide = null, array $cycles = [], int $countRides = 0)
+    public function __construct(City $city, ?Ride $currentRide = null, array $cycles = [], int $countRides = 0)
     {
         $this->city = $city;
         $this->currentRide = $currentRide;

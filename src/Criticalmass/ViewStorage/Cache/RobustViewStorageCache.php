@@ -5,25 +5,22 @@ namespace App\Criticalmass\ViewStorage\Cache;
 use App\Criticalmass\ViewStorage\Persister\ViewStoragePersisterInterface;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\Criticalmass\ViewStorage\ViewModel\ViewFactory;
-use JMS\Serializer\SerializerInterface;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use PhpAmqpLib\Exception\AMQPIOException;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class RobustViewStorageCache extends ViewStorageCache
 {
-    /** @var ViewStoragePersisterInterface $viewStoragePersister */
-    protected $viewStoragePersister;
-
-    /** @var RegistryInterface $registry */
-    protected $registry;
-
-    public function __construct(RegistryInterface $registry, ViewStoragePersisterInterface $viewStoragePersister, TokenStorageInterface $tokenStorage, ProducerInterface $producer, SerializerInterface $serializer)
+    public function __construct(
+        private ManagerRegistry $registry,
+        private ViewStoragePersisterInterface $viewStoragePersister,
+        TokenStorageInterface $tokenStorage,
+        ProducerInterface $producer,
+        SerializerInterface $serializer
+    )
     {
-        $this->viewStoragePersister = $viewStoragePersister;
-        $this->registry = $registry;
-
         parent::__construct($tokenStorage, $producer, $serializer);
     }
 
@@ -34,11 +31,11 @@ class RobustViewStorageCache extends ViewStorageCache
         } catch (AMQPIOException $exception) {
             // rabbit is not available, so just throw everything into the database and do not care about performance
 
-            $view = ViewFactory::createView($viewable, $this->tokenStorage->getToken()->getUser());
+            $view = ViewFactory::createView($viewable, $this->getUser());
 
             $this->viewStoragePersister->storeView($view);
 
-            $this->registry->getManager()->flush();
+            //$this->registry->getManager()->flush();
         }
     }
 }

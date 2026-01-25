@@ -2,27 +2,32 @@
 
 namespace App\Controller\Track;
 
+use App\Controller\AbstractController;
+use App\Entity\Track;
 use App\Event\Track\TrackDeletedEvent;
 use App\Event\Track\TrackHiddenEvent;
 use App\Event\Track\TrackShownEvent;
+use App\Repository\TrackRepository;
 use Knp\Component\Pager\PaginatorInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use App\Controller\AbstractController;
-use App\Entity\Track;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[Route('/track', name: 'caldera_criticalmass_track_')]
 class TrackManagementController extends AbstractController
 {
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     */
-    public function listAction(Request $request, UserInterface $user = null, PaginatorInterface $paginator)
-    {
-        $query = $this->getTrackRepository()->findByUserQuery($user, null, false);
+    #[IsGranted('ROLE_USER')]
+    #[Route('/list', name: 'list', methods: ['GET'], priority: 180)]
+    public function listAction(
+        Request $request,
+        TrackRepository $trackRepository,
+        PaginatorInterface $paginator,
+        ?UserInterface $user = null
+    ): Response {
+        $query = $trackRepository->findByUserQuery($user, null, false);
 
         $pagination = $paginator->paginate(
             $query,
@@ -35,36 +40,32 @@ class TrackManagementController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("is_granted('edit', track)")
-     * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
-     */
+    #[IsGranted('edit', 'track')]
+    #[Route('/{id}/toggle', name: 'toggle', methods: ['GET'], priority: 150)]
     public function toggleAction(EventDispatcherInterface $eventDispatcher, Track $track): Response
     {
         $track->setEnabled(!$track->getEnabled());
 
-        $this->getManager()->flush();
+        $this->managerRegistry->getManager()->flush();
 
         if ($track->getEnabled()) {
-            $eventDispatcher->dispatch(TrackShownEvent::NAME, new TrackShownEvent($track));
+            $eventDispatcher->dispatch(new TrackShownEvent($track), TrackShownEvent::NAME);
         } else {
-            $eventDispatcher->dispatch(TrackHiddenEvent::NAME, new TrackHiddenEvent($track));
+            $eventDispatcher->dispatch(new TrackHiddenEvent($track), TrackHiddenEvent::NAME);
         }
 
         return $this->redirectToRoute('caldera_criticalmass_track_list');
     }
 
-    /**
-     * @Security("is_granted('edit', track)")
-     * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
-     */
+    #[IsGranted('edit', 'track')]
+    #[Route('/{id}/delete', name: 'delete', methods: ['POST', 'GET'], priority: 150)]
     public function deleteAction(Track $track, EventDispatcherInterface $eventDispatcher): Response
     {
         $track->setDeleted(true);
 
-        $this->getManager()->flush();
+        $this->managerRegistry->getManager()->flush();
 
-        $eventDispatcher->dispatch(TrackDeletedEvent::NAME, new TrackDeletedEvent($track));
+        $eventDispatcher->dispatch(new TrackDeletedEvent($track), TrackDeletedEvent::NAME);
 
         return $this->redirectToRoute('caldera_criticalmass_track_list');
     }

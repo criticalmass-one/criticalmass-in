@@ -7,34 +7,28 @@ use App\Entity\Ride;
 use App\Entity\Track;
 use App\Entity\User;
 use App\Criticalmass\Image\PhotoUploader\PhotoUploader;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'criticalmass:photos:import',
+    description: 'Import photos to a tour',
+)]
 class ImportImagesCommand extends Command
 {
-    /** @var RegistryInterface $registry */
-    protected $registry;
-
-    /** @var PhotoUploader $photoUploader */
-    protected $photoUploader;
-
-    public function __construct(RegistryInterface $registry, PhotoUploader $photoUploader)
+    public function __construct(protected ManagerRegistry $registry, protected PhotoUploader $photoUploader)
     {
-        $this->registry = $registry;
-        $this->photoUploader = $photoUploader;
-
         parent::__construct();
     }
 
     protected function configure(): void
     {
         $this
-            ->setName('criticalmass:photos:import')
-            ->setDescription('Import photos to a tour')
             ->addArgument(
                 'citySlug',
                 InputArgument::REQUIRED,
@@ -57,7 +51,7 @@ class ImportImagesCommand extends Command
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $ride = $this->getRide($input->getArgument('citySlug'), $input->getArgument('rideIdentifier'));
         $user = $this->registry->getRepository(User::class)->findOneByUsername($input->getArgument('username'));
@@ -83,6 +77,7 @@ class ImportImagesCommand extends Command
 
         $table->render();
 
+        return Command::SUCCESS;
     }
 
     protected function getRide(string $citySlug, string $rideIdentifier): ?Ride

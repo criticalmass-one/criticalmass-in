@@ -6,17 +6,22 @@ use App\Controller\AbstractController;
 use App\Criticalmass\Geo\LatLngListGenerator\TimeLatLngListGenerator;
 use App\Entity\Ride;
 use App\Entity\Track;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use App\Repository\TrackRepository;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class TimelapseController extends AbstractController
 {
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
-    public function showAction(Ride $ride): Response
-    {
-        $tracks = $this->getTrackRepository()->findTracksByRide($ride);
+    #[Route(
+        '/{citySlug}/{rideIdentifier}/timelapse',
+        name: 'caldera_criticalmass_timelapse_homepage',
+        priority: 135
+    )]
+    public function showAction(
+        TrackRepository $trackRepository,
+        Ride $ride
+    ): Response {
+        $tracks = $trackRepository->findTracksByRide($ride);
 
         return $this->render('Timelapse/show.html.twig', [
             'ride' => $ride,
@@ -24,9 +29,12 @@ class TimelapseController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("track", class="App:Track", options={"id" = "trackId"})
-     */
+    #[Route(
+        '/{citySlug}/{rideIdentifier}/timelapse/load/{id}',
+        name: 'caldera_criticalmass_timelapse_load',
+        options: ['expose' => true],
+        priority: 135
+    )]
     public function loadtrackAction(TimeLatLngListGenerator $generator, Track $track): Response
     {
         $list = $generator
@@ -34,6 +42,6 @@ class TimelapseController extends AbstractController
             ->execute()
             ->getList();
 
-        return new Response($list, 200, ['Content-Type' => 'text/json']);
+        return new Response($list, Response::HTTP_OK, ['Content-Type' => 'text/json']);
     }
 }

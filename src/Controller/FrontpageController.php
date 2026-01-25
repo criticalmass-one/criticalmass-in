@@ -5,41 +5,47 @@ namespace App\Controller;
 use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Criticalmass\Timeline\TimelineInterface;
 use App\Factory\FrontpageRideListFactory;
+use App\Repository\FrontpageTeaserRepository;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class FrontpageController extends AbstractController
 {
-    public function indexAction(SeoPageInterface $seoPage, TimelineInterface $cachedTimeline): Response
-    {
+    #[Route('/', name: 'caldera_criticalmass_frontpage', priority: 180)]
+    public function indexAction(
+        FrontpageTeaserRepository $frontpageTeaserRepository,
+        SeoPageInterface $seoPage,
+        TimelineInterface $cachedTimeline
+    ): Response {
         $seoPage->setDescription('criticalmass.in sammelt Fotos, Tracks und Informationen über weltweite Critical-Mass-Touren');
 
-        $frontpageTeaserList = $this->getFrontpageTeaserRepository()->findForFrontpage();
+        $frontpageTeaserList = $frontpageTeaserRepository->findForFrontpage();
 
         $endDateTime = new \DateTime();
         $startDateTime = new \DateTime();
         $monthInterval = new \DateInterval('P1M');
         $startDateTime->sub($monthInterval);
 
-        $timelineContent = $cachedTimeline
+        $timelineContentList = $cachedTimeline
             ->setDateRange($startDateTime, $endDateTime)
             ->execute()
-            ->getTimelineContent();
+            ->getTimelineContentList();
 
         return $this->render('Frontpage/index.html.twig', [
-            'timelineContent' => $timelineContent,
+            'timelineContentList' => $timelineContentList,
             'frontpageTeaserList' => $frontpageTeaserList,
         ]);
     }
 
     public function rideListAction(FrontpageRideListFactory $frontpageRideListFactory): Response
     {
-        return $this->render('Frontpage/_ride_list.html.twig', [
-            'rideList' => $frontpageRideListFactory->sort(),
-        ]);
-    }
+        $monthList = $frontpageRideListFactory
+            ->createList()
+            ->sort()
+            ->getMonthList();
 
-    public function introAction(): Response
-    {
-        return $this->render('Frontpage/intro.html.twig');
+        return $this->render('Frontpage/_ride_list.html.twig', [
+            'rideList' => $monthList,
+        ]);
     }
 }

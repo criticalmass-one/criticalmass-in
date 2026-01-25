@@ -5,9 +5,9 @@ namespace Tests\ViewStorage\ViewEntityFactory;
 use App\Criticalmass\ViewStorage\ViewEntityFactory\ViewEntityFactory;
 use App\Criticalmass\ViewStorage\ViewModel\View;
 use App\Entity\User;
-use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\Persistence\ObjectRepository;
 use PHPUnit\Framework\TestCase;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Tests\ViewStorage\TestClass;
 use Tests\ViewStorage\TestClassView;
 
@@ -15,7 +15,7 @@ class ViewEntityFactoryTest extends TestCase
 {
     public function testFactoryWithoutUser(): void
     {
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
 
         $dateTime = new \DateTime();
         $testClass = new TestClass();
@@ -51,7 +51,7 @@ class ViewEntityFactoryTest extends TestCase
             ->with($this->equalTo(1))
             ->will($this->returnValue($user));
 
-        $registry = $this->createMock(RegistryInterface::class);
+        $registry = $this->createMock(ManagerRegistry::class);
         $registry
             ->expects($this->once())
             ->method('getRepository')

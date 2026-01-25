@@ -1,11 +1,10 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Top-Ten-Statistiken{% endblock %}
 
 {% block breadcrumb %}
-    <li class="active">
-        Top-Ten-Statistiken
-    </li>
+    {{ breadcrumb.active('Top-Ten-Statistiken') }}
 {% endblock %}
 
 {% block content %}
@@ -22,32 +21,32 @@
             </div>
         </div>
 
-        <div role="tabpanel">
+        <div>
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active">
-                    <a href="#participants" aria-controls="home" role="tab" data-toggle="tab">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="participants-tab" data-bs-toggle="tab" data-bs-target="#participants" type="button" role="tab" aria-controls="participants" aria-selected="true">
                         <i class="far fa-users"></i>
                         Teilnehmer
-                    </a>
+                    </button>
                 </li>
 
-                <li role="presentation">
-                    <a href="#distance" aria-controls="home" role="tab" data-toggle="tab">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="distance-tab" data-bs-toggle="tab" data-bs-target="#distance" type="button" role="tab" aria-controls="distance" aria-selected="false">
                         <i class="far fa-map"></i>
                         Strecke
-                    </a>
+                    </button>
                 </li>
 
-                <li role="presentation">
-                    <a href="#duration" aria-controls="home" role="tab" data-toggle="tab">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="duration-tab" data-bs-toggle="tab" data-bs-target="#duration" type="button" role="tab" aria-controls="duration" aria-selected="false">
                         <i class="far fa-clock"></i>
                         Länge
-                    </a>
+                    </button>
                 </li>
             </ul>
         </div>
         <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="participants">
+            <div role="tabpanel" class="tab-pane fade show active" id="participants" aria-labelledby="participants-tab">
                 <div class="row">
                     <div class="col-md-12">
                         <table class="table">
@@ -71,13 +70,13 @@
                             {% for ride in participationList %}
                                 <tr>
                                     <td>
-                                        <a href="{{ objectPath(ride) }}">
+                                        <a href="{{ object_path(ride) }}">
                                             {{ ride.dateTime|date('d.m.Y') }}
                                         </a>
                                     </td>
 
                                     <td>
-                                        <a href="{{ objectPath(ride.city) }}">
+                                        <a href="{{ object_path(ride.city) }}">
                                             {{ ride.city.city }}
                                         </a>
                                     </td>
@@ -93,7 +92,7 @@
                 </div>
             </div>
 
-            <div role="tabpanel" class="tab-pane" id="distance">
+            <div role="tabpanel" class="tab-pane fade" id="distance" aria-labelledby="distance-tab">
                 <div class="row">
                     <div class="col-md-12">
                         <table class="table">
@@ -117,19 +116,19 @@
                             {% for ride in distanceList %}
                                 <tr>
                                     <td>
-                                        <a href="{{ objectPath(ride) }}">
+                                        <a href="{{ object_path(ride) }}">
                                             {{ ride.dateTime|date('d.m.Y') }}
                                         </a>
                                     </td>
 
                                     <td>
-                                        <a href="{{ objectPath(ride.city) }}">
+                                        <a href="{{ object_path(ride.city) }}">
                                             {{ ride.city.city }}
                                         </a>
                                     </td>
 
                                     <td>
-                                        {{ ride.estimatedDistance|round(2) }} Kilometer
+                                        {{ ride.estimatedDistance|round(2) }}&nbsp;km
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -139,7 +138,7 @@
                 </div>
             </div>
 
-            <div role="tabpanel" class="tab-pane" id="duration">
+            <div role="tabpanel" class="tab-pane fade" id="duration" aria-labelledby="duration-tab">
                 <div class="row">
                     <div class="col-md-12">
                         <table class="table">
@@ -163,13 +162,13 @@
                             {% for ride in durationList %}
                                 <tr>
                                     <td>
-                                        <a href="{{ objectPath(ride) }}">
+                                        <a href="{{ object_path(ride) }}">
                                             {{ ride.dateTime|date('d.m.Y') }}
                                         </a>
                                     </td>
 
                                     <td>
-                                        <a href="{{ objectPath(ride.city) }}">
+                                        <a href="{{ object_path(ride.city) }}">
                                             {{ ride.city.city }}
                                         </a>
                                     </td>
@@ -186,7 +185,7 @@
             </div>
 
             <p>
-                Hier fehlt noch was? Du kannst fehlende Teilnehmerzahlen auf der jeweiligen Tourenseite nachtragen oder Streckenlängen mit hochgeladenen GPX-Dateien ergänzen. Auf <a href="{{ path('caldera_criticalmass_help_index') }}">unserer Hilfeseite</a> findest du weitere Informationen.
+                Hier fehlt noch was? Du kannst fehlende Teilnehmerzahlen auf der jeweiligen Tourenseite nachtragen oder Streckenlängen mit hochgeladenen GPX-Dateien ergänzen. Auf <a href="https://criticalmass.blog/criticalmass-one/haeufig-gestellte-fragen-zu-dieser-webseite/haeufig-gestellte-fragen-zur-statistik/">unserer Hilfeseite</a> findest du weitere Informationen.
             </p>
         </div>
     </div>

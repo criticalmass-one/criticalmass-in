@@ -5,7 +5,8 @@ namespace App\Command;
 use App\Criticalmass\Website\Crawler\CrawlerInterface;
 use App\Criticalmass\Website\Parser\ParserInterface;
 use App\Entity\Post;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Table;
@@ -13,35 +14,23 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'criticalmass:website:crawl',
+    description: 'Crawl websites from posts',
+)]
 class WebsiteCrawlerCommand extends Command
 {
-    /** @var RegistryInterface $registry */
-    protected $registry;
-
-    /** @var CrawlerInterface $crawler */
-    protected $crawler;
-
-    /** @var ParserInterface $parser */
-    protected $parser;
-
-    public function __construct(RegistryInterface $registry, CrawlerInterface $crawler, ParserInterface $parser)
+    public function __construct(protected ManagerRegistry $registry, protected CrawlerInterface $crawler, protected ParserInterface $parser)
     {
-        $this->registry = $registry;
-        $this->crawler = $crawler;
-        $this->parser = $parser;
-
         parent::__construct();
     }
 
     protected function configure(): void
     {
-        $this
-            ->setName('criticalmass:website:crawl')
-            ->setDescription('Crawl websites from posts')
-            ->addArgument('limit', InputArgument::OPTIONAL, 'Number of posts to crawl per command call');
+        $this->addArgument('limit', InputArgument::OPTIONAL, 'Number of posts to crawl per command call');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if (!$limit = (int) $input->getArgument('limit')) {
             $limit = null;
@@ -93,5 +82,7 @@ class WebsiteCrawlerCommand extends Command
 
         $progressBar->finish();
         $table->render();
+
+        return Command::SUCCESS;
     }
 }

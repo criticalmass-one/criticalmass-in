@@ -2,33 +2,44 @@
 
 namespace App\Controller;
 
+use App\Repository\CityRepository;
+use App\Repository\RegionRepository;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class RegionController extends AbstractController
 {
-    public function indexAction(string $slug1 = null, string $slug2 = null, string $slug3 = null): Response
-    {
+    #[Route('/world', name: 'caldera_criticalmass_region_world', priority: 140)]
+    #[Route('/world/{slug1}', name: 'caldera_criticalmass_region_world_region_1', priority: 140)]
+    #[Route('/world/{slug1}/{slug2}', name: 'caldera_criticalmass_region_world_region_2', priority: 140)]
+    #[Route('/world/{slug1}/{slug2}/{slug3}', name: 'caldera_criticalmass_region_world_region_3', priority: 140)]
+    public function indexAction(
+        CityRepository $cityRepository,
+        RegionRepository $regionRepository,
+        ?string $slug1 = null,
+        ?string $slug2 = null,
+        ?string $slug3 = null
+    ): Response {
         $region = null;
 
         if ($slug1 && $slug2 && $slug3) {
-            $region = $this->getRegionRepository()->findOneBySlug($slug3);
+            $region = $regionRepository->findOneBySlug($slug3);
         } elseif ($slug1 && $slug2) {
-            $region = $this->getRegionRepository()->findOneBySlug($slug2);
+            $region = $regionRepository->findOneBySlug($slug2);
         } elseif ($slug1) {
-            $region = $this->getRegionRepository()->findOneBySlug($slug1);
+            $region = $regionRepository->findOneBySlug($slug1);
         } else {
-            $region = $this->getRegionRepository()->find(1);
+            $region = $regionRepository->find(1);
         }
 
-        $cities = $this->getCityRepository()->findCitiesOfRegion($region);
-        $allCities = $this->getCityRepository()->findChildrenCitiesOfRegion($region);
-        $regions = $this->getRegionRepository()->findByParentRegion($region);
+        $cities = $cityRepository->findCitiesOfRegion($region);
+        $allCities = $cityRepository->findChildrenCitiesOfRegion($region);
+        $regions = $regionRepository->findByParentRegion($region);
 
         $cityCounter = [];
 
-        // do not name it $region as $region is already in use
         foreach ($regions as $region2) {
-            $cityCounter[$region2->getId()] = $this->getCityRepository()->countChildrenCitiesOfRegion($region2);
+            $cityCounter[$region2->getId()] = $cityRepository->countChildrenCitiesOfRegion($region2);
         }
 
         return $this->render('Region/index.html.twig', [

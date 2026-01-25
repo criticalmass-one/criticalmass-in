@@ -1,70 +1,35 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% set previous_photo = previous_entity(photo) %}
 {% set next_photo = next_entity(photo) %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ objectPath(city) }}">
-            {{ city.city }}
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ objectPath(ride) }}">
-            {{ ride.title }}
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ objectPath(ride, 'caldera_criticalmass_photo_ride_list') }}">
-            Fotos
-        </a>
-    </li>
-
-    <li class="active">
-        Foto {{ photo.id }} aus {{ city.city }}
-    </li>
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item(city.city, object_path(city)) }}
+    {{ breadcrumb.item(ride.title, object_path(ride)) }}
+    {{ breadcrumb.item('Fotos', object_path(ride, 'caldera_criticalmass_photo_ride_list')) }}
+    {{ breadcrumb.active('Foto ' ~ photo.id ~ ' aus ' ~ city.city) }}
 {% endblock %}
 
 {% block navigation %}
     <div class="row">
         <div class="col-md-12">
-            <ul class="pager">
-                {% if previous_photo %}
-                    <li class="previous">
-                        <a href="{{ objectPath(previous_photo) }}">
+            <nav aria-label="Foto Navigation">
+                <ul class="pagination justify-content-between">
+                    <li class="page-item{% if not previous_photo %} disabled{% endif %}">
+                        <a class="page-link" href="{% if previous_photo %}{{ object_path(previous_photo) }}{% else %}#{% endif %}">
                             &larr; Voriges Foto
                         </a>
                     </li>
-                {% else %}
-                    <li class="previous disabled">
-                        <a href="#">
-                            &larr; Voriges Foto
-                        </a>
-                    </li>
-                {% endif %}
 
-                {% if next_photo %}
-                    <li class="next">
-                        <a href="{{ objectPath(next_photo) }}">
+                    <li class="page-item{% if not next_photo %} disabled{% endif %}">
+                        <a class="page-link" href="{% if next_photo %}{{ object_path(next_photo) }}{% else %}#{% endif %}">
                             Nächstes Foto &rarr;
                         </a>
                     </li>
-                {% else %}
-                    <li class="next disabled">
-                        <a href="#">
-                            Nächstes Foto &rarr;
-                        </a>
-                    </li>
-                {% endif %}
-            </ul>
+                </ul>
+            </nav>
         </div>
     </div>
 {% endblock %}
@@ -90,7 +55,7 @@
                                 </p>
 
                                 <p class="text-center">
-                                    <a href="#" data-toggle="modal" data-target="#loginModal" class="btn btn-primary">
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-primary">
                                         Login
                                     </a>
                                 </p>
@@ -130,30 +95,10 @@
         <div class="col-md-4">
             {% include 'Photo/_map.html.twig' with { 'photo': photo } %}
             {% include 'Photo/_details.html.twig' with { 'photo': photo } %}
-            {% include 'Photo/_social_networks.html.twig' with { 'photo': photo } %}
         </div>
     </div>
 
         {{ block('navigation') }}
 </div>
 
-    <script>
-        CriticalMass.loadModule('ViewPhotoPage', null, null, function (page) {
-            {% if previous_photo %}
-            page.setPreviousPhotoUrl('{{ objectPath(previous_photo) }}');
-            {% endif %}
-
-            {% if next_photo %}
-            page.setNextPhotoUrl('{{ objectPath(next_photo) }}');
-            {% endif %}
-
-            {% if photo.hasCoordinates() %}
-            page.setPhoto('{{ photo|serialize|raw|e('js') }}', '{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}');
-            page.initMap();
-            {% endif %}
-        });
-
-        CriticalMass.loadModule('ScrollToPost');
-    </script>
-
-    {% endblock %}
+{% endblock %}

@@ -4,7 +4,8 @@ namespace App\Command;
 
 use App\Entity\User;
 use App\Criticalmass\ProfilePhotoGenerator\ProfilePhotoGeneratorInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Table;
@@ -12,32 +13,26 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'criticalmass:profile-photo:generate',
+    description: 'Generate profile photos',
+)]
 class GenerateProfilePhotosCommand extends Command
 {
-    /** @var RegistryInterface $registry */
-    protected $registry;
-
-    /** @var ProfilePhotoGeneratorInterface $profilePhotoGenerator */
-    protected $profilePhotoGenerator;
-
-    public function __construct(RegistryInterface $registry, ProfilePhotoGeneratorInterface $profilePhotoGenerator)
+    public function __construct(protected ManagerRegistry $registry, protected ProfilePhotoGeneratorInterface $profilePhotoGenerator)
     {
-        $this->registry = $registry;
-        $this->profilePhotoGenerator = $profilePhotoGenerator;
-
         parent::__construct();
     }
 
     protected function configure(): void
     {
         $this
-            ->setName('criticalmass:profile-photo:generate')
-            ->setDescription('Generate profile photos')
             ->addOption('overwrite', null,InputOption::VALUE_NONE)
-            ->addOption('limit', null, InputOption::VALUE_REQUIRED);
+            ->addOption('limit', null, InputOption::VALUE_REQUIRED)
+        ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $overwrite = $input->getOption('overwrite');
         $limit = $input->getOption('limit');
@@ -46,7 +41,8 @@ class GenerateProfilePhotosCommand extends Command
 
         if (0 === count($userList)) {
             $output->writeln(sprintf('<info>%s</info>', 'All profile photos are up to date'));
-            return;
+
+            return Command::SUCCESS;
         }
 
         $progress = new ProgressBar($output, count($userList));
@@ -68,6 +64,8 @@ class GenerateProfilePhotosCommand extends Command
         
         $progress->finish();
         $table->render();
+
+        return Command::SUCCESS;
     }
 
     protected function findUsers(bool $all = false): array

@@ -1,9 +1,10 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Dein Benutzerprofil{% endblock %}
 
 {% block breadcrumb %}
-    <li class="active">Dein Benutzerkonto</li>
+    {{ breadcrumb.active('Dein Benutzerkonto') }}
 {% endblock %}
 
 {% block content %}
@@ -25,12 +26,9 @@
 
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
-                    <div class="alert alert-dismissable alert-success" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-
+                    <div class="alert alert-dismissible alert-success" role="alert">
                         {{ flashMessage }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 </div>
             </div>
@@ -50,7 +48,7 @@
                                 </p>
 
                                 <p class="text-center">
-                                    <a class="btn btn-default"
+                                    <a class="btn btn-secondary"
                                        href="{{ path('criticalmass_user_profile_photo') }}">
                                         Profilfoto ändern
                                     </a>
@@ -70,7 +68,7 @@
                                 </p>
 
                                 <p class="text-center">
-                                    <a class="btn btn-default"
+                                    <a class="btn btn-secondary"
                                        href="{{ path('criticalmass_user_profile_color') }}">
                                         Profilfarbe wählen
                                     </a>
@@ -100,7 +98,7 @@
                                     </p>
 
                                     <p class="text-center">
-                                        <a class="btn btn-default"
+                                        <a class="btn btn-secondary"
                                            href="{{ path('criticalmass_user_participation_list') }}">
                                             Tourenübersicht
                                         </a>
@@ -128,7 +126,7 @@
                                     </p>
 
                                     <p class="text-center">
-                                        <a class="btn btn-default" href="{{ path('caldera_criticalmass_track_list') }}">
+                                        <a class="btn btn-secondary" href="{{ path('caldera_criticalmass_track_list') }}">
                                             Tracks verwalten
                                         </a>
                                     </p>
@@ -155,7 +153,7 @@
                                     </p>
 
                                     <p class="text-center">
-                                        <a class="btn btn-default"
+                                        <a class="btn btn-secondary"
                                            href="{{ path('caldera_criticalmass_photo_user_list') }}">
                                             Fotos verwalten
                                         </a>
@@ -169,32 +167,6 @@
                     <div class="col-md-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                Kennwort ändern
-                            </div>
-                            <div class="panel-body">
-                                {% if app.user.oauthAccount %}
-                                    <div class="alert alert-info" role="alert">
-                                        Du kannst dein Kennwort nicht ändern, weil du dich über ein soziales Netzwerk
-                                        bei criticalmass.in anmeldest.
-                                    </div>
-                                {% else %}
-                                    <p>
-                                        Ändere dein Kennwort, das du zum Login bei criticalmass.in nutzt.
-                                    </p>
-
-                                    <p class="text-center">
-                                        <a class="btn btn-default" href="{{ path('fos_user_change_password') }}">
-                                            Kennwort ändern
-                                        </a>
-                                    </p>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
                                 Benutzername ändern
                             </div>
                             <div class="panel-body">
@@ -203,7 +175,7 @@
                                 </p>
 
                                 <p class="text-center">
-                                    <a class="btn btn-default"
+                                    <a class="btn btn-secondary"
                                        href="{{ path('criticalmass_user_usermanagement_editusername') }}">
                                         Benutzername ändern
                                     </a>
@@ -218,53 +190,20 @@
                                 E-Mail-Adresse ändern
                             </div>
                             <div class="panel-body">
-                                {% if app.user.oauthAccount %}
-                                    <div class="alert alert-info" role="alert">
-                                        Du kannst deine E-Mail-Adresse nicht ändern, weil du dich über ein soziales
-                                        Netzwerk bei criticalmass.in anmeldest.
-                                    </div>
-                                {% else %}
-                                    <p>
-                                        Hier kannst du deine E-Mail-Adresse ändern. Bedenke bitte, dass du dich künftig
-                                        mit deinen neuen Benutzerdaten einloggen musst.
-                                    </p>
+                                <p>
+                                    Hier kannst du deine E-Mail-Adresse ändern. Bedenke bitte, dass du dich künftig
+                                    mit deinen neuen Benutzerdaten einloggen musst.
+                                </p>
 
-                                    <p class="text-center">
-                                        <a class="btn btn-default"
-                                           href="{{ path('criticalmass_user_usermanagement_editemail') }}">
-                                            E-Mail-Adresse ändern
-                                        </a>
-                                    </p>
-                                {% endif %}
+                                <p class="text-center">
+                                    <a class="btn btn-secondary"
+                                       href="{{ path('criticalmass_user_usermanagement_editemail') }}">
+                                        E-Mail-Adresse ändern
+                                    </a>
+                                </p>
                             </div>
                         </div>
                     </div>
-
-                    {% if feature('bikeright') %}
-                        <div class="col-md-6">
-                            <div class="panel panel-bikeright">
-                                <div class="panel-heading">
-                                    <small class="pull-right">
-                                        Anzeige
-                                    </small>
-
-                                    Bikeright-Rabattcode
-                                </div>
-                                <div class="panel-body">
-                                    <p>
-                                        Ab sofort! Kostenfreie Rechtsberatung für Community-Mitglieder!
-                                    </p>
-
-                                    <p class="text-center">
-                                        <a class="btn btn-bikeright"
-                                           href="{{ path('criticalmass_user_bikeright_view') }}">
-                                            Mehr erfahren
-                                        </a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    {% endif %}
                 </div>
             </div>
         </div>

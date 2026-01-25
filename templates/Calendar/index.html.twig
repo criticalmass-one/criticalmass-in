@@ -1,11 +1,10 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Kalender{% endblock %}
 
 {% block breadcrumb %}
-    <li class="active">
-        Critical-Mass-Kalender
-    </li>
+    {{ breadcrumb.active('Critical-Mass-Kalender') }}
 {% endblock %}
 
 {% block content %}
@@ -79,13 +78,9 @@
                                         </div>
 
                                         <ul class="ride-list list-unstyled">
-                                            {% for event in calendr_events(day).all %}
-                                                <li>
-                                                    {% set ride = event.ride %}
-                                                    <a href="{{ objectPath(ride) }}">
-                                                        {{ ride.city.city }}
-                                                    </a>
-                                                </li>
+                                            {% for event in calendr_events(day) %}
+                                                {% set ride = event.ride %}
+                                                {% include 'Common/Ride/simple_city_time_list_item.html.twig' with { ride: ride } %}
                                             {% endfor %}
                                         </ul>
                                     </td>
@@ -99,12 +94,7 @@
                 </table>
             </div>
         </div>
+
+        {% include('Calendar/_pagination.html.twig') with { 'previousMonth': previousMonth, 'nextMonth': nextMonth } %}
     </div>
-
-    {% include('Calendar/_pagination.html.twig') with { 'previousMonth': previousMonth, 'nextMonth': nextMonth } %}
-
-    <script type="text/javascript">
-        CriticalMass.loadModule('CalendarPage', '#calendar');
-    </script>
-
 {% endblock %}

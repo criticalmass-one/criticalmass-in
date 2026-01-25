@@ -4,11 +4,12 @@ namespace App\Twig\Extension;
 
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\EntityInterface\RouteableInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class RouterTwigExtension extends \Twig_Extension
+class RouterTwigExtension extends AbstractExtension
 {
-    /** @var ObjectRouterInterface $router */
-    protected $router;
+    protected ObjectRouterInterface $router;
 
     public function __construct(ObjectRouterInterface $router)
     {
@@ -18,13 +19,13 @@ class RouterTwigExtension extends \Twig_Extension
     public function getFunctions(): array
     {
         return [
-            new \Twig_SimpleFunction('objectPath', [$this, 'objectPath'], [
+            new TwigFunction('object_path', [$this, 'objectPath'], [
                 'is_safe' => ['raw'],
             ]),
         ];
     }
 
-    public function objectPath(RouteableInterface $object, string $routeName = null, array $parameters = []): string
+    public function objectPath(RouteableInterface $object, ?string $routeName = null, array $parameters = []): string
     {
         return $this->router->generate($object, $routeName, $parameters);
     }

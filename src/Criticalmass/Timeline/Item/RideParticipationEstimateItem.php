@@ -6,14 +6,13 @@ use App\Entity\Ride;
 
 class RideParticipationEstimateItem extends AbstractItem
 {
-    /** @var Ride $ride */
-    protected $ride;
+    protected ?Ride $ride = null;
 
-    /** @var string $rideTitle */
-    protected $rideTitle;
+    protected ?string $rideTitle = null;
 
-    /** @var int $estimatedParticipants */
-    protected $estimatedParticipants;
+    protected ?int $estimatedParticipants = null;
+
+    protected ?bool $rideEnabled = null;
 
     public function getRide(): Ride
     {
@@ -49,5 +48,17 @@ class RideParticipationEstimateItem extends AbstractItem
         $this->estimatedParticipants = $estimatedParticipants;
 
         return $this;
+    }
+
+    public function setRideEnabled(bool $rideEnabled): RideParticipationEstimateItem
+    {
+        $this->rideEnabled = $rideEnabled;
+
+        return $this;
+    }
+
+    public function isRideEnabled(): bool
+    {
+        return $this->rideEnabled;
     }
 }

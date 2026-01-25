@@ -25,7 +25,7 @@
     <div class="row margin-top-medium">
         <div class="col-md-12">
             <div class="btn-group pull-right" role="group">
-                <a href="javascript:window.location=document.referrer;" class="btn btn-default">
+                <a href="javascript:window.location=document.referrer;" class="btn btn-secondary">
                     Abbrechen
                 </a>
                 <button id="save" class="btn btn-primary">
@@ -34,12 +34,5 @@
             </div>
         </div>
     </div>
-
-    <script>
-        CriticalMass.loadModule('PhotoCensorPage', null, null, function (page) {
-            page.setPhoto('{{ photo|serialize|raw|e('js') }}', '{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}');
-            page.init();
-        });
-    </script>
 </div>
 {% endblock %}

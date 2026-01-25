@@ -1,0 +1,37 @@
+{% block captcha_widget %}
+{% if is_human %}
+-
+{% else %}
+{% apply spaceless %}
+    {% if reload %}
+        <script type="text/javascript">
+            function reload_{{ image_id }}() {
+                var img = document.getElementById('{{ image_id }}');
+                img.src = '{{ captcha_code }}?n=' + (new Date()).getTime();
+            }
+        </script>
+
+        <div class="input-group captcha-input-group">
+            <span class="input-group-addon">
+                <img class="captcha_image" id="{{ image_id }}" src="{{ captcha_code }}" alt="" title="captcha"
+                     width="{{ captcha_width }}" height="{{ captcha_height }}"/>
+            </span>
+            {{ form_widget(form, { attr: { class: 'form-control input-lg' } }) }}
+            <span class="input-group-btn">
+                <button class="btn btn-secondary btn-lg captcha_reload" type="button" onclick="reload_{{ image_id }}();">
+                    <i class="fas fa-sync"></i>
+                </button>
+            </span>
+        </div>
+    {% else %}
+        <div class="input-group captcha-input-group">
+            <span class="input-group-addon">
+                <img class="captcha_image" id="{{ image_id }}" src="{{ captcha_code }}" alt="" title="captcha"
+                     width="{{ captcha_width }}" height="{{ captcha_height }}"/>
+            </span>
+            {{ form_widget(form, { attr: { class: 'form-control input-lg' } }) }}
+        </div>
+    {% endif %}
+{% endapply %}
+{% endif %}
+{% endblock %}

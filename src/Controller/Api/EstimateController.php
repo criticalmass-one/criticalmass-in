@@ -2,26 +2,74 @@
 
 namespace App\Controller\Api;
 
-use App\Entity\CitySlug;
+use Doctrine\Persistence\ManagerRegistry;
+use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
+use MalteHuebner\DataQueryBundle\RequestParameterList\RequestParameterList;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
 use App\Event\RideEstimate\RideEstimateCreatedEvent;
 use App\Model\CreateEstimateModel;
-use App\Traits\RepositoryTrait;
-use App\Traits\UtilTrait;
-use FOS\ElasticaBundle\Finder\FinderInterface;
-use FOS\RestBundle\View\View;
-use JMS\Serializer\Serializer;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use App\Serializer\CriticalSerializerInterface;
+use OpenApi\Attributes as OA;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class EstimateController extends BaseController
 {
-    use RepositoryTrait;
-    use UtilTrait;
+    public function __construct(
+        CriticalSerializerInterface $serializer,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly DataQueryManagerInterface $dataQueryManager,
+        ManagerRegistry $managerRegistry,
+    )
+    {
+        parent::__construct($managerRegistry, $serializer);
+    }
+
+    /**
+     * Use this endpoint to add an participant estimate like this:
+     *
+     * <pre>{
+     *   "latitude": 53.549280,
+     *   "longitude": 9.979589,
+     *   "estimation": 6554,
+     *   "date_time": 1506710306,
+     *   "source": "your website or app homepage here?"
+     * }</pre>
+     *
+     * The ride will be automatically detected by the combination of provided coordinates and dateTime.
+     *
+     * If you do not provide <code>date_time</code> it will use the current time.
+     *
+     * This endpoint is primarly provided for apps with access to the user's current location. If you like you can
+     * provide details about your app or homepage in the <code>source</code> property or just default to null.
+     * If you know which in which ride the user participates, please use the other endpoint and specify
+     * <code>citySlug</code> and <code>rideIdentifier</code>.
+     */
+    #[OA\Tag(name: 'Estimate')]
+    #[OA\RequestBody(description: 'JSON representation of the estimate data', required: true, content: new OA\JsonContent(type: 'object'))]
+    #[OA\Response(response: 200, description: 'Returned when successful')]
+    public function createEstimateAction(Request $request): JsonResponse
+    {
+        /** @var CreateEstimateModel $estimateModel */
+        $estimateModel = $this->deserializeRequest($request, CreateEstimateModel::class);
+
+        $rideEstimation = $this->createRideEstimate($estimateModel);
+
+        if (!$rideEstimation) {
+            throw new BadRequestHttpException();
+        }
+
+        $this->managerRegistry->getManager()->persist($rideEstimation);
+        $this->managerRegistry->getManager()->flush();
+
+        $this->eventDispatcher->dispatch(new RideEstimateCreatedEvent($rideEstimation), RideEstimateCreatedEvent::NAME);
+
+        return $this->createStandardResponse($rideEstimation);
+    }
 
     /**
      * You can add an estimation of ride participants like this:
@@ -30,52 +78,59 @@ class EstimateController extends BaseController
      *   "latitude": 53.549280,
      *   "longitude": 9.979589,
      *   "estimation": 6554,
-     *   "dateTime": 1506710306
+     *   "date_time": 1506710306,
+     *   "source": "your website or app homepage here?"
      * }</pre>
      *
-     * You can also provide a city instead of coordinates:
+     * If you do not provide <code>date_time</code> it will use the current time. As the target ride is specified by
+     * <code>citySlug</code> and <code>rideIdentifier</code>, you don't even have to provide the coordinates. The
+     * followig json shows a valid request to this endpoint:
      *
      * <pre>{
-     *   "citySlug": "hamburg",
-     *   "estimation": 6554,
-     *   "dateTime": 1506710306
+     *   "estimation": 6554
      * }</pre>
      *
-     * If you do not provide <code>dateTime</code> it will use the current time.
-     *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Adds an estimation to statistic",
-     *  section="Estimate"
-     * )
+     * If you like you can provide details about your app or homepage in the <code>source</code> property or just
+     * default to null.
      */
-    public function createAction(Request $request, UserInterface $user, Serializer $serializer, EventDispatcherInterface $eventDispatcher): Response
+    #[Route(path: '/api/estimate', name: 'caldera_criticalmass_rest_estimate_create', methods: ['POST'], priority: 200)]
+    #[OA\Tag(name: 'Estimate')]
+    #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the ride\'s city', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'rideIdentifier', in: 'path', description: 'Identifier of the ride', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\RequestBody(description: 'JSON representation of the estimate data', required: true, content: new OA\JsonContent(type: 'object'))]
+    #[OA\Response(response: 200, description: 'Returned when successful')]
+    public function createRideEstimateAction(Request $request, Ride $ride): JsonResponse
     {
-        $estimateModel = $this->deserializeRequest($request, $serializer,CreateEstimateModel::class);
+        /** @var CreateEstimateModel $estimateModel */
+        $estimateModel = $this->deserializeRequest($request, CreateEstimateModel::class);
 
-        $rideEstimation = $this->createRideEstimate($estimateModel);
+        $rideEstimation = $this->createRideEstimate($estimateModel, $ride);
 
-        $this->getManager()->persist($rideEstimation);
-        $this->getManager()->flush();
+        if (!$rideEstimation) {
+            throw new BadRequestHttpException();
+        }
 
-        $eventDispatcher->dispatch(RideEstimateCreatedEvent::NAME, new RideEstimateCreatedEvent($rideEstimation));
+        $this->managerRegistry->getManager()->persist($rideEstimation);
+        $this->managerRegistry->getManager()->flush();
 
-        $view = View::create();
-        $view
-            ->setData($rideEstimation)
-            ->setFormat('json')
-            ->setStatusCode(200);
+        $this->eventDispatcher->dispatch(new RideEstimateCreatedEvent($rideEstimation), RideEstimateCreatedEvent::NAME);
 
-        return $this->handleView($view);
+        return $this->createStandardResponse($rideEstimation);
     }
 
-    protected function createRideEstimate(CreateEstimateModel $model): RideEstimate
+    protected function createRideEstimate(CreateEstimateModel $model, ?Ride $ride = null): ?RideEstimate
     {
         if (!$model->getDateTime()) {
             $model->setDateTime(new \DateTime());
         }
 
-        $ride = $this->guessRide($model);
+        if (!$ride) {
+            $ride = $this->findNearestRide($model);
+
+            if (!$ride) {
+                return null;
+            }
+        }
 
         $estimate = new RideEstimate();
 
@@ -84,74 +139,28 @@ class EstimateController extends BaseController
             ->setLatitude($model->getLatitude())
             ->setLongitude($model->getLongitude())
             ->setDateTime($model->getDateTime())
+            ->setSource($model->getSource())
             ->setRide($ride);
 
         return $estimate;
     }
 
-    protected function guessRide(CreateEstimateModel $model): ?Ride
-    {
-        $ride = null;
-
-        if ($model->getCitySlug()) {
-            /** @var CitySlug $citySlug */
-            $citySlug = $this->getCitySlugRepository()->findOneBySlug($model->getCitySlug());
-
-            if ($citySlug) {
-                $city = $citySlug->getCity();
-
-                if ($city) {
-                    $ride = $this->getRideRepository()->findCityRideByDate($city, $model->getDateTime());
-                }
-            }
-
-            return null;
-        } elseif ($model->getLatitude() && $model->getLongitude()) {
-            $ride = $this->findNearestRide($model);
-        }
-
-        return $ride;
-    }
-
     protected function findNearestRide(CreateEstimateModel $model): ?Ride
     {
-        /** @var FinderInterface $finder */
-        $finder = $this->container->get('fos_elastica.finder.criticalmass_ride.ride');
+        $requestParameterList = new RequestParameterList();
+        $requestParameterList
+            ->add('centerLatitude', (string)$model->getLatitude())
+            ->add('centerLongitude', (string)$model->getLongitude())
+            ->add('distanceOrderDirection', 'ASC')
+            ->add('year', $model->getDateTime()->format('Y'))
+            ->add('month', $model->getDateTime()->format('m'))
+            ->add('day', $model->getDateTime()->format('d'))
+            ->add('size', (string)1);
 
-        $geoQuery = new \Elastica\Query\GeoDistance('pin', [
-            'lat' => $model->getLatitude(),
-            'lon' => $model->getLongitude(),
-        ],
-            '25km'
-        );
+        $rideResultList = $this->dataQueryManager->query($requestParameterList, Ride::class);
 
-        $dateTimeQuery = new \Elastica\Query\Term([
-            'simpleDate' => $model->getDateTime()->format('Y-m-d')
-        ]);
-
-        $boolQuery = new \Elastica\Query\BoolQuery();
-        $boolQuery
-            ->addMust($geoQuery)
-            ->addMust($dateTimeQuery);
-
-        $query = new \Elastica\Query($boolQuery);
-
-        $query->setSize(1);
-        $query->setSort([
-            '_geo_distance' => [
-                'pin' => [
-                    $model->getLatitude(),
-                    $model->getLongitude(),
-                ],
-                'order' => 'asc',
-                'unit' => 'km',
-            ]
-        ]);
-
-        $results = $finder->find($query, 1);
-
-        if (is_array($results)) {
-            return array_pop($results);
+        if (1 === count($rideResultList)) {
+            return array_pop($rideResultList);
         }
 
         return null;

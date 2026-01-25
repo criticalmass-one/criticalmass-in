@@ -3,13 +3,20 @@
 namespace App\Repository;
 
 use App\Entity\City;
+use App\Entity\Post;
 use App\Entity\Ride;
 use App\Entity\Thread;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-class PostRepository extends EntityRepository
+class PostRepository extends ServiceEntityRepository
 {
-    public function findByCrawled(bool $crawled, int $limit = null): array
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Post::class);
+    }
+
+    public function findByCrawled(bool $crawled, ?int $limit = null): array
     {
         $qb = $this->createQueryBuilder('p');
 
@@ -93,8 +100,8 @@ class PostRepository extends EntityRepository
     }
 
     public function findForTimelineThreadPostCollector(
-        \DateTime $startDateTime = null,
-        \DateTime $endDateTime = null,
+        ?\DateTime $startDateTime = null,
+        ?\DateTime $endDateTime = null,
         $limit = null
     ): array {
         $builder = $this->createQueryBuilder('p');
@@ -133,8 +140,8 @@ class PostRepository extends EntityRepository
     }
 
     public function findForTimelineRideCommentCollector(
-        \DateTime $startDateTime = null,
-        \DateTime $endDateTime = null,
+        ?\DateTime $startDateTime = null,
+        ?\DateTime $endDateTime = null,
         $limit = null
     ): array {
         $builder = $this->createQueryBuilder('p');
@@ -171,17 +178,19 @@ class PostRepository extends EntityRepository
     }
 
     public function findForTimelinePhotoCommentCollector(
-        \DateTime $startDateTime = null,
-        \DateTime $endDateTime = null,
+        ?\DateTime $startDateTime = null,
+        ?\DateTime $endDateTime = null,
         $limit = null
     ): array {
         $builder = $this->createQueryBuilder('p');
 
         $builder
             ->select('p')
+            ->join('p.photo', 'p2')
             ->where($builder->expr()->eq('p.enabled', ':enabled'))
             ->setParameter('enabled', true)
-            ->andWhere($builder->expr()->isNotNull('p.photo'));
+            ->andWhere($builder->expr()->eq('p2.deleted', ':deleted'))
+            ->setParameter('deleted', false);
 
         if ($startDateTime) {
             $builder
@@ -200,41 +209,6 @@ class PostRepository extends EntityRepository
         }
 
         $builder->addOrderBy('p.dateTime', 'DESC');
-
-        $query = $builder->getQuery();
-
-        $result = $query->getResult();
-
-        return $result;
-    }
-
-    public function findForTimelineBlogPostCommentCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null): array
-    {
-        $builder = $this->createQueryBuilder('p');
-
-        $builder
-            ->select('p', 'bp')
-            ->where($builder->expr()->eq('p.enabled', ':enabled'))
-            ->join('p.blogPost', 'bp')
-            ->andWhere($builder->expr()->eq('bp.enabled', ':enabled'))
-            ->addOrderBy('p.dateTime', 'DESC')
-            ->setParameter('enabled', true);
-
-        if ($startDateTime) {
-            $builder
-                ->andWhere($builder->expr()->gte('p.dateTime',':startDateTime'))
-                ->setParameter('startDateTime', $startDateTime);
-        }
-
-        if ($endDateTime) {
-            $builder
-                ->andWhere($builder->expr()->lte('p.dateTime', ':endDateTime'))
-                ->setParameter('endDateTime', $endDateTime);
-        }
-
-        if ($limit) {
-            $builder->setMaxResults($limit);
-        }
 
         $query = $builder->getQuery();
 

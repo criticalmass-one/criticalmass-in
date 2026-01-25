@@ -9,28 +9,42 @@ use App\Criticalmass\Profile\Streak\StreakGeneratorInterface;
 use App\Entity\Participation;
 use App\Event\Participation\ParticipationDeletedEvent;
 use App\Event\Participation\ParticipationUpdatedEvent;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ParticipationController extends AbstractController
 {
-    /**
-     * @Security("has_role('ROLE_USER')")
-     */
-    public function listAction(UserInterface $user = null, RegistryInterface $registry, TableGeneratorInterface $tableGenerator, StreakGeneratorInterface $streakGenerator, ParticipationCityListFactoryInterface $participationCityListFactory): Response
-    {
+    #[IsGranted('ROLE_USER')]
+    #[Route(
+        '/profile/participation/list',
+        name: 'criticalmass_user_participation_list',
+        priority: 180
+    )]
+    public function listAction(
+        ManagerRegistry $registry,
+        TableGeneratorInterface $tableGenerator,
+        StreakGeneratorInterface $streakGenerator,
+        ParticipationCityListFactoryInterface $participationCityListFactory,
+        ?UserInterface $user = null
+    ): Response {
         $streakGenerator->setUser($user);
 
-        $repository = $this->getDoctrine()->getRepository(Participation::class);
+        $repository = $this->managerRegistry->getRepository(Participation::class);
 
-        $participationTable = $tableGenerator->setUser($user)->generate()->getTable();
+        $participationTable = $tableGenerator
+            ->setUser($user)
+            ->generate()
+            ->getTable();
 
-        $participationCityList = $participationCityListFactory->buildForUser($user)->sort()->getParticipationCityList();
+        $participationCityList = $participationCityListFactory
+            ->buildForUser($user)
+            ->sort()
+            ->getParticipationCityList();
 
         return $this->render('Participation/list.html.twig', [
             'participationYesList' => $repository->findByUser($user, true),
@@ -43,12 +57,18 @@ class ParticipationController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("is_granted('cancel', participation)")
-     * @ParamConverter("participation", class="App:Participation", options={"id": "participationId"})
-     */
-    public function updateAction(Request $request, RegistryInterface $registry, EventDispatcherInterface $eventDispatcher, Participation $participation): Response
-    {
+    #[IsGranted('cancel', 'participation')]
+    #[Route(
+        '/profile/participation/{id}/update',
+        name: 'criticalmass_user_participation_update',
+        priority: 180
+    )]
+    public function updateAction(
+        Request $request,
+        ManagerRegistry $registry,
+        EventDispatcherInterface $eventDispatcher,
+        Participation $participation
+    ): Response {
         $status = $request->query->get('status', 'maybe');
 
         $participation
@@ -58,22 +78,26 @@ class ParticipationController extends AbstractController
 
         $registry->getManager()->flush();
 
-        $eventDispatcher->dispatch(ParticipationUpdatedEvent::NAME, new ParticipationUpdatedEvent($participation));
+        $eventDispatcher->dispatch(new ParticipationUpdatedEvent($participation), ParticipationUpdatedEvent::NAME);
 
         return $this->redirectToRoute('criticalmass_user_participation_list');
     }
 
-    /**
-     * @Security("is_granted('delete', participation)")
-     * @ParamConverter("participation", class="App:Participation", options={"id": "participationId"})
-     */
-    public function deleteAction(RegistryInterface $registry, EventDispatcherInterface $eventDispatcher,  Participation $participation): Response
-    {
+    #[IsGranted('delete', 'participation')]
+    #[Route(
+        '/profile/participation/{id}/delete',
+        name: 'criticalmass_user_participation_delete',
+        priority: 180
+    )]
+    public function deleteAction(
+        ManagerRegistry $registry,
+        EventDispatcherInterface $eventDispatcher,
+        Participation $participation
+    ): Response {
         $registry->getManager()->remove($participation);
-
         $registry->getManager()->flush();
 
-        $eventDispatcher->dispatch(ParticipationDeletedEvent::NAME, new ParticipationDeletedEvent($participation));
+        $eventDispatcher->dispatch(new ParticipationDeletedEvent($participation), ParticipationDeletedEvent::NAME);
 
         return $this->redirectToRoute('criticalmass_user_participation_list');
     }

@@ -2,65 +2,58 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\Router\Attribute as Routing;
+use App\Criticalmass\Router\Attribute\RouteParameter;
 use App\EntityInterface\AuditableInterface;
-use App\EntityInterface\AutoParamConverterAble;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
-use App\Criticalmass\Router\Annotation as Routing;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
-/**
- * @ORM\Table(name="location")
- * @ORM\Entity(repositoryClass="App\Repository\LocationRepository")
- * @Routing\DefaultRoute(name="caldera_criticalmass_location_show")
- */
-class Location implements RouteableInterface, AuditableInterface, AutoParamConverterAble
+#[Routing\DefaultRoute(name: 'caldera_criticalmass_location_show')]
+#[ORM\Table(name: 'location')]
+#[ORM\Entity(repositoryClass: 'App\Repository\LocationRepository')]
+class Location implements RouteableInterface, AuditableInterface
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[Groups(['location'])]
+    protected ?int $id = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="photos")
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
-     * @Routing\RouteParameter(name="citySlug")
-     */
-    protected $city;
+    #[RouteParameter(name: 'citySlug')]
+    #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'locations')]
+    #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
+    #[Ignore]
+    protected ?City $city = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Routing\RouteParameter(name="locationSlug")
-     */
-    protected $slug;
+    #[RouteParameter(name: 'slug')]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['location'])]
+    protected ?string $slug = null;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    protected $latitude;
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['location'])]
+    protected ?float $latitude = null;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    protected $longitude;
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['location'])]
+    protected ?float $longitude = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    protected $title;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['location'])]
+    protected ?string $title = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    protected $description;
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(['location'])]
+    protected ?string $description = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setLatitude(float $latitude = null): Location
+    public function setLatitude(?float $latitude = null): Location
     {
         $this->latitude = $latitude;
 
@@ -72,7 +65,7 @@ class Location implements RouteableInterface, AuditableInterface, AutoParamConve
         return $this->latitude;
     }
 
-    public function setLongitude(float $longitude = null): Location
+    public function setLongitude(?float $longitude = null): Location
     {
         $this->longitude = $longitude;
 
@@ -84,7 +77,7 @@ class Location implements RouteableInterface, AuditableInterface, AutoParamConve
         return $this->longitude;
     }
 
-    public function setDescription(string $description = null): Location
+    public function setDescription(?string $description = null): Location
     {
         $this->description = $description;
 
@@ -96,7 +89,7 @@ class Location implements RouteableInterface, AuditableInterface, AutoParamConve
         return $this->description;
     }
 
-    public function setCity(City $city = null): Location
+    public function setCity(?City $city = null): Location
     {
         $this->city = $city;
 
@@ -120,7 +113,7 @@ class Location implements RouteableInterface, AuditableInterface, AutoParamConve
         return $this->title;
     }
 
-    public function setSlug(string $slug = null): Location
+    public function setSlug(?string $slug = null): Location
     {
         $this->slug = $slug;
 

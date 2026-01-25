@@ -4,33 +4,23 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="blacklisted_website")
- * @ORM\Entity()
- */
+#[ORM\Table(name: 'blacklisted_website')]
+#[ORM\Entity]
 class BlacklistedWebsite
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    protected ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $pattern;
+    #[ORM\Column(type: 'string', nullable: true)]
+    protected ?string $pattern = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    protected $description;
+    #[ORM\Column(type: 'text', nullable: true)]
+    protected ?string $description = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $createdAt;
+    #[ORM\Column(type: 'datetime')]
+    protected ?\DateTime $createdAt = null;
 
     public function __construct()
     {

@@ -2,12 +2,21 @@
 
 namespace App\Repository;
 
-use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
-use Doctrine\ORM\EntityRepository;
+use App\Criticalmass\SocialNetwork\FeedFetcher\FetchInfo;
+use App\Entity\City;
+use App\Entity\SocialNetworkProfile;
+use App\EntityInterface\SocialNetworkProfileAble;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 
-class SocialNetworkProfileRepository extends EntityRepository
+class SocialNetworkProfileRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, SocialNetworkProfile::class);
+    }
+
     protected function getProfileAbleQueryBuilder(bool $enabled = true): QueryBuilder
     {
         $builder = $this->createQueryBuilder('snp');
@@ -19,6 +28,42 @@ class SocialNetworkProfileRepository extends EntityRepository
         }
 
         return $builder;
+    }
+
+    public function findByProperties(?string $networkIdentifier = null, ?bool $autoFetch = null, ?City $city = null, array $entityClassNames = []): array
+    {
+        $builder = $this->createQueryBuilder('snp');
+
+        $builder
+            ->where($builder->expr()->eq('snp.enabled', ':enabled'))
+            ->setParameter('enabled', true);
+
+        if ($networkIdentifier) {
+            $builder
+                ->andWhere($builder->expr()->eq('snp.network', ':network'))
+                ->setParameter('network', $networkIdentifier);
+        }
+
+        if ($autoFetch) {
+            $builder
+                ->andWhere($builder->expr()->eq('snp.autoFetch', ':autoFetch'))
+                ->setParameter('autoFetch', $autoFetch);
+        }
+
+        if ($city) {
+            $builder
+                ->andWhere($builder->expr()->eq('snp.city', ':city'))
+                ->setParameter('city', $city);
+        }
+
+        /** @var string $entityClassName */
+        foreach ($entityClassNames as $entityClassName) {
+            $builder->andWhere($builder->expr()->isNotNull(sprintf('snp.%s', $entityClassName)));
+        }
+
+        $builder->orderBy('snp.createdAt');
+
+        return $builder->getQuery()->getResult();
     }
 
     public function findByProfileable(SocialNetworkProfileAble $profileAble): array
@@ -33,6 +78,21 @@ class SocialNetworkProfileRepository extends EntityRepository
         $queryBuilder
             ->andWhere($queryBuilder->expr()->eq($joinColumnName, ':profileAble'))
             ->setParameter('profileAble', $profileAble);
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function findByFetchInfo(FetchInfo $fetchInfo): array
+    {
+        $queryBuilder = $this->createQueryBuilder('snp');
+
+        $queryBuilder
+            ->where($queryBuilder->expr()->eq('snp.autoFetch', ':autoFetch'))
+            ->setParameter('autoFetch', true);
+
+        if ($fetchInfo->hasNetworkList()) {
+            $queryBuilder->andWhere($queryBuilder->expr()->in('snp.network', $fetchInfo->getNetworkList()));
+        }
 
         return $queryBuilder->getQuery()->getResult();
     }

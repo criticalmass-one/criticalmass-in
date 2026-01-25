@@ -8,7 +8,7 @@ use App\Criticalmass\Geo\Entity\Track;
 use App\Criticalmass\Geo\GpxReader\TrackReader;
 use App\Criticalmass\Geo\PositionList\PositionList;
 use League\Flysystem\Filesystem;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\TestCase;
 
 class TrackToPositionListConverterTest extends TestCase
@@ -103,7 +103,8 @@ class TrackToPositionListConverterTest extends TestCase
 
     public function testConverterWithStartEndPoints(): void
     {
-        $track = $this->createTestTrack(7, 2, 4);
+        // endPoint is exclusive, so with startPoint=2 and endPoint=4, points 2 and 3 are returned
+        $track = $this->createTestTrack(6, 2, 4);
 
         $trackReader = new TrackReader($this->createFilesystemMockForLatLngPosition());
         $trackReader->loadTrack($track);
@@ -114,13 +115,12 @@ class TrackToPositionListConverterTest extends TestCase
         $expectedPositionList = new PositionList();
         $expectedPositionList
             ->add(new Position(53.5493620, 9.9789640))
-            ->add(new Position(53.5493660, 9.9790330))
-            ->add(new Position(53.5493650, 9.9790790));
+            ->add(new Position(53.5493660, 9.9790330));
 
         $this->assertEquals($expectedPositionList, $actualPositionList);
     }
 
-    protected function createFilesystemMockForLatLngPosition(): FilesystemInterface
+    protected function createFilesystemMockForLatLngPosition(): FilesystemOperator
     {
         $filesystem = $this->createMock(Filesystem::class);
         $filesystem
@@ -147,7 +147,7 @@ class TrackToPositionListConverterTest extends TestCase
         return $filesystem;
     }
 
-    protected function createFilesystemMockForLatLngDateTimePosition(): FilesystemInterface
+    protected function createFilesystemMockForLatLngDateTimePosition(): FilesystemOperator
     {
         $filesystem = $this->createMock(Filesystem::class);
         $filesystem
@@ -186,7 +186,7 @@ class TrackToPositionListConverterTest extends TestCase
         return $filesystem;
     }
 
-    protected function createFilesystemMockForLatLngAltitudePosition(): FilesystemInterface
+    protected function createFilesystemMockForLatLngAltitudePosition(): FilesystemOperator
     {
         $filesystem = $this->createMock(Filesystem::class);
         $filesystem
@@ -225,7 +225,7 @@ class TrackToPositionListConverterTest extends TestCase
         return $filesystem;
     }
 
-    protected function createFilesystemMockForLatLngDateTimeAltitudePosition(): FilesystemInterface
+    protected function createFilesystemMockForLatLngDateTimeAltitudePosition(): FilesystemOperator
     {
         $filesystem = $this->createMock(Filesystem::class);
         $filesystem
@@ -270,7 +270,7 @@ class TrackToPositionListConverterTest extends TestCase
         return $filesystem;
     }
 
-    protected function createTestTrack(int $points = 6, int $startPoint = 0, int $endPoint = 5): Track
+    protected function createTestTrack(int $points = 6, int $startPoint = 0, int $endPoint = 6): Track
     {
         $track = new Track();
         $track

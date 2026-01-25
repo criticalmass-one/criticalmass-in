@@ -2,74 +2,64 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\Website\Crawler\Crawlable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\SerializedName;
+use Symfony\Component\Serializer\Attribute\Ignore;
 
-/**
- * @ORM\Table(name="social_network_feed_item", uniqueConstraints={
- *   @ORM\UniqueConstraint(name="unique_feed_item", columns={"social_network_profile_id", "uniqueIdentifier"})
- *    })
- * @ORM\Entity(repositoryClass="App\Repository\SocialNetworkFeedItemRepository")
- */
-class SocialNetworkFeedItem //implements Crawlable
+#[ORM\Table(name: 'social_network_feed_item')]
+#[ORM\UniqueConstraint(name: 'unique_feed_item', columns: ['social_network_profile_id', 'uniqueIdentifier'])]
+#[ORM\Entity(repositoryClass: 'App\Repository\SocialNetworkFeedItemRepository')]
+#[ORM\Index(fields: ['dateTime'], name: 'social_network_feed_item_date_time_index')]
+#[ORM\Index(fields: ['createdAt'], name: 'social_network_feed_item_created_at_index')]
+class SocialNetworkFeedItem
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[Groups(['feed-item'])]
+    protected ?int $id = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="SocialNetworkProfile", inversedBy="feedItems")
-     * @ORM\JoinColumn(name="social_network_profile_id", referencedColumnName="id")
-     */
-    protected $socialNetworkProfile;
+    #[ORM\ManyToOne(targetEntity: 'SocialNetworkProfile', inversedBy: 'feedItems')]
+    #[ORM\JoinColumn(name: 'social_network_profile_id', referencedColumnName: 'id')]
+    #[Ignore]
+    protected ?SocialNetworkProfile $socialNetworkProfile = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=false)
-     */
-    protected $uniqueIdentifier;
+    #[ORM\Column(type: 'string', length: 255, nullable: false)]
+    #[Groups(['feed-item'])]
+    protected ?string $uniqueIdentifier = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    protected $permalink;
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(['feed-item'])]
+    protected ?string $permalink = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    protected $title;
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(['feed-item'])]
+    protected ?string $title = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=false)
-     */
-    protected $text;
+    #[ORM\Column(type: 'text', nullable: false)]
+    #[Groups(['feed-item'])]
+    protected ?string $text = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $dateTime;
+    #[ORM\Column(type: 'datetime', nullable: false)]
+    #[Groups(['feed-item'])]
+    protected ?\DateTime $dateTime = null;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    protected $hidden = false;
+    #[ORM\Column(type: 'boolean', nullable: false)]
+    #[Groups(['feed-item'])]
+    protected bool $hidden = false;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    protected $deleted = false;
+    #[ORM\Column(type: 'boolean', nullable: false)]
+    #[Groups(['feed-item'])]
+    protected bool $deleted = false;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    protected $createdAt;
+    #[ORM\Column(type: 'datetime', nullable: false)]
+    #[Groups(['feed-item'])]
+    protected \DateTime $createdAt;
 
-    /**
-     * ORM\Column(type="boolean")
-     */
-    //protected $crawled = false;
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(['feed-item'])]
+    protected ?string $raw = null;
 
     public function __construct()
     {
@@ -196,15 +186,16 @@ class SocialNetworkFeedItem //implements Crawlable
         return $this;
     }
 
-    /*public function isCrawled(): bool
+    public function getRaw(): ?string
     {
-        return $this->crawled;
+        return $this->raw;
     }
 
-    public function setCrawled(bool $crawled): Crawlable
+    public function setRaw(string $raw): SocialNetworkFeedItem
     {
-        $this->crawled = $crawled;
-
+        $this->raw = $raw;
+        
         return $this;
-    }*/
+    }
+
 }

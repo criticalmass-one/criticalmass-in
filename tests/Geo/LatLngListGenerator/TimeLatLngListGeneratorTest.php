@@ -6,16 +6,16 @@ use App\Criticalmass\Geo\Entity\Track;
 use App\Criticalmass\Geo\GpxReader\TrackReader;
 use App\Criticalmass\Geo\LatLngListGenerator\TimeLatLngListGenerator;
 use League\Flysystem\Filesystem;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\TestCase;
 
 class TimeLatLngListGeneratorTest extends TestCase
 {
-    public function testLatLngListGapWith1(): void
+    public function testTimeLatLngListGenerator(): void
     {
         $trackReader = new TrackReader($this->createFilesystemMock());
 
-        $simpleLatLngListGenerator = new TimeLatLngListGenerator($trackReader, 1);
+        $timeLatLngListGenerator = new TimeLatLngListGenerator($trackReader);
 
         $track = new Track();
         $track->setTrackFilename('test.gpx')
@@ -23,39 +23,41 @@ class TimeLatLngListGeneratorTest extends TestCase
             ->setStartPoint(0)
             ->setEndPoint(16);
 
-        $actualList = $simpleLatLngListGenerator
+        $actualList = $timeLatLngListGenerator
             ->loadTrack($track)
             ->execute()
             ->getList();
 
-        $expectedList = '[["2017-04-28T18:26:37Z",52.5022483,13.4249933],["2017-04-28T18:26:41Z",52.5022967,13.4250517],["2017-04-28T18:26:44Z",52.5023483,13.425095],["2017-04-28T18:26:47Z",52.5023967,13.4251417],["2017-04-28T18:26:50Z",52.5024483,13.4251733],["2017-04-28T18:26:54Z",52.5024983,13.4252117],["2017-04-28T18:26:58Z",52.50254,13.425255],["2017-04-28T18:27:01Z",52.5025717,13.42533],["2017-04-28T18:27:04Z",52.5026167,13.4253517],["2017-04-28T18:27:09Z",52.50266,13.4253933],["2017-04-28T18:27:31Z",52.5028583,13.425535],["2017-04-28T18:27:38Z",52.5029117,13.42556],["2017-04-28T18:27:42Z",52.50296,13.42559],["2017-04-28T18:27:46Z",52.50301,13.4256233],["2017-04-28T18:27:49Z",52.50306,13.42565]]';
+        // With WIDTH=10 and range 0-16, only points at index 0 and 10 are included
+        $expectedList = '[["2017-04-28T18:26:33Z",52.50221,13.42493],["2017-04-28T18:27:09Z",52.50266,13.4253933]]';
 
         $this->assertEquals($expectedList, $actualList);
     }
 
-    public function testLatLngListGapWith5(): void
+    public function testTimeLatLngListGeneratorWithOffset(): void
     {
         $trackReader = new TrackReader($this->createFilesystemMock());
 
-        $simpleLatLngListGenerator = new TimeLatLngListGenerator($trackReader, 5);
+        $timeLatLngListGenerator = new TimeLatLngListGenerator($trackReader);
 
         $track = new Track();
         $track->setTrackFilename('test.gpx')
             ->setPoints(17)
-            ->setStartPoint(0)
+            ->setStartPoint(5)
             ->setEndPoint(16);
 
-        $actualList = $simpleLatLngListGenerator
+        $actualList = $timeLatLngListGenerator
             ->loadTrack($track)
             ->execute()
             ->getList();
 
-        $expectedList = '[["2017-04-28T18:26:50Z",52.5024483,13.4251733],["2017-04-28T18:27:09Z",52.50266,13.4253933],["2017-04-28T18:27:49Z",52.50306,13.42565]]';
+        // With WIDTH=10 and range 5-16, only point at index 10 is included
+        $expectedList = '[["2017-04-28T18:27:09Z",52.50266,13.4253933]]';
 
         $this->assertEquals($expectedList, $actualList);
     }
 
-    protected function createFilesystemMock(): FilesystemInterface
+    protected function createFilesystemMock(): FilesystemOperator
     {
         $filesystem = $this->createMock(Filesystem::class);
 

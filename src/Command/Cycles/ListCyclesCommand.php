@@ -4,43 +4,32 @@ namespace App\Command\Cycles;
 
 use App\Entity\CityCycle;
 use App\Entity\CitySlug;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[AsCommand(
+    name: 'criticalmass:cycles:list',
+    description: 'List all cycles for a city',
+)]
 class ListCyclesCommand extends Command
 {
-    /** @var RegistryInterface $registry */
-    protected $registry;
-
-    /** @var TranslatorInterface $translator */
-    protected $translator;
-
-    public function __construct($name = null, RegistryInterface $registry, TranslatorInterface $translator)
+    public function __construct(protected ManagerRegistry $registry, protected TranslatorInterface $translator)
     {
-        $this->registry = $registry;
-        $this->translator = $translator;
-
-        parent::__construct($name);
+        parent::__construct();
     }
 
     protected function configure(): void
     {
-        $this
-            ->setName('criticalmass:cycles:list')
-            ->setDescription('Create rides for a parameterized year and month automatically')
-            ->addArgument(
-                'citySlug',
-                InputArgument::REQUIRED,
-                'City slug'
-            );
+        $this->addArgument('citySlug', InputArgument::REQUIRED,'City slug');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         /** @var string $citySlug */
         $citySlugString = $input->getArgument('citySlug');
@@ -75,5 +64,7 @@ class ListCyclesCommand extends Command
         }
 
         $table->render();
+
+        return Command::SUCCESS;
     }
 }

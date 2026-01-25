@@ -1,0 +1,162 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
+
+{% block title %}Turnus auslösen{% endblock %}
+
+{% form_theme form 'Form/theme.html.twig' %}
+
+{% block breadcrumb %}
+    {{ breadcrumb.item(cityCycle.city.city, object_path(cityCycle.city)) }}
+    {{ breadcrumb.item('Turnusliste', object_path(cityCycle.city, 'caldera_criticalmass_citycycle_list')) }}
+    {{ breadcrumb.active('Turnus auslösen') }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Turnus
+                            </div>
+                            <div class="panel-body">
+                                <dl>
+                                    <dt>
+                                        Turnus
+                                    </dt>
+                                    <dd>
+                                        {{ ('cycle.event_date.month_week.' ~ cityCycle.weekOfMonth)|trans }} {{ ('cycle.event_date.day.' ~ cityCycle.dayOfWeek)|trans }}
+                                        im Monat
+                                    </dd>
+
+                                    <dt>
+                                        Uhrzeit
+                                    </dt>
+                                    <dd>
+                                        {{ cityCycle.time|date('H:i', 'UTC') }} Uhr
+                                    </dd>
+
+                                    <dt>
+                                        Treffpunkt
+                                    </dt>
+                                    <dd>
+                                        {% if cityCycle.location %}
+                                            {{ cityCycle.location }}
+                                        {% else %}
+                                            <em>nicht definiert</em>
+                                        {% endif %}
+                                    </dd>
+
+                                    <dt>
+                                        Gültigkeitsbeginn
+                                    </dt>
+                                    <dd>
+                                        {% if cityCycle.validFrom %}
+                                            {{ cityCycle.validFrom|date('d.m.Y') }}
+                                        {% else %}
+                                            <em>nicht definiert</em>
+                                        {% endif %}
+                                    </dd>
+
+                                    <dt>
+                                        Gültigkeitsende
+                                    </dt>
+                                    <dd>
+                                        {% if cityCycle.validUntil %}
+                                            {{ cityCycle.validUntil|date('d.m.Y') }}
+                                        {% else %}
+                                            <em>nicht definiert</em>
+                                        {% endif %}
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2>
+                                    Touren automatisch generieren
+                                </h2>
+
+                                <p class="lead">
+                                    Du kannst anhand des ausgewählten Turnus’ die Touren in deiner Stadt generieren
+                                    lassen.</p>
+
+                                <div class="alert alert-info">
+                                    <p>
+                                        Normalerweise wird diese Generierung in regelmäßigen Abständen serverseitig
+                                        ausgeführt und du musst überhaupt nichts weiter dafür tun.</p>
+
+                                    <p>
+                                        Diese „manuelle Generierung“ ist für dich in der Regel nur dann interessant,
+                                        wenn du
+                                    <ul>
+                                        <li>
+                                            gerade einen neuen Turnus angelegt hast und schon einmal für die nächsten
+                                            Monate Touren anlegen möchtest, bevor die automatische Generierung beginnt
+                                            oder
+                                        </li>
+                                        <li>
+                                            du oder jemand anders <strong>{{ cityCycle.city.city }}</strong> in unserer
+                                            Datenbank
+                                            angelegt hast und nun rückwirkend die Touren generieren lassen möchtest,
+                                            weil es deine Critical Mass bereits viel länger gibt als den Eintrag in
+                                            unserer Datenbank
+                                        </li>
+                                    </ul>
+                                    </p>
+                                </div>
+
+                                <p>
+                                    Mit den folgenden beiden Eingabefeldern kannst du einen Zeitraum definieren, für den
+                                    die Touren anhand der Daten aus dem Turnus generiert werden sollen. Der Generator
+                                    wird Monat für Monat eine einzelne Tour anlegen. Du kannst die Touren im nächsten
+                                    Schritt in einer Vorschau überprüfen, bevor sie abgespeichert werden.
+                                </p>
+                            </div>
+                        </div>
+                        {{ form_start(form) }}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group{% if form_errors(form.fromDate) %} has-error has-feedback{% endif %}">
+                                    <label class="control-label" for="">Startdatum:</label>
+                                    {{ form_errors(form.fromDate) }}
+                                    {{ form_widget(form.fromDate) }}
+                                    <p class="help-block">
+                                        Bitte im Format <code>dd.mm.jjjj</code> angeben.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group{% if form_errors(form.untilDate) %} has-error has-feedback{% endif %}">
+                                    <label class="control-label" for="">Enddatum:</label>
+                                    {{ form_errors(form.untilDate) }}
+                                    {{ form_widget(form.untilDate) }}
+                                    <p class="help-block">
+                                        Bitte im Format <code>dd.mm.jjjj</code> angeben.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    {{ form_widget(form.submit, { 'label': 'Weiter zur Vorschau', 'attr' : { 'class': 'btn btn-success pull-right'} }) }}
+                                </div>
+                            </div>
+                        </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

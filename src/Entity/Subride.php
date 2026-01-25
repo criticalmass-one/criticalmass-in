@@ -2,122 +2,78 @@
 
 namespace App\Entity;
 
+use App\Criticalmass\Router\Attribute as Routing;
 use App\EntityInterface\AuditableInterface;
-use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\EntityInterface\RouteableInterface;
+use App\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation as JMS;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\Ignore;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Criticalmass\Router\Annotation as Routing;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\SubrideRepository")
- * @ORM\Table(name="subride")
- * @JMS\ExclusionPolicy("all")
- */
+#[ORM\Table(name: 'subride')]
+#[ORM\Entity(repositoryClass: 'App\Repository\SubrideRepository')]
 class Subride implements AuditableInterface, SocialNetworkProfileAble, RouteableInterface
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @JMS\Expose
-     * @Routing\RouteParameter(name="subrideId")
-     */
-    protected $id;
+    #[Routing\RouteParameter(name: 'id')]
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[Groups(['subride-list', 'extended-subride-list'])]
+    protected ?int $id = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="subrides")
-     * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
-     * @JMS\Expose
-     * @Routing\RouteParameter(name="rideIdentifier")
-     * @Routing\RouteParameter(name="citySlug")
-     */
-    protected $ride;
+    #[Routing\RouteParameter(name: 'rideIdentifier')]
+    #[Routing\RouteParameter(name: 'citySlug')]
+    #[ORM\ManyToOne(targetEntity: 'Ride', inversedBy: 'subrides')]
+    #[ORM\JoinColumn(name: 'ride_id', referencedColumnName: 'id')]
+    #[Groups(['extended-subride-list'])]
+    protected ?Ride $ride = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity="SocialNetworkProfile", mappedBy="subride", cascade={"persist", "remove"})
-     */
-    protected $socialNetworkProfiles;
+    #[ORM\OneToMany(targetEntity: 'SocialNetworkProfile', mappedBy: 'subride', cascade: ['persist', 'remove'])]
+    #[Ignore]
+    protected Collection $socialNetworkProfiles;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\NotBlank()
-     * @JMS\Expose
-     */
-    protected $title;
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['subride-list', 'extended-subride-list'])]
+    protected ?string $title = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @JMS\Expose
-     */
-    protected $description;
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(['subride-list', 'extended-subride-list'])]
+    protected ?string $description = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     * @JMS\Expose
-     */
-    protected $dateTime;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Groups(['subride-list', 'extended-subride-list'])]
+    protected ?\DateTime $dateTime = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=false)
-     * @JMS\Expose
-     */
-    protected $createdAt;
+    #[ORM\Column(type: 'datetime', nullable: false)]
+    #[Groups(['subride-list', 'extended-subride-list'])]
+    protected \DateTime $createdAt;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @JMS\Expose
-     */
-    protected $updatedAt;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Groups(['subride-list', 'extended-subride-list'])]
+    protected ?\DateTime $updatedAt = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\NotBlank()
-     * @JMS\Expose
-     */
-    protected $location;
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['subride-list', 'extended-subride-list'])]
+    protected ?string $location = null;
 
-    /**
-     * @ORM\Column(type="float")
-     * @JMS\Expose
-     */
-    protected $latitude;
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['subride-list', 'extended-subride-list'])]
+    protected ?float $latitude = null;
 
-    /**
-     * @ORM\Column(type="float")
-     * @JMS\Expose
-     */
-    protected $longitude;
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['subride-list', 'extended-subride-list'])]
+    protected ?float $longitude = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Url()
-     * @JMS\Expose
-     */
-    protected $facebook;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Url()
-     * @JMS\Expose
-     */
-    protected $twitter;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Url()
-     * @JMS\Expose
-     */
-    protected $url;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="subrides")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
-    protected $user;
+    #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'subrides')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    #[Ignore]
+    protected ?User $user = null;
 
     public function __construct()
     {
@@ -160,11 +116,8 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
         return $this->description;
     }
 
-    /**
-     * @JMS\VirtualProperty
-     * @JMS\SerializedName("timestamp")
-     * @JMS\Type("integer")
-     */
+    #[SerializedName('timestamp')]
+    #[Groups(['subride-list', 'extended-subride-list'])]
     public function getTimestamp(): int
     {
         return (int) $this->dateTime->format('U');
@@ -218,61 +171,7 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
         return $this->longitude;
     }
 
-    /**
-     * @deprecated
-     */
-    public function setFacebook(string $facebook = null): Subride
-    {
-        $this->facebook = $facebook;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function getFacebook(): ?string
-    {
-        return $this->facebook;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function setTwitter(string $twitter = null): Subride
-    {
-        $this->twitter = $twitter;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function getTwitter(): ?string
-    {
-        return $this->twitter;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function setUrl(string $url = null): Subride
-    {
-        $this->url = $url;
-
-        return $this;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function getUrl(): ?string
-    {
-        return $this->url;
-    }
-
-    public function setRide(Ride $ride = null): Subride
+    public function setRide(?Ride $ride = null): Subride
     {
         $this->ride = $ride;
 
@@ -284,7 +183,7 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
         return $this->ride;
     }
 
-    public function setUser(User $user = null): Subride
+    public function setUser(?User $user = null): Subride
     {
         $this->user = $user;
 
@@ -308,7 +207,7 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
         return $this->createdAt;
     }
 
-    public function setUpdatedAt(\DateTime $updatedAt = null): Subride
+    public function setUpdatedAt(?\DateTime $updatedAt = null): Subride
     {
         $this->updatedAt = $updatedAt;
 

@@ -4,5 +4,5 @@ namespace App\Criticalmass\ViewStorage\BlackList;
 
 interface BlackListInterface
 {
-    public function isBlackListed(): bool;
+    public function isBlackListed(?string $userAgent = null): bool;
 }

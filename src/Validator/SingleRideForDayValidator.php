@@ -3,18 +3,15 @@
 namespace App\Validator;
 
 use App\Entity\Ride;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 class SingleRideForDayValidator extends ConstraintValidator
 {
-    /** @var RegistryInterface $registry */
-    protected $registry;
-
-    public function __construct(RegistryInterface $registry)
+    public function __construct(protected ManagerRegistry $registry)
     {
-        $this->registry = $registry;
+
     }
 
     /**
@@ -22,6 +19,10 @@ class SingleRideForDayValidator extends ConstraintValidator
      */
     public function validate($ride, Constraint $constraint): void
     {
+        if ($ride->getSlug()) {
+            return;
+        }
+
         if (!$ride->getId()) {
             // ride is created, there may not be any rides at this date
             $maxRidesPerDay = 0;
@@ -41,16 +42,14 @@ class SingleRideForDayValidator extends ConstraintValidator
             if ($oldRide->getDateTime()->format('Y-m-d') === $ride->getDateTime()->format('Y-m-d')) {
                 ++$foundRidesForSameDay;
             }
+        }
 
-            if ($foundRidesForSameDay > $maxRidesPerDay) {
-                $this
-                    ->context
-                    ->buildViolation($constraint->message)
-                    ->atPath('dateTime')
-                    ->addViolation();
-
-                break;
-            }
+        if ($foundRidesForSameDay > $maxRidesPerDay) {
+            $this
+                ->context
+                ->buildViolation($constraint->message)
+                ->atPath('dateTime')
+                ->addViolation();
         }
     }
 }

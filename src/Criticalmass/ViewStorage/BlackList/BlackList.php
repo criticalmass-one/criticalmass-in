@@ -2,23 +2,12 @@
 
 namespace App\Criticalmass\ViewStorage\BlackList;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
+use Jaybizzle\CrawlerDetect\CrawlerDetect;
 
 class BlackList implements BlackListInterface
 {
-    /** @var Request $request */
-    protected $request;
-
-    public function __construct(RequestStack $requestStack)
+    public function isBlackListed(?string $userAgent = null): bool
     {
-        $this->request = $requestStack->getMasterRequest();
-    }
-
-    public function isBlackListed(): bool
-    {
-        $hostname = $this->request->getHost();
-
-        return strpos($hostname, 'uptimerobot.com') !== false;
+        return (new CrawlerDetect())->isCrawler($userAgent);
     }
 }

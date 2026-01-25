@@ -2,37 +2,24 @@
 
 namespace App\Controller\Api;
 
-use FOS\RestBundle\Controller\FOSRestController;
-use JMS\Serializer\Context;
-use JMS\Serializer\DeserializationContext;
-use JMS\Serializer\SerializationContext;
-use JMS\Serializer\Serializer;
+use App\Controller\AbstractController;
+use App\Criticalmass\Api\Errors;
+use App\Serializer\CriticalSerializerInterface;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-abstract class BaseController extends FOSRestController
+abstract class BaseController extends AbstractController
 {
-    protected function getDeserializationContext(): DeserializationContext
+    public function __construct(
+        protected readonly ManagerRegistry $managerRegistry,
+        protected readonly CriticalSerializerInterface $serializer
+    )
     {
-        $deserializationContext = $this->initSerializerContext(new DeserializationContext());
 
-        return $deserializationContext;
     }
 
-    protected function getSerializationContext(): SerializationContext
-    {
-        $serializationContext = $this->initSerializerContext(new SerializationContext());
-
-        return $serializationContext;
-    }
-
-    protected function initSerializerContext(Context $context): Context
-    {
-        $context->setSerializeNull(true);
-
-        return $context;
-    }
-
-    protected function deserializeRequest(Request $request, Serializer $serializer, string $modelClass)
+    protected function deserializeRequest(Request $request, string $modelClass)
     {
         $content = null;
 
@@ -42,6 +29,18 @@ abstract class BaseController extends FOSRestController
             $content = $request->getContent();
         }
 
-        return $serializer->deserialize($content, $modelClass, 'json');
+        return $this->serializer->deserialize($content, $modelClass, 'json');
+    }
+
+    protected function createErrors(int $statusCode, array $errorMessages): JsonResponse
+    {
+        $error = new Errors($statusCode, $errorMessages);
+
+        return new JsonResponse($this->serializer->serialize($error, 'json'), $statusCode);
+    }
+
+    protected function createStandardResponse($responseObject, array $context = [], int $httpStatus = JsonResponse::HTTP_OK, array $headerList = []): JsonResponse
+    {
+        return new JsonResponse($this->serializer->serialize($responseObject, 'json', $context), $httpStatus, $headerList, true);
     }
 }

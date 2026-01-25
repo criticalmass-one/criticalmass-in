@@ -6,13 +6,13 @@ use App\Entity\Participation;
 use App\Entity\Ride;
 use App\Entity\User;
 use App\Event\Participation\ParticipationCreatedEvent;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class ParticipationManager implements ParticipationManagerInterface
 {
-    /** @var RegistryInterface $registry */
+    /** @var ManagerRegistry $registry */
     protected $registry;
 
     /** @var TokenStorageInterface $tokenStorage */
@@ -21,7 +21,7 @@ class ParticipationManager implements ParticipationManagerInterface
     /** @var EventDispatcherInterface $eventDispatcher */
     protected $eventDispatcher;
 
-    public function __construct(RegistryInterface $registry, TokenStorageInterface $tokenStorage, EventDispatcherInterface $eventDispatcher)
+    public function __construct(ManagerRegistry $registry, TokenStorageInterface $tokenStorage, EventDispatcherInterface $eventDispatcher)
     {
         $this->registry = $registry;
         $this->tokenStorage = $tokenStorage;
@@ -41,7 +41,7 @@ class ParticipationManager implements ParticipationManagerInterface
         $em->persist($participation);
         $em->flush();
 
-        $this->eventDispatcher->dispatch(ParticipationCreatedEvent::NAME, new ParticipationCreatedEvent($participation));
+        $this->eventDispatcher->dispatch(new ParticipationCreatedEvent($participation), ParticipationCreatedEvent::NAME);
 
         return $participation;
     }

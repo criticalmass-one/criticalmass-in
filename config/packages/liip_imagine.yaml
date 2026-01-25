@@ -1,7 +1,7 @@
 liip_imagine:
     resolvers:
-       default:
-          web_path: ~
+        default:
+            web_path: ~
     driver: imagick
 
     loaders:
@@ -20,13 +20,8 @@ liip_imagine:
         frontpage_teaser_flysystem_loader:
             flysystem:
                 filesystem_service:  oneup_flysystem.flysystem_frontpage_teaser_filesystem
-        blogpost_teaser_flysystem_loader:
-            flysystem:
-                filesystem_service:  oneup_flysystem.flysystem_blogpost_teaser_filesystem
 
     filter_sets:
-        cache: ~
-
         gallery_photo_thumb:
             data_loader: photo_flysystem_loader
             quality: 40
@@ -37,8 +32,8 @@ liip_imagine:
             quality: 60
             filters:
                 thumbnail: { size: [1600, 1600], mode: inset }
-                watermark:
-                    image: ../public/images/watermark/criticalmass.png
+                watermark_image:
+                    image: ./public/images/watermark/criticalmass.png
                     size: 0.15
                     position: bottomright
         gallery_photo_blurred:
@@ -52,8 +47,8 @@ liip_imagine:
             quality: 60
             filters:
                 thumbnail: { size: [2000, 2000], mode: inset }
-                watermark:
-                    image: ../public/images/watermark/criticalmass.png
+                watermark_image:
+                    image: ./public/images/watermark/criticalmass.png
                     size: 0.15
                     position: bottomright
 
@@ -103,12 +98,6 @@ liip_imagine:
 
         frontpage_teaser_large:
             data_loader: frontpage_teaser_flysystem_loader
-            quality: 75
-            filters:
-                thumbnail: { size: [2000, 2000], mode: inset }
-
-        blogpost_teaser:
-            data_loader: blogpost_teaser_flysystem_loader
             quality: 75
             filters:
                 thumbnail: { size: [2000, 2000], mode: inset }

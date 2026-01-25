@@ -2,185 +2,259 @@
 
 namespace App\Controller\Api;
 
-use App\Criticalmass\Util\DateTimeUtil;
+use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
+use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
+use App\Criticalmass\EntityMerger\EntityMergerInterface;
 use App\Entity\City;
-use App\Entity\CitySlug;
 use App\Entity\Ride;
-use App\Traits\RepositoryTrait;
-use App\Traits\UtilTrait;
-use FOS\RestBundle\Context\Context;
-use FOS\RestBundle\View\View;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Validator\ConstraintViolation;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class RideController extends BaseController
 {
-    use RepositoryTrait;
-    use UtilTrait;
-
     /**
      * Retrieve information about a ride identified by <code>rideIdentifier</code> of a city identified by <code>citySlug</code>.
      *
      * As the parameter <code>citySlug</code> is just a string like <code>hamburg-harburg</code> or <code>muenchen</code> the parameter <code>rideIdentifier</code> is either the date of the ride like <code>2011-06-24</code> or a special identifier like <code>kidical-mass-hamburg-september-2019</code>.
-     *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Returns ride details",
-     *  section="Ride"
-     * )
-     * @ParamConverter("ride", class="App:Ride")
      */
-    public function showAction(Ride $ride): Response
+    #[Route(path: '/api/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_show', methods: ['GET'], priority: 170)]
+    #[OA\Tag(name: 'Ride')]
+    #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Provide a city slug', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'rideIdentifier', in: 'path', description: 'Identify the requested ride', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\Response(response: 200, description: 'Returned when successful')]
+    public function showAction(Ride $ride): JsonResponse
     {
-        $view = View::create();
-        $view
-            ->setData($ride)
-            ->setFormat('json')
-            ->setStatusCode(200);
+        $context = ['groups' => 'ride-details'];
 
-        return $this->handleView($view);
+        return $this->createStandardResponse($ride, $context);
     }
 
     /**
      * Retrieve information about the current ride of a city identified by <code>citySlug</code>.
-     *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Returns details of the next ride in the city",
-     *  section="Ride"
-     * )
-     * @ParamConverter("city", class="App:City")
      */
-    public function showCurrentAction(Request $request, City $city): Response
+    #[Route(path: '/api/{citySlug}/current', name: 'caldera_criticalmass_rest_ride_show_current', methods: ['GET'], priority: 190)]
+    #[OA\Tag(name: 'Ride')]
+    #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Provide a city slug', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\Response(response: 200, description: 'Returned when successful')]
+    public function showCurrentAction(Request $request, City $city): JsonResponse
     {
-        $ride = $this->getRideRepository()->findCurrentRideForCity($city, (bool) $request->get('cycleMandatory', false), (bool) $request->get('slugsAllowd', true));
+        $cycleMandatory = $request->query->getBoolean('cycleMandatory', false);
+        $slugsAllowed = $request->query->getBoolean('slugsAllowed', true);
+
+        $ride = $this->managerRegistry->getRepository(Ride::class)->findCurrentRideForCity($city, $cycleMandatory, $slugsAllowed);
 
         if (!$ride) {
-            return new JsonResponse([], 200, []); // @todo this should return 404, but i have no clue how to handle multiple jquery requests then
+            return new JsonResponse([], JsonResponse::HTTP_OK, []);
         }
 
-        $view = View::create();
-        $view
-            ->setData($ride)
-            ->setFormat('json')
-            ->setStatusCode(200);
-
-        return $this->handleView($view);
+        return $this->createStandardResponse($ride);
     }
 
     /**
      * Get a list of critical mass rides.
      *
-     * This list may be limited to city or region by providing a city or region slug. You may also limit the list to a specific month or a specific day.
+     * You may specify your query with the following parameters.
      *
-     * If you do not provide <code>year</code> and <code>month</code>, results will be limited to the current month.
+     * <strong>List length</strong>
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Lists rides",
-     *  parameters={
-     *     {"name"="region", "dataType"="string", "required"=false, "description"="Provide a region slug"},
-     *     {"name"="city", "dataType"="string", "required"=false, "description"="Provide a city slug"},
-     *     {"name"="year", "dataType"="string", "required"=false, "description"="Limit the result set to this year. If not set, we will search in the current month."},
-     *     {"name"="month", "dataType"="string", "required"=false, "description"="Limit the result set to this year. Must be combined with 'year'. If not set, we will search in the current month."},
-     *     {"name"="day", "dataType"="string", "required"=false, "description"="Limit the result set to this day."}
-     *  },
-     *  section="Ride"
-     * )
+     * The length of your results defaults to 10. Use <code>size</code> to request more or less results.
+     *
+     * <strong>Regional query parameters</strong>
+     *
+     * <ul>
+     * <li><code>regionSlug</code>: Provide a slug like <code>schleswig-holstein</code> to retrieve only rides from cities of this region.</li>
+     * <li><code>citySlug</code>: Limit the resulting list to a city like <code>hamburg</code>, <code>new-york</code> or <code>muenchen</code>.</li>
+     * </ul>
+     *
+     * <strong>Date-related query parameters</strong>
+     *
+     * <ul>
+     * <li><code>year</code>: Retrieve only rides of the provided <code>year</code>.</li>
+     * <li><code>month</code>: Retrieve only rides of the provided <code>year</code> and <code>month</code>. This will only work in combination with the previous <code>year</code> parameter.</li>
+     * <li><code>day</code>: Limit the result list to a <code>day</code>. This parameter must be used with <code>year</code> and <code>month</code>.</li>
+     * </ul>
+     *
+     * <strong>Geo query parameters</strong>
+     *
+     * <ul>
+     * <li>Radius query: Specify <code>centerLatitude</code>, <code>centerLongitude</code> and a <code>radius</code> to retrieve all results within this circle.</li>
+     * <li>Bounding Box query: Fetch all rides in the box described by <code>bbNorthLatitude</code>, <code>bbEastLongitude</code> and <code>bbSouthLatitude</code>, <code>bbWestLongitude</code>.
+     * </ul>
+     *
+     * <strong>Ride Type parameters</strong>
+     *
+     * For <code>rideType</code>, specify any of the following:
+     *
+     * <ul>
+     * <li><code>critical_mass</code></li>
+     * <li><code>kidical_mass</code></li>
+     * <li><code>night_ride</code></li>
+     * <li><code>lunch_ride</code></li>
+     * <li><code>dawn_ride</code></li>
+     * <li><code>dusk_ride</code></li>
+     * <li><code>demonstration</code></li>
+     * <li><code>alleycat</code></li>
+     * <li><code>tour</code></li>
+     * <li><code>event</code></li>
+     * </ul>
+     *
+     * <strong>Order parameters</strong>
+     *
+     * Sort the resulting list with the parameter <code>orderBy</code> and choose from one of the following properties:
+     *
+     * <ul>
+     * <li><code>id</code></li>
+     * <li><code>slug</code></li>
+     * <li><code>title</code></li>
+     * <li><code>description</code></li>
+     * <li><code>socialDescription</code></li>
+     * <li><code>latitude</code></li>
+     * <li><code>longitude</code></li>
+     * <li><code>estimatedParticipants</code></li>
+     * <li><code>estimatedDuration</code></li>
+     * <li><code>estimatedDistance</code></li>
+     * <li><code>views</code></li>
+     * <li><code>dateTime</code></li>
+     * </ul>
+     *
+     * Specify the order direction with <code>orderDirection=asc</code> or <code>orderDirection=desc</code>.
+     *
+     * You may use the <code>distanceOrderDirection</code> parameter in combination with the radius query to sort the result list by the ride's distance to the center coord.
+     *
+     * Apply <code>startValue</code> to deliver a value to start your ordered list with.
      */
-    public function listAction(Request $request): Response
+    #[Route(path: '/api/ride', name: 'caldera_criticalmass_rest_ride_list', methods: ['GET'], priority: 200)]
+    #[OA\Tag(name: 'Ride')]
+    #[OA\Parameter(name: 'regionSlug', in: 'query', description: 'Provide a region slug', schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'citySlug', in: 'query', description: 'Provide a city slug', schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'rideType', in: 'query', description: 'Limit to a type of events', schema: new OA\Schema(type: 'array', items: new OA\Items(type: 'string')))]
+    #[OA\Parameter(name: 'year', in: 'query', description: 'Limit the result set to this year.', schema: new OA\Schema(type: 'integer'))]
+    #[OA\Parameter(name: 'month', in: 'query', description: 'Limit the result set to this month. Must be combined with year.', schema: new OA\Schema(type: 'integer'))]
+    #[OA\Parameter(name: 'day', in: 'query', description: 'Limit the result set to this day.', schema: new OA\Schema(type: 'integer'))]
+    #[OA\Parameter(name: 'centerLatitude', in: 'query', description: 'Latitude of a coordinate to search rides around in a given radius.', schema: new OA\Schema(type: 'number'))]
+    #[OA\Parameter(name: 'centerLongitude', in: 'query', description: 'Longitude of a coordinate to search rides around in a given radius.', schema: new OA\Schema(type: 'number'))]
+    #[OA\Parameter(name: 'radius', in: 'query', description: 'Radius to look around for rides.', schema: new OA\Schema(type: 'number'))]
+    #[OA\Parameter(name: 'bbEastLongitude', in: 'query', description: 'East longitude of a bounding box to look for rides.', schema: new OA\Schema(type: 'number'))]
+    #[OA\Parameter(name: 'bbWestLongitude', in: 'query', description: 'West longitude of a bounding box to look for rides.', schema: new OA\Schema(type: 'number'))]
+    #[OA\Parameter(name: 'bbNorthLatitude', in: 'query', description: 'North latitude of a bounding box to look for rides.', schema: new OA\Schema(type: 'number'))]
+    #[OA\Parameter(name: 'bbSouthLatitude', in: 'query', description: 'South latitude of a bounding box to look for rides.', schema: new OA\Schema(type: 'number'))]
+    #[OA\Parameter(name: 'orderBy', in: 'query', description: 'Choose a property to sort the list by.', schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'orderDirection', in: 'query', description: 'Sort ascending or descending.', schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'distanceOrderDirection', in: 'query', description: 'Enable distance sorting in combination with radius query.', schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'startValue', in: 'query', description: 'Start ordered list with provided value.', schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'extended', in: 'query', description: 'Set true to retrieve a more detailed list.', schema: new OA\Schema(type: 'boolean'))]
+    #[OA\Parameter(name: 'size', in: 'query', description: 'Length of resulting list. Defaults to 10.', schema: new OA\Schema(type: 'integer'))]
+    #[OA\Response(response: 200, description: 'Returned when successful')]
+    public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager): JsonResponse
     {
-        $region = null;
-        $city = null;
-        $dateTime = new \DateTime();
-        $fromDateTime = null;
-        $untilDateTime = null;
+        $queryParameterList = RequestToListConverter::convert($request);
+        $rideList = $dataQueryManager->query($queryParameterList, Ride::class);
 
-        if ($request->query->get('region')) {
-            $region = $this->getRegionRepository()->findOneBySlug($request->query->get('region'));
+        $groups = ['ride-list'];
 
-            if (!$region) {
-                throw $this->createNotFoundException('Region not found');
+        if ($request->query->has('extended') && true === $request->query->getBoolean('extended')) {
+            $groups[] = 'extended-ride-list';
+        }
+
+        return $this->createStandardResponse($rideList);
+    }
+
+    /**
+     * Creates a new ride.
+     */
+    #[Route(path: '/api/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_create', methods: ['PUT'], priority: 170)]
+    #[OA\Tag(name: 'Ride')]
+    #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city to assign the new created ride to', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'rideIdentifier', in: 'path', description: 'Identifier of the ride to be created', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\RequestBody(description: 'JSON representation of ride', required: true, content: new OA\JsonContent(type: 'object'))]
+    #[OA\Response(response: 200, description: 'Returned when successful')]
+    public function createRideAction(Request $request, City $city, ValidatorInterface $validator): JsonResponse
+    {
+        /** @var Ride $ride */
+        $ride = $this->deserializeRequest($request, Ride::class);
+
+        $ride->setCity($city);
+
+        if (!$ride->getDateTime()) {
+            $rideIdentifier = $request->get('rideIdentifier');
+
+            try {
+                $ride->setDateTime(new \DateTime($rideIdentifier));
+            } catch (\Exception $exception) {
+                if (!$ride->hasSlug()) {
+                    $ride->setSlug($rideIdentifier);
+                }
             }
         }
 
-        if ($request->query->get('city')) {
-            /** @var CitySlug $citySlug */
-            $citySlug = $this->getCitySlugRepository()->findOneBySlug($request->query->get('city'));
+        $constraintViolationList = $validator->validate($ride);
 
-            if ($citySlug) {
-                $city = $citySlug->getCity();
-            }
+        $errorList = [];
 
-            if (!$city) {
-                throw $this->createNotFoundException('City not found');
+        /** @var ConstraintViolation $constraintViolation */
+        foreach ($constraintViolationList as $constraintViolation) {
+            $errorList[$constraintViolation->getPropertyPath()] = $constraintViolation->getMessage();
+        }
+
+        if (0 < count($errorList)) {
+            return $this->createErrors(JsonResponse::HTTP_BAD_REQUEST, $errorList);
+        }
+
+        $manager = $this->managerRegistry->getManager();
+        $manager->persist($ride);
+        $manager->flush();
+
+        return $this->createStandardResponse($ride, ['groups' => ['ride-list']]);
+    }
+
+    /**
+     * Updates a ride.
+     */
+    #[Route(path: '/api/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_update', methods: ['POST'], priority: 170)]
+    #[OA\Tag(name: 'Ride')]
+    #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city to assign the updated ride to', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'rideIdentifier', in: 'path', description: 'Identifier of the ride to be updated', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\RequestBody(description: 'JSON representation of ride', required: true, content: new OA\JsonContent(type: 'object'))]
+    #[OA\Response(response: 200, description: 'Returned when successful')]
+    public function updateRideAction(Request $request, Ride $ride, ValidatorInterface $validator, EntityMergerInterface $entityMerger): JsonResponse
+    {
+        /** @var Ride $ride */
+        $updatedRide = $this->deserializeRequest($request, Ride::class);
+
+        $ride = $entityMerger->merge($updatedRide, $ride);
+
+        if (!$ride->getDateTime()) {
+            $rideIdentifier = $request->get('rideIdentifier');
+
+            try {
+                $ride->setDateTime(new \DateTime($rideIdentifier));
+            } catch (\Exception $exception) {
+                if (!$ride->hasSlug()) {
+                    $ride->setSlug($rideIdentifier);
+                }
             }
         }
 
-        if ($request->query->get('year') && $request->query->get('month') && $request->query->get('day')) {
-            try {
-                $dateTime = new \DateTime(
-                    sprintf('%d-%d-%d',
-                        $request->query->get('year'),
-                        $request->query->get('month'),
-                        $request->query->get('day')
-                    )
-                );
+        $constraintViolationList = $validator->validate($ride);
 
-                $fromDateTime = DateTimeUtil::getDayStartDateTime($dateTime);
-                $untilDateTime = DateTimeUtil::getDayEndDateTime($dateTime);
-            } catch (\Exception $e) {
-                throw $this->createNotFoundException('Date not found');
-            }
-        } elseif ($request->query->get('year') && $request->query->get('month')) {
-            try {
-                $dateTime = new \DateTime(
-                    sprintf('%d-%d-01',
-                        $request->query->get('year'),
-                        $request->query->get('month')
-                    )
-                );
+        $errorList = [];
 
-                $fromDateTime = DateTimeUtil::getMonthStartDateTime($dateTime);
-                $untilDateTime = DateTimeUtil::getMonthEndDateTime($dateTime);
-            } catch (\Exception $e) {
-                throw $this->createNotFoundException('Date not found');
-            }
-        } elseif ($request->query->get('year')) {
-            try {
-                $dateTime = new \DateTime(
-                    sprintf('%d-01-01',
-                        $request->query->get('year')
-                    )
-                );
-
-                $fromDateTime = DateTimeUtil::getYearStartDateTime($dateTime);
-                $untilDateTime = DateTimeUtil::getYearEndDateTime($dateTime);
-            } catch (\Exception $e) {
-                throw $this->createNotFoundException('Date not found');
-            }
+        /** @var ConstraintViolation $constraintViolation */
+        foreach ($constraintViolationList as $constraintViolation) {
+            $errorList[$constraintViolation->getPropertyPath()] = $constraintViolation->getMessage();
         }
 
-        $rideList = $this->getRideRepository()->findRides(
-            $fromDateTime,
-            $untilDateTime,
-            $city,
-            $region
-        );
+        if (0 < count($errorList)) {
+            return $this->createErrors(JsonResponse::HTTP_BAD_REQUEST, $errorList);
+        }
 
-        $context = new Context();
-        $context->addGroup('ride-list');
+        $manager = $this->managerRegistry->getManager();
+        $manager->flush();
 
-        $view = View::create();
-        $view
-            ->setData($rideList)
-            ->setFormat('json')
-            ->setStatusCode(200)
-            ->setContext($context);
-
-        return $this->handleView($view);
+        return $this->createStandardResponse($ride, ['groups' => ['ride-list']]);
     }
 }

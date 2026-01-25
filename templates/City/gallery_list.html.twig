@@ -1,22 +1,12 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Städte-Übersicht{% endblock %}
 
 {% block breadcrumb %}
-
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
-    <li>
-        <a href="{{ objectPath(city) }}">
-            {{ city.city }}
-        </a>
-    </li>
-    <li class="active">
-        Foto-Galerien
-    </li>
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item(city.city, object_path(city)) }}
+    {{ breadcrumb.active('Foto-Galerien') }}
 {% endblock %}
     
 {% block content %}
@@ -54,17 +44,17 @@
                     {% for key, ride in result.rides %}
                         <tr class="ride">
                             <td>
-                                <a href="{{ objectPath(ride) }}">
+                                <a href="{{ object_path(ride) }}">
                                     {{ ride.dateTime.format('d.m.Y') }}
                                 </a>
                             </td>
                             <td>
-                                <a href="{{ objectPath(ride) }}">
+                                <a href="{{ object_path(ride) }}">
                                     {{ ride.title }}
                                 </a>
                             </td>
                             <td>
-                                <a href="{{ objectPath(ride, 'caldera_criticalmass_photo_ride_list') }}">
+                                <a href="{{ object_path(ride, 'caldera_criticalmass_photo_ride_list') }}">
                                     {{ result.counter[key] }}
                                 </a>
                             </td>

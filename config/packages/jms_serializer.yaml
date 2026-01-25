@@ -1,7 +1,0 @@
-jms_serializer:
-    visitors:
-        xml:
-            format_output: '%kernel.debug%'
-    property_naming:
-        separator:  ~
-        lower_case: false

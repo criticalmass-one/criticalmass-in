@@ -1,14 +1,18 @@
-criticalmass:
-     resource: routes/criticalmass/routing.yml
+nelmio_api_doc:
+  resource: ./routes/nelmio_api_doc.yaml
+
+api_controllers:
+  resource: ../src/Controller/Api/
+  type: attribute
 
 facebook_login:
-    path: /login/check-facebook
+  path: /login/check-facebook
 
 strava_login:
-    path: /login/check-strava
+  path: /login/check-strava
 
-runkeeper_login:
-    path: /login/check-runkeeper
+controllers:
+  resource: ../src/Controller/
+  type: attribute
+  exclude: ../src/Controller/Api/
 
-twitter_login:
-    path: /login/check-twitter

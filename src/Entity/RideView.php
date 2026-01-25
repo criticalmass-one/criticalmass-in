@@ -5,35 +5,24 @@ namespace App\Entity;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewEntity;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="ride_view")
- * @ORM\Entity()
- */
+#[ORM\Table(name: 'ride_view')]
+#[ORM\Entity]
 class RideView implements ViewEntity
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    protected ?int $id = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="ride_views")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
-    protected $user;
+    #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'ride_views')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    protected ?User $user = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="ride_views")
-     * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
-     */
-    protected $ride;
+    #[ORM\ManyToOne(targetEntity: Ride::class, inversedBy: 'viewRelation')]
+    protected ?Ride $ride = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $dateTime;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    protected \DateTime $dateTime;
 
     public function __construct()
     {
@@ -57,7 +46,7 @@ class RideView implements ViewEntity
         return $this->user;
     }
 
-    public function setUser(User $user = null): ViewEntity
+    public function setUser(?User $user = null): ViewEntity
     {
         $this->user = $user;
 
@@ -81,7 +70,7 @@ class RideView implements ViewEntity
         return $this->ride;
     }
 
-    public function setRide(Ride $ride): RideView
+    public function setRide(?Ride $ride): RideView
     {
         $this->ride = $ride;
 

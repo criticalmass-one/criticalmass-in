@@ -1,0 +1,67 @@
+{% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
+
+{% block breadcrumb %}
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item(city.city, object_path(city)) }}
+    {{ breadcrumb.active('Soziale Netzwerke') }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {{ include('City/Includes/_tabs.html.twig', { tab: 'socialnetwork_city_list_items' }) }}
+
+        <div class="row">
+            <div class="col-md-12">
+                {% if itemList|length == 0 %}
+                    <div class="alert alert-info">
+                        <p>
+                            <strong>Schade!</strong> Entweder veröffentlicht niemand von der {{ city.title }} neue
+                            Beiträge in sozialen Netzerken oder wir waren nicht in der Lage, die Beiträge abzurufen.
+                        </p>
+
+                        <p>
+                            Wenn du für {{ city.city }} <a
+                                    href="{{ object_path(city, 'criticalmass_socialnetwork_city_list') }}">gesellschaftliche
+                                Netzwerke</a> konfigurierst, werden Beiträge aus diesen Netzwerken hier angezeigt.
+                        </p>
+                    </div>
+                {% endif %}
+
+                {% for item in itemList %}
+                    <div class="row margin-bottom-medium">
+                        <div class="col-md-3 text-center">
+                            <p>
+                                <i class="fab fa-3x {{ network_icon(item.socialNetworkProfile.network) }}"></i>
+                            </p>
+
+                            <a href="{{ item.permalink }}">
+                                <time title="{{ item.dateTime|date('d.m.Y H:i') }} Uhr">
+                                    {{ item.dateTime|time_ago_in_words }}
+                                </time>
+                            </a>
+                        </div>
+                        <div class="col-md-9">
+                            <h3 class="no-margin-top">
+                                <a href="{{ item.permalink }}">
+                                    {{ item.title }}
+                                </a>
+                            </h3>
+
+                            <p>
+                                {{ item.text|trim_intro|raw }}
+                            </p>
+
+                            <p class="text-right">
+                                <a href="{{ item.permalink }}" title="zum Beitrag" class="btn btn-primary">
+                                    <i class="far fa-hand-point-right"></i>
+                                    Weiterlesen
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -7,6 +7,6 @@ use App\Entity\User;
 interface StreakGeneratorInterface
 {
     public function setUser(User $user): StreakGeneratorInterface;
-    public function calculateCurrentStreak(\DateTime $currentDateTime = null, bool $includeCurrentMonth = false): ?Streak;
+    public function calculateCurrentStreak(?\DateTime $currentDateTime = null, bool $includeCurrentMonth = false): ?Streak;
     public function calculateLongestStreak(): ?Streak;
 }

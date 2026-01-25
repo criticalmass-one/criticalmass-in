@@ -47,7 +47,7 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <div class="btn-group" role="group" aria-label="...">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         Abbrechen
                     </button>
                     <button type="submit" id="button-submit-post" class="btn btn-success">
@@ -59,10 +59,6 @@
         </div>
 
         {{ form_end(form) }}
-
-        <script type="text/javascript">
-            CriticalMass.loadModule('WritePost', '#form-post');
-        </script>
         {% endif %}
     </div>
 {% endblock %}

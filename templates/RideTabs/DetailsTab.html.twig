@@ -1,41 +1,47 @@
-<div role="tabpanel" class="tab-pane active" id="details">
+<div role="tabpanel" class="tab-pane fade show active" id="details" aria-labelledby="details-tab">
     <div class="row">
         <div class="col-md-12">
-            <div class="btn-group pull-right" style="margin-top: 16px;">
+            <div class="btn-group float-end" style="margin-top: 16px;">
             {% if app.user %}
-                <a class="btn btn-success" href="{{ objectPath(ride, 'caldera_criticalmass_ride_edit') }}" title="Tour bearbeiten">
-                    <i class="far fa-cogs"></i>
-                    Tour editieren
-                </a>
-                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
+                {% if not ride.enabled %}
+                    <a class="btn btn-success" href="{{ object_path(ride, 'caldera_criticalmass_ride_enable') }}"
+                       title="Tour freischalten">
+                        <i class="far fa-unlock-alt"></i>
+                        Tour wieder aktivieren
+                    </a>
+                {% else %}
+                    <a class="btn btn-success" href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}"
+                       title="Tour bearbeiten">
+                        <i class="far fa-cogs"></i>
+                        Tour editieren
+                    </a>
+                {% endif %}
+                <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
-                    <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
+                    <span class="visually-hidden">Toggle Dropdown</span>
                 </button>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="{{ objectPath(ride, 'criticalmass_socialnetwork_ride_list') }}">
+                        <a class="dropdown-item" href="{{ object_path(ride, 'criticalmass_socialnetwork_ride_list') }}">
                             soziale Netzwerke verwalten
                         </a>
                     </li>
 
                     <li>
-                        <a href="{{ objectPath(ride, 'caldera_criticalmass_ride_socialpreview') }}">
+                        <a class="dropdown-item" href="{{ object_path(ride, 'caldera_criticalmass_ride_socialpreview') }}">
                             Vorschau für soziale Netzwerke
                         </a>
                     </li>
 
                     {% if ride.enabled %}
 
-                    <li class="divider">
+                        <li><hr class="dropdown-divider"></li>
 
-                    </li>
-
-                    <li>
-                        <a href="#" data-toggle="modal" data-target="#disable-modal">
-                            diese Tour deaktivieren
-                        </a>
-                    </li>
+                        <li>
+                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#disable-modal">
+                                diese Tour deaktivieren
+                            </a>
+                        </li>
                     {% endif %}
                 </ul>
             {% else %}
@@ -54,13 +60,7 @@
     {% include 'Ride/Includes/_disable.html.twig' with { 'ride': ride, 'disableForm': disableForm } %}
 
     <div class="row">
-        <div class="col-xs-12 col-sm-4 col-sm-push-8">
-            <div class="row">
-                <div class="col-md-12">
-                    {% include 'Ride/Includes/_live.html.twig' with { 'ride': ride } %}
-                </div>
-            </div>
-
+        <div class="col-12 col-sm-4 order-sm-last">
             <div class="row">
                 <div class="col-md-12">
                     {% include 'Ride/Includes/_rideDetails.html.twig' with { 'ride': ride, 'weatherForecast': weatherForecast, 'location': location } %}
@@ -81,15 +81,15 @@
         </div>
 
         {% if ride.description and ride.enabled %}
-            <div itemprop="description" class="col-xs-12 col-sm-8 col-sm-pull-4">
+            <div itemprop="description" class="col-12 col-sm-8 order-sm-first">
                 {{ ride.description|markdown }}
             </div>
         {% elseif ride.enabled %}
-            <div class="col-xs-12 col-sm-8 col-sm-pull-4">
+            <div class="col-12 col-sm-8 order-sm-first">
                 <div class="alert alert-info">
                     <strong>Huch?</strong>
                     Schade, bislang hat noch niemand Informationen über diese Tour hinterlegt. Wenn du Lust und Zeit
-                    hast, kannst du {{ ride.title }} <a href="{{ objectPath(ride, 'caldera_criticalmass_ride_edit') }}">hier editieren</a>:
+                    hast, kannst du {{ ride.title }} <a href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}">hier editieren</a>:
 
                     <ul>
                         <li>
@@ -106,7 +106,7 @@
                     </ul>
 
                     <p class="text-center margin-top-medium">
-                        <a href="{{ objectPath(ride, 'caldera_criticalmass_ride_edit') }}"
+                        <a href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}"
                            class="btn btn-primary btn-lg">
                             Tour editieren
                         </a>
@@ -114,43 +114,47 @@
                 </div>
             </div>
         {% else %}
-            <div class="col-xs-12 col-sm-8 col-sm-pull-4">
+            <div class="col-12 col-sm-8 order-sm-first">
                 <div class="alert alert-warning" id="ride-disabled-reason">
                     <p>
                         <strong>
                             Diese Tour wurde als abgesagt markiert:
                         </strong>
+
+                        {% if ride.disabledReason == 'DUPLICATE'|enum_constant('RideDisabledReasonType') %}
+                            Diese Tour ist ein Duplikat einer anderen Tour dieses Monats.
+                        {% endif %}
+
+                        {% if ride.disabledReason == 'WRONG_WEBSITE_HANDLING'|enum_constant('RideDisabledReasonType') %}
+                            Diese Tour wurde mit falschen Daten angelegt.
+                        {% endif %}
+
+                        {% if ride.disabledReason == 'WRONG_AUTO_GNERATION'|enum_constant('RideDisabledReasonType') %}
+                            Diese Tour wurde fehlerhafterweise automatisch generiert.
+                        {% endif %}
+
+                        {% if ride.disabledReason == 'CANCELLED_WEATHER'|enum_constant('RideDisabledReasonType') %}
+                            Diese Tour wurde witterungsbedingt abgesagt.
+                        {% endif %}
+
+                        {% if ride.disabledReason == 'CANCELLED_PARTICIPANTS'|enum_constant('RideDisabledReasonType') %}
+                            Diese Tour fand aufgrund geringer Teilnehmerzahlen nicht statt.
+                        {% endif %}
+
+                        {% if ride.disabledReason == 'CANCELLED_AUTHORITIES'|enum_constant('RideDisabledReasonType') %}
+                            Diese Tour wurde von der Polizei oder anderen Behörden untersagt.
+                        {% endif %}
+
+                        {% if ride.disabledReason == 'CANCELLED'|enum_constant('RideDisabledReasonType') %}
+                            Diese Tour wurde abgesagt.
+                        {% endif %}
                     </p>
 
-                    <p>
-                    {% if ride.disabledReason == 'DUPLICATE'|enum_constant('RideDisabledReasonType') %}
-                        Diese Tour ist ein Duplikat einer anderen Tour dieses Monats.
+                    {% if ride.disabledReasonMessage %}
+                        <p>
+                            {{ ride.disabledReasonMessage|markdown }}
+                        </p>
                     {% endif %}
-
-                    {% if ride.disabledReason == 'WRONG_WEBSITE_HANDLING'|enum_constant('RideDisabledReasonType') %}
-                        Diese Tour wurde mit falschen Daten angelegt.
-                    {% endif %}
-
-                    {% if ride.disabledReason == 'WRONG_AUTO_GNERATION'|enum_constant('RideDisabledReasonType') %}
-                        Diese Tour wurde fehlerhafterweise automatisch generiert.
-                    {% endif %}
-
-                    {% if ride.disabledReason == 'CANCELLED_WEATHER'|enum_constant('RideDisabledReasonType') %}
-                        Diese Tour wurde witterungsbedingt abgesagt.
-                    {% endif %}
-
-                    {% if ride.disabledReason == 'CANCELLED_PARTICIPANTS'|enum_constant('RideDisabledReasonType') %}
-                        Diese Tour fand aufgrund geringer Teilnehmerzahlen nicht statt.
-                    {% endif %}
-
-                    {% if ride.disabledReason == 'CANCELLED_AUTHORITIES'|enum_constant('RideDisabledReasonType') %}
-                        Diese Tour wurde von der Polizei oder anderen Behörden untersagt.
-                    {% endif %}
-
-                    {% if ride.disabledReason == 'CANCELLED'|enum_constant('RideDisabledReasonType') %}
-                        Diese Tour wurde abgesagt.
-                    {% endif %}
-                    </p>
                 </div>
             </div>
         {% endif %}

@@ -9,7 +9,7 @@
         <div class="col-md-12">
             {% if pastRide and app.getUser() %}
                 <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
-                    <a class="btn btn-success" href="#" data-toggle="modal" data-target="#modalEstimate"
+                    <a class="btn btn-success" href="#" data-bs-toggle="modal" data-bs-target="#modalEstimate"
                        title="Tour schätzen"><i class="halflings signal"></i> Tour schätzen</a>
                 </div>
             {% endif %}
@@ -37,16 +37,16 @@
             <td>
                 {% include('AppBundle:Common/Ride:RideParticipants.html.twig') with { 'ride': ride } %}
             </td>
-            <td>{% if app.getUser() %}<a href="#" data-toggle="modal" data-target="#modalEstimate"
+            <td>{% if app.getUser() %}<a href="#" data-bs-toggle="modal" data-bs-target="#modalEstimate"
                                          title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>
         </tr>
         <tr>
             <th>Distanz</th>
-            <td>{{ ride.getEstimatedDistance()|round(2) }} Kilometer</td>
+            <td>{{ ride.getEstimatedDistance()|round(2) }}&nbsp;km</td>
             <td>
                 {% include('AppBundle:Common/Ride:RideDistance.html.twig') with { 'ride': ride } %}
             </td>
-            <td>{% if app.getUser() %}<a href="#" data-toggle="modal" data-target="#modalEstimate"
+            <td>{% if app.getUser() %}<a href="#" data-bs-toggle="modal" data-bs-target="#modalEstimate"
                                          title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>
         </tr>
         <tr>
@@ -55,12 +55,12 @@
             <td>
                 {% include('AppBundle:Common/Ride:RideDuration.html.twig') with { 'ride': ride } %}
             </td>
-            <td>{% if app.getUser() %}<a href="#" data-toggle="modal" data-target="#modalEstimate"
+            <td>{% if app.getUser() %}<a href="#" data-bs-toggle="modal" data-bs-target="#modalEstimate"
                                          title="Tour schätzen">Werte schätzen?</a>{% endif %}</td>
         </tr>
         <tr>
             <th>Durchschnittsgeschwindigkeit</th>
-            <td>{{ ride.getAverageVelocity()|round(2) }} Kilometer pro Stunde</td>
+            <td>{{ ride.getAverageVelocity()|round(2) }}&nbsp;km/h</td>
             <td></td>
             <td></td>
         </tr>

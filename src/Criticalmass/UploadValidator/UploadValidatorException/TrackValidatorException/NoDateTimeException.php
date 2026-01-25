@@ -4,5 +4,5 @@ namespace App\Criticalmass\UploadValidator\UploadValidatorException\TrackValidat
 
 class NoDateTimeException extends TrackValidatorException
 {
-    protected $message = 'Deine hochgeladene Datei enthält leider keine oder defekte Zeitstempel.';
+    protected $message = 'Deine hochgeladene Datei enthält leider keine oder defekte Zeitstempel. Bitte versuche deinen Gpx-Track so zu exportieren, dass die Zeitstempel erhalten bleiben.';
 }

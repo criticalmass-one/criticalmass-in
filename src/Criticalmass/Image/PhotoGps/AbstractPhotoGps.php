@@ -38,7 +38,7 @@ abstract class AbstractPhotoGps implements PhotoGpsInterface
         $this->loop = $loop;
     }
 
-    public function setDateTimeZone(\DateTimeZone $dateTimeZone = null): PhotoGpsInterface
+    public function setDateTimeZone(?\DateTimeZone $dateTimeZone = null): PhotoGpsInterface
     {
         $this->dateTimeZone = $dateTimeZone;
 
@@ -63,7 +63,7 @@ abstract class AbstractPhotoGps implements PhotoGpsInterface
         return $this->photo;
     }
 
-    public function setTrack(Track $track = null): PhotoGpsInterface
+    public function setTrack(?Track $track = null): PhotoGpsInterface
     {
         $this->track = $track;
 

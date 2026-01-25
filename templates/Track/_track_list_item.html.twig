@@ -1,16 +1,23 @@
 <div class="col-md-4 margin-bottom-medium">
     <div class="panel panel-default{% if not track.enabled %} panel-warning{% elseif not track.reviewed %} panel-danger{% endif %}">
         <div class="panel-heading">
-            <a href="{{ objectPath(track.ride) }}">
+            <a href="{{ object_path(track.ride) }}">
                 {{ track.ride.title }}
             </a>
         </div>
         <div class="panel-body">
             <div class="row margin-bottom-medium">
                 <div class="col-md-12">
-                    <div id="map-{{ track.id }}" class="preview-map" style="height: 150px;"
-                         data-polyline-color="rgb({{ track.colorRed }}, {{ track.colorGreen }}, {{ track.colorBlue }})"
-                         data-lock-map="true" data-polyline="{{ track.polyline }}"></div>
+                    <div
+                        id="map-{{ track.id }}"
+                        class="map"
+                        style="height: 150px;"
+                        data-controller="map--map"
+                        data-map--map-lock-map-value="true"
+                        data-map--map-polyline-color-value="{{ track.user.color }}"
+                        data-map--map-polyline-value="{{ track.polyline }}"
+                    ></div>
+
                 </div>
             </div>
 
@@ -23,7 +30,7 @@
                             </dt>
 
                             <dd>
-                                <a href="{{ objectPath(track.ride.city) }}">
+                                <a href="{{ object_path(track.ride.city) }}">
                                     {{ track.ride.city.city }}
                                 </a>
                             </dd>
@@ -52,7 +59,7 @@
                         </dt>
 
                         <dd>
-                            <a href="{{ objectPath(track) }}">
+                            <a href="{{ object_path(track) }}">
                                 {{ track.ride.dateTime|date('d.m.Y') }}
                             </a>
                         </dd>
@@ -68,7 +75,7 @@
                         </dt>
 
                         <dd>
-                            {{ track.distance|number_format(2) }}&nbsp;Kilometer
+                            {{ track.distance|number_format(2) }}&nbsp;km
                         </dd>
                     </dl>
                 </div>

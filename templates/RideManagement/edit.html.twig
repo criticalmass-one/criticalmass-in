@@ -1,4 +1,5 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% if ride %}
     {% set title = 'Tour editieren' %}
@@ -11,32 +12,13 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ objectPath(city) }}">
-            {{ city.city }}
-        </a>
-    </li>
-
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item(city.city, object_path(city)) }}
     {% if ride %}
-        <li>
-            <a href="{{ objectPath(ride) }}">
-                {{ ride.title }}
-            </a>
-        </li>
-
-        <li class="active">
-            Tour editieren
-        </li>
+        {{ breadcrumb.item(ride.title, object_path(ride)) }}
+        {{ breadcrumb.active('Tour editieren') }}
     {% else %}
-        <li class="active">
-            Tour hinzufügen
-        </li>
+        {{ breadcrumb.active('Tour hinzufügen') }}
     {% endif %}
 {% endblock %}
 
@@ -73,8 +55,19 @@
         {{ form_start(form) }}
         <div class="row">
             <div class="col-md-12">
-                <div id="map" style="height: 250px;">
-
+                <div id="map"
+                     class="map"
+                     data-controller="map--form-map"
+                     style="height: 250px;"
+                     data-map--form-map-center-latitude-value="{{ ride.latitude }}"
+                     data-map--form-map-center-longitude-value="{{ ride.longitude }}"
+                     data-map--form-map-zoom-value="10"
+                     data-map--form-map-marker-latitude-target-value="{{ form.latitude.vars.id }}"
+                     data-map--form-map-marker-longitude-target-value="{{ form.longitude.vars.id }}"
+                     data-map--form-map-marker-icon-value="fa-bicycle"
+                     data-map--form-map-marker-color-value="red"
+                     data-map--form-map-marker-shape-value="circle"
+                     data-map--form-map-marker-prefix-value="fas">
                 </div>
             </div>
         </div>
@@ -131,7 +124,7 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="alert alert-warning" role="alert" id="doubleMonthRide" style="display: none;">
+                        <div class="alert alert-warning d-none hidden" role="alert" id="doubleMonthRide">
                             <strong>
                                 Vorsicht!
                             </strong>
@@ -139,7 +132,7 @@
                             Touren stattfinden?
                         </div>
 
-                        <div class="alert alert-danger" role="alert" id="doubleDayRide" style="display: none;">
+                        <div class="alert alert-danger d-none hidden" role="alert" id="doubleDayRide">
                             <strong>
                                 Achtung!
                             </strong>
@@ -153,11 +146,11 @@
                             </label>
                             <div class="row">
                                 <div class="col-md-6">
-                                    {{ form_widget(form.dateTime.date, { attr: { class: 'form-control datepicker' } }) }}
+                                    {{ form_widget(form.dateTime.date, { attr: { class: 'form-control check-ride-date' } }) }}
                                 </div>
 
                                 <div class="col-md-6">
-                                    {{ form_widget(form.dateTime.time, { attr: { class: 'form-control' } }) }}
+                                    {{ form_widget(form.dateTime.time, { attr: { class: 'form-control check-ride-date' } }) }}
                                 </div>
                             </div>
                         </div>
@@ -170,7 +163,12 @@
                             <label class="control-label" for="location">
                                 Treffpunkt:
                             </label>
-
+                            <button class="btn btn-secondary btn-xs pull-right geocode"
+                                    data-geocoding-query-suffix="{{ city.city }},{{ city.region }},{{ city.region.parent }}"
+                                    data-geocoding-query-selector="#ride_location"
+                                    type="button">
+                                <i class="far fa-map-marker"></i>
+                            </button>
                             {{ form_widget(form.location, { 'attr' : { 'class': 'form-control' } }) }}
                         </div>
                         <p class="help-block">
@@ -182,21 +180,50 @@
                     </div>
                 </div>
 
-                {% if form.enabled is defined %}
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label class="control-label" for="location">
-                                Tour aktivieren:
+                            <label class="control-label" for="rideType">
+                                Art der Tour:
                             </label>
 
-                            {{ form_widget(form.enabled, { 'attr' : { 'class': 'form-control' } }) }}
+                            {{ form_widget(form.rideType, { 'attr' : { 'class': 'form-control' } }) }}
                         </div>
                         <p class="help-block">
-                            Momentan ist diese Tour deaktiviert. Wähle die Checkbox an, um sie wieder zu aktivieren.
+                            Falls es sich bei dieser Tour nicht um eine „normale“ Critical Mass handeln sollte, kannst du hier die Art dieser Tour genauer spezifizieren.
                         </p>
                     </div>
                 </div>
+
+                {% if form.slug is defined %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label" for="slug">
+                                    Slug:
+                                </label>
+
+                                {{ form_widget(form.slug, { 'attr' : { 'class': 'form-control' } }) }}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if form.enabled is defined %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label" for="location">
+                                    Tour aktivieren:
+                                </label>
+
+                                {{ form_widget(form.enabled, { 'attr' : { 'class': 'form-control' } }) }}
+                            </div>
+                            <p class="help-block">
+                                Momentan ist diese Tour deaktiviert. Wähle die Checkbox an, um sie wieder zu aktivieren.
+                            </p>
+                        </div>
+                    </div>
                 {% endif %}
 
                 <div class="row">
@@ -204,11 +231,11 @@
                         <div class="form-group">
                             <div class="btn-group pull-right" role="group" aria-label="...">
                                 {% if ride %}
-                                    <a href="{{ objectPath(ride) }}" class="btn btn-default">
+                                    <a href="{{ object_path(ride) }}" class="btn btn-secondary">
                                         Abbrechen
                                     </a>
                                 {% else %}
-                                    <a href="{{ objectPath(city) }}" class="btn btn-default">
+                                    <a href="{{ object_path(city) }}" class="btn btn-secondary">
                                         Abbrechen
                                     </a>
                                 {% endif %}
@@ -227,22 +254,4 @@
 
         </form>
     </div>
-
-    <script>
-        var options = {
-            citySlug: '{{ city.mainSlug.slug() }}'
-        };
-
-        CriticalMass.loadModule('EditRidePage', null, options, function (editRidePage) {
-            var cityLatLng = L.latLng({{ city.latitude }}, {{ city.longitude }});
-
-            editRidePage.setCityLatLng(cityLatLng);
-
-            {% if ride and ride.id %}
-            editRidePage.setRideDateTime(new Date({{ ride.dateTime|date('U') * 1000 }}));
-            {% endif %}
-
-            editRidePage.init();
-        });
-    </script>
 {% endblock %}

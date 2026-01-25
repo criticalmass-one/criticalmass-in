@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UploadFaker extends AbstractUploadFaker
 {
-    public function fakeUpload(FakeUploadable $uploadable, string $propertyName, string $fileContent, string $originalFilename = null): string
+    public function fakeUpload(FakeUploadable $uploadable, string $propertyName, string $fileContent, ?string $originalFilename = null): string
     {
         $tmpFilename = $this->generateFilename();
 
