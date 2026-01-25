@@ -584,6 +584,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
         return $this;
     }
 
+    #[Ignore]
     public function getSalt(): string
     {
         return '';
@@ -594,6 +595,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
         return $this;
     }
 
+    #[Ignore]
     public function getPassword(): string
     {
         return '';
