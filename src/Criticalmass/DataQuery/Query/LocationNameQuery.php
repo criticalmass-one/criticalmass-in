@@ -2,41 +2,34 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
-use App\Criticalmass\DataQuery\Annotation\QueryAnnotation as DataQuery;
+use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
+use Elastica\Query\BoolQuery;
+use Elastica\Query\Wildcard;
 use Symfony\Component\Validator\Constraints as Constraints;
 
-/**
- * @DataQuery\RequiredEntityProperty(propertyName="name")
- */
+#[DataQuery\RequiredEntityProperty(propertyName: 'pin', propertyType: 'string')]
 class LocationNameQuery extends AbstractQuery implements DoctrineQueryInterface, ElasticQueryInterface
 {
-    #[Constraints\NotNull]
-    protected string $name;
+    #[Constraints\IsTrue]
+    protected bool $coordsRequired = false;
 
-    /**
-     * @DataQuery\RequiredQueryParameter(parameterName="location")
-     */
-    public function setName(string $name): LocationNameQuery
+    #[DataQuery\RequiredQueryParameter(parameterName: 'has_coords')]
+    public function setCoordsRequired(bool $hasCoords): HasCoordinatesQuery
     {
-        $this->name = $name;
-
+        $this->coordsRequired = $hasCoords;
         return $this;
     }
 
-    public function getName(): string
+    public function getCoordsRequired(): bool
     {
-        return $this->name;
+        return $this->coordsRequired;
     }
 
     public function createElasticQuery(): \Elastica\Query\AbstractQuery
     {
-        if ($this->name) {
-            return new \Elastica\Query\MatchPhrase('location', $this->name);
-        }
-
-        $wildcardQuery = new \Elastica\Query\Wildcard('location', '*');
-        $boolQuery = new \Elastica\Query\BoolQuery();
-        $boolQuery->addMustNot($wildcardQuery);
+        $boolQuery = new BoolQuery();
+        $boolQuery->addMust(new Wildcard('latitude', '*'));
+        $boolQuery->addMust(new Wildcard('longitude', '*'));
 
         return $boolQuery;
     }

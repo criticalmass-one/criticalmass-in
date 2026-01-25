@@ -1,11 +1,10 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Impressum{% endblock %}
 
 {% block breadcrumb %}
-    <li class="active">
-        Impressum
-    </li>
+    {{ breadcrumb.active('Impressum') }}
 {% endblock %}
 
 {% block content %}
@@ -23,6 +22,69 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">
+                            Verantwortlichkeit für lokale Critical-Mass-Gruppen
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            Die Website criticalmass.in ist ein rein informatorisches Projekt.
+                        </p>
+
+                        <p>
+                            Wir organisieren, veranstalten, betreiben, administrieren und moderieren keine lokalen Critical-Mass-Gruppen, Facebook-Seiten, Instagram-Accounts, Telegram-Kanäle oder sonstige Social-Media-Präsenzen.
+                        </p>
+
+                        <p>
+                            Alle Einträge zu Städten, Touren oder Gruppen dienen ausschließlich der Übersicht und werden größtenteils von Nutzer*innen selbst gepflegt.
+                        </p>
+
+                        <p>
+                            Für Inhalte, Fotos, Videos oder Beiträge einzelner Städte oder deren Social-Media-Kanäle sind wir nicht verantwortlich und haben keinen administrativen Zugriff.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Externe Inhalte und Links
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            Die auf criticalmass.in verlinkten Websites, Social-Media-Kanäle und externen Inhalte werden weder betrieben noch kontrolliert. Für deren Inhalte sind ausschließlich die jeweiligen Betreiber verantwortlich.
+                        </p>
+
+                        <p>
+                            Wir machen uns fremde Inhalte nicht zu eigen und haben keinen Einfluss auf deren Veröffentlichung, Löschung oder rechtlichen Status.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Keine Verantwortlichkeit für Inhalte verlinkter Social-Media-Seiten
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            Bitte beachten Sie, dass wir in keiner Form Betreiber oder Verantwortlicher externern Social-Media-Angebote von Critical-Mass-Radtouren sind sind.
+                        </p>
+
+                        <p>
+                            Wir haben keinen Zugriff auf dort veröffentlichte Inhalte und können diese nicht entfernen, nicht bearbeiten und nicht moderieren.
+                        </p>
+
+                        <p>
+                            Bitte wenden Sie sich bei rechtlichen Anliegen direkt an die jeweiligen Seitenbetreiber der lokalen Gruppe.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
                             Impressum
                         </h3>
                     </div>
@@ -32,17 +94,17 @@
                         </p>
 
                         <p>
-                            {{ impress_property('firstName') }} {{ impress_property('lastName') }}
+                            Malte Hübner
                             <br />
-                            {{ impress_property('street') }} {{ impress_property('houseNumber') }}
+                            Goethestraße 48
                             <br />
-                            {{ impress_property('zipCode') }} {{ impress_property('city') }}
+                            21335 Lüneburg
                         </p>
 
                         <p>
-                            Telefon: {{ impress_property('phoneNumber') }}
+                            Telefon: 0151 172 77 032
                             <br/>
-                            E-Mail: <a href="mailto:malte@caldera.cc">malte@caldera.cc</a>
+                            E-Mail: <a href="mailto:maltehuebner@gmx.org">maltehuebner@gmx.org</a>
                         </p>
 
                         <p>
@@ -52,8 +114,6 @@
                         </p>
                     </div>
                 </div>
-
-
             </div>
 
             <div class="col-md-5">

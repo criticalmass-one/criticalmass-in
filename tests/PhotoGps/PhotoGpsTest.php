@@ -64,6 +64,7 @@ class PhotoGpsTest extends TestCase
         $trackReader = $this->createMock(TrackReader::class);
 
         $loop = $this->createMock(Loop::class);
+        $loop->method('setDateTimeZone')->will($this->returnSelf());
         $loop->method('setPositionList')->will($this->returnSelf());
         $loop->method('searchPositionForDateTime')->willReturn(new Position(52.268021, 10.500126));
 
@@ -75,6 +76,7 @@ class PhotoGpsTest extends TestCase
 
         $photoGps
             ->setPhoto($photo)
+            ->setDateTimeZone(new \DateTimeZone('Europe/Berlin'))
             ->setTrack($track)
             ->execute();
 

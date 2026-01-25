@@ -87,7 +87,7 @@ class FrontpageTeaser implements PhotoInterface
         return $this->user;
     }
 
-    public function setCity(City $city = null): FrontpageTeaser
+    public function setCity(?City $city = null): FrontpageTeaser
     {
         $this->city = $city;
 
@@ -99,7 +99,7 @@ class FrontpageTeaser implements PhotoInterface
         return $this->city;
     }
 
-    public function setHeadline(string $headline = null): FrontpageTeaser
+    public function setHeadline(?string $headline = null): FrontpageTeaser
     {
         $this->headline = $headline;
 
@@ -123,7 +123,7 @@ class FrontpageTeaser implements PhotoInterface
         return $this->text;
     }
 
-    public function setImageFile(File $image = null): PhotoInterface
+    public function setImageFile(?File $image = null): PhotoInterface
     {
         $this->imageFile = $image;
 
@@ -139,7 +139,7 @@ class FrontpageTeaser implements PhotoInterface
         return $this->imageFile;
     }
 
-    public function setImageName(string $imageName = null): PhotoInterface
+    public function setImageName(?string $imageName = null): PhotoInterface
     {
         $this->imageName = $imageName;
 
@@ -156,7 +156,7 @@ class FrontpageTeaser implements PhotoInterface
         return $this->imageSize;
     }
 
-    public function setImageSize(int $imageSize = null): PhotoInterface
+    public function setImageSize(?int $imageSize = null): PhotoInterface
     {
         $this->imageSize = $imageSize;
 
@@ -168,7 +168,7 @@ class FrontpageTeaser implements PhotoInterface
         return $this->imageMimeType;
     }
 
-    public function setImageMimeType(string $imageMimeType = null): PhotoInterface
+    public function setImageMimeType(?string $imageMimeType = null): PhotoInterface
     {
         $this->imageMimeType = $imageMimeType;
 
@@ -199,7 +199,7 @@ class FrontpageTeaser implements PhotoInterface
         return $this->createdAt;
     }
 
-    public function setUpdatedAt(\DateTime $updatedAt = null): FrontpageTeaser
+    public function setUpdatedAt(?\DateTime $updatedAt = null): FrontpageTeaser
     {
         $this->updatedAt = $updatedAt;
 
@@ -211,7 +211,7 @@ class FrontpageTeaser implements PhotoInterface
         return $this->updatedAt;
     }
 
-    public function setValidFrom(\DateTime $validFrom = null): FrontpageTeaser
+    public function setValidFrom(?\DateTime $validFrom = null): FrontpageTeaser
     {
         $this->validFrom = $validFrom;
 
@@ -223,7 +223,7 @@ class FrontpageTeaser implements PhotoInterface
         return $this->validFrom;
     }
 
-    public function setValidUntil(\DateTime $validUntil = null): FrontpageTeaser
+    public function setValidUntil(?\DateTime $validUntil = null): FrontpageTeaser
     {
         $this->validUntil = $validUntil;
 

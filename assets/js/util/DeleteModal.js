@@ -17,17 +17,18 @@ export default class DeleteModal {
                 size: button.dataset.deleteModalSize || 'md'
             }
 
-            const source = this.getBootstrap3ModalTemplate();
+            const source = this.getBootstrap5ModalTemplate();
             const template = Handlebars.compile(source);
             const modalHtml = template(modalData);
 
             const body = document.querySelector('body');
             body.insertAdjacentHTML('beforeend', modalHtml);
 
-            const $modal = $('#delete-modal');
-            $modal.modal('show');
-            $modal.on('hidden.bs.modal', (event) => {
-                document.getElementById('delete-modal').remove();
+            const modalElement = document.getElementById('delete-modal');
+            const modal = new bootstrap.Modal(modalElement);
+            modal.show();
+            modalElement.addEventListener('hidden.bs.modal', () => {
+                modalElement.remove();
             });
 
             const modalDeleteButton = document.querySelector('#delete-modal .btn-danger');
@@ -52,17 +53,17 @@ export default class DeleteModal {
         request.send();
     }
 
-    getBootstrap3ModalTemplate() {
-        return '<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="delete-modal-label">\n' +
-            '  <div class="modal-dialog modal-{{ size }}" role="document">\n' +
+    getBootstrap5ModalTemplate() {
+        return '<div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="delete-modal-label" aria-hidden="true">\n' +
+            '  <div class="modal-dialog modal-{{ size }}">\n' +
             '    <div class="modal-content">\n' +
             '      <div class="modal-header">\n' +
-            '        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>\n' +
-            '        <h4 class="modal-title" id="delete-modal-label">{{ title }}</h4>\n' +
+            '        <h5 class="modal-title" id="delete-modal-label">{{ title }}</h5>\n' +
+            '        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>\n' +
             '      </div>\n' +
             '      <div class="modal-body">{{{ text }}}</div>\n' +
             '      <div class="modal-footer">\n' +
-            '        <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>\n' +
+            '        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>\n' +
             '        <button type="button" class="btn btn-danger">Löschen</button>\n' +
             '      </div>\n' +
             '    </div>\n' +

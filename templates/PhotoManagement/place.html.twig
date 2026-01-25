@@ -1,4 +1,5 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% set previous_photo = previous_entity(photo) %}
 {% set next_photo = next_entity(photo) %}
@@ -6,24 +7,10 @@
 {% block title %}Foto platzieren{% endblock %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
-    <li>
-        <a href="{{ object_path(photo.ride.city) }}">
-            {{ photo.ride.city.title }}
-        </a>
-    </li>
-    <li>
-        <a href="{{ object_path(photo.ride) }}">
-            {{ photo.ride.title }}
-        </a>
-    </li>
-    <li class="active">
-        Foto platzieren
-    </li>
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item(photo.ride.city.title, object_path(photo.ride.city)) }}
+    {{ breadcrumb.item(photo.ride.title, object_path(photo.ride)) }}
+    {{ breadcrumb.active('Foto platzieren') }}
 {% endblock %}
 
 {% block content %}
@@ -50,18 +37,22 @@
             <div class="col-md-9">
                 <div id="map-photo"
                      class="map"
-                     data-map-marker-draggable="true"
-                     data-map-marker-clickable="false"
-                     data-map-center-latitude="{{ photo.latitude }}"
-                     data-map-center-longitude="{{ photo.longitude }}"
-                     data-map-marker-latitude="{{ photo.latitude }}"
-                     data-map-marker-longitude="{{ photo.longitude }}"
-                     data-map-marker-latitude-target="photo_coord_latitude"
-                     data-map-marker-longitude-target="photo_coord_longitude"
-                     data-map-marker-type="photo"
-                     data-map-zoomlevel="13"
-                     style="height: 50vh;">
-                </div>
+                     data-controller="map--form-map"
+                     style="height: 50vh;"
+
+                     data-map--form-map-center-latitude-value="{{ photo.latitude }}"
+                     data-map--form-map-center-longitude-value="{{ photo.longitude }}"
+                     data-map--form-map-zoom-value="13"
+
+                     data-map--form-map-marker-latitude-target-value="{{ form.latitude.vars.id }}"
+                     data-map--form-map-marker-longitude-target-value="{{ form.longitude.vars.id }}"
+
+                     data-map--form-map-marker-icon-value="fa-camera"
+                     data-map--form-map-marker-color-value="yellow"
+                     data-map--form-map-marker-shape-value="square"
+                     data-map--form-map-marker-prefix-value="fas"
+                ></div>
+
             </div>
         </div>
 
@@ -72,7 +63,7 @@
                 {{ form_widget(form.longitude) }}
 
                 <div class="btn-group pull-right" role="group" aria-label="...">
-                    <a href="javascript:window.location=document.referrer;" class="btn btn-default">
+                    <a href="javascript:window.location=document.referrer;" class="btn btn-secondary">
                         Abbrechen
                     </a>
                     <button type="submit" class="btn btn-success">
@@ -86,35 +77,21 @@
 
         <div class="row">
             <div class="col-md-12">
-                <ul class="pager">
-                    {% if previous_photo %}
-                        <li class="previous">
-                            <a href="{{ object_path(previous_photo) }}">
+                <nav aria-label="Foto Navigation">
+                    <ul class="pagination justify-content-between">
+                        <li class="page-item{% if not previous_photo %} disabled{% endif %}">
+                            <a class="page-link" href="{% if previous_photo %}{{ object_path(previous_photo) }}{% else %}#{% endif %}">
                                 &larr; Voriges Foto
                             </a>
                         </li>
-                    {% else %}
-                        <li class="previous disabled">
-                            <a href="#">
-                                &larr; Voriges Foto
-                            </a>
-                        </li>
-                    {% endif %}
 
-                    {% if next_photo %}
-                        <li class="next">
-                            <a href="{{ object_path(next_photo) }}">
+                        <li class="page-item{% if not next_photo %} disabled{% endif %}">
+                            <a class="page-link" href="{% if next_photo %}{{ object_path(next_photo) }}{% else %}#{% endif %}">
                                 Nächstes Foto &rarr;
                             </a>
                         </li>
-                    {% else %}
-                        <li class="next disabled">
-                            <a href="#">
-                                Nächstes Foto &rarr;
-                            </a>
-                        </li>
-                    {% endif %}
-                </ul>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>

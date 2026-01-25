@@ -1,7 +1,0 @@
-caldera_criticalmass_location_show:
-    path:  /{citySlug}/location/{slug}
-    controller: App\Controller\LocationController::showAction
-
-caldera_criticalmass_location_ride:
-    path:  /{citySlug}/{rideIdentifier}/location
-    controller: App\Controller\LocationController::rideAction

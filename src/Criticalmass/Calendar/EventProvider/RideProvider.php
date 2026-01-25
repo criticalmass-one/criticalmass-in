@@ -7,9 +7,10 @@ use App\Entity\Ride;
 use App\Criticalmass\Calendar\Event\RideEvent;
 use Doctrine\Persistence\ManagerRegistry;
 
-class RideProvider implements ProviderInterface
+readonly class RideProvider implements ProviderInterface
 {
-    public function __construct(protected ManagerRegistry $doctrine)
+    public function __construct(
+        private ManagerRegistry $doctrine)
     {
     }
 

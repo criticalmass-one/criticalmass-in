@@ -29,7 +29,7 @@ class LoginController extends AbstractController
 
     }
 
-    #[Route('/login', name: 'login', methods: ['GET'])]
+    #[Route('/login', name: 'login', methods: ['GET'], priority: 200)]
     public function login(): Response
     {
        $loginForm = $this->createForm(LoginType::class);
@@ -39,7 +39,7 @@ class LoginController extends AbstractController
         ]);
     }
 
-    #[Route('/login', name: 'login_perform', methods: ['POST'])]
+    #[Route('/login', name: 'login_perform', methods: ['POST'], priority: 200)]
     public function loginPerform(
         NotifierInterface $notifier,
         LoginLinkHandlerInterface $loginLinkHandler,
@@ -101,13 +101,13 @@ class LoginController extends AbstractController
         return $user;
     }
 
-    #[Route('/login_check', name: 'login_check')]
+    #[Route('/login_check', name: 'login_check', priority: 200)]
     public function check(): never
     {
         throw new \LogicException('This code should never be reached');
     }
 
-    #[Route('/logout', name: 'logout')]
+    #[Route('/logout', name: 'logout', priority: 200)]
     public function logout(): never
     {
         throw new \LogicException('This code should never be reached');

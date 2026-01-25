@@ -45,7 +45,7 @@ class StreakGenerator implements StreakGeneratorInterface
         return $this;
     }
 
-    public function calculateCurrentStreak(\DateTime $currentDateTime = null, bool $includeCurrentMonth = false): ?Streak
+    public function calculateCurrentStreak(?\DateTime $currentDateTime = null, bool $includeCurrentMonth = false): ?Streak
     {
         $this->loadParticipations();
 

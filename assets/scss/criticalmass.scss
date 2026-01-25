@@ -1,4 +1,4 @@
-@import "bootstrap3";
+@import "bootstrap5";
 @import "../../node_modules/leaflet/dist/leaflet.css";
 @import "../../node_modules/leaflet-extra-markers/dist/css/leaflet.extra-markers.min.css";
 @import "criticalmass/criticalmass";
@@ -6,11 +6,6 @@
 
 .input-daterange input {
   text-align: left !important;
-}
-
-.breadcrumb > li + li:before {
-  content: "/\00a0";
-  color: $breadcrumb-color;
 }
 
 input[type="file"] {
@@ -25,6 +20,6 @@ input[type="file"] {
   z-index: 1000;
 }
 
-.captcha-input-group .input-group-addon {
+.captcha-input-group .input-group-text {
   padding: 0;
 }

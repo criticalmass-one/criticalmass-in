@@ -2,7 +2,6 @@
 
 namespace App\Criticalmass\Geo\Entity;
 
-use Caldera\GeoBasic\Track\Track as BaseTrack;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -11,7 +10,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\MappedSuperclass
  * @Vich\Uploadable
  */
-class Track extends BaseTrack
+class Track
 {
     /**
      * @ORM\Id
@@ -58,12 +57,24 @@ class Track extends BaseTrack
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    protected ?string $polyline;
+    protected ?string $polyline = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
     protected ?string $previewPolyline = null;
+
+    public function getPolyline(): ?string
+    {
+        return $this->polyline;
+    }
+
+    public function setPolyline(?string $polyline): static
+    {
+        $this->polyline = $polyline;
+
+        return $this;
+    }
 
     /**
      * @Vich\UploadableField(mapping="track_file", fileNameProperty="trackFilename", size="trackSize", mimeType="trackMimeType")
@@ -168,7 +179,7 @@ class Track extends BaseTrack
         return $this->points;
     }
 
-    public function setTrackFile(File $track = null): Track
+    public function setTrackFile(?File $track = null): Track
     {
         $this->trackFile = $track;
 
@@ -184,7 +195,7 @@ class Track extends BaseTrack
         return $this->trackFile;
     }
 
-    public function setTrackFilename(string $trackFilename = null): Track
+    public function setTrackFilename(?string $trackFilename = null): Track
     {
         $this->trackFilename = $trackFilename;
 
@@ -232,7 +243,7 @@ class Track extends BaseTrack
         return $this->updatedAt;
     }
 
-    public function setPreviewPolyline(string $previewPolyline = null): Track
+    public function setPreviewPolyline(?string $previewPolyline = null): Track
     {
         $this->previewPolyline = $previewPolyline;
 

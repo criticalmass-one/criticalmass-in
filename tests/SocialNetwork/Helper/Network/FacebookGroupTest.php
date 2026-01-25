@@ -9,7 +9,7 @@ class FacebookGroupTest extends TestCase
 {
     public function testName(): void
     {
-        $this->assertEquals('facebook-Gruppe', (new FacebookGroup())->getName());
+        $this->assertEquals('Facebook-Gruppe', (new FacebookGroup())->getName());
     }
 
     public function testIdentifier(): void

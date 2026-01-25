@@ -4,7 +4,7 @@ namespace Tests\Geo\GpxReader;
 
 use App\Criticalmass\Geo\GpxReader\GpxReader;
 use League\Flysystem\Filesystem;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\TestCase;
 
 class GpxReaderTest extends TestCase
@@ -111,7 +111,7 @@ class GpxReaderTest extends TestCase
         $this->assertEquals(new \DateTime('2017-04-28 18:26:50', new \DateTimeZone('UTC')), $dateTime);
     }
 
-    protected function createFilesystemMock(): FilesystemInterface
+    protected function createFilesystemMock(): FilesystemOperator
     {
         $filesystem = $this->createMock(Filesystem::class);
 

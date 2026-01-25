@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Tests\SocialNetworkDetector;
+namespace Tests\SocialNetwork\Helper\SocialNetworkDetector;
 
-class FacebookProfileDetectorTest extends AbstractNetworkDetectorTest
+class FacebookProfileDetectorTest extends AbstractNetworkDetectorTestCase
 {
     public function testFacebookProfile(): void
     {

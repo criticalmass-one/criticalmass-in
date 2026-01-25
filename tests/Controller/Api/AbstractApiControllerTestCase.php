@@ -1,0 +1,74 @@
+<?php declare(strict_types=1);
+
+namespace Tests\Controller\Api;
+
+use App\Criticalmass\Util\ClassUtil;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Serializer\CriticalSerializerInterface;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Tests\Controller\Api\Util\IdKiller;
+
+abstract class AbstractApiControllerTestCase extends WebTestCase
+{
+    protected ?KernelBrowser $client = null;
+    protected ?EntityManagerInterface $entityManager = null;
+
+    protected function setUp(): void
+    {
+        $this->client = static::createClient();
+        $this->entityManager = static::getContainer()->get('doctrine')->getManager();
+    }
+    /**
+     * @deprecated
+     */
+    protected function assertIdLessJsonEquals(string $expected, string $actual): void
+    {
+        $this->assertEquals(IdKiller::removeIds($expected), IdKiller::removeIds($actual));
+    }
+
+    protected function getSerializer(): CriticalSerializerInterface
+    {
+        return static::getContainer()->get(CriticalSerializerInterface::class);
+    }
+
+    /**
+     * @deprecated Use getJsonResponseList() instead for testing API responses
+     */
+    protected function deserializeEntityList(string $data, string $entityFqcn): array
+    {
+        $type = sprintf('%s[]', $entityFqcn);
+
+        return $this->getSerializer()->deserialize($data, $type, 'json');
+    }
+
+    /**
+     * @deprecated Use getJsonResponse() instead for testing API responses
+     */
+    protected function deserializeEntity(string $data, string $entityFqcn): object
+    {
+        return $this->getSerializer()->deserialize($data, $entityFqcn, 'json');
+    }
+
+    protected function getApiEndpointForFqcn(string $fqcn): string
+    {
+        return sprintf('/api/%s', ClassUtil::getLowercaseShortnameFromFqcn($fqcn));
+    }
+
+    protected function getJsonResponseList(): array
+    {
+        $response = $this->getJsonResponse();
+        $this->assertIsArray($response);
+        return $response;
+    }
+
+    protected function assertResponseStatusCode(int $expectedStatusCode): void
+    {
+        $this->assertResponseStatusCodeSame($expectedStatusCode);
+    }
+
+    protected function getJsonResponse(): array
+    {
+        return json_decode($this->client->getResponse()->getContent(), true);
+    }
+}

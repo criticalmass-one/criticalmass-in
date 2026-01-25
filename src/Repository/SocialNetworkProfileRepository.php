@@ -2,10 +2,10 @@
 
 namespace App\Repository;
 
-use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\Criticalmass\SocialNetwork\FeedFetcher\FetchInfo;
 use App\Entity\City;
 use App\Entity\SocialNetworkProfile;
+use App\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -30,7 +30,7 @@ class SocialNetworkProfileRepository extends ServiceEntityRepository
         return $builder;
     }
 
-    public function findByProperties(string $networkIdentifier = null, bool $autoFetch = null, City $city = null, array $entityClassNames = []): array
+    public function findByProperties(?string $networkIdentifier = null, ?bool $autoFetch = null, ?City $city = null, array $entityClassNames = []): array
     {
         $builder = $this->createQueryBuilder('snp');
 

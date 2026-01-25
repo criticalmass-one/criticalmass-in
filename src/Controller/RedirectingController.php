@@ -4,9 +4,17 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Attribute\Route;
 
 class RedirectingController extends AbstractController
 {
+    #[Route(
+        '/{url}',
+        name: 'remove_trailing_slash',
+        requirements: ['url' => '.*/$'],
+        methods: ['GET'],
+        priority: -255
+    )]
     public function removeTrailingSlashAction(Request $request): RedirectResponse
     {
         $pathInfo = $request->getPathInfo();

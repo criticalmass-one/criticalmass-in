@@ -97,7 +97,7 @@ class BlockedCity
         return $this->rideListLink;
     }
 
-    public function setCity(City $city = null): BlockedCity
+    public function setCity(?City $city = null): BlockedCity
     {
         $this->city = $city;
 

@@ -50,7 +50,7 @@ class RideRepository extends ServiceEntityRepository
         return $result;
     }
 
-    public function findRidesForCity(City $city, string $order = 'DESC', int $maxResults = null): array
+    public function findRidesForCity(City $city, string $order = 'DESC', ?int $maxResults = null): array
     {
         $builder = $this->createQueryBuilder('ride');
 
@@ -232,7 +232,7 @@ class RideRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function findEstimatedRides(int $year = null, int $month = null): array
+    public function findEstimatedRides(?int $year = null, ?int $month = null): array
     {
         $builder = $this->createQueryBuilder('ride');
 
@@ -255,7 +255,7 @@ class RideRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function findRidesInInterval(\DateTime $startDateTime = null, \DateTime $endDateTime = null)
+    public function findRidesInInterval(?\DateTime $startDateTime = null, ?\DateTime $endDateTime = null)
     {
         if (!$startDateTime) {
             $startDateTime = new \DateTime();
@@ -409,8 +409,8 @@ class RideRepository extends ServiceEntityRepository
     }
 
     public function findRidesWithFacebookInInterval(
-        \DateTime $startDateTime = null,
-        \DateTime $endDateTime = null
+        ?\DateTime $startDateTime = null,
+        ?\DateTime $endDateTime = null
     ): array {
         if (!$startDateTime) {
             $startDateTime = new \DateTime();
@@ -464,10 +464,10 @@ class RideRepository extends ServiceEntityRepository
     }
 
     public function findRides(
-        \DateTimeInterface $fromDateTime = null,
-        \DateTimeInterface $untilDateTime = null,
-        City $city = null,
-        Region $region = null
+        ?\DateTimeInterface $fromDateTime = null,
+        ?\DateTimeInterface $untilDateTime = null,
+        ?City $city = null,
+        ?Region $region = null
     ): array {
         $builder = $this->createQueryBuilder('ride');
 
@@ -521,8 +521,8 @@ class RideRepository extends ServiceEntityRepository
 
     public function findRidesInRegionInInterval(
         Region $region,
-        \DateTime $startDateTime = null,
-        \DateTime $endDateTime = null
+        ?\DateTime $startDateTime = null,
+        ?\DateTime $endDateTime = null
     ): array {
         $builder = $this->createQueryBuilder('ride');
 
@@ -550,9 +550,9 @@ class RideRepository extends ServiceEntityRepository
     }
 
     public function findForTimelineRideEditCollector(
-        \DateTime $startDateTime = null,
-        \DateTime $endDateTime = null,
-        int $limit = null
+        ?\DateTime $startDateTime = null,
+        ?\DateTime $endDateTime = null,
+        ?int $limit = null
     ): array {
         $builder = $this->createQueryBuilder('r');
 

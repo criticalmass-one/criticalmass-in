@@ -1,26 +1,13 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Track von Strava importieren{% endblock %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
-    <li>
-        <a href="{{ object_path(ride.city) }}">
-            {{ ride.city.city }}
-        </a>
-    </li>
-    <li>
-        <a href="{{ object_path(ride) }}">
-            {{ ride.title }}
-        </a>
-    </li>
-    <li class="active">
-        Track importieren
-    </li>
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item(ride.city.city, object_path(ride.city)) }}
+    {{ breadcrumb.item(ride.title, object_path(ride)) }}
+    {{ breadcrumb.active('Track importieren') }}
 {% endblock %}
 
 {% block content %}
@@ -56,10 +43,13 @@
 
                         <div class="row">
                             <div class="col-md-12">
-                                <div id="map-{{ activity.id }}" class="map" style="height: 150px;"
-                                     data-polyline="{{ activity.map.summary_polyline }}"
-                                     data-polyline-color="{{ app.user.color }}">
-
+                                <div id="map-{{ activity.id }}"
+                                     class="map"
+                                     data-controller="map--map"
+                                     style="height: 150px;"
+                                     data-map--map-lock-map-value="true"
+                                     data-map--map-polyline-value="{{ activity.map.summary_polyline }}"
+                                     data-map--map-polyline-color-value="{{ app.user.color }}">
                                 </div>
                             </div>
                         </div>
@@ -117,7 +107,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <a href="{{ object_path(ride) }}" class="btn btn-default pull-right">
+                <a href="{{ object_path(ride) }}" class="btn btn-secondary pull-right">
                     Abbrechen
                 </a>
             </div>

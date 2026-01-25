@@ -2,28 +2,31 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
-use MalteHuebner\DataQueryBundle\Annotation\QueryAnnotation as DataQuery;
+use App\Entity\CitySlug;
+use App\Entity\Photo;
+use App\Entity\Ride;
+use App\Entity\Track;
+use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use App\Entity\City;
 use MalteHuebner\DataQueryBundle\Query\AbstractQuery;
-use MalteHuebner\DataQueryBundle\Query\DoctrineQueryInterface;
+use MalteHuebner\DataQueryBundle\Query\OrmQueryInterface;
 use MalteHuebner\DataQueryBundle\Query\ElasticQueryInterface;
 use Symfony\Component\Validator\Constraints as Constraints;
+use Doctrine\ORM\QueryBuilder;
 
-/**
- * @DataQuery\RequiredEntityProperty(propertyName="slug")
- */
-class CityQuery extends AbstractQuery implements DoctrineQueryInterface, ElasticQueryInterface
+#[DataQuery\RequiredEntityProperty(propertyName: 'slug')]
+class CityQuery extends AbstractQuery implements OrmQueryInterface, ElasticQueryInterface
 {
-    /**
-     * @var City $city
-     */
     #[Constraints\NotNull]
-    #[Constraints\Type(\App\Entity\City::class)]
-    protected $city;
+    #[Constraints\Type(City::class)]
+    protected City $city;
 
-    /**
-     * @DataQuery\RequiredQueryParameter(parameterName="citySlug")
-     */
+    #[DataQuery\RequiredQueryParameter(
+        parameterName: 'citySlug',
+        repository: CitySlug::class,
+        repositoryMethod: 'findOneBySlug',
+        accessor: 'getCity'
+    )]
     public function setCity(City $city): CityQuery
     {
         $this->city = $city;
@@ -39,6 +42,46 @@ class CityQuery extends AbstractQuery implements DoctrineQueryInterface, Elastic
     public function createElasticQuery(): \Elastica\Query\AbstractQuery
     {
         return new \Elastica\Query\Term(['city' => $this->city->getCity()]);
+    }
+
+    public function createOrmQuery(QueryBuilder $queryBuilder): QueryBuilder
+    {
+        $alias = $queryBuilder->getRootAliases()[0];
+
+        if (Ride::class === $this->entityFqcn) {
+            $queryBuilder
+                ->join(sprintf('%s.city', $alias), 'c')
+                ->join('c.mainSlug', 'cs')
+            ;
+        }
+
+        if (City::class === $this->entityFqcn) {
+            $queryBuilder->join(sprintf('%s.mainSlug', $alias), 'cs');
+        }
+
+        // Photo has a direct city relation
+        if (Photo::class === $this->entityFqcn) {
+            $queryBuilder
+                ->join(sprintf('%s.city', $alias), 'c')
+                ->join('c.mainSlug', 'cs')
+            ;
+        }
+
+        // Track has city through ride relation
+        if (Track::class === $this->entityFqcn) {
+            $queryBuilder
+                ->join(sprintf('%s.ride', $alias), 'r')
+                ->join('r.city', 'c')
+                ->join('c.mainSlug', 'cs')
+            ;
+        }
+
+        $queryBuilder
+            ->andWhere($queryBuilder->expr()->eq('cs.slug', ':citySlug'))
+            ->setParameter('citySlug', $this->city->getMainSlug()->getSlug())
+        ;
+
+        return $queryBuilder;
     }
 
     public function isOverridenBy(): array
