@@ -448,7 +448,7 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
         return $this;
     }
 
-    public function getWaypointList(): string
+    public function getWaypointList(): ?string
     {
         return $this->geoJson;
     }
