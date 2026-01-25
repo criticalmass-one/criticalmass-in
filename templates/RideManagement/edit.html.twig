@@ -122,9 +122,9 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row" data-controller="ride-date-checker">
                     <div class="col-md-12">
-                        <div class="alert alert-warning d-none hidden" role="alert" id="doubleMonthRide">
+                        <div class="alert alert-warning d-none hidden" role="alert" id="doubleMonthRide" data-ride-date-checker-target="doubleMonthMessage">
                             <strong>
                                 Vorsicht!
                             </strong>
@@ -132,7 +132,7 @@
                             Touren stattfinden?
                         </div>
 
-                        <div class="alert alert-danger d-none hidden" role="alert" id="doubleDayRide">
+                        <div class="alert alert-danger d-none hidden" role="alert" id="doubleDayRide" data-ride-date-checker-target="doubleDayMessage">
                             <strong>
                                 Achtung!
                             </strong>
@@ -146,11 +146,11 @@
                             </label>
                             <div class="row">
                                 <div class="col-md-6">
-                                    {{ form_widget(form.dateTime.date, { attr: { class: 'form-control check-ride-date' } }) }}
+                                    {{ form_widget(form.dateTime.date, { attr: { class: 'form-control', 'data-ride-date-checker-target': 'date', 'data-action': 'change->ride-date-checker#checkDate' } }) }}
                                 </div>
 
                                 <div class="col-md-6">
-                                    {{ form_widget(form.dateTime.time, { attr: { class: 'form-control check-ride-date' } }) }}
+                                    {{ form_widget(form.dateTime.time, { attr: { class: 'form-control' } }) }}
                                 </div>
                             </div>
                         </div>
@@ -241,7 +241,7 @@
                                         Abbrechen
                                     </a>
                                 {% endif %}
-                                <button type="submit" class="btn btn-success" id="rideSubmitButton">
+                                <button type="submit" class="btn btn-success" id="rideSubmitButton" data-ride-date-checker-target="submitButton">
                                     Speichern
                                 </button>
                             </div>
