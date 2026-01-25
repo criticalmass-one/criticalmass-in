@@ -1,14 +1,20 @@
-import 'chart.js';
+import { Controller } from '@hotwired/stimulus';
+import Chart from 'chart.js/auto';
 
-export default class StatisticCityPage {
-    cities = [];
-    rideMonths = [];
+export default class extends Controller {
+    static targets = ['canvas', 'rideData'];
 
-    constructor(chart) {
-        this.createChart(chart);
+    connect() {
+        this.createChart();
     }
 
-    createChart(element) {
+    disconnect() {
+        if (this.chart) {
+            this.chart.destroy();
+        }
+    }
+
+    createChart() {
         const datasets = [];
 
         datasets.push(this.createDataset('Teilnehmer', 'participants', 'rgba(255, 0, 0, 1)', this.collectParticipantsData()));
@@ -20,29 +26,27 @@ export default class StatisticCityPage {
             datasets: datasets
         };
 
-        const chart = new Chart(element, {
+        this.chart = new Chart(this.canvasTarget, {
             type: 'line',
             data: data,
             options: {
                 scales: {
-                    yAxes: [{
-                        id: 'participants',
+                    participants: {
                         type: 'linear',
                         position: 'left'
-                    }, {
-                        id: 'distance',
+                    },
+                    distance: {
                         type: 'linear',
                         position: 'right'
-                    }, {
-                        id: 'duration',
+                    },
+                    duration: {
                         type: 'linear',
                         position: 'right'
                     }
-                    ]
                 }
             }
         });
-    };
+    }
 
     createDataset(label, yAxisID, colorString, data) {
         return {
@@ -55,7 +59,7 @@ export default class StatisticCityPage {
             borderDashOffset: 0.0,
             borderJoinStyle: 'miter',
             pointBorderColor: colorString,
-            pointBackgroundColor: "#fff",
+            pointBackgroundColor: '#fff',
             pointBorderWidth: 1,
             pointHoverRadius: 5,
             pointHoverBackgroundColor: colorString,
@@ -64,62 +68,22 @@ export default class StatisticCityPage {
             tension: 0.1,
             data: data,
             yAxisID: yAxisID
-        }
-    };
+        };
+    }
 
     collectRideDates() {
-        const list = [];
-
-        document.querySelectorAll('.ride-data').forEach((rideDataElement) => {
-            const dateTime = rideDataElement.dataset.rideDatetime;
-
-            list.push(dateTime);
-        });
-
-        return list;
+        return this.rideDataTargets.map(el => el.dataset.rideDatetime);
     }
 
     collectParticipantsData() {
-        const list = [];
-
-        document.querySelectorAll('.ride-data').forEach((rideDataElement) => {
-            const participants = rideDataElement.dataset.estimatedParticipants;
-
-            list.push(participants);
-        });
-
-        return list;
+        return this.rideDataTargets.map(el => el.dataset.estimatedParticipants);
     }
 
     collectDurationData() {
-        const list = [];
-
-        document.querySelectorAll('.ride-data').forEach((rideDataElement) => {
-            const duration = rideDataElement.dataset.estimatedDuration;
-
-            list.push(duration);
-        });
-
-        return list;
+        return this.rideDataTargets.map(el => el.dataset.estimatedDuration);
     }
 
     collectDistanceData() {
-        const list = [];
-
-        document.querySelectorAll('.ride-data').forEach((rideDataElement) => {
-            const distance = rideDataElement.dataset.estimatedDistance;
-
-            list.push(distance);
-        });
-
-        return list;
+        return this.rideDataTargets.map(el => el.dataset.estimatedDistance);
     }
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-    const chart = document.querySelector('canvas#chart');
-
-    if (chart) {
-        new StatisticCityPage(chart);
-    }
-});
