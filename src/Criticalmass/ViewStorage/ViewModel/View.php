@@ -8,7 +8,7 @@ class View
 
     private string $entityClassName;
 
-    private int $userId;
+    private ?int $userId = null;
 
     private \DateTime $dateTime;
 

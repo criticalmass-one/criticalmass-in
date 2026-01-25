@@ -81,13 +81,16 @@ class CriticalSerializerTest extends TestCase
     public function testDateTimeSerialization(): void
     {
         $object = new TestModelWithDateTime();
-        $object->setCreatedAt(new \DateTime('2024-06-15 14:30:00', new \DateTimeZone('Europe/Berlin')));
+        $dateTime = new \DateTime('2024-06-15 14:30:00', new \DateTimeZone('Europe/Berlin'));
+        $object->setCreatedAt($dateTime);
 
         $json = $this->serializer->serialize($object);
         $data = json_decode($json, true);
 
         $this->assertArrayHasKey('created_at', $data);
-        $this->assertMatchesRegularExpression('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}$/', $data['created_at']);
+        // DateTime is serialized as Unix timestamp
+        $this->assertIsInt($data['created_at']);
+        $this->assertEquals($dateTime->getTimestamp(), $data['created_at']);
     }
 
     public function testDateTimeDeserialization(): void

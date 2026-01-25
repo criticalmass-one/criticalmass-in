@@ -6,9 +6,9 @@ use App\Criticalmass\ViewStorage\Persister\ViewStoragePersister;
 use App\Criticalmass\ViewStorage\ViewEntityFactory\ViewEntityFactory;
 use App\Criticalmass\ViewStorage\ViewModel\View;
 use App\Entity\User;
+use App\Serializer\CriticalSerializer;
 use Doctrine\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use JMS\Serializer\SerializerBuilder;
 use PHPUnit\Framework\TestCase;
 use Doctrine\Persistence\ManagerRegistry;
 use Tests\ViewStorage\TestClass;
@@ -63,7 +63,7 @@ class ViewStoragePersisterTest extends TestCase
             ->method('getManager')
             ->willReturn($viewStoragePersisterManager);
 
-        $serializer = SerializerBuilder::create()->build();
+        $serializer = new CriticalSerializer();
         $viewEntityFactory = new ViewEntityFactory($viewEntityFactoryRegistry);
         $viewEntityFactory->setEntityNamespace('Tests\\ViewStorage\\');
 
@@ -138,7 +138,7 @@ class ViewStoragePersisterTest extends TestCase
             ->method('getManager')
             ->willReturn($viewStoragePersisterManager);
 
-        $serializer = SerializerBuilder::create()->build();
+        $serializer = new CriticalSerializer();
         $viewEntityFactory = new ViewEntityFactory($viewEntityFactoryRegistry);
         $viewEntityFactory->setEntityNamespace('Tests\\ViewStorage\\');
 
@@ -215,7 +215,7 @@ class ViewStoragePersisterTest extends TestCase
             ->method('getManager')
             ->willReturn($viewStoragePersisterManager);
 
-        $serializer = SerializerBuilder::create()->build();
+        $serializer = new CriticalSerializer();
         $viewEntityFactory = new ViewEntityFactory($viewEntityFactoryRegistry);
         $viewEntityFactory->setEntityNamespace('Tests\\ViewStorage\\');
 
