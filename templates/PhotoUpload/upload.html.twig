@@ -1,31 +1,15 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% set city = ride.city %}
 
 {% block title %}Fotos hochladen{% endblock %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ object_path(city) }}">
-            {{ city.title }}
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ object_path(ride) }}">
-            {{ ride.title }}
-        </a>
-    </li>
-
-    <li class="active">
-        Fotos hochladen
-    </li>
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item(city.title, object_path(city)) }}
+    {{ breadcrumb.item(ride.title, object_path(ride)) }}
+    {{ breadcrumb.active('Fotos hochladen') }}
 {% endblock %}
 
 {% block content %}

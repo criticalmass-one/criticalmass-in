@@ -47,7 +47,7 @@ class PromotionView implements ViewEntity
         return $this->user;
     }
 
-    public function setUser(User $user = null): ViewEntity
+    public function setUser(?User $user = null): ViewEntity
     {
         $this->user = $user;
 

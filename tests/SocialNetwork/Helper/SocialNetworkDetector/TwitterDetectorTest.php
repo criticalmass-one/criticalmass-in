@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Tests\SocialNetworkDetector;
+namespace Tests\SocialNetwork\Helper\SocialNetworkDetector;
 
-class TwitterDetectorTest extends AbstractNetworkDetectorTest
+class TwitterDetectorTest extends AbstractNetworkDetectorTestCase
 {
     public function testTwitter(): void
     {

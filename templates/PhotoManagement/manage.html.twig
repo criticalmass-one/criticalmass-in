@@ -1,21 +1,12 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Fotos bearbeiten{% endblock %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ object_path(ride.city) }}">
-            {{ ride.city.title }}
-        </a>
-    </li>
-    <li>
-        <a href="{{ object_path(ride) }}">
-            {{ ride.title }}
-        </a>
-    </li>
-    <li class="active">
-        Fotos bearbeiten
-    </li>
+    {{ breadcrumb.item(ride.city.title, object_path(ride.city)) }}
+    {{ breadcrumb.item(ride.title, object_path(ride)) }}
+    {{ breadcrumb.active('Fotos bearbeiten') }}
 {% endblock %}
 
 {% block content %}
@@ -58,10 +49,9 @@
                             <div class="row margin-top-10">
                                 <div class="col-md-12">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-default btn-xs dropdown-toggle"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Bearbeiten <span class="caret"></span>
-                                        </button>
+                                        <button type="button" class="btn btn-secondary btn-xs dropdown-toggle"
+                                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Bearbeiten                                        </button>
                                         <ul class="dropdown-menu">
                                             <li class="disabled">
                                                 <a href="#">
@@ -70,7 +60,7 @@
                                                 </a>
                                             </li>
 
-                                            <li role="separator" class="divider"></li>
+                                            <li><hr class="dropdown-divider"></li>
 
                                             <li>
                                                 <a href="{{ object_path(photo, 'caldera_criticalmass_photo_delete') }}">
@@ -102,7 +92,7 @@
                                                 </li>
                                             {% endif %}
 
-                                            <li role="separator" class="divider"></li>
+                                            <li><hr class="dropdown-divider"></li>
 
                                             {#<li>
                                                 <a href="{{ object_path(photo, 'caldera_criticalmass_photo_place_single') }}">
@@ -111,7 +101,7 @@
                                                 </a>
                                             </li>#}
 
-                                            <li role="separator" class="divider"></li>
+                                            <li><hr class="dropdown-divider"></li>
 
                                             <li>
                                                 <a href="{{ object_path(photo, 'caldera_criticalmass_photo_rotate') }}?direction=left">
@@ -126,7 +116,7 @@
                                                 </a>
                                             </li>
 
-                                            <li role="separator" class="divider"></li>
+                                            <li><hr class="dropdown-divider"></li>
 
                                             {% if photo.ride.featuredPhoto == photo %}
                                                 <li>

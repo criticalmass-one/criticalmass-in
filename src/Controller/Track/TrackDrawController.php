@@ -7,11 +7,17 @@ use App\Entity\Ride;
 use App\Entity\Track;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class TrackDrawController extends AbstractController
 {
     #[IsGranted('ROLE_USER')]
+    #[Route(
+        '/{citySlug}/{rideIdentifier}/drawtrack',
+        name: 'caldera_criticalmass_track_draw',
+        priority: 270
+    )]
     public function drawAction(Request $request, Ride $ride): Response
     {
         if (Request::METHOD_POST === $request->getMethod()) {
@@ -52,6 +58,11 @@ class TrackDrawController extends AbstractController
     }
 
     #[IsGranted('edit', 'track')]
+    #[Route(
+        '/track/{id}/edit',
+        name: 'caldera_criticalmass_track_edit',
+        priority: 270
+    )]
     public function editAction(Request $request, Track $track): Response
     {
         $ride = $track->getRide();

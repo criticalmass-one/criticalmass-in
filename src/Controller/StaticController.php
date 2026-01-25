@@ -3,11 +3,16 @@
 namespace App\Controller;
 
 use InvalidArgumentException;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class StaticController extends AbstractController
 {
+    #[Route(
+        '/content/{slug}',
+        name: 'caldera_criticalmass_static_display',
+        priority: 10
+    )]
     public function displayStaticContentAction(string $slug): Response
     {
         $templateName = sprintf('Static/%s.html.twig', $slug);

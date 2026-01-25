@@ -56,7 +56,12 @@ Encore
     })
 
     // enables Sass/SCSS support
-    .enableSassLoader()
+    .enableSassLoader((options) => {
+        options.api = 'modern-compiler';
+        options.sassOptions = {
+            silenceDeprecations: ['import', 'global-builtin', 'color-functions'],
+        };
+    })
 
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()

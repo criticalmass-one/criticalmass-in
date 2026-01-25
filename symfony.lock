@@ -31,6 +31,18 @@
             "src/Repository/.gitignore"
         ]
     },
+    "doctrine/doctrine-fixtures-bundle": {
+        "version": "4.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "3.0",
+            "ref": "1f5514cfa15b947298df4d771e694e578d4c204d"
+        },
+        "files": [
+            "src/DataFixtures/AppFixtures.php"
+        ]
+    },
     "doctrine/doctrine-migrations-bundle": {
         "version": "2.2",
         "recipe": {
@@ -81,20 +93,6 @@
             "config/routes/hwi_oauth_routing.yaml"
         ]
     },
-    "jms/serializer-bundle": {
-        "version": "3.10",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "main",
-            "version": "3.0",
-            "ref": "384cec52df45f3bfd46a09930d6960a58872b268"
-        },
-        "files": [
-            "config/packages/dev/jms_serializer.yaml",
-            "config/packages/jms_serializer.yaml",
-            "config/packages/prod/jms_serializer.yaml"
-        ]
-    },
     "knplabs/knp-menu-bundle": {
         "version": "v3.2.0"
     },
@@ -116,9 +114,6 @@
     },
     "maltehuebner/dataquery-bundle": {
         "version": "dev-main"
-    },
-    "maltehuebner/impress-bundle": {
-        "version": "0.1"
     },
     "maltehuebner/ordered-entities-bundle": {
         "version": "0.1"
@@ -158,43 +153,6 @@
         },
         "files": [
             "config/packages/oneup_flysystem.yaml"
-        ]
-    },
-    "php-amqplib/rabbitmq-bundle": {
-        "version": "2.11",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "main",
-            "version": "1.12",
-            "ref": "ce3ca2e4577270c4f518539aa6b9e878998fcfef"
-        },
-        "files": [
-            "config/packages/old_sound_rabbit_mq.yaml",
-            "src/Consumer/.gitignore"
-        ]
-    },
-    "php-http/discovery": {
-        "version": "1.19",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "1.18",
-            "ref": "f45b5dd173a27873ab19f5e3180b2f661c21de02"
-        },
-        "files": [
-            "config/packages/http_discovery.yaml"
-        ]
-    },
-    "php-http/httplug-bundle": {
-        "version": "1.27",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "main",
-            "version": "1.6",
-            "ref": "87b3d491d593d2c6e3b90bf0689ac69a188bfa5f"
-        },
-        "files": [
-            "config/packages/httplug.yaml"
         ]
     },
     "phpstan/phpstan": {
@@ -353,6 +311,18 @@
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
     },
+    "symfony/messenger": {
+        "version": "6.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "6.0",
+            "ref": "ba1ac4e919baba5644d31b57a3284d6ba12d52ee"
+        },
+        "files": [
+            "config/packages/messenger.yaml"
+        ]
+    },
     "symfony/monolog-bundle": {
         "version": "3.8",
         "recipe": {
@@ -428,6 +398,15 @@
         "files": [
             "config/packages/security.yaml"
         ]
+    },
+    "symfony/stimulus-bundle": {
+        "version": "2.25",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "2.8",
+            "ref": "9e33a8a3794b603fb4be6c04ee5ecab901ce549e"
+        }
     },
     "symfony/translation": {
         "version": "6.1",

@@ -47,7 +47,7 @@ class CityView implements ViewEntity
         return $this->user;
     }
 
-    public function setUser(User $user = null): ViewEntity
+    public function setUser(?User $user = null): ViewEntity
     {
         $this->user = $user;
 
@@ -71,7 +71,7 @@ class CityView implements ViewEntity
         return $this->city;
     }
 
-    public function setCity(City $city = null): CityView
+    public function setCity(?City $city = null): CityView
     {
         $this->city = $city;
 

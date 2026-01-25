@@ -3,7 +3,7 @@
 namespace App\Criticalmass\EntityMerger;
 
 use Doctrine\Common\Annotations\Reader;
-use JMS\Serializer\Annotation\Expose;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 class EntityMerger implements EntityMergerInterface
 {
@@ -17,12 +17,18 @@ class EntityMerger implements EntityMergerInterface
     public function merge(object $source, object $destination): object
     {
         $reflectionClass = new \ReflectionClass($source);
+        $destinationReflectionClass = new \ReflectionClass($destination);
 
         /** @var \ReflectionProperty $reflectionClass */
         foreach ($reflectionClass->getProperties() as $reflectionProperty) {
             if ($this->isPropertyExposed($reflectionProperty)) {
                 $setMethodName = $this->generateSetMethodName($reflectionProperty);
                 $getMethodName = $this->generateGetMethodName($reflectionProperty, $reflectionClass);
+
+                // Skip if the destination doesn't have the setter method
+                if (!$destinationReflectionClass->hasMethod($setMethodName)) {
+                    continue;
+                }
 
                 try {
                     $newValue = $source->$getMethodName();
@@ -48,12 +54,12 @@ class EntityMerger implements EntityMergerInterface
         $propertyAnnotations = $this->annotationReader->getPropertyAnnotations($reflectionProperty);
 
         foreach ($propertyAnnotations as $propertyAnnotation) {
-            if ($propertyAnnotation instanceof Expose) {
-                return true;
+            if ($propertyAnnotation instanceof Ignore) {
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 
     protected function generateSetMethodName(\ReflectionProperty $reflectionProperty): string

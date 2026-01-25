@@ -1,9 +1,10 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Städte-Übersicht{% endblock %}
 
 {% block breadcrumb %}
-    <li class="active">Städteliste</li>
+    {{ breadcrumb.active('Städteliste') }}
 {% endblock %}
     
 {% block content %}

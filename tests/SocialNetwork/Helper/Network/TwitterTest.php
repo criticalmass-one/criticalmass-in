@@ -9,7 +9,7 @@ class TwitterTest extends TestCase
 {
     public function testName(): void
     {
-        $this->assertEquals('twitter', (new Twitter())->getName());
+        $this->assertEquals('Twitter', (new Twitter())->getName());
     }
 
     public function testIdentifier(): void

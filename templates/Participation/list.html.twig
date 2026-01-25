@@ -1,69 +1,63 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Deine Touren{% endblock %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ path('criticalmass_user_usermanagement') }}">
-            Dein Benutzerkonto
-        </a>
-    </li>
-
-    <li class="active">
-        Deine Touren
-    </li>
+    {{ breadcrumb.item('Dein Benutzerkonto', path('criticalmass_user_usermanagement')) }}
+    {{ breadcrumb.active('Deine Touren') }}
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <ul class="nav nav-tabs">
-                    <li role="presentation" class="active">
-                        <a href="#table" aria-controls="profile" role="tab" data-toggle="tab">
+            <div class="col-md-10 offset-md-1">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="table-tab" data-bs-toggle="tab" data-bs-target="#table" type="button" role="tab" aria-controls="table" aria-selected="true">
                             Übersicht
-                        </a>
+                        </button>
                     </li>
-                    <li role="presentation">
-                        <a href="#goingYes" aria-controls="profile" role="tab" data-toggle="tab">
-                            Teilgenommen <span class="badge">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="goingYes-tab" data-bs-toggle="tab" data-bs-target="#goingYes" type="button" role="tab" aria-controls="goingYes" aria-selected="false">
+                            Teilgenommen <span class="badge bg-secondary">
                                 {{ participationYesList|length }}
                             </span>
-                        </a>
+                        </button>
                     </li>
 
-                    <li role="presentation">
-                        <a href="#goingMaybe" aria-controls="profile" role="tab" data-toggle="tab">
-                            Unentschieden <span class="badge">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="goingMaybe-tab" data-bs-toggle="tab" data-bs-target="#goingMaybe" type="button" role="tab" aria-controls="goingMaybe" aria-selected="false">
+                            Unentschieden <span class="badge bg-secondary">
                                 {{ participationMaybeList|length }}
                             </span>
-                        </a>
+                        </button>
                     </li>
 
-                    <li role="presentation">
-                        <a href="#goingNo" aria-controls="profile" role="tab" data-toggle="tab">
-                            Abgesagt <span class="badge">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="goingNo-tab" data-bs-toggle="tab" data-bs-target="#goingNo" type="button" role="tab" aria-controls="goingNo" aria-selected="false">
+                            Abgesagt <span class="badge bg-secondary">
                                 {{ participationNoList|length }}
                             </span>
-                        </a>
+                        </button>
                     </li>
 
-                    <li role="presentation">
-                        <a href="#city-list" aria-controls="city-list" role="tab" data-toggle="tab">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="city-list-tab" data-bs-toggle="tab" data-bs-target="#city-list" type="button" role="tab" aria-controls="city-list" aria-selected="false">
                             Städte
-                            <span class="badge">
+                            <span class="badge bg-secondary">
                                 {{ participationCityList|length }}
                             </span>
-                        </a>
+                        </button>
                     </li>
                 </ul>
 
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="table">
+                    <div role="tabpanel" class="tab-pane fade show active" id="table" aria-labelledby="table-tab">
                         {{ include('Participation/_table.html.twig') }}
                     </div>
 
-                    <div role="tabpanel" class="tab-pane" id="goingYes">
+                    <div role="tabpanel" class="tab-pane fade" id="goingYes" aria-labelledby="goingYes-tab">
                         <div class="row margin-top-medium">
                             <div class="col-md-12">
                                 <p>
@@ -75,7 +69,7 @@
                         {% include 'Participation/_list.html.twig' with { 'participationList': participationYesList } only %}
                     </div>
 
-                    <div role="tabpanel" class="tab-pane" id="goingMaybe">
+                    <div role="tabpanel" class="tab-pane fade" id="goingMaybe" aria-labelledby="goingMaybe-tab">
                         <div class="row margin-top-medium">
                             <div class="col-md-12">
                                 <p>
@@ -87,7 +81,7 @@
                         {% include 'Participation/_list.html.twig' with { 'participationList': participationMaybeList } only %}
                     </div>
 
-                    <div role="tabpanel" class="tab-pane" id="goingNo">
+                    <div role="tabpanel" class="tab-pane fade" id="goingNo" aria-labelledby="goingNo-tab">
                         <div class="row margin-top-medium">
                             <div class="col-md-12">
                                 <p>
@@ -99,7 +93,7 @@
                         {% include 'Participation/_list.html.twig' with { 'participationList': participationNoList } only %}
                     </div>
 
-                    <div role="tabpanel" class="tab-pane" id="city-list">
+                    <div role="tabpanel" class="tab-pane fade" id="city-list" aria-labelledby="city-list-tab">
                         {% include 'Participation/_city_list.html.twig' with { 'participationCityList': participationCityList } only %}
                     </div>
                 </div>

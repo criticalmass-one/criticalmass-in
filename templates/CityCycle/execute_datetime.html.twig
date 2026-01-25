@@ -1,25 +1,14 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Turnus auslösen{% endblock %}
 
 {% form_theme form 'Form/theme.html.twig' %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ object_path(cityCycle.city) }}">
-            {{ cityCycle.city.city }}
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ object_path(cityCycle.city, 'caldera_criticalmass_citycycle_list') }}">
-            Turnusliste
-        </a>
-    </li>
-
-    <li class="active">
-        Turnus auslösen
-    </li>
+    {{ breadcrumb.item(cityCycle.city.city, object_path(cityCycle.city)) }}
+    {{ breadcrumb.item('Turnusliste', object_path(cityCycle.city, 'caldera_criticalmass_citycycle_list')) }}
+    {{ breadcrumb.active('Turnus auslösen') }}
 {% endblock %}
 
 {% block content %}
@@ -136,6 +125,7 @@
                                 <div class="form-group{% if form_errors(form.fromDate) %} has-error has-feedback{% endif %}">
                                     <label class="control-label" for="">Startdatum:</label>
                                     {{ form_errors(form.fromDate) }}
+                                    {{ form_widget(form.fromDate) }}
                                     <p class="help-block">
                                         Bitte im Format <code>dd.mm.jjjj</code> angeben.
                                     </p>
@@ -148,6 +138,7 @@
                                 <div class="form-group{% if form_errors(form.untilDate) %} has-error has-feedback{% endif %}">
                                     <label class="control-label" for="">Enddatum:</label>
                                     {{ form_errors(form.untilDate) }}
+                                    {{ form_widget(form.untilDate) }}
                                     <p class="help-block">
                                         Bitte im Format <code>dd.mm.jjjj</code> angeben.
                                     </p>
