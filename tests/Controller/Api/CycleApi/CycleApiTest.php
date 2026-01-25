@@ -13,10 +13,11 @@ class CycleApiTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $cycles = $this->deserializeEntityList($this->client->getResponse()->getContent(), CityCycle::class);
+        $response = $this->getJsonResponse();
 
-        $this->assertNotEmpty($cycles);
-        $this->assertContainsOnlyInstancesOf(CityCycle::class, $cycles);
+        $this->assertIsArray($response);
+        $this->assertNotEmpty($response);
+        $this->assertArrayHasKey('id', $response[0]);
     }
 
     public function testListCyclesForHamburg(): void
@@ -25,12 +26,14 @@ class CycleApiTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $cycles = $this->deserializeEntityList($this->client->getResponse()->getContent(), CityCycle::class);
+        $response = $this->getJsonResponse();
 
-        $this->assertNotEmpty($cycles);
+        $this->assertIsArray($response);
+        $this->assertNotEmpty($response);
 
-        foreach ($cycles as $cycle) {
-            $this->assertEquals('Hamburg', $cycle->getCity()->getCity());
+        foreach ($response as $cycle) {
+            $this->assertArrayHasKey('city', $cycle);
+            $this->assertEquals('Hamburg', $cycle['city']['name']);
         }
     }
 
@@ -40,9 +43,10 @@ class CycleApiTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $cycles = $this->deserializeEntityList($this->client->getResponse()->getContent(), CityCycle::class);
+        $response = $this->getJsonResponse();
 
-        $this->assertNotEmpty($cycles);
+        $this->assertIsArray($response);
+        $this->assertNotEmpty($response);
     }
 
     public function testListCyclesValidNow(): void
@@ -51,9 +55,10 @@ class CycleApiTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $cycles = $this->deserializeEntityList($this->client->getResponse()->getContent(), CityCycle::class);
+        $response = $this->getJsonResponse();
 
-        $this->assertNotEmpty($cycles);
+        $this->assertIsArray($response);
+        $this->assertNotEmpty($response);
     }
 
     public function testListCyclesByDayOfWeek(): void
@@ -62,12 +67,13 @@ class CycleApiTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $cycles = $this->deserializeEntityList($this->client->getResponse()->getContent(), CityCycle::class);
+        $response = $this->getJsonResponse();
 
-        $this->assertNotEmpty($cycles);
+        $this->assertIsArray($response);
+        $this->assertNotEmpty($response);
 
-        foreach ($cycles as $cycle) {
-            $this->assertEquals(CityCycle::DAY_FRIDAY, $cycle->getDayOfWeek());
+        foreach ($response as $cycle) {
+            $this->assertEquals(CityCycle::DAY_FRIDAY, $cycle['day_of_week']);
         }
     }
 
@@ -77,12 +83,13 @@ class CycleApiTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $cycles = $this->deserializeEntityList($this->client->getResponse()->getContent(), CityCycle::class);
+        $response = $this->getJsonResponse();
 
-        $this->assertNotEmpty($cycles);
+        $this->assertIsArray($response);
+        $this->assertNotEmpty($response);
 
-        foreach ($cycles as $cycle) {
-            $this->assertEquals(CityCycle::WEEK_LAST, $cycle->getWeekOfMonth());
+        foreach ($response as $cycle) {
+            $this->assertEquals(CityCycle::WEEK_LAST, $cycle['week_of_month']);
         }
     }
 
@@ -92,18 +99,24 @@ class CycleApiTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $cycles = $this->deserializeEntityList($this->client->getResponse()->getContent(), CityCycle::class);
+        $response = $this->getJsonResponse();
 
-        $this->assertNotEmpty($cycles);
+        $this->assertIsArray($response);
+        $this->assertNotEmpty($response);
 
-        /** @var CityCycle $cycle */
-        $cycle = $cycles[0];
+        $cycle = $response[0];
 
-        $this->assertNotNull($cycle->getDayOfWeek());
-        $this->assertNotNull($cycle->getWeekOfMonth());
-        $this->assertNotNull($cycle->getTime());
-        $this->assertNotNull($cycle->getLocation());
-        $this->assertNotNull($cycle->getLatitude());
-        $this->assertNotNull($cycle->getLongitude());
+        $this->assertArrayHasKey('day_of_week', $cycle);
+        $this->assertNotNull($cycle['day_of_week']);
+        $this->assertArrayHasKey('week_of_month', $cycle);
+        $this->assertNotNull($cycle['week_of_month']);
+        $this->assertArrayHasKey('time', $cycle);
+        $this->assertNotNull($cycle['time']);
+        $this->assertArrayHasKey('location', $cycle);
+        $this->assertNotNull($cycle['location']);
+        $this->assertArrayHasKey('latitude', $cycle);
+        $this->assertNotNull($cycle['latitude']);
+        $this->assertArrayHasKey('longitude', $cycle);
+        $this->assertNotNull($cycle['longitude']);
     }
 }

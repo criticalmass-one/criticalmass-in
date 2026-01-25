@@ -14,10 +14,11 @@ class PhotoApiFullTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $photos = $this->deserializeEntityList($this->client->getResponse()->getContent(), Photo::class);
+        $response = $this->getJsonResponse();
 
-        $this->assertNotEmpty($photos);
-        $this->assertContainsOnlyInstancesOf(Photo::class, $photos);
+        $this->assertIsArray($response);
+        $this->assertNotEmpty($response);
+        $this->assertArrayHasKey('id', $response[0]);
     }
 
     public function testListPhotosWithSize(): void
@@ -26,9 +27,10 @@ class PhotoApiFullTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $photos = $this->deserializeEntityList($this->client->getResponse()->getContent(), Photo::class);
+        $response = $this->getJsonResponse();
 
-        $this->assertLessThanOrEqual(2, count($photos));
+        $this->assertIsArray($response);
+        $this->assertLessThanOrEqual(2, count($response));
     }
 
     public function testListPhotosForCity(): void
@@ -37,9 +39,10 @@ class PhotoApiFullTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $photos = $this->deserializeEntityList($this->client->getResponse()->getContent(), Photo::class);
+        $response = $this->getJsonResponse();
 
-        $this->assertNotEmpty($photos);
+        $this->assertIsArray($response);
+        $this->assertNotEmpty($response);
     }
 
     public function testListPhotosForRide(): void
@@ -58,9 +61,10 @@ class PhotoApiFullTest extends AbstractApiControllerTestCase
 
                 $this->assertResponseIsSuccessful();
 
-                $responsePhotos = $this->deserializeEntityList($this->client->getResponse()->getContent(), Photo::class);
+                $response = $this->getJsonResponse();
 
-                $this->assertNotEmpty($responsePhotos);
+                $this->assertIsArray($response);
+                $this->assertNotEmpty($response);
                 return;
             }
         }
@@ -78,9 +82,10 @@ class PhotoApiFullTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $photos = $this->deserializeEntityList($this->client->getResponse()->getContent(), Photo::class);
+        $response = $this->getJsonResponse();
 
-        $this->assertNotEmpty($photos);
+        $this->assertIsArray($response);
+        $this->assertNotEmpty($response);
     }
 
     public function testPhotoHasExpectedProperties(): void
@@ -89,16 +94,19 @@ class PhotoApiFullTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $photos = $this->deserializeEntityList($this->client->getResponse()->getContent(), Photo::class);
+        $response = $this->getJsonResponse();
 
-        $this->assertNotEmpty($photos);
+        $this->assertIsArray($response);
+        $this->assertNotEmpty($response);
 
-        /** @var Photo $photo */
-        $photo = $photos[0];
+        $photo = $response[0];
 
-        $this->assertNotNull($photo->getId());
-        $this->assertNotNull($photo->getLatitude());
-        $this->assertNotNull($photo->getLongitude());
+        $this->assertArrayHasKey('id', $photo);
+        $this->assertNotNull($photo['id']);
+        $this->assertArrayHasKey('latitude', $photo);
+        $this->assertNotNull($photo['latitude']);
+        $this->assertArrayHasKey('longitude', $photo);
+        $this->assertNotNull($photo['longitude']);
     }
 
     public function testListPhotosOrderByExifCreationDate(): void
@@ -111,8 +119,9 @@ class PhotoApiFullTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $photos = $this->deserializeEntityList($this->client->getResponse()->getContent(), Photo::class);
+        $response = $this->getJsonResponse();
 
-        $this->assertNotEmpty($photos);
+        $this->assertIsArray($response);
+        $this->assertNotEmpty($response);
     }
 }

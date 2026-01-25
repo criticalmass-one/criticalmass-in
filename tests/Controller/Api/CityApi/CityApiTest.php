@@ -38,9 +38,7 @@ class CityApiTest extends AbstractApiControllerTestCase
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-
-        $data = json_decode($client->getResponse()->getContent(), true);
+        $data = json_decode($this->client->getResponse()->getContent(), true);
 
         // Check essential properties
         // Note: City entity uses #[SerializedName('name')] on the $city property

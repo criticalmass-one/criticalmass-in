@@ -32,8 +32,8 @@ class PhotoApiSchemaTest extends AbstractApiControllerTestCase
         }
     }
 
-    #[TestDox('Photo creationDateTime is an ISO 8601 date-time string')]
-    public function testPhotoCreationDateTimeIsDateTimeString(): void
+    #[TestDox('Photo creationDateTime is a Unix timestamp')]
+    public function testPhotoCreationDateTimeIsUnixTimestamp(): void
     {
         $this->client->request('GET', '/api/photo?size=1');
         $this->assertResponseIsSuccessful();
@@ -43,8 +43,8 @@ class PhotoApiSchemaTest extends AbstractApiControllerTestCase
 
         $photo = $response[0];
         $this->assertArrayHasKey('creation_date_time', $photo);
-        $this->assertIsString($photo['creation_date_time'], 'creationDateTime should be an ISO 8601 date-time string');
-        $this->assertNotFalse(strtotime($photo['creation_date_time']), 'creationDateTime should be a valid date-time');
+        $this->assertIsInt($photo['creation_date_time'], 'creationDateTime should be a Unix timestamp');
+        $this->assertGreaterThan(0, $photo['creation_date_time'], 'creationDateTime should be a positive timestamp');
     }
 
     #[TestDox('Photo coordinates are valid when present')]

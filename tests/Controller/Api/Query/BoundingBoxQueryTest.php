@@ -5,7 +5,6 @@ namespace Tests\Controller\Api\Query;
 use App\Criticalmass\Geo\Coord\Coord;
 use App\Criticalmass\Geo\Coord\CoordInterface;
 use App\Entity\Ride;
-use App\EntityInterface\CoordinateInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\TestDox;
 use Tests\Controller\Api\AbstractApiControllerTestCase;
@@ -15,38 +14,37 @@ class BoundingBoxQueryTest extends AbstractApiControllerTestCase
     #[DataProvider('apiClassProvider')]
     public function testRideListWithBoundingBoxQueryForHamburg(string $fqcn, array $query, CoordInterface $expectedCoord): void
     {
-
         $this->client->request('GET', sprintf('%s?%s', $this->getApiEndpointForFqcn($fqcn), http_build_query($query)));
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $resultList = $this->deserializeEntityList($this->client->getResponse()->getContent(), $fqcn);
+        $resultList = $this->getJsonResponse();
 
         // Default size is 10, but we may have fewer records in fixtures
+        $this->assertIsArray($resultList);
         $this->assertLessThanOrEqual(10, count($resultList));
         $this->assertNotEmpty($resultList);
 
-        /** @var CoordinateInterface $result */
         foreach ($resultList as $result) {
             // Allow small floating point differences
-            $this->assertEqualsWithDelta($expectedCoord->getLatitude(), $result->getLatitude(), 0.05);
-            $this->assertEqualsWithDelta($expectedCoord->getLongitude(), $result->getLongitude(), 0.05);
+            $this->assertEqualsWithDelta($expectedCoord->getLatitude(), $result['latitude'], 0.05);
+            $this->assertEqualsWithDelta($expectedCoord->getLongitude(), $result['longitude'], 0.05);
         }
     }
 
     #[TestDox('Invalid coords for bounding box query will be ignored and result in 10 random rides.')]
     public function testRideListWithInvalidBoundingBoxQuery(): void
     {
-
         $this->client->request('GET', '/api/ride?bbNorthLatitude=54&bbSouthLatitude=57&bbEastLongitude=9&bbWestLongitude=10.054470');
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $actualRideList = $this->deserializeEntityList($this->client->getResponse()->getContent(), Ride::class);
+        $resultList = $this->getJsonResponse();
 
         // Default size is 10, but we may have fewer records in fixtures
-        $this->assertLessThanOrEqual(10, count($actualRideList));
-        $this->assertNotEmpty($actualRideList);
+        $this->assertIsArray($resultList);
+        $this->assertLessThanOrEqual(10, count($resultList));
+        $this->assertNotEmpty($resultList);
     }
 
     public static function apiClassProvider(): array
