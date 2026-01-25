@@ -22,7 +22,7 @@ export default class extends BaseMapController {
         polylineColor: String
     };
 
-    async connect() {
+    connect() {
         super.connect();
 
         const marker = this.addMarkerFromValues();
