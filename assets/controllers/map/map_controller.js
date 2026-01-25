@@ -110,7 +110,7 @@ export default class extends BaseMapController {
     }
 
     addPolylineFromValues() {
-        if (!this.hasPolylineValue) {
+        if (!this.hasPolylineValue || !this.polylineValue) {
             return null;
         }
 
