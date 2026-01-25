@@ -7,6 +7,7 @@ use App\Criticalmass\Router\Attribute\RouteParameter;
 use App\EntityInterface\AuditableInterface;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[Routing\DefaultRoute(name: 'caldera_criticalmass_location_show')]
@@ -17,6 +18,7 @@ class Location implements RouteableInterface, AuditableInterface
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[Groups(['location'])]
     protected ?int $id = null;
 
     #[RouteParameter(name: 'citySlug')]
@@ -27,18 +29,23 @@ class Location implements RouteableInterface, AuditableInterface
 
     #[RouteParameter(name: 'slug')]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['location'])]
     protected ?string $slug = null;
 
     #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['location'])]
     protected ?float $latitude = null;
 
     #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['location'])]
     protected ?float $longitude = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['location'])]
     protected ?string $title = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(['location'])]
     protected ?string $description = null;
 
     public function getId(): ?int

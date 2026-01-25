@@ -25,7 +25,6 @@ class SocialNetworkProfile
 
     #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'socialNetworkProfiles')]
     #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
-    #[SerializedName('city_id')]
     #[Ignore]
     protected ?City $city = null;
 
@@ -115,6 +114,13 @@ class SocialNetworkProfile
     public function getCity(): ?City
     {
         return $this->city;
+    }
+
+    #[SerializedName('city_id')]
+    #[Groups(['ride-list', 'ride-details'])]
+    public function getCityId(): ?int
+    {
+        return $this->city?->getId();
     }
 
     public function setCity(?City $city = null): SocialNetworkProfile

@@ -33,12 +33,13 @@ class CityCycle implements RouteableInterface
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[Groups(['ride-list'])]
     protected ?int $id = null;
 
     #[Routing\RouteParameter(name: 'citySlug')]
     #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'cycles')]
     #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
-    #[Ignore]
+    #[Groups(['ride-list'])]
     protected ?City $city = null;
 
     #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'cityCycles')]
@@ -62,6 +63,7 @@ class CityCycle implements RouteableInterface
 
     #[Assert\Type(type: '\DateTime')]
     #[ORM\Column(type: 'time', nullable: true)]
+    #[Groups(['ride-list'])]
     protected ?\DateTime $time = null;
 
     #[ORM\Column(type: 'string', nullable: true)]
@@ -79,6 +81,7 @@ class CityCycle implements RouteableInterface
     protected ?float $longitude = null;
 
     #[ORM\Column(type: 'datetime', nullable: false)]
+    #[Groups(['ride-list'])]
     protected \DateTime $createdAt;
 
     #[ORM\Column(type: 'datetime', nullable: true)]

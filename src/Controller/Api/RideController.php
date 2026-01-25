@@ -208,10 +208,7 @@ class RideController extends BaseController
         $manager->persist($ride);
         $manager->flush();
 
-        $context = new SerializationContext();
-        $context->setGroups('ride-list');
-
-        return $this->createStandardResponse($ride, $context);
+        return $this->createStandardResponse($ride, ['groups' => ['ride-list']]);
     }
 
     /**
@@ -258,9 +255,6 @@ class RideController extends BaseController
         $manager = $this->managerRegistry->getManager();
         $manager->flush();
 
-        $context = new SerializationContext();
-        $context->setGroups('ride-list');
-
-        return $this->createStandardResponse($ride, $context);
+        return $this->createStandardResponse($ride, ['groups' => ['ride-list']]);
     }
 }

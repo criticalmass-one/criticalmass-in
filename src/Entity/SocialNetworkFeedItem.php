@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Serializer\Attribute\Ignore;
 
@@ -16,39 +17,48 @@ class SocialNetworkFeedItem
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[Groups(['feed-item'])]
     protected ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: 'SocialNetworkProfile', inversedBy: 'feedItems')]
     #[ORM\JoinColumn(name: 'social_network_profile_id', referencedColumnName: 'id')]
-    #[SerializedName('social_network_profile_id')]
     #[Ignore]
     protected ?SocialNetworkProfile $socialNetworkProfile = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: false)]
+    #[Groups(['feed-item'])]
     protected ?string $uniqueIdentifier = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(['feed-item'])]
     protected ?string $permalink = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(['feed-item'])]
     protected ?string $title = null;
 
     #[ORM\Column(type: 'text', nullable: false)]
+    #[Groups(['feed-item'])]
     protected ?string $text = null;
 
     #[ORM\Column(type: 'datetime', nullable: false)]
+    #[Groups(['feed-item'])]
     protected ?\DateTime $dateTime = null;
 
     #[ORM\Column(type: 'boolean', nullable: false)]
+    #[Groups(['feed-item'])]
     protected bool $hidden = false;
 
     #[ORM\Column(type: 'boolean', nullable: false)]
+    #[Groups(['feed-item'])]
     protected bool $deleted = false;
 
     #[ORM\Column(type: 'datetime', nullable: false)]
+    #[Groups(['feed-item'])]
     protected \DateTime $createdAt;
 
     #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(['feed-item'])]
     protected ?string $raw = null;
 
     public function __construct()

@@ -22,6 +22,7 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[Groups(['subride-list', 'extended-subride-list'])]
     protected ?int $id = null;
 
     #[Routing\RouteParameter(name: 'rideIdentifier')]
@@ -37,28 +38,36 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
 
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['subride-list', 'extended-subride-list'])]
     protected ?string $title = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(['subride-list', 'extended-subride-list'])]
     protected ?string $description = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Groups(['subride-list', 'extended-subride-list'])]
     protected ?\DateTime $dateTime = null;
 
     #[ORM\Column(type: 'datetime', nullable: false)]
+    #[Groups(['subride-list', 'extended-subride-list'])]
     protected \DateTime $createdAt;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Groups(['subride-list', 'extended-subride-list'])]
     protected ?\DateTime $updatedAt = null;
 
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['subride-list', 'extended-subride-list'])]
     protected ?string $location = null;
 
     #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['subride-list', 'extended-subride-list'])]
     protected ?float $latitude = null;
 
     #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['subride-list', 'extended-subride-list'])]
     protected ?float $longitude = null;
 
     #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'subrides')]
@@ -108,6 +117,7 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
     }
 
     #[SerializedName('timestamp')]
+    #[Groups(['subride-list', 'extended-subride-list'])]
     public function getTimestamp(): int
     {
         return (int) $this->dateTime->format('U');

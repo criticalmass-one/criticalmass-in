@@ -12,6 +12,8 @@ use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -41,6 +43,11 @@ class CriticalSerializer implements CriticalSerializerInterface
             AbstractObjectNormalizer::SKIP_NULL_VALUES => true,
             AbstractObjectNormalizer::ENABLE_MAX_DEPTH => true,
             AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => fn (object $object): ?int => method_exists($object, 'getId') ? $object->getId() : null,
+            // Ignore Doctrine proxy internal properties (both camelCase and snake_case forms)
+            AbstractNormalizer::IGNORED_ATTRIBUTES => [
+                '__initializer__', '__cloner__', '__isInitialized__', '__is_initialized__',
+                'lazyObjectState', 'lazy_object_state',
+            ],
         ];
 
         return array_merge($defaultContext, $context);
@@ -63,9 +70,7 @@ class CriticalSerializer implements CriticalSerializerInterface
         ];
 
         $normalizers = [
-            new DateTimeNormalizer([
-                DateTimeNormalizer::FORMAT_KEY => 'Y-m-d\TH:i:sP',
-            ]),
+            new UnixTimestampDateTimeNormalizer(),
             new ObjectNormalizer(
                 classMetadataFactory: $classMetadataFactory,
                 nameConverter: $nameConverter,
@@ -76,5 +81,64 @@ class CriticalSerializer implements CriticalSerializerInterface
         ];
 
         return new Serializer($normalizers, [new JsonEncoder()]);
+    }
+}
+
+/**
+ * Custom normalizer that handles Unix timestamps for DateTime fields.
+ * Normalizes DateTime to Unix timestamp integers for API compatibility.
+ * Denormalizes Unix timestamps (integers or numeric strings) to DateTime objects.
+ */
+class UnixTimestampDateTimeNormalizer implements NormalizerInterface, DenormalizerInterface
+{
+    public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): ?\DateTimeInterface
+    {
+        if (null === $data || '' === $data) {
+            return null;
+        }
+
+        if (is_int($data) || (is_string($data) && ctype_digit($data))) {
+            return (new \DateTime())->setTimestamp((int) $data);
+        }
+
+        // Handle ISO 8601 strings
+        if (is_string($data)) {
+            try {
+                return new \DateTime($data);
+            } catch (\Exception) {
+                return null;
+            }
+        }
+
+        return null;
+    }
+
+    public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
+    {
+        return ($type === \DateTime::class || $type === \DateTimeInterface::class || $type === \DateTimeImmutable::class)
+            && ($data === null || is_int($data) || is_string($data));
+    }
+
+    public function normalize(mixed $object, ?string $format = null, array $context = []): ?int
+    {
+        if (!$object instanceof \DateTimeInterface) {
+            return null;
+        }
+
+        return $object->getTimestamp();
+    }
+
+    public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
+    {
+        return $data instanceof \DateTimeInterface;
+    }
+
+    public function getSupportedTypes(?string $format): array
+    {
+        return [
+            \DateTime::class => true,
+            \DateTimeInterface::class => true,
+            \DateTimeImmutable::class => true,
+        ];
     }
 }

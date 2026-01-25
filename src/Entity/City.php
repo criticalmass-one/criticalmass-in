@@ -112,7 +112,7 @@ class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableI
     protected Collection $cycles;
 
     #[ORM\OneToMany(targetEntity: 'SocialNetworkProfile', mappedBy: 'city', cascade: ['persist', 'remove'])]
-    #[Ignore]
+    #[Groups(['ride-details'])]
     protected Collection $socialNetworkProfiles;
 
     #[DataQuery\Sortable]

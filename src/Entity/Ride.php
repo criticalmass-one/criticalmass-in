@@ -165,12 +165,15 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
     protected ?\DateTime $updatedAt = null;
 
     #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['ride-list', 'ride-details'])]
     protected int $participationsNumberYes = 0;
 
     #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['ride-list', 'ride-details'])]
     protected int $participationsNumberMaybe = 0;
 
     #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['ride-list', 'ride-details'])]
     protected int $participationsNumberNo = 0;
 
     #[ORM\OneToMany(targetEntity: 'Participation', mappedBy: 'ride', fetch: 'LAZY')]
@@ -184,7 +187,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
     #[DataQuery\Sortable]
     #[DataQuery\Queryable]
     #[ORM\Column(type: 'integer', nullable: true)]
-    #[Ignore]
+    #[Groups(['ride-list', 'ride-details'])]
     protected int $views = 0;
 
     #[ORM\ManyToOne(targetEntity: 'Photo', inversedBy: 'featuredRides', fetch: 'LAZY')]
@@ -220,7 +223,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
      * @OE\Boolean(true)
      */
     #[ORM\Column(type: 'boolean', options: ['default' => true])]
-    #[Groups(['ride-list'])]
+    #[Groups(['ride-list', 'ride-details'])]
     protected bool $enabled = true;
 
     #[DoctrineAssert\EnumType(entity: 'App\DBAL\Type\RideDisabledReasonType')]
