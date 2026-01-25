@@ -3,8 +3,8 @@ import './scss/criticalmass.scss';
 import 'dropzone/dist/dropzone.css';
 import 'friendly-challenge/widget';
 
-//window.bootstrap = bootstrap;
-require('bootstrap');
+import * as bootstrap from 'bootstrap';
+window.bootstrap = bootstrap;
 
 import GeocodingButton from './js/GeocodingButton';
 import DataTable from './js/DataTable';

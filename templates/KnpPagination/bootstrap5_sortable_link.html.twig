@@ -1,0 +1,22 @@
+{#
+/**
+ * @file
+ * Bootstrap 5 Sorting control implementation.
+ *
+ * @author Afolabi Olayinka <folabiolayinka@gmail.com>
+ */
+#}
+<a{% for attr, value  in options %} {{ attr }}="{{ value }}"{% endfor %}>
+<span class="float-end">
+        {% if sorted %}
+            {% if direction == 'desc' %}
+                <i class="far fa-sort-amount-down"></i>
+            {% else %}
+                <i class="far fa-sort-amount-up"></i>
+            {% endif %}
+        {% else %}
+            <i class="far fa-sort text-muted"></i>
+        {% endif %}
+    </span>
+{{ title }}
+</a>

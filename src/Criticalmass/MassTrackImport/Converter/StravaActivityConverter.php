@@ -2,8 +2,8 @@
 
 namespace App\Criticalmass\MassTrackImport\Converter;
 
+use App\Criticalmass\Geo\Coord\Coord;
 use App\Entity\TrackImportCandidate;
-use Caldera\GeoBasic\Coord\Coord;
 
 class StravaActivityConverter
 {

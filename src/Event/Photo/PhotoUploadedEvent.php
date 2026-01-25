@@ -14,7 +14,7 @@ class PhotoUploadedEvent extends AbstractPhotoEvent
     /** @var string $tmpFilename */
     protected $tmpFilename;
 
-    public function __construct(Photo $photo, bool $flush = true, string $tmpFilename = null)
+    public function __construct(Photo $photo, bool $flush = true, ?string $tmpFilename = null)
     {
         $this->flush = $flush;
         $this->tmpFilename = $tmpFilename;

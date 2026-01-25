@@ -1,23 +1,12 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Deine Tracks{% endblock %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ path('criticalmass_user_usermanagement') }}">
-            Dein Benutzerkonto
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ path('caldera_criticalmass_track_list') }}">
-            Deine Tracks
-        </a>
-    </li>
-
-    <li class="active">
-        Track anzeigen
-    </li>
+    {{ breadcrumb.item('Dein Benutzerkonto', path('criticalmass_user_usermanagement')) }}
+    {{ breadcrumb.item('Deine Tracks', path('caldera_criticalmass_track_list')) }}
+    {{ breadcrumb.active('Track anzeigen') }}
 {% endblock %}
 
 {% block content %}
@@ -41,7 +30,7 @@
                                href="{{ object_path(track, 'caldera_criticalmass_track_range') }}">
                                 <i class="far fa-cut"></i>&nbsp;Track beschneiden
                             </a>
-                            <a class="btn btn-default"
+                            <a class="btn btn-secondary"
                                href="{{ object_path(track, 'caldera_criticalmass_track_approve') }}">
                                 <i class="far fa-check"></i>&nbsp;Track bestätigen
                             </a>
@@ -67,8 +56,8 @@
                         class="map"
                         style="height: 350px;"
                         data-controller="map--map"
-                        data-map--polyline="{{ track.polyline }}"
-                        data-map--polyline-color="{{ track.user.color }}"
+                        data-map--map-polyline-value="{{ track.polyline }}"
+                        data-map--map-polyline-color-value="{{ track.user.color }}"
                 ></div>
             </div>
         </div>
@@ -140,31 +129,21 @@
         {% set next_track = next_entity(track) %}
         <div class="row">
             <div class="col-md-12">
-                <ul class="pager">
-                    {% if previous_track %}
-                        <li class="previous">
-                            <a href="{{ object_path(previous_track) }}">
+                <nav aria-label="Track Navigation">
+                    <ul class="pagination justify-content-between">
+                        <li class="page-item{% if not previous_track %} disabled{% endif %}">
+                            <a class="page-link" href="{% if previous_track %}{{ object_path(previous_track) }}{% else %}#{% endif %}">
                                 &larr; Voriger Track
                             </a>
                         </li>
-                    {% else %}
-                        <li class="previous disabled">
-                            <a href="#">&larr; Voriger Track</a>
-                        </li>
-                    {% endif %}
 
-                    {% if next_track %}
-                        <li class="next">
-                            <a href="{{ object_path(next_track) }}">
+                        <li class="page-item{% if not next_track %} disabled{% endif %}">
+                            <a class="page-link" href="{% if next_track %}{{ object_path(next_track) }}{% else %}#{% endif %}">
                                 Nächster Track &rarr;
                             </a>
                         </li>
-                    {% else %}
-                        <li class="next disabled">
-                            <a href="#">Nächster Track &rarr;</a>
-                        </li>
-                    {% endif %}
-                </ul>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>

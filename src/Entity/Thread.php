@@ -62,7 +62,7 @@ class Thread implements ViewableEntity, RouteableInterface, PostableInterface
         return $this->id;
     }
 
-    public function setTitle(string $title = null): Thread
+    public function setTitle(?string $title = null): Thread
     {
         $this->title = $title;
 
@@ -86,7 +86,7 @@ class Thread implements ViewableEntity, RouteableInterface, PostableInterface
         return $this->enabled;
     }
 
-    public function setCity(City $city = null): Thread
+    public function setCity(?City $city = null): Thread
     {
         $this->city = $city;
 
@@ -98,7 +98,7 @@ class Thread implements ViewableEntity, RouteableInterface, PostableInterface
         return $this->city;
     }
 
-    public function setBoard(Board $board = null): Thread
+    public function setBoard(?Board $board = null): Thread
     {
         $this->board = $board;
 
@@ -110,7 +110,7 @@ class Thread implements ViewableEntity, RouteableInterface, PostableInterface
         return $this->board;
     }
 
-    public function setFirstPost(Post $firstPost = null): Thread
+    public function setFirstPost(?Post $firstPost = null): Thread
     {
         $this->firstPost = $firstPost;
 
@@ -122,7 +122,7 @@ class Thread implements ViewableEntity, RouteableInterface, PostableInterface
         return $this->firstPost;
     }
 
-    public function setLastPost(Post $lastPost = null): Thread
+    public function setLastPost(?Post $lastPost = null): Thread
     {
         $this->lastPost = $lastPost;
 

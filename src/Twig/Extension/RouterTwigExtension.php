@@ -25,7 +25,7 @@ class RouterTwigExtension extends AbstractExtension
         ];
     }
 
-    public function objectPath(RouteableInterface $object, string $routeName = null, array $parameters = []): string
+    public function objectPath(RouteableInterface $object, ?string $routeName = null, array $parameters = []): string
     {
         return $this->router->generate($object, $routeName, $parameters);
     }

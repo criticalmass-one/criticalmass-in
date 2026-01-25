@@ -7,7 +7,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 interface ObjectRouterInterface
 {
-    public function generate(RouteableInterface $routeable, string $routeName = null, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string;
+    public function generate(RouteableInterface $routeable, ?string $routeName = null, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string;
 
     public function getRouteParameter(RouteableInterface $routeable, string $variableName): ?string;
 }

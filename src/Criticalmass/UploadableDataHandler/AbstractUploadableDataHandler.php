@@ -2,20 +2,14 @@
 
 namespace App\Criticalmass\UploadableDataHandler;
 
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use Vich\UploaderBundle\Mapping\PropertyMappingFactory;
 
 abstract class AbstractUploadableDataHandler implements UploadableDataHandlerInterface
 {
-    /** @var PropertyMappingFactory $propertyMappingFactory */
-    protected $propertyMappingFactory;
-
-    /** @var FilesystemInterface $filesystem */
-    protected $filesystem;
-
-    public function __construct(PropertyMappingFactory $propertyMappingFactory, FilesystemInterface $filesystem)
-    {
-        $this->propertyMappingFactory = $propertyMappingFactory;
-        $this->filesystem = $filesystem;
+    public function __construct(
+        protected PropertyMappingFactory $propertyMappingFactory,
+        protected FilesystemOperator $filesystem
+    ) {
     }
 }

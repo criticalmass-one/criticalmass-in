@@ -1,37 +1,17 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Übersicht zum Treffpunkt {{ location.title }} der {{ location.city.title }}{% endblock %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ object_path(location.city) }}">
-            {{ location.city.city }}
-        </a>
-    </li>
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item(location.city.city, object_path(location.city)) }}
     {% if ride %}
-        <li>
-            <a href="{{ object_path(ride) }}">
-                {{ ride.title }}
-            </a>
-        </li>
-
-        <li class="active">
-            Informationen zum Treffpunkt
-        </li>
+        {{ breadcrumb.item(ride.title, object_path(ride)) }}
+        {{ breadcrumb.active('Informationen zum Treffpunkt') }}
     {% else %}
-        <li>
-            Treffpunkte
-        </li>
-
-        <li class="active">
-            {{ location.title }}
-        </li>
+        {{ breadcrumb.item('Treffpunkte', '#') }}
+        {{ breadcrumb.active(location.title) }}
     {% endif %}
 {% endblock %}
 

@@ -5,13 +5,19 @@ namespace App\Controller\Statistic;
 use App\Controller\AbstractController;
 use App\Repository\RideRepository;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class MonthlyStatsController extends AbstractController
 {
+    #[Route(
+        '/statistic/{year}/{month}',
+        name: 'caldera_criticalmass_statistic_ride_month',
+        priority: 140
+    )]
     public function listRidesAction(
         RideRepository $rideRepository,
-        int $year = null,
-        int $month = null
+        ?int $year = null,
+        ?int $month = null
     ): Response {
         $now = new \DateTime();
 

@@ -16,9 +16,7 @@ class ParticipationTableTest extends KernelTestCase
 
     protected function getTableGenerator(): TableGeneratorInterface
     {
-        $container = self::$container;
-
-        return $container->get(TableGeneratorInterface::class);
+        return static::getContainer()->get(TableGeneratorInterface::class);
     }
 
     protected function createRide(\DateTime $dateTime): Ride

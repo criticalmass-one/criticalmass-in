@@ -1,11 +1,10 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Deine persönlichen Daten{% endblock %}
 
 {% block breadcrumb %}
-    <li class="active">
-        Deine persönlichen Daten
-    </li>
+    {{ breadcrumb.active('Deine persönlichen Daten') }}
 {% endblock %}
 
 {% block content %}

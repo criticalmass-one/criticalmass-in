@@ -7,5 +7,5 @@ use App\EntityInterface\PhotoInterface;
 interface ManipulateablePhotoInterface extends PhotoInterface
 {
     public function getBackupName(): ?string;
-    public function setBackupName(string $backupName = null): ManipulateablePhotoInterface;
+    public function setBackupName(?string $backupName = null): ManipulateablePhotoInterface;
 }

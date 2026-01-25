@@ -1,8 +1,7 @@
 <div class="btn-group pull-right">
-    <button type="button" class="btn btn-default btn-xs dropdown-toggle"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Bearbeiten <span class="caret"></span>
-    </button>
+    <button type="button" class="btn btn-secondary btn-xs dropdown-toggle"
+            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Bearbeiten    </button>
     <ul class="dropdown-menu">
         {% if track.source == constant('TRACK_SOURCE_DRAW', track) %}
             <li>
@@ -34,7 +33,7 @@
                 </li>
             {% endif %}
 
-            <li role="separator" class="divider"></li>
+            <li><hr class="dropdown-divider"></li>
 
             {% if not track.isReviewed %}
                 <li>

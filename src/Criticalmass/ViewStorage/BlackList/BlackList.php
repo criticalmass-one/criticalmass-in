@@ -6,7 +6,7 @@ use Jaybizzle\CrawlerDetect\CrawlerDetect;
 
 class BlackList implements BlackListInterface
 {
-    public function isBlackListed(string $userAgent = null): bool
+    public function isBlackListed(?string $userAgent = null): bool
     {
         return (new CrawlerDetect())->isCrawler($userAgent);
     }

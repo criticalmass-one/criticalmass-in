@@ -17,8 +17,8 @@ class CityCycleRepository extends ServiceEntityRepository
 
     public function findByCity(
         City $city,
-        \DateTimeInterface $startDateTime = null,
-        \DateTimeInterface $endDateTime = null
+        ?\DateTimeInterface $startDateTime = null,
+        ?\DateTimeInterface $endDateTime = null
     ): array {
         $builder = $this->createQueryBuilder('cc');
 
@@ -57,13 +57,13 @@ class CityCycleRepository extends ServiceEntityRepository
     }
 
     public function findForApi(
-        City $city = null,
-        Region $region = null,
-        \DateTimeInterface $startDateTime = null,
-        \DateTimeInterface $endDateTime = null,
-        bool $validNow = null,
-        int $dayOfWeek = null,
-        int $weekOfMonth = null
+        ?City $city = null,
+        ?Region $region = null,
+        ?\DateTimeInterface $startDateTime = null,
+        ?\DateTimeInterface $endDateTime = null,
+        ?bool $validNow = null,
+        ?int $dayOfWeek = null,
+        ?int $weekOfMonth = null
     ): array
     {
         $builder = $this->createQueryBuilder('cc');

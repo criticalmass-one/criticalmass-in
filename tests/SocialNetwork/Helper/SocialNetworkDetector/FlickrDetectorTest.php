@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Tests\SocialNetworkDetector;
+namespace Tests\SocialNetwork\Helper\SocialNetworkDetector;
 
-class FlickrDetectorTest extends AbstractNetworkDetectorTest
+class FlickrDetectorTest extends AbstractNetworkDetectorTestCase
 {
     public function testFlickr(): void
     {
