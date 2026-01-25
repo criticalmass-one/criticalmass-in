@@ -7,12 +7,6 @@ services:
     image: schickling/mailcatcher
     ports: [ 1025, 1080 ]
 
-  memcached:
-    image: memcached:alpine
-    container_name: criticalmass-memcached
-    labels:
-      com.symfony.server.service-prefix: 'MEMCACHED'
-
   redis:
     image: redis:alpine
     container_name: criticalmass-redis
