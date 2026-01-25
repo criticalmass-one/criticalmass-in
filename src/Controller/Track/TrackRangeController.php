@@ -3,7 +3,7 @@
 namespace App\Controller\Track;
 
 use App\Controller\AbstractController;
-use App\Criticalmass\Geo\LatLngListGenerator\SimpleLatLngListGenerator;
+use App\Criticalmass\Geo\GpxService\GpxServiceInterface;
 use App\Entity\Track;
 use App\Event\Track\TrackTrimmedEvent;
 use App\Form\Type\TrackRangeType;
@@ -16,39 +16,43 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class TrackRangeController extends AbstractController
 {
-    public function __construct(private readonly string $gapWidth)
-    {
-
-    }
-
     #[IsGranted('edit', 'track')]
     #[Route('/track/range/{id}', name: 'caldera_criticalmass_track_range', priority: 270)]
-    public function rangeAction(Request $request, Track $track, SimpleLatLngListGenerator $latLngListGenerator, EventDispatcherInterface $eventDispatcher): Response
-    {
+    public function rangeAction(
+        Request $request,
+        Track $track,
+        GpxServiceInterface $gpxService,
+        EventDispatcherInterface $eventDispatcher
+    ): Response {
         $form = $this->createForm(TrackRangeType::class, $track);
 
         if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->rangePostAction($request, $track, $form, $latLngListGenerator, $eventDispatcher);
+            return $this->rangePostAction($request, $track, $form, $eventDispatcher);
         }
 
-        return $this->rangeGetAction($request, $track, $form, $latLngListGenerator, $eventDispatcher);
+        return $this->rangeGetAction($track, $form, $gpxService);
     }
 
-    protected function rangeGetAction(Request $request, Track $track, FormInterface $form, SimpleLatLngListGenerator $latLngListGenerator, EventDispatcherInterface $eventDispatcher): Response
-    {
-        $latLngListGenerator
-            ->loadTrack($track)
-            ->execute();
+    protected function rangeGetAction(
+        Track $track,
+        FormInterface $form,
+        GpxServiceInterface $gpxService
+    ): Response {
+        $latLngList = $gpxService->generateSimpleLatLngList($track);
 
         return $this->render('Track/range.html.twig', [
             'form' => $form->createView(),
             'track' => $track,
-            'latLngList' => $latLngListGenerator->getList(),
+            'latLngList' => $latLngList,
         ]);
     }
 
-    protected function rangePostAction(Request $request, Track $track, FormInterface $form, SimpleLatLngListGenerator $latLngListGenerator, EventDispatcherInterface $eventDispatcher): Response
-    {
+    protected function rangePostAction(
+        Request $request,
+        Track $track,
+        FormInterface $form,
+        EventDispatcherInterface $eventDispatcher
+    ): Response {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

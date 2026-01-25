@@ -3,7 +3,7 @@
 namespace App\Criticalmass\MassTrackImport\Voter;
 
 use App\Criticalmass\Geo\Coord\Coord;
-use App\Criticalmass\Geo\DistanceCalculator\DistanceCalculator;
+use App\Criticalmass\Geo\GeoUtil\GeoUtil;
 use App\Entity\Ride;
 use App\Entity\TrackImportCandidate;
 
@@ -18,7 +18,7 @@ class LocationVoter implements VoterInterface
         $rideCoord = new Coord($ride->getLatitude(), $ride->getLongitude());
         $activityCoord = $model->getStartCoord();
 
-        $distance = DistanceCalculator::calculateDistance($rideCoord, $activityCoord);
+        $distance = GeoUtil::calculateDistance($rideCoord, $activityCoord);
 
         if ($distance < 1) {
             return 1.0;
