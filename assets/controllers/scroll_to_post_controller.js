@@ -8,12 +8,23 @@ export default class extends Controller {
         if (hash.startsWith('post-')) {
             this.highlightPost(hash);
         }
+
+        // Event delegation for post links
+        this.clickHandler = this.handleClick.bind(this);
+        this.element.addEventListener('click', this.clickHandler);
     }
 
-    navigate(event) {
+    disconnect() {
+        this.element.removeEventListener('click', this.clickHandler);
+    }
+
+    handleClick(event) {
+        const link = event.target.closest('a[href^="#post-"]');
+        if (!link) return;
+
         event.preventDefault();
 
-        const hash = this.getHash(event.currentTarget.getAttribute('href'));
+        const hash = this.getHash(link.getAttribute('href'));
 
         window.location.hash = hash;
 
