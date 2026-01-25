@@ -1,10 +1,10 @@
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Details</h3>
+<div class="card card">
+    <div class="card-header">
+        Details
     </div>
-    <div class="panel-body">
+    <div class="card-body">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <dl>
                     <dt>Datum</dt>
                     <dd itemprop="startDate" content="{{ ride.dateTime|date('Y-m-dTH:i') }}">{{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}</dd>
@@ -58,7 +58,7 @@
 
                 {% if ride.dateTime %}
                     <p class="text-center">
-                        <a href="{{ object_path(ride, 'caldera_criticalmass_ride_ical') }}" class="btn btn-success">
+                        <a href="{{ object_path(ride, 'caldera_criticalmass_ride_ical') }}" class="btn btn-primary">
                             <i class="far fa-calendar"></i>
                             Kalendereintrag merken
                         </a>

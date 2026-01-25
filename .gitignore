@@ -33,10 +33,7 @@
 /public/js/
 /public/fonts/
 /public/css/
-/node_modules/
 /assets/css/
-node_modules2/
-node_modules_alt/
 public/*.html.swp
 public/.well-known/
 public/css2/
@@ -73,15 +70,14 @@ yarn-error.log
 
 criticalmass.iml
 .idea
-docker
 .yarn
 ###> liip/imagine-bundle ###
 /public/media/cache/
 ###< liip/imagine-bundle ###
 
-.yarnrc.yml
-
-
 ###> phpstan/phpstan ###
 phpstan.neon
 ###< phpstan/phpstan ###
+
+.yarnrc.yml
+

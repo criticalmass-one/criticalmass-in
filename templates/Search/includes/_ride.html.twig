@@ -1,5 +1,5 @@
-<div class="row margin-bottom-medium">
-    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+<div class="row mb-2">
+    <div class="col-12 col-md-3 col-lg-3">
         {% if ride.location and ride.latitude and ride.longitude %}
             <div id="map-{{ ride.id }}"
                  class="map"
@@ -29,9 +29,9 @@
         {% endif %}
     </div>
 
-    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+    <div class="col-12 col-md-7 col-lg-7">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <a href="{{ object_path(ride) }}">
                     <h4>
                         {{ ride.title }}
@@ -41,7 +41,7 @@
         </div>
 
         <div class="row">
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div class="col-4">
                 <dl>
                     <dt>
                         Datum:
@@ -53,7 +53,7 @@
                 </dl>
             </div>
 
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div class="col-4">
                 <dl>
                     <dt>
                         Uhrzeit:
@@ -66,7 +66,7 @@
             </div>
 
             {% if ride.location and ride.latitude and ride.longitude %}
-                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <div class="col-4">
                     <dl>
                         <dt>
                             Treffpunkt:

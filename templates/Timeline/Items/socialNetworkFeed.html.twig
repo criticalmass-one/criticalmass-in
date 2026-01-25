@@ -32,21 +32,23 @@
         </div>
     {% endif %}
 
-    {% if item.socialNetworkFeedItem.socialNetworkProfile.network == 'homepage' %}
-        <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
-            <div class="row">
-                <div class="col-md-12">
-                    <a href="{{ object_path(city) }}">
-                        <strong>
-                            {{ city.title }}
-                        </strong>
-                    </a>
-                    hat gebloggt:
-                </div>
+<div class="row mt-3">
+    {{ include('Timeline/_includes/user_column.html.twig') }}
+
+    <div class="col-9 col-md-10">
+        <div class="row">
+            <div class="col-12">
+                <a href="{{ object_path((source)) }}">
+                    <strong>
+                        {{ sourceName }}
+                    </strong>
+                </a>
+                hat einen Blog-Beitrag veröffentlicht:
             </div>
+        </div>
 
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <a href="{{ item.socialNetworkFeedItem.permalink }}">
                         <h4>
                             {{ item.socialNetworkFeedItem.title }}
@@ -79,7 +81,7 @@
             </div>
 
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-12">
                     <p>
                         <a href="{{ item.socialNetworkFeedItem.permalink }}">
                             {{ item.socialNetworkFeedItem.text }}

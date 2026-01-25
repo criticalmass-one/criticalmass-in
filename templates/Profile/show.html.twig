@@ -1,8 +1,6 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% set bootstrap4app = true %}
-
 {% block breadcrumb %}
     {{ breadcrumb.active(userProfile.usernameCanonical) }}
 {% endblock %}

@@ -1,12 +1,10 @@
-<div class="row hidden-xs hidden-sm">
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">
-                    Bald unterwegs
-                </h3>
-            </div>
-            <div class="panel-body">
+<div class="row mt-3 hidden-xs hidden-sm">
+    <div class="col-12">
+        <div class="card">
+            <h5 class="card-header">
+                Bald unterwegs
+            </h5>
+            <div class="card-body">
                 <ul class="list-unstyled">
                     {% for month in rideList %}
                         {% for day in month %}
@@ -15,7 +13,7 @@
                                     {{ day.dateTime|format_date('eeee, dd. MMMM YYYY') }}
                                 </h5>
 
-                                <ul>
+                                <ul class="list-unstyled">
                                     {% for ride in day %}
                                     {% include 'Common/Ride/simple_city_time_list_item.html.twig' with { ride: ride } %}
                                     {% endfor %}

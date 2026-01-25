@@ -1,12 +1,12 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
 
-{% block title %}{% endblock %}
+{% block title %}Stadt nicht gefunden{% endblock %}
 
 {% block content %}
     {% if city %}
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-12 col-md-8 offset-md-2 text-center">
                 <h2>
                     Critical Mass {{ city.city }}
                 </h2>
@@ -14,7 +14,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-12 col-md-8 offset-md-2">
                 <div id="map" class="map" style="height: 150px;"
                      data-map-center-latitude="{{ city.latitude }}"
                      data-map-center-longitude="{{ city.longitude }}"
@@ -27,8 +27,8 @@
             </div>
         </div>
 
-        <div class="row margin-top-medium">
-            <div class="col-md-8 col-md-offset-2">
+        <div class="row mt-2">
+            <div class="col-12 col-md-8 offset-md-2">
                 <p>
                     Es tut uns leid, aber wir haben keine Informationen zu einer Critical Mass in {{ city.city }} in unserer Datenbank.
                 </p>
@@ -48,18 +48,17 @@
     {% else %}
         <div class="container">
             <div class="row">
-                <div class="col-md-8 col-md-offset-2">
+                <div class="col-12 col-md-8 offset-md-2">
                     <h2>
                         Keine Masse gefunden
                     </h2>
                 </div>
             </div>
 
-            <div class="row margin-top-medium">
-                <div class="col-md-8 col-md-offset-2">
+            <div class="row mt-2">
+                <div class="col-12 col-md-8 offset-md-2">
                     <p>
-                        Es tut uns leid, aber wir konnten keine Stadt zu deiner Suche nach <code>{{ citySlug }}</code>
-                        finden.
+                        Es tut uns leid, aber wir konnten keine Stadt zu deiner Suche nach <code>{{ citySlug }}</code> finden.
                     </p>
 
                     <p>
