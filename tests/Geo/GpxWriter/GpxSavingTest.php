@@ -27,7 +27,7 @@ class GpxSavingTest extends TestCase
 
         $filesystem = $this->createMock(Filesystem::class);
         $filesystem->expects($this->once())
-            ->method('put')
+            ->method('write')
             ->with(
                 $this->equalTo('test.gpx'),
                 $this->equalTo($expectedContent));
@@ -48,7 +48,7 @@ class GpxSavingTest extends TestCase
 
         $filesystem = $this->createMock(Filesystem::class);
         $filesystem->expects($this->never())
-            ->method('put')
+            ->method('write')
             ->with(
                 $this->equalTo('test.gpx'),
                 $this->equalTo(''));
