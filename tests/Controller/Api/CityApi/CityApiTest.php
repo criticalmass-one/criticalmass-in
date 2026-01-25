@@ -4,21 +4,20 @@ namespace Tests\Controller\Api\CityApi;
 
 use App\Entity\City;
 use PHPUnit\Framework\Attributes\TestDox;
-use Tests\Controller\Api\AbstractApiControllerTest;
+use Tests\Controller\Api\AbstractApiControllerTestCase;
 
-class CityApiTest extends AbstractApiControllerTest
+class CityApiTest extends AbstractApiControllerTestCase
 {
     #[TestDox('Request Hamburg and check the result.')]
     public function testCityHamburg(): void
     {
-        $client = static::createClient();
 
-        $client->request('GET', '/api/hamburg');
+        $this->client->request('GET', '/api/hamburg');
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         /** @var City $actualCity */
-        $actualCity = $this->deserializeEntity($client->getResponse()->getContent(), City::class);
+        $actualCity = $this->deserializeEntity($this->client->getResponse()->getContent(), City::class);
 
         $this->assertEquals('Hamburg', $actualCity->getCity());
     }
@@ -26,23 +25,21 @@ class CityApiTest extends AbstractApiControllerTest
     #[TestDox('Ask for a unknown city and retrieve 404.')]
     public function testUnkownCity(): void
     {
-        $client = static::createClient();
 
-        $client->request('GET', '/api/asdf');
+        $this->client->request('GET', '/api/asdf');
 
-        $this->assertEquals(404, $client->getResponse()->getStatusCode());
+        $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
     }
 
     public function testCityHamburgRawResult(): void
     {
-        $client = static::createClient();
 
-        $client->request('GET', '/api/hamburg');
+        $this->client->request('GET', '/api/hamburg');
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
         // Verify the response contains expected Hamburg data
-        $content = json_decode($client->getResponse()->getContent(), true);
+        $content = json_decode($this->client->getResponse()->getContent(), true);
 
         $this->assertEquals('hamburg', $content['slug']);
         $this->assertEquals('Hamburg', $content['name']);

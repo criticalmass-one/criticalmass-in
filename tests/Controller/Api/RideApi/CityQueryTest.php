@@ -4,20 +4,19 @@ namespace Tests\Controller\Api\RideApi;
 
 use App\Entity\Ride;
 use PHPUnit\Framework\Attributes\TestDox;
-use Tests\Controller\Api\AbstractApiControllerTest;
+use Tests\Controller\Api\AbstractApiControllerTestCase;
 
-class CityQueryTest extends AbstractApiControllerTest
+class CityQueryTest extends AbstractApiControllerTestCase
 {
     #[TestDox('Querying for Hamburg will only return Hamburg rides.')]
     public function testRideListWithCityQueryForHamburg(): void
     {
-        $client = static::createClient();
 
-        $client->request('GET', '/api/ride?citySlug=hamburg');
+        $this->client->request('GET', '/api/ride?citySlug=hamburg');
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
+        $actualRideList = $this->deserializeEntityList($this->client->getResponse()->getContent(), Ride::class);
 
         $this->assertNotEmpty($actualRideList, 'Should return Hamburg rides');
 
@@ -35,13 +34,12 @@ class CityQueryTest extends AbstractApiControllerTest
     #[TestDox('Querying for Berlin will only return Berlin rides.')]
     public function testRideListWithCityQueryForBerlin(): void
     {
-        $client = static::createClient();
 
-        $client->request('GET', '/api/ride?citySlug=berlin');
+        $this->client->request('GET', '/api/ride?citySlug=berlin');
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
+        $actualRideList = $this->deserializeEntityList($this->client->getResponse()->getContent(), Ride::class);
 
         $this->assertNotEmpty($actualRideList, 'Should return Berlin rides');
 
@@ -59,11 +57,10 @@ class CityQueryTest extends AbstractApiControllerTest
     #[TestDox('Expect an error when providing a non existent slug.')]
     public function testRideListWithCityQueryForNonExistentCity(): void
     {
-        $client = static::createClient();
-        $client->catchExceptions(false);
+        $this->client->catchExceptions(false);
 
         // Non-existent city slug causes an exception in CityQuery
         $this->expectException(\Error::class);
-        $client->request('GET', '/api/ride?citySlug=foobarcity');
+        $this->client->request('GET', '/api/ride?citySlug=foobarcity');
     }
 }

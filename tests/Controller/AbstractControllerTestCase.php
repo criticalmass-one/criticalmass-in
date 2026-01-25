@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\Cookie;
 
-abstract class AbstractControllerTest extends WebTestCase
+abstract class AbstractControllerTestCase extends WebTestCase
 {
     protected function loginViaForm(KernelBrowser $client, string $username, string $password): KernelBrowser
     {

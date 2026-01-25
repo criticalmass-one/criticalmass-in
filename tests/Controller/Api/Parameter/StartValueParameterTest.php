@@ -6,34 +6,32 @@ use App\Entity\City;
 use App\Entity\Photo;
 use App\Entity\Ride;
 use PHPUnit\Framework\Attributes\DataProvider;
-use Tests\Controller\Api\AbstractApiControllerTest;
+use Tests\Controller\Api\AbstractApiControllerTestCase;
 
-class StartValueParameterTest extends AbstractApiControllerTest
+class StartValueParameterTest extends AbstractApiControllerTestCase
 {
     #[DataProvider('apiClassProvider')]
     public function testResultListWithStartValueParameterOnly(string $fqcn, string $propertyUnterTest, $start): void
     {
-        $client = static::createClient();
 
-        $client->request('GET', sprintf('%s?startValue=hamburg', $this->getApiEndpointForFqcn($fqcn)));
+        $this->client->request('GET', sprintf('%s?startValue=hamburg', $this->getApiEndpointForFqcn($fqcn)));
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 
     #[DataProvider('apiClassProvider')]
     public function testResultListWithStartValueAndOrderByParameterAscending(string $fqcn, string $propertyUnterTest, string $direction, $startValue): void
     {
-        $client = static::createClient();
 
         if ($startValue instanceof \DateTime) {
-            $client->request('GET', sprintf('%s?orderBy=%s&orderDirection=%s&startValue=%s', $this->getApiEndpointForFqcn($fqcn), $propertyUnterTest, $direction, $startValue->format('Y-m-d')));
+            $this->client->request('GET', sprintf('%s?orderBy=%s&orderDirection=%s&startValue=%s', $this->getApiEndpointForFqcn($fqcn), $propertyUnterTest, $direction, $startValue->format('Y-m-d')));
         } else {
-            $client->request('GET', sprintf('%s?orderBy=%s&orderDirection=%s&startValue=%s', $this->getApiEndpointForFqcn($fqcn), $propertyUnterTest, $direction, $startValue));
+            $this->client->request('GET', sprintf('%s?orderBy=%s&orderDirection=%s&startValue=%s', $this->getApiEndpointForFqcn($fqcn), $propertyUnterTest, $direction, $startValue));
         }
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $resultList = $this->deserializeEntityList($client->getResponse()->getContent(), $fqcn);
+        $resultList = $this->deserializeEntityList($this->client->getResponse()->getContent(), $fqcn);
 
         // Verify results are within expected bounds based on startValue
         $getMethodName = sprintf('get%s', ucfirst($propertyUnterTest));

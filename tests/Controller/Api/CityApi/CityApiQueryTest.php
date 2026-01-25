@@ -3,17 +3,16 @@
 namespace Tests\Controller\Api\CityApi;
 
 use PHPUnit\Framework\Attributes\DataProvider;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Tests\Controller\Api\AbstractApiControllerTestCase;
 
-class CityApiQueryTest extends WebTestCase
+class CityApiQueryTest extends AbstractApiControllerTestCase
 {
     public function testFindByName(): void
     {
-        $client = static::createClient();
-        $client->request('GET', '/api/city?name=hamburg');
+        $this->client->request('GET', '/api/city?name=hamburg');
 
         $this->assertResponseIsSuccessful();
-        $data = json_decode($client->getResponse()->getContent(), true);
+        $data = json_decode($this->client->getResponse()->getContent(), true);
 
         $this->assertSame(1, count($data));
 
@@ -24,11 +23,10 @@ class CityApiQueryTest extends WebTestCase
 
     public function testFilterByRegion(): void
     {
-        $client = static::createClient();
-        $client->request('GET', '/api/city?regionSlug=schleswig-holstein');
+        $this->client->request('GET', '/api/city?regionSlug=schleswig-holstein');
 
         $this->assertResponseIsSuccessful();
-        $data = json_decode($client->getResponse()->getContent(), true);
+        $data = json_decode($this->client->getResponse()->getContent(), true);
 
         // Region may not exist in test fixtures - just verify API returns valid response
         $this->assertIsArray($data);
@@ -40,11 +38,10 @@ class CityApiQueryTest extends WebTestCase
 
     public function testLimitSize(): void
     {
-        $client = static::createClient();
-        $client->request('GET', '/api/city?size=5');
+        $this->client->request('GET', '/api/city?size=5');
 
         $this->assertResponseIsSuccessful();
-        $data = json_decode($client->getResponse()->getContent(), true);
+        $data = json_decode($this->client->getResponse()->getContent(), true);
 
         $this->assertNotEmpty($data);
 
@@ -54,11 +51,10 @@ class CityApiQueryTest extends WebTestCase
 
     public function testBoundingBox(): void
     {
-        $client = static::createClient();
-        $client->request('GET', '/api/city?bbNorthLatitude=54&bbSouthLatitude=53&bbWestLongitude=9.8&bbEastLongitude=10.2');
+        $this->client->request('GET', '/api/city?bbNorthLatitude=54&bbSouthLatitude=53&bbWestLongitude=9.8&bbEastLongitude=10.2');
 
         $this->assertResponseIsSuccessful();
-        $data = json_decode($client->getResponse()->getContent(), true);
+        $data = json_decode($this->client->getResponse()->getContent(), true);
 
         $this->assertNotEmpty($data);
 
@@ -86,11 +82,10 @@ class CityApiQueryTest extends WebTestCase
             $order
         );
 
-        $client = static::createClient();
-        $client->request('GET', $apiUri);
+        $this->client->request('GET', $apiUri);
 
         $this->assertResponseIsSuccessful();
-        $data = json_decode($client->getResponse()->getContent(), true);
+        $data = json_decode($this->client->getResponse()->getContent(), true);
 
         $this->assertNotEmpty($data);
 
@@ -151,7 +146,6 @@ class CityApiQueryTest extends WebTestCase
         ?string $propertyName = null
     ): void
     {
-        $client = static::createClient();
 
         $query = sprintf(
             '/api/city?orderBy=%s&orderDirection=%s&startValue=%s&size=50&expanded=true',
@@ -160,11 +154,11 @@ class CityApiQueryTest extends WebTestCase
             urlencode((string)$startValue)
         );
 
-        $client->request('GET', $query);
+        $this->client->request('GET', $query);
 
         $this->assertResponseIsSuccessful();
 
-        $data = json_decode($client->getResponse()->getContent(), true);
+        $data = json_decode($this->client->getResponse()->getContent(), true);
         $this->assertNotEmpty($data);
 
         if (!$propertyName) {
@@ -212,11 +206,10 @@ class CityApiQueryTest extends WebTestCase
     {
         $requestUri = sprintf('/api/city?orderBy=%s&orderDirection=%s', $orderBy, $direction);
 
-        $client = static::createClient();
-        $client->request('GET', $requestUri);
+        $this->client->request('GET', $requestUri);
 
         $this->assertResponseIsSuccessful();
-        $data = json_decode($client->getResponse()->getContent(), true);
+        $data = json_decode($this->client->getResponse()->getContent(), true);
 
         $this->assertNotEmpty($data);
 

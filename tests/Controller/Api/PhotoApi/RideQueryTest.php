@@ -4,21 +4,20 @@ namespace Tests\Controller\Api\PhotoApi;
 
 use App\Entity\Photo;
 use PHPUnit\Framework\Attributes\TestDox;
-use Tests\Controller\Api\AbstractApiControllerTest;
+use Tests\Controller\Api\AbstractApiControllerTestCase;
 
-class RideQueryTest extends AbstractApiControllerTest
+class RideQueryTest extends AbstractApiControllerTestCase
 {
     #[TestDox('Querying for Hamburg with past ride date will only return Hamburg photos.')]
     public function testPhotoListWithRideQueryForHamburg(): void
     {
-        $client = static::createClient();
 
         $rideDate = (new \DateTime('-1 month last friday'))->format('Y-m-d');
-        $client->request('GET', '/api/photo?citySlug=hamburg&rideIdentifier=' . $rideDate);
+        $this->client->request('GET', '/api/photo?citySlug=hamburg&rideIdentifier=' . $rideDate);
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $actualPhotoList = $this->deserializeEntityList($client->getResponse()->getContent(), Photo::class);
+        $actualPhotoList = $this->deserializeEntityList($this->client->getResponse()->getContent(), Photo::class);
 
         /** @var Photo $actualPhoto */
         foreach ($actualPhotoList as $actualPhoto) {
@@ -29,14 +28,13 @@ class RideQueryTest extends AbstractApiControllerTest
     #[TestDox('Querying for Berlin with past ride date will only return Berlin photos.')]
     public function testPhotoListWithRideQueryForBerlin(): void
     {
-        $client = static::createClient();
 
         $rideDate = (new \DateTime('-1 month last friday'))->format('Y-m-d');
-        $client->request('GET', '/api/photo?citySlug=berlin&rideIdentifier=' . $rideDate);
+        $this->client->request('GET', '/api/photo?citySlug=berlin&rideIdentifier=' . $rideDate);
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $actualPhotoList = $this->deserializeEntityList($client->getResponse()->getContent(), Photo::class);
+        $actualPhotoList = $this->deserializeEntityList($this->client->getResponse()->getContent(), Photo::class);
 
         /** @var Photo $actualPhoto */
         foreach ($actualPhotoList as $actualPhoto) {
@@ -47,11 +45,10 @@ class RideQueryTest extends AbstractApiControllerTest
     #[TestDox('Expect an error when providing a non existent slug for city and ride.')]
     public function testPhotoListWithCityQueryForNonExistentCity(): void
     {
-        $client = static::createClient();
-        $client->catchExceptions(false);
+        $this->client->catchExceptions(false);
 
         // Non-existent city slug causes an exception in CityQuery
         $this->expectException(\Error::class);
-        $client->request('GET', '/api/photo?citySlug=foobarcity&rideIdentifier=1245');
+        $this->client->request('GET', '/api/photo?citySlug=foobarcity&rideIdentifier=1245');
     }
 }

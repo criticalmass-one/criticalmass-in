@@ -7,21 +7,20 @@ use App\Entity\City;
 use App\Entity\Photo;
 use App\Entity\Ride;
 use PHPUnit\Framework\Attributes\DataProvider;
-use Tests\Controller\Api\AbstractApiControllerTest;
+use Tests\Controller\Api\AbstractApiControllerTestCase;
 use Tests\Coords;
 
-class RadiusQueryTest extends AbstractApiControllerTest
+class RadiusQueryTest extends AbstractApiControllerTestCase
 {
     #[DataProvider('apiClassProvider')]
     public function testResultListForParameterizedDistance(string $fqcn, CoordInterface $centerCoord, float $radius, int $minExpected, int $maxExpected): void
     {
-        $client = static::createClient();
 
-        $client->request('GET', sprintf('%s?centerLatitude=%f&centerLongitude=%f&radius=%f', $this->getApiEndpointForFqcn($fqcn), $centerCoord->getLatitude(), $centerCoord->getLongitude(), $radius));
+        $this->client->request('GET', sprintf('%s?centerLatitude=%f&centerLongitude=%f&radius=%f', $this->getApiEndpointForFqcn($fqcn), $centerCoord->getLatitude(), $centerCoord->getLongitude(), $radius));
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $resultList = $this->deserializeEntityList($client->getResponse()->getContent(), $fqcn);
+        $resultList = $this->deserializeEntityList($this->client->getResponse()->getContent(), $fqcn);
 
         $this->assertGreaterThanOrEqual($minExpected, count($resultList));
         $this->assertLessThanOrEqual($maxExpected, count($resultList));

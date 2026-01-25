@@ -5,20 +5,19 @@ namespace Tests\Controller\Api\Query;
 use App\Entity\Photo;
 use App\Entity\Ride;
 use PHPUnit\Framework\Attributes\DataProvider;
-use Tests\Controller\Api\AbstractApiControllerTest;
+use Tests\Controller\Api\AbstractApiControllerTestCase;
 
-class DateTimeQueryTest extends AbstractApiControllerTest
+class DateTimeQueryTest extends AbstractApiControllerTestCase
 {
     #[DataProvider('apiClassProvider')]
     public function testRideListWithParameter(string $fqcn, string $propertyName, array $query, string $dateTimePattern, string $expectedDateTimeString): void
     {
-        $client = static::createClient();
 
-        $client->request('GET', sprintf('%s?%s', $this->getApiEndpointForFqcn($fqcn), http_build_query($query)));
+        $this->client->request('GET', sprintf('%s?%s', $this->getApiEndpointForFqcn($fqcn), http_build_query($query)));
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $resultList = $this->deserializeEntityList($client->getResponse()->getContent(), $fqcn);
+        $resultList = $this->deserializeEntityList($this->client->getResponse()->getContent(), $fqcn);
 
         $this->assertGreaterThan(0, count($resultList));
 

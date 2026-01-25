@@ -2,10 +2,12 @@
 
 namespace Tests\Controller\Api;
 
+use App\Criticalmass\Util\ClassUtil;
 use Doctrine\ORM\EntityManagerInterface;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Tests\Controller\Api\Util\IdKiller;
 
 abstract class AbstractApiControllerTestCase extends WebTestCase
 {
@@ -14,10 +16,15 @@ abstract class AbstractApiControllerTestCase extends WebTestCase
 
     protected function setUp(): void
     {
-        parent::setUp();
-
         $this->client = static::createClient();
         $this->entityManager = static::getContainer()->get('doctrine')->getManager();
+    }
+    /**
+     * @deprecated
+     */
+    protected function assertIdLessJsonEquals(string $expected, string $actual): void
+    {
+        $this->assertEquals(IdKiller::removeIds($expected), IdKiller::removeIds($actual));
     }
 
     protected function getSerializer(): SerializerInterface
@@ -37,21 +44,18 @@ abstract class AbstractApiControllerTestCase extends WebTestCase
         return $this->getSerializer()->deserialize($data, $entityFqcn, 'json');
     }
 
-    protected function getJsonResponse(): array
+    protected function getApiEndpointForFqcn(string $fqcn): string
     {
-        return json_decode($this->client->getResponse()->getContent(), true);
+        return sprintf('/api/%s', ClassUtil::getLowercaseShortnameFromFqcn($fqcn));
     }
 
     protected function assertResponseStatusCode(int $expectedStatusCode): void
     {
-        $this->assertEquals(
-            $expectedStatusCode,
-            $this->client->getResponse()->getStatusCode(),
-            sprintf('Expected status code %d, got %d. Content: %s',
-                $expectedStatusCode,
-                $this->client->getResponse()->getStatusCode(),
-                $this->client->getResponse()->getContent()
-            )
-        );
+        $this->assertResponseStatusCodeSame($expectedStatusCode);
+    }
+
+    protected function getJsonResponse(): array
+    {
+        return json_decode($this->client->getResponse()->getContent(), true);
     }
 }

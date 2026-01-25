@@ -8,20 +8,19 @@ use App\Entity\Ride;
 use App\EntityInterface\CoordinateInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\TestDox;
-use Tests\Controller\Api\AbstractApiControllerTest;
+use Tests\Controller\Api\AbstractApiControllerTestCase;
 
-class BoundingBoxQueryTest extends AbstractApiControllerTest
+class BoundingBoxQueryTest extends AbstractApiControllerTestCase
 {
     #[DataProvider('apiClassProvider')]
     public function testRideListWithBoundingBoxQueryForHamburg(string $fqcn, array $query, CoordInterface $expectedCoord): void
     {
-        $client = static::createClient();
 
-        $client->request('GET', sprintf('%s?%s', $this->getApiEndpointForFqcn($fqcn), http_build_query($query)));
+        $this->client->request('GET', sprintf('%s?%s', $this->getApiEndpointForFqcn($fqcn), http_build_query($query)));
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $resultList = $this->deserializeEntityList($client->getResponse()->getContent(), $fqcn);
+        $resultList = $this->deserializeEntityList($this->client->getResponse()->getContent(), $fqcn);
 
         // Default size is 10, but we may have fewer records in fixtures
         $this->assertLessThanOrEqual(10, count($resultList));
@@ -38,13 +37,12 @@ class BoundingBoxQueryTest extends AbstractApiControllerTest
     #[TestDox('Invalid coords for bounding box query will be ignored and result in 10 random rides.')]
     public function testRideListWithInvalidBoundingBoxQuery(): void
     {
-        $client = static::createClient();
 
-        $client->request('GET', '/api/ride?bbNorthLatitude=54&bbSouthLatitude=57&bbEastLongitude=9&bbWestLongitude=10.054470');
+        $this->client->request('GET', '/api/ride?bbNorthLatitude=54&bbSouthLatitude=57&bbEastLongitude=9&bbWestLongitude=10.054470');
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $actualRideList = $this->deserializeEntityList($client->getResponse()->getContent(), Ride::class);
+        $actualRideList = $this->deserializeEntityList($this->client->getResponse()->getContent(), Ride::class);
 
         // Default size is 10, but we may have fewer records in fixtures
         $this->assertLessThanOrEqual(10, count($actualRideList));

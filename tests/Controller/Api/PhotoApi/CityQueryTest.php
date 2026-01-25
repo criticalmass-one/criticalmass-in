@@ -4,20 +4,19 @@ namespace Tests\Controller\Api\PhotoApi;
 
 use App\Entity\Photo;
 use PHPUnit\Framework\Attributes\TestDox;
-use Tests\Controller\Api\AbstractApiControllerTest;
+use Tests\Controller\Api\AbstractApiControllerTestCase;
 
-class CityQueryTest extends AbstractApiControllerTest
+class CityQueryTest extends AbstractApiControllerTestCase
 {
     #[TestDox('Querying for Hamburg will only return Hamburg photos.')]
     public function testPhotoListWithCityQueryForHamburg(): void
     {
-        $client = static::createClient();
 
-        $client->request('GET', '/api/photo?citySlug=hamburg');
+        $this->client->request('GET', '/api/photo?citySlug=hamburg');
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $actualPhotoList = $this->deserializeEntityList($client->getResponse()->getContent(), Photo::class);
+        $actualPhotoList = $this->deserializeEntityList($this->client->getResponse()->getContent(), Photo::class);
 
         /** @var Photo $actualPhoto */
         foreach ($actualPhotoList as $actualPhoto) {
@@ -28,13 +27,12 @@ class CityQueryTest extends AbstractApiControllerTest
     #[TestDox('Querying for Berlin will only return Berlin photos.')]
     public function testPhotoListWithCityQueryForBerlin(): void
     {
-        $client = static::createClient();
 
-        $client->request('GET', '/api/photo?citySlug=berlin');
+        $this->client->request('GET', '/api/photo?citySlug=berlin');
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $actualPhotoList = $this->deserializeEntityList($client->getResponse()->getContent(), Photo::class);
+        $actualPhotoList = $this->deserializeEntityList($this->client->getResponse()->getContent(), Photo::class);
 
         /** @var Photo $actualPhoto */
         foreach ($actualPhotoList as $actualPhoto) {
@@ -45,12 +43,11 @@ class CityQueryTest extends AbstractApiControllerTest
     #[TestDox('Expect an error when providing a non existent slug.')]
     public function testPhotoListWithCityQueryForNonExistentCity(): void
     {
-        $client = static::createClient();
-        $client->catchExceptions(false);
+        $this->client->catchExceptions(false);
 
         // Non-existent city slug causes an exception in CityQuery
         // when trying to access getCity() on null result
         $this->expectException(\Error::class);
-        $client->request('GET', '/api/photo?citySlug=foobarcity');
+        $this->client->request('GET', '/api/photo?citySlug=foobarcity');
     }
 }
