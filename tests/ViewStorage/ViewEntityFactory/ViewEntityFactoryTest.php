@@ -5,7 +5,7 @@ namespace Tests\ViewStorage\ViewEntityFactory;
 use App\Criticalmass\ViewStorage\ViewEntityFactory\ViewEntityFactory;
 use App\Criticalmass\ViewStorage\ViewModel\View;
 use App\Entity\User;
-use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\Persistence\ObjectRepository;
 use PHPUnit\Framework\TestCase;
 use Doctrine\Persistence\ManagerRegistry;
 use Tests\ViewStorage\TestClass;

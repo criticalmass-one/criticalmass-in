@@ -1,7 +1,7 @@
 twig:
     paths:
-        - '%kernel.project_dir%/templates'
-        - '%kernel.project_dir%/templates/bundles'
+        '%kernel.project_dir%/templates': ~
+        '%kernel.project_dir%/templates/bundles': ~
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     number_format:
@@ -12,4 +12,4 @@ twig:
         timezone: Europe/Paris
         format: d.m.Y, H:i:s
         interval_format: '%%d days'
-    form_themes: ['bootstrap_3_layout.html.twig']
+    form_themes: ['bootstrap_5_layout.html.twig']

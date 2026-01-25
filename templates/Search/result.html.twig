@@ -25,7 +25,7 @@
                             </label>
                             <input type="text" class="form-control" name="query" value="{{ query }}" id="query-input" placeholder="Deine Suchanfrage"/>
 
-                            <button type="submit" class="btn btn-success pull-right margin-top-small">
+                            <button type="submit" class="btn btn-success float-end mt-2">
                                 Finden
                             </button>
                         </div>
@@ -35,23 +35,23 @@
 
             <div class="col-md-9">
                 <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active">
-                        <a href="#city-results" aria-controls="home" role="tab" data-toggle="tab">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="city-results-tab" data-bs-toggle="tab" data-bs-target="#city-results" type="button" role="tab" aria-controls="city-results" aria-selected="true">
                             <i class="far fa-university"></i>
                             Städte
-                        </a>
+                        </button>
                     </li>
 
-                    <li role="presentation">
-                        <a href="#ride-results" aria-controls="profile" role="tab" data-toggle="tab">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="ride-results-tab" data-bs-toggle="tab" data-bs-target="#ride-results" type="button" role="tab" aria-controls="ride-results" aria-selected="false">
                             <i class="far fa-bicycle"></i>
                             Touren
-                        </a>
+                        </button>
                     </li>
                 </ul>
 
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active padding-top-small" id="city-results">
+                    <div role="tabpanel" class="tab-pane fade show active pt-2" id="city-results" aria-labelledby="city-results-tab">
                         {% for cityResult in cityResults %}
                         {% include 'Search/includes/_city.html.twig' with { city: cityResult } %}
                         {% endfor %}
@@ -63,7 +63,7 @@
                         {% endif %}
                     </div>
 
-                    <div role="tabpanel" class="tab-pane padding-top-small" id="ride-results">
+                    <div role="tabpanel" class="tab-pane fade pt-2" id="ride-results" aria-labelledby="ride-results-tab">
                         {% for rideResult in rideResults %}
                         {% include 'Search/includes/_ride.html.twig' with { ride: rideResult } %}
                         {% endfor %}

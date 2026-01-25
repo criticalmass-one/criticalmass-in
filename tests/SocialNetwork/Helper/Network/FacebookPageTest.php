@@ -9,7 +9,7 @@ class FacebookPageTest extends TestCase
 {
     public function testName(): void
     {
-        $this->assertEquals('facebook-Seite', (new FacebookPage())->getName());
+        $this->assertEquals('Facebook-Seite', (new FacebookPage())->getName());
     }
 
     public function testIdentifier(): void

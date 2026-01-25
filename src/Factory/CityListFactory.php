@@ -47,7 +47,7 @@ class CityListFactory
 
     protected function createModel(
         City $city,
-        Ride $currentRide = null,
+        ?Ride $currentRide = null,
         array $cycles = [],
         int $countRides = 0
     ): CityListModel {

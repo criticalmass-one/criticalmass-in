@@ -1,8 +1,8 @@
-<div role="tabpanel" class="tab-pane" id="minimass">
+<div role="tabpanel" class="tab-pane fade" id="minimass" aria-labelledby="minimass-tab">
     <div class="row">
         <div class="col-md-12">
             {% if app.getUser() %}
-                <div class="btn-group pull-right" style="margin-top: 16px;">
+                <div class="btn-group float-end" style="margin-top: 16px;">
                     <a class="btn btn-success" href="{{ object_path(ride, 'caldera_criticalmass_subride_add') }}" title="Mini-Mass anlegen">
                         <i class="far fa-map-marker"></i>
                         Mini-Mass eintragen
@@ -18,20 +18,19 @@
             {% if subrides|length > 0 %}
                 {% set subrideNumber = 0 %}
                 {% for subride in subrides %}
-                    <div class="media subride col-md-4 no-margin-top margin-bottom-medium">
+                    <div class="d-flex subride col-md-4 no-margin-top margin-bottom-medium">
                         {% if app.getUser() %}
-                            <a href="{{ object_path(subride, 'caldera_criticalmass_subride_edit') }}" class="edit-subride pull-right btn btn-default btn-xs">
+                            <a href="{{ object_path(subride, 'caldera_criticalmass_subride_edit') }}" class="edit-subride float-end btn btn-secondary btn-sm">
                                 <i class="far fa-wrench"></i>
                             </a>
                         {% endif %}
 
-                        <a class="pull-left subride-link" href="#" data-subride-id="{{ subride.id }}">
-                            <img class="media-object"
+                        <a class="flex-shrink-0 subride-link" href="#" data-subride-id="{{ subride.id }}">
+                            <img class="me-3"
                                  src="/bundles/caldera/images/marker/marker-green.png" alt="...">
-                        </a>
 
-                        <div class="media-body">
-                            <h5 class="media-heading">{{ subride.getDateTime().format('H.i') }}
+                        <div class="flex-grow-1">
+                            <h5>{{ subride.getDateTime().format('H.i') }}
                                 Uhr: {{ subride.getTitle() }}</h5>
                             <p>{{ subride.getDescription()|nl2br }}</p>
                         </div>

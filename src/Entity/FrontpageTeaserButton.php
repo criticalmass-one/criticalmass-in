@@ -61,7 +61,7 @@ class FrontpageTeaserButton
         return $this->frontpageTeaser;
     }
 
-    public function setCaption(string $caption = null): FrontpageTeaserButton
+    public function setCaption(?string $caption = null): FrontpageTeaserButton
     {
         $this->caption = $caption;
 
@@ -73,7 +73,7 @@ class FrontpageTeaserButton
         return $this->caption;
     }
 
-    public function setIcon(string $icon = null): FrontpageTeaserButton
+    public function setIcon(?string $icon = null): FrontpageTeaserButton
     {
         $this->icon = $icon;
 
@@ -85,7 +85,7 @@ class FrontpageTeaserButton
         return $this->icon;
     }
 
-    public function setLink(string $link = null): FrontpageTeaserButton
+    public function setLink(?string $link = null): FrontpageTeaserButton
     {
         $this->link = $link;
 
@@ -97,7 +97,7 @@ class FrontpageTeaserButton
         return $this->link;
     }
 
-    public function setClass(string $class = null): FrontpageTeaserButton
+    public function setClass(?string $class = null): FrontpageTeaserButton
     {
         $this->class = $class;
 
@@ -133,7 +133,7 @@ class FrontpageTeaserButton
         return $this->createdAt;
     }
 
-    public function setUpdatedAt(\DateTime $updatedAt = null): FrontpageTeaserButton
+    public function setUpdatedAt(?\DateTime $updatedAt = null): FrontpageTeaserButton
     {
         $this->updatedAt = $updatedAt;
 

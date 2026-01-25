@@ -1,0 +1,22 @@
+{#
+    Breadcrumb Macros
+
+    Usage:
+    {% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
+
+    {% block breadcrumb %}
+        {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+        {{ breadcrumb.item(city.city, object_path(city)) }}
+        {{ breadcrumb.active(ride.title) }}
+    {% endblock %}
+#}
+
+{% macro item(label, url) %}
+    <li class="breadcrumb-item">
+        <a href="{{ url }}">{{ label }}</a>
+    </li>
+{% endmacro %}
+
+{% macro active(label) %}
+    <li class="breadcrumb-item active" aria-current="page">{{ label }}</li>
+{% endmacro %}

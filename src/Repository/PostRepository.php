@@ -16,7 +16,7 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
-    public function findByCrawled(bool $crawled, int $limit = null): array
+    public function findByCrawled(bool $crawled, ?int $limit = null): array
     {
         $qb = $this->createQueryBuilder('p');
 
@@ -100,8 +100,8 @@ class PostRepository extends ServiceEntityRepository
     }
 
     public function findForTimelineThreadPostCollector(
-        \DateTime $startDateTime = null,
-        \DateTime $endDateTime = null,
+        ?\DateTime $startDateTime = null,
+        ?\DateTime $endDateTime = null,
         $limit = null
     ): array {
         $builder = $this->createQueryBuilder('p');
@@ -140,8 +140,8 @@ class PostRepository extends ServiceEntityRepository
     }
 
     public function findForTimelineRideCommentCollector(
-        \DateTime $startDateTime = null,
-        \DateTime $endDateTime = null,
+        ?\DateTime $startDateTime = null,
+        ?\DateTime $endDateTime = null,
         $limit = null
     ): array {
         $builder = $this->createQueryBuilder('p');
@@ -178,8 +178,8 @@ class PostRepository extends ServiceEntityRepository
     }
 
     public function findForTimelinePhotoCommentCollector(
-        \DateTime $startDateTime = null,
-        \DateTime $endDateTime = null,
+        ?\DateTime $startDateTime = null,
+        ?\DateTime $endDateTime = null,
         $limit = null
     ): array {
         $builder = $this->createQueryBuilder('p');

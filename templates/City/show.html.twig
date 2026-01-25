@@ -1,17 +1,11 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}{{ city.title }}{% endblock %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
-
-    <li class="active">
-        {{ city.city }}
-    </li>
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.active(city.city) }}
 {% endblock %}
 
 {% block activity_badge %}
@@ -19,12 +13,11 @@
 {% endblock %}
 
 {% block optionsButton %}
-    <div class="btn-group pull-right">
-        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+    <div class="btn-group float-end">
+        <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
             <i class="far fa-cogs"></i>
             Optionen
-            <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
             <li>
@@ -71,7 +64,7 @@
                          style="height: 250px; background-image: url({{ vich_uploader_asset(city, 'imageFile')|imagine_filter('city_image_wide') }});">
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="pull-right no-margin-top">
+                                <div class="float-end no-margin-top">
                                     <h1 itemprop="name">
                                         {{ city.title }}
                                     </h1> {{ block('activity_badge') }}
@@ -82,7 +75,7 @@
                         {% if city.punchline %}
                             <div class="row">
                                 <div class="col-md-12">
-                                    <p class="lead pull-right no-margin-top">
+                                    <p class="lead float-end no-margin-top">
                                         {{ city.punchline }}
                                     </p>
                                 </div>
@@ -167,7 +160,7 @@
                                 <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
                                     <div class="photo-thumb margin-bottom-medium text-center">
                                         <a href="{{ object_path(photo) }}">
-                                            <img class="img-responsive"
+                                            <img class="img-fluid"
                                                  src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
                                         </a>
                                     </div>

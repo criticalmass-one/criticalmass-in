@@ -1,11 +1,10 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Impressum{% endblock %}
 
 {% block breadcrumb %}
-    <li class="active">
-        Impressum
-    </li>
+    {{ breadcrumb.active('Impressum') }}
 {% endblock %}
 
 {% block content %}
@@ -95,17 +94,17 @@
                         </p>
 
                         <p>
-                            {{ impress_property('firstName') }} {{ impress_property('lastName') }}
+                            Malte Hübner
                             <br />
-                            {{ impress_property('street') }} {{ impress_property('houseNumber') }}
+                            Goethestraße 48
                             <br />
-                            {{ impress_property('zipCode') }} {{ impress_property('city') }}
+                            21335 Lüneburg
                         </p>
 
                         <p>
-                            Telefon: {{ impress_property('phoneNumber') }}
+                            Telefon: 0151 172 77 032
                             <br/>
-                            E-Mail: <a href="mailto:malte@caldera.cc">malte@caldera.cc</a>
+                            E-Mail: <a href="mailto:maltehuebner@gmx.org">maltehuebner@gmx.org</a>
                         </p>
 
                         <p>

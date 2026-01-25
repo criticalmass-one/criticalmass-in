@@ -44,7 +44,7 @@ class PhotoUploader implements PhotoUploaderInterface
     }
 
     /** @deprecated  */
-    public function setTrack(Track $track = null): PhotoUploaderInterface
+    public function setTrack(?Track $track = null): PhotoUploaderInterface
     {
         return $this;
     }

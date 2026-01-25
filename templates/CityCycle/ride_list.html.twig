@@ -1,23 +1,12 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Automatisch generierte Touren von {{ city.city }} anzeigen{% endblock %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ object_path(city) }}">
-            {{ city.city }}
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ object_path(cityCycle.city, 'caldera_criticalmass_citycycle_list') }}">
-            Turnusliste
-        </a>
-    </li>
-
-    <li class="active">
-        Generierte Touren anzeigen
-    </li>
+    {{ breadcrumb.item(city.city, object_path(city)) }}
+    {{ breadcrumb.item('Turnusliste', object_path(cityCycle.city, 'caldera_criticalmass_citycycle_list')) }}
+    {{ breadcrumb.active('Generierte Touren anzeigen') }}
 {% endblock %}
     
 {% block content %}
@@ -147,7 +136,7 @@
                                             </td>
 
                                             <td>
-                                                <a class="btn btn-xs btn-default"
+                                                <a class="btn btn-xs btn-secondary"
                                                    href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}"
                                                    title="Tour editieren">
                                                     <i class="fa fa-wrench"></i>
