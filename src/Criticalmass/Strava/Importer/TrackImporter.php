@@ -2,11 +2,9 @@
 
 namespace App\Criticalmass\Strava\Importer;
 
-use App\Criticalmass\Geo\GpxWriter\GpxWriter;
-use App\Criticalmass\Geo\PositionList\PositionList;
+use App\Criticalmass\Geo\GpxService\GpxServiceInterface;
 use App\Criticalmass\Strava\Stream\StreamFactory;
 use App\Criticalmass\Strava\Stream\StreamList;
-use App\Criticalmass\Strava\Stream\StreamListConverter;
 use App\Criticalmass\Strava\Token\StravaTokenStorage;
 use App\Criticalmass\UploadFaker\UploadFakerInterface;
 use App\Entity\Ride;
@@ -33,7 +31,7 @@ class TrackImporter implements TrackImporterInterface
     ];
 
     public function __construct(
-        private readonly GpxWriter $gpxWriter,
+        private readonly GpxServiceInterface $gpxService,
         private readonly RequestStack $requestStack,
         private readonly ManagerRegistry $registry,
         private readonly UploadFakerInterface $uploadFaker,
@@ -102,7 +100,7 @@ class TrackImporter implements TrackImporterInterface
         $activity = $this->getActivity();
 
         [$offset, $timezoneIdentifier] = explode(' ', (string) $activity->timezone);
-        
+
         $startDateTime = new \DateTime($activity->start_date);
         $startDateTime->setTimezone(new \DateTimeZone($timezoneIdentifier));
 
@@ -112,15 +110,6 @@ class TrackImporter implements TrackImporterInterface
     protected function getStartDateTimestamp(): int
     {
         return $this->getStartDateTime()->getTimestamp();
-    }
-
-    protected function createPositionList(): PositionList
-    {
-        $startDateTime = $this->getStartDateTime();
-
-        $streamList = $this->getActivityStreamList();
-
-        return StreamListConverter::convert($streamList, $startDateTime);
     }
 
     protected function createTrack(): Track
@@ -139,11 +128,21 @@ class TrackImporter implements TrackImporterInterface
 
     public function importTrack(): Track
     {
-        $positionList = $this->createPositionList();
+        $startDateTime = $this->getStartDateTime();
+        $streamList = $this->getActivityStreamList();
 
-        $this->gpxWriter->setPositionList($positionList)->generateGpxContent();
+        $latLngData = $streamList->getStream('latlng')->getData();
+        $altitudeData = $streamList->getStream('altitude')->getData();
+        $timeData = $streamList->getStream('time')->getData();
 
-        $fileContent = $this->gpxWriter->getGpxContent();
+        $gpxFile = $this->gpxService->createGpxFromStravaStream(
+            $latLngData,
+            $altitudeData,
+            $timeData,
+            $startDateTime
+        );
+
+        $fileContent = $this->gpxService->toXmlString($gpxFile);
 
         $track = $this->createTrack();
 

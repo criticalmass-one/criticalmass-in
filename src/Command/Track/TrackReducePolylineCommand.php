@@ -2,7 +2,7 @@
 
 namespace App\Command\Track;
 
-use App\Criticalmass\Geo\TrackPolylineHandler\TrackPolylineHandlerInterface;
+use App\Criticalmass\Geo\GpxService\GpxServiceInterface;
 use App\Entity\Track;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -20,8 +20,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class TrackReducePolylineCommand extends Command
 {
-    public function __construct(protected ManagerRegistry $registry, protected TrackPolylineHandlerInterface $trackPolylineHandler)
-    {
+    public function __construct(
+        protected ManagerRegistry $registry,
+        protected GpxServiceInterface $gpxService
+    ) {
         parent::__construct();
     }
 
@@ -59,17 +61,24 @@ class TrackReducePolylineCommand extends Command
 
         /** @var Track $track */
         foreach ($tracks as $track) {
-            $track = $this->trackPolylineHandler->handleTrack($track);
+            try {
+                $track
+                    ->setPolyline($this->gpxService->generatePolyline($track))
+                    ->setReducedPolyline($this->gpxService->generateReducedPolyline($track));
+
+                $table->addRow([
+                    $track->getId(),
+                    $track->getUsername(),
+                    $track->getCreationDateTime()->format('Y-m-d H:i:s'),
+                    ($track->getRide() && $track->getRide()->getCity() ? $track->getRide()->getCity()->getCity() : ''),
+                    ($track->getRide() ? $track->getRide()->getDateTime()->format('Y-m-d H:i') : ''),
+                    $track->getReducedPolyline(),
+                ]);
+            } catch (\Exception $e) {
+                $output->writeln(sprintf('Error processing track %d: %s', $track->getId(), $e->getMessage()));
+            }
 
             $progressBar->advance();
-            $table->addRow([
-                $track->getId(),
-                $track->getUsername(),
-                $track->getCreationDateTime()->format('Y-m-d H:i:s'),
-                ($track->getRide() && $track->getRide()->getCity() ? $track->getRide()->getCity()->getCity() : ''),
-                ($track->getRide() ? $track->getRide()->getDateTime()->format('Y-m-d H:i') : ''),
-                $track->getReducedPolyline(),
-            ]);
         }
 
         $this->registry->getManager()->flush();

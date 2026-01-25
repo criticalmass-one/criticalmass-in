@@ -4,7 +4,7 @@ namespace Tests\Controller\Api\Parameter;
 
 use App\Criticalmass\Geo\Coord\Coord;
 use App\Criticalmass\Geo\Coord\CoordInterface;
-use App\Criticalmass\Geo\DistanceCalculator\DistanceCalculator;
+use App\Criticalmass\Geo\GeoUtil\GeoUtil;
 use App\Entity\City;
 use App\Entity\Photo;
 use App\Entity\Ride;
@@ -32,7 +32,7 @@ class OrderByDistanceParameterTest extends AbstractApiControllerTestCase
 
         foreach ($resultList as $result) {
             $resultCoord = new Coord($result['latitude'], $result['longitude']);
-            $distance = DistanceCalculator::calculateDistance($centerCoord, $resultCoord);
+            $distance = GeoUtil::calculateDistance($centerCoord, $resultCoord);
 
             if ($minDistance !== null) {
                 $this->assertGreaterThanOrEqual($minDistance, $distance);
@@ -60,7 +60,7 @@ class OrderByDistanceParameterTest extends AbstractApiControllerTestCase
 
         foreach ($resultList as $result) {
             $resultCoord = new Coord($result['latitude'], $result['longitude']);
-            $distance = DistanceCalculator::calculateDistance($centerCoord, $resultCoord);
+            $distance = GeoUtil::calculateDistance($centerCoord, $resultCoord);
 
             if ($maxDistance !== null) {
                 $this->assertLessThanOrEqual($maxDistance, $distance);
