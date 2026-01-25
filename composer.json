@@ -46,7 +46,6 @@
         "sabre/vobject": "^4.0",
         "oneup/flysystem-bundle": "^4.12.2",
         "flagception/flagception-bundle": "^6.0",
-        "php-amqplib/rabbitmq-bundle": "^2.0",
         "ext-fileinfo": "*",
         "ext-xmlwriter": "*",
         "symfony/webpack-encore-bundle": "^1.14",
