@@ -63,8 +63,8 @@ class CycleApiSchemaTest extends AbstractApiControllerTestCase
         }
     }
 
-    #[TestDox('Cycle time is an ISO 8601 date-time string when present')]
-    public function testCycleTimeIsDateTimeString(): void
+    #[TestDox('Cycle time is a Unix timestamp when present')]
+    public function testCycleTimeIsUnixTimestamp(): void
     {
         $this->client->request('GET', '/api/cycles');
         $this->assertResponseIsSuccessful();
@@ -73,9 +73,8 @@ class CycleApiSchemaTest extends AbstractApiControllerTestCase
 
         foreach ($response as $cycle) {
             if (isset($cycle['time']) && $cycle['time'] !== null) {
-                $this->assertIsString($cycle['time']);
-                // Verify it's a valid ISO 8601 date
-                $this->assertNotFalse(strtotime($cycle['time']), 'time should be a valid date-time string');
+                $this->assertIsInt($cycle['time']);
+                $this->assertGreaterThan(0, $cycle['time'], 'time should be a positive timestamp');
             }
         }
     }
@@ -100,8 +99,8 @@ class CycleApiSchemaTest extends AbstractApiControllerTestCase
         }
     }
 
-    #[TestDox('Cycle createdAt is an ISO 8601 date-time string')]
-    public function testCycleCreatedAtIsDateTimeString(): void
+    #[TestDox('Cycle createdAt is a Unix timestamp')]
+    public function testCycleCreatedAtIsUnixTimestamp(): void
     {
         $this->client->request('GET', '/api/cycles');
         $this->assertResponseIsSuccessful();
@@ -110,8 +109,8 @@ class CycleApiSchemaTest extends AbstractApiControllerTestCase
 
         foreach ($response as $cycle) {
             $this->assertArrayHasKey('created_at', $cycle);
-            $this->assertIsString($cycle['created_at']);
-            $this->assertNotFalse(strtotime($cycle['created_at']), 'created_at should be a valid date-time string');
+            $this->assertIsInt($cycle['created_at']);
+            $this->assertGreaterThan(0, $cycle['created_at'], 'created_at should be a positive timestamp');
         }
     }
 
@@ -129,8 +128,8 @@ class CycleApiSchemaTest extends AbstractApiControllerTestCase
         }
     }
 
-    #[TestDox('Cycle validFrom and validUntil are date-time strings when present')]
-    public function testCycleValidDatesAreDateTimeStrings(): void
+    #[TestDox('Cycle validFrom and validUntil are Unix timestamps when present')]
+    public function testCycleValidDatesAreUnixTimestamps(): void
     {
         $this->client->request('GET', '/api/cycles');
         $this->assertResponseIsSuccessful();
@@ -139,12 +138,12 @@ class CycleApiSchemaTest extends AbstractApiControllerTestCase
 
         foreach ($response as $cycle) {
             if (isset($cycle['valid_from']) && $cycle['valid_from'] !== null) {
-                $this->assertIsString($cycle['valid_from']);
-                $this->assertNotFalse(strtotime($cycle['valid_from']), 'valid_from should be a valid date-time string');
+                $this->assertIsInt($cycle['valid_from']);
+                $this->assertGreaterThan(0, $cycle['valid_from'], 'valid_from should be a positive timestamp');
             }
             if (isset($cycle['valid_until']) && $cycle['valid_until'] !== null) {
-                $this->assertIsString($cycle['valid_until']);
-                $this->assertNotFalse(strtotime($cycle['valid_until']), 'valid_until should be a valid date-time string');
+                $this->assertIsInt($cycle['valid_until']);
+                $this->assertGreaterThan(0, $cycle['valid_until'], 'valid_until should be a positive timestamp');
             }
         }
     }

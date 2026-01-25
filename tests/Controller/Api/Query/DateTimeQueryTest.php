@@ -12,19 +12,23 @@ class DateTimeQueryTest extends AbstractApiControllerTestCase
     #[DataProvider('apiClassProvider')]
     public function testRideListWithParameter(string $fqcn, string $propertyName, array $query, string $dateTimePattern, string $expectedDateTimeString): void
     {
-
         $this->client->request('GET', sprintf('%s?%s', $this->getApiEndpointForFqcn($fqcn), http_build_query($query)));
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $resultList = $this->deserializeEntityList($this->client->getResponse()->getContent(), $fqcn);
+        $resultList = $this->getJsonResponse();
 
+        $this->assertIsArray($resultList);
         $this->assertGreaterThan(0, count($resultList));
 
-        $getMethodName = sprintf('get%s', ucfirst($propertyName));
+        // Convert entity property name to JSON property name (camelCase to snake_case)
+        $jsonPropertyName = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $propertyName));
 
         foreach ($resultList as $result) {
-            $this->assertEquals($expectedDateTimeString, $result->$getMethodName()->format($dateTimePattern));
+            // Value is a Unix timestamp
+            $timestamp = $result[$jsonPropertyName];
+            $dateTime = (new \DateTime())->setTimestamp($timestamp);
+            $this->assertEquals($expectedDateTimeString, $dateTime->format($dateTimePattern));
         }
     }
 

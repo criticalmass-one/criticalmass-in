@@ -5,26 +5,18 @@ namespace App\Consumer;
 use App\Criticalmass\MassTrackImport\ProposalPersister\ProposalPersisterInterface;
 use App\Criticalmass\MassTrackImport\TrackDecider\TrackDeciderInterface;
 use App\Entity\TrackImportCandidate;
-use JMS\Serializer\SerializerInterface;
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class TrackImportCandidateConsumer implements ConsumerInterface
 {
-    /** @var SerializerInterface $serializer */
-    protected $serializer;
-
-    /** @var ProposalPersisterInterface $proposalPersister */
-    protected $proposalPersister;
-
-    /** @var TrackDeciderInterface $trackDecider */
-    protected $trackDecider;
-
-    public function __construct(SerializerInterface $serializer, ProposalPersisterInterface $proposalPersister, TrackDeciderInterface $trackDecider)
+    public function __construct(
+        private readonly SerializerInterface $serializer,
+        private readonly ProposalPersisterInterface $proposalPersister,
+        private readonly TrackDeciderInterface $trackDecider
+    )
     {
-        $this->serializer = $serializer;
-        $this->proposalPersister = $proposalPersister;
-        $this->trackDecider = $trackDecider;
     }
 
     public function execute(AMQPMessage $message): int

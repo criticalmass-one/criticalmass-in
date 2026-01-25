@@ -13,10 +13,11 @@ class RideApiFullTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $rides = $this->deserializeEntityList($this->client->getResponse()->getContent(), Ride::class);
+        $response = $this->getJsonResponse();
 
-        $this->assertNotEmpty($rides);
-        $this->assertContainsOnlyInstancesOf(Ride::class, $rides);
+        $this->assertIsArray($response);
+        $this->assertNotEmpty($response);
+        $this->assertArrayHasKey('id', $response[0]);
     }
 
     public function testListRidesWithSize(): void
@@ -25,9 +26,10 @@ class RideApiFullTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $rides = $this->deserializeEntityList($this->client->getResponse()->getContent(), Ride::class);
+        $response = $this->getJsonResponse();
 
-        $this->assertLessThanOrEqual(3, count($rides));
+        $this->assertIsArray($response);
+        $this->assertLessThanOrEqual(3, count($response));
     }
 
     public function testListRidesForCity(): void
@@ -36,17 +38,18 @@ class RideApiFullTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $rides = $this->deserializeEntityList($this->client->getResponse()->getContent(), Ride::class);
+        $response = $this->getJsonResponse();
 
-        $this->assertNotEmpty($rides);
+        $this->assertIsArray($response);
+        $this->assertNotEmpty($response);
 
         // Verify rides are in Hamburg area by coordinates instead of title
-        foreach ($rides as $ride) {
+        foreach ($response as $ride) {
             // Hamburg coordinates: approx 53.55 N, 10.0 E
-            $this->assertGreaterThan(53.4, $ride->getLatitude());
-            $this->assertLessThan(53.7, $ride->getLatitude());
-            $this->assertGreaterThan(9.8, $ride->getLongitude());
-            $this->assertLessThan(10.2, $ride->getLongitude());
+            $this->assertGreaterThan(53.4, $ride['latitude']);
+            $this->assertLessThan(53.7, $ride['latitude']);
+            $this->assertGreaterThan(9.8, $ride['longitude']);
+            $this->assertLessThan(10.2, $ride['longitude']);
         }
     }
 
@@ -64,10 +67,9 @@ class RideApiFullTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        /** @var Ride $responseRide */
-        $responseRide = $this->deserializeEntity($this->client->getResponse()->getContent(), Ride::class);
+        $responseRide = $this->getJsonResponse();
 
-        $this->assertEquals($ride->getTitle(), $responseRide->getTitle());
+        $this->assertEquals($ride->getTitle(), $responseRide['title']);
     }
 
     public function testShowCurrentRide(): void
@@ -95,11 +97,12 @@ class RideApiFullTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $rides = $this->deserializeEntityList($this->client->getResponse()->getContent(), Ride::class);
+        $response = $this->getJsonResponse();
 
-        $this->assertNotEmpty($rides);
+        $this->assertIsArray($response);
+        $this->assertNotEmpty($response);
 
-        $dates = array_map(fn(Ride $ride) => $ride->getDateTime()->getTimestamp(), $rides);
+        $dates = array_map(fn(array $ride) => $ride['date_time'], $response);
         $sortedDates = $dates;
         rsort($sortedDates);
 
@@ -116,9 +119,10 @@ class RideApiFullTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $rides = $this->deserializeEntityList($this->client->getResponse()->getContent(), Ride::class);
+        $response = $this->getJsonResponse();
 
-        $this->assertNotEmpty($rides);
+        $this->assertIsArray($response);
+        $this->assertNotEmpty($response);
     }
 
     public function testListRidesExtended(): void

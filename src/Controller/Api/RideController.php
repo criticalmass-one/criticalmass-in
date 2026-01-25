@@ -2,7 +2,6 @@
 
 namespace App\Controller\Api;
 
-use JMS\Serializer\SerializationContext;
 use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
 use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Criticalmass\EntityMerger\EntityMergerInterface;
@@ -29,7 +28,9 @@ class RideController extends BaseController
     #[OA\Response(response: 200, description: 'Returned when successful')]
     public function showAction(Ride $ride): JsonResponse
     {
-        return $this->createStandardResponse($ride);
+        $context = ['groups' => 'ride-details'];
+
+        return $this->createStandardResponse($ride, $context);
     }
 
     /**
@@ -159,10 +160,7 @@ class RideController extends BaseController
             $groups[] = 'extended-ride-list';
         }
 
-        $context = new SerializationContext();
-        $context->setGroups($groups);
-
-        return $this->createStandardResponse($rideList, $context);
+        return $this->createStandardResponse($rideList);
     }
 
     /**
@@ -210,10 +208,7 @@ class RideController extends BaseController
         $manager->persist($ride);
         $manager->flush();
 
-        $context = new SerializationContext();
-        $context->setGroups('ride-list');
-
-        return $this->createStandardResponse($ride, $context);
+        return $this->createStandardResponse($ride, ['groups' => ['ride-list']]);
     }
 
     /**
@@ -260,9 +255,6 @@ class RideController extends BaseController
         $manager = $this->managerRegistry->getManager();
         $manager->flush();
 
-        $context = new SerializationContext();
-        $context->setGroups('ride-list');
-
-        return $this->createStandardResponse($ride, $context);
+        return $this->createStandardResponse($ride, ['groups' => ['ride-list']]);
     }
 }

@@ -14,10 +14,13 @@ class TrackApiTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $tracks = $this->deserializeEntityList($this->client->getResponse()->getContent(), Track::class);
+        $response = $this->getJsonResponse();
 
-        $this->assertNotEmpty($tracks);
-        $this->assertContainsOnlyInstancesOf(Track::class, $tracks);
+        $this->assertIsArray($response);
+        $this->assertNotEmpty($response);
+
+        // Verify first item has expected structure
+        $this->assertArrayHasKey('id', $response[0]);
     }
 
     public function testListTracksWithSize(): void
@@ -26,9 +29,10 @@ class TrackApiTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $tracks = $this->deserializeEntityList($this->client->getResponse()->getContent(), Track::class);
+        $response = $this->getJsonResponse();
 
-        $this->assertLessThanOrEqual(2, count($tracks));
+        $this->assertIsArray($response);
+        $this->assertLessThanOrEqual(2, count($response));
     }
 
     public function testListTracksForRide(): void
@@ -47,9 +51,10 @@ class TrackApiTest extends AbstractApiControllerTestCase
 
                 $this->assertResponseIsSuccessful();
 
-                $responseTracks = $this->deserializeEntityList($this->client->getResponse()->getContent(), Track::class);
+                $response = $this->getJsonResponse();
 
-                $this->assertNotEmpty($responseTracks);
+                $this->assertIsArray($response);
+                $this->assertNotEmpty($response);
                 return;
             }
         }
@@ -69,11 +74,12 @@ class TrackApiTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        /** @var Track $responseTrack */
-        $responseTrack = $this->deserializeEntity($this->client->getResponse()->getContent(), Track::class);
+        $response = $this->getJsonResponse();
 
-        $this->assertEquals($track->getId(), $responseTrack->getId());
-        $this->assertEquals($track->getDistance(), $responseTrack->getDistance());
+        $this->assertIsArray($response);
+        $this->assertArrayHasKey('id', $response);
+        $this->assertEquals($track->getId(), $response['id']);
+        $this->assertEquals($track->getDistance(), $response['distance']);
     }
 
     public function testViewUnknownTrackReturns404(): void
@@ -100,7 +106,6 @@ class TrackApiTest extends AbstractApiControllerTestCase
         $this->assertArrayHasKey('id', $response);
         $this->assertArrayHasKey('distance', $response);
         $this->assertArrayHasKey('points', $response);
-        // JMS Serializer uses snake_case by default
         $this->assertArrayHasKey('start_date_time', $response);
         $this->assertArrayHasKey('end_date_time', $response);
     }

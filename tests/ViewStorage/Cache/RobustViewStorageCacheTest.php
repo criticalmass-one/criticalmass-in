@@ -6,9 +6,9 @@ use App\Criticalmass\ViewStorage\Cache\RobustViewStorageCache;
 use App\Criticalmass\ViewStorage\Persister\ViewStoragePersister;
 use App\Criticalmass\ViewStorage\ViewEntityFactory\ViewEntityFactory;
 use App\Entity\User;
+use App\Serializer\CriticalSerializer;
 use Doctrine\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use JMS\Serializer\SerializerBuilder;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use PhpAmqpLib\Exception\AMQPIOException;
 use PHPUnit\Framework\TestCase;
@@ -73,7 +73,7 @@ class RobustViewStorageCacheTest extends TestCase
 
         $viewEntityFactoryRegistry = $this->createMock(ManagerRegistry::class);
 
-        $serializer = SerializerBuilder::create()->build();
+        $serializer = new CriticalSerializer();
 
         $token = $this->createMock(UsernamePasswordToken::class);
         $token
@@ -172,7 +172,7 @@ class RobustViewStorageCacheTest extends TestCase
             ->with($this->equalTo(User::class))
             ->willReturn($viewEntityFactoryRepository);
 
-        $serializer = SerializerBuilder::create()->build();
+        $serializer = new CriticalSerializer();
 
         $token = $this->createMock(UsernamePasswordToken::class);
         $token

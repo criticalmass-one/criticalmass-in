@@ -114,7 +114,7 @@ class SocialNetworkProfileApiSchemaTest extends AbstractApiControllerTestCase
         }
     }
 
-    #[TestDox('Profile timestamps are date-time strings when present')]
+    #[TestDox('Profile timestamps are Unix timestamps when present')]
     public function testProfileTimestampsAreValidWhenPresent(): void
     {
         $this->client->request('GET', '/api/socialnetwork-profiles');
@@ -124,16 +124,16 @@ class SocialNetworkProfileApiSchemaTest extends AbstractApiControllerTestCase
 
         foreach ($response as $profile) {
             if (isset($profile['created_at']) && $profile['created_at'] !== null) {
-                $this->assertIsString($profile['created_at']);
-                $this->assertNotFalse(strtotime($profile['created_at']), 'created_at should be a valid date-time');
+                $this->assertIsInt($profile['created_at']);
+                $this->assertGreaterThan(0, $profile['created_at'], 'created_at should be a positive timestamp');
             }
             if (isset($profile['last_fetch_success_date_time']) && $profile['last_fetch_success_date_time'] !== null) {
-                $this->assertIsString($profile['last_fetch_success_date_time']);
-                $this->assertNotFalse(strtotime($profile['last_fetch_success_date_time']), 'last_fetch_success_date_time should be a valid date-time');
+                $this->assertIsInt($profile['last_fetch_success_date_time']);
+                $this->assertGreaterThan(0, $profile['last_fetch_success_date_time'], 'last_fetch_success_date_time should be a positive timestamp');
             }
             if (isset($profile['last_fetch_failure_date_time']) && $profile['last_fetch_failure_date_time'] !== null) {
-                $this->assertIsString($profile['last_fetch_failure_date_time']);
-                $this->assertNotFalse(strtotime($profile['last_fetch_failure_date_time']), 'last_fetch_failure_date_time should be a valid date-time');
+                $this->assertIsInt($profile['last_fetch_failure_date_time']);
+                $this->assertGreaterThan(0, $profile['last_fetch_failure_date_time'], 'last_fetch_failure_date_time should be a positive timestamp');
             }
         }
     }

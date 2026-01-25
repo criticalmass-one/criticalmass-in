@@ -53,6 +53,6 @@ class WeatherController extends BaseController
         $manager->persist($weather);
         $manager->flush();
 
-        return $this->createStandardResponse($ride, null, JsonResponse::HTTP_CREATED);
+        return $this->createStandardResponse($ride, [], JsonResponse::HTTP_CREATED);
     }
 }

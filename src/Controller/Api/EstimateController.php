@@ -9,7 +9,7 @@ use App\Entity\Ride;
 use App\Entity\RideEstimate;
 use App\Event\RideEstimate\RideEstimateCreatedEvent;
 use App\Model\CreateEstimateModel;
-use JMS\Serializer\SerializerInterface;
+use App\Serializer\CriticalSerializerInterface;
 use OpenApi\Attributes as OA;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -20,11 +20,12 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 class EstimateController extends BaseController
 {
     public function __construct(
+        CriticalSerializerInterface $serializer,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly DataQueryManagerInterface $dataQueryManager,
         ManagerRegistry $managerRegistry,
-        SerializerInterface $serializer,
-        protected readonly EventDispatcherInterface $eventDispatcher,
-        protected readonly DataQueryManagerInterface $dataQueryManager,
-    ) {
+    )
+    {
         parent::__construct($managerRegistry, $serializer);
     }
 
@@ -45,7 +46,6 @@ class EstimateController extends BaseController
      *
      * This endpoint is primarly provided for apps with access to the user's current location. If you like you can
      * provide details about your app or homepage in the <code>source</code> property or just default to null.
-
      * If you know which in which ride the user participates, please use the other endpoint and specify
      * <code>citySlug</code> and <code>rideIdentifier</code>.
      */
@@ -99,7 +99,7 @@ class EstimateController extends BaseController
     #[OA\Parameter(name: 'rideIdentifier', in: 'path', description: 'Identifier of the ride', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\RequestBody(description: 'JSON representation of the estimate data', required: true, content: new OA\JsonContent(type: 'object'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
-    public function createRideEstimateAction(Request $request, Ride $ride, SerializerInterface $serializer): JsonResponse
+    public function createRideEstimateAction(Request $request, Ride $ride): JsonResponse
     {
         /** @var CreateEstimateModel $estimateModel */
         $estimateModel = $this->deserializeRequest($request, CreateEstimateModel::class);

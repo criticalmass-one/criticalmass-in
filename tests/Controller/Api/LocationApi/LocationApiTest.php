@@ -2,7 +2,6 @@
 
 namespace Tests\Controller\Api\LocationApi;
 
-use App\Entity\Location;
 use Tests\Controller\Api\AbstractApiControllerTestCase;
 
 class LocationApiTest extends AbstractApiControllerTestCase
@@ -13,12 +12,12 @@ class LocationApiTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $locations = $this->deserializeEntityList($this->client->getResponse()->getContent(), Location::class);
+        $response = $this->getJsonResponse();
 
-        $this->assertNotEmpty($locations);
-        $this->assertContainsOnlyInstancesOf(Location::class, $locations);
+        $this->assertIsArray($response);
+        $this->assertNotEmpty($response);
 
-        $locationTitles = array_map(fn(Location $location) => $location->getTitle(), $locations);
+        $locationTitles = array_map(fn(array $location) => $location['title'], $response);
         $this->assertContains('Moorweide', $locationTitles);
     }
 
@@ -28,11 +27,12 @@ class LocationApiTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $locations = $this->deserializeEntityList($this->client->getResponse()->getContent(), Location::class);
+        $response = $this->getJsonResponse();
 
-        $this->assertNotEmpty($locations);
+        $this->assertIsArray($response);
+        $this->assertNotEmpty($response);
 
-        $locationTitles = array_map(fn(Location $location) => $location->getTitle(), $locations);
+        $locationTitles = array_map(fn(array $location) => $location['title'], $response);
         $this->assertContains('Heinrichplatz', $locationTitles);
         $this->assertContains('Brandenburger Tor', $locationTitles);
     }
@@ -43,13 +43,12 @@ class LocationApiTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        /** @var Location $location */
-        $location = $this->deserializeEntity($this->client->getResponse()->getContent(), Location::class);
+        $location = $this->getJsonResponse();
 
-        $this->assertEquals('Moorweide', $location->getTitle());
-        $this->assertEquals('moorweide', $location->getSlug());
-        $this->assertEqualsWithDelta(53.5611, $location->getLatitude(), 0.01);
-        $this->assertEqualsWithDelta(9.9895, $location->getLongitude(), 0.01);
+        $this->assertEquals('Moorweide', $location['title']);
+        $this->assertEquals('moorweide', $location['slug']);
+        $this->assertEqualsWithDelta(53.5611, $location['latitude'], 0.01);
+        $this->assertEqualsWithDelta(9.9895, $location['longitude'], 0.01);
     }
 
     public function testShowLocationMarienplatz(): void
@@ -58,10 +57,9 @@ class LocationApiTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        /** @var Location $location */
-        $location = $this->deserializeEntity($this->client->getResponse()->getContent(), Location::class);
+        $location = $this->getJsonResponse();
 
-        $this->assertEquals('Marienplatz', $location->getTitle());
+        $this->assertEquals('Marienplatz', $location['title']);
     }
 
     public function testShowUnknownLocationReturns404(): void

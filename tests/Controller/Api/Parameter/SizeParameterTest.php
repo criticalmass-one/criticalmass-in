@@ -15,14 +15,14 @@ class SizeParameterTest extends AbstractApiControllerTestCase
     #[TestDox('Calling api without size parameter delivers up to 10 results (default size).')]
     public function testResultListWithBoundingSizeParameter(string $fqcn): void
     {
-
         $this->client->request('GET', sprintf('%s', $this->getApiEndpointForFqcn($fqcn)));
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $resultList = $this->deserializeEntityList($this->client->getResponse()->getContent(), $fqcn);
+        $resultList = $this->getJsonResponse();
 
         // Default size is 10, but we may have fewer records in fixtures
+        $this->assertIsArray($resultList);
         $this->assertLessThanOrEqual(10, count($resultList));
         $this->assertNotEmpty($resultList);
     }
@@ -31,13 +31,13 @@ class SizeParameterTest extends AbstractApiControllerTestCase
     #[TestDox('Request up to 5 results.')]
     public function testResultListWith5Results(string $fqcn): void
     {
-
         $this->client->request('GET', sprintf('%s?size=5', $this->getApiEndpointForFqcn($fqcn)));
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $resultList = $this->deserializeEntityList($this->client->getResponse()->getContent(), $fqcn);
+        $resultList = $this->getJsonResponse();
 
+        $this->assertIsArray($resultList);
         $this->assertLessThanOrEqual(5, count($resultList));
         $this->assertNotEmpty($resultList);
     }
@@ -45,13 +45,13 @@ class SizeParameterTest extends AbstractApiControllerTestCase
     #[DataProvider('apiClassProvider')]
     public function testResultListWith1Result(string $fqcn): void
     {
-
         $this->client->request('GET', sprintf('%s?size=1', $this->getApiEndpointForFqcn($fqcn)));
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $resultList = $this->deserializeEntityList($this->client->getResponse()->getContent(), $fqcn);
+        $resultList = $this->getJsonResponse();
 
+        $this->assertIsArray($resultList);
         $this->assertCount(1, $resultList);
     }
 
@@ -59,13 +59,13 @@ class SizeParameterTest extends AbstractApiControllerTestCase
     #[TestDox('Calling size=0 will default to up to 10 results.')]
     public function testResultListWithSize0Returning5Results(string $fqcn): void
     {
-
         $this->client->request('GET', sprintf('%s?size=0', $this->getApiEndpointForFqcn($fqcn)));
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $resultList = $this->deserializeEntityList($this->client->getResponse()->getContent(), $fqcn);
+        $resultList = $this->getJsonResponse();
 
+        $this->assertIsArray($resultList);
         $this->assertLessThanOrEqual(10, count($resultList));
         $this->assertNotEmpty($resultList);
     }
@@ -74,13 +74,13 @@ class SizeParameterTest extends AbstractApiControllerTestCase
     #[TestDox('Calling size=-1 will default to up to 10 results.')]
     public function testResultListWithNegativeParameter(string $fqcn): void
     {
-
         $this->client->request('GET', sprintf('%s?size=-1', $this->getApiEndpointForFqcn($fqcn)));
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $resultList = $this->deserializeEntityList($this->client->getResponse()->getContent(), $fqcn);
+        $resultList = $this->getJsonResponse();
 
+        $this->assertIsArray($resultList);
         $this->assertLessThanOrEqual(10, count($resultList));
         $this->assertNotEmpty($resultList);
     }
@@ -89,7 +89,6 @@ class SizeParameterTest extends AbstractApiControllerTestCase
     #[TestDox('Using strings as parameter value will result in an error.')]
     public function testResultListWithInvalidParameter(string $fqcn): void
     {
-
         $this->client->request('GET', sprintf('%s?size=abc', $this->getApiEndpointForFqcn($fqcn)));
 
         // Invalid parameter value causes an error

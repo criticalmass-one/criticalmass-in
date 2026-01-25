@@ -5,12 +5,11 @@ namespace Tests\Controller\Api\Schema;
 /**
  * Central definitions of expected API response schemas.
  *
- * These schemas document the current JMS Serializer output structure
- * and will be used to verify compatibility after switching to Symfony Serializer.
+ * These schemas document the API output structure after switching to Symfony Serializer.
  *
  * Notes:
- * - All property names use snake_case (JMS CamelCaseToSnakeCase naming strategy)
- * - DateTime with 'U' format = Unix timestamp (int)
+ * - All property names use snake_case (CamelCaseToSnakeCaseNameConverter)
+ * - All DateTime fields are Unix timestamps (int) for API backwards compatibility
  * - Nullable fields use 'type|null' syntax
  * - Optional fields use 'field?' key suffix
  */
@@ -108,11 +107,11 @@ final class ApiSchemaDefinitions
         'longitude' => 'float|null',
         'description' => 'string|null',
         'views' => 'int',
-        'creation_date_time' => 'string', // ISO 8601 date-time string
+        'creation_date_time' => 'int', // Unix timestamp
         'image_name' => 'string',
-        'updated_at' => 'string|null', // ISO 8601 date-time string or null
+        'updated_at' => 'int|null', // Unix timestamp or null
         'location' => 'string|null',
-        'exif_creation_date' => 'string|null', // ISO 8601 date-time string or null
+        'exif_creation_date' => 'int|null', // Unix timestamp or null
     ];
 
     // =========================================================================
@@ -125,9 +124,9 @@ final class ApiSchemaDefinitions
      */
     public const TRACK_PUBLIC_SCHEMA = [
         'id' => 'int',
-        'creation_date_time' => 'string', // ISO 8601 date-time string
-        'start_date_time' => 'string|null', // ISO 8601 date-time string
-        'end_date_time' => 'string|null', // ISO 8601 date-time string
+        'creation_date_time' => 'int', // Unix timestamp
+        'start_date_time' => 'int|null', // Unix timestamp
+        'end_date_time' => 'int|null', // Unix timestamp
         'distance' => 'float|int|null', // Can be int or float
         'points' => 'int|null',
         'polylineString' => 'string|null', // Note: camelCase here
@@ -139,9 +138,9 @@ final class ApiSchemaDefinitions
     public const TRACK_PRIVATE_SCHEMA = [
         'id' => 'int',
         'username' => 'string|null',
-        'creation_date_time' => 'string', // ISO 8601 date-time string
-        'start_date_time' => 'string|null',
-        'end_date_time' => 'string|null',
+        'creation_date_time' => 'int', // Unix timestamp
+        'start_date_time' => 'int|null',
+        'end_date_time' => 'int|null',
         'distance' => 'float|int|null',
         'points' => 'int|null',
         'polylineString' => 'string|null',
@@ -155,9 +154,9 @@ final class ApiSchemaDefinitions
         'id' => 'int',
         'username' => 'string|null',
         'user?' => 'array',
-        'creation_date_time' => 'string', // ISO 8601 date-time string
-        'start_date_time' => 'string|null',
-        'end_date_time' => 'string|null',
+        'creation_date_time' => 'int', // Unix timestamp
+        'start_date_time' => 'int|null',
+        'end_date_time' => 'int|null',
         'distance' => 'float|int|null',
         'points' => 'int|null',
         'polylineString' => 'string|null',
@@ -195,12 +194,12 @@ final class ApiSchemaDefinitions
         'city' => 'array', // City object
         'day_of_week' => 'int',
         'week_of_month' => 'int|null',
-        'time' => 'string|null', // ISO 8601 date-time string
+        'time' => 'int|null', // Unix timestamp
         'location' => 'string|null',
         'latitude' => 'float|null',
         'longitude' => 'float|null',
-        'created_at' => 'string', // ISO 8601 date-time string
-        'valid_from' => 'string|null', // ISO 8601 date-time string
+        'created_at' => 'int', // Unix timestamp
+        'valid_from' => 'int|null', // Unix timestamp
     ];
 
     // =========================================================================
@@ -215,12 +214,12 @@ final class ApiSchemaDefinitions
         'title' => 'string',
         'description' => 'string|null',
         'timestamp' => 'int', // Virtual property: Unix timestamp from dateTime
-        'date_time' => 'string|null', // ISO 8601 date-time string
+        'date_time' => 'int|null', // Unix timestamp
         'location' => 'string|null',
         'latitude' => 'float|null',
         'longitude' => 'float|null',
-        'created_at' => 'string', // ISO 8601 date-time string
-        'updated_at' => 'string|null',
+        'created_at' => 'int', // Unix timestamp
+        'updated_at' => 'int|null',
     ];
 
     /**
@@ -231,12 +230,12 @@ final class ApiSchemaDefinitions
         'title' => 'string',
         'description' => 'string|null',
         'timestamp' => 'int',
-        'date_time' => 'string|null', // ISO 8601 date-time string
+        'date_time' => 'int|null', // Unix timestamp
         'location' => 'string|null',
         'latitude' => 'float|null',
         'longitude' => 'float|null',
-        'created_at' => 'string', // ISO 8601 date-time string
-        'updated_at' => 'string|null',
+        'created_at' => 'int', // Unix timestamp
+        'updated_at' => 'int|null',
         'ride' => 'array', // Ride object
     ];
 
@@ -251,7 +250,7 @@ final class ApiSchemaDefinitions
         'id' => 'int',
         'identifier' => 'string',
         'network' => 'string',
-        'created_at' => 'string|null', // ISO 8601 date-time string
+        'created_at' => 'int|null', // Unix timestamp
         'auto_fetch' => 'bool',
         'auto_publish' => 'bool',
     ];
@@ -269,10 +268,10 @@ final class ApiSchemaDefinitions
         'permalink' => 'string|null',
         'title' => 'string|null',
         'text' => 'string',
-        'date_time' => 'string', // ISO 8601 date-time string
+        'date_time' => 'int', // Unix timestamp
         'hidden' => 'bool',
         'deleted' => 'bool',
-        'created_at' => 'string', // ISO 8601 date-time string
+        'created_at' => 'int', // Unix timestamp
         'raw' => 'string|null',
     ];
 
@@ -285,8 +284,8 @@ final class ApiSchemaDefinitions
      */
     public const WEATHER_SCHEMA = [
         'id' => 'int',
-        'weather_date_time' => 'string', // ISO 8601 date-time string
-        'creation_date_time' => 'string', // ISO 8601 date-time string
+        'weather_date_time' => 'int', // Unix timestamp
+        'creation_date_time' => 'int', // Unix timestamp
         'temperature_min' => 'float',
         'temperature_max' => 'float',
         'temperature_morning' => 'float',

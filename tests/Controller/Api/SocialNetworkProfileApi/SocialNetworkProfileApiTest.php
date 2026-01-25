@@ -13,10 +13,11 @@ class SocialNetworkProfileApiTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $profiles = $this->deserializeEntityList($this->client->getResponse()->getContent(), SocialNetworkProfile::class);
+        $response = $this->getJsonResponse();
 
-        $this->assertNotEmpty($profiles);
-        $this->assertContainsOnlyInstancesOf(SocialNetworkProfile::class, $profiles);
+        $this->assertIsArray($response);
+        $this->assertNotEmpty($response);
+        $this->assertArrayHasKey('network', $response[0]);
     }
 
     public function testListSocialNetworkProfilesForHamburg(): void
@@ -25,11 +26,12 @@ class SocialNetworkProfileApiTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $profiles = $this->deserializeEntityList($this->client->getResponse()->getContent(), SocialNetworkProfile::class);
+        $response = $this->getJsonResponse();
 
-        $this->assertNotEmpty($profiles);
+        $this->assertIsArray($response);
+        $this->assertNotEmpty($response);
 
-        $networks = array_map(fn(SocialNetworkProfile $profile) => $profile->getNetwork(), $profiles);
+        $networks = array_map(fn(array $profile) => $profile['network'], $response);
         $this->assertContains('twitter', $networks);
         $this->assertContains('facebook', $networks);
         $this->assertContains('instagram', $networks);
@@ -41,11 +43,12 @@ class SocialNetworkProfileApiTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $profiles = $this->deserializeEntityList($this->client->getResponse()->getContent(), SocialNetworkProfile::class);
+        $response = $this->getJsonResponse();
 
-        $this->assertNotEmpty($profiles);
+        $this->assertIsArray($response);
+        $this->assertNotEmpty($response);
 
-        $networks = array_map(fn(SocialNetworkProfile $profile) => $profile->getNetwork(), $profiles);
+        $networks = array_map(fn(array $profile) => $profile['network'], $response);
         $this->assertContains('twitter', $networks);
         $this->assertContains('mastodon', $networks);
     }
@@ -56,12 +59,13 @@ class SocialNetworkProfileApiTest extends AbstractApiControllerTestCase
 
         $this->assertResponseIsSuccessful();
 
-        $profiles = $this->deserializeEntityList($this->client->getResponse()->getContent(), SocialNetworkProfile::class);
+        $response = $this->getJsonResponse();
 
-        $this->assertNotEmpty($profiles);
+        $this->assertIsArray($response);
+        $this->assertNotEmpty($response);
 
-        foreach ($profiles as $profile) {
-            $this->assertEquals('twitter', $profile->getNetwork());
+        foreach ($response as $profile) {
+            $this->assertEquals('twitter', $profile['network']);
         }
     }
 

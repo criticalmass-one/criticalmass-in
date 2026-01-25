@@ -4,7 +4,7 @@ namespace Tests\ViewStorage\Cache;
 
 use App\Criticalmass\ViewStorage\Cache\ViewStorageCache;
 use App\Entity\User;
-use JMS\Serializer\SerializerBuilder;
+use App\Serializer\CriticalSerializer;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -38,7 +38,7 @@ class ViewStorageCacheTest extends TestCase
             ->method('publish')
             ->with($this->equalTo($expectedJson));
 
-        $serializer = SerializerBuilder::create()->build();
+        $serializer = new CriticalSerializer();
 
         $viewStorageCache = new ViewStorageCache($tokenStorage, $producer, $serializer);
 
@@ -75,7 +75,7 @@ class ViewStorageCacheTest extends TestCase
             ->method('publish')
             ->with($this->equalTo($expectedJson));
 
-        $serializer = SerializerBuilder::create()->build();
+        $serializer = new CriticalSerializer();
 
         $viewStorageCache = new ViewStorageCache($tokenStorage, $producer, $serializer);
 

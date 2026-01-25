@@ -16,10 +16,10 @@ class CityApiTest extends AbstractApiControllerTestCase
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        /** @var City $actualCity */
-        $actualCity = $this->deserializeEntity($this->client->getResponse()->getContent(), City::class);
+        $data = json_decode($this->client->getResponse()->getContent(), true);
 
-        $this->assertEquals('Hamburg', $actualCity->getCity());
+        // Note: City entity uses #[SerializedName('name')] on the $city property
+        $this->assertEquals('Hamburg', $data['name']);
     }
 
     #[TestDox('Ask for a unknown city and retrieve 404.')]
@@ -38,6 +38,21 @@ class CityApiTest extends AbstractApiControllerTestCase
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
+        $data = json_decode($this->client->getResponse()->getContent(), true);
+
+        // Check essential properties
+        // Note: City entity uses #[SerializedName('name')] on the $city property
+        // and #[SerializedName('slug')] on getMainSlugString()
+        $this->assertEquals('hamburg', $data['slug']);
+        $this->assertEquals('Hamburg', $data['name']);
+        $this->assertEquals('Critical Mass Hamburg', $data['title']);
+        $this->assertEquals('Europe/Berlin', $data['timezone']);
+        $this->assertArrayHasKey('main_slug', $data);
+        $this->assertEquals('hamburg', $data['main_slug']['slug']);
+        $this->assertArrayHasKey('latitude', $data);
+        $this->assertArrayHasKey('longitude', $data);
+        $this->assertArrayHasKey('slugs', $data);
+        $this->assertArrayHasKey('color', $data);
         // Verify the response contains expected Hamburg data
         $content = json_decode($this->client->getResponse()->getContent(), true);
 

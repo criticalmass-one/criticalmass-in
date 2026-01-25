@@ -9,12 +9,12 @@ use App\Form\Type\ExecuteCityCycleType;
 use App\Model\RideGenerator\CycleExecutable;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
-use JMS\Serializer\SerializerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -58,7 +58,7 @@ class CityCycleExecuteController extends AbstractController
                 'body' => $json,
             ]);
 
-            $rideList = $serializer->deserialize($response->getContent(), 'array<App\Entity\Ride>', 'json');
+            $rideList = $serializer->deserialize($response->getContent(), Ride::class.'[]', 'json');
 
             return $this->render('CityCycle/execute_preview.html.twig', [
                 'cityCycle' => $cityCycle,
@@ -102,7 +102,7 @@ class CityCycleExecuteController extends AbstractController
                 'body' => $json,
             ]);
 
-            $rideList = $serializer->deserialize($response->getContent(), 'array<App\Entity\Ride>', 'json');
+            $rideList = $serializer->deserialize($response->getContent(), Ride::class.'[]', 'json');
 
             $em = $registry->getManager();
 

@@ -4,7 +4,7 @@ namespace Tests\Controller\Api;
 
 use App\Criticalmass\Util\ClassUtil;
 use Doctrine\ORM\EntityManagerInterface;
-use JMS\Serializer\SerializerInterface;
+use App\Serializer\CriticalSerializerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Tests\Controller\Api\Util\IdKiller;
@@ -27,18 +27,24 @@ abstract class AbstractApiControllerTestCase extends WebTestCase
         $this->assertEquals(IdKiller::removeIds($expected), IdKiller::removeIds($actual));
     }
 
-    protected function getSerializer(): SerializerInterface
+    protected function getSerializer(): CriticalSerializerInterface
     {
-        return static::getContainer()->get('jms_serializer');
+        return static::getContainer()->get(CriticalSerializerInterface::class);
     }
 
+    /**
+     * @deprecated Use getJsonResponseList() instead for testing API responses
+     */
     protected function deserializeEntityList(string $data, string $entityFqcn): array
     {
-        $type = sprintf('array<%s>', $entityFqcn);
+        $type = sprintf('%s[]', $entityFqcn);
 
         return $this->getSerializer()->deserialize($data, $type, 'json');
     }
 
+    /**
+     * @deprecated Use getJsonResponse() instead for testing API responses
+     */
     protected function deserializeEntity(string $data, string $entityFqcn): object
     {
         return $this->getSerializer()->deserialize($data, $entityFqcn, 'json');
@@ -47,6 +53,13 @@ abstract class AbstractApiControllerTestCase extends WebTestCase
     protected function getApiEndpointForFqcn(string $fqcn): string
     {
         return sprintf('/api/%s', ClassUtil::getLowercaseShortnameFromFqcn($fqcn));
+    }
+
+    protected function getJsonResponseList(): array
+    {
+        $response = $this->getJsonResponse();
+        $this->assertIsArray($response);
+        return $response;
     }
 
     protected function assertResponseStatusCode(int $expectedStatusCode): void

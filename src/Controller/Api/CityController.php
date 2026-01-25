@@ -2,7 +2,6 @@
 
 namespace App\Controller\Api;
 
-use JMS\Serializer\SerializationContext;
 use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
 use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Entity\City;
@@ -88,8 +87,7 @@ class CityController extends BaseController
             $groups[] = 'extended-ride-list';
         }
 
-        $context = new SerializationContext();
-        $context->setGroups($groups);
+        $context = ['groups' => $groups];
 
         return $this->createStandardResponse($cityList, $context);
     }
@@ -103,6 +101,8 @@ class CityController extends BaseController
     #[OA\Response(response: 200, description: 'Returned when successful')]
     public function showAction(City $city): JsonResponse
     {
-        return $this->createStandardResponse($city);
+        $groups = ['ride-list'];
+
+        return $this->createStandardResponse($city, $groups);
     }
 }

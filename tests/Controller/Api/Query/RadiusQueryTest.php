@@ -15,13 +15,13 @@ class RadiusQueryTest extends AbstractApiControllerTestCase
     #[DataProvider('apiClassProvider')]
     public function testResultListForParameterizedDistance(string $fqcn, CoordInterface $centerCoord, float $radius, int $minExpected, int $maxExpected): void
     {
-
         $this->client->request('GET', sprintf('%s?centerLatitude=%f&centerLongitude=%f&radius=%f', $this->getApiEndpointForFqcn($fqcn), $centerCoord->getLatitude(), $centerCoord->getLongitude(), $radius));
 
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $resultList = $this->deserializeEntityList($this->client->getResponse()->getContent(), $fqcn);
+        $resultList = $this->getJsonResponse();
 
+        $this->assertIsArray($resultList);
         $this->assertGreaterThanOrEqual($minExpected, count($resultList));
         $this->assertLessThanOrEqual($maxExpected, count($resultList));
     }
