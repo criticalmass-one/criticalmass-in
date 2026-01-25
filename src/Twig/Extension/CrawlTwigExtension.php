@@ -88,7 +88,7 @@ class CrawlTwigExtension extends AbstractExtension
         return $crawledWebsite;
     }
 
-    protected function obfuscate(string $text = null): ?string
+    protected function obfuscate(?string $text = null): ?string
     {
         if (!$text) {
             return null;

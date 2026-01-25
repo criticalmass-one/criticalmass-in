@@ -15,8 +15,8 @@ class RideEstimateRepository extends ServiceEntityRepository
     }
 
     public function findForTimelineRideParticipationEstimateCollector(
-        \DateTime $startDateTime = null,
-        \DateTime $endDateTime = null,
+        ?\DateTime $startDateTime = null,
+        ?\DateTime $endDateTime = null,
         $limit = null
     ): array {
         $builder = $this->createQueryBuilder('e');

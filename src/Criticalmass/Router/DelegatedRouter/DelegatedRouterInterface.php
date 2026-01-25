@@ -10,7 +10,7 @@ interface DelegatedRouterInterface
 {
     public function generate(
         RouteableInterface $routeable,
-        string $routeName = null,
+        ?string $routeName = null,
         array $parameters = [],
         int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH
     ): string;

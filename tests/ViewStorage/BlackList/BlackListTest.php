@@ -3,17 +3,13 @@
 namespace Tests\ViewStorage\BlackList;
 
 use App\Criticalmass\ViewStorage\BlackList\BlackList;
-use Jaybizzle\CrawlerDetect\CrawlerDetect;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 class BlackListTest extends TestCase
 {
     protected function createBlackList(): BlackList
     {
-        $requestStack = new RequestStack();
-        $crawlerDetect = new CrawlerDetect($requestStack);
-        return new BlackList($crawlerDetect);
+        return new BlackList();
     }
 
     public function testBlackListUptimeRobot(): void
@@ -49,5 +45,12 @@ class BlackListTest extends TestCase
         $userAgent = 'Googlebot-Image/1.0';
 
         $this->assertTrue($this->createBlackList()->isBlackListed($userAgent));
+    }
+
+    public function testNotBlackListedNormalBrowser(): void
+    {
+        $userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
+
+        $this->assertFalse($this->createBlackList()->isBlackListed($userAgent));
     }
 }

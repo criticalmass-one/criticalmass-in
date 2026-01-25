@@ -31,7 +31,7 @@ class PhotoStorage extends AbstractPhotoStorage
 
         $filename = $this->getImageFilename($photo);
 
-        $this->filesystem->put($filename, $image->get('jpeg'));
+        $this->filesystem->write($filename, $image->get('jpeg'));
 
         $this->photoCache->recachePhoto($photo);
 

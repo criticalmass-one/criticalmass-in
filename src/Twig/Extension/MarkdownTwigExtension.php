@@ -22,7 +22,7 @@ class MarkdownTwigExtension extends AbstractExtension
         ];
     }
 
-    public function markdown(string $text = null): string
+    public function markdown(?string $text = null): string
     {
         if (!$text) {
             return '';

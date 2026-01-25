@@ -2,52 +2,25 @@
 
 namespace Tests\Router;
 
-use App\Criticalmass\Router\ObjectRouter;
+use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\City;
 use App\Entity\CitySlug;
 use App\Entity\Ride;
-use Doctrine\Common\Annotations\AnnotationReader;
-use PHPUnit\Framework\TestCase;
-use Symfony\Component\Routing\Generator\UrlGenerator;
-use Symfony\Component\Routing\RequestContext;
-use Symfony\Component\Routing\Route;
-use Symfony\Component\Routing\RouteCollection;
-use Symfony\Component\Routing\Router;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class RouterTest extends TestCase
+class RouterTest extends KernelTestCase
 {
-    public function test1(): void
+    protected function setUp(): void
     {
-        $route = new Route('caldera_criticalmass_city_show');
-
-        $routeCollection = $this->createMock(RouteCollection::class);
-        $routeCollection->method('get')->willReturn($route);
-
-        $requestContext = $this->createMock(RequestContext::class);
-        $urlGenerator = new UrlGenerator($routeCollection, $requestContext);
-
-        $router = $this->createMock(Router::class);
-        $router->method('getRouteCollection')->willReturn($routeCollection);
-        $router->method('getGenerator')->willReturn($urlGenerator);
-
-        $annotationReader = new AnnotationReader();
-        $objectRouter = new ObjectRouter($router, $annotationReader);
-
-        $citySlug = new CitySlug();
-        $city = new City();
-
-        $citySlug
-            ->setSlug('testcity')
-            ->setCity($city);
-
-        $city->setMainSlug($citySlug);
-
-        $route = $objectRouter->generate($city, 'caldera_criticalmass_city_show');
-
-        $this->assertEquals('/testcity', $route);
+        self::bootKernel();
     }
 
-    public function testCity(): void
+    protected function getObjectRouter(): ObjectRouterInterface
+    {
+        return static::getContainer()->get(ObjectRouterInterface::class);
+    }
+
+    public function testCityRoute(): void
     {
         $citySlug = new CitySlug();
         $city = new City();
@@ -58,12 +31,12 @@ class RouterTest extends TestCase
 
         $city->setMainSlug($citySlug);
 
-        $route = $this->getRouter()->generate($city);
+        $route = $this->getObjectRouter()->generate($city);
 
         $this->assertEquals('/testcity', $route);
     }
 
-    public function testRide(): void
+    public function testRideRoute(): void
     {
         $citySlug = new CitySlug();
         $city = new City();
@@ -81,8 +54,24 @@ class RouterTest extends TestCase
 
         $city->addRide($ride);
 
-        $route = $this->getRouter()->generate($ride);
+        $route = $this->getObjectRouter()->generate($ride);
 
         $this->assertEquals('/testcity/2018-01-01', $route);
+    }
+
+    public function testCityRouteWithExplicitRouteName(): void
+    {
+        $citySlug = new CitySlug();
+        $city = new City();
+
+        $citySlug
+            ->setSlug('hamburg')
+            ->setCity($city);
+
+        $city->setMainSlug($citySlug);
+
+        $route = $this->getObjectRouter()->generate($city, 'caldera_criticalmass_city_show');
+
+        $this->assertEquals('/hamburg', $route);
     }
 }

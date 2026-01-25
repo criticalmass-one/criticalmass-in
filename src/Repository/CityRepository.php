@@ -175,9 +175,9 @@ class CityRepository extends ServiceEntityRepository
     }
 
     public function findForTimelineCityEditCollector(
-        \DateTime $startDateTime = null,
-        \DateTime $endDateTime = null,
-        int $limit = null
+        ?\DateTime $startDateTime = null,
+        ?\DateTime $endDateTime = null,
+        ?int $limit = null
     ): array {
         $builder = $this->createQueryBuilder('c');
 
@@ -209,9 +209,9 @@ class CityRepository extends ServiceEntityRepository
     }
 
     public function findForTimelineCityCreatedCollector(
-        \DateTime $startDateTime = null,
-        \DateTime $endDateTime = null,
-        int $limit = null
+        ?\DateTime $startDateTime = null,
+        ?\DateTime $endDateTime = null,
+        ?int $limit = null
     ): array {
         $builder = $this->createQueryBuilder('c');
 

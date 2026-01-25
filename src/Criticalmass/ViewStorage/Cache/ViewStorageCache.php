@@ -2,38 +2,45 @@
 
 namespace App\Criticalmass\ViewStorage\Cache;
 
+use App\Criticalmass\Util\ClassUtil;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
-use App\Criticalmass\ViewStorage\ViewModel\ViewFactory;
 use App\Entity\User;
-use JMS\Serializer\SerializerInterface;
-use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
+use App\Message\CountViewMessage;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class ViewStorageCache implements ViewStorageCacheInterface
 {
     public function __construct(
         protected TokenStorageInterface $tokenStorage,
-        protected ProducerInterface $producer,
-        protected SerializerInterface $serializer
+        protected MessageBusInterface $messageBus
     ) {
-
     }
 
     public function countView(ViewableEntity $viewable): void
     {
-        $view = ViewFactory::createView($viewable, $this->getUser());
+        $user = $this->getUser();
 
-        $this->producer->publish($this->serializer->serialize($view, 'json'));
+        $message = new CountViewMessage(
+            entityId: $viewable->getId(),
+            entityClassName: ClassUtil::getShortname($viewable),
+            userId: $user?->getId(),
+            dateTime: new \DateTime('now', new \DateTimeZone('UTC'))
+        );
+
+        $this->messageBus->dispatch($message);
     }
 
     protected function getUser(): ?User
     {
-        $user = null;
+        $token = $this->tokenStorage->getToken();
 
-        if ($this->tokenStorage->getToken()) {
-            $user = $this->tokenStorage->getToken()->getUser();
+        if (!$token) {
+            return null;
         }
 
-        return $user;
+        $user = $token->getUser();
+
+        return $user instanceof User ? $user : null;
     }
 }

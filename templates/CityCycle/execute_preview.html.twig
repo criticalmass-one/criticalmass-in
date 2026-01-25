@@ -1,23 +1,12 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Turnus auslösen{% endblock %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ object_path(cityCycle.city) }}">
-            {{ cityCycle.city.city }}
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ object_path(cityCycle.city, 'caldera_criticalmass_citycycle_list') }}">
-            Turnusliste
-        </a>
-    </li>
-
-    <li class="active">
-        Turnus auslösen
-    </li>
+    {{ breadcrumb.item(cityCycle.city.city, object_path(cityCycle.city)) }}
+    {{ breadcrumb.item('Turnusliste', object_path(cityCycle.city, 'caldera_criticalmass_citycycle_list')) }}
+    {{ breadcrumb.active('Turnus auslösen') }}
 {% endblock %}
 
 {% block content %}
@@ -137,7 +126,7 @@
                 <input type="hidden" name="untilDate" value="{{ executeable.untilDate|date('U') }}"/>
 
                 <div class="btn-group pull-right">
-                    <a href="" class="btn btn-default">
+                    <a href="" class="btn btn-secondary">
                         Abbrechen
                     </a>
                     <button type="submit" class="btn btn-primary">

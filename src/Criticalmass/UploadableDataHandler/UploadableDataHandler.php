@@ -21,7 +21,7 @@ class UploadableDataHandler extends AbstractUploadableDataHandler
         foreach ($mappingList as $mapping) {
             $filename = $this->getFilename($mapping, $entity);
 
-            if (!$filename || !$this->filesystem->has($filename)) {
+            if (!$filename || !$this->filesystem->fileExists($filename)) {
                 return $entity;
             }
 
@@ -73,12 +73,12 @@ class UploadableDataHandler extends AbstractUploadableDataHandler
 
     protected function calculateSize(string $filename): int
     {
-        return $this->filesystem->getSize($filename);
+        return $this->filesystem->fileSize($filename);
     }
 
     protected function calculateMimeType(string $filename): string
     {
-        return $this->filesystem->getMimetype($filename);
+        return $this->filesystem->mimeType($filename);
     }
 
     private function assignPropertyWithoutMapping(UploadableEntity $entity, string $property, string $filenamePropertyName, $value): UploadableEntity

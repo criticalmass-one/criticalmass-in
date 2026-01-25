@@ -7,44 +7,45 @@ use App\Criticalmass\Router\Attribute\RouteParameter;
 use App\EntityInterface\AuditableInterface;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation as JMS;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[Routing\DefaultRoute(name: 'caldera_criticalmass_location_show')]
 #[ORM\Table(name: 'location')]
 #[ORM\Entity(repositoryClass: 'App\Repository\LocationRepository')]
-#[JMS\ExclusionPolicy('all')]
 class Location implements RouteableInterface, AuditableInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    #[JMS\Expose]
+    #[Groups(['location'])]
     protected ?int $id = null;
 
     #[RouteParameter(name: 'citySlug')]
     #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'locations')]
     #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
+    #[Ignore]
     protected ?City $city = null;
 
     #[RouteParameter(name: 'slug')]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[JMS\Expose]
+    #[Groups(['location'])]
     protected ?string $slug = null;
 
     #[ORM\Column(type: 'float', nullable: true)]
-    #[JMS\Expose]
+    #[Groups(['location'])]
     protected ?float $latitude = null;
 
     #[ORM\Column(type: 'float', nullable: true)]
-    #[JMS\Expose]
+    #[Groups(['location'])]
     protected ?float $longitude = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[JMS\Expose]
+    #[Groups(['location'])]
     protected ?string $title = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[JMS\Expose]
+    #[Groups(['location'])]
     protected ?string $description = null;
 
     public function getId(): ?int
@@ -52,7 +53,7 @@ class Location implements RouteableInterface, AuditableInterface
         return $this->id;
     }
 
-    public function setLatitude(float $latitude = null): Location
+    public function setLatitude(?float $latitude = null): Location
     {
         $this->latitude = $latitude;
 
@@ -64,7 +65,7 @@ class Location implements RouteableInterface, AuditableInterface
         return $this->latitude;
     }
 
-    public function setLongitude(float $longitude = null): Location
+    public function setLongitude(?float $longitude = null): Location
     {
         $this->longitude = $longitude;
 
@@ -76,7 +77,7 @@ class Location implements RouteableInterface, AuditableInterface
         return $this->longitude;
     }
 
-    public function setDescription(string $description = null): Location
+    public function setDescription(?string $description = null): Location
     {
         $this->description = $description;
 
@@ -88,7 +89,7 @@ class Location implements RouteableInterface, AuditableInterface
         return $this->description;
     }
 
-    public function setCity(City $city = null): Location
+    public function setCity(?City $city = null): Location
     {
         $this->city = $city;
 
@@ -112,7 +113,7 @@ class Location implements RouteableInterface, AuditableInterface
         return $this->title;
     }
 
-    public function setSlug(string $slug = null): Location
+    public function setSlug(?string $slug = null): Location
     {
         $this->slug = $slug;
 

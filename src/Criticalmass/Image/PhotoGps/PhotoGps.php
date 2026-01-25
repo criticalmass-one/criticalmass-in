@@ -2,8 +2,6 @@
 
 namespace App\Criticalmass\Image\PhotoGps;
 
-use App\Criticalmass\Geo\Converter\TrackToPositionListConverter;
-use App\Criticalmass\Geo\Loop\Loop;
 use PHPExif\Exif;
 
 class PhotoGps extends AbstractPhotoGps
@@ -23,21 +21,13 @@ class PhotoGps extends AbstractPhotoGps
 
     protected function approximateCoordinates(): PhotoGps
     {
-        $this->trackReader->loadTrack($this->track);
-
         if ($dateTime = $this->getExifDateTime()) {
-            $converter = new TrackToPositionListConverter($this->trackReader);
-            $positionList = $converter->convert($this->track);
+            $point = $this->gpxService->findPointAtTime($this->track, $dateTime, $this->dateTimeZone);
 
-            $position = $this->loop
-                ->setDateTimeZone($this->dateTimeZone)
-                ->setPositionList($positionList)
-                ->searchPositionForDateTime($dateTime);
-
-            if ($position) {
+            if ($point) {
                 $this->photo
-                    ->setLatitude($position->getLatitude())
-                    ->setLongitude($position->getLongitude());
+                    ->setLatitude($point->latitude)
+                    ->setLongitude($point->longitude);
             }
         }
 

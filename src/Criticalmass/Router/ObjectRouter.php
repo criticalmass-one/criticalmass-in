@@ -26,7 +26,7 @@ class ObjectRouter extends AbstractRouter implements ObjectRouterInterface
 
     }
 
-    public function generate(RouteableInterface $routeable, string $routeName = null, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
+    public function generate(RouteableInterface $routeable, ?string $routeName = null, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
     {
         if (!$routeName) {
             $routeName = $this->getDefaultRouteName($routeable);

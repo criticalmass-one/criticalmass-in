@@ -7,7 +7,7 @@ use App\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandler;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
 use App\Repository\RideEstimateRepository;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use PHPUnit\Framework\TestCase;
 use Doctrine\Persistence\ManagerRegistry;
 
