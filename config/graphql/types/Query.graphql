@@ -1,0 +1,111 @@
+type Query {
+    # Cities
+    cities(limit: Int = 10): [City!]!
+    city(slug: String!): City
+    cityById(id: ID!): City
+
+    # Rides
+    rides(limit: Int = 10, citySlug: String): [Ride!]!
+    ride(id: ID!): Ride
+    rideBySlug(citySlug: String!, date: String!): Ride
+
+    # Photos
+    photos(limit: Int = 10, citySlug: String, rideId: ID): [Photo!]!
+    photo(id: ID!): Photo
+
+    # Tracks
+    tracks(limit: Int = 10, rideId: ID): [Track!]!
+    track(id: ID!): Track
+
+    # Locations
+    locations(citySlug: String!): [Location!]!
+    location(id: ID!): Location
+}
+
+type City {
+    id: ID!
+    name: String!
+    title: String!
+    slug: String!
+    description: String
+    latitude: Float!
+    longitude: Float!
+    timezone: String!
+    cityPopulation: Int
+    rides(limit: Int = 10): [Ride!]!
+    locations: [Location!]!
+    socialNetworkProfiles: [SocialNetworkProfile!]!
+}
+
+type Ride {
+    id: ID!
+    title: String!
+    slug: String
+    description: String
+    dateTime: String!
+    latitude: Float
+    longitude: Float
+    location: String
+    estimatedParticipants: Int
+    estimatedDistance: Float
+    estimatedDuration: Float
+    city: City!
+    photos(limit: Int = 10): [Photo!]!
+    tracks: [Track!]!
+    weather: Weather
+}
+
+type Photo {
+    id: ID!
+    latitude: Float
+    longitude: Float
+    description: String
+    views: Int!
+    imageName: String
+    location: String
+    exifCreationDate: String
+    ride: Ride
+    city: City
+}
+
+type Track {
+    id: ID!
+    username: String
+    distance: Float
+    points: Int
+    startDateTime: String
+    endDateTime: String
+    polyline: String
+    enabled: Boolean!
+    ride: Ride
+}
+
+type Location {
+    id: ID!
+    title: String!
+    slug: String!
+    description: String
+    latitude: Float!
+    longitude: Float!
+    city: City!
+}
+
+type SocialNetworkProfile {
+    id: ID!
+    identifier: String!
+    network: String!
+    mainNetwork: Boolean!
+}
+
+type Weather {
+    id: ID!
+    temperatureMin: Float
+    temperatureMax: Float
+    temperatureMorning: Float
+    temperatureDay: Float
+    temperatureEvening: Float
+    temperatureNight: Float
+    precipitation: Float
+    weatherDescription: String
+    weatherIcon: String
+}

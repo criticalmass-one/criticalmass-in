@@ -1,10 +1,8 @@
 overblog_graphql:
     definitions:
         schema:
-            quickstart:
+            default:
                 query: Query
-                resolver_maps:
-                    - App\GraphQL\Resolver\MyResolverMap
 
         mappings:
             auto_discover: false

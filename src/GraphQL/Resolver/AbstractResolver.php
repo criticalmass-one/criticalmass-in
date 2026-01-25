@@ -2,14 +2,13 @@
 
 namespace App\GraphQL\Resolver;
 
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 abstract class AbstractResolver
 {
-    /** @var RegistryInterface $registry */
-    protected $registry;
+    protected ManagerRegistry $registry;
 
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         $this->registry = $registry;
     }
