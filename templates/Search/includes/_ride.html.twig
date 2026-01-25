@@ -1,25 +1,31 @@
 <div class="row margin-bottom-medium">
     <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
         {% if ride.location and ride.latitude and ride.longitude %}
-            <div id="map-{{ ride.id }}" class="map" style="height: 150px;"
-                 data-map-center-latitude="{{ ride.latitude }}"
-                 data-map-center-longitude="{{ ride.longitude }}"
-                 data-map-zoomlevel="13"
-                 data-lock-map="true"
-                 data-marker-latitude="{{ ride.latitude }}"
-                 data-marker-longitude="{{ ride.longitude }}"
-                 data-marker-type="ride"
-            ></div>
+            <div id="map-{{ ride.id }}"
+                 class="map"
+                 data-controller="map--map"
+                 style="height: 150px;"
+                 data-map--map-center-latitude-value="{{ ride.latitude }}"
+                 data-map--map-center-longitude-value="{{ ride.longitude }}"
+                 data-map--map-zoom-value="13"
+                 data-map--map-lock-map-value="true"
+                 data-map--map-marker-latitude-value="{{ ride.latitude }}"
+                 data-map--map-marker-longitude-value="{{ ride.longitude }}"
+                 data-map--map-marker-type-value="ride">
+            </div>
         {% else %}
-            <div id="map-{{ ride.city.id }}" class="map" style="height: 150px;"
-                 data-map-center-latitude="{{ ride.city.latitude }}"
-                 data-map-center-longitude="{{ ride.city.longitude }}"
-                 data-map-zoomlevel="13"
-                 data-lock-map="true"
-                 data-marker-latitude="{{ ride.city.latitude }}"
-                 data-marker-longitude="{{ ride.city.longitude }}"
-                 data-marker-type="city"
-            ></div>
+            <div id="map-{{ ride.city.id }}"
+                 class="map"
+                 data-controller="map--map"
+                 style="height: 150px;"
+                 data-map--map-center-latitude-value="{{ ride.city.latitude }}"
+                 data-map--map-center-longitude-value="{{ ride.city.longitude }}"
+                 data-map--map-zoom-value="13"
+                 data-map--map-lock-map-value="true"
+                 data-map--map-marker-latitude-value="{{ ride.city.latitude }}"
+                 data-map--map-marker-longitude-value="{{ ride.city.longitude }}"
+                 data-map--map-marker-type-value="city">
+            </div>
         {% endif %}
     </div>
 

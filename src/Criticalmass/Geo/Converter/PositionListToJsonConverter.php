@@ -3,19 +3,16 @@
 namespace App\Criticalmass\Geo\Converter;
 
 use App\Criticalmass\Geo\PositionList\PositionListInterface;
-use JMS\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /** @deprecated  */
 class PositionListToJsonConverter
 {
-    const FORMAT = 'json';
+    private const string FORMAT = 'json';
 
-    /** @var SerializerInterface $serializer */
-    protected $serializer;
-
-    public function __construct(SerializerInterface $serializer)
+    public function __construct(private readonly SerializerInterface $serializer)
     {
-        $this->serializer = $serializer;
+
     }
 
     public function convert(PositionListInterface $positionList): string

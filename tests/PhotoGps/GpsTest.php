@@ -10,21 +10,20 @@ use Tests\PhotoGps\Mocks\MockTrack;
 use Tests\PhotoGps\Mocks\NoGpsPhoto;
 
 /**
- * @ignore
- * @skip
+ * Integration test that requires photos to be in public/photos directory.
+ * Use PhotoGpsTest for unit tests with mocks instead.
  */
 class GpsTest extends KernelTestCase
 {
     protected function setUp(): void
     {
+        $this->markTestSkipped('Integration test requires test photos in public/photos directory. Use PhotoGpsTest instead.');
         self::bootKernel();
     }
 
     protected function getPhotoGps(): PhotoGpsInterface
     {
-        $container = self::$container;
-
-        return $container->get(PhotoGpsInterface::class);
+        return static::getContainer()->get(PhotoGpsInterface::class);
     }
 
     public function testPhotoWithoutCoords(): void

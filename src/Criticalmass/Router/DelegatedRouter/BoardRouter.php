@@ -12,7 +12,7 @@ class BoardRouter extends AbstractDelegatedRouter
     /** @param BoardInterface $board */
     public function generate(
         RouteableInterface $board,
-        string $routeName = null,
+        ?string $routeName = null,
         array $parameters = [],
         int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH
     ): string {

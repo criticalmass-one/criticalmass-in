@@ -2,40 +2,15 @@
 
 namespace App\Criticalmass\ViewStorage\ViewModel;
 
-use JMS\Serializer\Annotation as JMS;
-
-/**
- * @JMS\ExclusionPolicy("all")
- */
 class View
 {
-    /**
-     * @var int $entityId
-     * @JMS\Expose
-     * @JMS\Type("int")
-     */
-    protected $entityId;
+    private int $entityId;
 
-    /**
-     * @var string $entityClassName
-     * @JMS\Expose
-     * @JMS\Type("string")
-     */
-    protected $entityClassName;
+    private string $entityClassName;
 
-    /**
-     * @var int $userId
-     * @JMS\Expose
-     * @JMS\Type("int")
-     */
-    protected $userId;
+    private ?int $userId = null;
 
-    /**
-     * @var \DateTime $dateTime
-     * @JMS\Expose
-     * @JMS\Type("DateTime<'U'>")
-     */
-    protected $dateTime;
+    private \DateTime $dateTime;
 
     public function getEntityId(): int
     {
@@ -66,7 +41,7 @@ class View
         return $this->userId;
     }
 
-    public function setUserId(int $userId = null): View
+    public function setUserId(?int $userId = null): View
     {
         $this->userId = $userId;
 

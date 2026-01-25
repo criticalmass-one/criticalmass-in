@@ -1,46 +1,16 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block breadcrumb %}
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
     {% if profileAbleType == 'city' %}
-        <li>
-            <a href="{{ path('caldera_criticalmass_city_list') }}">
-                Städteliste
-            </a>
-        </li>
-
-        <li>
-            <a href="{{ object_path(profileAble) }}">
-                {{ profileAble.city }}
-            </a>
-        </li>
-
-        <li class="active">
-            Soziale Netzwerke
-        </li>
+        {{ breadcrumb.item(profileAble.city, object_path(profileAble)) }}
+        {{ breadcrumb.active('Soziale Netzwerke') }}
     {% endif %}
-
     {% if profileAbleType == 'ride' %}
-        <li>
-            <a href="{{ path('caldera_criticalmass_city_list') }}">
-                Städteliste
-            </a>
-        </li>
-
-        <li>
-            <a href="{{ object_path(profileAble.city) }}">
-                {{ profileAble.city.city }}
-            </a>
-        </li>
-
-        <li>
-            <a href="{{ object_path(profileAble) }}">
-                {{ profileAble.title }}
-            </a>
-        </li>
-
-        <li class="active">
-            Soziale Netzwerke
-        </li>
+        {{ breadcrumb.item(profileAble.city.city, object_path(profileAble.city)) }}
+        {{ breadcrumb.item(profileAble.title, object_path(profileAble)) }}
+        {{ breadcrumb.active('Soziale Netzwerke') }}
     {% endif %}
 {% endblock %}
 
@@ -51,7 +21,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <button class="btn btn-success pull-right" data-toggle="modal" data-target="#profile-add-modal">
+                <button class="btn btn-success pull-right" data-bs-toggle="modal" data-bs-target="#profile-add-modal">
                     <i class="far fa-plus"></i>
                     Profil ergänzen
                 </button>
@@ -109,10 +79,10 @@
                             </td>
                             <td>
                                 <div class="btn-group">
-                                    <a href="{{ path('criticalmass_socialnetwork_edit', { id: profile.id }) }}" class="btn btn-default btn-xs">
+                                    <a href="{{ path('criticalmass_socialnetwork_edit', { id: profile.id }) }}" class="btn btn-secondary btn-xs">
                                         <i class="far fa-pencil"></i>
                                     </a>
-                                    <a href="{{ path('criticalmass_socialnetwork_disable', { id: profile.id }) }}" class="btn btn-default btn-xs">
+                                    <a href="{{ path('criticalmass_socialnetwork_disable', { id: profile.id }) }}" class="btn btn-secondary btn-xs">
                                         <i class="far fa-trash-alt"></i>
                                     </a>
                                 </div>
@@ -143,7 +113,7 @@
             <div class="col-md-12">
                 <p class="text-center">
                     Die Profile der übergeordneten Stadt {{ profileAble.city.city }} werden getrennt von dieser Liste verwaltet:<br />
-                    <a class="btn btn-default margin-top-small" href="{{ object_path(profileAble.city, 'criticalmass_socialnetwork_city_list') }}">Profile der Stadt verwalten</a>
+                    <a class="btn btn-secondary margin-top-small" href="{{ object_path(profileAble.city, 'criticalmass_socialnetwork_city_list') }}">Profile der Stadt verwalten</a>
                 </p>
             </div>
         </div>
@@ -155,11 +125,10 @@
             <div class="modal-content">
                 {{ form_start(addProfileForm) }}
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="profile-add-modal-label">
+                    <h5 class="modal-title" id="profile-add-modal-label">
                         Profil ergänzen
-                    </h4>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <p>
@@ -188,7 +157,7 @@
                 </div>
                 <div class="modal-footer">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                             Abbrechen
                         </button>
                         <button type="submit" class="btn btn-success">

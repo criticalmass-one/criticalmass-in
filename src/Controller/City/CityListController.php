@@ -6,9 +6,11 @@ use App\Controller\AbstractController;
 use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Factory\CityListFactory;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class CityListController extends AbstractController
 {
+    #[Route('/citylist', name: 'caldera_criticalmass_city_list', priority: 125)]
     public function listAction(SeoPageInterface $seoPage, CityListFactory $cityListFactory): Response
     {
         $seoPage->setDescription('Liste mit vielen weltweiten Critical-Mass-Radtouren.');

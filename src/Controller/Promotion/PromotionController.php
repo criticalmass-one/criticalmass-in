@@ -10,9 +10,15 @@ use App\Entity\Ride;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class PromotionController extends AbstractController
 {
+    #[Route(
+        '/promotion/{promotionSlug}',
+        name: 'caldera_criticalmass_promotion_show',
+        priority: 320
+    )]
     public function showAction(
         #[MapEntity(mapping: ['promotionSlug' => 'slug'])] Promotion $promotion,
         DataQueryManagerInterface $dataQueryManager,
@@ -20,7 +26,7 @@ class PromotionController extends AbstractController
     ): Response
     {
         $viewStorageCache->countView($promotion);
-        
+
         $requestParameterList = QueryStringToListConverter::convert($promotion->getQuery());
 
         $rideList = $dataQueryManager->query($requestParameterList, Ride::class);

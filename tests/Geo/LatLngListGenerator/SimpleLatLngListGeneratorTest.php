@@ -6,16 +6,16 @@ use App\Criticalmass\Geo\Entity\Track;
 use App\Criticalmass\Geo\GpxReader\TrackReader;
 use App\Criticalmass\Geo\LatLngListGenerator\SimpleLatLngListGenerator;
 use League\Flysystem\Filesystem;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\TestCase;
 
 class SimpleLatLngListGeneratorTest extends TestCase
 {
-    public function testFoo(): void
+    public function testSimpleLatLngListGenerator(): void
     {
         $trackReader = new TrackReader($this->createFilesystemMock());
 
-        $simpleLatLngListGenerator = new SimpleLatLngListGenerator($trackReader, 1);
+        $simpleLatLngListGenerator = new SimpleLatLngListGenerator($trackReader);
 
         $track = new Track();
         $track->setTrackFilename('test.gpx');
@@ -25,12 +25,13 @@ class SimpleLatLngListGeneratorTest extends TestCase
             ->execute()
             ->getList();
 
-        $expectedList = '[[52.50221,13.42493],[52.5022483,13.4249933],[52.5022967,13.4250517],[52.5023483,13.425095],[52.5023967,13.4251417],[52.5024483,13.4251733],[52.5024983,13.4252117],[52.50254,13.425255],[52.5025717,13.42533],[52.5026167,13.4253517],[52.50266,13.4253933],[52.5028583,13.425535],[52.5029117,13.42556],[52.50296,13.42559],[52.50301,13.4256233],[52.50306,13.42565],[52.5031017,13.4256917]]';
+        // With WIDTH=10, only points at index 0 and 10 are included (17 points total)
+        $expectedList = '[[52.50221,13.42493],[52.50266,13.4253933]]';
 
         $this->assertEquals($expectedList, $actualList);
     }
 
-    protected function createFilesystemMock(): FilesystemInterface
+    protected function createFilesystemMock(): FilesystemOperator
     {
         $filesystem = $this->createMock(Filesystem::class);
 

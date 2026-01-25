@@ -4,7 +4,7 @@ namespace Tests\Geo\GpxReader;
 
 use App\Criticalmass\Geo\GpxReader\GpxReader;
 use League\Flysystem\Filesystem;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\TestCase;
 
 class MultiTrackTest extends TestCase
@@ -17,7 +17,7 @@ class MultiTrackTest extends TestCase
         $this->assertEquals(5, $gpxReader->countPoints());
     }
 
-    protected function createFilesystemMock(): FilesystemInterface
+    protected function createFilesystemMock(): FilesystemOperator
     {
         $filesystem = $this->createMock(Filesystem::class);
 

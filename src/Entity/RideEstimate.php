@@ -70,7 +70,7 @@ class RideEstimate
         return $this->estimatedParticipants;
     }
 
-    public function setEstimatedParticipants(int $estimatedParticipants = null): RideEstimate
+    public function setEstimatedParticipants(?int $estimatedParticipants = null): RideEstimate
     {
         $this->estimatedParticipants = $estimatedParticipants;
 
@@ -82,7 +82,7 @@ class RideEstimate
         return $this->estimatedDistance;
     }
 
-    public function setEstimatedDistance(float $estimatedDistance = null): RideEstimate
+    public function setEstimatedDistance(?float $estimatedDistance = null): RideEstimate
     {
         $this->estimatedDistance = $estimatedDistance;
 
@@ -94,7 +94,7 @@ class RideEstimate
         return $this->estimatedDuration;
     }
 
-    public function setEstimatedDuration(float $estimatedDuration = null): RideEstimate
+    public function setEstimatedDuration(?float $estimatedDuration = null): RideEstimate
     {
         $this->estimatedDuration = $estimatedDuration;
 
@@ -118,7 +118,7 @@ class RideEstimate
         return $this->user;
     }
 
-    public function setUser(User $user = null): RideEstimate
+    public function setUser(?User $user = null): RideEstimate
     {
         $this->user = $user;
 
@@ -130,7 +130,7 @@ class RideEstimate
         return $this->ride;
     }
 
-    public function setRide(Ride $ride = null): RideEstimate
+    public function setRide(?Ride $ride = null): RideEstimate
     {
         $this->ride = $ride;
 
@@ -142,14 +142,14 @@ class RideEstimate
         return $this->track;
     }
 
-    public function setTrack(Track $track = null): RideEstimate
+    public function setTrack(?Track $track = null): RideEstimate
     {
         $this->track = $track;
 
         return $this;
     }
 
-    public function setLatitude(float $latitude = null): RideEstimate
+    public function setLatitude(?float $latitude = null): RideEstimate
     {
         $this->latitude = $latitude;
 
@@ -161,7 +161,7 @@ class RideEstimate
         return $this->latitude;
     }
 
-    public function setLongitude(float $longitude = null): RideEstimate
+    public function setLongitude(?float $longitude = null): RideEstimate
     {
         $this->longitude = $longitude;
 

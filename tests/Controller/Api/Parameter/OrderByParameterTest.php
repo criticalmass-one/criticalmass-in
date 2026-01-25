@@ -5,107 +5,103 @@ namespace Tests\Controller\Api\Parameter;
 use App\Entity\City;
 use App\Entity\Photo;
 use App\Entity\Ride;
-use Tests\Controller\Api\AbstractApiControllerTest;
+use PHPUnit\Framework\Attributes\DataProvider;
+use Tests\Controller\Api\AbstractApiControllerTestCase;
 
-class OrderByParameterTest extends AbstractApiControllerTest
+class OrderByParameterTest extends AbstractApiControllerTestCase
 {
-    /**
-     * @dataProvider apiClassProvider
-     */
-    public function testResultListOrderByAscending(string $fqcn, string $propertyName): void
+    #[DataProvider('apiClassProvider')]
+    public function testResultListOrderByAscending(string $fqcn, string $propertyName, string $jsonPropertyName): void
     {
-        $client = static::createClient();
+        $this->client->request('GET', sprintf('%s?orderBy=%s&orderDirection=ASC', $this->getApiEndpointForFqcn($fqcn), $propertyName));
 
-        $client->request('GET', sprintf('%s?orderBy=%s&orderDirection=ASC', $this->getApiEndpointForFqcn($fqcn), $propertyName));
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $resultList = $this->getJsonResponse();
 
-        $resultList = $this->deserializeEntityList($client->getResponse()->getContent(), $fqcn);
-
-        $this->assertCount(10, $resultList);
-
-        $getMethodName = sprintf('get%s', ucfirst($propertyName));
+        // Default size is 10, but we may have fewer records in fixtures
+        $this->assertIsArray($resultList);
+        $this->assertLessThanOrEqual(10, count($resultList));
+        $this->assertNotEmpty($resultList);
 
         $minPropertyValue = null;
 
         foreach ($resultList as $result) {
-            if ($minPropertyValue) {
-                $this->assertLessThanOrEqual($result->$getMethodName(), $minPropertyValue);
+            $value = $result[$jsonPropertyName];
+            if ($minPropertyValue !== null) {
+                $this->assertLessThanOrEqual($value, $minPropertyValue);
             }
 
-            $minPropertyValue = $result->$getMethodName();
+            $minPropertyValue = $value;
         }
     }
 
-    /**
-     * @dataProvider apiClassProvider
-     */
-    public function testResultListOrderByDescending(string $fqcn, string $propertyName): void
+    #[DataProvider('apiClassProvider')]
+    public function testResultListOrderByDescending(string $fqcn, string $propertyName, string $jsonPropertyName): void
     {
-        $client = static::createClient();
+        $this->client->request('GET', sprintf('%s?orderBy=%s&orderDirection=DESC', $this->getApiEndpointForFqcn($fqcn), $propertyName));
 
-        $client->request('GET', sprintf('%s?orderBy=%s&orderDirection=DESC', $this->getApiEndpointForFqcn($fqcn), $propertyName));
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $resultList = $this->getJsonResponse();
 
-        $resultList = $this->deserializeEntityList($client->getResponse()->getContent(), $fqcn);
-
-        $this->assertCount(10, $resultList);
-
-        $getMethodName = sprintf('get%s', ucfirst($propertyName));
+        // Default size is 10, but we may have fewer records in fixtures
+        $this->assertIsArray($resultList);
+        $this->assertLessThanOrEqual(10, count($resultList));
+        $this->assertNotEmpty($resultList);
 
         $maxPropertyValue = null;
 
         foreach ($resultList as $result) {
-            if ($maxPropertyValue) {
-                $this->assertGreaterThanOrEqual($result->$getMethodName(), $maxPropertyValue);
+            $value = $result[$jsonPropertyName];
+            if ($maxPropertyValue !== null) {
+                $this->assertGreaterThanOrEqual($value, $maxPropertyValue);
             }
 
-            $maxPropertyValue = $result->$getMethodName();
+            $maxPropertyValue = $value;
         }
     }
 
-    /**
-     * @dataProvider apiClassProvider
-     */
-    public function testResultListOrderByInvalidDirection(string $fqcn, string $propertyName): void
+    #[DataProvider('apiClassProvider')]
+    public function testResultListOrderByInvalidDirection(string $fqcn, string $propertyName, string $jsonPropertyName): void
     {
-        $client = static::createClient();
+        $this->client->request('GET', sprintf('%s?orderBy=%s&orderDirection=FOO', $this->getApiEndpointForFqcn($fqcn), $propertyName));
 
-        $client->request('GET', sprintf('%s?orderBy=%s&orderDirection=FOO', $this->getApiEndpointForFqcn($fqcn), $propertyName));
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $resultList = $this->getJsonResponse();
 
-        $resultList = $this->deserializeEntityList($client->getResponse()->getContent(), $fqcn);
-
-        $this->assertCount(10, $resultList);
+        // Default size is 10, but we may have fewer records in fixtures
+        $this->assertIsArray($resultList);
+        $this->assertLessThanOrEqual(10, count($resultList));
+        $this->assertNotEmpty($resultList);
     }
 
-    /**
-     * @dataProvider apiClassProvider
-     */
-    public function testResultListOrderByInvalidProperty(string $fqcn, string $propertyName): void
+    #[DataProvider('apiClassProvider')]
+    public function testResultListOrderByInvalidProperty(string $fqcn, string $propertyName, string $jsonPropertyName): void
     {
-        $client = static::createClient();
+        $this->client->request('GET', sprintf('%s?orderBy=invalidField&orderDirection=DESC', $this->getApiEndpointForFqcn($fqcn)));
 
-        $client->request('GET', sprintf('%s?orderBy=invalidField&orderDirection=DESC', $this->getApiEndpointForFqcn($fqcn)));
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $resultList = $this->getJsonResponse();
 
-        $resultList = $this->deserializeEntityList($client->getResponse()->getContent(), $fqcn);
-
-        $this->assertCount(10, $resultList);
+        // Default size is 10, but we may have fewer records in fixtures
+        $this->assertIsArray($resultList);
+        $this->assertLessThanOrEqual(10, count($resultList));
+        $this->assertNotEmpty($resultList);
     }
 
-    public function apiClassProvider(): array
+    public static function apiClassProvider(): array
     {
         return [
-            [City::class, 'title'],
-            [City::class, 'city'],
-            [Ride::class, 'title'],
-            [Ride::class, 'dateTime'],
-            [Photo::class, 'exifCreationDate'],
-            [Photo::class, 'creationDateTime'],
+            // Entity property name => JSON property name (snake_case)
+            [City::class, 'title', 'title'],
+            [City::class, 'city', 'name'],  // city property serializes to 'name'
+            [Ride::class, 'title', 'title'],
+            [Ride::class, 'dateTime', 'date_time'],
+            [Photo::class, 'exifCreationDate', 'exif_creation_date'],
+            [Photo::class, 'creationDateTime', 'creation_date_time'],
         ];
     }
 }

@@ -41,7 +41,7 @@ class PhotoRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function findPhotosWithoutExifData(int $limit = null, int $offset = null, bool $fetchExistingData = false): array
+    public function findPhotosWithoutExifData(?int $limit = null, ?int $offset = null, bool $fetchExistingData = false): array
     {
         $builder = $this->createQueryBuilder('p');
 
@@ -71,7 +71,7 @@ class PhotoRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function findPhotosWithoutExportData(int $limit = null, int $offset = null, bool $fetchExistingData = false): array
+    public function findPhotosWithoutExportData(?int $limit = null, ?int $offset = null, bool $fetchExistingData = false): array
     {
         $builder = $this->createQueryBuilder('p');
 
@@ -99,7 +99,7 @@ class PhotoRepository extends ServiceEntityRepository
     /**
      * @deprecated
      */
-    public function findRidesForGallery(City $city = null): array
+    public function findRidesForGallery(?City $city = null): array
     {
         $builder = $this->createQueryBuilder('photo');
 
@@ -145,7 +145,7 @@ class PhotoRepository extends ServiceEntityRepository
     /**
      * @deprecated
      */
-    public function findRidesWithPhotoCounter(City $city = null)
+    public function findRidesWithPhotoCounter(?City $city = null)
     {
         $builder = $this->createQueryBuilder('photo');
 
@@ -254,7 +254,7 @@ class PhotoRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function findSomePhotos($limit = 16, $maxViews = 15, City $city = null): array
+    public function findSomePhotos($limit = 16, $maxViews = 15, ?City $city = null): array
     {
         $builder = $this->createQueryBuilder('p');
 
@@ -289,8 +289,8 @@ class PhotoRepository extends ServiceEntityRepository
     }
 
     public function findForTimelineRidePhotoCollector(
-        \DateTime $startDateTime = null,
-        \DateTime $endDateTime = null,
+        ?\DateTime $startDateTime = null,
+        ?\DateTime $endDateTime = null,
         $limit = null
     ) {
         $builder = $this->createQueryBuilder('p');
@@ -343,7 +343,7 @@ class PhotoRepository extends ServiceEntityRepository
         return (int) $query->getSingleScalarResult();
     }
 
-    public function findPhotosForExport(int $limit = null, int $offset = null): array
+    public function findPhotosForExport(?int $limit = null, ?int $offset = null): array
     {
         $builder = $this->createQueryBuilder('p');
 

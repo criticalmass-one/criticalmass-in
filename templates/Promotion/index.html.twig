@@ -7,7 +7,15 @@
         {% if rideList|length > 0 and promotion.hasMap %}
             <div class="row">
                 <div class="col-md-12">
-                    <div class="map" id="promotion-map" data-ride-api-query="{{ path('caldera_criticalmass_rest_ride_list') ~ '?' ~ promotion.query|raw }}&extended=true" style="height: 350px;"></div>
+                    <div
+                        class="map"
+                        id="promotion-map"
+                        data-controller="map--query-map"
+                        data-map--popup-template-id-value="ride-popup"
+                        data-map--api-type-value="ride"
+                        data-map--api-query-value="{{ path('caldera_criticalmass_rest_ride_list') ~ '?' ~ promotion.query|raw }}&extended=true"
+                        style="height: 350px;"
+                    ></div>
                 </div>
             </div>
         {% endif %}
@@ -73,5 +81,25 @@
             </div>
         </div>
     </div>
+
+    {% verbatim %}
+<template id="ride-popup">
+  <div class="popup">
+    <h3 class="popup__title">{{title}}</h3>
+
+    <div class="popup__meta">
+      <div><strong>Datum:</strong> {{formatDateLocal this}}</div>
+      <div><strong>Uhrzeit:</strong> {{formatTimeLocal this}}</div>
+      {{#if location}}
+        <div><strong>Treffpunkt:</strong> {{location}}</div>
+      {{/if}}
+    </div>
+
+    <div class="popup__actions" style="margin-top: .5rem;">
+      <a class="btn btn-primary" href="{{rideUrl this}}">zur Tour</a>
+    </div>
+  </div>
+</template>
+{% endverbatim %}
 {% endblock %}
 

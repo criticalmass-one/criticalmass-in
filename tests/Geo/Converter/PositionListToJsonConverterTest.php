@@ -5,10 +5,9 @@ namespace Tests\Geo\Converter;
 use App\Criticalmass\Geo\Converter\PositionListToJsonConverter;
 use App\Criticalmass\Geo\Entity\Position;
 use App\Criticalmass\Geo\PositionList\PositionList;
-use JMS\Serializer\Naming\CamelCaseNamingStrategy;
-use JMS\Serializer\SerializerBuilder;
-use JMS\Serializer\SerializerInterface;
+use App\Serializer\CriticalSerializer;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class PositionListToJsonConverterTest extends TestCase
 {
@@ -52,15 +51,17 @@ class PositionListToJsonConverterTest extends TestCase
 
         $actualPointList = $converter->convert($positionList);
 
-        $expectedPointList = '[{"latitude":53.5,"longitude":10.5,"date_time":1308942000},{"latitude":53.6,"longitude":10.6,"date_time":1308942900}]';
+        // Compare decoded JSON to ignore key ordering differences
+        $expectedData = [
+            ['latitude' => 53.5, 'longitude' => 10.5, 'date_time' => 1308942000],
+            ['latitude' => 53.6, 'longitude' => 10.6, 'date_time' => 1308942900],
+        ];
 
-        $this->assertEquals($expectedPointList, $actualPointList);
+        $this->assertEquals($expectedData, json_decode($actualPointList, true));
     }
 
     protected function createSerializer(): SerializerInterface
     {
-        return SerializerBuilder::create()
-            ->setPropertyNamingStrategy(new CamelCaseNamingStrategy())
-            ->build();
+        return new CriticalSerializer();
     }
 }

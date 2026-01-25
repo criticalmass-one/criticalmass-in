@@ -2,68 +2,19 @@
 
 namespace App\Criticalmass\Geo\Entity;
 
+use App\Criticalmass\Geo\Coordinate\Coordinate;
 use App\Criticalmass\Geo\EntityInterface\PositionInterface;
-use Caldera\GeoBasic\Coordinate\Coordinate;
-use JMS\Serializer\Annotation as JMS;
 
-/**
- * @JMS\ExclusionPolicy("all")
- * @deprecated
- */
 class Position extends Coordinate implements PositionInterface
 {
-    /**
-     * @JMS\Expose
-     * @JMS\Type("float")
-     */
     protected ?float $latitude;
-
-    /**
-     * @JMS\Expose
-     * @JMS\Type("float")
-     */
     protected ?float $longitude;
-
-    /**
-     * @JMS\Expose
-     * @JMS\Type("float")
-     */
     protected ?float $accuracy = null;
-
-    /**
-     * @JMS\Expose
-     * @JMS\Type("float")
-     */
     protected ?float $altitude = null;
-
-    /**
-     * @JMS\Expose
-     * @JMS\Type("float")
-     */
     protected ?float $altitudeAccuracy = null;
-
-    /**
-     * @JMS\Expose
-     * @JMS\Type("float")
-     */
     protected ?float $heading = null;
-
-    /**
-     * @JMS\Expose
-     * @JMS\Type("float")
-     */
     protected ?float $speed = null;
-
-    /**
-     * @JMS\Expose
-     * @JMS\Type("int")
-     */
     protected ?int $timestamp = null;
-
-    /**
-     * @JMS\Expose
-     * @JMS\Type("DateTime<'U'>")
-     */
     protected ?\DateTime $dateTime = null;
 
     public function setLatitude(float $latitude): PositionInterface

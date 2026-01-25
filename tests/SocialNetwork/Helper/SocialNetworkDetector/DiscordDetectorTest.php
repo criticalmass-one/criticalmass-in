@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Tests\SocialNetworkDetector;
+namespace Tests\SocialNetwork\Helper\SocialNetworkDetector;
 
-class DiscordDetectorTest extends AbstractNetworkDetectorTest
+class DiscordDetectorTest extends AbstractNetworkDetectorTestCase
 {
     public function testDiscordChat(): void
     {

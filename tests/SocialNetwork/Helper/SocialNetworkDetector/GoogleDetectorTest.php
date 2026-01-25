@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Tests\SocialNetworkDetector;
+namespace Tests\SocialNetwork\Helper\SocialNetworkDetector;
 
-class GoogleDetectorTest extends AbstractNetworkDetectorTest
+class GoogleDetectorTest extends AbstractNetworkDetectorTestCase
 {
     public function testGoogle(): void
     {

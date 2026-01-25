@@ -2,11 +2,10 @@
 
 namespace App\Criticalmass\Geo\EntityInterface;
 
-use Caldera\GeoBasic\Track\TrackInterface as BaseTrackInterface;
-
-/** @deprecated  */
-interface TrackInterface extends BaseTrackInterface
+interface TrackInterface
 {
-    public function setReducedPolyline(string $reducedPolyline = null): TrackInterface;
+    public function getPolyline(): ?string;
+    public function setPolyline(?string $polyline): static;
+    public function setReducedPolyline(?string $reducedPolyline = null): TrackInterface;
     public function getReducedPolyline(): ?string;
 }

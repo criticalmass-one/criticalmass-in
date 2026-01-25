@@ -2,61 +2,32 @@
 
 namespace App\Model;
 
-use JMS\Serializer\Annotation as JMS;
-
-/**
- * @JMS\ExclusionPolicy("all")
- */
 class CreateEstimateModel
 {
-    /**
-     * @JMS\Expose()
-     * @JMS\Type("DateTime<'U'>")
-     */
     protected ?\DateTime $dateTime = null;
 
-    /**
-     * @JMS\Expose()
-     * @JMS\Type("string")
-     */
     protected ?string $citySlug = null;
 
-    /**
-     * @JMS\Expose()
-     * @JMS\Type("float")
-     */
     protected ?float $latitude = null;
 
-    /**
-     * @JMS\Expose()
-     * @JMS\Type("float")
-     */
     protected ?float $longitude = null;
 
-    /**
-     * @JMS\Expose()
-     * @JMS\Type("integer")
-     */
     protected ?int $estimation = null;
 
-    /**
-     * @JMS\Expose()
-     * @JMS\Type("string")
-     */
     protected ?string $source = null;
 
     public function __construct(
-        \DateTime $dateTime = null,
-        string $citySlug = null,
-        float $latitude = null,
-        float $longitude = null,
-        int $estimation
+        int $estimation,
+        ?\DateTime $dateTime = null,
+        ?string $citySlug = null,
+        ?float $latitude = null,
+        ?float $longitude = null
     ) {
+        $this->estimation = $estimation;
         $this->dateTime = $dateTime;
         $this->citySlug = $citySlug;
         $this->latitude = $latitude;
         $this->longitude = $longitude;
-        $this->estimation = $estimation;
     }
 
     public function setDateTime(\DateTime $dateTime): CreateEstimateModel

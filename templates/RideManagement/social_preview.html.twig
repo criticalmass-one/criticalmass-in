@@ -1,29 +1,13 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Details für soziale Netzwerke{% endblock %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ object_path(ride.city) }}">
-            {{ ride.city.city }}
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ object_path(ride) }}">
-            {{ ride.title }}
-        </a>
-    </li>
-
-    <li class="active">
-        Details für soziale Netzwerke
-    </li>
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item(ride.city.city, object_path(ride.city)) }}
+    {{ breadcrumb.item(ride.title, object_path(ride)) }}
+    {{ breadcrumb.active('Details für soziale Netzwerke') }}
 {% endblock %}
 
 {% block content %}
@@ -90,7 +74,7 @@
         <div class="row">
             <div class="col-md-12 form-group">
                 <div class="btn-group pull-right" role="group" aria-label="...">
-                    <a href="{{ object_path(ride) }}" class="btn btn-default">
+                    <a href="{{ object_path(ride) }}" class="btn btn-secondary">
                         Abbrechen
                     </a>
                     <button type="submit" class="btn btn-success" id="rideSubmitButton">

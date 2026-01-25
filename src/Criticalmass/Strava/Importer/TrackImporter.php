@@ -22,6 +22,7 @@ class TrackImporter implements TrackImporterInterface
     private User $user;
     private Ride $ride;
     private StravaApi $api;
+    private ?\stdClass $activity = null;
     private const string API_URI = 'https://www.strava.com/api/v3/';
     private const string RESOULUTION = 'high';
 
@@ -79,7 +80,11 @@ class TrackImporter implements TrackImporterInterface
 
     protected function getActivity(bool $allEfforts = true): \stdClass
     {
-        return $this->api->get(sprintf('activities/%d', $this->activityId));
+        if (!$this->activity) {
+            $this->activity = $this->api->get(sprintf('activities/%d', $this->activityId));
+        }
+
+        return $this->activity;
     }
 
     protected function getActivityStreamList(): StreamList
@@ -124,6 +129,7 @@ class TrackImporter implements TrackImporterInterface
         $track
             ->setStravaActivityId($this->activityId)
             ->setSource(Track::TRACK_SOURCE_STRAVA)
+            ->setApp($this->getActivity()->device_name ?? null)
             ->setUser($this->user)
             ->setRide($this->ride)
             ->setUsername($this->user->getUsername());
