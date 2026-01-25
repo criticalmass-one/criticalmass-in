@@ -217,7 +217,7 @@ class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableI
         return $this->user;
     }
 
-    public function setUser(User $user = null): City
+    public function setUser(?User $user = null): City
     {
         $this->user = $user;
 
@@ -296,7 +296,7 @@ class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableI
         return $this->title;
     }
 
-    public function setLatitude(float $latitude = null): CoordinateInterface
+    public function setLatitude(?float $latitude = null): CoordinateInterface
     {
         $this->latitude = $latitude;
 
@@ -308,7 +308,7 @@ class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableI
         return $this->latitude;
     }
 
-    public function setLongitude(float $longitude = null): CoordinateInterface
+    public function setLongitude(?float $longitude = null): CoordinateInterface
     {
         $this->longitude = $longitude;
 
@@ -421,7 +421,7 @@ class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableI
         return $this->punchLine;
     }
 
-    public function setLongDescription(string $longDescription = null): City
+    public function setLongDescription(?string $longDescription = null): City
     {
         $this->longDescription = $longDescription;
 
@@ -484,7 +484,7 @@ class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableI
         return $this->photos;
     }
 
-    public function setImageFile(File $image = null): PhotoInterface
+    public function setImageFile(?File $image = null): PhotoInterface
     {
         $this->imageFile = $image;
 
@@ -500,7 +500,7 @@ class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableI
         return $this->imageFile;
     }
 
-    public function setImageName(string $imageName = null): PhotoInterface
+    public function setImageName(?string $imageName = null): PhotoInterface
     {
         $this->imageName = $imageName;
 
@@ -517,7 +517,7 @@ class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableI
         return $this->imageSize;
     }
 
-    public function setImageSize(int $imageSize = null): PhotoInterface
+    public function setImageSize(?int $imageSize = null): PhotoInterface
     {
         $this->imageSize = $imageSize;
 
@@ -529,7 +529,7 @@ class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableI
         return $this->imageMimeType;
     }
 
-    public function setImageMimeType(string $imageMimeType = null): PhotoInterface
+    public function setImageMimeType(?string $imageMimeType = null): PhotoInterface
     {
         $this->imageMimeType = $imageMimeType;
 
@@ -577,7 +577,7 @@ class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableI
         return $this;
     }
 
-    public function setLastThread(Thread $lastThread = null): BoardInterface
+    public function setLastThread(?Thread $lastThread = null): BoardInterface
     {
         $this->lastThread = $lastThread;
 
@@ -627,7 +627,7 @@ class City implements BoardInterface, ViewableEntity, PhotoInterface, RouteableI
         return $this;
     }
 
-    public function setUpdatedAt(\DateTime $updatedAt = null): City
+    public function setUpdatedAt(?\DateTime $updatedAt = null): City
     {
         $this->updatedAt = $updatedAt;
 

@@ -74,7 +74,7 @@ class CrawledWebsite
         return $this->title;
     }
 
-    public function setTitle(string $title = null): CrawledWebsite
+    public function setTitle(?string $title = null): CrawledWebsite
     {
         $this->title = $title;
 
@@ -86,7 +86,7 @@ class CrawledWebsite
         return $this->description;
     }
 
-    public function setDescription(string $description = null): CrawledWebsite
+    public function setDescription(?string $description = null): CrawledWebsite
     {
         $this->description = $description;
 

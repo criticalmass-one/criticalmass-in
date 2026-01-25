@@ -26,7 +26,7 @@ class PhotoManagementController extends AbstractController
     #[Route('/photos/list', name: 'caldera_criticalmass_photo_user_list', priority: 180)]
     public function listAction(
         PhotoRepository $photoRepository,
-        UserInterface $user = null
+        ?UserInterface $user = null
     ): Response {
         return $this->render('PhotoManagement/user_list.html.twig', [
             'result' => $photoRepository->findRidesWithPhotoCounterByUser($user),
@@ -210,12 +210,12 @@ class PhotoManagementController extends AbstractController
     #[Route('/photo/{id}/censor', name: 'caldera_criticalmass_photo_censor_short', options: ['expose' => true], priority: 170)]
     public function censorAction(
         Request $request,
-        UserInterface $user = null,
         Photo $photo,
-        PhotoManipulatorInterface $photoManipulator
+        PhotoManipulatorInterface $photoManipulator,
+        ?UserInterface $user = null
     ): Response {
         if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->censorPostAction($request, $user, $photo, $photoManipulator);
+            return $this->censorPostAction($request, $photo, $photoManipulator, $user);
         }
 
         return $this->censorGetAction($photo, $photoManipulator, $user);
@@ -224,7 +224,7 @@ class PhotoManagementController extends AbstractController
     public function censorGetAction(
         Photo $photo,
         PhotoManipulatorInterface $photoManipulator,
-        UserInterface $user = null
+        ?UserInterface $user = null
     ): Response {
         return $this->render('PhotoManagement/censor.html.twig', [
             'photo' => $photo,
@@ -233,9 +233,9 @@ class PhotoManagementController extends AbstractController
 
     public function censorPostAction(
         Request $request,
-        UserInterface $user = null,
         Photo $photo,
-        PhotoManipulatorInterface $photoManipulator
+        PhotoManipulatorInterface $photoManipulator,
+        ?UserInterface $user = null
     ): Response {
         $areaDataList = json_decode($request->getContent());
 

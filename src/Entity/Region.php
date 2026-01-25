@@ -67,7 +67,7 @@ class Region implements RouteableInterface, AuditableInterface
         return $this->description;
     }
 
-    public function setDescription(string $description = null): Region
+    public function setDescription(?string $description = null): Region
     {
         $this->description = $description;
 
@@ -91,7 +91,7 @@ class Region implements RouteableInterface, AuditableInterface
         return $this->parent;
     }
 
-    public function setParent(Region $parent = null): Region
+    public function setParent(?Region $parent = null): Region
     {
         $this->parent = $parent;
 

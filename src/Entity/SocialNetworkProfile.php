@@ -109,7 +109,7 @@ class SocialNetworkProfile
         return $this->user;
     }
 
-    public function setUser(User $user = null): SocialNetworkProfile
+    public function setUser(?User $user = null): SocialNetworkProfile
     {
         $this->user = $user;
 
@@ -121,7 +121,7 @@ class SocialNetworkProfile
         return $this->city;
     }
 
-    public function setCity(City $city = null): SocialNetworkProfile
+    public function setCity(?City $city = null): SocialNetworkProfile
     {
         $this->city = $city;
 
@@ -133,7 +133,7 @@ class SocialNetworkProfile
         return $this->ride;
     }
 
-    public function setRide(Ride $ride = null): SocialNetworkProfile
+    public function setRide(?Ride $ride = null): SocialNetworkProfile
     {
         $this->ride = $ride;
 
@@ -145,7 +145,7 @@ class SocialNetworkProfile
         return $this->subride;
     }
 
-    public function setSubride(Subride $subride = null): SocialNetworkProfile
+    public function setSubride(?Subride $subride = null): SocialNetworkProfile
     {
         $this->subride = $subride;
 

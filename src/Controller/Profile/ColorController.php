@@ -25,23 +25,23 @@ class ColorController extends AbstractController
     public function colorAction(
         Request $request,
         EventDispatcherInterface $eventDispatcher,
-        UserInterface $user = null
+        ?UserInterface $user = null
     ): Response {
         $form = $this->createForm(ProfileColorType::class, $user);
         $form->add('submit', SubmitType::class);
 
         if ($request->isMethod(Request::METHOD_POST)) {
-            return $this->colorPostAction($request, $user, $form, $eventDispatcher);
+            return $this->colorPostAction($request, $form, $eventDispatcher, $user);
         }
 
-        return $this->colorGetAction($request, $user, $form, $eventDispatcher);
+        return $this->colorGetAction($request, $form, $eventDispatcher, $user);
     }
 
     protected function colorGetAction(
         Request $request,
-        UserInterface $user = null,
         FormInterface $form,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
+        ?UserInterface $user = null
     ): Response {
         return $this->render('ProfileColor/color.html.twig', [
             'profileColorForm' => $form->createView(),
@@ -51,9 +51,9 @@ class ColorController extends AbstractController
 
     public function colorPostAction(
         Request $request,
-        UserInterface $user = null,
         FormInterface $form,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
+        ?UserInterface $user = null
     ): Response {
         $form->handleRequest($request);
 
@@ -65,6 +65,6 @@ class ColorController extends AbstractController
             $eventDispatcher->dispatch(new UserColorChangedEvent($user), UserColorChangedEvent::NAME);
         }
 
-        return $this->colorGetAction($request, $user, $form, $eventDispatcher);
+        return $this->colorGetAction($request, $form, $eventDispatcher, $user);
     }
 }

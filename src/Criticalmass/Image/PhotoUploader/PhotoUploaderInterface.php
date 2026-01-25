@@ -11,7 +11,7 @@ interface PhotoUploaderInterface
 {
     public function setUser(User $user): PhotoUploaderInterface;
     public function setRide(Ride $ride): PhotoUploaderInterface;
-    public function setTrack(Track $track = null): PhotoUploaderInterface;
+    public function setTrack(?Track $track = null): PhotoUploaderInterface;
     public function addFile(string $filename): PhotoUploaderInterface;
     public function addUploadedFile(UploadedFile $uploadedFile): PhotoUploaderInterface;
     public function addDirectory(string $directoryName): PhotoUploaderInterface;

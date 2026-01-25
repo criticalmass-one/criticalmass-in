@@ -75,7 +75,7 @@ class PhotoEventSubscriber implements EventSubscriberInterface
         }
     }
 
-    protected function handleExifData(Photo $photo, string $tmpFilename = null): void
+    protected function handleExifData(Photo $photo, ?string $tmpFilename = null): void
     {
         if ($tmpFilename) {
             $exif = $this->exifHandler->readExifDataFromFile($tmpFilename);

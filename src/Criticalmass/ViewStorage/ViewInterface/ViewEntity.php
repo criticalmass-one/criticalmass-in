@@ -10,7 +10,7 @@ interface ViewEntity
 
     public function setId(int $id): ViewEntity;
 
-    public function setUser(User $user = null): ViewEntity;
+    public function setUser(?User $user = null): ViewEntity;
 
     public function getUser(): ?User;
 

@@ -43,8 +43,8 @@ class BoardController extends AbstractController
     public function listThreadsAction(
         ThreadRepository $threadRepository,
         ObjectRouterInterface $objectRouter,
-        #[MapEntity(mapping: ['boardSlug' => 'slug'])] Board $board = null,
-        City $city = null
+        #[MapEntity(mapping: ['boardSlug' => 'slug'])] ?Board $board = null,
+        ?City $city = null
     ): Response {
         $threads = [];
         $newThreadUrl = '';
@@ -91,8 +91,8 @@ class BoardController extends AbstractController
     public function addThreadAction(
         Request $request,
         ObjectRouterInterface $objectRouter,
-        #[MapEntity(mapping: ['boardSlug' => 'slug'])] Board $board = null,
-        City $city = null
+        #[MapEntity(mapping: ['boardSlug' => 'slug'])] ?Board $board = null,
+        ?City $city = null
     ): Response {
         $board = $board ?? $city;
 

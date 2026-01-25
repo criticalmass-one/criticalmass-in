@@ -67,7 +67,7 @@ class ThreadRepository extends ServiceEntityRepository
         return $query->getSingleResult();
     }
 
-    public function findForTimelineThreadCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null): array
+    public function findForTimelineThreadCollector(?\DateTime $startDateTime = null, ?\DateTime $endDateTime = null, $limit = null): array
     {
         $builder = $this->createQueryBuilder('t');
 

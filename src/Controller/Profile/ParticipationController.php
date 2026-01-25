@@ -26,11 +26,11 @@ class ParticipationController extends AbstractController
         priority: 180
     )]
     public function listAction(
-        UserInterface $user = null,
         ManagerRegistry $registry,
         TableGeneratorInterface $tableGenerator,
         StreakGeneratorInterface $streakGenerator,
-        ParticipationCityListFactoryInterface $participationCityListFactory
+        ParticipationCityListFactoryInterface $participationCityListFactory,
+        ?UserInterface $user = null
     ): Response {
         $streakGenerator->setUser($user);
 

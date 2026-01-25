@@ -52,7 +52,7 @@ class Location implements RouteableInterface, AuditableInterface
         return $this->id;
     }
 
-    public function setLatitude(float $latitude = null): Location
+    public function setLatitude(?float $latitude = null): Location
     {
         $this->latitude = $latitude;
 
@@ -64,7 +64,7 @@ class Location implements RouteableInterface, AuditableInterface
         return $this->latitude;
     }
 
-    public function setLongitude(float $longitude = null): Location
+    public function setLongitude(?float $longitude = null): Location
     {
         $this->longitude = $longitude;
 
@@ -76,7 +76,7 @@ class Location implements RouteableInterface, AuditableInterface
         return $this->longitude;
     }
 
-    public function setDescription(string $description = null): Location
+    public function setDescription(?string $description = null): Location
     {
         $this->description = $description;
 
@@ -88,7 +88,7 @@ class Location implements RouteableInterface, AuditableInterface
         return $this->description;
     }
 
-    public function setCity(City $city = null): Location
+    public function setCity(?City $city = null): Location
     {
         $this->city = $city;
 
@@ -112,7 +112,7 @@ class Location implements RouteableInterface, AuditableInterface
         return $this->title;
     }
 
-    public function setSlug(string $slug = null): Location
+    public function setSlug(?string $slug = null): Location
     {
         $this->slug = $slug;
 

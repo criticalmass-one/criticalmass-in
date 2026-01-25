@@ -25,7 +25,7 @@ class TrackManagementController extends AbstractController
         Request $request,
         TrackRepository $trackRepository,
         PaginatorInterface $paginator,
-        UserInterface $user = null
+        ?UserInterface $user = null
     ): Response {
         $query = $trackRepository->findByUserQuery($user, null, false);
 

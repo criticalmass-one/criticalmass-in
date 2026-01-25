@@ -187,7 +187,7 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
         return $this->username;
     }
 
-    public function setRide(Ride $ride = null): Track
+    public function setRide(?Ride $ride = null): Track
     {
         $this->ride = $ride;
 
@@ -199,7 +199,7 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
         return $this->ride;
     }
 
-    public function setUser(User $user = null): Track
+    public function setUser(?User $user = null): Track
     {
         $this->user = $user;
 
@@ -247,7 +247,7 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
         return $this;
     }
 
-    public function setRideEstimate(RideEstimate $rideEstimate = null): Track
+    public function setRideEstimate(?RideEstimate $rideEstimate = null): Track
     {
         $this->rideEstimate = $rideEstimate;
 
@@ -283,7 +283,7 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
         return $this->polyline;
     }
 
-    public function setReducedPolyline(string $reducedPolyline = null): TrackInterface
+    public function setReducedPolyline(?string $reducedPolyline = null): TrackInterface
     {
         $this->reducedPolyline = $reducedPolyline;
 
@@ -353,7 +353,7 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
         return $this->trackSize;
     }
 
-    public function setTrackSize(int $trackSize = null): Track
+    public function setTrackSize(?int $trackSize = null): Track
     {
         $this->trackSize = $trackSize;
 
@@ -365,7 +365,7 @@ class Track extends GeoTrack implements RouteableInterface, TrackInterface, Uplo
         return $this->trackMimeType;
     }
 
-    public function setTrackMimeType(string $trackMimeType = null): Track
+    public function setTrackMimeType(?string $trackMimeType = null): Track
     {
         $this->trackMimeType = $trackMimeType;
 

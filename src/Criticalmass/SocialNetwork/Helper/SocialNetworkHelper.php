@@ -21,7 +21,7 @@ class SocialNetworkHelper implements SocialNetworkHelperInterface
 
     }
 
-    public function getProfileAbleObject(Ride $ride = null, Subride $subride = null, City $city = null, User $user = null): SocialNetworkProfileAble
+    public function getProfileAbleObject(?Ride $ride = null, ?Subride $subride = null, ?City $city = null, ?User $user = null): SocialNetworkProfileAble
     {
         return $user ?? $ride ?? $city ?? $subride;
     }

@@ -47,8 +47,8 @@ class PostController extends AbstractController
     #[Route('/post/write/thread/{threadSlug}', name: 'caldera_criticalmass_timeline_post_write_thread', priority: 120)]
     public function writeThreadAction(
         Request $request,
-        #[MapEntity(mapping: ['threadSlug' => 'slug'])] Thread $thread = null,
-        ObjectRouterInterface $objectRouter
+        ObjectRouterInterface $objectRouter,
+        #[MapEntity(mapping: ['threadSlug' => 'slug'])] ?Thread $thread = null
     ): Response {
         return $this->writeAction($request, $thread, $objectRouter);
     }
@@ -112,9 +112,9 @@ class PostController extends AbstractController
 
     public function listAction(
         PostRepository $postRepository,
-        int $cityId = null,
-        int $rideId = null,
-        int $photoId = null
+        ?int $cityId = null,
+        ?int $rideId = null,
+        ?int $photoId = null
     ): Response {
         $criteria = ['enabled' => true];
 
@@ -135,7 +135,7 @@ class PostController extends AbstractController
         return $this->render('Post/list.html.twig', ['posts' => $posts]);
     }
 
-    protected function getPostForm(PostableInterface $postable, Post $post = null): FormInterface
+    protected function getPostForm(PostableInterface $postable, ?Post $post = null): FormInterface
     {
         if (!$post) {
             $post = new Post();

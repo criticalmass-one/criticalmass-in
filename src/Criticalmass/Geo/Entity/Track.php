@@ -179,7 +179,7 @@ class Track
         return $this->points;
     }
 
-    public function setTrackFile(File $track = null): Track
+    public function setTrackFile(?File $track = null): Track
     {
         $this->trackFile = $track;
 
@@ -195,7 +195,7 @@ class Track
         return $this->trackFile;
     }
 
-    public function setTrackFilename(string $trackFilename = null): Track
+    public function setTrackFilename(?string $trackFilename = null): Track
     {
         $this->trackFilename = $trackFilename;
 
@@ -243,7 +243,7 @@ class Track
         return $this->updatedAt;
     }
 
-    public function setPreviewPolyline(string $previewPolyline = null): Track
+    public function setPreviewPolyline(?string $previewPolyline = null): Track
     {
         $this->previewPolyline = $previewPolyline;
 
