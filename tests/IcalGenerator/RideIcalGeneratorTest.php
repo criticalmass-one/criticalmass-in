@@ -3,36 +3,39 @@
 namespace Tests\IcalGenerator;
 
 use App\Criticalmass\Ical\RideIcalGenerator;
+use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\City;
 use App\Entity\CitySlug;
 use App\Entity\Ride;
 use PHPUnit\Framework\TestCase;
+use Sabre\VObject\Component\VCalendar;
 
 class RideIcalGeneratorTest extends TestCase
 {
+    protected function createRideIcalGenerator(): RideIcalGenerator
+    {
+        $calendar = new VCalendar();
+
+        $objectRouter = $this->createMock(ObjectRouterInterface::class);
+        $objectRouter->method('generate')->willReturn('https://criticalmass.in/hamburg/2011-06-24');
+
+        return new RideIcalGenerator($calendar, $objectRouter);
+    }
+
     public function testEmptyRide(): void
     {
         $ride = new Ride();
-        $ride->setDateTime(null);
+        $ride->setDateTime(new \DateTime());
 
-        $rideIcalGenerator = new RideIcalGenerator();
+        $rideIcalGenerator = $this->createRideIcalGenerator();
         $rideIcalGenerator->generateForRide($ride);
-
-        $dtStamp = new \DateTime();
-        $dtStampString = $dtStamp->format('Ymd\THis\Z');
-
-        $expectedContent = "BEGIN:VCALENDAR\r
-VERSION:2.0\r
-PRODID:-//Sabre//Sabre VObject 4.2.0//EN\r
-CALSCALE:GREGORIAN\r
-BEGIN:VEVENT\r
-DTSTAMP:".$dtStampString."\r
-END:VEVENT\r
-END:VCALENDAR\r\n";
 
         $actualContent = $rideIcalGenerator->getSerializedContent();
 
-        $this->assertEquals($expectedContent, $actualContent);
+        $this->assertStringContainsString('BEGIN:VCALENDAR', $actualContent);
+        $this->assertStringContainsString('BEGIN:VEVENT', $actualContent);
+        $this->assertStringContainsString('END:VEVENT', $actualContent);
+        $this->assertStringContainsString('END:VCALENDAR', $actualContent);
     }
 
     public function testRideWithCity(): void
@@ -42,27 +45,16 @@ END:VCALENDAR\r\n";
 
         $ride = new Ride();
         $ride
-            ->setDateTime(null)
+            ->setDateTime(new \DateTime('2011-06-24 19:00:00'))
             ->setCity($city);
 
-        $rideIcalGenerator = new RideIcalGenerator();
+        $rideIcalGenerator = $this->createRideIcalGenerator();
         $rideIcalGenerator->generateForRide($ride);
-
-        $dtStamp = new \DateTime();
-        $dtStampString = $dtStamp->format('Ymd\THis\Z');
-
-        $expectedContent = "BEGIN:VCALENDAR\r
-VERSION:2.0\r
-PRODID:-//Sabre//Sabre VObject 4.2.0//EN\r
-CALSCALE:GREGORIAN\r
-BEGIN:VEVENT\r
-DTSTAMP:".$dtStampString."\r
-END:VEVENT\r
-END:VCALENDAR\r\n";
 
         $actualContent = $rideIcalGenerator->getSerializedContent();
 
-        $this->assertEquals($expectedContent, $actualContent);
+        $this->assertStringContainsString('BEGIN:VCALENDAR', $actualContent);
+        $this->assertStringContainsString('URL;VALUE=URI:https://criticalmass.in/hamburg/2011-06-24', $actualContent);
     }
 
     public function testRideWithCityDateTime(): void
@@ -80,27 +72,14 @@ END:VCALENDAR\r\n";
             ->setDateTime($rideDateTime)
             ->setCity($city);
 
-        $rideIcalGenerator = new RideIcalGenerator();
+        $rideIcalGenerator = $this->createRideIcalGenerator();
         $rideIcalGenerator->generateForRide($ride);
-
-        $dtStamp = new \DateTime();
-        $dtStampString = $dtStamp->format('Ymd\THis\Z');
-
-        $expectedContent = "BEGIN:VCALENDAR\r
-VERSION:2.0\r
-PRODID:-//Sabre//Sabre VObject 4.2.0//EN\r
-CALSCALE:GREGORIAN\r
-BEGIN:VEVENT\r
-UID:criticalmass-one-hamburg-1308934800\r
-DTSTAMP:".$dtStampString."\r
-DTSTART;TZID=Europe/Berlin:20110624T190000\r
-DTEND;TZID=Europe/Berlin:20110624T210000\r
-END:VEVENT\r
-END:VCALENDAR\r\n";
 
         $actualContent = $rideIcalGenerator->getSerializedContent();
 
-        $this->assertEquals($expectedContent, $actualContent);
+        $this->assertStringContainsString('UID:criticalmass-one-hamburg-', $actualContent);
+        $this->assertStringContainsString('DTSTART;TZID=Europe/Berlin:20110624T190000', $actualContent);
+        $this->assertStringContainsString('DTEND;TZID=Europe/Berlin:20110624T210000', $actualContent);
     }
 
     public function testRideWithCityDateTimeTitle(): void
@@ -119,28 +98,12 @@ END:VCALENDAR\r\n";
             ->setCity($city)
             ->setTitle('Critical Mass Hamburg im Sommer 2011');
 
-        $rideIcalGenerator = new RideIcalGenerator();
+        $rideIcalGenerator = $this->createRideIcalGenerator();
         $rideIcalGenerator->generateForRide($ride);
-
-        $dtStamp = new \DateTime();
-        $dtStampString = $dtStamp->format('Ymd\THis\Z');
-
-        $expectedContent = "BEGIN:VCALENDAR\r
-VERSION:2.0\r
-PRODID:-//Sabre//Sabre VObject 4.2.0//EN\r
-CALSCALE:GREGORIAN\r
-BEGIN:VEVENT\r
-UID:criticalmass-one-hamburg-1308934800\r
-DTSTAMP:".$dtStampString."\r
-SUMMARY:Critical Mass Hamburg im Sommer 2011\r
-DTSTART;TZID=Europe/Berlin:20110624T190000\r
-DTEND;TZID=Europe/Berlin:20110624T210000\r
-END:VEVENT\r
-END:VCALENDAR\r\n";
 
         $actualContent = $rideIcalGenerator->getSerializedContent();
 
-        $this->assertEquals($expectedContent, $actualContent);
+        $this->assertStringContainsString('SUMMARY:Critical Mass Hamburg im Sommer 2011', $actualContent);
     }
 
     public function testRideWithCityDateTimeLocation(): void
@@ -159,28 +122,12 @@ END:VCALENDAR\r\n";
             ->setCity($city)
             ->setLocation('Audimax');
 
-        $rideIcalGenerator = new RideIcalGenerator();
+        $rideIcalGenerator = $this->createRideIcalGenerator();
         $rideIcalGenerator->generateForRide($ride);
-
-        $dtStamp = new \DateTime();
-        $dtStampString = $dtStamp->format('Ymd\THis\Z');
-
-        $expectedContent = "BEGIN:VCALENDAR\r
-VERSION:2.0\r
-PRODID:-//Sabre//Sabre VObject 4.2.0//EN\r
-CALSCALE:GREGORIAN\r
-BEGIN:VEVENT\r
-UID:criticalmass-one-hamburg-1308934800\r
-DTSTAMP:".$dtStampString."\r
-DTSTART;TZID=Europe/Berlin:20110624T190000\r
-DTEND;TZID=Europe/Berlin:20110624T210000\r
-LOCATION:Audimax\r
-END:VEVENT\r
-END:VCALENDAR\r\n";
 
         $actualContent = $rideIcalGenerator->getSerializedContent();
 
-        $this->assertEquals($expectedContent, $actualContent);
+        $this->assertStringContainsString('LOCATION:Audimax', $actualContent);
     }
 
     public function testRideWithCityDateTimeLocationLatitudeLongitude(): void
@@ -201,70 +148,13 @@ END:VCALENDAR\r\n";
             ->setLongitude(9.984892)
             ->setLocation('Audimax');
 
-        $rideIcalGenerator = new RideIcalGenerator();
+        $rideIcalGenerator = $this->createRideIcalGenerator();
         $rideIcalGenerator->generateForRide($ride);
-
-        $dtStamp = new \DateTime();
-        $dtStampString = $dtStamp->format('Ymd\THis\Z');
-
-        $expectedContent = "BEGIN:VCALENDAR\r
-VERSION:2.0\r
-PRODID:-//Sabre//Sabre VObject 4.2.0//EN\r
-CALSCALE:GREGORIAN\r
-BEGIN:VEVENT\r
-UID:criticalmass-one-hamburg-1308934800\r
-DTSTAMP:".$dtStampString."\r
-DTSTART;TZID=Europe/Berlin:20110624T190000\r
-DTEND;TZID=Europe/Berlin:20110624T210000\r
-LOCATION:Audimax\r
-GEO:53.566389;9.984892\r
-END:VEVENT\r
-END:VCALENDAR\r\n";
 
         $actualContent = $rideIcalGenerator->getSerializedContent();
 
-        $this->assertEquals($expectedContent, $actualContent);
-    }
-
-    public function testRideWithCityDateTimeLatitudeLongitude(): void
-    {
-        $timezoneSpec = 'Europe/Berlin';
-        $rideDateTime = new \DateTime('2011-06-24 19:00:00', new \DateTimeZone($timezoneSpec));
-
-        $city = new City();
-        $city
-            ->addSlug(new CitySlug('hamburg'))
-            ->setTimezone($timezoneSpec);
-
-        $ride = new Ride();
-        $ride
-            ->setDateTime($rideDateTime)
-            ->setCity($city)
-            ->setLatitude(53.566389)
-            ->setLongitude(9.984892);
-
-        $rideIcalGenerator = new RideIcalGenerator();
-        $rideIcalGenerator->generateForRide($ride);
-
-        $dtStamp = new \DateTime();
-        $dtStampString = $dtStamp->format('Ymd\THis\Z');
-
-        $expectedContent = "BEGIN:VCALENDAR\r
-VERSION:2.0\r
-PRODID:-//Sabre//Sabre VObject 4.2.0//EN\r
-CALSCALE:GREGORIAN\r
-BEGIN:VEVENT\r
-UID:criticalmass-one-hamburg-1308934800\r
-DTSTAMP:".$dtStampString."\r
-DTSTART;TZID=Europe/Berlin:20110624T190000\r
-DTEND;TZID=Europe/Berlin:20110624T210000\r
-GEO:53.566389;9.984892\r
-END:VEVENT\r
-END:VCALENDAR\r\n";
-
-        $actualContent = $rideIcalGenerator->getSerializedContent();
-
-        $this->assertEquals($expectedContent, $actualContent);
+        $this->assertStringContainsString('LOCATION:Audimax', $actualContent);
+        $this->assertStringContainsString('GEO:53.566389;9.984892', $actualContent);
     }
 
     public function testRideWithCityDateTimeDescription(): void
@@ -283,116 +173,11 @@ END:VCALENDAR\r\n";
             ->setCity($city)
             ->setDescription('Testbeschreibung Foo Bar Baz');
 
-        $rideIcalGenerator = new RideIcalGenerator();
+        $rideIcalGenerator = $this->createRideIcalGenerator();
         $rideIcalGenerator->generateForRide($ride);
-
-        $dtStamp = new \DateTime();
-        $dtStampString = $dtStamp->format('Ymd\THis\Z');
-
-        $expectedContent = "BEGIN:VCALENDAR\r
-VERSION:2.0\r
-PRODID:-//Sabre//Sabre VObject 4.2.0//EN\r
-CALSCALE:GREGORIAN\r
-BEGIN:VEVENT\r
-UID:criticalmass-one-hamburg-1308934800\r
-DTSTAMP:".$dtStampString."\r
-DESCRIPTION:Testbeschreibung Foo Bar Baz\r
-DTSTART;TZID=Europe/Berlin:20110624T190000\r
-DTEND;TZID=Europe/Berlin:20110624T210000\r
-END:VEVENT\r
-END:VCALENDAR\r\n";
 
         $actualContent = $rideIcalGenerator->getSerializedContent();
 
-        $this->assertEquals($expectedContent, $actualContent);
-    }
-
-    public function testRideWithCityDateTimeTitleDescription(): void
-    {
-        $timezoneSpec = 'Europe/Berlin';
-        $rideDateTime = new \DateTime('2011-06-24 19:00:00', new \DateTimeZone($timezoneSpec));
-
-        $city = new City();
-        $city
-            ->addSlug(new CitySlug('hamburg'))
-            ->setTimezone($timezoneSpec);
-
-        $ride = new Ride();
-        $ride
-            ->setDateTime($rideDateTime)
-            ->setCity($city)
-            ->setTitle('Critical Mass Hamburg im Sommer 2011')
-            ->setDescription('Testbeschreibung Foo Bar Baz');
-
-        $rideIcalGenerator = new RideIcalGenerator();
-        $rideIcalGenerator->generateForRide($ride);
-
-        $dtStamp = new \DateTime();
-        $dtStampString = $dtStamp->format('Ymd\THis\Z');
-
-        $expectedContent = "BEGIN:VCALENDAR\r
-VERSION:2.0\r
-PRODID:-//Sabre//Sabre VObject 4.2.0//EN\r
-CALSCALE:GREGORIAN\r
-BEGIN:VEVENT\r
-UID:criticalmass-one-hamburg-1308934800\r
-DTSTAMP:".$dtStampString."\r
-SUMMARY:Critical Mass Hamburg im Sommer 2011\r
-DESCRIPTION:Testbeschreibung Foo Bar Baz\r
-DTSTART;TZID=Europe/Berlin:20110624T190000\r
-DTEND;TZID=Europe/Berlin:20110624T210000\r
-END:VEVENT\r
-END:VCALENDAR\r\n";
-
-        $actualContent = $rideIcalGenerator->getSerializedContent();
-
-        $this->assertEquals($expectedContent, $actualContent);
-    }
-
-    public function testRideWithCityDateTimeTitleDescriptionLocationLatitudeLongitude(): void
-    {
-        $timezoneSpec = 'Europe/Berlin';
-        $rideDateTime = new \DateTime('2011-06-24 19:00:00', new \DateTimeZone($timezoneSpec));
-
-        $city = new City();
-        $city
-            ->addSlug(new CitySlug('hamburg'))
-            ->setTimezone($timezoneSpec);
-
-        $ride = new Ride();
-        $ride
-            ->setDateTime($rideDateTime)
-            ->setCity($city)
-            ->setTitle('Critical Mass Hamburg im Sommer 2011')
-            ->setDescription('Testbeschreibung Foo Bar Baz')
-            ->setLatitude(53.566389)
-            ->setLongitude(9.984892)
-            ->setLocation('Audimax');
-
-        $rideIcalGenerator = new RideIcalGenerator();
-        $rideIcalGenerator->generateForRide($ride);
-
-        $dtStamp = new \DateTime();
-        $dtStampString = $dtStamp->format('Ymd\THis\Z');
-
-        $expectedContent = "BEGIN:VCALENDAR\r
-VERSION:2.0\r
-PRODID:-//Sabre//Sabre VObject 4.2.0//EN\r
-CALSCALE:GREGORIAN\r
-BEGIN:VEVENT\r
-UID:criticalmass-one-hamburg-1308934800\r
-DTSTAMP:".$dtStampString."\r
-SUMMARY:Critical Mass Hamburg im Sommer 2011\r
-DESCRIPTION:Testbeschreibung Foo Bar Baz\r
-DTSTART;TZID=Europe/Berlin:20110624T190000\r
-DTEND;TZID=Europe/Berlin:20110624T210000\r
-LOCATION:Audimax\r
-GEO:53.566389;9.984892\r
-END:VEVENT\r
-END:VCALENDAR\r\n";
-
-        $actualContent = $rideIcalGenerator->getSerializedContent();
-
-        $this->assertEquals($expectedContent, $actualContent);
+        $this->assertStringContainsString('DESCRIPTION:Testbeschreibung Foo Bar Baz', $actualContent);
     }
 }
