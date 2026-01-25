@@ -32,7 +32,7 @@ class CycleExecutable
         return $this->fromDate;
     }
 
-    public function setFromDate(\DateTime $fromDate = null): self
+    public function setFromDate(?\DateTime $fromDate = null): self
     {
         $this->fromDate = $fromDate;
 
@@ -44,7 +44,7 @@ class CycleExecutable
         return $this->untilDate;
     }
 
-    public function setUntilDate(\DateTime $untilDate = null): self
+    public function setUntilDate(?\DateTime $untilDate = null): self
     {
         $this->untilDate = $untilDate;
 

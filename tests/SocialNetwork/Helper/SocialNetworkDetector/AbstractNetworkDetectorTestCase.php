@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Tests\SocialNetworkDetector;
+namespace Tests\SocialNetwork\Helper\SocialNetworkDetector;
 
 use App\Criticalmass\SocialNetwork\Network;
 use App\Criticalmass\SocialNetwork\NetworkDetector\NetworkDetector;
@@ -8,7 +8,7 @@ use App\Criticalmass\SocialNetwork\NetworkDetector\NetworkDetectorInterface;
 use App\Criticalmass\SocialNetwork\NetworkManager\NetworkManager;
 use PHPUnit\Framework\TestCase;
 
-abstract class AbstractNetworkDetectorTest extends TestCase
+abstract class AbstractNetworkDetectorTestCase extends TestCase
 {
     protected function getNetworkDetector(): NetworkDetectorInterface
     {

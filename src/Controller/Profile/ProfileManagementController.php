@@ -30,7 +30,7 @@ class ProfileManagementController extends AbstractController
         name: 'fos_user_profile_show',
         priority: 180
     )]
-    public function manageAction(UserInterface $user = null): Response
+    public function manageAction(?UserInterface $user = null): Response
     {
         $participationCounter = $this->managerRegistry->getRepository(Participation::class)->countByUser($user);
         $trackCounter = $this->managerRegistry->getRepository(Track::class)->countByUser($user);
@@ -52,7 +52,7 @@ class ProfileManagementController extends AbstractController
     public function editUsernameAction(
         Request $request,
         ManagerRegistry $managerRegistry,
-        UserInterface $user = null
+        ?UserInterface $user = null
     ): Response {
         $usernameForm = $this->createForm(UsernameType::class, $user, [
             'action' => $this->generateUrl('criticalmass_user_usermanagement_editusername')
@@ -96,7 +96,7 @@ class ProfileManagementController extends AbstractController
     public function editEmailAction(
         Request $request,
         ManagerRegistry $managerRegistry,
-        UserInterface $user = null
+        ?UserInterface $user = null
     ): Response {
         $userEmailForm = $this->createForm(UserEmailType::class, $user, [
             'action' => $this->generateUrl('criticalmass_user_usermanagement_editemail')

@@ -11,7 +11,7 @@ class ThreadRouter extends AbstractDelegatedRouter
     /** @param Thread $thread */
     public function generate(
         RouteableInterface $thread,
-        string $routeName = null,
+        ?string $routeName = null,
         array $parameters = [],
         int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH
     ): string {

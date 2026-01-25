@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Tests\SocialNetworkDetector;
+namespace Tests\SocialNetwork\Helper\SocialNetworkDetector;
 
-class InstagramPhotoDetectorTest extends AbstractNetworkDetectorTest
+class InstagramPhotoDetectorTest extends AbstractNetworkDetectorTestCase
 {
     public function testInstagramPhoto(): void
     {

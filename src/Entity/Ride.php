@@ -272,7 +272,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
         return $this->user;
     }
 
-    public function setUser(User $user = null): Ride
+    public function setUser(?User $user = null): Ride
     {
         $this->user = $user;
 
@@ -284,14 +284,14 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
         return $this->cycle;
     }
 
-    public function setCycle(CityCycle $cityCycle = null): Ride
+    public function setCycle(?CityCycle $cityCycle = null): Ride
     {
         $this->cycle = $cityCycle;
 
         return $this;
     }
 
-    public function setDateTime(\DateTime $dateTime = null): Ride
+    public function setDateTime(?\DateTime $dateTime = null): Ride
     {
         $this->dateTime = $dateTime;
 
@@ -306,7 +306,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
         return $this->dateTime;
     }
 
-    public function setLocation(string $location = null): self
+    public function setLocation(?string $location = null): self
     {
         $this->location = $location;
 
@@ -318,7 +318,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
         return $this->location;
     }
 
-    public function setCity(City $city = null): Ride
+    public function setCity(?City $city = null): Ride
     {
         $this->city = $city;
 
@@ -330,7 +330,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
         return $this->city;
     }
 
-    public function setLatitude(float $latitude = null): CoordinateInterface
+    public function setLatitude(?float $latitude = null): CoordinateInterface
     {
         $this->latitude = $latitude;
 
@@ -342,7 +342,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
         return $this->latitude;
     }
 
-    public function setLongitude(float $longitude = null): CoordinateInterface
+    public function setLongitude(?float $longitude = null): CoordinateInterface
     {
         $this->longitude = $longitude;
 
@@ -367,7 +367,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
         return new Coord($this->latitude, $this->longitude);
     }
 
-    public function setSlug(string $slug = null): Ride
+    public function setSlug(?string $slug = null): Ride
     {
         $this->slug = $slug;
 
@@ -384,7 +384,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
         return $this->slug !== null;
     }
 
-    public function setTitle(string $title = null): Ride
+    public function setTitle(?string $title = null): Ride
     {
         $this->title = $title;
 
@@ -724,7 +724,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
         return null;
     }
 
-    public function setFeaturedPhoto(Photo $featuredPhoto = null): Ride
+    public function setFeaturedPhoto(?Photo $featuredPhoto = null): Ride
     {
         $this->featuredPhoto = $featuredPhoto;
 
@@ -826,7 +826,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
         $this->id = null;
     }
 
-    public function setImageFile(File $image = null): PhotoInterface
+    public function setImageFile(?File $image = null): PhotoInterface
     {
         $this->imageFile = $image;
 
@@ -842,7 +842,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
         return $this->imageFile;
     }
 
-    public function setImageName(string $imageName = null): PhotoInterface
+    public function setImageName(?string $imageName = null): PhotoInterface
     {
         $this->imageName = $imageName;
 
@@ -859,7 +859,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
         return $this->imageSize;
     }
 
-    public function setImageSize(int $imageSize = null): PhotoInterface
+    public function setImageSize(?int $imageSize = null): PhotoInterface
     {
         $this->imageSize = $imageSize;
 
@@ -871,7 +871,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
         return $this->imageMimeType;
     }
 
-    public function setImageMimeType(string $imageMimeType = null): PhotoInterface
+    public function setImageMimeType(?string $imageMimeType = null): PhotoInterface
     {
         $this->imageMimeType = $imageMimeType;
 
@@ -921,7 +921,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
         return $this->disabledReason;
     }
 
-    public function setDisabledReason(string $disabledReason = null): Ride
+    public function setDisabledReason(?string $disabledReason = null): Ride
     {
         $this->disabledReason = $disabledReason;
 
@@ -933,7 +933,7 @@ class Ride implements ParticipateableInterface, ViewableEntity, PhotoInterface, 
         return $this->rideType;
     }
 
-    public function setRideType(string $rideType = null): Ride
+    public function setRideType(?string $rideType = null): Ride
     {
         $this->rideType = $rideType;
 

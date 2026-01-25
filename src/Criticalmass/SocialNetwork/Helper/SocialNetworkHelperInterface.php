@@ -11,7 +11,7 @@ use App\EntityInterface\SocialNetworkProfileAble;
 
 interface SocialNetworkHelperInterface
 {
-    public function getProfileAbleObject(Ride $ride = null, Subride $subride = null, City $city = null, User $user = null): SocialNetworkProfileAble;
+    public function getProfileAbleObject(?Ride $ride = null, ?Subride $subride = null, ?City $city = null, ?User $user = null): SocialNetworkProfileAble;
     public function getProfileAble(SocialNetworkProfile $socialNetworkProfile): ?SocialNetworkProfileAble;
     public function getProfileAbleShortname(SocialNetworkProfileAble $profileAble): string;
     public function getRouteName(SocialNetworkProfileAble $profileAble, string $actionName): string;

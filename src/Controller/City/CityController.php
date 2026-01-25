@@ -73,7 +73,7 @@ class CityController extends AbstractController
         PhotoRepository $photoRepository,
         SeoPageInterface $seoPage,
         EventDispatcherInterface $eventDispatcher,
-        City $city = null
+        ?City $city = null
     ): Response {
         if (!$city) {
             $citySlug = $request->get('citySlug');

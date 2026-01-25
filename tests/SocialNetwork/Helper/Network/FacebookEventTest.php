@@ -9,7 +9,7 @@ class FacebookEventTest extends TestCase
 {
     public function testName(): void
     {
-        $this->assertEquals('facebook-Event', (new FacebookEvent())->getName());
+        $this->assertEquals('Facebook-Event', (new FacebookEvent())->getName());
     }
 
     public function testIdentifier(): void

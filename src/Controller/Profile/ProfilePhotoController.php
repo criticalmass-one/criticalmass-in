@@ -22,7 +22,7 @@ class ProfilePhotoController extends AbstractController
         name: 'criticalmass_user_profile_photo',
         priority: 180
     )]
-    public function uploadAction(Request $request, UserInterface $user = null, ManagerRegistry $managerRegistry): Response
+    public function uploadAction(Request $request, ManagerRegistry $managerRegistry, ?UserInterface $user = null): Response
     {
         $profileUser = $managerRegistry->getRepository(User::class)->find($user->getId());
 

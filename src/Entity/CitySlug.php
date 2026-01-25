@@ -26,7 +26,7 @@ class CitySlug implements RouteableInterface
     #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
     protected ?City $city = null;
 
-    public function __construct(string $slug = null)
+    public function __construct(?string $slug = null)
     {
         $this->slug = $slug;
     }
@@ -41,7 +41,7 @@ class CitySlug implements RouteableInterface
         return $this->city;
     }
 
-    public function setCity(City $city = null): CitySlug
+    public function setCity(?City $city = null): CitySlug
     {
         $this->city = $city;
 
@@ -53,7 +53,7 @@ class CitySlug implements RouteableInterface
         return $this->slug;
     }
 
-    public function setSlug(string $slug = null): CitySlug
+    public function setSlug(?string $slug = null): CitySlug
     {
         $this->slug = $slug;
 

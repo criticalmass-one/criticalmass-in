@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Tests\SocialNetworkDetector;
+namespace Tests\SocialNetwork\Helper\SocialNetworkDetector;
 
-class YoutubePlaylistDetectorTest extends AbstractNetworkDetectorTest
+class YoutubePlaylistDetectorTest extends AbstractNetworkDetectorTestCase
 {
     public function testYoutubePlaylist(): void
     {

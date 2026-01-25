@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace SocialNetwork\Helper\SocialNetworkDetector;
+namespace Tests\SocialNetwork\Helper\SocialNetworkDetector;
 
-use Tests\SocialNetworkDetector\AbstractNetworkDetectorTest;
+use Tests\SocialNetwork\Helper\SocialNetworkDetector\AbstractNetworkDetectorTestCase;
 
-class BlueskyProfileDetectorTest extends AbstractNetworkDetectorTest
+class BlueskyProfileDetectorTest extends AbstractNetworkDetectorTestCase
 {
     public function testBlueskyProfile(): void
     {

@@ -22,7 +22,7 @@ class TrackController extends BaseController
     /**
      * Get a list of tracks which were uploaded to a specified ride.
      */
-    #[Route(path: '/api/{citySlug}/{rideIdentifier}/listTracks', name: 'caldera_criticalmass_rest_track_ridelist', methods: ['GET'])]
+    #[Route(path: '/api/{citySlug}/{rideIdentifier}/listTracks', name: 'caldera_criticalmass_rest_track_ridelist', methods: ['GET'], priority: 190)]
     #[OA\Tag(name: 'Track')]
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Parameter(name: 'rideIdentifier', in: 'path', description: 'Identifier of the ride (date or slug)', required: true, schema: new OA\Schema(type: 'string'))]
@@ -37,9 +37,9 @@ class TrackController extends BaseController
     /**
      * Show details of a specified track.
      */
-    #[Route(path: '/api/track/{trackId}', name: 'caldera_criticalmass_rest_track_view', methods: ['GET'])]
+    #[Route(path: '/api/track/{id}', name: 'caldera_criticalmass_rest_track_view', methods: ['GET'], priority: 200)]
     #[OA\Tag(name: 'Track')]
-    #[OA\Parameter(name: 'trackId', in: 'path', description: 'Id of the track', required: true, schema: new OA\Schema(type: 'integer'))]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Id of the track', required: true, schema: new OA\Schema(type: 'integer'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
     public function viewAction(Track $track, ?UserInterface $user = null): JsonResponse
     {
@@ -99,7 +99,7 @@ class TrackController extends BaseController
      *
      * Apply <code>startValue</code> to deliver a value to start your ordered list with.
      */
-    #[Route(path: '/api/track', name: 'caldera_criticalmass_rest_track_list', methods: ['GET'])]
+    #[Route(path: '/api/track', name: 'caldera_criticalmass_rest_track_list', methods: ['GET'], priority: 200)]
     #[OA\Tag(name: 'Track')]
     #[OA\Parameter(name: 'regionSlug', in: 'query', description: 'Provide a region slug', schema: new OA\Schema(type: 'string'))]
     #[OA\Parameter(name: 'citySlug', in: 'query', description: 'Provide a city slug', schema: new OA\Schema(type: 'string'))]
@@ -130,7 +130,7 @@ class TrackController extends BaseController
      *
      * Marks the track as deleted. Requires edit permissions on the track.
      */
-    #[Route('/api/track/{id}', name: 'caldera_criticalmass_rest_track_delete', methods: ['DELETE'])]
+    #[Route('/api/track/{id}', name: 'caldera_criticalmass_rest_track_delete', methods: ['DELETE'], priority: 200)]
     #[IsGranted('edit', 'track')]
     #[OA\Tag(name: 'Track')]
     #[OA\Parameter(name: 'id', in: 'path', description: 'Id of the track to delete', required: true, schema: new OA\Schema(type: 'integer'))]

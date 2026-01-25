@@ -6,6 +6,6 @@ interface TrackInterface
 {
     public function getPolyline(): ?string;
     public function setPolyline(?string $polyline): static;
-    public function setReducedPolyline(string $reducedPolyline = null): TrackInterface;
+    public function setReducedPolyline(?string $reducedPolyline = null): TrackInterface;
     public function getReducedPolyline(): ?string;
 }

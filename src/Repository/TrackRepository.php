@@ -60,7 +60,7 @@ class TrackRepository extends ServiceEntityRepository
         return $result;
     }
 
-    public function findForTimelineRideTrackCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null): array
+    public function findForTimelineRideTrackCollector(?\DateTime $startDateTime = null, ?\DateTime $endDateTime = null, $limit = null): array
     {
         $builder = $this->createQueryBuilder('t');
 
@@ -144,7 +144,7 @@ class TrackRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function findByUserQuery(User $user, bool $enabled = null, bool $deleted = null, string $order = 'DESC'): Query
+    public function findByUserQuery(User $user, ?bool $enabled = null, ?bool $deleted = null, string $order = 'DESC'): Query
     {
         $builder = $this->createQueryBuilder('t');
 

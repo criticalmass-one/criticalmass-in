@@ -58,7 +58,7 @@ class CityController extends BaseController
      *
      * Apply <code>startValue</code> to deliver a value to start your ordered list with.
      */
-    #[Route(path: '/api/city', name: 'caldera_criticalmass_rest_city_list', methods: ['GET'])]
+    #[Route(path: '/api/city', name: 'caldera_criticalmass_rest_city_list', methods: ['GET'], priority: 200)]
     #[OA\Tag(name: 'City')]
     #[OA\Parameter(name: 'name', in: 'query', description: 'Name of the city', schema: new OA\Schema(type: 'string'))]
     #[OA\Parameter(name: 'regionSlug', in: 'query', description: 'Provide a region slug', schema: new OA\Schema(type: 'string'))]
@@ -95,7 +95,7 @@ class CityController extends BaseController
     /**
      * Retrieve information for a city, which is identified by the parameter <code>citySlug</code>.
      */
-    #[Route(path: '/api/{citySlug}', name: 'caldera_criticalmass_rest_city_show', methods: ['GET'])]
+    #[Route(path: '/api/{citySlug}', name: 'caldera_criticalmass_rest_city_show', methods: ['GET'], priority: 180, requirements: ['citySlug' => '(?!doc$|doc\.json$)[^/]+'])]
     #[OA\Tag(name: 'City')]
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]

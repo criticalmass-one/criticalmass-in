@@ -161,7 +161,7 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
         return $this->longitude;
     }
 
-    public function setRide(Ride $ride = null): Subride
+    public function setRide(?Ride $ride = null): Subride
     {
         $this->ride = $ride;
 
@@ -173,7 +173,7 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
         return $this->ride;
     }
 
-    public function setUser(User $user = null): Subride
+    public function setUser(?User $user = null): Subride
     {
         $this->user = $user;
 
@@ -197,7 +197,7 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
         return $this->createdAt;
     }
 
-    public function setUpdatedAt(\DateTime $updatedAt = null): Subride
+    public function setUpdatedAt(?\DateTime $updatedAt = null): Subride
     {
         $this->updatedAt = $updatedAt;
 

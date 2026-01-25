@@ -21,7 +21,7 @@ class RideController extends BaseController
      *
      * As the parameter <code>citySlug</code> is just a string like <code>hamburg-harburg</code> or <code>muenchen</code> the parameter <code>rideIdentifier</code> is either the date of the ride like <code>2011-06-24</code> or a special identifier like <code>kidical-mass-hamburg-september-2019</code>.
      */
-    #[Route(path: '/api/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_show', methods: ['GET'])]
+    #[Route(path: '/api/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_show', methods: ['GET'], priority: 170)]
     #[OA\Tag(name: 'Ride')]
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Provide a city slug', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Parameter(name: 'rideIdentifier', in: 'path', description: 'Identify the requested ride', required: true, schema: new OA\Schema(type: 'string'))]
@@ -36,7 +36,7 @@ class RideController extends BaseController
     /**
      * Retrieve information about the current ride of a city identified by <code>citySlug</code>.
      */
-    #[Route(path: '/api/{citySlug}/current', name: 'caldera_criticalmass_rest_ride_show_current', methods: ['GET'])]
+    #[Route(path: '/api/{citySlug}/current', name: 'caldera_criticalmass_rest_ride_show_current', methods: ['GET'], priority: 190)]
     #[OA\Tag(name: 'Ride')]
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Provide a city slug', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
@@ -127,7 +127,7 @@ class RideController extends BaseController
      *
      * Apply <code>startValue</code> to deliver a value to start your ordered list with.
      */
-    #[Route(path: '/api/ride', name: 'caldera_criticalmass_rest_ride_list', methods: ['GET'])]
+    #[Route(path: '/api/ride', name: 'caldera_criticalmass_rest_ride_list', methods: ['GET'], priority: 200)]
     #[OA\Tag(name: 'Ride')]
     #[OA\Parameter(name: 'regionSlug', in: 'query', description: 'Provide a region slug', schema: new OA\Schema(type: 'string'))]
     #[OA\Parameter(name: 'citySlug', in: 'query', description: 'Provide a city slug', schema: new OA\Schema(type: 'string'))]
@@ -166,7 +166,7 @@ class RideController extends BaseController
     /**
      * Creates a new ride.
      */
-    #[Route(path: '/api/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_create', methods: ['PUT'])]
+    #[Route(path: '/api/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_create', methods: ['PUT'], priority: 170)]
     #[OA\Tag(name: 'Ride')]
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city to assign the new created ride to', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Parameter(name: 'rideIdentifier', in: 'path', description: 'Identifier of the ride to be created', required: true, schema: new OA\Schema(type: 'string'))]
@@ -217,7 +217,7 @@ class RideController extends BaseController
     /**
      * Updates a ride.
      */
-    #[Route(path: '/api/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_update', methods: ['POST'])]
+    #[Route(path: '/api/{citySlug}/{rideIdentifier}', name: 'caldera_criticalmass_rest_ride_update', methods: ['POST'], priority: 170)]
     #[OA\Tag(name: 'Ride')]
     #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city to assign the updated ride to', required: true, schema: new OA\Schema(type: 'string'))]
     #[OA\Parameter(name: 'rideIdentifier', in: 'path', description: 'Identifier of the ride to be updated', required: true, schema: new OA\Schema(type: 'string'))]

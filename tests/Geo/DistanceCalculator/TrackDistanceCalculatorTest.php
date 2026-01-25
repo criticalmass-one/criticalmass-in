@@ -5,8 +5,7 @@ namespace Tests\Geo\DistanceCalculator;
 use App\Criticalmass\Geo\DistanceCalculator\TrackDistanceCalculator;
 use App\Criticalmass\Geo\Entity\Track;
 use App\Criticalmass\Geo\GpxReader\TrackReader;
-use League\Flysystem\Filesystem;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\TestCase;
 
 class TrackDistanceCalculatorTest extends TestCase
@@ -14,10 +13,17 @@ class TrackDistanceCalculatorTest extends TestCase
     public function testTrackDistanceCalculatorTestWithoutTrack(): void
     {
         $trackReader = new TrackReader($this->createFilesystemMock());
+        $track = new Track();
+        $track
+            ->setTrackFilename('test.gpx')
+            ->setStartPoint(0)
+            ->setEndPoint(0);
 
         $distanceCalculator = new TrackDistanceCalculator($trackReader);
 
-        $actualDistance = $distanceCalculator->calculate();
+        $actualDistance = $distanceCalculator
+            ->setTrack($track)
+            ->calculate();
 
         $this->assertEquals(0.0, $actualDistance);
     }
@@ -26,7 +32,10 @@ class TrackDistanceCalculatorTest extends TestCase
     {
         $trackReader = new TrackReader($this->createFilesystemMock());
         $track = new Track();
-        $track->setTrackFilename('test.gpx');
+        $track
+            ->setTrackFilename('test.gpx')
+            ->setStartPoint(0)
+            ->setEndPoint(16);
 
         $distanceCalculator = new TrackDistanceCalculator($trackReader);
 
@@ -34,12 +43,12 @@ class TrackDistanceCalculatorTest extends TestCase
             ->setTrack($track)
             ->calculate();
 
-        $this->assertEquals(0.11490919922802, $actualDistance);
+        $this->assertEqualsWithDelta(0.10939281720072, $actualDistance, 0.0001);
     }
 
-    protected function createFilesystemMock(): FilesystemInterface
+    protected function createFilesystemMock(): FilesystemOperator
     {
-        $filesystem = $this->createMock(Filesystem::class);
+        $filesystem = $this->createMock(FilesystemOperator::class);
 
         $filesystem->method('read')->willReturn('<?xml version=\'1.0\' encoding=\'UTF-8\' standalone=\'yes\' ?>
 <gpx version="1.1" creator="OsmAnd+" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">

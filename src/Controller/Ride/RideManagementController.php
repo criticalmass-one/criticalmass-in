@@ -24,7 +24,7 @@ class RideManagementController extends AbstractController
 {
     #[IsGranted('ROLE_USER')]
     #[Route('/{citySlug}/add-ride', name: 'caldera_criticalmass_ride_add', priority: 70)]
-    public function addAction(Request $request, UserInterface $user = null, EntityManagerInterface $entityManager, City $city, ObjectRouterInterface $objectRouter): Response
+    public function addAction(Request $request, EntityManagerInterface $entityManager, City $city, ObjectRouterInterface $objectRouter, ?UserInterface $user = null): Response
     {
         $ride = new Ride();
         $ride
@@ -39,13 +39,13 @@ class RideManagementController extends AbstractController
         ]);
 
         if ($request->isMethod(Request::METHOD_POST)) {
-            return $this->addPostAction($request, $user, $ride, $entityManager, $objectRouter, $city, $form);
+            return $this->addPostAction($request, $ride, $entityManager, $objectRouter, $city, $form, $user);
         } else {
-            return $this->addGetAction($request, $user, $ride, $entityManager, $objectRouter, $city, $form);
+            return $this->addGetAction($request, $ride, $entityManager, $objectRouter, $city, $form, $user);
         }
     }
 
-    protected function addGetAction(Request $request, UserInterface $user = null, Ride $ride, EntityManagerInterface $entityManager, ObjectRouterInterface $objectRouter, City $city, FormInterface $form): Response
+    protected function addGetAction(Request $request, Ride $ride, EntityManagerInterface $entityManager, ObjectRouterInterface $objectRouter, City $city, FormInterface $form, ?UserInterface $user = null): Response
     {
         return $this->render('RideManagement/edit.html.twig', [
             'ride' => $ride,
@@ -57,12 +57,12 @@ class RideManagementController extends AbstractController
 
     protected function addPostAction(
         Request $request,
-        UserInterface $user = null,
         Ride $ride,
         EntityManagerInterface $entityManager,
         ObjectRouterInterface $objectRouter,
         City $city,
-        FormInterface $form
+        FormInterface $form,
+        ?UserInterface $user = null
     ): Response {
         $form->handleRequest($request);
 
@@ -93,26 +93,26 @@ class RideManagementController extends AbstractController
 
     #[IsGranted('ROLE_USER')]
     #[Route('/{citySlug}/{rideIdentifier}/edit', name: 'caldera_criticalmass_ride_edit', priority: 70)]
-    public function editAction(Request $request, UserInterface $user = null, Ride $ride, ObjectRouterInterface $objectRouter): Response
+    public function editAction(Request $request, Ride $ride, ObjectRouterInterface $objectRouter, ?UserInterface $user = null): Response
     {
         $form = $this->createForm(RideType::class, $ride, [
             'action' => $objectRouter->generate($ride, 'caldera_criticalmass_ride_edit'),
         ]);
 
         if (Request::METHOD_POST == $request->getMethod()) {
-            return $this->editPostAction($request, $user, $ride, $ride->getCity(), $form, $objectRouter);
+            return $this->editPostAction($request, $ride, $ride->getCity(), $form, $objectRouter, $user);
         } else {
-            return $this->editGetAction($request, $user, $ride, $ride->getCity(), $form, $objectRouter);
+            return $this->editGetAction($request, $ride, $ride->getCity(), $form, $objectRouter, $user);
         }
     }
 
     protected function editGetAction(
         Request $request,
-        UserInterface $user = null,
         Ride $ride,
         City $city,
         FormInterface $form,
-        ObjectRouterInterface $objectRouter
+        ObjectRouterInterface $objectRouter,
+        ?UserInterface $user = null
     ): Response {
         return $this->render('RideManagement/edit.html.twig', [
             'ride' => $ride,
@@ -124,11 +124,11 @@ class RideManagementController extends AbstractController
 
     protected function editPostAction(
         Request $request,
-        UserInterface $user = null,
         Ride $ride,
         City $city,
         FormInterface $form,
-        ObjectRouterInterface $objectRouter
+        ObjectRouterInterface $objectRouter,
+        ?UserInterface $user = null
     ): Response {
         $form->handleRequest($request);
 
@@ -161,27 +161,27 @@ class RideManagementController extends AbstractController
     public function socialPreviewAction(
         EntityManagerInterface $entityManager,
         Request $request,
-        UserInterface $user = null,
         ObjectRouterInterface $objectRouter,
-        Ride $ride
+        Ride $ride,
+        ?UserInterface $user = null
     ): Response {
         $form = $this->createForm(RideSocialPreviewType::class, $ride, [
             'action' => $objectRouter->generate($ride, 'caldera_criticalmass_ride_socialpreview'),
         ]);
 
         if ($request->isMethod(Request::METHOD_POST)) {
-            return $this->socialPreviewPostAction($entityManager, $request, $user, $ride, $form);
+            return $this->socialPreviewPostAction($entityManager, $request, $ride, $form, $user);
         } else {
-            return $this->socialPreviewGetAction($entityManager, $request, $user, $ride, $form);
+            return $this->socialPreviewGetAction($entityManager, $request, $ride, $form, $user);
         }
     }
 
     protected function socialPreviewGetAction(
         EntityManagerInterface $entityManager,
         Request $request,
-        UserInterface $user = null,
         Ride $ride,
-        Form $form
+        Form $form,
+        ?UserInterface $user = null
     ): Response {
         return $this->render('RideManagement/social_preview.html.twig', [
             'ride' => $ride,
@@ -192,9 +192,9 @@ class RideManagementController extends AbstractController
     protected function socialPreviewPostAction(
         EntityManagerInterface $entityManager,
         Request $request,
-        UserInterface $user = null,
         Ride $ride,
-        Form $form
+        Form $form,
+        ?UserInterface $user = null
     ): Response {
         $form->handleRequest($request);
 
@@ -208,12 +208,12 @@ class RideManagementController extends AbstractController
             $request->getSession()->getFlashBag()->add('success', 'Änderungen gespeichert!');
         }
 
-        return $this->socialPreviewGetAction($entityManager, $request, $user, $ride, $form);
+        return $this->socialPreviewGetAction($entityManager, $request, $ride, $form, $user);
     }
 
     #[IsGranted('ROLE_USER')]
     #[Route('/{citySlug}/{rideIdentifier}/disable', name: 'caldera_criticalmass_ride_disable', priority: 70)]
-    public function disableAction(Request $request, ManagerRegistry $registry, UserInterface $user = null, Ride $ride, ObjectRouterInterface $objectRouter): RedirectResponse
+    public function disableAction(Request $request, ManagerRegistry $registry, Ride $ride, ObjectRouterInterface $objectRouter, ?UserInterface $user = null): RedirectResponse
     {
         if (Request::METHOD_POST === $request->getMethod()) {
             $disableForm = $this->createForm(RideDisableType::class, $ride);
@@ -231,7 +231,7 @@ class RideManagementController extends AbstractController
 
     #[IsGranted('ROLE_USER')]
     #[Route('/{citySlug}/{rideIdentifier}/enable', name: 'caldera_criticalmass_ride_enable', priority: 70)]
-    public function enableAction(ManagerRegistry $registry, UserInterface $user = null, Ride $ride, ObjectRouterInterface $objectRouter): RedirectResponse
+    public function enableAction(ManagerRegistry $registry, Ride $ride, ObjectRouterInterface $objectRouter, ?UserInterface $user = null): RedirectResponse
     {
         $ride->setEnabled(true)
             ->setDisabledReason(null)

@@ -100,7 +100,7 @@ class StravaMassImportController extends AbstractController
 
     #[IsGranted('ROLE_USER')]
     #[Route('/trackimport/stravalist', name: 'caldera_criticalmass_trackmassimport_list', priority: 310)]
-    public function listridesAction(ManagerRegistry $registry, UserInterface $user = null): Response
+    public function listridesAction(ManagerRegistry $registry, ?UserInterface $user = null): Response
     {
         $list = $registry->getRepository(TrackImportCandidate::class)->findCandidatesForUser($user);
 

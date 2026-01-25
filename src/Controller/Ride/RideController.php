@@ -53,7 +53,7 @@ class RideController extends AbstractController
         PhotoRepository $photoRepository,
         SeoPageInterface $seoPage,
         EventDispatcherInterface $eventDispatcher,
-        Ride $ride = null
+        ?Ride $ride = null
     ): Response {
         if (!$ride) {
             $this->redirectToRoute('caldera_criticalmass_calendar');

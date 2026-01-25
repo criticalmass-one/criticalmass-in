@@ -117,13 +117,23 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
             "ckeditor:install": "symfony-cmd"
         },
-        "reset-test-db": [
-            "bin/console --env=test doctrine:database:drop --force",
-            "bin/console --env=test doctrine:database:create",
-            "bin/console --env=test doctrine:schema:create"
+        "test:db:reset": [
+            "php bin/console --env=test doctrine:schema:drop --force --full-database",
+            "php bin/console --env=test doctrine:schema:create",
+            "php bin/console --env=test doctrine:fixtures:load --no-interaction"
         ],
-        "functional-tests": [
-            "vendor/bin/phpunit tests/Controller"
+        "test:run": [
+            "php vendor/bin/phpunit"
+        ],
+        "test:api": [
+            "php vendor/bin/phpunit --testsuite 'API Tests'"
+        ],
+        "test": [
+            "@test:db:reset",
+            "@test:run"
+        ],
+        "tests": [
+            "@test"
         ]
     },
     "config": {

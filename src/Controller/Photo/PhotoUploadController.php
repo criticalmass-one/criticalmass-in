@@ -20,22 +20,22 @@ class PhotoUploadController extends AbstractController
     #[Route('/{citySlug}/{rideIdentifier}/addphoto', name: 'caldera_criticalmass_gallery_photos_upload_ride', priority: 170)]
     public function uploadAction(
         Request $request,
-        UserInterface $user = null,
         Ride $ride,
-        PhotoUploaderInterface $photoUploader
+        PhotoUploaderInterface $photoUploader,
+        ?UserInterface $user = null
     ): Response {
         if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->uploadPostAction($request, $user, $ride, $photoUploader);
+            return $this->uploadPostAction($request, $ride, $photoUploader, $user);
         }
 
-        return $this->uploadGetAction($request, $user, $ride, $photoUploader);
+        return $this->uploadGetAction($request, $ride, $photoUploader, $user);
     }
 
     protected function uploadGetAction(
         Request $request,
-        UserInterface $user = null,
         Ride $ride,
-        PhotoUploaderInterface $photoUploader
+        PhotoUploaderInterface $photoUploader,
+        ?UserInterface $user = null
     ): Response {
         return $this->render('PhotoUpload/upload.html.twig', [
             'ride' => $ride,
@@ -44,9 +44,9 @@ class PhotoUploadController extends AbstractController
 
     protected function uploadPostAction(
         Request $request,
-        UserInterface $user = null,
         Ride $ride,
-        PhotoUploaderInterface $photoUploader
+        PhotoUploaderInterface $photoUploader,
+        ?UserInterface $user = null
     ): Response {
         /** @var UploadedFile $uploadedFile */
         $uploadedFile = $request->files->get('file');

@@ -16,8 +16,8 @@ class MonthlyStatsController extends AbstractController
     )]
     public function listRidesAction(
         RideRepository $rideRepository,
-        int $year = null,
-        int $month = null
+        ?int $year = null,
+        ?int $month = null
     ): Response {
         $now = new \DateTime();
 

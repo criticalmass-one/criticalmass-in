@@ -446,7 +446,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
         return $this;
     }
 
-    public function setImageFile(File $image = null): PhotoInterface
+    public function setImageFile(?File $image = null): PhotoInterface
     {
         $this->imageFile = $image;
 
@@ -462,7 +462,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
         return $this->imageFile;
     }
 
-    public function setImageName(string $imageName = null): PhotoInterface
+    public function setImageName(?string $imageName = null): PhotoInterface
     {
         $this->imageName = $imageName;
 
@@ -479,7 +479,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
         return $this->imageSize;
     }
 
-    public function setImageSize(int $imageSize = null): PhotoInterface
+    public function setImageSize(?int $imageSize = null): PhotoInterface
     {
         $this->imageSize = $imageSize;
 
@@ -491,7 +491,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
         return $this->imageMimeType;
     }
 
-    public function setImageMimeType(string $imageMimeType = null): PhotoInterface
+    public function setImageMimeType(?string $imageMimeType = null): PhotoInterface
     {
         $this->imageMimeType = $imageMimeType;
 

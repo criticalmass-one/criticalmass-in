@@ -16,9 +16,9 @@ class RegionController extends AbstractController
     public function indexAction(
         CityRepository $cityRepository,
         RegionRepository $regionRepository,
-        string $slug1 = null,
-        string $slug2 = null,
-        string $slug3 = null
+        ?string $slug1 = null,
+        ?string $slug2 = null,
+        ?string $slug3 = null
     ): Response {
         $region = null;
 

@@ -142,7 +142,7 @@ class CityCycle implements RouteableInterface
         return $this->user;
     }
 
-    public function setLatitude(float $latitude = null): CityCycle
+    public function setLatitude(?float $latitude = null): CityCycle
     {
         $this->latitude = $latitude;
 
@@ -154,7 +154,7 @@ class CityCycle implements RouteableInterface
         return $this->latitude;
     }
 
-    public function setLongitude(float $longitude = null): CityCycle
+    public function setLongitude(?float $longitude = null): CityCycle
     {
         $this->longitude = $longitude;
 
@@ -190,7 +190,7 @@ class CityCycle implements RouteableInterface
         return $this->weekOfMonth;
     }
 
-    public function setTime(\DateTime $time = null): CityCycle
+    public function setTime(?\DateTime $time = null): CityCycle
     {
         $this->time = $time;
 
@@ -202,7 +202,7 @@ class CityCycle implements RouteableInterface
         return $this->time;
     }
 
-    public function setLocation(string $location = null): CityCycle
+    public function setLocation(?string $location = null): CityCycle
     {
         $this->location = $location;
 
@@ -226,7 +226,7 @@ class CityCycle implements RouteableInterface
         return $this->createdAt;
     }
 
-    public function setUpdatedAt(\DateTime $updatedAt = null): CityCycle
+    public function setUpdatedAt(?\DateTime $updatedAt = null): CityCycle
     {
         $this->updatedAt = $updatedAt;
 
@@ -238,7 +238,7 @@ class CityCycle implements RouteableInterface
         return $this->updatedAt;
     }
 
-    public function setDisabledAt(\DateTime $disabledAt = null): CityCycle
+    public function setDisabledAt(?\DateTime $disabledAt = null): CityCycle
     {
         $this->disabledAt = $disabledAt;
 
@@ -250,7 +250,7 @@ class CityCycle implements RouteableInterface
         return $this->disabledAt;
     }
 
-    public function setValidFrom(\DateTime $validFrom = null): CityCycle
+    public function setValidFrom(?\DateTime $validFrom = null): CityCycle
     {
         $this->validFrom = $validFrom;
 
@@ -262,7 +262,7 @@ class CityCycle implements RouteableInterface
         return $this->validFrom;
     }
 
-    public function setValidUntil(\DateTime $validUntil = null): CityCycle
+    public function setValidUntil(?\DateTime $validUntil = null): CityCycle
     {
         $this->validUntil = $validUntil;
 
@@ -285,7 +285,7 @@ class CityCycle implements RouteableInterface
      * @throws \Exception
      * @deprecated
      */
-    public function isValid(\DateTime $dateTime = null): bool
+    public function isValid(?\DateTime $dateTime = null): bool
     {
         if (!$dateTime) {
             $dateTime = new \DateTime();

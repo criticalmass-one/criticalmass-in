@@ -4,5 +4,5 @@ namespace App\Criticalmass\UploadFaker;
 
 interface UploadFakerInterface
 {
-    public function fakeUpload(FakeUploadable $uploadable, string $propertyName, string $fileContent, string $originalFilename = null): string;
+    public function fakeUpload(FakeUploadable $uploadable, string $propertyName, string $fileContent, ?string $originalFilename = null): string;
 }
