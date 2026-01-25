@@ -2,13 +2,12 @@
 
 namespace Tests\PhotoGps;
 
-use App\Criticalmass\Geo\Entity\Position;
-use App\Criticalmass\Geo\GpxReader\TrackReader;
-use App\Criticalmass\Geo\Loop\Loop;
+use App\Criticalmass\Geo\GpxService\GpxServiceInterface;
 use App\Criticalmass\Image\ExifWrapper\ExifWrapper;
 use App\Criticalmass\Image\PhotoGps\PhotoGps;
 use App\Entity\Photo;
 use App\Entity\Track;
+use phpGPX\Models\Point;
 use PHPExif\Exif;
 use PHPUnit\Framework\TestCase;
 
@@ -17,12 +16,11 @@ class PhotoGpsTest extends TestCase
     public function testPhotoWithoutCoords(): void
     {
         $exifWrapper = $this->createMock(ExifWrapper::class);
-        $trackReader = $this->createMock(TrackReader::class);
-        $loop = $this->createMock(Loop::class);
+        $gpxService = $this->createMock(GpxServiceInterface::class);
 
         $photo = new Photo();
 
-        $photoGps = new PhotoGps($trackReader, $exifWrapper, $loop);
+        $photoGps = new PhotoGps($gpxService, $exifWrapper);
 
         $photoGps->setPhoto($photo)->execute();
 
@@ -33,16 +31,14 @@ class PhotoGpsTest extends TestCase
 
     public function testPhotoWithCoords(): void
     {
-        $trackReader = $this->createMock(TrackReader::class);
+        $gpxService = $this->createMock(GpxServiceInterface::class);
         $exifWrapper = $this->createMock(ExifWrapper::class);
         $exif = $this->createMock(Exif::class);
-
-        $loop = $this->createMock(Loop::class);
 
         $exif->method('getGPS')->willReturn('52.266666666667,10.5');
         $exifWrapper->method('getExifData')->willReturn($exif);
 
-        $photoGps = new PhotoGps($trackReader, $exifWrapper, $loop);
+        $photoGps = new PhotoGps($gpxService, $exifWrapper);
 
         $photo = new Photo();
 
@@ -61,14 +57,14 @@ class PhotoGpsTest extends TestCase
         $exifWrapper = $this->createMock(ExifWrapper::class);
         $exifWrapper->method('getExifData')->willReturn($exif);
 
-        $trackReader = $this->createMock(TrackReader::class);
+        $point = new Point(Point::TRACKPOINT);
+        $point->latitude = 52.268021;
+        $point->longitude = 10.500126;
 
-        $loop = $this->createMock(Loop::class);
-        $loop->method('setDateTimeZone')->will($this->returnSelf());
-        $loop->method('setPositionList')->will($this->returnSelf());
-        $loop->method('searchPositionForDateTime')->willReturn(new Position(52.268021, 10.500126));
+        $gpxService = $this->createMock(GpxServiceInterface::class);
+        $gpxService->method('findPointAtTime')->willReturn($point);
 
-        $photoGps = new PhotoGps($trackReader, $exifWrapper, $loop);
+        $photoGps = new PhotoGps($gpxService, $exifWrapper);
 
         $track = $this->createMock(Track::class);
 

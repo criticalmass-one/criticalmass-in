@@ -3,7 +3,7 @@
 namespace App\Controller\Ride;
 
 use App\Controller\AbstractController;
-use App\Criticalmass\Geo\LatLngListGenerator\TimeLatLngListGenerator;
+use App\Criticalmass\Geo\GpxService\GpxServiceInterface;
 use App\Entity\Ride;
 use App\Entity\Track;
 use App\Repository\TrackRepository;
@@ -35,12 +35,9 @@ class TimelapseController extends AbstractController
         options: ['expose' => true],
         priority: 135
     )]
-    public function loadtrackAction(TimeLatLngListGenerator $generator, Track $track): Response
+    public function loadtrackAction(GpxServiceInterface $gpxService, Track $track): Response
     {
-        $list = $generator
-            ->loadTrack($track)
-            ->execute()
-            ->getList();
+        $list = $gpxService->generateTimeLatLngList($track);
 
         return new Response($list, Response::HTTP_OK, ['Content-Type' => 'text/json']);
     }

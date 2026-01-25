@@ -2,7 +2,7 @@
 
 namespace App\Controller\Track;
 
-use App\Criticalmass\Geo\TimeShifter\TrackTimeShifterInterface;
+use App\Criticalmass\Geo\GpxService\GpxServiceInterface;
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Event\Track\TrackTimeEvent;
 use App\Controller\AbstractController;
@@ -28,8 +28,8 @@ class TrackTimeController extends AbstractController
         Request $request,
         ObjectRouterInterface $objectRouter,
         EventDispatcherInterface $eventDispatcher,
-        Track $track,
-        TrackTimeShifterInterface $trackTimeshift
+        GpxServiceInterface $gpxService,
+        Track $track
     ): Response {
         $form = $this->createFormBuilder($track)
             ->setAction($objectRouter->generate($track, 'caldera_criticalmass_track_time'))
@@ -38,19 +38,14 @@ class TrackTimeController extends AbstractController
             ->getForm();
 
         if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->timePostAction($request, $eventDispatcher, $track, $form, $trackTimeshift);
+            return $this->timePostAction($request, $eventDispatcher, $gpxService, $track, $form);
         }
 
-        return $this->timeGetAction($request, $eventDispatcher, $track, $form, $trackTimeshift);
+        return $this->timeGetAction($track, $form);
     }
 
-    protected function timeGetAction(
-        Request $request,
-        EventDispatcherInterface $eventDispatcher,
-        Track $track,
-        FormInterface $form,
-        TrackTimeShifterInterface $trackTimeshift
-    ): Response {
+    protected function timeGetAction(Track $track, FormInterface $form): Response
+    {
         return $this->render('Track/time.html.twig', [
             'form' => $form->createView(),
             'track' => $track,
@@ -60,9 +55,9 @@ class TrackTimeController extends AbstractController
     protected function timePostAction(
         Request $request,
         EventDispatcherInterface $eventDispatcher,
+        GpxServiceInterface $gpxService,
         Track $track,
-        FormInterface $form,
-        TrackTimeShifterInterface $trackTimeshift
+        FormInterface $form
     ): Response {
         // catch the old dateTime before it is overridden by the form submit
         $oldDateTime = $track->getStartDateTime();
@@ -76,10 +71,7 @@ class TrackTimeController extends AbstractController
 
             $interval = $newTrack->getStartDateTime()->diff($oldDateTime);
 
-            $trackTimeshift
-                ->loadTrack($newTrack)
-                ->shift($interval)
-                ->saveTrack();
+            $gpxService->shiftTimeAndSave($newTrack, $interval);
 
             $eventDispatcher->dispatch(new TrackTimeEvent($track), TrackTimeEvent::NAME);
         }

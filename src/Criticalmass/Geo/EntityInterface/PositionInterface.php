@@ -4,6 +4,7 @@ namespace App\Criticalmass\Geo\EntityInterface;
 
 use App\Criticalmass\Geo\Coord\CoordInterface;
 
+/** @deprecated  */
 interface PositionInterface extends CoordInterface
 {
     public function setLatitude(float $latitude): PositionInterface;

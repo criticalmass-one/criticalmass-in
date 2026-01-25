@@ -2,40 +2,21 @@
 
 namespace App\Criticalmass\Image\PhotoGps;
 
-use App\Criticalmass\Geo\GpxReader\TrackReader;
-use App\Criticalmass\Geo\Loop\LoopInterface;
+use App\Criticalmass\Geo\GpxService\GpxServiceInterface;
 use App\Criticalmass\Image\ExifWrapper\ExifWrapperInterface;
 use App\Entity\Photo;
 use App\Entity\Track;
 
 abstract class AbstractPhotoGps implements PhotoGpsInterface
 {
-    /** @var Track $track */
-    protected $track;
+    protected ?Track $track = null;
+    protected ?Photo $photo = null;
+    protected ?\DateTimeZone $dateTimeZone = null;
 
-    /** @var Photo $photo */
-    protected $photo;
-
-    /** @var array $exifData */
-    protected $exifData;
-
-    /** @var TrackReader $trackReader */
-    protected $trackReader;
-
-    /** @var \DateTimeZone */
-    protected $dateTimeZone;
-
-    /** @var ExifWrapperInterface $exifWrapper */
-    protected $exifWrapper;
-
-    /** @var LoopInterface $loop */
-    protected $loop;
-
-    public function __construct(TrackReader $trackReader, ExifWrapperInterface $exifWrapper, LoopInterface $loop)
-    {
-        $this->trackReader = $trackReader;
-        $this->exifWrapper = $exifWrapper;
-        $this->loop = $loop;
+    public function __construct(
+        protected readonly GpxServiceInterface $gpxService,
+        protected readonly ExifWrapperInterface $exifWrapper,
+    ) {
     }
 
     public function setDateTimeZone(?\DateTimeZone $dateTimeZone = null): PhotoGpsInterface
