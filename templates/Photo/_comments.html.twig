@@ -5,9 +5,15 @@
                 Kommentar hinzufügen
             </button>
         {% else %}
-            <span class="btn btn-success pull-right modal-hint" data-modal-hint-title="{{ 'hint_modal.photo.post_add_button.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.photo.post_add_button.text'|trans({'%city%': photo.ride.city.city, '%dateTime%': photo.ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
+            <button
+                    type="button"
+                    class="btn btn-success pull-right"
+                    data-controller="hint-modal"
+                    data-modal-hint-title="{{ 'hint_modal.photo.post_add_button.title'|trans }}"
+                    data-modal-hint-text="{{ 'hint_modal.photo.post_add_button.text'|trans({'%city%': photo.ride.city.city, '%dateTime%': photo.ride.dateTime|date('d.m.Y')}) }}"
+                    data-modal-hint-size="md">
                 Kommentar hinzufügen
-            </span>
+            </button>
         {% endif %}
 
         <h3 class="no-margin-top">

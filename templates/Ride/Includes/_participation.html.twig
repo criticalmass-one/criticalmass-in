@@ -122,13 +122,19 @@
             {% endif %}
         {% endif %}
     {% else %}
-        <span class="btn btn-secondary modal-hint" data-modal-hint-title="{{ 'hint_modal.ride.participation_button.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.ride.participation_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
+        <button
+                type="button"
+                class="btn btn-secondary"
+                data-controller="hint-modal"
+                data-modal-hint-title="{{ 'hint_modal.ride.participation_button.title'|trans }}"
+                data-modal-hint-text="{{ 'hint_modal.ride.participation_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
+                data-modal-hint-size="md">
             <i class="far fa-bicycle"></i>
             {% if pastRide %}
                 Hast du teilgenommen?
             {% else %}
                 Bist du dabei?
             {% endif %}
-        </span>
+        </button>
     {% endif %}
 </div>
