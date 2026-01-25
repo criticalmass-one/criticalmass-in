@@ -1,8 +1,8 @@
 import { Controller } from '@hotwired/stimulus';
+import { Modal } from 'bootstrap';
 import Handlebars from 'handlebars/dist/handlebars';
 
 export default class extends Controller {
-    static targets = [];
     static values = {
         hintTitle: String,
         hintText: String,
@@ -10,14 +10,17 @@ export default class extends Controller {
     }
 
     connect() {
-        this.element.addEventListener('click', this.open.bind(this));
+        this.openHandler = this.open.bind(this);
+        this.element.addEventListener('click', this.openHandler);
     }
 
     disconnect() {
-        this.element.removeEventListener('click', this.open.bind(this));
+        this.element.removeEventListener('click', this.openHandler);
     }
 
     open(event) {
+        event.preventDefault();
+
         const target = event.currentTarget;
 
         const hintData = {
@@ -26,32 +29,34 @@ export default class extends Controller {
             size: target.dataset.modalHintSize || 'md'
         };
 
-        const source = this.getBootstrap3ModalTemplate();
+        const source = this.getModalTemplate();
         const template = Handlebars.compile(source);
         const modalHtml = template(hintData);
 
         document.body.insertAdjacentHTML('beforeend', modalHtml);
 
-        const $modal = $('#hint-modal');
-        $modal.modal('show');
+        const modalElement = document.getElementById('hint-modal');
+        const modal = new Modal(modalElement);
+        modal.show();
 
-        $modal.on('hidden.bs.modal', () => {
-            document.getElementById('hint-modal').remove();
-        });
+        modalElement.addEventListener('hidden.bs.modal', () => {
+            modal.dispose();
+            modalElement.remove();
+        }, { once: true });
     }
 
-    getBootstrap3ModalTemplate() {
+    getModalTemplate() {
         return '' +
-            '<div class="modal fade" id="hint-modal" tabindex="-1" role="dialog" aria-labelledby="hint-modal-label">' +
-            '  <div class="modal-dialog modal-{{ size }}" role="document">' +
+            '<div class="modal fade" id="hint-modal" tabindex="-1" aria-labelledby="hint-modal-label" aria-hidden="true">' +
+            '  <div class="modal-dialog modal-{{ size }}">' +
             '    <div class="modal-content">' +
             '      <div class="modal-header">' +
-            '        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
-            '        <h4 class="modal-title" id="hint-modal-label">{{ title }}</h4>' +
+            '        <h5 class="modal-title" id="hint-modal-label">{{ title }}</h5>' +
+            '        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
             '      </div>' +
             '      <div class="modal-body">{{{ text }}}</div>' +
             '      <div class="modal-footer">' +
-            '        <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>' +
+            '        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>' +
             '      </div>' +
             '    </div>' +
             '  </div>' +
