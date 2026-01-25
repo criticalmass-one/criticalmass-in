@@ -51,7 +51,7 @@ class PhotoGalleryController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function userlistAction(
         PhotoRepository $photoRepository,
-        UserInterface $user = null
+        ?UserInterface $user = null
     ): Response {
         $result = $photoRepository->findRidesWithPhotoCounterByUser($user);
 

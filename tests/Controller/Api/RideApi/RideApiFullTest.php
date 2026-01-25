@@ -40,8 +40,13 @@ class RideApiFullTest extends AbstractApiControllerTestCase
 
         $this->assertNotEmpty($rides);
 
+        // Verify rides are in Hamburg area by coordinates instead of title
         foreach ($rides as $ride) {
-            $this->assertStringContainsString('Hamburg', $ride->getTitle());
+            // Hamburg coordinates: approx 53.55 N, 10.0 E
+            $this->assertGreaterThan(53.4, $ride->getLatitude());
+            $this->assertLessThan(53.7, $ride->getLatitude());
+            $this->assertGreaterThan(9.8, $ride->getLongitude());
+            $this->assertLessThan(10.2, $ride->getLongitude());
         }
     }
 

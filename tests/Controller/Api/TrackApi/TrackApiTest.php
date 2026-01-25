@@ -100,7 +100,8 @@ class TrackApiTest extends AbstractApiControllerTestCase
         $this->assertArrayHasKey('id', $response);
         $this->assertArrayHasKey('distance', $response);
         $this->assertArrayHasKey('points', $response);
-        $this->assertArrayHasKey('startDateTime', $response);
-        $this->assertArrayHasKey('endDateTime', $response);
+        // JMS Serializer uses snake_case by default
+        $this->assertArrayHasKey('start_date_time', $response);
+        $this->assertArrayHasKey('end_date_time', $response);
     }
 }

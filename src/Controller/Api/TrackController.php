@@ -38,9 +38,9 @@ class TrackController extends BaseController
     /**
      * Show details of a specified track.
      */
-    #[Route(path: '/api/track/{trackId}', name: 'caldera_criticalmass_rest_track_view', methods: ['GET'], priority: 200)]
+    #[Route(path: '/api/track/{id}', name: 'caldera_criticalmass_rest_track_view', methods: ['GET'], priority: 200)]
     #[OA\Tag(name: 'Track')]
-    #[OA\Parameter(name: 'trackId', in: 'path', description: 'Id of the track', required: true, schema: new OA\Schema(type: 'integer'))]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Id of the track', required: true, schema: new OA\Schema(type: 'integer'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
     public function viewAction(Track $track, ?UserInterface $user = null): JsonResponse
     {

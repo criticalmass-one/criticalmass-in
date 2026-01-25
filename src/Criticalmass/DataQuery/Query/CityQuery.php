@@ -3,7 +3,9 @@
 namespace App\Criticalmass\DataQuery\Query;
 
 use App\Entity\CitySlug;
+use App\Entity\Photo;
 use App\Entity\Ride;
+use App\Entity\Track;
 use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use App\Entity\City;
 use MalteHuebner\DataQueryBundle\Query\AbstractQuery;
@@ -55,6 +57,23 @@ class CityQuery extends AbstractQuery implements OrmQueryInterface, ElasticQuery
 
         if (City::class === $this->entityFqcn) {
             $queryBuilder->join(sprintf('%s.mainSlug', $alias), 'cs');
+        }
+
+        // Photo has a direct city relation
+        if (Photo::class === $this->entityFqcn) {
+            $queryBuilder
+                ->join(sprintf('%s.city', $alias), 'c')
+                ->join('c.mainSlug', 'cs')
+            ;
+        }
+
+        // Track has city through ride relation
+        if (Track::class === $this->entityFqcn) {
+            $queryBuilder
+                ->join(sprintf('%s.ride', $alias), 'r')
+                ->join('r.city', 'c')
+                ->join('c.mainSlug', 'cs')
+            ;
         }
 
         $queryBuilder

@@ -241,7 +241,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return $this->latitude;
     }
 
-    public function setLatitude(float $latitude = null): CoordinateInterface
+    public function setLatitude(?float $latitude = null): CoordinateInterface
     {
         $this->latitude = $latitude;
 
@@ -253,7 +253,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return $this->longitude;
     }
 
-    public function setLongitude(float $longitude = null): CoordinateInterface
+    public function setLongitude(?float $longitude = null): CoordinateInterface
     {
         $this->longitude = $longitude;
 
@@ -289,7 +289,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return $this->description;
     }
 
-    public function setDescription(string $description = null): Photo
+    public function setDescription(?string $description = null): Photo
     {
         $this->description = $description;
 
@@ -313,7 +313,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return $this->creationDateTime;
     }
 
-    public function setImageFile(File $image = null): PhotoInterface
+    public function setImageFile(?File $image = null): PhotoInterface
     {
         $this->imageFile = $image;
 
@@ -329,7 +329,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return $this->imageFile;
     }
 
-    public function setImageName(string $imageName = null): PhotoInterface
+    public function setImageName(?string $imageName = null): PhotoInterface
     {
         $this->imageName = $imageName;
 
@@ -346,7 +346,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return $this->imageSize;
     }
 
-    public function setImageSize(int $imageSize = null): PhotoInterface
+    public function setImageSize(?int $imageSize = null): PhotoInterface
     {
         $this->imageSize = $imageSize;
 
@@ -358,14 +358,14 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return $this->imageMimeType;
     }
 
-    public function setImageMimeType(string $imageMimeType = null): PhotoInterface
+    public function setImageMimeType(?string $imageMimeType = null): PhotoInterface
     {
         $this->imageMimeType = $imageMimeType;
 
         return $this;
     }
 
-    public function setBackupFile(File $image = null): Photo
+    public function setBackupFile(?File $image = null): Photo
     {
         $this->backupFile = $image;
 
@@ -381,7 +381,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return $this->imageFile;
     }
 
-    public function setBackupName(string $backupName = null): ManipulateablePhotoInterface
+    public function setBackupName(?string $backupName = null): ManipulateablePhotoInterface
     {
         $this->backupName = $backupName;
 
@@ -449,7 +449,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     }
 
 
-    public function setLocation(string $location = null): self
+    public function setLocation(?string $location = null): self
     {
         $this->location = $location;
 
@@ -478,7 +478,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return $this->exifExposure;
     }
 
-    public function setExifExposure(string $exifExposure = null): Photo
+    public function setExifExposure(?string $exifExposure = null): Photo
     {
         $this->exifExposure = $exifExposure;
 
@@ -490,7 +490,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return $this->exifAperture;
     }
 
-    public function setExifAperture(string $exifAperture = null): Photo
+    public function setExifAperture(?string $exifAperture = null): Photo
     {
         $this->exifAperture = $exifAperture;
 
@@ -502,7 +502,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return $this->exifIso;
     }
 
-    public function setExifIso(int $exifIso = null): Photo
+    public function setExifIso(?int $exifIso = null): Photo
     {
         $this->exifIso = $exifIso;
 
@@ -514,7 +514,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return $this->exifFocalLength;
     }
 
-    public function setExifFocalLength(float $exifFocalLength = null): Photo
+    public function setExifFocalLength(?float $exifFocalLength = null): Photo
     {
         $this->exifFocalLength = $exifFocalLength;
 
@@ -526,7 +526,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return $this->exifCamera;
     }
 
-    public function setExifCamera(string $exifCamera = null): Photo
+    public function setExifCamera(?string $exifCamera = null): Photo
     {
         $this->exifCamera = $exifCamera;
 

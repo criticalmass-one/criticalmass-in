@@ -7,7 +7,7 @@ use App\Criticalmass\Geo\Entity\Position;
 use App\Criticalmass\Geo\GpxReader\GpxReader;
 use App\Criticalmass\Geo\PositionList\PositionList;
 use League\Flysystem\Filesystem;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\TestCase;
 
 class GpxToPositionListConverterTest extends TestCase
@@ -88,7 +88,7 @@ class GpxToPositionListConverterTest extends TestCase
         $this->assertEquals($expectedPositionList, $actualPositionList);
     }
 
-    protected function createFilesystemMockForLatLngPosition(): FilesystemInterface
+    protected function createFilesystemMockForLatLngPosition(): FilesystemOperator
     {
         $filesystem = $this->createMock(Filesystem::class);
         $filesystem
@@ -115,7 +115,7 @@ class GpxToPositionListConverterTest extends TestCase
         return $filesystem;
     }
 
-    protected function createFilesystemMockForLatLngDateTimePosition(): FilesystemInterface
+    protected function createFilesystemMockForLatLngDateTimePosition(): FilesystemOperator
     {
         $filesystem = $this->createMock(Filesystem::class);
         $filesystem
@@ -154,7 +154,7 @@ class GpxToPositionListConverterTest extends TestCase
         return $filesystem;
     }
 
-    protected function createFilesystemMockForLatLngAltitudePosition(): FilesystemInterface
+    protected function createFilesystemMockForLatLngAltitudePosition(): FilesystemOperator
     {
         $filesystem = $this->createMock(Filesystem::class);
         $filesystem
@@ -193,7 +193,7 @@ class GpxToPositionListConverterTest extends TestCase
         return $filesystem;
     }
 
-    protected function createFilesystemMockForLatLngDateTimeAltitudePosition(): FilesystemInterface
+    protected function createFilesystemMockForLatLngDateTimeAltitudePosition(): FilesystemOperator
     {
         $filesystem = $this->createMock(Filesystem::class);
         $filesystem

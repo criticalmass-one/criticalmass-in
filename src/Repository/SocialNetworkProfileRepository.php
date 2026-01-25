@@ -30,7 +30,7 @@ class SocialNetworkProfileRepository extends ServiceEntityRepository
         return $builder;
     }
 
-    public function findByProperties(string $networkIdentifier = null, bool $autoFetch = null, City $city = null, array $entityClassNames = []): array
+    public function findByProperties(?string $networkIdentifier = null, ?bool $autoFetch = null, ?City $city = null, array $entityClassNames = []): array
     {
         $builder = $this->createQueryBuilder('snp');
 

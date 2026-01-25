@@ -2,71 +2,29 @@
 
 namespace Tests\Controller\Api;
 
-use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
-use Doctrine\Common\DataFixtures\Loader;
-use Doctrine\Common\DataFixtures\Purger\ORMPurger;
+use App\Criticalmass\Util\ClassUtil;
 use Doctrine\ORM\EntityManagerInterface;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Tests\Controller\Api\Util\IdKiller;
 
 abstract class AbstractApiControllerTestCase extends WebTestCase
 {
     protected ?KernelBrowser $client = null;
     protected ?EntityManagerInterface $entityManager = null;
-    protected static bool $fixturesLoaded = false;
 
     protected function setUp(): void
     {
-        parent::setUp();
-
         $this->client = static::createClient();
         $this->entityManager = static::getContainer()->get('doctrine')->getManager();
-
-        if (!static::$fixturesLoaded) {
-            $this->loadFixtures();
-            static::$fixturesLoaded = true;
-        }
     }
-
-    protected function loadFixtures(): void
+    /**
+     * @deprecated
+     */
+    protected function assertIdLessJsonEquals(string $expected, string $actual): void
     {
-        $loader = new Loader();
-
-        $fixtureClasses = $this->getFixtureClasses();
-
-        foreach ($fixtureClasses as $fixtureClass) {
-            $loader->addFixture(new $fixtureClass());
-        }
-
-        $connection = $this->entityManager->getConnection();
-
-        // Disable foreign key checks for MySQL
-        $connection->executeStatement('SET FOREIGN_KEY_CHECKS=0');
-
-        $purger = new ORMPurger($this->entityManager);
-        $executor = new ORMExecutor($this->entityManager, $purger);
-        $executor->execute($loader->getFixtures());
-
-        // Re-enable foreign key checks
-        $connection->executeStatement('SET FOREIGN_KEY_CHECKS=1');
-    }
-
-    protected function getFixtureClasses(): array
-    {
-        return [
-            \App\DataFixtures\RegionFixtures::class,
-            \App\DataFixtures\UserFixtures::class,
-            \App\DataFixtures\CityFixtures::class,
-            \App\DataFixtures\LocationFixtures::class,
-            \App\DataFixtures\SocialNetworkProfileFixtures::class,
-            \App\DataFixtures\CityCycleFixtures::class,
-            \App\DataFixtures\RideFixtures::class,
-            \App\DataFixtures\PhotoFixtures::class,
-            \App\DataFixtures\WeatherFixtures::class,
-            \App\DataFixtures\RideEstimateFixtures::class,
-            \App\DataFixtures\TrackFixtures::class,
-        ];
+        $this->assertEquals(IdKiller::removeIds($expected), IdKiller::removeIds($actual));
     }
 
     protected function getSerializer(): SerializerInterface
@@ -86,21 +44,18 @@ abstract class AbstractApiControllerTestCase extends WebTestCase
         return $this->getSerializer()->deserialize($data, $entityFqcn, 'json');
     }
 
-    protected function getJsonResponse(): array
+    protected function getApiEndpointForFqcn(string $fqcn): string
     {
-        return json_decode($this->client->getResponse()->getContent(), true);
+        return sprintf('/api/%s', ClassUtil::getLowercaseShortnameFromFqcn($fqcn));
     }
 
     protected function assertResponseStatusCode(int $expectedStatusCode): void
     {
-        $this->assertEquals(
-            $expectedStatusCode,
-            $this->client->getResponse()->getStatusCode(),
-            sprintf('Expected status code %d, got %d. Content: %s',
-                $expectedStatusCode,
-                $this->client->getResponse()->getStatusCode(),
-                $this->client->getResponse()->getContent()
-            )
-        );
+        $this->assertResponseStatusCodeSame($expectedStatusCode);
+    }
+
+    protected function getJsonResponse(): array
+    {
+        return json_decode($this->client->getResponse()->getContent(), true);
     }
 }

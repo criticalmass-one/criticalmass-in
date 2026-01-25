@@ -68,8 +68,9 @@ class EstimateApiTest extends AbstractApiControllerTestCase
 
         $response = $this->getJsonResponse();
 
-        $this->assertArrayHasKey('estimatedParticipants', $response);
-        $this->assertEquals(500, $response['estimatedParticipants']);
+        // JMS Serializer uses snake_case naming strategy
+        $this->assertArrayHasKey('estimated_participants', $response);
+        $this->assertEquals(500, $response['estimated_participants']);
     }
 
     public function testMultipleEstimatesPerRide(): void

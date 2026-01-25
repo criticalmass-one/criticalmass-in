@@ -12,7 +12,7 @@ class ViewFactory
     {
     }
 
-    public static function createView(ViewableEntity $viewable, $user = null, \DateTime $dateTime = null): View
+    public static function createView(ViewableEntity $viewable, $user = null, ?\DateTime $dateTime = null): View
     {
         $viewDateTime = $dateTime ?? new \DateTime('now', new \DateTimeZone('UTC'));
 

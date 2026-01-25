@@ -9,23 +9,22 @@ use App\Entity\Photo;
 use App\Entity\Ride;
 use App\EntityInterface\CoordinateInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
-use Tests\Controller\Api\AbstractApiControllerTest;
+use Tests\Controller\Api\AbstractApiControllerTestCase;
 use Tests\Coords;
 
-class OrderByDistanceParameterTest extends AbstractApiControllerTest
+class OrderByDistanceParameterTest extends AbstractApiControllerTestCase
 {
     #[DataProvider('apiClassProvider')]
     public function testResultListOrderByAscending(string $fqcn, CoordInterface $centerCoord): void
     {
-        $client = static::createClient();
 
         $uri = sprintf('%s?centerLatitude=%f&centerLongitude=%f&distanceOrderDirection=ASC', $this->getApiEndpointForFqcn($fqcn), $centerCoord->getLatitude(), $centerCoord->getLongitude());
 
-        $client->request('GET', $uri);
+        $this->client->request('GET', $uri);
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $resultList = $this->deserializeEntityList($client->getResponse()->getContent(), $fqcn);
+        $resultList = $this->deserializeEntityList($this->client->getResponse()->getContent(), $fqcn);
 
         /** @var float $minDistance */
         $minDistance = null;
@@ -45,15 +44,14 @@ class OrderByDistanceParameterTest extends AbstractApiControllerTest
     #[DataProvider('apiClassProvider')]
     public function testResultListOrderByDescending(string $fqcn, CoordInterface $centerCoord): void
     {
-        $client = static::createClient();
 
         $uri = sprintf('%s?centerLatitude=%f&centerLongitude=%f&distanceOrderDirection=DESC', $this->getApiEndpointForFqcn($fqcn), $centerCoord->getLatitude(), $centerCoord->getLongitude());
 
-        $client->request('GET', $uri);
+        $this->client->request('GET', $uri);
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-        $resultList = $this->deserializeEntityList($client->getResponse()->getContent(), $fqcn);
+        $resultList = $this->deserializeEntityList($this->client->getResponse()->getContent(), $fqcn);
         
         /** @var float $maxDistance */
         $maxDistance = null;

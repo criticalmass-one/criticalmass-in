@@ -96,7 +96,7 @@ class Participation
         return $this->ride;
     }
 
-    public function setRide(Ride $ride = null): Participation
+    public function setRide(?Ride $ride = null): Participation
     {
         $this->ride = $ride;
 
@@ -108,7 +108,7 @@ class Participation
         return $this->user;
     }
 
-    public function setUser(User $user = null): Participation
+    public function setUser(?User $user = null): Participation
     {
         $this->user = $user;
 

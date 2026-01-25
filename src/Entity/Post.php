@@ -141,7 +141,7 @@ class Post implements Crawlable
         return $this->user;
     }
 
-    public function setUser(User $user = null): Post
+    public function setUser(?User $user = null): Post
     {
         $this->user = $user;
 
@@ -153,7 +153,7 @@ class Post implements Crawlable
         return $this->ride;
     }
 
-    public function setRide(Ride $ride = null): Post
+    public function setRide(?Ride $ride = null): Post
     {
         $this->ride = $ride;
 
@@ -165,7 +165,7 @@ class Post implements Crawlable
         return $this->city;
     }
 
-    public function setCity(City $city = null): Post
+    public function setCity(?City $city = null): Post
     {
         $this->city = $city;
 
@@ -189,7 +189,7 @@ class Post implements Crawlable
         return $this->parent;
     }
 
-    public function setParent(Post $parent = null): Post
+    public function setParent(?Post $parent = null): Post
     {
         $this->parent = $parent;
 
@@ -220,7 +220,7 @@ class Post implements Crawlable
         return $this->thread;
     }
 
-    public function setThread(Thread $thread = null): Post
+    public function setThread(?Thread $thread = null): Post
     {
         $this->thread = $thread;
 

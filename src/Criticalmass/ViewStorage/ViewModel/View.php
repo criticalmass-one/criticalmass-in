@@ -66,7 +66,7 @@ class View
         return $this->userId;
     }
 
-    public function setUserId(int $userId = null): View
+    public function setUserId(?int $userId = null): View
     {
         $this->userId = $userId;
 

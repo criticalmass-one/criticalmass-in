@@ -21,12 +21,16 @@ class ViewStorageCacheTest extends TestCase
         );
 
         $token = $this->createMock(UsernamePasswordToken::class);
+        $token
+            ->expects($this->once())
+            ->method('getUser')
+            ->willReturn(null);
 
         $tokenStorage = $this->createMock(TokenStorageInterface::class);
         $tokenStorage
-            ->expects($this->once())
+            ->expects($this->exactly(2))
             ->method('getToken')
-            ->will($this->returnValue($token));
+            ->willReturn($token);
 
         $producer = $this->createMock(ProducerInterface::class);
         $producer
@@ -57,13 +61,13 @@ class ViewStorageCacheTest extends TestCase
         $token
             ->expects($this->once())
             ->method('getUser')
-            ->will($this->returnValue($user));
+            ->willReturn($user);
 
         $tokenStorage = $this->createMock(TokenStorageInterface::class);
         $tokenStorage
-            ->expects($this->once())
+            ->expects($this->exactly(2))
             ->method('getToken')
-            ->will($this->returnValue($token));
+            ->willReturn($token);
 
         $producer = $this->createMock(ProducerInterface::class);
         $producer

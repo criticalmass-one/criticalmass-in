@@ -11,7 +11,7 @@ class RideRouter extends AbstractDelegatedRouter
     /** @param Ride $ride */
     public function generate(
         RouteableInterface $ride,
-        string $routeName = null,
+        ?string $routeName = null,
         array $parameters = [],
         int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH
     ): string {

@@ -19,7 +19,7 @@ class CityCycleManagementController extends AbstractController
 {
     #[IsGranted('ROLE_USER')]
     #[Route('/{citySlug}/cycles/add', name: 'caldera_criticalmass_citycycle_add', priority: 80)]
-    public function addAction(Request $request, UserInterface $user = null, City $city, ObjectRouterInterface $objectRouter): Response
+    public function addAction(Request $request, City $city, ObjectRouterInterface $objectRouter, ?UserInterface $user = null): Response
     {
         $cityCycle = new CityCycle();
         $cityCycle
@@ -73,9 +73,9 @@ class CityCycleManagementController extends AbstractController
     #[Route('/{citySlug}/cycles/{id}/edit', name: 'caldera_criticalmass_citycycle_edit', priority: 80)]
     public function editAction(
         Request $request,
-        UserInterface $user = null,
         CityCycle $cityCycle,
-        ObjectRouterInterface $objectRouter
+        ObjectRouterInterface $objectRouter,
+        ?UserInterface $user = null
     ): Response {
         $cityCycle->setUser($user);
 
@@ -84,13 +84,13 @@ class CityCycleManagementController extends AbstractController
         ]);
 
         if (Request::METHOD_POST == $request->getMethod()) {
-            return $this->editPostAction($request, $user, $cityCycle, $form, $objectRouter);
+            return $this->editPostAction($request, $cityCycle, $form, $objectRouter, $user);
         } else {
-            return $this->editGetAction($request, $user, $cityCycle, $form, $objectRouter);
+            return $this->editGetAction($request, $cityCycle, $form, $objectRouter, $user);
         }
     }
 
-    protected function editGetAction(Request $request, UserInterface $user = null, CityCycle $cityCycle, FormInterface $form, ObjectRouterInterface $objectRouter): Response
+    protected function editGetAction(Request $request, CityCycle $cityCycle, FormInterface $form, ObjectRouterInterface $objectRouter, ?UserInterface $user = null): Response
     {
         return $this->render('CityCycle/edit.html.twig', [
             'city' => $cityCycle->getCity(),
@@ -99,7 +99,7 @@ class CityCycleManagementController extends AbstractController
         ]);
     }
 
-    protected function editPostAction(Request $request, UserInterface $user = null, CityCycle $cityCycle, FormInterface $form, ObjectRouterInterface $objectRouter): Response
+    protected function editPostAction(Request $request, CityCycle $cityCycle, FormInterface $form, ObjectRouterInterface $objectRouter, ?UserInterface $user = null): Response
     {
         $city = $cityCycle->getCity();
 

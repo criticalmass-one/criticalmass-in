@@ -59,7 +59,7 @@ class StreakCalculator implements StreakCalculatorInterface
         return $this;
     }
     
-    public function calculateCurrentStreak(\DateTime $dateTime = null, bool $includeCurrentMonth = false): ?Streak
+    public function calculateCurrentStreak(?\DateTime $dateTime = null, bool $includeCurrentMonth = false): ?Streak
     {
         if (!$dateTime) {
             $dateTime = new \DateTime();
@@ -99,7 +99,7 @@ class StreakCalculator implements StreakCalculatorInterface
         return null;
     }
 
-    protected function checkCurrentStreakMonth(\DateTime $dateTime = null, bool $includeCurrentMonth = false): bool
+    protected function checkCurrentStreakMonth(?\DateTime $dateTime = null, bool $includeCurrentMonth = false): bool
     {
         $monthKeys = array_keys($this->list);
 

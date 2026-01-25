@@ -39,9 +39,9 @@ class SocialNetworkController extends AbstractController
         ObjectRouterInterface $objectRouter,
         SocialNetworkProfileFactoryInterface $networkProfileFactory,
         SocialNetworkHelperInterface $socialNetworkHelper,
-        City $city = null,
-        Ride $ride = null,
-        UserInterface $user = null
+        ?City $city = null,
+        ?Ride $ride = null,
+        ?UserInterface $user = null
     ): Response {
         $socialNetworkProfile = $networkProfileFactory
             ->withCreatedBy($user)
@@ -71,8 +71,8 @@ class SocialNetworkController extends AbstractController
         EntityNetworkDetectorInterface $networkDetector,
         ObjectRouterInterface $objectRouter,
         SocialNetworkHelperInterface $socialNetworkHelper,
-        City $city = null,
-        Ride $ride = null
+        ?City $city = null,
+        ?Ride $ride = null
     ): Response {
         $form->handleRequest($request);
 
@@ -119,8 +119,8 @@ class SocialNetworkController extends AbstractController
         EntityNetworkDetectorInterface $networkDetector,
         ObjectRouterInterface $objectRouter,
         SocialNetworkHelperInterface $socialNetworkHelper,
-        City $city = null,
-        Ride $ride = null
+        ?City $city = null,
+        ?Ride $ride = null
     ): Response {
         $socialNetworkProfile = $form->getData();
 
