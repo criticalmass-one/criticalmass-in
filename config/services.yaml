@@ -115,18 +115,6 @@ services:
         tags:
             - { name: liip_imagine.cache.resolver, resolver: App\Criticalmass\Imagine\CacheResolver\RemoteCacheResolver }
 
-    App\Criticalmass\ViewStorage\Cache\RobustViewStorageCache:
-        arguments:
-            $producer: '@old_sound_rabbit_mq.criticalmass_view_producer'
-
-    App\Criticalmass\ViewStorage\Cache\ViewStorageCache:
-        arguments:
-            $producer: '@old_sound_rabbit_mq.criticalmass_view_producer'
-
-    App\Criticalmass\MassTrackImport\MassTrackImporter:
-        arguments:
-            $producer: '@old_sound_rabbit_mq.criticalmass_trackimportcandidate_producer'
-
     App\Criticalmass\UploadableDataHandler\UploadableDataHandlerInterface:
         alias: App\Criticalmass\UploadableDataHandler\UploadableDataHandler
 

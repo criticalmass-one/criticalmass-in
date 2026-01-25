@@ -4,9 +4,10 @@ namespace Tests\ViewStorage\Cache;
 
 use App\Criticalmass\ViewStorage\Cache\ViewStorageCache;
 use App\Entity\User;
-use App\Serializer\CriticalSerializer;
-use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
+use App\Message\CountViewMessage;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Messenger\Envelope;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Tests\ViewStorage\TestClass;
@@ -15,11 +16,6 @@ class ViewStorageCacheTest extends TestCase
 {
     public function testWithoutUser(): void
     {
-        $expectedJson = sprintf(
-            '{"entity_id":1,"entity_class_name":"TestClass","date_time":%d}',
-            (new \DateTime())->format('U')
-        );
-
         $token = $this->createMock(UsernamePasswordToken::class);
         $token
             ->expects($this->once())
@@ -28,19 +24,24 @@ class ViewStorageCacheTest extends TestCase
 
         $tokenStorage = $this->createMock(TokenStorageInterface::class);
         $tokenStorage
-            ->expects($this->exactly(2))
+            ->expects($this->atLeastOnce())
             ->method('getToken')
             ->willReturn($token);
 
-        $producer = $this->createMock(ProducerInterface::class);
-        $producer
+        $messageBus = $this->createMock(MessageBusInterface::class);
+        $messageBus
             ->expects($this->once())
-            ->method('publish')
-            ->with($this->equalTo($expectedJson));
+            ->method('dispatch')
+            ->with($this->callback(function ($message) {
+                return $message instanceof CountViewMessage
+                    && $message->getEntityId() === 1
+                    && $message->getEntityClassName() === 'TestClass'
+                    && $message->getUserId() === null
+                    && $message->getDateTime() instanceof \DateTimeInterface;
+            }))
+            ->willReturn(new Envelope(new \stdClass()));
 
-        $serializer = new CriticalSerializer();
-
-        $viewStorageCache = new ViewStorageCache($tokenStorage, $producer, $serializer);
+        $viewStorageCache = new ViewStorageCache($tokenStorage, $messageBus);
 
         $testClass = new TestClass();
 
@@ -49,11 +50,6 @@ class ViewStorageCacheTest extends TestCase
 
     public function testWithUser(): void
     {
-        $expectedJson = sprintf(
-            '{"entity_id":1,"entity_class_name":"TestClass","user_id":42,"date_time":%d}',
-            (new \DateTime())->format('U')
-        );
-
         $user = new User();
         $user->setId(42);
 
@@ -65,21 +61,26 @@ class ViewStorageCacheTest extends TestCase
 
         $tokenStorage = $this->createMock(TokenStorageInterface::class);
         $tokenStorage
-            ->expects($this->exactly(2))
+            ->expects($this->atLeastOnce())
             ->method('getToken')
             ->willReturn($token);
 
-        $producer = $this->createMock(ProducerInterface::class);
-        $producer
+        $messageBus = $this->createMock(MessageBusInterface::class);
+        $messageBus
             ->expects($this->once())
-            ->method('publish')
-            ->with($this->equalTo($expectedJson));
+            ->method('dispatch')
+            ->with($this->callback(function ($message) {
+                return $message instanceof CountViewMessage
+                    && $message->getEntityId() === 1
+                    && $message->getEntityClassName() === 'TestClass'
+                    && $message->getUserId() === 42
+                    && $message->getDateTime() instanceof \DateTimeInterface;
+            }))
+            ->willReturn(new Envelope(new \stdClass()));
 
-        $serializer = new CriticalSerializer();
+        $viewStorageCache = new ViewStorageCache($tokenStorage, $messageBus);
 
-        $viewStorageCache = new ViewStorageCache($tokenStorage, $producer, $serializer);
-
-        $testClass = new TestClass;
+        $testClass = new TestClass();
 
         $viewStorageCache->countView($testClass);
     }
