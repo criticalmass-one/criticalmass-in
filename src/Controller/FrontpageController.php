@@ -5,15 +5,21 @@ namespace App\Controller;
 use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Criticalmass\Timeline\TimelineInterface;
 use App\Factory\FrontpageRideListFactory;
+use App\Repository\FrontpageTeaserRepository;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class FrontpageController extends AbstractController
 {
-    public function indexAction(SeoPageInterface $seoPage, TimelineInterface $cachedTimeline): Response
-    {
+    #[Route('/', name: 'caldera_criticalmass_frontpage', priority: 180)]
+    public function indexAction(
+        FrontpageTeaserRepository $frontpageTeaserRepository,
+        SeoPageInterface $seoPage,
+        TimelineInterface $cachedTimeline
+    ): Response {
         $seoPage->setDescription('criticalmass.in sammelt Fotos, Tracks und Informationen über weltweite Critical-Mass-Touren');
 
-        $frontpageTeaserList = $this->getFrontpageTeaserRepository()->findForFrontpage();
+        $frontpageTeaserList = $frontpageTeaserRepository->findForFrontpage();
 
         $endDateTime = new \DateTime();
         $startDateTime = new \DateTime();
@@ -36,16 +42,10 @@ class FrontpageController extends AbstractController
         $monthList = $frontpageRideListFactory
             ->createList()
             ->sort()
-            ->getMonthList()
-        ;
+            ->getMonthList();
 
         return $this->render('Frontpage/_ride_list.html.twig', [
             'rideList' => $monthList,
         ]);
-    }
-
-    public function introAction(): Response
-    {
-        return $this->render('Frontpage/intro.html.twig');
     }
 }

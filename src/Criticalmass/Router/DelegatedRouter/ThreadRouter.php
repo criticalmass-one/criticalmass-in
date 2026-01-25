@@ -9,8 +9,12 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class ThreadRouter extends AbstractDelegatedRouter
 {
     /** @param Thread $thread */
-    public function generate(RouteableInterface $thread, string $routeName = null, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
-    {
+    public function generate(
+        RouteableInterface $thread,
+        ?string $routeName = null,
+        array $parameters = [],
+        int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH
+    ): string {
         /* Let’s see if this is a city thread */
         if ($thread->getCity()) {
             $routeName = 'caldera_criticalmass_board_viewcitythread';

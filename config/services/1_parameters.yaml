@@ -38,3 +38,5 @@ parameters:
   upload_destination.user_photo: '%kernel.project_dir%/public/users'
   staticmaps.host: '%env(STATICMAPS_HOST)%'
   assets_version: '%env(ASSETS_VERSION)%'
+  friendlycaptcha_api_key: '%env(FRIENDLYCAPTCHA_API_KEY)%'
+  friendlycaptcha_site_key: '%env(FRIENDLYCAPTCHA_SITE_KEY)%'

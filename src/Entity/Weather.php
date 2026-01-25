@@ -3,141 +3,98 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation as JMS;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
-/**
- * @ORM\Table(name="weather")
- * @ORM\Entity(repositoryClass="App\Repository\WeatherRepository")
- * @JMS\ExclusionPolicy("all")
- */
+#[ORM\Table(name: 'weather')]
+#[ORM\Entity(repositoryClass: 'App\Repository\WeatherRepository')]
 class Weather
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @JMS\Expose()
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[Groups(['weather'])]
     protected ?int $id = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="weather")
-     * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'Ride', inversedBy: 'weathers')]
+    #[ORM\JoinColumn(name: 'ride_id', referencedColumnName: 'id')]
+    #[Ignore]
     protected ?Ride $ride = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @JMS\Expose()
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Ignore]
     protected ?string $json = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     * @JMS\Expose()
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Groups(['weather'])]
     protected ?\DateTime $weatherDateTime = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     * @JMS\Expose()
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Groups(['weather'])]
     protected ?\DateTime $creationDateTime = null;
 
-    /**
-     * @ORM\Column(type="float")
-     * @JMS\Expose()
-     */
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['weather'])]
     protected ?float $temperatureMin = null;
 
-    /**
-     * @ORM\Column(type="float")
-     * @JMS\Expose()
-     */
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['weather'])]
     protected ?float $temperatureMax = null;
 
-    /**
-     * @ORM\Column(type="float")
-     * @JMS\Expose()
-     */
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['weather'])]
     protected ?float $temperatureMorning = null;
 
-    /**
-     * @ORM\Column(type="float")
-     * @JMS\Expose()
-     */
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['weather'])]
     protected ?float $temperatureDay = null;
 
-    /**
-     * @ORM\Column(type="float")
-     * @JMS\Expose()
-     */
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['weather'])]
     protected ?float $temperatureEvening = null;
 
-    /**
-     * @ORM\Column(type="float")
-     * @JMS\Expose()
-     */
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['weather'])]
     protected ?float $temperatureNight = null;
 
-    /**
-     * @ORM\Column(type="float")
-     * @JMS\Expose()
-     */
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['weather'])]
     protected ?float $pressure = null;
 
-    /**
-     * @ORM\Column(type="float")
-     * @JMS\Expose()
-     */
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['weather'])]
     protected ?float $humidity = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @JMS\Expose()
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['weather'])]
     protected ?int $weatherCode = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @JMS\Expose()
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['weather'])]
     protected ?string $weather = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @JMS\Expose()
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['weather'])]
     protected ?string $weatherDescription = null;
 
-    /**
-     * @ORM\Column(type="string", length=5)
-     * @JMS\Expose()
-     */
+    #[ORM\Column(type: 'string', length: 5, nullable: true)]
+    #[Groups(['weather'])]
     protected ?string $weatherIcon = null;
 
-    /**
-     * @ORM\Column(type="float")
-     * @JMS\Expose()
-     */
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['weather'])]
     protected ?float $windSpeed = null;
 
-    /**
-     * @ORM\Column(type="float")
-     * @JMS\Expose()
-     */
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['weather'])]
     protected ?float $windDirection = null;
 
-    /**
-     * @ORM\Column(type="float")
-     * @JMS\Expose()
-     */
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['weather'])]
     protected ?float $clouds = null;
 
-    /**
-     * @ORM\Column(type="float")
-     * @JMS\Expose()
-     */
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['weather'])]
     protected ?float $precipitation = null;
 
     public function __construct()
@@ -155,7 +112,7 @@ class Weather
         return $this->json;
     }
 
-    public function setJson(string $json = null): Weather
+    public function setJson(?string $json = null): Weather
     {
         $this->json = $json;
 
@@ -167,7 +124,7 @@ class Weather
         return $this->weatherDateTime;
     }
 
-    public function setWeatherDateTime(\DateTime $weatherDateTime = null): Weather
+    public function setWeatherDateTime(?\DateTime $weatherDateTime = null): Weather
     {
         $this->weatherDateTime = $weatherDateTime;
 
@@ -179,7 +136,7 @@ class Weather
         return $this->creationDateTime;
     }
 
-    public function setCreationDateTime(\DateTime $creationDateTime = null): Weather
+    public function setCreationDateTime(?\DateTime $creationDateTime = null): Weather
     {
         $this->creationDateTime = $creationDateTime;
 
@@ -191,7 +148,7 @@ class Weather
         return $this->temperatureMin;
     }
 
-    public function setTemperatureMin(float $temperatureMin = null): Weather
+    public function setTemperatureMin(?float $temperatureMin = null): Weather
     {
         $this->temperatureMin = $temperatureMin;
 
@@ -203,7 +160,7 @@ class Weather
         return $this->temperatureMax;
     }
 
-    public function setTemperatureMax(float $temperatureMax = null): Weather
+    public function setTemperatureMax(?float $temperatureMax = null): Weather
     {
         $this->temperatureMax = $temperatureMax;
 
@@ -215,7 +172,7 @@ class Weather
         return $this->temperatureMorning;
     }
 
-    public function setTemperatureMorning(float $temperatureMorning = null): Weather
+    public function setTemperatureMorning(?float $temperatureMorning = null): Weather
     {
         $this->temperatureMorning = $temperatureMorning;
 
@@ -227,7 +184,7 @@ class Weather
         return $this->temperatureDay;
     }
 
-    public function setTemperatureDay(float $temperatureDay = null): Weather
+    public function setTemperatureDay(?float $temperatureDay = null): Weather
     {
         $this->temperatureDay = $temperatureDay;
 
@@ -239,7 +196,7 @@ class Weather
         return $this->temperatureEvening;
     }
 
-    public function setTemperatureEvening(float $temperatureEvening = null): Weather
+    public function setTemperatureEvening(?float $temperatureEvening = null): Weather
     {
         $this->temperatureEvening = $temperatureEvening;
 
@@ -251,7 +208,7 @@ class Weather
         return $this->temperatureNight;
     }
 
-    public function setTemperatureNight(float $temperatureNight = null): Weather
+    public function setTemperatureNight(?float $temperatureNight = null): Weather
     {
         $this->temperatureNight = $temperatureNight;
 
@@ -263,7 +220,7 @@ class Weather
         return $this->pressure;
     }
 
-    public function setPressure(float $pressure = null): Weather
+    public function setPressure(?float $pressure = null): Weather
     {
         $this->pressure = $pressure;
 
@@ -275,7 +232,7 @@ class Weather
         return $this->humidity;
     }
 
-    public function setHumidity(float $humidity = null): Weather
+    public function setHumidity(?float $humidity = null): Weather
     {
         $this->humidity = $humidity;
 
@@ -287,7 +244,7 @@ class Weather
         return $this->weatherCode;
     }
 
-    public function setWeatherCode(int $weatherCode = null): Weather
+    public function setWeatherCode(?int $weatherCode = null): Weather
     {
         $this->weatherCode = $weatherCode;
 
@@ -299,7 +256,7 @@ class Weather
         return $this->weather;
     }
 
-    public function setWeather(string $weather = null): Weather
+    public function setWeather(?string $weather = null): Weather
     {
         $this->weather = $weather;
 
@@ -311,7 +268,7 @@ class Weather
         return $this->weatherDescription;
     }
 
-    public function setWeatherDescription(string $weatherDescription = null): Weather
+    public function setWeatherDescription(?string $weatherDescription = null): Weather
     {
         $this->weatherDescription = $weatherDescription;
 
@@ -323,7 +280,7 @@ class Weather
         return $this->windSpeed;
     }
 
-    public function setWindSpeed(float $windSpeed = null): Weather
+    public function setWindSpeed(?float $windSpeed = null): Weather
     {
         $this->windSpeed = $windSpeed;
 
@@ -335,7 +292,7 @@ class Weather
         return $this->windDirection;
     }
 
-    public function setWindDirection(float $windDirection = null): Weather
+    public function setWindDirection(?float $windDirection = null): Weather
     {
         $this->windDirection = $windDirection;
 
@@ -347,7 +304,7 @@ class Weather
         return $this->clouds;
     }
 
-    public function setClouds(float $clouds = null): Weather
+    public function setClouds(?float $clouds = null): Weather
     {
         $this->clouds = $clouds;
 
@@ -359,7 +316,7 @@ class Weather
         return $this->precipitation;
     }
 
-    public function setPrecipitation(float $precipitation = null): Weather
+    public function setPrecipitation(?float $precipitation = null): Weather
     {
         $this->precipitation = $precipitation;
 
@@ -371,7 +328,7 @@ class Weather
         return $this->ride;
     }
 
-    public function setRide(Ride $ride = null): Weather
+    public function setRide(?Ride $ride = null): Weather
     {
         $this->ride = $ride;
 
@@ -383,7 +340,7 @@ class Weather
         return $this->weatherIcon;
     }
 
-    public function setWeatherIcon(string $weatherIcon = null): Weather
+    public function setWeatherIcon(?string $weatherIcon = null): Weather
     {
         $this->weatherIcon = $weatherIcon;
 

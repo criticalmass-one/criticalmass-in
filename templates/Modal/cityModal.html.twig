@@ -1,9 +1,9 @@
-<div class="modal fade" id="cityInfoModal" tabindex="-1" role="dialog">
+<div class="modal fade" id="cityInfoModal" tabindex="-1" aria-labelledby="cityModalTitle" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="cityModalTitle"></h4>
+                <h5 class="modal-title" id="cityModalTitle"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="cityModalBody">
                 <div id="cityModalTabNextRideKnown">
@@ -49,11 +49,11 @@
                 </div>
 
                 <div id="cityModalTabNextButtons" class="btn-group">
-                    <button class="btn btn-default" id="cityModalTabNextButtonsCity">Zur Stadt</button>
-                    <button class="btn btn-default" id="cityModalTabNextButtonsLocation" style="display: none;">Zum
+                    <button class="btn btn-secondary" id="cityModalTabNextButtonsCity">Zur Stadt</button>
+                    <button class="btn btn-secondary" id="cityModalTabNextButtonsLocation" style="display: none;">Zum
                         Treffpunkt
                     </button>
-                    <button class="btn btn-default" id="cityModalTabNextButtonsPosition" style="display: none;">Zur
+                    <button class="btn btn-secondary" id="cityModalTabNextButtonsPosition" style="display: none;">Zur
                         neusten Position
                     </button>
                 </div>

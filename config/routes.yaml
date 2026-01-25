@@ -1,9 +1,9 @@
-gregwar_captcha_routing:
-  resource: '@GregwarCaptchaBundle/Resources/config/routing/routing.yml'
+nelmio_api_doc:
+  resource: ./routes/nelmio_api_doc.yaml
 
-criticalmass:
-  resource: routes/criticalmass/routing.yml
-  prefix:   /
+api_controllers:
+  resource: ../src/Controller/Api/
+  type: attribute
 
 facebook_login:
   path: /login/check-facebook
@@ -11,8 +11,8 @@ facebook_login:
 strava_login:
   path: /login/check-strava
 
-runkeeper_login:
-  path: /login/check-runkeeper
+controllers:
+  resource: ../src/Controller/
+  type: attribute
+  exclude: ../src/Controller/Api/
 
-twitter_login:
-    path: /login/check-twitter

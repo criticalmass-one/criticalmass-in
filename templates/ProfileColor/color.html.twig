@@ -1,17 +1,11 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Farbe wählen{% endblock %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ path('criticalmass_user_usermanagement') }}">
-            Dein Benutzerkonto
-        </a>
-    </li>
-
-    <li class="active">
-        Farbe wählen
-    </li>
+    {{ breadcrumb.item('Dein Benutzerkonto', path('criticalmass_user_usermanagement')) }}
+    {{ breadcrumb.active('Farbe wählen') }}
 {% endblock %}
 
 {% block content %}
@@ -32,10 +26,7 @@
         {{ form_start(profileColorForm) }}
         <div class="row">
             <div class="col-md-4 col-md-offset-4 text-center">
-                <div id="colorpicker" class="input-group colorpicker-component">
-                    <input type="text" value="{{ rgb_to_hex(user.colorRed, user.colorGreen, user.colorBlue) }}" class="form-control" />
-                    <span class="input-group-addon"><i></i></span>
-                </div>
+                {{ form_row(profileColorForm.color) }}
             </div>
         </div>
 
@@ -44,7 +35,7 @@
                 <div class="btn-group">
                     {{ form_widget(profileColorForm.submit, { label: 'Speichern', attr: { class: 'btn btn-primary'}}) }}
 
-                    <a href="{{ path('criticalmass_user_usermanagement') }}" class="btn btn-default">
+                    <a href="{{ path('criticalmass_user_usermanagement') }}" class="btn btn-secondary">
                         Abbrechen
                     </a>
                 </div>
@@ -52,9 +43,4 @@
         </div>
         {{ form_end(profileColorForm) }}
     </div>
-
-
-    <script>
-        CriticalMass.loadModule('ProfileColorPage');
-    </script>
 {% endblock %}

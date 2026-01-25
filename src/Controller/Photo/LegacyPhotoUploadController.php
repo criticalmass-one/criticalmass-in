@@ -7,33 +7,33 @@ use App\Criticalmass\Image\PhotoUploader\PhotoUploaderInterface;
 use App\Entity\Photo;
 use App\Entity\Ride;
 use App\Form\Type\LegacyPhotoUploadType;
-use Flagception\Bundle\FlagceptionBundle\Annotations\Feature;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Flagception\Bundle\FlagceptionBundle\Attribute\Feature;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-/**
- * @Feature("photos")
- */
+#[Feature('photos')]
 class LegacyPhotoUploadController extends AbstractController
 {
-    /**
-     * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("ride", class="App:Ride")
-     */
-    public function uploadAction(Request $request, UserInterface $user = null, Ride $ride, PhotoUploaderInterface $photoUploader): Response
+    #[IsGranted('ROLE_USER')]
+    #[Route(
+        '/{citySlug}/{rideIdentifier}/addphoto-legacy',
+        name: 'caldera_criticalmass_gallery_legacy_photos_upload_ride',
+        priority: 170
+    )]
+    public function uploadAction(Request $request, Ride $ride, PhotoUploaderInterface $photoUploader, ?UserInterface $user = null): Response
     {
         if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->uploadPostAction($request, $user, $ride, $photoUploader);
+            return $this->uploadPostAction($request, $ride, $photoUploader, $user);
         } else {
-            return $this->uploadGetAction($request, $user, $ride, $photoUploader);
+            return $this->uploadGetAction($request, $ride, $photoUploader, $user);
         }
     }
 
-    protected function uploadGetAction(Request $request, UserInterface $user = null, Ride $ride, PhotoUploaderInterface $photoUploader): Response
+    protected function uploadGetAction(Request $request, Ride $ride, PhotoUploaderInterface $photoUploader, ?UserInterface $user = null): Response
     {
         $form = $this->createForm(LegacyPhotoUploadType::class, new Photo());
 
@@ -43,7 +43,7 @@ class LegacyPhotoUploadController extends AbstractController
         ]);
     }
 
-    protected function uploadPostAction(Request $request, UserInterface $user = null, Ride $ride, PhotoUploaderInterface $photoUploader): Response
+    protected function uploadPostAction(Request $request, Ride $ride, PhotoUploaderInterface $photoUploader, ?UserInterface $user = null): Response
     {
         /** @var UploadedFile $uploadedFile */
         $fileArray = $request->files->get('legacy_photo_upload');
@@ -61,6 +61,6 @@ class LegacyPhotoUploadController extends AbstractController
                 ->addUploadedFile($uploadedFile);
         }
 
-        return $this->uploadGetAction($request, $user, $ride, $photoUploader);
+        return $this->uploadGetAction($request, $ride, $photoUploader, $user);
     }
 }

@@ -2,41 +2,24 @@
 
 namespace App\Controller\Api;
 
-use App\Criticalmass\Api\Error;
+use App\Controller\AbstractController;
 use App\Criticalmass\Api\Errors;
-use FOS\RestBundle\Controller\AbstractFOSRestController;
-use FOS\RestBundle\View\View;
-use JMS\Serializer\Context;
-use JMS\Serializer\DeserializationContext;
-use JMS\Serializer\SerializationContext;
-use JMS\Serializer\SerializerInterface;
+use App\Serializer\CriticalSerializerInterface;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
-abstract class BaseController extends AbstractFOSRestController
+abstract class BaseController extends AbstractController
 {
-    protected function getDeserializationContext(): DeserializationContext
+    public function __construct(
+        protected readonly ManagerRegistry $managerRegistry,
+        protected readonly CriticalSerializerInterface $serializer
+    )
     {
-        $deserializationContext = $this->initSerializerContext(new DeserializationContext());
 
-        return $deserializationContext;
     }
 
-    protected function getSerializationContext(): SerializationContext
-    {
-        $serializationContext = $this->initSerializerContext(new SerializationContext());
-
-        return $serializationContext;
-    }
-
-    protected function initSerializerContext(Context $context): Context
-    {
-        $context->setSerializeNull(true);
-
-        return $context;
-    }
-
-    protected function deserializeRequest(Request $request, SerializerInterface $serializer, string $modelClass)
+    protected function deserializeRequest(Request $request, string $modelClass)
     {
         $content = null;
 
@@ -46,33 +29,18 @@ abstract class BaseController extends AbstractFOSRestController
             $content = $request->getContent();
         }
 
-        return $serializer->deserialize($content, $modelClass, 'json');
+        return $this->serializer->deserialize($content, $modelClass, 'json');
     }
 
-    /** @deprecated */
-    protected function createError(int $statusCode, string $errorMessage): Response
-    {
-        $error = new Error($statusCode, $errorMessage);
-
-        $view = View::create();
-        $view
-            ->setFormat('json')
-            ->setData($error)
-            ->setStatusCode($statusCode);
-
-        return $this->handleView($view);
-    }
-
-    protected function createErrors(int $statusCode, array $errorMessages): Response
+    protected function createErrors(int $statusCode, array $errorMessages): JsonResponse
     {
         $error = new Errors($statusCode, $errorMessages);
 
-        $view = View::create();
-        $view
-            ->setFormat('json')
-            ->setData($error)
-            ->setStatusCode($statusCode);
+        return new JsonResponse($this->serializer->serialize($error, 'json'), $statusCode);
+    }
 
-        return $this->handleView($view);
+    protected function createStandardResponse($responseObject, array $context = [], int $httpStatus = JsonResponse::HTTP_OK, array $headerList = []): JsonResponse
+    {
+        return new JsonResponse($this->serializer->serialize($responseObject, 'json', $context), $httpStatus, $headerList, true);
     }
 }

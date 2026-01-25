@@ -5,34 +5,26 @@ namespace App\Controller\Api;
 use App\Criticalmass\EntityMerger\EntityMergerInterface;
 use App\Entity\City;
 use App\Entity\SocialNetworkProfile;
-use Doctrine\Persistence\ManagerRegistry;
-use FOS\RestBundle\Context\Context;
-use FOS\RestBundle\View\View;
-use JMS\Serializer\SerializerInterface;
-use Nelmio\ApiDocBundle\Annotation\Operation;
-use Nelmio\ApiDocBundle\Annotation\Model;
-use Swagger\Annotations as SWG;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use OpenApi\Attributes as OA;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class SocialNetworkProfileController extends BaseController
 {
     /**
-     * @Operation(
-     *     tags={"Social Network Profile"},
-     *     summary="Search for social network profiles",
-     *     @SWG\Response(
-     *         response="200",
-     *         description="Returned when successful"
-     *     )
-     * )
+     * Search for social network profiles.
      *
-     * @ParamConverter("city", class="App:City", isOptional="true")
-     * @Route("/socialnetwork-profiles", name="caldera_criticalmass_rest_socialnetwork_profiles_list", methods={"GET"})
+     * You can filter the results by providing optional query parameters.
      */
-    public function listSocialNetworkProfilesAction(Request $request, ManagerRegistry $registry, City $city = null, SerializerInterface $serializer): Response
+    #[Route(path: '/api/socialnetwork-profiles', name: 'caldera_criticalmass_rest_socialnetwork_profiles_list', methods: ['GET'], priority: 200)]
+    #[OA\Tag(name: 'Social Network Profile')]
+    #[OA\Parameter(name: 'networkIdentifier', in: 'query', description: 'Filter by social network identifier (e.g. twitter, facebook, instagram)', schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'autoFetch', in: 'query', description: 'Filter by auto-fetch setting', schema: new OA\Schema(type: 'boolean'))]
+    #[OA\Parameter(name: 'entities', in: 'query', description: 'Comma-separated list of entity class names to filter by', schema: new OA\Schema(type: 'string'))]
+    #[OA\Response(response: 200, description: 'Returned when successful')]
+    public function listSocialNetworkProfilesAction(Request $request, ?City $city = null): JsonResponse
     {
         $networkIdentifier = $request->get('networkIdentifier');
         $autoFetch = (bool)$request->get('autoFetch');
@@ -43,114 +35,68 @@ class SocialNetworkProfileController extends BaseController
             $entityClassNames = [];
         }
 
-        $profileList = $registry->getRepository(SocialNetworkProfile::class)->findByProperties($networkIdentifier, $autoFetch, $city, $entityClassNames);
+        $profileList = $this->managerRegistry->getRepository(SocialNetworkProfile::class)->findByProperties($networkIdentifier, $autoFetch, $city, $entityClassNames);
 
-        $view = View::create();
-        $view
-            ->setData($profileList)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_OK);
-
-        return $this->handleView($view);
+        return $this->createStandardResponse($profileList);
     }
 
     /**
-     * @Operation(
-     *     tags={"Social Network Profile"},
-     *     summary="Retrieve a list of social network profiles assigned to a city",
-     *     @SWG\Response(
-     *         response="200",
-     *         description="Returned when successful"
-     *     )
-     * )
-     *
-     * @ParamConverter("city", class="App:City")
-     * @Route("/{citySlug}/socialnetwork-profiles", name="caldera_criticalmass_rest_socialnetwork_profiles_citylist", methods={"GET"})
+     * Retrieve a list of social network profiles assigned to a city.
      */
-    public function listSocialNetworkProfilesCityAction(ManagerRegistry $registry, City $city): Response
+    #[Route(path: '/api/{citySlug}/socialnetwork-profiles', name: 'caldera_criticalmass_rest_socialnetwork_profiles_citylist', methods: ['GET'], priority: 190)]
+    #[OA\Tag(name: 'Social Network Profile')]
+    #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\Response(response: 200, description: 'Returned when successful')]
+    public function listSocialNetworkProfilesCityAction(City $city): JsonResponse
     {
-        $profileList = $registry->getRepository(SocialNetworkProfile::class)->findByCity($city);
+        $profileList = $this->managerRegistry->getRepository(SocialNetworkProfile::class)->findByCity($city);
 
-        $view = View::create();
-        $view
-            ->setData($profileList)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_OK);
-
-        return $this->handleView($view);
+        return $this->createStandardResponse($profileList);
     }
 
     /**
      * Update properties of a social network profile.
-     *
-     * @Operation(
-     *     tags={"Social Network Profile"},
-     *     summary="Update properties of a social network profile",
-     *     @SWG\Response(
-     *         response="200",
-     *         description="Returned when successful"
-     *     )
-     * )
-     *
-     * @ParamConverter("socialNetworkProfile", class="App:SocialNetworkProfile")
-     * @Route("/{citySlug}/socialnetwork-profiles/{profileId}", name="caldera_criticalmass_rest_socialnetwork_profiles_update", methods={"POST"})
      */
-    public function updateSocialNetworkProfileAction(Request $request, SocialNetworkProfile $socialNetworkProfile, SerializerInterface $serializer, ManagerRegistry $managerRegistry, EntityMergerInterface $entityMerger): Response
-    {
-        $updatedSocialNetworkProfile = $serializer->deserialize($request->getContent(), SocialNetworkProfile::class, 'json');
+    #[Route(path: '/api/{citySlug}/socialnetwork-profiles/{id}', name: 'caldera_criticalmass_rest_socialnetwork_profiles_update', methods: ['POST'], priority: 190)]
+    #[OA\Tag(name: 'Social Network Profile')]
+    #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Id of the social network profile to update', required: true, schema: new OA\Schema(type: 'integer'))]
+    #[OA\RequestBody(description: 'JSON representation of the profile properties to update', required: true, content: new OA\JsonContent(type: 'object'))]
+    #[OA\Response(response: 200, description: 'Returned when successful')]
+    public function updateSocialNetworkProfileAction(
+        Request $request,
+        SocialNetworkProfile $socialNetworkProfile,
+        EntityMergerInterface $entityMerger
+    ): Response {
+        $updatedSocialNetworkProfile = $this->serializer->deserialize($request->getContent(), SocialNetworkProfile::class, 'json');
 
         $entityMerger->merge($updatedSocialNetworkProfile, $socialNetworkProfile);
 
-        $managerRegistry->getManager()->flush();
+        $this->managerRegistry->getManager()->flush();
 
-        $context = new Context();
-
-        $view = View::create();
-        $view
-            ->setData($socialNetworkProfile)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_OK)
-            ->setContext($context);
-
-        return $this->handleView($view);
+        return $this->createStandardResponse($socialNetworkProfile);
     }
 
     /**
      * Create a new social network profile and assign it to the provided city.
-     *
-     * @Operation(
-     *     tags={"Social Network Profile"},
-     *     summary="Create a new social network profile",
-     *     @SWG\Response(
-     *         response="200",
-     *         description="Returned when successful"
-     *     )
-     * )
-     *
-     * @ParamConverter("city", class="App:City")
-     * @Route("/{citySlug}/socialnetwork-profiles", name="caldera_criticalmass_rest_socialnetwork_profiles_create", methods={"PUT"})
      */
-    public function createSocialNetworkProfileAction(Request $request, City $city, SerializerInterface $serializer, ManagerRegistry $managerRegistry): Response
+    #[Route(path: '/api/{citySlug}/socialnetwork-profiles', name: 'caldera_criticalmass_rest_socialnetwork_profiles_create', methods: ['PUT'], priority: 190)]
+    #[OA\Tag(name: 'Social Network Profile')]
+    #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the city', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\RequestBody(description: 'JSON representation of the social network profile to create', required: true, content: new OA\JsonContent(type: 'object'))]
+    #[OA\Response(response: 200, description: 'Returned when successfully created')]
+    public function createSocialNetworkProfileAction(Request $request, City $city): JsonResponse
     {
-        $newSocialNetworkProfile = $serializer->deserialize($request->getContent(), SocialNetworkProfile::class, 'json');
+        $newSocialNetworkProfile = $this->serializer->deserialize($request->getContent(), SocialNetworkProfile::class, 'json');
 
         $newSocialNetworkProfile
             ->setCity($city)
             ->setCreatedAt(new \DateTime());
 
-        $manager = $managerRegistry->getManager();
+        $manager = $this->managerRegistry->getManager();
         $manager->persist($newSocialNetworkProfile);
         $manager->flush();
 
-        $context = new Context();
-
-        $view = View::create();
-        $view
-            ->setData($newSocialNetworkProfile)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_CREATED)
-            ->setContext($context);
-
-        return $this->handleView($view);
+        return $this->createStandardResponse($newSocialNetworkProfile);
     }
 }

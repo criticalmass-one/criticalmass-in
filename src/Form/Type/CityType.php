@@ -80,7 +80,6 @@ class CityType extends AbstractType
                     'required' => false
                 ]
             )
-            ->add('showCoronaIncidenceWarning', CheckboxType::class, ['required' => false])
         ;
     }
 

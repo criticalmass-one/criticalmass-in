@@ -1,24 +1,12 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Städte-Übersicht{% endblock %}
 
 {% block breadcrumb %}
-
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ objectPath(city) }}">
-            {{ city.city }}
-        </a>
-    </li>
-
-    <li class="active">
-        Tour-Übersicht
-    </li>
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item(city.city, object_path(city)) }}
+    {{ breadcrumb.active('Tour-Übersicht') }}
 {% endblock %}
     
 {% block content %}
@@ -81,10 +69,4 @@
             </div>
         </div>
     </div>
-{% endblock %}
-
-{% block additionalFooterElements %}
-    <script>
-        CriticalMass.loadModule('CityRideListPage', '#ride-list-table');
-    </script>
 {% endblock %}

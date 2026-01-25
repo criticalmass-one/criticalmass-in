@@ -15,66 +15,67 @@
 
 <div class="row">
     <div class="col-md-12">
-        <div id="map" style="height: 350px;"></div>
+        <div
+            data-controller="map--ride-map"
+            style="height: 350px;"
+            data-map--ride-map-city-slug-value="{{ ride.city.mainSlugString }}"
+            data-map--ride-map-ride-identifier-value="{{ ride.slug|default(ride.dateTime|date('Y-m-d')) }}"
+            data-map--ride-map-latitude-value="{{ ride.latitude }}"
+            data-map--ride-map-longitude-value="{{ ride.longitude }}"
+        ></div>
     </div>
 </div>
 
 <div class="row" style="margin-top: 1em;">
     <div class="col-md-12">
-        <div role="tabpanel">
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active">
-                    <a href="#details" aria-controls="home" role="tab" data-toggle="tab">
+        <div>
+            <ul class="nav nav-tabs" id="rideTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="details-tab" data-bs-toggle="tab" data-bs-target="#details" type="button" role="tab" aria-controls="details" aria-selected="true">
                         <i class="far fa-flag"></i>
                         Details
-                    </a>
+                    </button>
                 </li>
-                <li role="presentation">
-                    <a href="#minimass" aria-controls="settings" role="tab" data-toggle="tab">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="minimass-tab" data-bs-toggle="tab" data-bs-target="#minimass" type="button" role="tab" aria-controls="minimass" aria-selected="false">
                         <i class="far fa-map-marker"></i>
                         Mini-Masses
-                        <span class="badge">
+                        <span class="badge bg-secondary">
                             {{ ride.getSubrides|length }}
                         </span>
-                    </a>
+                    </button>
                 </li>
-                <li role="presentation">
-                    <a href="#comments" aria-controls="messages" role="tab" data-toggle="tab">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="comments-tab" data-bs-toggle="tab" data-bs-target="#comments" type="button" role="tab" aria-controls="comments" aria-selected="false">
                         <i class="far fa-pencil"></i>
                         Kommentare
-                        <span class="badge">
+                        <span class="badge bg-secondary">
                             {{ ride.getPosts|length }}
                         </span>
-                    </a>
+                    </button>
                 </li>
                 {% if pastRide and ride.enabled %}
                     {% if feature('photos') %}
-                        <li role="presentation">
-                            <a href="{{ objectPath(ride, 'caldera_criticalmass_photo_ride_list') }}">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" href="{{ object_path(ride, 'caldera_criticalmass_photo_ride_list') }}">
                                 <i class="far fa-camera"></i>
                                 Galerie
-                                <span class="badge">
+                                <span class="badge bg-secondary">
                             {{ photos|length }}
                         </span>
                             </a>
                         </li>
                     {% endif %}
-                    <li role="presentation">
-                        <a href="#tracks" aria-controls="profile" role="tab" data-toggle="tab">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="tracks-tab" data-bs-toggle="tab" data-bs-target="#tracks" type="button" role="tab" aria-controls="tracks" aria-selected="false">
                             <i class="far fa-bicycle"></i>
                             Tracks
-                            <span class="badge">
+                            <span class="badge bg-secondary">
                             {{ tracks|length }}
                         </span>
-                        </a>
+                        </button>
                     </li>
                 {% endif %}
-                <li role="presentation">
-                    <a href="#corona" aria-controls="messages" role="tab" data-toggle="tab">
-                        <i class="far fa-virus"></i>
-                        Corona
-                    </a>
-                </li>
             </ul>
 
             <div class="tab-content">
@@ -85,53 +86,7 @@
                 {% if pastRide and ride.enabled %}
                     {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderTracksTabAction', { 'ride': ride } )) }}
                 {% endif %}
-
-                {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderCoronaTabAction', { 'ride': ride } )) }}
             </div>
         </div>
     </div>
 </div>
-
-<script>
-    var pageOptions = {
-        photoViewPageUrl: '{{ objectPath(ride, 'caldera_criticalmass_photo_show_ride', { photoId: 'photoId'}) }}',
-        photoCounterUrl: '{{ objectPath(ride, 'caldera_criticalmass_photo_ajaxview') }}',
-        citySlug: '{{ city.slug }}',
-        rideDate: '{{ ride.dateTime|date('Y-m-d') }}'
-    };
-
-    CriticalMass.loadModule('RidePage', null, pageOptions, function (ridePage) {
-        {% if ride.location and ride.latitude and ride.longitude and ride.latitude != 0 and ride.getLongitude != 0 %}
-        ridePage.addRide('{{ ride|serialize|raw|e('js') }}');
-        {% else %}
-        ridePage.addCity('{{ city|serialize|raw|e('js') }}');
-        {% endif %}
-
-        {% for track in tracks %}
-        ridePage.addTrack('{{ track|serialize('json', serialization_context().setGroups('timelapse'))|raw|e('js') }}');
-        {% endfor %}
-
-        {% if feature('photos') %}
-        {% for photo in photos %}
-        {% if photo.hasCoordinates() %}
-        {% if photo.user.blurGalleries %}
-        {% set blur = true %}
-        {% else %}
-        {% set blur = false %}
-        {% endif %}
-        ridePage.addPhoto('{{ photo|serialize|raw|e('js') }}', '{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}', '{{ blur }}');
-        {% endif %}
-        {% endfor %}
-        {% endif %}
-
-        {% for subride in subrides %}
-        ridePage.addSubride('{{ subride|serialize|raw|e('js') }}');
-        {% endfor %}
-
-        ridePage.init();
-
-        ridePage.focus();
-    });
-
-    CriticalMass.loadModule('ScrollToPost');
-</script>

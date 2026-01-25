@@ -7,19 +7,29 @@ use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Entity\City;
 use App\Entity\Region;
 use App\Entity\Ride;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use App\Repository\RegionRepository;
+use App\Repository\RideRepository;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class StatisticController extends AbstractController
 {
-    /**
-     * @ParamConverter("city", class="App:City")
-     */
-    public function citystatisticAction(SeoPageInterface $seoPage, City $city): Response
-    {
-        $rides = $this->getRideRepository()->findRidesForCity($city);
+    #[Route(
+        '/{citySlug}/statistic',
+        name: 'caldera_criticalmass_statistic_city',
+        priority: 140
+    )]
+    public function citystatisticAction(
+        SeoPageInterface $seoPage,
+        RideRepository $rideRepository,
+        City $city
+    ): Response {
+        $rides = $rideRepository->findRidesForCity($city);
 
-        $seoPage->setDescription(sprintf('Critical-Mass-Statistiken aus %s: Teilnehmer, Fahrtdauer, Fahrtlänge, Touren', $city->getCity()));
+        $seoPage->setDescription(sprintf(
+            'Critical-Mass-Statistiken aus %s: Teilnehmer, Fahrtdauer, Fahrtlänge, Touren',
+            $city->getCity()
+        ));
 
         return $this->render('Statistic/city_statistic.html.twig', [
             'city' => $city,
@@ -27,10 +37,18 @@ class StatisticController extends AbstractController
         ]);
     }
 
-    public function overviewAction(SeoPageInterface $seoPage): Response
-    {
+    #[Route(
+        '/statistic',
+        name: 'caldera_criticalmass_statistic_overview',
+        priority: 140
+    )]
+    public function overviewAction(
+        SeoPageInterface $seoPage,
+        RideRepository $rideRepository,
+        RegionRepository $regionRepository
+    ): Response {
         /** @var Region $region */
-        $region = $this->getRegionRepository()->find(3);
+        $region = $regionRepository->find(3);
 
         $endDateTime = new \DateTime();
         $twoYearInterval = new \DateInterval('P2Y');
@@ -38,21 +56,17 @@ class StatisticController extends AbstractController
         $startDateTime = new \DateTime();
         $startDateTime->sub($twoYearInterval);
 
-        $rides = $this->getRideRepository()->findRidesInRegionInInterval($region, $startDateTime, $endDateTime);
+        $rides = $rideRepository->findRidesInRegionInInterval($region, $startDateTime, $endDateTime);
 
         $citiesWithoutEstimates = $this->findCitiesWithoutParticipationEstimates($rides);
         $rides = $this->filterRideList($rides, $citiesWithoutEstimates);
 
         $cities = [];
-
         $rideMonths = [];
 
-        /**
-         * @var Ride $ride
-         */
+        /** @var Ride $ride */
         foreach ($rides as $ride) {
             $cities[$ride->getCity()->getSlug()] = $ride->getCity();
-
             $rideMonths[$ride->getDateTime()->format('Y-m')] = $ride->getDateTime()->format('Y-m');
         }
 
@@ -91,9 +105,7 @@ class StatisticController extends AbstractController
     {
         $resultList = [];
 
-        /**
-         * @var Ride $ride
-         */
+        /** @var Ride $ride */
         foreach ($rides as $ride) {
             $citySlug = $ride->getCity()->getSlug();
 

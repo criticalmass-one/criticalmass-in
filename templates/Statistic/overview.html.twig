@@ -1,11 +1,10 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Statistiken{% endblock %}
 
 {% block breadcrumb %}
-    <li class="active">
-        Statistiken
-    </li>
+    {{ breadcrumb.active('Statistiken') }}
 {% endblock %}
 
 {% block content %}
@@ -31,25 +30,25 @@
 
         <div>
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active">
-                    <a href="#tab-participiants" aria-controls="" role="tab" data-toggle="tab">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="participiants-tab" data-bs-toggle="tab" data-bs-target="#tab-participiants" type="button" role="tab" aria-controls="tab-participiants" aria-selected="true">
                         Teilnehmerzahl
-                    </a>
+                    </button>
                 </li>
-                <li role="presentation">
-                    <a href="#tab-duration" aria-controls="" role="tab" data-toggle="tab">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="duration-tab" data-bs-toggle="tab" data-bs-target="#tab-duration" type="button" role="tab" aria-controls="tab-duration" aria-selected="false">
                         Fahrtdauer
-                    </a>
+                    </button>
                 </li>
-                <li role="presentation">
-                    <a href="#tab-distance" aria-controls="" role="tab" data-toggle="tab">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="distance-tab" data-bs-toggle="tab" data-bs-target="#tab-distance" type="button" role="tab" aria-controls="tab-distance" aria-selected="false">
                         Fahrtlänge
-                    </a>
+                    </button>
                 </li>
             </ul>
 
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="tab-participiants">
+                <div role="tabpanel" class="tab-pane fade show active" id="tab-participiants" aria-labelledby="participiants-tab">
                     <div class="row margin-top-small">
                         <div class="col-md-12">
                             <p>
@@ -62,12 +61,12 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            <canvas id="participants" style="width: 100%; height: 250px;"></canvas>
+                            <canvas id="participants" style="width: 100%; height: 75vh;"></canvas>
                         </div>
                     </div>
                 </div>
 
-                <div role="tabpanel" class="tab-pane" id="tab-duration">
+                <div role="tabpanel" class="tab-pane fade" id="tab-duration" aria-labelledby="duration-tab">
                     <div class="row margin-top-small">
                         <div class="col-md-12">
                             <p>
@@ -79,12 +78,12 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            <canvas id="duration" style="width: 100%; height: 250px;"></canvas>
+                            <canvas id="duration" style="width: 100%; height: 75vh;"></canvas>
                         </div>
                     </div>
                 </div>
 
-                <div role="tabpanel" class="tab-pane" id="tab-distance">
+                <div role="tabpanel" class="tab-pane fade" id="tab-distance" aria-labelledby="distance-tab">
                     <div class="row margin-top-small">
                         <div class="col-md-12">
                             <p>
@@ -96,7 +95,7 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            <canvas id="distance" style="width: 100%; height: 250px;"></canvas>
+                            <canvas id="distance" style="width: 100%; height: 75vh;"></canvas>
                         </div>
                     </div>
                 </div>
@@ -104,23 +103,15 @@
         </div>
     </div>
 
-    <script type="text/javascript">
-        CriticalMass.loadModule('StatisticPage', null, null, function (page) {
-            {% for rideMonth in rideMonths %}
-            page.addRideMonth('{{ rideMonth }}');
-            {% endfor %}
+    {% for rideMonth in rideMonths %}
+        <div class="ride-month" data-ride-month="{{ rideMonth }}"></div>
+    {% endfor %}
 
-            {% for city in cities %}
-            page.addCity('{{ city.city }}', '{{ city.slug }}', {{ city.colorRed }}, {{ city.colorGreen }}, {{ city.colorBlue }});
-            {% endfor %}
+    {% for city in cities %}
+        <div class="city" data-city-name="{{ city.city }}" data-city-slug="{{ city.slug }}" data-color-red="{{ city.colorRed }}" data-color-green="{{ city.colorGreen }}" data-color-blue="{{ city.colorBlue }}"></div>
+    {% endfor %}
 
-            {% for ride in rides %}
-            page.addRideData('{{ ride.city.slug }}', '{{ ride.dateTime|date('Y-m') }}', {{ ride.estimatedParticipants|default(0) }}, {{ ride.estimatedDuration|default(0) }}, {{ ride.estimatedDistance|default(0) }});
-            {% endfor %}
-
-            page.createParticipantsChart($('#participants'));
-            page.createDurationChart($('#duration'));
-            page.createDistanceChart($('#distance'));
-        });
-    </script>
+    {% for ride in rides %}
+        <div class="ride-data" data-city-slug="{{ ride.city.slug }}" data-ride-month="{{ ride.dateTime|date('Y-m') }}" data-estimated-participants="{{ ride.estimatedParticipants|default(0) }}" data-estimated-duration="{{ ride.estimatedDuration|default(0) }}" data-estimated-distance="{{ ride.estimatedDistance|default(0) }}"></div>
+    {% endfor %}
 {% endblock %}

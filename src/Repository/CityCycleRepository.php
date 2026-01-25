@@ -3,16 +3,22 @@
 namespace App\Repository;
 
 use App\Entity\City;
+use App\Entity\CityCycle;
 use App\Entity\Region;
-use Doctrine\ORM\EntityRepository;
-use function Doctrine\ORM\QueryBuilder;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-class CityCycleRepository extends EntityRepository
+class CityCycleRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, CityCycle::class);
+    }
+
     public function findByCity(
         City $city,
-        \DateTimeInterface $startDateTime = null,
-        \DateTimeInterface $endDateTime = null
+        ?\DateTimeInterface $startDateTime = null,
+        ?\DateTimeInterface $endDateTime = null
     ): array {
         $builder = $this->createQueryBuilder('cc');
 
@@ -51,13 +57,13 @@ class CityCycleRepository extends EntityRepository
     }
 
     public function findForApi(
-        City $city = null,
-        Region $region = null,
-        \DateTimeInterface $startDateTime = null,
-        \DateTimeInterface $endDateTime = null,
-        bool $validNow = null,
-        int $dayOfWeek = null,
-        int $weekOfMonth = null
+        ?City $city = null,
+        ?Region $region = null,
+        ?\DateTimeInterface $startDateTime = null,
+        ?\DateTimeInterface $endDateTime = null,
+        ?bool $validNow = null,
+        ?int $dayOfWeek = null,
+        ?int $weekOfMonth = null
     ): array
     {
         $builder = $this->createQueryBuilder('cc');

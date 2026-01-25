@@ -1,0 +1,25 @@
+###############################################################################
+#                          Generated on phpdocker.io                          #
+###############################################################################
+version: "3.1"
+services:
+  mailer:
+    image: schickling/mailcatcher
+    ports: [ 1025, 1080 ]
+
+  mysql:
+    image: mariadb:10.9.3
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: criticalmass-mysql
+    working_dir: /application
+    volumes:
+      - ./docker/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=criticalmass
+      - MYSQL_USER=criticalmass
+      - MYSQL_PASSWORD=criticalmass
+    ports:
+      - "8002:3306"
+    labels:
+      com.symfony.server.service-prefix: 'DATABASE'

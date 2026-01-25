@@ -6,12 +6,17 @@ use App\Entity\City;
 use App\Entity\Ride;
 use App\Entity\Track;
 use App\Entity\User;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
-use function Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 
-class TrackRepository extends EntityRepository
+class TrackRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Track::class);
+    }
+
     /** @deprecated */
     public function findTracksByRide(Ride $ride): array
     {
@@ -55,7 +60,7 @@ class TrackRepository extends EntityRepository
         return $result;
     }
 
-    public function findForTimelineRideTrackCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null): array
+    public function findForTimelineRideTrackCollector(?\DateTime $startDateTime = null, ?\DateTime $endDateTime = null, $limit = null): array
     {
         $builder = $this->createQueryBuilder('t');
 
@@ -139,7 +144,7 @@ class TrackRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findByUserQuery(User $user, bool $enabled = null, bool $deleted = null, string $order = 'DESC'): Query
+    public function findByUserQuery(User $user, ?bool $enabled = null, ?bool $deleted = null, string $order = 'DESC'): Query
     {
         $builder = $this->createQueryBuilder('t');
 

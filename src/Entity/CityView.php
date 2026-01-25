@@ -5,34 +5,24 @@ namespace App\Entity;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewEntity;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="city_view")
- * @ORM\Entity()
- */
+#[ORM\Table(name: 'city_view')]
+#[ORM\Entity]
 class CityView implements ViewEntity
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private ?int $id = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="city_views")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'city_views')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     protected ?User $user = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="city_views")
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'city_views')]
+    #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
     protected ?City $city = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     protected \DateTime $dateTime;
 
     public function __construct()
@@ -57,7 +47,7 @@ class CityView implements ViewEntity
         return $this->user;
     }
 
-    public function setUser(User $user = null): ViewEntity
+    public function setUser(?User $user = null): ViewEntity
     {
         $this->user = $user;
 
@@ -81,7 +71,7 @@ class CityView implements ViewEntity
         return $this->city;
     }
 
-    public function setCity(City $city = null): CityView
+    public function setCity(?City $city = null): CityView
     {
         $this->city = $city;
 

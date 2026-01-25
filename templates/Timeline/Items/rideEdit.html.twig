@@ -13,7 +13,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <a href="{{ objectPath(item.ride) }}">
+                <a href="{{ object_path(item.ride) }}">
                     <h4>
                         {{ item.rideTitle }}
                     </h4>
@@ -24,23 +24,23 @@
         {% if item.ride.latitude and item.ride.longitude %}
             <div class="row">
                 <div class="col-md-12">
-                    <div id="map-{{ item.uniqId }}" class="timeline-item-ride-map" style="height: 150px;"
-                         data-map-center-latitude="{{ item.ride.latitude }}"
-                         data-map-center-longitude="{{ item.ride.longitude }}"
-                         data-map-zoomlevel="13"
-                         data-lock-map="true"
-                         data-map-marker-latitude="{{ item.ride.latitude }}"
-                         data-map-marker-longitude="{{ item.ride.longitude }}"
-                         data-map-marker-color="red"
-                         data-map-marker-icon="fa-bicycle"
-                         data-map-marker-shape="circle"
-                    ></div>
+                    <div
+                        id="map-{{ item.uniqId }}"
+                        class="map timeline-item-ride-map"
+                        data-controller="map--map"
+                        style="height: 150px;"
+                        data-map--map-center-latitude-value="{{ item.ride.latitude }}"
+                        data-map--map-center-longitude-value="{{ item.ride.longitude }}"
+                        data-map--map-zoom-value="13"
+                        data-map--map-lock-map-value="true"
+                        data-map--map-marker-latitude-value="{{ item.ride.latitude }}"
+                        data-map--map-marker-longitude-value="{{ item.ride.longitude }}"
+                        data-map--map-marker-type-value="ride"
+                        data-map--map-vector-value="false"
+                    >
+                    </div>
                 </div>
             </div>
-
-            <script type="text/javascript">
-                CriticalMass.loadModule('AutoMap', 'map-{{ item.uniqId }}');
-            </script>
         {% endif %}
     </div>
 </div>

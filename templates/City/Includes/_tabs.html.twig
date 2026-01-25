@@ -1,28 +1,27 @@
-<ul class="nav nav-tabs margin-bottom-medium" role="tablist">
-    <li {% if tab == 'city' %}role="presentation" class="active" {% else %}role="tab"{% endif %}>
-        <a href="{{ objectPath(city) }}">
+<ul class="nav nav-tabs mb-3" role="tablist">
+    <li class="nav-item" role="presentation">
+        <a class="nav-link{% if tab == 'city' %} active{% endif %}" href="{{ object_path(city) }}">
             <i class="far fa-university"></i>
             {{ city.city }}
         </a>
     </li>
 
-    <li {% if tab == 'ride_list' %}role="presentation" class="active" {% else %}role="tab"{% endif %}>
-        <a href="{{ objectPath(city, 'caldera_criticalmass_city_listrides') }}">
+    <li class="nav-item" role="presentation">
+        <a class="nav-link{% if tab == 'ride_list' %} active{% endif %}" href="{{ object_path(city, 'caldera_criticalmass_city_listrides') }}">
             <i class="far fa-bicycle"></i>
             Touren
         </a>
     </li>
 
-    <li {% if tab == 'statistic' %}role="presentation" class="active" {% else %}role="tab"{% endif %}>
-        <a href="{{ objectPath(city, 'caldera_criticalmass_statistic_city') }}">
+    <li class="nav-item" role="presentation">
+        <a class="nav-link{% if tab == 'statistic' %} active{% endif %}" href="{{ object_path(city, 'caldera_criticalmass_statistic_city') }}">
             <i class="far fa-chart-bar"></i>
             Statistik
         </a>
     </li>
 
-    <li {% if tab == 'socialnetwork_city_list_items' %}role="presentation" class="active"
-        {% else %}role="tab"{% endif %}>
-        <a href="{{ objectPath(city, 'criticalmass_socialnetwork_city_list_items') }}">
+    <li class="nav-item" role="presentation">
+        <a class="nav-link{% if tab == 'socialnetwork_city_list_items' %} active{% endif %}" href="{{ object_path(city, 'criticalmass_socialnetwork_city_list_items') }}">
             <i class="far fa-newspaper"></i>
             Neuigkeiten
         </a>

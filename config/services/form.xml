@@ -7,6 +7,6 @@
         </defaults>
 
         <prototype namespace="App\Form\"
-                   resource="%kernel.project_dir%/src/App/Form/*"/>
+                   resource="%kernel.project_dir%/src/Form/*"/>
     </services>
 </container>

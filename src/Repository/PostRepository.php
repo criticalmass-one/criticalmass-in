@@ -3,13 +3,20 @@
 namespace App\Repository;
 
 use App\Entity\City;
+use App\Entity\Post;
 use App\Entity\Ride;
 use App\Entity\Thread;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-class PostRepository extends EntityRepository
+class PostRepository extends ServiceEntityRepository
 {
-    public function findByCrawled(bool $crawled, int $limit = null): array
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Post::class);
+    }
+
+    public function findByCrawled(bool $crawled, ?int $limit = null): array
     {
         $qb = $this->createQueryBuilder('p');
 
@@ -93,8 +100,8 @@ class PostRepository extends EntityRepository
     }
 
     public function findForTimelineThreadPostCollector(
-        \DateTime $startDateTime = null,
-        \DateTime $endDateTime = null,
+        ?\DateTime $startDateTime = null,
+        ?\DateTime $endDateTime = null,
         $limit = null
     ): array {
         $builder = $this->createQueryBuilder('p');
@@ -133,8 +140,8 @@ class PostRepository extends EntityRepository
     }
 
     public function findForTimelineRideCommentCollector(
-        \DateTime $startDateTime = null,
-        \DateTime $endDateTime = null,
+        ?\DateTime $startDateTime = null,
+        ?\DateTime $endDateTime = null,
         $limit = null
     ): array {
         $builder = $this->createQueryBuilder('p');
@@ -171,8 +178,8 @@ class PostRepository extends EntityRepository
     }
 
     public function findForTimelinePhotoCommentCollector(
-        \DateTime $startDateTime = null,
-        \DateTime $endDateTime = null,
+        ?\DateTime $startDateTime = null,
+        ?\DateTime $endDateTime = null,
         $limit = null
     ): array {
         $builder = $this->createQueryBuilder('p');

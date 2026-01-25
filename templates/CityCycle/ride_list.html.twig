@@ -1,23 +1,12 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Automatisch generierte Touren von {{ city.city }} anzeigen{% endblock %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ objectPath(city) }}">
-            {{ city.city }}
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ objectPath(cityCycle.city, 'caldera_criticalmass_citycycle_list') }}">
-            Turnusliste
-        </a>
-    </li>
-
-    <li class="active">
-        Generierte Touren anzeigen
-    </li>
+    {{ breadcrumb.item(city.city, object_path(city)) }}
+    {{ breadcrumb.item('Turnusliste', object_path(cityCycle.city, 'caldera_criticalmass_citycycle_list')) }}
+    {{ breadcrumb.active('Generierte Touren anzeigen') }}
 {% endblock %}
     
 {% block content %}
@@ -129,7 +118,7 @@
                                     {% for ride in rideList %}
                                         <tr>
                                             <td>
-                                                <a href="{{ objectPath(ride) }}" title="zur Tourseite">
+                                                <a href="{{ object_path(ride) }}" title="zur Tourseite">
                                                     {{ ride.title }}
                                                 </a>
                                             </td>
@@ -147,8 +136,8 @@
                                             </td>
 
                                             <td>
-                                                <a class="btn btn-xs btn-default"
-                                                   href="{{ objectPath(ride, 'caldera_criticalmass_ride_edit') }}"
+                                                <a class="btn btn-xs btn-secondary"
+                                                   href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}"
                                                    title="Tour editieren">
                                                     <i class="fa fa-wrench"></i>
                                                 </a>

@@ -6,16 +6,14 @@ use App\Controller\AbstractController;
 use App\Entity\City;
 use App\Entity\Track;
 use Knp\Component\Pager\PaginatorInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class CityTrackListController extends AbstractController
 {
-    /**
-     * @ParamConverter("city", class="App:City")
-     */
+    #[Route('/{citySlug}/tracks', name: 'caldera_criticalmass_city_listtracks', priority: 100)]
     public function listTracksAction(Request $request, City $city, ManagerRegistry $registry, PaginatorInterface $paginator): Response
     {
         $query = $registry->getRepository(Track::class)->findByCityQuery($city, 'DESC');

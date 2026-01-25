@@ -8,89 +8,60 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Table(name="post")
- * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
- */
+#[ORM\Table(name: 'post')]
+#[ORM\Entity(repositoryClass: 'App\Repository\PostRepository')]
+#[ORM\Index(fields: ['dateTime'], name: 'post_date_time_index')]
 class Post implements Crawlable
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Post", inversedBy="children")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'Post', inversedBy: 'children')]
+    #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id')]
     protected ?Post $parent = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Post", mappedBy="parent")
-     */
+    #[ORM\OneToMany(targetEntity: 'Post', mappedBy: 'parent')]
     protected Collection $children;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="posts")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'posts')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     protected ?User $user = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="posts")
-     * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'Ride', inversedBy: 'posts')]
+    #[ORM\JoinColumn(name: 'ride_id', referencedColumnName: 'id')]
     protected ?Ride $ride = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="posts")
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'posts')]
+    #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
     protected ?City $city = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Thread", inversedBy="posts")
-     * @ORM\JoinColumn(name="thread_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'Thread', inversedBy: 'posts')]
+    #[ORM\JoinColumn(name: 'thread_id', referencedColumnName: 'id')]
     protected ?Thread $thread = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Photo", inversedBy="posts")
-     * @ORM\JoinColumn(name="photo_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'Photo', inversedBy: 'posts')]
+    #[ORM\JoinColumn(name: 'photo_id', referencedColumnName: 'id')]
     protected ?Photo $photo = null;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
+    #[ORM\Column(type: 'float', nullable: true)]
     protected ?float $latitude = null;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
+    #[ORM\Column(type: 'float', nullable: true)]
     protected ?float $longitude = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     protected ?\DateTime $dateTime = null;
 
-    /**
-     * @ORM\Column(type="text")
-     * @Assert\NotBlank()
-     */
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'text', nullable: true)]
     protected ?string $message = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     protected bool $enabled = true;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     protected bool $crawled = false;
 
     public function __construct()
@@ -170,7 +141,7 @@ class Post implements Crawlable
         return $this->user;
     }
 
-    public function setUser(User $user = null): Post
+    public function setUser(?User $user = null): Post
     {
         $this->user = $user;
 
@@ -182,7 +153,7 @@ class Post implements Crawlable
         return $this->ride;
     }
 
-    public function setRide(Ride $ride = null): Post
+    public function setRide(?Ride $ride = null): Post
     {
         $this->ride = $ride;
 
@@ -194,7 +165,7 @@ class Post implements Crawlable
         return $this->city;
     }
 
-    public function setCity(City $city = null): Post
+    public function setCity(?City $city = null): Post
     {
         $this->city = $city;
 
@@ -218,7 +189,7 @@ class Post implements Crawlable
         return $this->parent;
     }
 
-    public function setParent(Post $parent = null): Post
+    public function setParent(?Post $parent = null): Post
     {
         $this->parent = $parent;
 
@@ -249,7 +220,7 @@ class Post implements Crawlable
         return $this->thread;
     }
 
-    public function setThread(Thread $thread = null): Post
+    public function setThread(?Thread $thread = null): Post
     {
         $this->thread = $thread;
 

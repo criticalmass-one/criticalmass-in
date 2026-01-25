@@ -5,10 +5,16 @@ namespace App\Repository;
 use App\Entity\Board;
 use App\Entity\City;
 use App\Entity\Thread;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-class ThreadRepository extends EntityRepository
+class ThreadRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Thread::class);
+    }
+
     public function findThreadsForBoard(Board $board): array
     {
         $builder = $this->createQueryBuilder('t');
@@ -61,7 +67,7 @@ class ThreadRepository extends EntityRepository
         return $query->getSingleResult();
     }
 
-    public function findForTimelineThreadCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, $limit = null): array
+    public function findForTimelineThreadCollector(?\DateTime $startDateTime = null, ?\DateTime $endDateTime = null, $limit = null): array
     {
         $builder = $this->createQueryBuilder('t');
 

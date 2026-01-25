@@ -4,8 +4,6 @@ namespace App\Controller\Track;
 
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Event\Track\TrackUploadedEvent;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use App\Criticalmass\UploadValidator\TrackValidator;
@@ -15,14 +13,18 @@ use App\Entity\Ride;
 use App\Entity\Track;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class TrackUploadController extends AbstractController
 {
-    /**
-     * @Security("has_role('ROLE_USER')")
-     * @ParamConverter("ride", class="App:Ride")
-     */
+    #[IsGranted('ROLE_USER')]
+    #[Route(
+        '/{citySlug}/{rideIdentifier}/addtrack',
+        name: 'caldera_criticalmass_track_upload',
+        priority: 270
+    )]
     public function uploadAction(Request $request, EventDispatcherInterface $eventDispatcher, ObjectRouterInterface $objectRouter, Ride $ride, TrackValidator $trackValidator): Response
     {
         $track = new Track();
@@ -53,7 +55,7 @@ class TrackUploadController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->managerRegistry->getManager();
 
             /** @var Track $track */
             $track = $form->getData();
@@ -82,7 +84,7 @@ class TrackUploadController extends AbstractController
             $em->persist($track);
             $em->flush();
 
-            $eventDispatcher->dispatch(TrackUploadedEvent::NAME, new TrackUploadedEvent($track));
+            $eventDispatcher->dispatch(new TrackUploadedEvent($track), TrackUploadedEvent::NAME);
 
             return $this->redirect($objectRouter->generate($track));
         }

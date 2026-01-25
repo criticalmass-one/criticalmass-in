@@ -3,78 +3,54 @@
 namespace App\Entity;
 
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
-use App\EntityInterface\AutoParamConverterAble;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Router\Attribute as Routing;
 
-/**
- * @ORM\Table(name="thread")
- * @ORM\Entity(repositoryClass="App\Repository\ThreadRepository")
-
- */
-class Thread implements ViewableEntity, RouteableInterface, AutoParamConverterAble, PostableInterface
+#[ORM\Table(name: 'thread')]
+#[ORM\Entity(repositoryClass: 'App\Repository\ThreadRepository')]
+class Thread implements ViewableEntity, RouteableInterface, PostableInterface
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Board", inversedBy="threads")
-     * @ORM\JoinColumn(name="board_id", referencedColumnName="id")
-     * @Routing\RouteParameter(name="boardSlug")
-     */
+    #[Routing\RouteParameter(name: 'boardSlug')]
+    #[ORM\ManyToOne(targetEntity: 'Board', inversedBy: 'threads')]
+    #[ORM\JoinColumn(name: 'board_id', referencedColumnName: 'id')]
     protected ?Board $board = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="threads")
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
-     * @Routing\RouteParameter(name="citySlug")
-     */
+    #[Routing\RouteParameter(name: 'citySlug')]
+    #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'threads')]
+    #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
     protected ?City $city = null;
 
-    /**
-     * @ORM\Column(type="text")
-     * @Assert\NotBlank()
-     */
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'text', nullable: true)]
     protected ?string $title = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Routing\RouteParameter(name="threadSlug")
-     */
+    #[Routing\RouteParameter(name: 'threadSlug')]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $slug = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected int $views = 0;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected int $postNumber = 0;
 
-    /**
-     * @ORM\OneToOne(targetEntity="Post")
-     * @ORM\JoinColumn(name="firstpost_id", referencedColumnName="id")
-     */
+    #[ORM\OneToOne(targetEntity: 'Post')]
+    #[ORM\JoinColumn(name: 'firstpost_id', referencedColumnName: 'id', unique: true)]
     protected ?Post $firstPost = null;
 
-    /**
-     * @ORM\OneToOne(targetEntity="Post")
-     * @ORM\JoinColumn(name="lastpost_id", referencedColumnName="id")
-     */
+    #[ORM\OneToOne(targetEntity: 'Post')]
+    #[ORM\JoinColumn(name: 'lastpost_id', referencedColumnName: 'id', unique: true)]
     protected ?Post $lastPost = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     protected bool $enabled = true;
 
     public function __construct()
@@ -86,7 +62,7 @@ class Thread implements ViewableEntity, RouteableInterface, AutoParamConverterAb
         return $this->id;
     }
 
-    public function setTitle(string $title = null): Thread
+    public function setTitle(?string $title = null): Thread
     {
         $this->title = $title;
 
@@ -110,7 +86,7 @@ class Thread implements ViewableEntity, RouteableInterface, AutoParamConverterAb
         return $this->enabled;
     }
 
-    public function setCity(City $city = null): Thread
+    public function setCity(?City $city = null): Thread
     {
         $this->city = $city;
 
@@ -122,7 +98,7 @@ class Thread implements ViewableEntity, RouteableInterface, AutoParamConverterAb
         return $this->city;
     }
 
-    public function setBoard(Board $board = null): Thread
+    public function setBoard(?Board $board = null): Thread
     {
         $this->board = $board;
 
@@ -134,7 +110,7 @@ class Thread implements ViewableEntity, RouteableInterface, AutoParamConverterAb
         return $this->board;
     }
 
-    public function setFirstPost(Post $firstPost = null): Thread
+    public function setFirstPost(?Post $firstPost = null): Thread
     {
         $this->firstPost = $firstPost;
 
@@ -146,7 +122,7 @@ class Thread implements ViewableEntity, RouteableInterface, AutoParamConverterAb
         return $this->firstPost;
     }
 
-    public function setLastPost(Post $lastPost = null): Thread
+    public function setLastPost(?Post $lastPost = null): Thread
     {
         $this->lastPost = $lastPost;
 

@@ -7,17 +7,14 @@ use App\Entity\Ride;
 use App\Criticalmass\Calendar\Event\RideEvent;
 use Doctrine\Persistence\ManagerRegistry;
 
-class RideProvider implements ProviderInterface
+readonly class RideProvider implements ProviderInterface
 {
-    /** @var ManagerRegistry $doctrine */
-    protected $doctrine;
-
-    public function __construct(ManagerRegistry $doctrine)
+    public function __construct(
+        private ManagerRegistry $doctrine)
     {
-        $this->doctrine = $doctrine;
     }
 
-    public function getEvents(\DateTime $begin, \DateTime $end, array $options = []): array
+    public function getEvents(\DateTimeInterface $begin, \DateTimeInterface $end, array $options = []): array
     {
         $rideList = $this->findRides($begin, $end);
         $eventList = [];
@@ -29,7 +26,7 @@ class RideProvider implements ProviderInterface
         return $eventList;
     }
 
-    protected function findRides(\DateTime $begin, \DateTime $end): array
+    protected function findRides(\DateTimeInterface $begin, \DateTimeInterface $end): array
     {
         return $this->doctrine->getRepository(Ride::class)->findRides($begin, $end);
     }

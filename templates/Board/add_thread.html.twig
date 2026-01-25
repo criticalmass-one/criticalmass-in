@@ -1,23 +1,12 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Neues Thema beginnen{% endblock %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_board_overview') }}">
-            Diskussionen
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ objectPath(board) }}">
-            {{ board.title }}
-        </a>
-    </li>
-
-    <li>
-        neues Thema beginnen
-    </li>
+    {{ breadcrumb.item('Diskussionen', path('caldera_criticalmass_board_overview')) }}
+    {{ breadcrumb.item(board.title, object_path(board)) }}
+    {{ breadcrumb.active('neues Thema beginnen') }}
 {% endblock %}
 
 {% block content %}
@@ -54,7 +43,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="btn-group pull-right">
-                    <a href="{{ objectPath(board) }}" class="btn btn-default">
+                    <a href="{{ object_path(board) }}" class="btn btn-secondary">
                         Abbrechen
                     </a>
 

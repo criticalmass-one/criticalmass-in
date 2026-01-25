@@ -4,42 +4,28 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="crawled_website")
- * @ORM\Entity()
- */
+#[ORM\Table(name: 'crawled_website')]
+#[ORM\Entity]
 class CrawledWebsite
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $url = null;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected ?string $imageUrl = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected ?string $title = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected ?string $description = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     protected \DateTime $createdAt;
 
     public function __construct()
@@ -88,7 +74,7 @@ class CrawledWebsite
         return $this->title;
     }
 
-    public function setTitle(string $title = null): CrawledWebsite
+    public function setTitle(?string $title = null): CrawledWebsite
     {
         $this->title = $title;
 
@@ -100,7 +86,7 @@ class CrawledWebsite
         return $this->description;
     }
 
-    public function setDescription(string $description = null): CrawledWebsite
+    public function setDescription(?string $description = null): CrawledWebsite
     {
         $this->description = $description;
 

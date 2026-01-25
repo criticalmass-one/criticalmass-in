@@ -19,13 +19,13 @@ class RouterTwigExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('objectPath', [$this, 'objectPath'], [
+            new TwigFunction('object_path', [$this, 'objectPath'], [
                 'is_safe' => ['raw'],
             ]),
         ];
     }
 
-    public function objectPath(RouteableInterface $object, string $routeName = null, array $parameters = []): string
+    public function objectPath(RouteableInterface $object, ?string $routeName = null, array $parameters = []): string
     {
         return $this->router->generate($object, $routeName, $parameters);
     }

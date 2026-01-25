@@ -2,132 +2,64 @@
 
 namespace App\Entity;
 
-use Caldera\GeoBasic\Coord\Coord;
-use Caldera\GeoBasic\Coord\CoordInterface;
+use App\Criticalmass\Geo\Coord\Coord;
+use App\Criticalmass\Geo\Coord\CoordInterface;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation as JMS;
 
-/**
- * @JMS\ExclusionPolicy("all")
- * @ORM\Table(name="track_candidate")
- * @ORM\Entity(repositoryClass="App\Repository\TrackImportCandidateRepository")
- */
+#[ORM\Table(name: 'track_candidate')]
+#[ORM\Entity(repositoryClass: 'App\Repository\TrackImportCandidateRepository')]
 class TrackImportCandidate
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     * @JMS\Expose
-     * @JMS\Type("int")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     protected ?int $id = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="trackImportCandidates")
-     * @ORM\JoinColumn(nullable=false)
-     * @JMS\Expose
-     * @JMS\Type("Relation<App\Entity\User>")
-     */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User', inversedBy: 'trackImportCandidates')]
+    #[ORM\JoinColumn(nullable: false)]
     protected ?User $user = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Ride", inversedBy="trackImportCandidates")
-     * @ORM\JoinColumn(nullable=false)
-     * @JMS\Expose
-     * @JMS\Type("Relation<App\Entity\Ride>")
-     */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Ride', inversedBy: 'trackImportCandidates')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Ride $ride = null;
 
-    /**
-     * @ORM\Column(type="bigint")
-     * @JMS\Expose
-     * @JMS\Type("int")
-     */
+    #[ORM\Column(type: 'bigint')]
     protected ?int $activityId = null;
 
-    /**
-     * @ORM\Column(type="string")
-     * @JMS\Expose
-     * @JMS\Type("string")
-     */
+    #[ORM\Column(type: 'string')]
     protected ?string $name = null;
 
-    /**
-     * @ORM\Column(type="float")
-     * @JMS\Expose
-     * @JMS\Type("float")
-     */
+    #[ORM\Column(type: 'float')]
     protected ?float $distance = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @JMS\Expose
-     * @JMS\Type("int")
-     */
+    #[ORM\Column(type: 'integer')]
     protected ?int $elapsedTime = null;
 
-    /**
-     * @ORM\Column(type="string")
-     * @JMS\Expose
-     * @JMS\Type("string")
-     */
+    #[ORM\Column(type: 'string')]
     protected ?string $type = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     * @JMS\Expose
-     * @JMS\Type("DateTime")
-     */
+    #[ORM\Column(type: 'datetime')]
     protected ?\DateTime $startDateTime = null;
 
-    /**
-     * @ORM\Column(type="float")
-     * @JMS\Expose
-     * @JMS\Type("float")
-     */
+    #[ORM\Column(type: 'float')]
     protected ?float $startLatitude = null;
 
-    /**
-     * @ORM\Column(type="float")
-     * @JMS\Expose
-     * @JMS\Type("float")
-     */
+    #[ORM\Column(type: 'float')]
     protected ?float $startLongitude = null;
 
-    /**
-     * @ORM\Column(type="float")
-     * @JMS\Expose
-     * @JMS\Type("float")
-     */
+    #[ORM\Column(type: 'float')]
     protected ?float $endLatitude = null;
 
-    /**
-     * @ORM\Column(type="float")
-     * @JMS\Expose
-     * @JMS\Type("float")
-     */
+    #[ORM\Column(type: 'float')]
     protected ?float $endLongitude = null;
 
-    /**
-     * @ORM\Column(type="text")
-     * @JMS\Expose
-     * @JMS\Type("string")
-     */
+    #[ORM\Column(type: 'text')]
     protected ?string $polyline = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     * @JMS\Expose
-     * @JMS\Type("DateTime")
-     */
+    #[ORM\Column(type: 'datetime')]
     protected ?\DateTime $createdAt;
 
-    /**
-     * @ORM\Column(type="boolean")
-     * @JMS\Expose
-     * @JMS\Type("bool")
-     */
+    #[ORM\Column(type: 'boolean')]
     protected bool $rejected = false;
 
     public function __construct()

@@ -32,8 +32,8 @@ liip_imagine:
             quality: 60
             filters:
                 thumbnail: { size: [1600, 1600], mode: inset }
-                watermark:
-                    image: ../public/images/watermark/criticalmass.png
+                watermark_image:
+                    image: ./public/images/watermark/criticalmass.png
                     size: 0.15
                     position: bottomright
         gallery_photo_blurred:
@@ -47,8 +47,8 @@ liip_imagine:
             quality: 60
             filters:
                 thumbnail: { size: [2000, 2000], mode: inset }
-                watermark:
-                    image: ../public/images/watermark/criticalmass.png
+                watermark_image:
+                    image: ./public/images/watermark/criticalmass.png
                     size: 0.15
                     position: bottomright
 

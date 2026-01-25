@@ -6,12 +6,18 @@ use App\Entity\City;
 use App\Entity\Photo;
 use App\Entity\Ride;
 use App\Entity\User;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 
-class PhotoRepository extends EntityRepository
+class PhotoRepository extends ServiceEntityRepository
 {
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Photo::class);
+    }
+
     public function findRidesWithPhotoCounterByUser(User $user): array
     {
         $builder = $this->createQueryBuilder('photo');
@@ -35,7 +41,7 @@ class PhotoRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findPhotosWithoutExifData(int $limit = null, int $offset = null, bool $fetchExistingData = false): array
+    public function findPhotosWithoutExifData(?int $limit = null, ?int $offset = null, bool $fetchExistingData = false): array
     {
         $builder = $this->createQueryBuilder('p');
 
@@ -65,7 +71,7 @@ class PhotoRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findPhotosWithoutExportData(int $limit = null, int $offset = null, bool $fetchExistingData = false): array
+    public function findPhotosWithoutExportData(?int $limit = null, ?int $offset = null, bool $fetchExistingData = false): array
     {
         $builder = $this->createQueryBuilder('p');
 
@@ -93,7 +99,7 @@ class PhotoRepository extends EntityRepository
     /**
      * @deprecated
      */
-    public function findRidesForGallery(City $city = null): array
+    public function findRidesForGallery(?City $city = null): array
     {
         $builder = $this->createQueryBuilder('photo');
 
@@ -139,7 +145,7 @@ class PhotoRepository extends EntityRepository
     /**
      * @deprecated
      */
-    public function findRidesWithPhotoCounter(City $city = null)
+    public function findRidesWithPhotoCounter(?City $city = null)
     {
         $builder = $this->createQueryBuilder('photo');
 
@@ -248,7 +254,7 @@ class PhotoRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function findSomePhotos($limit = 16, $maxViews = 15, City $city = null): array
+    public function findSomePhotos($limit = 16, $maxViews = 15, ?City $city = null): array
     {
         $builder = $this->createQueryBuilder('p');
 
@@ -283,8 +289,8 @@ class PhotoRepository extends EntityRepository
     }
 
     public function findForTimelineRidePhotoCollector(
-        \DateTime $startDateTime = null,
-        \DateTime $endDateTime = null,
+        ?\DateTime $startDateTime = null,
+        ?\DateTime $endDateTime = null,
         $limit = null
     ) {
         $builder = $this->createQueryBuilder('p');
@@ -337,7 +343,7 @@ class PhotoRepository extends EntityRepository
         return (int) $query->getSingleScalarResult();
     }
 
-    public function findPhotosForExport(int $limit = null, int $offset = null): array
+    public function findPhotosForExport(?int $limit = null, ?int $offset = null): array
     {
         $builder = $this->createQueryBuilder('p');
 

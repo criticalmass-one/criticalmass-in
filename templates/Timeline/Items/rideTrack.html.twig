@@ -13,7 +13,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <a href="{{ objectPath(item.ride) }}">
+                <a href="{{ object_path(item.ride) }}">
                     <h4>
                         {{ item.rideTitle }}
                     </h4>
@@ -24,13 +24,19 @@
         {% if item.polyline %}
         <div class="row">
             <div class="col-md-12">
-                <div id="map-{{ item.uniqId }}"
-                     class="timeline-item-ride-map"
-                     data-polyline="{{ item.polyline }}"
-                     data-polyline-color="{{ item.polylineColor }}"
-                     data-lock-map="true"
-                     data-map-marker-clickable="false"
-                     style="height: 150px;">
+                <div
+                    id="map-{{ item.uniqId }}"
+                    class="map timeline-item-ride-map"
+                    data-controller="map--map"
+                    style="height: 150px;"
+                    data-map--map-center-latitude-value="{{ item.ride.latitude }}"
+                    data-map--map-center-longitude-value="{{ item.ride.longitude }}"
+                    data-map--map-zoom-value="13"
+                    data-map--map-lock-map-value="true"
+                    data-map--map-polyline-color-value="{{ item.track.user.color }}"
+                    data-map--map-polyline-value="{{ item.track.polyline }}"
+                    data-map--map-vector-value="false"
+                >
                 </div>
             </div>
         </div>
@@ -56,7 +62,7 @@
                     </dt>
 
                     <dd>
-                        {{ item.distance|number_format(2, ',', '.') }} Kilometer
+                        {{ item.distance|number_format(2, ',', '.') }}&nbsp;km
                     </dd>
                 </dl>
             </div>
@@ -75,9 +81,3 @@
         </div>
     </div>
 </div>
-
-{% if item.polyline %}
-<script type="text/javascript">
-    CriticalMass.loadModule('AutoMap', 'map-{{ item.uniqId }}');
-</script>
-{% endif %}

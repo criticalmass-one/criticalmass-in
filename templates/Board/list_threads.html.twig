@@ -1,17 +1,11 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}{{ board.title }}{% endblock %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_board_overview') }}">
-            Diskussionen
-        </a>
-    </li>
-
-    <li class="active">
-        {{ board.title }}
-    </li>
+    {{ breadcrumb.item('Diskussionen', path('caldera_criticalmass_board_overview')) }}
+    {{ breadcrumb.active(board.title) }}
 {% endblock %}
 
 {% block content %}
@@ -56,7 +50,7 @@
                         {% for thread in threads %}
                             <tr>
                                 <td>
-                                    <a href="{{ objectPath(thread) }}">
+                                    <a href="{{ object_path(thread) }}">
                                         {{ thread.title }}
                                     </a>
                                 </td>

@@ -6,61 +6,27 @@ use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
 use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Entity\Photo;
 use App\Entity\Ride;
-use Doctrine\Persistence\ManagerRegistry;
-use FOS\RestBundle\View\View;
-use JMS\Serializer\SerializerInterface;
-use Nelmio\ApiDocBundle\Annotation\Operation;
-use Swagger\Annotations as SWG;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class PhotoController extends BaseController
 {
     /**
      * Get a list of photos which were uploaded to a specified ride.
-     *
-     * @Operation(
-     *     tags={"Photo"},
-     *     summary="Retrieve a list of photos of a ride",
-     *     @SWG\Parameter(
-     *         name="citySlug",
-     *         in="path",
-     *         description="Provide a city slug",
-     *         required=true,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="rideIdentifier",
-     *         in="path",
-     *         description="Provide a ride identifier",
-     *         required=true,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
-     *     ),
-     *     @SWG\Response(
-     *         response="200",
-     *         description="Returned when successful"
-     *     )
-     * )
-     *
-     * @ParamConverter("ride", class="App:Ride")
-     * @Route("/{citySlug}/{rideIdentifier}/listPhotos", name="caldera_criticalmass_rest_photo_ridelist", methods={"GET"})
      */
-    public function listRidePhotosAction(ManagerRegistry $registry, Ride $ride): Response
+    #[Route(path: '/api/{citySlug}/{rideIdentifier}/listPhotos', name: 'caldera_criticalmass_rest_photo_ridelist', methods: ['GET'], priority: 190)]
+    #[OA\Tag(name: 'Photo')]
+    #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Provide a city slug', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'rideIdentifier', in: 'path', description: 'Provide a ride identifier', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\Response(response: 200, description: 'Returned when successful')]
+    public function listRidePhotosAction(Ride $ride): JsonResponse
     {
-        $photoList = $registry->getRepository(Photo::class)->findPhotosByRide($ride);
+        $photoList = $this->managerRegistry->getRepository(Photo::class)->findPhotosByRide($ride);
 
-        $view = View::create();
-        $view
-            ->setData($photoList)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_OK);
-
-        return $this->handleView($view);
+        return $this->createStandardResponse($photoList);
     }
 
     /**
@@ -122,180 +88,45 @@ class PhotoController extends BaseController
      * You may use the <code>distanceOrderDirection</code> parameter in combination with the radius query to sort the result list by the photos geo position to the center coord.
      *
      * Apply <code>startValue</code> to deliver a value to start your ordered list with.
-     *
-     * @Operation(
-     *     tags={"Photo"},
-     *     summary="Lists photos",
-     *     @SWG\Parameter(
-     *         name="regionSlug",
-     *         in="query",
-     *         description="Provide a region slug",
-     *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="citySlug",
-     *         in="query",
-     *         description="Provide a city slug",
-     *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="rideIdentifier",
-     *         in="query",
-     *         description="Provide a ride identifier",
-     *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="year",
-     *         in="query",
-     *         description="Limit the result set to this year. If not set, we will search in the current month.",
-     *         required=false,
-     *         @SWG\Schema(type="integer"),
-     *         type="integer"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="month",
-     *         in="query",
-     *         description="Limit the result set to this year. Must be combined with 'year'. If not set, we will search in the current month.",
-     *         required=false,
-     *         @SWG\Schema(type="integer"),
-     *         type="integer"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="day",
-     *         in="query",
-     *         description="Limit the result set to this day.",
-     *         required=false,
-     *         @SWG\Schema(type="integer"),
-     *         type="integer"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="centerLatitude",
-     *         in="query",
-     *         description="Latitude of a coordinate to search photos around in a given radius.",
-     *         required=false,
-     *         @SWG\Schema(type="number"),
-     *         type="number"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="centerLongitude",
-     *         in="query",
-     *         description="Longitude of a coordinate to search photos around in a given radius.",
-     *         required=false,
-     *         @SWG\Schema(type="number"),
-     *         type="number"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="radius",
-     *         in="query",
-     *         description="Radius to look around for photos.",
-     *         required=false,
-     *         @SWG\Schema(type="number"),
-     *         type="number"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="bbEastLongitude",
-     *         in="query",
-     *         description="East longitude of a bounding box to look for photos.",
-     *         required=false,
-     *         @SWG\Schema(type="number"),
-     *         type="number"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="bbWestLongitude",
-     *         in="query",
-     *         description="West longitude of a bounding box to look for photos.",
-     *         required=false,
-     *         @SWG\Schema(type="number"),
-     *         type="number"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="bbNorthLatitude",
-     *         in="query",
-     *         description="North latitude of a bounding box to look for photos.",
-     *         required=false,
-     *         @SWG\Schema(type="number"),
-     *         type="number"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="bbSouthLatitude",
-     *         in="query",
-     *         description="South latitude of a bounding box to look for photos.",
-     *         required=false,
-     *         @SWG\Schema(type="number"),
-     *         type="number"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="orderBy",
-     *         in="query",
-     *         description="Choose a property to sort the list by.",
-     *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="orderDirection",
-     *         in="query",
-     *         description="Sort ascending or descending.",
-     *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="distanceOrderDirection",
-     *         in="query",
-     *         description="Enable distance sorting in combination with radius query.",
-     *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="startValue",
-     *         in="query",
-     *         description="Start ordered list with provided value.",
-     *         required=false,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="size",
-     *         in="query",
-     *         description="Length of resulting list. Defaults to 10.",
-     *         required=false,
-     *         @SWG\Schema(type="integer"),
-     *         type="integer"
-     *     ),
-     *     @SWG\Response(
-     *         response="200",
-     *         description="Returned when successful"
-     *     )
-     * )
-     * @Route("/photo", name="caldera_criticalmass_rest_photo_list", methods={"GET"})
      */
-    public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager): Response
+    #[Route(path: '/api/photo', name: 'caldera_criticalmass_rest_photo_list', methods: ['GET'], priority: 200)]
+    #[OA\Tag(name: 'Photo')]
+    #[OA\Parameter(name: 'regionSlug', in: 'query', description: 'Provide a region slug', schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'citySlug', in: 'query', description: 'Provide a city slug', schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'rideIdentifier', in: 'query', description: 'Provide a ride identifier', schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'year', in: 'query', description: 'Limit the result set to this year.', schema: new OA\Schema(type: 'integer'))]
+    #[OA\Parameter(name: 'month', in: 'query', description: 'Limit the result set to this month. Must be combined with year.', schema: new OA\Schema(type: 'integer'))]
+    #[OA\Parameter(name: 'day', in: 'query', description: 'Limit the result set to this day.', schema: new OA\Schema(type: 'integer'))]
+    #[OA\Parameter(name: 'centerLatitude', in: 'query', description: 'Latitude of a coordinate to search photos around in a given radius.', schema: new OA\Schema(type: 'number'))]
+    #[OA\Parameter(name: 'centerLongitude', in: 'query', description: 'Longitude of a coordinate to search photos around in a given radius.', schema: new OA\Schema(type: 'number'))]
+    #[OA\Parameter(name: 'radius', in: 'query', description: 'Radius to look around for photos.', schema: new OA\Schema(type: 'number'))]
+    #[OA\Parameter(name: 'bbEastLongitude', in: 'query', description: 'East longitude of a bounding box to look for photos.', schema: new OA\Schema(type: 'number'))]
+    #[OA\Parameter(name: 'bbWestLongitude', in: 'query', description: 'West longitude of a bounding box to look for photos.', schema: new OA\Schema(type: 'number'))]
+    #[OA\Parameter(name: 'bbNorthLatitude', in: 'query', description: 'North latitude of a bounding box to look for photos.', schema: new OA\Schema(type: 'number'))]
+    #[OA\Parameter(name: 'bbSouthLatitude', in: 'query', description: 'South latitude of a bounding box to look for photos.', schema: new OA\Schema(type: 'number'))]
+    #[OA\Parameter(name: 'orderBy', in: 'query', description: 'Choose a property to sort the list by.', schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'orderDirection', in: 'query', description: 'Sort ascending or descending.', schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'distanceOrderDirection', in: 'query', description: 'Enable distance sorting in combination with radius query.', schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'startValue', in: 'query', description: 'Start ordered list with provided value.', schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'size', in: 'query', description: 'Length of resulting list. Defaults to 10.', schema: new OA\Schema(type: 'integer'))]
+    #[OA\Response(response: 200, description: 'Returned when successful')]
+    public function listAction(Request $request, DataQueryManagerInterface $dataQueryManager): JsonResponse
     {
         $queryParameterList = RequestToListConverter::convert($request);
 
-        $rideList = $dataQueryManager->query($queryParameterList, Photo::class);
+        $photoList = $dataQueryManager->query($queryParameterList, Photo::class);
 
-        $view = View::create();
-        $view
-            ->setData($rideList)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_OK);
-
-        return $this->handleView($view);
+        return $this->createStandardResponse($photoList);
     }
 
     /**
-     * @ParamConverter("ride", class="App:Ride")
-     * @Route("/photo/{id}", name="caldera_criticalmass_rest_photo_post", methods={"POST"})
+     * Update properties of a photo.
      */
+    #[Route(path: '/api/photo/{id}', name: 'caldera_criticalmass_rest_photo_post', methods: ['POST'], priority: 200)]
+    #[OA\Tag(name: 'Photo')]
+    #[OA\Parameter(name: 'id', in: 'path', description: 'Id of the photo to update', required: true, schema: new OA\Schema(type: 'integer'))]
+    #[OA\RequestBody(description: 'JSON representation of the photo data', required: true, content: new OA\JsonContent(type: 'object'))]
+    #[OA\Response(response: 200, description: 'Returned when successful')]
     public function updatePhotoAction(Request $request, SerializerInterface $serializer): JsonResponse
     {
         $json = $request->getContent();
@@ -304,6 +135,6 @@ class PhotoController extends BaseController
 
         $photoJson = $serializer->serialize($photo, 'json');
 
-        return new JsonResponse($photoJson, 200, [], true);
+        return $this->createStandardResponse($photoJson);
     }
 }

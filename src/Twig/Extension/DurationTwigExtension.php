@@ -17,7 +17,7 @@ class DurationTwigExtension extends AbstractExtension
         ];
     }
 
-    public function duration(string $duration = null): ?string
+    public function duration(?string $duration = null): ?string
     {
         if (!$duration) {
             return null;

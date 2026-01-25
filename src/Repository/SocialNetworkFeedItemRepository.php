@@ -3,12 +3,19 @@
 namespace App\Repository;
 
 use App\Entity\City;
-use Doctrine\ORM\EntityRepository;
+use App\Entity\SocialNetworkFeedItem;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 
-class SocialNetworkFeedItemRepository extends EntityRepository
+class SocialNetworkFeedItemRepository extends ServiceEntityRepository
 {
-    public function findForTimelineSocialNetworkFeedItemCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, int $limit = null): array
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, SocialNetworkFeedItem::class);
+    }
+
+    public function findForTimelineSocialNetworkFeedItemCollector(?\DateTime $startDateTime = null, ?\DateTime $endDateTime = null, ?int $limit = null): array
     {
         $builder = $this->createQueryBuilder('fi');
 
@@ -43,7 +50,7 @@ class SocialNetworkFeedItemRepository extends EntityRepository
         return $result;
     }
 
-    protected function createDefaultQueryBuilder(City $city = null): QueryBuilder
+    protected function createDefaultQueryBuilder(?City $city = null): QueryBuilder
     {
         $qb = $this->createQueryBuilder('snfi');
 
@@ -73,7 +80,7 @@ class SocialNetworkFeedItemRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function findByCityAndProperties(City $city, string $uniqueIdentifier = null, string $networkIdentifier = null, string $orderDirection = 'DESC'): array
+    public function findByCityAndProperties(City $city, ?string $uniqueIdentifier = null, ?string $networkIdentifier = null, string $orderDirection = 'DESC'): array
     {
         $qb = $this->createDefaultQueryBuilder($city);
         $qb->orderBy('snfi.dateTime', $orderDirection);

@@ -2,41 +2,31 @@
 
 namespace App\Controller\Api;
 
+use Doctrine\Persistence\ManagerRegistry;
 use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
 use MalteHuebner\DataQueryBundle\RequestParameterList\RequestParameterList;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
 use App\Event\RideEstimate\RideEstimateCreatedEvent;
 use App\Model\CreateEstimateModel;
-use Doctrine\Persistence\ManagerRegistry;
-use FOS\RestBundle\View\View;
-use JMS\Serializer\SerializerInterface;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Nelmio\ApiDocBundle\Annotation\Operation;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Swagger\Annotations as SWG;
+use App\Serializer\CriticalSerializerInterface;
+use OpenApi\Attributes as OA;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class EstimateController extends BaseController
 {
-    protected SerializerInterface $serializer;
-
-    protected EventDispatcherInterface $eventDispatcher;
-
-    protected DataQueryManagerInterface $dataQueryManager;
-
-    protected ManagerRegistry $registry;
-
-    public function __construct(SerializerInterface $serializer, EventDispatcherInterface $eventDispatcher, DataQueryManagerInterface $dataQueryManager, ManagerRegistry $registry)
+    public function __construct(
+        CriticalSerializerInterface $serializer,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly DataQueryManagerInterface $dataQueryManager,
+        ManagerRegistry $managerRegistry,
+    )
     {
-        $this->serializer = $serializer;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->dataQueryManager = $dataQueryManager;
-        $this->registry = $registry;
+        parent::__construct($managerRegistry, $serializer);
     }
 
     /**
@@ -56,30 +46,16 @@ class EstimateController extends BaseController
      *
      * This endpoint is primarly provided for apps with access to the user's current location. If you like you can
      * provide details about your app or homepage in the <code>source</code> property or just default to null.
-
      * If you know which in which ride the user participates, please use the other endpoint and specify
      * <code>citySlug</code> and <code>rideIdentifier</code>.
-     *
-     * @Operation(
-     *     tags={"Estimate"},
-     *     summary="Adds an estimation to statistic",
-     *     @SWG\Parameter(
-     *         name="body",
-     *         in="body",
-     *         description="JSON representation of the estimate data",
-     *         required=true,
-     *         @SWG\Schema(type="string")
-     *     ),
-     *     @SWG\Response(
-     *         response="200",
-     *         description="Returned when successful"
-     *     )
-     * )
      */
-    public function createEstimateAction(Request $request): Response
+    #[OA\Tag(name: 'Estimate')]
+    #[OA\RequestBody(description: 'JSON representation of the estimate data', required: true, content: new OA\JsonContent(type: 'object'))]
+    #[OA\Response(response: 200, description: 'Returned when successful')]
+    public function createEstimateAction(Request $request): JsonResponse
     {
         /** @var CreateEstimateModel $estimateModel */
-        $estimateModel = $this->deserializeRequest($request, $this->serializer, CreateEstimateModel::class);
+        $estimateModel = $this->deserializeRequest($request, CreateEstimateModel::class);
 
         $rideEstimation = $this->createRideEstimate($estimateModel);
 
@@ -87,18 +63,12 @@ class EstimateController extends BaseController
             throw new BadRequestHttpException();
         }
 
-        $this->registry->getManager()->persist($rideEstimation);
-        $this->registry->getManager()->flush();
+        $this->managerRegistry->getManager()->persist($rideEstimation);
+        $this->managerRegistry->getManager()->flush();
 
-        $this->eventDispatcher->dispatch(RideEstimateCreatedEvent::NAME, new RideEstimateCreatedEvent($rideEstimation));
+        $this->eventDispatcher->dispatch(new RideEstimateCreatedEvent($rideEstimation), RideEstimateCreatedEvent::NAME);
 
-        $view = View::create();
-        $view
-            ->setData($rideEstimation)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_CREATED);
-
-        return $this->handleView($view);
+        return $this->createStandardResponse($rideEstimation);
     }
 
     /**
@@ -113,7 +83,7 @@ class EstimateController extends BaseController
      * }</pre>
      *
      * If you do not provide <code>date_time</code> it will use the current time. As the target ride is specified by
-     * <code>citySlug</code> and <code>rideIdentifier</code>, you don’t even have to provide the coordinates. The
+     * <code>citySlug</code> and <code>rideIdentifier</code>, you don't even have to provide the coordinates. The
      * followig json shows a valid request to this endpoint:
      *
      * <pre>{
@@ -122,45 +92,17 @@ class EstimateController extends BaseController
      *
      * If you like you can provide details about your app or homepage in the <code>source</code> property or just
      * default to null.
-     *
-     * @Operation(
-     *     tags={"Estimate"},
-     *     summary="Adds an estimation to statistic",
-     *     @SWG\Parameter(
-     *         name="citySlug",
-     *         in="path",
-     *         description="Slug of the ride’s city",
-     *         required=true,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="rideIdentifier",
-     *         in="path",
-     *         description="Identifier of the ride",
-     *         required=true,
-     *         @SWG\Schema(type="string"),
-     *         type="string"
-     *     ),
-     *     @SWG\Parameter(
-     *         name="body",
-     *         in="body",
-     *         description="JSON representation of the estimate data",
-     *         required=true,
-     *         @SWG\Schema(type="string")
-     *     ),
-     *     @SWG\Response(
-     *         response="200",
-     *         description="Returned when successful"
-     *     )
-     * )
-     * @Route("/estimate", name="caldera_criticalmass_rest_estimate_create", methods={"POST"})
-     * @ParamConverter("ride", class="App:Ride")
      */
-    public function createRideEstimateAction(Request $request, Ride $ride): Response
+    #[Route(path: '/api/estimate', name: 'caldera_criticalmass_rest_estimate_create', methods: ['POST'], priority: 200)]
+    #[OA\Tag(name: 'Estimate')]
+    #[OA\Parameter(name: 'citySlug', in: 'path', description: 'Slug of the ride\'s city', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\Parameter(name: 'rideIdentifier', in: 'path', description: 'Identifier of the ride', required: true, schema: new OA\Schema(type: 'string'))]
+    #[OA\RequestBody(description: 'JSON representation of the estimate data', required: true, content: new OA\JsonContent(type: 'object'))]
+    #[OA\Response(response: 200, description: 'Returned when successful')]
+    public function createRideEstimateAction(Request $request, Ride $ride): JsonResponse
     {
         /** @var CreateEstimateModel $estimateModel */
-        $estimateModel = $this->deserializeRequest($request, $this->serializer, CreateEstimateModel::class);
+        $estimateModel = $this->deserializeRequest($request, CreateEstimateModel::class);
 
         $rideEstimation = $this->createRideEstimate($estimateModel, $ride);
 
@@ -168,21 +110,15 @@ class EstimateController extends BaseController
             throw new BadRequestHttpException();
         }
 
-        $this->registry->getManager()->persist($rideEstimation);
-        $this->registry->getManager()->flush();
+        $this->managerRegistry->getManager()->persist($rideEstimation);
+        $this->managerRegistry->getManager()->flush();
 
-        $this->eventDispatcher->dispatch(RideEstimateCreatedEvent::NAME, new RideEstimateCreatedEvent($rideEstimation));
+        $this->eventDispatcher->dispatch(new RideEstimateCreatedEvent($rideEstimation), RideEstimateCreatedEvent::NAME);
 
-        $view = View::create();
-        $view
-            ->setData($rideEstimation)
-            ->setFormat('json')
-            ->setStatusCode(Response::HTTP_CREATED);
-
-        return $this->handleView($view);
+        return $this->createStandardResponse($rideEstimation);
     }
 
-    protected function createRideEstimate(CreateEstimateModel $model, Ride $ride = null): ?RideEstimate
+    protected function createRideEstimate(CreateEstimateModel $model, ?Ride $ride = null): ?RideEstimate
     {
         if (!$model->getDateTime()) {
             $model->setDateTime(new \DateTime());

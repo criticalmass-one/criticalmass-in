@@ -15,14 +15,12 @@ class RouterTest extends KernelTestCase
         self::bootKernel();
     }
 
-    protected function getRouter(): ObjectRouterInterface
+    protected function getObjectRouter(): ObjectRouterInterface
     {
-        $container = self::$container;
-
-        return $container->get(ObjectRouterInterface::class);
+        return static::getContainer()->get(ObjectRouterInterface::class);
     }
 
-    public function test1(): void
+    public function testCityRoute(): void
     {
         $citySlug = new CitySlug();
         $city = new City();
@@ -33,28 +31,12 @@ class RouterTest extends KernelTestCase
 
         $city->setMainSlug($citySlug);
 
-        $route = $this->getRouter()->generate($city, 'caldera_criticalmass_city_show');
+        $route = $this->getObjectRouter()->generate($city);
 
         $this->assertEquals('/testcity', $route);
     }
 
-    public function testCity(): void
-    {
-        $citySlug = new CitySlug();
-        $city = new City();
-
-        $citySlug
-            ->setSlug('testcity')
-            ->setCity($city);
-
-        $city->setMainSlug($citySlug);
-
-        $route = $this->getRouter()->generate($city);
-
-        $this->assertEquals('/testcity', $route);
-    }
-
-    public function testRide(): void
+    public function testRideRoute(): void
     {
         $citySlug = new CitySlug();
         $city = new City();
@@ -72,8 +54,24 @@ class RouterTest extends KernelTestCase
 
         $city->addRide($ride);
 
-        $route = $this->getRouter()->generate($ride);
+        $route = $this->getObjectRouter()->generate($ride);
 
         $this->assertEquals('/testcity/2018-01-01', $route);
+    }
+
+    public function testCityRouteWithExplicitRouteName(): void
+    {
+        $citySlug = new CitySlug();
+        $city = new City();
+
+        $citySlug
+            ->setSlug('hamburg')
+            ->setCity($city);
+
+        $city->setMainSlug($citySlug);
+
+        $route = $this->getObjectRouter()->generate($city, 'caldera_criticalmass_city_show');
+
+        $this->assertEquals('/hamburg', $route);
     }
 }

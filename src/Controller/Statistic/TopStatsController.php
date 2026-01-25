@@ -3,16 +3,23 @@
 namespace App\Controller\Statistic;
 
 use App\Controller\AbstractController;
+use App\Repository\RideRepository;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class TopStatsController extends AbstractController
 {
-    public function topStatsAction(): Response
+    #[Route(
+        '/statistic/top',
+        name: 'caldera_criticalmass_statistic_topten',
+        priority: 170
+    )]
+    public function topStatsAction(RideRepository $rideRepository): Response
     {
         return $this->render('Statistic/top.html.twig', [
-            'participationList' => $this->getRideRepository()->findMostPopularRides(),
-            'durationList' => $this->getRideRepository()->findLongestDurationRides(),
-            'distanceList' => $this->getRideRepository()->findLongestDistanceRides(),
+            'participationList' => $rideRepository->findMostPopularRides(),
+            'durationList' => $rideRepository->findLongestDurationRides(),
+            'distanceList' => $rideRepository->findLongestDistanceRides(),
         ]);
     }
 }

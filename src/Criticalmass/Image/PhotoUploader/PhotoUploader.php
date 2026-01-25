@@ -2,13 +2,53 @@
 
 namespace App\Criticalmass\Image\PhotoUploader;
 
+use App\Criticalmass\UploadFaker\UploadFakerInterface;
 use App\Entity\Photo;
+use App\Entity\Ride;
+use App\Entity\Track;
+use App\Entity\User;
 use App\Event\Photo\PhotoUploadedEvent;
 use DirectoryIterator;
+use Doctrine\Persistence\ManagerRegistry;
+use League\Flysystem\Filesystem;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class PhotoUploader extends AbstractPhotoUploader
+class PhotoUploader implements PhotoUploaderInterface
 {
+    private User $user;
+    private Ride $ride;
+    private array $addedPhotoList = [];
+
+    public function __construct(
+        private readonly ManagerRegistry $doctrine,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly UploadFakerInterface $uploadFaker
+    )
+    {
+
+    }
+
+    public function setUser(User $user): PhotoUploaderInterface
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function setRide(Ride $ride): PhotoUploaderInterface
+    {
+        $this->ride = $ride;
+
+        return $this;
+    }
+
+    /** @deprecated  */
+    public function setTrack(?Track $track = null): PhotoUploaderInterface
+    {
+        return $this;
+    }
+
     public function addFile(string $filename): PhotoUploaderInterface
     {
         $this->createPhotoEntity($filename);
@@ -59,7 +99,7 @@ class PhotoUploader extends AbstractPhotoUploader
 
         $this->doctrine->getManager()->persist($photo);
 
-        $this->eventDispatcher->dispatch(PhotoUploadedEvent::NAME, new PhotoUploadedEvent($photo, true, $uploadedFile->getRealPath()));
+        $this->eventDispatcher->dispatch(new PhotoUploadedEvent($photo, true, $uploadedFile->getRealPath()), PhotoUploadedEvent::NAME);
 
         $this->addedPhotoList[] = $photo;
 
@@ -79,7 +119,7 @@ class PhotoUploader extends AbstractPhotoUploader
 
         $this->doctrine->getManager()->persist($photo);
         
-        $this->eventDispatcher->dispatch(PhotoUploadedEvent::NAME, new PhotoUploadedEvent($photo, true, $tmpFilename));
+        $this->eventDispatcher->dispatch(new PhotoUploadedEvent($photo, true, $tmpFilename), PhotoUploadedEvent::NAME);
 
         $this->addedPhotoList[] = $photo;
 

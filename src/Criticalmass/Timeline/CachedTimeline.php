@@ -5,25 +5,12 @@ namespace App\Criticalmass\Timeline;
 use Doctrine\Persistence\ManagerRegistry;
 use Flagception\Manager\FeatureManagerInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-use Symfony\Component\Cache\Adapter\RedisAdapter;
-use Symfony\Component\Templating\EngineInterface;
 use Symfony\Contracts\Cache\ItemInterface;
+use Twig\Environment;
 
 class CachedTimeline extends Timeline
 {
-    protected int $ttl;
-
-    protected string $redisUrl;
-
-    public function __construct(ManagerRegistry $doctrine, EngineInterface $templating, FeatureManagerInterface $featureManager, string $redisUrl, int $cachedTimelineTtl = 300)
-    {
-        $this->doctrine = $doctrine;
-        $this->templating = $templating;
-        $this->ttl = $cachedTimelineTtl;
-        $this->redisUrl = $redisUrl;
-
-        parent::__construct($doctrine, $templating, $featureManager);
-    }
+    private const int TTL = 300;
 
     public function execute(): TimelineInterface
     {
@@ -37,16 +24,13 @@ class CachedTimeline extends Timeline
             $cacheKey .= '-end-' . $this->endDateTime->format('Y-m-d');
         }
 
-        $redisConnection = RedisAdapter::createConnection($this->redisUrl);
-
-        $cache = new RedisAdapter(
-            $redisConnection,
-            'criticalmass',
-            $this->ttl
+        $cache = new FilesystemAdapter(
+            'criticalmass-timeline',
+            self::TTL
         );
 
         $this->contentList = $cache->get($cacheKey, function (ItemInterface $item) {
-            $item->expiresAfter($this->ttl);
+            $item->expiresAfter(self::TTL);
 
             $this->process();
 

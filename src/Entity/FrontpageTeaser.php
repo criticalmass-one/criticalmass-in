@@ -9,91 +9,59 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @ORM\Table(name="frontpage_teaser")
- * @ORM\Entity(repositoryClass="App\Repository\FrontpageTeaserRepository")
- * @Vich\Uploadable
- */
+#[Vich\Uploadable]
+#[ORM\Table(name: 'frontpage_teaser')]
+#[ORM\Entity(repositoryClass: 'App\Repository\FrontpageTeaserRepository')]
 class FrontpageTeaser implements PhotoInterface
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected ?int $id = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="frontpageTeasers")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'frontpageTeasers')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     protected ?User $user = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="frontpageTeasers")
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'City', inversedBy: 'frontpageTeasers')]
+    #[ORM\JoinColumn(name: 'city_id', referencedColumnName: 'id')]
     protected ?City $city = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected ?string $headline = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     protected ?string $text = null;
 
-    /**
-     * @Vich\UploadableField(mapping="frontpage_teaser", fileNameProperty="imageName",  size="imageSize", mimeType="imageMimeType")
-     */
+    #[Vich\UploadableField(mapping: 'frontpage_teaser', fileNameProperty: 'imageName', size: 'imageSize', mimeType: 'imageMimeType')]
     protected ?File $imageFile = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $imageName = null;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     protected ?int $imageSize = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $imageMimeType = null;
 
-    /**
-     * @ORM\Column(type="smallint")
-     */
+    #[ORM\Column(type: 'smallint', nullable: true)]
     protected int $position = 0;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=false)
-     */
+    #[ORM\Column(type: 'datetime', nullable: false)]
     protected \DateTime $createdAt;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     protected ?\DateTime $updatedAt = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     protected ?\DateTime $validFrom = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     protected ?\DateTime $validUntil = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity="FrontpageTeaserButton", mappedBy="frontpageTeaser")
-     * @ORM\OrderBy({"position" = "ASC"})
-     */
+    #[ORM\OneToMany(targetEntity: 'FrontpageTeaserButton', mappedBy: 'frontpageTeaser')]
+    #[ORM\OrderBy(['position' => 'ASC'])]
     protected Collection $buttons;
 
     public function __construct()
@@ -119,7 +87,7 @@ class FrontpageTeaser implements PhotoInterface
         return $this->user;
     }
 
-    public function setCity(City $city = null): FrontpageTeaser
+    public function setCity(?City $city = null): FrontpageTeaser
     {
         $this->city = $city;
 
@@ -131,7 +99,7 @@ class FrontpageTeaser implements PhotoInterface
         return $this->city;
     }
 
-    public function setHeadline(string $headline = null): FrontpageTeaser
+    public function setHeadline(?string $headline = null): FrontpageTeaser
     {
         $this->headline = $headline;
 
@@ -155,7 +123,7 @@ class FrontpageTeaser implements PhotoInterface
         return $this->text;
     }
 
-    public function setImageFile(File $image = null): PhotoInterface
+    public function setImageFile(?File $image = null): PhotoInterface
     {
         $this->imageFile = $image;
 
@@ -171,7 +139,7 @@ class FrontpageTeaser implements PhotoInterface
         return $this->imageFile;
     }
 
-    public function setImageName(string $imageName = null): PhotoInterface
+    public function setImageName(?string $imageName = null): PhotoInterface
     {
         $this->imageName = $imageName;
 
@@ -188,7 +156,7 @@ class FrontpageTeaser implements PhotoInterface
         return $this->imageSize;
     }
 
-    public function setImageSize(int $imageSize = null): PhotoInterface
+    public function setImageSize(?int $imageSize = null): PhotoInterface
     {
         $this->imageSize = $imageSize;
 
@@ -200,7 +168,7 @@ class FrontpageTeaser implements PhotoInterface
         return $this->imageMimeType;
     }
 
-    public function setImageMimeType(string $imageMimeType = null): PhotoInterface
+    public function setImageMimeType(?string $imageMimeType = null): PhotoInterface
     {
         $this->imageMimeType = $imageMimeType;
 
@@ -231,7 +199,7 @@ class FrontpageTeaser implements PhotoInterface
         return $this->createdAt;
     }
 
-    public function setUpdatedAt(\DateTime $updatedAt = null): FrontpageTeaser
+    public function setUpdatedAt(?\DateTime $updatedAt = null): FrontpageTeaser
     {
         $this->updatedAt = $updatedAt;
 
@@ -243,7 +211,7 @@ class FrontpageTeaser implements PhotoInterface
         return $this->updatedAt;
     }
 
-    public function setValidFrom(\DateTime $validFrom = null): FrontpageTeaser
+    public function setValidFrom(?\DateTime $validFrom = null): FrontpageTeaser
     {
         $this->validFrom = $validFrom;
 
@@ -255,7 +223,7 @@ class FrontpageTeaser implements PhotoInterface
         return $this->validFrom;
     }
 
-    public function setValidUntil(\DateTime $validUntil = null): FrontpageTeaser
+    public function setValidUntil(?\DateTime $validUntil = null): FrontpageTeaser
     {
         $this->validUntil = $validUntil;
 

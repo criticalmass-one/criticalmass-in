@@ -6,210 +6,167 @@ use App\Criticalmass\Geo\Entity\Track as GeoTrack;
 use App\Criticalmass\Geo\EntityInterface\TrackInterface;
 use MalteHuebner\OrderedEntitiesBundle\Annotation as OE;
 use MalteHuebner\OrderedEntitiesBundle\OrderedEntityInterface;
-use App\Criticalmass\Router\Annotation as Routing;
+use App\Criticalmass\Router\Attribute as Routing;
 use App\Criticalmass\UploadableDataHandler\UploadableEntity;
 use App\Criticalmass\UploadFaker\FakeUploadable;
 use App\EntityInterface\RouteableInterface;
-use App\EntityInterface\StaticMapableInterface;
-use Caldera\GeoBasic\Track\TrackInterface as BaseTrackInterface;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\Ignore;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Table(name="track")
- * @ORM\Entity(repositoryClass="App\Repository\TrackRepository")
- * @Vich\Uploadable
- * @JMS\ExclusionPolicy("all")
- * @Routing\DefaultRoute(name="caldera_criticalmass_track_view")
  * @OE\OrderedEntity()
  */
-class Track extends GeoTrack implements RouteableInterface, StaticMapableInterface, TrackInterface, UploadableEntity, FakeUploadable, OrderedEntityInterface
+#[Vich\Uploadable]
+#[Routing\DefaultRoute(name: 'caldera_criticalmass_track_view')]
+#[ORM\Table(name: 'track')]
+#[ORM\Entity(repositoryClass: 'App\Repository\TrackRepository')]
+#[ORM\Index(fields: ['creationDateTime'], name: 'track_creation_date_time_index')]
+class Track extends GeoTrack implements RouteableInterface, TrackInterface, UploadableEntity, FakeUploadable, OrderedEntityInterface
 {
     const TRACK_SOURCE_GPX = 'TRACK_SOURCE_GPX';
     const TRACK_SOURCE_STRAVA = 'TRACK_SOURCE_STRAVA';
-    const TRACK_SOURCE_RUNKEEPER = 'TRACK_SOURCE_RUNKEEPER';
     const TRACK_SOURCE_RUNTASTIC = 'TRACK_SOURCE_RUNTASTIC';
     const TRACK_SOURCE_DRAW = 'TRACK_SOURCE_DRAW';
     const TRACK_SOURCE_GLYMPSE = 'TRACK_SOURCE_GLYMPSE';
     const TRACK_SOURCE_CRITICALMAPS = 'TRACK_SOURCE_CRITICALMAPS';
     const TRACK_SOURCE_UNKNOWN = 'TRACK_SOURCE_UNKNOWN';
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @JMS\Groups({"timelapse", "api-public"})
-     * @JMS\Expose
-     * @Routing\RouteParameter(name="trackId")
-     */
+    #[Routing\RouteParameter(name: 'id')]
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[Groups(['timelapse', 'api-public'])]
     protected ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @JMS\Groups({"timelapse", "api-private"})
-     * @JMS\Expose
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['timelapse', 'api-private'])]
     protected ?string $username = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Ride", inversedBy="tracks")
-     * @ORM\JoinColumn(name="ride_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: 'Ride', inversedBy: 'tracks')]
+    #[ORM\JoinColumn(name: 'ride_id', referencedColumnName: 'id')]
+    #[Ignore]
     protected ?Ride $ride = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="tracks")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     * @JMS\Groups({"timelapse", "api-private"})
-     * @JMS\Expose
      * @OE\Identical()
      */
+    #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'tracks')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    #[Groups(['timelapse', 'api-private'])]
     protected ?User $user = null;
 
-    /**
-     * @ORM\OneToOne(targetEntity="RideEstimate", mappedBy="track", cascade={"all"}, orphanRemoval=true)
-     * @ORM\JoinColumn(name="estimate_id", referencedColumnName="id")
-     */
+    #[ORM\OneToOne(targetEntity: 'RideEstimate', mappedBy: 'track', cascade: ['all'], orphanRemoval: true)]
+    #[ORM\JoinColumn(name: 'estimate_id', referencedColumnName: 'id')]
+    #[Ignore]
     protected ?RideEstimate $rideEstimate = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     * @JMS\Groups({"timelapse", "api-public"})
-     * @JMS\Expose
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Groups(['timelapse', 'api-public'])]
     protected ?\DateTime $creationDateTime = null;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @JMS\Groups({"timelapse", "api-public"})
-     * @JMS\Expose
      * @OE\Order(direction="asc")
      */
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Groups(['timelapse', 'api-public'])]
     protected ?\DateTime $startDateTime = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @JMS\Groups({"timelapse", "api-public"})
-     * @JMS\Expose
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Groups(['timelapse', 'api-public'])]
     protected ?\DateTime $endDateTime = null;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     * @JMS\Groups({"timelapse", "api-public"})
-     * @JMS\Expose
-     */
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['timelapse', 'api-public'])]
     protected ?float $distance = null;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @JMS\Groups({"timelapse", "api-public"})
-     * @JMS\Expose
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['timelapse', 'api-public'])]
     protected ?int $points = null;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @JMS\Groups({"timelapse", "api-public"})
-     * @JMS\Expose
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['timelapse', 'api-public'])]
     protected ?int $startPoint = null;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @JMS\Groups({"timelapse", "api-public"})
-     * @JMS\Expose
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['timelapse', 'api-public'])]
     protected ?int $endPoint = null;
 
-    /**
-     * @ORM\Column(type="string", length=32, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 32, nullable: true)]
+    #[Ignore]
     protected ?string $md5Hash = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    #[Ignore]
     protected bool $enabled = true;
 
     /**
-     * @ORM\Column(type="boolean")
      * @OE\Boolean(value=false)
      */
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    #[Ignore]
     protected bool $deleted = false;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
      * @deprecated
      */
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Ignore]
     protected ?string $latLngList = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Ignore]
     protected ?string $geoJson = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @JMS\Groups({"timelapse", "api-public"})
-     * @JMS\Expose
-     * @JMS\SerializedName("polylineString")
-     */
-    protected ?string $polyline = null;
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(['timelapse', 'api-public'])]
+    #[SerializedName('polylineString')]
+    protected ?string $polyline;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @JMS\Groups({"timelapse", "api-public"})
-     * @JMS\Expose
-     * @JMS\SerializedName("reducedPolylineString")
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
+    #[Groups(['timelapse', 'api-public'])]
+    #[SerializedName('reducedPolylineString')]
     protected ?string $reducedPolyline = null;
 
-    /**
-     * @Vich\UploadableField(mapping="track_file", fileNameProperty="trackFilename",  size="trackSize", mimeType="trackMimeType")
-     */
+    #[Vich\UploadableField(mapping: 'track_file', fileNameProperty: 'trackFilename', size: 'trackSize', mimeType: 'trackMimeType')]
     protected ?File $trackFile = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Ignore]
     protected ?string $trackFilename = null;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Ignore]
     protected ?int $trackSize = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Ignore]
     protected ?string $trackMimeType = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Ignore]
     protected ?\DateTime $updatedAt = null;
 
     /**
-     * @ORM\Column(type="string", columnDefinition="ENUM('TRACK_SOURCE_GPX', 'TRACK_SOURCE_STRAVA', 'TRACK_SOURCE_RUNKEEPER', 'TRACK_SOURCE_RUNTASTIC', 'TRACK_SOURCE_DRAW', 'TRACK_SOURCE_GLYMPSE', 'TRACK_SOURCE_CRITICALMAPS', 'TRACK_SOURCE_UNKNOWN')")
-     *
      * $source must be nullable du to legacy tracks without source attribution
      */
+    #[ORM\Column(type: 'string', nullable: true, columnDefinition: "ENUM('TRACK_SOURCE_GPX', 'TRACK_SOURCE_STRAVA', 'TRACK_SOURCE_RUNKEEPER', 'TRACK_SOURCE_RUNTASTIC', 'TRACK_SOURCE_DRAW', 'TRACK_SOURCE_GLYMPSE', 'TRACK_SOURCE_CRITICALMAPS', 'TRACK_SOURCE_UNKNOWN')")]
+    #[Ignore]
     protected ?string $source = self::TRACK_SOURCE_UNKNOWN;
 
-    /**
-     * @ORM\Column(type="bigint", nullable=true)
-     */
+    #[ORM\Column(type: 'bigint', nullable: true)]
+    #[Ignore]
     protected ?int $stravaActitityId = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
+    #[Ignore]
     private bool $reviewed = false;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $app = null;
 
     public function __construct()
     {
@@ -233,7 +190,7 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
         return $this->username;
     }
 
-    public function setRide(Ride $ride = null): Track
+    public function setRide(?Ride $ride = null): Track
     {
         $this->ride = $ride;
 
@@ -245,7 +202,7 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
         return $this->ride;
     }
 
-    public function setUser(User $user = null): Track
+    public function setUser(?User $user = null): Track
     {
         $this->user = $user;
 
@@ -293,7 +250,7 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
         return $this;
     }
 
-    public function setRideEstimate(RideEstimate $rideEstimate = null): Track
+    public function setRideEstimate(?RideEstimate $rideEstimate = null): Track
     {
         $this->rideEstimate = $rideEstimate;
 
@@ -317,19 +274,19 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
         return $this->latLngList;
     }
 
-    public function setPolyline(string $polyline): BaseTrackInterface
+    public function setPolyline(?string $polyline): static
     {
         $this->polyline = $polyline;
 
         return $this;
     }
 
-    public function getPolyline(): string
+    public function getPolyline(): ?string
     {
         return $this->polyline;
     }
 
-    public function setReducedPolyline(string $reducedPolyline = null): TrackInterface
+    public function setReducedPolyline(?string $reducedPolyline = null): TrackInterface
     {
         $this->reducedPolyline = $reducedPolyline;
 
@@ -341,55 +298,34 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
         return $this->reducedPolyline;
     }
 
-    /**
-     * @JMS\Groups({"timelapse"})
-     * @JMS\VirtualProperty
-     * @JMS\SerializedName("colorRed")
-     */
+    #[Groups(['timelapse'])]
+    #[SerializedName('colorRed')]
     public function getColorRed(): ?int
     {
         if ($this->getUser()) {
             return $this->getUser()->getColorRed();
-        } elseif ($this->getTicket()) {
-            return $this->getTicket()->getColorRed();
-        } elseif ($this->getCriticalmapsUser()) {
-            return $this->getCriticalmapsUser()->getColorRed();
         }
 
         return null;
     }
 
-    /**
-     * @JMS\Groups({"timelapse"})
-     * @JMS\VirtualProperty
-     * @JMS\SerializedName("colorGreen")
-     */
+    #[Groups(['timelapse'])]
+    #[SerializedName('colorGreen')]
     public function getColorGreen(): ?int
     {
         if ($this->getUser()) {
             return $this->getUser()->getColorGreen();
-        } elseif ($this->getTicket()) {
-            return $this->getTicket()->getColorGreen();
-        } elseif ($this->getCriticalmapsUser()) {
-            return $this->getCriticalmapsUser()->getColorGreen();
         }
 
         return null;
     }
 
-    /**
-     * @JMS\Groups({"timelapse"})
-     * @JMS\VirtualProperty
-     * @JMS\SerializedName("colorBlue")
-     */
+    #[Groups(['timelapse'])]
+    #[SerializedName('colorBlue')]
     public function getColorBlue(): ?int
     {
         if ($this->getUser()) {
             return $this->getUser()->getColorBlue();
-        } elseif ($this->getTicket()) {
-            return $this->getTicket()->getColorBlue();
-        } elseif ($this->getCriticalmapsUser()) {
-            return $this->getCriticalmapsUser()->getColorBlue();
         }
 
         return null;
@@ -417,7 +353,7 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
         return $this->trackSize;
     }
 
-    public function setTrackSize(int $trackSize = null): Track
+    public function setTrackSize(?int $trackSize = null): Track
     {
         $this->trackSize = $trackSize;
 
@@ -429,7 +365,7 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
         return $this->trackMimeType;
     }
 
-    public function setTrackMimeType(string $trackMimeType = null): Track
+    public function setTrackMimeType(?string $trackMimeType = null): Track
     {
         $this->trackMimeType = $trackMimeType;
 
@@ -453,22 +389,6 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
         }
 
         return 0;
-    }
-
-    public function getAverageVelocity(): ?float
-    {
-        if ($this->startDateTime && $this->endDateTime && $this->distance) {
-            $kilometres = $this->getDistance();
-            $seconds = $this->getEndDateTime()->getTimestamp() - $this->getStartDateTime()->getTimestamp();
-
-            $hours = (float)$seconds / 3600;
-
-            $velocity = $kilometres / ($hours + 0.0001);
-
-            return $velocity;
-        }
-
-        return null;
     }
 
     public function getStartTime(): \DateTime
@@ -528,7 +448,7 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
         return $this;
     }
 
-    public function getWaypointList(): string
+    public function getWaypointList(): ?string
     {
         return $this->geoJson;
     }
@@ -545,8 +465,15 @@ class Track extends GeoTrack implements RouteableInterface, StaticMapableInterfa
         return $this;
     }
 
-    public function elasticable(): bool
+    public function getApp(): ?string
     {
-        return $this->enabled && !$this->deleted && $this->reviewed;
+        return $this->app;
+    }
+
+    public function setApp(?string $app): static
+    {
+        $this->app = $app;
+
+        return $this;
     }
 }

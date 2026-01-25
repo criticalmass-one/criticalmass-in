@@ -1,31 +1,15 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% set city = ride.city %}
 
 {% block title %}Fotos hochladen{% endblock %}
 
 {% block breadcrumb %}
-    <li>
-        <a href="{{ path('caldera_criticalmass_city_list') }}">
-            Städteliste
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ objectPath(city) }}">
-            {{ city.title }}
-        </a>
-    </li>
-
-    <li>
-        <a href="{{ objectPath(ride) }}">
-            {{ ride.title }}
-        </a>
-    </li>
-
-    <li class="active">
-        Fotos hochladen
-    </li>
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item(city.title, object_path(city)) }}
+    {{ breadcrumb.item(ride.title, object_path(ride)) }}
+    {{ breadcrumb.active('Fotos hochladen') }}
 {% endblock %}
 
 {% block content %}
@@ -49,7 +33,7 @@
 
                 <p>
                     Um mehrere Fotos auf einmal hochzuladen, probiere bitte <a
-                            href="{{ objectPath(ride, 'caldera_criticalmass_gallery_photos_upload_ride') }}">Multi-Uploader</a>
+                            href="{{ object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') }}">Multi-Uploader</a>
                     aus.
                 </p>
             </div>
@@ -58,7 +42,7 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <div class="form-group">
-                    <form action="{{ objectPath(ride, 'caldera_criticalmass_gallery_legacy_photos_upload_ride') }}"
+                    <form action="{{ object_path(ride, 'caldera_criticalmass_gallery_legacy_photos_upload_ride') }}"
                           method="post" enctype="multipart/form-data">
                         {{ form_widget(form.imageFile) }}
                         <input type="submit" value="Datei hochladen" class="btn btn-success margin-top-medium">
