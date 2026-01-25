@@ -150,7 +150,7 @@ class TrackEventSubscriber implements EventSubscriberInterface
             ->setEndPoint($pointCounter - 1)
             ->setStartDateTime($gpxStats->startedAt)
             ->setEndDateTime($gpxStats->finishedAt)
-            ->setDistance($gpxStats->distance)
+            ->setDistance($gpxStats->distance / 1000) // phpGPX returns meters, we store kilometers
         ;
     }
 
