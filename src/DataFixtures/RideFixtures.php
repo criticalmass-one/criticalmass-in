@@ -42,96 +42,141 @@ class RideFixtures extends Fixture implements DependentFixtureInterface
         /** @var User $adminUser */
         $adminUser = $this->getReference(UserFixtures::ADMIN_USER_REFERENCE, User::class);
 
-        $pastDate = new \DateTime('-1 month last friday 19:00');
-        $futureDate = new \DateTime('+1 month last friday 19:00');
+        // Create rides for the last 3 months and next 3 months for Hamburg
+        $hamburgParticipants = [280, 250, 220, null, null, null];
+        for ($i = -3; $i <= 3; $i++) {
+            if ($i === 0) {
+                continue;
+            }
 
-        $hamburgRidePast = $this->createRide(
-            $hamburg,
-            $hamburgCycle,
-            $adminUser,
-            $pastDate,
-            'Critical Mass Hamburg ' . $pastDate->format('F Y'),
-            'Moorweide',
-            53.5611,
-            9.9895,
-            250
-        );
-        $this->addReference(self::HAMBURG_RIDE_PAST_REFERENCE, $hamburgRidePast);
-        $manager->persist($hamburgRidePast);
+            $monthOffset = $i > 0 ? "+{$i}" : (string) $i;
+            $date = new \DateTime("{$monthOffset} months last friday 19:00");
+            $participantIndex = $i + 3;
+            if ($i > 0) {
+                $participantIndex--;
+            }
 
-        $hamburgRideFuture = $this->createRide(
-            $hamburg,
-            $hamburgCycle,
-            $adminUser,
-            $futureDate,
-            'Critical Mass Hamburg ' . $futureDate->format('F Y'),
-            'Moorweide',
-            53.5611,
-            9.9895
-        );
-        $this->addReference(self::HAMBURG_RIDE_FUTURE_REFERENCE, $hamburgRideFuture);
-        $manager->persist($hamburgRideFuture);
+            $ride = $this->createRide(
+                $hamburg,
+                $hamburgCycle,
+                $adminUser,
+                $date,
+                'Critical Mass Hamburg ' . $date->format('F Y'),
+                'Moorweide',
+                53.5611,
+                9.9895,
+                $hamburgParticipants[$participantIndex] ?? null
+            );
 
-        $berlinPastDate = new \DateTime('-1 month last friday 19:00');
-        $berlinFutureDate = new \DateTime('+1 month last friday 19:00');
+            if ($i === -1) {
+                $this->addReference(self::HAMBURG_RIDE_PAST_REFERENCE, $ride);
+            } elseif ($i === 1) {
+                $this->addReference(self::HAMBURG_RIDE_FUTURE_REFERENCE, $ride);
+            }
 
-        $berlinRidePast = $this->createRide(
-            $berlin,
-            $berlinCycle,
-            $adminUser,
-            $berlinPastDate,
-            'Critical Mass Berlin ' . $berlinPastDate->format('F Y'),
-            'Heinrichplatz',
-            52.4989,
-            13.4178,
-            500
-        );
-        $this->addReference(self::BERLIN_RIDE_PAST_REFERENCE, $berlinRidePast);
-        $manager->persist($berlinRidePast);
+            $manager->persist($ride);
+        }
 
-        $berlinRideFuture = $this->createRide(
-            $berlin,
-            $berlinCycle,
-            $adminUser,
-            $berlinFutureDate,
-            'Critical Mass Berlin ' . $berlinFutureDate->format('F Y'),
-            'Heinrichplatz',
-            52.4989,
-            13.4178
-        );
-        $this->addReference(self::BERLIN_RIDE_FUTURE_REFERENCE, $berlinRideFuture);
-        $manager->persist($berlinRideFuture);
+        // Create rides for the last 3 months and next 3 months for Berlin
+        $berlinParticipants = [600, 500, 450, null, null, null];
+        for ($i = -3; $i <= 3; $i++) {
+            if ($i === 0) {
+                continue;
+            }
 
-        $munichPastDate = new \DateTime('-2 months last friday 19:00');
+            $monthOffset = $i > 0 ? "+{$i}" : (string) $i;
+            $date = new \DateTime("{$monthOffset} months last friday 19:00");
+            $participantIndex = $i + 3;
+            if ($i > 0) {
+                $participantIndex--;
+            }
 
-        $munichRidePast = $this->createRide(
-            $munich,
-            $munichCycle,
-            $adminUser,
-            $munichPastDate,
-            'Critical Mass Munich ' . $munichPastDate->format('F Y'),
-            'Marienplatz',
-            48.1371,
-            11.5754,
-            300
-        );
-        $this->addReference(self::MUNICH_RIDE_PAST_REFERENCE, $munichRidePast);
-        $manager->persist($munichRidePast);
+            $ride = $this->createRide(
+                $berlin,
+                $berlinCycle,
+                $adminUser,
+                $date,
+                'Critical Mass Berlin ' . $date->format('F Y'),
+                'Heinrichplatz',
+                52.4989,
+                13.4178,
+                $berlinParticipants[$participantIndex] ?? null
+            );
 
-        $kielFutureDate = new \DateTime('+2 months last friday 18:00');
+            if ($i === -1) {
+                $this->addReference(self::BERLIN_RIDE_PAST_REFERENCE, $ride);
+            } elseif ($i === 1) {
+                $this->addReference(self::BERLIN_RIDE_FUTURE_REFERENCE, $ride);
+            }
 
-        $kielRideFuture = $this->createRide(
-            $kiel,
-            $kielCycle,
-            $adminUser,
-            $kielFutureDate,
-            'Critical Mass Kiel ' . $kielFutureDate->format('F Y'),
-            'Asmus-Bremer-Platz',
-            54.3233,
-            10.1359
-        );
-        $this->addReference(self::KIEL_RIDE_FUTURE_REFERENCE, $kielRideFuture);
-        $manager->persist($kielRideFuture);
+            $manager->persist($ride);
+        }
+
+        // Create rides for the last 3 months and next 3 months for Munich
+        $munichParticipants = [350, 300, 280, null, null, null];
+        for ($i = -3; $i <= 3; $i++) {
+            if ($i === 0) {
+                continue;
+            }
+
+            $monthOffset = $i > 0 ? "+{$i}" : (string) $i;
+            $date = new \DateTime("{$monthOffset} months last friday 19:00");
+            $participantIndex = $i + 3;
+            if ($i > 0) {
+                $participantIndex--;
+            }
+
+            $ride = $this->createRide(
+                $munich,
+                $munichCycle,
+                $adminUser,
+                $date,
+                'Critical Mass Munich ' . $date->format('F Y'),
+                'Marienplatz',
+                48.1371,
+                11.5754,
+                $munichParticipants[$participantIndex] ?? null
+            );
+
+            if ($i === -2) {
+                $this->addReference(self::MUNICH_RIDE_PAST_REFERENCE, $ride);
+            }
+
+            $manager->persist($ride);
+        }
+
+        // Create rides for the last 3 months and next 3 months for Kiel
+        $kielParticipants = [120, 100, 80, null, null, null];
+        for ($i = -3; $i <= 3; $i++) {
+            if ($i === 0) {
+                continue;
+            }
+
+            $monthOffset = $i > 0 ? "+{$i}" : (string) $i;
+            $date = new \DateTime("{$monthOffset} months last friday 18:00");
+            $participantIndex = $i + 3;
+            if ($i > 0) {
+                $participantIndex--;
+            }
+
+            $ride = $this->createRide(
+                $kiel,
+                $kielCycle,
+                $adminUser,
+                $date,
+                'Critical Mass Kiel ' . $date->format('F Y'),
+                'Asmus-Bremer-Platz',
+                54.3233,
+                10.1359,
+                $kielParticipants[$participantIndex] ?? null
+            );
+
+            if ($i === 2) {
+                $this->addReference(self::KIEL_RIDE_FUTURE_REFERENCE, $ride);
+            }
+
+            $manager->persist($ride);
+        }
 
         $manager->flush();
     }
