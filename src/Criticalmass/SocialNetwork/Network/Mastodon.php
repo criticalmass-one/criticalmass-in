@@ -14,10 +14,8 @@ class Mastodon extends AbstractNetwork
 
     public function accepts(string $url): bool
     {
-        $pattern = '/@?\b([A-Z0-9._%+-]+)@([A-Z0-9.-]+\.[A-Z]{2,})/';
+        $pattern = '/@?([a-z0-9._%+-]+)@([a-z0-9.-]+\.[a-z]{2,})/i';
 
-        preg_match($pattern, $url, $matches);
-
-        return $matches && is_array($matches) && count($matches) > 1;
+        return preg_match($pattern, $url) === 1;
     }
 }
