@@ -1,42 +1,29 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Critical Mass in {{ region.name }}{% endblock %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
-
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Verzeichnis', path('caldera_criticalmass_region_world')) }}
-    {{ bootstrap.breadcrumb_item(city.title, objectPath(city)) }}
-    {{ bootstrap.breadcrumb_item(ride.title, objectPath(ride)) }}
-
-{% endblock %}
-
-{% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Verzeichnis', path('caldera_criticalmass_region_world')) }}
-
+    {{ breadcrumb.item('Verzeichnis', path('caldera_criticalmass_region_world')) }}
     {% if (region.parent and region.parent.parent and region.parent.parent.parent and not region.parent.parent.parent.isWorld()) %}
-        {{ bootstrap.breadcrum_item(region.parent.parent.parent.name, objectPath(region.parent.parent.parent)) }}
+        {{ breadcrumb.item(region.parent.parent.parent.name, object_path(region.parent.parent.parent)) }}
     {% endif %}
-
     {% if (region.parent and region.parent.parent and not region.parent.parent.isWorld()) %}
-        {{ bootstrap.breadcrum_item(region.parent.parent.name, objectPath(region.parent.parent)) }}
+        {{ breadcrumb.item(region.parent.parent.name, object_path(region.parent.parent)) }}
     {% endif %}
-
-
     {% if (region.parent and not region.parent.isWorld()) %}
-        {{ bootstrap.breadcrum_item(region.parent.name, objectPath(region.parent)) }}
+        {{ breadcrumb.item(region.parent.name, object_path(region.parent)) }}
     {% endif %}
-
-    {{ bootstrap.breadcrumb_item(region.name, '', true) }}
+    {{ breadcrumb.active(region.name) }}
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 {% if app.getUser() and region.isLevel(3) %}
                     <a href="{{ path('caldera_criticalmass_city_add', { slug1: region.parent.parent.slug, slug2: region.parent.slug, slug3: region.slug }) }}"
-                       class="btn btn-primary mt-2 pull-right">
+                       class="btn btn-success margin-top-medium pull-right">
                         <i class="far fa-plus"></i>
                         Stadt hinzufügen
                     </a>
@@ -53,15 +40,21 @@
 
         {% if allCities|length > 0 %}
             <div class="row">
-                <div class="col-12">
-                    <div class="map" id="region-map" style="height: 350px;" data-api-type="city" data-api-query="{{ path('caldera_criticalmass_rest_city_list', { regionSlug: region.slug, size: 500 }) }}"></div>
+                <div class="col-md-12">
+                    <div class="map"
+                         id="region-map"
+                         data-controller="map--query-map"
+                         style="height: 350px;"
+                         data-map--api-type-value="city"
+                         data-map--api-query-value="{{ path('caldera_criticalmass_rest_city_list', { regionSlug: region.slug, size: 500 }) }}">
+                    </div>
                 </div>
             </div>
         {% endif %}
 
         {% if regions|length > 0 %}
-            <div class="row mt-3">
-                <div class="col-12">
+            <div class="row">
+                <div class="col-md-12">
                     <h2>
                         {% if region.isWorld() %}
                             Kontinente
@@ -74,9 +67,9 @@
 
             <div class="row">
                 {% for region2 in regions %}
-                    <div class="col-6 col-sm-4 col-md-3">
+                    <div class="col-xs-6 col-sm-4 col-md-3">
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-md-12">
                                 <div class="text-center">
                                     <h4>
                                         <a href="{{ object_path(region2) }}">
@@ -88,11 +81,9 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-md-12">
                                 <div class="text-center">
-                                    <small>
-                                        {{ cityCounter[region2.id] }} Städte in dieser Region
-                                    </small>
+                                    <small>{{ cityCounter[region2.id] }} Städte in dieser Region</small>
                                 </div>
                             </div>
                         </div>
@@ -103,7 +94,7 @@
 
         {% if cities|length > 0 %}
             <div class="row">
-                <div class="col-12 mt-3">
+                <div class="col-md-12">
                     <h2>
                         Städte in {{ region.name }}
                     </h2>
@@ -112,9 +103,9 @@
 
             <div class="row">
                 {% for city in cities %}
-                    <div class="col-6 col-sm-4 col-md-3">
+                    <div class="col-xs-6 col-sm-4 col-md-3">
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-md-12">
                                 <div class="text-center">
                                     <h4>
                                         <a href="{{ object_path(city) }}">

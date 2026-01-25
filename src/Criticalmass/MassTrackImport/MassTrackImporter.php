@@ -4,41 +4,18 @@ namespace App\Criticalmass\MassTrackImport;
 
 use App\Criticalmass\MassTrackImport\ActivityLoader\ActivityLoaderInterface;
 use App\Criticalmass\MassTrackImport\Converter\StravaActivityConverter;
-use App\Criticalmass\MassTrackImport\ProposalPersister\ProposalPersisterInterface;
-use App\Criticalmass\MassTrackImport\TrackDecider\TrackDeciderInterface;
 use App\Entity\User;
-use JMS\Serializer\SerializerInterface;
-use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
+use App\Message\ImportTrackCandidateMessage;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class MassTrackImporter implements MassTrackImporterInterface
 {
-    /** @var ActivityLoaderInterface $activityLoader */
-    protected $activityLoader;
-
-    /** @var SerializerInterface $serializer */
-    protected $serializer;
-
-    /** @var TrackDeciderInterface $trackDecider */
-    protected $trackDecider;
-
-    /** @var ProposalPersisterInterface $proposalPersister */
-    protected $proposalPersister;
-
-    /** @var ProducerInterface $producer */
-    protected $producer;
-
-    /** @var TokenStorageInterface $tokenStorage */
-    protected $tokenStorage;
-
-    public function __construct(ProducerInterface $producer, ProposalPersisterInterface $proposalPersister, SerializerInterface $serializer, TrackDeciderInterface $trackDecider, ActivityLoaderInterface $activityLoader, TokenStorageInterface $tokenStorage)
-    {
-        $this->serializer = $serializer;
-        $this->trackDecider = $trackDecider;
-        $this->activityLoader = $activityLoader;
-        $this->proposalPersister = $proposalPersister;
-        $this->producer = $producer;
-        $this->tokenStorage = $tokenStorage;
+    public function __construct(
+        private readonly MessageBusInterface $messageBus,
+        private readonly ActivityLoaderInterface $activityLoader,
+        private readonly TokenStorageInterface $tokenStorage
+    ) {
     }
 
     public function setStartDateTime(\DateTime $startDateTime): MassTrackImporterInterface
@@ -58,15 +35,27 @@ class MassTrackImporter implements MassTrackImporterInterface
     public function execute(): array
     {
         $modelList = $this->activityLoader->load();
+        $user = $this->getUser();
 
-        foreach ($modelList as $key => $activityData) {
+        foreach ($modelList as $activityData) {
             $activity = StravaActivityConverter::convert($activityData);
 
-            $activity->setUser($this->getUser());
+            $message = new ImportTrackCandidateMessage(
+                userId: $user->getId(),
+                activityId: $activity->getActivityId(),
+                name: $activity->getName(),
+                distance: $activity->getDistance(),
+                elapsedTime: $activity->getElapsedTime(),
+                type: $activity->getType(),
+                startDateTime: $activity->getStartDateTime(),
+                startLatitude: $activity->getStartLatitude(),
+                startLongitude: $activity->getStartLongitude(),
+                endLatitude: $activity->getEndLatitude(),
+                endLongitude: $activity->getEndLongitude(),
+                polyline: $activity->getPolyline()
+            );
 
-            $serializedActivity = $this->serializer->serialize($activity, 'json');
-
-            $this->producer->publish($serializedActivity);
+            $this->messageBus->dispatch($message);
         }
 
         return [];

@@ -10,18 +10,24 @@ use App\Criticalmass\Util\ClassUtil;
 use App\Entity\SocialNetworkProfile;
 use App\Form\Type\SocialNetworkProfileEditType;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class SocialNetworkManagementController extends AbstractController
 {
-    /**
-     * @ParamConverter("socialNetworkProfile", class="App:SocialNetworkProfile", options={"id" = "profileId"})
-     */
-    public function editAction(Request $request, SocialNetworkProfile $socialNetworkProfile, ObjectRouterInterface $objectRouter, SocialNetworkHelperInterface $socialNetworkHelper): Response
-    {
+    #[Route(
+        '/socialnetwork/{id}/edit',
+        name: 'criticalmass_socialnetwork_edit',
+        priority: 60
+    )]
+    public function editAction(
+        Request $request,
+        SocialNetworkProfile $socialNetworkProfile,
+        ObjectRouterInterface $objectRouter,
+        SocialNetworkHelperInterface $socialNetworkHelper
+    ): Response {
         $form = $this->createForm(
             SocialNetworkProfileEditType::class,
             $socialNetworkProfile
@@ -29,9 +35,9 @@ class SocialNetworkManagementController extends AbstractController
 
         if (Request::METHOD_POST === $request->getMethod()) {
             return $this->editPostAction($request, $form, $objectRouter, $socialNetworkHelper);
-        } else {
-            return $this->editGetAction($request, $form, $objectRouter, $socialNetworkHelper);
         }
+
+        return $this->editGetAction($request, $form, $objectRouter, $socialNetworkHelper);
     }
 
     protected function editPostAction(
@@ -47,13 +53,15 @@ class SocialNetworkManagementController extends AbstractController
             $socialNetworkProfile = $form->getData();
 
             $this->managerRegistry->getManager()->persist($socialNetworkProfile);
-
             $this->managerRegistry->getManager()->flush();
 
             $request->getSession()->getFlashBag()->add('success', 'Deine Änderungen wurden gespeichert.');
         }
 
-        return $this->redirect($objectRouter->generate($socialNetworkProfile->getCity(), 'criticalmass_socialnetwork_city_list'));
+        return $this->redirect($objectRouter->generate(
+            $socialNetworkProfile->getCity(),
+            'criticalmass_socialnetwork_city_list'
+        ));
     }
 
     protected function editGetAction(
@@ -65,16 +73,19 @@ class SocialNetworkManagementController extends AbstractController
         $socialNetworkProfile = $form->getData();
 
         return $this->render('SocialNetwork/edit.html.twig', [
-                'form' => $form->createView(),
-                'profileAbleType' => ClassUtil::getLowercaseShortname($socialNetworkHelper->getProfileAble($socialNetworkProfile)),
-                'profileAble' => $socialNetworkHelper->getProfileAble($socialNetworkProfile),
-            ]
-        );
+            'form' => $form->createView(),
+            'profileAbleType' => ClassUtil::getLowercaseShortname(
+                $socialNetworkHelper->getProfileAble($socialNetworkProfile)
+            ),
+            'profileAble' => $socialNetworkHelper->getProfileAble($socialNetworkProfile),
+        ]);
     }
 
-    /**
-     * @ParamConverter("socialNetworkProfile", class="App:SocialNetworkProfile", options={"id" = "profileId"})
-     */
+    #[Route(
+        '/socialnetwork/{id}/disable',
+        name: 'criticalmass_socialnetwork_disable',
+        priority: 60
+    )]
     public function disableAction(
         EntityManagerInterface $entityManager,
         SocialNetworkProfile $socialNetworkProfile,
@@ -84,6 +95,11 @@ class SocialNetworkManagementController extends AbstractController
 
         $entityManager->flush();
 
-        return $this->redirect($socialNetworkHelper->getRouteName($socialNetworkHelper->getProfileAble($socialNetworkProfile), 'list'));
+        return $this->redirect(
+            $socialNetworkHelper->getRouteName(
+                $socialNetworkHelper->getProfileAble($socialNetworkProfile),
+                'list'
+            )
+        );
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Criticalmass\FriendlyCaptcha\FriendlyCaptchaInterface;
 use App\Entity\User;
 use App\Form\Type\LoginType;
 use App\Notifier\CriticalMassLoginLinkNotification;
@@ -20,14 +21,15 @@ class LoginController extends AbstractController
     const string DEFAULT_USERNAME = 'anonymous cyclist';
 
     public function __construct(
-        protected UserRepository $userRepository,
-        protected ManagerRegistry $managerRegistry
+        private readonly UserRepository $userRepository,
+        private readonly ManagerRegistry $managerRegistry,
+        private readonly FriendlyCaptchaInterface $friendlyCaptcha
     )
     {
 
     }
 
-    #[Route('/login', name: 'login', methods: ['GET'])]
+    #[Route('/login', name: 'login', methods: ['GET'], priority: 200)]
     public function login(): Response
     {
        $loginForm = $this->createForm(LoginType::class);
@@ -37,7 +39,7 @@ class LoginController extends AbstractController
         ]);
     }
 
-    #[Route('/login', name: 'login_perform', methods: ['POST'])]
+    #[Route('/login', name: 'login_perform', methods: ['POST'], priority: 200)]
     public function loginPerform(
         NotifierInterface $notifier,
         LoginLinkHandlerInterface $loginLinkHandler,
@@ -46,6 +48,12 @@ class LoginController extends AbstractController
     ): Response {
         $form = $this->createForm(LoginType::class);
         $form->handleRequest($request);
+
+        $captchaValid = $this->friendlyCaptcha->checkCaptcha($request);
+
+        if (!$captchaValid) {
+            return $this->redirectToRoute('login');
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
@@ -93,13 +101,13 @@ class LoginController extends AbstractController
         return $user;
     }
 
-    #[Route('/login_check', name: 'login_check')]
+    #[Route('/login_check', name: 'login_check', priority: 200)]
     public function check(): never
     {
         throw new \LogicException('This code should never be reached');
     }
 
-    #[Route('/logout', name: 'logout')]
+    #[Route('/logout', name: 'logout', priority: 200)]
     public function logout(): never
     {
         throw new \LogicException('This code should never be reached');

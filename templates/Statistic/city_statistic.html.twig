@@ -1,13 +1,12 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Statistiken aus {{ city.city }}{% endblock %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
-
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Städteliste', path('caldera_criticalmass_city_list')) }}
-    {{ bootstrap.breadcrumb_item(city.city, objectPath(city)) }}
-    {{ bootstrap.breadcrumb_item('Statistiken', '', true) }}
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item(city.city, object_path(city)) }}
+    {{ breadcrumb.active('Statistiken') }}
 {% endblock %}
 
 {% block content %}
@@ -15,7 +14,7 @@
         {{ include('City/Includes/_tabs.html.twig', { tab: 'statistic' }) }}
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <h1>
                     Stadt-Statistiken von {{ city.city }}
                 </h1>
@@ -31,7 +30,7 @@
         </div>
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <h2>
                     Teilnehmerzahl
                 </h2>
@@ -43,14 +42,22 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-12">
-                <canvas id="chart" style="width: 100%; height: 75vh;"></canvas>
+        <div class="row" data-controller="statistic-city-chart">
+            <div class="col-md-12">
+                <canvas id="chart" style="width: 100%; height: 75vh;" data-statistic-city-chart-target="canvas"></canvas>
             </div>
+
+            {% for ride in rides %}
+                <span class="d-none" data-statistic-city-chart-target="rideData"
+                      data-ride-datetime="{{ ride.dateTime|date('Y-m-d') }}"
+                      data-estimated-participants="{{ ride.estimatedParticipants|default(0) }}"
+                      data-estimated-duration="{{ ride.estimatedDuration|default(0) }}"
+                      data-estimated-distance="{{ ride.estimatedDistance|default(0) }}"></span>
+            {% endfor %}
         </div>
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <h2>
                     Tabellarischer Vergleich
                 </h2>
@@ -62,7 +69,7 @@
         </div>
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <table class="table">
                     <thead>
                     <tr>
@@ -126,7 +133,4 @@
         </div>
     </div>
 
-    {% for ride in rides %}
-        <div class="ride-data" data-ride-datetime="{{ ride.dateTime|date('Y-m-d') }}" data-estimated-participants="{{ ride.estimatedParticipants|default(0) }}" data-estimated-duration="{{ ride.estimatedDuration|default(0) }}" data-estimated-distance="{{ ride.estimatedDistance|default(0) }}"></div>
-    {% endfor %}
 {% endblock %}

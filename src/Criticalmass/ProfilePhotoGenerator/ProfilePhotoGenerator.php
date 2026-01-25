@@ -13,28 +13,19 @@ use Imagine\Image\Point\Center;
 use Imagine\Gd\Font;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Palette;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 
 class ProfilePhotoGenerator implements ProfilePhotoGeneratorInterface
 {
     const FONT_FILE = '/assets/fonts/Verdana/Bold.ttf';
 
-    /** @var User $user */
-    protected $user;
+    protected User $user;
+    protected PaletteInterface $palette;
 
-    /** @var string $projectDirectory */
-    protected $projectDirectory;
-
-    /** @var FilesystemInterface $filesystem */
-    protected $filesystem;
-
-    /** @var PaletteInterface $palette */
-    protected $palette;
-
-    public function __construct(FilesystemInterface $filesystem, string $projectDirectory)
-    {
-        $this->projectDirectory = $projectDirectory;
-        $this->filesystem = $filesystem;
+    public function __construct(
+        protected FilesystemOperator $filesystem,
+        protected string $projectDirectory
+    ) {
         $this->palette = new Palette\RGB();
     }
 
@@ -53,7 +44,7 @@ class ProfilePhotoGenerator implements ProfilePhotoGeneratorInterface
 
         $this->writeText($image);
 
-        $this->filesystem->put($filename, $image->get('jpeg'));
+        $this->filesystem->write($filename, $image->get('jpeg'));
 
         return $filename;
     }

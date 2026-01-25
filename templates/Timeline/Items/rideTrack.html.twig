@@ -1,9 +1,9 @@
-<div class="row mt-3 timeline-item-ride{% if not item.rideEnabled %}--disabled{% endif %}">
+<div class="row margin-bottom-medium timeline-item-ride{% if not item.rideEnabled %}--disabled{% endif %}">
     {{ include('Timeline/_includes/user_column.html.twig') }}
 
-    <div class="col-9 col-md-10">
+    <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <strong>
                     {{ item.user.username }}
                 </strong>
@@ -12,7 +12,7 @@
         </div>
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <a href="{{ object_path(item.ride) }}">
                     <h4>
                         {{ item.rideTitle }}
@@ -23,21 +23,27 @@
 
         {% if item.polyline %}
         <div class="row">
-            <div class="col-12">
-                <div id="map-{{ item.uniqId }}"
-                     class="map timeline-item-ride-map"
-                     data-lock-map="true"
-                     data-map-marker-clickable="false"
-                     data-polyline-color="{{ item.polylineColor }}"
-                     data-polyline="{{ item.polyline }}"
-                     style="height: 150px;">
+            <div class="col-md-12">
+                <div
+                    id="map-{{ item.uniqId }}"
+                    class="map timeline-item-ride-map"
+                    data-controller="map--map"
+                    style="height: 150px;"
+                    data-map--map-center-latitude-value="{{ item.ride.latitude }}"
+                    data-map--map-center-longitude-value="{{ item.ride.longitude }}"
+                    data-map--map-zoom-value="13"
+                    data-map--map-lock-map-value="true"
+                    data-map--map-polyline-color-value="{{ item.track.user.color }}"
+                    data-map--map-polyline-value="{{ item.track.polyline }}"
+                    data-map--map-vector-value="false"
+                >
                 </div>
             </div>
         </div>
         {% endif %}
 
         <div class="row">
-            <div class="col-4">
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                 <dl>
                     <dt>
                         Datum:
@@ -49,7 +55,7 @@
                 </dl>
             </div>
 
-            <div class="col-4">
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                 <dl>
                     <dt>
                         Länge:
@@ -61,7 +67,7 @@
                 </dl>
             </div>
 
-            <div class="col-4">
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                 <dl>
                     <dt>
                         Dauer:

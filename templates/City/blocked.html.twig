@@ -1,18 +1,17 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}{{ city.title }}{% endblock %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
-
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Städteliste', path('caldera_criticalmass_city_list')) }}
-    {{ bootstrap.breadcrumb_item(city.city, '', true) }}
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.active(city.city) }}
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <h1>
                     {{ city.title }}
                 </h1>
@@ -20,7 +19,7 @@
         </div>
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <div class="alert alert-danger">
                     {{ blocked.description }}
                 </div>

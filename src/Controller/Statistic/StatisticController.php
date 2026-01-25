@@ -9,14 +9,16 @@ use App\Entity\Region;
 use App\Entity\Ride;
 use App\Repository\RegionRepository;
 use App\Repository\RideRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class StatisticController extends AbstractController
 {
-    /**
-     * @ParamConverter("city", class="App:City")
-     */
+    #[Route(
+        '/{citySlug}/statistic',
+        name: 'caldera_criticalmass_statistic_city',
+        priority: 140
+    )]
     public function citystatisticAction(
         SeoPageInterface $seoPage,
         RideRepository $rideRepository,
@@ -24,7 +26,10 @@ class StatisticController extends AbstractController
     ): Response {
         $rides = $rideRepository->findRidesForCity($city);
 
-        $seoPage->setDescription(sprintf('Critical-Mass-Statistiken aus %s: Teilnehmer, Fahrtdauer, Fahrtlänge, Touren', $city->getCity()));
+        $seoPage->setDescription(sprintf(
+            'Critical-Mass-Statistiken aus %s: Teilnehmer, Fahrtdauer, Fahrtlänge, Touren',
+            $city->getCity()
+        ));
 
         return $this->render('Statistic/city_statistic.html.twig', [
             'city' => $city,
@@ -32,6 +37,11 @@ class StatisticController extends AbstractController
         ]);
     }
 
+    #[Route(
+        '/statistic',
+        name: 'caldera_criticalmass_statistic_overview',
+        priority: 140
+    )]
     public function overviewAction(
         SeoPageInterface $seoPage,
         RideRepository $rideRepository,
@@ -52,15 +62,11 @@ class StatisticController extends AbstractController
         $rides = $this->filterRideList($rides, $citiesWithoutEstimates);
 
         $cities = [];
-
         $rideMonths = [];
 
-        /**
-         * @var Ride $ride
-         */
+        /** @var Ride $ride */
         foreach ($rides as $ride) {
             $cities[$ride->getCity()->getSlug()] = $ride->getCity();
-
             $rideMonths[$ride->getDateTime()->format('Y-m')] = $ride->getDateTime()->format('Y-m');
         }
 
@@ -99,9 +105,7 @@ class StatisticController extends AbstractController
     {
         $resultList = [];
 
-        /**
-         * @var Ride $ride
-         */
+        /** @var Ride $ride */
         foreach ($rides as $ride) {
             $citySlug = $ride->getCity()->getSlug();
 

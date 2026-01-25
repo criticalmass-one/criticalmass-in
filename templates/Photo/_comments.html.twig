@@ -1,27 +1,33 @@
 <div class="row">
-    <div class="col-12">
+    <div class="col-md-12">
         {% if app.user %}
-            <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#modal-add-post">
+            <button type="button" class="btn btn-success pull-right" data-bs-toggle="modal" data-bs-target="#modal-add-post">
                 Kommentar hinzufügen
             </button>
         {% else %}
-            <span class="btn btn-primary pull-right modal-hint" data-modal-hint-title="{{ 'hint_modal.photo.post_add_button.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.photo.post_add_button.text'|trans({'%city%': photo.ride.city.city, '%dateTime%': photo.ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
+            <button
+                    type="button"
+                    class="btn btn-success pull-right"
+                    data-controller="hint-modal"
+                    data-modal-hint-title="{{ 'hint_modal.photo.post_add_button.title'|trans }}"
+                    data-modal-hint-text="{{ 'hint_modal.photo.post_add_button.text'|trans({'%city%': photo.ride.city.city, '%dateTime%': photo.ride.dateTime|date('d.m.Y')}) }}"
+                    data-modal-hint-size="md">
                 Kommentar hinzufügen
-            </span>
+            </button>
         {% endif %}
 
-        <h3 class="mt-0">
+        <h3 class="no-margin-top">
             Kommentare zu diesem Foto
         </h3>
     </div>
 </div>
 
 <div class="row">
-    <div class="col-12">
+    <div class="col-md-12">
         {{ render(controller('App\\Controller\\PostController::listAction', { 'photoId': photo.id })) }}
 
         {% if app.getUser() %}
-            {{ render(controller('App\\Controller\\PostController::writePhotoAction', { 'photoId': photo.id, 'noButton': true })) }}
+            {{ render(controller('App\\Controller\\PostController::writePhotoAction', { 'id': photo.id, 'noButton': true })) }}
         {% endif %}
     </div>
 </div>

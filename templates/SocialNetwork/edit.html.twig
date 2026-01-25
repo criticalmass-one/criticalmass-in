@@ -1,28 +1,24 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
-
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block breadcrumb %}
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
     {% if profileAbleType == 'city' %}
-        {{ bootstrap.breadcrumb_item('Städteliste', 'caldera_criticalmass_city_list') }}
-        {{ bootstrap.breadcrumb_item(profileAble.city, objectPath(profileAble)) }}
-        {{ bootstrap.breadcrumb_item('Soziale Netzwerke', objectPath(profileAble, 'criticalmass_socialnetwork_city_list')) }}
-        {{ bootstrap.breadcrumb_item('Soziales Netzwerk editieren', '', true) }}
+        {{ breadcrumb.item(profileAble.city, object_path(profileAble)) }}
+        {{ breadcrumb.item('Soziale Netzwerke', object_path(profileAble, 'criticalmass_socialnetwork_city_list')) }}
     {% endif %}
-
     {% if profileAbleType == 'ride' %}
-        {{ bootstrap.breadcrumb_item('Städteliste', 'caldera_criticalmass_city_list') }}
-        {{ bootstrap.breadcrumb_item(profileAble.city.city, objectPath(profileAble.city)) }}
-        {{ bootstrap.breadcrumb_item(profileAble.title, objectPath(profileAble)) }}
-        {{ bootstrap.breadcrumb_item('Soziale Netzwerke', objectPath(profileAble, 'criticalmass_socialnetwork_ride_list')) }}
-        {{ bootstrap.breadcrumb_item('Soziales Netzwerk editieren', '', true) }}
+        {{ breadcrumb.item(profileAble.city.city, object_path(profileAble.city)) }}
+        {{ breadcrumb.item(profileAble.title, object_path(profileAble)) }}
+        {{ breadcrumb.item('Soziale Netzwerke', object_path(profileAble, 'criticalmass_socialnetwork_ride_list')) }}
     {% endif %}
+    {{ breadcrumb.active('Soziales Netzwerk editieren') }}
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-12 col-md-6 offset-md-3">
+            <div class="col-md-6 col-md-offset-3">
                 <h2>
                     Soziales Netzwerk editieren
                 </h2>
@@ -30,25 +26,25 @@
         </div>
 
         <div class="row">
-            <div class="col-12 col-md-6 offset-md-3">
+            <div class="col-md-6 col-md-offset-3">
                 {{ form_start(form) }}
 
                 <div class="row">
-                    <div class="col-12 form-group">
+                    <div class="col-md-12 form-group">
                         <label class="control-label" for="">Adresse:</label>
                         {{ form_widget(form.identifier, { 'attr' : { 'class': 'form-control'} }) }}
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-12 form-group">
+                    <div class="col-md-12 form-group">
                         <label class="control-label" for="">Soziales Netzwerk:</label>
                         {{ form_widget(form.network, { 'attr' : { 'class': 'form-control'} }) }}
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-12 form-group">
+                    <div class="col-md-12 form-group">
                         <label class="control-label" for="">Hauptkonto:</label>
                         {{ form_widget(form.mainNetwork, { 'attr' : { 'class': 'form-control'} }) }}
                         <p class="help-block">
@@ -58,7 +54,7 @@
                 </div>
 
                 <div class="row">
-                     <div class="col-12 form-group">
+                     <div class="col-md-12 form-group">
                          <div class="btn-group pull-right">
                              {% set cancel_path = object_path(profileAble, 'criticalmass_socialnetwork_' ~ profileAbleType ~ '_list') %}
                              <a href="{{ cancel_path }}" class="btn btn-secondary">

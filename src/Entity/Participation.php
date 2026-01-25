@@ -2,12 +2,11 @@
 
 namespace App\Entity;
 
-use App\EntityInterface\AutoParamConverterAble;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'participation')]
 #[ORM\Entity(repositoryClass: 'App\Repository\ParticipationRepository')]
-class Participation implements AutoParamConverterAble
+class Participation
 {
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
@@ -97,7 +96,7 @@ class Participation implements AutoParamConverterAble
         return $this->ride;
     }
 
-    public function setRide(Ride $ride = null): Participation
+    public function setRide(?Ride $ride = null): Participation
     {
         $this->ride = $ride;
 
@@ -109,7 +108,7 @@ class Participation implements AutoParamConverterAble
         return $this->user;
     }
 
-    public function setUser(User $user = null): Participation
+    public function setUser(?User $user = null): Participation
     {
         $this->user = $user;
 

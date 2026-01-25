@@ -1,7 +1,0 @@
-caldera_criticalmass_frontpage:
-    path:  /
-    controller: App\Controller\FrontpageController::indexAction
-
-caldera_criticalmass_intro:
-    path:  /intro
-    controller: App\Controller\FrontpageController::introAction

@@ -1,28 +1,27 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Fotos bearbeiten{% endblock %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
-
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item(ride.city.title, objectPath(ride.city)) }}
-    {{ bootstrap.breadcrumb_item(ride.title, objectPath(ride)) }}
-    {{ bootstrap.breadcrumb_item('Fotos bearbeiten', '', true) }}
+    {{ breadcrumb.item(ride.city.title, object_path(ride.city)) }}
+    {{ breadcrumb.item(ride.title, object_path(ride)) }}
+    {{ breadcrumb.active('Fotos bearbeiten') }}
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <div class="btn-group pull-right" role="group" aria-label="...">
                     <a href="{{ object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') }}"
-                       class="btn btn-primary">
+                       class="btn btn-success">
                         <i class="far fa-camera"></i>
                         Weitere Fotos hochladen
                     </a>
 
                     {#<a href="{{ object_path(ride, 'caldera_criticalmass_photo_relocate') }}"
-                       class="btn btn-primary">
+                       class="btn btn-success">
                         <i class="far fa-map-marker"></i>
                         Fotos verschieben
                     </a>#}
@@ -36,24 +35,23 @@
         </div>
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <div class="row">
                     {% for photo in pagination %}
                         <div class="col-md-3">
                             <div class="row">
-                                <div class="col-12">
-                                    <img class="img-fluid img-thumbnail{% if not photo.enabled %} bg-danger{% endif %}"
+                                <div class="col-md-12">
+                                    <img class="img-responsive img-thumbnail{% if not photo.enabled %} bg-danger{% endif %}"
                                          src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
                                 </div>
                             </div>
 
                             <div class="row margin-top-10">
-                                <div class="col-12">
+                                <div class="col-md-12">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-default btn-xs dropdown-toggle"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Bearbeiten <span class="caret"></span>
-                                        </button>
+                                        <button type="button" class="btn btn-secondary btn-xs dropdown-toggle"
+                                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Bearbeiten                                        </button>
                                         <ul class="dropdown-menu">
                                             <li class="disabled">
                                                 <a href="#">
@@ -62,7 +60,7 @@
                                                 </a>
                                             </li>
 
-                                            <li role="separator" class="divider"></li>
+                                            <li><hr class="dropdown-divider"></li>
 
                                             <li>
                                                 <a href="{{ object_path(photo, 'caldera_criticalmass_photo_delete') }}">
@@ -94,7 +92,7 @@
                                                 </li>
                                             {% endif %}
 
-                                            <li role="separator" class="divider"></li>
+                                            <li><hr class="dropdown-divider"></li>
 
                                             {#<li>
                                                 <a href="{{ object_path(photo, 'caldera_criticalmass_photo_place_single') }}">
@@ -103,7 +101,7 @@
                                                 </a>
                                             </li>#}
 
-                                            <li role="separator" class="divider"></li>
+                                            <li><hr class="dropdown-divider"></li>
 
                                             <li>
                                                 <a href="{{ object_path(photo, 'caldera_criticalmass_photo_rotate') }}?direction=left">
@@ -118,7 +116,7 @@
                                                 </a>
                                             </li>
 
-                                            <li role="separator" class="divider"></li>
+                                            <li><hr class="dropdown-divider"></li>
 
                                             {% if photo.ride.featuredPhoto == photo %}
                                                 <li>
@@ -144,7 +142,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-md-12">
                         <div class="text-center">
                             {{ knp_pagination_render(pagination) }}
                         </div>

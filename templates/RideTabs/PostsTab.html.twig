@@ -1,27 +1,34 @@
-<div class="row mt-2">
-    <div class="col-12">
-        {% if app.getUser() %}
-            <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#modal-add-post">
-                Kommentar hinzufügen
-            </button>
-        {% else %}
-            <span class="btn btn-primary pull-right modal-hint" data-modal-hint-title="{{ 'hint_modal.ride.post_write_button.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.ride.post_write_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
-                Kommentar hinzufügen
-            </span>
-        {% endif %}
+<div role="tabpanel" class="tab-pane fade" id="comments" aria-labelledby="comments-tab">
+    <div class="row">
+        <div class="col-md-12">
+            {% if app.getUser() %}
+                <button type="button" class="btn btn-success float-end" data-bs-toggle="modal"
+                        data-bs-target="#modal-add-post">
+                    Kommentar hinzufügen
+                </button>
+            {% else %}
+                <button
+                        type="button"
+                        class="btn btn-success float-end"
+                        data-controller="hint-modal"
+                        data-modal-hint-title="{{ 'hint_modal.ride.post_write_button.title'|trans }}"
+                        data-modal-hint-text="{{ 'hint_modal.ride.post_write_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
+                        data-modal-hint-size="md">
+                    Kommentar hinzufügen
+                </button>
+            {% endif %}
 
-        <h3>
-            Kommentare zu dieser Tour
-        </h3>
+            <h3>Kommentare zu dieser Tour</h3>
+        </div>
     </div>
-</div>
 
-<div class="row">
-    <div class="col-12">
-        {{ render(controller('App\\Controller\\PostController::listAction', { 'rideId': ride.getId() })) }}
+    <div class="row">
+        <div class="col-md-12">
+            {{ render(controller('App\\Controller\\PostController::listAction', { 'rideId': ride.getId() })) }}
 
-        {% if app.getUser() %}
-            {{ render(controller('App\\Controller\\PostController::writeRideAction', { 'rideId': ride.getId(), 'noButton': true })) }}
-        {% endif %}
+            {% if app.getUser() %}
+                {{ render(controller('App\\Controller\\PostController::writeRideAction', { 'id': ride.id, 'noButton': true })) }}
+            {% endif %}
+        </div>
     </div>
 </div>

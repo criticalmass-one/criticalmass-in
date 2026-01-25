@@ -1,15 +1,13 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Fotos ausrichten{% endblock %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
-
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Städteliste', path('caldera_criticalmass_city_list')) }}
-    {{ bootstrap.breadcrumb_item(ride.city.title, objectPath(ride.city)) }}
-    {{ bootstrap.breadcrumb_item(ride.title, objectPath(ride)) }}
-    {{ bootstrap.breadcrumb_item('Fotos verwalten', path('caldera_criticalmass_photo_manage')) }}
-    {{ bootstrap.breadcrumb_item('Fotos ausrichten', '', true) }}
+    {{ breadcrumb.item(ride.city.title, object_path(ride.city)) }}
+    {{ breadcrumb.item(ride.title, object_path(ride)) }}
+    {{ breadcrumb.item('Fotos verwalten', object_path(ride, 'caldera_criticalmass_photo_manage')) }}
+    {{ breadcrumb.active('Fotos ausrichten') }}
 {% endblock %}
 
 {% block content %}

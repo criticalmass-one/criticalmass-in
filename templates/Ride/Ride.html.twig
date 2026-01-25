@@ -1,5 +1,3 @@
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
-
 {% if dateTime > ride.getDateTime() %}
     {% set pastRide = true %}
 {% else %}
@@ -7,7 +5,7 @@
 {% endif %}
 
 <div class="row">
-    <div class="col-12">
+    <div class="col-md-12">
         {% include('Ride/Includes/_participation.html.twig') with { 'pastRide': pastRide, 'participation': participation } %}
         <h1 itemprop="name">
             {{ ride.title }}
@@ -15,44 +13,80 @@
     </div>
 </div>
 
-<div class="row mt-3">
-    <div class="col-12">
-        <div id="map" style="height: 350px;" class="map" data-city-slug="{{ ride.city.mainSlugString }}" data-ride-identifier="{{ ride.slug|default(ride.dateTime|date('Y-m-d')) }}"></div>
+<div class="row">
+    <div class="col-md-12">
+        <div
+            data-controller="map--ride-map"
+            style="height: 350px;"
+            data-map--ride-map-city-slug-value="{{ ride.city.mainSlugString }}"
+            data-map--ride-map-ride-identifier-value="{{ ride.slug|default(ride.dateTime|date('Y-m-d')) }}"
+            data-map--ride-map-latitude-value="{{ ride.latitude }}"
+            data-map--ride-map-longitude-value="{{ ride.longitude }}"
+        ></div>
     </div>
 </div>
 
-<div class="row mt-3">
-    <div class="col-12">
-        {% set tab_list = [
-            { tab: 'details', caption: '<i class="far fa-flag"></i> Details', active: true },
-            { tab: 'minimass', caption: '<i class="far fa-map-marker"></i> Mini-Masses <span class="badge badge-secondary">' ~ ride.getSubrides|length ~ '</span>' },
-            { tab: 'comments', caption: '<i class="far fa-pencil"></i> Kommentare <span class="badge badge-secondary">' ~ ride.getPosts|length ~ '</span>' },
-        ] %}
+<div class="row" style="margin-top: 1em;">
+    <div class="col-md-12">
+        <div>
+            <ul class="nav nav-tabs" id="rideTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="details-tab" data-bs-toggle="tab" data-bs-target="#details" type="button" role="tab" aria-controls="details" aria-selected="true">
+                        <i class="far fa-flag"></i>
+                        Details
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="minimass-tab" data-bs-toggle="tab" data-bs-target="#minimass" type="button" role="tab" aria-controls="minimass" aria-selected="false">
+                        <i class="far fa-map-marker"></i>
+                        Mini-Masses
+                        <span class="badge bg-secondary">
+                            {{ ride.getSubrides|length }}
+                        </span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="comments-tab" data-bs-toggle="tab" data-bs-target="#comments" type="button" role="tab" aria-controls="comments" aria-selected="false">
+                        <i class="far fa-pencil"></i>
+                        Kommentare
+                        <span class="badge bg-secondary">
+                            {{ ride.getPosts|length }}
+                        </span>
+                    </button>
+                </li>
+                {% if pastRide and ride.enabled %}
+                    {% if feature('photos') %}
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" href="{{ object_path(ride, 'caldera_criticalmass_photo_ride_list') }}">
+                                <i class="far fa-camera"></i>
+                                Galerie
+                                <span class="badge bg-secondary">
+                            {{ photos|length }}
+                        </span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="tracks-tab" data-bs-toggle="tab" data-bs-target="#tracks" type="button" role="tab" aria-controls="tracks" aria-selected="false">
+                            <i class="far fa-bicycle"></i>
+                            Tracks
+                            <span class="badge bg-secondary">
+                            {{ tracks|length }}
+                        </span>
+                        </button>
+                    </li>
+                {% endif %}
+            </ul>
 
-        {% set tab_content_list = [
-            { id: 'details', active: true, content: render(controller('App\\Controller\\Ride\\RideTabsController::renderDetailsTabAction', { 'ride': ride } )) },
-            { id: 'minimass', content: render(controller('App\\Controller\\Ride\\RideTabsController::renderSubridesTabAction', { 'ride': ride } )) },
-            { id: 'comments', content: render(controller('App\\Controller\\Ride\\RideTabsController::renderPostsTabAction', { 'ride': ride } )) },
-        ] %}
+            <div class="tab-content">
+                {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderDetailsTabAction', { 'ride': ride } )) }}
+                {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderSubridesTabAction', { 'ride': ride } )) }}
+                {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderPostsTabAction', { 'ride': ride } )) }}
 
-        {% if pastRide and ride.enabled %}
-            {% if feature('photos') %}
-                {% set past_ride_tabs = [
-                    { href: objectPath(ride, 'caldera_criticalmass_photo_ride_list'), caption: '<i class="far fa-camera"></i> Galerie <span class="badge badge-secondary">' ~ photos|length ~ '</span>' },
-                    { tab: 'tracks', caption: '<i class="fa fa-bicycle"></i> Tracks <span class="badge badge-secondary">' ~ tracks|length ~ '</span>' },
-                ] %}
-            {% else %}
-                {% set past_ride_tabs = [
-                    { tab: 'tracks', caption: '<i class="far fa-bicycle"></i> Tracks <span class="badge badge-secondary">' ~ tracks|length ~ '</span>' },
-                ] %}
-            {% endif %}
-
-            {% set tab_content_list = tab_content_list | merge([{ id: 'tracks', content: render(controller('App\\Controller\\Ride\\RideTabsController::renderTracksTabAction', { 'ride': ride } )) }]) %}
-
-            {% set tab_list = tab_list | merge(past_ride_tabs) %}
-        {% endif %}
-
-        {{ bootstrap.tabs(tab_list) }}
-        {{ bootstrap.tab_panels(tab_content_list) }}
+                {% if pastRide and ride.enabled %}
+                    {{ render(controller('App\\Controller\\Ride\\RideTabsController::renderTracksTabAction', { 'ride': ride } )) }}
+                {% endif %}
+            </div>
+        </div>
     </div>
 </div>

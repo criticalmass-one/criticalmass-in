@@ -1,69 +1,69 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Übersicht zum Treffpunkt {{ location.title }} der {{ location.city.title }}{% endblock %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
-
-{{ bootstrap.breadcrumb_item(city.city, objectPath(city)) }}
-{{ bootstrap.breadcrumb_item(title, '', true) }}
-
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Städteliste', path('caldera_criticalmass_city_list')) }}
-    {{ bootstrap.breadcrumb_item(location.city.city, objectPath(location.city)) }}
-
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item(location.city.city, object_path(location.city)) }}
     {% if ride %}
-        {{ bootstrap.breadcrumb_item(ride.title, objectPath(ride)) }}
-        {{ bootstrap.breadcrumb_item('Informationen zum Treffpunkt', '', true) }}
+        {{ breadcrumb.item(ride.title, object_path(ride)) }}
+        {{ breadcrumb.active('Informationen zum Treffpunkt') }}
     {% else %}
-        {{ bootstrap.breadcrumb_item('Treffpunkte', '', false) }}
-        {{ bootstrap.breadcrumb_item(location.title, '', true) }}
+        {{ breadcrumb.item('Treffpunkte', '#') }}
+        {{ breadcrumb.active(location.title) }}
     {% endif %}
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                <h2>
+            <div class="col-md-8">
+                <h1>
                     {{ location.title }}
-                </h2>
+                </h1>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-12 col-md-8">
+            <div class="col-md-8">
                 {% if location.hasCoordinates() %}
                     <div class="row">
-                        <div class="col-12">
-                            <div id="map" class="map" style="height: 150px;"
-                                 data-map-center-latitude="{{ location.latitude }}"
-                                 data-map-center-longitude="{{ location.longitude }}"
-                                 data-map-zoomlevel="13"
-                                 data-lock-map="true"
-                                 data-marker-latitude="{{ location.latitude }}"
-                                 data-marker-longitude="{{ location.longitude }}"
-                                 data-marker-type="location"
+                        <div class="col-md-12">
+                            <div
+                                id="map"
+                                class="map"
+                                style="height: 150px;"
+                                data-controller="map--map"
+                                data-map--map-center-latitude-value="{{ location.latitude }}"
+                                data-map--map-center-longitude-value="{{ location.longitude }}"
+                                data-map--map-zoom-value="13"
+                                data-map--map-lock-map-value="true"
+                                data-map--map-marker-latitude-value="{{ location.latitude }}"
+                                data-map--map-marker-longitude-value="{{ location.longitude }}"
+                                data-map--map-marker-type-value="location"
                             ></div>
                         </div>
                     </div>
                 {% endif %}
 
-                <div class="row mt-2">
-                    <div class="col-12">
+                <div class="row">
+                    <div class="col-md-12">
                         {{ location.description|markdown }}
                     </div>
                 </div>
             </div>
 
-            <div class="col-12 col-md-4">
+            <div class="col-md-4">
                 {% if rides|length > 0 %}
-                    <div class="card">
-                        <div class="card-header">
-                            Touren von diesem Treffpunkt
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                Touren von diesem Treffpunkt
+                            </h3>
                         </div>
-
-                        <div class="card-body">
-                            <ul class="list-unstyled">
+                        <div class="panel-body">
+                            <ul>
                                 {% for ride in rides %}
                                     <li>
                                         <a href="{{ object_path(ride) }}">
@@ -75,13 +75,14 @@
                         </div>
                     </div>
                 {% endif %}
-
-                <div class="card mt-2">
-                    <div class="card-header">
-                        Andere Treffpunkte dieser Stadt
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Andere Treffpunkte dieser Stadt
+                        </h3>
                     </div>
-                    <div class="card-body">
-                        <ul class="list-unstyled">
+                    <div class="panel-body">
+                        <ul>
                             {% for location in locations %}
                                 <li>
                                     <a href="{{ object_path(location) }}">

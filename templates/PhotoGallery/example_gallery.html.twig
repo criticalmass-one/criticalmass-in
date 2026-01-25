@@ -1,14 +1,23 @@
-{% extends 'Template/StandardTemplate.html.twig' %}{% block title %}Fotogalerie{% endblock %}
+{% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+{% block title %}Fotogalerie{% endblock %}
 
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Städteliste', path('caldera_criticalmass_city_list')) }}
-    {{ bootstrap.breadcrumb_item('Fotogalerie', '', true) }}
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.active('Fotogalerie') }}
 {% endblock %}
 
 {% block content %}
     <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>
+                    Fotogalerie
+                </h1>
+            </div>
+        </div>
+
         {% set cityString = '' %}
         {% for city in cities %}
             {% set cityString = cityString ~ '<a href="' ~ object_path(city) ~ '">' ~ city.city ~ '</a>' %}
@@ -21,25 +30,22 @@
                 {% set cityString = cityString ~ ' und ' %}
             {% endif %}
         {% endfor %}
-
         <div class="row">
-            <div class="col-12">
-                <h2>
-                    Fotogalerie
-                </h2>
-
+            <div class="col-md-12">
                 <p class="lead">
-                    Neugierig geworden? Hier siehst du ein paar zufällig ausgewählte Fotos von früheren Critical-Mass-Touren aus {{ cityString|raw }}. Viel Spaß beim Herumblättern!
+                    Neugierig geworden? Hier siehst du ein paar zufällig ausgewählte Fotos von früheren
+                    Critical-Mass-Touren aus {{ cityString|raw }}. Viel Spaß beim Herumblättern!
                 </p>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-12 photo-list">
+            <div class="photo-list">
                 {% for photo in photos %}
-                    <div class="col-6 col-sm-4 col-md-3 col-lg-3 text-center mb-2">
+                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 text-center margin-bottom-medium">
                         <a href="{{ object_path(photo) }}">
-                            <img class="img-thumbnail img-fluid" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
+                            <img class="img-thumbnail img-fluid"
+                                 src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
                         </a>
                     </div>
                 {% endfor %}

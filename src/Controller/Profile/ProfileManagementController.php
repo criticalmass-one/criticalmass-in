@@ -9,22 +9,28 @@ use App\Entity\Track;
 use App\Form\Type\UserEmailType;
 use App\Form\Type\UsernameType;
 use Doctrine\Persistence\ManagerRegistry;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ProfileManagementController extends AbstractController
 {
-    //public function __construct(private readonly UserManagerInterface $userManager)
-    //{
-    //}
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     */
-    public function manageAction(UserInterface $user = null): Response
+    #[IsGranted('ROLE_USER')]
+    #[Route(
+        '/profile/',
+        name: 'criticalmass_user_usermanagement',
+        priority: 180
+    )]
+    #[Route(
+        '/profile/',
+        name: 'fos_user_profile_show',
+        priority: 180
+    )]
+    public function manageAction(?UserInterface $user = null): Response
     {
         $participationCounter = $this->managerRegistry->getRepository(Participation::class)->countByUser($user);
         $trackCounter = $this->managerRegistry->getRepository(Track::class)->countByUser($user);
@@ -37,13 +43,16 @@ class ProfileManagementController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     */
+    #[IsGranted('ROLE_USER')]
+    #[Route(
+        '/profile/username',
+        name: 'criticalmass_user_usermanagement_editusername',
+        priority: 180
+    )]
     public function editUsernameAction(
         Request $request,
         ManagerRegistry $managerRegistry,
-        UserInterface $user = null
+        ?UserInterface $user = null
     ): Response {
         $usernameForm = $this->createForm(UsernameType::class, $user, [
             'action' => $this->generateUrl('criticalmass_user_usermanagement_editusername')
@@ -56,10 +65,13 @@ class ProfileManagementController extends AbstractController
                 try {
                     $managerRegistry->getManager()->flush();
 
-                    $this->addFlash('success',
-                        sprintf('Deine neuer Benutzername wurde gespeichert. Du heißt jetzt %s!',
+                    $this->addFlash(
+                        'success',
+                        sprintf(
+                            'Deine neuer Benutzername wurde gespeichert. Du heißt jetzt %s!',
                             $user->getUsername()
-                        ));
+                        )
+                    );
 
                     return $this->redirectToRoute('criticalmass_user_usermanagement');
                 } catch (UniqueConstraintViolationException $exception) {
@@ -75,14 +87,16 @@ class ProfileManagementController extends AbstractController
         ]);
     }
 
-
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     */
+    #[IsGranted('ROLE_USER')]
+    #[Route(
+        '/profile/email',
+        name: 'criticalmass_user_usermanagement_editemail',
+        priority: 180
+    )]
     public function editEmailAction(
         Request $request,
         ManagerRegistry $managerRegistry,
-        UserInterface $user = null
+        ?UserInterface $user = null
     ): Response {
         $userEmailForm = $this->createForm(UserEmailType::class, $user, [
             'action' => $this->generateUrl('criticalmass_user_usermanagement_editemail')
@@ -95,10 +109,13 @@ class ProfileManagementController extends AbstractController
                 try {
                     $managerRegistry->getManager()->flush();
 
-                    $this->addFlash('success',
-                        sprintf('Deine neue E-Mail-Adresse wurde gespeichert. Du kannst dich ab jetzt mit %s einloggen.',
+                    $this->addFlash(
+                        'success',
+                        sprintf(
+                            'Deine neue E-Mail-Adresse wurde gespeichert. Du kannst dich ab jetzt mit %s einloggen.',
                             $user->getEmail()
-                        ));
+                        )
+                    );
 
                     return $this->redirectToRoute('criticalmass_user_usermanagement');
                 } catch (UniqueConstraintViolationException $exception) {

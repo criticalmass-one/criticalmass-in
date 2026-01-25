@@ -3,25 +3,23 @@
 namespace App\Controller\City;
 
 use App\Controller\AbstractController;
-use App\Criticalmass\ElasticCityFinder\ElasticCityFinderInterface;
 use App\Entity\City;
 use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Event\View\ViewEvent;
 use App\Repository\BlockedCityRepository;
+use App\Repository\CityRepository;
 use App\Repository\LocationRepository;
 use App\Repository\PhotoRepository;
 use App\Repository\RideRepository;
 use App\Repository\SocialNetworkProfileRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class CityController extends AbstractController
 {
-    /**
-     * @ParamConverter("city", class="App:City")
-     */
+    #[Route('/{citySlug}/missingstats', name: 'caldera_criticalmass_city_missingstats', priority: 100)]
     public function missingStatsAction(
         RideRepository $rideRepository,
         City $city
@@ -32,9 +30,7 @@ class CityController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("city", class="App:City")
-     */
+    #[Route('/{citySlug}/list', name: 'caldera_criticalmass_city_listrides', priority: 170)]
     public function listRidesAction(
         RideRepository $rideRepository,
         City $city
@@ -45,9 +41,7 @@ class CityController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("city", class="App:City")
-     */
+    #[Route('/{citySlug}/galleries', name: 'caldera_criticalmass_city_listgalleries', priority: 100)]
     public function listGalleriesAction(
         PhotoRepository $photoRepository,
         SeoPageInterface $seoPage,
@@ -63,20 +57,23 @@ class CityController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("city", class="App:City", isOptional=true)
-     */
+    #[Route(
+        '/{citySlug}',
+        name: 'caldera_criticalmass_city_show',
+        options: ['expose' => true],
+        priority: 100
+    )]
     public function showAction(
         Request $request,
         RideRepository $rideRepository,
+        CityRepository $cityRepository,
         LocationRepository $locationRepository,
         SocialNetworkProfileRepository $socialNetworkProfileRepository,
         BlockedCityRepository $blockedCityRepository,
         PhotoRepository $photoRepository,
-        ElasticCityFinderInterface $elasticCityFinder,
         SeoPageInterface $seoPage,
         EventDispatcherInterface $eventDispatcher,
-        City $city = null
+        ?City $city = null
     ): Response {
         if (!$city) {
             $citySlug = $request->get('citySlug');
@@ -90,7 +87,7 @@ class CityController extends AbstractController
             ]);
         }
 
-        $eventDispatcher->dispatch(new ViewEvent($city), ViewEvent::NAME);
+        //$eventDispatcher->dispatch(new ViewEvent($city), ViewEvent::NAME);
 
         $blocked = $blockedCityRepository->findCurrentCityBlock($city);
 
@@ -100,7 +97,7 @@ class CityController extends AbstractController
                 'blocked' => $blocked
             ]);
         }
-        
+
         $seoPage
             ->setDescription('Informationen, Tourendaten, Tracks und Fotos von der Critical Mass in ' . $city->getCity())
             ->setCanonicalForObject($city)
@@ -113,7 +110,7 @@ class CityController extends AbstractController
         return $this->render('City/show.html.twig', [
             'city' => $city,
             'currentRide' => $rideRepository->findCurrentRideForCity($city),
-            'nearCities' => $elasticCityFinder->findNearCities($city),
+            'nearCities' => $cityRepository->findNearCities($city),
             'locations' => $locationRepository->findLocationsByCity($city),
             'photos' => $photoRepository->findSomePhotos(8, null, $city),
             'rides' => $rideRepository->findRidesForCity($city, 'DESC', 6),
@@ -121,9 +118,7 @@ class CityController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("city", class="App:City")
-     */
+    #[Route('/{citySlug}/locations', name: 'caldera_criticalmass_city_locations', priority: 100)]
     public function getlocationsAction(
         RideRepository $rideRepository,
         City $city

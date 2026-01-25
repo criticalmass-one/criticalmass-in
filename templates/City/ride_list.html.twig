@@ -1,33 +1,27 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Städte-Übersicht{% endblock %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
-
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Städteliste', path('caldera_criticalmass_city_list')) }}
-    {{ bootstrap.breadcrumb_item(city.city, objectPath(city)) }}
-    {{ bootstrap.breadcrumb_item('Tour-Übersicht', '', true) }}
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item(city.city, object_path(city)) }}
+    {{ breadcrumb.active('Tour-Übersicht') }}
 {% endblock %}
-
+    
 {% block content %}
     <div class="container">
 
         {{ include('City/Includes/_tabs.html.twig', { tab: 'ride_list' }) }}
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <h2>
                     Touren in dieser Stadt
                 </h2>
             </div>
         </div>
 
-                <h2>
-                    Touren in dieser Stadt
-                </h2>
-            </div>
-        </div>
         {% for message in app.flashes('success') %}
             <div class="row">
                 <div class="col-md-12">
@@ -39,7 +33,7 @@
         {% endfor %}
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <table id="ride-list-table" class="table">
                     <thead>
                     <tr>

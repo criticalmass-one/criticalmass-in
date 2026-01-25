@@ -1,31 +1,31 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Touren mit fehlenden Statistiken aus {{ city.city }}{% endblock %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
-
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Städteliste', path('caldera_criticalmass_city_list')) }}
-    {{ bootstrap.breadcrumb_item(city.city, objectPath(city)) }}
-    {{ bootstrap.breadcrumb_item('Touren mit fehlenden Statistiken', '', true) }}
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item(city.city, object_path(city)) }}
+    {{ breadcrumb.active('Touren mit fehlenden Statistiken') }}
 {% endblock %}
-
+    
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                <h2>
+            <div class="col-md-12">
+                <h1>
                     Touren aus {{ city.city }} mit fehlenden Statistiken
-                </h2>
+                </h1>
 
                 <p class="lead">
-                    Bei den folgenden Touren wurden keine Statistiken abgespeichert. Du kannst auf den Seiten der jeweiligen Tour eine Teilnehmerzahl schätzen oder einen GPX-Track importieren.
+                    Bei den folgenden Touren wurden keine Statistiken abgespeichert. Du kannst auf den Seiten der
+                    jeweiligen Tour eine Teilnehmerzahl schätzen oder einen GPX-Track importieren.
                 </p>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <table class="table">
                     <thead>
                     <tr>

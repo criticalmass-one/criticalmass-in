@@ -1,21 +1,20 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Details für soziale Netzwerke{% endblock %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
-
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Städteliste', path('caldera_criticalmass_city_list')) }}
-    {{ bootstrap.breadcrumb_item(ride.city.city, objectPath(ride.city)) }}
-    {{ bootstrap.breadcrumb_item(ride.title, objectPath(ride)) }}
-    {{ bootstrap.breadcrumb_item('Details für soziale Netzwerke', '', true) }}
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item(ride.city.city, object_path(ride.city)) }}
+    {{ breadcrumb.item(ride.title, object_path(ride)) }}
+    {{ breadcrumb.active('Details für soziale Netzwerke') }}
 {% endblock %}
 
 {% block content %}
     <div class="container">
         {% for message in app.flashes('success') %}
             <div class="row">
-                <div class="col-12">
+                <div class="col-md-12">
                     <div class="alert alert-success">
                         {{ message }}
                     </div>
@@ -24,37 +23,37 @@
         {% endfor %}
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <h2>
                     Details für soziale Netzwerke
                 </h2>
 
                 <p class="lead">
-                    Hier kannst du festlegen, wie diese Tour in öffentlichen Netzwerken oder in Suchmaschinen dargestellt werden soll. Du kannst dazu ein kleines Vorschaufoto hochalden, das beispielsweise bei facebook und twitter gemeinsam mit Verlinkungen dargestellt wird, sowie einen kurzen Vorankündigungstext eingeben.
+                    Hier kannst du festlegen, wie diese Tour in öffentlichen Netzwerken oder in Suchmaschinen dargestellt werden soll. Du kannst dazu ein kleines Vorschaufoto hochalden, das gemeinsam mit Verlinkungen dargestellt wird, sowie einen kurzen Vorankündigungstext eingeben.
                 </p>
             </div>
         </div>
 
         {{ form_start(form) }}
 
-        <div class="row mt-2">
+        <div class="row margin-top-medium">
             <div class="col-md-6">
                 {% if ride.imageName %}
-                <div class="row mb-2">
-                    <div class="col-12">
-                        <img id="photo" class="img-thumbnail img-fluid" src="{{ vich_uploader_asset(ride, 'imageFile')|imagine_filter('ride_photo_preview') }}"/>
+                <div class="row margin-bottom-medium">
+                    <div class="col-md-12">
+                        <img id="photo" class="img-thumbnail img-responsive" src="{{ vich_uploader_asset(ride, 'imageFile')|imagine_filter('ride_photo_preview') }}"/>
                     </div>
                 </div>
                 {% endif %}
 
                 <div class="row">
-                    <div class="col-12 form-group">
+                    <div class="col-md-12 form-group">
                         <label class="control-label" for="">
                             Datei:
                         </label>
                         {{ form_widget(form.imageFile) }}
                         <p class="help-block">
-                            Hier kannst du eine Grafik hochladen, die bei Verlinkungen der Tour auf facebook und twitter angezeigt wird. Die Grafik sollte mindestens 1.200 mal 630 Pixel messen.
+                            Hier kannst du eine Grafik hochladen, die bei Verlinkungen der Tour im Netz angezeigt wird. Die Grafik sollte mindestens 1.200 mal 630 Pixel messen.
                             <strong>Bitte lade nur Fotos hoch, an denen du das Urheber- oder Nutzungsrecht besitzt.</strong>
                         </p>
                     </div>
@@ -67,18 +66,18 @@
                 </label>
                 {{ form_widget(form.socialDescription, { 'attr' : { 'class': 'form-control', 'rows': 4 } }) }}
                 <p class="help-block">
-                    Hier kannst du eine kurze Beschreibung eingeben, die in sozialen Netzwerken wie facebook und twitter angezeigt wird. Bedenke, dass dort meistens nur 140 bis 160 Zeichen angezeigt und der Rest des Textes abgeschnitten werden.
+                    Hier kannst du eine kurze Beschreibung eingeben, die in sozialen Netzwerken angezeigt wird. Bedenke, dass dort meistens nur 140 bis 160 Zeichen angezeigt und der Rest des Textes abgeschnitten werden.
                 </p>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-12 form-group">
+            <div class="col-md-12 form-group">
                 <div class="btn-group pull-right" role="group" aria-label="...">
-                    <a href="{{ object_path(ride) }}" class="btn btn-default">
+                    <a href="{{ object_path(ride) }}" class="btn btn-secondary">
                         Abbrechen
                     </a>
-                    <button type="submit" class="btn btn-primary" id="rideSubmitButton">
+                    <button type="submit" class="btn btn-success" id="rideSubmitButton">
                         Speichern
                     </button>
                 </div>

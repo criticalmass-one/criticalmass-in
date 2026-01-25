@@ -12,11 +12,11 @@ use App\Repository\RideRepository;
 use App\Repository\SubrideRepository;
 use App\Repository\TrackRepository;
 use App\Repository\WeatherRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Controller\AbstractController;
 use App\Entity\Weather;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
 class RideController extends AbstractController
 {
@@ -37,9 +37,13 @@ class RideController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("ride", class="App:Ride", isOptional=true)
-     */
+    #[Route(
+        '/{citySlug}/{rideIdentifier}',
+        name: 'caldera_criticalmass_ride_show',
+        requirements: ['citySlug' => '(?!api$)[^/]+'],
+        options: ['expose' => true],
+        priority: -100
+    )]
     public function showAction(
         BlockedCityRepository $blockedCityRepository,
         ParticipationRepository $participationRepository,
@@ -49,7 +53,7 @@ class RideController extends AbstractController
         PhotoRepository $photoRepository,
         SeoPageInterface $seoPage,
         EventDispatcherInterface $eventDispatcher,
-        Ride $ride = null
+        ?Ride $ride = null
     ): Response {
         if (!$ride) {
             $this->redirectToRoute('caldera_criticalmass_calendar');
@@ -64,7 +68,7 @@ class RideController extends AbstractController
             ]);
         }
 
-        $eventDispatcher->dispatch(new ViewEvent($ride), ViewEvent::NAME);
+        //$eventDispatcher->dispatch(new ViewEvent($ride), ViewEvent::NAME);
 
         $seoPage
             ->setDescription('Informationen, Strecken und Fotos von der Critical Mass in ' . $ride->getCity()->getCity() . ' am ' . $ride->getDateTime()->format('d.m.Y'))
@@ -82,9 +86,7 @@ class RideController extends AbstractController
             $seoPage->setDescription($ride->getDescription());
         }
 
-        /**
-         * @var Weather $weather
-         */
+        /** @var Weather $weather */
         $weather = $weatherRepository->findCurrentWeatherForRide($ride);
 
         if ($weather) {
@@ -94,8 +96,10 @@ class RideController extends AbstractController
         }
 
         if ($this->getUser()) {
-            $participation = $participationRepository->findParticipationForUserAndRide($this->getUser(),
-                $ride);
+            $participation = $participationRepository->findParticipationForUserAndRide(
+                $this->getUser(),
+                $ride
+            );
         } else {
             $participation = null;
         }

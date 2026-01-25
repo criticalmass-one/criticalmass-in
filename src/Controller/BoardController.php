@@ -9,22 +9,24 @@ use App\Repository\BoardRepository;
 use App\Repository\CityRepository;
 use App\Repository\PostRepository;
 use App\Repository\ThreadRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Entity\City;
 use App\Entity\Post;
 use App\Entity\Thread;
 use App\EntityInterface\BoardInterface;
 use Malenki\Slug;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Routing\Attribute\Route;
 
 class BoardController extends AbstractController
 {
+    #[Route('/boards/overview', name: 'caldera_criticalmass_board_overview', priority: 240)]
     public function overviewAction(
         CityRepository $cityRepository,
         BoardRepository $boardRepository
@@ -36,28 +38,24 @@ class BoardController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("city", class="App:City", isOptional="true")
-     * @ParamConverter("board", class="App:Board", isOptional="true")
-     */
+    #[Route('/boards/{boardSlug}', name: 'caldera_criticalmass_board_listthreads', priority: 240)]
+    #[Route('/{citySlug}/listthreads', name: 'caldera_criticalmass_board_listcitythreads', priority: 240)]
     public function listThreadsAction(
         ThreadRepository $threadRepository,
         ObjectRouterInterface $objectRouter,
-        Board $board = null,
-        City $city = null
+        #[MapEntity(mapping: ['boardSlug' => 'slug'])] ?Board $board = null,
+        ?City $city = null
     ): Response {
         $threads = [];
         $newThreadUrl = '';
 
         if ($board) {
             $threads = $threadRepository->findThreadsForBoard($board);
-
             $newThreadUrl = $objectRouter->generate($board, 'caldera_criticalmass_board_addthread');
         }
 
         if ($city) {
             $threads = $threadRepository->findThreadsForCity($city);
-
             $newThreadUrl = $objectRouter->generate($city, 'caldera_criticalmass_board_addcitythread');
         }
 
@@ -68,9 +66,8 @@ class BoardController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("thread", class="App:Thread")
-     */
+    #[Route('/boards/{boardSlug}/thread/{threadSlug}', name: 'caldera_criticalmass_board_viewthread', priority: 240)]
+    #[Route('/{citySlug}/thread/{threadSlug}', name: 'caldera_criticalmass_board_viewcitythread', priority: 240)]
     public function viewThreadAction(
         PostRepository $postRepository,
         EventDispatcherInterface $eventDispatcher,
@@ -88,13 +85,15 @@ class BoardController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("city", class="App:City", isOptional="true")
-     * @ParamConverter("board", class="App:Board", isOptional="true")
-     */
-    public function addThreadAction(Request $request, ObjectRouterInterface $objectRouter, Board $board = null, City $city = null): Response
-    {
+    #[IsGranted('ROLE_USER')]
+    #[Route('/boards/{boardSlug}/addthread', name: 'caldera_criticalmass_board_addthread', priority: 240)]
+    #[Route('/{citySlug}/addthread', name: 'caldera_criticalmass_board_addcitythread', priority: 240)]
+    public function addThreadAction(
+        Request $request,
+        ObjectRouterInterface $objectRouter,
+        #[MapEntity(mapping: ['boardSlug' => 'slug'])] ?Board $board = null,
+        ?City $city = null
+    ): Response {
         $board = $board ?? $city;
 
         $data = [];

@@ -1,3 +1,0 @@
-caldera_criticalmass_profile_show:
-    path:  /{userId
-    controller: App\Controller\Profile:show

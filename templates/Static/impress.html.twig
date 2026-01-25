@@ -1,15 +1,16 @@
-{% extends 'Template/StandardTemplate.html.twig' %}{% block title %}Impressum{% endblock %}
+{% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+{% block title %}Impressum{% endblock %}
 
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Impressum', '', true) }}
+    {{ breadcrumb.active('Impressum') }}
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-12 col-md-10 offset-md-1">
+            <div class="col-md-10 col-md-offset-1">
                 <h2>
                     Impressum
                 </h2>
@@ -17,31 +18,96 @@
         </div>
 
         <div class="row">
-            <div class="col-12 col-md-5 offset-md-1">
-                <div class="card">
-                    <h5 class="card-header">
-                        Impressum
-                    </h5>
-                    <div class="card-body">
-                        <p class="card-text">
+            <div class="col-md-5 col-md-offset-1">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Verantwortlichkeit für lokale Critical-Mass-Gruppen
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            Die Website criticalmass.in ist ein rein informatorisches Projekt.
+                        </p>
+
+                        <p>
+                            Wir organisieren, veranstalten, betreiben, administrieren und moderieren keine lokalen Critical-Mass-Gruppen, Facebook-Seiten, Instagram-Accounts, Telegram-Kanäle oder sonstige Social-Media-Präsenzen.
+                        </p>
+
+                        <p>
+                            Alle Einträge zu Städten, Touren oder Gruppen dienen ausschließlich der Übersicht und werden größtenteils von Nutzer*innen selbst gepflegt.
+                        </p>
+
+                        <p>
+                            Für Inhalte, Fotos, Videos oder Beiträge einzelner Städte oder deren Social-Media-Kanäle sind wir nicht verantwortlich und haben keinen administrativen Zugriff.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Externe Inhalte und Links
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            Die auf criticalmass.in verlinkten Websites, Social-Media-Kanäle und externen Inhalte werden weder betrieben noch kontrolliert. Für deren Inhalte sind ausschließlich die jeweiligen Betreiber verantwortlich.
+                        </p>
+
+                        <p>
+                            Wir machen uns fremde Inhalte nicht zu eigen und haben keinen Einfluss auf deren Veröffentlichung, Löschung oder rechtlichen Status.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Keine Verantwortlichkeit für Inhalte verlinkter Social-Media-Seiten
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>
+                            Bitte beachten Sie, dass wir in keiner Form Betreiber oder Verantwortlicher externern Social-Media-Angebote von Critical-Mass-Radtouren sind sind.
+                        </p>
+
+                        <p>
+                            Wir haben keinen Zugriff auf dort veröffentlichte Inhalte und können diese nicht entfernen, nicht bearbeiten und nicht moderieren.
+                        </p>
+
+                        <p>
+                            Bitte wenden Sie sich bei rechtlichen Anliegen direkt an die jeweiligen Seitenbetreiber der lokalen Gruppe.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Impressum
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>
                             Angaben nach § 5 TMG:
                         </p>
 
-                        <p class="card-text">
-                            {{ impress_property('firstName') }} {{ impress_property('lastName') }}
+                        <p>
+                            Malte Hübner
                             <br />
-                            {{ impress_property('street') }} {{ impress_property('houseNumber') }}
+                            Goethestraße 48
                             <br />
-                            {{ impress_property('zipCode') }} {{ impress_property('city') }}
+                            21335 Lüneburg
                         </p>
 
-                        <p class="card-text">
-                            Telefon: {{ impress_property('phoneNumber') }}
+                        <p>
+                            Telefon: 0151 172 77 032
                             <br/>
-                            E-Mail: <a href="mailto:malte@caldera.cc">malte@caldera.cc</a>
+                            E-Mail: <a href="mailto:maltehuebner@gmx.org">maltehuebner@gmx.org</a>
                         </p>
 
-                        <p class="card-text">
+                        <p>
                             <strong>
                                 Bitte beachte, dass diese Kontaktdaten nicht für Support- oder Presseanfragen vorgesehen sind.
                             </strong>
@@ -50,41 +116,43 @@
                 </div>
             </div>
 
-            <div class="col-6 col-md-5">
-                <div class="card">
-                    <h5 class="card-header">
-                        Kontakt
-                    </h5>
-                    <div class="card-body">
-                        <h5 class="card-title">
+            <div class="col-md-5">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            Kontakt
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <h4>
                             Supportanfragen
-                        </h5>
+                        </h4>
 
-                        <p class="card-text">
+                        <p>
                             Wenn du Probleme bei der Bedienung dieser Internetseite oder einen Fehler gefunden hast, schreibe bitte eine Mail an <a href="mailto:criticalmass@caldera.cc">criticalmass@caldera.cc</a> oder, falls du mit Software-Entwicklung und GitHub vertraut bist, eröffne ein Ticket <a href="https://github.com/calderacc/criticalmass-in/issues">in unserem Repository</a>.
                         </p>
 
-                        <h5 class="card-title">
+                        <h4>
                             Korrektur von Städtedaten
-                        </h5>
+                        </h4>
 
-                        <p class="card-text">
+                        <p>
                             criticalmass.in funktioniert so ähnlich wie Wikipedia: Fehler in den Daten von Städten oder Touren kannst du direkt selbst korrigieren und abändern, du brauchst dazu lediglich ein kostenloses Benutzerkonto auf unserer Webseite. Schicke uns bitte eine Mail an <a href="mailto:criticalmass@caldera.cc">criticalmass@caldera.cc</a>, wenn du Probleme mit der Bedienung der Seite hast.
                         </p>
 
-                        <h5 class="card-title">
+                        <h4>
                             Rückmeldungen und Kommentare zur Critical Mass
-                        </h5>
+                        </h4>
 
-                        <p class="card-text">
+                        <p>
                             Wir bekommen häufig lange E-Mails mit Erfahrungsberichten und Verbesserungsvorschlägen zu allen möglichen Critical-Mass-Touren — leider können wir damit gar nichts anfangen, weil wir nicht dabei waren und überhaupt keinen Einfluss auf den Ablauf der Touren haben. Damit deine Berichte das entsprechende Publikum finden, suchst du am besten deine Stadt aus der <a href="{{ path('caldera_criticalmass_city_list') }}">Städteliste</a> heraus und schreibst deine Erfahrungen entweder als Kommentar unter die jeweilige Tour oder nutzt die Verlinkungen zu sozialen Netzwerken, um dort mit anderen Teilnehmern über die Tour zu diskutieren. Natürlich kannst du auch gerne das <a href="{{ path('caldera_criticalmass_board_overview') }}">Diskussionsforum auf criticalmass.in</a> nutzen.
                         </p>
 
-                        <h5 class="card-title">
+                        <h4>
                             Presseanfragen
-                        </h5>
+                        </h4>
 
-                        <p class="card-text">
+                        <p>
                             Wir können leider nur allgemeine Fragen zur Critical Mass beantworten. Über Details zur Critical Mass in einzelnen Städten oder weiteren Fahrrad-Aktionen wie das Aufstellen von Ghostbikes, Fahrradreparaturwerkstätten oder Fahrradtouren können wir keine Auskunft geben. Bitte suche in der <a href="{{ path('caldera_criticalmass_city_list') }}">Städteliste</a> die jeweilige Stadt heraus und versuche über die Verlinkungen zu sozialen Netzwerken einen Ansprechpartner zu finden.
                         </p>
                     </div>

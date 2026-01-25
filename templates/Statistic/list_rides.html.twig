@@ -1,16 +1,17 @@
-{% extends 'Template/StandardTemplate.html.twig' %}{% block title %}Critical-Mass-Teilnehmerzahlen im {{ dateTime|format_date('MMMM YYYY') }}{% endblock %}
+{% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+{% block title %}Critical-Mass-Teilnehmerzahlen im {{ dateTime|format_date('MMMM YYYY') }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Städteliste', path('caldera_criticalmass_statistic_ride_month', { year: dateTime|date('Y'), month: dateTime|date('m') })) }}
-    {{ bootstrap.breadcrumb_item('Critical-Mass-Teilnehmerzahlen im ' ~ dateTime|format_date('MMMM YYYY'), '', true) }}
+    {{ breadcrumb.item('Statistik', '#') }}
+    {{ breadcrumb.active('Critical-Mass-Teilnehmerzahlen im ' ~ dateTime|format_date('MMMM YYYY')) }}
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <h2>
                     Critical-Mass-Teilnehmerzahlen im {{ dateTime|format_date('MMMM YYYY') }}
                 </h2>
@@ -22,7 +23,7 @@
         </div>
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <table class="table ride-list">
                     <thead>
                     <tr>
@@ -56,7 +57,7 @@
         </div>
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <p>
                     Hier fehlt noch was? Du kannst fehlende Teilnehmerzahlen auf der jeweiligen Tourenseite nachtragen oder Streckenlängen mit hochgeladenen GPX-Dateien ergänzen. Auf <a href="https://criticalmass.blog/criticalmass-one/haeufig-gestellte-fragen-zu-dieser-webseite/haeufig-gestellte-fragen-zur-statistik/">unserer Hilfeseite</a> findest du weitere Informationen.
                 </p>
@@ -64,8 +65,22 @@
         </div>
 
         <div class="row">
-            <div class="col-12">
-                {% include('Statistic/_pagination.html.twig') with { 'previousMonth': previousDateTime, 'nextMonth': nextDateTime } %}
+            <div class="col-md-12">
+                <nav aria-label="Monat Navigation">
+                    <ul class="pagination justify-content-between">
+                        <li class="page-item{% if not previousDateTime %} disabled{% endif %}">
+                            <a class="page-link" href="{% if previousDateTime %}{{ path('caldera_criticalmass_statistic_ride_month', { year: previousDateTime|date('Y'), month: previousDateTime|date('m') }) }}{% else %}#{% endif %}">
+                                &larr; Voriger Monat
+                            </a>
+                        </li>
+
+                        <li class="page-item{% if not nextDateTime %} disabled{% endif %}">
+                            <a class="page-link" href="{% if nextDateTime %}{{ path('caldera_criticalmass_statistic_ride_month', { year: nextDateTime|date('Y'), month: nextDateTime|date('m') }) }}{% else %}#{% endif %}">
+                                Nächster Monat &rarr;
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>

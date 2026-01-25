@@ -1,15 +1,16 @@
-{% extends 'Template/StandardTemplate.html.twig' %}{% block title %}Städte-Übersicht{% endblock %}
+{% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+{% block title %}Städte-Übersicht{% endblock %}
 
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Städteliste', '', true) }}
+    {{ breadcrumb.active('Städteliste') }}
 {% endblock %}
     
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <h1>
                     Die nächste Masse ist ganz nah
                 </h1>
@@ -19,13 +20,16 @@
                 </p>
 
                 <p>
-                    Auf den Sattel, fertig, los: Die folgende Liste enthält mittlerweile {{ cityList|length }} Städte. Bitte bedenke, dass die folgenden Informationen aus verschiedenen Quellen im Internet stammen und womöglich veraltet oder schlichtweg falsch sein können. Überprüfe bitte vorher die einschlägigen Quellen wie Facebook oder Twitter, bevor du dich auf den Weg machst.
+                    Auf den Sattel, fertig, los: Die folgende Liste enthält mittlerweile {{ cityList|length }} Städte.
+                    Bitte bedenke, dass die folgenden Informationen aus verschiedenen Quellen im Internet stammen und
+                    womöglich veraltet oder schlichtweg falsch sein können. Überprüfe bitte vorher weitere Quellen,
+                    bevor du dich auf den Weg machst.
                 </p>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <table id="city-list-table" class="table tablesorter">
                     <thead>
                     <tr>

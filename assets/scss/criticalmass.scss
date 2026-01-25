@@ -1,8 +1,8 @@
-@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+@import "bootstrap5";
 @import "../../node_modules/leaflet/dist/leaflet.css";
 @import "../../node_modules/leaflet-extra-markers/dist/css/leaflet.extra-markers.min.css";
 @import "criticalmass/criticalmass";
-@import "criticalmass/frontpage4";
+@import "criticalmass/frontpage3";
 
 .input-daterange input {
   text-align: left !important;
@@ -20,6 +20,6 @@ input[type="file"] {
   z-index: 1000;
 }
 
-.captcha-input-group .input-group-addon {
+.captcha-input-group .input-group-text {
   padding: 0;
 }

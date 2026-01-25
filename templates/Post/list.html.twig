@@ -1,5 +1,5 @@
 {% if posts|length > 0 %}
-    <div class="post-list">
+    <div class="post-list" data-controller="scroll-to-post">
         {% for post in posts %}
             {% include('Post/post.html.twig') with { 'post':  post } %}
         {% endfor %}

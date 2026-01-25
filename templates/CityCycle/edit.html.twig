@@ -1,4 +1,5 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% if city != null %}
     {% set title = 'Turnus editieren' %}
@@ -8,12 +9,10 @@
 
 {% block title %}{{ title }}{% endblock %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
-
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item(city.city, objectPath(city)) }}
-    {{ bootstrap.breadcrumb_item('Turnusliste', objectPath(city, 'caldera_criticalmass_citycycle_list')) }}
-    {{ bootstrap.breadcrumb_item(title, '', true) }}
+    {{ breadcrumb.item(city.city, object_path(city)) }}
+    {{ breadcrumb.item('Turnusliste', object_path(city, 'caldera_criticalmass_citycycle_list')) }}
+    {{ breadcrumb.active(title) }}
 {% endblock %}
 
 {% block content %}
@@ -24,17 +23,19 @@
         {{ form_start(form) }}
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <h2>
                     {{ title }}
                 </h2>
 
-                <p class="lead">criticalmass.in kann jeden Monat automatisch eine neue Tour für diese Stadt erstellen, sofern die Touren jeweils an einem einheitlichen Tag zu einer bestimmten Uhrzeit an einem vorher festgelegten Treffpunkt starten.</p>
+                <p class="lead">criticalmass.in kann jeden Monat automatisch eine neue Tour für diese Stadt erstellen,
+                    sofern die Touren jeweils an einem einheitlichen Tag zu einer bestimmten Uhrzeit an einem vorher
+                    festgelegten Treffpunkt starten.</p>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <div class="alert alert-info">
                     Wenn du lediglich eine einzelne Tour für {{ city.city }} erstellen möchtest, nutze bitte <strong><a href="{{ object_path(city, 'caldera_criticalmass_ride_add') }}">dieses Formular</a></strong>.
                 </div>
@@ -42,15 +43,29 @@
         </div>
 
         <div class="row">
-            <div class="col-12">
-                <div id="map" class="map" style="height: 250px;" data-map-center-latitude="{{ city.latitude }}" data-map-center-longitude="{{ city.longitude }}" data-map-zoomlevel="10" data-marker-type="ride" data-marker-latitude-target="city_cycle_latitude" data-marker-longitude-target="city_cycle_longitude"></div>
+            <div class="col-md-12">
+                <div id="map"
+                     class="map"
+                     data-controller="map--form-map"
+                     style="height: 250px;"
+                     data-map--form-map-center-latitude-value="{{ city.latitude }}"
+                     data-map--form-map-center-longitude-value="{{ city.longitude }}"
+                     data-map--form-map-zoom-value="10"
+                     data-map--form-map-marker-latitude-target-value="city_cycle_latitude"
+                     data-map--form-map-marker-longitude-target-value="city_cycle_longitude"
+                     data-map--form-map-marker-icon-value="fa-map-marker-alt"
+                     data-map--form-map-marker-color-value="yellow"
+                     data-map--form-map-marker-shape-value="circle"
+                     data-map--form-map-marker-prefix-value="fas"
+                >
+                </div>
             </div>
         </div>
 
-        <div class="row mt-2">
-            <div class="col-12 col-md-6">
+        <div class="row margin-top-medium">
+            <div class="col-md-6">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-md-12">
                         <div class="form-group{% if form_errors(form.dayOfWeek) %} has-error has-feedback{% endif %}">
                             <label class="control-label" for="">Wochentag der Touren:</label>
                             {{ form_widget(form.dayOfWeek, { 'attr' : { 'class': 'form-control'} }) }}
@@ -69,7 +84,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-md-12">
                         <div class="form-group{% if form_errors(form.weekOfMonth) %} has-error has-feedback{% endif %}">
                             <label class="control-label" for="">Woche der Touren:</label>
                             {{ form_widget(form.weekOfMonth, { 'attr' : { 'class': 'form-control'} }) }}
@@ -88,9 +103,9 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-6">
+            <div class="col-md-6">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-md-12">
                         <div class="form-group{% if form_errors(form.time) %} has-error has-feedback{% endif %}">
                             <label class="control-label" for="">Uhrzeit der Touren:</label>
                             {{ form_widget(form.time, { 'attr' : { 'class': 'form-control' } }) }}
@@ -102,7 +117,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-md-12">
                         <div class="form-group{% if form_errors(form.location) %} has-error has-feedback{% endif %}">
                             <label class="control-label" for="">Treffpunkt der Touren:</label>
                             {{ form_widget(form.location, { 'attr' : { 'class': 'form-control' } }) }}
@@ -117,7 +132,7 @@
         </div>
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 Hier kannst du einen optionalen Gültigkeitszeitraum angeben, in dem neue Touren nach dem obigen
                 Einstellungen erzeugt werden sollen. Das kann nützlich sein, falls die Critical Mass in {{ city.city }}
                 nur im Sommer stattfindet oder sich irgendwann einmal der Treffpunkt ändert.
@@ -141,12 +156,12 @@
         </div>
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <div class="btn-group pull-right">
                     <a href="{{ object_path(city) }}" class="btn btn-secondary">
                         Abbrechen
                     </a>
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-success">
                         Speichern
                     </button>
                 </div>

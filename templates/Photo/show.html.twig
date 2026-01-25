@@ -1,50 +1,33 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
-
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% set previous_photo = previous_entity(photo) %}
 {% set next_photo = next_entity(photo) %}
 
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Städteliste', path('caldera_criticalmass_city_list')) }}
-    {{ bootstrap.breadcrumb_item(city.city, objectPath(city)) }}
-    {{ bootstrap.breadcrumb_item(ride.title, objectPath(ride)) }}
-    {{ bootstrap.breadcrumb_item('Fotos', objectPath(ride, 'caldera_criticalmass_photo_ride_list')) }}
-    {{ bootstrap.breadcrumb_item('Foto ' ~ photo.id ~ ' aus ' ~ city.city, '', true) }}
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item(city.city, object_path(city)) }}
+    {{ breadcrumb.item(ride.title, object_path(ride)) }}
+    {{ breadcrumb.item('Fotos', object_path(ride, 'caldera_criticalmass_photo_ride_list')) }}
+    {{ breadcrumb.active('Foto ' ~ photo.id ~ ' aus ' ~ city.city) }}
 {% endblock %}
 
 {% block navigation %}
-    <div class="row mt-2">
-        <div class="col-12">
-            <nav aria-label="Photo navigation" class="text-center">
-                <ul class="pagination justify-content-center">
-                    {% if previous_photo %}
-                        <li class="page-item">
-                            <a class="page-link" href="{{ object_path(previous_photo) }}">
-                                &larr; Voriges Foto
-                            </a>
-                        </li>
-                    {% else %}
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#">
-                                &larr; Voriges Foto
-                            </a>
-                        </li>
-                    {% endif %}
+    <div class="row">
+        <div class="col-md-12">
+            <nav aria-label="Foto Navigation">
+                <ul class="pagination justify-content-between">
+                    <li class="page-item{% if not previous_photo %} disabled{% endif %}">
+                        <a class="page-link" href="{% if previous_photo %}{{ object_path(previous_photo) }}{% else %}#{% endif %}">
+                            &larr; Voriges Foto
+                        </a>
+                    </li>
 
-                    {% if next_photo %}
-                        <li class="page-item">
-                            <a class="page-link" href="{{ object_path(next_photo) }}">
-                                Nächstes Photo &rarr;
-                            </a>
-                        </li>
-                    {% else %}
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#">
-                                Nächstes Photo &rarr;
-                            </a>
-                        </li>
-                    {% endif %}
+                    <li class="page-item{% if not next_photo %} disabled{% endif %}">
+                        <a class="page-link" href="{% if next_photo %}{{ object_path(next_photo) }}{% else %}#{% endif %}">
+                            Nächstes Foto &rarr;
+                        </a>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -56,12 +39,12 @@
     {{ block('navigation') }}
 
     <div class="row">
-        <div class="col-12">
+        <div class="col-md-12">
             {% if not app.user and photo.user.blurGalleries %}
                 <div class="row" style="position: absolute; z-index: 100; width: 100%; height: 100%; top: 100px;">
-                    <div class="col-12 col-md-6 col-md-offset-3">
-                        <div class="card">
-                            <div class="card-body">
+                    <div class="col-md-6 col-md-offset-3">
+                        <div class="panel panel-danger">
+                            <div class="panel-body">
                                 <h4 class="text-center">
                                     Bitte logge dich ein
                                 </h4>
@@ -72,7 +55,7 @@
                                 </p>
 
                                 <p class="text-center">
-                                    <a href="#" data-toggle="modal" data-target="#loginModal" class="btn btn-primary">
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-primary">
                                         Login
                                     </a>
                                 </p>
@@ -94,38 +77,24 @@
                         </div>
                     </div>
                 </div>
-                <img id="photo" class="img-fluid" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_blurred') }}" style="width: 100%;" />
+                <img id="photo" class="img-responsive"
+                     src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_blurred') }}"
+                     style="width: 100%;"/>
             {% else %}
-                <img id="photo" class="img-fluid" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}" />
+                <img id="photo" class="img-responsive"
+                     src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_standard') }}"/>
             {% endif %}
         </div>
     </div>
 
-    <div class="row mt-3">
-        <div class="col-12 col-md-8">
+    <div class="row margin-top-medium">
+        <div class="col-md-8">
             {% include 'Photo/_comments.html.twig' with { 'photo': photo } %}
         </div>
 
-        <div class="col-12 col-md-4">
-            {% if photo.hasCoordinates() %}
-            <div class="row mb-2">
-                <div class="col-12">
-                    {% include 'Photo/_map.html.twig' with { 'photo': photo } %}
-                </div>
-            </div>
-            {% endif %}
-
-            <div class="row mb-2">
-                <div class="col-12">
-                    {% include 'Photo/_details.html.twig' with { 'photo': photo } %}
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12">
-                    {% include 'Photo/_social_networks.html.twig' with { 'photo': photo } %}
-                </div>
-            </div>
+        <div class="col-md-4">
+            {% include 'Photo/_map.html.twig' with { 'photo': photo } %}
+            {% include 'Photo/_details.html.twig' with { 'photo': photo } %}
         </div>
     </div>
 

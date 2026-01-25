@@ -1,20 +1,25 @@
-{% extends 'Template/StandardTemplate.html.twig' %}{% block title %}Datenschutzerklärung{% endblock %}
+{% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+{% block title %}Datenschutzerklärung{% endblock %}
 
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Datenschutzerklärung', '', true) }}
+    {{ breadcrumb.active('Datenschutzerklärung') }}
 {% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-12 col-md-8 offset-md-2">
+        <div class="col-md-10 col-md-offset-1">
             <h2>
                 Datenschutzerklärung
             </h2>
+        </div>
+    </div>
 
-            <p class="lead">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <p>
                 Diese Datenschutzerklärung klärt Sie über die Art, den Umfang und Zweck der Verarbeitung von personenbezogenen Daten (nachfolgend kurz „Daten“) innerhalb unseres Onlineangebotes und der mit ihm verbundenen Webseiten, Funktionen und Inhalte sowie externen Onlinepräsenzen, wie z.B. unser Social Media Profile auf. (nachfolgend gemeinsam bezeichnet als „Onlineangebot“). Im Hinblick auf die verwendeten Begrifflichkeiten, wie z.B. „Verarbeitung“ oder „Verantwortlicher“ verweisen wir auf die Definitionen im Art. 4 der Datenschutzgrundverordnung (DSGVO).
             </p>
 
@@ -23,17 +28,17 @@
             </h3>
 
             <p>
-                {{ impress_property('firstName') }} {{ impress_property('lastName') }}
+                Malte Hübner
                 <br />
-                {{ impress_property('street') }} {{ impress_property('houseNumber') }}
+                Goethestraße 48
                 <br />
-                {{ impress_property('zipCode') }} {{ impress_property('city') }}
+                21335 Lüneburg
             </p>
 
             <p>
-                Telefon: {{ impress_property('phoneNumber') }}
+                Telefon: 0151 172 77 032
                 <br/>
-                E-Mail: <a href="mailto:malte@caldera.cc">malte@caldera.cc</a>
+                E-Mail: <a href="mailto:maltehuebner@gmx.org">maltehuebner@gmx.org</a>
             </p>
 
             <h3>

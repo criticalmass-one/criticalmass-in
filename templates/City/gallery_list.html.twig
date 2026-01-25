@@ -1,31 +1,31 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Städte-Übersicht{% endblock %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
-
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Städteliste', path('caldera_criticalmass_city_list')) }}
-    {{ bootstrap.breadcrumb_item(city.city, objectPath(city)) }}
-    {{ bootstrap.breadcrumb_item('Foto-Galerien', '', true) }}
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item(city.city, object_path(city)) }}
+    {{ breadcrumb.active('Foto-Galerien') }}
 {% endblock %}
-
+    
 {% block content %}
-    <div class="container">
+    <div class="container main-container">
         <div class="row">
-            <div class="col-12">
-                <h2>
+            <div class="col-md-12">
+                <h1>
                     Fotos aus {{ city.city }}
-                </h2>
+                </h1>
 
                 <p class="lead">
-                    Hier siehst du eine Übersicht von Critical-Mass-Touren aus {{ city.city }}, zu denen Fotos hochgeladen wurden.
+                    Hier siehst du eine Übersicht von Critical-Mass-Touren aus {{ city.city }}, zu denen Fotos
+                    hochgeladen wurden.
                 </p>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <table id="cityRideList" class="table">
                     <thead>
                     <tr>

@@ -1,26 +1,29 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% set city = ride.city %}
 
 {% block title %}Fotos hochladen{% endblock %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
-
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Städteliste', path('caldera_criticalmass_city_list')) }}
-    {{ bootstrap.breadcrumb_item(city.title, objectPath(city)) }}
-    {{ bootstrap.breadcrumb_item(ride.title, objectPath(ride)) }}
-    {{ bootstrap.breadcrumb_item('Fotos hochladen', '', true) }}
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item(city.title, object_path(city)) }}
+    {{ breadcrumb.item(ride.title, object_path(ride)) }}
+    {{ breadcrumb.active('Fotos hochladen') }}
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                <h2>
+            <div class="col-md-12">
+                <h1>
                     Fotos hochladen
-                </h2>
+                </h1>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col-md-12">
                 <p>
                     Ziehe einfach Fotos von deinem Rechner auf die graue Fläche, um sie zu der Tour hinzuzufügen. Wenn
                     du vorher einen GPX-Track deiner Tour hochlädst oder deine Fotos GPS-Koordinaten
@@ -42,7 +45,7 @@
         </div>
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <div class="form-group">
                     <form action="{{ object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') }}" class="dropzone" id="photo-dropzone">
                     </form>

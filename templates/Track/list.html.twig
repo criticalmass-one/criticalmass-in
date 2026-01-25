@@ -1,28 +1,33 @@
-{% extends 'Template/StandardTemplate.html.twig' %}{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+{% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Deine Tracks{% endblock %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
-
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Dein Benutzerkonto', path('criticalmass_user_usermanagement')) }}
-    {{ bootstrap.breadcrumb_item('Deine Tracks', '', true)) }}
+    {{ breadcrumb.item('Dein Benutzerkonto', path('criticalmass_user_usermanagement')) }}
+    {{ breadcrumb.active('Deine Tracks') }}
 {% endblock %}
 
 {% block content %}
-    <div class="container">
+    <div class="container main-container">
         <div class="row">
-            <div class="col-12">
-                <h2>
+            <div class="col-md-12">
+                <h1>
                     Deine Gpx-Tracks
-                </h2>
+                </h1>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col-md-12">
                 <p class="lead">
-                    Hier siehst du alle Tracks, die du bei deinen bisherigen Critical-Mass-Teilnahmen aufgezeichnet hast.
+                    Hier siehst du alle Tracks, die du bei deinen bisherigen Critical-Mass-Teilnahmen aufgezeichnet
+                    hast.
                 </p>
 
                 <p>
-                    Klicke in der Übersicht einer Radtour im Reiter „Tracks“ auf den grünen Button, um einen neuen Track hinzuzufügen.
+                    Klicke in der Übersicht einer Radtour im Reiter „Tracks“ auf den grünen Button, um einen neuen Track
+                    hinzuzufügen.
                 </p>
             </div>
         </div>
@@ -35,8 +40,31 @@
     </div>
 
     <div class="row">
-        <div class="col-12">
-            {{ knp_pagination_render(pagination, null, [], { align: 'center' } ) }}
+        <div class="col-md-12">
+            <div class="text-center">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Track löschen</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <span id="trackIdLabel"></span>
+                    <p>Willst Du diesen Track wirklich löschen?</p>
+                </div>
+                <div class="modal-footer">
+                    <div class="btn-group" role="group" aria-label="...">
+                        <a id="deleteButton" href="#" class="btn btn-success">Ja, löschen</a>
+                        <button id="cancelButton" class="btn btn-secondary">Nein, abbrechen</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

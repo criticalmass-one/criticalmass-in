@@ -1,66 +1,65 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Deine Touren{% endblock %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
-
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Dein Benutzerkonto', path('criticalmass_user_usermanagement')) }}
-    {{ bootstrap.breadcrumb_item('Deine Touren', '', true) }}
+    {{ breadcrumb.item('Dein Benutzerkonto', path('criticalmass_user_usermanagement')) }}
+    {{ breadcrumb.active('Deine Touren') }}
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-12 col-md-10 offset-md-1">
+            <div class="col-md-10 offset-md-1">
                 <ul class="nav nav-tabs" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="participationListTab" data-toggle="tab" href="#participationList" role="tab" aria-controls="participationList" aria-selected="true">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="table-tab" data-bs-toggle="tab" data-bs-target="#table" type="button" role="tab" aria-controls="table" aria-selected="true">
                             Übersicht
-                        </a>
+                        </button>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="goingYesTab" data-toggle="tab" href="#goingYes" role="tab" aria-controls="goingYes" aria-selected="false">
-                            Teilgenommen <span class="badge badge-secondary">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="goingYes-tab" data-bs-toggle="tab" data-bs-target="#goingYes" type="button" role="tab" aria-controls="goingYes" aria-selected="false">
+                            Teilgenommen <span class="badge bg-secondary">
                                 {{ participationYesList|length }}
                             </span>
-                        </a>
+                        </button>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" id="goingMaybeTab" data-toggle="tab" href="#goingMaybe" role="tab" aria-controls="goingMaybe" aria-selected="false">
-                            Unentschieden <span class="badge badge-secondary">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="goingMaybe-tab" data-bs-toggle="tab" data-bs-target="#goingMaybe" type="button" role="tab" aria-controls="goingMaybe" aria-selected="false">
+                            Unentschieden <span class="badge bg-secondary">
                                 {{ participationMaybeList|length }}
                             </span>
-                        </a>
+                        </button>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" id="goingNoTab" data-toggle="tab" href="#goingNo" role="tab" aria-controls="goingNo" aria-selected="false">
-                            Abgesagt <span class="badge badge-secondary">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="goingNo-tab" data-bs-toggle="tab" data-bs-target="#goingNo" type="button" role="tab" aria-controls="goingNo" aria-selected="false">
+                            Abgesagt <span class="badge bg-secondary">
                                 {{ participationNoList|length }}
                             </span>
-                        </a>
+                        </button>
                     </li>
 
-                    <li role="presentation">
-                        <a href="#city-list" aria-controls="city-list" role="tab" data-toggle="tab">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="city-list-tab" data-bs-toggle="tab" data-bs-target="#city-list" type="button" role="tab" aria-controls="city-list" aria-selected="false">
                             Städte
-                            <span class="badge">
+                            <span class="badge bg-secondary">
                                 {{ participationCityList|length }}
                             </span>
-                        </a>
+                        </button>
                     </li>
                 </ul>
 
                 <div class="tab-content">
-                    <div class="tab-pane fade show active" id="participationList" role="tabpanel" aria-labelledby="participationListTab">
+                    <div role="tabpanel" class="tab-pane fade show active" id="table" aria-labelledby="table-tab">
                         {{ include('Participation/_table.html.twig') }}
                     </div>
 
-                    <div class="tab-pane fade" id="goingYes" role="tabpanel" aria-labelledby="goingYesTab">
-                        <div class="row mt-1">
-                            <div class="col-12">
+                    <div role="tabpanel" class="tab-pane fade" id="goingYes" aria-labelledby="goingYes-tab">
+                        <div class="row margin-top-medium">
+                            <div class="col-md-12">
                                 <p>
                                     Hier siehst du eine Liste von Critical-Mass-Touren, zu denen du deine Teilnahme bestätigt hast. Du kannst deine Teilnahme nachträglich zurückziehen oder den Eintrag aus unserer Datenbank löschen.
                                 </p>
@@ -70,9 +69,9 @@
                         {% include 'Participation/_list.html.twig' with { 'participationList': participationYesList } only %}
                     </div>
 
-                    <div class="tab-pane fade" id="goingMaybe" role="tabpanel" aria-labelledby="goingMaybeTab">
-                        <div class="row mt-1">
-                            <div class="col-12">
+                    <div role="tabpanel" class="tab-pane fade" id="goingMaybe" aria-labelledby="goingMaybe-tab">
+                        <div class="row margin-top-medium">
+                            <div class="col-md-12">
                                 <p>
                                     Bei diesen Touren hast du bislang nicht angegeben, ob du teilgenommen hast oder nicht. Du kannst deine Teilnahme nachträglich bestätigen, zurückziehen oder den Datensatz aus unserer Datenbank löschen.
                                 </p>
@@ -82,9 +81,9 @@
                         {% include 'Participation/_list.html.twig' with { 'participationList': participationMaybeList } only %}
                     </div>
 
-                    <div class="tab-pane fade" id="goingNo" role="tabpanel" aria-labelledby="goingNoTaab">
-                        <div class="row mt-1">
-                            <div class="col-12">
+                    <div role="tabpanel" class="tab-pane fade" id="goingNo" aria-labelledby="goingNo-tab">
+                        <div class="row margin-top-medium">
+                            <div class="col-md-12">
                                 <p>
                                     Hier siehst du eine Liste von Critical-Mass-Touren, zu deren Teilnahme du abgesagt hast. Du kannst deine Teilnahme nachträglich bestätigen oder den Eintrag aus unserer Datenbank löschen.
                                 </p>
@@ -94,7 +93,7 @@
                         {% include 'Participation/_list.html.twig' with { 'participationList': participationNoList } only %}
                     </div>
 
-                    <div role="tabpanel" class="tab-pane" id="city-list">
+                    <div role="tabpanel" class="tab-pane fade" id="city-list" aria-labelledby="city-list-tab">
                         {% include 'Participation/_city_list.html.twig' with { 'participationCityList': participationCityList } only %}
                     </div>
                 </div>

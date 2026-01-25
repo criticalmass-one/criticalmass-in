@@ -6,17 +6,15 @@ use App\Controller\AbstractController;
 use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Entity\Ride;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class CityCycleController extends AbstractController
 {
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("city", class="App:City")
-     */
+    #[IsGranted('ROLE_USER')]
+    #[Route('/{citySlug}/cycles/list', name: 'caldera_criticalmass_citycycle_list', priority: 80)]
     public function listAction(City $city, ManagerRegistry $registry): Response
     {
         $cityCycleRepository = $registry->getRepository(CityCycle::class);
@@ -27,12 +25,12 @@ class CityCycleController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("cityCycle", class="App:CityCycle")
-     */
-    public function listRidesAction(CityCycle $cityCycle, ManagerRegistry $registry): Response
-    {
+    #[IsGranted('ROLE_USER')]
+    #[Route('/{citySlug}/cycles/{id}/list', name: 'caldera_criticalmass_citycycle_ride_list', priority: 80)]
+    public function listRidesAction(
+        CityCycle $cityCycle,
+        ManagerRegistry $registry
+    ): Response {
         $rideRepository = $registry->getRepository(Ride::class);
 
         return $this->render('CityCycle/ride_list.html.twig', [

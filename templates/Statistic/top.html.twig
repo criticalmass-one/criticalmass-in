@@ -1,17 +1,16 @@
-{% extends 'Template/StandardTemplate.html.twig' %}{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+{% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Top-Ten-Statistiken{% endblock %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
-
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Top-Ten-Statistiken', '', true) }}
+    {{ breadcrumb.active('Top-Ten-Statistiken') }}
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <h2>
                     Top-Ten-Statistiken
                 </h2>
@@ -22,166 +21,172 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-12">
-                {{ bootstrap.tabs([
-                    { tab: 'participants', caption: '<i class="fa fa-group"></i> Teilnehmerzahl', active: true },
-                    { tab: 'duration', caption: '<i class="fa fa-clock-o"></i> Fahrtdauer' },
-                    { tab: 'distance', caption: '<i class="fa fa-map"></i> Streckenlänge' }
-                ]) }}
-            </div>
+        <div>
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="participants-tab" data-bs-toggle="tab" data-bs-target="#participants" type="button" role="tab" aria-controls="participants" aria-selected="true">
+                        <i class="far fa-users"></i>
+                        Teilnehmer
+                    </button>
+                </li>
+
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="distance-tab" data-bs-toggle="tab" data-bs-target="#distance" type="button" role="tab" aria-controls="distance" aria-selected="false">
+                        <i class="far fa-map"></i>
+                        Strecke
+                    </button>
+                </li>
+
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="duration-tab" data-bs-toggle="tab" data-bs-target="#duration" type="button" role="tab" aria-controls="duration" aria-selected="false">
+                        <i class="far fa-clock"></i>
+                        Länge
+                    </button>
+                </li>
+            </ul>
         </div>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade show active" id="participants" aria-labelledby="participants-tab">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>
+                                    Datum
+                                </th>
 
-        <div class="row">
-            <div class="col-12">
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="participants">
-                        <div class="row">
-                            <div class="col-12">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th>
-                                            Datum
-                                        </th>
+                                <th>
+                                    Stadt
+                                </th>
 
-                                        <th>
-                                            Stadt
-                                        </th>
+                                <th>
+                                    Teilnehmerzahl
+                                </th>
+                            </tr>
+                            </thead>
 
-                                        <th>
-                                            Teilnehmerzahl
-                                        </th>
-                                    </tr>
-                                    </thead>
+                            <tbody>
+                            {% for ride in participationList %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ object_path(ride) }}">
+                                            {{ ride.dateTime|date('d.m.Y') }}
+                                        </a>
+                                    </td>
 
-                                    <tbody>
-                                    {% for ride in participationList %}
-                                        <tr>
-                                            <td>
-                                                <a href="{{ object_path(ride) }}">
-                                                    {{ ride.dateTime|date('d.m.Y') }}
-                                                </a>
-                                            </td>
+                                    <td>
+                                        <a href="{{ object_path(ride.city) }}">
+                                            {{ ride.city.city }}
+                                        </a>
+                                    </td>
 
-                                            <td>
-                                                <a href="{{ object_path(ride.city) }}">
-                                                    {{ ride.city.city }}
-                                                </a>
-                                            </td>
-
-                                            <td>
-                                                {{ ride.estimatedParticipants }}
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div role="tabpanel" class="tab-pane" id="distance">
-                        <div class="row">
-                            <div class="col-12">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th>
-                                            Datum
-                                        </th>
-
-                                        <th>
-                                            Stadt
-                                        </th>
-
-                                        <th>
-                                            Streckenlänge
-                                        </th>
-                                    </tr>
-                                    </thead>
-
-                                    <tbody>
-                                    {% for ride in distanceList %}
-                                        <tr>
-                                            <td>
-                                                <a href="{{ object_path(ride) }}">
-                                                    {{ ride.dateTime|date('d.m.Y') }}
-                                                </a>
-                                            </td>
-
-                                            <td>
-                                                <a href="{{ object_path(ride.city) }}">
-                                                    {{ ride.city.city }}
-                                                </a>
-                                            </td>
-
-                                            <td>
-                                                {{ ride.estimatedDistance|round(2) }}&nbsp;km
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div role="tabpanel" class="tab-pane" id="duration">
-                        <div class="row">
-                            <div class="col-12">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th>
-                                            Datum
-                                        </th>
-
-                                        <th>
-                                            Stadt
-                                        </th>
-
-                                        <th>
-                                            Dauer
-                                        </th>
-                                    </tr>
-                                    </thead>
-
-                                    <tbody>
-                                    {% for ride in durationList %}
-                                        <tr>
-                                            <td>
-                                                <a href="{{ object_path(ride) }}">
-                                                    {{ ride.dateTime|date('d.m.Y') }}
-                                                </a>
-                                            </td>
-
-                                            <td>
-                                                <a href="{{ object_path(ride.city) }}">
-                                                    {{ ride.city.city }}
-                                                </a>
-                                            </td>
-
-                                            <td>
-                                                {{ human_duration(ride.getEstimatedDurationInSeconds()) }}
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                                    <td>
+                                        {{ ride.estimatedParticipants }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-12">
-                <p>
-                    Hier fehlt noch was? Du kannst fehlende Teilnehmerzahlen auf der jeweiligen Tourenseite nachtragen oder Streckenlängen mit hochgeladenen GPX-Dateien ergänzen. Auf <a href="https://criticalmass.blog/criticalmass-one/haeufig-gestellte-fragen-zu-dieser-webseite/haeufig-gestellte-fragen-zur-statistik/">unserer Hilfeseite</a> findest du weitere Informationen.
-                </p>
+            <div role="tabpanel" class="tab-pane fade" id="distance" aria-labelledby="distance-tab">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>
+                                    Datum
+                                </th>
+
+                                <th>
+                                    Stadt
+                                </th>
+
+                                <th>
+                                    Streckenlänge
+                                </th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            {% for ride in distanceList %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ object_path(ride) }}">
+                                            {{ ride.dateTime|date('d.m.Y') }}
+                                        </a>
+                                    </td>
+
+                                    <td>
+                                        <a href="{{ object_path(ride.city) }}">
+                                            {{ ride.city.city }}
+                                        </a>
+                                    </td>
+
+                                    <td>
+                                        {{ ride.estimatedDistance|round(2) }}&nbsp;km
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
+
+            <div role="tabpanel" class="tab-pane fade" id="duration" aria-labelledby="duration-tab">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>
+                                    Datum
+                                </th>
+
+                                <th>
+                                    Stadt
+                                </th>
+
+                                <th>
+                                    Dauer
+                                </th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            {% for ride in durationList %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ object_path(ride) }}">
+                                            {{ ride.dateTime|date('d.m.Y') }}
+                                        </a>
+                                    </td>
+
+                                    <td>
+                                        <a href="{{ object_path(ride.city) }}">
+                                            {{ ride.city.city }}
+                                        </a>
+                                    </td>
+
+                                    <td>
+                                        {{ human_duration(ride.getEstimatedDurationInSeconds()) }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <p>
+                Hier fehlt noch was? Du kannst fehlende Teilnehmerzahlen auf der jeweiligen Tourenseite nachtragen oder Streckenlängen mit hochgeladenen GPX-Dateien ergänzen. Auf <a href="https://criticalmass.blog/criticalmass-one/haeufig-gestellte-fragen-zu-dieser-webseite/haeufig-gestellte-fragen-zur-statistik/">unserer Hilfeseite</a> findest du weitere Informationen.
+            </p>
         </div>
     </div>
 {% endblock %}

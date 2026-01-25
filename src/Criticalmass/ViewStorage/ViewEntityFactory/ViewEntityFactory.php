@@ -50,7 +50,7 @@ class ViewEntityFactory implements ViewEntityFactoryInterface
         return new $viewClassName;
     }
 
-    protected function getUser(int $userId = null): ?User
+    protected function getUser(?int $userId = null): ?User
     {
         if (!$userId) {
             return null;

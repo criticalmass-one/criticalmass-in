@@ -1,9 +1,9 @@
-<div class="row mt-3 timeline-item-ride{% if not item.enabled %}--disabled{% endif %}">
+<div class="row margin-bottom-medium timeline-item-ride{% if not item.enabled %}--disabled{% endif %}">
     {{ include('Timeline/_includes/user_column.html.twig') }}
 
-    <div class="col-9 col-md-10">
+    <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10">
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <strong>
                     {{ item.user.username }}
                 </strong>
@@ -12,7 +12,7 @@
         </div>
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <a href="{{ object_path(item.ride) }}">
                     <h4>
                         {{ item.rideTitle }}
@@ -23,16 +23,22 @@
 
         {% if item.ride.latitude and item.ride.longitude %}
             <div class="row">
-                <div class="col-12">
-                    <div id="map-{{ item.uniqId }}" class="map timeline-item-ride-map" style="height: 150px;"
-                         data-map-center-latitude="{{ item.ride.latitude }}"
-                         data-map-center-longitude="{{ item.ride.longitude }}"
-                         data-map-zoomlevel="13"
-                         data-lock-map="true"
-                         data-map-marker-latitude="{{ item.ride.latitude }}"
-                         data-map-marker-longitude="{{ item.ride.longitude }}"
-                         data-map-marker-type="ride"
-                    ></div>
+                <div class="col-md-12">
+                    <div
+                        id="map-{{ item.uniqId }}"
+                        class="map timeline-item-ride-map"
+                        data-controller="map--map"
+                        style="height: 150px;"
+                        data-map--map-center-latitude-value="{{ item.ride.latitude }}"
+                        data-map--map-center-longitude-value="{{ item.ride.longitude }}"
+                        data-map--map-zoom-value="13"
+                        data-map--map-lock-map-value="true"
+                        data-map--map-marker-latitude-value="{{ item.ride.latitude }}"
+                        data-map--map-marker-longitude-value="{{ item.ride.longitude }}"
+                        data-map--map-marker-type-value="ride"
+                        data-map--map-vector-value="false"
+                    >
+                    </div>
                 </div>
             </div>
         {% endif %}

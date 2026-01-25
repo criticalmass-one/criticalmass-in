@@ -1,157 +1,126 @@
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
-
-<div class="row mt-2">
-    <div class="col-12">
-        <div class="btn-group pull-right mt-0">
-        {% if app.user %}
-            {{ bootstrap.dropdown('<i class="fa fa-cogs"></i> Tour bearbeiten', [
-                { href: objectPath(ride, 'caldera_criticalmass_ride_edit'), caption: 'Tour bearbeiten' },
-                { href: objectPath(ride, 'criticalmass_socialnetwork_ride_list'), caption: 'soziale Netzwerke verwalten' },
-                { href: objectPath(ride, 'caldera_criticalmass_ride_socialpreview'), caption: 'Vorschau für soziale Netzwerke' },
-            ], 'btn-primary', false) }}
-        {% else %}
-            <span class="btn btn-primary modal-hint" data-modal-hint-title="{{ 'hint_modal.ride.edit_button.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.ride.edit_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
-                <i class="fa fa-cogs"></i> Tour editieren
-            </span>
-        {% endif %}
-        </div>
-<div role="tabpanel" class="tab-pane active" id="details">
+<div role="tabpanel" class="tab-pane fade show active" id="details" aria-labelledby="details-tab">
     <div class="row">
         <div class="col-md-12">
-            <div class="btn-group pull-right" style="margin-top: 16px;">
-            {% if app.user %}
-                {% if not ride.enabled %}
-                    <a class="btn btn-success" href="{{ object_path(ride, 'caldera_criticalmass_ride_enable') }}"
-                       title="Tour freischalten">
-                        <i class="far fa-unlock-alt"></i>
-                        Tour wieder aktivieren
-                    </a>
-                {% else %}
-                    <a class="btn btn-success" href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}"
-                       title="Tour bearbeiten">
-                        <i class="far fa-cogs"></i>
-                        Tour editieren
-                    </a>
-                {% endif %}
-                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                    <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a href="{{ object_path(ride, 'criticalmass_socialnetwork_ride_list') }}">
-                            soziale Netzwerke verwalten
+            <div class="btn-group float-end" style="margin-top: 16px;">
+                {% if app.user %}
+                    {% if not ride.enabled %}
+                        <a class="btn btn-success" href="{{ object_path(ride, 'caldera_criticalmass_ride_enable') }}"
+                           title="Tour freischalten">
+                            <i class="far fa-unlock-alt"></i>
+                            Tour wieder aktivieren
                         </a>
-                    </li>
-
-                    <li>
-                        <a href="{{ object_path(ride, 'caldera_criticalmass_ride_socialpreview') }}">
-                            Vorschau für soziale Netzwerke
+                    {% else %}
+                        <a class="btn btn-success" href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}"
+                           title="Tour bearbeiten">
+                            <i class="far fa-cogs"></i>
+                            Tour editieren
                         </a>
-                    </li>
-
-                    {% if ride.enabled %}
-
-                        <li class="divider">
-
+                    {% endif %}
+                    <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        <span class="visually-hidden">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" href="{{ object_path(ride, 'criticalmass_socialnetwork_ride_list') }}">
+                                soziale Netzwerke verwalten
+                            </a>
                         </li>
 
                         <li>
-                            <a href="#" data-toggle="modal" data-target="#disable-modal">
-                                diese Tour deaktivieren
+                            <a class="dropdown-item" href="{{ object_path(ride, 'caldera_criticalmass_ride_socialpreview') }}">
+                                Vorschau für soziale Netzwerke
                             </a>
                         </li>
-                    {% endif %}
-                </ul>
-            {% else %}
-                <span class="btn btn-success modal-hint" data-modal-hint-title="{{ 'hint_modal.ride.edit_button.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.ride.edit_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
-                    <i class="far fa-cogs"></i> Tour editieren
-                </span>
-            {% endif %}
+
+                        {% if ride.enabled %}
+                            <li><hr class="dropdown-divider"></li>
+
+                            <li>
+                                <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#disable-modal">
+                                    diese Tour deaktivieren
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                {% else %}
+                    <button
+                            type="button"
+                            class="btn btn-success"
+                            data-controller="hint-modal"
+                            data-modal-hint-title="{{ 'hint_modal.ride.edit_button.title'|trans }}"
+                            data-modal-hint-text="{{ 'hint_modal.ride.edit_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
+                            data-modal-hint-size="md">
+                        <i class="far fa-cogs"></i>
+                        Tour editieren
+                    </button>
+                {% endif %}
             </div>
 
-        <h3 class="mt-0">
-            {{ ride.title }}
-        </h3>
+            <h3>
+                {{ ride.title }}
+            </h3>
+        </div>
     </div>
-</div>
 
-{% include 'Ride/Includes/_disable.html.twig' with { 'ride': ride, 'disableForm': disableForm } %}<div class="row mt-2">
-    <div class="col-12 col-sm-4">
-        {% if today(ride.dateTime) %}
-        <div class="row mb-2">
-            <div class="col-12">
-                {% include 'Ride/Includes/_live.html.twig' with { 'ride': ride } %}
-            </div>
-        </div>
-        {% endif %}
-
-        <div class="row mb-2">
-            <div class="col-12">
-                {% include 'Ride/Includes/_rideDetails.html.twig' with { 'ride': ride, 'weatherForecast': weatherForecast, 'location': location } %}
-            </div>
-        </div>
     {% include 'Ride/Includes/_disable.html.twig' with { 'ride': ride, 'disableForm': disableForm } %}
 
     <div class="row">
-        <div class="col-xs-12 col-sm-4 col-sm-push-8">
+        <div class="col-12 col-sm-4 order-sm-last">
             <div class="row">
                 <div class="col-md-12">
                     {% include 'Ride/Includes/_rideDetails.html.twig' with { 'ride': ride, 'weatherForecast': weatherForecast, 'location': location } %}
                 </div>
             </div>
 
-        <div class="row mb-2">
-            <div class="col-12">
-                {% include 'Ride/Includes/_socialMedia.html.twig' with { 'ride': ride } %}
+            <div class="row">
+                <div class="col-md-12">
+                    {% include 'Ride/Includes/_socialMedia.html.twig' with { 'ride': ride } %}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    {% include 'Ride/Includes/_statistic.html.twig' with { 'ride': ride } %}
+                </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-12">
-                {% include 'Ride/Includes/_statistic.html.twig' with { 'ride': ride } %}
+        {% if ride.description and ride.enabled %}
+            <div itemprop="description" class="col-12 col-sm-8 order-sm-first">
+                {{ ride.description|markdown }}
             </div>
-        </div>
-    </div>
-
-    {% if ride.description and ride.enabled %}
-        <div itemprop="description" class="col-12 col-sm-8">
-            {{ ride.description|markdown }}
-        </div>
         {% elseif ride.enabled %}
-        <div class="col-12 col-sm-8">
-            <div class="alert alert-info">
-                <strong>Huch?</strong>
+            <div class="col-12 col-sm-8 order-sm-first">
+                <div class="alert alert-info">
+                    <strong>Huch?</strong>
+                    Schade, bislang hat noch niemand Informationen über diese Tour hinterlegt. Wenn du Lust und Zeit
+                    hast, kannst du {{ ride.title }} <a href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}">hier editieren</a>:
 
-                <p>
-                    Schade, bislang hat noch niemand Informationen über diese Tour hinterlegt. Wenn du Lust und Zeit hast, kannst du {{ ride.title }} <a href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}">hier editieren</a>:
-                </p>
+                    <ul>
+                        <li>
+                            Gibt es ein Motto für diese Tour?
+                        </li>
 
-                <ul>
-                    <li>
-                        Gibt es ein Motto für diese Tour?
-                    </li>
+                        <li>
+                            Gibt es irgendwelche Neuigkeiten oder Termine für den Radverkehr?
+                        </li>
 
-                    <li>
-                        Gibt es irgendwelche Neuigkeiten oder Termine für den Radverkehr?
-                    </li>
+                        <li>
+                            Oder, auch immer ganz wichtig: Wie wird das Wetter?
+                        </li>
+                    </ul>
 
-                    <li>
-                        Oder, auch immer ganz wichtig: Wie wird das Wetter?
-                    </li>
-                </ul>
-
-                <p class="text-center mt-3">
-                    <a href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}"
-                       class="btn btn-primary btn-lg">
-                        Tour editieren
-                    </a>
-                </p>
+                    <p class="text-center margin-top-medium">
+                        <a href="{{ object_path(ride, 'caldera_criticalmass_ride_edit') }}"
+                           class="btn btn-primary btn-lg">
+                            Tour editieren
+                        </a>
+                    </p>
+                </div>
             </div>
-        </div>
-    {% else %}
-            <div class="col-xs-12 col-sm-8 col-sm-pull-4">
+        {% else %}
+            <div class="col-12 col-sm-8 order-sm-first">
                 <div class="alert alert-warning" id="ride-disabled-reason">
                     <p>
                         <strong>
@@ -195,4 +164,5 @@
                 </div>
             </div>
         {% endif %}
+    </div>
 </div>

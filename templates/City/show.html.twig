@@ -1,20 +1,62 @@
-{% extends 'Template/StandardTemplate.html.twig' %}{% block title %}{{ city.title }}{% endblock %}
+{% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+{% block title %}{{ city.title }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Städteliste', path('caldera_criticalmass_city_list')) }}
-    {{ bootstrap.breadcrumb_item(city.city, '', true) }}
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.active(city.city) }}
 {% endblock %}
 
 {% block optionsButton %}
-    <div class="btn-group pull-right">
-        {{ bootstrap.dropdown('<i class="far fa-cogs"></i> Optionen <span class="caret"></span>', [
-            { href: objectPath(city, 'caldera_criticalmass_city_edit'), caption: '<i class="far fa-cogs"></i> Stadt editieren' },
-            { href: objectPath(city, 'caldera_criticalmass_ride_add'), caption: '<i class="far fa-plus"></i> Tour hinzufügen' },
-            { href: objectPath(city, 'caldera_criticalmass_citycycle_list'), caption: '<i class="far fa-calendar"></i> Turnus verwalten' },
-            { href: objectPath(city, 'criticalmass_socialnetwork_city_list'), caption: '<i class="far fa-at"></i> soziale Netzwerke verwalten' },
-        ], 'btn-primary', false) }}
+    <div class="btn-group float-end">
+        {% if app.user %}
+            <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                <i class="far fa-cogs"></i>
+                Optionen
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a class="dropdown-item" href="{{ object_path(city, 'caldera_criticalmass_city_edit') }}">
+                        <i class="far fa-cogs"></i>
+                        Stadt editieren
+                    </a>
+                </li>
+
+                <li>
+                    <a class="dropdown-item" href="{{ object_path(city, 'caldera_criticalmass_ride_add') }}">
+                        <i class="far fa-plus"></i>
+                        Tour hinzufügen
+                    </a>
+                </li>
+
+                <li>
+                    <a class="dropdown-item" href="{{ object_path(city, 'caldera_criticalmass_citycycle_list') }}">
+                        <i class="far fa-calendar"></i>
+                        Turnus verwalten
+                    </a>
+                </li>
+
+                <li>
+                    <a class="dropdown-item" href="{{ object_path(city, 'criticalmass_socialnetwork_city_list') }}">
+                        <i class="far fa-at"></i>
+                        soziale Netzwerke verwalten
+                    </a>
+                </li>
+            </ul>
+        {% else %}
+            <button
+                    type="button"
+                    class="btn btn-success"
+                    data-controller="hint-modal"
+                    data-modal-hint-title="{{ 'hint_modal.city.options_button.title'|trans }}"
+                    data-modal-hint-text="{{ 'hint_modal.city.options_button.text'|trans({'%city%': city.city}) }}"
+                    data-modal-hint-size="md">
+                <i class="far fa-cogs"></i>
+                Optionen
+            </button>
+        {% endif %}
     </div>
 {% endblock %}
 
@@ -25,12 +67,13 @@
         {{ include('City/Includes/_tabs.html.twig', { tab: 'city' }) }}
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 {% if city.imageName %}
-                    <div class="jumbotron" id="city-jumbotron" style="height: 250px; background-image: url({{ vich_uploader_asset(city, 'imageFile')|imagine_filter('city_image_wide') }});">
+                    <div class="jumbotron" id="city-jumbotron"
+                         style="height: 250px; background-image: url({{ vich_uploader_asset(city, 'imageFile')|imagine_filter('city_image_wide') }});">
                         <div class="row">
-                            <div class="col-12">
-                                <h1 class="pull-right mt-0" itemprop="name">
+                            <div class="col-md-12">
+                                <h1 class="float-end no-margin-top" itemprop="name">
                                     {{ city.title }}
                                 </h1>
                             </div>
@@ -38,37 +81,33 @@
 
                         {% if city.punchline %}
                             <div class="row">
-                                <div class="col-12">
-                                    <p class="lead pull-right mt-0">
+                                <div class="col-md-12">
+                                    <p class="lead float-end no-margin-top">
                                         {{ city.punchline }}
                                     </p>
                                 </div>
                             </div>
                         {% endif %}
 
-                        {% if app.getUser() %}
-                            <div class="row">
-                                <div class="col-12">
-                                    {{ block('optionsButton') }}
-                                </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                {{ block('optionsButton') }}
                             </div>
-                        {% endif %}
+                        </div>
                     </div>
                 {% else %}
-                    {% if app.getUser() %}
-                        {{ block('optionsButton') }}
-                    {% endif %}
-                    <h2 class="mt-0">
+                    {{ block('optionsButton') }}
+                    <h1 class="no-margin-top">
                         {{ city.title }}
-                    </h2>
+                    </h1>
                 {% endif %}
             </div>
         </div>
 
         <div class="row">
-            <div class="col-12 col-md-9">
+            <div class="col-md-9">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-md-12">
                         {% if city.longDescription %}
                             {{ city.longDescription|markdown }}
                         {% else %}
@@ -94,7 +133,7 @@
                                     </li>
                                 </ul>
 
-                                <p class="text-center mt-2">
+                                <p class="text-center margin-top-medium">
                                     <a href="{{ object_path(city, 'caldera_criticalmass_city_edit') }}"
                                        class="btn btn-primary btn-lg">
                                         {{ city.city }} editieren
@@ -107,7 +146,7 @@
 
                 {% if feature('photos') and photos|length > 0 %}
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-md-12">
                             <h2>
                                 Fotos aus {{ city.city }}
                             </h2>
@@ -121,10 +160,11 @@
                     <div class="row">
                         <div class="photo-list">
                             {% for photo in photos %}
-                                <div class="col-6 col-sm-4 col-md-3 col-lg-3">
-                                    <div class="photo-thumb mb-2 text-center">
+                                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                                    <div class="photo-thumb margin-bottom-medium text-center">
                                         <a href="{{ object_path(photo) }}">
-                                            <img class="img-fluid img-thumbnail" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
+                                            <img class="img-fluid"
+                                                 src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
                                         </a>
                                     </div>
                                 </div>
@@ -134,43 +174,31 @@
                 {% endif %}
             </div>
 
-            <div class="col-12 col-md-3">
+            <div class="col-md-3">
                 <div class="row">
-                    <div class="col-12">
-                        {% include 'City/Includes/_live.html.twig' with { 'city': city } %}
-                    </div>
-                </div>
-
-                <div class="row mt-2">
-                    <div class="col-12">
+                    <div class="col-md-12">
                         {% include 'City/Includes/_nextTour.html.twig' with { 'city': city, 'currentRide': currentRide } %}
                     </div>
                 </div>
 
-                <div class="row mt-2">
-                    <div class="col-12">
-                        {% include 'City/Includes/_statistic.html.twig' with { 'city': city } %}
-                    </div>
-                </div>
-
-                <div class="row mt-2">
-                    <div class="col-12">
+                <div class="row">
+                    <div class="col-md-12">
                         {% include 'City/Includes/_socialMedia.html.twig' with { 'city': city } %}
                     </div>
                 </div>
 
-                <div class="row mt-2">
-                    <div class="col-12">
+                <div class="row">
+                    <div class="col-md-12">
                         {% include 'City/Includes/_locations.html.twig' with { 'city': city, 'locations': locations } %}
                     </div>
                 </div>
 
                 {% if nearCities and nearCities|length > 0 %}
-                <div class="row mt-2">
-                    <div class="col-12">
-                        {% include 'City/Includes/_nearCities.html.twig' with { 'nearCities': nearCities } %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            {% include 'City/Includes/_nearCities.html.twig' with { 'nearCities': nearCities } %}
+                        </div>
                     </div>
-                </div>
                 {% endif %}
             </div>
         </div>

@@ -1,18 +1,19 @@
-{% extends 'Template/StandardTemplate.html.twig' %}{% block title %}Neues Thema eröffnen{% endblock %}
+{% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+{% block title %}Neues Thema beginnen{% endblock %}
 
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Diskussionen', path('caldera_criticalmass_board_overview')) }}
-    {{ bootstrap.breadcrumb_item(board.title, objectPath(board)) }}
-    {{ bootstrap.breadcrumb_item('neues Thema beginnen', '', true) }}
+    {{ breadcrumb.item('Diskussionen', path('caldera_criticalmass_board_overview')) }}
+    {{ breadcrumb.item(board.title, object_path(board)) }}
+    {{ breadcrumb.active('neues Thema beginnen') }}
 {% endblock %}
 
 {% block content %}
     {{ form_errors(form) }}
     <div class="container">
         <div class="row">
-            <div class="col-12 col-md-8 offset-md-2">
+            <div class="col-md-12">
                 <h1>
                     Neues Thema beginnen
                 </h1>
@@ -22,7 +23,7 @@
         {{ form_start(form) }}
 
         <div class="row">
-            <div class="col-12 col-md-8 offset-md-2">
+            <div class="col-md-12">
                 <div class="form-group">
                     <label class="control-label" for="">Titel deines Themas:</label>
                     {{ form_widget(form.title, { 'attr' : { 'class': 'form-control'} }) }}
@@ -31,7 +32,7 @@
         </div>
 
         <div class="row">
-            <div class="col-12 col-md-8 offset-md-2">
+            <div class="col-md-12">
                 <div class="form-group">
                     <label class="control-label" for="">Dein Beitrag:</label>
                     {{ form_widget(form.message, { 'attr' : { 'class': 'form-control', 'rows': 10 } }) }}
@@ -40,13 +41,13 @@
         </div>
 
         <div class="row">
-            <div class="col-12 col-md-8 offset-md-2">
+            <div class="col-md-12">
                 <div class="btn-group pull-right">
                     <a href="{{ object_path(board) }}" class="btn btn-secondary">
                         Abbrechen
                     </a>
 
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-success">
                         Speichern
                     </button>
                 </div>

@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Tests\SocialNetworkDetector;
+namespace Tests\SocialNetwork\Helper\SocialNetworkDetector;
 
-class YoutubeVideoDetectorTest extends AbstractNetworkDetectorTest
+class YoutubeVideoDetectorTest extends AbstractNetworkDetectorTestCase
 {
     public function testYoutubeVideo(): void
     {

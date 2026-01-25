@@ -15,7 +15,7 @@ class SocialNetworkFeedItemRepository extends ServiceEntityRepository
         parent::__construct($registry, SocialNetworkFeedItem::class);
     }
 
-    public function findForTimelineSocialNetworkFeedItemCollector(\DateTime $startDateTime = null, \DateTime $endDateTime = null, int $limit = null): array
+    public function findForTimelineSocialNetworkFeedItemCollector(?\DateTime $startDateTime = null, ?\DateTime $endDateTime = null, ?int $limit = null): array
     {
         $builder = $this->createQueryBuilder('fi');
 
@@ -50,7 +50,7 @@ class SocialNetworkFeedItemRepository extends ServiceEntityRepository
         return $result;
     }
 
-    protected function createDefaultQueryBuilder(City $city = null): QueryBuilder
+    protected function createDefaultQueryBuilder(?City $city = null): QueryBuilder
     {
         $qb = $this->createQueryBuilder('snfi');
 
@@ -80,7 +80,7 @@ class SocialNetworkFeedItemRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function findByCityAndProperties(City $city, string $uniqueIdentifier = null, string $networkIdentifier = null, string $orderDirection = 'DESC'): array
+    public function findByCityAndProperties(City $city, ?string $uniqueIdentifier = null, ?string $networkIdentifier = null, string $orderDirection = 'DESC'): array
     {
         $qb = $this->createDefaultQueryBuilder($city);
         $qb->orderBy('snfi.dateTime', $orderDirection);

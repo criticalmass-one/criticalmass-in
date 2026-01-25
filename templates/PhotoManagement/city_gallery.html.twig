@@ -1,18 +1,17 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Fotogalerie{% endblock %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
-
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Städteliste', path('caldera_criticalmass_city_list')) }}
-    {{ bootstrap.breadcrumb_item('Fotogalerie', '', true) }}
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.active('Fotogalerie') }}
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <h1>
                     Fotogalerie
                 </h1>
@@ -44,7 +43,7 @@
             <div class="photo-list">
                 {% for photo in photos %}
                     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-                        <div class="photo-thumb mb-2 text-center">
+                        <div class="photo-thumb margin-bottom-medium text-center">
                             <a href="{{ object_path(photo) }}">
                                 <img src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
                             </a>

@@ -1,23 +1,25 @@
-{% extends 'Template/StandardTemplate.html.twig' %}{% block title %}Track-Zeitstempel anpassen{% endblock %}
+{% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+{% block title %}Zeit anpassen{% endblock %}
 
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Dein Benutzerkonto', path('criticalmass_user_usermanagement')) }}
-    {{ bootstrap.breadcrumb_item('Deine Tracks', path('caldera_criticalmass_track_list')) }}
-    {{ bootstrap.breadcrumb_item('Track-Zeitstempel anpassen', '', true) }}
+    {{ breadcrumb.item('Dein Benutzerkonto', path('criticalmass_user_usermanagement')) }}
+    {{ breadcrumb.item('Deine Tracks', path('caldera_criticalmass_track_list')) }}
+    {{ breadcrumb.active('Zeit anpassen') }}
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                <h2>
-                    Track-Zeitstempel anpassen
-                </h2>
+            <div class="col-md-12">
+                <h1>
+                    Zeit anpassen
+                </h1>
 
                 <p class="lead">
-                    Falls dein Aufzeichnungsgerät aus irgendeinem Grunde eine falsche Uhrzeit bei deinem GPX-Track angegeben haben sollte, kannst du hier den Start-Zeitpunkt deines Tracks verschieben.
+                    Falls dein Aufzeichnungsgerät aus irgendeinem Grunde eine falsche Uhrzeit bei deinem GPX-Track
+                    angegeben haben sollte, kannst du hier den Start-Zeitpunkt deines Tracks verschieben.
                 </p>
             </div>
         </div>
@@ -25,41 +27,38 @@
         {{ form_start(form) }}
 
         <div class="row">
-            <div class="col-12 col-md-5 offset-md-1">
-                <div class="card">
-                    <div class="card-header">
+            <div class="col-md-5 col-md-offset-1">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
                         Alte Uhrzeit
                     </div>
-                    <div class="card-body">
+                    <div class="panel-body">
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="">
-                                        Datum:
-                                    </label>
-                                    <input class="form-control" type="text" disabled="disabled" value="{{ track.startDate.format('d.m.Y') }}" />
+                                    <label class="control-label" for="">Datum:</label>
+                                    <input class="form-control" type="text" disabled="disabled"
+                                           value="{{ track.startDate.format('d.m.Y') }}"/>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="">
-                                        Uhrzeit:
-                                    </label>
-                                    <input class="form-control" type="text" disabled="disabled" value="{{ track.startDate.format('H:i') }}" />
+                                    <label class="control-label" for="">Uhrzeit:</label>
+                                    <input class="form-control" type="text" disabled="disabled"
+                                           value="{{ track.startDate.format('H:i') }}"/>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="">
-                                        Zeitzone:
-                                    </label>
-                                    <input class="form-control" type="text" disabled="disabled" value="{{ track.ride.city.timezone }}" />
+                                    <label class="control-label" for="">Zeitzone:</label>
+                                    <input class="form-control" type="text" disabled="disabled"
+                                           value="{{ track.ride.city.timezone }}"/>
                                 </div>
                             </div>
                         </div>
@@ -67,14 +66,14 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-5">
-                <div class="card">
-                    <div class="card-header">
+            <div class="col-md-5">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
                         Neue Uhrzeit
                     </div>
-                    <div class="card-body">
+                    <div class="panel-body">
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-md-12">
                                 <div class="form-group{% if form_errors(form.startDate) %} has-error has-feedback{% endif %}">
                                     <label class="control-label" for="">Datum:</label>
                                     {{ form_widget(form.startDate, { 'attr' : { 'class': 'form-control'} }) }}
@@ -83,7 +82,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-md-12">
                                 <div class="form-group{% if form_errors(form.startTime) %} has-error has-feedback{% endif %}">
                                     <label class="control-label" for="">Uhrzeit:</label>
                                     {{ form_widget(form.startTime, { 'attr' : { 'class': 'form-control'} }) }}
@@ -92,10 +91,11 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label" for="">Zeitzone:</label>
-                                    <input class="form-control" type="text" disabled="disabled" value="{{ track.ride.city.timezone }}" />
+                                    <input class="form-control" type="text" disabled="disabled"
+                                           value="{{ track.ride.city.timezone }}"/>
                                 </div>
                             </div>
                         </div>
@@ -104,13 +104,13 @@
             </div>
         </div>
 
-        <div class="row mt-2">
-            <div class="col-12 text-center">
+        <div class="row">
+            <div class="col-md-12 text-center">
                 <div class="btn-group">
                     <a href="{{ path('caldera_criticalmass_track_list') }}" class="btn btn-secondary">
                         Abbrechen
                     </a>
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-success">
                         Speichern
                     </button>
                 </div>

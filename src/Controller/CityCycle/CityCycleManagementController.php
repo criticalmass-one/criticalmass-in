@@ -8,20 +8,18 @@ use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Form\Type\CityCycleType;
 use Doctrine\Persistence\ManagerRegistry;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class CityCycleManagementController extends AbstractController
 {
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("city", class="App:City")
-     */
-    public function addAction(Request $request, UserInterface $user = null, City $city, ObjectRouterInterface $objectRouter): Response
+    #[IsGranted('ROLE_USER')]
+    #[Route('/{citySlug}/cycles/add', name: 'caldera_criticalmass_citycycle_add', priority: 80)]
+    public function addAction(Request $request, City $city, ObjectRouterInterface $objectRouter, ?UserInterface $user = null): Response
     {
         $cityCycle = new CityCycle();
         $cityCycle
@@ -71,12 +69,14 @@ class CityCycleManagementController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("cityCycle", class="App:CityCycle", options={"id" = "cycleId"})
-     */
-    public function editAction(Request $request, UserInterface $user = null, CityCycle $cityCycle, ObjectRouterInterface $objectRouter): Response
-    {
+    #[IsGranted('ROLE_USER')]
+    #[Route('/{citySlug}/cycles/{id}/edit', name: 'caldera_criticalmass_citycycle_edit', priority: 80)]
+    public function editAction(
+        Request $request,
+        CityCycle $cityCycle,
+        ObjectRouterInterface $objectRouter,
+        ?UserInterface $user = null
+    ): Response {
         $cityCycle->setUser($user);
 
         $form = $this->createForm(CityCycleType::class, $cityCycle, [
@@ -84,13 +84,13 @@ class CityCycleManagementController extends AbstractController
         ]);
 
         if (Request::METHOD_POST == $request->getMethod()) {
-            return $this->editPostAction($request, $user, $cityCycle, $form, $objectRouter);
+            return $this->editPostAction($request, $cityCycle, $form, $objectRouter, $user);
         } else {
-            return $this->editGetAction($request, $user, $cityCycle, $form, $objectRouter);
+            return $this->editGetAction($request, $cityCycle, $form, $objectRouter, $user);
         }
     }
 
-    protected function editGetAction(Request $request, UserInterface $user = null, CityCycle $cityCycle, FormInterface $form, ObjectRouterInterface $objectRouter): Response
+    protected function editGetAction(Request $request, CityCycle $cityCycle, FormInterface $form, ObjectRouterInterface $objectRouter, ?UserInterface $user = null): Response
     {
         return $this->render('CityCycle/edit.html.twig', [
             'city' => $cityCycle->getCity(),
@@ -99,7 +99,7 @@ class CityCycleManagementController extends AbstractController
         ]);
     }
 
-    protected function editPostAction(Request $request, UserInterface $user = null, CityCycle $cityCycle, FormInterface $form, ObjectRouterInterface $objectRouter): Response
+    protected function editPostAction(Request $request, CityCycle $cityCycle, FormInterface $form, ObjectRouterInterface $objectRouter, ?UserInterface $user = null): Response
     {
         $city = $cityCycle->getCity();
 
@@ -124,12 +124,13 @@ class CityCycleManagementController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("cityCycle", class="App:CityCycle", options={"id" = "cycleId"})
-     */
-    public function disableAction(CityCycle $cityCycle, ManagerRegistry $managerRegistry, ObjectRouterInterface $objectRouter): Response
-    {
+    #[IsGranted('ROLE_USER')]
+    #[Route('/{citySlug}/cycles/{id}/disable', name: 'caldera_criticalmass_citycycle_disable', priority: 80)]
+    public function disableAction(
+        CityCycle $cityCycle,
+        ManagerRegistry $managerRegistry,
+        ObjectRouterInterface $objectRouter
+    ): Response {
         $manager = $managerRegistry->getManager();
 
         if ($cityCycle->getRides()->count() > 0) {

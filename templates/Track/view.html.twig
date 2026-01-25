@@ -1,20 +1,23 @@
-{% extends 'Template/StandardTemplate.html.twig' %}{% block title %}Deine Tracks{% endblock %}
+{% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+{% block title %}Deine Tracks{% endblock %}
 
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Dein Benutzerkonto', path('criticalmass_user_usermanagement')) }}
-    {{ bootstrap.breadcrumb_item('Deine Tracks', path('caldera_criticalmass_track_list')) }}
-    {{ bootstrap.breadcrumb_item('Track anzeigen', '', true) }}
+    {{ breadcrumb.item('Dein Benutzerkonto', path('criticalmass_user_usermanagement')) }}
+    {{ breadcrumb.item('Deine Tracks', path('caldera_criticalmass_track_list')) }}
+    {{ breadcrumb.active('Track anzeigen') }}
 {% endblock %}
 
 {% block content %}
-    <div class="container">
+    <div class="container main-container">
         <div class="row">
-            <div class="col-12">
-                <h2>
-                    {{ track.ride.title }}
-                </h2>
+            <div class="col-md-12">
+                {% if track.getRide().getTitle() %}
+                    <h1>{{ track.getRide().getTitle() }}</h1>
+                {% else %}
+                    <h1>{{ track.getRide().getCity().getTitle() }}</h1>
+                {% endif %}
             </div>
         </div>
 
@@ -27,7 +30,7 @@
                                href="{{ object_path(track, 'caldera_criticalmass_track_range') }}">
                                 <i class="far fa-cut"></i>&nbsp;Track beschneiden
                             </a>
-                            <a class="btn btn-default"
+                            <a class="btn btn-secondary"
                                href="{{ object_path(track, 'caldera_criticalmass_track_approve') }}">
                                 <i class="far fa-check"></i>&nbsp;Track bestätigen
                             </a>
@@ -46,14 +49,21 @@
             </div>
         {% endif %}
 
-        <div class="row mt-2">
-            <div class="col-12">
-                <div id="map" class="map" style="height: 350px;" data-polyline="{{ track.polyline }}" data-polyline-color="{{ track.user.color }}"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div
+                        id="map"
+                        class="map"
+                        style="height: 350px;"
+                        data-controller="map--map"
+                        data-map--map-polyline-value="{{ track.polyline }}"
+                        data-map--map-polyline-color-value="{{ track.user.color }}"
+                ></div>
             </div>
         </div>
 
-        <div class="row mt-2">
-            <div class="col-3">
+        <div class="row margin-top-medium">
+            <div class="col-md-3">
                 <dl>
                     <dt>
                         Tour:
@@ -66,7 +76,7 @@
                 </dl>
             </div>
 
-            <div class="col-2">
+            <div class="col-md-2">
                 <dl>
                     <dt>
                         Datum:
@@ -77,7 +87,7 @@
                 </dl>
             </div>
 
-            <div class="col-3">
+            <div class="col-md-3">
                 <dl>
                     <dt>
                         Treffpunkt:
@@ -92,7 +102,7 @@
                 </dl>
             </div>
 
-            <div class="col-2">
+            <div class="col-md-2">
                 <dl>
                     <dt>
                         Distanz:
@@ -103,7 +113,7 @@
                 </dl>
             </div>
 
-            <div class="col-2">
+            <div class="col-md-2">
                 <dl>
                     <dt>
                         Dauer:
@@ -118,36 +128,20 @@
         {% set previous_track = previous_entity(track) %}
         {% set next_track = next_entity(track) %}
         <div class="row">
-            <div class="col-12">
-                <nav aria-label="Track navigation" class="text-center m-4">
-                    <ul class="pagination justify-content-center">
-                        {% if previous_track %}
-                            <li class="page-item">
-                                <a class="page-link" href="{{ object_path(previous_track) }}">
-                                    &larr; Voriger Track
-                                </a>
-                            </li>
-                        {% else %}
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#">
-                                    &larr; Voriger Track
-                                </a>
-                            </li>
-                        {% endif %}
+            <div class="col-md-12">
+                <nav aria-label="Track Navigation">
+                    <ul class="pagination justify-content-between">
+                        <li class="page-item{% if not previous_track %} disabled{% endif %}">
+                            <a class="page-link" href="{% if previous_track %}{{ object_path(previous_track) }}{% else %}#{% endif %}">
+                                &larr; Voriger Track
+                            </a>
+                        </li>
 
-                        {% if next_track %}
-                            <li class="page-item">
-                                <a class="page-link" href="{{ object_path(next_track) }}">
-                                    Nächster Track &rarr;
-                                </a>
-                            </li>
-                        {% else %}
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#">
-                                    Nächster Track &rarr;
-                                </a>
-                            </li>
-                        {% endif %}
+                        <li class="page-item{% if not next_track %} disabled{% endif %}">
+                            <a class="page-link" href="{% if next_track %}{{ object_path(next_track) }}{% else %}#{% endif %}">
+                                Nächster Track &rarr;
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </div>

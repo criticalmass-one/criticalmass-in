@@ -5,9 +5,12 @@ namespace App\Repository;
 use App\Criticalmass\Util\DateTimeUtil;
 use App\Entity\City;
 use App\Entity\CityCycle;
+use App\Entity\Location;
 use App\Entity\Region;
 use App\Entity\Ride;
+use App\Entity\CitySlug;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
 
 class RideRepository extends ServiceEntityRepository
@@ -47,7 +50,7 @@ class RideRepository extends ServiceEntityRepository
         return $result;
     }
 
-    public function findRidesForCity(City $city, string $order = 'DESC', int $maxResults = null): array
+    public function findRidesForCity(City $city, string $order = 'DESC', ?int $maxResults = null): array
     {
         $builder = $this->createQueryBuilder('ride');
 
@@ -229,7 +232,7 @@ class RideRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function findEstimatedRides(int $year = null, int $month = null): array
+    public function findEstimatedRides(?int $year = null, ?int $month = null): array
     {
         $builder = $this->createQueryBuilder('ride');
 
@@ -252,7 +255,7 @@ class RideRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function findRidesInInterval(\DateTime $startDateTime = null, \DateTime $endDateTime = null)
+    public function findRidesInInterval(?\DateTime $startDateTime = null, ?\DateTime $endDateTime = null)
     {
         if (!$startDateTime) {
             $startDateTime = new \DateTime();
@@ -406,8 +409,8 @@ class RideRepository extends ServiceEntityRepository
     }
 
     public function findRidesWithFacebookInInterval(
-        \DateTime $startDateTime = null,
-        \DateTime $endDateTime = null
+        ?\DateTime $startDateTime = null,
+        ?\DateTime $endDateTime = null
     ): array {
         if (!$startDateTime) {
             $startDateTime = new \DateTime();
@@ -461,10 +464,10 @@ class RideRepository extends ServiceEntityRepository
     }
 
     public function findRides(
-        \DateTimeInterface $fromDateTime = null,
-        \DateTimeInterface $untilDateTime = null,
-        City $city = null,
-        Region $region = null
+        ?\DateTimeInterface $fromDateTime = null,
+        ?\DateTimeInterface $untilDateTime = null,
+        ?City $city = null,
+        ?Region $region = null
     ): array {
         $builder = $this->createQueryBuilder('ride');
 
@@ -518,8 +521,8 @@ class RideRepository extends ServiceEntityRepository
 
     public function findRidesInRegionInInterval(
         Region $region,
-        \DateTime $startDateTime = null,
-        \DateTime $endDateTime = null
+        ?\DateTime $startDateTime = null,
+        ?\DateTime $endDateTime = null
     ): array {
         $builder = $this->createQueryBuilder('ride');
 
@@ -547,9 +550,9 @@ class RideRepository extends ServiceEntityRepository
     }
 
     public function findForTimelineRideEditCollector(
-        \DateTime $startDateTime = null,
-        \DateTime $endDateTime = null,
-        int $limit = null
+        ?\DateTime $startDateTime = null,
+        ?\DateTime $endDateTime = null,
+        ?int $limit = null
     ): array {
         $builder = $this->createQueryBuilder('r');
 
@@ -660,5 +663,88 @@ class RideRepository extends ServiceEntityRepository
         $query = $builder->getQuery();
 
         return $query->getResult();
+    }
+
+    public function findRidesForLocation(Location $location, float $radiusInMeters = 500, int $limit = 25): array
+    {
+        if (!$location->getLatitude() || !$location->getLongitude()) {
+            return [];
+        }
+
+        $latitude = $location->getLatitude();
+        $longitude = $location->getLongitude();
+        $earthRadius = 6371000;
+
+        $rsm = new ResultSetMapping();
+
+        $rsm->addEntityResult(Ride::class, 'r');
+        $rsm->addFieldResult('r', 'id', 'id');
+        $rsm->addFieldResult('r', 'dateTime', 'dateTime');
+        $rsm->addFieldResult('r', 'latitude', 'latitude');
+        $rsm->addFieldResult('r', 'longitude', 'longitude');
+        $rsm->addFieldResult('r', 'title', 'title');
+
+        $rsm->addJoinedEntityResult(City::class, 'c', 'r', 'city');
+        $rsm->addFieldResult('c', 'c_id', 'id');
+
+        $rsm->addJoinedEntityResult(CitySlug::class, 'cs', 'c', 'mainSlug');
+        $rsm->addFieldResult('cs', 'cs_id', 'id');
+        $rsm->addFieldResult('cs', 'cs_slug', 'slug');
+
+        $sql = <<<SQL
+SELECT 
+    r.id,
+    r.dateTime,
+    r.latitude,
+    r.longitude,
+    r.title,
+    r.city_id,
+    c.id AS c_id,
+    cs.id AS cs_id,
+    cs.slug AS cs_slug,
+    (
+        $earthRadius * acos(
+            cos(radians(:latitude)) * cos(radians(r.latitude)) *
+            cos(radians(r.longitude) - radians(:longitude)) +
+            sin(radians(:latitude)) * sin(radians(r.latitude))
+        )
+    ) AS distance
+FROM ride r
+INNER JOIN city c ON r.city_id = c.id
+INNER JOIN cityslug cs ON cs.id = c.main_slug_id
+HAVING distance <= :radius
+ORDER BY r.dateTime DESC
+LIMIT :limit
+SQL;
+
+        $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
+        $query->setParameter('latitude', $latitude);
+        $query->setParameter('longitude', $longitude);
+        $query->setParameter('radius', $radiusInMeters);
+        $query->setParameter('limit', $limit, \PDO::PARAM_INT);
+
+        return $query->getResult();
+    }
+
+    public function searchByQuery(string $query, int $maxResults = 50): array
+    {
+        $qb = $this->createQueryBuilder('r');
+        $expr = $qb->expr();
+
+        if ($query !== '') {
+            $qb->where(
+                $expr->orX(
+                    $expr->like('r.title', ':q'),
+                    $expr->like('r.description', ':q'),
+                    $expr->like('r.location', ':q')
+                )
+            )->setParameter('q', sprintf('%%%s%%', $query));
+        }
+
+        return $qb
+            ->setMaxResults($maxResults)
+            ->getQuery()
+            ->getResult()
+        ;
     }
 }

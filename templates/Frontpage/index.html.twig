@@ -1,25 +1,24 @@
-{% extends 'Template/StandardTemplate.html.twig' %}{% block title %}criticalmass.in{% endblock %}
+{% extends 'Template/MasterTemplate.html.twig' %}
 
-{% block content %}
-    {#
-    <div class="navbar-wrapper">
-        {% include('Template/Navigation/_navigation.html.twig') %}
-    </div>
+{% block title %}criticalmass.in{% endblock %}
 
-    <div class="container-fluid mb-2">
+{% block masterContent %}
+    {% include('Template/Navigation/_full_navigation.html.twig') %}
+
+    <div class="container-fluid margin-bottom-medium">
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 {% include 'Frontpage/_carousel.html.twig' with { 'frontpageTeaserList': frontpageTeaserList } %}
             </div>
         </div>
     </div>
-#}
-    <div class="container mt-2">
+
+    <div class="container margin-top-medium">
         <div class="row">
-            <div class="col-12 col-md-8">
+            <div class="col-md-8">
                 <div class="row">
-                    <div class="col-12">
-                        <h1 class="mt-0">
+                    <div class="col-md-12">
+                        <h1 class="no-margin-top">
                             Hej, wir fahren Fahrrad!
                         </h1>
 
@@ -29,7 +28,7 @@
                         </p>
 
                         <p class="text-center">
-                            <a href="{{ path('caldera_criticalmass_intro') }}" class="btn btn-primary">
+                            <a href="https://criticalmass.blog/criticalmass-one/ueber-criticalmass-in/" class="btn btn-primary">
                                 <i class="far fa-bicycle"></i>
                                 Erfahre mehr über criticalmass.in
                             </a>
@@ -37,14 +36,14 @@
                     </div>
                 </div>
 
-                <div class="row mt-2">
-                    <div class="col-12">
+                <div class="row margin-top-medium">
+                    <div class="col-md-12">
                         {{ include('Timeline/timeline.html.twig') }}
                     </div>
                 </div>
             </div>
 
-            <div class="col-12 col-md-4">
+            <div class="col-md-4">
                 {{ render(controller('App\\Controller\\FrontpageController::rideListAction')) }}
             </div>
         </div>

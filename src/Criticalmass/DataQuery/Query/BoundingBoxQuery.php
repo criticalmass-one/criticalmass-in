@@ -2,87 +2,63 @@
 
 namespace App\Criticalmass\DataQuery\Query;
 
-use MalteHuebner\DataQueryBundle\Annotation\QueryAnnotation as DataQuery;
+use Doctrine\ORM\QueryBuilder;
+use MalteHuebner\DataQueryBundle\Attribute\QueryAttribute as DataQuery;
 use MalteHuebner\DataQueryBundle\Query\AbstractQuery;
 use MalteHuebner\DataQueryBundle\Query\ElasticQueryInterface;
+use MalteHuebner\DataQueryBundle\Query\OrmQueryInterface;
 use MalteHuebner\DataQueryBundle\Validator\Constraint\BoundingBoxValues;
 use Symfony\Component\Validator\Constraints as Constraints;
 
-/**
- * @DataQuery\RequiredEntityProperty(propertyName="pin", propertyType="string")
- * @BoundingBoxValues()
- */
-class BoundingBoxQuery extends AbstractQuery implements ElasticQueryInterface
+#[DataQuery\RequiredEntityProperty(propertyName: 'pin', propertyType: 'string')]
+#[BoundingBoxValues]
+class BoundingBoxQuery extends AbstractQuery implements ElasticQueryInterface, OrmQueryInterface
 {
-    /**
-     * @var float $northLatitude
-     */
     #[Constraints\NotNull]
     #[Constraints\Type('float')]
     #[Constraints\Range(min: -90, max: 90)]
-    protected $northLatitude;
+    protected ?float $northLatitude = null;
 
-    /**
-     * @var float $southLatitude
-     */
     #[Constraints\NotNull]
     #[Constraints\Type('float')]
     #[Constraints\Range(min: -90, max: 90)]
-    protected $southLatitude;
+    protected ?float $southLatitude = null;
 
-    /**
-     * @var float $eastLongitude
-     */
     #[Constraints\NotNull]
     #[Constraints\Type('float')]
     #[Constraints\Range(min: -180, max: 180)]
-    protected $eastLongitude;
+    protected ?float $eastLongitude = null;
 
-    /**
-     * @var float $westLongitude
-     */
     #[Constraints\NotNull]
     #[Constraints\Type('float')]
     #[Constraints\Range(min: -180, max: 180)]
-    protected $westLongitude;
+    protected ?float $westLongitude = null;
 
-    /**
-     * @DataQuery\RequiredQueryParameter(parameterName="bbNorthLatitude")
-     */
+    #[DataQuery\RequiredQueryParameter(parameterName: 'bbNorthLatitude')]
     public function setNorthLatitude(float $northLatitude): BoundingBoxQuery
     {
         $this->northLatitude = $northLatitude;
-
         return $this;
     }
 
-    /**
-     * @DataQuery\RequiredQueryParameter(parameterName="bbSouthLatitude")
-     */
+    #[DataQuery\RequiredQueryParameter(parameterName: 'bbSouthLatitude')]
     public function setSouthLatitude(float $southLatitude): BoundingBoxQuery
     {
         $this->southLatitude = $southLatitude;
-
         return $this;
     }
 
-    /**
-     * @DataQuery\RequiredQueryParameter(parameterName="bbEastLongitude")
-     */
+    #[DataQuery\RequiredQueryParameter(parameterName: 'bbEastLongitude')]
     public function setEastLongitude(float $eastLongitude): BoundingBoxQuery
     {
         $this->eastLongitude = $eastLongitude;
-
         return $this;
     }
 
-    /**
-     * @DataQuery\RequiredQueryParameter(parameterName="bbWestLongitude")
-     */
+    #[DataQuery\RequiredQueryParameter(parameterName: 'bbWestLongitude')]
     public function setWestLongitude(float $westLongitude): BoundingBoxQuery
     {
         $this->westLongitude = $westLongitude;
-
         return $this;
     }
 
@@ -128,12 +104,34 @@ class BoundingBoxQuery extends AbstractQuery implements ElasticQueryInterface
 
     public function createElasticQuery(): \Elastica\Query\AbstractQuery
     {
-        $geoQuery = new \Elastica\Query\GeoBoundingBox('pin',
-            [
-                [$this->westLongitude, $this->northLatitude,],
-                [$this->eastLongitude, $this->southLatitude,],
-            ]);
+        $geoQuery = new \Elastica\Query\GeoBoundingBox('pin', [
+            [$this->westLongitude, $this->northLatitude],
+            [$this->eastLongitude, $this->southLatitude],
+        ]);
 
         return $geoQuery;
+    }
+
+    public function createOrmQuery(QueryBuilder $queryBuilder): QueryBuilder
+    {
+        $alias = $queryBuilder->getRootAliases()[0];
+        $expr = $queryBuilder->expr();
+
+        $queryBuilder
+            ->andWhere($expr->andX(
+                $expr->gte(sprintf('%s.latitude', $alias), ':southLatitude'),
+                $expr->lte(sprintf('%s.latitude', $alias), ':northLatitude')
+            ))
+            ->andWhere($expr->andX(
+                $expr->gte(sprintf('%s.longitude', $alias), ':westLongitude'),
+                $expr->lte(sprintf('%s.longitude', $alias), ':eastLongitude')
+            ))
+            ->setParameter('southLatitude', $this->southLatitude)
+            ->setParameter('northLatitude', $this->northLatitude)
+            ->setParameter('westLongitude', $this->westLongitude)
+            ->setParameter('eastLongitude', $this->eastLongitude)
+        ;
+
+        return $queryBuilder;
     }
 }

@@ -1,59 +1,66 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% set city = ride.city %}
 
-{% block title %}Fotos von {{ ride.title }}{% endblock %}
-
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+{% block title %}Fotos{% endblock %}
 
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Städteliste', path('caldera_criticalmass_city_list')) }}
-    {{ bootstrap.breadcrumb_item(ride.city.city, objectPath(ride.city)) }}
-    {{ bootstrap.breadcrumb_item(ride.title, objectPath(ride)) }}
-    {{ bootstrap.breadcrumb_item('Fotos', '', true) }}
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item(ride.city.city, object_path(ride.city)) }}
+    {{ breadcrumb.item(ride.title, object_path(ride)) }}
+    {{ breadcrumb.active('Fotos') }}
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                <div class="btn-group btn-group pull-right mt-2">
-                {% if app.user %}
-                    {% set uploadPath = object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') %}
+            <div class="col-md-12">
+                <div class="btn-group btn-group pull-right" style="margin-top: 16px;">
+                    {% if app.user %}
+                        {% set uploadPath = object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') %}
 
-                    <a class="btn btn-primary" href="{{ uploadPath }}" title="Fotos hochladen">
-                        <i class="far fa-camera"></i>
-                        Fotos hochladen
-                    </a>
-                {% else %}
-                    <span class="btn btn-primary modal-hint" data-modal-hint-title="{{ 'hint_modal.gallery.photo_upload_button.title'|trans }}" data-modal-hint-text="{{ 'hint_modal.gallery.photo_upload_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}" data-hint-modal-size="md">
-                        <i class="far fa-camera"></i>
-                        Fotos hochladen
-                    </span>
-                {% endif %}
+                        <a class="btn btn-success" href="{{ uploadPath }}" title="Fotos hochladen">
+                            <i class="far fa-camera"></i>
+                            Fotos hochladen
+                        </a>
+                    {% else %}
+                        <button
+                                type="button"
+                                class="btn btn-success"
+                                data-controller="hint-modal"
+                                data-modal-hint-title="{{ 'hint_modal.gallery.photo_upload_button.title'|trans }}"
+                                data-modal-hint-text="{{ 'hint_modal.gallery.photo_upload_button.text'|trans({'%city%': ride.city.city, '%dateTime%': ride.dateTime|date('d.m.Y')}) }}"
+                                data-modal-hint-size="md">
+                            <i class="far fa-camera"></i>
+                            Fotos hochladen
+                        </button>
+                    {% endif %}
                 </div>
 
-                <h2>
+                <h1>
                     Fotos von {{ ride.title }}
-                </h2>
+                </h1>
             </div>
         </div>
 
         {% if pagination|length == 0 %}
             {% if not app.getUser() %}
-                <div class="row mt-2">
-                    <div class="col-12">
+                <div class="row">
+                    <div class="col-md-12">
                         <div class="alert alert-info" role="alert">
                             <strong>
                                 Schade!
                             </strong>
-                            Bislang hat noch niemand Fotos von dieser Tour hochgeladen. Mit einem <a href="{{ path('login') }}">criticalmass.in-Benutzerkonto</a> könntest du deine Fotos hochladen.
+                            Bislang hat noch niemand Fotos von dieser Tour hochgeladen. Mit einem <a
+                                    href="{{ path('login') }}">criticalmass.in-Benutzerkonto</a>
+                            könntest du deine Fotos hochladen.
                         </div>
                     </div>
                 </div>
             {% else %}
-                <div class="row mt-2">
-                    <div class="col-12">
+                <div class="row">
+                    <div class="col-md-12">
                         <div class="alert alert-info" role="alert">
                             <strong>
                                 Hej!
@@ -64,25 +71,28 @@
                 </div>
             {% endif %}
         {% else %}
-            <div class="row mt-2 photo-list">
-                {% for photo in pagination %}
-                    <div class="col-6 col-sm-4 col-md-3 col-lg-3">
-                        <div class="mb-2 text-center">
-                            <a href="{{ object_path(photo) }}">
-                                {% if photo.posts|length > 0 %}
-                                    <span class="badge" style="position: absolute; top: -10px; right: 10px; background-color: red; font-size: 1em;">{{ photo.posts|length }}</span>
-                                {% endif %}
-                                <img class="img-thumbnail" src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
-                            </a>
+            <div class="row">
+                <div class="photo-list">
+                    {% for photo in pagination %}
+                        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                            <div class="margin-bottom-medium text-center">
+                                <a href="{{ object_path(photo) }}">
+                                    {% if photo.posts|length > 0 %}
+                                        <span class="badge" style="position: absolute; top: -10px; right: 10px; background-color: red; font-size: 1em;">{{ photo.posts|length }}</span>
+                                    {% endif %}
+                                    <img class="img-thumbnail"
+                                         src="{{ vich_uploader_asset(photo, 'imageFile')|imagine_filter('gallery_photo_thumb') }}"/>
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
 
-            <div class="row mt-2">
-                <div class="col-12">
+            <div class="row">
+                <div class="col-md-12">
                     <div class="text-center">
-                        {{ knp_pagination_render(piagination, null, [], { align: 'center' } ) }}
+                        {{ knp_pagination_render(pagination) }}
                     </div>
                 </div>
             </div>

@@ -14,31 +14,31 @@ use App\Factory\City\CityFactoryInterface;
 use App\Form\Type\CityType;
 use App\Repository\RegionRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class CityManagementController extends AbstractController
 {
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     */
+    #[IsGranted('ROLE_USER')]
+    #[Route('/world/{slug1}/{slug2}/{slug3}/addcity', name: 'caldera_criticalmass_city_add', priority: 95)]
+    #[Route('/{citySlug}/add', name: 'caldera_criticalmass_city_add_slug', priority: 95)]
     public function addAction(
         Request $request,
         ManagerRegistry $managerRegistry,
-        UserInterface $user = null,
         NominatimCityBridge $nominatimCityBridge,
         EventDispatcherInterface $eventDispatcher,
         ObjectRouterInterface $objectRouter,
         CityFactoryInterface $cityFactory,
-        string $slug1 = null,
-        string $slug2 = null,
-        string $slug3 = null,
-        string $citySlug = null
+        ?UserInterface $user = null,
+        ?string $slug1 = null,
+        ?string $slug2 = null,
+        ?string $slug3 = null,
+        ?string $citySlug = null
     ): Response {
         $regionRepository = $managerRegistry->getRepository(Region::class);
         $region = $this->getRegion($nominatimCityBridge, $regionRepository, $slug3, $citySlug);
@@ -54,26 +54,25 @@ class CityManagementController extends AbstractController
         }
 
         $form = $this->createForm(CityType::class, $city, [
-            'action' => $this->generateUrl('caldera_criticalmass_city_add',
-                $this->getRegionSlugParameterArray($region)),
+            'action' => $this->generateUrl('caldera_criticalmass_city_add', $this->getRegionSlugParameterArray($region)),
         ]);
 
         if (Request::METHOD_POST == $request->getMethod()) {
-            return $this->addPostAction($request, $user, $eventDispatcher, $objectRouter, $city, $region, $form);
+            return $this->addPostAction($request, $eventDispatcher, $objectRouter, $city, $region, $form, $user);
         }
 
-        return $this->addGetAction($request, $user, $eventDispatcher, $objectRouter, $city, $region, $form);
+        return $this->addGetAction($request, $eventDispatcher, $objectRouter, $city, $region, $form, $user);
     }
 
     protected function addGetAction(
         Request $request,
-        UserInterface $user = null,
         EventDispatcherInterface $eventDispatcher,
         ObjectRouterInterface $objectRouter,
         City $city,
         Region $region,
-        FormInterface $form
-    ) {
+        FormInterface $form,
+        ?UserInterface $user = null
+    ): Response {
         return $this->render('CityManagement/edit.html.twig', [
             'city' => $city,
             'form' => $form->createView(),
@@ -85,12 +84,12 @@ class CityManagementController extends AbstractController
 
     protected function addPostAction(
         Request $request,
-        UserInterface $user = null,
         EventDispatcherInterface $eventDispatcher,
         ObjectRouterInterface $objectRouter,
         City $city,
         Region $region,
-        FormInterface $form
+        FormInterface $form,
+        ?UserInterface $user = null
     ): Response {
         $form->handleRequest($request);
 
@@ -106,7 +105,6 @@ class CityManagementController extends AbstractController
             }
 
             $em->persist($city);
-
             $em->flush();
 
             $form = $this->createForm(CityType::class, $city, [
@@ -127,35 +125,33 @@ class CityManagementController extends AbstractController
         ]);
     }
 
-    /**
-     * @Security("is_granted('ROLE_USER')")
-     * @ParamConverter("city", class="App:City")
-     */
+    #[IsGranted('ROLE_USER')]
+    #[Route('/{citySlug}/edit', name: 'caldera_criticalmass_city_edit', priority: 95)]
     public function editAction(
         Request $request,
-        UserInterface $user = null,
         EventDispatcherInterface $eventDispatcher,
         City $city,
-        ObjectRouterInterface $objectRouter
+        ObjectRouterInterface $objectRouter,
+        ?UserInterface $user = null
     ): Response {
         $form = $this->createForm(CityType::class, $city, [
             'action' => $objectRouter->generate($city, 'caldera_criticalmass_city_edit'),
         ]);
 
         if (Request::METHOD_POST === $request->getMethod()) {
-            return $this->editPostAction($request, $user, $eventDispatcher, $city, $form, $objectRouter);
+            return $this->editPostAction($request, $eventDispatcher, $city, $form, $objectRouter, $user);
         }
 
-        return $this->editGetAction($request, $user, $eventDispatcher, $city, $form, $objectRouter);
+        return $this->editGetAction($request, $eventDispatcher, $city, $form, $objectRouter, $user);
     }
 
     protected function editGetAction(
         Request $request,
-        UserInterface $user = null,
         EventDispatcherInterface $eventDispatcher,
         City $city,
         FormInterface $form,
-        ObjectRouterInterface $objectRouter
+        ObjectRouterInterface $objectRouter,
+        ?UserInterface $user = null
     ): Response {
         return $this->render('CityManagement/edit.html.twig', [
             'city' => $city,
@@ -168,19 +164,18 @@ class CityManagementController extends AbstractController
 
     protected function editPostAction(
         Request $request,
-        UserInterface $user = null,
         EventDispatcherInterface $eventDispatcher,
         City $city,
         FormInterface $form,
-        ObjectRouterInterface $objectRouter
+        ObjectRouterInterface $objectRouter,
+        ?UserInterface $user = null
     ): Response {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $city
                 ->setUpdatedAt(new \DateTime())
-                ->setUser($user)
-            ;
+                ->setUser($user);
 
             $this->managerRegistry->getManager()->flush();
 
@@ -203,8 +198,8 @@ class CityManagementController extends AbstractController
     protected function getRegion(
         NominatimCityBridge $nominatimCityBridge,
         RegionRepository $regionRepository,
-        string $regionSlug = null,
-        string $citySlug = null
+        ?string $regionSlug = null,
+        ?string $citySlug = null
     ): ?Region {
         if ($regionSlug) {
             return $regionRepository->findOneBySlug($regionSlug);

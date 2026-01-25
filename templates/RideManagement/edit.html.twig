@@ -1,4 +1,7 @@
-{% extends 'Template/StandardTemplate.html.twig' %}{% if ride %}
+{% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
+
+{% if ride %}
     {% set title = 'Tour editieren' %}
     {% set mode = 'edit' %}
 {% else %}
@@ -8,17 +11,14 @@
 
 {% block title %}{{ title }}{% endblock %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
-
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Städteliste', path('caldera_criticalmass_city_list')) }}
-    {{ bootstrap.breadcrumb_item(city.city, objectPath(city)) }}
-
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item(city.city, object_path(city)) }}
     {% if ride %}
-        {{ bootstrap.breadcrumb_item(ride.title, objectPath(ride)) }}
-        {{ bootstrap.breadcrumb_item('Tour editieren', '', true) }}
+        {{ breadcrumb.item(ride.title, object_path(ride)) }}
+        {{ breadcrumb.active('Tour editieren') }}
     {% else %}
-        {{ bootstrap.breadcrumb_item('Track hinzufügen', '', true) }}
+        {{ breadcrumb.active('Tour hinzufügen') }}
     {% endif %}
 {% endblock %}
 
@@ -26,24 +26,27 @@
     <div class="container">
         {% if city.cycles|length > 0 and mode == 'create' %}
             <div class="row">
-                <div class="col-12">
+                <div class="col-md-12">
                     <div class="alert alert-warning" role="alert">
                         <strong>Vorsicht!</strong>
-                        Die Touren für diese Stadt werden jeden Monat anhand vorgegebener Standard-Werte automatisch generiert. Bitte schau erst einmal nach, ob die Tour, die du gerade anlegen möchtest, womöglich bereits existiert.
+                        Die Touren für diese Stadt werden jeden Monat anhand vorgegebener Standard-Werte automatisch
+                        generiert. Bitte schau erst einmal nach, ob die Tour, die du gerade anlegen möchtest, womöglich
+                        bereits existiert.
                     </div>
                 </div>
             </div>
+
         {% endif %}
 
         <div class="row">
-            <div class="col-12">
-                <h2>
-                    {{ title }}
-                </h2>
+            <div class="col-md-12">
+                <h1>{{ title }}</h1>
+            </div>
+        </div>
 
-                <p>
-                    Hier kannst du die Details einer Tour editieren.
-                </p>
+        <div class="row">
+            <div class="col-md-12">
+                <p>Hier kannst du die Details einer Tour editieren.</p>
             </div>
         </div>
 
@@ -51,25 +54,28 @@
 
         {{ form_start(form) }}
         <div class="row">
-            <div class="col-12">
-                <div id="map" class="map" style="height: 250px;"
-                     data-map-marker-draggable="true"
-                     data-map-center-latitude="{{ ride.latitude }}"
-                     data-map-center-longitude="{{ ride.longitude }}"
-                     data-map-zoomlevel="10"
-                     data-map-marker-type="ride"
-                     data-map-marker-latitude-target="{{ form.latitude.vars.id }}"
-                     data-map-marker-longitude-target="{{ form.longitude.vars.id }}"
-                >
-
+            <div class="col-md-12">
+                <div id="map"
+                     class="map"
+                     data-controller="map--form-map"
+                     style="height: 250px;"
+                     data-map--form-map-center-latitude-value="{{ ride.latitude }}"
+                     data-map--form-map-center-longitude-value="{{ ride.longitude }}"
+                     data-map--form-map-zoom-value="10"
+                     data-map--form-map-marker-latitude-target-value="{{ form.latitude.vars.id }}"
+                     data-map--form-map-marker-longitude-target-value="{{ form.longitude.vars.id }}"
+                     data-map--form-map-marker-icon-value="fa-bicycle"
+                     data-map--form-map-marker-color-value="red"
+                     data-map--form-map-marker-shape-value="circle"
+                     data-map--form-map-marker-prefix-value="fas">
                 </div>
             </div>
         </div>
 
-        <div class="row mt-3">
-            <div class="col-2 col-md-6">
+        <div class="row margin-top-medium">
+            <div class="col-md-6">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-md-12">
                         <h3>
                             Tourdaten
                         </h3>
@@ -77,7 +83,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-md-12">
                         <div class="form-group">
                             <label class="control-label" for="title">
                                 Titel:
@@ -91,7 +97,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-md-12">
                         <div class="form-group">
                             <label class="control-label" for="description">
                                 Beschreibung:
@@ -107,18 +113,18 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-6">
+            <div class="col-md-6">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-md-12">
                         <h3>
                             Datum und Treffpunkt
                         </h3>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-12">
-                        <div class="alert alert-warning d-none hidden" role="alert" id="doubleMonthRide">
+                <div class="row" data-controller="ride-date-checker">
+                    <div class="col-md-12">
+                        <div class="alert alert-warning d-none hidden" role="alert" id="doubleMonthRide" data-ride-date-checker-target="doubleMonthMessage">
                             <strong>
                                 Vorsicht!
                             </strong>
@@ -126,7 +132,7 @@
                             Touren stattfinden?
                         </div>
 
-                        <div class="alert alert-danger d-none hidden" role="alert" id="doubleDayRide">
+                        <div class="alert alert-danger d-none hidden" role="alert" id="doubleDayRide" data-ride-date-checker-target="doubleDayMessage">
                             <strong>
                                 Achtung!
                             </strong>
@@ -140,11 +146,11 @@
                             </label>
                             <div class="row">
                                 <div class="col-md-6">
-                                    {{ form_widget(form.dateTime.date, { attr: { class: 'form-control check-ride-date' } }) }}
+                                    {{ form_widget(form.dateTime.date, { attr: { class: 'form-control', 'data-ride-date-checker-target': 'date', 'data-action': 'change->ride-date-checker#checkDate' } }) }}
                                 </div>
 
                                 <div class="col-md-6">
-                                    {{ form_widget(form.dateTime.time, { attr: { class: 'form-control check-ride-date' } }) }}
+                                    {{ form_widget(form.dateTime.time, { attr: { class: 'form-control' } }) }}
                                 </div>
                             </div>
                         </div>
@@ -152,20 +158,21 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-md-12">
                         <div class="form-group">
                             <label class="control-label" for="location">
                                 Treffpunkt:
                             </label>
-                            <button class="btn btn-default btn-xs pull-right geocode"
-                                    data-geocoding-query-suffix="{{ city.city }},{{ city.region }},{{ city.region.parent }}"
-                                    data-geocoding-query-selector="#ride_location"
+                            <button class="btn btn-secondary btn-xs pull-right"
+                                    data-controller="geocoding"
+                                    data-action="click->geocoding#search"
+                                    data-geocoding-query-suffix-value="{{ city.city }},{{ city.region }},{{ city.region.parent }}"
+                                    data-geocoding-query-selector-value="#ride_location"
                                     type="button">
                                 <i class="far fa-map-marker"></i>
                             </button>
                             {{ form_widget(form.location, { 'attr' : { 'class': 'form-control' } }) }}
                         </div>
-
                         <p class="help-block">
                             Gib hier den Treffpunkt der Tour ein. Beschränke dich bitte auf eine aussagekräftige
                             Bezeichnung, die auch für ortsunkundige Radfahrer verständlich ist, aber ohne
@@ -176,7 +183,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-md-12">
                         <div class="form-group">
                             <label class="control-label" for="rideType">
                                 Art der Tour:
@@ -234,7 +241,7 @@
                                         Abbrechen
                                     </a>
                                 {% endif %}
-                                <button type="submit" class="btn btn-primary" id="rideSubmitButton">
+                                <button type="submit" class="btn btn-success" id="rideSubmitButton" data-ride-date-checker-target="submitButton">
                                     Speichern
                                 </button>
                             </div>

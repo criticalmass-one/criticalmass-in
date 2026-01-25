@@ -2,10 +2,7 @@
 
 namespace App\EventSubscriber;
 
-use App\Criticalmass\Geo\DistanceCalculator\TrackDistanceCalculatorInterface;
-use App\Criticalmass\Geo\GpxReader\TrackReader;
-use App\Criticalmass\Geo\LatLngListGenerator\RangeLatLngListGenerator;
-use App\Criticalmass\Geo\TrackPolylineHandler\TrackPolylineHandlerInterface;
+use App\Criticalmass\Geo\GpxService\GpxServiceInterface;
 use App\Criticalmass\Participation\Manager\ParticipationManagerInterface;
 use App\Criticalmass\Statistic\RideEstimateConverter\RideEstimateConverterInterface;
 use App\Criticalmass\Statistic\RideEstimateHandler\RideEstimateHandler;
@@ -20,44 +17,18 @@ use App\Event\Track\TrackTrimmedEvent;
 use App\Event\Track\TrackUpdatedEvent;
 use App\Event\Track\TrackUploadedEvent;
 use Doctrine\Persistence\ManagerRegistry;
+use phpGPX\Models\GpxFile;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class TrackEventSubscriber implements EventSubscriberInterface
 {
-    protected TrackReader $trackReader;
-    protected TrackPolylineHandlerInterface $trackPolylineHandler;
-    protected RangeLatLngListGenerator $rangeLatLngListGenerator;
-    protected RideEstimateHandlerInterface $rideEstimateHandler;
-    protected TrackDistanceCalculatorInterface $trackDistanceCalculator;
-    protected RideEstimateConverterInterface $rideEstimateConverter;
-    protected ManagerRegistry $registry;
-    protected ParticipationManagerInterface $participationManager;
-
     public function __construct(
-        ManagerRegistry $registry,
-        RideEstimateHandler $rideEstimateHandler,
-        RideEstimateConverterInterface $rideEstimateConverter,
-        TrackReader $trackReader,
-        RangeLatLngListGenerator $rangeLatLngListGenerator,
-        TrackDistanceCalculatorInterface $trackDistanceCalculator,
-        TrackPolylineHandlerInterface $trackPolylineHandler,
-        ParticipationManagerInterface $participationManager
+        private readonly GpxServiceInterface $gpxService,
+        private readonly ManagerRegistry $registry,
+        private readonly RideEstimateHandler $rideEstimateHandler,
+        private readonly RideEstimateConverterInterface $rideEstimateConverter,
+        private readonly ParticipationManagerInterface $participationManager,
     ) {
-        $this->rangeLatLngListGenerator = $rangeLatLngListGenerator;
-
-        $this->trackReader = $trackReader;
-
-        $this->rideEstimateHandler = $rideEstimateHandler;
-
-        $this->trackDistanceCalculator = $trackDistanceCalculator;
-
-        $this->rideEstimateConverter = $rideEstimateConverter;
-
-        $this->registry = $registry;
-
-        $this->trackPolylineHandler = $trackPolylineHandler;
-
-        $this->participationManager = $participationManager;
     }
 
     public static function getSubscribedEvents(): array
@@ -115,8 +86,9 @@ class TrackEventSubscriber implements EventSubscriberInterface
     public function onTrackUploaded(TrackUploadedEvent $trackUploadedEvent): void
     {
         $track = $trackUploadedEvent->getTrack();
+        $gpxFile = $this->gpxService->loadFromTrack($track);
 
-        $this->loadTrackProperties($track);
+        $this->loadTrackProperties($track, $gpxFile);
         $this->addRideEstimate($track, $track->getRide());
         $this->updateLatLngList($track);
         $this->updatePolyline($track);
@@ -145,7 +117,7 @@ class TrackEventSubscriber implements EventSubscriberInterface
         $this->registry->getManager()->flush();
     }
 
-    protected function addRideEstimate(Track $track, Ride $ride)
+    protected function addRideEstimate(Track $track, Ride $ride): void
     {
         $this->rideEstimateConverter->addEstimateFromTrack($track);
 
@@ -156,54 +128,50 @@ class TrackEventSubscriber implements EventSubscriberInterface
 
     protected function updatePolyline(Track $track): void
     {
-         $this->trackPolylineHandler->handleTrack($track);
+        $track
+            ->setPolyline($this->gpxService->generatePolyline($track))
+            ->setReducedPolyline($this->gpxService->generateReducedPolyline($track));
     }
 
     protected function updateLatLngList(Track $track): void
     {
-        $this->rangeLatLngListGenerator
-            ->loadTrack($track)
-            ->execute();
-
-        $track->setLatLngList($this->rangeLatLngListGenerator->getList());
+        $track->setLatLngList($this->gpxService->generateLatLngList($track));
     }
 
-    protected function loadTrackProperties(Track $track): void
+    protected function loadTrackProperties(Track $track, GpxFile $gpxFile): void
     {
-        $this->trackReader->loadTrack($track);
+        $gpxTrack = $gpxFile->tracks[0];
+        $gpxStats = $gpxTrack->stats;
+        $pointCounter = count($gpxTrack->getPoints());
 
         $track
-            ->setPoints($this->trackReader->countPoints())
+            ->setPoints($pointCounter)
             ->setStartPoint(0)
-            ->setEndPoint($this->trackReader->countPoints() - 1)
-            ->setStartDateTime($this->trackReader->getStartDateTime())
-            ->setEndDateTime($this->trackReader->getEndDateTime());
-
-
-        $distance = $this->trackDistanceCalculator
-            ->setTrack($track)
-            ->calculate();
-
-        $track->setDistance($distance);
+            ->setEndPoint($pointCounter - 1)
+            ->setStartDateTime($gpxStats->startedAt)
+            ->setEndDateTime($gpxStats->finishedAt)
+            ->setDistance($gpxStats->distance / 1000) // phpGPX returns meters, we store kilometers
+        ;
     }
 
     protected function calculateTrackDistance(Track $track): void
     {
-        $distance = $this->trackDistanceCalculator
-            ->setTrack($track)
-            ->calculate();
-
+        $distance = $this->gpxService->calculateDistance($track);
         $track->setDistance($distance);
     }
 
     protected function updateTrackProperties(Track $track): void
     {
-        $this->trackReader->loadTrack($track);
+        $startDateTime = $this->gpxService->getStartDateTime($track);
+        $endDateTime = $this->gpxService->getEndDateTime($track);
 
-        $track
-            ->setStartDateTime($this->trackReader->getStartDateTime())
-            ->setEndDateTime($this->trackReader->getEndDateTime())
-        ;
+        if ($startDateTime) {
+            $track->setStartDateTime($startDateTime);
+        }
+
+        if ($endDateTime) {
+            $track->setEndDateTime($endDateTime);
+        }
     }
 
     public function updateEstimates(Track $track): void

@@ -1,6 +1,5 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
-
-{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% if city != null %}
     {% set title = 'Stadt editieren' %}
@@ -10,29 +9,23 @@
 
 {% block title %}{{ title }}{% endblock %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
-
 {% block breadcrumb %}
-    {% if city %}
-        {{ bootstrap.breadcrumb_item(city.city, objectPath(city)) }}
-        {{ bootstrap.breadcrumb_item(title, '', true) }}
+    {% if city and city.mainSlug %}
+        {{ breadcrumb.item(city.city, object_path(city)) }}
+        {{ breadcrumb.active(title) }}
     {% else %}
-        {{ bootstrap.breadcrumb_item('Verzeichnis', path('caldera_criticalmass_region_world')) }}
-
+        {{ breadcrumb.item('Verzeichnis', path('caldera_criticalmass_region_world')) }}
         {% if (region.parent and region.parent.parent and region.parent.parent.parent and not region.parent.parent.parent.isWorld()) %}
-            {{ bootstrap.breadcrumb_item(region.parent.parent.parent.name, objectPath(region.parent.parent.parent)) }}
+            {{ breadcrumb.item(region.parent.parent.parent.name, object_path(region.parent.parent.parent)) }}
         {% endif %}
-
         {% if (region.parent and region.parent.parent and not region.parent.parent.isWorld()) %}
-            {{ bootstrap.breadcrumb_item(region.parent.parent.name, objectPath(region.parent.parent)) }}
+            {{ breadcrumb.item(region.parent.parent.name, object_path(region.parent.parent)) }}
         {% endif %}
-
         {% if (region.parent and not region.parent.isWorld()) %}
-            {{ bootstrap.breadcrumb_item(region.parent.name, objectPath(region.parent)) }}
+            {{ breadcrumb.item(region.parent.name, object_path(region.parent)) }}
         {% endif %}
-
-        {{ bootstrap.breadcrumb_item(region.name, objectPath(region)) }}
-        {{ bootstrap.breadcrumb_item('Stadt hinzufügen', '', true) }}
+        {{ breadcrumb.item(region.name, object_path(region)) }}
+        {{ breadcrumb.active('Stadt hinzufügen') }}
     {% endif %}
 {% endblock %}
 
@@ -44,124 +37,150 @@
         {{ form_start(form) }}
 
         <div class="row">
-            <div class="col-12">
-                <h2>
-                    {{ title }}
-                </h2>
+            <div class="col-md-12">
+                <h1>{{ title }}</h1>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-12">
-                <div id="map" class="map" style="height: 250px;"
-                     data-map-marker-draggable="true"
-                     data-map-center-latitude="{{ city.latitude }}"
-                     data-map-center-longitude="{{ city.longitude }}"
-                     data-map-zoomlevel="10"
-                     data-map-marker-type="city"
-                     data-map-marker-latitude-target="city_latitude"
-                     data-map-marker-longitude-target="city_longitude"
-                >
-
-                </div>
+            <div class="col-md-12">
+                <div
+                        id="map-city"
+                        class="map"
+                        style="height:250px;"
+                        data-controller="map--form-map"
+                        data-map--form-map-center-latitude-value="{{ city.latitude }}"
+                        data-map--form-map-center-longitude-value="{{ city.longitude }}"
+                        data-map--form-map-zoom-value="10"
+                        data-map--form-map-marker-latitude-target-value="{{ form.latitude.vars.id }}"
+                        data-map--form-map-marker-longitude-target-value="{{ form.longitude.vars.id }}"
+                        data-map--form-map-marker-icon-value="fa-university"
+                        data-map--form-map-marker-color-value="blue"
+                        data-map--form-map-marker-shape-value="circle"
+                        data-map--form-map-marker-prefix-value="fas"
+                ></div>
             </div>
         </div>
 
-        <div class="row mt-2">
-            <div class="col-6">
+        <div class="row">
+            <div class="col-md-6">
                 <div class="row">
-                    <div class="col-12">
-                        <h4>
-                            Städte-Informationen
-                        </h4>
+                    <div class="col-md-12">
+                        <h2>Städte-Informationen</h2>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-12">
-                        {{ form_row(form.region) }}
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.region) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Region:</label>
+                            {{ form_widget(form.region, { 'attr' : { 'class': 'form-control'} }) }}
+                            <p class="help-block">Wähle das Bundesland, den Kanton oder das County dieser Stadt aus.</p>
+                        </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-12">
-                        {{ form_row(form.title) }}
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.title) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Titel:</label>
+                            {{ form_widget(form.title, { 'attr' : { 'class': 'form-control'} }) }}
+                            <p class="help-block">Gib hier den Titel der Stadt ein, beispielsweise „Critical Mass
+                                Hamburg“ oder „Fahrradfreitag Rendsburg“.</p>
+                        </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-12">
-                        <button class="btn btn-outline-secondary btn-sm pull-right geocode" type="button" data-geocoding-query-selector="#city_city" data-geocoding-query-part-selector="#city_region">
-                            <i class="far fa-map-marker"></i>
-                        </button>
-
-                        {{ form_row(form.city) }}
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.city) %} has-error has-feedback{% endif %}">
+                            <button class="btn btn-secondary btn-xs pull-right" type="button"
+                                data-controller="geocoding"
+                                data-action="click->geocoding#search"
+                                data-geocoding-query-selector-value="#city_city"
+                                data-geocoding-query-part-selector-value="#city_region">
+                                <i class="far fa-map-marker"></i>
+                            </button>
+                            <label class="control-label" for="">Name:</label>
+                            {{ form_widget(form.city, { 'attr' : { 'class': 'form-control'} }) }}
+                            <p class="help-block">Name der Stadt, etwa Hamburg oder Rendsburg.</p>
+                        </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-12">
-                        {{ form_row(form.description) }}
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.description) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Beschreibung:</label>
+                            {{ form_widget(form.description, { 'attr' : { 'class': 'form-control', 'rows': '10' } }) }}
+                            <p class="help-block">Eine kurze, aufs Wesentliche reduzierte Beschreibung der Stadt.</p>
+                        </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-12">
-                        {{ form_row(form.punchLine) }}
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.punchLine) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Punchline:</label>
+                            {{ form_widget(form.punchLine, { 'attr' : { 'class': 'form-control'} }) }}
+                            <p class="help-block">Hier kann ein ganz einprägsamer Satz hin. Sowas wie „We are traffic“
+                                oder „Reclaim the streets“ ist ja schon fast Standard.</p>
+                        </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-12">
-                        {{ form_row(form.longDescription) }}
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12">
-                        <button id="fetch-population-button" class="btn btn-outline-secondary btn-sm pull-right" type="button">
-                            <i class="fa fa-users"></i>
-                        </button>
-
-                        {{ form_row(form.cityPopulation) }}
+                    <div class="col-md-12">
+                        <div class="form-group{% if form_errors(form.longDescription) %} has-error has-feedback{% endif %}">
+                            <label class="control-label" for="">Lange Beschreibung:</label>
+                            {{ form_widget(form.longDescription, { 'attr' : { 'class': 'form-control', 'rows': '10' } }) }}
+                            <p class="help-block">Hier ist Platz für eine längere und ausführlichere Beschreibung.</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-6">
+            <div class="col-md-6">
                 <div class="row">
-                    <div class="col-12">
-                        <h4>
-                            Technisches
-                        </h4>
+                    <div class="col-md-12">
+                        <h2>Technisches</h2>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-12">
-                        {{ form_row(form.enableBoard) }}
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label" for="">Forum anzeigen:</label>
+                            {{ form_widget(form.enableBoard, { 'attr' : { 'class': 'form-control'} }) }}
+                            <p class="help-block">Aktiviere diese Checkbox, um ein Diskussionsforum für diese Stadt zu
+                                aktivieren.</p>
+                        </div>
                     </div>
                 </div>
 
 
                 <div class="row">
-                    <div class="col-12">
-                        <h4>
-                            Header-Grafik
-                        </h4>
+                    <div class="col-md-12">
+                        <h2>Header-Grafik</h2>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-12">
-                        {{ form_row(form.imageFile) }}
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label" for="">Datei:</label>
+                            {{ form_widget(form.imageFile, { 'attr' : { 'class': 'form-control'} }) }}
+                            <p class="help-block">Lade hier ein Foto für diese Stadt hoch. <strong>Bitte beachte, dass
+                                    du das Urheber- oder Nutzungsrecht an dieser Datei besitzt.</strong> Am besten sind
+                                Bildabmessungen von 2.280 mal 500 Pixel.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <div class="btn-group pull-right">
                     {% if city and city.mainSlug %}
                         <a href="{{ object_path(city) }}" class="btn btn-secondary">
@@ -172,7 +191,7 @@
                             Abbrechen
                         </a>
                     {% endif %}
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-success">
                         Speichern
                     </button>
                 </div>

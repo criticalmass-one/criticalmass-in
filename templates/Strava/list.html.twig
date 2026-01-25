@@ -1,24 +1,30 @@
-{% extends 'Template/StandardTemplate.html.twig' %}{% block title %}Track von Strava importieren{% endblock %}
+{% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+{% block title %}Track von Strava importieren{% endblock %}
 
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Städteliste', path('caldera_criticalmass_city_list')) }}
-    {{ bootstrap.breadcrumb_item(ride.city.city, objectPath(ride.city)) }}
-    {{ bootstrap.breadcrumb_item(ride.title, objectPath(ride)) }}
-    {{ bootstrap.breadcrumb_item('Track importieren', '', true) }}
+    {{ breadcrumb.item('Städteliste', path('caldera_criticalmass_city_list')) }}
+    {{ breadcrumb.item(ride.city.city, object_path(ride.city)) }}
+    {{ breadcrumb.item(ride.title, object_path(ride)) }}
+    {{ breadcrumb.active('Track importieren') }}
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                <h2>
+            <div class="col-md-12">
+                <h1>
                     Wähle eine Aktivität
-                </h2>
+                </h1>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col-md-12">
                 <p>
-                    Am <strong>{{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}</strong> hast du die folgenden Aktivitäten mit Strava aufgezeichnet. Bitte wähle die Aktivität aus, die du als Track importieren möchtest.
+                    Am <strong>{{ ride.dateTime.format('d.m.Y') }}</strong> hast du die folgenden Aktivitäten mit Strava
+                    aufgezeichnet. Bitte wähle die Aktivität aus, die du als Track importieren möchtest.
                 </p>
             </div>
         </div>
@@ -26,50 +32,58 @@
         <div class="row">
             {% if activities is iterable and activities|length > 0 %}
                 {% for activity in activities %}
-                    <div class="col-12 col-md-4">
+                    <div class="col-md-4">
                         <div class="row">
-                            <div class="col-12">
-                                <h5>
+                            <div class="col-md-12">
+                                <h3>
                                     {{ activity.name }}
-                                </h5>
+                                </h3>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-12">
-                                <div id="map-{{ activity.id }}" class="map" style="height: 150px;" data-polyline="{{ activity.map.summary_polyline }}"
-                                     data-polyline-color="{{ app.user.color }}"></div>
+                            <div class="col-md-12">
+                                <div id="map-{{ activity.id }}"
+                                     class="map"
+                                     data-controller="map--map"
+                                     style="height: 150px;"
+                                     data-map--map-lock-map-value="true"
+                                     data-map--map-polyline-value="{{ activity.map.summary_polyline }}"
+                                     data-map--map-polyline-color-value="{{ app.user.color }}">
+                                </div>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-md-4">
                                 <dl>
                                     <dt>Distanz:</dt>
                                     <dd>{{ (activity.distance / 1000)|round(2) }}&nbsp;km</dd>
                                 </dl>
                             </div>
-                            <div class="col-4">
+                            <div class="col-md-4">
                                 <dl>
                                     <dt>Start:</dt>
                                     <dd>{{ activity.start_date|date('H:i') }}&nbsp;Uhr</dd>
                                 </dl>
                             </div>
-                            <div class="col-4">
+                            <div class="col-md-4">
                                 <dl>
                                     <dt>Dauer:</dt>
-                                    <dd>{{ (activity.elapsed_time / 60)|round() }}&nbsp;min</dd>
+                                    <dd>{{ (activity.elapsed_time / 60)|round() }}&nbsp;Minuten</dd>
                                 </dl>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-12 text-center">
-                                <a class="btn btn-primary" href="{{ object_path(ride, 'caldera_criticalmass_strava_import') }}?activityId={{ activity.id }}">
-                                    {# TODO #}
-                                    <i class="far fa-download"></i>
-                                    Track importieren
-                                </a>
+                            <div class="col-md-12">
+                                <div class="text-center">
+                                    <a class="btn btn-success" href="{{ object_path(ride, 'caldera_criticalmass_strava_import') }}?activityId={{ activity.id }}">
+                                        {# TODO #}
+                                        <i class="far fa-download"></i>
+                                        Track importieren
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -82,17 +96,17 @@
                     </div>
                 </div>
             {% else %}
-                <div class="col-12">
+                <div class="col-md-12">
                     <div class="alert alert-danger" role="alert">
-                        <strong>Keine Touren gefunden!</strong>
-                        Offenbar hast du mit Strava am <strong>{{ ride.dateTime|date('d.m.Y', ride.city.timezone) }}</strong> keine Touren aufgezeichnet.
+                        <strong>Hoppla!</strong>
+                        Leider können wir momentan keine Touren von Strava auslesen — bitte versuche es später noch einmal.
                     </div>
                 </div>
             {% endif %}
         </div>
 
-        <div class="row mt-2">
-            <div class="col-12">
+        <div class="row">
+            <div class="col-md-12">
                 <a href="{{ object_path(ride) }}" class="btn btn-secondary pull-right">
                     Abbrechen
                 </a>

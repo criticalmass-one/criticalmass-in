@@ -1,19 +1,22 @@
-<div class="row mb-2">
-    <div class="col-12 col-md-3 col-lg-3">
-        <div id="map-{{ city.id }}" class="map" style="height: 150px;"
-             data-map-center-latitude="{{ city.latitude }}"
-             data-map-center-longitude="{{ city.longitude }}"
-             data-map-zoomlevel="13"
-             data-lock-map="true"
-             data-marker-latitude="{{ city.latitude }}"
-             data-marker-longitude="{{ city.longitude }}"
-             data-marker-type="city"
-        ></div>
+<div class="row margin-bottom-medium">
+    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+        <div id="map-{{ city.id }}"
+             class="map"
+             data-controller="map--map"
+             style="height: 150px;"
+             data-map--map-center-latitude-value="{{ city.latitude }}"
+             data-map--map-center-longitude-value="{{ city.longitude }}"
+             data-map--map-zoom-value="13"
+             data-map--map-lock-map-value="true"
+             data-map--map-marker-latitude-value="{{ city.latitude }}"
+             data-map--map-marker-longitude-value="{{ city.longitude }}"
+             data-map--map-marker-type-value="city">
+        </div>
     </div>
 
-    <div class="col-12 col-md-3 col-lg-3">
+    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <a href="{{ object_path(city) }}">
                     <h4>
                         {{ city.title }}
@@ -24,7 +27,7 @@
 
         {% if city.cycles|length > 0 %}
             <div class="row">
-                <div class="col-12">
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
                     <ul>
                         {% for cycle in city.cycles %}
                         <li>

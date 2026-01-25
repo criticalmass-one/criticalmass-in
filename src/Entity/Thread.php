@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
-use App\EntityInterface\AutoParamConverterAble;
 use App\EntityInterface\PostableInterface;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,7 +11,7 @@ use App\Criticalmass\Router\Attribute as Routing;
 
 #[ORM\Table(name: 'thread')]
 #[ORM\Entity(repositoryClass: 'App\Repository\ThreadRepository')]
-class Thread implements ViewableEntity, RouteableInterface, AutoParamConverterAble, PostableInterface
+class Thread implements ViewableEntity, RouteableInterface, PostableInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
@@ -63,7 +62,7 @@ class Thread implements ViewableEntity, RouteableInterface, AutoParamConverterAb
         return $this->id;
     }
 
-    public function setTitle(string $title = null): Thread
+    public function setTitle(?string $title = null): Thread
     {
         $this->title = $title;
 
@@ -87,7 +86,7 @@ class Thread implements ViewableEntity, RouteableInterface, AutoParamConverterAb
         return $this->enabled;
     }
 
-    public function setCity(City $city = null): Thread
+    public function setCity(?City $city = null): Thread
     {
         $this->city = $city;
 
@@ -99,7 +98,7 @@ class Thread implements ViewableEntity, RouteableInterface, AutoParamConverterAb
         return $this->city;
     }
 
-    public function setBoard(Board $board = null): Thread
+    public function setBoard(?Board $board = null): Thread
     {
         $this->board = $board;
 
@@ -111,7 +110,7 @@ class Thread implements ViewableEntity, RouteableInterface, AutoParamConverterAb
         return $this->board;
     }
 
-    public function setFirstPost(Post $firstPost = null): Thread
+    public function setFirstPost(?Post $firstPost = null): Thread
     {
         $this->firstPost = $firstPost;
 
@@ -123,7 +122,7 @@ class Thread implements ViewableEntity, RouteableInterface, AutoParamConverterAb
         return $this->firstPost;
     }
 
-    public function setLastPost(Post $lastPost = null): Thread
+    public function setLastPost(?Post $lastPost = null): Thread
     {
         $this->lastPost = $lastPost;
 

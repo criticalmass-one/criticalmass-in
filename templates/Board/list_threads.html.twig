@@ -1,29 +1,30 @@
-{% extends 'Template/StandardTemplate.html.twig' %}{% block title %}{{ board.title }}{% endblock %}
+{% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+{% block title %}{{ board.title }}{% endblock %}
 
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Diskussionen', path('caldera_criticalmass_board_overview')) }}
-    {{ bootstrap.breadcrumb_item(board.title, '', true) }}
+    {{ breadcrumb.item('Diskussionen', path('caldera_criticalmass_board_overview')) }}
+    {{ breadcrumb.active(board.title) }}
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 {% if app.getUser() %}
-                    <a href="{{ newThreadUrl }}" class="btn btn-primary pull-right mt-2">
+                    <a href="{{ newThreadUrl }}" class="btn btn-success pull-right margin-top-medium">
                         neues Thema eröffnen
                     </a>
                 {% endif %}
-                <h2>
+                <h1>
                     {{ board.title }}
-                </h2>
+                </h1>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 {% if threads|length %}
                     <table class="table">
                         <thead>

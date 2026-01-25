@@ -6,16 +6,13 @@ use App\Entity\City;
 use App\Entity\Location;
 use App\Entity\Ride;
 use App\Repository\LocationRepository;
-use FOS\ElasticaBundle\Finder\FinderInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use App\Repository\RideRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Attribute\Route;
 
 class LocationController extends AbstractController
 {
-    /**
-     * @ParamConverter("city", class="App:City")
-     */
     public function listlocationsAction(
         LocationRepository $locationRepository,
         City $city
@@ -27,14 +24,17 @@ class LocationController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("location", class="App:Location")
-     */
+    #[Route(
+        '/{citySlug}/location/{slug}',
+        name: 'caldera_criticalmass_location_show',
+        priority: 160
+    )]
     public function showAction(
         LocationRepository $locationRepository,
+        RideRepository $rideRepository,
         Location $location
     ): Response {
-        $rides = $this->findRidesForLocation($location);
+        $rides = $rideRepository->findRidesForLocation($location);
 
         $locations = $locationRepository->findLocationsByCity($location->getCity());
 
@@ -46,11 +46,14 @@ class LocationController extends AbstractController
         ]);
     }
 
-    /**
-     * @ParamConverter("ride", class="App:Ride")
-     */
+    #[Route(
+        '/{citySlug}/{rideIdentifier}/location',
+        name: 'caldera_criticalmass_location_ride',
+        priority: 160
+    )]
     public function rideAction(
         LocationRepository $locationRepository,
+        RideRepository $rideRepository,
         Ride $ride
     ): Response {
         $location = $locationRepository->findLocationForRide($ride);
@@ -59,7 +62,7 @@ class LocationController extends AbstractController
             throw new NotFoundHttpException();
         }
 
-        $rides = $this->findRidesForLocation($location);
+        $rides = $rideRepository->findRidesForLocation($location);
 
         $locations = $locationRepository->findLocationsByCity($ride->getCity());
 
@@ -69,37 +72,5 @@ class LocationController extends AbstractController
             'rides' => $rides,
             'ride' => $ride,
         ]);
-    }
-
-    protected function findRidesForLocation(Location $location): array
-    {
-        if (!$location->getLatitude() || !$location->getLongitude()) {
-            return [];
-        }
-
-        /** @var FinderInterface $finder */
-        $finder = $this->container->get('fos_elastica.finder.criticalmass_ride.ride');
-
-        $geoQuery = new \Elastica\Query\GeoDistance('pin', [
-            'lat' => $location->getLatitude(),
-            'lon' => $location->getLongitude(),
-        ],
-            '500m'
-        );
-
-        $boolQuery = new \Elastica\Query\BoolQuery();
-        $boolQuery
-            ->addMust($geoQuery);
-
-        $query = new \Elastica\Query($boolQuery);
-
-        $query->setSize(25);
-        $query->setSort([
-            'dateTime'
-        ]);
-
-        $result = $finder->find($query);
-
-        return $result;
     }
 }

@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-12">
+    <div class="col-md-12">
         {% if participationList|length > 0 %}
         <table class="table">
             <thead>
@@ -41,18 +41,18 @@
                     </td>
 
                     <td class="btn-group btn-group-xs">
-                        <a href="{{ path('criticalmass_user_participation_delete', { participationId: participation.id }) }}" class="btn btn-secondary" title="Diesen Eintrag komplett löschen">
+                        <a href="{{ path('criticalmass_user_participation_delete', { id: participation.id }) }}" class="btn btn-secondary" title="Diesen Eintrag komplett löschen">
                             <i class="far fa-trash-alt"></i>
                         </a>
 
                         {% if not participation.goingYes %}
-                        <a href="{{ path('criticalmass_user_participation_update', { participationId: participation.id, status: 'yes' }) }}" class="btn btn-primary" title="Deine Teilnahme speichern">
+                        <a href="{{ path('criticalmass_user_participation_update', { id: participation.id, status: 'yes' }) }}" class="btn btn-success" title="Deine Teilnahme speichern">
                             <i class="far fa-check"></i>
                         </a>
                         {% endif %}
 
                         {% if not participation.goingNo %}
-                        <a href="{{ path('criticalmass_user_participation_update', { participationId: participation.id, status: 'no' }) }}" class="btn btn-danger" title="Deine Teilnahme zurückziehen">
+                        <a href="{{ path('criticalmass_user_participation_update', { id: participation.id, status: 'no' }) }}" class="btn btn-danger" title="Deine Teilnahme zurückziehen">
                             <i class="far fa-times"></i>
                         </a>
                         {% endif %}

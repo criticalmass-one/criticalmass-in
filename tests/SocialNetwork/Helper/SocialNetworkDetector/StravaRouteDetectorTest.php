@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Tests\SocialNetworkDetector;
+namespace Tests\SocialNetwork\Helper\SocialNetworkDetector;
 
-class StravaRouteDetectorTest extends AbstractNetworkDetectorTest
+class StravaRouteDetectorTest extends AbstractNetworkDetectorTestCase
 {
     public function testStravaRoute(): void
     {

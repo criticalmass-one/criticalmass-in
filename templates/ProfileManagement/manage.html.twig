@@ -1,17 +1,16 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Dein Benutzerprofil{% endblock %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
-
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Dein Benutzerkonto', '', true) }}
+    {{ breadcrumb.active('Dein Benutzerkonto') }}
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-12 col-md-10 offset-md-1">
+            <div class="col-md-10 col-md-offset-1">
                 <h2>
                     Hej {{ app.getUser().getUsername() }}, schön, dass du da bist!
                 </h2>
@@ -26,27 +25,24 @@
         {% for flashMessage in app.session.flashbag.get('success') %}
 
             <div class="row">
-                <div class="col-12 col-md-10 offset-md-1">
-                    <div class="alert alert-dismissable alert-success" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="alert alert-dismissible alert-success" role="alert">
                         {{ flashMessage }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 </div>
             </div>
         {% endfor %}
 
         <div class="row">
-            <div class="col-12 col-md-10 offset-md-1">
+            <div class="col-md-10 col-md-offset-1">
                 <div class="row">
-                    <div class="col-12 col-md-6 mb-3">
-                        <div class="card">
-                            <div class="card-header">
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
                                 Profilfoto ändern
                             </div>
-                            <div class="card-body">
+                            <div class="panel-body">
                                 <p>
                                     Lade ein Foto für dein Profil hoch.
                                 </p>
@@ -61,12 +57,12 @@
                         </div>
                     </div>
 
-                    <div class="col-12 col-md-6 mb-3">
-                        <div class="card">
-                            <div class="card-header">
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
                                 Profilfarbe wählen
                             </div>
-                            <div class="card-body">
+                            <div class="panel-body">
                                 <p>
                                     Ändere die Farbe deines Benutzerkontos.
                                 </p>
@@ -81,13 +77,13 @@
                         </div>
                     </div>
 
-                    <div class="col-12 col-md-6 mb-3">
-                        <div class="card">
-                            <div class="card-header">
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
                                 Deine Touren
                             </div>
 
-                            <div class="card-body">
+                            <div class="panel-body">
                                 {% if participationCounter == 0 %}
                                     <div class="alert alert-info" role="alert">
                                         <strong>Schade:</strong>
@@ -112,12 +108,12 @@
                         </div>
                     </div>
 
-                    <div class="col-12 col-md-6 mb-3">
-                        <div class="card">
-                            <div class="card-header">
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
                                 Deine Tracks
                             </div>
-                            <div class="card-body">
+                            <div class="panel-body">
                                 {% if trackCounter == 0 %}
                                     <div class="alert alert-info" role="alert">
                                         Du hast bislang noch keine Tracks von Critical-Mass-Touren gespeichert. Schau in
@@ -140,12 +136,12 @@
                     </div>
 
                     {% if feature('photos') %}
-                    <div class="col-12 col-md-6 mb-3">
-                        <div class="card">
-                            <div class="card-header">
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
                                 Deine Fotos
                             </div>
-                            <div class="card-body">
+                            <div class="panel-body">
                                 {% if photoCounter == 0 %}
                                     <div class="alert alert-info" role="alert">
                                         Du hast bislang noch keine Fotos hochgeladen. In der Hilfe findest du mehr
@@ -168,38 +164,12 @@
                     </div>
                     {% endif %}
 
-                    <div class="col-12 col-md-6 mb-3">
-                        <div class="card">
-                            <div class="card-header">
-                                Kennwort ändern
-                            </div>
-                            <div class="card-body">
-                                {% if app.user.oauthAccount and not is_granted('ROLE_ADMIN') %}
-                                    <div class="alert alert-info" role="alert">
-                                        Du kannst dein Kennwort nicht ändern, weil du dich über ein soziales Netzwerk
-                                        bei criticalmass.in anmeldest.
-                                    </div>
-                                {% else %}
-                                    <p>
-                                        Ändere dein Kennwort, das du zum Login bei criticalmass.in nutzt.
-                                    </p>
-
-                                    <p class="text-center">
-                                        <a class="btn btn-secondary" href="{{ path('fos_user_change_password') }}">
-                                            Kennwort ändern
-                                        </a>
-                                    </p>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-md-6 mb-3">
-                        <div class="card">
-                            <div class="card-header">
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
                                 Benutzername ändern
                             </div>
-                            <div class="card-body">
+                            <div class="panel-body">
                                 <p>
                                     Hier kannst du deinen Benutzernamen ändern.
                                 </p>
@@ -214,12 +184,12 @@
                         </div>
                     </div>
 
-                    <div class="col-12 col-md-6 mb-3">
-                        <div class="card">
-                            <div class="card-header">
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
                                 E-Mail-Adresse ändern
                             </div>
-                            <div class="card-body">
+                            <div class="panel-body">
                                 <p>
                                     Hier kannst du deine E-Mail-Adresse ändern. Bedenke bitte, dass du dich künftig
                                     mit deinen neuen Benutzerdaten einloggen musst.

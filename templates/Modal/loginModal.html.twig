@@ -1,0 +1,48 @@
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" id="loginTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#loginTabsLogin" type="button" role="tab" aria-controls="loginTabsLogin" aria-selected="true">
+                            <i class="fa fa-info-circle"></i>&nbsp;Anmelden
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="register-tab" data-bs-toggle="tab" data-bs-target="#loginTabsRegister" type="button" role="tab" aria-controls="loginTabsRegister" aria-selected="false">
+                            <i class="fa fa-envelope"></i>&nbsp;Registrieren
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="password-tab" data-bs-toggle="tab" data-bs-target="#loginTabsPassword" type="button" role="tab" aria-controls="loginTabsPassword" aria-selected="false">
+                            <i class="fa fa-exclamation-circle"></i>&nbsp;Kennwort vergessen
+                        </button>
+                    </li>
+                </ul>
+                <div class="tab-content pt-3" id="loginTabsContent">
+                    <div id="loginTabsLogin" class="tab-pane fade show active" role="tabpanel" aria-labelledby="login-tab">
+                        {% block fos_user_login %}
+                            {% render controller("SonataUserBundle:SecurityFOSUser1:login") %}
+                        {% endblock %}
+                    </div>
+
+                    <div id="loginTabsRegister" class="tab-pane fade" role="tabpanel" aria-labelledby="register-tab">
+                        {% block sonata_user_registration %}
+                            {% render controller("SonataUserBundle:RegistrationFOSUser1:register") %}
+                        {% endblock %}
+                    </div>
+
+                    <div id="loginTabsPassword" class="tab-pane fade" role="tabpanel" aria-labelledby="password-tab">
+                        {% block fos_user_resetting %}
+                            {% render controller("SonataUserBundle:ResettingFOSUser1:request") %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

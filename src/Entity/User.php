@@ -2,16 +2,17 @@
 
 namespace App\Entity;
 
-use App\Criticalmass\SocialNetwork\EntityInterface\SocialNetworkProfileAble;
 use App\EntityInterface\PhotoInterface;
 use App\EntityInterface\RouteableInterface;
+use App\EntityInterface\SocialNetworkProfileAble;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\LegacyPasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\Ignore;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -19,107 +20,113 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\Table(name: 'user')]
 #[ORM\Entity(repositoryClass: 'App\Repository\UserRepository')]
 #[ORM\HasLifecycleCallbacks]
-#[JMS\ExclusionPolicy('all')]
 class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterface, UserInterface, LegacyPasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    #[JMS\Groups(['timelapse'])]
-    #[JMS\Expose]
+    #[Groups(['timelapse'])]
     protected ?int $id = null;
 
     #[ORM\Column(type: 'json', nullable: true)]
+    #[Ignore]
     private ?array $roles = [];
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Ignore]
     private ?string $email = null;
 
     #[Assert\NotBlank]
     #[Assert\Regex(pattern: '/https?\:\/\//', match: false, message: 'Der Benutzername darf keine Url enthalten')]
-    #[JMS\Groups(['timelapse'])]
-    #[JMS\Expose]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['timelapse'])]
     protected ?string $username = null;
 
     #[ORM\OneToMany(targetEntity: 'Track', mappedBy: 'user', cascade: ['persist', 'remove'])]
+    #[Ignore]
     protected Collection $tracks;
 
     #[ORM\Column(type: 'smallint', nullable: true)]
-    #[JMS\Groups(['timelapse'])]
-    #[JMS\Expose]
+    #[Groups(['timelapse'])]
     protected int $colorRed = 0;
 
     #[ORM\Column(type: 'smallint', nullable: true)]
-    #[JMS\Groups(['timelapse'])]
-    #[JMS\Expose]
+    #[Groups(['timelapse'])]
     protected int $colorGreen = 0;
 
     #[ORM\Column(type: 'smallint', nullable: true)]
-    #[JMS\Groups(['timelapse'])]
-    #[JMS\Expose]
+    #[Groups(['timelapse'])]
     protected int $colorBlue = 0;
 
     #[ORM\Column(type: 'boolean', nullable: true, options: ['default' => 0])]
+    #[Ignore]
     protected bool $blurGalleries = false;
 
     #[ORM\Column(type: 'boolean', nullable: true, options: ['default' => 0])]
+    #[Ignore]
     protected bool $enabled = false;
 
     #[ORM\OneToMany(targetEntity: 'Participation', mappedBy: 'user')]
+    #[Ignore]
     protected Collection $participations;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Ignore]
     protected ?\DateTime $updatedAt = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Ignore]
     protected ?\DateTime $createdAt = null;
 
     #[ORM\Column(name: 'last_login', type: 'datetime', nullable: true)]
+    #[Ignore]
     protected ?\DateTime $lastLogin = null;
 
     #[ORM\Column(name: 'facebook_id', type: 'string', length: 255, nullable: true)]
+    #[Ignore]
     protected ?string $facebookId = null;
 
     #[ORM\Column(name: 'facebook_access_token', type: 'text', nullable: true)]
+    #[Ignore]
     protected ?string $facebookAccessToken = null;
 
     #[ORM\Column(name: 'strava_id', type: 'string', length: 255, nullable: true)]
+    #[Ignore]
     protected ?string $stravaId = null;
 
     #[ORM\Column(name: 'strava_access_token', type: 'text', nullable: true)]
+    #[Ignore]
     protected ?string $stravaAccessToken = null;
 
-    #[ORM\Column(name: 'twitter_id', type: 'string', length: 255, nullable: true)]
-    protected ?string $twitterId = null;
-
-    #[ORM\Column(name: 'twitter_access_token', type: 'text', nullable: true)]
-    protected ?string $twitterkAccessToken = null;
-
     #[ORM\OneToMany(targetEntity: 'CityCycle', mappedBy: 'city', cascade: ['persist', 'remove'])]
+    #[Ignore]
     protected Collection $cycles;
 
     #[Vich\UploadableField(mapping: 'user_photo', fileNameProperty: 'imageName', size: 'imageSize', mimeType: 'imageMimeType')]
     protected ?File $imageFile = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[JMS\Groups(['timelapse'])]
-    #[JMS\Expose]
+    #[Groups(['timelapse'])]
     protected ?string $imageName = null;
 
     #[ORM\Column(type: 'integer', nullable: true)]
+    #[Ignore]
     protected ?int $imageSize = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Ignore]
     protected ?string $imageMimeType = null;
 
     #[ORM\Column(type: 'boolean', options: ['default' => 0])]
+    #[Ignore]
     protected bool $ownProfilePhoto = false;
 
     #[ORM\OneToMany(targetEntity: 'App\Entity\SocialNetworkProfile', mappedBy: 'createdBy')]
+    #[Ignore]
     private Collection $socialNetworkProfiles;
 
     #[ORM\OneToMany(targetEntity: 'App\Entity\TrackImportCandidate', mappedBy: 'user', orphanRemoval: true)]
+    #[Ignore]
     private Collection $trackImportCandidates;
 
     public function __construct()
@@ -386,30 +393,6 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
         return $this->facebookAccessToken;
     }
 
-    public function setTwitterId(string $twitterId): User
-    {
-        $this->twitterId = $twitterId;
-
-        return $this;
-    }
-
-    public function getTwitterId(): ?string
-    {
-        return $this->twitterId;
-    }
-
-    public function setTwitterAccessToken(string $twitterkAccessToken): User
-    {
-        $this->twitterkAccessToken = $twitterkAccessToken;
-
-        return $this;
-    }
-
-    public function getTwitterAccessToken(): ?string
-    {
-        return $this->twitterkAccessToken;
-    }
-
     public function setBlurGalleries(bool $blurGalleries): User
     {
         $this->blurGalleries = $blurGalleries;
@@ -424,7 +407,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
 
     public function isOauthAccount(): bool
     {
-        return $this->stravaId || $this->facebookId || $this->isTwitterAccount();
+        return $this->stravaId || $this->facebookId;
     }
 
     public function isFacebookAccount(): bool
@@ -435,11 +418,6 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
     public function isStravaAccount(): bool
     {
         return $this->stravaId !== null;
-    }
-
-    public function isTwitterAccount(): bool
-    {
-        return $this->twitterId !== null;
     }
 
     public function addCycle(CityCycle $cityCycle): User
@@ -468,7 +446,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
         return $this;
     }
 
-    public function setImageFile(File $image = null): PhotoInterface
+    public function setImageFile(?File $image = null): PhotoInterface
     {
         $this->imageFile = $image;
 
@@ -484,7 +462,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
         return $this->imageFile;
     }
 
-    public function setImageName(string $imageName = null): PhotoInterface
+    public function setImageName(?string $imageName = null): PhotoInterface
     {
         $this->imageName = $imageName;
 
@@ -501,7 +479,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
         return $this->imageSize;
     }
 
-    public function setImageSize(int $imageSize = null): PhotoInterface
+    public function setImageSize(?int $imageSize = null): PhotoInterface
     {
         $this->imageSize = $imageSize;
 
@@ -513,7 +491,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
         return $this->imageMimeType;
     }
 
-    public function setImageMimeType(string $imageMimeType = null): PhotoInterface
+    public function setImageMimeType(?string $imageMimeType = null): PhotoInterface
     {
         $this->imageMimeType = $imageMimeType;
 
@@ -606,18 +584,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
         return $this;
     }
 
-    public function getTwitterkAccessToken(): ?string
-    {
-        return $this->twitterkAccessToken;
-    }
-
-    public function setTwitterkAccessToken(?string $twitterkAccessToken): User
-    {
-        $this->twitterkAccessToken = $twitterkAccessToken;
-
-        return $this;
-    }
-
+    #[Ignore]
     public function getSalt(): string
     {
         return '';
@@ -628,6 +595,7 @@ class User implements SocialNetworkProfileAble, RouteableInterface, PhotoInterfa
         return $this;
     }
 
+    #[Ignore]
     public function getPassword(): string
     {
         return '';

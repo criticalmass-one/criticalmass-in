@@ -1,19 +1,18 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Deine Tracks{% endblock %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
-
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Dein Benutzerkonto', path('criticalmass_user_usermanagement')) }}
-    {{ bootstrap.breadcrumb_item('Deine Tracks', '', true)) }}
+    {{ breadcrumb.item('Dein Benutzerkonto', path('criticalmass_user_usermanagement')) }}
+    {{ breadcrumb.active('Deine Tracks') }}
 {% endblock %}
 
 {% block content %}
 
     <div class="container">
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <div id="map" style="height: 400px;">
 
                 </div>
@@ -21,13 +20,13 @@
         </div>
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <form method="post"
                       action="{{ object_path(track, 'caldera_criticalmass_track_draw') }}">
                     <input type="hidden" id="polyline" name="polyline"/>
                     <input type="hidden" id="geojson" name="geojson"/>
 
-                    <button type="submit" id="save-track" class="btn btn-default">
+                    <button type="submit" id="save-track" class="btn btn-secondary">
                         Speichern
                     </button>
                 </form>

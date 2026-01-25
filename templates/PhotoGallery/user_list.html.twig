@@ -1,25 +1,22 @@
 {% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
 {% block title %}Deine Fotos{% endblock %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
-
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Deine Fotos', '', true) }}
+    {{ breadcrumb.active('Deine Fotos') }}
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                <h2>
-                    Deine Fotos
-                </h2>
+            <div class="col-md-12">
+                <h2>Fotos sortieren</h2>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-12">
                 <table class="table">
                     <tr>
                         <th>Datum</th>

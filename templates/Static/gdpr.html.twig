@@ -1,15 +1,16 @@
-{% extends 'Template/StandardTemplate.html.twig' %}{% block title %}Deine persönlichen Daten{% endblock %}
+{% extends 'Template/StandardTemplate.html.twig' %}
+{% import 'Template/Macros/breadcrumb.html.twig' as breadcrumb %}
 
-{% import 'Bootstrap/bootstrap_macros.html.twig' as bootstrap %}
+{% block title %}Deine persönlichen Daten{% endblock %}
 
 {% block breadcrumb %}
-    {{ bootstrap.breadcrumb_item('Deine persönlichen Daten', '', true) }}
+    {{ breadcrumb.active('Deine persönlichen Daten') }}
 {% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-8">
+        <div class="col-md-8">
             <h2>
                 Deine persönlichen Daten
             </h2>
@@ -330,82 +331,82 @@
             <iframe style="border: 0; height: 200px; width: 100%;" src="https://piwik.caldera.cc/index.php?module=CoreAdminHome&action=optOut&language=de&backgroundColor=ffffff&fontColor=000000&fontSize=16px&fontFamily=%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans-serif"></iframe>
         </div>
 
-        <div class="col-4">
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link" href="#dein-profil">
+        <div class="col-md-4">
+            <ul class="nav nav-pills nav-stacked">
+                <li role="presentation">
+                    <a href="#dein-profil">
                         Dein Profil
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#login-soziale-netzwerke">
+                <li role="presentation">
+                    <a href="#login-soziale-netzwerke">
                         Login über soziale Netzwerke
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#fotos">
+                <li role="presentation">
+                    <a href="#fotos">
                         Fotos
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#tracks">
+                <li role="presentation">
+                    <a href="#tracks">
                         Tracks
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#staedte-touren-zubringertouren">
+                <li role="presentation">
+                    <a href="#staedte-touren-zubringertouren">
                         Städte, Touren und Zubringertouren
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#teilnahmen">
+                <li role="presentation">
+                    <a href="#teilnahmen">
                         Teilnahmen an Touren
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#statistiken">
+                <li role="presentation">
+                    <a href="#statistiken">
                         Statistiken
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#diskussionsforum">
+                <li role="presentation">
+                    <a href="#diskussionsforum">
                         Diskussionsforum
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#landkarten">
+                <li role="presentation">
+                    <a href="#landkarten">
                         Landkarten
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#werbung">
+                <li role="presentation">
+                    <a href="#werbung">
                         Werbung
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#verschluesselung">
+                <li role="presentation">
+                    <a href="#verschluesselung">
                         Verschlüsselung
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#cookies">
+                <li role="presentation">
+                    <a href="#cookies">
                         Cookies
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#tracking">
+                <li role="presentation">
+                    <a href="#tracking">
                         Tracking
                     </a>
                 </li>

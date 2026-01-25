@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Tests\SocialNetworkDetector;
+namespace Tests\SocialNetwork\Helper\SocialNetworkDetector;
 
-class WhatsappChatDetectorTest extends AbstractNetworkDetectorTest
+class WhatsappChatDetectorTest extends AbstractNetworkDetectorTestCase
 {
     public function testWhatsAppChat(): void
     {
