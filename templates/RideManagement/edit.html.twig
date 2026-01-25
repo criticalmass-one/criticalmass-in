@@ -163,9 +163,11 @@
                             <label class="control-label" for="location">
                                 Treffpunkt:
                             </label>
-                            <button class="btn btn-secondary btn-xs pull-right geocode"
-                                    data-geocoding-query-suffix="{{ city.city }},{{ city.region }},{{ city.region.parent }}"
-                                    data-geocoding-query-selector="#ride_location"
+                            <button class="btn btn-secondary btn-xs pull-right"
+                                    data-controller="geocoding"
+                                    data-action="click->geocoding#search"
+                                    data-geocoding-query-suffix-value="{{ city.city }},{{ city.region }},{{ city.region.parent }}"
+                                    data-geocoding-query-selector-value="#ride_location"
                                     type="button">
                                 <i class="far fa-map-marker"></i>
                             </button>

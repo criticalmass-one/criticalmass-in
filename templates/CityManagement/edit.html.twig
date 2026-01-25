@@ -94,7 +94,11 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group{% if form_errors(form.city) %} has-error has-feedback{% endif %}">
-                            <button class="btn btn-secondary btn-xs pull-right geocode" type="button" data-geocoding-query-selector="#city_city" data-geocoding-query-part-selector="#city_region">
+                            <button class="btn btn-secondary btn-xs pull-right" type="button"
+                                data-controller="geocoding"
+                                data-action="click->geocoding#search"
+                                data-geocoding-query-selector-value="#city_city"
+                                data-geocoding-query-part-selector-value="#city_region">
                                 <i class="far fa-map-marker"></i>
                             </button>
                             <label class="control-label" for="">Name:</label>
