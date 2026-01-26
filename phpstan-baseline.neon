@@ -973,18 +973,6 @@ parameters:
 			path: src/Criticalmass/DataQuery/Query/CityQuery.php
 
 		-
-			message: '#^Method App\\Criticalmass\\EntityMerger\\EntityMerger\:\:generateGetMethodName\(\) has parameter \$reflectionClass with generic class ReflectionClass but does not specify its types\: T$#'
-			identifier: missingType.generics
-			count: 1
-			path: src/Criticalmass/EntityMerger/EntityMerger.php
-
-		-
-			message: '#^Variable \$reflectionClass in PHPDoc tag @var does not match any variable in the foreach loop\: \$reflectionProperty$#'
-			identifier: varTag.differentVariable
-			count: 1
-			path: src/Criticalmass/EntityMerger/EntityMerger.php
-
-		-
 			message: '#^Method App\\Criticalmass\\FriendlyCaptcha\\Response\:\:getErrors\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
