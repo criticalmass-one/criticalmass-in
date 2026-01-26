@@ -8,6 +8,11 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class RegionRouter extends AbstractDelegatedRouter
 {
+    protected static function getEntityFqcn(): string
+    {
+        return Region::class;
+    }
+
     /** @param Region $region */
     public function generate(
         RouteableInterface $region,
