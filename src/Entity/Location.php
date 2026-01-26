@@ -101,7 +101,7 @@ class Location implements RouteableInterface, AuditableInterface
         return $this->city;
     }
 
-    public function setTitle($title = null): Location
+    public function setTitle(?string $title = null): Location
     {
         $this->title = $title;
 

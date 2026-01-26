@@ -102,7 +102,7 @@ class PostRepository extends ServiceEntityRepository
     public function findForTimelineThreadPostCollector(
         ?\DateTime $startDateTime = null,
         ?\DateTime $endDateTime = null,
-        $limit = null
+        ?int $limit = null
     ): array {
         $builder = $this->createQueryBuilder('p');
 
@@ -142,7 +142,7 @@ class PostRepository extends ServiceEntityRepository
     public function findForTimelineRideCommentCollector(
         ?\DateTime $startDateTime = null,
         ?\DateTime $endDateTime = null,
-        $limit = null
+        ?int $limit = null
     ): array {
         $builder = $this->createQueryBuilder('p');
 
@@ -180,7 +180,7 @@ class PostRepository extends ServiceEntityRepository
     public function findForTimelinePhotoCommentCollector(
         ?\DateTime $startDateTime = null,
         ?\DateTime $endDateTime = null,
-        $limit = null
+        ?int $limit = null
     ): array {
         $builder = $this->createQueryBuilder('p');
 

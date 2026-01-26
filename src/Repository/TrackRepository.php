@@ -60,7 +60,7 @@ class TrackRepository extends ServiceEntityRepository
         return $result;
     }
 
-    public function findForTimelineRideTrackCollector(?\DateTime $startDateTime = null, ?\DateTime $endDateTime = null, $limit = null): array
+    public function findForTimelineRideTrackCollector(?\DateTime $startDateTime = null, ?\DateTime $endDateTime = null, ?int $limit = null): array
     {
         $builder = $this->createQueryBuilder('t');
 
