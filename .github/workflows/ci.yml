@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  phpstan:
+    name: PHPStan
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5'
+
+      - uses: actions/cache@v4
+        with:
+          path: vendor
+          key: composer-${{ hashFiles('composer.lock') }}
+          restore-keys: composer-
+
+      - run: composer install --no-interaction --no-progress
+
+      - run: vendor/bin/phpstan analyse
+
+  tests:
+    name: PHPUnit
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mariadb:10.9
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: criticalmass
+          MYSQL_USER: criticalmass
+          MYSQL_PASSWORD: criticalmass
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mariadb-admin ping -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5'
+          extensions: intl, pdo_mysql
+
+      - uses: actions/cache@v4
+        with:
+          path: vendor
+          key: composer-${{ hashFiles('composer.lock') }}
+          restore-keys: composer-
+
+      - run: composer install --no-interaction --no-progress
+
+      - run: composer test:db:reset
+        env:
+          DATABASE_URL: "mysql://criticalmass:criticalmass@127.0.0.1:3306/criticalmass?charset=utf8mb4"
+
+      - run: composer test:run
+        env:
+          DATABASE_URL: "mysql://criticalmass:criticalmass@127.0.0.1:3306/criticalmass?charset=utf8mb4"
