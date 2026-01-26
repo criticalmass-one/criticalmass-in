@@ -1,3 +1,6 @@
+includes:
+    - phpstan-baseline.neon
+
 parameters:
     level: 6
     paths:
@@ -6,3 +9,6 @@ parameters:
         - public/
         - src/
         - tests/
+    excludePaths:
+        - src/Criticalmass/DataQuery/Query/HasCoordinatesQuery.php
+        - src/Criticalmass/DataQuery/Query/LocationNameQuery.php

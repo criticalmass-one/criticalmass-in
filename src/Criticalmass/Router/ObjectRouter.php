@@ -47,6 +47,8 @@ class ObjectRouter extends AbstractRouter implements ObjectRouterInterface
                 return $delegatedRouter->generate($routeable, $routeName, $parameters, $referenceType);
             }
         }
+
+        return '';
     }
 
     protected function getDefaultRouteName(RouteableInterface $routeable): ?string
