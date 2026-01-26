@@ -3,6 +3,7 @@
 namespace Tests\Controller;
 
 use App\Entity\Ride;
+use App\Entity\RideEstimate;
 use App\Entity\Track;
 
 class TrackUploadControllerTest extends AbstractControllerTestCase
@@ -277,6 +278,104 @@ class TrackUploadControllerTest extends AbstractControllerTestCase
                 }
             });
             $this->assertGreaterThanOrEqual(2, $kmCount, 'At least 2 tracks should show distance in km');
+        } finally {
+            @unlink($gpxFile1);
+            @unlink($gpxFile2);
+        }
+    }
+
+    public function testStatisticsAveragedForMultipleTracks(): void
+    {
+        $client = static::createClient();
+        $this->loginAs($client, 'testuser@criticalmass.in');
+
+        $ride = $this->getPastRideForCity('berlin');
+        $this->assertNotNull($ride, 'Past Berlin ride fixture should exist');
+        $rideId = $ride->getId();
+
+        // Track 1: small radius (0.005), 55 points → short distance, ~108 min
+        $gpxFile1 = $this->generateGpxFile(52.50, 13.42, '2024-10-15T18:00:00Z', 55, 0.005);
+        // Track 2: large radius (0.02), 120 points → long distance, ~238 min
+        $gpxFile2 = $this->generateGpxFile(52.50, 13.42, '2024-10-15T18:00:00Z', 120, 0.02);
+
+        try {
+            // Upload first track
+            $crawler = $client->request('GET', $this->buildRideUrl($ride) . '/addtrack');
+            $form = $crawler->selectButton('Track hochladen')->form();
+            $form['form[trackFile][file]']->upload($gpxFile1);
+            $client->submit($form);
+            $this->assertEquals(302, $client->getResponse()->getStatusCode());
+
+            $track1 = $this->getNewestTrackForRide($rideId);
+            $this->assertNotNull($track1, 'First track should exist after upload');
+            $track1Distance = $track1->getDistance();
+            $track1Id = $track1->getId();
+            $this->assertEquals(55, $track1->getPoints(), 'Track 1 should have 55 points');
+
+            // Upload second track
+            $crawler = $client->request('GET', $this->buildRideUrl($ride) . '/addtrack');
+            $form = $crawler->selectButton('Track hochladen')->form();
+            $form['form[trackFile][file]']->upload($gpxFile2);
+            $client->submit($form);
+            $this->assertEquals(302, $client->getResponse()->getStatusCode());
+
+            $track2 = $this->getNewestTrackForRide($rideId);
+            $this->assertNotNull($track2, 'Second track should exist after upload');
+            $track2Distance = $track2->getDistance();
+            $this->assertNotEquals($track1Id, $track2->getId(), 'Second track should be different from first');
+            $this->assertEquals(120, $track2->getPoints(), 'Track 2 should have 120 points');
+
+            // Tracks must have clearly different distances
+            $this->assertGreaterThan($track1Distance, $track2Distance, 'Track with larger radius should have greater distance');
+
+            // Load all estimates for this ride
+            $em = static::getContainer()->get('doctrine')->getManager();
+            $estimates = $em->getRepository(RideEstimate::class)
+                ->createQueryBuilder('re')
+                ->where('re.ride = :rideId')
+                ->setParameter('rideId', $rideId)
+                ->getQuery()
+                ->getResult();
+
+            $this->assertGreaterThanOrEqual(2, count($estimates), 'At least 2 ride estimates should exist');
+
+            // Calculate expected averages from all estimates (same logic as RideEstimateCalculator)
+            $totalDistance = 0.0;
+            $distanceCount = 0;
+            $totalDuration = 0.0;
+            $durationCount = 0;
+
+            foreach ($estimates as $estimate) {
+                if ($estimate->getEstimatedDistance()) {
+                    $totalDistance += $estimate->getEstimatedDistance();
+                    $distanceCount++;
+                }
+                if ($estimate->getEstimatedDuration()) {
+                    $totalDuration += $estimate->getEstimatedDuration();
+                    $durationCount++;
+                }
+            }
+
+            $expectedAvgDistance = $distanceCount > 0 ? $totalDistance / $distanceCount : 0;
+            $expectedAvgDuration = $durationCount > 0 ? $totalDuration / $durationCount : 0;
+
+            // Verify ride statistics match the calculated averages
+            $updatedRide = $em->getRepository(Ride::class)->find($rideId);
+            $this->assertNotNull($updatedRide);
+
+            $this->assertEqualsWithDelta($expectedAvgDistance, $updatedRide->getEstimatedDistance(), 0.01,
+                'Ride estimated distance should be average of all track estimates');
+            $this->assertEqualsWithDelta($expectedAvgDuration, $updatedRide->getEstimatedDuration(), 0.01,
+                'Ride estimated duration should be average of all track estimates');
+
+            $this->assertGreaterThan(0, $updatedRide->getEstimatedDistance(), 'Estimated distance should be positive');
+            $this->assertGreaterThan(0, $updatedRide->getEstimatedDuration(), 'Estimated duration should be positive');
+
+            // Verify estimates have different distances (proving averaging is meaningful)
+            $distances = array_filter(array_map(fn($e) => $e->getEstimatedDistance(), $estimates));
+            $uniqueDistances = array_unique($distances);
+            $this->assertGreaterThanOrEqual(2, count($uniqueDistances),
+                'There should be estimates with different distances, proving averaging is meaningful');
         } finally {
             @unlink($gpxFile1);
             @unlink($gpxFile2);
