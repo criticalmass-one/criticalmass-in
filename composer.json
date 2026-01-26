@@ -29,7 +29,6 @@
         "knplabs/knp-paginator-bundle": "^5.0",
         "emcconville/google-map-polyline-encoding-tool": ">=1.2.1",
         "symfony/monolog-bundle": "^3.3",
-        "incenteev/composer-parameter-handler": "^2.0",
         "hwi/oauth-bundle": "^2.2",
         "malenki/slug": "1.0.0",
         "sonata-project/intl-bundle": "^2.3",
@@ -153,9 +152,6 @@
         "symfony-web-dir": "web",
         "symfony-tests-dir": "tests",
         "symfony-assets-install": "relative",
-        "incenteev-parameters": {
-            "file": "app/config/parameters.yml"
-        },
         "branch-alias": {
             "dev-master": "3.0-dev"
         }
