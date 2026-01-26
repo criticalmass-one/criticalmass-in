@@ -33,6 +33,29 @@
 
 {% block masterContent %}{% endblock %}
 
+<div data-controller="upload-status-bar" class="upload-status-bar d-none">
+    <div class="container-fluid">
+        <div class="d-flex align-items-center justify-content-between py-2">
+            <div class="d-flex align-items-center">
+                <i class="fas fa-cloud-upload-alt me-2"></i>
+                <span data-upload-status-bar-target="count">Uploads aktiv</span>
+            </div>
+            <div class="progress flex-grow-1 mx-3" style="height: 8px; max-width: 200px;" data-upload-status-bar-target="progress">
+                <div class="progress-bar progress-bar-striped progress-bar-animated"
+                     role="progressbar"
+                     aria-valuenow="0"
+                     aria-valuemin="0"
+                     aria-valuemax="100"
+                     data-upload-status-bar-target="progressBar"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div data-controller="upload-toast" class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100;">
+    <div data-upload-toast-target="container"></div>
+</div>
+
 {{ encore_entry_script_tags(entrypoint) }}
 
 {% block additionalFooterElements %}{% endblock %}

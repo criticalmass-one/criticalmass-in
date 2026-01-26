@@ -23,3 +23,70 @@ input[type="file"] {
 .captcha-input-group .input-group-text {
   padding: 0;
 }
+
+.upload-status-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--bs-primary);
+  color: white;
+  z-index: 1050;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.15);
+
+  .progress {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .progress-bar {
+    background-color: white;
+  }
+
+  i {
+    font-size: 1.1rem;
+  }
+}
+
+.uppy-Dashboard {
+  font-family: inherit;
+}
+
+.uppy-Dashboard-inner {
+  border-radius: 0.375rem;
+  border-color: var(--bs-border-color);
+}
+
+.uppy-Dashboard-AddFiles {
+  border-color: var(--bs-border-color);
+}
+
+.uppy-Dashboard-AddFiles-title {
+  color: var(--bs-body-color);
+}
+
+.uppy-DashboardContent-bar {
+  background-color: var(--bs-light);
+  border-color: var(--bs-border-color);
+}
+
+.uppy-StatusBar {
+  background-color: var(--bs-light);
+}
+
+.uppy-StatusBar-actionBtn--upload {
+  background-color: var(--bs-primary);
+  color: white;
+
+  &:hover {
+    background-color: var(--bs-primary);
+    opacity: 0.9;
+  }
+}
+
+.uppy-StatusBar.is-complete .uppy-StatusBar-progress {
+  background-color: var(--bs-success);
+}
+
+.uppy-StatusBar.is-error .uppy-StatusBar-progress {
+  background-color: var(--bs-danger);
+}

@@ -46,9 +46,13 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="form-group">
-                    <form action="{{ object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') }}" class="dropzone" id="photo-dropzone">
-                    </form>
+                <div
+                    data-controller="photo-upload"
+                    data-photo-upload-endpoint-value="{{ object_path(ride, 'caldera_criticalmass_gallery_photos_upload_ride') }}"
+                    data-photo-upload-max-files-value="50"
+                    data-photo-upload-max-file-size-value="{{ 20 * 1024 * 1024 }}"
+                >
+                    <div data-photo-upload-target="dashboard"></div>
                 </div>
             </div>
         </div>
