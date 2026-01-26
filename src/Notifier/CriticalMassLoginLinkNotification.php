@@ -2,7 +2,8 @@
 
 namespace App\Notifier;
 
-use Symfony\Bridge\Twig\Mime\NotificationEmail;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Notifier\Message\EmailMessage;
 use Symfony\Component\Notifier\Recipient\EmailRecipientInterface;
 use Symfony\Component\Security\Http\LoginLink\LoginLinkDetails;
@@ -17,32 +18,35 @@ class CriticalMassLoginLinkNotification extends LoginLinkNotification
 
     public function asEmailMessage(EmailRecipientInterface $recipient, ?string $transport = null): ?EmailMessage
     {
-        if (!class_exists(NotificationEmail::class)) {
-            throw new \LogicException(sprintf('The "%s" method requires "symfony/twig-bridge:>4.4".', __METHOD__));
-        }
-
-        $email = NotificationEmail::asPublicEmail()
+        $email = (new TemplatedEmail())
+            ->from(new Address('malte@criticalmass.in', 'criticalmass.in'))
             ->to($recipient->getEmail())
             ->subject($this->getSubject())
-            ->content($this->getContent() ?: $this->getDefaultContent())
-            ->action('Login', $this->loginLinkDetails->getUrl())
-        ;
+            ->htmlTemplate('email/login_link.html.twig')
+            ->context([
+                'loginUrl' => $this->loginLinkDetails->getUrl(),
+                'expirationText' => $this->getExpirationText(),
+                'content' => $this->getContent() ?: $this->getDefaultContent(),
+            ]);
 
         return new EmailMessage($email);
     }
 
-    private function getDefaultContent(): string
+    private function getExpirationText(): string
     {
         $duration = $this->loginLinkDetails->getExpiresAt()->getTimestamp() - time();
-        $durationString = floor($duration / 60).' minute'.($duration > 60 ? 's' : '');
-        if (($hours = $duration / 3600) >= 1) {
-            $durationString = floor($hours).' hour'.($hours >= 2 ? 's' : '');
+        $minutes = (int) floor($duration / 60);
+        $hours = (int) floor($duration / 3600);
+
+        if ($hours >= 1) {
+            return $hours === 1 ? '1 Stunde' : sprintf('%d Stunden', $hours);
         }
 
-        return sprintf(
-        'Bitte click auf den Link, um dich auf criticalmass.in einzuloggen.'
-             . ' Dieser Link läuft in %s ab.',
-            $durationString
-        );
+        return sprintf('%d Minuten', $minutes);
+    }
+
+    private function getDefaultContent(): string
+    {
+        return 'Bitte klicke auf den Button, um dich auf criticalmass.in einzuloggen.';
     }
 }
