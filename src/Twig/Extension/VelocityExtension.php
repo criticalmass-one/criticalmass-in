@@ -17,7 +17,7 @@ class VelocityExtension extends AbstractExtension
 
     public function averageVelocity(Track $track): ?float
     {
-        if ($track->getStartDateTime() && $track->getEndDateTime() && $track->getDistance()) {
+        if (!$track->getStartDateTime() || !$track->getEndDateTime() || !$track->getDistance()) {
             return null;
         }
 
