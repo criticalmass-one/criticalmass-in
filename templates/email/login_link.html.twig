@@ -1,0 +1,105 @@
+{% apply inky_to_html|inline_css %}
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: #f3f3f3;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        .header {
+            background-color: #337ab7;
+        }
+
+        .header td {
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #ffffff;
+            font-size: 28px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .content {
+            background-color: #ffffff;
+        }
+
+        .content td {
+            padding: 10px 20px;
+        }
+
+        .content p {
+            color: #333333;
+            font-size: 16px;
+            line-height: 1.5;
+            margin: 0 0 10px;
+        }
+
+        .button-wrapper td {
+            padding: 10px 20px 20px;
+            background-color: #ffffff;
+        }
+
+        .button a {
+            background-color: #337ab7;
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .footer {
+            background-color: #f3f3f3;
+        }
+
+        .footer td {
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .footer p {
+            color: #999999;
+            font-size: 13px;
+            line-height: 1.4;
+            margin: 0;
+        }
+    </style>
+
+    <container>
+        <row class="header">
+            <columns>
+                <h1>criticalmass.in</h1>
+            </columns>
+        </row>
+
+        <spacer size="16"></spacer>
+
+        <row class="content">
+            <columns>
+                <p>Hallo!</p>
+                <p>{{ content }}</p>
+            </columns>
+        </row>
+
+        <row class="button-wrapper">
+            <columns>
+                <center>
+                    <button class="button" href="{{ loginUrl }}">Einloggen</button>
+                </center>
+            </columns>
+        </row>
+
+        <spacer size="16"></spacer>
+
+        <row class="footer">
+            <columns>
+                <p>Falls du diesen Login nicht angefordert hast, kannst du diese E-Mail ignorieren.</p>
+                <p>Der Link ist {{ expirationText }} g&uuml;ltig.</p>
+            </columns>
+        </row>
+    </container>
+{% endapply %}
