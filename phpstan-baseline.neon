@@ -221,11 +221,6 @@ parameters:
 			path: src/Command/Statistic/ImportRideEstimatesCommand.php
 
 		-
-			message: "#^Regex pattern is invalid\\: Compilation failed\\: invalid range in character class at offset 27 in pattern\\: /\\(\\[\\\\sA\\-Za\\-z\\-\\.\\]\\+\\[a\\-z\\]\\)\\(\\?\\:\\[\\\\s\\-–—\\:\\]\\+\\)\\(\\[0\\-9\\.\\]\\+\\)/$#"
-			count: 1
-			path: src/Command/Statistic/ImportRideEstimatesCommand.php
-
-		-
 			message: "#^Variable \\$track in PHPDoc tag @var does not exist\\.$#"
 			count: 1
 			path: src/Command/Track/OptimizeTracksCommand.php
