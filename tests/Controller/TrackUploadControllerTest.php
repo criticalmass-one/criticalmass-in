@@ -5,6 +5,8 @@ namespace Tests\Controller;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
 use App\Entity\Track;
+use Symfony\Component\DomCrawler\Field\FileFormField;
+use Symfony\Component\DomCrawler\Form;
 
 class TrackUploadControllerTest extends AbstractControllerTestCase
 {
@@ -29,6 +31,13 @@ class TrackUploadControllerTest extends AbstractControllerTestCase
     private function buildRideUrl(Ride $ride): string
     {
         return sprintf('/%s/%s', $ride->getCity()->getMainSlugString(), $ride->getDateTime()->format('Y-m-d'));
+    }
+
+    private function uploadFileToForm(Form $form, string $filePath): void
+    {
+        /** @var FileFormField $fileField */
+        $fileField = $form['form[trackFile][file]'];
+        $fileField->upload($filePath);
     }
 
     private function generateGpxFile(float $startLat, float $startLon, string $startTime, int $pointCount = 60, float $radius = 0.01): string
@@ -101,7 +110,7 @@ class TrackUploadControllerTest extends AbstractControllerTestCase
             $crawler = $client->request('GET', $this->buildRideUrl($ride) . '/addtrack');
 
             $form = $crawler->selectButton('Track hochladen')->form();
-            $form['form[trackFile][file]']->upload($gpxFile);
+            $this->uploadFileToForm($form, $gpxFile);
 
             $client->submit($form);
 
@@ -152,7 +161,7 @@ class TrackUploadControllerTest extends AbstractControllerTestCase
             $crawler = $client->request('GET', $this->buildRideUrl($ride) . '/addtrack');
 
             $form = $crawler->selectButton('Track hochladen')->form();
-            $form['form[trackFile][file]']->upload($gpxFile);
+            $this->uploadFileToForm($form, $gpxFile);
 
             $client->submit($form);
 
@@ -186,7 +195,7 @@ class TrackUploadControllerTest extends AbstractControllerTestCase
             $crawler = $client->request('GET', $this->buildRideUrl($ride) . '/addtrack');
 
             $form = $crawler->selectButton('Track hochladen')->form();
-            $form['form[trackFile][file]']->upload($gpxFile);
+            $this->uploadFileToForm($form, $gpxFile);
 
             $client->submit($form);
 
@@ -216,7 +225,7 @@ class TrackUploadControllerTest extends AbstractControllerTestCase
         try {
             $crawler = $client->request('GET', $this->buildRideUrl($ride) . '/addtrack');
             $form = $crawler->selectButton('Track hochladen')->form();
-            $form['form[trackFile][file]']->upload($gpxFile);
+            $this->uploadFileToForm($form, $gpxFile);
             $client->submit($form);
 
             $crawler = $client->request('GET', $this->buildRideUrl($ride));
@@ -247,14 +256,14 @@ class TrackUploadControllerTest extends AbstractControllerTestCase
             // Upload first track
             $crawler = $client->request('GET', $this->buildRideUrl($ride) . '/addtrack');
             $form = $crawler->selectButton('Track hochladen')->form();
-            $form['form[trackFile][file]']->upload($gpxFile1);
+            $this->uploadFileToForm($form, $gpxFile1);
             $client->submit($form);
             $this->assertEquals(302, $client->getResponse()->getStatusCode());
 
             // Upload second track
             $crawler = $client->request('GET', $this->buildRideUrl($ride) . '/addtrack');
             $form = $crawler->selectButton('Track hochladen')->form();
-            $form['form[trackFile][file]']->upload($gpxFile2);
+            $this->uploadFileToForm($form, $gpxFile2);
             $client->submit($form);
             $this->assertEquals(302, $client->getResponse()->getStatusCode());
 
@@ -302,7 +311,7 @@ class TrackUploadControllerTest extends AbstractControllerTestCase
             // Upload first track
             $crawler = $client->request('GET', $this->buildRideUrl($ride) . '/addtrack');
             $form = $crawler->selectButton('Track hochladen')->form();
-            $form['form[trackFile][file]']->upload($gpxFile1);
+            $this->uploadFileToForm($form, $gpxFile1);
             $client->submit($form);
             $this->assertEquals(302, $client->getResponse()->getStatusCode());
 
@@ -315,7 +324,7 @@ class TrackUploadControllerTest extends AbstractControllerTestCase
             // Upload second track
             $crawler = $client->request('GET', $this->buildRideUrl($ride) . '/addtrack');
             $form = $crawler->selectButton('Track hochladen')->form();
-            $form['form[trackFile][file]']->upload($gpxFile2);
+            $this->uploadFileToForm($form, $gpxFile2);
             $client->submit($form);
             $this->assertEquals(302, $client->getResponse()->getStatusCode());
 

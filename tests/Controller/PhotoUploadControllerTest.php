@@ -4,6 +4,7 @@ namespace Tests\Controller;
 
 use App\Entity\Photo;
 use App\Entity\Ride;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class PhotoUploadControllerTest extends AbstractControllerTestCase
@@ -71,7 +72,7 @@ class PhotoUploadControllerTest extends AbstractControllerTestCase
             ->getOneOrNullResult();
     }
 
-    private function uploadPhoto($client, Ride $ride): void
+    private function uploadPhoto(KernelBrowser $client, Ride $ride): void
     {
         $tmpFile = $this->generateTestImage();
         $uploadedFile = new UploadedFile($tmpFile, 'test_photo.jpg', 'image/jpeg', null, true);

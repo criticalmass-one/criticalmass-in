@@ -51,7 +51,9 @@ class TrackRepository extends ServiceEntityRepository
             ->andWhere($builder->expr()->eq('t.enabled', ':enabled'))
             ->setParameter('enabled', true)
             ->andWhere($builder->expr()->eq('t.deleted', ':deleted'))
-            ->setParameter('deleted', false);
+            ->setParameter('deleted', false)
+            ->orderBy('t.creationDateTime', 'DESC')
+            ->setMaxResults(1);
 
         $query = $builder->getQuery();
 
