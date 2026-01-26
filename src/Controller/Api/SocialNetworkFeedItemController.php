@@ -2,7 +2,6 @@
 
 namespace App\Controller\Api;
 
-use App\Criticalmass\EntityMerger\EntityMergerInterface;
 use App\Entity\City;
 use App\Entity\SocialNetworkFeedItem;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
@@ -43,11 +42,9 @@ class SocialNetworkFeedItemController extends BaseController
     #[OA\Parameter(name: 'feedItemId', in: 'path', description: 'Id of the feed item to update', required: true, schema: new OA\Schema(type: 'integer'))]
     #[OA\RequestBody(description: 'JSON representation of the feed item properties to update', required: true, content: new OA\JsonContent(type: 'object'))]
     #[OA\Response(response: 200, description: 'Returned when successful')]
-    public function updateSocialNetworkFeedItemAction(Request $request, SocialNetworkFeedItem $socialNetworkFeedItem, EntityMergerInterface $entityMerger): JsonResponse
+    public function updateSocialNetworkFeedItemAction(Request $request, SocialNetworkFeedItem $socialNetworkFeedItem): JsonResponse
     {
-        $updatedSocialNetworkFeedItem = $this->serializer->deserialize($request->getContent(), SocialNetworkFeedItem::class, 'json');
-
-        $entityMerger->merge($updatedSocialNetworkFeedItem, $socialNetworkFeedItem);
+        $this->serializer->deserializeInto($request->getContent(), $socialNetworkFeedItem);
 
         $this->managerRegistry->getManager()->flush();
 
