@@ -291,7 +291,7 @@ class PhotoRepository extends ServiceEntityRepository
     public function findForTimelineRidePhotoCollector(
         ?\DateTime $startDateTime = null,
         ?\DateTime $endDateTime = null,
-        $limit = null
+        ?int $limit = null
     ) {
         $builder = $this->createQueryBuilder('p');
 
