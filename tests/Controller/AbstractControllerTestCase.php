@@ -9,6 +9,19 @@ use Symfony\Component\BrowserKit\Cookie;
 
 abstract class AbstractControllerTestCase extends WebTestCase
 {
+    protected function getUser(string $email): User
+    {
+        $em = static::getContainer()->get('doctrine')->getManager();
+
+        return $em->getRepository(User::class)->findOneBy(['email' => $email]);
+    }
+
+    protected function loginAs(KernelBrowser $client, string $email): void
+    {
+        $user = $this->getUser($email);
+        $client->loginUser($user, 'user');
+    }
+
     protected function loginViaForm(KernelBrowser $client, string $username, string $password): KernelBrowser
     {
         $crawler = $client->request('GET', '/login');
