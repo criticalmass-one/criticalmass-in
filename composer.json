@@ -31,7 +31,6 @@
         "symfony/monolog-bundle": "^3.3",
         "hwi/oauth-bundle": "^2.2",
         "malenki/slug": "1.0.0",
-        "sonata-project/intl-bundle": "^2.3",
         "miljar/php-exif": "^0.6.5",
         "sonata-project/seo-bundle": "^3.0",
         "salavert/time-ago-in-words": "^1.8",
