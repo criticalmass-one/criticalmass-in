@@ -36,5 +36,7 @@ class RegionRouter extends AbstractDelegatedRouter
             ],
                 $referenceType);
         }
+
+        return '';
     }
 }

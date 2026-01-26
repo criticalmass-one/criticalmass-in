@@ -100,7 +100,7 @@ class ImportRideEstimatesCommand extends Command
 
     protected function parse(string $line, \DateTime $dateTime, InputInterface $input, OutputInterface $output): ?RideEstimate
     {
-        $pattern = '/([\sA-Za-z-.]+[a-z])(?:[\s-–—:]+)([0-9.]+)/';
+        $pattern = '/([\sA-Za-z\-.]+[a-z])(?:[\s\-–—:]+)([0-9.]+)/';
         preg_match($pattern, $line, $matches);
 
         if (3 === count($matches)) {
