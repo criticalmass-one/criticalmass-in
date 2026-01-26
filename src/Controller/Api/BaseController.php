@@ -32,6 +32,11 @@ abstract class BaseController extends AbstractController
         return $this->serializer->deserialize($content, $modelClass, 'json');
     }
 
+    protected function deserializeRequestInto(Request $request, object $target): object
+    {
+        return $this->serializer->deserializeInto($request->getContent(), $target);
+    }
+
     protected function createErrors(int $statusCode, array $errorMessages): JsonResponse
     {
         $error = new Errors($statusCode, $errorMessages);

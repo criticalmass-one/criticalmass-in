@@ -10,4 +10,5 @@ interface CriticalSerializerInterface extends SerializerInterface
 
     public function serialize(mixed $data, string $format = self::FORMAT, array $context = []): string;
     public function deserialize(mixed $data, string $type, string $format = self::FORMAT, array $context = []): mixed;
+    public function deserializeInto(mixed $data, object $target, string $format = self::FORMAT, array $context = []): object;
 }
