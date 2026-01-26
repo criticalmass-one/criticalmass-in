@@ -4,8 +4,9 @@ namespace App\Controller;
 
 use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Criticalmass\Timeline\TimelineInterface;
-use App\Factory\FrontpageRideListFactory;
+use App\Model\Frontpage\RideList\MonthList;
 use App\Repository\FrontpageTeaserRepository;
+use App\Repository\RideRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -37,12 +38,17 @@ class FrontpageController extends AbstractController
         ]);
     }
 
-    public function rideListAction(FrontpageRideListFactory $frontpageRideListFactory): Response
+    public function rideListAction(RideRepository $rideRepository): Response
     {
-        $monthList = $frontpageRideListFactory
-            ->createList()
-            ->sort()
-            ->getMonthList();
+        $monthList = new MonthList();
+
+        foreach ($rideRepository->findFrontpageRides() as $ride) {
+            $monthList->addRide($ride);
+        }
+
+        foreach ($monthList as $month) {
+            $month->sort();
+        }
 
         return $this->render('Frontpage/_ride_list.html.twig', [
             'rideList' => $monthList,
