@@ -54,7 +54,7 @@ class TrackUploadController extends AbstractController
     {
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->managerRegistry->getManager();
 
             /** @var Track $track */
