@@ -62,6 +62,8 @@ jobs:
 
       - run: composer install --no-interaction --no-progress
 
+      - run: cp .env.dist .env
+
       - run: composer test:db:reset
         env:
           DATABASE_URL: "mysql://criticalmass:criticalmass@127.0.0.1:3306/criticalmass?charset=utf8mb4"
