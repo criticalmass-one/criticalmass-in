@@ -93,4 +93,91 @@ class RideManagementControllerTest extends AbstractControllerTestCase
 
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
     }
+
+    public function testEditRideSubmissionRedirects(): void
+    {
+        $client = static::createClient();
+        $this->loginAs($client, 'testuser@criticalmass.in');
+
+        $ride = $this->getFirstRideForCity('hamburg');
+        $this->assertNotNull($ride, 'Hamburg ride fixture should exist');
+
+        $crawler = $client->request('GET', $this->buildRideUrl($ride) . '/edit');
+
+        $form = $crawler->selectButton('Speichern')->form();
+        $form['ride[title]'] = 'Geänderter Titel für Hamburg';
+
+        $client->submit($form);
+
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+    }
+
+    public function testEditRideChangesTitleInDatabase(): void
+    {
+        $client = static::createClient();
+        $this->loginAs($client, 'testuser@criticalmass.in');
+
+        $ride = $this->getFirstRideForCity('hamburg');
+        $this->assertNotNull($ride, 'Hamburg ride fixture should exist');
+        $rideId = $ride->getId();
+
+        $crawler = $client->request('GET', $this->buildRideUrl($ride) . '/edit');
+
+        $form = $crawler->selectButton('Speichern')->form();
+        $form['ride[title]'] = 'Critical Mass Hamburg Testtitel';
+
+        $client->submit($form);
+
+        $em = static::getContainer()->get('doctrine')->getManager();
+        $updatedRide = $em->getRepository(Ride::class)->find($rideId);
+
+        $this->assertNotNull($updatedRide);
+        $this->assertEquals('Critical Mass Hamburg Testtitel', $updatedRide->getTitle());
+    }
+
+    public function testEditRideChangesLocationInDatabase(): void
+    {
+        $client = static::createClient();
+        $this->loginAs($client, 'testuser@criticalmass.in');
+
+        $ride = $this->getFirstRideForCity('hamburg');
+        $this->assertNotNull($ride, 'Hamburg ride fixture should exist');
+        $rideId = $ride->getId();
+
+        $crawler = $client->request('GET', $this->buildRideUrl($ride) . '/edit');
+
+        $form = $crawler->selectButton('Speichern')->form();
+        $form['ride[location]'] = 'Jungfernstieg';
+
+        $client->submit($form);
+
+        $em = static::getContainer()->get('doctrine')->getManager();
+        $updatedRide = $em->getRepository(Ride::class)->find($rideId);
+
+        $this->assertNotNull($updatedRide);
+        $this->assertEquals('Jungfernstieg', $updatedRide->getLocation());
+    }
+
+    public function testEditRideChangesDescriptionInDatabase(): void
+    {
+        $client = static::createClient();
+        $this->loginAs($client, 'testuser@criticalmass.in');
+
+        $ride = $this->getFirstRideForCity('hamburg');
+        $this->assertNotNull($ride, 'Hamburg ride fixture should exist');
+        $rideId = $ride->getId();
+
+        $crawler = $client->request('GET', $this->buildRideUrl($ride) . '/edit');
+
+        $form = $crawler->selectButton('Speichern')->form();
+        $form['ride[description]'] = 'Neue Beschreibung für die Tour.';
+
+        $client->submit($form);
+
+        $em = static::getContainer()->get('doctrine')->getManager();
+        $updatedRide = $em->getRepository(Ride::class)->find($rideId);
+
+        $this->assertNotNull($updatedRide);
+        $this->assertEquals('Neue Beschreibung für die Tour.', $updatedRide->getDescription());
+    }
 }
