@@ -282,23 +282,6 @@ class CityCycle implements RouteableInterface
         return ($this->validFrom && $this->validUntil);
     }
 
-    /**
-     * @param \DateTime|null $dateTime
-     * @return bool
-     * @throws \Exception
-     * @deprecated
-     */
-    public function isValid(?\DateTime $dateTime = null): bool
-    {
-        if (!$dateTime) {
-            $dateTime = new \DateTime();
-        }
-
-        return ($this->validFrom <= $dateTime && $this->validUntil >= $dateTime) ||
-            ($this->validFrom <= $dateTime && $this->validUntil === null) ||
-            ($this->validFrom === null && $this->validUntil >= $dateTime);
-    }
-
     public function addRide(Ride $ride): CityCycle
     {
         $this->rides->add($ride);
