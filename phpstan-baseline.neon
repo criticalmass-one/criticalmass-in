@@ -226,11 +226,6 @@ parameters:
 			path: src/Command/Track/OptimizeTracksCommand.php
 
 		-
-			message: "#^Call to an undefined method Doctrine\\\\Persistence\\\\ObjectRepository\\<App\\\\Entity\\\\Post\\>\\:\\:findByCrawled\\(\\)\\.$#"
-			count: 1
-			path: src/Command/WebsiteCrawlerCommand.php
-
-		-
 			message: "#^Method App\\\\Controller\\\\Api\\\\BaseController\\:\\:createErrors\\(\\) has parameter \\$errorMessages with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: src/Controller/Api/BaseController.php
@@ -2146,41 +2141,6 @@ parameters:
 			path: src/Criticalmass/ViewStorage/ViewModel/ViewFactory.php
 
 		-
-			message: "#^Method App\\\\Criticalmass\\\\Website\\\\Crawler\\\\Crawler\\:\\:crawlUrls\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Criticalmass/Website/Crawler/Crawler.php
-
-		-
-			message: "#^Method App\\\\Criticalmass\\\\Website\\\\Crawler\\\\CrawlerInterface\\:\\:crawlUrls\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Criticalmass/Website/Crawler/CrawlerInterface.php
-
-		-
-			message: "#^Call to method find\\(\\) on an unknown class simplehtmldom_1_5\\\\simple_html_dom\\.$#"
-			count: 1
-			path: src/Criticalmass/Website/Parser/Parser.php
-
-		-
-			message: "#^Method App\\\\Criticalmass\\\\Website\\\\Parser\\\\Parser\\:\\:fetchHtml\\(\\) has invalid return type simplehtmldom_1_5\\\\simple_html_dom\\.$#"
-			count: 1
-			path: src/Criticalmass/Website/Parser/Parser.php
-
-		-
-			message: "#^Parameter \\$element of method App\\\\Criticalmass\\\\Website\\\\Parser\\\\Parser\\:\\:findFirstMatchingElement\\(\\) has invalid type simplehtmldom_1_5\\\\simple_html_dom\\.$#"
-			count: 1
-			path: src/Criticalmass/Website/Parser/Parser.php
-
-		-
-			message: "#^Parameter \\$element of method App\\\\Criticalmass\\\\Website\\\\Parser\\\\Parser\\:\\:parseHtml\\(\\) has invalid type simplehtmldom_1_5\\\\simple_html_dom\\.$#"
-			count: 1
-			path: src/Criticalmass/Website/Parser/Parser.php
-
-		-
-			message: "#^Strict comparison using \\=\\=\\= between simplehtmldom_1_5\\\\simple_html_dom and false will always evaluate to false\\.$#"
-			count: 1
-			path: src/Criticalmass/Website/Parser/Parser.php
-
-		-
 			message: "#^Array has 2 duplicate keys with value 'CANCELLED_WEATHER' \\(self\\:\\:CANCELLED_WEATHER, self\\:\\:CANCELLED_PARTICIPANTS\\)\\.$#"
 			count: 1
 			path: src/DBAL/Type/RideDisabledReasonType.php
@@ -3784,16 +3744,6 @@ parameters:
 			message: "#^Method App\\\\Serializer\\\\UnixTimestampDateTimeNormalizer\\:\\:supportsNormalization\\(\\) has parameter \\$context with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: src/Serializer/CriticalSerializer.php
-
-		-
-			message: "#^Call to an undefined method Doctrine\\\\Persistence\\\\ObjectRepository\\<App\\\\Entity\\\\CrawledWebsite\\>\\:\\:findOneByUrl\\(\\)\\.$#"
-			count: 1
-			path: src/Twig/Extension/CrawlTwigExtension.php
-
-		-
-			message: "#^Property App\\\\Twig\\\\Extension\\\\CrawlTwigExtension\\:\\:\\$blacklistPatternList type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Twig/Extension/CrawlTwigExtension.php
 
 		-
 			message: "#^Method App\\\\Twig\\\\Extension\\\\RouterTwigExtension\\:\\:objectPath\\(\\) has parameter \\$parameters with no value type specified in iterable type array\\.$#"
