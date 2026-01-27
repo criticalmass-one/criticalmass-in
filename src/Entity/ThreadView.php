@@ -42,7 +42,7 @@ class ThreadView implements ViewEntity
         return $this->id;
     }
 
-    public function getUser(): User
+    public function getUser(): ?User
     {
         return $this->user;
     }
