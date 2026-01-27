@@ -102,9 +102,4 @@ liip_imagine:
             filters:
                 thumbnail: { size: [2000, 2000], mode: inset }
 
-        crawled_preview_image:
-            cache: App\Criticalmass\Imagine\CacheResolver\RemoteCacheResolver
-            data_loader: App\Criticalmass\Imagine\DataLoader\RemoteStreamLoader
-            quality: 40
-            filters:
-                thumbnail: { size: [250, 250], mode: inset }
+
