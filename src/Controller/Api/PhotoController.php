@@ -3,7 +3,7 @@
 namespace App\Controller\Api;
 
 use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
-use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
+use App\Criticalmass\DataQuery\RequestToListConverter;
 use App\Entity\Photo;
 use App\Entity\Ride;
 use OpenApi\Attributes as OA;

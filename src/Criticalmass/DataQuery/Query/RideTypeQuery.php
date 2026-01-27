@@ -37,9 +37,17 @@ class RideTypeQuery extends AbstractQuery implements OrmQueryInterface, ElasticQ
         $expr = $queryBuilder->expr();
         $alias = $queryBuilder->getRootAliases()[0];
 
-        $queryBuilder
-            ->andWhere($expr->eq(sprintf('%s.rideType', $alias), ':rideType'))
-            ->setParameter('rideType', strtoupper($this->rideType));
+        $rideTypes = array_map('strtoupper', explode(',', $this->rideType));
+
+        if (count($rideTypes) === 1) {
+            $queryBuilder
+                ->andWhere($expr->eq(sprintf('%s.rideType', $alias), ':rideType'))
+                ->setParameter('rideType', $rideTypes[0]);
+        } else {
+            $queryBuilder
+                ->andWhere($expr->in(sprintf('%s.rideType', $alias), ':rideTypes'))
+                ->setParameter('rideTypes', $rideTypes);
+        }
 
         return $queryBuilder;
     }
