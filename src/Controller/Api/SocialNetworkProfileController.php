@@ -4,6 +4,7 @@ namespace App\Controller\Api;
 
 use App\Criticalmass\EntityMerger\EntityMergerInterface;
 use App\Entity\City;
+use Carbon\Carbon;
 use App\Entity\SocialNetworkProfile;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -91,7 +92,7 @@ class SocialNetworkProfileController extends BaseController
 
         $newSocialNetworkProfile
             ->setCity($city)
-            ->setCreatedAt(new \DateTime());
+            ->setCreatedAt(Carbon::now());
 
         $manager = $this->managerRegistry->getManager();
         $manager->persist($newSocialNetworkProfile);

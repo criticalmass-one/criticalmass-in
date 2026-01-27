@@ -14,7 +14,7 @@ class ViewFactoryTest extends TestCase
     {
         $testClass = new TestClass();
         $userMock = new User();
-        $dateTime = new \DateTime();
+        $dateTime = new \Carbon\Carbon();
 
         $expectedView = new View();
         $expectedView
@@ -32,7 +32,7 @@ class ViewFactoryTest extends TestCase
         $userMock = new User();
         $userMock->setId(42);
 
-        $dateTime = new \DateTime();
+        $dateTime = new \Carbon\Carbon();
 
         $expectedView = new View();
         $expectedView
@@ -49,7 +49,7 @@ class ViewFactoryTest extends TestCase
         $testClass = new TestClass();
         $userMock = 'anon';
 
-        $dateTime = new \DateTime();
+        $dateTime = new \Carbon\Carbon();
 
         $expectedView = new View();
         $expectedView

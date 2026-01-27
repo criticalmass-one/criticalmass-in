@@ -27,6 +27,8 @@
     <env name="KERNEL_CLASS" value="App\Kernel"/>
     <env name="SYMFONY_DEPRECATIONS_HELPER" value="disabled=1"/>
     <env name="SHELL_VERBOSITY" value="-1"/>
+    <env name="FRIENDLYCAPTCHA_API_KEY" value="placeholder"/>
+    <env name="FRIENDLYCAPTCHA_SITE_KEY" value="placeholder"/>
   </php>
 
   <testsuites>

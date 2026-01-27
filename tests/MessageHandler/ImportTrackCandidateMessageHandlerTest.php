@@ -70,7 +70,7 @@ class ImportTrackCandidateMessageHandlerTest extends TestCase
             distance: 25.5,
             elapsedTime: 7200,
             type: 'Ride',
-            startDateTime: new \DateTime('2024-01-15 18:00:00'),
+            startDateTime: new \Carbon\Carbon('2024-01-15 18:00:00'),
             startLatitude: 53.5511,
             startLongitude: 9.9937,
             endLatitude: 53.5611,
@@ -119,7 +119,7 @@ class ImportTrackCandidateMessageHandlerTest extends TestCase
             distance: 10.0,
             elapsedTime: 3600,
             type: 'Run',
-            startDateTime: new \DateTime('2024-01-15 10:00:00'),
+            startDateTime: new \Carbon\Carbon('2024-01-15 10:00:00'),
             startLatitude: 50.0,
             startLongitude: 10.0,
             endLatitude: 50.1,
@@ -164,7 +164,7 @@ class ImportTrackCandidateMessageHandlerTest extends TestCase
             distance: 10.0,
             elapsedTime: 3600,
             type: 'Ride',
-            startDateTime: new \DateTime(),
+            startDateTime: new \Carbon\Carbon(),
             startLatitude: 50.0,
             startLongitude: 10.0,
             endLatitude: 50.1,
@@ -191,7 +191,7 @@ class ImportTrackCandidateMessageHandlerTest extends TestCase
             ->method('getRepository')
             ->willReturn($userRepository);
 
-        $expectedDateTime = new \DateTime('2024-06-28 18:30:00');
+        $expectedDateTime = new \Carbon\Carbon('2024-06-28 18:30:00');
 
         $trackDecider = $this->createMock(TrackDeciderInterface::class);
         $trackDecider

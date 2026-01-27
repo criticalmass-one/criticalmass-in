@@ -2,9 +2,11 @@
 
 namespace App\Criticalmass\Timeline\Collector;
 
+use Carbon\Carbon;
+
 interface TimelineCollectorInterface
 {
-    public function setDateRange(\DateTime $startDateTime, \DateTime $endDateTime): TimelineCollectorInterface;
+    public function setDateRange(Carbon $startDateTime, Carbon $endDateTime): TimelineCollectorInterface;
 
     public function execute(): TimelineCollectorInterface;
 

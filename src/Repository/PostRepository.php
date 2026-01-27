@@ -6,6 +6,7 @@ use App\Entity\City;
 use App\Entity\Post;
 use App\Entity\Ride;
 use App\Entity\Thread;
+use Carbon\Carbon;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -100,8 +101,8 @@ class PostRepository extends ServiceEntityRepository
     }
 
     public function findForTimelineThreadPostCollector(
-        ?\DateTime $startDateTime = null,
-        ?\DateTime $endDateTime = null,
+        ?Carbon $startDateTime = null,
+        ?Carbon $endDateTime = null,
         ?int $limit = null
     ): array {
         $builder = $this->createQueryBuilder('p');
@@ -140,8 +141,8 @@ class PostRepository extends ServiceEntityRepository
     }
 
     public function findForTimelineRideCommentCollector(
-        ?\DateTime $startDateTime = null,
-        ?\DateTime $endDateTime = null,
+        ?Carbon $startDateTime = null,
+        ?Carbon $endDateTime = null,
         ?int $limit = null
     ): array {
         $builder = $this->createQueryBuilder('p');
@@ -178,8 +179,8 @@ class PostRepository extends ServiceEntityRepository
     }
 
     public function findForTimelinePhotoCommentCollector(
-        ?\DateTime $startDateTime = null,
-        ?\DateTime $endDateTime = null,
+        ?Carbon $startDateTime = null,
+        ?Carbon $endDateTime = null,
         ?int $limit = null
     ): array {
         $builder = $this->createQueryBuilder('p');

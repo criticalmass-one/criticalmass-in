@@ -17,7 +17,7 @@ class MonthTest extends TestCase
 
         $ride = $this->createMock(Ride::class);
         $ride->method('getCity')->willReturn($city);
-        $ride->method('getDateTime')->willReturn(new \DateTime($dateTime));
+        $ride->method('getDateTime')->willReturn(new \Carbon\Carbon($dateTime));
 
         return $ride;
     }
@@ -26,7 +26,7 @@ class MonthTest extends TestCase
     {
         $month = new Month();
 
-        $this->assertInstanceOf(\DateTime::class, $month->getDateTime());
+        $this->assertInstanceOf(\Carbon\Carbon::class, $month->getDateTime());
     }
 
     public function testAddRide(): void

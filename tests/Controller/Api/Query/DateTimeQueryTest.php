@@ -27,7 +27,7 @@ class DateTimeQueryTest extends AbstractApiControllerTestCase
         foreach ($resultList as $result) {
             // Value is a Unix timestamp
             $timestamp = $result[$jsonPropertyName];
-            $dateTime = (new \DateTime())->setTimestamp($timestamp);
+            $dateTime = (new \Carbon\Carbon())->setTimestamp($timestamp);
             $this->assertEquals($expectedDateTimeString, $dateTime->format($dateTimePattern));
         }
     }

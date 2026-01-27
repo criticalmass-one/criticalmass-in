@@ -8,6 +8,7 @@ use App\Criticalmass\UploadValidator\UploadValidatorException\TrackValidatorExce
 use App\Criticalmass\UploadValidator\UploadValidatorException\TrackValidatorException\NoValidGpxStructureException;
 use App\Criticalmass\UploadValidator\UploadValidatorException\TrackValidatorException\NoXmlException;
 use App\Entity\Track;
+use Carbon\Carbon;
 use Exception;
 use League\Flysystem\FilesystemOperator;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
@@ -99,7 +100,7 @@ class TrackValidator implements UploadValidatorInterface
             }
 
             try {
-                $dateTime = new \DateTime((string) $point->time);
+                $dateTime = Carbon::parse((string) $point->time);
             } catch (Exception $e) {
                 throw new NoDateTimeException();
             }

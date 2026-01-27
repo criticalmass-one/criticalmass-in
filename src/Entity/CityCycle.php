@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Criticalmass\Router\Attribute as Routing;
+use Carbon\Carbon;
 use App\EntityInterface\RouteableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -64,7 +65,7 @@ class CityCycle implements RouteableInterface
     #[Assert\Type(type: '\DateTime')]
     #[ORM\Column(type: 'time', nullable: true)]
     #[Groups(['ride-list'])]
-    protected ?\DateTime $time = null;
+    protected ?Carbon $time = null;
 
     #[ORM\Column(type: 'string', nullable: true)]
     #[Groups(['ride-list'])]
@@ -82,21 +83,21 @@ class CityCycle implements RouteableInterface
 
     #[ORM\Column(type: 'datetime', nullable: false)]
     #[Groups(['ride-list'])]
-    protected \DateTime $createdAt;
+    protected Carbon $createdAt;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    protected ?\DateTime $updatedAt = null;
+    protected ?Carbon $updatedAt = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    protected ?\DateTime $disabledAt = null;
+    protected ?Carbon $disabledAt = null;
 
     #[ORM\Column(type: 'date', nullable: true)]
     #[Groups(['ride-list'])]
-    protected ?\DateTime $validFrom = null;
+    protected ?Carbon $validFrom = null;
 
     #[ORM\Column(type: 'date', nullable: true)]
     #[Groups(['ride-list'])]
-    protected ?\DateTime $validUntil = null;
+    protected ?Carbon $validUntil = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $rideCalculatorFqcn = null;
@@ -112,7 +113,7 @@ class CityCycle implements RouteableInterface
 
     public function __construct()
     {
-        $this->createdAt = new \DateTime();
+        $this->createdAt = Carbon::now();
         $this->rides = new ArrayCollection();
     }
 
@@ -193,14 +194,14 @@ class CityCycle implements RouteableInterface
         return $this->weekOfMonth;
     }
 
-    public function setTime(?\DateTime $time = null): CityCycle
+    public function setTime(?Carbon $time = null): CityCycle
     {
         $this->time = $time;
 
         return $this;
     }
 
-    public function getTime(): ?\DateTime
+    public function getTime(): ?Carbon
     {
         return $this->time;
     }
@@ -217,62 +218,62 @@ class CityCycle implements RouteableInterface
         return $this->location;
     }
 
-    public function setCreatedAt(\DateTime $createdAt): CityCycle
+    public function setCreatedAt(Carbon $createdAt): CityCycle
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): Carbon
     {
         return $this->createdAt;
     }
 
-    public function setUpdatedAt(?\DateTime $updatedAt = null): CityCycle
+    public function setUpdatedAt(?Carbon $updatedAt = null): CityCycle
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTime
+    public function getUpdatedAt(): ?Carbon
     {
         return $this->updatedAt;
     }
 
-    public function setDisabledAt(?\DateTime $disabledAt = null): CityCycle
+    public function setDisabledAt(?Carbon $disabledAt = null): CityCycle
     {
         $this->disabledAt = $disabledAt;
 
         return $this;
     }
 
-    public function getDisabledAt(): ?\DateTime
+    public function getDisabledAt(): ?Carbon
     {
         return $this->disabledAt;
     }
 
-    public function setValidFrom(?\DateTime $validFrom = null): CityCycle
+    public function setValidFrom(?Carbon $validFrom = null): CityCycle
     {
         $this->validFrom = $validFrom;
 
         return $this;
     }
 
-    public function getValidFrom(): ?\DateTime
+    public function getValidFrom(): ?Carbon
     {
         return $this->validFrom;
     }
 
-    public function setValidUntil(?\DateTime $validUntil = null): CityCycle
+    public function setValidUntil(?Carbon $validUntil = null): CityCycle
     {
         $this->validUntil = $validUntil;
 
         return $this;
     }
 
-    public function getValidUntil(): ?\DateTime
+    public function getValidUntil(): ?Carbon
     {
         return $this->validUntil;
     }
@@ -283,15 +284,12 @@ class CityCycle implements RouteableInterface
     }
 
     /**
-     * @param \DateTime|null $dateTime
-     * @return bool
-     * @throws \Exception
      * @deprecated
      */
-    public function isValid(?\DateTime $dateTime = null): bool
+    public function isValid(?Carbon $dateTime = null): bool
     {
         if (!$dateTime) {
-            $dateTime = new \DateTime();
+            $dateTime = Carbon::now();
         }
 
         return ($this->validFrom <= $dateTime && $this->validUntil >= $dateTime) ||

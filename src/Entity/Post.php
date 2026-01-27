@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Criticalmass\Website\Crawler\Crawlable;
+use Carbon\Carbon;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -52,7 +53,7 @@ class Post implements Crawlable
     protected ?float $longitude = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    protected ?\DateTime $dateTime = null;
+    protected ?Carbon $dateTime = null;
 
     #[Assert\NotBlank]
     #[ORM\Column(type: 'text', nullable: true)]
@@ -66,7 +67,7 @@ class Post implements Crawlable
 
     public function __construct()
     {
-        $this->dateTime = new \DateTime();
+        $this->dateTime = Carbon::now();
 
         $this->children = new ArrayCollection();
     }
@@ -100,12 +101,12 @@ class Post implements Crawlable
         return $this;
     }
 
-    public function getDateTime(): \DateTime
+    public function getDateTime(): Carbon
     {
         return $this->dateTime;
     }
 
-    public function setDateTime(\DateTime $dateTime): Post
+    public function setDateTime(Carbon $dateTime): Post
     {
         $this->dateTime = $dateTime;
 

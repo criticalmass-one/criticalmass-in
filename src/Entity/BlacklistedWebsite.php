@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'blacklisted_website')]
@@ -20,11 +21,11 @@ class BlacklistedWebsite
     protected ?string $description = null;
 
     #[ORM\Column(type: 'datetime')]
-    protected ?\DateTime $createdAt = null;
+    protected ?Carbon $createdAt = null;
 
     public function __construct()
     {
-        $this->createdAt = new \DateTime();
+        $this->createdAt = Carbon::now();
     }
 
     public function getId():? int
@@ -63,12 +64,12 @@ class BlacklistedWebsite
         return $this;
     }
 
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): Carbon
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $createdAt): BlacklistedWebsite
+    public function setCreatedAt(Carbon $createdAt): BlacklistedWebsite
     {
         $this->createdAt = $createdAt;
 

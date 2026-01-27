@@ -4,6 +4,7 @@ namespace App\Controller\Ride;
 
 use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\Ride;
+use Carbon\Carbon;
 use App\Repository\RideRepository;
 use App\Controller\AbstractController;
 use App\Entity\Subride;
@@ -126,7 +127,7 @@ class SubrideController extends AbstractController
             'city' => $subride->getRide()->getCity(),
             'subride' => $subride,
             'form' => $form->createView(),
-            'dateTime' => new \DateTime(),
+            'dateTime' => Carbon::now(),
         ]);
     }
 
@@ -160,7 +161,7 @@ class SubrideController extends AbstractController
         ObjectRouterInterface $objectRouter,
         RideRepository $rideRepository
     ): Response {
-        $newDateObj = \DateTime::createFromFormat('Y-m-d', $newDate);
+        $newDateObj = Carbon::createFromFormat('Y-m-d', $newDate);
 
         if (!$newDateObj) {
             throw new \InvalidArgumentException('Invalid date format. Expected Y-m-d');
@@ -176,7 +177,7 @@ class SubrideController extends AbstractController
             $newSubride->setUser($this->getUser());
             $newSubride->setRide($ride);
 
-            $newSubrideDateTime = new \DateTime($ride->getDateTime()->format('Y-m-d') . ' ' . $oldSubride->getDateTime()->format('H:i:s'));
+            $newSubrideDateTime = Carbon::parse($ride->getDateTime()->format('Y-m-d') . ' ' . $oldSubride->getDateTime()->format('H:i:s'));
             $newSubride->setDateTime($newSubrideDateTime);
 
             $em->persist($newSubride);

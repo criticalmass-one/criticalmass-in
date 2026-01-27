@@ -7,6 +7,7 @@ use App\Entity\Ride;
 use App\Entity\SocialNetworkProfile;
 use App\Entity\Subride;
 use App\Entity\User;
+use Carbon\Carbon;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 interface SocialNetworkProfileFactoryInterface
@@ -17,7 +18,7 @@ interface SocialNetworkProfileFactoryInterface
     public function withSubride(Subride $subride): SocialNetworkProfileFactoryInterface;
     public function withCity(City $city): SocialNetworkProfileFactoryInterface;
     public function withUser(UserInterface $user): SocialNetworkProfileFactoryInterface;
-    public function withCreatedAt(\DateTime $createdAt): SocialNetworkProfileFactoryInterface;
+    public function withCreatedAt(Carbon $createdAt): SocialNetworkProfileFactoryInterface;
     public function withCreatedBy(User $user): SocialNetworkProfileFactoryInterface;
     public function build(): SocialNetworkProfile;
 }

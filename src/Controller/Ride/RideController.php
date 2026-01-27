@@ -4,6 +4,7 @@ namespace App\Controller\Ride;
 
 use App\Entity\Ride;
 use App\Criticalmass\SeoPage\SeoPageInterface;
+use Carbon\Carbon;
 use App\Event\View\ViewEvent;
 use App\Repository\BlockedCityRepository;
 use App\Repository\ParticipationRepository;
@@ -110,7 +111,7 @@ class RideController extends AbstractController
             'tracks' => $trackRepository->findTracksByRide($ride),
             'photos' => $photoRepository->findPhotosByRide($ride),
             'subrides' => $subrideRepository->getSubridesForRide($ride),
-            'dateTime' => new \DateTime(),
+            'dateTime' => Carbon::now(),
             'weatherForecast' => $weatherForecast,
             'participation' => $participation,
         ]);

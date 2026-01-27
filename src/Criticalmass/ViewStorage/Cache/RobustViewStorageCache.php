@@ -8,6 +8,7 @@ use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\Criticalmass\ViewStorage\ViewModel\View;
 use App\Entity\User;
 use App\Message\CountViewMessage;
+use Carbon\Carbon;
 use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -35,7 +36,7 @@ class RobustViewStorageCache extends ViewStorageCache
                 ->setEntityId($viewable->getId())
                 ->setEntityClassName(ClassUtil::getShortname($viewable))
                 ->setUserId($user?->getId())
-                ->setDateTime(new \DateTime('now', new \DateTimeZone('UTC')));
+                ->setDateTime(Carbon::now('UTC'));
 
             $this->viewStoragePersister->storeView($view, true);
         }

@@ -2,6 +2,8 @@
 
 namespace App\Criticalmass\ViewStorage\ViewModel;
 
+use Carbon\Carbon;
+
 class View
 {
     private int $entityId;
@@ -10,7 +12,7 @@ class View
 
     private ?int $userId = null;
 
-    private \DateTime $dateTime;
+    private Carbon $dateTime;
 
     public function getEntityId(): int
     {
@@ -48,12 +50,12 @@ class View
         return $this;
     }
 
-    public function getDateTime(): \DateTime
+    public function getDateTime(): Carbon
     {
         return $this->dateTime;
     }
 
-    public function setDateTime(\DateTime $dateTime): View
+    public function setDateTime(Carbon $dateTime): View
     {
         $this->dateTime = $dateTime;
 

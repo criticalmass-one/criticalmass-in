@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'participation')]
@@ -22,7 +23,7 @@ class Participation
     protected ?User $user = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    protected \DateTime $dateTime;
+    protected Carbon $dateTime;
 
     #[ORM\Column(type: 'boolean', nullable: true)]
     protected bool $goingYes = true;
@@ -35,7 +36,7 @@ class Participation
 
     public function __construct()
     {
-        $this->dateTime = new \DateTime();
+        $this->dateTime = Carbon::now();
     }
 
     public function getId(): ?int
@@ -43,7 +44,7 @@ class Participation
         return $this->id;
     }
 
-    public function getDateTime(): \DateTime
+    public function getDateTime(): Carbon
     {
         return $this->dateTime;
     }

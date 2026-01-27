@@ -4,6 +4,7 @@ namespace App\Criticalmass\Profile\Streak;
 
 use App\Entity\Participation;
 use App\Entity\User;
+use Carbon\Carbon;
 use Doctrine\Persistence\ManagerRegistry;
 
 class StreakGenerator implements StreakGeneratorInterface
@@ -45,7 +46,7 @@ class StreakGenerator implements StreakGeneratorInterface
         return $this;
     }
 
-    public function calculateCurrentStreak(?\DateTime $currentDateTime = null, bool $includeCurrentMonth = false): ?Streak
+    public function calculateCurrentStreak(?Carbon $currentDateTime = null, bool $includeCurrentMonth = false): ?Streak
     {
         $this->loadParticipations();
 

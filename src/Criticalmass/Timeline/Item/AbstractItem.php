@@ -3,12 +3,13 @@
 namespace App\Criticalmass\Timeline\Item;
 
 use App\Entity\User;
+use Carbon\Carbon;
 
 abstract class AbstractItem implements ItemInterface
 {
     protected string $uniqId;
 
-    protected ?\DateTime $dateTime = null;
+    protected ?Carbon $dateTime = null;
 
     protected ?User $user = null;
 
@@ -19,12 +20,12 @@ abstract class AbstractItem implements ItemInterface
         $this->uniqId = uniqid();
     }
 
-    public function getDateTime(): \DateTime
+    public function getDateTime(): Carbon
     {
         return $this->dateTime;
     }
 
-    public function setDateTime(\DateTime $dateTime): AbstractItem
+    public function setDateTime(Carbon $dateTime): AbstractItem
     {
         $this->dateTime = $dateTime;
 

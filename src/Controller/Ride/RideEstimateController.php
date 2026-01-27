@@ -41,7 +41,7 @@ class RideEstimateController extends AbstractController
 
         $estimateForm->handleRequest($request);
 
-        if ($estimateForm->isValid()) {
+        if ($estimateForm->isSubmitted() && $estimateForm->isValid()) {
             $manager = $this->managerRegistry->getManager();
             $manager->persist($estimateForm->getData());
             $manager->flush();
@@ -75,7 +75,7 @@ class RideEstimateController extends AbstractController
 
         $estimateForm->handleRequest($request);
 
-        if ($estimateForm->isValid()) {
+        if ($estimateForm->isSubmitted() && $estimateForm->isValid()) {
             $manager = $this->managerRegistry->getManager();
             $manager->persist($estimateForm->getData());
             $manager->flush();

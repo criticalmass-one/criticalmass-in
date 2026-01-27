@@ -7,6 +7,7 @@ use App\Criticalmass\MassTrackImport\TrackDecider\TrackDeciderInterface;
 use App\Entity\TrackImportCandidate;
 use App\Entity\User;
 use App\Message\ImportTrackCandidateMessage;
+use Carbon\Carbon;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -36,7 +37,7 @@ class ImportTrackCandidateMessageHandler
             ->setDistance($message->getDistance())
             ->setElapsedTime($message->getElapsedTime())
             ->setType($message->getType())
-            ->setStartDateTime(\DateTime::createFromInterface($message->getStartDateTime()))
+            ->setStartDateTime(Carbon::instance($message->getStartDateTime()))
             ->setStartLatitude($message->getStartLatitude())
             ->setStartLongitude($message->getStartLongitude())
             ->setEndLatitude($message->getEndLatitude())

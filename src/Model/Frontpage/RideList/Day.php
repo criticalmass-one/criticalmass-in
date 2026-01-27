@@ -3,14 +3,15 @@
 namespace App\Model\Frontpage\RideList;
 
 use App\Entity\Ride;
+use Carbon\Carbon;
 
 class Day implements \Iterator
 {
-    protected ?\DateTime $dateTime = null;
+    protected ?Carbon $dateTime = null;
 
     protected array $list = [];
 
-    public function __construct(\DateTime $dateTime)
+    public function __construct(Carbon $dateTime)
     {
         $this->dateTime = $dateTime;
     }
@@ -47,7 +48,7 @@ class Day implements \Iterator
         reset($this->list);
     }
 
-    public function getDateTime(): \DateTime
+    public function getDateTime(): Carbon
     {
         return $this->dateTime;
     }

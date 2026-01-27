@@ -163,7 +163,7 @@ class MassTrackImporterTest extends TestCase
             ->method('getToken')
             ->willReturn($token);
 
-        $startDateTime = new \DateTime('2024-01-01');
+        $startDateTime = new \Carbon\Carbon('2024-01-01');
 
         $activityLoader = $this->createMock(ActivityLoaderInterface::class);
         $activityLoader
@@ -195,7 +195,7 @@ class MassTrackImporterTest extends TestCase
             ->method('getToken')
             ->willReturn($token);
 
-        $endDateTime = new \DateTime('2024-12-31');
+        $endDateTime = new \Carbon\Carbon('2024-12-31');
 
         $activityLoader = $this->createMock(ActivityLoaderInterface::class);
         $activityLoader
@@ -244,8 +244,8 @@ class MassTrackImporterTest extends TestCase
 
         // Test fluent interface
         $result = $importer
-            ->setStartDateTime(new \DateTime('2024-01-01'))
-            ->setEndDateTime(new \DateTime('2024-12-31'))
+            ->setStartDateTime(new \Carbon\Carbon('2024-01-01'))
+            ->setEndDateTime(new \Carbon\Carbon('2024-12-31'))
             ->execute();
 
         $this->assertIsArray($result);

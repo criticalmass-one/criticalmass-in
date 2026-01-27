@@ -2,11 +2,13 @@
 
 namespace App\Criticalmass\Timeline\Item;
 
+use Carbon\Carbon;
+
 interface ItemInterface
 {
-    public function setDateTime(\DateTime $dateTime);
+    public function setDateTime(Carbon $dateTime);
 
-    public function getDateTime(): \DateTime;
+    public function getDateTime(): Carbon;
 
     public function getUniqId(): string;
 

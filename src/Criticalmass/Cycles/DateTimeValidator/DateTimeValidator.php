@@ -4,6 +4,7 @@ namespace App\Criticalmass\Cycles\DateTimeValidator;
 
 use App\Entity\CityCycle;
 use App\Entity\Ride;
+use Carbon\Carbon;
 
 class DateTimeValidator
 {
@@ -17,7 +18,7 @@ class DateTimeValidator
         return self::isValidDateTime($cityCycle, $ride->getDateTime());
     }
 
-    public static function isValidDateTime(CityCycle $cityCycle, \DateTime $dateTime): bool
+    public static function isValidDateTime(CityCycle $cityCycle, Carbon $dateTime): bool
     {
         return ($cityCycle->getValidFrom() <= $dateTime && $cityCycle->getValidUntil() >= $dateTime) ||
             ($cityCycle->getValidFrom() <= $dateTime && $cityCycle->getValidUntil() === null) ||

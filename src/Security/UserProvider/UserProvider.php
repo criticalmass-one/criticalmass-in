@@ -3,6 +3,7 @@
 namespace App\Security\UserProvider;
 
 use App\Entity\User;
+use Carbon\Carbon;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
@@ -129,7 +130,7 @@ class UserProvider implements UserProviderInterface, OAuthAwareUserProviderInter
         $user
             ->setUsername($response->getNickname())
             ->setEnabled(true)
-            ->setLastLogin(new \DateTime())
+            ->setLastLogin(Carbon::now())
         ;
 
         if ($response->getEmail()) {

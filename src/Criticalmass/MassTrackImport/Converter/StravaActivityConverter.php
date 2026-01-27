@@ -4,6 +4,7 @@ namespace App\Criticalmass\MassTrackImport\Converter;
 
 use App\Criticalmass\Geo\Coord\Coord;
 use App\Entity\TrackImportCandidate;
+use Carbon\Carbon;
 
 class StravaActivityConverter
 {
@@ -23,7 +24,7 @@ class StravaActivityConverter
             ->setName($content['name'])
             ->setDistance($content['distance'])
             ->setElapsedTime($content['elapsed_time'])
-            ->setStartDateTime(new \DateTime($content['start_date']))
+            ->setStartDateTime(Carbon::parse($content['start_date']))
             ->setStartCoord($startCoord)
             ->setEndCoord($endCoord)
             ->setType($content['type'])

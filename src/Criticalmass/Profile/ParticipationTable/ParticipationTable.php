@@ -3,6 +3,7 @@
 namespace App\Criticalmass\Profile\ParticipationTable;
 
 use App\Entity\Participation;
+use Carbon\Carbon;
 
 class ParticipationTable implements \Countable, \Iterator
 {
@@ -14,7 +15,7 @@ class ParticipationTable implements \Countable, \Iterator
 
     public function __construct()
     {
-        $this->currentYear = (new \DateTime())->format('Y');
+        $this->currentYear = Carbon::now()->format('Y');
     }
 
     public function getYearList(): array
@@ -38,7 +39,7 @@ class ParticipationTable implements \Countable, \Iterator
     {
         $this->currentYear = $fromYear;
 
-        $untilYear = (new \DateTime())->format('Y');
+        $untilYear = Carbon::now()->format('Y');
 
         for ($year = $fromYear; $year <= $untilYear; ++$year) {
             if (!array_key_exists($year, $this->yearList)) {
@@ -85,7 +86,7 @@ class ParticipationTable implements \Countable, \Iterator
         if (count($this->yearList) > 0) {
             $this->currentYear = max(array_keys($this->yearList));
         } else {
-            $this->currentYear = (new \DateTime())->format('Y');
+            $this->currentYear = Carbon::now()->format('Y');
         }
     }
 }

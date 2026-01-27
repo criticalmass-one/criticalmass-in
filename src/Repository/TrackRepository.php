@@ -6,6 +6,7 @@ use App\Entity\City;
 use App\Entity\Ride;
 use App\Entity\Track;
 use App\Entity\User;
+use Carbon\Carbon;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
@@ -51,7 +52,9 @@ class TrackRepository extends ServiceEntityRepository
             ->andWhere($builder->expr()->eq('t.enabled', ':enabled'))
             ->setParameter('enabled', true)
             ->andWhere($builder->expr()->eq('t.deleted', ':deleted'))
-            ->setParameter('deleted', false);
+            ->setParameter('deleted', false)
+            ->orderBy('t.creationDateTime', 'DESC')
+            ->setMaxResults(1);
 
         $query = $builder->getQuery();
 
@@ -60,7 +63,7 @@ class TrackRepository extends ServiceEntityRepository
         return $result;
     }
 
-    public function findForTimelineRideTrackCollector(?\DateTime $startDateTime = null, ?\DateTime $endDateTime = null, ?int $limit = null): array
+    public function findForTimelineRideTrackCollector(?Carbon $startDateTime = null, ?Carbon $endDateTime = null, ?int $limit = null): array
     {
         $builder = $this->createQueryBuilder('t');
 

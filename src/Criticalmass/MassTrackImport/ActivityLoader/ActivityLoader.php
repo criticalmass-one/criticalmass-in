@@ -2,6 +2,7 @@
 
 namespace App\Criticalmass\MassTrackImport\ActivityLoader;
 
+use Carbon\Carbon;
 use Strava\API\Client;
 use Strava\API\Service\REST;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -12,8 +13,8 @@ class ActivityLoader implements ActivityLoaderInterface
 {
     const PER_PAGE = 100;
 
-    protected \DateTime $startDateTime;
-    protected \DateTime $endDateTime;
+    protected Carbon $startDateTime;
+    protected Carbon $endDateTime;
     protected Client $client;
 
     public function __construct(
@@ -24,14 +25,14 @@ class ActivityLoader implements ActivityLoaderInterface
 
     }
 
-    public function setStartDateTime(\DateTime $startDateTime): ActivityLoaderInterface
+    public function setStartDateTime(Carbon $startDateTime): ActivityLoaderInterface
     {
         $this->startDateTime = $startDateTime;
 
         return $this;
     }
 
-    public function setEndDateTime(\DateTime $endDateTime): ActivityLoaderInterface
+    public function setEndDateTime(Carbon $endDateTime): ActivityLoaderInterface
     {
         $this->endDateTime = $endDateTime;
 

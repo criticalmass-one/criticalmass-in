@@ -4,6 +4,7 @@ namespace App\Controller\Statistic;
 
 use App\Controller\AbstractController;
 use App\Criticalmass\SeoPage\SeoPageInterface;
+use Carbon\Carbon;
 use App\Entity\City;
 use App\Entity\Region;
 use App\Entity\Ride;
@@ -50,11 +51,8 @@ class StatisticController extends AbstractController
         /** @var Region $region */
         $region = $regionRepository->find(3);
 
-        $endDateTime = new \DateTime();
-        $twoYearInterval = new \DateInterval('P2Y');
-
-        $startDateTime = new \DateTime();
-        $startDateTime->sub($twoYearInterval);
+        $endDateTime = Carbon::now();
+        $startDateTime = Carbon::now()->subYears(2);
 
         $rides = $rideRepository->findRidesInRegionInInterval($region, $startDateTime, $endDateTime);
 

@@ -6,6 +6,7 @@ use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Entity\Ride;
 use App\Model\CityListModel;
+use Carbon\Carbon;
 use Doctrine\Persistence\ManagerRegistry;
 
 class CityListFactory
@@ -32,7 +33,7 @@ class CityListFactory
     protected function createList(): CityListFactory
     {
         $cities = $this->doctrine->getRepository(City::class)->findEnabledCities();
-        $now = new \DateTime();
+        $now = Carbon::now();
 
         foreach ($cities as $city) {
             $currentRide = $this->doctrine->getRepository(Ride::class)->findCurrentRideForCity($city);

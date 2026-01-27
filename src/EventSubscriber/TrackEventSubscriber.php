@@ -16,6 +16,7 @@ use App\Event\Track\TrackTimeEvent;
 use App\Event\Track\TrackTrimmedEvent;
 use App\Event\Track\TrackUpdatedEvent;
 use App\Event\Track\TrackUploadedEvent;
+use Carbon\Carbon;
 use Doctrine\Persistence\ManagerRegistry;
 use phpGPX\Models\GpxFile;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -148,8 +149,8 @@ class TrackEventSubscriber implements EventSubscriberInterface
             ->setPoints($pointCounter)
             ->setStartPoint(0)
             ->setEndPoint($pointCounter - 1)
-            ->setStartDateTime($gpxStats->startedAt)
-            ->setEndDateTime($gpxStats->finishedAt)
+            ->setStartDateTime(Carbon::instance($gpxStats->startedAt))
+            ->setEndDateTime(Carbon::instance($gpxStats->finishedAt))
             ->setDistance($gpxStats->distance / 1000) // phpGPX returns meters, we store kilometers
         ;
     }

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Carbon\Carbon;
 use MalteHuebner\DataQueryBundle\Attribute\EntityAttribute as DataQuery;
 use App\Criticalmass\Router\Attribute as Routing;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
@@ -29,10 +30,10 @@ class Promotion implements ViewableEntity, RouteableInterface
     private ?string $description = null;
 
     #[ORM\Column(type: 'datetime')]
-    private \DateTime $createdAt;
+    private Carbon $createdAt;
 
     #[ORM\Column(type: 'datetime')]
-    private ?\DateTime $updatedAt = null;
+    private ?Carbon $updatedAt = null;
 
     #[ORM\Column(type: 'string', length: 255)]
     private ?string $query = null;
@@ -95,24 +96,24 @@ class Promotion implements ViewableEntity, RouteableInterface
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?Carbon
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(Carbon $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?Carbon
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    public function setUpdatedAt(Carbon $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 

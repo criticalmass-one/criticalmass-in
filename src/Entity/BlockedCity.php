@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'city_blocked')]
@@ -18,10 +19,10 @@ class BlockedCity
     protected ?City $city = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    protected ?\DateTime $blockStart = null;
+    protected ?Carbon $blockStart = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    protected ?\DateTime $blockEnd = null;
+    protected ?Carbon $blockEnd = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
     protected ?string $description = null;
@@ -37,26 +38,26 @@ class BlockedCity
         return $this->id;
     }
 
-    public function setBlockStart(\DateTime $blockStart): BlockedCity
+    public function setBlockStart(Carbon $blockStart): BlockedCity
     {
         $this->blockStart = $blockStart;
 
         return $this;
     }
 
-    public function getBlockStart(): ?\DateTime
+    public function getBlockStart(): ?Carbon
     {
         return $this->blockStart;
     }
 
-    public function setBlockEnd(\DateTime $blockEnd): BlockedCity
+    public function setBlockEnd(Carbon $blockEnd): BlockedCity
     {
         $this->blockEnd = $blockEnd;
 
         return $this;
     }
 
-    public function getBlockEnd(): ?\DateTime
+    public function getBlockEnd(): ?Carbon
     {
         return $this->blockEnd;
     }

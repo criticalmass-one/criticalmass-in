@@ -3,6 +3,7 @@
 namespace App\Criticalmass\Profile\ParticipationTable;
 
 use App\Entity\Participation;
+use Carbon\Carbon;
 
 class ParticipationMonth implements \Countable, \Iterator
 {
@@ -87,7 +88,7 @@ class ParticipationMonth implements \Countable, \Iterator
     public function valid(): bool
     {
         $dateTimeSpec = '%d-%d-1';
-        $dateTime = new \DateTime(sprintf($dateTimeSpec, $this->year, $this->month));
+        $dateTime = Carbon::parse(sprintf($dateTimeSpec, $this->year, $this->month));
         $maxDays = $dateTime->format('t');
 
         return (1 <= $this->day) && ($this->day <= $maxDays);

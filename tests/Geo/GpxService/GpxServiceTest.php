@@ -375,7 +375,7 @@ class GpxServiceTest extends TestCase
         $track->method('getEndPoint')->willReturn(100);
 
         // Search for a time within the track's range
-        $searchTime = new \DateTime('2018-03-30T17:28:30Z');
+        $searchTime = new \Carbon\Carbon('2018-03-30T17:28:30Z');
 
         $point = $this->gpxService->findPointAtTime($track, $searchTime);
 
@@ -393,7 +393,7 @@ class GpxServiceTest extends TestCase
         $track->method('getEndPoint')->willReturn(100);
 
         // Search for exact time of first point
-        $searchTime = new \DateTime('2018-03-30T17:26:47Z');
+        $searchTime = new \Carbon\Carbon('2018-03-30T17:26:47Z');
 
         $point = $this->gpxService->findPointAtTime($track, $searchTime);
 
@@ -411,7 +411,7 @@ class GpxServiceTest extends TestCase
         $track->method('getEndPoint')->willReturn(100);
 
         // Search for time before track starts
-        $searchTime = new \DateTime('2018-03-30T10:00:00Z');
+        $searchTime = new \Carbon\Carbon('2018-03-30T10:00:00Z');
 
         $point = $this->gpxService->findPointAtTime($track, $searchTime);
 
@@ -427,7 +427,7 @@ class GpxServiceTest extends TestCase
         $track->method('getEndPoint')->willReturn(100);
 
         // Search for time after track ends
-        $searchTime = new \DateTime('2018-03-31T23:59:59Z');
+        $searchTime = new \Carbon\Carbon('2018-03-31T23:59:59Z');
 
         $point = $this->gpxService->findPointAtTime($track, $searchTime);
 
@@ -511,7 +511,7 @@ class GpxServiceTest extends TestCase
         ];
         $altitudeData = [76.4, 77.0, 77.0];
         $timeData = [0, 97, 100];
-        $startDateTime = new \DateTime('2018-03-30T17:26:47Z');
+        $startDateTime = new \Carbon\Carbon('2018-03-30T17:26:47Z');
 
         $gpxFile = $this->gpxService->createGpxFromStravaStream(
             $latLngData,
@@ -534,7 +534,7 @@ class GpxServiceTest extends TestCase
         ];
         $altitudeData = [76.4, 10.0];
         $timeData = [0, 3600];
-        $startDateTime = new \DateTime('2018-03-30T17:26:47Z');
+        $startDateTime = new \Carbon\Carbon('2018-03-30T17:26:47Z');
 
         $gpxFile = $this->gpxService->createGpxFromStravaStream(
             $latLngData,
@@ -559,7 +559,7 @@ class GpxServiceTest extends TestCase
         ];
         $altitudeData = [76.4, 85.5];
         $timeData = [0, 60];
-        $startDateTime = new \DateTime('2018-03-30T17:26:47Z');
+        $startDateTime = new \Carbon\Carbon('2018-03-30T17:26:47Z');
 
         $gpxFile = $this->gpxService->createGpxFromStravaStream(
             $latLngData,
@@ -582,7 +582,7 @@ class GpxServiceTest extends TestCase
         ];
         $altitudeData = [76.4, 77.0];
         $timeData = [0, 120]; // 2 minutes apart
-        $startDateTime = new \DateTime('2018-03-30T17:00:00Z');
+        $startDateTime = new \Carbon\Carbon('2018-03-30T17:00:00Z');
 
         $gpxFile = $this->gpxService->createGpxFromStravaStream(
             $latLngData,
@@ -641,7 +641,7 @@ class GpxServiceTest extends TestCase
         ];
         $altitudeData = [76.4, 77.0];
         $timeData = [0, 60];
-        $startDateTime = new \DateTime('2018-03-30T17:26:47Z');
+        $startDateTime = new \Carbon\Carbon('2018-03-30T17:26:47Z');
 
         $gpxFile = $this->gpxService->createGpxFromStravaStream(
             $latLngData,

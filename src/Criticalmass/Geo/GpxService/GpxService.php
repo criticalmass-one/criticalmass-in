@@ -3,6 +3,7 @@
 namespace App\Criticalmass\Geo\GpxService;
 
 use App\Entity\Track;
+use Carbon\Carbon;
 use phpGPX\Models\GpxFile;
 use phpGPX\Models\Metadata;
 use phpGPX\Models\Point;
@@ -65,7 +66,7 @@ class GpxService implements GpxServiceInterface
     /**
      * Binary search to find the point closest to the given datetime.
      */
-    public function findPointAtTime(Track $track, \DateTimeInterface $dateTime, ?\DateTimeZone $timeZone = null): ?Point
+    public function findPointAtTime(Track $track, Carbon $dateTime, ?\DateTimeZone $timeZone = null): ?Point
     {
         $points = $this->getPointsInRange($track);
 
@@ -196,7 +197,7 @@ class GpxService implements GpxServiceInterface
     /**
      * Returns the start datetime from track stats.
      */
-    public function getStartDateTime(Track $track): ?\DateTime
+    public function getStartDateTime(Track $track): ?Carbon
     {
         $gpxFile = $this->loadFromTrack($track);
         $points = $this->getPointsInRange($track);
@@ -207,13 +208,13 @@ class GpxService implements GpxServiceInterface
 
         $firstPoint = reset($points);
 
-        return $firstPoint->time ? \DateTime::createFromInterface($firstPoint->time) : null;
+        return $firstPoint->time ? Carbon::instance($firstPoint->time) : null;
     }
 
     /**
      * Returns the end datetime from track stats.
      */
-    public function getEndDateTime(Track $track): ?\DateTime
+    public function getEndDateTime(Track $track): ?Carbon
     {
         $points = $this->getPointsInRange($track);
 
@@ -223,7 +224,7 @@ class GpxService implements GpxServiceInterface
 
         $lastPoint = end($points);
 
-        return $lastPoint->time ? \DateTime::createFromInterface($lastPoint->time) : null;
+        return $lastPoint->time ? Carbon::instance($lastPoint->time) : null;
     }
 
     /**
@@ -314,13 +315,13 @@ class GpxService implements GpxServiceInterface
      * @param array<array{float, float}> $latLngData Array of [lat, lng] pairs
      * @param array<float> $altitudeData Array of altitude values
      * @param array<int> $timeData Array of time offsets in seconds
-     * @param \DateTime $startDateTime Start datetime of the activity
+     * @param Carbon $startDateTime Start datetime of the activity
      */
     public function createGpxFromStravaStream(
         array $latLngData,
         array $altitudeData,
         array $timeData,
-        \DateTime $startDateTime
+        Carbon $startDateTime
     ): GpxFile {
         $gpxFile = new GpxFile();
         $gpxFile->metadata = new Metadata();
@@ -339,7 +340,7 @@ class GpxService implements GpxServiceInterface
             $point->elevation = $altitudeData[$i] ?? null;
 
             $timestamp = $startTimestamp + ($timeData[$i] ?? 0);
-            $point->time = new \DateTime(sprintf('@%d', $timestamp));
+            $point->time = Carbon::createFromTimestamp($timestamp);
 
             $segment->points[] = $point;
         }

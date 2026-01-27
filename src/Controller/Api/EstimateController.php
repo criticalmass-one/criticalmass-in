@@ -7,6 +7,7 @@ use MalteHuebner\DataQueryBundle\DataQueryManager\DataQueryManagerInterface;
 use MalteHuebner\DataQueryBundle\RequestParameterList\RequestParameterList;
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
+use Carbon\Carbon;
 use App\Event\RideEstimate\RideEstimateCreatedEvent;
 use App\Model\CreateEstimateModel;
 use App\Serializer\CriticalSerializerInterface;
@@ -121,7 +122,7 @@ class EstimateController extends BaseController
     protected function createRideEstimate(CreateEstimateModel $model, ?Ride $ride = null): ?RideEstimate
     {
         if (!$model->getDateTime()) {
-            $model->setDateTime(new \DateTime());
+            $model->setDateTime(Carbon::now());
         }
 
         if (!$ride) {

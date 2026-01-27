@@ -3,6 +3,7 @@
 namespace App\Menu;
 
 use App\Entity\User;
+use Carbon\Carbon;
 use Knp\Menu\ItemInterface;
 
 class Builder extends AbstractBuilder
@@ -55,8 +56,8 @@ class Builder extends AbstractBuilder
             ->addChild('Monatsauswertung', [
                 'route' => 'caldera_criticalmass_statistic_ride_month',
                 'routeParameters' => [
-                    'year' => (new \DateTime())->format('Y'),
-                    'month' => (new \DateTime())->format('m'),
+                    'year' => Carbon::now()->format('Y'),
+                    'month' => Carbon::now()->format('m'),
                 ]]);
 
         $menu->addChild('Community', ['uri' => '#'])

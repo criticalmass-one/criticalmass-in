@@ -38,22 +38,22 @@ class ClassUtilTest extends TestCase
         $this->assertEquals('stdClass', ClassUtil::getShortname($object));
     }
 
-    public function testGetShortnameFromDateTimeObject(): void
+    public function testGetShortnameFromCarbonObject(): void
     {
-        $object = new \DateTime();
-        $this->assertEquals('DateTime', ClassUtil::getShortname($object));
+        $object = new \Carbon\Carbon();
+        $this->assertEquals('Carbon', ClassUtil::getShortname($object));
     }
 
     public function testGetLowercaseShortnameFromObject(): void
     {
-        $object = new \DateTime();
-        $this->assertEquals('datetime', ClassUtil::getLowercaseShortname($object));
+        $object = new \Carbon\Carbon();
+        $this->assertEquals('carbon', ClassUtil::getLowercaseShortname($object));
     }
 
     public function testGetLcfirstShortnameFromObject(): void
     {
-        $object = new \DateTime();
-        $this->assertEquals('dateTime', ClassUtil::getLcfirstShortname($object));
+        $object = new \Carbon\Carbon();
+        $this->assertEquals('carbon', ClassUtil::getLcfirstShortname($object));
     }
 
     public function testGetLcfirstShortnameFromStdClass(): void

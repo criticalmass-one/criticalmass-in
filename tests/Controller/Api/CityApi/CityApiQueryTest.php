@@ -170,8 +170,8 @@ class CityApiQueryTest extends AbstractApiControllerTestCase
 
             // Datum vergleichen, wenn es sich um einen ISO-String handelt
             if (in_array($propertyName, ['createdAt', 'updatedAt']) && is_string($startValue)) {
-                $value = new \DateTime($value);
-                $start = new \DateTime($startValue);
+                $value = new \Carbon\Carbon($value);
+                $start = new \Carbon\Carbon($startValue);
             } else {
                 $start = $startValue;
             }
@@ -220,7 +220,7 @@ class CityApiQueryTest extends AbstractApiControllerTestCase
         $values = array_column($data, $propertyName);
 
         if (in_array($propertyName, ['createdAt', 'updatedAt'])) {
-            $values = array_map(fn($v) => (new \DateTime($v))->getTimestamp(), $values);
+            $values = array_map(fn($v) => (new \Carbon\Carbon($v))->getTimestamp(), $values);
             $sorted = $values;
             if ($direction === 'asc') {
                 sort($sorted);

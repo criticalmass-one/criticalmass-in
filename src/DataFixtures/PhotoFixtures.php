@@ -6,6 +6,7 @@ use App\Entity\City;
 use App\Entity\Photo;
 use App\Entity\Ride;
 use App\Entity\User;
+use Carbon\Carbon;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -89,7 +90,7 @@ class PhotoFixtures extends Fixture implements DependentFixtureInterface
         float $latitude,
         float $longitude,
         string $location,
-        \DateTime $exifCreationDate
+        Carbon $exifCreationDate
     ): Photo {
         return (new Photo())
             ->setRide($ride)

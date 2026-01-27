@@ -13,6 +13,7 @@ use App\Event\City\CityUpdatedEvent;
 use App\Factory\City\CityFactoryInterface;
 use App\Form\Type\CityType;
 use App\Repository\RegionRepository;
+use Carbon\Carbon;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
@@ -174,7 +175,7 @@ class CityManagementController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $city
-                ->setUpdatedAt(new \DateTime())
+                ->setUpdatedAt(Carbon::now())
                 ->setUser($user);
 
             $this->managerRegistry->getManager()->flush();

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Criticalmass\Router\Attribute as Routing;
+use Carbon\Carbon;
 use App\EntityInterface\AuditableInterface;
 use App\EntityInterface\RouteableInterface;
 use App\EntityInterface\SocialNetworkProfileAble;
@@ -47,15 +48,15 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Groups(['subride-list', 'extended-subride-list'])]
-    protected ?\DateTime $dateTime = null;
+    protected ?Carbon $dateTime = null;
 
     #[ORM\Column(type: 'datetime', nullable: false)]
     #[Groups(['subride-list', 'extended-subride-list'])]
-    protected \DateTime $createdAt;
+    protected Carbon $createdAt;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Groups(['subride-list', 'extended-subride-list'])]
-    protected ?\DateTime $updatedAt = null;
+    protected ?Carbon $updatedAt = null;
 
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
@@ -77,14 +78,14 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
 
     public function __construct()
     {
-        $this->createdAt = new \DateTime();
+        $this->createdAt = Carbon::now();
 
         $this->socialNetworkProfiles = new ArrayCollection();
     }
 
     public function __clone()
     {
-        $this->setCreatedAt(new \DateTime());
+        $this->setCreatedAt(Carbon::now());
     }
 
     public function getId(): ?int
@@ -123,14 +124,14 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
         return (int) $this->dateTime->format('U');
     }
 
-    public function setDateTime(\DateTime $dateTime): Subride
+    public function setDateTime(Carbon $dateTime): Subride
     {
         $this->dateTime = $dateTime;
 
         return $this;
     }
 
-    public function getDateTime(): \DateTime
+    public function getDateTime(): Carbon
     {
         return $this->dateTime;
     }
@@ -195,39 +196,39 @@ class Subride implements AuditableInterface, SocialNetworkProfileAble, Routeable
         return $this->user;
     }
 
-    public function setCreatedAt(\DateTime $createdAt): Subride
+    public function setCreatedAt(Carbon $createdAt): Subride
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): Carbon
     {
         return $this->createdAt;
     }
 
-    public function setUpdatedAt(?\DateTime $updatedAt = null): Subride
+    public function setUpdatedAt(?Carbon $updatedAt = null): Subride
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTime
+    public function getUpdatedAt(): ?Carbon
     {
         return $this->updatedAt;
     }
 
-    public function getTime(): \DateTime
+    public function getTime(): Carbon
     {
         return $this->dateTime;
     }
 
     /** @deprecated */
-    public function setTime(\DateTime $time): Subride
+    public function setTime(Carbon $time): Subride
     {
-        $this->dateTime = new \DateTime($this->dateTime->format('Y-m-d') . ' ' . $time->format('H:i:s'));
+        $this->dateTime = Carbon::parse($this->dateTime->format('Y-m-d') . ' ' . $time->format('H:i:s'));
 
         return $this;
     }

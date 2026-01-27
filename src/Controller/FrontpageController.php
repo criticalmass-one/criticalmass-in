@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Criticalmass\SeoPage\SeoPageInterface;
 use App\Criticalmass\Timeline\TimelineInterface;
+use Carbon\Carbon;
 use App\Factory\FrontpageRideListFactory;
 use App\Repository\FrontpageTeaserRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,10 +22,8 @@ class FrontpageController extends AbstractController
 
         $frontpageTeaserList = $frontpageTeaserRepository->findForFrontpage();
 
-        $endDateTime = new \DateTime();
-        $startDateTime = new \DateTime();
-        $monthInterval = new \DateInterval('P1M');
-        $startDateTime->sub($monthInterval);
+        $endDateTime = Carbon::now();
+        $startDateTime = Carbon::now()->subMonth();
 
         $timelineContentList = $cachedTimeline
             ->setDateRange($startDateTime, $endDateTime)

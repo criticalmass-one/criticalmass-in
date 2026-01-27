@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -46,18 +47,18 @@ class RideEstimate
     protected ?float $estimatedDuration = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    protected \DateTime $dateTime;
+    protected Carbon $dateTime;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    protected \DateTime $createdAt;
+    protected Carbon $createdAt;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected ?string $source = null;
 
     public function __construct()
     {
-        $this->dateTime = new \DateTime();
-        $this->createdAt = new \DateTime();
+        $this->dateTime = Carbon::now();
+        $this->createdAt = Carbon::now();
     }
 
     public function getId(): ?int
@@ -101,12 +102,12 @@ class RideEstimate
         return $this;
     }
 
-    public function getDateTime(): \DateTime
+    public function getDateTime(): Carbon
     {
         return $this->dateTime;
     }
 
-    public function setDateTime(\DateTime $dateTime): RideEstimate
+    public function setDateTime(Carbon $dateTime): RideEstimate
     {
         $this->dateTime = $dateTime;
 
@@ -173,12 +174,12 @@ class RideEstimate
         return $this->longitude;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): Carbon
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $createdAt): self
+    public function setCreatedAt(Carbon $createdAt): self
     {
         $this->createdAt = $createdAt;
 

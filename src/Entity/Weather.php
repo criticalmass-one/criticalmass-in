@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\Ignore;
@@ -27,11 +28,11 @@ class Weather
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Groups(['weather'])]
-    protected ?\DateTime $weatherDateTime = null;
+    protected ?Carbon $weatherDateTime = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Groups(['weather'])]
-    protected ?\DateTime $creationDateTime = null;
+    protected ?Carbon $creationDateTime = null;
 
     #[ORM\Column(type: 'float', nullable: true)]
     #[Groups(['weather'])]
@@ -99,7 +100,7 @@ class Weather
 
     public function __construct()
     {
-        $this->creationDateTime = new \DateTime();
+        $this->creationDateTime = Carbon::now();
     }
 
     public function getId(): ?int
@@ -119,24 +120,24 @@ class Weather
         return $this;
     }
 
-    public function getWeatherDateTime(): ?\DateTime
+    public function getWeatherDateTime(): ?Carbon
     {
         return $this->weatherDateTime;
     }
 
-    public function setWeatherDateTime(?\DateTime $weatherDateTime = null): Weather
+    public function setWeatherDateTime(?Carbon $weatherDateTime = null): Weather
     {
         $this->weatherDateTime = $weatherDateTime;
 
         return $this;
     }
 
-    public function getCreationDateTime(): ?\DateTime
+    public function getCreationDateTime(): ?Carbon
     {
         return $this->creationDateTime;
     }
 
-    public function setCreationDateTime(?\DateTime $creationDateTime = null): Weather
+    public function setCreationDateTime(?Carbon $creationDateTime = null): Weather
     {
         $this->creationDateTime = $creationDateTime;
 

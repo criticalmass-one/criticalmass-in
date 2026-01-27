@@ -3,6 +3,7 @@
 namespace App\Criticalmass\Geo\GpxService;
 
 use App\Entity\Track;
+use Carbon\Carbon;
 use phpGPX\Models\GpxFile;
 use phpGPX\Models\Point;
 
@@ -22,7 +23,7 @@ interface GpxServiceInterface
      */
     public function getPointsInRange(Track $track): array;
 
-    public function findPointAtTime(Track $track, \DateTimeInterface $dateTime, ?\DateTimeZone $timeZone = null): ?Point;
+    public function findPointAtTime(Track $track, Carbon $dateTime, ?\DateTimeZone $timeZone = null): ?Point;
 
     public function generatePolyline(Track $track): string;
 
@@ -36,9 +37,9 @@ interface GpxServiceInterface
 
     public function generateSimpleLatLngList(Track $track, int $sampleWidth = 10): string;
 
-    public function getStartDateTime(Track $track): ?\DateTime;
+    public function getStartDateTime(Track $track): ?Carbon;
 
-    public function getEndDateTime(Track $track): ?\DateTime;
+    public function getEndDateTime(Track $track): ?Carbon;
 
     public function shiftTimeAndSave(Track $track, \DateInterval $interval): void;
 
@@ -51,7 +52,7 @@ interface GpxServiceInterface
         array $latLngData,
         array $altitudeData,
         array $timeData,
-        \DateTime $startDateTime
+        Carbon $startDateTime
     ): GpxFile;
 
     public function toXmlString(GpxFile $gpxFile): string;

@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Entity\User;
+use Carbon\Carbon;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -34,7 +35,7 @@ class CityCycleFixtures extends Fixture implements DependentFixtureInterface
             $adminUser,
             CityCycle::DAY_FRIDAY,
             CityCycle::WEEK_LAST,
-            new \DateTime('19:00:00'),
+            Carbon::parse('19:00:00'),
             'Moorweide',
             53.5611,
             9.9895
@@ -47,7 +48,7 @@ class CityCycleFixtures extends Fixture implements DependentFixtureInterface
             $adminUser,
             CityCycle::DAY_FRIDAY,
             CityCycle::WEEK_LAST,
-            new \DateTime('19:00:00'),
+            Carbon::parse('19:00:00'),
             'Heinrichplatz',
             52.4989,
             13.4178
@@ -60,7 +61,7 @@ class CityCycleFixtures extends Fixture implements DependentFixtureInterface
             $adminUser,
             CityCycle::DAY_FRIDAY,
             CityCycle::WEEK_LAST,
-            new \DateTime('19:00:00'),
+            Carbon::parse('19:00:00'),
             'Marienplatz',
             48.1371,
             11.5754
@@ -73,7 +74,7 @@ class CityCycleFixtures extends Fixture implements DependentFixtureInterface
             $adminUser,
             CityCycle::DAY_FRIDAY,
             CityCycle::WEEK_LAST,
-            new \DateTime('18:00:00'),
+            Carbon::parse('18:00:00'),
             'Asmus-Bremer-Platz',
             54.3233,
             10.1359
@@ -89,7 +90,7 @@ class CityCycleFixtures extends Fixture implements DependentFixtureInterface
         User $user,
         int $dayOfWeek,
         int $weekOfMonth,
-        \DateTime $time,
+        Carbon $time,
         string $location,
         float $latitude,
         float $longitude
@@ -103,7 +104,7 @@ class CityCycleFixtures extends Fixture implements DependentFixtureInterface
             ->setLocation($location)
             ->setLatitude($latitude)
             ->setLongitude($longitude)
-            ->setValidFrom(new \DateTime('2020-01-01'));
+            ->setValidFrom(Carbon::parse('2020-01-01'));
     }
 
     public function getDependencies(): array

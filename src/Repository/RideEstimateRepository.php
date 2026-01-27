@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Ride;
 use App\Entity\RideEstimate;
+use Carbon\Carbon;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -15,8 +16,8 @@ class RideEstimateRepository extends ServiceEntityRepository
     }
 
     public function findForTimelineRideParticipationEstimateCollector(
-        ?\DateTime $startDateTime = null,
-        ?\DateTime $endDateTime = null,
+        ?Carbon $startDateTime = null,
+        ?Carbon $endDateTime = null,
         ?int $limit = null
     ): array {
         $builder = $this->createQueryBuilder('e');

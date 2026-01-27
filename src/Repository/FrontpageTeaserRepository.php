@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\FrontpageTeaser;
+use Carbon\Carbon;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -15,7 +16,7 @@ class FrontpageTeaserRepository extends ServiceEntityRepository
 
     public function findForFrontpage(): array
     {
-        $dateTime = new \DateTime();
+        $dateTime = Carbon::now();
         $builder = $this->createQueryBuilder('ft');
 
         $builder

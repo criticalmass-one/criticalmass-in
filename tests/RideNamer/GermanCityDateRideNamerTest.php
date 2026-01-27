@@ -16,7 +16,7 @@ class GermanCityDateRideNamerTest extends TestCase
 
         $ride = $this->createMock(Ride::class);
         $ride->method('getCity')->willReturn($city);
-        $ride->method('getDateTime')->willReturn(new \DateTime($dateTime));
+        $ride->method('getDateTime')->willReturn(new \Carbon\Carbon($dateTime));
 
         return $ride;
     }

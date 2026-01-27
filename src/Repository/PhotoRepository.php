@@ -6,6 +6,7 @@ use App\Entity\City;
 use App\Entity\Photo;
 use App\Entity\Ride;
 use App\Entity\User;
+use Carbon\Carbon;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
@@ -289,8 +290,8 @@ class PhotoRepository extends ServiceEntityRepository
     }
 
     public function findForTimelineRidePhotoCollector(
-        ?\DateTime $startDateTime = null,
-        ?\DateTime $endDateTime = null,
+        ?Carbon $startDateTime = null,
+        ?Carbon $endDateTime = null,
         ?int $limit = null
     ) {
         $builder = $this->createQueryBuilder('p');

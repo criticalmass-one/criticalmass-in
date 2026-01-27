@@ -4,6 +4,7 @@ namespace App\Criticalmass\Geo\Entity;
 
 use App\Criticalmass\Geo\Coordinate\Coordinate;
 use App\Criticalmass\Geo\EntityInterface\PositionInterface;
+use Carbon\Carbon;
 
 class Position extends Coordinate implements PositionInterface
 {
@@ -15,7 +16,7 @@ class Position extends Coordinate implements PositionInterface
     protected ?float $heading = null;
     protected ?float $speed = null;
     protected ?int $timestamp = null;
-    protected ?\DateTime $dateTime = null;
+    protected ?Carbon $dateTime = null;
 
     public function setLatitude(float $latitude): PositionInterface
     {
@@ -103,14 +104,14 @@ class Position extends Coordinate implements PositionInterface
         return $this->timestamp;
     }
 
-    public function setDateTime(\DateTime $creationDateTime): PositionInterface
+    public function setDateTime(Carbon $creationDateTime): PositionInterface
     {
         $this->dateTime = $creationDateTime;
 
         return $this;
     }
 
-    public function getDateTime(): ?\DateTime
+    public function getDateTime(): ?Carbon
     {
         return $this->dateTime;
     }

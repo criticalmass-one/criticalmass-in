@@ -6,6 +6,7 @@ use App\Criticalmass\Util\ClassUtil;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
 use App\Entity\User;
 use App\Message\CountViewMessage;
+use Carbon\Carbon;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -25,7 +26,7 @@ class ViewStorageCache implements ViewStorageCacheInterface
             entityId: $viewable->getId(),
             entityClassName: ClassUtil::getShortname($viewable),
             userId: $user?->getId(),
-            dateTime: new \DateTime('now', new \DateTimeZone('UTC'))
+            dateTime: Carbon::now('UTC')
         );
 
         $this->messageBus->dispatch($message);

@@ -2,6 +2,7 @@
 
 namespace App\Serializer;
 
+use Carbon\Carbon;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
@@ -98,13 +99,13 @@ class UnixTimestampDateTimeNormalizer implements NormalizerInterface, Denormaliz
         }
 
         if (is_int($data) || (is_string($data) && ctype_digit($data))) {
-            return (new \DateTime())->setTimestamp((int) $data);
+            return Carbon::createFromTimestamp((int) $data);
         }
 
         // Handle ISO 8601 strings
         if (is_string($data)) {
             try {
-                return new \DateTime($data);
+                return Carbon::parse($data);
             } catch (\Exception) {
                 return null;
             }
@@ -115,7 +116,7 @@ class UnixTimestampDateTimeNormalizer implements NormalizerInterface, Denormaliz
 
     public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
     {
-        return ($type === \DateTime::class || $type === \DateTimeInterface::class || $type === \DateTimeImmutable::class)
+        return ($type === \DateTime::class || $type === \DateTimeInterface::class || $type === \DateTimeImmutable::class || $type === Carbon::class)
             && ($data === null || is_int($data) || is_string($data));
     }
 
@@ -139,6 +140,7 @@ class UnixTimestampDateTimeNormalizer implements NormalizerInterface, Denormaliz
             \DateTime::class => true,
             \DateTimeInterface::class => true,
             \DateTimeImmutable::class => true,
+            Carbon::class => true,
         ];
     }
 }

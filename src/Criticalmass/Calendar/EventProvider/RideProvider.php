@@ -5,6 +5,7 @@ namespace App\Criticalmass\Calendar\EventProvider;
 use CalendR\Event\Provider\ProviderInterface;
 use App\Entity\Ride;
 use App\Criticalmass\Calendar\Event\RideEvent;
+use Carbon\Carbon;
 use Doctrine\Persistence\ManagerRegistry;
 
 readonly class RideProvider implements ProviderInterface

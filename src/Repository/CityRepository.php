@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\City;
 use App\Entity\Region;
+use Carbon\Carbon;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -175,8 +176,8 @@ class CityRepository extends ServiceEntityRepository
     }
 
     public function findForTimelineCityEditCollector(
-        ?\DateTime $startDateTime = null,
-        ?\DateTime $endDateTime = null,
+        ?Carbon $startDateTime = null,
+        ?Carbon $endDateTime = null,
         ?int $limit = null
     ): array {
         $builder = $this->createQueryBuilder('c');
@@ -209,8 +210,8 @@ class CityRepository extends ServiceEntityRepository
     }
 
     public function findForTimelineCityCreatedCollector(
-        ?\DateTime $startDateTime = null,
-        ?\DateTime $endDateTime = null,
+        ?Carbon $startDateTime = null,
+        ?Carbon $endDateTime = null,
         ?int $limit = null
     ): array {
         $builder = $this->createQueryBuilder('c');

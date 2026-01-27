@@ -4,6 +4,7 @@ namespace App\Criticalmass\ViewStorage\ViewModel;
 
 use App\Criticalmass\Util\ClassUtil;
 use App\Criticalmass\ViewStorage\ViewInterface\ViewableEntity;
+use Carbon\Carbon;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class ViewFactory
@@ -12,9 +13,9 @@ class ViewFactory
     {
     }
 
-    public static function createView(ViewableEntity $viewable, $user = null, ?\DateTime $dateTime = null): View
+    public static function createView(ViewableEntity $viewable, $user = null, ?Carbon $dateTime = null): View
     {
-        $viewDateTime = $dateTime ?? new \DateTime('now', new \DateTimeZone('UTC'));
+        $viewDateTime = $dateTime ?? Carbon::now('UTC');
 
         $view = new View();
         $view

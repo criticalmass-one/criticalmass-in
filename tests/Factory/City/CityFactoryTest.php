@@ -13,7 +13,7 @@ class CityFactoryTest extends TestCase
 {
     public function testCityFactoryWithNearlyEmptyCity(): void
     {
-        $dateTime = new \DateTime();
+        $dateTime = new \Carbon\Carbon();
 
         $factory = new CityFactory();
         $factory->withCreatedAt($dateTime);
@@ -41,7 +41,7 @@ class CityFactoryTest extends TestCase
 
     public function testCityColors(): void
     {
-        $dateTime = new \DateTime();
+        $dateTime = new \Carbon\Carbon();
 
         $red = 55;
         $green = 66;
@@ -69,7 +69,7 @@ class CityFactoryTest extends TestCase
      */
     public function testRandomColors(): void
     {
-        $dateTime = new \DateTime();
+        $dateTime = new \Carbon\Carbon();
 
         $cityFactory1 = new CityFactory();
         $cityFactory1
@@ -93,7 +93,7 @@ class CityFactoryTest extends TestCase
 
     public function testRegion(): void
     {
-        $dateTime = new \DateTime();
+        $dateTime = new \Carbon\Carbon();
 
         $region = new Region();
 
@@ -114,7 +114,7 @@ class CityFactoryTest extends TestCase
 
     public function testUser(): void
     {
-        $dateTime = new \DateTime();
+        $dateTime = new \Carbon\Carbon();
         $user = new User();
 
         $cityFactory = new CityFactory();
@@ -134,7 +134,7 @@ class CityFactoryTest extends TestCase
 
     public function testCityName(): void
     {
-        $dateTime = new \DateTime();
+        $dateTime = new \Carbon\Carbon();
 
         $cityFactory = new CityFactory();
         $cityFactory

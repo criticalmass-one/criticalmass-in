@@ -2,6 +2,7 @@
 
 namespace App\Twig\Extension;
 
+use Carbon\Carbon;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -16,7 +17,7 @@ class DateTimeTwigExtension extends AbstractExtension
         ];
     }
 
-    public function add(\DateTime $dateTime, string $dateIntervalSpec): \DateTime
+    public function add(Carbon $dateTime, string $dateIntervalSpec): Carbon
     {
         $dateInterval = new \DateInterval($dateIntervalSpec);
 

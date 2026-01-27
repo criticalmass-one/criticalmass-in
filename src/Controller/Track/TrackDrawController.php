@@ -4,6 +4,7 @@ namespace App\Controller\Track;
 
 use App\Controller\AbstractController;
 use App\Entity\Ride;
+use Carbon\Carbon;
 use App\Entity\Track;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,7 +42,7 @@ class TrackDrawController extends AbstractController
 
         $track = new Track();
 
-        $track->setCreationDateTime(new \DateTime())
+        $track->setCreationDateTime(Carbon::now())
             ->setPolyline($polyline)
             ->setGeoJson($geojson)
             ->setRide($ride)

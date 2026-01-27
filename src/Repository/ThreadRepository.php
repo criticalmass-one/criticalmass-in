@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Board;
 use App\Entity\City;
 use App\Entity\Thread;
+use Carbon\Carbon;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -67,7 +68,7 @@ class ThreadRepository extends ServiceEntityRepository
         return $query->getSingleResult();
     }
 
-    public function findForTimelineThreadCollector(?\DateTime $startDateTime = null, ?\DateTime $endDateTime = null, ?int $limit = null): array
+    public function findForTimelineThreadCollector(?Carbon $startDateTime = null, ?Carbon $endDateTime = null, ?int $limit = null): array
     {
         $builder = $this->createQueryBuilder('t');
 

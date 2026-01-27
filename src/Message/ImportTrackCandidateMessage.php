@@ -2,6 +2,8 @@
 
 namespace App\Message;
 
+use Carbon\Carbon;
+
 class ImportTrackCandidateMessage
 {
     public function __construct(
@@ -11,7 +13,7 @@ class ImportTrackCandidateMessage
         private readonly float $distance,
         private readonly int $elapsedTime,
         private readonly string $type,
-        private readonly \DateTimeInterface $startDateTime,
+        private readonly Carbon $startDateTime,
         private readonly float $startLatitude,
         private readonly float $startLongitude,
         private readonly float $endLatitude,
@@ -50,7 +52,7 @@ class ImportTrackCandidateMessage
         return $this->type;
     }
 
-    public function getStartDateTime(): \DateTimeInterface
+    public function getStartDateTime(): Carbon
     {
         return $this->startDateTime;
     }

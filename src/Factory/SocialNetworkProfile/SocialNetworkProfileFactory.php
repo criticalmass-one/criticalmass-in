@@ -7,6 +7,7 @@ use App\Entity\Ride;
 use App\Entity\SocialNetworkProfile;
 use App\Entity\Subride;
 use App\Entity\User;
+use Carbon\Carbon;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class SocialNetworkProfileFactory implements SocialNetworkProfileFactoryInterface
@@ -23,7 +24,7 @@ class SocialNetworkProfileFactory implements SocialNetworkProfileFactoryInterfac
         $this->socialNetworkProfile
             ->setEnabled(true)
             ->setMainNetwork(false)
-            ->setCreatedAt(new \DateTime());
+            ->setCreatedAt(Carbon::now());
     }
 
     public function withEnabled(bool $enabled): SocialNetworkProfileFactoryInterface
@@ -68,7 +69,7 @@ class SocialNetworkProfileFactory implements SocialNetworkProfileFactoryInterfac
         return $this;
     }
 
-    public function withCreatedAt(\DateTime $createdAt): SocialNetworkProfileFactoryInterface
+    public function withCreatedAt(Carbon $createdAt): SocialNetworkProfileFactoryInterface
     {
         $this->socialNetworkProfile->setCreatedAt($createdAt);
 

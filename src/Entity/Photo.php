@@ -22,6 +22,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\Ignore;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Carbon\Carbon;
 
 /**
  * @OE\OrderedEntity()
@@ -101,7 +102,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
 
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'datetime')]
-    protected ?\DateTime $creationDateTime = null;
+    protected ?Carbon $creationDateTime = null;
 
     #[Vich\UploadableField(mapping: 'photo_photo', fileNameProperty: 'imageName', size: 'imageSize', mimeType: 'imageMimeType')]
     protected ?File $imageFile = null;
@@ -130,7 +131,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
 
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'datetime')]
-    protected ?\DateTime $updatedAt = null;
+    protected ?Carbon $updatedAt = null;
 
     #[ORM\OneToMany(targetEntity: 'Ride', mappedBy: 'featuredPhoto', fetch: 'LAZY')]
     #[Ignore]
@@ -172,15 +173,15 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
     #[DataQuery\DateTimeQueryable(format: 'strict_date_hour_minute_second', pattern: 'Y-m-d\TH:i:s')]
     #[DataQuery\Sortable]
     #[ORM\Column(type: 'datetime')]
-    protected ?\DateTime $exifCreationDate = null;
+    protected ?Carbon $exifCreationDate = null;
 
     public function __construct()
     {
         $this->posts = new ArrayCollection();
         $this->featuredRides = new ArrayCollection();
-        $this->exifCreationDate = new \DateTime();
-        $this->creationDateTime = new \DateTime();
-        $this->updatedAt = new \DateTime();
+        $this->exifCreationDate = Carbon::now();
+        $this->creationDateTime = Carbon::now();
+        $this->updatedAt = Carbon::now();
         $this->description = '';
     }
 
@@ -290,14 +291,14 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return ($this->latitude && $this->longitude);
     }
 
-    public function setCreationDateTime(\DateTime $creationDateTime): Photo
+    public function setCreationDateTime(Carbon $creationDateTime): Photo
     {
         $this->creationDateTime = $creationDateTime;
 
         return $this;
     }
 
-    public function getCreationDateTime(): \DateTime
+    public function getCreationDateTime(): Carbon
     {
         return $this->creationDateTime;
     }
@@ -307,7 +308,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         $this->imageFile = $image;
 
         if ($image) {
-            $this->updatedAt = new \DateTime('now');
+            $this->updatedAt = Carbon::now();
         }
 
         return $this;
@@ -359,7 +360,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         $this->backupFile = $image;
 
         if ($image) {
-            $this->updatedAt = new \DateTime('now');
+            $this->updatedAt = Carbon::now();
         }
 
         return $this;
@@ -432,7 +433,7 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return $this;
     }
 
-    public function getUpdatedAt(): \DateTime
+    public function getUpdatedAt(): Carbon
     {
         return $this->updatedAt;
     }
@@ -522,12 +523,12 @@ class Photo implements FakeUploadable, ViewableEntity, ManipulateablePhotoInterf
         return $this;
     }
 
-    public function getExifCreationDate(): \DateTime
+    public function getExifCreationDate(): Carbon
     {
         return $this->exifCreationDate;
     }
 
-    public function setExifCreationDate(\DateTime $exifCreationDate): Photo
+    public function setExifCreationDate(Carbon $exifCreationDate): Photo
     {
         $this->exifCreationDate = $exifCreationDate;
 

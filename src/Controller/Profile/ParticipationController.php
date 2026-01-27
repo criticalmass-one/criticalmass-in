@@ -5,6 +5,7 @@ namespace App\Controller\Profile;
 use App\Controller\AbstractController;
 use App\Criticalmass\Participation\CityList\ParticipationCityListFactoryInterface;
 use App\Criticalmass\Profile\ParticipationTable\TableGeneratorInterface;
+use Carbon\Carbon;
 use App\Criticalmass\Profile\Streak\StreakGeneratorInterface;
 use App\Entity\Participation;
 use App\Event\Participation\ParticipationDeletedEvent;
@@ -51,7 +52,7 @@ class ParticipationController extends AbstractController
             'participationMaybeList' => $repository->findByUser($user, false, true),
             'participationNoList' => $repository->findByUser($user, false, false, true),
             'participationTable' => $participationTable,
-            'currentStreak' => $streakGenerator->calculateCurrentStreak(new \DateTime(), true),
+            'currentStreak' => $streakGenerator->calculateCurrentStreak(Carbon::now(), true),
             'longestStreak' => $streakGenerator->calculateLongestStreak(),
             'participationCityList' => $participationCityList->getList(),
         ]);

@@ -69,7 +69,7 @@ class RideApiQueryTest extends AbstractApiControllerTestCase
         $this->assertNotEmpty($data);
 
         foreach ($data as $ride) {
-            $date = new \DateTime('@' . $ride['date_time']);
+            $date = new \Carbon\Carbon('@' . $ride['date_time']);
             $this->assertEquals(2025, (int) $date->format('Y'));
             $this->assertEquals(12, (int) $date->format('n'));
             $this->assertEquals(23, (int) $date->format('j'));
@@ -87,7 +87,7 @@ class RideApiQueryTest extends AbstractApiControllerTestCase
         $this->assertNotEmpty($data);
 
         foreach ($data as $ride) {
-            $date = new \DateTime('@' . $ride['date_time']);
+            $date = new \Carbon\Carbon('@' . $ride['date_time']);
             $this->assertEquals(2026, (int) $date->format('Y'));
             $this->assertEquals(2, (int) $date->format('n'));
         }
@@ -104,7 +104,7 @@ class RideApiQueryTest extends AbstractApiControllerTestCase
         $this->assertNotEmpty($data);
 
         foreach ($data as $ride) {
-            $date = new \DateTime('@' . $ride['date_time']);
+            $date = new \Carbon\Carbon('@' . $ride['date_time']);
             $this->assertEquals(2025, (int) $date->format('Y'));
         }
     }
@@ -192,7 +192,7 @@ class RideApiQueryTest extends AbstractApiControllerTestCase
         }
 
         if (in_array($orderBy, ['createdAt', 'updatedAt'])) {
-            $values = array_map(fn($v) => (new \DateTime($v))->getTimestamp(), $values);
+            $values = array_map(fn($v) => (new \Carbon\Carbon($v))->getTimestamp(), $values);
             $sorted = $values;
             if ($direction === 'asc') {
                 sort($sorted);

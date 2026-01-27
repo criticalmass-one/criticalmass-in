@@ -7,6 +7,7 @@ use App\Criticalmass\Router\ObjectRouterInterface;
 use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Form\Type\CityCycleType;
+use Carbon\Carbon;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -139,10 +140,10 @@ class CityCycleManagementController extends AbstractController
             }
 
             if (!$cityCycle->getValidUntil()) {
-                $cityCycle->setValidUntil(new \DateTime());
+                $cityCycle->setValidUntil(Carbon::now());
             }
 
-            $cityCycle->setDisabledAt(new \DateTime());
+            $cityCycle->setDisabledAt(Carbon::now());
         } elseif (0 === $cityCycle->getRides()->count()) {
             $manager->remove($cityCycle);
         }

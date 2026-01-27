@@ -7,6 +7,7 @@ use MalteHuebner\DataQueryBundle\RequestParameterList\RequestToListConverter;
 use App\Criticalmass\EntityMerger\EntityMergerInterface;
 use App\Entity\City;
 use App\Entity\Ride;
+use Carbon\Carbon;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -183,7 +184,7 @@ class RideController extends BaseController
             $rideIdentifier = $request->get('rideIdentifier');
 
             try {
-                $ride->setDateTime(new \DateTime($rideIdentifier));
+                $ride->setDateTime(Carbon::parse($rideIdentifier));
             } catch (\Exception $exception) {
                 if (!$ride->hasSlug()) {
                     $ride->setSlug($rideIdentifier);
@@ -231,7 +232,7 @@ class RideController extends BaseController
             $rideIdentifier = $request->get('rideIdentifier');
 
             try {
-                $ride->setDateTime(new \DateTime($rideIdentifier));
+                $ride->setDateTime(Carbon::parse($rideIdentifier));
             } catch (\Exception $exception) {
                 if (!$ride->hasSlug()) {
                     $ride->setSlug($rideIdentifier);

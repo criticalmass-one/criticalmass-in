@@ -5,6 +5,7 @@ namespace App\Controller\Api;
 use App\Entity\City;
 use App\Entity\CityCycle;
 use App\Entity\Region;
+use Carbon\Carbon;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use OpenApi\Attributes as OA;
@@ -37,13 +38,13 @@ class CycleController extends BaseController
         $validUntilString = $request->query->getAlnum('validUntil');
 
         if ($validFromString) {
-            $validFrom = new \DateTime($validFromString);
+            $validFrom = Carbon::parse($validFromString);
         } else {
             $validFrom = null;
         }
 
         if ($validUntilString) {
-            $validUntil = new \DateTime($validUntilString);
+            $validUntil = Carbon::parse($validUntilString);
         } else {
             $validUntil = null;
         }

@@ -3,16 +3,17 @@
 namespace App\Model\Frontpage\RideList;
 
 use App\Entity\Ride;
+use Carbon\Carbon;
 
 class Month implements \Iterator
 {
     protected array $dayList = [];
 
-    protected ?\DateTime $dateTime = null;
+    protected ?Carbon $dateTime = null;
 
     public function __construct()
     {
-        $this->dateTime = new \DateTime();
+        $this->dateTime = Carbon::now();
     }
 
     public function addRide(Ride $ride): Month
@@ -53,7 +54,7 @@ class Month implements \Iterator
         reset($this->dayList);
     }
 
-    public function getDateTime(): \DateTime
+    public function getDateTime(): Carbon
     {
         return $this->dateTime;
     }

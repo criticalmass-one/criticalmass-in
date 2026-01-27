@@ -17,7 +17,7 @@ class ViewEntityFactoryTest extends TestCase
     {
         $registry = $this->createMock(ManagerRegistry::class);
 
-        $dateTime = new \DateTime();
+        $dateTime = new \Carbon\Carbon();
         $testClass = new TestClass();
         $viewEntityFactory = new ViewEntityFactory($registry);
         $viewEntityFactory->setEntityNamespace('Tests\\ViewStorage\\');
@@ -58,7 +58,7 @@ class ViewEntityFactoryTest extends TestCase
             ->with($this->equalTo(User::class))
             ->will($this->returnValue($repository));
 
-        $dateTime = new \DateTime();
+        $dateTime = new \Carbon\Carbon();
         $testClass = new TestClass();
         $viewEntityFactory = new ViewEntityFactory($registry);
         $viewEntityFactory->setEntityNamespace('Tests\\ViewStorage\\');
