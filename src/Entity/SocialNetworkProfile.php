@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\Ignore;
@@ -57,7 +58,7 @@ class SocialNetworkProfile
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Groups(['ride-list'])]
-    private ?\DateTime $createdAt = null;
+    private ?Carbon $createdAt = null;
 
     #[ORM\ManyToOne(targetEntity: 'App\Entity\User', inversedBy: 'socialNetworkProfiles')]
     #[Ignore]
@@ -69,11 +70,11 @@ class SocialNetworkProfile
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Groups(['ride-list'])]
-    protected ?\DateTime $lastFetchSuccessDateTime = null;
+    protected ?Carbon $lastFetchSuccessDateTime = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Groups(['ride-list'])]
-    protected ?\DateTime $lastFetchFailureDateTime = null;
+    protected ?Carbon $lastFetchFailureDateTime = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
     #[Groups(['ride-list'])]
@@ -210,12 +211,12 @@ class SocialNetworkProfile
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?Carbon
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(?\DateTimeInterface $createdAt): self
+    public function setCreatedAt(?Carbon $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -246,24 +247,24 @@ class SocialNetworkProfile
         return $this;
     }
 
-    public function getLastFetchSuccessDateTime(): ?\DateTimeInterface
+    public function getLastFetchSuccessDateTime(): ?Carbon
     {
         return $this->lastFetchSuccessDateTime;
     }
 
-    public function setLastFetchSuccessDateTime(?\DateTimeInterface $lastFetchSuccessDateTime): self
+    public function setLastFetchSuccessDateTime(?Carbon $lastFetchSuccessDateTime): self
     {
         $this->lastFetchSuccessDateTime = $lastFetchSuccessDateTime;
 
         return $this;
     }
 
-    public function getLastFetchFailureDateTime(): ?\DateTimeInterface
+    public function getLastFetchFailureDateTime(): ?Carbon
     {
         return $this->lastFetchFailureDateTime;
     }
 
-    public function setLastFetchFailureDateTime(?\DateTimeInterface $lastFetchFailureDateTime): self
+    public function setLastFetchFailureDateTime(?Carbon $lastFetchFailureDateTime): self
     {
         $this->lastFetchFailureDateTime = $lastFetchFailureDateTime;
 

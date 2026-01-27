@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'crawled_website')]
@@ -26,11 +27,11 @@ class CrawledWebsite
     protected ?string $description = null;
 
     #[ORM\Column(type: 'datetime')]
-    protected \DateTime $createdAt;
+    protected Carbon $createdAt;
 
     public function __construct()
     {
-        $this->createdAt = new \DateTime();
+        $this->createdAt = Carbon::now();
     }
 
     public function getId():? int
@@ -93,12 +94,12 @@ class CrawledWebsite
         return $this;
     }
 
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): Carbon
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $createdAt): CrawledWebsite
+    public function setCreatedAt(Carbon $createdAt): CrawledWebsite
     {
         $this->createdAt = $createdAt;
 

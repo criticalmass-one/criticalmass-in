@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Criticalmass\ViewStorage\ViewInterface\ViewEntity;
+use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'ride_view')]
@@ -22,11 +23,11 @@ class RideView implements ViewEntity
     protected ?Ride $ride = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    protected \DateTime $dateTime;
+    protected Carbon $dateTime;
 
     public function __construct()
     {
-        $this->dateTime = new \DateTime();
+        $this->dateTime = Carbon::now();
     }
 
     public function getId(): ?int
@@ -53,12 +54,12 @@ class RideView implements ViewEntity
         return $this;
     }
 
-    public function getDateTime(): \DateTime
+    public function getDateTime(): Carbon
     {
         return $this->dateTime;
     }
 
-    public function setDateTime(\DateTime $dateTime): ViewEntity
+    public function setDateTime(Carbon $dateTime): ViewEntity
     {
         $this->dateTime = $dateTime;
 

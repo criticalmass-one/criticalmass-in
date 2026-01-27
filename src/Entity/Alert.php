@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'alert')]
@@ -20,10 +21,10 @@ class Alert
     private ?string $message = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    private ?\DateTime $fromDateTime = null;
+    private ?Carbon $fromDateTime = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    private ?\DateTime $untilDateTime = null;
+    private ?Carbon $untilDateTime = null;
 
     #[ORM\Column(type: 'string', length: 255)]
     private ?string $type = null;
@@ -57,24 +58,24 @@ class Alert
         return $this;
     }
 
-    public function getFromDateTime(): ?\DateTimeInterface
+    public function getFromDateTime(): ?Carbon
     {
         return $this->fromDateTime;
     }
 
-    public function setFromDateTime(?\DateTimeInterface $fromDateTime): self
+    public function setFromDateTime(?Carbon $fromDateTime): self
     {
         $this->fromDateTime = $fromDateTime;
 
         return $this;
     }
 
-    public function getUntilDateTime(): ?\DateTimeInterface
+    public function getUntilDateTime(): ?Carbon
     {
         return $this->untilDateTime;
     }
 
-    public function setUntilDateTime(?\DateTimeInterface $untilDateTime): self
+    public function setUntilDateTime(?Carbon $untilDateTime): self
     {
         $this->untilDateTime = $untilDateTime;
 

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Criticalmass\ViewStorage\ViewInterface\ViewEntity;
+use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'city_view')]
@@ -23,11 +24,11 @@ class CityView implements ViewEntity
     protected ?City $city = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    protected \DateTime $dateTime;
+    protected Carbon $dateTime;
 
     public function __construct()
     {
-        $this->dateTime = new \DateTime();
+        $this->dateTime = Carbon::now();
     }
 
     public function setId(int $id): ViewEntity
@@ -54,12 +55,12 @@ class CityView implements ViewEntity
         return $this;
     }
 
-    public function getDateTime(): \DateTime
+    public function getDateTime(): Carbon
     {
         return $this->dateTime;
     }
 
-    public function setDateTime(\DateTime $dateTime): ViewEntity
+    public function setDateTime(Carbon $dateTime): ViewEntity
     {
         $this->dateTime = $dateTime;
 

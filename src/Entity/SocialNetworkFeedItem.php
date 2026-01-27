@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
@@ -43,7 +44,7 @@ class SocialNetworkFeedItem
 
     #[ORM\Column(type: 'datetime', nullable: false)]
     #[Groups(['feed-item'])]
-    protected ?\DateTime $dateTime = null;
+    protected ?Carbon $dateTime = null;
 
     #[ORM\Column(type: 'boolean', nullable: false)]
     #[Groups(['feed-item'])]
@@ -55,7 +56,7 @@ class SocialNetworkFeedItem
 
     #[ORM\Column(type: 'datetime', nullable: false)]
     #[Groups(['feed-item'])]
-    protected \DateTime $createdAt;
+    protected Carbon $createdAt;
 
     #[ORM\Column(type: 'text', nullable: true)]
     #[Groups(['feed-item'])]
@@ -63,7 +64,7 @@ class SocialNetworkFeedItem
 
     public function __construct()
     {
-        $this->createdAt = new \DateTime();
+        $this->createdAt = Carbon::now();
     }
 
     public function getId(): ?int
@@ -138,12 +139,12 @@ class SocialNetworkFeedItem
         return $this;
     }
 
-    public function getDateTime(): \DateTime
+    public function getDateTime(): Carbon
     {
         return $this->dateTime;
     }
 
-    public function setDateTime(\DateTime $dateTime): SocialNetworkFeedItem
+    public function setDateTime(Carbon $dateTime): SocialNetworkFeedItem
     {
         $this->dateTime = $dateTime;
 
@@ -174,12 +175,12 @@ class SocialNetworkFeedItem
         return $this;
     }
 
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): Carbon
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $createdAt): SocialNetworkFeedItem
+    public function setCreatedAt(Carbon $createdAt): SocialNetworkFeedItem
     {
         $this->createdAt = $createdAt;
 

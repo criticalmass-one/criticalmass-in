@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Criticalmass\Geo\Coord\Coord;
 use App\Criticalmass\Geo\Coord\CoordInterface;
+use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'track_candidate')]
@@ -39,7 +40,7 @@ class TrackImportCandidate
     protected ?string $type = null;
 
     #[ORM\Column(type: 'datetime')]
-    protected ?\DateTime $startDateTime = null;
+    protected ?Carbon $startDateTime = null;
 
     #[ORM\Column(type: 'float')]
     protected ?float $startLatitude = null;
@@ -57,14 +58,14 @@ class TrackImportCandidate
     protected ?string $polyline = null;
 
     #[ORM\Column(type: 'datetime')]
-    protected ?\DateTime $createdAt;
+    protected ?Carbon $createdAt;
 
     #[ORM\Column(type: 'boolean')]
     protected bool $rejected = false;
 
     public function __construct()
     {
-        $this->createdAt = new \DateTime();
+        $this->createdAt = Carbon::now();
     }
 
     public function getId(): int
@@ -163,12 +164,12 @@ class TrackImportCandidate
         return $this;
     }
 
-    public function getStartDateTime(): \DateTime
+    public function getStartDateTime(): Carbon
     {
         return $this->startDateTime;
     }
 
-    public function setStartDateTime(\DateTime $startDateTime): TrackImportCandidate
+    public function setStartDateTime(Carbon $startDateTime): TrackImportCandidate
     {
         $this->startDateTime = $startDateTime;
 
@@ -260,12 +261,12 @@ class TrackImportCandidate
         return $this;
     }
 
-    public function getCreatedAt(): \DateTimeInterface
+    public function getCreatedAt(): Carbon
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): TrackImportCandidate
+    public function setCreatedAt(Carbon $createdAt): TrackImportCandidate
     {
         $this->createdAt = $createdAt;
 

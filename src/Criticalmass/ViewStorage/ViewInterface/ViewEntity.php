@@ -3,6 +3,7 @@
 namespace App\Criticalmass\ViewStorage\ViewInterface;
 
 use App\Entity\User;
+use Carbon\Carbon;
 
 interface ViewEntity
 {
@@ -14,7 +15,7 @@ interface ViewEntity
 
     public function getUser(): ?User;
 
-    public function setDateTime(\DateTime $dateTime): ViewEntity;
+    public function setDateTime(Carbon $dateTime): ViewEntity;
 
-    public function getDateTime(): \DateTime;
+    public function getDateTime(): Carbon;
 }

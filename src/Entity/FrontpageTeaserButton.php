@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 
@@ -34,14 +35,14 @@ class FrontpageTeaserButton
     protected int $position = 0;
 
     #[ORM\Column(type: 'datetime', nullable: false)]
-    protected \DateTime $createdAt;
+    protected Carbon $createdAt;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    protected ?\DateTime $updatedAt = null;
+    protected ?Carbon $updatedAt = null;
 
     public function __construct()
     {
-        $this->createdAt = new \DateTime();
+        $this->createdAt = Carbon::now();
     }
 
     public function getId(): ?int
@@ -121,26 +122,26 @@ class FrontpageTeaserButton
         return $this->position;
     }
 
-    public function setCreatedAt(\DateTime $createdAt): FrontpageTeaserButton
+    public function setCreatedAt(Carbon $createdAt): FrontpageTeaserButton
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): Carbon
     {
         return $this->createdAt;
     }
 
-    public function setUpdatedAt(?\DateTime $updatedAt = null): FrontpageTeaserButton
+    public function setUpdatedAt(?Carbon $updatedAt = null): FrontpageTeaserButton
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTime
+    public function getUpdatedAt(): ?Carbon
     {
         return $this->updatedAt;
     }

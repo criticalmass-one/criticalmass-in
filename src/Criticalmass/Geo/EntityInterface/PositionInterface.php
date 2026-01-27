@@ -3,6 +3,7 @@
 namespace App\Criticalmass\Geo\EntityInterface;
 
 use App\Criticalmass\Geo\Coord\CoordInterface;
+use Carbon\Carbon;
 
 /** @deprecated  */
 interface PositionInterface extends CoordInterface
@@ -31,6 +32,6 @@ interface PositionInterface extends CoordInterface
     public function setTimestamp(int $timestamp): PositionInterface;
     public function getTimestamp(): ?int;
 
-    public function setDateTime(\DateTime $creationDateTime): PositionInterface;
-    public function getDateTime(): ?\DateTime;
+    public function setDateTime(Carbon $creationDateTime): PositionInterface;
+    public function getDateTime(): ?Carbon;
 }

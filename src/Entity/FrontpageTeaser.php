@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\EntityInterface\PhotoInterface;
+use Carbon\Carbon;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -49,16 +50,16 @@ class FrontpageTeaser implements PhotoInterface
     protected int $position = 0;
 
     #[ORM\Column(type: 'datetime', nullable: false)]
-    protected \DateTime $createdAt;
+    protected Carbon $createdAt;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    protected ?\DateTime $updatedAt = null;
+    protected ?Carbon $updatedAt = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    protected ?\DateTime $validFrom = null;
+    protected ?Carbon $validFrom = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    protected ?\DateTime $validUntil = null;
+    protected ?Carbon $validUntil = null;
 
     #[ORM\OneToMany(targetEntity: 'FrontpageTeaserButton', mappedBy: 'frontpageTeaser')]
     #[ORM\OrderBy(['position' => 'ASC'])]
@@ -66,7 +67,7 @@ class FrontpageTeaser implements PhotoInterface
 
     public function __construct()
     {
-        $this->createdAt = new \DateTime();
+        $this->createdAt = Carbon::now();
         $this->buttons = new ArrayCollection();
     }
 
@@ -128,7 +129,7 @@ class FrontpageTeaser implements PhotoInterface
         $this->imageFile = $image;
 
         if ($image) {
-            $this->updatedAt = new \DateTime('now');
+            $this->updatedAt = Carbon::now();
         }
 
         return $this;
@@ -187,50 +188,50 @@ class FrontpageTeaser implements PhotoInterface
         return $this->position;
     }
 
-    public function setCreatedAt(\DateTime $createdAt): FrontpageTeaser
+    public function setCreatedAt(Carbon $createdAt): FrontpageTeaser
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): Carbon
     {
         return $this->createdAt;
     }
 
-    public function setUpdatedAt(?\DateTime $updatedAt = null): FrontpageTeaser
+    public function setUpdatedAt(?Carbon $updatedAt = null): FrontpageTeaser
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTime
+    public function getUpdatedAt(): ?Carbon
     {
         return $this->updatedAt;
     }
 
-    public function setValidFrom(?\DateTime $validFrom = null): FrontpageTeaser
+    public function setValidFrom(?Carbon $validFrom = null): FrontpageTeaser
     {
         $this->validFrom = $validFrom;
 
         return $this;
     }
 
-    public function getValidFrom(): ?\DateTime
+    public function getValidFrom(): ?Carbon
     {
         return $this->validFrom;
     }
 
-    public function setValidUntil(?\DateTime $validUntil = null): FrontpageTeaser
+    public function setValidUntil(?Carbon $validUntil = null): FrontpageTeaser
     {
         $this->validUntil = $validUntil;
 
         return $this;
     }
 
-    public function getValidUntil(): ?\DateTime
+    public function getValidUntil(): ?Carbon
     {
         return $this->validUntil;
     }
