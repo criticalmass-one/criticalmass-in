@@ -986,7 +986,7 @@ parameters:
 			path: src/Criticalmass/Ical/RideIcalGenerator.php
 
 		-
-			message: "#^Cannot access property \\$UID on array\\<string, DateTime\\|string\\>\\.$#"
+			message: "#^Cannot access property \\$UID on array\\<string, Carbon\\\\Carbon\\|string\\>\\.$#"
 			count: 1
 			path: src/Criticalmass/Ical/RideIcalGenerator.php
 
@@ -2296,16 +2296,6 @@ parameters:
 			path: src/DependencyInjection/Configuration.php
 
 		-
-			message: "#^Property App\\\\Entity\\\\Alert\\:\\:\\$fromDateTime \\(DateTime\\|null\\) does not accept DateTimeInterface\\|null\\.$#"
-			count: 1
-			path: src/Entity/Alert.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\Alert\\:\\:\\$untilDateTime \\(DateTime\\|null\\) does not accept DateTimeInterface\\|null\\.$#"
-			count: 1
-			path: src/Entity/Alert.php
-
-		-
 			message: "#^Parameter \\$targetEntity of attribute class Doctrine\\\\ORM\\\\Mapping\\\\ManyToOne constructor expects class\\-string\\|null, string given\\.$#"
 			count: 1
 			path: src/Entity/BlockedCity.php
@@ -2541,16 +2531,6 @@ parameters:
 			path: src/Entity/Post.php
 
 		-
-			message: "#^Property App\\\\Entity\\\\Promotion\\:\\:\\$createdAt \\(DateTime\\) does not accept DateTimeInterface\\.$#"
-			count: 1
-			path: src/Entity/Promotion.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\Promotion\\:\\:\\$updatedAt \\(DateTime\\|null\\) does not accept DateTimeInterface\\.$#"
-			count: 1
-			path: src/Entity/Promotion.php
-
-		-
 			message: "#^Parameter \\$targetEntity of attribute class Doctrine\\\\ORM\\\\Mapping\\\\ManyToOne constructor expects class\\-string\\|null, string given\\.$#"
 			count: 2
 			path: src/Entity/PromotionView.php
@@ -2776,21 +2756,6 @@ parameters:
 			path: src/Entity/SocialNetworkProfile.php
 
 		-
-			message: "#^Property App\\\\Entity\\\\SocialNetworkProfile\\:\\:\\$createdAt \\(DateTime\\|null\\) does not accept DateTimeInterface\\|null\\.$#"
-			count: 1
-			path: src/Entity/SocialNetworkProfile.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\SocialNetworkProfile\\:\\:\\$lastFetchFailureDateTime \\(DateTime\\|null\\) does not accept DateTimeInterface\\|null\\.$#"
-			count: 1
-			path: src/Entity/SocialNetworkProfile.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\SocialNetworkProfile\\:\\:\\$lastFetchSuccessDateTime \\(DateTime\\|null\\) does not accept DateTimeInterface\\|null\\.$#"
-			count: 1
-			path: src/Entity/SocialNetworkProfile.php
-
-		-
 			message: "#^Attribute class App\\\\Criticalmass\\\\Router\\\\Attribute\\\\RouteParameter is not repeatable but is already present above the property\\.$#"
 			count: 1
 			path: src/Entity/Subride.php
@@ -2852,11 +2817,6 @@ parameters:
 
 		-
 			message: "#^Binary operation \"\\-\" between \\$this\\(App\\\\Entity\\\\TrackImportCandidate\\) and float\\|null results in an error\\.$#"
-			count: 1
-			path: src/Entity/TrackImportCandidate.php
-
-		-
-			message: "#^Property App\\\\Entity\\\\TrackImportCandidate\\:\\:\\$createdAt \\(DateTime\\|null\\) does not accept DateTimeInterface\\.$#"
 			count: 1
 			path: src/Entity/TrackImportCandidate.php
 
