@@ -1,0 +1,611 @@
+// ==========================================================================
+// App Shell — Mobile-first PWA-style layout
+// ==========================================================================
+
+// --------------------------------------------------------------------------
+// CSS Custom Properties (Light / Dark aware)
+// --------------------------------------------------------------------------
+:root {
+  --app-header-height: 56px;
+  --app-bottom-nav-height: 64px;
+  --app-safe-area-top: env(safe-area-inset-top, 0px);
+  --app-safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --app-surface: #ffffff;
+  --app-surface-raised: #ffffff;
+  --app-surface-overlay: rgba(255, 255, 255, 0.95);
+  --app-text: #1a1a2e;
+  --app-text-secondary: #6b7280;
+  --app-border: rgba(0, 0, 0, 0.08);
+  --app-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --app-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --app-shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.06);
+  --app-radius-sm: 8px;
+  --app-radius-md: 12px;
+  --app-radius-lg: 16px;
+  --app-radius-xl: 24px;
+  --app-accent-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --app-bg: #f0f2f5;
+}
+
+[data-bs-theme="dark"] {
+  --app-surface: #1e1e2e;
+  --app-surface-raised: #262639;
+  --app-surface-overlay: rgba(30, 30, 46, 0.95);
+  --app-text: #e4e4ef;
+  --app-text-secondary: #9ca3af;
+  --app-border: rgba(255, 255, 255, 0.08);
+  --app-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --app-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --app-shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.5);
+  --app-bg: #11111b;
+}
+
+// --------------------------------------------------------------------------
+// Base body
+// --------------------------------------------------------------------------
+body {
+  background-color: var(--app-bg);
+  color: var(--app-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+
+  // Account for fixed bottom nav on mobile
+  @media (max-width: 991.98px) {
+    padding-bottom: calc(var(--app-bottom-nav-height) + var(--app-safe-area-bottom) + 8px);
+  }
+}
+
+// --------------------------------------------------------------------------
+// Top App Bar (mobile-optimised)
+// --------------------------------------------------------------------------
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  background: var(--app-surface-overlay);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--app-border);
+  padding-top: var(--app-safe-area-top);
+  transition: box-shadow 0.3s ease, background 0.3s ease;
+
+  &.scrolled {
+    box-shadow: var(--app-shadow-sm);
+  }
+
+  .navbar {
+    min-height: var(--app-header-height);
+    padding-top: 0.35rem;
+    padding-bottom: 0.35rem;
+  }
+
+  .navbar-brand {
+    font-weight: 800;
+    font-size: 1.2rem;
+    letter-spacing: -0.02em;
+    background: var(--app-accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Bottom Navigation (mobile only)
+// --------------------------------------------------------------------------
+.app-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1040;
+  background: var(--app-surface-overlay);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-top: 1px solid var(--app-border);
+  padding-bottom: var(--app-safe-area-bottom);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  @media (min-width: 992px) {
+    display: none;
+  }
+
+  &__list {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    height: var(--app-bottom-nav-height);
+  }
+
+  &__item {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 6px 12px;
+    border-radius: var(--app-radius-md);
+    text-decoration: none;
+    color: var(--app-text-secondary);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+    min-width: 64px;
+    min-height: 44px;
+    justify-content: center;
+
+    &:hover,
+    &:focus {
+      color: var(--app-text);
+      text-decoration: none;
+    }
+
+    &--active {
+      color: $primary;
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 2px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: $primary;
+      }
+    }
+
+    i, .fa, .fas, .far, .fab {
+      font-size: 1.25rem;
+      line-height: 1;
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+// App Cards
+// --------------------------------------------------------------------------
+.card,
+.panel,
+.panel-default {
+  background: var(--app-surface-raised);
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-md) !important;
+  box-shadow: var(--app-shadow-sm);
+  overflow: hidden;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+
+  @media (max-width: 575.98px) {
+    border-radius: var(--app-radius-md) !important;
+  }
+}
+
+.card:hover {
+  box-shadow: var(--app-shadow-md);
+}
+
+.card-header,
+.panel-heading {
+  background: var(--app-surface-raised) !important;
+  border-bottom: 1px solid var(--app-border);
+  font-weight: 600;
+}
+
+// --------------------------------------------------------------------------
+// Content area
+// --------------------------------------------------------------------------
+.app-content {
+  min-height: calc(100vh - var(--app-header-height));
+  min-height: calc(100dvh - var(--app-header-height));
+}
+
+// --------------------------------------------------------------------------
+// Buttons – bigger touch targets, rounded pill style
+// --------------------------------------------------------------------------
+.btn {
+  border-radius: var(--app-radius-sm);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 0.5rem 1.25rem;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-primary {
+  background: var(--app-accent-gradient);
+  border: none;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+
+  &:hover, &:focus {
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.btn-pill {
+  border-radius: 50px;
+  padding: 0.5rem 1.5rem;
+}
+
+// --------------------------------------------------------------------------
+// Alerts – modern style
+// --------------------------------------------------------------------------
+.alert {
+  border: none;
+  border-radius: var(--app-radius-md);
+  backdrop-filter: blur(8px);
+  font-weight: 500;
+}
+
+// --------------------------------------------------------------------------
+// Breadcrumb – subtle and compact on mobile
+// --------------------------------------------------------------------------
+.breadcrumb {
+  background: transparent;
+  padding: 0.5rem 0;
+  font-size: 0.85rem;
+  margin-bottom: 0;
+  border-radius: 0;
+
+  @media (max-width: 575.98px) {
+    font-size: 0.8rem;
+    padding: 0.35rem 0;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+// Form controls – larger, rounder
+// --------------------------------------------------------------------------
+.form-control,
+.form-select {
+  border-radius: var(--app-radius-sm);
+  border: 1.5px solid var(--app-border);
+  padding: 0.65rem 1rem;
+  min-height: 44px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background-color: var(--app-surface);
+
+  &:focus {
+    border-color: $primary;
+    box-shadow: 0 0 0 3px rgba($primary, 0.15);
+  }
+}
+
+// --------------------------------------------------------------------------
+// Hero section for frontpage
+// --------------------------------------------------------------------------
+.app-hero {
+  background: var(--app-accent-gradient);
+  color: #fff;
+  padding: 2rem 1rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+
+  @media (min-width: 768px) {
+    padding: 3.5rem 2rem;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 32px;
+    background: var(--app-bg);
+    border-radius: var(--app-radius-xl) var(--app-radius-xl) 0 0;
+  }
+
+  h1 {
+    font-weight: 800;
+    font-size: 1.75rem;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.75rem;
+
+    @media (min-width: 768px) {
+      font-size: 2.5rem;
+    }
+  }
+
+  .lead {
+    font-size: 1rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto 1.25rem;
+
+    @media (min-width: 768px) {
+      font-size: 1.15rem;
+    }
+  }
+
+  .btn {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    font-weight: 700;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+      color: #fff;
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+// Section titles
+// --------------------------------------------------------------------------
+.app-section-title {
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+  color: var(--app-text);
+
+  @media (min-width: 768px) {
+    font-size: 1.5rem;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Carousel – edge-to-edge on mobile, rounded on desktop
+// --------------------------------------------------------------------------
+.carousel {
+  margin-left: 0;
+  margin-right: 0;
+
+  @media (min-width: 768px) {
+    border-radius: var(--app-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--app-shadow-md);
+  }
+
+  .carousel-item {
+    height: 220px;
+
+    @media (min-width: 768px) {
+      height: 400px;
+    }
+
+    @media (min-width: 1200px) {
+      height: 500px;
+    }
+  }
+
+  .carousel-caption {
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+
+    h5, p {
+      text-shadow: inherit;
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+// Footer – modern compact
+// --------------------------------------------------------------------------
+footer#footer {
+  background: var(--app-surface);
+  border-top: 1px solid var(--app-border);
+  padding: 2rem 0 1rem;
+  margin-top: 2rem !important;
+
+  h5 {
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--app-text-secondary);
+    margin-bottom: 0.75rem;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+
+      &:hover {
+        color: var(--app-text);
+      }
+    }
+  }
+
+  ul {
+    font-size: 0.85rem;
+
+    li {
+      margin-bottom: 0.35rem;
+    }
+
+    a {
+      color: var(--app-text-secondary);
+      text-decoration: none;
+      transition: color 0.15s ease;
+
+      &:hover {
+        color: $primary;
+      }
+    }
+  }
+
+  @media (max-width: 767.98px) {
+    .col-md-3 {
+      margin-bottom: 1.25rem;
+    }
+  }
+}
+
+#warming-stripes {
+  border-radius: 0;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+  padding: 10px;
+
+  @media (max-width: 991.98px) {
+    margin-bottom: calc(var(--app-bottom-nav-height) + var(--app-safe-area-bottom));
+  }
+}
+
+// --------------------------------------------------------------------------
+// Typography refinements
+// --------------------------------------------------------------------------
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+h1 { font-size: 1.75rem; @media (min-width: 768px) { font-size: 2.25rem; } }
+h2 { font-size: 1.5rem;  @media (min-width: 768px) { font-size: 1.85rem; } }
+
+// --------------------------------------------------------------------------
+// Table modernisation
+// --------------------------------------------------------------------------
+.table {
+  border-radius: var(--app-radius-md);
+  overflow: hidden;
+
+  thead th {
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--app-text-secondary);
+    border-bottom-width: 1px;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Animations
+// --------------------------------------------------------------------------
+@keyframes app-fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.app-animate {
+  animation: app-fade-in 0.35s ease-out both;
+}
+
+// Stagger children (use on parent)
+.app-stagger > * {
+  animation: app-fade-in 0.35s ease-out both;
+
+  @for $i from 1 through 12 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.04}s;
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+// Dark mode toggle helper (Bootstrap 5.3)
+// --------------------------------------------------------------------------
+.theme-toggle {
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  color: var(--app-text-secondary);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: var(--app-border);
+  }
+}
+
+// --------------------------------------------------------------------------
+// Utility: glass card
+// --------------------------------------------------------------------------
+.glass {
+  background: var(--app-surface-overlay);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--app-border);
+}
+
+// --------------------------------------------------------------------------
+// Scrollbar styling
+// --------------------------------------------------------------------------
+@media (min-width: 992px) {
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.25);
+    }
+  }
+
+  [data-bs-theme="dark"] {
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.25);
+      }
+    }
+  }
+}
+
+// --------------------------------------------------------------------------
+// Pull-to-refresh visual (cosmetic only)
+// --------------------------------------------------------------------------
+.app-pull-indicator {
+  position: fixed;
+  top: calc(var(--app-header-height) + var(--app-safe-area-top));
+  left: 50%;
+  transform: translateX(-50%) translateY(-100%);
+  width: 36px;
+  height: 4px;
+  background: var(--app-border);
+  border-radius: 2px;
+  z-index: 1050;
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
